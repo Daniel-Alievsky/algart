@@ -1,0 +1,747 @@
+package net.algart.matrices.skeletons.demo;
+
+import net.algart.arrays.*;
+import net.algart.math.IPoint;
+import net.algart.math.patterns.Pattern;
+import net.algart.math.patterns.Patterns;
+import net.algart.matrices.morphology.BasicMorphology;
+import net.algart.matrices.morphology.Morphology;
+import net.algart.matrices.scanning.ConnectedObjectScanner;
+import net.algart.matrices.scanning.ConnectivityType;
+import net.algart.matrices.skeletons.*;
+
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
+
+public class VerifySkeletonConnectivity implements Cloneable {
+
+    public static enum PStatus {
+        CENTER_NOT_REMOVED,
+        SOURCE_DISCONNECTED,
+        P_SOMETIMES_DISCONNECTED,
+        P_NEVER_DISCONNECTED,
+        ESTIMATED_ONLY,
+    }
+
+    private static final SimpleMemoryModel SMM = SimpleMemoryModel.getInstance();
+    private static final Morphology MORPHOLOGY = BasicMorphology.getInstance(null);
+    private static final int BUFFER_LENGTH = 32768;
+
+    private boolean estimateComplexity = false;
+    private boolean violationsOnly = false;
+    private boolean skipDeepTesting = false;
+    private boolean showDeepTesting = false;
+    private boolean diagonalThinning = false;
+    private boolean topological = false;
+    private final Class<? extends ThinningSkeleton> skeletonType;
+    private Pattern dependenceAperture = null;
+
+    private int pDimX, pDimY, qDimX, qDimY, nX, nY, nXY;
+    private int cX, cY, pMinX, pMinY, pMaxX, pMaxY;
+    private long numberOfMatricesQ;
+    private long numberOfMatricesP;
+    private int[] cNeighboursBitIndexes;
+    private int[] pBitIndexes;
+    private int[] qBitIndexes;
+
+    private Matrix<UpdatableBitArray> matrixQ;
+    private Matrix<UpdatableBitArray> matrixQWork;
+    private Matrix<UpdatableBitArray> matrixQForScanning;
+    private Matrix<UpdatableBitArray> matrixQLarge;
+    private Matrix<UpdatableBitArray> matrixQLargeWork;
+    private UpdatableBitArray arrayQ;
+    private UpdatableBitArray arrayQWork;
+    private UpdatableBitArray arrayQForScanning;
+    private UpdatableBitArray arrayQLarge;
+    private UpdatableBitArray arrayQLargeWork;
+    private BitArray thinningXPOrXPYP;
+    private BitArray thinningXPOrXPYPLarge;
+    private ConnectedObjectScanner clearingScanner;
+    private long maskRectangleP;
+    private long[] bitArrayQ = new long[1];
+    private long[] bitArrayQWork = new long[1];
+
+    private final long minPCode, maxPCode;
+    private long countP = 0;
+    private long countConnectiveP = 0;
+    private long countQ = 0;
+
+    public VerifySkeletonConnectivity(String[] args) throws UsageException {
+        int startArgIndex = 0;
+        for (;;) {
+            if (startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-estimateComplexity")) {
+                estimateComplexity = true;
+                startArgIndex++;
+            } else if (startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-violationsOnly")) {
+                violationsOnly = true;
+                startArgIndex++;
+            } else if (startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-skipDeepTesting")) {
+                skipDeepTesting = true;
+                startArgIndex++;
+            } else if (startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-showDeepTesting")) {
+                showDeepTesting = true;
+                startArgIndex++;
+            } else if (startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-diagonalThinning")) {
+                diagonalThinning = true;
+                startArgIndex++;
+            } else if (startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-topological")) {
+                topological = true;
+                startArgIndex++;
+            } else {
+                break;
+            }
+        }
+        if (args.length < startArgIndex + 2) {
+            System.out.println("Usage:");
+            System.out.println("    " + getClass().getName());
+            System.out.println("      [-estimateComplexity] [-violationsOnly] [-skipDeepTesting|-showDeepTesting]"
+                + " [-diagonalThinning] [-topological]");
+            System.out.println("      [Weak]OctupleThinningSkeleton2D|[Strong]Quadruple3x5ThinningSkeleton2D");
+            System.out.println("      3x3+5x5|3x4+5x6|3x4+5x8|4x4+6x6|4x4+6x8|5x4+7x6|5x4+7x8|4x5+6x7|4x5+6x9"
+                + " [minPCode [maxPCode]]");
+            System.out.println("-diagonalThinning must be also checked 8-connected skeletons");
+            System.out.println("-violationsOnly works little faster: "
+                + "the connectivity of the full result is not really checked");
+            throw new UsageException();
+        }
+        skeletonType = AnalyseSkeletonConfigurations.getSkeletonType(args[startArgIndex]);
+        int pDimX, pDimY, qDimX, qDimY;
+        if (args[startArgIndex + 1].equals("3x3+5x5")) {
+            pDimX = 3;
+            pDimY = 3;
+            qDimX = 5;
+            qDimY = 5;
+        } else if (args[startArgIndex + 1].equals("3x4+5x6")) {
+            pDimX = 3;
+            pDimY = 4;
+            qDimX = 5;
+            qDimY = 6;
+        } else if (args[startArgIndex + 1].equals("3x4+5x8")) {
+            pDimX = 3;
+            pDimY = 4;
+            qDimX = 5;
+            qDimY = 8;
+        } else if (args[startArgIndex + 1].equals("4x4+6x6")) {
+            pDimX = 4;
+            pDimY = 4;
+            qDimX = 6;
+            qDimY = 6;
+        } else if (args[startArgIndex + 1].equals("4x4+6x8")) {
+            pDimX = 4;
+            pDimY = 4;
+            qDimX = 6;
+            qDimY = 8;
+        } else if (args[startArgIndex + 1].equals("5x4+7x6")) {
+            pDimX = 5;
+            pDimY = 4;
+            qDimX = 7;
+            qDimY = 6;
+        } else if (args[startArgIndex + 1].equals("5x4+7x8")) {
+            pDimX = 5;
+            pDimY = 4;
+            qDimX = 7;
+            qDimY = 8;
+        } else if (args[startArgIndex + 1].equals("4x4+6x8")) {
+            pDimX = 4;
+            pDimY = 4;
+            qDimX = 6;
+            qDimY = 8;
+        } else if (args[startArgIndex + 1].equals("4x5+6x7")) {
+            pDimX = 4;
+            pDimY = 5;
+            qDimX = 6;
+            qDimY = 7;
+        } else if (args[startArgIndex + 1].equals("4x5+6x9")) {
+            pDimX = 4;
+            pDimY = 5;
+            qDimX = 6;
+            qDimY = 9;
+        } else {
+            throw new IllegalArgumentException("Incorrect aperture configuration: " + args[startArgIndex + 1]);
+        }
+        int cX = (qDimX - 1) / 2;
+        int cY = (qDimY - 1) / 2;
+        setDimensions(pDimX, pDimY, qDimX, qDimY, cX, cY);
+        if (startArgIndex + 2 < args.length) {
+            minPCode = Math.max(0, Long.parseLong(args[startArgIndex + 2]));
+        } else {
+            minPCode = 1; // don't check the degenerated 1-point case!
+        }
+        if (startArgIndex + 3 < args.length) {
+            maxPCode = Math.min(numberOfMatricesP - 1, Long.parseLong(args[startArgIndex + 3]));
+        } else {
+            maxPCode = numberOfMatricesP - 1;
+        }
+    }
+
+    public void analyseDependenceAperture() {
+        final int logCpuCount = Math.min(4, // 2^4 = 16 kernels
+            31 - Integer.numberOfLeadingZeros(Runtime.getRuntime().availableProcessors()));
+        Thread[] tasks = new Thread[1 << logCpuCount];
+        System.err.printf("Finding aperture...");
+        final boolean[] centerBits = new boolean[1 << 24];
+        long t1 = System.nanoTime();
+        for (int taskIndex = 0; taskIndex < tasks.length; taskIndex++) {
+            // This task should be performed maximally quickly: it is just preprocessing and executed always
+            final int ti = taskIndex;
+            tasks[ti] = new Thread() {
+                @Override
+                public void run() {
+                    Matrix<UpdatableBitArray> matrix6x6 = SMM.newBitMatrix(6, 6);
+                    UpdatableBitArray array6x6 = matrix6x6.array();
+                    BitArray thinningXPOrXPYP = getThinningXPOrXPYP(matrix6x6);
+                    int bitsFrom = ti << (24 - logCpuCount);
+                    int bitsTo = bitsFrom + (1 << (24 - logCpuCount));
+                    boolean[] centerBitsLocal = new boolean[1 << (24 - logCpuCount)];
+                    for (int bits = bitsFrom; bits < bitsTo; bits++) {
+                        array6x6.fill(false);
+                        array6x6.setBit(2 * 6 + 2, true);
+                        int bitIndex = 0;
+                        for (int y = 0; y < 5; y++) {
+                            for (int x = 0, disp = y * 6; x < 5; x++, disp++) {
+                                if (x == 2 && y == 2) {
+                                    continue;
+                                }
+                                array6x6.setBit(disp, (bits & 1 << bitIndex) != 0);
+                                bitIndex++;
+                            }
+                        }
+                        assert bitIndex == 24;
+                        boolean center = thinningXPOrXPYP.getBit(2 * 6 + 2);
+                        centerBitsLocal[bits - bitsFrom] = center;
+                    }
+                    synchronized (centerBits) {
+                        System.arraycopy(centerBitsLocal, 0,
+                            centerBits, ti << (24 - logCpuCount), 1 << (24 - logCpuCount));
+                    }
+                }
+            };
+        }
+        for (Thread task : tasks) {
+            task.start();
+        }
+        for (Thread task : tasks) {
+            try {
+                task.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.err.printf("\r%78s\r", "");
+        Set<IPoint> points = new HashSet<IPoint>();
+        points.add(IPoint.valueOf(0, 0));
+        for (int bitIndex = 0; bitIndex < 24; bitIndex++) {
+            boolean dependent = false;
+            int mask = 1 << bitIndex;
+            for (int bits = 0; bits < 1 << 24; bits++) {
+                if (centerBits[bits] != centerBits[bits ^ mask]) {
+                    dependent = true;
+                    break;
+                }
+            }
+            if (dependent) {
+                int matrixIndex = bitIndex < 12 ? bitIndex : bitIndex + 1;
+                points.add(IPoint.valueOf(matrixIndex % 5 - 2, matrixIndex / 5 - 2));
+            }
+        }
+        long t2 = System.nanoTime();
+        System.out.printf(Locale.US, "Aperture tested in %.3f seconds%n", (t2 - t1) * 1e-9);
+        this.dependenceAperture = Patterns.newIPattern(points);
+
+        Matrix<UpdatableBitArray> matrix5x5 = SMM.newBitMatrix(5, 5);
+            matrix5x5.array().fill(false);
+        matrix5x5.array().setBit(2 * 5 + 2, true);
+        System.out.printf("The aperture of the skeleton: %s%n%s%n",dependenceAperture,
+            AnalyseSkeletonConfigurations.bitMatrixToString(
+                MORPHOLOGY.dilation(matrix5x5, dependenceAperture).cast(BitArray.class),
+                2, 2, 2, 2, 2, 2, "    ", true));
+    }
+
+    // q q q q q q .
+    // q q q q q q .
+    // q P P P P q .
+    // q P P P P q .
+    // q P 1 P P q .
+    // q P P P P q .
+    // q P P P P q .
+    // q q q q q q .
+    // q q q q q q .
+    // . . . . . . .
+    // If qDimX or qDimY is not even, the center is shifted by 0.5 leftward (x-0.5) or upward (y-0.5)
+    public void testConnectivity() {
+        if (dependenceAperture == null)
+            throw new IllegalStateException("dependenceAperture must be found");
+
+        System.out.printf("Testing for connectivity %d configurations %dx%d=(%d..%d)x(%d..%d)%n",
+            numberOfMatricesP, pDimX, pDimY, pMinX, pMaxX, pMinY, pMaxY);
+        long problemsCount = 0;
+        allocateBuffers();
+        VerifySkeletonConnectivity deepVerifierXP = null;
+        VerifySkeletonConnectivity deepVerifierYP = null;
+        VerifySkeletonConnectivity deepVerifierXPYP = null;
+        if (!skipDeepTesting) {
+            deepVerifierXP = increaseDimensions(1, 0);
+            deepVerifierXP.allocateBuffers();
+            deepVerifierYP = increaseDimensions(0, 1);
+            deepVerifierYP.allocateBuffers();
+            deepVerifierXPYP = increaseDimensions(1, 1);
+            deepVerifierXPYP.allocateBuffers();
+        }
+        long t1 = System.nanoTime(), tLast = t1;
+        for (long bitsP = minPCode; bitsP <= maxPCode; bitsP++) {
+            long t = System.nanoTime();
+            double part = (bitsP - minPCode) / (double) (maxPCode - minPCode + 1);
+            if (t - tLast > 200 * 1000 * 1000) { // 200 ms
+                double time = (t - t1) * 1e-9;
+                System.err.printf(Locale.US,
+                    "\r(%.0f%%, %.0f/%.0f sec, pCode %d from %d..%d) %d configurations %dx%d done \r",
+                    part * 100, time, time / part, bitsP, minPCode, maxPCode, countConnectiveP, pDimX, pDimY);
+                tLast = t;
+            }
+            setPCode(bitsP);
+            PStatus status = testCurrentPConfiguration();
+            if (status == PStatus.P_SOMETIMES_DISCONNECTED) {
+                boolean allXPGood = false;
+                boolean allYPGood = false;
+                boolean allXPYPGood = false;
+                BitArray saveViolationsQ = arrayQ.updatableClone();
+                DeepTesting:
+                if (!skipDeepTesting) {
+                    assert deepVerifierXP != null && deepVerifierYP != null;
+                    if (showDeepTesting) {
+                        System.err.printf("\r%78s\r", "");
+                        System.out.printf("Deep testing pCode %d (connectivity is broken in %dx%d aperture)%n",
+                            bitsP, pDimX, pDimY);
+                    }
+                    // . . . . . . .
+                    // . P P P P E .
+                    // . P P P P E .
+                    // . P 1 P P E .
+                    // . P P P P E .
+                    // . P P P P E .
+                    // . . . . . . .
+                    if (showDeepTesting) {
+                        System.err.printf(Locale.US,
+                            "\r(%.0f%%, pCode %d from %d..%d) deep testing %d configurations %dx%d...    \r",
+                            part * 100, bitsP, minPCode, maxPCode,
+                            1L << pDimY, deepVerifierXP.pDimX, deepVerifierXP.pDimY);
+                    }
+                    setPCode(bitsP); // restoring bitsP
+                    deepVerifierXP.arrayQ.fill(false);
+                    deepVerifierXP.matrixQ.subMatr(pMinX, pMinY, pDimX, pDimY).array().copy(
+                        matrixQ.subMatr(pMinX, pMinY, pDimX, pDimY).array());
+                    allXPGood = true;
+                    for (long bitsE = 0; bitsE < 1L << pDimY; bitsE++) {
+                        for (int y = deepVerifierXP.pMinY; y <= deepVerifierXP.pMaxY; y++) {
+                            deepVerifierXP.arrayQ.setBit(
+                                y * deepVerifierXP.nX + deepVerifierXP.pMaxX,
+                                (bitsE & (1L << (y - deepVerifierXP.pMinY))) != 0);
+                        }
+                        if (deepVerifierXP.testCurrentPConfiguration() == PStatus.P_SOMETIMES_DISCONNECTED) {
+                            allXPGood = false;
+                            break;
+                        }
+                    }
+                    if (allXPGood) {
+                        break DeepTesting;
+                    }
+                    // . . . . . .
+                    // . P P P P .
+                    // . P P P P .
+                    // . P 1 P P .
+                    // . P P P P .
+                    // . P P P P .
+                    // . E E E E .
+                    // . . . . . .
+                    if (showDeepTesting) {
+                        System.err.printf(Locale.US,
+                            "\r(%.0f%%, pCode %d from %d..%d) deep testing %d configurations %dx%d...    \r",
+                            part * 100, bitsP, minPCode, maxPCode,
+                            1L << pDimX, deepVerifierYP.pDimX, deepVerifierYP.pDimY);
+                    }
+                    setPCode(bitsP); // restoring bitsP
+                    deepVerifierYP.arrayQ.fill(false);
+                    deepVerifierYP.matrixQ.subMatr(pMinX, pMinY, pDimX, pDimY).array().copy(
+                        matrixQ.subMatr(pMinX, pMinY, pDimX, pDimY).array());
+                    allYPGood = true;
+                    for (long bitsE = 0; bitsE < 1L << pDimX; bitsE++) {
+                        for (int x = deepVerifierYP.pMinX; x <= deepVerifierYP.pMaxX; x++) {
+                            deepVerifierYP.arrayQ.setBit(
+                                deepVerifierYP.pMaxY * deepVerifierYP.nX + x,
+                                (bitsE & (1L << (x - deepVerifierYP.pMinX))) != 0);
+                        }
+                        if (deepVerifierYP.testCurrentPConfiguration() == PStatus.P_SOMETIMES_DISCONNECTED) {
+                            allYPGood = false;
+                            break;
+                        }
+                    }
+                    if (allYPGood) {
+                        break DeepTesting;
+                    }
+                    // . . . . . . .
+                    // . P P P P E .
+                    // . P P P P E .
+                    // . P 1 P P E .
+                    // . P P P P E .
+                    // . P P P P E .
+                    // . E E E E E .
+                    // . . . . . . .
+                    if (showDeepTesting) {
+                        System.err.printf(Locale.US,
+                            "\r(%.0f%%, pCode %d from %d..%d) deep testing %d configurations %dx%d...    \r",
+                            part * 100, bitsP, minPCode, maxPCode,
+                            1L << (pDimX + pDimY + 1), deepVerifierXPYP.pDimX, deepVerifierXPYP.pDimY);
+                    }
+                    setPCode(bitsP); // restoring bitsP
+                    deepVerifierXPYP.arrayQ.fill(false);
+                    deepVerifierXPYP.matrixQ.subMatr(pMinX, pMinY, pDimX, pDimY).array().copy(
+                        matrixQ.subMatr(pMinX, pMinY, pDimX, pDimY).array());
+                    allXPYPGood = true;
+                    for (long bitsE = 0; bitsE < 1L << (pDimX + pDimY + 1); bitsE++) {
+                        int bitIndex = 0;
+                        for (int y = deepVerifierXPYP.pMinY; y <= deepVerifierXPYP.pMaxY; y++, bitIndex++) {
+                            deepVerifierXPYP.arrayQ.setBit(
+                                y * deepVerifierXPYP.nX + deepVerifierXPYP.pMaxX,
+                                (bitsE & (1L << bitIndex)) != 0);
+                        }
+                        for (int x = deepVerifierXPYP.pMinX; x < deepVerifierXPYP.pMaxX; x++, bitIndex++) {
+                            deepVerifierXPYP.arrayQ.setBit(
+                                deepVerifierXPYP.pMaxY * deepVerifierXPYP.nX + x,
+                                (bitsE & (1L << bitIndex)) != 0);
+                        }
+                        assert bitIndex == pDimX + pDimY + 1;
+                        if (deepVerifierXPYP.testCurrentPConfiguration() == PStatus.P_SOMETIMES_DISCONNECTED) {
+                            allXPYPGood = false;
+                            break;
+                        }
+                    }
+                    if (allXPYPGood) {
+                        break DeepTesting;
+                    }
+                }
+                if (showDeepTesting) {
+                    System.err.printf("\r%78s\r", "");
+                }
+                if (!allXPGood && !allYPGood && !allXPYPGood) {
+                    problemsCount++;
+                    arrayQ.copy(saveViolationsQ);
+                    System.err.printf("\r%78s\r", "");
+                    System.out.printf("Violation I detected at pCode %d: connectivity is broken "
+                        + "in %dx%d aperture%n%s%n"
+                        + "transformed to%n%s%n", bitsP, pDimX, pDimY,
+                        qMatrixToString(matrixQ),
+                        qMatrixToString(matrixQWork));
+                    if (!skipDeepTesting) {
+                        assert deepVerifierXP != null && deepVerifierYP != null;
+                        System.out.printf("And this violation I is repeated in %dx%d aperture%n%s%n"
+                            + "transformed to%n%s%n", deepVerifierXP.pDimX, deepVerifierXP.pDimY,
+                            deepVerifierXP.qMatrixToString(deepVerifierXP.matrixQ),
+                            deepVerifierXP.qMatrixToString(deepVerifierXP.matrixQWork));
+                        System.out.printf("And this violation I is repeated in %dx%d aperture%n%s%n"
+                            + "transformed to%n%s%n", deepVerifierYP.pDimX, deepVerifierYP.pDimY,
+                            deepVerifierYP.qMatrixToString(deepVerifierYP.matrixQ),
+                            deepVerifierYP.qMatrixToString(deepVerifierYP.matrixQWork));
+                        System.out.printf("And this violation I is repeated in %dx%d aperture%n%s%n"
+                            + "transformed to%n%s%n", deepVerifierXPYP.pDimX, deepVerifierXPYP.pDimY,
+                            deepVerifierXPYP.qMatrixToString(deepVerifierXPYP.matrixQ),
+                            deepVerifierXPYP.qMatrixToString(deepVerifierXPYP.matrixQWork));
+                    }
+                }
+            }
+        } // bitsP
+        long t2 = System.nanoTime();
+        System.err.printf("\r%78s\r", "");
+        System.out.printf(Locale.US, "%d connected configurations %dx%d %s in %.3f seconds%n"
+            +"%d configurations %dx%d with clearing center found%n"
+            +"%d configurations %dx%d at all%n"
+            +"%,d configurations %dx%d %s (%.4e per each %dx%d)%n"
+            +"%s%n",
+            countConnectiveP, pDimX, pDimY, estimateComplexity ? "are counted" : "are verified",
+            (t2 - t1) * 1e-9,
+            countP, pDimX, pDimY,
+            numberOfMatricesP, pDimX, pDimY,
+            countQ, qDimX, qDimY, estimateComplexity ? "are counted" : "are verified",
+            countQ / (double) countP, pDimX, pDimY,
+            estimateComplexity ? "" : problemsCount != 0 ? problemsCount + " PROBLEMS FOUND" : "No problems found");
+    }
+
+
+
+    public VerifySkeletonConnectivity increaseDimensions(int xIncrement, int yIncrement) {
+        try {
+            VerifySkeletonConnectivity result = (VerifySkeletonConnectivity)this.clone();
+            result.matrixQLarge = null; // no be on the safe side
+            result.matrixQLargeWork = null;
+            result.arrayQLarge = null;
+            result.arrayQLargeWork = null;
+            result.setDimensions(pDimX + xIncrement, pDimY + yIncrement,
+                qDimX + xIncrement, qDimY + yIncrement, cX, cY);
+            return result;
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(e.getMessage());
+        }
+    }
+
+    public PStatus testCurrentPConfiguration() {
+        long bitsP = 0;
+        for (int bitIndex = 0; bitIndex < pBitIndexes.length; bitIndex++) {
+            if (arrayQ.getBit(pBitIndexes[bitIndex])) {
+                bitsP |= 1L << bitIndex;
+            }
+        }
+
+        arrayQ.getBits(0, bitArrayQ, 0, nX * qDimY);
+        final long wP = bitArrayQ[0];
+        if (thinningXPOrXPYP.getBit(cY * nX + cX)) {
+            return PStatus.CENTER_NOT_REMOVED;
+        }
+//            System.out.printf("%n%d %dx%d%n%s%n", bitsP, pDimX, pDimY,
+//                qMatrixToString(matrixQ.subMatr(0, 0, qDimX, qDimY)));
+
+        countP++;
+        arrayQForScanning.fill(false);
+        arrayQForScanning.copy(arrayQ); // first line and column are empty
+        clearingScanner.clear(null, cX, cY);
+        if (arrayQForScanning.indexOf(0, arrayQForScanning.length(), true) != -1) {
+            return PStatus.SOURCE_DISCONNECTED;
+        }
+        countConnectiveP++;
+
+        if (bitsP != 0) { // degenerated 1-point case
+            arrayQWork.copy(arrayQ);
+            arrayQWork.clearBit(cY * nX + cX); // clearing only 1 bit at the center
+            int neighbourIndex = -1;
+            for (int i : cNeighboursBitIndexes) {
+                if (arrayQWork.getBit(i)) {
+                    neighbourIndex = i;
+                    break;
+                }
+            }
+            if (neighbourIndex == -1)
+                throw new AssertionError("Bug in ConnectedObjectScanner: "
+                    + "cannot find a neighbour in a connected object");
+            arrayQForScanning.copy(arrayQWork); // first line and column are empty
+            long clearedCount = clearingScanner.clear(null, neighbourIndex % nX, neighbourIndex / nX);
+            assert clearedCount > 0 : "nothing to clear (A), bitsP = " + bitsP;  // we've found non-zero neighbour
+            arrayQForScanning.getBits(0, bitArrayQWork, 0, nX * qDimY);
+            if (bitArrayQWork[0] != 0) {
+                arrayQWork.copy(thinningXPOrXPYP);
+                System.err.printf("\r%78s\r", "");
+                System.out.printf("ERROR III DETECTED at pCode %d: connectivity is broken "
+                    + "after removing the center in %dx%d aperture%n%s%n"
+                    + "transformed to%n%s%n",
+                    bitsP, pDimX, pDimY, qMatrixToString(matrixQ), qMatrixToString(matrixQWork));
+                throw new AssertionError("Invalid skeleton: connectivity is broken after removing the center");
+            }
+        }
+
+        MORPHOLOGY.dilation(matrixQWork, matrixQ, dependenceAperture, true);
+        long maskQ = 0;
+        for (int bitIndex = 0; bitIndex < qBitIndexes.length; bitIndex++) {
+            if (arrayQWork.getBit(qBitIndexes[bitIndex])) {
+                maskQ |= 1L << bitIndex;
+            }
+        }
+        long remainingIterations = 1L << Long.bitCount(maskQ);
+        countQ += remainingIterations;
+        if (estimateComplexity) {
+            return PStatus.ESTIMATED_ONLY;
+        }
+        arrayQLarge.fill(false);
+        arrayQLargeWork.fill(false);
+        long pos = 0;
+        for (long bitsQ = 0; bitsQ < numberOfMatricesQ; bitsQ++) {
+            if ((bitsQ & maskQ) != bitsQ) {
+                continue;
+            }
+            remainingIterations--;
+            long wQ = wP;
+            for (int bitIndex = 0; bitIndex < qBitIndexes.length; bitIndex++) {
+                if ((bitsQ & (1 << bitIndex)) != 0) {
+                    wQ |= 1L << qBitIndexes[bitIndex];
+                }
+            }
+            bitArrayQ[0] = wQ;
+            if (pos < BUFFER_LENGTH) { // accumulate in buffer
+                arrayQLarge.setBits(pos * nXY, bitArrayQ, 0, nX * qDimY);
+                pos++;
+            }
+            if (pos == BUFFER_LENGTH || remainingIterations == 0) {
+                arrayQLargeWork.subArr(0, pos * nXY).copy(thinningXPOrXPYPLarge);
+                for (long k = 0; k < pos; k++) {
+//                        arrayQ.setBits(0, bitArrayQ, 0, nX * qDimY);
+                    arrayQLargeWork.getBits(k * nXY, bitArrayQWork, 0, nX * qDimY);
+                    final long wThinnedQ = bitArrayQWork[0];
+                    int neighbourIndex = -1;
+                    for (int i : cNeighboursBitIndexes) {
+                        if ((wThinnedQ & (1 << i)) != 0) {
+                            neighbourIndex = i;
+                            break;
+                        }
+                    }
+                    if (neighbourIndex == -1) {
+                        System.err.printf("\r%78s\r", "");
+                        System.out.printf("ERROR II DETECTED at pCode %d: "
+                            + "no neighbours of the center in the skeleton%n%s%n"
+                            + "transformed to%n%s%n", bitsP,
+                            qMatrixToString(matrixQLarge.subMatr(0, k * nY, nX, nY)),
+                            qMatrixToString(matrixQLargeWork.subMatr(0, k * nY, nX, nY)));
+                        throw new AssertionError("Too strong skeleton: no unit neighbours of the removed center");
+                    }
+
+                    bitArrayQWork[0] = wThinnedQ & maskRectangleP;
+                    arrayQForScanning.fill(false); // empty first 2 lines and the last line
+                    arrayQForScanning.setBits(2 * nX, bitArrayQWork, 0, nX * qDimY);
+                    long clearedCount = clearingScanner.clear(null, neighbourIndex % nX, 2 + neighbourIndex / nX);
+                    assert clearedCount > 0 : "nothing to clear (B)";  // we've found non-zero neighbour
+                    arrayQForScanning.getBits(2 * nX, bitArrayQWork, 0, nX * qDimY);
+                    boolean violation = bitArrayQWork[0] != 0;
+                    if (violationsOnly && !violation) {
+                        continue;
+                    }
+                    bitArrayQWork[0] = wThinnedQ;
+                    arrayQForScanning.setBits(2 * nX, bitArrayQWork, 0, nX * qDimY);
+                    clearedCount = clearingScanner.clear(null, neighbourIndex % nX, 2 + neighbourIndex / nX);
+                    assert clearedCount > 0 : "nothing to clear (C)";
+                    arrayQForScanning.getBits(2 * nX, bitArrayQWork, 0, nX * qDimY);
+                    if (bitArrayQWork[0] != 0) { // it is possible if the original configuration is not connected
+                        arrayQForScanning.subArr(2 * nX, nX * qDimY).copy(arrayQLarge.subArr(k * nXY, nX * qDimY));
+                        clearedCount = clearingScanner.clear(null, cX, 2 + cY);
+                        assert clearedCount > 0 : "nothing to clear (D)";
+                        arrayQForScanning.getBits(2 * nX, bitArrayQWork, 0, nX * qDimY);
+                        boolean connectedQ = bitArrayQWork[0] == 0;
+                        if (!connectedQ) {
+                            continue;
+                        }
+                        System.err.printf("\r%78s\r", "");
+                        System.out.printf("ERROR I DETECTED at pCode %d: connectivity is broken%n%s%n"
+                            + "transformed to%n%s%n", bitsP,
+                            qMatrixToString(matrixQLarge.subMatr(0, k * nY, nX, nY)),
+                            qMatrixToString(matrixQLargeWork.subMatr(0, k * nY, nX, nY)));
+                        throw new AssertionError("Invalid skeleton: connectivity is broken after removing the center");
+                    }
+                    if (violation) {
+                        arrayQ.copy(matrixQLarge.subMatr(0, k * nY, nX, nY).array());
+                        arrayQWork.copy(matrixQLargeWork.subMatr(0, k * nY, nX, nY).array());
+                        return PStatus.P_SOMETIMES_DISCONNECTED;
+                    }
+                }
+                pos = 0;
+            }
+        } // bitsQ
+        return PStatus.P_NEVER_DISCONNECTED;
+    }
+
+    private void setPCode(long bitsP) {
+        arrayQ.fill(false);
+        arrayQ.setBit(cY * nX + cX, true);
+        for (int bitIndex = 0; bitIndex < pBitIndexes.length; bitIndex++) {
+            boolean b = (bitsP & (1L << bitIndex)) != 0;
+            arrayQ.setBit(pBitIndexes[bitIndex], b);
+        }
+    }
+
+    private void setDimensions(int pDimX, int pDimY, int qDimX, int qDimY, int cX, int cY) {
+        assert pDimX < qDimX && pDimY < qDimY;
+        assert (qDimX - pDimX) % 2 == 0;
+        assert (qDimY - pDimY) % 2 == 0;
+        this.pDimX = pDimX;
+        this.pDimY = pDimY;
+        this.qDimX = qDimX;
+        this.qDimY = qDimY;
+        this.cX = cX;
+        this.cY = cY;
+        nX = qDimX + 1;
+        nY = qDimY + 1;
+        nXY = nX * nY;
+        if (nX * qDimY > 64)
+            throw new IllegalArgumentException("Cannot analyse so large aperture");
+        pMinX = (qDimX - pDimX) / 2;
+        pMinY = (qDimY - pDimY) / 2;
+        pMaxX = pMinX + pDimX - 1;
+        pMaxY = pMinY + pDimY - 1;
+        numberOfMatricesP = 1L << (pDimX * pDimY - 1);
+        numberOfMatricesQ = 1L << (qDimX * qDimY - pDimX * pDimY);
+        cNeighboursBitIndexes = new int[8];
+        int bitIndex = 0;
+        for (int y = cY - 1; y <= cY + 1; y++) {
+            for (int x = cX - 1; x <= cX + 1; x++) {
+                if (x == cX && y == cY) {
+                    continue;
+                }
+                cNeighboursBitIndexes[bitIndex++] = y * nX + x;
+            }
+        }
+        assert bitIndex == cNeighboursBitIndexes.length;
+        pBitIndexes = new int[pDimX * pDimY - 1];
+        bitIndex = 0;
+        for (int y = pMinY; y <= pMaxY; y++) {
+            for (int x = pMinX; x <= pMaxX; x++) {
+                if (x == cX && y == cY) {
+                    continue;
+                }
+                pBitIndexes[bitIndex++] = y * nX + x;
+            }
+        }
+        assert bitIndex == pBitIndexes.length;
+        qBitIndexes = new int[qDimX * qDimY - pDimX * pDimY];
+        bitIndex = 0;
+        for (int y = 0; y < qDimY; y++) {
+            for (int x = 0; x < qDimX; x++) {
+                if (y >= pMinY && y <= pMaxY && x >= pMinX && x <= pMaxX) {
+                    continue;
+                }
+                qBitIndexes[bitIndex++] = y * nX + x;
+            }
+        }
+        assert bitIndex == qBitIndexes.length;
+        matrixQ = SMM.newBitMatrix(nX, nY);
+        matrixQWork = SMM.newBitMatrix(nX, nY);
+        arrayQ = matrixQ.array();
+        arrayQWork = matrixQWork.array();
+        thinningXPOrXPYP = getThinningXPOrXPYP(matrixQ);
+
+        matrixQForScanning = SMM.newBitMatrix(nX, 2 + nY);
+        arrayQForScanning = matrixQForScanning.array();
+        clearingScanner = ConnectedObjectScanner.getUncheckedBreadthFirstScanner(
+            matrixQForScanning, ConnectivityType.STRAIGHT_AND_DIAGONAL);
+
+        arrayQWork.fill(false);
+        matrixQWork.subMatr(pMinX, pMinY, pDimX, pDimY).array().fill(true);
+        long[] bitArray = new long[1];
+        arrayQWork.getBits(0, bitArray, 0, nX * qDimY);
+        maskRectangleP = bitArray[0];
+    }
+
+    private void allocateBuffers() {
+        matrixQLarge = SMM.newBitMatrix(nX, nY * BUFFER_LENGTH);
+        matrixQLargeWork = SMM.newBitMatrix(nX, nY * BUFFER_LENGTH);
+        arrayQLarge = matrixQLarge.array();
+        arrayQLargeWork = matrixQLargeWork.array();
+        assert arrayQLarge.length() <= Integer.MAX_VALUE;
+        thinningXPOrXPYPLarge = getThinningXPOrXPYP(matrixQLarge);
+    }
+
+    private BitArray getThinningXPOrXPYP(Matrix<? extends UpdatableBitArray> matrix) {
+        return AnalyseSkeletonConfigurations.getSkeleton(skeletonType,
+            true, topological, matrix).asThinning(diagonalThinning ? 1 : 0).array();
+    }
+
+    private String qMatrixToString(Matrix<? extends BitArray> matrix) {
+        return AnalyseSkeletonConfigurations.bitMatrixToString(matrix.subMatr(0, 0, qDimX, qDimY),
+            pMinX, pMinY, pMaxX, pMaxY, cX, cY, "  ", true);
+    }
+
+    public static void main(String[] args) {
+        VerifySkeletonConnectivity verifier;
+        try {
+            verifier = new VerifySkeletonConnectivity(args);
+        } catch (UsageException e) {
+            return;
+        }
+        verifier.analyseDependenceAperture();
+        verifier.testConnectivity();
+    }
+
+}

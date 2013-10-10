@@ -1,0 +1,91 @@
+package net.algart.logging;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.*;
+
+/**
+ * <p>The simplest implementation of {@link Logger.Handler} interface,
+ * that just print all messages to the console by <tt>System.out.println</tt> method.</p>
+ *
+ * <p>If the calling logger has set a {@link Logger#setSourceClass(Class) source class},
+ * {@link Logger#setSourceMethod(String) current method} or
+ * {@link Logger#setSourceInstance(Object) instance},
+ * their standard string representations will be added in the beginning of the printed message.</p>
+ *
+ * <p>The output of this handler is buffered for better performance.</p>
+ *
+ * <p>If the passed message is an exception (instance of <tt>Throwable</tt>),
+ * the buffer is immediately flushed and the exception stack trace is printed
+ * by <tt>printStackTrace()</tt> call. <tt>System.out.println</tt> is not used for printing
+ * such messages.</p>
+ *
+ * <p>This class performs synchronization and <b>is thread-safe</b>.</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.0
+ * @since JDK 1.1
+ */
+public class BufferedConsole implements Logger.Handler {
+    private StringBuffer sb = new StringBuffer();
+    private final int maxBufferLength;
+
+    /**
+     * Creates new instance of this handler with some default buffer size.
+     */
+    public BufferedConsole() {
+        this(32768);
+    }
+
+    /**
+     * Creates new instance of this handler with the specified buffer size.
+     *
+     * @param maxBufferLength the length of buffer in characters.
+     */
+    public BufferedConsole(int maxBufferLength) {
+        this.maxBufferLength = maxBufferLength;
+    }
+
+    public void publish(Logger logger, int messageLevel, Object message) {
+        synchronized(sb) {
+            Class c = logger.getSourceClass();
+            String m = logger.getSourceMethod();
+            Object inst = logger.getSourceInstance();
+            String prefix = null;
+            if (c != null || m != null || inst != null) {
+                prefix = (c != null ? c.getName() : "")
+                    + (m != null ? (c != null ? "." : "") + m : "")
+                    + (inst != null ? (c != null || m != null ? ": \"" : "\"") + inst + "\"": "");
+            }
+            if (!(message instanceof Throwable)) {
+                if (prefix != null)
+                    sb.append("[").append(prefix).append("] ");
+                sb.append(message).append(Logger.LINE_SEPARATOR);
+            }
+            if (sb.length() > maxBufferLength || message instanceof Throwable) {
+                flush(logger);
+            }
+            if (message instanceof Throwable) {
+                if (prefix != null)
+                    System.err.println("[" + prefix + "] ");
+                ((Throwable)message).printStackTrace();
+            }
+        }
+    }
+
+    public void flush(Logger logger) {
+        synchronized(sb) {
+            System.out.print(sb);
+            sb.setLength(0);
+            if (sb.capacity() > 32768) { // avoiding extra memory usage
+                try { // Java 5.0 call
+                    Method m = sb.getClass().getMethod("trimToSize", new Class[0]);
+                    m.invoke(sb, new Object[0]);
+                } catch (Exception ex) {
+                    // Java 1.1-1.4
+                    sb = new StringBuffer();
+                }
+            }
+        }
+    }
+}
+

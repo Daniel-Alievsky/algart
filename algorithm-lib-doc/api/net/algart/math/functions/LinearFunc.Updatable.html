@@ -1,0 +1,548 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+LinearFunc.Updatable
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="LinearFunc.Updatable";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../../net/algart/math/functions/LinearOperator.html" title="class in net.algart.math.functions"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/math/functions/LinearFunc.Updatable.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="LinearFunc.Updatable.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_net.algart.math.functions.LinearFunc">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.math.functions</FONT>
+<BR>
+Class LinearFunc.Updatable</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions">net.algart.math.functions.LinearFunc</A>
+      <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><STRONG>net.algart.math.functions.LinearFunc.Updatable</STRONG>
+</PRE>
+<DL>
+<DT><STRONG>All Implemented Interfaces:</STRONG></DT> <DD><A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A>, <A HREF="../../../../net/algart/math/functions/Func.Updatable.html" title="interface in net.algart.math.functions">Func.Updatable</A></DD>
+</DL>
+<DL>
+<DT><STRONG>Enclosing class:</STRONG></DT><DD><A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions">LinearFunc</A></DD>
+</DL>
+<HR>
+<PRE>public static class <STRONG>LinearFunc.Updatable</STRONG>
+extends <A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions">LinearFunc</A>
+implements <A HREF="../../../../net/algart/math/functions/Func.Updatable.html" title="interface in net.algart.math.functions">Func.Updatable</A></PRE>
+
+<P>
+<p><A HREF="../../../../net/algart/math/functions/Func.Updatable.html" title="interface in net.algart.math.functions"><CODE>Updatable extension</CODE></A> of the <A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions"><CODE>linear function</CODE></A>
+ with one argument.</p>
+<P>
+
+<P>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Nested Class Summary table, listing nested classes, and an explanation">
+<CAPTION CLASS="TableCaption">
+Nested Class Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Class and Description</TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_net.algart.math.functions.LinearFunc"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Nested classes/interfaces inherited from class net.algart.math.functions.<A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions">LinearFunc</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.Updatable.html" title="class in net.algart.math.functions">LinearFunc.Updatable</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_net.algart.math.functions.Func"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Nested classes/interfaces inherited from interface net.algart.math.functions.<A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../net/algart/math/functions/Func.Updatable.html" title="interface in net.algart.math.functions">Func.Updatable</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Field Summary table, listing fields, and an explanation">
+<CAPTION CLASS="TableCaption">
+Field Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Field and Description</TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_net.algart.math.functions.Func"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Fields inherited from interface net.algart.math.functions.<A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../net/algart/math/functions/Func.html#ABS">ABS</A>, <A HREF="../../../../net/algart/math/functions/Func.html#ABS_DIFF">ABS_DIFF</A>, <A HREF="../../../../net/algart/math/functions/Func.html#HALF_X_MINUS_Y">HALF_X_MINUS_Y</A>, <A HREF="../../../../net/algart/math/functions/Func.html#HALF_X_PLUS_Y">HALF_X_PLUS_Y</A>, <A HREF="../../../../net/algart/math/functions/Func.html#HALF_Y_MINUS_X">HALF_Y_MINUS_X</A>, <A HREF="../../../../net/algart/math/functions/Func.html#IDENTITY">IDENTITY</A>, <A HREF="../../../../net/algart/math/functions/Func.html#MAX">MAX</A>, <A HREF="../../../../net/algart/math/functions/Func.html#MIN">MIN</A>, <A HREF="../../../../net/algart/math/functions/Func.html#POSITIVE_DIFF">POSITIVE_DIFF</A>, <A HREF="../../../../net/algart/math/functions/Func.html#REVERSE">REVERSE</A>, <A HREF="../../../../net/algart/math/functions/Func.html#SELECT">SELECT</A>, <A HREF="../../../../net/algart/math/functions/Func.html#SELECT_FROM_8_DIRECTIONS_2D">SELECT_FROM_8_DIRECTIONS_2D</A>, <A HREF="../../../../net/algart/math/functions/Func.html#SELECT_IF_GREATER">SELECT_IF_GREATER</A>, <A HREF="../../../../net/algart/math/functions/Func.html#SELECT_IF_GREATER_OR_EQUAL">SELECT_IF_GREATER_OR_EQUAL</A>, <A HREF="../../../../net/algart/math/functions/Func.html#SHIFTS_ALONG_8_DIRECTIONS_2D">SHIFTS_ALONG_8_DIRECTIONS_2D</A>, <A HREF="../../../../net/algart/math/functions/Func.html#UPDATABLE_IDENTITY">UPDATABLE_IDENTITY</A>, <A HREF="../../../../net/algart/math/functions/Func.html#X_MINUS_Y">X_MINUS_Y</A>, <A HREF="../../../../net/algart/math/functions/Func.html#X_PLUS_Y">X_PLUS_Y</A>, <A HREF="../../../../net/algart/math/functions/Func.html#Y_MINUS_X">Y_MINUS_X</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/LinearFunc.Updatable.html#get()">get</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <tt><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get</CODE></A>(new double[0])</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/LinearFunc.Updatable.html#get(double...)">get</A></STRONG>(double...&nbsp;x)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the result of this function for the given arguments:
+ <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><tt>x.length</tt>-1</sub>).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/LinearFunc.Updatable.html#get(double)">get</A></STRONG>(double&nbsp;x0)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <tt><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get</CODE></A>(new double[] {x0})</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/LinearFunc.Updatable.html#get(double, double)">get</A></STRONG>(double&nbsp;x0,
+    double&nbsp;x1)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <tt><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get</CODE></A>(new double[] {x0, x1})</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/LinearFunc.Updatable.html#get(double, double, double)">get</A></STRONG>(double&nbsp;x0,
+    double&nbsp;x1,
+    double&nbsp;x2)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <tt><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get</CODE></A>(new double[] {x0, x1, x2})</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/LinearFunc.Updatable.html#get(double, double, double, double)">get</A></STRONG>(double&nbsp;x0,
+    double&nbsp;x1,
+    double&nbsp;x2,
+    double&nbsp;x3)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <tt><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get</CODE></A>(new double[] {x0, x1, x2, x3})</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/LinearFunc.Updatable.html#set(double[], double)">set</A></STRONG>(double[]&nbsp;x,
+    double&nbsp;newResult)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Correct some of <tt>x</tt> arguments so that
+ <A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get(x)</CODE></A> will be, as possible, equal to <tt>newResult</tt>.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_net.algart.math.functions.LinearFunc"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class net.algart.math.functions.<A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions">LinearFunc</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html#a()">a</A>, <A HREF="../../../../net/algart/math/functions/LinearFunc.html#a(int)">a</A>, <A HREF="../../../../net/algart/math/functions/LinearFunc.html#b()">b</A>, <A HREF="../../../../net/algart/math/functions/LinearFunc.html#getAveragingInstance(int)">getAveragingInstance</A>, <A HREF="../../../../net/algart/math/functions/LinearFunc.html#getInstance(double, double...)">getInstance</A>, <A HREF="../../../../net/algart/math/functions/LinearFunc.html#getInstance(net.algart.math.Range, net.algart.math.Range)">getInstance</A>, <A HREF="../../../../net/algart/math/functions/LinearFunc.html#getNonweightedInstance(double, double, int)">getNonweightedInstance</A>, <A HREF="../../../../net/algart/math/functions/LinearFunc.html#getUpdatableInstance(double, double)">getUpdatableInstance</A>, <A HREF="../../../../net/algart/math/functions/LinearFunc.html#isNonweighted()">isNonweighted</A>, <A HREF="../../../../net/algart/math/functions/LinearFunc.html#n()">n</A>, <A HREF="../../../../net/algart/math/functions/LinearFunc.html#toString()">toString</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class java.lang.Object</STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="get(double...)"><!-- --></A><H3>
+get</H3>
+<PRE>
+public double <STRONG>get</STRONG>(double...&nbsp;x)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)">Func</A></CODE></STRONG></DD>
+<DD>Returns the result of this function for the given arguments:
+ <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><tt>x.length</tt>-1</sub>).
+
+ <p>This method must not change the values of <tt>x</tt> elements!
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)">get</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A></CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html#get(double...)">get</A></CODE> in class <CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions">LinearFunc</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>x</CODE> - the function arguments.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the function result.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="get()"><!-- --></A><H3>
+get</H3>
+<PRE>
+public double <STRONG>get</STRONG>()</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../../net/algart/math/functions/Func.html#get()">Func</A></CODE></STRONG></DD>
+<DD>Equivalent to <tt><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get</CODE></A>(new double[0])</tt>.
+ Provides better performance because it does not require Java array creation.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/Func.html#get()">get</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A></CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html#get()">get</A></CODE> in class <CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions">LinearFunc</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the function result.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="get(double)"><!-- --></A><H3>
+get</H3>
+<PRE>
+public double <STRONG>get</STRONG>(double&nbsp;x0)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../../net/algart/math/functions/Func.html#get(double)">Func</A></CODE></STRONG></DD>
+<DD>Equivalent to <tt><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get</CODE></A>(new double[] {x0})</tt>.
+ Provides better performance because it does not require Java array creation.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/Func.html#get(double)">get</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A></CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html#get(double)">get</A></CODE> in class <CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions">LinearFunc</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>x0</CODE> - the function argument.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the function result.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="get(double, double)"><!-- --></A><H3>
+get</H3>
+<PRE>
+public double <STRONG>get</STRONG>(double&nbsp;x0,
+                  double&nbsp;x1)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../../net/algart/math/functions/Func.html#get(double, double)">Func</A></CODE></STRONG></DD>
+<DD>Equivalent to <tt><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get</CODE></A>(new double[] {x0, x1})</tt>.
+ Provides better performance because it does not require Java array creation.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/Func.html#get(double, double)">get</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A></CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html#get(double, double)">get</A></CODE> in class <CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions">LinearFunc</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>x0</CODE> - the first function argument.</DD><DD><CODE>x1</CODE> - the second function argument.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the function result.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="get(double, double, double)"><!-- --></A><H3>
+get</H3>
+<PRE>
+public double <STRONG>get</STRONG>(double&nbsp;x0,
+                  double&nbsp;x1,
+                  double&nbsp;x2)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../../net/algart/math/functions/Func.html#get(double, double, double)">Func</A></CODE></STRONG></DD>
+<DD>Equivalent to <tt><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get</CODE></A>(new double[] {x0, x1, x2})</tt>.
+ Provides better performance because it does not require Java array creation.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/Func.html#get(double, double, double)">get</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A></CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html#get(double, double, double)">get</A></CODE> in class <CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions">LinearFunc</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>x0</CODE> - the first function argument.</DD><DD><CODE>x1</CODE> - the second function argument.</DD><DD><CODE>x2</CODE> - the third function argument.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the function result.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="get(double, double, double, double)"><!-- --></A><H3>
+get</H3>
+<PRE>
+public double <STRONG>get</STRONG>(double&nbsp;x0,
+                  double&nbsp;x1,
+                  double&nbsp;x2,
+                  double&nbsp;x3)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../../net/algart/math/functions/Func.html#get(double, double, double, double)">Func</A></CODE></STRONG></DD>
+<DD>Equivalent to <tt><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get</CODE></A>(new double[] {x0, x1, x2, x3})</tt>.
+ Provides better performance because it does not require Java array creation.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/Func.html#get(double, double, double, double)">get</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A></CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html#get(double, double, double, double)">get</A></CODE> in class <CODE><A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions">LinearFunc</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>x0</CODE> - the first function argument.</DD><DD><CODE>x1</CODE> - the second function argument.</DD><DD><CODE>x2</CODE> - the third function argument.</DD><DD><CODE>x3</CODE> - the fourth function argument.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the function result.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="set(double[], double)"><!-- --></A><H3>
+set</H3>
+<PRE>
+public void <STRONG>set</STRONG>(double[]&nbsp;x,
+                double&nbsp;newResult)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../../net/algart/math/functions/Func.Updatable.html#set(double[], double)">Func.Updatable</A></CODE></STRONG></DD>
+<DD>Correct some of <tt>x</tt> arguments so that
+ <A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get(x)</CODE></A> will be, as possible, equal to <tt>newResult</tt>.
+ For example, if this is one-argument function <i>f</i>(<i>x</i>),
+ and its inverse function is <i>g</i>(<i>y</i>) (<i>g</i>(<i>f</i>(<i>x</i>))=<i>x</i>),
+ then this method should assign <tt>x[0]=<i>g</i>(newResult)</tt>.
+
+ <p>This method does not guarantee the precise equality
+ <tt><A HREF="../../../../net/algart/math/functions/Func.html#get(double...)"><CODE>get(x)</CODE></A>==newResult</tt>. (Usually, it is impossible due to
+ limited precision of floating-point calculations.) But this method should try
+ to provide this equality (after its call) with, as possible, maximal possible precision.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/Func.Updatable.html#set(double[], double)">set</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/functions/Func.Updatable.html" title="interface in net.algart.math.functions">Func.Updatable</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>x</CODE> - the function arguments.</DD><DD><CODE>newResult</CODE> - the desired function result.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/math/functions/LinearFunc.html" title="class in net.algart.math.functions"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../../net/algart/math/functions/LinearOperator.html" title="class in net.algart.math.functions"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/math/functions/LinearFunc.Updatable.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="LinearFunc.Updatable.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_net.algart.math.functions.LinearFunc">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

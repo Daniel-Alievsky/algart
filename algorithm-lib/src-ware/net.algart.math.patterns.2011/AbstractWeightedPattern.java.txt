@@ -1,0 +1,208 @@
+package net.algart.math.patterns;
+
+import net.algart.math.IPoint;
+import net.algart.math.IRange;
+import net.algart.math.Point;
+import net.algart.math.Range;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * <p>A skeletal implementation of the {@link WeightedPattern} interface to minimize
+ * the effort required to implement this interface.</p>
+ *
+ * <p>This implementation is based on using some "parent" pattern, implementing {@link Pattern} interface
+ * and passed to the constructor.
+ * All methods of this class, excepting declared in the {@link WeightedPattern} interface,
+ * just call the same methods of the parent pattern.
+ * To complete implementation, you just need to implement several methods from
+ * the {@link WeightedPattern} interface.</p>
+ *
+ * <p>AlgART Laboratory 2007-2012</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ */
+public abstract class AbstractWeightedPattern implements WeightedPattern {
+    /**
+     * The parent pattern.
+     */
+    protected final Pattern parent;
+
+    /**
+     * Creates a new weighted pattern on the base of the given parent one.
+     *
+     * @param parent the parent pattern, serving most of all methods of this instance.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     */
+    protected AbstractWeightedPattern(Pattern parent) {
+        if (parent == null)
+            throw new NullPointerException("Null parent pattern");
+        this.parent = parent;
+    }
+
+    public int dimCount() {
+        return parent.dimCount();
+    }
+
+    public long pointCount() {
+        return parent.pointCount();
+    }
+
+    public double largePointCount() {
+        return parent.largePointCount();
+    }
+
+    public boolean isVeryLarge() {
+        return parent.isVeryLarge();
+    }
+
+    public boolean contains(IPoint point) {
+        return parent.contains(point);
+    }
+
+    public Set<Point> points() {
+        return parent.points();
+    }
+
+    public Set<IPoint> roundedPoints() {
+        return parent.roundedPoints();
+    }
+
+    public Range coordRange(int coordIndex) {
+        return parent.coordRange(coordIndex);
+    }
+
+    public Range[] coordRanges() {
+        return parent.coordRanges();
+    }
+
+    public Point coordMin() {
+        return parent.coordMin();
+    }
+
+    public Point coordMax() {
+        return parent.coordMax();
+    }
+
+    public IRange roundedCoordRange(int coordIndex) {
+        return parent.roundedCoordRange(coordIndex);
+    }
+
+    public IRange[] roundedCoordRanges() {
+        return parent.roundedCoordRanges();
+    }
+
+    public boolean isOriginPoint() {
+        return parent.isOriginPoint();
+    }
+
+    public Pattern projectionAlongAxis(int coordIndex) {
+        return parent.projectionAlongAxis(coordIndex);
+    }
+
+    public boolean isInteger() {
+        return parent.isInteger();
+    }
+
+    public UniformGridPattern round() {
+        return parent.round();
+    }
+
+    public Pattern minBound(int coordIndex) {
+        return parent.minBound(coordIndex);
+    }
+
+    public Pattern maxBound(int coordIndex) {
+        return parent.maxBound(coordIndex);
+    }
+
+    public Pattern carcass() {
+        return parent.carcass();
+    }
+
+    public int maxCarcassMultiplier() {
+        return parent.maxCarcassMultiplier();
+    }
+
+    public Pattern minkowskiAdd(Pattern added) {
+        return parent.minkowskiAdd(added);
+    }
+
+    public Pattern minkowskiSubtract(Pattern subtracted) {
+        return parent.minkowskiSubtract(subtracted);
+    }
+
+    public List<Pattern> minkowskiDecomposition(int minimalPointCount) {
+        return parent.minkowskiDecomposition(minimalPointCount);
+    }
+
+    public boolean hasMinkowskiDecomposition() {
+        return parent.hasMinkowskiDecomposition();
+    }
+
+    public List<Pattern> unionDecomposition(int minimalPointCount) {
+        return parent.unionDecomposition(minimalPointCount);
+    }
+
+    public List<List<Pattern>> allUnionDecompositions(int minimalPointCount) {
+        return parent.allUnionDecompositions(minimalPointCount);
+    }
+
+    public WeightedPattern shift(Point shift) {
+        return shift(shift.toRoundedPoint());
+    }
+
+    public abstract WeightedPattern shift(IPoint shift);
+
+    public WeightedPattern multiply(double mult) {
+        double[] multipliers = new double[dimCount()];
+        Arrays.fill(multipliers, mult);
+        return scale(multipliers);
+    }
+
+    public abstract WeightedPattern scale(double... multipliers);
+
+    /**
+     * This implementation calls {@link #multiply(double) multiply(-1.0)}.
+     * There are no reasons to override this method usually.
+     *
+     * @return the symmetric pattern.
+     */
+    public WeightedPattern symmetric() {
+        return multiply(-1.0);
+    }
+
+    public abstract double weight(IPoint point);
+
+    public abstract Range weightRange();
+
+    /**
+     * This implementation returns <tt>{@link #weightRange()}.{@link Range#size() size()}==0.0</tt>.
+     * There are no reasons to override this method usually.
+     *
+     * @return <tt>true</tt> if the weights of all points are the same.
+     */
+    public boolean isConstant() {
+        return weightRange().size() == 0.0;
+    }
+
+    /**
+     * This implementation returns <tt>Collections.singletonList(this)</tt>.
+     * Please override this method if there is better implementation.
+     *
+     * @param minimalPointCount this method does not try to decompose patterns that contain
+     *                          less than <tt>minimalPointCount</tt> points.
+     * @return                  the decomposition of this pattern to the "product" (convolution) of smaller patterns.
+     * @throws IllegalArgumentException if the argument is negative.
+     */
+    public List<WeightedPattern> productDecomposition(int minimalPointCount) {
+        if (minimalPointCount < 0)
+            throw new IllegalArgumentException("Negative minimalPointCount");
+        return Collections.<WeightedPattern>singletonList(this);
+    }
+}

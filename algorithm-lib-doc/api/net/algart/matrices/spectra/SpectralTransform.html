@@ -1,0 +1,568 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+SpectralTransform
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="SpectralTransform";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/matrices/spectra/SeparableFastHartleyTransform.html" title="class in net.algart.matrices.spectra"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;NEXT CLASS</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/matrices/spectra/SpectralTransform.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="SpectralTransform.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.matrices.spectra</FONT>
+<BR>
+Interface SpectralTransform</H2>
+<DL>
+<DT><STRONG>All Known Implementing Classes:</STRONG></DT> <DD><A HREF="../../../../net/algart/matrices/spectra/AbstractSpectralTransform.html" title="class in net.algart.matrices.spectra">AbstractSpectralTransform</A>, <A HREF="../../../../net/algart/matrices/spectra/FastFourierTransform.html" title="class in net.algart.matrices.spectra">FastFourierTransform</A>, <A HREF="../../../../net/algart/matrices/spectra/SeparableFastHartleyTransform.html" title="class in net.algart.matrices.spectra">SeparableFastHartleyTransform</A></DD>
+</DL>
+<HR>
+<PRE>public interface <STRONG>SpectralTransform</STRONG></PRE>
+
+<P>
+<p>Spectral transform: Fourier, Hartley, Hadamar, etc.</p>
+
+ <p>This interface is an abstraction, allowing to perform two basic operations: <i>direct transform</i>
+ and <i>inverse transform</i> over an array or <i>n</i>-dimensional matrix, consisting of some <i>samples</i>.
+ The transformed samples can be represented in two forms:</p>
+
+ <ol>
+ <li>maximally abstract 1-dimensional array of samples, stored in some implementation
+ of <A HREF="../../../../net/algart/matrices/spectra/SampleArray.html" title="interface in net.algart.matrices.spectra"><CODE>SampleArray</CODE></A> interface;</li>
+
+ <li><i>n</i>-dimensional matrix (N=1,2,3,...) of real / complex numbers, stored in one / two
+ <A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays"><CODE>AlgART numeric matrices</CODE></A>.</li>
+ </ol>
+
+ <p>In the first case, the transformation is performed by
+ <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>directTransform</CODE></A> / <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>inverseTransform</CODE></A> methods,
+ in the second case &mdash; by <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>directTransformMatrix</CODE></A>
+ / <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>inverseTransformMatrix</CODE></A> methods.</p>
+
+ <p>This package, in the current implementation, offers implementations of two transforms:</p>
+
+ <ul>
+ <li>classic Fast Fourier Transform (FFT) in <A HREF="../../../../net/algart/matrices/spectra/FastFourierTransform.html" title="class in net.algart.matrices.spectra"><CODE>FastFourierTransform</CODE></A> class;</li>
+
+ <li>separable Fast Hartley Transform (SFHT) in <A HREF="../../../../net/algart/matrices/spectra/SeparableFastHartleyTransform.html" title="class in net.algart.matrices.spectra"><CODE>SeparableFastHartleyTransform</CODE></A> class.</li>
+ </ul>
+
+ <p>These classes also contain additional methods, allowing to convert the Hartley spectrum
+ to Fourier one and vise versa, and also to calculate the spectrum of the convolution of two matrices
+ (real or complex) on the base of spectra of the source matrices.</p>
+
+ <p>Some implementations of this interface can work with complex numbers only, other implementations can process
+ both complex and real samples. In this package, <A HREF="../../../../net/algart/matrices/spectra/FastFourierTransform.html" title="class in net.algart.matrices.spectra"><CODE>FastFourierTransform</CODE></A> class requires complex samples,
+ but <A HREF="../../../../net/algart/matrices/spectra/SeparableFastHartleyTransform.html" title="class in net.algart.matrices.spectra"><CODE>SeparableFastHartleyTransform</CODE></A> can be applied to real samples also.
+ You can check, whether complex numbers are required or no, by <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#areComplexSamplesRequired()"><CODE>areComplexSamplesRequired()</CODE></A> method.
+ If you work with real numbers only, in most cases you don't need <A HREF="../../../../net/algart/matrices/spectra/FastFourierTransform.html" title="class in net.algart.matrices.spectra"><CODE>FastFourierTransform</CODE></A>,
+ because the separable Hartley transform works essentially faster and allows to solve the same tasks,
+ including getting the Fourier spectrum.</p>
+
+ <p>The implementations of this interface can require that the length of the processed sample arrays
+ or dimensions of the processed matrices should fulfil some restrictions. In particular, both implementations,
+ offered by this package, require that all dimensions should be powers of two (2<sup><i>k</i></sup>).
+ To process an array or matrix with another sizes, you must append it to the nearest allowed sizes,
+ usually by zeroes or by another form of continuation: see <A HREF="../../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays"><CODE>Matrix.ContinuationMode</CODE></A> class.
+ You can check, whether some size is allowed or no, by <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#isLengthAllowed(long)"><CODE>isLengthAllowed(long)</CODE></A> method.</p>
+
+ <p>All numeric algorithms, performed by methods of this interface and its implementations,
+ are performed over floating-point numbers, corresponding to <tt>float</tt> or <tt>double</tt> Java types.
+ Single precision is used, if the passed sample arrays are represented by <tt>float</tt> element type;
+ double precision is used, if the passed sample arrays are represented by <tt>double</tt> element type.
+ It is theoretically possible to process sample arrays, represented by fixed-point numbers,
+ alike Java <tt>int</tt>, <tt>long</tt>, <tt>short</tt> and other types (for example,
+ if the passed AlgART matrix is <nobr><A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays"><CODE>Matrix &lt;? extends UpdatableIntArray&gt;</CODE></A></nobr>
+ or if the passed <A HREF="../../../../net/algart/matrices/spectra/SampleArray.html" title="interface in net.algart.matrices.spectra"><CODE>SampleArray</CODE></A> is <A HREF="../../../../net/algart/matrices/spectra/RealScalarSampleArray.html" title="class in net.algart.matrices.spectra"><CODE>RealScalarSampleArray</CODE></A>, built on the base of
+ <A HREF="../../../../net/algart/arrays/UpdatableByteArray.html" title="interface in net.algart.arrays"><CODE>UpdatableByteArray</CODE></A>). In this situation,
+ calculations can be performed with some form of rounding, possible overflows lead to unspecified results
+ and algorithms can work slower.</p>
+
+ <p>If some methods of this interface or its implementations have several arguments, representing arrays
+ of samples &mdash; for example, real and imaginary part in
+ <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>directTransformMatrix</CODE></A>
+ / <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>inverseTransformMatrix</CODE></A> methods,
+ or source and target spectra in
+ <A HREF="../../../../net/algart/matrices/spectra/FastFourierTransform.html#spectrumOfConvolution(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>FastFourierTransform.spectrumOfConvolution</CODE></A> method,
+ or Fourier and Hartley spectra in
+ <A HREF="../../../../net/algart/matrices/spectra/SeparableFastHartleyTransform.html#separableHartleyToFourier(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>SeparableFastHartleyTransform.separableHartleyToFourier</CODE></A> method &mdash;
+ then all passed arrays usually have the same numeric precision (<tt>float</tt>, <tt>double</tt>
+ or some fixed-point type). But it is not a requirement: for example, you may store the real part
+ of the complex matrix in <nobr><A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays"><CODE>Matrix &lt;? extends UpdatableDoubleArray&gt;</CODE></A></nobr>
+ and the imaginary part in <nobr><A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays"><CODE>Matrix &lt;? extends UpdatableFloatArray&gt;</CODE></A></nobr>.
+ In any case, if such a method allocates some temporary numeric arrays,
+ it uses for them the precision of one of the passed arguments or better.</p>
+
+ <p>Most of methods of this interface and its implementations work with an <A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays"><CODE>array context</CODE></A>,
+ passed to them in the first argument. This context is used as in
+ <A HREF="../../../../net/algart/arrays/Arrays.ParallelExecutor.html" title="class in net.algart.arrays"><CODE>Arrays.ParallelExecutor</CODE></A> class for interruption, showing the progress,
+ allocating work memory (if necessary) and multiprocessing on several CPUs.
+ If this argument is <tt>null</tt>, then all temporary AlgART arrays are allocated by
+ <A HREF="../../../../net/algart/arrays/SimpleMemoryModel.html" title="class in net.algart.arrays"><CODE>SimpleMemoryModel</CODE></A>, multiprocessing (when possible) is implemented by
+ <A HREF="../../../../net/algart/arrays/DefaultThreadPoolFactory.html" title="class in net.algart.arrays"><CODE>DefaultThreadPoolFactory</CODE></A> class, interrupting by the user is impossible
+ and showing the progress is not supported.</p>
+
+ <p>The implementations of this class are not thread-safe, but <b>are thread-compatible</b>
+ and can be synchronized manually if multithread access is necessary.</p>
+
+ <p>AlgART Laboratory 2009-2013</p>
+<P>
+
+<P>
+<DL>
+<DT><STRONG>Since:</STRONG></DT>
+  <DD>JDK 1.5</DD>
+<DT><STRONG>Version:</STRONG></DT>
+  <DD>1.2</DD>
+<DT><STRONG>Author:</STRONG></DT>
+  <DD>Daniel Alievsky</DD></DL>
+<HR>
+
+<P>
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#areComplexSamplesRequired()">areComplexSamplesRequired</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if the transformation methods of this class (<A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>directTransform</CODE></A>,
+ <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>inverseTransform</CODE></A>, <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>directTransformMatrix</CODE></A>,
+ <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>inverseTransformMatrix</CODE></A>) can process only complex samples,
+ <tt>false</tt> if the real samples are also allowed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)">directTransform</A></STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                <A HREF="../../../../net/algart/matrices/spectra/SampleArray.html" title="interface in net.algart.matrices.spectra">SampleArray</A>&nbsp;samples)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Direct transform of the passed sample array to its spectrum.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)">directTransformMatrix</A></STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                      <A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../../net/algart/arrays/UpdatablePNumberArray.html" title="interface in net.algart.arrays">UpdatablePNumberArray</A>&gt;&nbsp;matrixRe,
+                      <A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../../net/algart/arrays/UpdatablePNumberArray.html" title="interface in net.algart.arrays">UpdatablePNumberArray</A>&gt;&nbsp;matrixIm)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Direct transform of the passed matrix of real or complex numbers to its spectrum.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)">inverseTransform</A></STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                 <A HREF="../../../../net/algart/matrices/spectra/SampleArray.html" title="interface in net.algart.matrices.spectra">SampleArray</A>&nbsp;samples)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inverse transform of the spectrum back to the original sample array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)">inverseTransformMatrix</A></STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                       <A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../../net/algart/arrays/UpdatablePNumberArray.html" title="interface in net.algart.arrays">UpdatablePNumberArray</A>&gt;&nbsp;matrixRe,
+                       <A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../../net/algart/arrays/UpdatablePNumberArray.html" title="interface in net.algart.arrays">UpdatablePNumberArray</A>&gt;&nbsp;matrixIm)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inverse transform of the spectrum back to the original matrix of real or complex numbers.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#isLengthAllowed(long)">isLengthAllowed</A></STRONG>(long&nbsp;length)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if the specified argument is an allowed dimension for arrays or matrices,
+ transformed by <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>directTransform</CODE></A>, <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>inverseTransform</CODE></A>,
+ <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>directTransformMatrix</CODE></A> or <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>inverseTransformMatrix</CODE></A>
+ method.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="isLengthAllowed(long)"><!-- --></A><H3>
+isLengthAllowed</H3>
+<PRE>
+boolean <STRONG>isLengthAllowed</STRONG>(long&nbsp;length)</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if the specified argument is an allowed dimension for arrays or matrices,
+ transformed by <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>directTransform</CODE></A>, <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>inverseTransform</CODE></A>,
+ <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>directTransformMatrix</CODE></A> or <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>inverseTransformMatrix</CODE></A>
+ method.
+
+ <p>More precisely, if this method returns <tt>false</tt> for the length of a sample array,
+ passed to 1st or 2nd methods, or for some dimension of some matrix, passed to 3rd or 4th method,
+ then those methods throw <CODE>IllegalArgumentException</CODE>.
+ In other case, those methods will process that passed data.
+
+ <p>In both implementations of this interface, offered by this package,
+ this method returns <tt>true</tt> if the passed length is a power of two (2<sup><i>k</i></sup>).
+
+ <p>If the <tt>length</tt> argument is negative, the result of this method is unspecified.
+ It is not a problem, because lengths of sample arrays and dimensions of AlgART matrices
+ cannot be negative.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>length</CODE> - the checked length or matrix dimension.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>whether the specified argument is an allowed dimension for arrays or matrices,
+               trasformed by this transformation.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="areComplexSamplesRequired()"><!-- --></A><H3>
+areComplexSamplesRequired</H3>
+<PRE>
+boolean <STRONG>areComplexSamplesRequired</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if the transformation methods of this class (<A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>directTransform</CODE></A>,
+ <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>inverseTransform</CODE></A>, <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>directTransformMatrix</CODE></A>,
+ <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>inverseTransformMatrix</CODE></A>) can process only complex samples,
+ <tt>false</tt> if the real samples are also allowed.
+
+ <p>More precisely, if this method returns <tt>true</tt>,
+ then the methods <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>directTransform</CODE></A> / <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><CODE>inverseTransform</CODE></A>
+ checks, whether <A HREF="../../../../net/algart/matrices/spectra/SampleArray.html#isComplex()"><CODE>SampleArray.isComplex()</CODE></A> method returns <tt>true</tt> for the <tt>samples</tt> argument,
+ and the methods <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#directTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>directTransformMatrix</CODE></A> /
+ <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#inverseTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><CODE>inverseTransformMatrix</CODE></A> checks, whether the <tt>matrixIm</tt> argument is
+ not <tt>null</tt>. If this condition is not fulfilled, these methods throw
+ <tt>UnsupportedOperationException</tt>.
+ In other case, these methods work normally.
+
+ <p>In implementations, offered by this package, this method returns <tt>true</tt>
+ in <A HREF="../../../../net/algart/matrices/spectra/FastFourierTransform.html" title="class in net.algart.matrices.spectra"><CODE>FastFourierTransform</CODE></A> class and <tt>false</tt> in <A HREF="../../../../net/algart/matrices/spectra/SeparableFastHartleyTransform.html" title="class in net.algart.matrices.spectra"><CODE>SeparableFastHartleyTransform</CODE></A> class.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if this class can transform complex samples only,
+         <tt>false</tt> if real samples can be transformed too.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="directTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><!-- --></A><H3>
+directTransform</H3>
+<PRE>
+void <STRONG>directTransform</STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                     <A HREF="../../../../net/algart/matrices/spectra/SampleArray.html" title="interface in net.algart.matrices.spectra">SampleArray</A>&nbsp;samples)</PRE>
+<DL>
+<DD>Direct transform of the passed sample array to its spectrum.
+ The resulting data are returned in the same sample array.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the context that will be used by this algorithm; may be <tt>null</tt>
+                (see comments to <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html" title="interface in net.algart.matrices.spectra"><CODE>SpectralTransform</CODE></A>).</DD><DD><CODE>samples</CODE> - the transformed samples.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if the <tt>samples</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the <A HREF="../../../../net/algart/matrices/spectra/SampleArray.html#length()"><CODE>length</CODE></A> of the passed array
+                                       is not allowed, i.e. if <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#isLengthAllowed(long)"><CODE>isLengthAllowed(long)</CODE></A> method
+                                       returns <tt>false</tt> for this value.</DD>
+<DD><CODE>java.lang.UnsupportedOperationException</CODE> - if <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#areComplexSamplesRequired()"><CODE>areComplexSamplesRequired()</CODE></A> method returns <tt>true</tt>,
+                                       but <tt>samples.<A HREF="../../../../net/algart/matrices/spectra/SampleArray.html#isComplex()"><CODE>isComplex()</CODE></A></tt> method
+                                       returns <tt>false</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="inverseTransform(net.algart.arrays.ArrayContext, net.algart.matrices.spectra.SampleArray)"><!-- --></A><H3>
+inverseTransform</H3>
+<PRE>
+void <STRONG>inverseTransform</STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                      <A HREF="../../../../net/algart/matrices/spectra/SampleArray.html" title="interface in net.algart.matrices.spectra">SampleArray</A>&nbsp;samples)</PRE>
+<DL>
+<DD>Inverse transform of the spectrum back to the original sample array.
+ The resulting data are returned in the same sample array.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the context that will be used by this algorithm; may be <tt>null</tt>
+                (see comments to <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html" title="interface in net.algart.matrices.spectra"><CODE>SpectralTransform</CODE></A>).</DD><DD><CODE>samples</CODE> - the transformed samples.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if the <tt>samples</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the <A HREF="../../../../net/algart/matrices/spectra/SampleArray.html#length()"><CODE>length</CODE></A> of the passed array
+                                       is not allowed, i.e. if <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#isLengthAllowed(long)"><CODE>isLengthAllowed(long)</CODE></A> method
+                                       returns <tt>false</tt> for this value.</DD>
+<DD><CODE>java.lang.UnsupportedOperationException</CODE> - if <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#areComplexSamplesRequired()"><CODE>areComplexSamplesRequired()</CODE></A> method returns <tt>true</tt>,
+                                       but <tt>samples.<A HREF="../../../../net/algart/matrices/spectra/SampleArray.html#isComplex()"><CODE>isComplex()</CODE></A></tt> method
+                                       returns <tt>false</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="directTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><!-- --></A><H3>
+directTransformMatrix</H3>
+<PRE>
+void <STRONG>directTransformMatrix</STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                           <A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../../net/algart/arrays/UpdatablePNumberArray.html" title="interface in net.algart.arrays">UpdatablePNumberArray</A>&gt;&nbsp;matrixRe,
+                           <A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../../net/algart/arrays/UpdatablePNumberArray.html" title="interface in net.algart.arrays">UpdatablePNumberArray</A>&gt;&nbsp;matrixIm)</PRE>
+<DL>
+<DD>Direct transform of the passed matrix of real or complex numbers to its spectrum.
+ The complex matrix is represented as a pair of AlgART matrices <tt>(matrixRe,matrixIm)</tt>:
+ the corresponding elements of these 2 matrices contain the real and imaginary parts
+ of the corresponding elements of the complex matrix.
+ The real matrix is represented as a single AlgART matrix <tt>matrixRe</tt>;
+ in this case, <tt>matrixIm</tt> argument must be <tt>null</tt>.
+ (It is allowed only if <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#areComplexSamplesRequired()"><CODE>areComplexSamplesRequired()</CODE></A> method returns <tt>false</tt>.)
+ The resulting data are returned in the same AlgART matrices.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the context that will be used by this algorithm; may be <tt>null</tt>
+                 (see comments to <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html" title="interface in net.algart.matrices.spectra"><CODE>SpectralTransform</CODE></A>).</DD><DD><CODE>matrixRe</CODE> - the transformed matrix if we have a real matrix;
+                 the real parts of the elements of the transformed matrix if it is a complex matrix.</DD><DD><CODE>matrixIm</CODE> - <tt>null</tt> if we have a real matrix;
+                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if the <tt>matrixRe</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the some of <A HREF="../../../../net/algart/arrays/Matrix.html#dim(int)"><CODE>dimensions</CODE></A> of the passed matrices
+                                       is not allowed, i.e. if <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#isLengthAllowed(long)"><CODE>isLengthAllowed(long)</CODE></A> method
+                                       returns <tt>false</tt> for this value.</DD>
+<DD><CODE><A HREF="../../../../net/algart/arrays/SizeMismatchException.html" title="class in net.algart.arrays">SizeMismatchException</A></CODE> - if both passed matrices are not <tt>null</tt> (the case of the complex
+                                       matrix) and have different dimensions.</DD>
+<DD><CODE>java.lang.UnsupportedOperationException</CODE> - if <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#areComplexSamplesRequired()"><CODE>areComplexSamplesRequired()</CODE></A> method returns <tt>true</tt>
+                                       and <tt>matrixIm</tt> argument is <tt>null</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="inverseTransformMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, net.algart.arrays.Matrix)"><!-- --></A><H3>
+inverseTransformMatrix</H3>
+<PRE>
+void <STRONG>inverseTransformMatrix</STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                            <A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../../net/algart/arrays/UpdatablePNumberArray.html" title="interface in net.algart.arrays">UpdatablePNumberArray</A>&gt;&nbsp;matrixRe,
+                            <A HREF="../../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../../net/algart/arrays/UpdatablePNumberArray.html" title="interface in net.algart.arrays">UpdatablePNumberArray</A>&gt;&nbsp;matrixIm)</PRE>
+<DL>
+<DD>Inverse transform of the spectrum back to the original matrix of real or complex numbers.
+ The complex matrix is represented as a pair of AlgART matrices <tt>(matrixRe,matrixIm)</tt>:
+ the corresponding elements of these 2 matrices contain the real and imaginary parts
+ of the corresponding elements of the complex matrix.
+ The real matrix is represented as a single AlgART matrix <tt>matrixRe</tt>;
+ in this case, <tt>matrixIm</tt> argument must be <tt>null</tt>.
+ (It is allowed only if <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#areComplexSamplesRequired()"><CODE>areComplexSamplesRequired()</CODE></A> method returns <tt>false</tt>.)
+ The resulting data are returned in the same AlgART matrices.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the context that will be used by this algorithm; may be <tt>null</tt>
+                 (see comments to <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html" title="interface in net.algart.matrices.spectra"><CODE>SpectralTransform</CODE></A>).</DD><DD><CODE>matrixRe</CODE> - the transformed matrix if we have a real matrix;
+                 the real parts of the elements of the transformed matrix if it is a complex matrix.</DD><DD><CODE>matrixIm</CODE> - <tt>null</tt> if we have a real matrix;
+                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if the <tt>matrixRe</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the some of <A HREF="../../../../net/algart/arrays/Matrix.html#dim(int)"><CODE>dimensions</CODE></A> of the passed matrices
+                                       is not allowed, i.e. if <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#isLengthAllowed(long)"><CODE>isLengthAllowed(long)</CODE></A> method
+                                       returns <tt>false</tt> for this value.</DD>
+<DD><CODE><A HREF="../../../../net/algart/arrays/SizeMismatchException.html" title="class in net.algart.arrays">SizeMismatchException</A></CODE> - if both passed matrices are not <tt>null</tt> (the case of the complex
+                                       matrix) and have different dimensions.</DD>
+<DD><CODE>java.lang.UnsupportedOperationException</CODE> - if <A HREF="../../../../net/algart/matrices/spectra/SpectralTransform.html#areComplexSamplesRequired()"><CODE>areComplexSamplesRequired()</CODE></A> method returns <tt>true</tt>
+                                       and <tt>matrixIm</tt> argument is <tt>null</tt>.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/matrices/spectra/SeparableFastHartleyTransform.html" title="class in net.algart.matrices.spectra"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;NEXT CLASS</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/matrices/spectra/SpectralTransform.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="SpectralTransform.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

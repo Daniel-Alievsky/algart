@@ -1,0 +1,729 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+RankProcessors
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="RankProcessors";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/matrices/morphology/RankPrecision.html" title="enum in net.algart.matrices.morphology"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../../net/algart/matrices/morphology/TiledMorphology.html" title="class in net.algart.matrices.morphology"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/matrices/morphology/RankProcessors.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="RankProcessors.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.matrices.morphology</FONT>
+<BR>
+Class RankProcessors</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><STRONG>net.algart.matrices.morphology.RankProcessors</STRONG>
+</PRE>
+<HR>
+<PRE>public class <STRONG>RankProcessors</STRONG>
+extends java.lang.Object</PRE>
+
+<P>
+<p>A set of <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices"><CODE>streaming aperture processors</CODE></A>,
+ implementing all operations, specified in <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html" title="interface in net.algart.matrices.morphology"><CODE>RankMorphology</CODE></A> interface.</p>
+
+ <p>This class cannot be instantiated.</p>
+
+ <p>AlgART Laboratory 2007-2013</p>
+<P>
+
+<P>
+<DL>
+<DT><STRONG>Since:</STRONG></DT>
+  <DD>JDK 1.5</DD>
+<DT><STRONG>Version:</STRONG></DT>
+  <DD>1.2</DD>
+<DT><STRONG>Author:</STRONG></DT>
+  <DD>Daniel Alievsky</DD></DL>
+<HR>
+
+<P>
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/morphology/RankProcessors.html#getAveragerBetweenPercentiles(net.algart.arrays.ArrayContext, double, boolean, int...)">getAveragerBetweenPercentiles</A></STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                              double&nbsp;filler,
+                              boolean&nbsp;interpolated,
+                              int...&nbsp;bitLevels)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new streaming aperture processor, which finds the <i>mean between 2 percentiles</i>
+ of the source matrix&nbsp;<b>M</b>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/morphology/RankProcessors.html#getAveragerBetweenValues(net.algart.arrays.ArrayContext, double, boolean, int...)">getAveragerBetweenValues</A></STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                         double&nbsp;filler,
+                         boolean&nbsp;interpolated,
+                         int...&nbsp;bitLevels)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new streaming aperture processor, which finds the <i>mean between 2 values</i>
+ of the source matrix&nbsp;<b>M</b>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/morphology/RankProcessors.html#getPercentilePairProcessor(net.algart.arrays.ArrayContext, net.algart.math.functions.Func, boolean, int...)">getPercentilePairProcessor</A></STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                           <A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A>&nbsp;processingFunc,
+                           boolean&nbsp;interpolated,
+                           int...&nbsp;bitLevels)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new streaming aperture processor, which finds the result of some given function
+ <nobr><i>f</i>(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>
+ of some matrix <b>M</b><sub>0</sub>
+ and two <i>percentiles</i> <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>
+ of the source matrix&nbsp;<b>M</b>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/morphology/RankProcessors.html#getPercentiler(net.algart.arrays.ArrayContext, boolean, int...)">getPercentiler</A></STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+               boolean&nbsp;interpolated,
+               int...&nbsp;bitLevels)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new streaming aperture processor, which finds the <i>percentile</i> of the source matrix&nbsp;<b>M</b>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/morphology/RankProcessors.html#getRanker(net.algart.arrays.ArrayContext, boolean, int...)">getRanker</A></STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+          boolean&nbsp;interpolated,
+          int...&nbsp;bitLevels)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new streaming aperture processor, which finds the <i>rank</i> of the source matrix&nbsp;<b>M</b>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/matrices/morphology/RankProcessors.html#getSummator(net.algart.arrays.ArrayContext, net.algart.math.functions.Func)">getSummator</A></STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+            <A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A>&nbsp;processingFunc)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new streaming aperture processor, which finds the result of some given function
+ <nobr><i>f</i>(<i>S</i>)</nobr> of the <i>aperture sum S</i>
+ of the source matrix&nbsp;<b>M</b>.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class java.lang.Object</STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getPercentiler(net.algart.arrays.ArrayContext, boolean, int...)"><!-- --></A><H3>
+getPercentiler</H3>
+<PRE>
+public static <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A> <STRONG>getPercentiler</STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                                        boolean&nbsp;interpolated,
+                                                        int...&nbsp;bitLevels)</PRE>
+<DL>
+<DD>Creates a new streaming aperture processor, which finds the <i>percentile</i> of the source matrix&nbsp;<b>M</b>.
+ See <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html" title="interface in net.algart.matrices.morphology"><CODE>comments to RankMorphology</CODE></A>, section 4 about the "<i>percentile</i>" term.
+ The real index <i>r</i> of the percentile for every element of the result is equal
+ to the corresponding element of the additional matrix <b>M</b><sub>0</sub>.
+
+ <p>More precisely, let <tt>rm</tt> is an instance of <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A>, created by the call
+
+ <blockquote><tt>rm = <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#getInstance(net.algart.arrays.ArrayContext, double, net.algart.matrices.morphology.CustomRankPrecision)"><CODE>BasicRankMorphology.getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)</CODE></A>,
+ </tt></blockquote>
+
+ <p>so that <tt>context</tt>, <tt>precision.<A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#interpolated()"><CODE>interpolated()</CODE></A></tt> and
+ <tt>precision.<A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#bitLevels()"><CODE>bitLevels()</CODE></A></tt> are the same as the arguments
+ of this method. Then in the streaming aperture processor, created by this method:
+
+ <ul>
+ <li>the number of required additional matrices is 1;</li>
+ <li><A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method is equivalent to
+ <nobr><b>R</b>=<tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#asPercentile(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern)"><CODE>asPercentile</CODE></A></tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>)</nobr>, if the <tt>requiredType</tt> argument of
+ <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method is equal to
+ <b>M</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>==<b>R</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>;</li>
+
+ <li>if <tt>requiredType</tt> is not equal to <b>M</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>, it is equivalent to
+ <nobr><tt><A HREF="../../../../net/algart/arrays/Matrices.html#asFuncMatrix(boolean, net.algart.math.functions.Func, java.lang.Class, net.algart.arrays.Matrix)"><CODE>Matrices.asFuncMatrix</CODE></A>(true, <A HREF="../../../../net/algart/math/functions/Func.html#IDENTITY"><CODE>Func.IDENTITY</CODE></A>, requiredType, </tt><b>R</b><tt>)</tt></nobr>;</li>
+
+ <li><A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#process(net.algart.arrays.Matrix, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>process</CODE></A> method is equivalent to
+ <nobr><tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#percentile(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern)"><CODE>percentile</CODE></A></tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>)</nobr>.</li>
+ </ul>
+
+ <p>This processor is really created and called in the implementation of
+ <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#asPercentile(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern)"><CODE>asPercentile</CODE></A>
+ and <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#percentile(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern)"><CODE>percentile</CODE></A>
+ methods in <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A> class.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the <A HREF="../../../../net/algart/arrays/AbstractArrayProcessorWithContextSwitching.html#context()"><CODE>context</CODE></A> that will be used by this object;
+                     may be <tt>null</tt>, then it will be ignored.</DD><DD><CODE>interpolated</CODE> - the histogram model used while calculating percentile: <tt>true</tt> means
+                     the precise histogram model, <tt>false</tt> means the simple histogram model
+                     (see comments to <A HREF="../../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>Histogram</CODE></A> class).</DD><DD><CODE>bitLevels</CODE> - the <A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#bitLevels()"><CODE>bit levels</CODE></A> used while calculations.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the new streaming aperture processor, finding the percentile.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>bitLevels</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
+                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+                                  for some <i>k</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRanker(net.algart.arrays.ArrayContext, boolean, int...)"><!-- --></A><H3>
+getRanker</H3>
+<PRE>
+public static <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A> <STRONG>getRanker</STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                                   boolean&nbsp;interpolated,
+                                                   int...&nbsp;bitLevels)</PRE>
+<DL>
+<DD>Creates a new streaming aperture processor, which finds the <i>rank</i> of the source matrix&nbsp;<b>M</b>.
+ See <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html" title="interface in net.algart.matrices.morphology"><CODE>comments to RankMorphology</CODE></A>, section 4 about the "<i>rank</i>" term.
+ The real value <i>v</i> for every element of the result is equal
+ to the corresponding element of the additional matrix <b>M</b><sub>0</sub>.
+
+ <p>More precisely, let <tt>rm</tt> is an instance of <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A>, created by the call
+
+ <blockquote><tt>rm = <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#getInstance(net.algart.arrays.ArrayContext, double, net.algart.matrices.morphology.CustomRankPrecision)"><CODE>BasicRankMorphology.getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)</CODE></A>,
+ </tt></blockquote>
+
+ <p>so that <tt>context</tt>, <tt>precision.<A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#interpolated()"><CODE>interpolated()</CODE></A></tt> and
+ <tt>precision.<A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#bitLevels()"><CODE>bitLevels()</CODE></A></tt> are the same as the arguments
+ of this method. Then in the streaming aperture processor, created by this method:
+
+ <ul>
+ <li>the number of required additional matrices is 1;</li>
+ <li><A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method is equivalent to
+ <nobr><tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#asRank(java.lang.Class, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern)"><CODE>asRank</CODE></A></tt>(<tt>requiredType</tt>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>)</nobr>,
+ where <tt>requiredType</tt> is the first argument of
+ <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method;</li>
+
+ <li><A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#process(net.algart.arrays.Matrix, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>process</CODE></A> method is equivalent to
+ <nobr><tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#rank(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern)"><CODE>rank</CODE></A></tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>)</nobr>.</li>
+ </ul>
+
+ <p>This processor is really created and called in the implementation of
+ <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#asRank(java.lang.Class, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern)"><CODE>asRank</CODE></A>
+ and <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#rank(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern)"><CODE>rank</CODE></A>
+ methods in <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A> class.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the <A HREF="../../../../net/algart/arrays/AbstractArrayProcessorWithContextSwitching.html#context()"><CODE>context</CODE></A> that will be used by this object;
+                     may be <tt>null</tt>, then it will be ignored.</DD><DD><CODE>interpolated</CODE> - the histogram model used while calculating percentile: <tt>true</tt> means
+                     the precise histogram model, <tt>false</tt> means the simple histogram model
+                     (see comments to <A HREF="../../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>Histogram</CODE></A> class).</DD><DD><CODE>bitLevels</CODE> - the <A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#bitLevels()"><CODE>bit levels</CODE></A> used while calculations.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the new streaming aperture processor, finding the rank.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>bitLevels</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
+                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+                                  for some <i>k</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAveragerBetweenPercentiles(net.algart.arrays.ArrayContext, double, boolean, int...)"><!-- --></A><H3>
+getAveragerBetweenPercentiles</H3>
+<PRE>
+public static <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A> <STRONG>getAveragerBetweenPercentiles</STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                                                       double&nbsp;filler,
+                                                                       boolean&nbsp;interpolated,
+                                                                       int...&nbsp;bitLevels)</PRE>
+<DL>
+<DD>Creates a new streaming aperture processor, which finds the <i>mean between 2 percentiles</i>
+ of the source matrix&nbsp;<b>M</b>.
+ See <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html" title="interface in net.algart.matrices.morphology"><CODE>comments to RankMorphology</CODE></A>, section 4 about the
+ "<i>mean between 2 percentiles</i>" term.
+ The real indexes <i>r</i><sub>1</sub> and <i>r</i><sub>2</sub> of the percentiles
+ for every element of the result are equal
+ to the corresponding elements of the additional matrices <b>M</b><sub>0</sub> and <b>M</b><sub>1</sub>.
+
+ <p>More precisely, let <tt>rm</tt> is an instance of <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A>, created by the call
+
+ <blockquote><tt>rm = <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#getInstance(net.algart.arrays.ArrayContext, double, net.algart.matrices.morphology.CustomRankPrecision)"><CODE>BasicRankMorphology.getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)</CODE></A>,
+ </tt></blockquote>
+
+ <p>so that <tt>context</tt>, <tt>precision.<A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#interpolated()"><CODE>interpolated()</CODE></A></tt> and
+ <tt>precision.<A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#bitLevels()"><CODE>bitLevels()</CODE></A></tt> are the same as the arguments
+ of this method. Then in the streaming aperture processor, created by this method:
+
+ <ul>
+ <li>the number of required additional matrices is 2;</li>
+ <li><A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method is equivalent to
+ <nobr><b>R</b>=<tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#asMeanBetweenPercentiles(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, double)"><CODE>asMeanBetweenPercentiles</CODE></A></tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
+ <tt>filler</tt>)</nobr> (where <tt>filler</tt> is the argument of this method),
+ if the <tt>requiredType</tt> argument of
+ <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method is equal to
+ <b>M</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>==<b>R</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>;</li>
+
+ <li>if <tt>requiredType</tt> is not equal to <b>M</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>, it analogously calculates
+ the mean between percentile with maximal (<tt>double</tt>) precision and then
+ casts the floating-point results to the desired element type by the same rules
+ as <A HREF="../../../../net/algart/arrays/Arrays.html#asFuncArray(boolean, net.algart.math.functions.Func, java.lang.Class, net.algart.arrays.PArray...)"><CODE>Arrays.asFuncArray(boolean, Func, Class, PArray...)</CODE></A>
+ method with the argument <tt>truncateOverflows=true</tt>;
+ note that such result cannot be obtained by <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html" title="interface in net.algart.matrices.morphology"><CODE>RankMorphology</CODE></A> methods;</li>
+
+ <li><A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#process(net.algart.arrays.Matrix, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>process</CODE></A> method is equivalent to
+ <nobr><tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#meanBetweenPercentiles(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, double)"><CODE>meanBetweenPercentiles</CODE></A></tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
+ <tt>filler</tt>)</nobr> (where <tt>filler</tt> is the argument of this method).</li>
+ </ul>
+
+ <p>This processor is really created and called in the implementation of
+ <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#asMeanBetweenPercentiles(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, double)"><CODE>asMeanBetweenPercentiles</CODE></A>
+ and <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#meanBetweenPercentiles(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, double)"><CODE>meanBetweenPercentiles</CODE></A>
+ methods in <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A> class.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the <A HREF="../../../../net/algart/arrays/AbstractArrayProcessorWithContextSwitching.html#context()"><CODE>context</CODE></A> that will be used by this object;
+                     may be <tt>null</tt>, then it will be ignored.</DD><DD><CODE>filler</CODE> - the reserved value, returned when
+                     <nobr><i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub></nobr>.</DD><DD><CODE>interpolated</CODE> - the histogram model used while calculating percentile: <tt>true</tt> means
+                     the precise histogram model, <tt>false</tt> means the simple histogram model
+                     (see comments to <A HREF="../../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>Histogram</CODE></A> class).</DD><DD><CODE>bitLevels</CODE> - the <A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#bitLevels()"><CODE>bit levels</CODE></A> used while calculations.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the new streaming aperture processor, finding the mean between 2 percentiles.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>bitLevels</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
+                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+                                  for some <i>k</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAveragerBetweenValues(net.algart.arrays.ArrayContext, double, boolean, int...)"><!-- --></A><H3>
+getAveragerBetweenValues</H3>
+<PRE>
+public static <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A> <STRONG>getAveragerBetweenValues</STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                                                  double&nbsp;filler,
+                                                                  boolean&nbsp;interpolated,
+                                                                  int...&nbsp;bitLevels)</PRE>
+<DL>
+<DD>Creates a new streaming aperture processor, which finds the <i>mean between 2 values</i>
+ of the source matrix&nbsp;<b>M</b>.
+ See <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html" title="interface in net.algart.matrices.morphology"><CODE>comments to RankMorphology</CODE></A>, section 4 about the
+ "<i>mean between 2 values</i>" term.
+ The real numbers <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub>
+ for every element of the result are equal
+ to the corresponding elements of the additional matrices <b>M</b><sub>0</sub> and <b>M</b><sub>1</sub>.
+
+ <p>More precisely, let <tt>rm</tt> is an instance of <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A>, created by the call
+
+ <blockquote><tt>rm = <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#getInstance(net.algart.arrays.ArrayContext, double, net.algart.matrices.morphology.CustomRankPrecision)"><CODE>BasicRankMorphology.getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)</CODE></A>,
+ </tt></blockquote>
+
+ <p>so that <tt>context</tt>, <tt>precision.<A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#interpolated()"><CODE>interpolated()</CODE></A></tt> and
+ <tt>precision.<A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#bitLevels()"><CODE>bitLevels()</CODE></A></tt> are the same as the arguments
+ of this method. Then in the streaming aperture processor, created by this method:
+
+ <ul>
+ <li>the number of required additional matrices is 2;</li>
+ <li><A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method is equivalent to
+ <nobr><b>R</b>=<tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#asMeanBetweenValues(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, double)"><CODE>asMeanBetweenValues</CODE></A></tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
+ <tt>filler</tt>)</nobr> (where <tt>filler</tt> is the argument of this method),
+ if the <tt>requiredType</tt> argument of
+ <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method is equal to
+ <b>M</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>==<b>R</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>;</li>
+
+ <li>if <tt>requiredType</tt> is not equal to <b>M</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>, it analogously calculates
+ the mean between values with maximal (<tt>double</tt>) precision and then
+ casts the floating-point results to the desired element type by the same rules
+ as <A HREF="../../../../net/algart/arrays/Arrays.html#asFuncArray(boolean, net.algart.math.functions.Func, java.lang.Class, net.algart.arrays.PArray...)"><CODE>Arrays.asFuncArray(boolean, Func, Class, PArray...)</CODE></A>
+ method with the argument <tt>truncateOverflows=true</tt>;
+ note that such result cannot be obtained by <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html" title="interface in net.algart.matrices.morphology"><CODE>RankMorphology</CODE></A> methods;</li>
+
+ <li><A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#process(net.algart.arrays.Matrix, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>process</CODE></A> method is equivalent to
+ <nobr><tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#meanBetweenValues(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, double)"><CODE>meanBetweenValues</CODE></A></tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
+ <tt>filler</tt>)</nobr> (where <tt>filler</tt> is the argument of this method).</li>
+ </ul>
+
+ <p>This processor is really created and called in the implementation of
+ <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#asMeanBetweenValues(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, double)"><CODE>asMeanBetweenValues</CODE></A>
+ and <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#meanBetweenValues(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, double)"><CODE>meanBetweenValues</CODE></A>
+ methods in <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A> class.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the <A HREF="../../../../net/algart/arrays/AbstractArrayProcessorWithContextSwitching.html#context()"><CODE>context</CODE></A> that will be used by this object;
+                     may be <tt>null</tt>, then it will be ignored.</DD><DD><CODE>filler</CODE> - the reserved value, returned when
+                     <i>r</i>(<i>v</i><sub>1</sub>*&sigma;)&ge;<i>r</i>(<i>v</i><sub>2</sub>*&sigma;),
+                     or one of the special keys <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#FILL_MIN_VALUE"><CODE>RankMorphology.FILL_MIN_VALUE</CODE></A>,
+                     <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#FILL_MAX_VALUE"><CODE>RankMorphology.FILL_MAX_VALUE</CODE></A>, <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#FILL_NEAREST_VALUE"><CODE>RankMorphology.FILL_NEAREST_VALUE</CODE></A>,
+                     which mean using of special calculation modes B, C, D.</DD><DD><CODE>interpolated</CODE> - the histogram model used while calculating percentile: <tt>true</tt> means
+                     the precise histogram model, <tt>false</tt> means the simple histogram model
+                     (see comments to <A HREF="../../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>Histogram</CODE></A> class).</DD><DD><CODE>bitLevels</CODE> - the <A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#bitLevels()"><CODE>bit levels</CODE></A> used while calculations.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the new streaming aperture processor, finding the mean between 2 values.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>bitLevels</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
+                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+                                  for some <i>k</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getSummator(net.algart.arrays.ArrayContext, net.algart.math.functions.Func)"><!-- --></A><H3>
+getSummator</H3>
+<PRE>
+public static <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A> <STRONG>getSummator</STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                                     <A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A>&nbsp;processingFunc)</PRE>
+<DL>
+<DD>Creates a new streaming aperture processor, which finds the result of some given function
+ <nobr><i>f</i>(<i>S</i>)</nobr> of the <i>aperture sum S</i>
+ of the source matrix&nbsp;<b>M</b>.
+ See <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html" title="interface in net.algart.matrices.morphology"><CODE>comments to RankMorphology</CODE></A>, section 4 about the
+ "<i>aperture sum</i>" term.
+
+ <p>More precisely, let <tt>rm</tt> is an instance of <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A>, created by the call
+
+ <blockquote><tt>rm = <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#getInstance(net.algart.arrays.ArrayContext, double, net.algart.matrices.morphology.CustomRankPrecision)"><CODE>BasicRankMorphology.getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)</CODE></A>,
+ </tt></blockquote>
+
+ <p>so that <tt>context</tt> is the same as the argument
+ of this method and other argument are any (they do not affect calculating the aperture sum).
+ Then in the streaming aperture processor, created by this method:
+
+ <ul>
+ <li>no additional matrices are required;</li>
+ <li><A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method is equivalent to
+ <nobr><b>R</b>=<tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#asFunctionOfSum(net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, net.algart.math.functions.Func)"><CODE>asFunctionOfSum</CODE></A></tt>(<b>M</b>, <b>P</b>, <tt>processingFunc</tt>)</nobr>
+ (where <tt>processingFunc</tt> is the argument of this method),
+ if the <tt>requiredType</tt> argument of
+ <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method is equal to
+ <b>M</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>==<b>R</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>;</li>
+
+ <li>if <tt>requiredType</tt> is not equal to <b>M</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>, it analogously calculates
+ the function <nobr><i>f</i>(<i>S</i>)</nobr> of the aperture sum <i>S</i>
+ with maximal (<tt>double</tt>) precision and then
+ casts the floating-point results to the desired element type by the same rules
+ as <A HREF="../../../../net/algart/arrays/Arrays.html#asFuncArray(boolean, net.algart.math.functions.Func, java.lang.Class, net.algart.arrays.PArray...)"><CODE>Arrays.asFuncArray(boolean, Func, Class, PArray...)</CODE></A>
+ method with the argument <tt>truncateOverflows=true</tt>;
+ note that such result cannot be obtained by <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html" title="interface in net.algart.matrices.morphology"><CODE>RankMorphology</CODE></A> methods;</li>
+
+ <li><A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#process(net.algart.arrays.Matrix, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>process</CODE></A> method is equivalent to
+ <nobr><tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#functionOfSum(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, net.algart.math.functions.Func)"><CODE>functionOfSum</CODE></A></tt>(<b>R</b>, <b>M</b>, <b>P</b>, <tt>processingFunc</tt>)</nobr>
+ (where <tt>processingFunc</tt> is the argument of this method).</li>
+ </ul>
+
+ <p>This processor is really created and called in the implementation of
+ <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#asFunctionOfSum(net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, net.algart.math.functions.Func)"><CODE>asFunctionOfSum</CODE></A>
+ and <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#functionOfSum(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, net.algart.math.functions.Func)"><CODE>functionOfSum</CODE></A>
+ methods in <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A> class.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the <A HREF="../../../../net/algart/arrays/AbstractArrayProcessorWithContextSwitching.html#context()"><CODE>context</CODE></A> that will be used by this object;
+                       may be <tt>null</tt>, then it will be ignored.</DD><DD><CODE>processingFunc</CODE> - the function, which should be applied to every calculated aperture sum.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the new streaming aperture processor, finding the given function of the aperture sum.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>bitLevels</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
+                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+                                  for some <i>k</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPercentilePairProcessor(net.algart.arrays.ArrayContext, net.algart.math.functions.Func, boolean, int...)"><!-- --></A><H3>
+getPercentilePairProcessor</H3>
+<PRE>
+public static <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A> <STRONG>getPercentilePairProcessor</STRONG>(<A HREF="../../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                                                    <A HREF="../../../../net/algart/math/functions/Func.html" title="interface in net.algart.math.functions">Func</A>&nbsp;processingFunc,
+                                                                    boolean&nbsp;interpolated,
+                                                                    int...&nbsp;bitLevels)</PRE>
+<DL>
+<DD>Creates a new streaming aperture processor, which finds the result of some given function
+ <nobr><i>f</i>(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>
+ of some matrix <b>M</b><sub>0</sub>
+ and two <i>percentiles</i> <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>
+ of the source matrix&nbsp;<b>M</b>.
+ See <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html" title="interface in net.algart.matrices.morphology"><CODE>comments to RankMorphology</CODE></A>, section 4 about the "<i>percentile</i>" term.
+ The real indexes <i>r</i> of two percentiles for every element of the result are equal
+ to the corresponding elements of the additional matrices <b>M</b><sub>1</sub> and <b>M</b><sub>2</sub>.
+
+ <p>More precisely, let <tt>rm</tt> is an instance of <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A>, created by the call
+
+ <blockquote><tt>rm = <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#getInstance(net.algart.arrays.ArrayContext, double, net.algart.matrices.morphology.CustomRankPrecision)"><CODE>BasicRankMorphology.getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)</CODE></A>,
+ </tt></blockquote>
+
+ <p>so that <tt>context</tt>, <tt>precision.<A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#interpolated()"><CODE>interpolated()</CODE></A></tt> and
+ <tt>precision.<A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#bitLevels()"><CODE>bitLevels()</CODE></A></tt> are the same as the arguments
+ of this method. Then in the streaming aperture processor, created by this method:
+
+ <ul>
+ <li>the number of required additional matrices is 3;</li>
+ <li><A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method is equivalent to
+ <nobr><b>R</b>=<tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#asFunctionOfPercentilePair(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, net.algart.math.functions.Func)"><CODE>asFunctionOfPercentilePair</CODE></A></tt>(<b>M</b>, <b>M</b><sub>1</sub>, <b>M</b><sub>2</sub>, <b>P</b>,
+ <tt>processingFunc</tt>)</nobr> (where <tt>processingFunc</tt> is the argument of this method),
+ if <b>M</b><sub>0</sub>==<b>M</b> and the <tt>requiredType</tt> argument of
+ <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#asProcessed(java.lang.Class, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>asProcessed</CODE></A> method is equal to
+ <b>M</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>==<b>R</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>;</li>
+
+ <li>if <tt>requiredType</tt> is not equal to
+ <b>M</b>.<A HREF="../../../../net/algart/arrays/Matrix.html#type()"><CODE>type()</CODE></A>, it analogously calculates
+ the function <nobr><i>f</i>(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>
+ of the matrix <b>M</b><sub>0</sub>
+ and two percentiles <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>
+ of the source matrix&nbsp;<b>M</b>
+ with maximal (<tt>double</tt>) precision and then
+ casts the floating-point results to the desired element type by the same rules
+ as <A HREF="../../../../net/algart/arrays/Arrays.html#asFuncArray(boolean, net.algart.math.functions.Func, java.lang.Class, net.algart.arrays.PArray...)"><CODE>Arrays.asFuncArray(boolean, Func, Class, PArray...)</CODE></A>
+ method with the argument <tt>truncateOverflows=true</tt>;</li>
+
+ <li>if <b>M</b><sub>0</sub>==<b>M</b>, <A HREF="../../../../net/algart/matrices/StreamingApertureProcessor.html#process(net.algart.arrays.Matrix, net.algart.arrays.Matrix, java.util.List, net.algart.math.patterns.Pattern)"><CODE>process</CODE></A> method is equivalent to
+ <nobr><tt>rm.<A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#functionOfPercentilePair(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, net.algart.math.functions.Func)"><CODE>functionOfPercentilePair</CODE></A></tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>1</sub>, <b>M</b><sub>2</sub>, <b>P</b>,
+ <tt>processingFunc</tt>)</nobr> (where <tt>processingFunc</tt> is the argument of this method),
+ in other case if works analogously, but gets the first argument of <i>f</i> function from <b>M</b><sub>0</sub>
+ matrix instead of <b>M</b>.</li>
+ </ul>
+
+ <p>Note that this processor, unlike <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#asFunctionOfPercentilePair(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, net.algart.math.functions.Func)"><CODE>RankMorphology.asFunctionOfPercentilePair</CODE></A> and <A HREF="../../../../net/algart/matrices/morphology/RankMorphology.html#functionOfPercentilePair(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, net.algart.math.functions.Func)"><CODE>RankMorphology.functionOfPercentilePair</CODE></A>
+ methods, allows to use any matrix <b>M</b><sub>0</sub> as the source of first arguments of the function
+ <nobr><i>f</i>(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>.
+ (Those methods always get the first function argument from the source <b>M</b> matrix.)
+
+ <p>This processor is really created and called in the implementation of
+ <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#asFunctionOfPercentilePair(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, net.algart.math.functions.Func)"><CODE>asFunctionOfPercentilePair</CODE></A>
+ and <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html#functionOfPercentilePair(net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.arrays.Matrix, net.algart.math.patterns.Pattern, net.algart.math.functions.Func)"><CODE>functionOfPercentilePair</CODE></A>
+ methods in <A HREF="../../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology"><CODE>BasicRankMorphology</CODE></A> class. Those methods pass the same <tt>src</tt> matrix to this
+ processor twice: as the main source matrix <b>M</b> and as the first additional matrix <b>M</b><sub>0</sub>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the <A HREF="../../../../net/algart/arrays/AbstractArrayProcessorWithContextSwitching.html#context()"><CODE>context</CODE></A> that will be used by this object;
+                       may be <tt>null</tt>, then it will be ignored.</DD><DD><CODE>processingFunc</CODE> - the function, which should be applied to every three
+                       <nobr>(<i>v</i><sub>0</sub>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>,
+                       where <i>v</i><sub>0</sub> is the element of <b>M</b><sub>0</sub> matrix,
+                       <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles
+                       of the source <b>M</b> matrix.</DD><DD><CODE>interpolated</CODE> - the histogram model used while calculating percentiles: <tt>true</tt> means
+                       the precise histogram model, <tt>false</tt> means the simple histogram model
+                       (see comments to <A HREF="../../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>Histogram</CODE></A> class).</DD><DD><CODE>bitLevels</CODE> - the <A HREF="../../../../net/algart/matrices/morphology/CustomRankPrecision.html#bitLevels()"><CODE>bit levels</CODE></A> used while calculations.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the new streaming aperture processor, finding the given function of the additional
+                       matrix <b>M</b><sub>0</sub> and the pair of percentiles.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>bitLevels</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
+                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+                                  for some <i>k</i>.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/matrices/morphology/RankPrecision.html" title="enum in net.algart.matrices.morphology"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../../net/algart/matrices/morphology/TiledMorphology.html" title="class in net.algart.matrices.morphology"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/matrices/morphology/RankProcessors.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="RankProcessors.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,21 @@
+*** ITERATION #1
+Allocated 10000000 bits: 210.194176 ms
+    (1.3149566650390625 MB used)
+Filled: 26.861824 ms, 2.686 ns/bit
+                                                  2/3162...                                                  45/3162...                                                  800/3162...                                                  2000/3162...Complete: 1708.915200 ms, 170.892 ns/bit
+
+*** ITERATION #2
+Allocated 10000000 bits: 22.197248 ms
+    (2.5140457153320312 MB used)
+Filled: 23.582976 ms, 2.358 ns/bit
+                                                  2/3162...                                                  80/3162...                                                  1200/3162...                                                  2000/3162...Complete: 1311.082240 ms, 131.108 ns/bit
+
+*** ITERATION #3
+Allocated 10000000 bits: 23.886592 ms
+    (2.5120010375976562 MB used)
+Filled: 8.441088 ms, 0.844 ns/bit
+                                                  2/3162...                                                  45/3162...                                                  1200/3162...                                                  2000/3162...Complete: 1304.297984 ms, 130.430 ns/bit
+
+Found 664579 prime numbers: 589.763840 ms, 58.976 ns/bit, 887.425 ns/number
+    (5.317543029785156 MB used)
+Report saved in "prime.txt"

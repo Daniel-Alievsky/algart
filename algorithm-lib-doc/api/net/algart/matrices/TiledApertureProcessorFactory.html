@@ -1,0 +1,1139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+TiledApertureProcessorFactory
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="TiledApertureProcessorFactory";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.TileInformation.html" title="class in net.algart.matrices"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/matrices/TiledApertureProcessorFactory.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="TiledApertureProcessorFactory.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.matrices</FONT>
+<BR>
+Class TiledApertureProcessorFactory</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><STRONG>net.algart.matrices.TiledApertureProcessorFactory</STRONG>
+</PRE>
+<HR>
+<PRE>public final class <STRONG>TiledApertureProcessorFactory</STRONG>
+extends java.lang.Object</PRE>
+
+<P>
+<p><i>Tiler</i>: generator of <i>tiled</i> <A HREF="../../../net/algart/matrices/ApertureProcessor.html" title="interface in net.algart.matrices"><CODE>aperture matrix processors</CODE></A>.
+ The tiler works with some algorithm, represented by <A HREF="../../../net/algart/matrices/ApertureProcessor.html" title="interface in net.algart.matrices"><CODE>ApertureProcessor</CODE></A> interface
+ and called <i>one-tile processor</i>: it can be any algorithm, which
+ processes one or several <A HREF="../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays"><CODE><i>n</i>-dimensional matrices</CODE></A> (with identical sets of dimensions)
+ and returns one or several other matrices as a result (with the same sets of dimensions).
+ The only requirement is that the value of every element of the resulting matrices depends only on
+ the elements of the source matrices in a fixed rectangular aperture "around" the same position,
+ as described in <A HREF="../../../net/algart/matrices/ApertureProcessor.html" title="interface in net.algart.matrices"><CODE>ApertureProcessor</CODE></A> interface.
+ This class allows to convert the given one-tile processor into another aperture processor,
+ called a <i>tiled</i> processor, created on the base of the original one-tile processor
+ and functionally equivalent to it. (The equivalence can be violated on the bounds
+ of the matrices, where the tiled processor provides several models of continuations &mdash;
+ see below the section "Continuation model outside the bounds of the large matrices".)
+ This new processor splits all the matrices into relatively little <i>tiles</i> (rectangular areas,
+ i.e. submatrices), performs the processing of every tile with the one-tile processor and places the results
+ into the corresponding submatrices of the resulting matrices.
+ Such conversion of one algorithm to another is called <i>tiling an algorithm</i>
+ and is performed by <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tile(ApertureProcessor)</CODE></A> method &mdash; the main method of this class.</p>
+
+
+ <h4>Why to tile aperture processors</h4>
+
+ <p>The goal of tiling some algorithms is optimization of processing very large matrices,
+ usually located on external storage devices (for example, with help of <A HREF="../../../net/algart/arrays/LargeMemoryModel.html" title="class in net.algart.arrays"><CODE>LargeMemoryModel</CODE></A>).</p>
+
+ <p>First, very large matrices are usually <A HREF="../../../net/algart/arrays/Matrix.html#tile()"><CODE>tiled</CODE></A>, but many algorithms process matrices
+ in a simple "streaming" manner, i.e. load elements in the order, corresponding to the order of elements
+ in the <A HREF="../../../net/algart/arrays/Matrix.html#array()"><CODE>built-in AlgART array</CODE></A>. This order of downloading is inefficient for tiled matrices.
+ The same algorithms, tiled with help of this class, process large tiled matrices in more efficient order:
+ they download a rectangular block from all source matrices into newly created
+ (relatively little) matrices, process them and store the results
+ into the corresponding submatrices of the destination matrices.
+ For maximal efficiency, the tiler tries to use <A HREF="../../../net/algart/arrays/SimpleMemoryModel.html" title="class in net.algart.arrays"><CODE>SimpleMemoryModel</CODE></A> for storing and processing every
+ rectangular block (a tile); you can control this with <tt>maxTempJavaMemory</tt> argument of all
+ instantiation methods <tt>getInstance</tt>. In addition, the matrices, allocated by the tiled processor
+ (if it creates them), are automatically tiled by <A HREF="../../../net/algart/arrays/Matrix.html#tile(long...)"><CODE>Matrix.tile(long...)</CODE></A> method (see more details below in
+ the specification of <tt>process</tt> method in the tiled aperture processors, stage <b>4.d</b>).</p>
+
+ <p>Second, many algorithms (for example, the basic implementation of
+ <A HREF="../../../net/algart/matrices/morphology/Morphology.html" title="interface in net.algart.matrices.morphology"><CODE>mathematical morphology</CODE></A> from
+ <A HREF="../../../net/algart/matrices/morphology/package-summary.html"><CODE>net.algart.matrices.morphology</CODE></A> package) are multipass, i.e. process source matrices in many passes
+ though all the matrix. It can be very important for high performance, when all data are located in RAM,
+ especially in a form of Java memory (via <A HREF="../../../net/algart/arrays/SimpleMemoryModel.html" title="class in net.algart.arrays"><CODE>SimpleMemoryModel</CODE></A>), but it can extremely slow down
+ the calculations, when the source matrices are very large and located on a disk or another storage,
+ because an algorithm downloads all data from external devices again during each pass.
+ Unlike this, a matrix processor, generated by the tiler (by <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tile(ApertureProcessor)</CODE></A> method),
+ is always single-pass: each tile is downloaded and saved only 1 time, and multipass processing is applied
+ to relatively little tile matrices, usually allocated in <A HREF="../../../net/algart/arrays/SimpleMemoryModel.html" title="class in net.algart.arrays"><CODE>SimpleMemoryModel</CODE></A>.</p>
+
+ <p>Third, tiling by this class is the simplest way to optimize an algorithm for multiprocessor or multi-core
+ computers, if the algorithm does not provide multithreading optimization itself:
+ several tiles can be processed simultaneously in parallel threads. See below about multithreading.</p>
+
+
+ <h4>Specification of <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A> and other methods in the tiled aperture processors</h4>
+
+ <p>Here is the precise specification of the behaviour of the <A HREF="../../../net/algart/matrices/ApertureProcessor.html" title="interface in net.algart.matrices"><CODE>ApertureProcessor</CODE></A>,
+ tiled by this tiler, i.e. of the result of <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tile(ApertureProcessor oneTileProcessor)</CODE></A>.
+ We call the argument of this method the <i>one-tile processor</i>, and the result of this method
+ the <i>tiled processor</i>.</p>
+
+ <ul>
+     <li>The generic type <tt>K</tt> of indexes of the source and resulting matrices in the tiled
+     processor is the same as in the one-tile processor. (It is obvious from the declaration
+     of <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tile</CODE></A> method.)
+     <br>&nbsp;</li>
+
+     <li><A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>ApertureProcessor.process(Map dest, Map src)</CODE></A> method of the tiled processor
+     does the following.<br>&nbsp;
+     <ol>
+         <li>It checks, whether the arguments are correct. If they violate one of common requirement,
+         described in "Throws" section in
+         <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>comments to "process" method</CODE></A>,
+         a corresponding exception is thrown. In particular, this implementation checks,
+         that all matrices in the <tt>dest</tt> map are either <tt>null</tt>
+         or updatable, i.e. their <A HREF="../../../net/algart/arrays/Matrix.html#array()"><CODE>built-in arrays</CODE></A> implement
+         <A HREF="../../../net/algart/arrays/UpdatableArray.html" title="interface in net.algart.arrays"><CODE>UpdatableArray</CODE></A> interface &mdash; if at least one non-null matrix in the <tt>dest</tt> map
+         is not updatable, <tt>IllegalArgumentException</tt> is thrown.<br>
+         In addition, the given implementation throws
+         <tt>IllegalArgumentException</tt> if one of the passed matrices has
+         <A HREF="../../../net/algart/arrays/Matrix.html#dimCount()"><CODE>number of dimensions</CODE></A>, other than the number of dimensions of this tiler,
+         returned by its <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#dimCount()"><CODE>dimCount()</CODE></A> method.<br>
+         If no source matrices and no non-null resulting matrices were passed to this method,
+         i.e. if <tt>src.isEmpty()</tt> and either <tt>dest.isEmpty()</tt>, or all matrices
+         <tt>dest.get(key)==null</tt>, then <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A>
+         method does nothing and immediately returns.
+         If at least one of dimensions of the passed matrices is 0, then
+         <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A>
+         method also does nothing and immediately returns (there are no elements to process).
+         <br>&nbsp;</li>
+
+         <li>It calculates the <i>maximal dependence aperture</i> <b>A</b><sup>m</sup>: a minimal integer
+         rectangular area (an instance of <A HREF="../../../net/algart/math/IRectangularArea.html" title="class in net.algart.math"><CODE>IRectangularArea</CODE></A>), containing all dependence apertures
+         <b>A</b><sub><i>i</i></sub> of the one-tile processor (returned by its
+         <A HREF="../../../net/algart/matrices/ApertureProcessor.html#dependenceAperture(K)"><CODE>dependenceAperture(<i>i</i>)</CODE></A> method)
+         for all indexes <i>i</i>&isin;<i>Q</i>=<tt>src.keySet()</tt>, and also containing the origin
+         of coordinates. While this calculation, <tt>IndexOutOfBoundsException</tt> will be thrown,
+         if the number of dimensions for one of results of <A HREF="../../../net/algart/matrices/ApertureProcessor.html#dependenceAperture(K)"><CODE>dependenceAperture(<i>i</i>)</CODE></A> calls is less than <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#dimCount()"><CODE>dimCount()</CODE></A>, but if some
+         of them has more than <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#dimCount()"><CODE>dimCount()</CODE></A> dimensions, the extra dimensions of such aperture
+         are just ignored (here and in the further algorithm).
+         <br>&nbsp;</li>
+
+         <li>It splits all source matrices <b>M</b><sub><i>i</i></sub> (<tt>src.get(<i>i</i>)</tt>)
+         and all resulting matrices <b>M'</b><sub><i>j</i></sub> (<tt>dest.get(<i>j</i>)</tt>) into
+         a set of rectangular non-overlapping <i>tiles</i>, i.e. submatrices, the dimensions of which are chosen
+         to be equal to the desired tile dimensions of this tiler (<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tileDim()"><CODE>tileDim()</CODE></A>) or, maybe, less.
+         (This stage does not suppose any actual calculations: we consider this stage
+         for the sake of simplicity.)<br>
+         For every tile, we shall designate
+         <nobr><b>f</b> = (<i>f</i><sub>0</sub>, <i>f</i><sub>1</sub>, ...,
+         <i>f</i><sub><i>n</i>&minus;1</sub>)</nobr> the <i>n</i>-dimensional starting point of the tile (inclusive)
+         and <nobr><b>t</b> = (<i>t</i><sub>0</sub>, <i>t</i><sub>1</sub>, ...,
+         <i>t</i><sub><i>n</i>&minus;1</sub>)</nobr> the <i>n</i>-dimensional ending point of the tile (exclusive).
+         (Here "f" is the starting letter of "from" word, "t" is the starting letter of "to" word.)
+         More precisely, this tile consists of all elements of the source and target matrices with such indexes
+         <nobr>(<i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>&minus;1</sub>)</nobr>,
+         that<br>
+             &nbsp;&nbsp;&nbsp;&nbsp;<i>f<sub>k</sub></i> &le; <i>i<sub>k</sub></i> &lt; <i>t<sub>k</sub></i>,
+         <nobr><i>k</i>=0,1,...,<i>n</i>&minus;1</nobr>.<br>
+         Besides this tile (<b>f</b>,&nbsp;<b>t</b>), we also consider the <i>extended tile</i>
+         (<b>fe</b>,&nbsp;<b>te</b>), consisting of all elements of the source and target matrices with such indexes
+         <nobr>(<i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>&minus;1</sub>)</nobr>,
+         that<br>
+             &nbsp;&nbsp;&nbsp;&nbsp;<i>fe<sub>k</sub></i>
+             = <i>f<sub>k</sub></i> + <b>A</b><sup>m</sup>.<A HREF="../../../net/algart/math/IRectangularArea.html#min(int)"><CODE>min(<i>k</i>)</CODE></A>
+             &le; <i>i<sub>k</sub></i>
+             &lt; <i>te<sub>k</sub></i>
+             =  <i>t<sub>k</sub></i> + <b>A</b><sup>m</sup>.<A HREF="../../../net/algart/math/IRectangularArea.html#min(int)"><CODE>max(<i>k</i>)</CODE></A>.
+         <br>Note that all tiles (<b>f</b>,&nbsp;<b>t</b>) lie fully inside the dimensions
+         of the source and target matrices, but it is not always so for extended tiles (<b>fe</b>,&nbsp;<b>te</b>).
+         Also note that each tile (<b>f</b>,&nbsp;<b>t</b>) is a subset of the corresponding extended tile
+         (<b>fe</b>,&nbsp;<b>te</b>), because the maximal dependence aperture <b>A</b><sup>m</sup>
+         always contains the origin of coordinates (as written in the item 2).
+         <br>&nbsp;</li>
+
+         <li>Then the <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A>
+         method of the tiled processor does the following, for every tile (<b>f</b>,&nbsp;<b>t</b>)
+         and the corresponding extended tile (<b>fe</b>,&nbsp;<b>te</b>):
+         <ol type="a">
+             <li>For each index of a source matrices <i>i</i>&isin;<i>Q</i>=<tt>src.keySet()</tt> and
+             for each index of a resulting non-null matrix <i>j</i>&isin;<i>R</i>=<tt>dest.keySet()</tt>,
+             passed to this method, it allocates new matrices
+             <b>m</b><sub><i>i</i></sub> and <b>m'</b><sub><i>j</i></sub>
+             with the same element type as <b>M</b><sub><i>i</i></sub> and <b>M'</b><sub><i>j</i></sub>
+             and with dimensions, equal to the sizes of the extended tile
+             <i>te<sub>k</sub></i>&minus;<i>fe<sub>k</sub></i>.
+             For each index <i>j</i> of a null resulting matrix <b>M'</b><sub><i>j</i></sub><tt>=null</tt>,
+             passed to this method, it's assumed <b>m'</b><sub><i>j</i></sub><tt>=null</tt>.
+             The newly created (relatively small) matrices (or <tt>null</tt> references) <b>m</b><sub><i>i</i></sub>
+             and <b>m'</b><sub><i>j</i></sub> are stored in two <tt>Map&lt;K,&nbsp;Matrix&lt;?&gt;&gt;</tt> objects
+             <tt>srcTile</tt> (<b>m</b><sub><i>i</i></sub>) and <tt>destTile</tt> (<b>m'</b><sub><i>j</i></sub>),
+             in the same manner as the original <tt>dest</tt> and <tt>src</tt> arguments.<br>
+             Note that the tiled processor tries to use the created matrices <b>m</b><sub><i>i</i></sub>
+             and <b>m'</b><sub><i>j</i></sub> many times for different tiles, because there is no sense
+             to create them again for every tile.<br>
+             This algorithm tries to create all matrices in <A HREF="../../../net/algart/arrays/SimpleMemoryModel.html" title="class in net.algart.arrays"><CODE>SimpleMemoryModel</CODE></A>. But, it the total
+             amount of memory, necessary simultaneously for all these matrices, is greater than
+             <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#maxTempJavaMemory()"><CODE>maxTempJavaMemory()</CODE></A> bytes (this parameter is passed to all instantiation methods
+             <tt>getInstance</tt> of the tiler), then the memory model from the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#context()"><CODE>current context</CODE></A>
+             is used instead. Note that the total amount of memory depends not only on the number of arguments and
+             results and the tile dimensions, but also on the desired
+             <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#numberOfTasks()"><CODE>number of parallel tasks</CODE></A>.<br>
+             Here is a guarantee that all non-null matrices <b>m'</b><sub><i>j</i></sub>
+             (stored in <tt>destTile</tt>) are updatable, i.e. their <A HREF="../../../net/algart/arrays/Matrix.html#array()"><CODE>built-in arrays</CODE></A>
+             implement <A HREF="../../../net/algart/arrays/UpdatableArray.html" title="interface in net.algart.arrays"><CODE>UpdatableArray</CODE></A> interface.
+             </li>
+
+             <li>For each source matrix <b>M</b><sub><i>i</i></sub>, its submatrix, corresponding to the
+             extended tile and extracted with <nobr><b>M</b><sub><i>i</i></sub>.<A HREF="../../../net/algart/arrays/Matrix.html#subMatrix(long[], long[], net.algart.arrays.Matrix.ContinuationMode)"><CODE>subMatrix</CODE></A>(<b>fe</b>, <b>te</b>, <tt>continuationMode</tt>)</nobr> call, is copied into
+             the corresponding small matrix <b>m</b><sub><i>i</i></sub> (<tt>srcTile.get(<i>i</i>)</tt>).
+             Here the <tt>continuationMode</tt> is equal to the continuation mode of this tiler, returned by
+             <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#continuationMode()"><CODE>continuationMode()</CODE></A> method.<br>
+             At this step, the method may really copy less data from some source matrices (with getting
+             the same results), if the corresponding dependence apertures <b>A</b><sub><i>i</i></sub> are less
+             than the maximal aperture <b>A</b><sup>m</sup>.
+             </li>
+
+             <li><b>Main part of the algorithm:</b>
+             <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A> method of
+             the one-tile processor is called with the arguments <b>m'</b><sub><i>j</i></sub>
+             and <b>m</b><sub><i>i</i></sub> &mdash;
+             <nobr><tt>oneTileProcessor.<A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A>(destTile, srcTile)</tt></nobr>.<br>
+             Note that, as a result, all null small matrices <b>m'</b><sub><i>j</i></sub>
+             (<tt>destTile.get(<i>j</i>)</tt>) will become not null &mdash; it is a requirement,
+             described in <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>comments to "process" method</CODE></A>. If some matrix <nobr><tt>destTile.get(<i>j</i>)</tt></nobr>
+             is <tt>null</tt> after calling the one-tile processor, it means an invalid implementation
+             of the one-tile processor: <tt>AssertionError</tt> is thrown in this case.
+             </li>
+
+             <li>If it is the first processed tile, this algorithm scans the whole map <tt>destTile</tt>.
+             If it contains some matrix <b>m'</b><sub><i>j</i></sub>, for which the index <i>j</i> is not
+             present in the <tt>dest</tt> map (<nobr><tt>!dest.containsKey(<i>j</i>)</tt></nobr>)
+             or the value <nobr><tt>dest.get(<i>j</i>)==null</tt></nobr>,
+             the corresponding resulting matrices <b>M'</b><sub><i>j</i></sub>
+             is created with the element type, equal to corresponding
+             <b>m'</b><sub><i>j</i></sub>.<A HREF="../../../net/algart/arrays/Matrix.html#elementType()"><CODE>elementType()</CODE></A>, and dimensions,
+             equal to dimensions of other source and resulting matrices <b>M</b><sub><i>i</i></sub>
+             and <b>M'</b><sub><i>j</i></sub>. Each created matrix <b>M'</b><sub><i>j</i></sub> is saved
+             back into <tt>dest</tt> argument:
+             <nobr><tt>dest.put(</tt><i>j</i>,&nbsp;<b>M'</b><sub><i>j</i></sub><tt>)</tt></nobr>.<br>
+             The resulting matrices <b>M'</b><sub><i>j</i></sub> are created in the memory model
+             from the current context of the tiler: <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#context()"><CODE>context()</CODE></A>.<A HREF="../../../net/algart/arrays/ArrayContext.html#getMemoryModel()"><CODE>getMemoryModel()</CODE></A>. Moreover, every newly created matrix is automatically tiled, i.e. replaced
+             with <tt>newMatrix.<A HREF="../../../net/algart/arrays/Matrix.html#tile(long...)"><CODE>tile</CODE></A>(allocationTileDim)</tt>, where
+             <tt>allocationTileDim</tt> is the corresponding argument of the <tt>getInstance</tt>
+             instantiation method &mdash; with the only exception, when you explicitly specify <tt>null</tt>
+             for this argument (in this case the new matrices are not tiled). In most cases,
+             the tiler is used with very large matrices, and automatic tiling the resulting matrices
+             improves performance.
+             </li>
+
+             <li>The central part (submatrix) of all matrices <b>m'</b><sub><i>j</i></sub>,
+             corresponding to the original (non-extended) tile (<b>f</b>,&nbsp;<b>t</b>),
+             is copied into the corresponding tile of the resulting matrices <b>M'</b><sub><i>j</i></sub>,
+             i.e. into their submatrices <nobr><b>M'</b><sub><i>j</i></sub>.<A HREF="../../../net/algart/arrays/Matrix.html#subMatrix(long[], long[])"><CODE>subMatrix</CODE></A>(<b>f</b>, <b>t</b>)</nobr>.
+             <br>&nbsp;</li>
+         </ol></li>
+     </ol></li>
+
+     <li><A HREF="../../../net/algart/matrices/ApertureProcessor.html#dependenceAperture(K)"><CODE>ApertureProcessor.dependenceAperture(Object srcMatrixKey)</CODE></A> method of the tiled processor
+     just calls the same method of the one-tile processor with the same <tt>srcMatrixKey</tt> argument
+     and returns its result.
+     <br>&nbsp;</li>
+ </ul>
+
+ <p>Note: there is a guarantee, that each resulting matrix <b>M'</b><sub><i>j</i></sub>,
+ created by <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A> method of the tiled processor
+ at the stage <b>4.d</b> is <i>updatable</i>: its <A HREF="../../../net/algart/arrays/Matrix.html#array()"><CODE>built-in array</CODE></A> is <A HREF="../../../net/algart/arrays/UpdatableArray.html" title="interface in net.algart.arrays"><CODE>UpdatableArray</CODE></A>
+ and, thus, the matrix can be cast to <nobr><tt><A HREF="../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays"><CODE>Matrix</CODE></A>&lt;UpdatableArray&gt;</tt></nobr> with help of
+ <nobr><tt><A HREF="../../../net/algart/arrays/Matrix.html#cast(java.lang.Class)"><CODE>Matrix.cast</CODE></A>(UpdatableArray.class)</tt></nobr> call.</p>
+
+ <p>Note: <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A>
+ method of the tiled processor can process several tiles simultaneously in parallel threads
+ to optimize calculations on multiprocessor or multi-core computers.
+ It depends on the <tt>numberOfTasks</tt> argument of the instantiation methods <tt>getInstance</tt>.
+ If it is 0 (or absent), the desired number of parallel tasks
+ is detected automatically on the base of the <A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays"><CODE>ArrayContext</CODE></A> argument
+ of the instantiation methods.
+ Many algorithms (one-tile processors) provide multithreading optimization themselves,
+ so there is no sense to use this feature: in this case you may specify <tt>numberOfTasks=1</tt>.</p>
+
+
+ <h4>Continuation model outside the bounds of the large matrices</h4>
+
+ <p>The behaviour of the aperture processor, tiled by <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tile(ApertureProcessor oneTileProcessor)</CODE></A> method,
+ can little differ from the behaviour of the original one-tile processor near the bounds of the matrices,
+ namely for the resulting elements, for which the dependence aperture
+ <nobr><b>A</b><sub><i>i</i></sub>=<A HREF="../../../net/algart/matrices/ApertureProcessor.html#dependenceAperture(K)"><CODE>dependenceAperture(<i>i</i>)</CODE></A></nobr> (at least for one index <i>i</i> of a source matrix)
+ does not fully lie inside the corresponding source matrix <b>M</b><sub><i>i</i></sub>.</p>
+
+ <p>In such situation the behaviour of the original one-tile processor depends on implementation &mdash;
+ for example, many algorithms suppose so-called pseudo-cyclic continuation mode, described in comments
+ to <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html#PSEUDO_CYCLIC"><CODE>Matrix.ContinuationMode.PSEUDO_CYCLIC</CODE></A> constant.
+ But the behaviour of the resulting processor,
+ tiled by <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tile(ApertureProcessor)</CODE></A> method, is strictly defined always and corresponds to
+ the <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays"><CODE>continuation mode</CODE></A>,
+ passed as <tt>continuationMode</tt> argument to an instantiation method <tt>getInstance</tt>
+ of the tiler and returned by <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#continuationMode()"><CODE>continuationMode()</CODE></A> method.
+ You can see it from the specification of the behaviour of
+ <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A> method above,
+ stage <b>4.b</b>.</p>
+
+ <p>If the one-tile processor works according one of continuation models, provided by
+ <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays"><CODE>Matrix.ContinuationMode</CODE></A> class, you can guarantee the identical behaviour of
+ the tiled processor by passing the same continuation mode into a tiler instantiation method <tt>getInstance</tt>;
+ if no, the tiled processor will be impossible to provide identical results.</p>
+
+ <p>Note that <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html#NONE"><CODE>Matrix.ContinuationMode.NONE</CODE></A> continuation mode cannot be used in the tiler:
+ such value of <tt>continuationMode</tt> argument of instantiation methods <tt>getInstance</tt> leads
+ to <tt>IllegalArgumentException</tt>.</p>
+
+
+ <h4>Contexts for the one-tile processor</h4>
+
+ <p>First of all, we note that every tiled processor &mdash; a result of <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tile(ApertureProcessor)</CODE></A> method
+ &mdash; always implements not only <A HREF="../../../net/algart/matrices/ApertureProcessor.html" title="interface in net.algart.matrices"><CODE>ApertureProcessor</CODE></A>, but also
+ <A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html" title="interface in net.algart.arrays"><CODE>ArrayProcessorWithContextSwitching</CODE></A> interface. So, you can use its
+ <A HREF="../../../net/algart/arrays/ArrayProcessor.html#context()"><CODE>ArrayProcessor.context()</CODE></A> and <A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html#context(net.algart.arrays.ArrayContext)"><CODE>ArrayProcessorWithContextSwitching.context(ArrayContext)</CODE></A> methods
+ after corresponding type cast. The current context of the tiled processor
+ (returned by <A HREF="../../../net/algart/arrays/ArrayProcessor.html#context()"><CODE>context()</CODE></A> method) is initially equal to the
+ <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#context()"><CODE>current context</CODE></A> of the tiler, and you can change it with help of
+ <A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html#context(net.algart.arrays.ArrayContext)"><CODE>context(ArrayContext)</CODE></A> method.
+ This context (if it is not <tt>null</tt>) is used for determining memory model,
+ which should be used for allocating matrices, for showing execution progress
+ and allowing to stop execution after processing every tile (even if the one-tile processor
+ does not support these features) and for multithreading simultaneous processing several tiles,
+ if <tt><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#numberOfTasks()"><CODE>numberOfTasks()</CODE></A>&gt;1</tt>. And it will be initially <tt>null</tt>, if the
+ <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#context()"><CODE>current context</CODE></A> of the tiler is <tt>null</tt> &mdash; then it will be ignored.</p>
+
+ <p>Many algorithms, which can be tiled by this class, also works with some <A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays"><CODE>ArrayContext</CODE></A>
+ to provide abilities to stop calculations, show progress, determine desired memory model for allocating
+ AlgART arrays, etc. Such algorithms <i>should</i> implement not only <A HREF="../../../net/algart/matrices/ApertureProcessor.html" title="interface in net.algart.matrices"><CODE>ApertureProcessor</CODE></A> interface,
+ but also <A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html" title="interface in net.algart.arrays"><CODE>ArrayProcessorWithContextSwitching</CODE></A> interface, and <i>should</i> get the current context
+ via their <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#context()"><CODE>context()</CODE></A> method. This requirement if not absolute, but if your algorithm retrieves
+ the context with some other way, then the behaviour of its <A HREF="../../../net/algart/arrays/ArrayContext.html#updateProgress(net.algart.arrays.ArrayContext.Event)"><CODE>ArrayContext.updateProgress(ArrayContext.Event)</CODE></A>
+ method can be incorrect &mdash; your processor, processing one tile, will not "know" that it is only a part
+ of the full task (processing all tiles).</p>
+
+ <p>If a one-tile processor, tiled by <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tile(ApertureProcessor)</CODE></A> method, really implements
+ <A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html" title="interface in net.algart.arrays"><CODE>ArrayProcessorWithContextSwitching</CODE></A>, then
+ <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A> method of the tiled processor
+ creates special <i>tile context</i> before processing every tile and
+ <A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html#context(net.algart.arrays.ArrayContext)"><CODE>switches</CODE></A> the one-tile processor
+ to this context before calling its
+ <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A> method.
+ In other words, at the stage <b>4.c</b> the tiled processor calls not<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<nobr><tt>oneTileProcessor.<A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A>(destTile, srcTile)</tt></nobr>,<br>
+ but<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<nobr><tt>((ApertureProcessor&lt;K&gt;)(oneTileProcessor.<A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html#context(net.algart.arrays.ArrayContext)"><CODE>context</CODE></A>(tileContext))).<A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A>(destTile, srcTile)</tt>.</nobr><br>
+ (By the way, it means that you are able not to think about the initial value of the
+ <A HREF="../../../net/algart/arrays/ArrayProcessor.html#context()"><CODE>current context</CODE></A> in the constructor of your one-tile processor:
+ it will be surely replaced with <tt>tileContext</tt> before usage of your processor.
+ For example, you may initialize it by <tt>null</tt>.)
+ Of course, it is supposed that the switching method
+ <nobr><tt>oneTileProcessor.<A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html#context(net.algart.arrays.ArrayContext)"><CODE>context</CODE></A>(tileContext)</tt></nobr> returns an object that also implements <A HREF="../../../net/algart/matrices/ApertureProcessor.html" title="interface in net.algart.matrices"><CODE>ApertureProcessor</CODE></A> &mdash;
+ if it is not so, it means an invalid implementation of that method, and <tt>AssertionError</tt>
+ or <tt>ClassCastException</tt> can be thrown in this case.</p>
+
+ <p>The <tt>tileContext</tt> here <b>is never <tt>null</tt></b>: you can freely use this fact
+ in your implementation of the one-tile processor.
+ This context is formed automatically as a <A HREF="../../../net/algart/arrays/ArrayContext.html#part(double, double)"><CODE>part</CODE></A>
+ of the current context of the <i>tiled</i> processor, returned by <i>its</i> <A HREF="../../../net/algart/arrays/ArrayProcessor.html#context()"><CODE>context()</CODE></A> method &mdash; a part, corresponding to processing only one from a lot of tiles.
+ (As written above, by default the current context of the tiled processor is equal to the
+ <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#context()"><CODE>current context</CODE></A> of the tiler.)
+ Thus, the tiler provides correct behaviour of
+ <nobr><tt>oneTileProcessor.<A HREF="../../../net/algart/arrays/ArrayProcessor.html#context()"><CODE>context()</CODE></A>.<A HREF="../../../net/algart/arrays/ArrayContext.html#updateProgress(net.algart.arrays.ArrayContext.Event)"><CODE>updateProgress(...)</CODE></A></tt></nobr>
+ inside <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A> method
+ of your one-tile processor.
+ If the current context of the tiled processor is <tt>null</tt>,
+ <tt>tileContext</tt> is formed from <A HREF="../../../net/algart/arrays/ArrayContext.html#DEFAULT"><CODE>ArrayContext.DEFAULT</CODE></A>.</p>
+
+ <p>The <tt>tileContext</tt> also provides additional information about the position and sizes
+ of the currently processed tile. Namely, it is created with help of <A HREF="../../../net/algart/arrays/ArrayContext.html#customDataVersion(java.lang.Object)"><CODE>ArrayContext.customDataVersion(Object)</CODE></A>
+ method in such a way, that its <A HREF="../../../net/algart/arrays/ArrayContext.html#customData()"><CODE>customData()</CODE></A> method always returns
+ a correctly filled instance of <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.TileInformation.html" title="class in net.algart.matrices"><CODE>TiledApertureProcessorFactory.TileInformation</CODE></A> class, describing the currently processed tile.</p>
+
+ <p>If the current <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#numberOfTasks()"><CODE>number of tasks</CODE></A>, desired for this tiler,
+ is greater than 1, and the tiled processor uses multithreading for parallel processing several tiles,
+ then the <tt>tileContext</tt> is formed in a more complex way.
+ Namely, in this case it is also a <A HREF="../../../net/algart/arrays/ArrayContext.html#part(double, double)"><CODE>part</CODE></A> of the full context
+ with correctly filled <A HREF="../../../net/algart/arrays/ArrayContext.html#customData()"><CODE>customData()</CODE></A> (an instance of <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.TileInformation.html" title="class in net.algart.matrices"><CODE>TiledApertureProcessorFactory.TileInformation</CODE></A>),
+ and in addition:</p>
+ <ul>
+     <li><A HREF="../../../net/algart/arrays/ArrayContext.html#multithreadedVersion(int, int)"><CODE>ArrayContext.multithreadedVersion(int k, int n)</CODE></A> method is called &mdash; so,
+     the one-tile processor can determine, in which of several parallel threads it is called
+     (the index <tt>k</tt>) and what is the total number of parallel threads
+     (the value <tt>n&le;<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#numberOfTasks()"><CODE>numberOfTasks()</CODE></A></tt> &mdash; it can be less than <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#numberOfTasks()"><CODE>numberOfTasks()</CODE></A>,
+     for example, when the total number of tiles is less than it).
+     This is helpful if the implementation of the one-tile processor needs some work memory
+     or another objects, which should be created before all calculations
+     and must be separate for different threads;</li>
+     <li><A HREF="../../../net/algart/arrays/ArrayContext.html#singleThreadVersion()"><CODE>ArrayContext.singleThreadVersion()</CODE></A> method is called &mdash; in other words,
+     the tiler tries to suppress multithreading in the one-tile processor, when it uses multithreading
+     itself for parallel processing several tiles;</li>
+     <li><A HREF="../../../net/algart/arrays/ArrayContext.html#noProgressVersion()"><CODE>ArrayContext.noProgressVersion()</CODE></A> method is called &mdash; because a progress bar cannot be updated
+     correctly while parallel processing several tiles (it will be updated after finishing processing
+     this group of tiles).</li>
+ </ul>
+
+
+ <h4>Restrictions</h4>
+
+ <p>Every instance of this class can work only with some fixed number <i>n</i> of matrix dimensions,
+ returned by <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#dimCount()"><CODE>dimCount()</CODE></A> method and equal to the length of <tt>tileDim</tt> array,
+ passed as an argument of the instantiation methods <tt>getInstance</tt>. It means that
+ <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A> method of an aperture processor,
+ returned by <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tile(ApertureProcessor)</CODE></A> method, can process only <i>n</i>-dimensional matrices
+ with <i>n</i>=<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#dimCount()"><CODE>dimCount()</CODE></A> and throws <tt>IllegalArgumentException</tt> if some of the passed matrices
+ has another number of dimensions.</p>
+
+ <p>The tiler has no restrictions for the types of matrix elements: it can work with any element types,
+ including non-primitive types. But usually the types of matrix elements are primitive.</p>
+
+ <p>Note: in improbable cases, when the dimensions of the source and resulting matrices and/or
+ the sizes of the <A HREF="../../../net/algart/matrices/ApertureProcessor.html#dependenceAperture(K)"><CODE>dependence apertures</CODE></A>
+ are extremely large (about 2<sup>63</sup>),
+ so that the sum of some matrix dimension and the corresponding size of the aperture
+ (<A HREF="../../../net/algart/math/IRectangularArea.html#width(int)"><CODE>IRectangularArea.width(int)</CODE></A>) or the product of all such sums (i.e. the number of elements
+ in a source/resulting matrix, <A HREF="../../../net/algart/matrices/DependenceApertureBuilder.html#extendDimensions(long[], net.algart.math.IRectangularArea)"><CODE>extended</CODE></A> by such aperture) is greater than <nobr><tt>Long.MAX_VALUE</tt></nobr>,
+ the <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A> method of the
+ <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tiled</CODE></A> processor throws <tt>IndexOutOfBoundsException</tt> and does nothing.
+ Of course, these are very improbable cases.</p>
+
+ <h4>Creating instances of this class</h4>
+
+ <p>To create instances of this class, you should use one of the following methods:</p>
+
+ <ul>
+     <li><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[])"><CODE>getInstance(ArrayContext, Matrix.ContinuationMode, long, long[])</CODE></A>,</li>
+     <li><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[])"><CODE>getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[])</CODE></A>,</li>
+     <li><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], int)"><CODE>getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], int)</CODE></A>,</li>
+     <li><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)</CODE></A>.</li>
+ </ul>
+
+
+ <h4>Multithread compatibility</h4>
+
+ <p>This class is <b>immutable</b> and <b>thread-safe</b>:
+ there are no ways to modify settings of the created instance.
+ The same is true for the tiled processors, created by <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tile(ApertureProcessor)</CODE></A> method.</p>
+
+ <p>AlgART Laboratory 2007-2013</p>
+<P>
+
+<P>
+<DL>
+<DT><STRONG>Since:</STRONG></DT>
+  <DD>JDK 1.5</DD>
+<DT><STRONG>Version:</STRONG></DT>
+  <DD>1.2</DD>
+<DT><STRONG>Author:</STRONG></DT>
+  <DD>Daniel Alievsky</DD></DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Nested Class Summary table, listing nested classes, and an explanation">
+<CAPTION CLASS="TableCaption">
+Nested Class Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Class and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.TileInformation.html" title="class in net.algart.matrices">TiledApertureProcessorFactory.TileInformation</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Additional information about the current processed tile, available for tiled aperture processors
+ via their context.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#context()">context</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the current context, used by this tiler.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices">TiledApertureProcessorFactory</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#context(net.algart.arrays.ArrayContext)">context</A></STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;newContext)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switches the context: returns an instance, identical to this one excepting
+ that it uses the specified <tt>newContext</tt> for all operations.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays">Matrix.ContinuationMode</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#continuationMode()">continuationMode</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the continuation mode, used by this tiler.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#dimCount()">dimCount</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the number of dimensions of this tiler.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices">TiledApertureProcessorFactory</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[])">getInstance</A></STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+            <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays">Matrix.ContinuationMode</A>&nbsp;continuationMode,
+            long&nbsp;maxTempJavaMemory,
+            long[]&nbsp;tileDim)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates new instance of the tiler.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices">TiledApertureProcessorFactory</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], int)">getInstance</A></STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+            <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays">Matrix.ContinuationMode</A>&nbsp;continuationMode,
+            long&nbsp;maxTempJavaMemory,
+            long[]&nbsp;tileDim,
+            int&nbsp;numberOfTasks)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates new instance of the tiler.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices">TiledApertureProcessorFactory</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[])">getInstance</A></STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+            <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays">Matrix.ContinuationMode</A>&nbsp;continuationMode,
+            long&nbsp;maxTempJavaMemory,
+            long[]&nbsp;tileDim,
+            long[]&nbsp;allocationTileDim)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates new instance of the tiler.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices">TiledApertureProcessorFactory</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)">getInstance</A></STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+            <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays">Matrix.ContinuationMode</A>&nbsp;continuationMode,
+            long&nbsp;maxTempJavaMemory,
+            long[]&nbsp;tileDim,
+            long[]&nbsp;allocationTileDim,
+            int&nbsp;numberOfTasks)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates new instance of the tiler.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#maxTempJavaMemory()">maxTempJavaMemory</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the maximal amount of Java memory, in bytes, allowed for allocating temporary matrices
+ for storing a tile.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#numberOfTasks()">numberOfTasks</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the number of tiles, which should be processed simultaneously in
+ parallel threads to optimize calculations on multiprocessor or multi-core computers.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;K&gt; <A HREF="../../../net/algart/matrices/ApertureProcessor.html" title="interface in net.algart.matrices">ApertureProcessor</A>&lt;K&gt;</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)">tile</A></STRONG>(<A HREF="../../../net/algart/matrices/ApertureProcessor.html" title="interface in net.algart.matrices">ApertureProcessor</A>&lt;K&gt;&nbsp;oneTileProcessor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The main method: builds the tiled aperture processor on the base of the given  one-tile processor.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long[]</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tileDim()">tileDim</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the desired dimensions of every tile.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#toString()">toString</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a brief string description of this object.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class java.lang.Object</STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[])"><!-- --></A><H3>
+getInstance</H3>
+<PRE>
+public static <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices">TiledApertureProcessorFactory</A> <STRONG>getInstance</STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                                        <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays">Matrix.ContinuationMode</A>&nbsp;continuationMode,
+                                                        long&nbsp;maxTempJavaMemory,
+                                                        long[]&nbsp;tileDim)</PRE>
+<DL>
+<DD>Creates new instance of the tiler. Equivalent to the following call of the basic instantiation method:<br>
+ <tt><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A>(context, continuationMode, maxTempJavaMemory, tileDim, <A HREF="../../../net/algart/arrays/Matrices.html#defaultTileDimensions(int)"><CODE>Matrices.defaultTileDimensions</CODE></A>(tileDim.length), 0)</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD><DD><CODE>continuationMode</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD><DD><CODE>maxTempJavaMemory</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD><DD><CODE>tileDim</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>new tiler.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>continuationMode==<A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html#NONE"><CODE>Matrix.ContinuationMode.NONE</CODE></A></tt>,
+                                  or if <tt>maxTempJavaMemory&lt;0</tt>,
+                                  or if <tt>tileDim.length==0</tt>,
+                                  or if one of elements of <tt>tileDim</tt> Java array is zero or negative.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[])"><!-- --></A><H3>
+getInstance</H3>
+<PRE>
+public static <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices">TiledApertureProcessorFactory</A> <STRONG>getInstance</STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                                        <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays">Matrix.ContinuationMode</A>&nbsp;continuationMode,
+                                                        long&nbsp;maxTempJavaMemory,
+                                                        long[]&nbsp;tileDim,
+                                                        long[]&nbsp;allocationTileDim)</PRE>
+<DL>
+<DD>Creates new instance of the tiler. Equivalent to the following call of the basic instantiation method:<br>
+ <tt><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A>(context, continuationMode, maxTempJavaMemory, tileDim, allocationTileDim, 0)</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD><DD><CODE>continuationMode</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD><DD><CODE>maxTempJavaMemory</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD><DD><CODE>tileDim</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD><DD><CODE>allocationTileDim</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>new tiler.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>continuationMode==<A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html#NONE"><CODE>Matrix.ContinuationMode.NONE</CODE></A></tt>,
+                                  or if <tt>maxTempJavaMemory&lt;0</tt>,
+                                  or if <tt>tileDim.length==0</tt>,
+                                  or if <tt>allocationTileDim!=null</tt> and
+                                  <tt>allocationTileDim.length!=tileDim.length</tt>,
+                                  or if one of elements of <tt>tileDim</tt> or (non-null)
+                                  <tt>allocationTileDim</tt> Java arrays is zero or negative.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], int)"><!-- --></A><H3>
+getInstance</H3>
+<PRE>
+public static <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices">TiledApertureProcessorFactory</A> <STRONG>getInstance</STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                                        <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays">Matrix.ContinuationMode</A>&nbsp;continuationMode,
+                                                        long&nbsp;maxTempJavaMemory,
+                                                        long[]&nbsp;tileDim,
+                                                        int&nbsp;numberOfTasks)</PRE>
+<DL>
+<DD>Creates new instance of the tiler. Equivalent to the following call of the basic instantiation method:<br>
+ <tt><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A>(context, continuationMode, maxTempJavaMemory, tileDim, <A HREF="../../../net/algart/arrays/Matrices.html#defaultTileDimensions(int)"><CODE>Matrices.defaultTileDimensions</CODE></A>(tileDim.length), numberOfTasks)</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD><DD><CODE>continuationMode</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD><DD><CODE>maxTempJavaMemory</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD><DD><CODE>tileDim</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD><DD><CODE>numberOfTasks</CODE> - see the basic <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>new tiler.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>continuationMode==<A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html#NONE"><CODE>Matrix.ContinuationMode.NONE</CODE></A></tt>,
+                                  or if <tt>maxTempJavaMemory&lt;0</tt>,
+                                  or if <tt>tileDim.length==0</tt>,
+                                  or if <tt>numberOfTasks&lt;0</tt>,
+                                  or if one of elements of <tt>tileDim</tt> Java array is zero or negative.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><!-- --></A><H3>
+getInstance</H3>
+<PRE>
+public static <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices">TiledApertureProcessorFactory</A> <STRONG>getInstance</STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                                        <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays">Matrix.ContinuationMode</A>&nbsp;continuationMode,
+                                                        long&nbsp;maxTempJavaMemory,
+                                                        long[]&nbsp;tileDim,
+                                                        long[]&nbsp;allocationTileDim,
+                                                        int&nbsp;numberOfTasks)</PRE>
+<DL>
+<DD>Creates new instance of the tiler.
+
+ <p>The passed Java arrays <tt>tileDim</tt> and <tt>allocationTileDim</tt> are cloned by this method:
+ no references to them are maintained by the created object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#context()"><CODE>context</CODE></A> that will be used by this tiler;
+                          may be <tt>null</tt>, then it will be ignored, and
+                          the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tiled</CODE></A> processor will create all temporary
+                          matrices in <A HREF="../../../net/algart/arrays/SimpleMemoryModel.html" title="class in net.algart.arrays"><CODE>SimpleMemoryModel</CODE></A>.<br>&nbsp;</DD><DD><CODE>continuationMode</CODE> - continuation mode, used by the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tiled</CODE></A> processor
+                          (see also the specification of the
+                          <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A>
+                          method in the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices"><CODE>comments to this class</CODE></A>,
+                          stage <b>4.b</b>).<br>&nbsp;</DD><DD><CODE>maxTempJavaMemory</CODE> - maximal amount of Java memory, in bytes, allowed for allocating by the
+                          <A HREF="../../../net/algart/matrices/ApertureProcessor.html#process(java.util.Map, java.util.Map)"><CODE>process</CODE></A> method
+                          of the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tiled</CODE></A> processor
+                          (see ibid., stage <b>4.a</b>). If you are sure that there is enough Java memory
+                          for allocating all necessary matrices for <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#numberOfTasks()"><CODE>numberOfTasks()</CODE></A> tiles
+                          of all source and resulting matrices (with the given dimensions <tt>tileDim</tt>),
+                          you may specify here <tt>Long.MAX_VALUE</tt>.<br>&nbsp;</DD><DD><CODE>tileDim</CODE> - the desired dimensions of tiles, into which the source and resulting matrices
+                          are split by the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tiled</CODE></A> processor
+                          (see ibid., stage <b>3</b>). Typical values for most applications are 4096x4096
+                          or 2048x2048 (in 2-dimensional case).<br>&nbsp;</DD><DD><CODE>allocationTileDim</CODE> - if not <tt>null</tt>, then the resulting matrices <b>M'</b><sub><i>j</i></sub>,
+                          created by the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tiled</CODE></A> processor
+                          (see ibid., stage <b>4.d</b>), are automatically tiled by the call
+                          <tt>newMatrix.<A HREF="../../../net/algart/arrays/Matrix.html#tile(long...)"><CODE>tile</CODE></A>(allocationTileDim)</tt>.
+                          If it is <tt>null</tt>, the resulting matrices are not tiled.<br>&nbsp;</DD><DD><CODE>numberOfTasks</CODE> - the desired number of tiles, which should be processed simultaneously in
+                          parallel threads to optimize calculations on multiprocessor or multi-core computers;
+                          may be 0, then it will be detected automatically as
+                          <tt><A HREF="../../../net/algart/arrays/Arrays.html#getThreadPoolFactory(net.algart.arrays.ArrayContext)"><CODE>Arrays.getThreadPoolFactory</CODE></A>(context).<A HREF="../../../net/algart/arrays/ThreadPoolFactory.html#recommendedNumberOfTasks()"><CODE>recommendedNumberOfTasks()</CODE></A></tt>.
+                          You may specify <tt>numberOfTasks=1</tt> for saving memory, if you know that
+                          the one-tile processors, which you are going to tile, provide multithreading
+                          optimization themselves.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>new tiler.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>continuationMode==<A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html#NONE"><CODE>Matrix.ContinuationMode.NONE</CODE></A></tt>,
+                                  or if <tt>maxTempJavaMemory&lt;0</tt>,
+                                  or if <tt>tileDim.length==0</tt>,
+                                  or if <tt>allocationTileDim!=null</tt> and
+                                  <tt>allocationTileDim.length!=tileDim.length</tt>,
+                                  or if <tt>numberOfTasks&lt;0</tt>,
+                                  or if one of elements of <tt>tileDim</tt> or (non-null)
+                                  <tt>allocationTileDim</tt> Java arrays is zero or negative.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#context()"><CODE>context()</CODE></A>, 
+<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#continuationMode()"><CODE>continuationMode()</CODE></A>, 
+<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#maxTempJavaMemory()"><CODE>maxTempJavaMemory()</CODE></A>, 
+<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#dimCount()"><CODE>dimCount()</CODE></A>, 
+<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tileDim()"><CODE>tileDim()</CODE></A>, 
+<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#numberOfTasks()"><CODE>numberOfTasks()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="context()"><!-- --></A><H3>
+context</H3>
+<PRE>
+public <A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A> <STRONG>context</STRONG>()</PRE>
+<DL>
+<DD>Returns the current context, used by this tiler. Equal to the first argument,
+ passed to an instantiation method <tt>getInstance</tt>.
+
+ <p>This context (if it is not <tt>null</tt>) is used by the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tiled</CODE></A> processor
+ for determining memory model, which should be used for allocating resulting matrices and, maybe,
+ temporary matrices for every tile (if <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#maxTempJavaMemory()"><CODE>maxTempJavaMemory()</CODE></A> is too small to allocate them
+ in <A HREF="../../../net/algart/arrays/SimpleMemoryModel.html" title="class in net.algart.arrays"><CODE>SimpleMemoryModel</CODE></A>), for showing execution progress and allowing to stop execution after
+ processing every tile (even if the one-tile processor does not support these features)
+ and for multithreading simultaneous processing several tiles, if <tt><A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#numberOfTasks()"><CODE>numberOfTasks()</CODE></A>&gt;1</tt>.
+
+ <p>See also the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices"><CODE>comments to this class</CODE></A>, the section
+ "Contexts for the one-tile processor".
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the current context, used by this tiler; may be <tt>null</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="context(net.algart.arrays.ArrayContext)"><!-- --></A><H3>
+context</H3>
+<PRE>
+public <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices">TiledApertureProcessorFactory</A> <STRONG>context</STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;newContext)</PRE>
+<DL>
+<DD>Switches the context: returns an instance, identical to this one excepting
+ that it uses the specified <tt>newContext</tt> for all operations.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>newContext</CODE> - another context, used by the returned instance; may be <tt>null</tt>.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>new instance with another context.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="dimCount()"><!-- --></A><H3>
+dimCount</H3>
+<PRE>
+public int <STRONG>dimCount</STRONG>()</PRE>
+<DL>
+<DD>Returns the number of dimensions of this tiler. Equal to the number of elements of <tt>tileDim</tt>
+ arrays, passed to an instantiation method <tt>getInstance</tt>.
+
+ <p>The tiled processor, created by <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#tile(net.algart.matrices.ApertureProcessor)"><CODE>tile(ApertureProcessor)</CODE></A> method of this tiler,
+ can process only matrices with this number of dimensions.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of dimensions of matrices, which can be processed by aperture processors,
+         tiled by this tiler; always &ge;1.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="continuationMode()"><!-- --></A><H3>
+continuationMode</H3>
+<PRE>
+public <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html" title="class in net.algart.arrays">Matrix.ContinuationMode</A> <STRONG>continuationMode</STRONG>()</PRE>
+<DL>
+<DD>Returns the continuation mode, used by this tiler. Equal to the corresponding argument,
+ passed to an instantiation method <tt>getInstance</tt>.
+
+ <p>See comments to the basic
+ <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A>
+ method and the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices"><CODE>comments to this class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the continuation mode of this tiler; cannot be <tt>null</tt> or
+         <A HREF="../../../net/algart/arrays/Matrix.ContinuationMode.html#NONE"><CODE>Matrix.ContinuationMode.NONE</CODE></A>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="maxTempJavaMemory()"><!-- --></A><H3>
+maxTempJavaMemory</H3>
+<PRE>
+public long <STRONG>maxTempJavaMemory</STRONG>()</PRE>
+<DL>
+<DD>Returns the maximal amount of Java memory, in bytes, allowed for allocating temporary matrices
+ for storing a tile. Equal to the corresponding argument,
+ passed to an instantiation method <tt>getInstance</tt>.
+
+ <p>See comments to the basic
+ <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A>
+ method and the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices"><CODE>comments to this class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the maximal amount of Java memory, in bytes, allowed for allocating temporary matrices
+         for storing a tile; always &ge;0.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="tileDim()"><!-- --></A><H3>
+tileDim</H3>
+<PRE>
+public long[] <STRONG>tileDim</STRONG>()</PRE>
+<DL>
+<DD>Returns the desired dimensions of every tile. Equal to <tt>tileDim</tt>
+ arrays, passed to an instantiation method <tt>getInstance</tt>.
+
+ <p>The returned array is a clone of the internal dimension array stored in this object.
+ The returned array is never empty (its length cannot be zero).
+ The elements of the returned array are never zero or negative.
+
+ <p>See comments to the basic
+ <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A>
+ method and the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices"><CODE>comments to this class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the desired dimensions of every tile.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="numberOfTasks()"><!-- --></A><H3>
+numberOfTasks</H3>
+<PRE>
+public int <STRONG>numberOfTasks</STRONG>()</PRE>
+<DL>
+<DD>Returns the number of tiles, which should be processed simultaneously in
+ parallel threads to optimize calculations on multiprocessor or multi-core computers.
+ It is equal to:
+ <ul>
+ <li><tt>numberOfTasks</tt> argument if this instance was created by
+ <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[], int)"><CODE>getInstance</CODE></A> method, having such argument, and if this argument was non-zero or</li>
+ <li><tt><A HREF="../../../net/algart/arrays/Arrays.html#getThreadPoolFactory(net.algart.arrays.ArrayContext)"><CODE>Arrays.getThreadPoolFactory</CODE></A>(<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#context()"><CODE>context()</CODE></A>).<A HREF="../../../net/algart/arrays/ThreadPoolFactory.html#recommendedNumberOfTasks()"><CODE>recommendedNumberOfTasks()</CODE></A></tt> if this instance was created by
+ <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html#getInstance(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix.ContinuationMode, long, long[], long[])"><CODE>getInstance</CODE></A>
+ method without <tt>numberOfTasks</tt> argument or if this argument was zero
+ (<tt>numberOfTasks=0</tt>).</li>
+ </ul>
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of threads, that this class uses for multithreading optimization; always &ge;1.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="tile(net.algart.matrices.ApertureProcessor)"><!-- --></A><H3>
+tile</H3>
+<PRE>
+public &lt;K&gt; <A HREF="../../../net/algart/matrices/ApertureProcessor.html" title="interface in net.algart.matrices">ApertureProcessor</A>&lt;K&gt; <STRONG>tile</STRONG>(<A HREF="../../../net/algart/matrices/ApertureProcessor.html" title="interface in net.algart.matrices">ApertureProcessor</A>&lt;K&gt;&nbsp;oneTileProcessor)</PRE>
+<DL>
+<DD>The main method: builds the tiled aperture processor on the base of the given  one-tile processor.
+ See the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices"><CODE>comments to this class</CODE></A> for more details.
+
+ <p>The result of this method always implements <A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html" title="interface in net.algart.arrays"><CODE>ArrayProcessorWithContextSwitching</CODE></A> interface.
+ See the <A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.html" title="class in net.algart.matrices"><CODE>comments to this class</CODE></A>, the section
+ "Contexts for the one-tile processor".
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>oneTileProcessor</CODE> - one-tile aperture processor.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>tiled aperture processor.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if the argument is <tt>null</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="toString()"><!-- --></A><H3>
+toString</H3>
+<PRE>
+public java.lang.String <STRONG>toString</STRONG>()</PRE>
+<DL>
+<DD>Returns a brief string description of this object.
+
+ <p>The result of this method may depend on implementation and usually contains
+ a short description of this tiler.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>toString</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>a brief string description of this object.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/matrices/TiledApertureProcessorFactory.TileInformation.html" title="class in net.algart.matrices"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/matrices/TiledApertureProcessorFactory.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="TiledApertureProcessorFactory.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

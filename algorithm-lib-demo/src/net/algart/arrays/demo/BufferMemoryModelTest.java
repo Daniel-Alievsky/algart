@@ -1,0 +1,76 @@
+package net.algart.arrays.demo;
+
+import net.algart.arrays.*;
+
+import java.nio.*;
+import java.util.Locale;
+
+/**
+ * <p>Demo of using {@link BufferMemoryModel}.</p>
+ *
+ * <p>AlgART Laboratory 2007-2013</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ */
+public class BufferMemoryModelTest {
+    public static void main(String[] args) {
+        int startArgIndex = 0;
+        boolean direct = false;
+        if (startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-direct")) {
+            direct = true; startArgIndex++;
+        }
+        if (args.length < startArgIndex + 2) {
+            System.out.println("Usage: " + BufferMemoryModelTest.class.getName()
+                + " [-direct] arrayLength numberOfIterations");
+            return;
+        }
+        int n = Integer.parseInt(args[startArgIndex]);
+        int numberOfIterations = Integer.parseInt(args[startArgIndex + 1]);
+        ByteBuffer bb = direct ?
+            ByteBuffer.allocateDirect(4 * n) :
+            ByteBuffer.allocate(4 * n);
+        IntBuffer ib = bb.asIntBuffer();
+        bb.position(bb.limit() / 2); // must work even in this case
+        UpdatableIntArray ia = BufferMemoryModel.asUpdatableIntArray(bb);
+        IntBuffer sib = n >= 10 ? ((IntBuffer)ib.position(10)).slice() : ib;
+        UpdatableIntArray sia = n >= 10 ? ia.subArray(10, n) : ia;
+        for (int iteration = 1; iteration <= numberOfIterations; iteration++) {
+            System.out.println("Iteration #" + iteration + "/" + numberOfIterations);
+            long t1 = System.nanoTime();
+            for (int k = 0; k < n; k++) {
+                ib.put(k, k);
+            }
+            long t2 = System.nanoTime();
+            sib.rewind();
+            long sum1 = 0;
+            for (int k = 0, len = sib.limit(); k < len; k++) {
+                sum1 += sib.get();
+            }
+            long t3 = System.nanoTime();
+            long sum2 = 0;
+            for (int k = 0, len = (int)sia.length(); k < len; k++) {
+                sum2 += sia.getInt(k);
+            }
+            long t4 = System.nanoTime();
+            for (int k = 0; k < n; k++) {
+                ia.setInt(k, k);
+            }
+            long t5 = System.nanoTime();
+            System.out.printf(Locale.US, "Filling IntBuffer:         %.5f ms, %.3f ns/element (%d elements)%n",
+                (t2 - t1) * 1e-6, (double)(t2 - t1) / ib.limit(), ib.limit());
+            System.out.printf(Locale.US, "Sum of IntBuffer:          %.5f ms, %.3f ns/element (%d elements), "
+                + "sum = %d%n",
+                (t3 - t2) * 1e-6, (double)(t3 - t2) / sib.limit(), sib.limit(), sum1);
+            System.out.printf(Locale.US, "Sum of UpdatableIntArray:  %.5f ms, %.3f ns/element (%d elements), "
+                + "sum = %d%n",
+                (t4 - t3) * 1e-6, (double)(t4 - t3) / sia.length(), sia.length(), sum2);
+            System.out.printf(Locale.US, "Filling UpdatableIntArray: %.5f ms, %.3f ns/element (%d elements)%n",
+                (t5 - t4) * 1e-6, (double)(t5 - t4) / ia.length(), ia.length());
+            if (sum1 != sum2)
+                throw new AssertionError("A bug is found: invalid sum");
+            System.out.println();
+        }
+    }
+}

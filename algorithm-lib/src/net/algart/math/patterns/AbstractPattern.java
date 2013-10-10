@@ -1,0 +1,664 @@
+package net.algart.math.patterns;
+
+import java.util.*;
+
+import net.algart.math.*;
+
+/**
+ * <p>A skeletal implementation of the {@link Pattern} interface to minimize
+ * the effort required to implement this interface.</p>
+ *
+ * <p>All non-abstract methods are completely implemented here and may be not overridden in subclasses.</p>
+ *
+ * <p>AlgART Laboratory 2007-2013</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ */
+public strictfp abstract class AbstractPattern implements Pattern {
+
+    volatile Boolean surelyOrigin = null;
+    volatile Boolean surelyInteger = null;
+    final Range[] coordRanges; // null-filled by the constructor
+    final Pattern[] minBound; // null-filled by the constructor
+    final Pattern[] maxBound; // null-filled by the constructor
+
+    /**
+     * The number of space dimensions of this pattern.
+     */
+    protected final int dimCount;
+
+    /**
+     * Creates a pattern with the given number of space dimensions.
+     *
+     * @param dimCount the number of space dimensions.
+     * @throws IllegalArgumentException if <tt>dimCount&lt;=0</tt>.
+     */
+    protected AbstractPattern(int dimCount) {
+        if (dimCount <= 0)
+            throw new IllegalArgumentException("Negative or zero dimCount=" + dimCount);
+        this.dimCount = dimCount;
+        this.coordRanges = new Range[dimCount]; // null-filled
+        this.minBound = new Pattern[dimCount]; // null-filled
+        this.maxBound = new Pattern[dimCount]; // null-filled
+    }
+
+    /**
+     * This implementation returns {@link #dimCount} field.
+     *
+     * @return the number of space dimensions of this pattern.
+     */
+    public final int dimCount() {
+        return this.dimCount;
+    }
+
+    public abstract long pointCount();
+
+    /**
+     * This implementation returns <tt>(double){@link #pointCount()}</tt>.
+     * Please override this method if the pattern can contain more than <tt>Long.MAX_VALUE</tt> points.
+     *
+     * @return the number of {@link IPoint integer points} in this pattern.
+     */
+    public double largePointCount() {
+        return (double) pointCount();
+    }
+
+    /**
+     * This implementation returns <tt>false</tt>.
+     * Please override this method if the pattern can contain more than <tt>Long.MAX_VALUE</tt> points.
+     *
+     * @return <tt>true</tt> if the number of points in this pattern is greater than <tt>Long.MAX_VALUE</tt>.
+     */
+    public boolean isPointCountVeryLarge() {
+        return false;
+    }
+
+    public abstract Set<Point> points();
+
+    /**
+     * This implementation calls {@link #points()} method and returns a new set, built from the returned set of
+     * real points by conversion of every point to an integer point via {@link Point#toRoundedPoint()} method,
+     * as written in
+     * {@link Pattern#roundedPoints() comments to this method in Pattern interface}.
+     * Please override this method if there is more efficient way to get all rounded points.
+     *
+     * @return all points of this pattern, rounded to the nearest integer points.
+     * @throws TooManyPointsInPatternError if {@link #points()} method throws this exception
+     *                                     (<tt>OutOfMemoryError</tt> can be also thrown in this case).
+     */
+    public Set<IPoint> roundedPoints() {
+        Set<IPoint> result = new HashSet<IPoint>();
+        for (Point p : points()) {
+            result.add(p.toRoundedPoint());
+        }
+        return Collections.unmodifiableSet(result);
+    }
+
+    public abstract Range coordRange(int coordIndex);
+
+    /**
+     * This implementation is based on the loop of calls of {@link #coordRange(int)} method
+     * for all coordinate indexes from <tt>0</tt> to <tt>{@link #dimCount()}-1</tt>.
+     *
+     * @return the ranges from minimal to maximal grid index for all space dimensions.
+     */
+    public RectangularArea coordArea() {
+        Range[] result = new Range[dimCount];
+        for (int k = 0; k < result.length; k++) {
+            result[k] = coordRange(k);
+        }
+        return RectangularArea.valueOf(result);
+    }
+
+    /**
+     * This implementation is based on the loop of calls of {@link #coordRange(int)} method
+     * for all coordinate indexes from <tt>0</tt> to <tt>{@link #dimCount()}-1</tt>.
+     *
+     * @return minimal coordinates for all space dimensions as a point.
+     */
+    public Point coordMin() {
+        double[] coordinates = new double[dimCount];
+        for (int k = 0; k < coordinates.length; k++) {
+            coordinates[k] = coordRange(k).min();
+        }
+        return Point.valueOf(coordinates);
+    }
+
+    /**
+     * This implementation is based on the loop of calls of {@link #coordRange(int)} method
+     * for all coordinate indexes from <tt>0</tt> to <tt>{@link #dimCount()}-1</tt>.
+     *
+     * @return maximal coordinates for all space dimensions as a point.
+     */
+    public Point coordMax() {
+        double[] coordinates = new double[dimCount];
+        for (int k = 0; k < coordinates.length; k++) {
+            coordinates[k] = coordRange(k).max();
+        }
+        return Point.valueOf(coordinates);
+    }
+
+
+    /**
+     * This implementation returns <tt>{@link #coordRange(int) coordRange}(coordIndex).{@link Range#toRoundedRange()
+     * toRoundedRange()}</tt>.
+     *
+     * @param coordIndex the index of the coordinate (0 for <i>x</i>, 1 for <i>y</i>, 2 for <i>z</i>, etc.).
+     * @return the range from minimal to maximal coordinate with this index, rounded to the <tt>long</tt> values.
+     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     */
+    public IRange roundedCoordRange(int coordIndex) {
+        return coordRange(coordIndex).toRoundedRange();
+    }
+
+    /**
+     * This implementation is based on the loop of calls of {@link #roundedCoordRange(int)} method
+     * for all coordinate indexes from <tt>0</tt> to <tt>{@link #dimCount()}-1</tt>.
+     *
+     * @return the ranges from minimal to maximal coordinate for all space dimensions,
+     *         rounded to the <tt>long</tt> values.
+     */
+    public IRectangularArea roundedCoordArea() {
+        IRange[] result = new IRange[dimCount];
+        for (int k = 0; k < result.length; k++) {
+            result[k] = roundedCoordRange(k);
+        }
+        return IRectangularArea.valueOf(result);
+    }
+
+    public abstract boolean isSurelySinglePoint();
+
+    /**
+     * This implementation checks {@link #isSurelySinglePoint()}, and if it is <tt>true</tt>,
+     * checks, whether the only element of {@link #points()} set is the origin.
+     *
+     * <p>This method caches its results: the following calls will work faster.
+     *
+     * @return <tt>true</tt> if it is one-point pattern containing the origin of coordinates as the single point.
+     */
+    public boolean isSurelyOriginPoint() {
+        if (surelyOrigin == null) {
+            surelyOrigin = isSurelySinglePoint() && points().iterator().next().isOrigin();
+            // if isSurelySinglePoint(), then this method works quickly enough:
+            // usually there are no problems to get the only one point
+        }
+        return surelyOrigin;
+    }
+
+    /**
+     * This implementation calls {@link #points()} method and checks, whether all returned points are integer,
+     * i&#46;e&#46; {@link Point#isInteger()} method returns <tt>true</tt> for all elements the returned set.
+     * If all points, returned by {@link #points()} call, are integer, this method returns <tt>true</tt>,
+     * in other case it returns <tt>false</tt>.
+     *
+     * <p>This method caches its results: the following calls will work faster.
+     *
+     * <p>Note: according the {@link Pattern#isSurelyInteger() comments to this method in Pattern interface},
+     * such implementation is correct only if {@link #minkowskiDecomposition(int)},
+     * {@link #unionDecomposition(int)} and {@link #allUnionDecompositions(int)} methods
+     * have default implementations (not overridden). If some of them are overridden and
+     * return some non-trivial results, this method <i>must</i> be also overridden.
+     *
+     * <p>Note: according the {@link Pattern#isSurelyInteger() comments to this method in Pattern interface},
+     * this method <i>must</i> be overridden if the number of points can be very large and a call of
+     * {@link #points()} method leads to a risk of {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>.
+     * In particular, this method should be usually overridden in implementations of {@link RectangularPattern}.
+     *
+     * @return <tt>true</tt> if this pattern assuredly contain only {@link Point#isInteger() integer} points.
+     */
+    public boolean isSurelyInteger() {
+        if (surelyInteger == null) {
+            boolean allInteger = true;
+            for (Point p : points()) {
+                if (!p.isInteger()) {
+                    allInteger = false;
+                    break;
+                }
+            }
+            surelyInteger = allInteger;
+        }
+        return surelyInteger;
+    }
+
+    /**
+     * This implementation calls {@link #roundedPoints()} method and constructs a new integer pattern on the base
+     * of this set, like as it is performed in {@link Patterns#newIntegerPattern(java.util.Collection)} method.
+     * Please override this method if there is more efficient way to round this pattern,
+     * for example, if this pattern is already an integer one.
+     *
+     * @return the integer pattern, geometrically nearest to this one.
+     * @throws TooManyPointsInPatternError if this pattern is not {@link DirectPointSetPattern} and
+     *                                     not {@link RectangularPattern} and if, at the same time, the number
+     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     in some rare situations, is near this limit
+     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     */
+    public UniformGridPattern round() {
+        return new BasicDirectPointSetUniformGridPattern(dimCount, roundedPoints());
+        // Here is a little optimization: we do not clone the result of roundedPoints() call.
+        // It is correct for any possible correct implementation of roundedPoints(),
+        // because this object is always immutable (it is a requirement of Pattern interface).
+    }
+
+    public abstract Pattern projectionAlongAxis(int coordIndex);
+
+    /*Repeat() min(?!us) ==> max */
+
+    /**
+     * This implementation calls {@link #points()} method and builds the result on the base of analysis
+     * of the returned point set.
+     * Please override this method if there is more efficient way to find the result,
+     * for example, if this pattern is a rectangular one.
+     *
+     * @param coordIndex the index of the coordinate (0 for <i>x</i>-axis , 1 for <i>y</i>-axis,
+     *                   2 for <i>z</i>a-xis, etc.).
+     * @return the minimal boundary of this pattern for the given axis.
+     * @throws IndexOutOfBoundsException   if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @throws TooManyPointsInPatternError if this pattern is not {@link DirectPointSetPattern} and
+     *                                     not {@link RectangularPattern} and if, at the same time, the number
+     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     in some rare situations, is near this limit
+     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     */
+    public Pattern minBound(int coordIndex) {
+        return minBound(coordIndex, false);
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
+    /**
+     * This implementation calls {@link #points()} method and builds the result on the base of analysis
+     * of the returned point set.
+     * Please override this method if there is more efficient way to find the result,
+     * for example, if this pattern is a rectangular one.
+     *
+     * @param coordIndex the index of the coordinate (0 for <i>x</i>-axis , 1 for <i>y</i>-axis,
+     *                   2 for <i>z</i>a-xis, etc.).
+     * @return the maximal boundary of this pattern for the given axis.
+     * @throws IndexOutOfBoundsException   if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @throws TooManyPointsInPatternError if this pattern is not {@link DirectPointSetPattern} and
+     *                                     not {@link RectangularPattern} and if, at the same time, the number
+     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     in some rare situations, is near this limit
+     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     */
+    public Pattern maxBound(int coordIndex) {
+        return maxBound(coordIndex, false);
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /**
+     * This implementation just returns this object.
+     * Please override this method (together with {@link #maxCarcassMultiplier()}),
+     * if your class can provide better results.
+     *
+     * <p>Note: {@link AbstractUniformGridPattern} class provides much better implementation.
+     *
+     * @return the <i>carcass</i> of this pattern.
+     */
+    public Pattern carcass() {
+        return this;
+    }
+
+    /**
+     * This implementation just returns 2.
+     * Please override this method (together with {@link #carcass()}),
+     * if your class can provide better results.
+     *
+     * <p>Note: {@link AbstractUniformGridPattern} class provides much better implementation.
+     *
+     * @return the maximal multiplier (&ge;2),
+     *         for which the calculation of the Minkowski multiple can be optimized
+     *         by using the {@link #carcass() carcass}.
+     */
+    public int maxCarcassMultiplier() {
+        return 2;
+    }
+
+    public abstract Pattern shift(Point shift);
+
+    /**
+     * This implementation calls {@link #multiply(double) multiply(-1.0)}.
+     * There are no reasons to override this method usually.
+     *
+     * @return the symmetric pattern.
+     */
+    public Pattern symmetric() {
+        return multiply(-1.0);
+    }
+
+    /**
+     * This implementation creates Java array <tt>double[]</tt> by the call
+     * "<nobr><tt>a = new double[{@link #dimCount}]</tt></nobr>", fills all its elements by
+     * <tt>multiplier</tt> argument and then calls {@link #scale(double...) scale(a)}.
+     * There are no reasons to override this method usually.
+     *
+     * @param multiplier the scale along all coordinates.
+     * @return the scaled pattern.
+     * @throws TooLargePatternCoordinatesException
+     *          if the set of scaled points does not fulfil the restrictions,
+     *          described in the comments to {@link Pattern} interface,
+     *          section "Coordinate restrictions".
+     */
+    public Pattern multiply(double multiplier) {
+        double[] multipliers = new double[dimCount];
+        Arrays.fill(multipliers, multiplier);
+        return scale(multipliers);
+    }
+
+    public abstract Pattern scale(double... multipliers);
+
+    /**
+     * This implementation is based on the loop for all points returned by {@link #points()} method in both patterns
+     * and always returns a {@link DirectPointSetPattern direct point-set pattern},
+     * consisting of sums of all point pairs.
+     * This algorithm may be very slow for large patterns
+     * (<i>O</i>(<i>NM</i>) operations, <i>N</i>={@link #pointCount()}, <i>M</i>=added.{@link #pointCount()})
+     * and does not work at all if the number of resulting points is greater than <tt>Integer.MAX_VALUE</tt>.
+     * Please override this method if there is better implementation.
+     *
+     * @param added another pattern.
+     * @return the Minkowski sum of this and another patterns.
+     * @throws NullPointerException        if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException    if the numbers of space dimensions of both patterns are different.
+     * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points in this,
+     *                                     <tt>added</tt> or result pattern is greater than
+     *                                     <tt>Integer.MAX_VALUE</tt> or, maybe, is near this limit
+     * @throws TooLargePatternCoordinatesException
+     *                                     if the resulting set of points does not fulfil the restrictions,
+     *                                     described in the comments to {@link Pattern} interface,
+     *                                     section "Coordinate restrictions".
+     */
+    public Pattern minkowskiAdd(Pattern added) {
+        if (added == null)
+            throw new NullPointerException("Null added argument");
+        if (added.dimCount() != this.dimCount)
+            throw new IllegalArgumentException("Dimensions count mismatch: "
+                + added.dimCount() + " instead of " + this.dimCount);
+        long addedPointCount = added.pointCount();
+        if (addedPointCount == 1) {
+            return shift(added.coordMin());
+        }
+
+        Set<Point> resultPoints = new HashSet<Point>();
+        Set<Point> points = points();
+        Set<Point> addedPoints = added.points();
+        for (Point p : points) {
+            for (Point q : addedPoints) {
+                resultPoints.add(p.add(q));
+            }
+        }
+        return new SimplePattern(resultPoints);
+    }
+
+    /**
+     * This implementation is based on the loop for all points returned by {@link #points()} method in both patterns
+     * and always returns a {@link DirectPointSetPattern direct point-set pattern}.
+     * This algorithm may be very slow for large patterns
+     * (<i>O</i>(<i>NM</i>) operations, <i>N</i>={@link #pointCount()}, <i>M</i>=added.{@link #pointCount()})
+     * and does not work at all if the number of resulting points is greater than <tt>Integer.MAX_VALUE</tt>.
+     * Please override this method if there is better implementation.
+     *
+     * @param subtracted another pattern.
+     * @return the erosion of this pattern by the specified pattern
+     *         or <tt>null</tt> if this erosion is the empty set.
+     * @throws NullPointerException        if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException    if the numbers of space dimensions of both patterns are different.
+     * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points in this,
+     *                                     <tt>subtracted</tt> or result pattern is greater than
+     *                                     <tt>Integer.MAX_VALUE</tt> or, maybe, is near this limit
+     * @throws TooLargePatternCoordinatesException
+     *                                     if the resulting set of points does not fulfil the restrictions,
+     *                                     described in the comments to {@link Pattern} interface,
+     *                                     section "Coordinate restrictions".
+     */
+    public Pattern minkowskiSubtract(Pattern subtracted) {
+        if (subtracted == null)
+            throw new NullPointerException("Null subtracted argument");
+        if (subtracted.dimCount() != this.dimCount)
+            throw new IllegalArgumentException("Dimensions count mismatch: "
+                + subtracted.dimCount() + " instead of " + this.dimCount);
+        Set<Point> subtractedPoints = subtracted.points();
+        Point minimal = null;
+        double minimalDistance = Double.POSITIVE_INFINITY;
+        for (Point p : subtractedPoints) {
+            double distance = p.distanceFromOrigin();
+            if (minimal == null || distance < minimalDistance) {
+                minimal = p;
+                minimalDistance = distance;
+            }
+        }
+        assert minimal != null : "Empty subtracted.points()";
+        boolean containsOrigin = minimal.isOrigin();
+        Set<Point> points = points();
+        Set<Point> resultPoints = new HashSet<Point>();
+        mainLoop:
+        for (Point p : points) {
+            // Formally, we need here a loop for infinity number of all points p in the space;
+            // but we can use the simple fact that the result is a subset of thisPattern.shift(-minimal)
+            if (!containsOrigin) {
+                p = p.subtract(minimal);
+            }
+            for (Point q : subtractedPoints) {
+                if (q.equals(minimal)) {
+                    continue; // no sense to check
+                }
+                if (!points.contains(p.add(q))) {
+                    continue mainLoop; // don't add p
+                }
+            }
+            resultPoints.add(p);
+        }
+        return resultPoints.isEmpty() ? null : Patterns.newPattern(resultPoints);
+    }
+
+    /**
+     * This implementation just returns <tt>Collections.&lt;Pattern&gt;singletonList(thisInstance)</tt>.
+     *
+     * <p>Note: {@link AbstractUniformGridPattern} class provides much better implementation for
+     * patterns, recognized as rectangular by {@link UniformGridPattern#isActuallyRectangular()} method.
+     *
+     * @param minimalPointCount this method usually does not decompose patterns that contain
+     *                          less than <tt>minimalPointCount</tt> points.
+     * @return the decomposition of this pattern to Minkowski sum; always contains &ge;1 elements.
+     * @throws IllegalArgumentException if the argument is negative.
+     */
+    public List<Pattern> minkowskiDecomposition(int minimalPointCount) {
+        if (minimalPointCount < 0)
+            throw new IllegalArgumentException("Negative minimalPointCount");
+        return Collections.<Pattern>singletonList(this);
+    }
+
+    /**
+     * This implementation just returns <tt>false</tt>.
+     *
+     * @return <tt>true</tt> if the Minkowski decomposition contains 2 or more elements;
+     *         always <tt>false</tt> in this implementation.
+     */
+    public boolean hasMinkowskiDecomposition() {
+        return false;
+    }
+
+    /**
+     * This implementation returns <tt>{@link #allUnionDecompositions(int)
+     * allUnionDecompositions(minimalPointCount)}.get(0)</tt>.
+     *
+     * @param minimalPointCount this method usually does not decompose patterns that contain
+     *                          less than <tt>minimalPointCount</tt> points.
+     * @return a decomposition of this pattern into the union of patterns; always contains &ge;1 elements.
+     * @throws IllegalArgumentException if the argument is negative.
+     */
+    public List<Pattern> unionDecomposition(int minimalPointCount) {
+        return allUnionDecompositions(minimalPointCount).get(0);
+    }
+
+    /**
+     * This implementation just returns the list containing 1 list, containing
+     * this instance as the only element:
+     * <tt>Collections.singletonList(Collections.&lt;Pattern&gt;singletonList(thisInstance))</tt>.
+     *
+     * <p>Note: {@link AbstractUniformGridPattern} class provides much better implementation.
+     *
+     * @param minimalPointCount this method usually does not decompose patterns that contain
+     *                          less than <tt>minimalPointCount</tt> points.
+     * @return several good variants of decomposition of this pattern to the union of patterns;
+     *         the result always contains &ge;1 elements,
+     *         and all its elements also contain &ge;1 elements.
+     * @throws IllegalArgumentException if the argument is negative.
+     */
+    public List<List<Pattern>> allUnionDecompositions(int minimalPointCount) {
+        if (minimalPointCount < 0)
+            throw new IllegalArgumentException("Negative minimalPointCount");
+        return Collections.singletonList(Collections.<Pattern>singletonList(this));
+    }
+
+    /**
+     * Returns <tt>true</tt> if and only if all coordinates of the specified point lie
+     * in range &minus;{@link #MAX_COORDINATE}&le;<i>x</i><sub><i>j</i></sub>&le;{@link #MAX_COORDINATE}.
+     *
+     * <p>Actually this method checks the 1st restriction for coordinates of any pattern:
+     * see comments to {@link Pattern} interface, section "Coordinate restrictions".
+     *
+     * @param point some point.
+     * @return whether this point is an allowed point for patterns.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     */
+    public static boolean isAllowedPoint(Point point) {
+        if (point == null)
+            throw new NullPointerException("Null point");
+        for (int k = 0, n = point.coordCount(); k < n; k++) {
+            double coord = point.coord(k);
+            if (coord < -Pattern.MAX_COORDINATE || coord > Pattern.MAX_COORDINATE) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns <tt>true</tt> if and only if both boundaries of the specified range,
+     * <i>a</i>=<tt>range.{@link Range#min() min()}</tt> and <i>b</i>=<tt>range.{@link Range#max() max()}</tt>,
+     * lie in range
+     * <nobr>&minus;{@link #MAX_COORDINATE}&le;<i>a</i>&le;<i>b</i>&le;{@link #MAX_COORDINATE}</nobr>
+     * and, at the same time, the call <tt>{@link Patterns#isAllowedDifference(double, double)
+     * Patterns.isAllowedDifference}(<i>a</i>,<i>b</i>)</tt> returns <tt>true</tt>.
+     *
+     * <p>This method helps to check the 2nd restriction for coordinates of any pattern:
+     * see comments to {@link Pattern} interface, section "Coordinate restrictions".
+     *
+     * @param range some range.
+     * @return whether this range is an allowed coordinate range for patterns.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     */
+    public static boolean isAllowedCoordRange(Range range) {
+        if (range == null)
+            throw new NullPointerException("Null range");
+        double min = range.min();
+        double max = range.max();
+        assert min <= max;
+        return min >= -MAX_COORDINATE && max <= MAX_COORDINATE && Patterns.isAllowedDifference(min, max);
+    }
+
+    /**
+     * Throws <tt>IndexOutOfBoundsException</tt>
+     * if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * Does nothing in other case.
+     *
+     * @param coordIndex checked index of the coordinate.
+     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     */
+    protected final void checkCoordIndex(int coordIndex) {
+        if (coordIndex < 0 || coordIndex >= dimCount)
+            throw new IndexOutOfBoundsException("Coordinate index "
+                + coordIndex + " is out of range 0.." + (dimCount - 1));
+    }
+
+    static void checkPoint(Point point) throws TooLargePatternCoordinatesException {
+        if (!isAllowedPoint(point))
+            throw new TooLargePatternCoordinatesException("Point " + point + " has one of coordinates "
+                + " out of -" + MAX_COORDINATE + ".." + MAX_COORDINATE
+                + " range and cannot be used for building a pattern");
+    }
+
+    static void checkCoordRange(Range range) throws TooLargePatternCoordinatesException {
+        if (range == null)
+            throw new NullPointerException("Null range");
+        double min = range.min();
+        double max = range.max();
+        assert min <= max;
+        if (min < -MAX_COORDINATE || max > MAX_COORDINATE)
+            throw new TooLargePatternCoordinatesException("Coordinate range " + range
+                + " is out of -" + MAX_COORDINATE + ".." + MAX_COORDINATE
+                + " range and cannot be used for building a pattern");
+        if (!Patterns.isAllowedDifference(min, max))
+            throw new TooLargePatternCoordinatesException("Coordinate range " + range
+                + " has a size larger than " + MAX_COORDINATE + " and cannot be used for building a pattern");
+    }
+
+    final void fillCoordRangesWithCheck(Collection<Point> points) {
+        double[] minCoord = new double[dimCount];
+        double[] maxCoord = new double[dimCount];
+        Arrays.fill(minCoord, Double.POSITIVE_INFINITY);
+        Arrays.fill(maxCoord, Double.NEGATIVE_INFINITY);
+        for (Point p : points) {
+            checkPoint(p);
+            for (int k = 0; k < dimCount; k++) {
+                double coordinate = p.coord(k);
+                if (coordinate < minCoord[k]) {
+                    minCoord[k] = coordinate;
+                }
+                if (coordinate > maxCoord[k]) {
+                    maxCoord[k] = coordinate;
+                }
+            }
+        }
+        for (int k = 0; k < dimCount; k++) {
+            this.coordRanges[k] = Range.valueOf(minCoord[k], maxCoord[k]);
+            checkCoordRange(this.coordRanges[k]);
+        }
+    }
+
+    final Pattern minBound(int coordIndex, boolean alwaysSimple) {
+        checkCoordIndex(coordIndex);
+        synchronized (minBound) {
+            if (minBound[coordIndex] == null) {
+                Set<Point> points = points();
+                Map<Point, Point> map = new HashMap<Point, Point>();
+                for (Point p : points) {
+                    Point projection = p.projectionAlongAxis(coordIndex);
+                    Point bound = map.get(projection);
+                    if (bound == null || p.coord(coordIndex) < bound.coord(coordIndex)) {
+                        map.put(projection, p);
+                    }
+                }
+                minBound[coordIndex] = alwaysSimple ?
+                    new SimplePattern(map.values()) :
+                    Patterns.newPattern(map.values());
+            }
+            return minBound[coordIndex];
+        }
+    }
+
+    final Pattern maxBound(int coordIndex, boolean alwaysSimple) {
+        checkCoordIndex(coordIndex);
+        synchronized (maxBound) {
+            if (maxBound[coordIndex] == null) {
+                Set<Point> points = points();
+                Map<Point, Point> map = new HashMap<Point, Point>();
+                for (Point p : points) {
+                    Point projection = p.projectionAlongAxis(coordIndex);
+                    Point bound = map.get(projection);
+                    if (bound == null || p.coord(coordIndex) > bound.coord(coordIndex)) {
+                        map.put(projection, p);
+                    }
+                }
+                maxBound[coordIndex] = alwaysSimple ?
+                    new SimplePattern(map.values()) :
+                    Patterns.newPattern(map.values());
+            }
+            return maxBound[coordIndex];
+        }
+    }
+
+}

@@ -1,0 +1,182 @@
+package net.algart.matrices.skeletons;
+
+import net.algart.arrays.*;
+import net.algart.matrices.morphology.*;
+import net.algart.math.patterns.*;
+import net.algart.math.functions.*;
+
+/**
+ * <p>The simplest algorithm of multidimensional skeletonization of binary matrices, based on sequential
+ * {@link Morphology#erosion(Matrix, Pattern) erosions} of the matrix by some small pattern.</p>
+ *
+ * <p>More precisely, this class is an implementation of {@link IterativeArrayProcessor} interface,
+ * iteratively processing some bit matrix (<tt>{@link Matrix}({@link UpdatableBitArray})</tt>), named
+ * <tt>result</tt> and passed to the {@link #getInstance getInstance} method.
+ * In this implementation:</p>
+ *
+ * <ul>
+ * <li>{@link #performIteration(ArrayContext)} method
+ * calculates <tt>{@link Morphology#erosion(Matrix, Pattern) erosion}(result,P)</tt> of the current <tt>result</tt> matrix
+ * by some small pattern <tt>P</tt> (usually little circle or square, in 2-dimensional case) and
+ * <tt>{@link Morphology#opening(Matrix, Pattern, Morphology.SubtractionMode)
+ * opening}(result,Q,{@link net.algart.matrices.morphology.Morphology.SubtractionMode#NONE})</tt> of this matrix
+ * by some other pattern <tt>Q</tt>, usually equal to <tt>P</tt> or little greater than <tt>P</tt>.
+ * The opening is subtracted (in the set-theoretical sense) from the source <tt>result</tt> matrix
+ * and the difference (i.e. "thin" areas in the bit image) is united with the erosion
+ * (also in the set-theoretical sense).
+ * Then the <tt>result</tt> matrix is replaced with this union.</li>
+ *
+ * <li>{@link #done()} method returns <tt>true</tt> if the last iteration was unable to change the matrix:
+ * all "objects" are already "thin" (removed after the erosion).</li>
+ *
+ * <li>{@link #result()} method always returns the reference to the source matrix, passed to
+ * {@link #getInstance getInstance} method.</li>
+ * </ul>
+ *
+ * <p>The algorithm, implemented by this class, does not guarantee that connected "objects"
+ * (areas filled by 1 elements) stay connected
+ * and does not guarantee that the resulting "skeleton" will be "thin" enough.
+ * But it guarantees that resulting "skeleton" does not contain areas "larger" than the pattern <tt>Q</tt>
+ * used for opening operation.</p>
+ *
+ * <p>This class is based on {@link Matrices#asShifted Matrices.asShifted} method
+ * with some elementwise logical operations (AND, OR, NOT).
+ * So, the matrix is supposed to be infinitely pseudo-cyclically continued, as well
+ * {@link Matrices#asShifted Matrices.asShifted} method supposes it.
+ * You can change this behavior by appending the source matrix with zero elements
+ * by calling <nobr>{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)}</nobr> method,
+ * where the dimensions of the "submatrix" are greater than dimensions of the source one by 1
+ * and the <tt>continuationMode</tt> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
+ *
+ * <p>This class can process a matrix with any number of dimensions.</p>
+ *
+ * <p>This class is not thread-safe, but <b>is thread-compatible</b>
+ * and can be synchronized manually, if multithread access is necessary.</p>
+ *
+ * <p>AlgART Laboratory 2007-2013</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ */
+public class ErodingSkeleton extends AbstractIterativeArrayProcessor<Matrix<? extends UpdatableBitArray>>
+    implements IterativeArrayProcessor<Matrix<? extends UpdatableBitArray>>
+{
+    private final Pattern erosionPattern;
+    private final Pattern openingPattern;
+    private final Matrix<? extends UpdatableBitArray> result;
+    private final Matrix<? extends UpdatableBitArray> temp1;
+    private final Matrix<? extends UpdatableBitArray> temp2;
+    private boolean done = false;
+    private ErodingSkeleton(ArrayContext context, Matrix<? extends UpdatableBitArray> matrix,
+        Pattern erosionPattern, Pattern openingPattern)
+    {
+        super(context);
+        if (matrix == null)
+            throw new NullPointerException("Null matrix argument");
+        if (erosionPattern == null)
+            throw new NullPointerException("Null erosionPattern argument");
+        if (openingPattern == null)
+            throw new NullPointerException("Null openingPattern argument");
+        this.erosionPattern = erosionPattern;
+        this.openingPattern = openingPattern;
+        final boolean differentPatterns = !erosionPattern.equals(openingPattern);
+        final MemoryModel mm = mm(memoryModel, matrix, differentPatterns ? 2 : 1);
+        this.result = matrix;
+        this.temp1 = mm.newMatrix(UpdatableBitArray.class, boolean.class, matrix.dimensions());
+        if (differentPatterns)
+            this.temp2 = mm.newMatrix(UpdatableBitArray.class, boolean.class, matrix.dimensions());
+        else
+            this.temp2 = null;
+    }
+
+    /**
+     * Creates new instance of this class.
+     *
+     * @param context        the {@link #context() context} that will be used by this object;
+     *                       may be <tt>null</tt>, then it will be ignored.
+     * @param matrix         the bit matrix that should be processed and returned by {@link #result()} method.
+     * @param erosionPattern the pattern that will be used for erosion operation at every iteration.
+     * @param openingPattern the pattern that will be used for opening operation at every iteration.
+     * @return               new instance of this class.
+     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     */
+    public static ErodingSkeleton getInstance(ArrayContext context,
+        Matrix<? extends UpdatableBitArray> matrix, Pattern erosionPattern, Pattern openingPattern)
+    {
+        return new ErodingSkeleton(context, matrix, erosionPattern, openingPattern);
+    }
+
+    @Override
+    public void performIteration(ArrayContext context) {
+        Morphology morphology = BasicMorphology.getInstance(context);
+        Class<? extends PArray> type = result.type(PArray.class);
+        if (this.temp2 == null) { // openingPattern = erosionPattern
+            morphology.context(part(context, 0.0, 0.5)).erosion(temp1, result, erosionPattern);
+            // temp1 = m(-)p
+            Matrix<? extends PArray> lazyOpening = morphology.asDilation(temp1, erosionPattern);
+            Matrix<? extends PArray> lazyRears = Matrices.asFuncMatrix(
+                Func.ABS_DIFF, type, result, lazyOpening); // rears = m \ (m(-)p(+)p)
+            Matrix<? extends PArray> lazyResult = Matrices.asFuncMatrix(
+                Func.MAX, type, temp1, lazyRears);
+            // result = m(-)p U rears
+            done = !Matrices.compareAndCopy(part(context, 0.5, 1.0), result, lazyResult).changed();
+        } else {
+            morphology.context(part(context, 0.0, 0.3)).erosion(temp1, result, openingPattern);
+            morphology.context(part(context, 0.3, 0.6)).dilation(temp2, temp1, openingPattern);
+            // temp2 = m(-)q(+)q
+            morphology.context(part(context, 0.6, 0.9)).erosion(temp1, result, erosionPattern);
+            // temp1 = m(-)p
+            Matrix<? extends PArray> lazyRears = Matrices.asFuncMatrix(
+                Func.ABS_DIFF, type, result, temp2); // rears = m \ (m(-)q(+)q)
+            Matrix<? extends PArray> lazyResult = Matrices.asFuncMatrix(
+                Func.MAX, type, temp1, lazyRears);
+            // result = m(-)p U rears
+            done = !Matrices.compareAndCopy(part(context, 0.9, 1.0), result, lazyResult).changed();
+        }
+    }
+
+    @Override
+    public boolean done() {
+        return done;
+    }
+
+    @Override
+    public long estimatedNumberOfIterations() {
+        return IterativeErosion.estimatedNumberOfIterations(result, erosionPattern);
+    }
+
+    @Override
+    public Matrix<? extends UpdatableBitArray> result() {
+        return result;
+    }
+
+    @Override
+    public void freeResources(ArrayContext context) {
+        temp1.freeResources(context == null ? null : context.part(0.0, temp2 != null ? 1.0 / 3.0 : 0.5));
+        if (temp2 != null)
+            temp2.freeResources(context == null ? null : context.part(1.0 / 3.0, 2.0 / 3.0));
+        result.freeResources(context == null ? null : context.part(temp2 != null ? 2.0 / 3.0 : 0.5, 1.0));
+    }
+
+    /**
+     * Returns a brief string description of this object.
+     *
+     * @return a brief string description of this object.
+     */
+    @Override
+    public String toString() {
+        return "simple skeletonizer, " +
+            (this.temp2 == null ?
+                erosionPattern.toString() :
+                "patterns: " + erosionPattern + " (erosion) and " + openingPattern + " (opening)");
+    }
+
+    static MemoryModel mm(MemoryModel memoryModel, Matrix<? extends PArray> matrix, int numberOfMatrices) {
+        if (Matrices.sizeOf(matrix) > Arrays.SystemSettings.maxTempJavaMemory() / numberOfMatrices) {
+            return memoryModel;
+        } else {
+            return SimpleMemoryModel.getInstance();
+        }
+    }
+}

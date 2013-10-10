@@ -1,0 +1,1145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+UnsafeSegment2D
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="UnsafeSegment2D";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/math/geom/Segment2D.html" title="class in net.algart.math.geom"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;NEXT CLASS</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/math/geom/UnsafeSegment2D.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="UnsafeSegment2D.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.math.geom</FONT>
+<BR>
+Class UnsafeSegment2D</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><STRONG>net.algart.math.geom.UnsafeSegment2D</STRONG>
+</PRE>
+<DL>
+<DT><STRONG>All Implemented Interfaces:</STRONG></DT> <DD>java.lang.Cloneable</DD>
+</DL>
+<DL>
+<DT><STRONG>Direct Known Subclasses:</STRONG></DT> <DD><A HREF="../../../../net/algart/math/geom/Segment2D.html" title="class in net.algart.math.geom">Segment2D</A></DD>
+</DL>
+<HR>
+<PRE>public class <STRONG>UnsafeSegment2D</STRONG>
+extends java.lang.Object
+implements java.lang.Cloneable</PRE>
+
+<P>
+<p>"Unsafe" 2D segment</p>
+
+ <p>It is a version of <A HREF="../../../../net/algart/math/geom/Segment2D.html" title="class in net.algart.math.geom"><CODE>Segment2D</CODE></A> segment, which can work incorrectly if arguments
+ of setFi(fi, nx, ny) or setAll(centerX, centerY, length, fi, nx, ny) method are illegal.</p>
+
+ <p>This class allows to avoid slow calculation of cosine and sine
+ while setting new direction. But getNormalClone() and copyNormalTo()
+ methods work slower than the same methods in <A HREF="../../../../net/algart/math/geom/Segment2D.html" title="class in net.algart.math.geom"><CODE>Segment2D</CODE></A> class.</p>
+
+ <p>This class is <b>immutable</b> and <b>thread-safe</b>:
+ there are no ways to modify settings of the created instance.</p>
+
+ <p>AlgART Laboratory 2007-2013</p>
+<P>
+
+<P>
+<DL>
+<DT><STRONG>Since:</STRONG></DT>
+  <DD>JDK 1.1</DD>
+<DT><STRONG>Version:</STRONG></DT>
+  <DD>1.0</DD>
+<DT><STRONG>Author:</STRONG></DT>
+  <DD>Daniel Alievsky</DD></DL>
+<HR>
+
+<P>
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#checkInvariants()">checkInvariants</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generates IllegalStateException exception if the information stored in this object is invalid, setFi(fi, nx, ny) or setAll(centerX, centerY, length, fi, nx, ny) method
+ was called with illegal arguments.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.Object</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#clone()">clone</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates an identical copy of this object.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#copyFrom(net.algart.math.geom.UnsafeSegment2D)">copyFrom</A></STRONG>(<A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html" title="class in net.algart.math.geom">UnsafeSegment2D</A>&nbsp;other)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the current segment identical to <tt>other</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#copyNormalTo(net.algart.math.geom.Direction2D)">copyNormalTo</A></STRONG>(<A HREF="../../../../net/algart/math/geom/Direction2D.html" title="class in net.algart.math.geom">Direction2D</A>&nbsp;normal)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copies the normal vector to this segment to the given argument
+ (normal.getAngle() will be equal to this.getFi() + &pi; / 2).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#equals(java.lang.Object)">equals</A></STRONG>(java.lang.Object&nbsp;obj)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Indicates whether some other segment is equal to this one, with a precision set by the last
+ <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setEqualityPrecision(double)"><CODE>setEqualityPrecision(double)</CODE></A> call (or with absolute precision if that method was never called).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getAngleBetweenDirections(net.algart.math.geom.UnsafeSegment2D)">getAngleBetweenDirections</A></STRONG>(<A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html" title="class in net.algart.math.geom">UnsafeSegment2D</A>&nbsp;other)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the shortes angle (0..&pi;, in radians)
+ between the directions of this and <tt>other</tt> segments, from 1st end to 2nd.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getAngleBetweenStraights(net.algart.math.geom.UnsafeSegment2D)">getAngleBetweenStraights</A></STRONG>(<A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html" title="class in net.algart.math.geom">UnsafeSegment2D</A>&nbsp;other)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the shortes angle (0..&pi;/2, in radians)
+ between the straights containing this and <tt>other</tt> segments.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getCenterX()">getCenterX</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the x-coordinate of the segment center.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getCenterY()">getCenterY</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the y-coordinate of the segment center.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getEqualityPrecision()">getEqualityPrecision</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the "equality prevision" for this segment: a precision of segments equality
+ considered by <tt>equals</tt> and <tt>hashCode</tt> methods.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getFi()">getFi</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the direction (in radians) from the segment begin to the segment end:
+ an angle between 0x and a ray from 1st to 2nd segment end.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getLength()">getLength</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the segment length.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../net/algart/math/geom/Direction2D.html" title="class in net.algart.math.geom">Direction2D</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getNormalClone()">getNormalClone</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the normal unit vector, with creating a clone.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getNormalUnitVectorX()">getNormalUnitVectorX</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns x-projection of the normal unit vector,
+ which direction is fi+&pi;/2, where fi is set by setFi or setAll methods.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getNormalUnitVectorY()">getNormalUnitVectorY</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns y-projection of the normal unit vector,
+ which direction is fi+&pi;/2, where fi is set by setFi or setAll methods.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getUnitVectorX()">getUnitVectorX</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns x-projection of the unit vector directed from the segment begin to the segment end,
+ that is which direction is fi, where fi is set by setFi or setAll methods.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getUnitVectorY()">getUnitVectorY</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns y-projection of the unit vector directed from the segment begin to the segment end,
+ that is which direction is fi, where fi is set by setFi or setAll methods.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html" title="class in net.algart.math.geom">UnsafeSegment2D</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getUnsafeInstance()">getUnsafeInstance</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates some "default" segment.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getX1()">getX1</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns x-coordinate of the segment begin.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getX2()">getX2</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns x-coordinate of the segment end.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getY1()">getY1</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns y-coordinate of the segment begin.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getY2()">getY2</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns y-coordinate of the segment end.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#hashCode()">hashCode</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the hash code for this segment.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#inverse()">inverse</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rotates the segment around its center by &pi;: new direction angle will be &phi; + &pi;,
+ where &phi; is current direction angle.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#revive()">revive</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Revive direction vector by recalculation of the normal unit vector:
+ see <A HREF="../../../../net/algart/math/geom/Direction2D.html#revive()"><CODE>Direction2D.revive()</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#rotate(net.algart.math.geom.Rotation2D)">rotate</A></STRONG>(<A HREF="../../../../net/algart/math/geom/Rotation2D.html" title="class in net.algart.math.geom">Rotation2D</A>&nbsp;rot)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rotates the segment around its center: new direction angle will be &phi; + rot.getRotationAngle(),
+ where &phi; is current direction angle.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#rotateBack(net.algart.math.geom.Rotation2D)">rotateBack</A></STRONG>(<A HREF="../../../../net/algart/math/geom/Rotation2D.html" title="class in net.algart.math.geom">Rotation2D</A>&nbsp;rot)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rotates the segment around its center: new direction angle will be &phi; - rot.getRotationAngle(),
+ where &phi; is current direction angle.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setAll(double, double, double, net.algart.math.geom.Direction2D)">setAll</A></STRONG>(double&nbsp;centerX,
+       double&nbsp;centerY,
+       double&nbsp;length,
+       <A HREF="../../../../net/algart/math/geom/Direction2D.html" title="class in net.algart.math.geom">Direction2D</A>&nbsp;normal)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets all segment information (normal.getAngle() = this.getFi() + &pi; / 2).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setAll(double, double, double, double)">setAll</A></STRONG>(double&nbsp;centerX,
+       double&nbsp;centerY,
+       double&nbsp;length,
+       double&nbsp;fi)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets all segment information.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setAll(double, double, double, double, double, double)">setAll</A></STRONG>(double&nbsp;centerX,
+       double&nbsp;centerY,
+       double&nbsp;length,
+       double&nbsp;fi,
+       double&nbsp;nx,
+       double&nbsp;ny)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets all segment information.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setCenter(double, double)">setCenter</A></STRONG>(double&nbsp;centerX,
+          double&nbsp;centerY)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the coordinates of the segment center.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setCenterX(double)">setCenterX</A></STRONG>(double&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the x-coordinate of the segment center.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setCenterY(double)">setCenterY</A></STRONG>(double&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the y-coordinate of the segment center.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setEqualityPrecision(double)">setEqualityPrecision</A></STRONG>(double&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the "equality prevision" for this segment: a precision of segments equality
+ considered by <tt>equals</tt> and <tt>hashCode</tt> methods.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setFi(double)">setFi</A></STRONG>(double&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the segment orientation (an angle between 0x and a ray from 1st to 2nd segment end).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setFi(double, double, double)">setFi</A></STRONG>(double&nbsp;fi,
+      double&nbsp;nx,
+      double&nbsp;ny)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the segment direction.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setLength(double)">setLength</A></STRONG>(double&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the segment length.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setNormal(net.algart.math.geom.Direction2D)">setNormal</A></STRONG>(<A HREF="../../../../net/algart/math/geom/Direction2D.html" title="class in net.algart.math.geom">Direction2D</A>&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copies the agrument into the normal unit vector inside this object
+ (value.getAngle() = this.getFi() + &pi; / 2)</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#toString()">toString</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns some string representation of this object.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class java.lang.Object</STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>finalize, getClass, notify, notifyAll, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getUnsafeInstance()"><!-- --></A><H3>
+getUnsafeInstance</H3>
+<PRE>
+public static <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html" title="class in net.algart.math.geom">UnsafeSegment2D</A> <STRONG>getUnsafeInstance</STRONG>()</PRE>
+<DL>
+<DD>Creates some "default" segment. The parameters of this segment (center, orientation, length)
+ are not specified. So, you must set all segment parameters after creating such instance.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCenterX()"><!-- --></A><H3>
+getCenterX</H3>
+<PRE>
+public double <STRONG>getCenterX</STRONG>()</PRE>
+<DL>
+<DD>Returns the x-coordinate of the segment center.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setCenterX(double)"><!-- --></A><H3>
+setCenterX</H3>
+<PRE>
+public void <STRONG>setCenterX</STRONG>(double&nbsp;value)</PRE>
+<DL>
+<DD>Sets the x-coordinate of the segment center.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCenterY()"><!-- --></A><H3>
+getCenterY</H3>
+<PRE>
+public double <STRONG>getCenterY</STRONG>()</PRE>
+<DL>
+<DD>Returns the y-coordinate of the segment center.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setCenterY(double)"><!-- --></A><H3>
+setCenterY</H3>
+<PRE>
+public void <STRONG>setCenterY</STRONG>(double&nbsp;value)</PRE>
+<DL>
+<DD>Sets the y-coordinate of the segment center.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLength()"><!-- --></A><H3>
+getLength</H3>
+<PRE>
+public double <STRONG>getLength</STRONG>()</PRE>
+<DL>
+<DD>Returns the segment length.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setLength(double)"><!-- --></A><H3>
+setLength</H3>
+<PRE>
+public void <STRONG>setLength</STRONG>(double&nbsp;value)</PRE>
+<DL>
+<DD>Sets the segment length.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getFi()"><!-- --></A><H3>
+getFi</H3>
+<PRE>
+public double <STRONG>getFi</STRONG>()</PRE>
+<DL>
+<DD>Returns the direction (in radians) from the segment begin to the segment end:
+ an angle between 0x and a ray from 1st to 2nd segment end.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setFi(double)"><!-- --></A><H3>
+setFi</H3>
+<PRE>
+public void <STRONG>setFi</STRONG>(double&nbsp;value)</PRE>
+<DL>
+<DD>Sets the segment orientation (an angle between 0x and a ray from 1st to 2nd segment end).
+ This method works slowly, because requires sine and cosine calculation.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getX1()"><!-- --></A><H3>
+getX1</H3>
+<PRE>
+public double <STRONG>getX1</STRONG>()</PRE>
+<DL>
+<DD>Returns x-coordinate of the segment begin.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getY1()"><!-- --></A><H3>
+getY1</H3>
+<PRE>
+public double <STRONG>getY1</STRONG>()</PRE>
+<DL>
+<DD>Returns y-coordinate of the segment begin.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getX2()"><!-- --></A><H3>
+getX2</H3>
+<PRE>
+public double <STRONG>getX2</STRONG>()</PRE>
+<DL>
+<DD>Returns x-coordinate of the segment end.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getY2()"><!-- --></A><H3>
+getY2</H3>
+<PRE>
+public double <STRONG>getY2</STRONG>()</PRE>
+<DL>
+<DD>Returns y-coordinate of the segment end.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setCenter(double, double)"><!-- --></A><H3>
+setCenter</H3>
+<PRE>
+public void <STRONG>setCenter</STRONG>(double&nbsp;centerX,
+                      double&nbsp;centerY)</PRE>
+<DL>
+<DD>Sets the coordinates of the segment center.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setAll(double, double, double, double)"><!-- --></A><H3>
+setAll</H3>
+<PRE>
+public void <STRONG>setAll</STRONG>(double&nbsp;centerX,
+                   double&nbsp;centerY,
+                   double&nbsp;length,
+                   double&nbsp;fi)</PRE>
+<DL>
+<DD>Sets all segment information.
+ This method works slowly, because requires sine and cosine calculation.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setAll(double, double, double, net.algart.math.geom.Direction2D)"><!-- --></A><H3>
+setAll</H3>
+<PRE>
+public void <STRONG>setAll</STRONG>(double&nbsp;centerX,
+                   double&nbsp;centerY,
+                   double&nbsp;length,
+                   <A HREF="../../../../net/algart/math/geom/Direction2D.html" title="class in net.algart.math.geom">Direction2D</A>&nbsp;normal)</PRE>
+<DL>
+<DD>Sets all segment information (normal.getAngle() = this.getFi() + &pi; / 2).
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setNormal(net.algart.math.geom.Direction2D)"><!-- --></A><H3>
+setNormal</H3>
+<PRE>
+public void <STRONG>setNormal</STRONG>(<A HREF="../../../../net/algart/math/geom/Direction2D.html" title="class in net.algart.math.geom">Direction2D</A>&nbsp;value)</PRE>
+<DL>
+<DD>Copies the agrument into the normal unit vector inside this object
+ (value.getAngle() = this.getFi() + &pi; / 2)
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setFi(double, double, double)"><!-- --></A><H3>
+setFi</H3>
+<PRE>
+public void <STRONG>setFi</STRONG>(double&nbsp;fi,
+                  double&nbsp;nx,
+                  double&nbsp;ny)</PRE>
+<DL>
+<DD>Sets the segment direction.
+ <p>The following conditions must be true: nx = cos(fi+&pi;/2), ny = sin(fi+&pi;/2).
+ If it is not so, then getNormalUnitVectorX(), getNormalUnitVectorY(),
+ getX1(), getY1(), getX2(), getY2() methods will work incorrectly.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setAll(double, double, double, double, double, double)"><!-- --></A><H3>
+setAll</H3>
+<PRE>
+public void <STRONG>setAll</STRONG>(double&nbsp;centerX,
+                   double&nbsp;centerY,
+                   double&nbsp;length,
+                   double&nbsp;fi,
+                   double&nbsp;nx,
+                   double&nbsp;ny)</PRE>
+<DL>
+<DD>Sets all segment information.
+ <p>The following conditions must be true: length &gt;= 0.0, nx = cos(fi+&pi;/2), ny = sin(fi+&pi;/2)
+ If it is not so, then getNormalUnitVectorX(), getNormalUnitVectorY(),
+ getX1(), getY1(), getX2(), getY2() methods will work incorrectly.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getNormalClone()"><!-- --></A><H3>
+getNormalClone</H3>
+<PRE>
+public <A HREF="../../../../net/algart/math/geom/Direction2D.html" title="class in net.algart.math.geom">Direction2D</A> <STRONG>getNormalClone</STRONG>()</PRE>
+<DL>
+<DD>Returns the normal unit vector, with creating a clone.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copyNormalTo(net.algart.math.geom.Direction2D)"><!-- --></A><H3>
+copyNormalTo</H3>
+<PRE>
+public void <STRONG>copyNormalTo</STRONG>(<A HREF="../../../../net/algart/math/geom/Direction2D.html" title="class in net.algart.math.geom">Direction2D</A>&nbsp;normal)</PRE>
+<DL>
+<DD>Copies the normal vector to this segment to the given argument
+ (normal.getAngle() will be equal to this.getFi() + &pi; / 2).
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getUnitVectorX()"><!-- --></A><H3>
+getUnitVectorX</H3>
+<PRE>
+public double <STRONG>getUnitVectorX</STRONG>()</PRE>
+<DL>
+<DD>Returns x-projection of the unit vector directed from the segment begin to the segment end,
+ that is which direction is fi, where fi is set by setFi or setAll methods.
+ Equivalent to <tt>getNormalUnitVectorY()</tt>.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getUnitVectorY()"><!-- --></A><H3>
+getUnitVectorY</H3>
+<PRE>
+public double <STRONG>getUnitVectorY</STRONG>()</PRE>
+<DL>
+<DD>Returns y-projection of the unit vector directed from the segment begin to the segment end,
+ that is which direction is fi, where fi is set by setFi or setAll methods.
+ Equivalent to <tt>-getNormalUnitVectorX()</tt>.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getNormalUnitVectorX()"><!-- --></A><H3>
+getNormalUnitVectorX</H3>
+<PRE>
+public double <STRONG>getNormalUnitVectorX</STRONG>()</PRE>
+<DL>
+<DD>Returns x-projection of the normal unit vector,
+ which direction is fi+&pi;/2, where fi is set by setFi or setAll methods.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getNormalUnitVectorY()"><!-- --></A><H3>
+getNormalUnitVectorY</H3>
+<PRE>
+public double <STRONG>getNormalUnitVectorY</STRONG>()</PRE>
+<DL>
+<DD>Returns y-projection of the normal unit vector,
+ which direction is fi+&pi;/2, where fi is set by setFi or setAll methods.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAngleBetweenStraights(net.algart.math.geom.UnsafeSegment2D)"><!-- --></A><H3>
+getAngleBetweenStraights</H3>
+<PRE>
+public double <STRONG>getAngleBetweenStraights</STRONG>(<A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html" title="class in net.algart.math.geom">UnsafeSegment2D</A>&nbsp;other)</PRE>
+<DL>
+<DD>Returns the shortes angle (0..&pi;/2, in radians)
+ between the straights containing this and <tt>other</tt> segments.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAngleBetweenDirections(net.algart.math.geom.UnsafeSegment2D)"><!-- --></A><H3>
+getAngleBetweenDirections</H3>
+<PRE>
+public double <STRONG>getAngleBetweenDirections</STRONG>(<A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html" title="class in net.algart.math.geom">UnsafeSegment2D</A>&nbsp;other)</PRE>
+<DL>
+<DD>Returns the shortes angle (0..&pi;, in radians)
+ between the directions of this and <tt>other</tt> segments, from 1st end to 2nd.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="revive()"><!-- --></A><H3>
+revive</H3>
+<PRE>
+public void <STRONG>revive</STRONG>()</PRE>
+<DL>
+<DD>Revive direction vector by recalculation of the normal unit vector:
+ see <A HREF="../../../../net/algart/math/geom/Direction2D.html#revive()"><CODE>Direction2D.revive()</CODE></A>.
+ This method should usually be called sometimes in any long sequence of <tt>rotate</tt>
+ or <tt>rotateBack</tt> methods.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="rotate(net.algart.math.geom.Rotation2D)"><!-- --></A><H3>
+rotate</H3>
+<PRE>
+public void <STRONG>rotate</STRONG>(<A HREF="../../../../net/algart/math/geom/Rotation2D.html" title="class in net.algart.math.geom">Rotation2D</A>&nbsp;rot)</PRE>
+<DL>
+<DD>Rotates the segment around its center: new direction angle will be &phi; + rot.getRotationAngle(),
+ where &phi; is current direction angle.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="rotateBack(net.algart.math.geom.Rotation2D)"><!-- --></A><H3>
+rotateBack</H3>
+<PRE>
+public void <STRONG>rotateBack</STRONG>(<A HREF="../../../../net/algart/math/geom/Rotation2D.html" title="class in net.algart.math.geom">Rotation2D</A>&nbsp;rot)</PRE>
+<DL>
+<DD>Rotates the segment around its center: new direction angle will be &phi; - rot.getRotationAngle(),
+ where &phi; is current direction angle.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="inverse()"><!-- --></A><H3>
+inverse</H3>
+<PRE>
+public void <STRONG>inverse</STRONG>()</PRE>
+<DL>
+<DD>Rotates the segment around its center by &pi;: new direction angle will be &phi; + &pi;,
+ where &phi; is current direction angle.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copyFrom(net.algart.math.geom.UnsafeSegment2D)"><!-- --></A><H3>
+copyFrom</H3>
+<PRE>
+public void <STRONG>copyFrom</STRONG>(<A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html" title="class in net.algart.math.geom">UnsafeSegment2D</A>&nbsp;other)</PRE>
+<DL>
+<DD>Sets the current segment identical to <tt>other</tt>.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="checkInvariants()"><!-- --></A><H3>
+checkInvariants</H3>
+<PRE>
+public void <STRONG>checkInvariants</STRONG>()</PRE>
+<DL>
+<DD>Generates IllegalStateException exception if the information stored in this object is invalid, setFi(fi, nx, ny) or setAll(centerX, centerY, length, fi, nx, ny) method
+ was called with illegal arguments.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getEqualityPrecision()"><!-- --></A><H3>
+getEqualityPrecision</H3>
+<PRE>
+public double <STRONG>getEqualityPrecision</STRONG>()</PRE>
+<DL>
+<DD>Returns the "equality prevision" for this segment: a precision of segments equality
+ considered by <tt>equals</tt> and <tt>hashCode</tt> methods.
+ Default value is 0.0 (precise equality).
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#equals(java.lang.Object)"><CODE>equals(Object)</CODE></A>, 
+<A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#hashCode()"><CODE>hashCode()</CODE></A>, 
+<A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setEqualityPrecision(double)"><CODE>setEqualityPrecision(double)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setEqualityPrecision(double)"><!-- --></A><H3>
+setEqualityPrecision</H3>
+<PRE>
+public void <STRONG>setEqualityPrecision</STRONG>(double&nbsp;value)</PRE>
+<DL>
+<DD>Sets the "equality prevision" for this segment: a precision of segments equality
+ considered by <tt>equals</tt> and <tt>hashCode</tt> methods.
+ Default value is 0.0 (precise equality).
+ The <tt>value</tt> argument must be &gt;=0.0.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#equals(java.lang.Object)"><CODE>equals(Object)</CODE></A>, 
+<A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#hashCode()"><CODE>hashCode()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="toString()"><!-- --></A><H3>
+toString</H3>
+<PRE>
+public java.lang.String <STRONG>toString</STRONG>()</PRE>
+<DL>
+<DD>Returns some string representation of this object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>toString</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="hashCode()"><!-- --></A><H3>
+hashCode</H3>
+<PRE>
+public int <STRONG>hashCode</STRONG>()</PRE>
+<DL>
+<DD>Returns the hash code for this segment.
+ If "equality precision", set by <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setEqualityPrecision(double)"><CODE>setEqualityPrecision(double)</CODE></A> method, is non-zero,
+ this method uses it to correspond to behavior of <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#equals(java.lang.Object)"><CODE>equals(Object)</CODE></A>} method.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>hashCode</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="equals(java.lang.Object)"><!-- --></A><H3>
+equals</H3>
+<PRE>
+public boolean <STRONG>equals</STRONG>(java.lang.Object&nbsp;obj)</PRE>
+<DL>
+<DD>Indicates whether some other segment is equal to this one, with a precision set by the last
+ <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setEqualityPrecision(double)"><CODE>setEqualityPrecision(double)</CODE></A> call (or with absolute precision if that method was never called).
+
+ <p>This method <i>requires</i> that the "equality precision", which can be set by
+ <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setEqualityPrecision(double)"><CODE>setEqualityPrecision(double)</CODE></A> method (and is 0.0 by default),
+ is the same for both segments. In other case, this method throws IllegalArgumentException.
+
+ <p>This method returns <tt>true</tt> if:<ol>
+
+ <li>The <tt>obj</tt> argument is a segment (an instance of <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html" title="class in net.algart.math.geom"><CODE>UnsafeSegment2D</CODE></A> or <A HREF="../../../../net/algart/math/geom/Segment2D.html" title="class in net.algart.math.geom"><CODE>Segment2D</CODE></A>).
+
+ <li>The values <tt>centerX</tt>, <tt>centerY</tt>, <tt>length</tt> and <tt>fi*length</tt>
+ (see the corresponding methods <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getCenterX()"><CODE>getCenterX()</CODE></A>, <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getCenterY()"><CODE>getCenterY()</CODE></A>, <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getLength()"><CODE>getLength()</CODE></A>,
+ <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#getFi()"><CODE>getFi()</CODE></A>) are equal for both segments. But some difference is still possible.
+ Namely, let <tt>&epsilon;</tt> is "equality precision" set by <A HREF="../../../../net/algart/math/geom/UnsafeSegment2D.html#setEqualityPrecision(double)"><CODE>setEqualityPrecision(double)</CODE></A> method
+ (identical for both segments).
+ Two values <tt>A</tt> and <tt>B</tt> are considered "equal" here,
+ if <tt>A==B</tt> or if &epsilon;&gt;0.0 and (int)(A/&epsilon;)==(int)(B/&epsilon;).
+ Of course, this algorithm works good only if all segment coordinatates,
+ divided by equality precision &epsilon;, are not too large (&gt;&gt;2^31) or too small (&lt;&lt;1.0).
+ </ol>
+
+ <p>Note: if the difference between directions is <tt>k&pi;</tt> or even <tt>2k&pi;</tt>,
+ the segments <i>are not considered</i> to be equal, though their ends are identical.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>equals</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the passed argument is a segment,
+ but this and passed segments have different equality precision</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="clone()"><!-- --></A><H3>
+clone</H3>
+<PRE>
+public java.lang.Object <STRONG>clone</STRONG>()</PRE>
+<DL>
+<DD>Creates an identical copy of this object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>clone</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/math/geom/Segment2D.html" title="class in net.algart.math.geom"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;NEXT CLASS</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/math/geom/UnsafeSegment2D.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="UnsafeSegment2D.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,1179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+AbstractDataFileModel
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="AbstractDataFileModel";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/AbstractCharArray.html" title="class in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/AbstractDoubleArray.html" title="class in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/AbstractDataFileModel.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="AbstractDataFileModel.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.arrays</FONT>
+<BR>
+Class AbstractDataFileModel</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><STRONG>net.algart.arrays.AbstractDataFileModel</STRONG>
+</PRE>
+<DL>
+<DT><STRONG>All Implemented Interfaces:</STRONG></DT> <DD><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</DD>
+</DL>
+<DL>
+<DT><STRONG>Direct Known Subclasses:</STRONG></DT> <DD><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays">DefaultDataFileModel</A>, <A HREF="../../../net/algart/arrays/StandardIODataFileModel.html" title="class in net.algart.arrays">StandardIODataFileModel</A></DD>
+</DL>
+<HR>
+<PRE>public abstract class <STRONG>AbstractDataFileModel</STRONG>
+extends java.lang.Object
+implements <A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</PRE>
+
+<P>
+<p>A skeletal implementation of the <A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays"><CODE>DataFileModel</CODE></A> interface to minimize
+ the effort required to implement this interface for processing usual disk files.</p>
+
+ <p>AlgART Laboratory 2007-2013</p>
+<P>
+
+<P>
+<DL>
+<DT><STRONG>Since:</STRONG></DT>
+  <DD>JDK 1.5</DD>
+<DT><STRONG>Version:</STRONG></DT>
+  <DD>1.2</DD>
+<DT><STRONG>Author:</STRONG></DT>
+  <DD>Daniel Alievsky</DD></DL>
+<HR>
+
+<P>
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Field Summary table, listing fields, and an explanation">
+<CAPTION CLASS="TableCaption">
+Field Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Field and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;java.util.Set&lt;<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&gt;</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#allTemporaryFiles">allTemporaryFiles</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The internal synchronized set of all non-deleted temporary files:
+ <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#allTemporaryFiles()"><CODE>allTemporaryFiles()</CODE></A> method returns its clone.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#prefixSize">prefixSize</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The value returned by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedPrefixSize()"><CODE>recommendedPrefixSize()</CODE></A> method.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;java.io.File</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath">tempPath</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The path where new temporary files will be created by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>createTemporaryFile(boolean)</CODE></A> method
+ or <tt>null</tt> if the default temporary-file directory is to be used.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Constructor Summary table, listing constructors, and an explanation">
+<CAPTION CLASS="TableCaption">
+Constructor Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Constructor and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected </CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#AbstractDataFileModel()">AbstractDataFileModel</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#AbstractDataFileModel(java.io.File, long)"><CODE>AbstractDataFileModel(null, 0)</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected </CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#AbstractDataFileModel(java.io.File, long)">AbstractDataFileModel</A></STRONG>(java.io.File&nbsp;tempPath,
+                      long&nbsp;prefixSize)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new instance with the specified temporary-file path and the starting gap size
+ in all temporary files.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.util.Set&lt;<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&gt;</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#allTemporaryFiles()">allTemporaryFiles</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the set of all data files, that are
+ temporary and should be automatically deleted while system shutdown.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#autoResizingOnMapping()">autoResizingOnMapping</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation returns <tt>false</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;java.nio.ByteOrder</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#byteOrderInTemporaryFiles()">byteOrderInTemporaryFiles</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns byte order that is used for new temporary files by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporary(boolean)"><CODE>createTemporary(boolean)</CODE></A> method
+ in this class.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporary(boolean)">createTemporary</A></STRONG>(boolean&nbsp;unresizable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation creates a temporary file by calling <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>createTemporaryFile(boolean)</CODE></A>
+ protected method and returns a result of <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#getDataFile(java.io.File, java.nio.ByteOrder)"><CODE>getDataFile(pathToTemporaryFile, ByteOrder.nativeOrder())</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;java.io.File</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)">createTemporaryFile</A></STRONG>(boolean&nbsp;unresizable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new temporary empty disk file and returns the absolute (unique for the file system) path to it.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#delete(net.algart.arrays.DataFile)">delete</A></STRONG>(<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&nbsp;dataFile)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation removes the file by the call of standard <tt>java.io.File.delete()</tt> method:
+ <tt><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#getPath(net.algart.arrays.DataFile)"><CODE>getPath</CODE></A>(dataFile).delete()</tt>
+ (if <tt>java.io.File.exists()</tt> method returns <tt>true</tt>).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#finalizationNotify(java.io.File, boolean)">finalizationNotify</A></STRONG>(java.io.File&nbsp;dataFilePath,
+                   boolean&nbsp;isApplicationShutdown)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation does nothing.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#getDataFile(java.io.File, java.nio.ByteOrder)">getDataFile</A></STRONG>(java.io.File&nbsp;path,
+            java.nio.ByteOrder&nbsp;byteOrder)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a new instance of <A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays"><CODE>DataFile</CODE></A> object corresponding to the given path.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;java.io.File</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#getPath(net.algart.arrays.DataFile)">getPath</A></STRONG>(<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&nbsp;dataFile)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the path describing unique position of the data file (usually the absolute path to the disk file).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#isAutoDeletionRequested()">isAutoDeletionRequested</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if the standard cleanup procedure, that deletes all temporary files
+ (as described in comments to <A HREF="../../../net/algart/arrays/DataFileModel.html#allTemporaryFiles()"><CODE>DataFileModel.allTemporaryFiles()</CODE></A> method), is necessary for this file model.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#isConcreteFile()">isConcreteFile</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if the <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath"><CODE>tempPath</CODE></A> field is not <tt>null</tt> and
+ corresponds to existing file or non-existing file/directory:
+ <tt>tempPath != null && (!tempPath.exists() || tempPath.isFile())</tt>
+ In such situations, this data file model always works with the only one constant file,
+ specified in <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath"><CODE>tempPath</CODE></A> field.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.Class&lt;java.io.File&gt;</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#pathClass()">pathClass</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation returns <tt>File.class</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedBankSize(boolean)">recommendedBankSize</A></STRONG>(boolean&nbsp;unresizable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The size of every memory bank in bytes, recommended for data files created by this factory.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedNumberOfBanks()">recommendedNumberOfBanks</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of memory banks, recommended for data files created by this factory.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedPrefixSize()">recommendedPrefixSize</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation returns <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#prefixSize"><CODE>prefixSize</CODE></A> &mdash; the <tt>long</tt> value passed
+ to the constructor, or <tt>0</tt> if the constructor without <tt>long</tt> argument was used.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedSingleMappingLimit()">recommendedSingleMappingLimit</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation returns 0.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#setTemporary(net.algart.arrays.DataFile, boolean)">setTemporary</A></STRONG>(<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&nbsp;dataFile,
+             boolean&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If <tt>value</tt> is <tt>true</tt>, adds the passed data file instance into
+ the internal collection returned by <A HREF="../../../net/algart/arrays/DataFileModel.html#allTemporaryFiles()"><CODE>DataFileModel.allTemporaryFiles()</CODE></A> method;
+ if <tt>value</tt> is <tt>false</tt>, removes it from that collection.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#temporaryFilePrefix()">temporaryFilePrefix</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the prefix, used by the current implementation of
+ <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporary(boolean)"><CODE>createTemporary(boolean)</CODE></A> method while creating temporary files &mdash;
+ see comments to that method.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.io.File</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath()">tempPath</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath"><CODE>tempPath</CODE></A> protected field,
+ in other words, the first argument of <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#AbstractDataFileModel(java.io.File, long)"><CODE>AbstractDataFileModel(File, long)</CODE></A> constructor.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class java.lang.Object</STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Field Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="allTemporaryFiles"><!-- --></A><H3>
+allTemporaryFiles</H3>
+<PRE>
+protected final java.util.Set&lt;<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&gt; <STRONG>allTemporaryFiles</STRONG></PRE>
+<DL>
+<DD>The internal synchronized set of all non-deleted temporary files:
+ <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#allTemporaryFiles()"><CODE>allTemporaryFiles()</CODE></A> method returns its clone.
+ <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporary(boolean)"><CODE>createTemporary(boolean)</CODE></A> method adds a path to this set,
+ <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#delete(net.algart.arrays.DataFile)"><CODE>delete(DataFile)</CODE></A> method removes the path from it.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="tempPath"><!-- --></A><H3>
+tempPath</H3>
+<PRE>
+protected final java.io.File <STRONG>tempPath</STRONG></PRE>
+<DL>
+<DD>The path where new temporary files will be created by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>createTemporaryFile(boolean)</CODE></A> method
+ or <tt>null</tt> if the default temporary-file directory is to be used.
+ If it is not <tt>null</tt>, it can refer to: 1) an existing directory, 2) existing file or
+ 3) non-existing file/directory. In 1st case, it is considered as the temporary-file directory,
+ in which new temporary files will be created. In 2nd and 3rd case, it is considered
+ as a <i>file</i> name: the name of new temporary file will always equal to this
+ (so, it will be possible to create only one temporary file).
+ It is equal to the first argument of <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#AbstractDataFileModel(java.io.File, long)"><CODE>AbstractDataFileModel(File, long)</CODE></A> constructor.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath()"><CODE>tempPath()</CODE></A>, 
+<A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#isConcreteFile()"><CODE>isConcreteFile()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="prefixSize"><!-- --></A><H3>
+prefixSize</H3>
+<PRE>
+protected final long <STRONG>prefixSize</STRONG></PRE>
+<DL>
+<DD>The value returned by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedPrefixSize()"><CODE>recommendedPrefixSize()</CODE></A> method.
+ It is equal to the second argument of <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#AbstractDataFileModel(java.io.File, long)"><CODE>AbstractDataFileModel(File, long)</CODE></A> constructor.
+<P>
+</DD>
+</DL>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Constructor Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="AbstractDataFileModel()"><!-- --></A><H3>
+AbstractDataFileModel</H3>
+<PRE>
+protected <STRONG>AbstractDataFileModel</STRONG>()</PRE>
+<DL>
+<DD>Equivalent to <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#AbstractDataFileModel(java.io.File, long)"><CODE>AbstractDataFileModel(null, 0)</CODE></A>.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="AbstractDataFileModel(java.io.File, long)"><!-- --></A><H3>
+AbstractDataFileModel</H3>
+<PRE>
+protected <STRONG>AbstractDataFileModel</STRONG>(java.io.File&nbsp;tempPath,
+                                long&nbsp;prefixSize)</PRE>
+<DL>
+<DD>Creates a new instance with the specified temporary-file path and the starting gap size
+ in all temporary files.
+
+ <p>The <tt>tempPath</tt> argument may refer both to a directory and to a file.
+ The following 4 cases are possible.
+
+ <ol>
+ <li><tt>tempPath</tt> is an existing directory or another non-file disk resource;
+ more precisely, <nobr><tt>tempPath.exists() && !tempPath.isFile()</tt></nobr>.
+ In this case, new temporary files, created by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>createTemporaryFile(boolean)</CODE></A> method,
+ will be placed in this directory with unique names.</li>
+
+ <li><tt>tempPath</tt> is <tt>null</tt>. In this case, new temporary files, created by
+ <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>createTemporaryFile(boolean)</CODE></A> method, will be placed in the default system-dependent
+ temporary-file directory.</li>
+
+ <li><tt>tempPath</tt> is an existing file (<nobr><tt>tempPath.isFile()</tt></nobr>) or
+
+ <li><tt>tempPath</tt> does not exists (<nobr><tt>!tempPath.exists()</tt></nobr>).
+ These are <b>special cases</b>! The <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>createTemporaryFile(boolean)</CODE></A> will create the file
+ at this position (<tt>tempPath.createNewFile()</tt>) and return <tt>tempPath</tt>.
+ In other words, this data file model will not be able to create more than one temporary file,
+ and all further temporary files, if will be requested, will overwrite the same file.
+ </li>
+ </ol>
+
+ <p>The last variants 3 and 4 can be useful for creating a single array mapped to some required file.
+ For example, the following code will create new array, containing 1024 <tt>int</tt> values,
+ in the file "myfile.dat":
+
+ <pre>
+ <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> dfm = new <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File)"><CODE>DefaultDataFileModel</CODE></A>("myfile.dat");
+ <A HREF="../../../net/algart/arrays/LargeMemoryModel.html" title="class in net.algart.arrays"><CODE>LargeMemoryModel&lt;File&gt;</CODE></A> mm = <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#getInstance(net.algart.arrays.DataFileModel)"><CODE>LargeMemoryModel.getInstance</CODE></A>(dfm);
+ <A HREF="../../../net/algart/arrays/UpdatableIntArray.html" title="interface in net.algart.arrays"><CODE>UpdatableIntArray</CODE></A> dest = mm.<A HREF="../../../net/algart/arrays/MemoryModel.html#newUnresizableIntArray(long)"><CODE>newUnresizableIntArray</CODE></A>(1024);
+ <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#setTemporary(net.algart.arrays.Array, boolean)"><CODE>LargeMemoryModel.setTemporary</CODE></A>(dest, false);
+ </pre>
+
+ <p>Please be careful: if there is an existing subdirectory with the same "myfile.dat" name,
+ the behavior of the data file model will be another (the variant #1).
+
+ <p>The <tt>prefixSize</tt> defines the starting gap in all temporary files,
+ returned by <A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedPrefixSize()"><CODE>recommendedPrefixSize()</CODE></A> implementation
+ in this class. Usually you may pass <tt>0</tt> here. The only case when it makes sense to
+ pass positive value is if you are planning to clear temporary status of the created array
+ via <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#setTemporary(net.algart.arrays.Array, boolean)"><CODE>LargeMemoryModel.setTemporary(Array, boolean)</CODE></A> method and save some additional
+ meta-information in the file prefix &mdash; element type, array length, etc.
+ A good example of using prefix is the tool <A HREF="../../../net/algart/arrays/MatrixInfo.html" title="class in net.algart.arrays"><CODE>MatrixInfo</CODE></A>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>tempPath</CODE> - the path where new temporary files will be created
+                   by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>createTemporaryFile(boolean)</CODE></A> method
+                   or <tt>null</tt> if the default temporary-file directory is to be used.</DD><DD><CODE>prefixSize</CODE> - the value returned by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedPrefixSize()"><CODE>recommendedPrefixSize()</CODE></A> implementation in this class.</DD></DL>
+</DD>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="pathClass()"><!-- --></A><H3>
+pathClass</H3>
+<PRE>
+public java.lang.Class&lt;java.io.File&gt; <STRONG>pathClass</STRONG>()</PRE>
+<DL>
+<DD>This implementation returns <tt>File.class</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#pathClass()">pathClass</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>File.class</tt></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getDataFile(java.io.File, java.nio.ByteOrder)"><!-- --></A><H3>
+getDataFile</H3>
+<PRE>
+public abstract <A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A> <STRONG>getDataFile</STRONG>(java.io.File&nbsp;path,
+                                     java.nio.ByteOrder&nbsp;byteOrder)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#getDataFile(P, java.nio.ByteOrder)">DataFileModel</A></CODE></STRONG></DD>
+<DD>Returns a new instance of <A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays"><CODE>DataFile</CODE></A> object corresponding to the given path.
+ This path will be returned by <A HREF="../../../net/algart/arrays/DataFileModel.html#getPath(net.algart.arrays.DataFile)"><CODE>DataFileModel.getPath(DataFile)</CODE></A> method for the returned object.
+
+ <p>The passed byte order will be used for mapping this file:
+ the <A HREF="../../../net/algart/arrays/DataFile.html#map(net.algart.arrays.DataFile.Range, boolean)"><CODE>DataFile.map(DataFile.Range, boolean)</CODE></A> method of the data file
+ will return <tt>ByteBuffer</tt> with this byte order.
+
+ <p>The physical object (for example, disk file), described by <tt>path</tt>
+ string, should already exist.
+ This method does not attempt to create physical file;
+ it only creates new Java object associated with an existing file.
+
+ <p>This method never throws <tt>java.io.IOError</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#getDataFile(P, java.nio.ByteOrder)">getDataFile</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>path</CODE> - the path describing unique position of the existing data file.</DD><DD><CODE>byteOrder</CODE> - the byte order that will be always used for mapping this file.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>new instance of <A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays"><CODE>DataFile</CODE></A> object.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPath(net.algart.arrays.DataFile)"><!-- --></A><H3>
+getPath</H3>
+<PRE>
+public abstract java.io.File <STRONG>getPath</STRONG>(<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&nbsp;dataFile)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#getPath(net.algart.arrays.DataFile)">DataFileModel</A></CODE></STRONG></DD>
+<DD>Returns the path describing unique position of the data file (usually the absolute path to the disk file).
+
+ <p>This method never throws <tt>java.io.IOError</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#getPath(net.algart.arrays.DataFile)">getPath</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>dataFile</CODE> - the data file.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the path describing unique position of the data file.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createTemporary(boolean)"><!-- --></A><H3>
+createTemporary</H3>
+<PRE>
+public <A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A> <STRONG>createTemporary</STRONG>(boolean&nbsp;unresizable)</PRE>
+<DL>
+<DD>This implementation creates a temporary file by calling <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>createTemporaryFile(boolean)</CODE></A>
+ protected method and returns a result of <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#getDataFile(java.io.File, java.nio.ByteOrder)"><CODE>getDataFile(pathToTemporaryFile, ByteOrder.nativeOrder())</CODE></A>.
+ You may override <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>createTemporaryFile(boolean)</CODE></A> method
+ to change a location or names of temporary files.
+
+ <p>The byte order in the created file will be equal to the result of <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#byteOrderInTemporaryFiles()"><CODE>byteOrderInTemporaryFiles()</CODE></A>
+ protected method. You may override it to specify custom byte order in temporary files.
+
+ <p>This method adds the created instance into <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#allTemporaryFiles"><CODE>allTemporaryFiles</CODE></A>,
+ if <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#isAutoDeletionRequested()"><CODE>isAutoDeletionRequested()</CODE></A> method returns <tt>true</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#createTemporary(boolean)">createTemporary</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>unresizable</CODE> - the argument passed to <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>createTemporaryFile(boolean)</CODE></A>.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>new instance of <A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays"><CODE>DataFile</CODE></A> object corresponding newly created temporary data file.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.io.IOError</CODE> - if <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>createTemporaryFile(boolean)</CODE></A> throws <tt>IOException</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="delete(net.algart.arrays.DataFile)"><!-- --></A><H3>
+delete</H3>
+<PRE>
+public boolean <STRONG>delete</STRONG>(<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&nbsp;dataFile)</PRE>
+<DL>
+<DD>This implementation removes the file by the call of standard <tt>java.io.File.delete()</tt> method:
+ <tt><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#getPath(net.algart.arrays.DataFile)"><CODE>getPath</CODE></A>(dataFile).delete()</tt>
+ (if <tt>java.io.File.exists()</tt> method returns <tt>true</tt>).
+ After deletion, this implementation removes the passed instance from
+ <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#allTemporaryFiles"><CODE>allTemporaryFiles</CODE></A>.
+
+ <p>This implementation is fully synchronized on the internal set
+ returned by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#allTemporaryFiles()"><CODE>allTemporaryFiles()</CODE></A> method.
+
+ <p>You should override this method if the data files in this model do not correspond to usual disk files.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#delete(net.algart.arrays.DataFile)">delete</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>dataFile</CODE> - the data file that should be deleted.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if and only if the data file existed and was successfully deleted,
+                 <tt>false</tt> if the data file does not exist (maybe was deleted already).</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.io.IOError</CODE> - in a case of any problems while file deletion.</DD>
+<DD><CODE>java.lang.NullPointerException</CODE> - if the passed data file is <tt>null</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="finalizationNotify(java.io.File, boolean)"><!-- --></A><H3>
+finalizationNotify</H3>
+<PRE>
+public void <STRONG>finalizationNotify</STRONG>(java.io.File&nbsp;dataFilePath,
+                               boolean&nbsp;isApplicationShutdown)</PRE>
+<DL>
+<DD>This implementation does nothing.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#finalizationNotify(P, boolean)">finalizationNotify</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>dataFilePath</CODE> - the path describing unique position of the data file.</DD><DD><CODE>isApplicationShutdown</CODE> - <tt>true</tt> if this method is called by the cleanup procedure,
+                              performed by this package, while finishing the application;
+                              <tt>false</tt> if it is called from the garbage collector.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="allTemporaryFiles()"><!-- --></A><H3>
+allTemporaryFiles</H3>
+<PRE>
+public java.util.Set&lt;<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&gt; <STRONG>allTemporaryFiles</STRONG>()</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#allTemporaryFiles()">DataFileModel</A></CODE></STRONG></DD>
+<DD>Returns the set of all data files, that are
+ temporary and should be automatically deleted while system shutdown.
+ The returned set is an immutable view or a newly allocated copy of an internal set stored in this instance.
+ The returned instance must not be <tt>null</tt> (but may be the empty set).
+
+ <p>Usually this method returns the set of temporary files
+ that were created by <A HREF="../../../net/algart/arrays/DataFileModel.html#createTemporary(boolean)"><CODE>DataFileModel.createTemporary(boolean)</CODE></A> method by this instance of this factory,
+ but not were successfully deleted by <A HREF="../../../net/algart/arrays/DataFileModel.html#delete(net.algart.arrays.DataFile)"><CODE>DataFileModel.delete(DataFile)</CODE></A> method yet.
+
+ <p>This package includes automatic cleanup procedure, that is performed in
+ the internal shutdown hook and calls <A HREF="../../../net/algart/arrays/DataFileModel.html#delete(net.algart.arrays.DataFile)"><CODE>DataFileModel.delete(DataFile)</CODE></A> for all data files,
+ returned by this method for all instances of this class, which
+ were used since the application start and returned <tt>true</tt> as a result
+ of <A HREF="../../../net/algart/arrays/DataFileModel.html#isAutoDeletionRequested()"><CODE>DataFileModel.isAutoDeletionRequested()</CODE></A> method.
+ You may install additional cleanup procedures, that will be called before or after this,
+ via <A HREF="../../../net/algart/arrays/Arrays.html#addShutdownTask(java.lang.Runnable, net.algart.arrays.Arrays.TaskExecutionOrder)"><CODE>Arrays.addShutdownTask(Runnable, Arrays.TaskExecutionOrder)</CODE></A> method.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#allTemporaryFiles()">allTemporaryFiles</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the set of the paths of all created temporary files.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setTemporary(net.algart.arrays.DataFile, boolean)"><!-- --></A><H3>
+setTemporary</H3>
+<PRE>
+public void <STRONG>setTemporary</STRONG>(<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&nbsp;dataFile,
+                         boolean&nbsp;value)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#setTemporary(net.algart.arrays.DataFile, boolean)">DataFileModel</A></CODE></STRONG></DD>
+<DD>If <tt>value</tt> is <tt>true</tt>, adds the passed data file instance into
+ the internal collection returned by <A HREF="../../../net/algart/arrays/DataFileModel.html#allTemporaryFiles()"><CODE>DataFileModel.allTemporaryFiles()</CODE></A> method;
+ if <tt>value</tt> is <tt>false</tt>, removes it from that collection.
+
+ <p>This method does nothing if <A HREF="../../../net/algart/arrays/DataFileModel.html#isAutoDeletionRequested()"><CODE>DataFileModel.isAutoDeletionRequested()</CODE></A> returns <tt>false</tt>.
+
+ <p>This method is called in <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#setTemporary(net.algart.arrays.Array, boolean)"><CODE>LargeMemoryModel.setTemporary(net.algart.arrays.Array, boolean)</CODE></A> method only.
+
+ <p>In some data file models (implemented in another packages) this method may do nothing
+ or throw an exception.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#setTemporary(net.algart.arrays.DataFile, boolean)">setTemporary</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>dataFile</CODE> - the data file.</DD><DD><CODE>value</CODE> - specifies whether the data file should be included into or excluded from
+                 the internal collection of temporary files.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isAutoDeletionRequested()"><!-- --></A><H3>
+isAutoDeletionRequested</H3>
+<PRE>
+public abstract boolean <STRONG>isAutoDeletionRequested</STRONG>()</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#isAutoDeletionRequested()">DataFileModel</A></CODE></STRONG></DD>
+<DD>Returns <tt>true</tt> if the standard cleanup procedure, that deletes all temporary files
+ (as described in comments to <A HREF="../../../net/algart/arrays/DataFileModel.html#allTemporaryFiles()"><CODE>DataFileModel.allTemporaryFiles()</CODE></A> method), is necessary for this file model.
+ In this case, the instance of this model is automatically registered,
+ while creating any <A HREF="../../../net/algart/arrays/LargeMemoryModel.html" title="class in net.algart.arrays"><CODE>LargeMemoryModel</CODE></A> instance with this model,
+ in the internal static collection
+ that can be retrieved by <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#allUsedDataFileModelsWithAutoDeletion()"><CODE>LargeMemoryModel.allUsedDataFileModelsWithAutoDeletion()</CODE></A> method.
+
+ <p>This method returns <tt>true</tt> for all implementations from this package.
+ If you implemented own cleanup procedure in your implementation of this class,
+ you may return <tt>false</tt> in this method. If this method returns <tt>false</tt>,
+ the implementations of <A HREF="../../../net/algart/arrays/DataFileModel.html#createTemporary(boolean)"><CODE>DataFileModel.createTemporary(boolean)</CODE></A> method in this package
+ do not add the file name into the internal collection,
+ returned by <A HREF="../../../net/algart/arrays/DataFileModel.html#allTemporaryFiles()"><CODE>DataFileModel.allTemporaryFiles()</CODE></A> method.
+
+ <p>If this method returns <tt>false</tt>, <i>it does not mean</i> that temporary files will
+ not be deleted automatically. It only means that this data file model instance
+ will not be registered in the internal static collection
+ (available via <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#allUsedDataFileModelsWithAutoDeletion()"><CODE>LargeMemoryModel.allUsedDataFileModelsWithAutoDeletion()</CODE></A> method)
+ and that the <A HREF="../../../net/algart/arrays/DataFileModel.html#createTemporary(boolean)"><CODE>DataFileModel.createTemporary(boolean)</CODE></A> method will not register the file name in
+ <A HREF="../../../net/algart/arrays/DataFileModel.html#allTemporaryFiles()"><CODE>DataFileModel.allTemporaryFiles()</CODE></A> collection. To avoid automatic file deletion,
+ you must call <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#setTemporary(net.algart.arrays.Array, boolean)"><CODE>LargeMemoryModel.setTemporary(Array, boolean)</CODE></A> method
+ with <tt>false</tt> second argument.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#isAutoDeletionRequested()">isAutoDeletionRequested</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if the temporary data files, created by this model, should be automatically
+         deleted by the standard cleanup procedure.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="recommendedNumberOfBanks()"><!-- --></A><H3>
+recommendedNumberOfBanks</H3>
+<PRE>
+public abstract int <STRONG>recommendedNumberOfBanks</STRONG>()</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedNumberOfBanks()">DataFileModel</A></CODE></STRONG></DD>
+<DD>The number of memory banks, recommended for data files created by this factory.
+ AlgART arrays, based on data file mapping, allocate this number of memory banks
+ and load there portions of large data file.
+
+ <p>The returned number of banks must not be less than 2.
+ In other case, an attempt to create <A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays"><CODE>Array</CODE></A> instance will throw an exception.
+ Usual values are 8-16.
+
+     <!--Repeat.SectionStart recommendedNumberOfBanks_multiprocessor-->
+ <p>Please note that many algorithms, on multiprocessor or multi-core systems,
+ use several parallel threads for processing arrays: see <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html" title="class in net.algart.arrays"><CODE>Arrays.ParallelExecutor</CODE></A>.
+ So, the number of banks should be enough for parallel using by all CPU units,
+ to avoid frequently bank swapping.
+ There should be at least 2 banks per each CPU unit,
+ better 3-4 banks (for complex random-access algorithms).
+     <!--Repeat.SectionEnd recommendedNumberOfBanks_multiprocessor-->
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedNumberOfBanks()">recommendedNumberOfBanks</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the recommended number of memory banks.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="recommendedBankSize(boolean)"><!-- --></A><H3>
+recommendedBankSize</H3>
+<PRE>
+public abstract int <STRONG>recommendedBankSize</STRONG>(boolean&nbsp;unresizable)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedBankSize(boolean)">DataFileModel</A></CODE></STRONG></DD>
+<DD>The size of every memory bank in bytes, recommended for data files created by this factory.
+ AlgART arrays, based on data file mapping, allocate memory banks with this size
+ and load there portions of large data file.
+
+ <p>The <tt>unresizable</tt> flag specifies whether this bank size will be used for
+ data file, which stores unresizable arrays only. In this case, this method may return greater value
+ than if <tt>unresizable</tt> is <tt>false</tt>. The reason is that the data files,
+ containing resizable arrays, may grow per blocks, which size is equal to the bank size.
+ If bank size is 8 MB, then any resizable array, created by <A HREF="../../../net/algart/arrays/MemoryModel.html#newIntArray(long)"><CODE>MemoryModel.newIntArray(long)</CODE></A>
+ or similar method, will occupy at least 8 MB of disk space, even its length is only several <tt>int</tt>
+ values. For unresizable arrays, created by <A HREF="../../../net/algart/arrays/MemoryModel.html#newUnresizableIntArray(long)"><CODE>MemoryModel.newUnresizableIntArray(long)</CODE></A> and similar
+ methods, the file size is usually fixed while its creation and bank size information is not used.
+
+ <p>This returned size must be the power of two (2<sup>k</sup>) and must not be less than 256.
+ In other case, an attempt to create <A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays"><CODE>Array</CODE></A> instance will throw an exception.
+
+ <p>We recommend use large banks to reduce bank swapping.
+ But do not specify too large values here: every opened data file
+ use <tt><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedNumberOfBanks()"><CODE>DataFileModel.recommendedNumberOfBanks()</CODE></A>*<A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedBankSize(boolean)"><CODE>DataFileModel.recommendedBankSize(boolean)</CODE></A></tt>
+ bytes of the address space, which is limited by ~1.0-1.5 GB under 32-bit OS.
+ Typical value is 2-8 MB for unresizable arrays
+ (when the argument is <tt>true</tt>) and 64-256 KB for resizable
+ ones (when the argument is <tt>false</tt>).
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedBankSize(boolean)">recommendedBankSize</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>unresizable</CODE> - <tt>true</tt> if this bank size will be used for unresizable arrays only.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the recommended size of every memory bank in bytes.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedSingleMappingLimit()"><CODE>DataFileModel.recommendedSingleMappingLimit()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="recommendedSingleMappingLimit()"><!-- --></A><H3>
+recommendedSingleMappingLimit</H3>
+<PRE>
+public int <STRONG>recommendedSingleMappingLimit</STRONG>()</PRE>
+<DL>
+<DD><p>This implementation returns 0.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedSingleMappingLimit()">recommendedSingleMappingLimit</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>0.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="recommendedPrefixSize()"><!-- --></A><H3>
+recommendedPrefixSize</H3>
+<PRE>
+public long <STRONG>recommendedPrefixSize</STRONG>()</PRE>
+<DL>
+<DD><p>This implementation returns <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#prefixSize"><CODE>prefixSize</CODE></A> &mdash; the <tt>long</tt> value passed
+ to the constructor, or <tt>0</tt> if the constructor without <tt>long</tt> argument was used.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedPrefixSize()">recommendedPrefixSize</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#prefixSize"><CODE>prefixSize</CODE></A>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/MatrixInfo.html" title="class in net.algart.arrays"><CODE>MatrixInfo</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="autoResizingOnMapping()"><!-- --></A><H3>
+autoResizingOnMapping</H3>
+<PRE>
+public boolean <STRONG>autoResizingOnMapping</STRONG>()</PRE>
+<DL>
+<DD><p>This implementation returns <tt>false</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#autoResizingOnMapping()">autoResizingOnMapping</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>false</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="tempPath()"><!-- --></A><H3>
+tempPath</H3>
+<PRE>
+public final java.io.File <STRONG>tempPath</STRONG>()</PRE>
+<DL>
+<DD>Returns the value of <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath"><CODE>tempPath</CODE></A> protected field,
+ in other words, the first argument of <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#AbstractDataFileModel(java.io.File, long)"><CODE>AbstractDataFileModel(File, long)</CODE></A> constructor.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the value of <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath"><CODE>tempPath</CODE></A> protected field.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isConcreteFile()"><!-- --></A><H3>
+isConcreteFile</H3>
+<PRE>
+public final boolean <STRONG>isConcreteFile</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if the <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath"><CODE>tempPath</CODE></A> field is not <tt>null</tt> and
+ corresponds to existing file or non-existing file/directory:
+ <tt>tempPath != null && (!tempPath.exists() || tempPath.isFile())</tt>
+ In such situations, this data file model always works with the only one constant file,
+ specified in <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath"><CODE>tempPath</CODE></A> field.
+
+ <p>This method returns <tt>true</tt> is the cases #3 and #4, described in
+ the <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#AbstractDataFileModel(java.io.File, long)"><CODE>comments to the constructor</CODE></A>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>whether this data file model always works with the fixed file <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath"><CODE>tempPath</CODE></A>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="temporaryFilePrefix()"><!-- --></A><H3>
+temporaryFilePrefix</H3>
+<PRE>
+public java.lang.String <STRONG>temporaryFilePrefix</STRONG>()</PRE>
+<DL>
+<DD>Returns the prefix, used by the current implementation of
+ <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporary(boolean)"><CODE>createTemporary(boolean)</CODE></A> method while creating temporary files &mdash;
+ see comments to that method. This prefix helps to indicate a concrete
+ data file model class, which was used while creating temporaty files.
+
+ <p>The result of this method must be at least three characters long.
+ In other case, its result will be automatically appended with "_" to fulfil
+ the requirements of the standard <tt>File.createTempFile</tt> method.
+
+ <p>This method must not return <tt>null</tt>.
+
+ <p>This implementation returns <tt>"lmm"</tt>.
+ The implementation from <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> class returns <tt>"mapmm"</tt>.
+ The implementation from <A HREF="../../../net/algart/arrays/StandardIODataFileModel.html" title="class in net.algart.arrays"><CODE>StandardIODataFileModel</CODE></A> class returns <tt>"stdmm"</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the prefix (3 characters minimum), which will be added to the name of the temporary files,
+         created by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporary(boolean)"><CODE>createTemporary(boolean)</CODE></A> method.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createTemporaryFile(boolean)"><!-- --></A><H3>
+createTemporaryFile</H3>
+<PRE>
+protected java.io.File <STRONG>createTemporaryFile</STRONG>(boolean&nbsp;unresizable)
+                                    throws java.io.IOException</PRE>
+<DL>
+<DD>Creates a new temporary empty disk file and returns the absolute (unique for the file system) path to it.
+ This method is used by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporary(boolean)"><CODE>createTemporary(boolean)</CODE></A> method, if it was not overridden,
+ in particular, in both <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> and <A HREF="../../../net/algart/arrays/StandardIODataFileModel.html" title="class in net.algart.arrays"><CODE>StandardIODataFileModel</CODE></A> classes.
+
+ <p>If <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#isConcreteFile()"><CODE>isConcreteFile()</CODE></A> method returns <tt>false</tt>
+ (i.e. if <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath"><CODE>tempPath</CODE></A> is <tt>null</tt> or an existing directory:
+ <nobr><tt>tempPath.exists() && !tempPath.isFile()</tt></nobr>),
+ this implementation returns the following result:
+ <tt>File.createTempFile(prefix,suffix,<A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath"><CODE>tempPath</CODE></A>).getAbsolutePath()</tt>, where
+ <tt>tempPath</tt> is the constructor argument (<tt>null</tt> for constructor without
+ <tt>File</tt> argument), <tt>prefix</tt> is the result of <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#temporaryFilePrefix()"><CODE>temporaryFilePrefix()</CODE></A>
+ method (appened to the length 3 with "_" character if its length &lt;3),
+ <tt>suffix</tt> is calculated as<pre>
+ String suffix = (unresizable ? ".uarray." : ".marray.")
+ + (<A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#byteOrderInTemporaryFiles()"><CODE>byteOrderInTemporaryFiles()</CODE></A> == ByteOrder.BIG_ENDIAN ? "be.tmp" : "le.tmp");
+ </pre>
+
+ <p>If <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#isConcreteFile()"><CODE>isConcreteFile()</CODE></A> method returns <tt>true</tt>
+ (i.e. if <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath"><CODE>tempPath</CODE></A> is not <tt>null</tt>, and it is a file or does not exists:
+ <nobr><tt>!tempPath.exists() || tempPath.isFile()</tt></nobr>),
+ this implementation calls <tt>tempPath.createNewFile()</tt> and returns <tt>tempPath</tt>.
+
+ <p>You may override this method to change this behavior.
+
+ <p>This method does not try to use <tt>File.deleteOnExit()</tt> method
+ for created files.
+ Instead, the temporary files will deleted via built-in
+ cleanup procedure (described in comments to <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#allTemporaryFiles()"><CODE>allTemporaryFiles()</CODE></A> method),
+ if <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#isAutoDeletionRequested()"><CODE>isAutoDeletionRequested()</CODE></A> method returns <tt>true</tt>.
+ The reasons are the Sun's bugs #6359560:
+ "<a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6359560"
+ >(fs)&nbsp;File.deleteOnExit() doesn't work when MappedByteBuffer exists (win)</a>"
+ and #4171239 (Java 1.5 and 1.6):
+ "<a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4171239"
+ >java.io.File.deleteOnExit does not work on open files (win32)</a>".
+
+ <p>You need to keep in mind that some of these files will not be deleted,
+ if all finalization code will not be performed until system exit.
+ You may call <A HREF="../../../net/algart/arrays/Arrays.html#gcAndAwaitFinalization(int)"><CODE>Arrays.gcAndAwaitFinalization(int)</CODE></A> method before system exit
+ to reduce the probability of appearing non-deleted files.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>unresizable</CODE> - <tt>true</tt> if this file will be used for unresizable arrays only.
+                    It is an information flag: for example, it may be used for choosing file name
+                    or directory. If this flag is set, it does not mean that <A HREF="../../../net/algart/arrays/DataFile.html#length(long)"><CODE>DataFile.length(long)</CODE></A>
+                    method will not be called to change the file length; it will be called at least once.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the absolute path to new created temporary file.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.io.IOException</CODE> - in a case of any disk errors.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="byteOrderInTemporaryFiles()"><!-- --></A><H3>
+byteOrderInTemporaryFiles</H3>
+<PRE>
+protected java.nio.ByteOrder <STRONG>byteOrderInTemporaryFiles</STRONG>()</PRE>
+<DL>
+<DD>Returns byte order that is used for new temporary files by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporary(boolean)"><CODE>createTemporary(boolean)</CODE></A> method
+ in this class. Never returns <tt>null</tt>.
+
+ <p>This implementation returns <tt>ByteOrder.nativeOrder()</tt>: in most situations,
+ the best choice for temporary data, that will be automatically deleted
+ before application exit and, probably, will never be transferred to another computers.
+ You may override this method to specify another byte order;
+ it be useful if you are planning to clear temporary status
+ for some arrays via <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#setTemporary(net.algart.arrays.Array, boolean)"><CODE>LargeMemoryModel.setTemporary(Array, boolean)</CODE></A> method.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>byte order that is used for new temporary files.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/AbstractCharArray.html" title="class in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/AbstractDoubleArray.html" title="class in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/AbstractDataFileModel.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="AbstractDataFileModel.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

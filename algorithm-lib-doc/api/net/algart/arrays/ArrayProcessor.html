@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+ArrayProcessor
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="ArrayProcessor";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/ArrayPool.html" title="class in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html" title="interface in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/ArrayProcessor.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="ArrayProcessor.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.arrays</FONT>
+<BR>
+Interface ArrayProcessor</H2>
+<DL>
+<DT><STRONG>All Known Subinterfaces:</STRONG></DT> <DD><A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html" title="interface in net.algart.arrays">ArrayProcessorWithContextSwitching</A>, <A HREF="../../../net/algart/matrices/linearfiltering/Convolution.html" title="interface in net.algart.matrices.linearfiltering">Convolution</A>, <A HREF="../../../net/algart/matrices/linearfiltering/Derivator.html" title="interface in net.algart.matrices.linearfiltering">Derivator</A>, <A HREF="../../../net/algart/arrays/IterativeArrayProcessor.html" title="interface in net.algart.arrays">IterativeArrayProcessor</A>&lt;T&gt;, <A HREF="../../../net/algart/matrices/morphology/Morphology.html" title="interface in net.algart.matrices.morphology">Morphology</A>, <A HREF="../../../net/algart/matrices/morphology/RankMorphology.html" title="interface in net.algart.matrices.morphology">RankMorphology</A>, <A HREF="../../../net/algart/matrices/skeletons/ThinningSkeleton.html" title="interface in net.algart.matrices.skeletons">ThinningSkeleton</A></DD>
+</DL>
+<DL>
+<DT><STRONG>All Known Implementing Classes:</STRONG></DT> <DD><A HREF="../../../net/algart/arrays/AbstractArrayProcessorWithContextSwitching.html" title="class in net.algart.arrays">AbstractArrayProcessorWithContextSwitching</A>, <A HREF="../../../net/algart/matrices/linearfiltering/AbstractConvolution.html" title="class in net.algart.matrices.linearfiltering">AbstractConvolution</A>, <A HREF="../../../net/algart/matrices/linearfiltering/AbstractDerivator.html" title="class in net.algart.matrices.linearfiltering">AbstractDerivator</A>, <A HREF="../../../net/algart/arrays/AbstractIterativeArrayProcessor.html" title="class in net.algart.arrays">AbstractIterativeArrayProcessor</A>, <A HREF="../../../net/algart/matrices/morphology/AbstractMorphology.html" title="class in net.algart.matrices.morphology">AbstractMorphology</A>, <A HREF="../../../net/algart/matrices/morphology/AbstractRankMorphology.html" title="class in net.algart.matrices.morphology">AbstractRankMorphology</A>, <A HREF="../../../net/algart/matrices/linearfiltering/BasicConvolution.html" title="class in net.algart.matrices.linearfiltering">BasicConvolution</A>, <A HREF="../../../net/algart/matrices/linearfiltering/BasicDerivator.html" title="class in net.algart.matrices.linearfiltering">BasicDerivator</A>, <A HREF="../../../net/algart/matrices/morphology/BasicMorphology.html" title="class in net.algart.matrices.morphology">BasicMorphology</A>, <A HREF="../../../net/algart/matrices/morphology/BasicRankMorphology.html" title="class in net.algart.matrices.morphology">BasicRankMorphology</A>, <A HREF="../../../net/algart/matrices/linearfiltering/ContinuedConvolution.html" title="class in net.algart.matrices.linearfiltering">ContinuedConvolution</A>, <A HREF="../../../net/algart/matrices/linearfiltering/ContinuedDerivator.html" title="class in net.algart.matrices.linearfiltering">ContinuedDerivator</A>, <A HREF="../../../net/algart/matrices/morphology/ContinuedMorphology.html" title="class in net.algart.matrices.morphology">ContinuedMorphology</A>, <A HREF="../../../net/algart/matrices/morphology/ContinuedRankMorphology.html" title="class in net.algart.matrices.morphology">ContinuedRankMorphology</A>, <A HREF="../../../net/algart/matrices/ContinuedStreamingApertureProcessor.html" title="class in net.algart.matrices">ContinuedStreamingApertureProcessor</A>, <A HREF="../../../net/algart/matrices/skeletons/ErodingSkeleton.html" title="class in net.algart.matrices.skeletons">ErodingSkeleton</A>, <A HREF="../../../net/algart/arrays/ExternalProcessor.html" title="class in net.algart.arrays">ExternalProcessor</A>, <A HREF="../../../net/algart/arrays/GeneralizedBitProcessing.html" title="class in net.algart.arrays">GeneralizedBitProcessing</A>, <A HREF="../../../net/algart/matrices/morphology/IterativeErosion.html" title="class in net.algart.matrices.morphology">IterativeErosion</A>, <A HREF="../../../net/algart/matrices/morphology/IterativeOpening.html" title="class in net.algart.matrices.morphology">IterativeOpening</A>, <A HREF="../../../net/algart/matrices/skeletons/OctupleThinningSkeleton2D.html" title="class in net.algart.matrices.skeletons">OctupleThinningSkeleton2D</A>, <A HREF="../../../net/algart/matrices/skeletons/Quadruple3x5ThinningSkeleton2D.html" title="class in net.algart.matrices.skeletons">Quadruple3x5ThinningSkeleton2D</A>, <A HREF="../../../net/algart/matrices/skeletons/SkeletonScanner.html" title="class in net.algart.matrices.skeletons">SkeletonScanner</A>, <A HREF="../../../net/algart/matrices/StreamingApertureProcessor.html" title="class in net.algart.matrices">StreamingApertureProcessor</A>, <A HREF="../../../net/algart/matrices/skeletons/StrongQuadruple3x5ThinningSkeleton2D.html" title="class in net.algart.matrices.skeletons">StrongQuadruple3x5ThinningSkeleton2D</A>, <A HREF="../../../net/algart/matrices/linearfiltering/TiledConvolution.html" title="class in net.algart.matrices.linearfiltering">TiledConvolution</A>, <A HREF="../../../net/algart/matrices/morphology/TiledMorphology.html" title="class in net.algart.matrices.morphology">TiledMorphology</A>, <A HREF="../../../net/algart/matrices/morphology/TiledRankMorphology.html" title="class in net.algart.matrices.morphology">TiledRankMorphology</A>, <A HREF="../../../net/algart/matrices/skeletons/WeakOctupleThinningSkeleton2D.html" title="class in net.algart.matrices.skeletons">WeakOctupleThinningSkeleton2D</A></DD>
+</DL>
+<HR>
+<PRE>public interface <STRONG>ArrayProcessor</STRONG></PRE>
+
+<P>
+<p>Abstract array processor: an algorithm processing AlgART arrays or matrices.</p>
+
+ <p>It is very abstract interface: it almost does not declare any functionality.
+ The only exception is the <A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays"><CODE>array context</CODE></A>.
+ We suppose that any array processing algorithm should work in some context,
+ and this interface declares a method for getting the current execution context
+ (<A HREF="../../../net/algart/arrays/ArrayProcessor.html#context()"><CODE>context()</CODE></A> method).
+ Usually, the context of execution is passed to constructor or instantiation method.</p>
+
+ <p>Some array processors may have no current context. In this situation, <A HREF="../../../net/algart/arrays/ArrayProcessor.html#context()"><CODE>context()</CODE></A>
+ method returns <tt>null</tt>.
+ However, we recommend to provide correct context always,
+ because the context allows to show execution progress to the user, interrupt execution
+ and increase performance on multiprocessor systems by multithread execution.
+ Also the context is necessary to specify the memory model used for allocation of AlgART array:
+ by default, most of array processors will use <A HREF="../../../net/algart/arrays/SimpleMemoryModel.html" title="class in net.algart.arrays"><CODE>SimpleMemoryModel</CODE></A>.
+
+ <p>There is an extended version of this interface, <A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html" title="interface in net.algart.arrays"><CODE>ArrayProcessorWithContextSwitching</CODE></A>,
+ that also allows to change the current context.
+
+ <p>AlgART Laboratory 2007-2013</p>
+<P>
+
+<P>
+<DL>
+<DT><STRONG>Since:</STRONG></DT>
+  <DD>JDK 1.5</DD>
+<DT><STRONG>Version:</STRONG></DT>
+  <DD>1.2</DD>
+<DT><STRONG>Author:</STRONG></DT>
+  <DD>Daniel Alievsky</DD></DL>
+<HR>
+
+<P>
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/ArrayProcessor.html#context()">context</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the current context used by this instance for all operations.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="context()"><!-- --></A><H3>
+context</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A> <STRONG>context</STRONG>()</PRE>
+<DL>
+<DD>Returns the current context used by this instance for all operations.
+ This method may return <tt>null</tt>; the classes, implementing this interface,
+ should work in this situation as while using <A HREF="../../../net/algart/arrays/ArrayContext.html#DEFAULT"><CODE>ArrayContext.DEFAULT</CODE></A> context.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the current context used by this instance; may be <tt>null</tt>.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/ArrayPool.html" title="class in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/ArrayProcessorWithContextSwitching.html" title="interface in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/ArrayProcessor.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="ArrayProcessor.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

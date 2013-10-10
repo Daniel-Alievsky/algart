@@ -1,0 +1,4254 @@
+package net.algart.arrays;
+
+import java.util.Locale;
+import java.util.zip.CRC32;
+import java.util.zip.Checksum;
+
+/**
+ * <p>Some operations for Java array manipulation, in addition to <tt>java.util.Arrays</tt>.</p>
+ *
+ * <p>This class cannot be instantiated.</p>
+ *
+ * <p>AlgART Laboratory 2007-2013</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.1
+ */
+public class JArrays {
+    private static final int HASH_BLOCK_LEN = 256; // must be 2^k
+    private static final boolean OPTIMIZE_BYTE_MIN_MAX_BY_TABLES = false; // antioptimization under Java 1.6+
+
+    private JArrays() {}
+
+    /**
+     * Returns a fragment of the given array from the element <tt>#fromIndex</tt>
+     * to the element <tt>#toIndex</tt>.
+     * The type of returned array is identical to the type of <tt>array</tt> argument,
+     * the length of returned array is <tt>toIndex-fromIndex</tt>.
+     *
+     * <p>The <tt>toIndex</tt> value must not be less than <tt>fromIndex</tt>,
+     * but may be greater than <tt>array.length</tt> (the length of the source array),
+     * in which case all "extra" elements of the result (with indexes
+     * <tt>#array.length..#toIndex</tt>) are zero-filled: 0 for array of numbers and characters,
+     * <tt>false</tt> for <tt>boolean</tt> array, <tt>null</tt> for array of objects.
+     *
+     * <p>The method always creates a new array, even if <tt>fromIndex</tt> is 0
+     * and <tt>toIndex</tt> is equal to <tt>array.length</tt>.
+     *
+     * <p>Example of usage:<pre>
+     *     float[] data = new float[10000];
+     *     int len = 0;
+     *     ... (filling some first elements, with incrementing len)
+     *     float[] result = (float[])JArrays.copyOfRange(data, 0, len);
+     *     // now result contains first len elements of data array</pre>
+     *
+     * <p>This method is an analog of <tt>java.util.Arrays.copyOfRange</tt> methods (Java 1.6),
+     * but it works with any type of array (which is passed as <tt>Object</tt> argument)
+     * and it is compatible with JRE 1.1.
+     *
+     * @param array     the source array.
+     * @param fromIndex the initial index in <tt>array</tt>, inclusive.
+     * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
+     * @return          the specified subarray, padded by zeros to required length
+     *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
+     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  IllegalArgumentException  if the <tt>array</tt> argument is not a Java array
+     *                                    or if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
+     * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt>
+     *                                    or <tt>fromIndex &gt; array.length</tt>.
+     */
+    public static Object copyOfRange(Object array, int fromIndex, int toIndex) {
+        if (array == null)
+            throw new NullPointerException("Null array argument in copyOfRange method");
+        int length = java.lang.reflect.Array.getLength(array);
+        if (fromIndex > toIndex)
+            throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
+                + " > end index = " + toIndex);
+        if (fromIndex < 0 || fromIndex > length)
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        Object result = java.lang.reflect.Array.newInstance(array.getClass().getComponentType(), toIndex - fromIndex);
+        System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, length) - fromIndex);
+        return result;
+    }
+
+    /*Repeat() boolean ==> byte,,char,,short,,int,,long,,float,,double;;
+               Boolean ==> Byte,,Char,,Short,,Int,,Long,,Float,,Double
+     */
+    /**
+     * Equivalent to
+     * <tt>(boolean[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</tt>.
+     *
+     * @param array     the source array.
+     * @param fromIndex the initial index in <tt>array</tt>, inclusive.
+     * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
+     * @return          the specified subarray, padded by zeros to required length
+     *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
+     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
+     * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
+     */
+    public static boolean[] copyOfRange(boolean[] array, int fromIndex, int toIndex) {
+        if (array == null)
+            throw new NullPointerException("Null array argument in copyOfRange method");
+        if (fromIndex > toIndex)
+            throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
+                + " > end index = " + toIndex);
+        if (fromIndex < 0 || fromIndex > array.length)
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        boolean[] result = new boolean[toIndex - fromIndex];
+        System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
+        return result;
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Equivalent to
+     * <tt>(byte[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</tt>.
+     *
+     * @param array     the source array.
+     * @param fromIndex the initial index in <tt>array</tt>, inclusive.
+     * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
+     * @return          the specified subarray, padded by zeros to required length
+     *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
+     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
+     * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
+     */
+    public static byte[] copyOfRange(byte[] array, int fromIndex, int toIndex) {
+        if (array == null)
+            throw new NullPointerException("Null array argument in copyOfRange method");
+        if (fromIndex > toIndex)
+            throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
+                + " > end index = " + toIndex);
+        if (fromIndex < 0 || fromIndex > array.length)
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        byte[] result = new byte[toIndex - fromIndex];
+        System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
+        return result;
+    }
+
+    /**
+     * Equivalent to
+     * <tt>(char[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</tt>.
+     *
+     * @param array     the source array.
+     * @param fromIndex the initial index in <tt>array</tt>, inclusive.
+     * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
+     * @return          the specified subarray, padded by zeros to required length
+     *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
+     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
+     * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
+     */
+    public static char[] copyOfRange(char[] array, int fromIndex, int toIndex) {
+        if (array == null)
+            throw new NullPointerException("Null array argument in copyOfRange method");
+        if (fromIndex > toIndex)
+            throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
+                + " > end index = " + toIndex);
+        if (fromIndex < 0 || fromIndex > array.length)
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        char[] result = new char[toIndex - fromIndex];
+        System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
+        return result;
+    }
+
+    /**
+     * Equivalent to
+     * <tt>(short[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</tt>.
+     *
+     * @param array     the source array.
+     * @param fromIndex the initial index in <tt>array</tt>, inclusive.
+     * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
+     * @return          the specified subarray, padded by zeros to required length
+     *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
+     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
+     * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
+     */
+    public static short[] copyOfRange(short[] array, int fromIndex, int toIndex) {
+        if (array == null)
+            throw new NullPointerException("Null array argument in copyOfRange method");
+        if (fromIndex > toIndex)
+            throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
+                + " > end index = " + toIndex);
+        if (fromIndex < 0 || fromIndex > array.length)
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        short[] result = new short[toIndex - fromIndex];
+        System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
+        return result;
+    }
+
+    /**
+     * Equivalent to
+     * <tt>(int[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</tt>.
+     *
+     * @param array     the source array.
+     * @param fromIndex the initial index in <tt>array</tt>, inclusive.
+     * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
+     * @return          the specified subarray, padded by zeros to required length
+     *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
+     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
+     * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
+     */
+    public static int[] copyOfRange(int[] array, int fromIndex, int toIndex) {
+        if (array == null)
+            throw new NullPointerException("Null array argument in copyOfRange method");
+        if (fromIndex > toIndex)
+            throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
+                + " > end index = " + toIndex);
+        if (fromIndex < 0 || fromIndex > array.length)
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        int[] result = new int[toIndex - fromIndex];
+        System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
+        return result;
+    }
+
+    /**
+     * Equivalent to
+     * <tt>(long[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</tt>.
+     *
+     * @param array     the source array.
+     * @param fromIndex the initial index in <tt>array</tt>, inclusive.
+     * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
+     * @return          the specified subarray, padded by zeros to required length
+     *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
+     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
+     * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
+     */
+    public static long[] copyOfRange(long[] array, int fromIndex, int toIndex) {
+        if (array == null)
+            throw new NullPointerException("Null array argument in copyOfRange method");
+        if (fromIndex > toIndex)
+            throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
+                + " > end index = " + toIndex);
+        if (fromIndex < 0 || fromIndex > array.length)
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        long[] result = new long[toIndex - fromIndex];
+        System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
+        return result;
+    }
+
+    /**
+     * Equivalent to
+     * <tt>(float[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</tt>.
+     *
+     * @param array     the source array.
+     * @param fromIndex the initial index in <tt>array</tt>, inclusive.
+     * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
+     * @return          the specified subarray, padded by zeros to required length
+     *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
+     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
+     * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
+     */
+    public static float[] copyOfRange(float[] array, int fromIndex, int toIndex) {
+        if (array == null)
+            throw new NullPointerException("Null array argument in copyOfRange method");
+        if (fromIndex > toIndex)
+            throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
+                + " > end index = " + toIndex);
+        if (fromIndex < 0 || fromIndex > array.length)
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        float[] result = new float[toIndex - fromIndex];
+        System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
+        return result;
+    }
+
+    /**
+     * Equivalent to
+     * <tt>(double[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</tt>.
+     *
+     * @param array     the source array.
+     * @param fromIndex the initial index in <tt>array</tt>, inclusive.
+     * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
+     * @return          the specified subarray, padded by zeros to required length
+     *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
+     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
+     * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
+     */
+    public static double[] copyOfRange(double[] array, int fromIndex, int toIndex) {
+        if (array == null)
+            throw new NullPointerException("Null array argument in copyOfRange method");
+        if (fromIndex > toIndex)
+            throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
+                + " > end index = " + toIndex);
+        if (fromIndex < 0 || fromIndex > array.length)
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        double[] result = new double[toIndex - fromIndex];
+        System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
+        return result;
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /*Repeat() boolean ==> byte,,char,,short,,int,,long,,float,,double,,Object;;
+               Boolean ==> Byte,,Char,,Short,,Int,,Long,,Float,,Double,,Object
+     */
+    /**
+     * Fills all elements in the <tt>dest</tt> array by the specified value.
+     *
+     * @param dest    the filled Java array.
+     * @param value   the filler.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void fillBooleanArray(boolean[] dest, boolean value) {
+        fillBooleanArray(dest, 0, dest.length, value);
+    }
+
+    /**
+     * Fills <tt>count</tt> elements in the <tt>dest</tt> array, starting from the element <tt>#destPos</tt>,
+     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * is the number of filled element, but not the end filled index
+     * as in <tt>java.util.Arrays.fill</tt> methods.
+     *
+     * @param dest    the filled Java array.
+     * @param destPos starting index of element to replace.
+     * @param count   the number of elements to be filled (should be &gt;=0).
+     * @param value   the filler.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
+     */
+    public static void fillBooleanArray(boolean[] dest, int destPos, int count, boolean value) {
+        rangeCheck(dest.length, destPos, count);
+        int blockLen = count > 16 ? 16 : count;
+        for (int ofs = destPos, ofsMax = destPos + blockLen; ofs < ofsMax; ofs++) {
+            dest[ofs] = value;
+        }
+        while (blockLen < count) {
+            // let's copy 0..15 elements to 16..31, then 0..31 to 32..63, then 0..63 to 64..127, etc.
+            int secondBlockLen = blockLen;
+            if (secondBlockLen > count - blockLen) {
+                secondBlockLen = count - blockLen;
+            }
+            System.arraycopy(dest, destPos, dest, destPos + blockLen, secondBlockLen);
+            blockLen += secondBlockLen;
+        }
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Fills all elements in the <tt>dest</tt> array by the specified value.
+     *
+     * @param dest    the filled Java array.
+     * @param value   the filler.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void fillByteArray(byte[] dest, byte value) {
+        fillByteArray(dest, 0, dest.length, value);
+    }
+
+    /**
+     * Fills <tt>count</tt> elements in the <tt>dest</tt> array, starting from the element <tt>#destPos</tt>,
+     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * is the number of filled element, but not the end filled index
+     * as in <tt>java.util.Arrays.fill</tt> methods.
+     *
+     * @param dest    the filled Java array.
+     * @param destPos starting index of element to replace.
+     * @param count   the number of elements to be filled (should be &gt;=0).
+     * @param value   the filler.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
+     */
+    public static void fillByteArray(byte[] dest, int destPos, int count, byte value) {
+        rangeCheck(dest.length, destPos, count);
+        int blockLen = count > 16 ? 16 : count;
+        for (int ofs = destPos, ofsMax = destPos + blockLen; ofs < ofsMax; ofs++) {
+            dest[ofs] = value;
+        }
+        while (blockLen < count) {
+            // let's copy 0..15 elements to 16..31, then 0..31 to 32..63, then 0..63 to 64..127, etc.
+            int secondBlockLen = blockLen;
+            if (secondBlockLen > count - blockLen) {
+                secondBlockLen = count - blockLen;
+            }
+            System.arraycopy(dest, destPos, dest, destPos + blockLen, secondBlockLen);
+            blockLen += secondBlockLen;
+        }
+    }
+
+    /**
+     * Fills all elements in the <tt>dest</tt> array by the specified value.
+     *
+     * @param dest    the filled Java array.
+     * @param value   the filler.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void fillCharArray(char[] dest, char value) {
+        fillCharArray(dest, 0, dest.length, value);
+    }
+
+    /**
+     * Fills <tt>count</tt> elements in the <tt>dest</tt> array, starting from the element <tt>#destPos</tt>,
+     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * is the number of filled element, but not the end filled index
+     * as in <tt>java.util.Arrays.fill</tt> methods.
+     *
+     * @param dest    the filled Java array.
+     * @param destPos starting index of element to replace.
+     * @param count   the number of elements to be filled (should be &gt;=0).
+     * @param value   the filler.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
+     */
+    public static void fillCharArray(char[] dest, int destPos, int count, char value) {
+        rangeCheck(dest.length, destPos, count);
+        int blockLen = count > 16 ? 16 : count;
+        for (int ofs = destPos, ofsMax = destPos + blockLen; ofs < ofsMax; ofs++) {
+            dest[ofs] = value;
+        }
+        while (blockLen < count) {
+            // let's copy 0..15 elements to 16..31, then 0..31 to 32..63, then 0..63 to 64..127, etc.
+            int secondBlockLen = blockLen;
+            if (secondBlockLen > count - blockLen) {
+                secondBlockLen = count - blockLen;
+            }
+            System.arraycopy(dest, destPos, dest, destPos + blockLen, secondBlockLen);
+            blockLen += secondBlockLen;
+        }
+    }
+
+    /**
+     * Fills all elements in the <tt>dest</tt> array by the specified value.
+     *
+     * @param dest    the filled Java array.
+     * @param value   the filler.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void fillShortArray(short[] dest, short value) {
+        fillShortArray(dest, 0, dest.length, value);
+    }
+
+    /**
+     * Fills <tt>count</tt> elements in the <tt>dest</tt> array, starting from the element <tt>#destPos</tt>,
+     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * is the number of filled element, but not the end filled index
+     * as in <tt>java.util.Arrays.fill</tt> methods.
+     *
+     * @param dest    the filled Java array.
+     * @param destPos starting index of element to replace.
+     * @param count   the number of elements to be filled (should be &gt;=0).
+     * @param value   the filler.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
+     */
+    public static void fillShortArray(short[] dest, int destPos, int count, short value) {
+        rangeCheck(dest.length, destPos, count);
+        int blockLen = count > 16 ? 16 : count;
+        for (int ofs = destPos, ofsMax = destPos + blockLen; ofs < ofsMax; ofs++) {
+            dest[ofs] = value;
+        }
+        while (blockLen < count) {
+            // let's copy 0..15 elements to 16..31, then 0..31 to 32..63, then 0..63 to 64..127, etc.
+            int secondBlockLen = blockLen;
+            if (secondBlockLen > count - blockLen) {
+                secondBlockLen = count - blockLen;
+            }
+            System.arraycopy(dest, destPos, dest, destPos + blockLen, secondBlockLen);
+            blockLen += secondBlockLen;
+        }
+    }
+
+    /**
+     * Fills all elements in the <tt>dest</tt> array by the specified value.
+     *
+     * @param dest    the filled Java array.
+     * @param value   the filler.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void fillIntArray(int[] dest, int value) {
+        fillIntArray(dest, 0, dest.length, value);
+    }
+
+    /**
+     * Fills <tt>count</tt> elements in the <tt>dest</tt> array, starting from the element <tt>#destPos</tt>,
+     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * is the number of filled element, but not the end filled index
+     * as in <tt>java.util.Arrays.fill</tt> methods.
+     *
+     * @param dest    the filled Java array.
+     * @param destPos starting index of element to replace.
+     * @param count   the number of elements to be filled (should be &gt;=0).
+     * @param value   the filler.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
+     */
+    public static void fillIntArray(int[] dest, int destPos, int count, int value) {
+        rangeCheck(dest.length, destPos, count);
+        int blockLen = count > 16 ? 16 : count;
+        for (int ofs = destPos, ofsMax = destPos + blockLen; ofs < ofsMax; ofs++) {
+            dest[ofs] = value;
+        }
+        while (blockLen < count) {
+            // let's copy 0..15 elements to 16..31, then 0..31 to 32..63, then 0..63 to 64..127, etc.
+            int secondBlockLen = blockLen;
+            if (secondBlockLen > count - blockLen) {
+                secondBlockLen = count - blockLen;
+            }
+            System.arraycopy(dest, destPos, dest, destPos + blockLen, secondBlockLen);
+            blockLen += secondBlockLen;
+        }
+    }
+
+    /**
+     * Fills all elements in the <tt>dest</tt> array by the specified value.
+     *
+     * @param dest    the filled Java array.
+     * @param value   the filler.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void fillLongArray(long[] dest, long value) {
+        fillLongArray(dest, 0, dest.length, value);
+    }
+
+    /**
+     * Fills <tt>count</tt> elements in the <tt>dest</tt> array, starting from the element <tt>#destPos</tt>,
+     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * is the number of filled element, but not the end filled index
+     * as in <tt>java.util.Arrays.fill</tt> methods.
+     *
+     * @param dest    the filled Java array.
+     * @param destPos starting index of element to replace.
+     * @param count   the number of elements to be filled (should be &gt;=0).
+     * @param value   the filler.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
+     */
+    public static void fillLongArray(long[] dest, int destPos, int count, long value) {
+        rangeCheck(dest.length, destPos, count);
+        int blockLen = count > 16 ? 16 : count;
+        for (int ofs = destPos, ofsMax = destPos + blockLen; ofs < ofsMax; ofs++) {
+            dest[ofs] = value;
+        }
+        while (blockLen < count) {
+            // let's copy 0..15 elements to 16..31, then 0..31 to 32..63, then 0..63 to 64..127, etc.
+            int secondBlockLen = blockLen;
+            if (secondBlockLen > count - blockLen) {
+                secondBlockLen = count - blockLen;
+            }
+            System.arraycopy(dest, destPos, dest, destPos + blockLen, secondBlockLen);
+            blockLen += secondBlockLen;
+        }
+    }
+
+    /**
+     * Fills all elements in the <tt>dest</tt> array by the specified value.
+     *
+     * @param dest    the filled Java array.
+     * @param value   the filler.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void fillFloatArray(float[] dest, float value) {
+        fillFloatArray(dest, 0, dest.length, value);
+    }
+
+    /**
+     * Fills <tt>count</tt> elements in the <tt>dest</tt> array, starting from the element <tt>#destPos</tt>,
+     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * is the number of filled element, but not the end filled index
+     * as in <tt>java.util.Arrays.fill</tt> methods.
+     *
+     * @param dest    the filled Java array.
+     * @param destPos starting index of element to replace.
+     * @param count   the number of elements to be filled (should be &gt;=0).
+     * @param value   the filler.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
+     */
+    public static void fillFloatArray(float[] dest, int destPos, int count, float value) {
+        rangeCheck(dest.length, destPos, count);
+        int blockLen = count > 16 ? 16 : count;
+        for (int ofs = destPos, ofsMax = destPos + blockLen; ofs < ofsMax; ofs++) {
+            dest[ofs] = value;
+        }
+        while (blockLen < count) {
+            // let's copy 0..15 elements to 16..31, then 0..31 to 32..63, then 0..63 to 64..127, etc.
+            int secondBlockLen = blockLen;
+            if (secondBlockLen > count - blockLen) {
+                secondBlockLen = count - blockLen;
+            }
+            System.arraycopy(dest, destPos, dest, destPos + blockLen, secondBlockLen);
+            blockLen += secondBlockLen;
+        }
+    }
+
+    /**
+     * Fills all elements in the <tt>dest</tt> array by the specified value.
+     *
+     * @param dest    the filled Java array.
+     * @param value   the filler.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void fillDoubleArray(double[] dest, double value) {
+        fillDoubleArray(dest, 0, dest.length, value);
+    }
+
+    /**
+     * Fills <tt>count</tt> elements in the <tt>dest</tt> array, starting from the element <tt>#destPos</tt>,
+     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * is the number of filled element, but not the end filled index
+     * as in <tt>java.util.Arrays.fill</tt> methods.
+     *
+     * @param dest    the filled Java array.
+     * @param destPos starting index of element to replace.
+     * @param count   the number of elements to be filled (should be &gt;=0).
+     * @param value   the filler.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
+     */
+    public static void fillDoubleArray(double[] dest, int destPos, int count, double value) {
+        rangeCheck(dest.length, destPos, count);
+        int blockLen = count > 16 ? 16 : count;
+        for (int ofs = destPos, ofsMax = destPos + blockLen; ofs < ofsMax; ofs++) {
+            dest[ofs] = value;
+        }
+        while (blockLen < count) {
+            // let's copy 0..15 elements to 16..31, then 0..31 to 32..63, then 0..63 to 64..127, etc.
+            int secondBlockLen = blockLen;
+            if (secondBlockLen > count - blockLen) {
+                secondBlockLen = count - blockLen;
+            }
+            System.arraycopy(dest, destPos, dest, destPos + blockLen, secondBlockLen);
+            blockLen += secondBlockLen;
+        }
+    }
+
+    /**
+     * Fills all elements in the <tt>dest</tt> array by the specified value.
+     *
+     * @param dest    the filled Java array.
+     * @param value   the filler.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void fillObjectArray(Object[] dest, Object value) {
+        fillObjectArray(dest, 0, dest.length, value);
+    }
+
+    /**
+     * Fills <tt>count</tt> elements in the <tt>dest</tt> array, starting from the element <tt>#destPos</tt>,
+     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * is the number of filled element, but not the end filled index
+     * as in <tt>java.util.Arrays.fill</tt> methods.
+     *
+     * @param dest    the filled Java array.
+     * @param destPos starting index of element to replace.
+     * @param count   the number of elements to be filled (should be &gt;=0).
+     * @param value   the filler.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
+     */
+    public static void fillObjectArray(Object[] dest, int destPos, int count, Object value) {
+        rangeCheck(dest.length, destPos, count);
+        int blockLen = count > 16 ? 16 : count;
+        for (int ofs = destPos, ofsMax = destPos + blockLen; ofs < ofsMax; ofs++) {
+            dest[ofs] = value;
+        }
+        while (blockLen < count) {
+            // let's copy 0..15 elements to 16..31, then 0..31 to 32..63, then 0..63 to 64..127, etc.
+            int secondBlockLen = blockLen;
+            if (secondBlockLen > count - blockLen) {
+                secondBlockLen = count - blockLen;
+            }
+            System.arraycopy(dest, destPos, dest, destPos + blockLen, secondBlockLen);
+            blockLen += secondBlockLen;
+        }
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /**
+     * Fills <tt>count</tt> elements in the <tt>dest</tt> array, starting from the element <tt>#destPos</tt>,
+     * by zeroes (<tt>null</tt> for <tt>Object[]</tt> arrays, <tt>false</tt> for <tt>boolean[]</tt>,
+     * <tt>+0.0</tt> for floating-point types).
+     * <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * is the number of filled element, but not the end filled index
+     * as in <tt>java.util.Arrays.fill</tt> methods.
+     *
+     * @param dest    the filled Java array.
+     * @param destPos starting index of element to replace.
+     * @param count   the number of elements to be filled (should be &gt;=0).
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if the <tt>dest</tt> argument is not a Java array,
+     *                                   or if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
+     * @see #areElementsZero(Object, int, int)
+     */
+    public static void zeroFillArray(Object dest, int destPos, int count) {
+        if (dest == null)
+            throw new NullPointerException("Null dest argument");
+        if (dest instanceof boolean[]) {
+            fillBooleanArray((boolean[])dest, destPos, count, false);
+        } else if (dest instanceof char[]) {
+            fillCharArray((char[])dest, destPos, count, (char)0);
+        } else if (dest instanceof byte[]) {
+            fillByteArray((byte[])dest, destPos, count, (byte)0);
+        } else if (dest instanceof short[]) {
+            fillShortArray((short[])dest, destPos, count, (short)0);
+        } else if (dest instanceof int[]) {
+            fillIntArray((int[])dest, destPos, count, 0);
+        } else if (dest instanceof long[]) {
+            fillLongArray((long[])dest, destPos, count, 0L);
+        } else if (dest instanceof float[]) {
+            fillFloatArray((float[])dest, destPos, count, 0.0f);
+        } else if (dest instanceof double[]) {
+            fillDoubleArray((double[])dest, destPos, count, 0.0);
+        } else if (dest instanceof Object[]) {
+            fillObjectArray((Object[])dest, destPos, count, null);
+        } else {
+            throw new IllegalArgumentException("The passed argument is not a Java array (" + dest.getClass() + ")");
+        }
+    }
+
+    /**
+     * Returns <tt>true</tt> if the specified fragment of the passed Java array is filled by zero
+     * (<tt>false</tt> for <tt>boolean[]</tt> array, <tt>(char)0</tt> for <tt>char[]</tt>,
+     * <tt>null</tt> for non-primitive element type).
+     * Returns <tt>false</tt> if at least one of elements <tt>array[pos]..array[pos+count-1]</tt> is non-zero.
+     *
+     * <p>For arrays of floating-point types, unlike {@link #arrayEquals(Object, int, Object, int, int)},
+     * this method considers that <tt>+0.0==-0.0</tt>: both values are considered to be zero.
+     *
+     * <p>If the <tt>count</tt> argument (number of elements) is 0, this method returns <tt>true</tt>.
+     *
+     * @param array the checked Java array.
+     * @param pos   the initial index of the checked fragment in the array.
+     * @param count the number of checked elements.
+     * @return      <tt>true</tt> if and only if all elements <tt>array[pos]..array[pos+count-1]</tt> are zero
+     *              or if <tt>count==0</tt>.
+     * @throws NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException  if the <tt>dest</tt> argument is not a Java array,
+     *                                   or if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if <tt>pos</tt> is negative,
+     *                                   or if <tt>pos+count</tt> is greater than <tt>array.length</tt>.
+     * @see #zeroFillArray(Object, int, int)
+     */
+    public static boolean areElementsZero(Object array, int pos, int count) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        int arrayLen = java.lang.reflect.Array.getLength(array);
+        rangeCheck(arrayLen, pos, count);
+        if (array instanceof boolean[]) {
+            boolean[] a = (boolean[])array;
+            for (int posMax = pos + count; pos < posMax; pos++) {
+                if (a[pos]) {
+                    return false;
+                }
+            }
+            return true;
+        } else //[[Repeat() char ==> byte,,short,,int,,long,,float,,double,,Object;; \b0\b ==> 0,,0,,0,,0,,0,,0,,null]]
+        if (array instanceof char[]) {
+            char[] a = (char[])array;
+            for (int posMax = pos + count; pos < posMax; pos++) {
+                if (a[pos] != 0) {
+                    return false;
+                }
+            }
+            return true;
+        } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
+        if (array instanceof byte[]) {
+            byte[] a = (byte[])array;
+            for (int posMax = pos + count; pos < posMax; pos++) {
+                if (a[pos] != 0) {
+                    return false;
+                }
+            }
+            return true;
+        } else
+        if (array instanceof short[]) {
+            short[] a = (short[])array;
+            for (int posMax = pos + count; pos < posMax; pos++) {
+                if (a[pos] != 0) {
+                    return false;
+                }
+            }
+            return true;
+        } else
+        if (array instanceof int[]) {
+            int[] a = (int[])array;
+            for (int posMax = pos + count; pos < posMax; pos++) {
+                if (a[pos] != 0) {
+                    return false;
+                }
+            }
+            return true;
+        } else
+        if (array instanceof long[]) {
+            long[] a = (long[])array;
+            for (int posMax = pos + count; pos < posMax; pos++) {
+                if (a[pos] != 0) {
+                    return false;
+                }
+            }
+            return true;
+        } else
+        if (array instanceof float[]) {
+            float[] a = (float[])array;
+            for (int posMax = pos + count; pos < posMax; pos++) {
+                if (a[pos] != 0) {
+                    return false;
+                }
+            }
+            return true;
+        } else
+        if (array instanceof double[]) {
+            double[] a = (double[])array;
+            for (int posMax = pos + count; pos < posMax; pos++) {
+                if (a[pos] != 0) {
+                    return false;
+                }
+            }
+            return true;
+        } else
+        if (array instanceof Object[]) {
+            Object[] a = (Object[])array;
+            for (int posMax = pos + count; pos < posMax; pos++) {
+                if (a[pos] != null) {
+                    return false;
+                }
+            }
+            return true;
+        } else //[[Repeat.AutoGeneratedEnd]]
+        {
+            throw new InternalError("Internal error: this check should never occur");
+        }
+    }
+
+    /**
+     * Returns a hash code based on the contents of the specified fragment of the given array.
+     * If the passed array is <tt>null</tt> or <tt>fromIndex==toIndex</tt>, returns 0.
+     *
+     * <p>If the array is <tt>Object[]</tt>,
+     * the result is based on standard <tt>hashCode</tt> method for all elements of the array.
+     * In particular, in this case, if the array contains other arrays as elements,
+     * the hash code is based on their identities rather than their contents.
+     *
+     * <p>The returned hash code depends only on the sequence of elements, but does not depend
+     * on the position of this sequence in the passed Java array.
+     *
+     * <p>For any two arrays <tt>a1</tt> and <tt>a2</tt> such that
+     * <tt>JArrays.arrayEquals(a1, pos1, a2, pos2, count)</tt>, it is also the case that
+     * <tt>JArrays.arrayHashCode(a1, pos1, pos1 + count) == JArrays.arrayHashCode(a2, pos2, pos2 + count)</tt>.
+     *
+     * <p>This method is an extended analog of <tt>java.util.Arrays.hashCode</tt> methods,
+     * compatible with JRE 1.1 and using more safe algorithm, based on
+     * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/zip/CRC32.html">CRC32</a>.
+     *
+     * @param array     the array whose content-based hash code to compute.
+     * @param fromIndex the initial index of the checked fragment, inclusive.
+     * @param toIndex   the end index of the checked fragment, exclusive.
+     * @return          a content-based hash code for the specified fragment in <tt>array</tt>.
+     * @throws IllegalArgumentException  if the <tt>array</tt> argument is not a Java array.
+     * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
+     *                                   or if <tt>toIndex</tt> is greater than <tt>array.length</tt>
+     *                                   (0 when <tt>array==null</tt>),
+     *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>,
+     *                                   or if <tt>array==null</tt> and not <tt>fromIndex==toIndex==0</tt>.
+     * @see #arrayEquals(Object, int, Object, int, int)
+     * @see #updateArrayHashCode(Object, int, int, Checksum)
+     */
+    public static int arrayHashCode(Object array, int fromIndex, int toIndex) {
+        Checksum sum = new CRC32();
+        updateArrayHashCode(array, fromIndex, toIndex, sum);
+        return fromIndex == toIndex ? 0 : (int)sum.getValue();
+    }
+
+    /**
+     * Updates hash code (<tt>hash</tt> argument) on the base of the contents
+     * of the specified fragment of the given array.
+     * If the passed array is <tt>null</tt> or <tt>fromIndex==toIndex</tt>, does nothing.
+     *
+     * <p>This method is used by {@link #arrayHashCode(Object, int, int)
+     * arrayHashCode(Object array, int fromIndex, int toIndex)}.
+     * More precisely, that method is equivalent to:<pre>
+     * Checksum sum = new CRC32();
+     * updateArrayHashCode(array, fromIndex, toIndex, sum);
+     * return fromIndex == toIndex ? 0 : (int)sum.getValue();
+     * </pre>
+     *
+     * <p>The following 2 code fragment always produce the same results in <tt>hash</tt>argument:<pre>
+     * updateArrayHashCode(arr, fromIndex, toIndex, hash);
+     * </pre>and<pre>
+     * updateArrayHashCode(arr, fromIndex, k1, hash);
+     * updateArrayHashCode(arr, k1, k2, hash);
+     * ...
+     * updateArrayHashCode(arr, kN, toIndex, hash);
+     * </pre>
+     * where <tt>fromIndex &lt;= k1 &lt;= k2 &lt;= ... &lt;= kN &lt;= toIndex</tt>.
+     * So, unlike <tt>arrayHashCode</tt>, this method allows to calculate correct hash code
+     * of a long array when we cannot get all its element at the same time,
+     * but can get sequent portions ot it.
+     *
+     * @param array     the array whose content-based hash code to compute.
+     * @param fromIndex the initial index of the checked fragment, inclusive.
+     * @param toIndex   the end index of the checked fragment, exclusive.
+     * @param hash      updated hash code.
+     * @throws NullPointerException      if the <tt>hash</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException  if the <tt>array</tt> argument is not a Java array.
+     * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
+     *                                   or if <tt>toIndex</tt> is greater than <tt>array.length</tt>
+     *                                   (0 when <tt>array==null</tt>),
+     *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>,
+     *                                   or if <tt>array==null</tt> and not <tt>fromIndex==toIndex==0</tt>.
+     */
+    public static void updateArrayHashCode(Object array, int fromIndex, int toIndex, Checksum hash) {
+        if (hash == null)
+            throw new NullPointerException("Null previousHash argument");
+        if (fromIndex < 0)
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        if (fromIndex > toIndex)
+            throw new ArrayIndexOutOfBoundsException("Array index out of range: initial index = " + fromIndex
+                + " > end index = " + toIndex);
+        if (array == null) {
+            if (toIndex > 0)
+                throw new ArrayIndexOutOfBoundsException(toIndex);
+        }
+        if (fromIndex == toIndex) // in particular, if array == null
+            return;
+        int countEven = (toIndex - fromIndex) & ~(HASH_BLOCK_LEN - 1);
+        if (array instanceof byte[]) {
+            byte[] a = (byte[])array;
+            if (toIndex > a.length)
+                throw new ArrayIndexOutOfBoundsException(toIndex);
+            hash.update(a, fromIndex, toIndex - fromIndex);
+        } else
+        //<<Repeat() boolean ==> char,,short,,int,,long,,float,,double,,Object;;
+        //           (ELEM_SIZE\s*=)\s*1 ==> $1 2,,$1 2,,$1 4,,$1 8,,$1 4,,$1 8,,$1 4 >>
+        if (array instanceof boolean[]) {
+            boolean[] a = (boolean[])array;
+            if (toIndex > a.length)
+                throw new ArrayIndexOutOfBoundsException(toIndex);
+            final int ELEM_SIZE = 1;
+            byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
+            int kMax = fromIndex + countEven;
+            for (int k = fromIndex; k < kMax; k += HASH_BLOCK_LEN) {
+                getBytes(a, k, HASH_BLOCK_LEN, bytes);
+                hash.update(bytes, 0, ELEM_SIZE * HASH_BLOCK_LEN);
+            }
+            getBytes(a, kMax, toIndex - kMax, bytes);
+            hash.update(bytes, 0, ELEM_SIZE * (toIndex - kMax));
+        } else//<<Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! >>
+        if (array instanceof char[]) {
+            char[] a = (char[])array;
+            if (toIndex > a.length)
+                throw new ArrayIndexOutOfBoundsException(toIndex);
+            final int ELEM_SIZE = 2;
+            byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
+            int kMax = fromIndex + countEven;
+            for (int k = fromIndex; k < kMax; k += HASH_BLOCK_LEN) {
+                getBytes(a, k, HASH_BLOCK_LEN, bytes);
+                hash.update(bytes, 0, ELEM_SIZE * HASH_BLOCK_LEN);
+            }
+            getBytes(a, kMax, toIndex - kMax, bytes);
+            hash.update(bytes, 0, ELEM_SIZE * (toIndex - kMax));
+        } else
+        if (array instanceof short[]) {
+            short[] a = (short[])array;
+            if (toIndex > a.length)
+                throw new ArrayIndexOutOfBoundsException(toIndex);
+            final int ELEM_SIZE = 2;
+            byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
+            int kMax = fromIndex + countEven;
+            for (int k = fromIndex; k < kMax; k += HASH_BLOCK_LEN) {
+                getBytes(a, k, HASH_BLOCK_LEN, bytes);
+                hash.update(bytes, 0, ELEM_SIZE * HASH_BLOCK_LEN);
+            }
+            getBytes(a, kMax, toIndex - kMax, bytes);
+            hash.update(bytes, 0, ELEM_SIZE * (toIndex - kMax));
+        } else
+        if (array instanceof int[]) {
+            int[] a = (int[])array;
+            if (toIndex > a.length)
+                throw new ArrayIndexOutOfBoundsException(toIndex);
+            final int ELEM_SIZE = 4;
+            byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
+            int kMax = fromIndex + countEven;
+            for (int k = fromIndex; k < kMax; k += HASH_BLOCK_LEN) {
+                getBytes(a, k, HASH_BLOCK_LEN, bytes);
+                hash.update(bytes, 0, ELEM_SIZE * HASH_BLOCK_LEN);
+            }
+            getBytes(a, kMax, toIndex - kMax, bytes);
+            hash.update(bytes, 0, ELEM_SIZE * (toIndex - kMax));
+        } else
+        if (array instanceof long[]) {
+            long[] a = (long[])array;
+            if (toIndex > a.length)
+                throw new ArrayIndexOutOfBoundsException(toIndex);
+            final int ELEM_SIZE = 8;
+            byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
+            int kMax = fromIndex + countEven;
+            for (int k = fromIndex; k < kMax; k += HASH_BLOCK_LEN) {
+                getBytes(a, k, HASH_BLOCK_LEN, bytes);
+                hash.update(bytes, 0, ELEM_SIZE * HASH_BLOCK_LEN);
+            }
+            getBytes(a, kMax, toIndex - kMax, bytes);
+            hash.update(bytes, 0, ELEM_SIZE * (toIndex - kMax));
+        } else
+        if (array instanceof float[]) {
+            float[] a = (float[])array;
+            if (toIndex > a.length)
+                throw new ArrayIndexOutOfBoundsException(toIndex);
+            final int ELEM_SIZE = 4;
+            byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
+            int kMax = fromIndex + countEven;
+            for (int k = fromIndex; k < kMax; k += HASH_BLOCK_LEN) {
+                getBytes(a, k, HASH_BLOCK_LEN, bytes);
+                hash.update(bytes, 0, ELEM_SIZE * HASH_BLOCK_LEN);
+            }
+            getBytes(a, kMax, toIndex - kMax, bytes);
+            hash.update(bytes, 0, ELEM_SIZE * (toIndex - kMax));
+        } else
+        if (array instanceof double[]) {
+            double[] a = (double[])array;
+            if (toIndex > a.length)
+                throw new ArrayIndexOutOfBoundsException(toIndex);
+            final int ELEM_SIZE = 8;
+            byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
+            int kMax = fromIndex + countEven;
+            for (int k = fromIndex; k < kMax; k += HASH_BLOCK_LEN) {
+                getBytes(a, k, HASH_BLOCK_LEN, bytes);
+                hash.update(bytes, 0, ELEM_SIZE * HASH_BLOCK_LEN);
+            }
+            getBytes(a, kMax, toIndex - kMax, bytes);
+            hash.update(bytes, 0, ELEM_SIZE * (toIndex - kMax));
+        } else
+        if (array instanceof Object[]) {
+            Object[] a = (Object[])array;
+            if (toIndex > a.length)
+                throw new ArrayIndexOutOfBoundsException(toIndex);
+            final int ELEM_SIZE = 4;
+            byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
+            int kMax = fromIndex + countEven;
+            for (int k = fromIndex; k < kMax; k += HASH_BLOCK_LEN) {
+                getBytes(a, k, HASH_BLOCK_LEN, bytes);
+                hash.update(bytes, 0, ELEM_SIZE * HASH_BLOCK_LEN);
+            }
+            getBytes(a, kMax, toIndex - kMax, bytes);
+            hash.update(bytes, 0, ELEM_SIZE * (toIndex - kMax));
+        } else//<<Repeat.AutoGeneratedEnd>>
+        {
+            throw new IllegalArgumentException("The passed argument is not a Java array (" + array.getClass() + ")");
+        }
+    }
+
+    /**
+     * Returns <tt>true</tt> if the arguments are Java arrays
+     * and their specified fragments are equals,
+     * or if both arguments are <tt>null</tt>.
+     * Returns <tt>false</tt> if one of the arguments is <tt>null</tt>, but the other is not <tt>null</tt>.
+     *
+     * <p>The two fragments of the passed arrays are considered equal
+     * if all corresponding pairs of elements are equal.
+     * For arrays of primitive types (<tt>byte[]</tt>, <tt>short</tt>, etc.),
+     * the fragments are considered equal only if the types of their elements are identical.
+     * For arrays of floating-point types, unlike the <tt>==</tt> operator, this method considers
+     * <tt>NaN</tt> equals to itself, and 0.0 unequal to -0.0.
+     * For <tt>Object[]</tt> arrays, two objects <tt>e1</tt> and <tt>e2</tt> are considered
+     * <i>equal</i> if <tt>(e1==null ? e2==null : e1.equals(e2))</tt>.
+     *
+     * <p>This method is an extended analog of <tt>java.util.Arrays.equals</tt> methods,
+     * compatible with JRE 1.1.
+     *
+     * @param array1 one array to be tested for equality.
+     * @param pos1   the initial index of the checked fragment in the first array.
+     * @param array2 the other array to be tested for equality.
+     * @param pos2   the initial index of the checked fragment in the second array.
+     * @param length the number of compared elements.
+     * @return       <tt>true</tt> if the specified fragments of two arrays are equal.
+     * @throws IllegalArgumentException  if the <tt>array1</tt> or <tt>array2</tt> argument is not a Java array
+     *                                   or if <tt>length</tt> is negative.
+     * @throws IndexOutOfBoundsException if <tt>pos1</tt>, <tt>pos2</tt> or <tt>length</tt> are negative,
+     *                                   or if <tt>pos1+length</tt> is greater than <tt>array1.length</tt>
+     *                                   (0 when <tt>array1==null</tt>),
+     *                                   or if <tt>pos2+length</tt> is greater than <tt>array2.length</tt>
+     *                                   (0 when <tt>array2==null</tt>).
+     */
+    public static boolean arrayEquals(Object array1, int pos1, Object array2, int pos2, int length) {
+        int length1 = array1 == null ? 0 : java.lang.reflect.Array.getLength(array1);
+        int length2 = array2 == null ? 0 : java.lang.reflect.Array.getLength(array2);
+        if (length < 0)
+            throw new IllegalArgumentException("Negative number of compared elements: length = " + length);
+        if (pos1 < 0)
+            throw new ArrayIndexOutOfBoundsException(pos1);
+        if (pos2 < 0)
+            throw new ArrayIndexOutOfBoundsException(pos2);
+        if (pos1 + length > length1)
+            throw new ArrayIndexOutOfBoundsException(pos1 + length);
+        if (pos2 + length > length2)
+            throw new ArrayIndexOutOfBoundsException(pos2 + length);
+        if (array1 == array2) {
+            return array1 == null || pos1 == pos2;
+        }
+        if (array1 == null || array2 == null) {
+            return false;
+        }
+        //[[Repeat() boolean ==> char,,byte,,short,,int,,long,,float,,double,,Object;;
+        //           (a1\[.+?])(\s*!=\s*)(a2\[.+?\]) ==> $1$2$3,,$1$2$3,,$1$2$3,,$1$2$3,,$1$2$3,,
+        //                       Float.floatToIntBits($1) != Float.floatToIntBits($3),,
+        //                       Double.doubleToLongBits($1) != Double.doubleToLongBits($3),,
+        //                       !($1 == null ? $3 == null : $1.equals($3)) ]]
+        if (array1 instanceof boolean[]) {
+            if (!(array2 instanceof boolean[])) {
+                return false;
+            }
+            boolean[] a1 = (boolean[])array1;
+            boolean[] a2 = (boolean[])array2;
+            for (int pos1Max = pos1 + length; pos1 < pos1Max; pos1++, pos2++) {
+                if (a1[pos1] != a2[pos2]) {
+                    return false;
+                }
+            }
+        } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
+        if (array1 instanceof char[]) {
+            if (!(array2 instanceof char[])) {
+                return false;
+            }
+            char[] a1 = (char[])array1;
+            char[] a2 = (char[])array2;
+            for (int pos1Max = pos1 + length; pos1 < pos1Max; pos1++, pos2++) {
+                if (a1[pos1] != a2[pos2]) {
+                    return false;
+                }
+            }
+        } else
+        if (array1 instanceof byte[]) {
+            if (!(array2 instanceof byte[])) {
+                return false;
+            }
+            byte[] a1 = (byte[])array1;
+            byte[] a2 = (byte[])array2;
+            for (int pos1Max = pos1 + length; pos1 < pos1Max; pos1++, pos2++) {
+                if (a1[pos1] != a2[pos2]) {
+                    return false;
+                }
+            }
+        } else
+        if (array1 instanceof short[]) {
+            if (!(array2 instanceof short[])) {
+                return false;
+            }
+            short[] a1 = (short[])array1;
+            short[] a2 = (short[])array2;
+            for (int pos1Max = pos1 + length; pos1 < pos1Max; pos1++, pos2++) {
+                if (a1[pos1] != a2[pos2]) {
+                    return false;
+                }
+            }
+        } else
+        if (array1 instanceof int[]) {
+            if (!(array2 instanceof int[])) {
+                return false;
+            }
+            int[] a1 = (int[])array1;
+            int[] a2 = (int[])array2;
+            for (int pos1Max = pos1 + length; pos1 < pos1Max; pos1++, pos2++) {
+                if (a1[pos1] != a2[pos2]) {
+                    return false;
+                }
+            }
+        } else
+        if (array1 instanceof long[]) {
+            if (!(array2 instanceof long[])) {
+                return false;
+            }
+            long[] a1 = (long[])array1;
+            long[] a2 = (long[])array2;
+            for (int pos1Max = pos1 + length; pos1 < pos1Max; pos1++, pos2++) {
+                if (a1[pos1] != a2[pos2]) {
+                    return false;
+                }
+            }
+        } else
+        if (array1 instanceof float[]) {
+            if (!(array2 instanceof float[])) {
+                return false;
+            }
+            float[] a1 = (float[])array1;
+            float[] a2 = (float[])array2;
+            for (int pos1Max = pos1 + length; pos1 < pos1Max; pos1++, pos2++) {
+                if (Float.floatToIntBits(a1[pos1]) != Float.floatToIntBits(a2[pos2])) {
+                    return false;
+                }
+            }
+        } else
+        if (array1 instanceof double[]) {
+            if (!(array2 instanceof double[])) {
+                return false;
+            }
+            double[] a1 = (double[])array1;
+            double[] a2 = (double[])array2;
+            for (int pos1Max = pos1 + length; pos1 < pos1Max; pos1++, pos2++) {
+                if (Double.doubleToLongBits(a1[pos1]) != Double.doubleToLongBits(a2[pos2])) {
+                    return false;
+                }
+            }
+        } else
+        if (array1 instanceof Object[]) {
+            if (!(array2 instanceof Object[])) {
+                return false;
+            }
+            Object[] a1 = (Object[])array1;
+            Object[] a2 = (Object[])array2;
+            for (int pos1Max = pos1 + length; pos1 < pos1Max; pos1++, pos2++) {
+                if (!(a1[pos1] == null ? a2[pos2] == null : a1[pos1].equals(a2[pos2]))) {
+                    return false;
+                }
+            }
+        } else //[[Repeat.AutoGeneratedEnd]]
+        {
+            throw new InternalError("Internal error: this check should never occur");
+        }
+        return true;
+    }
+
+    /*Repeat() boolean ==> byte,,char,,short,,int,,long,,float,,double;;
+               Boolean ==> Byte,,Char,,Short,,Int,,Long,,Float,,Double
+     */
+    /**
+     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,array.length)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>lowIndex&gt;=array.length</tt> or <tt>lowIndex&gt;=highIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index for search (inclusive).
+     * @param highIndex the high index for search (exclusive);
+     *                  pass <tt>array.length</tt> to search all remaining elements.
+     * @param value     the value to be found.
+     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #lastIndexOfBoolean(boolean[], int, int, boolean)
+     */
+    public static int indexOfBoolean(boolean[] array, int lowIndex, int highIndex, boolean value) {
+        if (lowIndex < 0) {
+            lowIndex = 0;
+        }
+        int maxPlus1 = Math.min(array.length, highIndex);
+        for (; lowIndex < maxPlus1; lowIndex++) {
+            if (array[lowIndex] == value) {
+                return lowIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>highIndex&gt;=array.length</tt>, the result is the same as if <tt>highIndex==array.length</tt>.
+     *
+     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * {@link #indexOfBoolean(boolean[], int, int, boolean)} method:
+     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index in the array for search (inclusive);
+     *                  pass <tt>0</tt> to search all remaining elements.
+     * @param highIndex the high index in the array for search (exclusive).
+     * @param value     the value to be found.
+     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #indexOfBoolean(boolean[], int, int, boolean)
+     */
+    public static int lastIndexOfBoolean(boolean[] array, int lowIndex, int highIndex, boolean value) {
+        if (highIndex > array.length) {
+            highIndex = array.length;
+        }
+        int min = Math.max(lowIndex, 0);
+        for (; highIndex > min; ) {
+            if (array[--highIndex] == value) {
+                return highIndex;
+            }
+        }
+        return -1;
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,array.length)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>lowIndex&gt;=array.length</tt> or <tt>lowIndex&gt;=highIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index for search (inclusive).
+     * @param highIndex the high index for search (exclusive);
+     *                  pass <tt>array.length</tt> to search all remaining elements.
+     * @param value     the value to be found.
+     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #lastIndexOfByte(byte[], int, int, byte)
+     */
+    public static int indexOfByte(byte[] array, int lowIndex, int highIndex, byte value) {
+        if (lowIndex < 0) {
+            lowIndex = 0;
+        }
+        int maxPlus1 = Math.min(array.length, highIndex);
+        for (; lowIndex < maxPlus1; lowIndex++) {
+            if (array[lowIndex] == value) {
+                return lowIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>highIndex&gt;=array.length</tt>, the result is the same as if <tt>highIndex==array.length</tt>.
+     *
+     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * {@link #indexOfByte(byte[], int, int, byte)} method:
+     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index in the array for search (inclusive);
+     *                  pass <tt>0</tt> to search all remaining elements.
+     * @param highIndex the high index in the array for search (exclusive).
+     * @param value     the value to be found.
+     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #indexOfByte(byte[], int, int, byte)
+     */
+    public static int lastIndexOfByte(byte[] array, int lowIndex, int highIndex, byte value) {
+        if (highIndex > array.length) {
+            highIndex = array.length;
+        }
+        int min = Math.max(lowIndex, 0);
+        for (; highIndex > min; ) {
+            if (array[--highIndex] == value) {
+                return highIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,array.length)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>lowIndex&gt;=array.length</tt> or <tt>lowIndex&gt;=highIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index for search (inclusive).
+     * @param highIndex the high index for search (exclusive);
+     *                  pass <tt>array.length</tt> to search all remaining elements.
+     * @param value     the value to be found.
+     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #lastIndexOfChar(char[], int, int, char)
+     */
+    public static int indexOfChar(char[] array, int lowIndex, int highIndex, char value) {
+        if (lowIndex < 0) {
+            lowIndex = 0;
+        }
+        int maxPlus1 = Math.min(array.length, highIndex);
+        for (; lowIndex < maxPlus1; lowIndex++) {
+            if (array[lowIndex] == value) {
+                return lowIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>highIndex&gt;=array.length</tt>, the result is the same as if <tt>highIndex==array.length</tt>.
+     *
+     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * {@link #indexOfChar(char[], int, int, char)} method:
+     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index in the array for search (inclusive);
+     *                  pass <tt>0</tt> to search all remaining elements.
+     * @param highIndex the high index in the array for search (exclusive).
+     * @param value     the value to be found.
+     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #indexOfChar(char[], int, int, char)
+     */
+    public static int lastIndexOfChar(char[] array, int lowIndex, int highIndex, char value) {
+        if (highIndex > array.length) {
+            highIndex = array.length;
+        }
+        int min = Math.max(lowIndex, 0);
+        for (; highIndex > min; ) {
+            if (array[--highIndex] == value) {
+                return highIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,array.length)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>lowIndex&gt;=array.length</tt> or <tt>lowIndex&gt;=highIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index for search (inclusive).
+     * @param highIndex the high index for search (exclusive);
+     *                  pass <tt>array.length</tt> to search all remaining elements.
+     * @param value     the value to be found.
+     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #lastIndexOfShort(short[], int, int, short)
+     */
+    public static int indexOfShort(short[] array, int lowIndex, int highIndex, short value) {
+        if (lowIndex < 0) {
+            lowIndex = 0;
+        }
+        int maxPlus1 = Math.min(array.length, highIndex);
+        for (; lowIndex < maxPlus1; lowIndex++) {
+            if (array[lowIndex] == value) {
+                return lowIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>highIndex&gt;=array.length</tt>, the result is the same as if <tt>highIndex==array.length</tt>.
+     *
+     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * {@link #indexOfShort(short[], int, int, short)} method:
+     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index in the array for search (inclusive);
+     *                  pass <tt>0</tt> to search all remaining elements.
+     * @param highIndex the high index in the array for search (exclusive).
+     * @param value     the value to be found.
+     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #indexOfShort(short[], int, int, short)
+     */
+    public static int lastIndexOfShort(short[] array, int lowIndex, int highIndex, short value) {
+        if (highIndex > array.length) {
+            highIndex = array.length;
+        }
+        int min = Math.max(lowIndex, 0);
+        for (; highIndex > min; ) {
+            if (array[--highIndex] == value) {
+                return highIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,array.length)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>lowIndex&gt;=array.length</tt> or <tt>lowIndex&gt;=highIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index for search (inclusive).
+     * @param highIndex the high index for search (exclusive);
+     *                  pass <tt>array.length</tt> to search all remaining elements.
+     * @param value     the value to be found.
+     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #lastIndexOfInt(int[], int, int, int)
+     */
+    public static int indexOfInt(int[] array, int lowIndex, int highIndex, int value) {
+        if (lowIndex < 0) {
+            lowIndex = 0;
+        }
+        int maxPlus1 = Math.min(array.length, highIndex);
+        for (; lowIndex < maxPlus1; lowIndex++) {
+            if (array[lowIndex] == value) {
+                return lowIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>highIndex&gt;=array.length</tt>, the result is the same as if <tt>highIndex==array.length</tt>.
+     *
+     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * {@link #indexOfInt(int[], int, int, int)} method:
+     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index in the array for search (inclusive);
+     *                  pass <tt>0</tt> to search all remaining elements.
+     * @param highIndex the high index in the array for search (exclusive).
+     * @param value     the value to be found.
+     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #indexOfInt(int[], int, int, int)
+     */
+    public static int lastIndexOfInt(int[] array, int lowIndex, int highIndex, int value) {
+        if (highIndex > array.length) {
+            highIndex = array.length;
+        }
+        int min = Math.max(lowIndex, 0);
+        for (; highIndex > min; ) {
+            if (array[--highIndex] == value) {
+                return highIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,array.length)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>lowIndex&gt;=array.length</tt> or <tt>lowIndex&gt;=highIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index for search (inclusive).
+     * @param highIndex the high index for search (exclusive);
+     *                  pass <tt>array.length</tt> to search all remaining elements.
+     * @param value     the value to be found.
+     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #lastIndexOfLong(long[], int, int, long)
+     */
+    public static int indexOfLong(long[] array, int lowIndex, int highIndex, long value) {
+        if (lowIndex < 0) {
+            lowIndex = 0;
+        }
+        int maxPlus1 = Math.min(array.length, highIndex);
+        for (; lowIndex < maxPlus1; lowIndex++) {
+            if (array[lowIndex] == value) {
+                return lowIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>highIndex&gt;=array.length</tt>, the result is the same as if <tt>highIndex==array.length</tt>.
+     *
+     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * {@link #indexOfLong(long[], int, int, long)} method:
+     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index in the array for search (inclusive);
+     *                  pass <tt>0</tt> to search all remaining elements.
+     * @param highIndex the high index in the array for search (exclusive).
+     * @param value     the value to be found.
+     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #indexOfLong(long[], int, int, long)
+     */
+    public static int lastIndexOfLong(long[] array, int lowIndex, int highIndex, long value) {
+        if (highIndex > array.length) {
+            highIndex = array.length;
+        }
+        int min = Math.max(lowIndex, 0);
+        for (; highIndex > min; ) {
+            if (array[--highIndex] == value) {
+                return highIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,array.length)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>lowIndex&gt;=array.length</tt> or <tt>lowIndex&gt;=highIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index for search (inclusive).
+     * @param highIndex the high index for search (exclusive);
+     *                  pass <tt>array.length</tt> to search all remaining elements.
+     * @param value     the value to be found.
+     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #lastIndexOfFloat(float[], int, int, float)
+     */
+    public static int indexOfFloat(float[] array, int lowIndex, int highIndex, float value) {
+        if (lowIndex < 0) {
+            lowIndex = 0;
+        }
+        int maxPlus1 = Math.min(array.length, highIndex);
+        for (; lowIndex < maxPlus1; lowIndex++) {
+            if (array[lowIndex] == value) {
+                return lowIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>highIndex&gt;=array.length</tt>, the result is the same as if <tt>highIndex==array.length</tt>.
+     *
+     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * {@link #indexOfFloat(float[], int, int, float)} method:
+     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index in the array for search (inclusive);
+     *                  pass <tt>0</tt> to search all remaining elements.
+     * @param highIndex the high index in the array for search (exclusive).
+     * @param value     the value to be found.
+     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #indexOfFloat(float[], int, int, float)
+     */
+    public static int lastIndexOfFloat(float[] array, int lowIndex, int highIndex, float value) {
+        if (highIndex > array.length) {
+            highIndex = array.length;
+        }
+        int min = Math.max(lowIndex, 0);
+        for (; highIndex > min; ) {
+            if (array[--highIndex] == value) {
+                return highIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,array.length)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>lowIndex&gt;=array.length</tt> or <tt>lowIndex&gt;=highIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index for search (inclusive).
+     * @param highIndex the high index for search (exclusive);
+     *                  pass <tt>array.length</tt> to search all remaining elements.
+     * @param value     the value to be found.
+     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #lastIndexOfDouble(double[], int, int, double)
+     */
+    public static int indexOfDouble(double[] array, int lowIndex, int highIndex, double value) {
+        if (lowIndex < 0) {
+            lowIndex = 0;
+        }
+        int maxPlus1 = Math.min(array.length, highIndex);
+        for (; lowIndex < maxPlus1; lowIndex++) {
+            if (array[lowIndex] == value) {
+                return lowIndex;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
+     * and <tt>array[k]==value</tt>, or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>highIndex&gt;=array.length</tt>, the result is the same as if <tt>highIndex==array.length</tt>.
+     *
+     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * {@link #indexOfDouble(double[], int, int, double)} method:
+     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index in the array for search (inclusive);
+     *                  pass <tt>0</tt> to search all remaining elements.
+     * @param highIndex the high index in the array for search (exclusive).
+     * @param value     the value to be found.
+     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #indexOfDouble(double[], int, int, double)
+     */
+    public static int lastIndexOfDouble(double[] array, int lowIndex, int highIndex, double value) {
+        if (highIndex > array.length) {
+            highIndex = array.length;
+        }
+        int min = Math.max(lowIndex, 0);
+        for (; highIndex > min; ) {
+            if (array[--highIndex] == value) {
+                return highIndex;
+            }
+        }
+        return -1;
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /**
+     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,array.length)</tt>
+     * and <tt>value==null?array[k]==null:value.equals(array[k])</tt>,
+     * or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>lowIndex&gt;=array.length</tt> or <tt>lowIndex&gt;=highIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index for search (inclusive).
+     * @param highIndex the high index for search (exclusive);
+     *                  pass <tt>array.length</tt> to search all remaining elements.
+     * @param value     the value to be found.
+     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #lastIndexOfObject(Object[], int, int, Object)
+     */
+    public static int indexOfObject(Object[] array, int lowIndex, int highIndex, Object value) {
+        if (lowIndex < 0) {
+            lowIndex = 0;
+        }
+        int maxPlus1 = Math.min(array.length, highIndex);
+        if (value == null) {
+            for (; lowIndex < maxPlus1; lowIndex++) {
+                if (array[lowIndex] == null) {
+                    return lowIndex;
+                }
+            }
+        } else {
+            for (; lowIndex < maxPlus1; lowIndex++) {
+                if (value.equals(array[lowIndex])) {
+                    return lowIndex;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
+     * and <tt>value==null?array[k]==null:value.equals(array[k])</tt>,
+     * or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>highIndex&gt;=array.length</tt>, the result is the same as if <tt>highIndex==array.length</tt>.
+     *
+     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * {@link #indexOfObject(Object[], int, int, Object)} method:
+     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     *
+     * @param array     the searched Java array.
+     * @param lowIndex  the low index in the array for search (inclusive);
+     *                  pass <tt>0</tt> to search all remaining elements.
+     * @param highIndex the high index in the array for search (exclusive).
+     * @param value     the value to be found.
+     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
+     *                  or <tt>-1</tt> if this value does not occur
+     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
+     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @see #indexOfObject(Object[], int, int, Object)
+     */
+    public static int lastIndexOfObject(Object[] array, int lowIndex, int highIndex, Object value) {
+        if (highIndex > array.length) {
+            highIndex = array.length;
+        }
+        int min = Math.max(lowIndex, 0);
+        if (value == null) {
+            for (; highIndex > min; ) {
+                if (array[--highIndex] == null) {
+                    return highIndex;
+                }
+            }
+        } else {
+            for (; highIndex > min; ) {
+                if (value.equals(array[--highIndex])) {
+                    return highIndex;
+                }
+            }
+        }
+        return -1;
+    }
+
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     * The byte elements are considered to be unsigned: <tt>min(a,b)=(a&amp;0xFF)&lt;(b&amp;0xFF)?a:b</tt>.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void minByteArray(byte[] dest, int destPos, byte[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (OPTIMIZE_BYTE_MIN_MAX_BY_TABLES) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] = MinMaxTables.MIN_TABLE[
+                    ((src[srcPos] & 0xFF) << 8) | (dest[destPos] & 0xFF)];
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                if ((src[srcPos] & 0xFF) < (dest[destPos] & 0xFF)) {
+                    dest[destPos] = src[srcPos];
+                }
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> bytes in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the maximum of them and corresponding <tt>count</tt> bytes in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     * The byte elements are considered to be unsigned: <tt>max(a,b)=(a&amp;0xFF)&gt;(b&amp;0xFF)?a:b</tt>.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void maxByteArray(byte[] dest, int destPos, byte[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (OPTIMIZE_BYTE_MIN_MAX_BY_TABLES) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] = MinMaxTables.MAX_TABLE[
+                    ((src[srcPos] & 0xFF) << 8) | (dest[destPos] & 0xFF)];
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                if ((src[srcPos] & 0xFF) > (dest[destPos] & 0xFF)) {
+                    dest[destPos] = src[srcPos];
+                }
+            }
+        }
+    }
+
+    /*Repeat() short ==> char,,int,,long,,float,,double;;
+               Short ==> Char,,Int,,Long,,Float,,Double;;
+               (\s*&(?:amp;)?\s*0xFFFF) ==> ,,...;;
+               (The\s+\w+\s+elements.*?<\/tt>\.) ==> ,,...
+     */
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     * The short elements are considered to be unsigned: <tt>min(a,b)=(a&amp;0xFFFF)&lt;(b&amp;0xFFFF)?a:b</tt>.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void minShortArray(short[] dest, int destPos, short[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos] & 0xFFFF) < (dest[destPos] & 0xFFFF)) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> shorts in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the maximum of them and corresponding <tt>count</tt> shorts in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     * The short elements are considered to be unsigned: <tt>max(a,b)=(a&amp;0xFFFF)&gt;(b&amp;0xFFFF)?a:b</tt>.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void maxShortArray(short[] dest, int destPos, short[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos] & 0xFFFF) > (dest[destPos] & 0xFFFF)) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void minCharArray(char[] dest, int destPos, char[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos]) < (dest[destPos])) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> chars in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the maximum of them and corresponding <tt>count</tt> chars in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void maxCharArray(char[] dest, int destPos, char[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos]) > (dest[destPos])) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void minIntArray(int[] dest, int destPos, int[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos]) < (dest[destPos])) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> ints in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the maximum of them and corresponding <tt>count</tt> ints in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void maxIntArray(int[] dest, int destPos, int[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos]) > (dest[destPos])) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void minLongArray(long[] dest, int destPos, long[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos]) < (dest[destPos])) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> longs in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the maximum of them and corresponding <tt>count</tt> longs in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void maxLongArray(long[] dest, int destPos, long[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos]) > (dest[destPos])) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void minFloatArray(float[] dest, int destPos, float[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos]) < (dest[destPos])) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> floats in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the maximum of them and corresponding <tt>count</tt> floats in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void maxFloatArray(float[] dest, int destPos, float[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos]) > (dest[destPos])) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void minDoubleArray(double[] dest, int destPos, double[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos]) < (dest[destPos])) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> doubles in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the maximum of them and corresponding <tt>count</tt> doubles in <tt>src</tt> array,
+     * starting from the element <tt>#destPos</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void maxDoubleArray(double[] dest, int destPos, double[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            if ((src[srcPos]) > (dest[destPos])) {
+                dest[destPos] = src[srcPos];
+            }
+        }
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /*Repeat() byte ==> char,,short,,int,,long,,float,,double;;
+               Byte ==> Char,,Short,,Int,,Long,,Float,,Double;;
+               (\s*&(?:amp;)?\s*0xFF) ==> ,,$1FF,, ,,...;;
+               (The\s+\w+\s+elements.*?\.) ==> ,,$1,, ,,...
+     */
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i]&amp;0xFF)</tt>.
+     * The byte elements are considered to be unsigned.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addByteArray(int[] dest, int destPos, byte[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] += src[srcPos] & 0xFF;
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * multiplied by <tt>mult</tt> argument,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i]&amp;0xFF)*mult</tt>.
+     * The byte elements are considered to be unsigned.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addByteArray(double[] dest, int destPos, byte[] src, int srcPos, int count, double mult) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (mult == 0.0) {
+            return;
+        }
+        if (mult == 1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += src[srcPos] & 0xFF;
+            }
+        } else if (mult == -1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] -= src[srcPos] & 0xFF;
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += (src[srcPos] & 0xFF) * mult;
+            }
+        }
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i])</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addCharArray(int[] dest, int destPos, char[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] += src[srcPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * multiplied by <tt>mult</tt> argument,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i])*mult</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addCharArray(double[] dest, int destPos, char[] src, int srcPos, int count, double mult) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (mult == 0.0) {
+            return;
+        }
+        if (mult == 1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += src[srcPos];
+            }
+        } else if (mult == -1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] -= src[srcPos];
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += (src[srcPos]) * mult;
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i]&amp;0xFFFF)</tt>.
+     * The short elements are considered to be unsigned.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addShortArray(int[] dest, int destPos, short[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] += src[srcPos] & 0xFFFF;
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * multiplied by <tt>mult</tt> argument,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i]&amp;0xFFFF)*mult</tt>.
+     * The short elements are considered to be unsigned.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addShortArray(double[] dest, int destPos, short[] src, int srcPos, int count, double mult) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (mult == 0.0) {
+            return;
+        }
+        if (mult == 1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += src[srcPos] & 0xFFFF;
+            }
+        } else if (mult == -1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] -= src[srcPos] & 0xFFFF;
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += (src[srcPos] & 0xFFFF) * mult;
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i])</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addIntArray(int[] dest, int destPos, int[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] += src[srcPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * multiplied by <tt>mult</tt> argument,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i])*mult</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addIntArray(double[] dest, int destPos, int[] src, int srcPos, int count, double mult) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (mult == 0.0) {
+            return;
+        }
+        if (mult == 1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += src[srcPos];
+            }
+        } else if (mult == -1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] -= src[srcPos];
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += (src[srcPos]) * mult;
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i])</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addLongArray(int[] dest, int destPos, long[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] += src[srcPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * multiplied by <tt>mult</tt> argument,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i])*mult</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addLongArray(double[] dest, int destPos, long[] src, int srcPos, int count, double mult) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (mult == 0.0) {
+            return;
+        }
+        if (mult == 1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += src[srcPos];
+            }
+        } else if (mult == -1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] -= src[srcPos];
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += (src[srcPos]) * mult;
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i])</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addFloatArray(int[] dest, int destPos, float[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] += src[srcPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * multiplied by <tt>mult</tt> argument,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i])*mult</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addFloatArray(double[] dest, int destPos, float[] src, int srcPos, int count, double mult) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (mult == 0.0) {
+            return;
+        }
+        if (mult == 1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += src[srcPos];
+            }
+        } else if (mult == -1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] -= src[srcPos];
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += (src[srcPos]) * mult;
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i])</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addDoubleArray(int[] dest, int destPos, double[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] += src[srcPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * multiplied by <tt>mult</tt> argument,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]+=(src[srcPos+i])*mult</tt>.
+     *
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void addDoubleArray(double[] dest, int destPos, double[] src, int srcPos, int count, double mult) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (mult == 0.0) {
+            return;
+        }
+        if (mult == 1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += src[srcPos];
+            }
+        } else if (mult == -1.0) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] -= src[srcPos];
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] += (src[srcPos]) * mult;
+            }
+        }
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /*Repeat() (int\s*v\s*=) ==> $1,,$1;;
+               (\(int\))(dest|src) ==> $1$2,,$1$2;;
+               byte ==> char,,short;;
+               Byte ==> Char,,Short;;
+               BYTE ==> CHAR,,SHORT;;
+               (\s*&(?:amp;)?\s*0xFF) ==> ,,$1FF;;
+               (0\.\.0xFF) ==> $1FF,,$1FF;;
+               (The\s+\w+\s+elements.*?\.) ==> ,,$1
+     */
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=dest[destPos+i]-src[srcPos+i]</tt>.
+     * If <tt>truncateOverflows</tt> argument is <tt>true</tt>, the difference is truncated
+     * to <tt>0..0xFF</tt> range before assigning to <tt>dest</tt> elements.
+     * The byte elements are considered to be unsigned.
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @param truncateOverflows whether the results should be truncated to <tt>0..0xFF</tt> range.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void subtractByteArray(byte[] dest, int destPos, byte[] src, int srcPos, int count,
+        boolean truncateOverflows)
+    {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (truncateOverflows) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                int v = ((int)dest[destPos] & 0xFF) - ((int)src[srcPos] & 0xFF);
+                dest[destPos] = v < 0 ? 0 : (byte)v;
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] -= src[srcPos];
+            }
+        }
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=dest[destPos+i]-src[srcPos+i]</tt>.
+     * If <tt>truncateOverflows</tt> argument is <tt>true</tt>, the difference is truncated
+     * to <tt>0..0xFFFF</tt> range before assigning to <tt>dest</tt> elements.
+     *
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @param truncateOverflows whether the results should be truncated to <tt>0..0xFFFF</tt> range.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void subtractCharArray(char[] dest, int destPos, char[] src, int srcPos, int count,
+        boolean truncateOverflows)
+    {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (truncateOverflows) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                int v = ((int)dest[destPos]) - ((int)src[srcPos]);
+                dest[destPos] = v < 0 ? 0 : (char)v;
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] -= src[srcPos];
+            }
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=dest[destPos+i]-src[srcPos+i]</tt>.
+     * If <tt>truncateOverflows</tt> argument is <tt>true</tt>, the difference is truncated
+     * to <tt>0..0xFFFF</tt> range before assigning to <tt>dest</tt> elements.
+     * The short elements are considered to be unsigned.
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @param truncateOverflows whether the results should be truncated to <tt>0..0xFFFF</tt> range.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void subtractShortArray(short[] dest, int destPos, short[] src, int srcPos, int count,
+        boolean truncateOverflows)
+    {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (truncateOverflows) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                int v = ((int)dest[destPos] & 0xFFFF) - ((int)src[srcPos] & 0xFFFF);
+                dest[destPos] = v < 0 ? 0 : (short)v;
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] -= src[srcPos];
+            }
+        }
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=dest[destPos+i]-src[srcPos+i]</tt>.
+     * If <tt>truncateOverflows</tt> argument is <tt>true</tt>, the difference is truncated
+     * to <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt> range before assigning to <tt>dest</tt> elements.
+     *
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @param truncateOverflows whether the results should be truncated to <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt> range.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void subtractIntArray(int[] dest, int destPos, int[] src, int srcPos, int count,
+        boolean truncateOverflows)
+    {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (truncateOverflows) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                long v = (long)dest[destPos] - (long)src[srcPos];
+                dest[destPos] = v < Integer.MIN_VALUE ? Integer.MIN_VALUE :
+                    v > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)v;
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] -= src[srcPos];
+            }
+        }
+    }
+
+    /*Repeat() long ==> float,,double;;
+               Long ==> Float,,Double
+     */
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=dest[destPos+i]-src[srcPos+i]</tt>.
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void subtractLongArray(long[] dest, int destPos, long[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] -= src[srcPos];
+        }
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=dest[destPos+i]-src[srcPos+i]</tt>.
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void subtractFloatArray(float[] dest, int destPos, float[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] -= src[srcPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=dest[destPos+i]-src[srcPos+i]</tt>.
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void subtractDoubleArray(double[] dest, int destPos, double[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] -= src[srcPos];
+        }
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /*Repeat() byte ==> char,,short,,long,,float,,double;;
+               Byte ==> Char,,Short,,Long,,Float,,Double;;
+               (\s*&\s*0xFF) ==> ,,$1FF,, ,,...;;
+               \((long|float|double)\) ==> ,,...;;
+               (\(The\s+\w+\s+elements.*?\.\)) ==> ,,$1,, ,,...
+     */
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the absolute value of the difference of them
+     * and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=|dest[destPos+i]-src[srcPos+i]|</tt>.
+     * (The byte elements are considered to be unsigned.)
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void absDiffOfByteArray(byte[] dest, int destPos, byte[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] = (dest[destPos] & 0xFF) >= (src[srcPos] & 0xFF) ?
+                (byte)(dest[destPos] - src[srcPos]) :
+                (byte)(src[srcPos] - dest[destPos]);
+        }
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the absolute value of the difference of them
+     * and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=|dest[destPos+i]-src[srcPos+i]|</tt>.
+     *
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void absDiffOfCharArray(char[] dest, int destPos, char[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] = (dest[destPos]) >= (src[srcPos]) ?
+                (char)(dest[destPos] - src[srcPos]) :
+                (char)(src[srcPos] - dest[destPos]);
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the absolute value of the difference of them
+     * and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=|dest[destPos+i]-src[srcPos+i]|</tt>.
+     * (The short elements are considered to be unsigned.)
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void absDiffOfShortArray(short[] dest, int destPos, short[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] = (dest[destPos] & 0xFFFF) >= (src[srcPos] & 0xFFFF) ?
+                (short)(dest[destPos] - src[srcPos]) :
+                (short)(src[srcPos] - dest[destPos]);
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the absolute value of the difference of them
+     * and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=|dest[destPos+i]-src[srcPos+i]|</tt>.
+     *
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void absDiffOfLongArray(long[] dest, int destPos, long[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] = (dest[destPos]) >= (src[srcPos]) ?
+                (dest[destPos] - src[srcPos]) :
+                (src[srcPos] - dest[destPos]);
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the absolute value of the difference of them
+     * and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=|dest[destPos+i]-src[srcPos+i]|</tt>.
+     *
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void absDiffOfFloatArray(float[] dest, int destPos, float[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] = (dest[destPos]) >= (src[srcPos]) ?
+                (dest[destPos] - src[srcPos]) :
+                (src[srcPos] - dest[destPos]);
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the absolute value of the difference of them
+     * and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=|dest[destPos+i]-src[srcPos+i]|</tt>.
+     *
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void absDiffOfDoubleArray(double[] dest, int destPos, double[] src, int srcPos, int count) {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+            dest[destPos] = (dest[destPos]) >= (src[srcPos]) ?
+                (dest[destPos] - src[srcPos]) :
+                (src[srcPos] - dest[destPos]);
+        }
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the absolute value of the difference of them
+     * and corresponding <tt>count</tt> elements in <tt>src</tt> array,
+     * starting from the element <tt>#srcPos</tt>:
+     * <tt>dest[destPos+i]=|dest[destPos+i]-src[srcPos+i]|</tt>.
+     * If <tt>truncateOverflows</tt> argument is <tt>true</tt>, the difference is truncated
+     * to <tt>0..Integer.MAX_VALUE</tt> range before assigning to <tt>dest</tt> elements.
+     *
+     * @param dest              the destination array.
+     * @param destPos           position of the first replaced element in the destination array.
+     * @param src               the source array.
+     * @param srcPos            position of the first read element in the source array.
+     * @param count             the number of elements to be replaced (should be &gt;=0).
+     * @param truncateOverflows whether the results should be truncated to <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt> range.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void absDiffOfIntArray(int[] dest, int destPos, int[] src, int srcPos, int count,
+        boolean truncateOverflows)
+    {
+        rangeCheck(dest.length, destPos, src.length, srcPos, count);
+        if (truncateOverflows) {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                long v = (long)dest[destPos] - (long)src[srcPos];
+                if (v < 0)
+                    v = -v;
+                dest[destPos] = v > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)v;
+            }
+        } else {
+            for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
+                dest[destPos] = dest[destPos] >= src[srcPos] ?
+                    dest[destPos] - src[srcPos] :
+                    src[srcPos] - dest[destPos];
+            }
+        }
+    }
+
+    /*Repeat() \(byte\) ==> (short),, ,, ,, ,, ;;
+               byte     ==> short,,int,,long,,float,,double;;
+               Byte     ==> Short,,Int,,Long,,Float,,Double
+     */
+    /**
+     * Replaces all elements in <tt>dest</tt> array
+     * with the same values with the minus sign:
+     * <tt>dest[i]=-dest[i]</tt>.
+     *
+     * @param dest the destination array.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void oppositeByteArray(byte[] dest) {
+        for (int destPos = 0; destPos < dest.length; destPos++) {
+            dest[destPos] = (byte)-dest[destPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the same values with the minus sign:
+     * <tt>dest[destPos+i]=-dest[destPos+i]</tt>.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void oppositeByteArray(byte[] dest, int destPos, int count) {
+        rangeCheck(dest.length, destPos, count);
+        for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
+            dest[destPos] = (byte)-dest[destPos];
+        }
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Replaces all elements in <tt>dest</tt> array
+     * with the same values with the minus sign:
+     * <tt>dest[i]=-dest[i]</tt>.
+     *
+     * @param dest the destination array.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void oppositeShortArray(short[] dest) {
+        for (int destPos = 0; destPos < dest.length; destPos++) {
+            dest[destPos] = (short)-dest[destPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the same values with the minus sign:
+     * <tt>dest[destPos+i]=-dest[destPos+i]</tt>.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void oppositeShortArray(short[] dest, int destPos, int count) {
+        rangeCheck(dest.length, destPos, count);
+        for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
+            dest[destPos] = (short)-dest[destPos];
+        }
+    }
+
+    /**
+     * Replaces all elements in <tt>dest</tt> array
+     * with the same values with the minus sign:
+     * <tt>dest[i]=-dest[i]</tt>.
+     *
+     * @param dest the destination array.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void oppositeIntArray(int[] dest) {
+        for (int destPos = 0; destPos < dest.length; destPos++) {
+            dest[destPos] = -dest[destPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the same values with the minus sign:
+     * <tt>dest[destPos+i]=-dest[destPos+i]</tt>.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void oppositeIntArray(int[] dest, int destPos, int count) {
+        rangeCheck(dest.length, destPos, count);
+        for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
+            dest[destPos] = -dest[destPos];
+        }
+    }
+
+    /**
+     * Replaces all elements in <tt>dest</tt> array
+     * with the same values with the minus sign:
+     * <tt>dest[i]=-dest[i]</tt>.
+     *
+     * @param dest the destination array.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void oppositeLongArray(long[] dest) {
+        for (int destPos = 0; destPos < dest.length; destPos++) {
+            dest[destPos] = -dest[destPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the same values with the minus sign:
+     * <tt>dest[destPos+i]=-dest[destPos+i]</tt>.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void oppositeLongArray(long[] dest, int destPos, int count) {
+        rangeCheck(dest.length, destPos, count);
+        for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
+            dest[destPos] = -dest[destPos];
+        }
+    }
+
+    /**
+     * Replaces all elements in <tt>dest</tt> array
+     * with the same values with the minus sign:
+     * <tt>dest[i]=-dest[i]</tt>.
+     *
+     * @param dest the destination array.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void oppositeFloatArray(float[] dest) {
+        for (int destPos = 0; destPos < dest.length; destPos++) {
+            dest[destPos] = -dest[destPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the same values with the minus sign:
+     * <tt>dest[destPos+i]=-dest[destPos+i]</tt>.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void oppositeFloatArray(float[] dest, int destPos, int count) {
+        rangeCheck(dest.length, destPos, count);
+        for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
+            dest[destPos] = -dest[destPos];
+        }
+    }
+
+    /**
+     * Replaces all elements in <tt>dest</tt> array
+     * with the same values with the minus sign:
+     * <tt>dest[i]=-dest[i]</tt>.
+     *
+     * @param dest the destination array.
+     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void oppositeDoubleArray(double[] dest) {
+        for (int destPos = 0; destPos < dest.length; destPos++) {
+            dest[destPos] = -dest[destPos];
+        }
+    }
+
+    /**
+     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
+     * starting from the element <tt>#destPos</tt>,
+     * with the same values with the minus sign:
+     * <tt>dest[destPos+i]=-dest[destPos+i]</tt>.
+     *
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
+     */
+    public static void oppositeDoubleArray(double[] dest, int destPos, int count) {
+        rangeCheck(dest.length, destPos, count);
+        for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
+            dest[destPos] = -dest[destPos];
+        }
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /*Repeat() boolean   ==> char,,byte,,short,,int,,long,,float,,double,,Object;;
+               Bit       ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double,,Object
+     */
+    /**
+     * Joins and returns as a string the standard string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(boolean[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source Java array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(boolean[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray ca = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        ca.append(String.valueOf(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (ca.length() >= maxStringLength) {
+                ca.append(separator).append("..."); break;
+            }
+            ca.append(separator).append(String.valueOf(array[k]));
+        }
+        return Arrays.toString(ca);
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Joins and returns as a string the standard string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(char[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source Java array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(char[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray ca = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        ca.append(String.valueOf(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (ca.length() >= maxStringLength) {
+                ca.append(separator).append("..."); break;
+            }
+            ca.append(separator).append(String.valueOf(array[k]));
+        }
+        return Arrays.toString(ca);
+    }
+
+    /**
+     * Joins and returns as a string the standard string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(byte[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source Java array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(byte[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray ca = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        ca.append(String.valueOf(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (ca.length() >= maxStringLength) {
+                ca.append(separator).append("..."); break;
+            }
+            ca.append(separator).append(String.valueOf(array[k]));
+        }
+        return Arrays.toString(ca);
+    }
+
+    /**
+     * Joins and returns as a string the standard string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(short[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source Java array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(short[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray ca = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        ca.append(String.valueOf(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (ca.length() >= maxStringLength) {
+                ca.append(separator).append("..."); break;
+            }
+            ca.append(separator).append(String.valueOf(array[k]));
+        }
+        return Arrays.toString(ca);
+    }
+
+    /**
+     * Joins and returns as a string the standard string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(int[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source Java array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(int[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray ca = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        ca.append(String.valueOf(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (ca.length() >= maxStringLength) {
+                ca.append(separator).append("..."); break;
+            }
+            ca.append(separator).append(String.valueOf(array[k]));
+        }
+        return Arrays.toString(ca);
+    }
+
+    /**
+     * Joins and returns as a string the standard string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(long[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source Java array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(long[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray ca = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        ca.append(String.valueOf(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (ca.length() >= maxStringLength) {
+                ca.append(separator).append("..."); break;
+            }
+            ca.append(separator).append(String.valueOf(array[k]));
+        }
+        return Arrays.toString(ca);
+    }
+
+    /**
+     * Joins and returns as a string the standard string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(float[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source Java array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(float[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray ca = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        ca.append(String.valueOf(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (ca.length() >= maxStringLength) {
+                ca.append(separator).append("..."); break;
+            }
+            ca.append(separator).append(String.valueOf(array[k]));
+        }
+        return Arrays.toString(ca);
+    }
+
+    /**
+     * Joins and returns as a string the standard string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(double[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source Java array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(double[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray ca = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        ca.append(String.valueOf(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (ca.length() >= maxStringLength) {
+                ca.append(separator).append("..."); break;
+            }
+            ca.append(separator).append(String.valueOf(array[k]));
+        }
+        return Arrays.toString(ca);
+    }
+
+    /**
+     * Joins and returns as a string the standard string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(Object[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source Java array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(Object[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray ca = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        ca.append(String.valueOf(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (ca.length() >= maxStringLength) {
+                ca.append(separator).append("..."); break;
+            }
+            ca.append(separator).append(String.valueOf(array[k]));
+        }
+        return Arrays.toString(ca);
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /*Repeat() byte ==> short,,int,,long,,float,,double;;
+               Byte ==> Short,,Int,,Long,,Float,,Double
+     */
+    /**
+     * Joins and returns as a string the string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>,
+     * using <tt>format</tt> string for formatting numeric elements.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, Locale, String, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(byte[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param locale          the locale that will be passed to <tt>String.format(locale,format,v)</tt> call.
+     * @param format          format string for numeric elements: each element <tt>v</tt> is converted
+     *                        to string by <tt>String.format(locale,format,v)</tt> call.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(byte[] array, Locale locale, String format, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(String.format(locale, format, array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(String.format(locale, format, array[k]));
+        }
+        return Arrays.toString(cv);
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Joins and returns as a string the string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>,
+     * using <tt>format</tt> string for formatting numeric elements.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, Locale, String, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(short[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param locale          the locale that will be passed to <tt>String.format(locale,format,v)</tt> call.
+     * @param format          format string for numeric elements: each element <tt>v</tt> is converted
+     *                        to string by <tt>String.format(locale,format,v)</tt> call.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(short[] array, Locale locale, String format, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(String.format(locale, format, array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(String.format(locale, format, array[k]));
+        }
+        return Arrays.toString(cv);
+    }
+
+    /**
+     * Joins and returns as a string the string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>,
+     * using <tt>format</tt> string for formatting numeric elements.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, Locale, String, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(int[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param locale          the locale that will be passed to <tt>String.format(locale,format,v)</tt> call.
+     * @param format          format string for numeric elements: each element <tt>v</tt> is converted
+     *                        to string by <tt>String.format(locale,format,v)</tt> call.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(int[] array, Locale locale, String format, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(String.format(locale, format, array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(String.format(locale, format, array[k]));
+        }
+        return Arrays.toString(cv);
+    }
+
+    /**
+     * Joins and returns as a string the string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>,
+     * using <tt>format</tt> string for formatting numeric elements.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, Locale, String, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(long[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param locale          the locale that will be passed to <tt>String.format(locale,format,v)</tt> call.
+     * @param format          format string for numeric elements: each element <tt>v</tt> is converted
+     *                        to string by <tt>String.format(locale,format,v)</tt> call.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(long[] array, Locale locale, String format, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(String.format(locale, format, array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(String.format(locale, format, array[k]));
+        }
+        return Arrays.toString(cv);
+    }
+
+    /**
+     * Joins and returns as a string the string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>,
+     * using <tt>format</tt> string for formatting numeric elements.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, Locale, String, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(float[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param locale          the locale that will be passed to <tt>String.format(locale,format,v)</tt> call.
+     * @param format          format string for numeric elements: each element <tt>v</tt> is converted
+     *                        to string by <tt>String.format(locale,format,v)</tt> call.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(float[] array, Locale locale, String format, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(String.format(locale, format, array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(String.format(locale, format, array[k]));
+        }
+        return Arrays.toString(cv);
+    }
+
+    /**
+     * Joins and returns as a string the string representations for all
+     * elements of the Java array, separating elements by the given <tt>separator</tt>,
+     * using <tt>format</tt> string for formatting numeric elements.
+     * Equivalent to
+     * <tt>{@link Arrays#toString(Array, Locale, String, String, int)
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(double[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param locale          the locale that will be passed to <tt>String.format(locale,format,v)</tt> call.
+     * @param format          format string for numeric elements: each element <tt>v</tt> is converted
+     *                        to string by <tt>String.format(locale,format,v)</tt> call.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toString(double[] array, Locale locale, String format, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(String.format(locale, format, array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(String.format(locale, format, array[k]));
+        }
+        return Arrays.toString(cv);
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /*Repeat() (\w+\[\w+\])\s*\?\s*\"1\"\s*:\s*\"0\" ==>
+                           InternalUtils.toHexString((short)$1),,
+                           InternalUtils.toHexString($1),,
+                           InternalUtils.toHexString($1),,
+                           InternalUtils.toHexString($1),,
+                           InternalUtils.toHexString($1);;
+               boolean ==> char,,byte,,short,,int,,long;;
+               Bit     ==> Char,,Byte,,Short,,Int,,Long;;
+               Binary  ==> Hex,,...]]
+     */
+    /**
+     * Joins and returns as a string the "hexadecimal" string representations for all
+     * elements of the AlgART array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toHexString(Array, String, int)
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(boolean[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toBinaryString(boolean[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(array[0] ? "1" : "0");
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(array[k] ? "1" : "0");
+        }
+        return Arrays.toString(cv);
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    /**
+     * Joins and returns as a string the "hexadecimal" string representations for all
+     * elements of the AlgART array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toHexString(Array, String, int)
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(char[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toHexString(char[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(InternalUtils.toHexString((short)array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(InternalUtils.toHexString((short)array[k]));
+        }
+        return Arrays.toString(cv);
+    }
+
+    /**
+     * Joins and returns as a string the "hexadecimal" string representations for all
+     * elements of the AlgART array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toHexString(Array, String, int)
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(byte[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toHexString(byte[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(InternalUtils.toHexString(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(InternalUtils.toHexString(array[k]));
+        }
+        return Arrays.toString(cv);
+    }
+
+    /**
+     * Joins and returns as a string the "hexadecimal" string representations for all
+     * elements of the AlgART array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toHexString(Array, String, int)
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(short[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toHexString(short[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(InternalUtils.toHexString(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(InternalUtils.toHexString(array[k]));
+        }
+        return Arrays.toString(cv);
+    }
+
+    /**
+     * Joins and returns as a string the "hexadecimal" string representations for all
+     * elements of the AlgART array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toHexString(Array, String, int)
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(int[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toHexString(int[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(InternalUtils.toHexString(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(InternalUtils.toHexString(array[k]));
+        }
+        return Arrays.toString(cv);
+    }
+
+    /**
+     * Joins and returns as a string the "hexadecimal" string representations for all
+     * elements of the AlgART array, separating elements by the given <tt>separator</tt>.
+     * Equivalent to
+     * <tt>{@link Arrays#toHexString(Array, String, int)
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(long[])
+     * valueOf}(array), separator, maxStringLength)</tt>, but works little faster.
+     *
+     * @param array           the source AlgART array.
+     * @param separator       the string used for separating elements.
+     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
+     *                        with adding "..." at the end).
+     * @return                the string representations of all elements joined into one string.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     */
+    public static String toHexString(long[] array, String separator, int maxStringLength) {
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (separator == null)
+            throw new NullPointerException("Null separator argument");
+        if (maxStringLength <= 0)
+            throw new IllegalArgumentException("maxStringLength argument must be positive");
+        if (array.length == 0) {
+            return "";
+        }
+        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
+        cv.append(InternalUtils.toHexString(array[0]));
+        for (int k = 1; k < array.length; k++) {
+            if (cv.length() >= maxStringLength) {
+                cv.append(separator).append("..."); break;
+            }
+            cv.append(separator).append(InternalUtils.toHexString(array[k]));
+        }
+        return Arrays.toString(cv);
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    static void rangeCheck(int arrayLen, int pos, int count) {
+        if (count < 0)
+            throw new IllegalArgumentException("Negative number of elements (" + count + ")");
+        if (pos < 0)
+            throw new IndexOutOfBoundsException("Start position " + pos + " < 0");
+        if (pos > arrayLen - count)
+            throw new IndexOutOfBoundsException("End position " + (pos + count)
+                + " > array length ( " + arrayLen + ")");
+    }
+
+    static void rangeCheck(int arrayLen1, int pos1, int arrayLen2, int pos2, int count) {
+        if (count < 0)
+            throw new IllegalArgumentException("Negative number of elements (" + count + ")");
+        if (pos1 < 0)
+            throw new IndexOutOfBoundsException("Start position " + pos1 + " < 0");
+        if (pos1 > arrayLen1 - count)
+            throw new IndexOutOfBoundsException("End position " + (pos1 + count)
+                + " > array length ( " + arrayLen1 + ")");
+        if (pos2 < 0)
+            throw new IndexOutOfBoundsException("Start position " + pos2 + " < 0");
+        if (pos2 > arrayLen2 - count)
+            throw new IndexOutOfBoundsException("End position " + (pos2 + count)
+                + " > array length ( " + arrayLen2 + ")");
+    }
+
+    private static void getBytes(boolean[] array, int offset, int count, byte[] result) {
+        for (int disp = 0, offsetMax = offset + count; offset < offsetMax; offset++) {
+            result[disp++] = array[offset] ? (byte)11 : (byte)17;
+        }
+    }
+
+    private static void getBytes(char[] array, int offset, int count, byte[] result) {
+        for (int disp = 0, offsetMax = offset + count; offset < offsetMax; offset++) {
+            char value = array[offset];
+            result[disp++] = (byte)(value ^ 'C'); // provide different results for different primitive types
+            result[disp++] = (byte)(value >>> 8);
+        }
+    }
+
+    private static void getBytes(short[] array, int offset, int count, byte[] result) {
+        for (int disp = 0, offsetMax = offset + count; offset < offsetMax; offset++) {
+            short value = array[offset];
+            result[disp++] = (byte)(value ^ 'S'); // provide different results for different primitive types
+            result[disp++] = (byte)(value >>> 8);
+        }
+    }
+
+    private static void getBytes(int[] array, int offset, int count, byte[] result) {
+        for (int disp = 0, offsetMax = offset + count; offset < offsetMax; offset++) {
+            int value = array[offset];
+            result[disp++] = (byte)(value ^ 'I'); // provide different results for different primitive types
+            result[disp++] = (byte)(value >>> 8);
+            result[disp++] = (byte)(value >>> 16);
+            result[disp++] = (byte)(value >>> 24);
+        }
+    }
+
+    private static void getBytes(long[] array, int offset, int count, byte[] result) {
+        for (int disp = 0, offsetMax = offset + count; offset < offsetMax; offset++) {
+            long l = array[offset];
+            int value = (int)l ^ 'L'; // provide different results for different primitive types
+            result[disp++] = (byte)value;
+            result[disp++] = (byte)(value >>> 8);
+            result[disp++] = (byte)(value >>> 16);
+            result[disp++] = (byte)(value >>> 24);
+            value = (int)(l >>> 32) ^ 'L'; // provide different results for different primitive types
+            result[disp++] = (byte)value;
+            result[disp++] = (byte)(value >>> 8);
+            result[disp++] = (byte)(value >>> 16);
+            result[disp++] = (byte)(value >>> 24);
+        }
+    }
+
+    private static void getBytes(float[] array, int offset, int count, byte[] result) {
+        for (int disp = 0, offsetMax = offset + count; offset < offsetMax; offset++) {
+            int value = Float.floatToIntBits(array[offset])
+                ^ 'F'; // provide different results for different primitive types
+            result[disp++] = (byte)value;
+            result[disp++] = (byte)(value >>> 8);
+            result[disp++] = (byte)(value >>> 16);
+            result[disp++] = (byte)(value >>> 24);
+        }
+    }
+
+    private static void getBytes(double[] array, int offset, int count, byte[] result) {
+        for (int disp = 0, offsetMax = offset + count; offset < offsetMax; offset++) {
+            long l = Double.doubleToLongBits(array[offset]);
+            int value = (int)l ^ 'D'; // provide different results for different primitive types
+            result[disp++] = (byte)value;
+            result[disp++] = (byte)(value >>> 8);
+            result[disp++] = (byte)(value >>> 16);
+            result[disp++] = (byte)(value >>> 24);
+            value = (int)(l >>> 32) ^ 'D'; // provide different results for different primitive types
+            result[disp++] = (byte)value;
+            result[disp++] = (byte)(value >>> 8);
+            result[disp++] = (byte)(value >>> 16);
+            result[disp++] = (byte)(value >>> 24);
+        }
+    }
+
+    private static void getBytes(Object[] array, int offset, int count, byte[] result) {
+        for (int disp = 0, offsetMax = offset + count; offset < offsetMax; offset++) {
+            int value = array[offset] == null ? 0 : array[offset].hashCode();
+            result[disp++] = (byte)value;
+            result[disp++] = (byte)(value >>> 8);
+            result[disp++] = (byte)(value >>> 16);
+            result[disp++] = (byte)(value >>> 24);
+        }
+    }
+
+    static class MinMaxTables {
+        static byte[] MIN_TABLE = new byte[65536];
+        static byte[] MAX_TABLE = new byte[65536];
+        static {
+            for (int b1 = 0; b1 < 256; b1++) {
+                for (int b2 = 0; b2 < 256; b2++) {
+                    MIN_TABLE[(b1 << 8) | b2] = (byte)Math.min(b1, b2);
+                    MAX_TABLE[(b1 << 8) | b2] = (byte)Math.max(b1, b2);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,66 @@
+    /**
+     * If this method returns some positive value <tt>L</tt>, the AlgART arrays, based on data file mapping,
+     * never creates more than <tt>L</tt> simultaneous mappings. More precisely,
+     * maximal number of Java objects describing mapped block
+     * (returned by {@link DataFile.BufferHolder#mappingObject()} method),
+     * that are not finalized by the garbage colletor yet, will be restricted by this limit.
+     *
+     * <p>If the mapping algorithm of the {@link LargeMemoryModel large memory model}
+     * detects that the number of non-finalized mapping objects is greater than
+     * the result of this method (<tt>L</tt>), then the special <i>mapping cleaner</i>
+     * algorithm is performed. This algorithm starts the waiting loop with
+     * calling <tt>System.gc()</tt>. The loop is performed
+     * until the number of non-finalized mapping objects will be reduced to
+     * <tt>L/4</tt> value, or until the timeout (see {@link #estimatedMinimalDiskSpeed()}
+     * will be reached.
+     * In a case of timeout, the corresponded <tt>java.io.IOError</tt> will be thrown.
+     *
+     * <p>This behaviour can be used for {@link DefaultDataFileModel},
+     * that is based on standard Java mapping technique. The reason is a bug in
+     * Java machines: under some OS, it generates an internal error
+     * ("java.lang.Error: Cleaner terminated abnormally")
+     * in the garbage collector when there are too many simultaneous mappings for the same file.
+     * See detailed description here:
+     * <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6521677">http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6521677</a>.
+     *
+     * <p>Right now, this bug never occurs: calling <tt>force()</tt> method of <tt>MappedByteBuffer</tt> class
+     * in {@link DataFile.BufferHolder#unmap() unmap()} method resolves the problem.
+     * So, I think it is safe enough to return 0 by this method.
+     *
+     * <p>You should understand that the maximal array size that can be simultaneously
+     * mapped into memory is about {@link #simultaneousMappingsLimit()} * {@link #recommendedBankSize()}
+     * bytes, i.e., for example, only 100 MB for the limit 100 and bank size 1 MB. Every attempt to process
+     * larger array will force garbage collector, i.e. disk swapping.
+     *
+     * <p>If the data file factory provides correct {@link DataFile.BufferHolder#unmap() unmapping},
+     * that really releases all allocated resources, than this method should return 0.
+     *
+     * @return the maximal allowed number of simultaneous mappings of the same file.
+     */
+    public int simultaneousMappingsLimit();
+
+    /**
+     * Should return estimated minimal possible value of the hard disk speed, in megabytes per second.
+     * This value is used for estimating time necessary to flush all unsaved mapping buffers
+     * while garbage collection and, so, for calculating necessary timeout for <i>mapping
+     * cleaner</i> algorithm described in {@link #simultaneousMappingsLimit()} method.
+     *
+     * <p>Namely, the timeout is <nobr><tt>2 * n * bs / speed</tt></nobr>, where
+     * <tt>n</tt> is the number of non-finalized mapping objects,
+     * <tt>bs</tt> is the size of one bank in MB (in other words,
+     * the number of megabytes in every mapping objects), and
+     * <tt>speed</tt> is the result of this method (the disk speed in MB/sec).
+     * It means that the timeout is enough (with 2 times) to flush all unsaved mapping buffers
+     * to disk, even if the disk speed is only <tt>speed</tt> MB/sec.
+     *
+     * <p>The suitable value, that may be returned by this method, is about 0.5 (MB/sec).
+     * It means that 10 banks per 1 MB should be successfully flushed to disk in
+     * <nobr><tt>2 * 10 * 1 / 0.5 = 40</tt></nobr> seconds; in other case,
+     * <tt>java.io.IOError</tt> will be thrown.
+     *
+     * <p>If this method returns a value less than 0.01, it is replaced with 0.01 (10 KB/sec):
+     * there are no HDD with less speed.
+     *
+     * @return estimated minimal possible HDD speed, in MB/sec.
+     */
+    public double estimatedMinimalDiskSpeed();

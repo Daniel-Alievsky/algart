@@ -1,0 +1,1512 @@
+138 possible 3x3 configurations:
+      (1/138) 0=0x0 (3x3, 1 unit bits):
+      . . . 
+      . * . 
+      . . . 
+
+      (2/138) 1=0x1 (3x3, 2 unit bits):
+      * . . 
+      . * . 
+      . . . 
+
+(rotated)       (3/138) 4=0x4 (3x3, 2 unit bits):
+(rotated)       . . * 
+(rotated)       . * . 
+(rotated)       . . . 
+
+(rotated)       (4/138) 16=0x10 (3x3, 2 unit bits):
+(rotated)       . . . 
+(rotated)       . * . 
+(rotated)       . . * 
+
+(rotated)       (5/138) 64=0x40 (3x3, 2 unit bits):
+(rotated)       . . . 
+(rotated)       . * . 
+(rotated)       * . . 
+
+      (6/138) 2=0x2 (3x3, 2 unit bits):
+      . * . 
+      . * . 
+      . . . 
+
+(rotated)       (7/138) 8=0x8 (3x3, 2 unit bits):
+(rotated)       . . . 
+(rotated)       . * * 
+(rotated)       . . . 
+
+(rotated)       (8/138) 32=0x20 (3x3, 2 unit bits):
+(rotated)       . . . 
+(rotated)       . * . 
+(rotated)       . * . 
+
+(rotated)       (9/138) 128=0x80 (3x3, 2 unit bits):
+(rotated)       . . . 
+(rotated)       * * . 
+(rotated)       . . . 
+
+      (10/138) 5=0x5 (3x3, 3 unit bits):
+      * . * 
+      . * . 
+      . . . 
+
+(rotated)       (11/138) 20=0x14 (3x3, 3 unit bits):
+(rotated)       . . * 
+(rotated)       . * . 
+(rotated)       . . * 
+
+(rotated)       (12/138) 65=0x41 (3x3, 3 unit bits):
+(rotated)       * . . 
+(rotated)       . * . 
+(rotated)       * . . 
+
+(rotated)       (13/138) 80=0x50 (3x3, 3 unit bits):
+(rotated)       . . . 
+(rotated)       . * . 
+(rotated)       * . * 
+
+      (14/138) 9=0x9 (3x3, 3 unit bits):
+      * . . 
+      . * * 
+      . . . 
+
+(rotated)       (15/138) 36=0x24 (3x3, 3 unit bits):
+(rotated)       . . * 
+(rotated)       . * . 
+(rotated)       . * . 
+
+(rotated)       (16/138) 66=0x42 (3x3, 3 unit bits):
+(rotated)       . * . 
+(rotated)       . * . 
+(rotated)       * . . 
+
+(rotated)       (17/138) 144=0x90 (3x3, 3 unit bits):
+(rotated)       . . . 
+(rotated)       * * . 
+(rotated)       . . * 
+
+      (18/138) 17=0x11 (3x3, 3 unit bits):
+      * . . 
+      . * . 
+      . . * 
+
+(rotated)       (19/138) 68=0x44 (3x3, 3 unit bits):
+(rotated)       . . * 
+(rotated)       . * . 
+(rotated)       * . . 
+
+      (20/138) 18=0x12 (3x3, 3 unit bits):
+      . * . 
+      . * . 
+      . . * 
+
+(rotated)       (21/138) 33=0x21 (3x3, 3 unit bits):
+(rotated)       * . . 
+(rotated)       . * . 
+(rotated)       . * . 
+
+(rotated)       (22/138) 72=0x48 (3x3, 3 unit bits):
+(rotated)       . . . 
+(rotated)       . * * 
+(rotated)       * . . 
+
+(rotated)       (23/138) 132=0x84 (3x3, 3 unit bits):
+(rotated)       . . * 
+(rotated)       * * . 
+(rotated)       . . . 
+
+      (24/138) 34=0x22 (3x3, 3 unit bits):
+      . * . 
+      . * . 
+      . * . 
+
+(rotated)       (25/138) 136=0x88 (3x3, 3 unit bits):
+(rotated)       . . . 
+(rotated)       * * * 
+(rotated)       . . . 
+
+      (26/138) 13=0xD (3x3, 4 unit bits):
+      * . * 
+      . * * 
+      . . . 
+
+    13=0xD (3x3, 4 unit bits) is possible inside 0x88 (5x5, +2 unit bits)
+    . . . * . 
+    . * . * . 
+    . . * * . 
+    . . . . * 
+    . . . . . 
+
+(rotated)       (27/138) 52=0x34 (3x3, 4 unit bits):
+(rotated)       . . * 
+(rotated)       . * . 
+(rotated)       . * * 
+
+(rotated)       (28/138) 67=0x43 (3x3, 4 unit bits):
+(rotated)       * * . 
+(rotated)       . * . 
+(rotated)       * . . 
+
+(rotated)       (29/138) 208=0xD0 (3x3, 4 unit bits):
+(rotated)       . . . 
+(rotated)       * * . 
+(rotated)       * . * 
+
+      (30/138) 19=0x13 (3x3, 4 unit bits):
+      * * . 
+      . * . 
+      . . * 
+
+    19=0x13 (3x3, 4 unit bits) is possible inside 0x9 (5x5, +2 unit bits)
+    * . . * . 
+    . * * . . 
+    . . * . . 
+    . . . * . 
+    . . . . . 
+
+(rotated)       (31/138) 49=0x31 (3x3, 4 unit bits):
+(rotated)       * . . 
+(rotated)       . * . 
+(rotated)       . * * 
+
+(rotated)       (32/138) 76=0x4C (3x3, 4 unit bits):
+(rotated)       . . * 
+(rotated)       . * * 
+(rotated)       * . . 
+
+(rotated)       (33/138) 196=0xC4 (3x3, 4 unit bits):
+(rotated)       . . * 
+(rotated)       * * . 
+(rotated)       * . . 
+
+      (34/138) 21=0x15 (3x3, 4 unit bits):
+      * . * 
+      . * . 
+      . . * 
+
+(rotated)       (35/138) 69=0x45 (3x3, 4 unit bits):
+(rotated)       * . * 
+(rotated)       . * . 
+(rotated)       * . . 
+
+(rotated)       (36/138) 81=0x51 (3x3, 4 unit bits):
+(rotated)       * . . 
+(rotated)       . * . 
+(rotated)       * . * 
+
+(rotated)       (37/138) 84=0x54 (3x3, 4 unit bits):
+(rotated)       . . * 
+(rotated)       . * . 
+(rotated)       * . * 
+
+      (38/138) 22=0x16 (3x3, 4 unit bits):
+      . * * 
+      . * . 
+      . . * 
+
+    22=0x16 (3x3, 4 unit bits) is possible inside 0x12 (5x5, +2 unit bits)
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . . . * . 
+    . . . . . 
+
+(rotated)       (39/138) 88=0x58 (3x3, 4 unit bits):
+(rotated)       . . . 
+(rotated)       . * * 
+(rotated)       * . * 
+
+(rotated)       (40/138) 97=0x61 (3x3, 4 unit bits):
+(rotated)       * . . 
+(rotated)       . * . 
+(rotated)       * * . 
+
+(rotated)       (41/138) 133=0x85 (3x3, 4 unit bits):
+(rotated)       * . * 
+(rotated)       * * . 
+(rotated)       . . . 
+
+      (42/138) 25=0x19 (3x3, 4 unit bits):
+      * . . 
+      . * * 
+      . . * 
+
+    25=0x19 (3x3, 4 unit bits) is possible inside 0x120 (5x5, +2 unit bits)
+    . . . . . 
+    . * . . * 
+    . . * * . 
+    . . . * . 
+    . . . . * 
+
+(rotated)       (43/138) 70=0x46 (3x3, 4 unit bits):
+(rotated)       . * * 
+(rotated)       . * . 
+(rotated)       * . . 
+
+(rotated)       (44/138) 100=0x64 (3x3, 4 unit bits):
+(rotated)       . . * 
+(rotated)       . * . 
+(rotated)       * * . 
+
+(rotated)       (45/138) 145=0x91 (3x3, 4 unit bits):
+(rotated)       * . . 
+(rotated)       * * . 
+(rotated)       . . * 
+
+      (46/138) 35=0x23 (3x3, 4 unit bits):
+      * * . 
+      . * . 
+      . * . 
+
+    35=0x23 (3x3, 4 unit bits) is possible inside 0x9 (5x5, +2 unit bits)
+    * . . * . 
+    . * * . . 
+    . . * . . 
+    . . * . . 
+    . . . . . 
+
+(rotated)       (47/138) 50=0x32 (3x3, 4 unit bits):
+(rotated)       . * . 
+(rotated)       . * . 
+(rotated)       . * * 
+
+(rotated)       (48/138) 140=0x8C (3x3, 4 unit bits):
+(rotated)       . . * 
+(rotated)       * * * 
+(rotated)       . . . 
+
+(rotated)       (49/138) 200=0xC8 (3x3, 4 unit bits):
+(rotated)       . . . 
+(rotated)       * * * 
+(rotated)       * . . 
+
+      (50/138) 37=0x25 (3x3, 4 unit bits):
+      * . * 
+      . * . 
+      . * . 
+
+(rotated)       (51/138) 73=0x49 (3x3, 4 unit bits):
+(rotated)       * . . 
+(rotated)       . * * 
+(rotated)       * . . 
+
+(rotated)       (52/138) 82=0x52 (3x3, 4 unit bits):
+(rotated)       . * . 
+(rotated)       . * . 
+(rotated)       * . * 
+
+(rotated)       (53/138) 148=0x94 (3x3, 4 unit bits):
+(rotated)       . . * 
+(rotated)       * * . 
+(rotated)       . . * 
+
+      (54/138) 38=0x26 (3x3, 4 unit bits):
+      . * * 
+      . * . 
+      . * . 
+
+    38=0x26 (3x3, 4 unit bits) is possible inside 0x12 (5x5, +2 unit bits)
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . . * . . 
+    . . . . . 
+
+(rotated)       (55/138) 98=0x62 (3x3, 4 unit bits):
+(rotated)       . * . 
+(rotated)       . * . 
+(rotated)       * * . 
+
+(rotated)       (56/138) 137=0x89 (3x3, 4 unit bits):
+(rotated)       * . . 
+(rotated)       * * * 
+(rotated)       . . . 
+
+(rotated)       (57/138) 152=0x98 (3x3, 4 unit bits):
+(rotated)       . . . 
+(rotated)       * * * 
+(rotated)       . . * 
+
+      (58/138) 41=0x29 (3x3, 4 unit bits):
+      * . . 
+      . * * 
+      . * . 
+
+    41=0x29 (3x3, 4 unit bits) is possible inside 0x220 (5x5, +2 unit bits)
+    . . . . . 
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . . . * . 
+
+(rotated)       (59/138) 74=0x4A (3x3, 4 unit bits):
+(rotated)       . * . 
+(rotated)       . * * 
+(rotated)       * . . 
+
+(rotated)       (60/138) 146=0x92 (3x3, 4 unit bits):
+(rotated)       . * . 
+(rotated)       * * . 
+(rotated)       . . * 
+
+(rotated)       (61/138) 164=0xA4 (3x3, 4 unit bits):
+(rotated)       . . * 
+(rotated)       * * . 
+(rotated)       . * . 
+
+      (62/138) 23=0x17 (3x3, 5 unit bits):
+      * * * 
+      . * . 
+      . . * 
+
+  23=0x17 (3x3, 5 unit bits) is possible inside 0x15 (5x5, +3 unit bits) inside 0x8 (7x7, +1 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . . . * . . 
+  . . . . . . . 
+  . . . . . . . 
+
+(rotated)       (63/138) 92=0x5C (3x3, 5 unit bits):
+(rotated)       . . * 
+(rotated)       . * * 
+(rotated)       * . * 
+
+(rotated)       (64/138) 113=0x71 (3x3, 5 unit bits):
+(rotated)       * . . 
+(rotated)       . * . 
+(rotated)       * * * 
+
+(rotated)       (65/138) 197=0xC5 (3x3, 5 unit bits):
+(rotated)       * . * 
+(rotated)       * * . 
+(rotated)       * . . 
+
+      (66/138) 29=0x1D (3x3, 5 unit bits):
+      * . * 
+      . * * 
+      . . * 
+
+  29=0x1D (3x3, 5 unit bits) is possible inside 0x448 (5x5, +3 unit bits) inside 0x100 (7x7, +1 unit bits)
+  . . . . . . . 
+  . . . . * . . 
+  . . * . * . * 
+  . . . * * * . 
+  . . . . * . . 
+  . . . * . . . 
+  . . . . . . . 
+
+(rotated)       (67/138) 71=0x47 (3x3, 5 unit bits):
+(rotated)       * * * 
+(rotated)       . * . 
+(rotated)       * . . 
+
+(rotated)       (68/138) 116=0x74 (3x3, 5 unit bits):
+(rotated)       . . * 
+(rotated)       . * . 
+(rotated)       * * * 
+
+(rotated)       (69/138) 209=0xD1 (3x3, 5 unit bits):
+(rotated)       * . . 
+(rotated)       * * . 
+(rotated)       * . * 
+
+      (70/138) 39=0x27 (3x3, 5 unit bits):
+      * * * 
+      . * . 
+      . * . 
+
+  39=0x27 (3x3, 5 unit bits) is possible inside 0x15 (5x5, +3 unit bits) inside 0x8 (7x7, +1 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . . * . . . 
+  . . . . . . . 
+  . . . . . . . 
+
+(rotated)       (71/138) 114=0x72 (3x3, 5 unit bits):
+(rotated)       . * . 
+(rotated)       . * . 
+(rotated)       * * * 
+
+(rotated)       (72/138) 156=0x9C (3x3, 5 unit bits):
+(rotated)       . . * 
+(rotated)       * * * 
+(rotated)       . . * 
+
+(rotated)       (73/138) 201=0xC9 (3x3, 5 unit bits):
+(rotated)       * . . 
+(rotated)       * * * 
+(rotated)       * . . 
+
+      (74/138) 45=0x2D (3x3, 5 unit bits):
+      * . * 
+      . * * 
+      . * . 
+
+    45=0x2D (3x3, 5 unit bits) is possible inside 0x488 (5x5, +3 unit bits)
+    . . . * . 
+    . * . * . 
+    . . * * . 
+    . . * . * 
+    . . * . . 
+
+(rotated)       (75/138) 75=0x4B (3x3, 5 unit bits):
+(rotated)       * * . 
+(rotated)       . * * 
+(rotated)       * . . 
+
+(rotated)       (76/138) 180=0xB4 (3x3, 5 unit bits):
+(rotated)       . . * 
+(rotated)       * * . 
+(rotated)       . * * 
+
+(rotated)       (77/138) 210=0xD2 (3x3, 5 unit bits):
+(rotated)       . * . 
+(rotated)       * * . 
+(rotated)       * . * 
+
+      (78/138) 51=0x33 (3x3, 5 unit bits):
+      * * . 
+      . * . 
+      . * * 
+
+    51=0x33 (3x3, 5 unit bits) is possible inside 0x849 (5x5, +4 unit bits)
+    * . . * . 
+    . * * . . 
+    . . * . * 
+    . . * * . 
+    . * . . . 
+
+(rotated)       (79/138) 204=0xCC (3x3, 5 unit bits):
+(rotated)       . . * 
+(rotated)       * * * 
+(rotated)       * . . 
+
+      (80/138) 53=0x35 (3x3, 5 unit bits):
+      * . * 
+      . * . 
+      . * * 
+
+    53=0x35 (3x3, 5 unit bits) is possible inside 0x880 (5x5, +2 unit bits)
+    . . . . . 
+    . * . * . 
+    . . * . . 
+    . . * * * 
+    . * . . . 
+
+(rotated)       (81/138) 77=0x4D (3x3, 5 unit bits):
+(rotated)       * . * 
+(rotated)       . * * 
+(rotated)       * . . 
+
+(rotated)       (82/138) 83=0x53 (3x3, 5 unit bits):
+(rotated)       * * . 
+(rotated)       . * . 
+(rotated)       * . * 
+
+(rotated)       (83/138) 212=0xD4 (3x3, 5 unit bits):
+(rotated)       . . * 
+(rotated)       * * . 
+(rotated)       * . * 
+
+      (84/138) 54=0x36 (3x3, 5 unit bits):
+      . * * 
+      . * . 
+      . * * 
+
+    54=0x36 (3x3, 5 unit bits) is possible inside 0x892 (5x5, +4 unit bits)
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . . * * * 
+    . * . . . 
+
+(rotated)       (85/138) 99=0x63 (3x3, 5 unit bits):
+(rotated)       * * . 
+(rotated)       . * . 
+(rotated)       * * . 
+
+(rotated)       (86/138) 141=0x8D (3x3, 5 unit bits):
+(rotated)       * . * 
+(rotated)       * * * 
+(rotated)       . . . 
+
+(rotated)       (87/138) 216=0xD8 (3x3, 5 unit bits):
+(rotated)       . . . 
+(rotated)       * * * 
+(rotated)       * . * 
+
+      (88/138) 57=0x39 (3x3, 5 unit bits):
+      * . . 
+      . * * 
+      . * * 
+
+    57=0x39 (3x3, 5 unit bits) is possible inside 0x920 (5x5, +3 unit bits)
+    . . . . . 
+    . * . . * 
+    . . * * . 
+    . . * * . 
+    . * . . * 
+
+(rotated)       (89/138) 78=0x4E (3x3, 5 unit bits):
+(rotated)       . * * 
+(rotated)       . * * 
+(rotated)       * . . 
+
+(rotated)       (90/138) 147=0x93 (3x3, 5 unit bits):
+(rotated)       * * . 
+(rotated)       * * . 
+(rotated)       . . * 
+
+(rotated)       (91/138) 228=0xE4 (3x3, 5 unit bits):
+(rotated)       . . * 
+(rotated)       * * . 
+(rotated)       * * . 
+
+      (92/138) 85=0x55 (3x3, 5 unit bits):
+      * . * 
+      . * . 
+      * . * 
+
+      (93/138) 86=0x56 (3x3, 5 unit bits):
+      . * * 
+      . * . 
+      * . * 
+
+    86=0x56 (3x3, 5 unit bits) is possible inside 0x12 (5x5, +2 unit bits)
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . * . * . 
+    . . . . . 
+
+(rotated)       (94/138) 89=0x59 (3x3, 5 unit bits):
+(rotated)       * . . 
+(rotated)       . * * 
+(rotated)       * . * 
+
+(rotated)       (95/138) 101=0x65 (3x3, 5 unit bits):
+(rotated)       * . * 
+(rotated)       . * . 
+(rotated)       * * . 
+
+(rotated)       (96/138) 149=0x95 (3x3, 5 unit bits):
+(rotated)       * . * 
+(rotated)       * * . 
+(rotated)       . . * 
+
+      (97/138) 90=0x5A (3x3, 5 unit bits):
+      . * . 
+      . * * 
+      * . * 
+
+    90=0x5A (3x3, 5 unit bits) is possible inside 0x122 (5x5, +3 unit bits)
+    . * . . . 
+    . . * . * 
+    . . * * . 
+    . * . * . 
+    . . . . * 
+
+(rotated)       (98/138) 105=0x69 (3x3, 5 unit bits):
+(rotated)       * . . 
+(rotated)       . * * 
+(rotated)       * * . 
+
+(rotated)       (99/138) 150=0x96 (3x3, 5 unit bits):
+(rotated)       . * * 
+(rotated)       * * . 
+(rotated)       . . * 
+
+(rotated)       (100/138) 165=0xA5 (3x3, 5 unit bits):
+(rotated)       * . * 
+(rotated)       * * . 
+(rotated)       . * . 
+
+      (101/138) 102=0x66 (3x3, 5 unit bits):
+      . * * 
+      . * . 
+      * * . 
+
+    102=0x66 (3x3, 5 unit bits) is possible inside 0x1212 (5x5, +4 unit bits)
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . * * . . 
+    * . . * . 
+
+(rotated)       (102/138) 153=0x99 (3x3, 5 unit bits):
+(rotated)       * . . 
+(rotated)       * * * 
+(rotated)       . . * 
+
+      (103/138) 170=0xAA (3x3, 5 unit bits):
+      . * . 
+      * * * 
+      . * . 
+
+    170=0xAA (3x3, 5 unit bits) is possible inside 0x2222 (5x5, +4 unit bits)
+    . * . . . 
+    . . * . * 
+    . * * * . 
+    * . * . . 
+    . . . * . 
+
+      (104/138) 55=0x37 (3x3, 6 unit bits):
+      * * * 
+      . * . 
+      . * * 
+
+  55=0x37 (3x3, 6 unit bits) is possible inside 0x895 (5x5, +5 unit bits) inside 0x8 (7x7, +1 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . . * * * . 
+  . . * . . . . 
+  . . . . . . . 
+
+(rotated)       (105/138) 115=0x73 (3x3, 6 unit bits):
+(rotated)       * * . 
+(rotated)       . * . 
+(rotated)       * * * 
+
+(rotated)       (106/138) 205=0xCD (3x3, 6 unit bits):
+(rotated)       * . * 
+(rotated)       * * * 
+(rotated)       * . . 
+
+(rotated)       (107/138) 220=0xDC (3x3, 6 unit bits):
+(rotated)       . . * 
+(rotated)       * * * 
+(rotated)       * . * 
+
+      (108/138) 61=0x3D (3x3, 6 unit bits):
+      * . * 
+      . * * 
+      . * * 
+
+  61=0x3D (3x3, 6 unit bits) is possible inside 0x948 (5x5, +4 unit bits) inside 0x100 (7x7, +1 unit bits)
+  . . . . . . . 
+  . . . . * . . 
+  . . * . * . * 
+  . . . * * * . 
+  . . . * * . . 
+  . . * . . * . 
+  . . . . . . . 
+
+(rotated)       (109/138) 79=0x4F (3x3, 6 unit bits):
+(rotated)       * * * 
+(rotated)       . * * 
+(rotated)       * . . 
+
+(rotated)       (110/138) 211=0xD3 (3x3, 6 unit bits):
+(rotated)       * * . 
+(rotated)       * * . 
+(rotated)       * . * 
+
+(rotated)       (111/138) 244=0xF4 (3x3, 6 unit bits):
+(rotated)       . . * 
+(rotated)       * * . 
+(rotated)       * * * 
+
+      (112/138) 87=0x57 (3x3, 6 unit bits):
+      * * * 
+      . * . 
+      * . * 
+
+  87=0x57 (3x3, 6 unit bits) is possible inside 0x15 (5x5, +3 unit bits) inside 0x8 (7x7, +1 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . * . * . . 
+  . . . . . . . 
+  . . . . . . . 
+
+(rotated)       (113/138) 93=0x5D (3x3, 6 unit bits):
+(rotated)       * . * 
+(rotated)       . * * 
+(rotated)       * . * 
+
+(rotated)       (114/138) 117=0x75 (3x3, 6 unit bits):
+(rotated)       * . * 
+(rotated)       . * . 
+(rotated)       * * * 
+
+(rotated)       (115/138) 213=0xD5 (3x3, 6 unit bits):
+(rotated)       * . * 
+(rotated)       * * . 
+(rotated)       * . * 
+
+      (116/138) 94=0x5E (3x3, 6 unit bits):
+      . * * 
+      . * * 
+      * . * 
+
+  94=0x5E (3x3, 6 unit bits) is possible inside 0x152 (5x5, +4 unit bits) inside 0x200 (7x7, +1 unit bits)
+  . . . . . . . 
+  . . * . . * . 
+  . . . * * . . 
+  . . . * * * * 
+  . . * . * . . 
+  . . . . . * . 
+  . . . . . . . 
+
+(rotated)       (117/138) 121=0x79 (3x3, 6 unit bits):
+(rotated)       * . . 
+(rotated)       . * * 
+(rotated)       * * * 
+
+(rotated)       (118/138) 151=0x97 (3x3, 6 unit bits):
+(rotated)       * * * 
+(rotated)       * * . 
+(rotated)       . . * 
+
+(rotated)       (119/138) 229=0xE5 (3x3, 6 unit bits):
+(rotated)       * . * 
+(rotated)       * * . 
+(rotated)       * * . 
+
+      (120/138) 103=0x67 (3x3, 6 unit bits):
+      * * * 
+      . * . 
+      * * . 
+
+  103=0x67 (3x3, 6 unit bits) is possible inside 0x1215 (5x5, +5 unit bits) inside 0x8 (7x7, +1 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . * * . . . 
+  . * . . * . . 
+  . . . . . . . 
+
+(rotated)       (121/138) 118=0x76 (3x3, 6 unit bits):
+(rotated)       . * * 
+(rotated)       . * . 
+(rotated)       * * * 
+
+(rotated)       (122/138) 157=0x9D (3x3, 6 unit bits):
+(rotated)       * . * 
+(rotated)       * * * 
+(rotated)       . . * 
+
+(rotated)       (123/138) 217=0xD9 (3x3, 6 unit bits):
+(rotated)       * . . 
+(rotated)       * * * 
+(rotated)       * . * 
+
+      (124/138) 171=0xAB (3x3, 6 unit bits):
+      * * . 
+      * * * 
+      . * . 
+
+    171=0xAB (3x3, 6 unit bits) is possible inside 0x2249 (5x5, +5 unit bits)
+    * . . * . 
+    . * * . . 
+    . * * * * 
+    * . * . . 
+    . . . * . 
+
+(rotated)       (125/138) 174=0xAE (3x3, 6 unit bits):
+(rotated)       . * * 
+(rotated)       * * * 
+(rotated)       . * . 
+
+(rotated)       (126/138) 186=0xBA (3x3, 6 unit bits):
+(rotated)       . * . 
+(rotated)       * * * 
+(rotated)       . * * 
+
+(rotated)       (127/138) 234=0xEA (3x3, 6 unit bits):
+(rotated)       . * . 
+(rotated)       * * * 
+(rotated)       * * . 
+
+      (128/138) 95=0x5F (3x3, 7 unit bits):
+      * * * 
+      . * * 
+      * . * 
+
+  95=0x5F (3x3, 7 unit bits) is possible inside 0x155 (5x5, +5 unit bits) inside 0x208 (7x7, +2 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * * * * 
+  . . * . * . . 
+  . . . . . * . 
+  . . . . . . . 
+
+(rotated)       (129/138) 125=0x7D (3x3, 7 unit bits):
+(rotated)       * . * 
+(rotated)       . * * 
+(rotated)       * * * 
+
+(rotated)       (130/138) 215=0xD7 (3x3, 7 unit bits):
+(rotated)       * * * 
+(rotated)       * * . 
+(rotated)       * . * 
+
+(rotated)       (131/138) 245=0xF5 (3x3, 7 unit bits):
+(rotated)       * . * 
+(rotated)       * * . 
+(rotated)       * * * 
+
+      (132/138) 119=0x77 (3x3, 7 unit bits):
+      * * * 
+      . * . 
+      * * * 
+
+  119=0x77 (3x3, 7 unit bits) is possible inside 0x1495 (5x5, +6 unit bits) inside 0x4008 (7x7, +2 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . * * * * . 
+  . * . * . . . 
+  . . . . * . . 
+
+(rotated)       (133/138) 221=0xDD (3x3, 7 unit bits):
+(rotated)       * . * 
+(rotated)       * * * 
+(rotated)       * . * 
+
+      (134/138) 175=0xAF (3x3, 7 unit bits):
+      * * * 
+      * * * 
+      . * . 
+
+  175=0xAF (3x3, 7 unit bits) is possible inside 0x2495 (5x5, +6 unit bits) inside 0x8 (7x7, +1 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . * * * . . 
+  . * . * . * . 
+  . . . * . . . 
+  . . . . . . . 
+
+(rotated)       (135/138) 190=0xBE (3x3, 7 unit bits):
+(rotated)       . * * 
+(rotated)       * * * 
+(rotated)       . * * 
+
+(rotated)       (136/138) 235=0xEB (3x3, 7 unit bits):
+(rotated)       * * . 
+(rotated)       * * * 
+(rotated)       * * . 
+
+(rotated)       (137/138) 250=0xFA (3x3, 7 unit bits):
+(rotated)       . * . 
+(rotated)       * * * 
+(rotated)       * * * 
+
+      (138/138) 255=0xFF (3x3, 9 unit bits):
+      * * * 
+      * * * 
+      * * * 
+
+  255=0xFF (3x3, 9 unit bits) is possible inside 0x5555 (5x5, +8 unit bits) inside 0x208208 (7x7, +4 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  * * * * * * * 
+  . . * * * . . 
+  . * . * . * . 
+  . . . * . . . 
+
+
+118 impossible 3x3 configurations:
+      (1/118) 3=0x3 (3x3, 3 unit bits):
+      * * . 
+      . * . 
+      . . . 
+
+(rotated)       (2/118) 12=0xC (3x3, 3 unit bits):
+(rotated)       . . * 
+(rotated)       . * * 
+(rotated)       . . . 
+
+(rotated)       (3/118) 48=0x30 (3x3, 3 unit bits):
+(rotated)       . . . 
+(rotated)       . * . 
+(rotated)       . * * 
+
+(rotated)       (4/118) 192=0xC0 (3x3, 3 unit bits):
+(rotated)       . . . 
+(rotated)       * * . 
+(rotated)       * . . 
+
+      (5/118) 6=0x6 (3x3, 3 unit bits):
+      . * * 
+      . * . 
+      . . . 
+
+(rotated)       (6/118) 24=0x18 (3x3, 3 unit bits):
+(rotated)       . . . 
+(rotated)       . * * 
+(rotated)       . . * 
+
+(rotated)       (7/118) 96=0x60 (3x3, 3 unit bits):
+(rotated)       . . . 
+(rotated)       . * . 
+(rotated)       * * . 
+
+(rotated)       (8/118) 129=0x81 (3x3, 3 unit bits):
+(rotated)       * . . 
+(rotated)       * * . 
+(rotated)       . . . 
+
+      (9/118) 10=0xA (3x3, 3 unit bits):
+      . * . 
+      . * * 
+      . . . 
+
+(rotated)       (10/118) 40=0x28 (3x3, 3 unit bits):
+(rotated)       . . . 
+(rotated)       . * * 
+(rotated)       . * . 
+
+(rotated)       (11/118) 130=0x82 (3x3, 3 unit bits):
+(rotated)       . * . 
+(rotated)       * * . 
+(rotated)       . . . 
+
+(rotated)       (12/118) 160=0xA0 (3x3, 3 unit bits):
+(rotated)       . . . 
+(rotated)       * * . 
+(rotated)       . * . 
+
+      (13/118) 7=0x7 (3x3, 4 unit bits):
+      * * * 
+      . * . 
+      . . . 
+
+(rotated)       (14/118) 28=0x1C (3x3, 4 unit bits):
+(rotated)       . . * 
+(rotated)       . * * 
+(rotated)       . . * 
+
+(rotated)       (15/118) 112=0x70 (3x3, 4 unit bits):
+(rotated)       . . . 
+(rotated)       . * . 
+(rotated)       * * * 
+
+(rotated)       (16/118) 193=0xC1 (3x3, 4 unit bits):
+(rotated)       * . . 
+(rotated)       * * . 
+(rotated)       * . . 
+
+      (17/118) 11=0xB (3x3, 4 unit bits):
+      * * . 
+      . * * 
+      . . . 
+
+(rotated)       (18/118) 44=0x2C (3x3, 4 unit bits):
+(rotated)       . . * 
+(rotated)       . * * 
+(rotated)       . * . 
+
+(rotated)       (19/118) 176=0xB0 (3x3, 4 unit bits):
+(rotated)       . . . 
+(rotated)       * * . 
+(rotated)       . * * 
+
+(rotated)       (20/118) 194=0xC2 (3x3, 4 unit bits):
+(rotated)       . * . 
+(rotated)       * * . 
+(rotated)       * . . 
+
+      (21/118) 14=0xE (3x3, 4 unit bits):
+      . * * 
+      . * * 
+      . . . 
+
+(rotated)       (22/118) 56=0x38 (3x3, 4 unit bits):
+(rotated)       . . . 
+(rotated)       . * * 
+(rotated)       . * * 
+
+(rotated)       (23/118) 131=0x83 (3x3, 4 unit bits):
+(rotated)       * * . 
+(rotated)       * * . 
+(rotated)       . . . 
+
+(rotated)       (24/118) 224=0xE0 (3x3, 4 unit bits):
+(rotated)       . . . 
+(rotated)       * * . 
+(rotated)       * * . 
+
+      (25/118) 26=0x1A (3x3, 4 unit bits):
+      . * . 
+      . * * 
+      . . * 
+
+(rotated)       (26/118) 104=0x68 (3x3, 4 unit bits):
+(rotated)       . . . 
+(rotated)       . * * 
+(rotated)       * * . 
+
+(rotated)       (27/118) 134=0x86 (3x3, 4 unit bits):
+(rotated)       . * * 
+(rotated)       * * . 
+(rotated)       . . . 
+
+(rotated)       (28/118) 161=0xA1 (3x3, 4 unit bits):
+(rotated)       * . . 
+(rotated)       * * . 
+(rotated)       . * . 
+
+      (29/118) 42=0x2A (3x3, 4 unit bits):
+      . * . 
+      . * * 
+      . * . 
+
+(rotated)       (30/118) 138=0x8A (3x3, 4 unit bits):
+(rotated)       . * . 
+(rotated)       * * * 
+(rotated)       . . . 
+
+(rotated)       (31/118) 162=0xA2 (3x3, 4 unit bits):
+(rotated)       . * . 
+(rotated)       * * . 
+(rotated)       . * . 
+
+(rotated)       (32/118) 168=0xA8 (3x3, 4 unit bits):
+(rotated)       . . . 
+(rotated)       * * * 
+(rotated)       . * . 
+
+      (33/118) 15=0xF (3x3, 5 unit bits):
+      * * * 
+      . * * 
+      . . . 
+
+(rotated)       (34/118) 60=0x3C (3x3, 5 unit bits):
+(rotated)       . . * 
+(rotated)       . * * 
+(rotated)       . * * 
+
+(rotated)       (35/118) 195=0xC3 (3x3, 5 unit bits):
+(rotated)       * * . 
+(rotated)       * * . 
+(rotated)       * . . 
+
+(rotated)       (36/118) 240=0xF0 (3x3, 5 unit bits):
+(rotated)       . . . 
+(rotated)       * * . 
+(rotated)       * * * 
+
+      (37/118) 27=0x1B (3x3, 5 unit bits):
+      * * . 
+      . * * 
+      . . * 
+
+(rotated)       (38/118) 108=0x6C (3x3, 5 unit bits):
+(rotated)       . . * 
+(rotated)       . * * 
+(rotated)       * * . 
+
+(rotated)       (39/118) 177=0xB1 (3x3, 5 unit bits):
+(rotated)       * . . 
+(rotated)       * * . 
+(rotated)       . * * 
+
+(rotated)       (40/118) 198=0xC6 (3x3, 5 unit bits):
+(rotated)       . * * 
+(rotated)       * * . 
+(rotated)       * . . 
+
+      (41/118) 30=0x1E (3x3, 5 unit bits):
+      . * * 
+      . * * 
+      . . * 
+
+(rotated)       (42/118) 120=0x78 (3x3, 5 unit bits):
+(rotated)       . . . 
+(rotated)       . * * 
+(rotated)       * * * 
+
+(rotated)       (43/118) 135=0x87 (3x3, 5 unit bits):
+(rotated)       * * * 
+(rotated)       * * . 
+(rotated)       . . . 
+
+(rotated)       (44/118) 225=0xE1 (3x3, 5 unit bits):
+(rotated)       * . . 
+(rotated)       * * . 
+(rotated)       * * . 
+
+      (45/118) 43=0x2B (3x3, 5 unit bits):
+      * * . 
+      . * * 
+      . * . 
+
+(rotated)       (46/118) 172=0xAC (3x3, 5 unit bits):
+(rotated)       . . * 
+(rotated)       * * * 
+(rotated)       . * . 
+
+(rotated)       (47/118) 178=0xB2 (3x3, 5 unit bits):
+(rotated)       . * . 
+(rotated)       * * . 
+(rotated)       . * * 
+
+(rotated)       (48/118) 202=0xCA (3x3, 5 unit bits):
+(rotated)       . * . 
+(rotated)       * * * 
+(rotated)       * . . 
+
+      (49/118) 46=0x2E (3x3, 5 unit bits):
+      . * * 
+      . * * 
+      . * . 
+
+(rotated)       (50/118) 139=0x8B (3x3, 5 unit bits):
+(rotated)       * * . 
+(rotated)       * * * 
+(rotated)       . . . 
+
+(rotated)       (51/118) 184=0xB8 (3x3, 5 unit bits):
+(rotated)       . . . 
+(rotated)       * * * 
+(rotated)       . * * 
+
+(rotated)       (52/118) 226=0xE2 (3x3, 5 unit bits):
+(rotated)       . * . 
+(rotated)       * * . 
+(rotated)       * * . 
+
+      (53/118) 58=0x3A (3x3, 5 unit bits):
+      . * . 
+      . * * 
+      . * * 
+
+(rotated)       (54/118) 142=0x8E (3x3, 5 unit bits):
+(rotated)       . * * 
+(rotated)       * * * 
+(rotated)       . . . 
+
+(rotated)       (55/118) 163=0xA3 (3x3, 5 unit bits):
+(rotated)       * * . 
+(rotated)       * * . 
+(rotated)       . * . 
+
+(rotated)       (56/118) 232=0xE8 (3x3, 5 unit bits):
+(rotated)       . . . 
+(rotated)       * * * 
+(rotated)       * * . 
+
+      (57/118) 106=0x6A (3x3, 5 unit bits):
+      . * . 
+      . * * 
+      * * . 
+
+(rotated)       (58/118) 154=0x9A (3x3, 5 unit bits):
+(rotated)       . * . 
+(rotated)       * * * 
+(rotated)       . . * 
+
+(rotated)       (59/118) 166=0xA6 (3x3, 5 unit bits):
+(rotated)       . * * 
+(rotated)       * * . 
+(rotated)       . * . 
+
+(rotated)       (60/118) 169=0xA9 (3x3, 5 unit bits):
+(rotated)       * . . 
+(rotated)       * * * 
+(rotated)       . * . 
+
+      (61/118) 31=0x1F (3x3, 6 unit bits):
+      * * * 
+      . * * 
+      . . * 
+
+(rotated)       (62/118) 124=0x7C (3x3, 6 unit bits):
+(rotated)       . . * 
+(rotated)       . * * 
+(rotated)       * * * 
+
+(rotated)       (63/118) 199=0xC7 (3x3, 6 unit bits):
+(rotated)       * * * 
+(rotated)       * * . 
+(rotated)       * . . 
+
+(rotated)       (64/118) 241=0xF1 (3x3, 6 unit bits):
+(rotated)       * . . 
+(rotated)       * * . 
+(rotated)       * * * 
+
+      (65/118) 47=0x2F (3x3, 6 unit bits):
+      * * * 
+      . * * 
+      . * . 
+
+(rotated)       (66/118) 188=0xBC (3x3, 6 unit bits):
+(rotated)       . . * 
+(rotated)       * * * 
+(rotated)       . * * 
+
+(rotated)       (67/118) 203=0xCB (3x3, 6 unit bits):
+(rotated)       * * . 
+(rotated)       * * * 
+(rotated)       * . . 
+
+(rotated)       (68/118) 242=0xF2 (3x3, 6 unit bits):
+(rotated)       . * . 
+(rotated)       * * . 
+(rotated)       * * * 
+
+      (69/118) 59=0x3B (3x3, 6 unit bits):
+      * * . 
+      . * * 
+      . * * 
+
+(rotated)       (70/118) 179=0xB3 (3x3, 6 unit bits):
+(rotated)       * * . 
+(rotated)       * * . 
+(rotated)       . * * 
+
+(rotated)       (71/118) 206=0xCE (3x3, 6 unit bits):
+(rotated)       . * * 
+(rotated)       * * * 
+(rotated)       * . . 
+
+(rotated)       (72/118) 236=0xEC (3x3, 6 unit bits):
+(rotated)       . . * 
+(rotated)       * * * 
+(rotated)       * * . 
+
+      (73/118) 62=0x3E (3x3, 6 unit bits):
+      . * * 
+      . * * 
+      . * * 
+
+(rotated)       (74/118) 143=0x8F (3x3, 6 unit bits):
+(rotated)       * * * 
+(rotated)       * * * 
+(rotated)       . . . 
+
+(rotated)       (75/118) 227=0xE3 (3x3, 6 unit bits):
+(rotated)       * * . 
+(rotated)       * * . 
+(rotated)       * * . 
+
+(rotated)       (76/118) 248=0xF8 (3x3, 6 unit bits):
+(rotated)       . . . 
+(rotated)       * * * 
+(rotated)       * * * 
+
+      (77/118) 91=0x5B (3x3, 6 unit bits):
+      * * . 
+      . * * 
+      * . * 
+
+(rotated)       (78/118) 109=0x6D (3x3, 6 unit bits):
+(rotated)       * . * 
+(rotated)       . * * 
+(rotated)       * * . 
+
+(rotated)       (79/118) 181=0xB5 (3x3, 6 unit bits):
+(rotated)       * . * 
+(rotated)       * * . 
+(rotated)       . * * 
+
+(rotated)       (80/118) 214=0xD6 (3x3, 6 unit bits):
+(rotated)       . * * 
+(rotated)       * * . 
+(rotated)       * . * 
+
+      (81/118) 107=0x6B (3x3, 6 unit bits):
+      * * . 
+      . * * 
+      * * . 
+
+(rotated)       (82/118) 173=0xAD (3x3, 6 unit bits):
+(rotated)       * . * 
+(rotated)       * * * 
+(rotated)       . * . 
+
+(rotated)       (83/118) 182=0xB6 (3x3, 6 unit bits):
+(rotated)       . * * 
+(rotated)       * * . 
+(rotated)       . * * 
+
+(rotated)       (84/118) 218=0xDA (3x3, 6 unit bits):
+(rotated)       . * . 
+(rotated)       * * * 
+(rotated)       * . * 
+
+      (85/118) 110=0x6E (3x3, 6 unit bits):
+      . * * 
+      . * * 
+      * * . 
+
+(rotated)       (86/118) 155=0x9B (3x3, 6 unit bits):
+(rotated)       * * . 
+(rotated)       * * * 
+(rotated)       . . * 
+
+(rotated)       (87/118) 185=0xB9 (3x3, 6 unit bits):
+(rotated)       * . . 
+(rotated)       * * * 
+(rotated)       . * * 
+
+(rotated)       (88/118) 230=0xE6 (3x3, 6 unit bits):
+(rotated)       . * * 
+(rotated)       * * . 
+(rotated)       * * . 
+
+      (89/118) 122=0x7A (3x3, 6 unit bits):
+      . * . 
+      . * * 
+      * * * 
+
+(rotated)       (90/118) 158=0x9E (3x3, 6 unit bits):
+(rotated)       . * * 
+(rotated)       * * * 
+(rotated)       . . * 
+
+(rotated)       (91/118) 167=0xA7 (3x3, 6 unit bits):
+(rotated)       * * * 
+(rotated)       * * . 
+(rotated)       . * . 
+
+(rotated)       (92/118) 233=0xE9 (3x3, 6 unit bits):
+(rotated)       * . . 
+(rotated)       * * * 
+(rotated)       * * . 
+
+      (93/118) 63=0x3F (3x3, 7 unit bits):
+      * * * 
+      . * * 
+      . * * 
+
+(rotated)       (94/118) 207=0xCF (3x3, 7 unit bits):
+(rotated)       * * * 
+(rotated)       * * * 
+(rotated)       * . . 
+
+(rotated)       (95/118) 243=0xF3 (3x3, 7 unit bits):
+(rotated)       * * . 
+(rotated)       * * . 
+(rotated)       * * * 
+
+(rotated)       (96/118) 252=0xFC (3x3, 7 unit bits):
+(rotated)       . . * 
+(rotated)       * * * 
+(rotated)       * * * 
+
+      (97/118) 111=0x6F (3x3, 7 unit bits):
+      * * * 
+      . * * 
+      * * . 
+
+(rotated)       (98/118) 189=0xBD (3x3, 7 unit bits):
+(rotated)       * . * 
+(rotated)       * * * 
+(rotated)       . * * 
+
+(rotated)       (99/118) 219=0xDB (3x3, 7 unit bits):
+(rotated)       * * . 
+(rotated)       * * * 
+(rotated)       * . * 
+
+(rotated)       (100/118) 246=0xF6 (3x3, 7 unit bits):
+(rotated)       . * * 
+(rotated)       * * . 
+(rotated)       * * * 
+
+      (101/118) 123=0x7B (3x3, 7 unit bits):
+      * * . 
+      . * * 
+      * * * 
+
+(rotated)       (102/118) 183=0xB7 (3x3, 7 unit bits):
+(rotated)       * * * 
+(rotated)       * * . 
+(rotated)       . * * 
+
+(rotated)       (103/118) 222=0xDE (3x3, 7 unit bits):
+(rotated)       . * * 
+(rotated)       * * * 
+(rotated)       * . * 
+
+(rotated)       (104/118) 237=0xED (3x3, 7 unit bits):
+(rotated)       * . * 
+(rotated)       * * * 
+(rotated)       * * . 
+
+      (105/118) 126=0x7E (3x3, 7 unit bits):
+      . * * 
+      . * * 
+      * * * 
+
+(rotated)       (106/118) 159=0x9F (3x3, 7 unit bits):
+(rotated)       * * * 
+(rotated)       * * * 
+(rotated)       . . * 
+
+(rotated)       (107/118) 231=0xE7 (3x3, 7 unit bits):
+(rotated)       * * * 
+(rotated)       * * . 
+(rotated)       * * . 
+
+(rotated)       (108/118) 249=0xF9 (3x3, 7 unit bits):
+(rotated)       * . . 
+(rotated)       * * * 
+(rotated)       * * * 
+
+      (109/118) 187=0xBB (3x3, 7 unit bits):
+      * * . 
+      * * * 
+      . * * 
+
+(rotated)       (110/118) 238=0xEE (3x3, 7 unit bits):
+(rotated)       . * * 
+(rotated)       * * * 
+(rotated)       * * . 
+
+      (111/118) 127=0x7F (3x3, 8 unit bits):
+      * * * 
+      . * * 
+      * * * 
+
+(rotated)       (112/118) 223=0xDF (3x3, 8 unit bits):
+(rotated)       * * * 
+(rotated)       * * * 
+(rotated)       * . * 
+
+(rotated)       (113/118) 247=0xF7 (3x3, 8 unit bits):
+(rotated)       * * * 
+(rotated)       * * . 
+(rotated)       * * * 
+
+(rotated)       (114/118) 253=0xFD (3x3, 8 unit bits):
+(rotated)       * . * 
+(rotated)       * * * 
+(rotated)       * * * 
+
+      (115/118) 191=0xBF (3x3, 8 unit bits):
+      * * * 
+      * * * 
+      . * * 
+
+(rotated)       (116/118) 239=0xEF (3x3, 8 unit bits):
+(rotated)       * * * 
+(rotated)       * * * 
+(rotated)       * * . 
+
+(rotated)       (117/118) 251=0xFB (3x3, 8 unit bits):
+(rotated)       * * . 
+(rotated)       * * * 
+(rotated)       * * * 
+
+(rotated)       (118/118) 254=0xFE (3x3, 8 unit bits):
+(rotated)       . * * 
+(rotated)       * * * 
+(rotated)       * * * 
+
+
+0 questionable 3x3 configurations:

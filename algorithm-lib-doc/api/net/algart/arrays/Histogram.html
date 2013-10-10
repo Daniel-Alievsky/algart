@@ -1,0 +1,2376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+Histogram
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Histogram";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/GeneralizedBitProcessing.SliceOperation.html" title="interface in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/IllegalInfoSyntaxException.html" title="class in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/Histogram.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="Histogram.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.arrays</FONT>
+<BR>
+Class Histogram</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><STRONG>net.algart.arrays.Histogram</STRONG>
+</PRE>
+<DL>
+<DT><STRONG>Direct Known Subclasses:</STRONG></DT> <DD><A HREF="../../../net/algart/arrays/SummingHistogram.html" title="class in net.algart.arrays">SummingHistogram</A></DD>
+</DL>
+<HR>
+<PRE>public abstract class <STRONG>Histogram</STRONG>
+extends java.lang.Object</PRE>
+
+<P>
+<p>Histogram: an array of non-negative integer numbers <b>b</b>[<i>v</i>], 0&le;<i>v</i>&lt;<i>M</i>,
+ where every element <b>b</b>[<i>v</i>] represents the number of occurrence of the value <i>v</i>
+ in some source array <b>A</b>, consisting of integer elements in 0..<i>M</i>&minus;1 range.
+ The integer values <i>v</i> in the source array are 31-bit:
+ 0&le;<i>M</i>&lt;2<sup>31</sup> (<tt>int</tt> Java type). The elements (bars) of the histogram
+ <b>b</b>[<i>v</i>] and also the total number of elements in the source array <i>N</i> are 63-bit:
+ 0&le;<i>N</i>&lt;2<sup>63</sup> (<tt>long</tt> Java type).
+ The source array <b>A</b> is always supposed to be <i>sorted in increasing order</i>:
+ <nobr><b>A</b>[0]&le;<b>A</b>[1]&le;...&le;<b>A</b>[<i>N</i>&minus;1]</nobr>, where <i>N</i>
+ is the number of elements in <b>A</b> (obviously, <i>N</i> is equal to the sum of all bars
+ <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>M</i>&minus;1]</nobr>).</p>
+
+ <p>This class is designed for solving 2 basic tasks:</p>
+
+ <ol>
+ <li>to find the value <i>v</i>=<b>A</b>[<i>r</i>], if we know its index <i>r</i> in the sorted array <b>A</b>:
+ this value is called the <i>percentile</i> #<i>r</i> (well-known special case is the <i>median</i>,
+ when <i>r</i>=<i>N</i>/2);</li>
+ <li>to find the index <i>r</i> in the sorted array <b>A</b>, if we know the corresponding value
+ <i>v</i>=<b>A</b>[<i>r</i>]:
+ this value is called the <i>rank</i> of the value <i>v</i>.</li>
+ </ol>
+
+ <p>It's important that this class does not store and does not try to sort the source array <b>A</b>, it stores
+ only the histogram <b>b</b> and solves both tasks on the base of it.</p>
+
+ <p>According the simple definition above, the rank and the percentile are integer numbers.
+ However, this class works not with integer, but with <i>real</i> precision, using
+ some generalization of the integer rank and percentile to the floating-point case.
+ Below is the formal definition of the real rank and percentile.</p>
+
+ <blockquote>
+ <table border="1" cellpadding="8" cellspacing="0">
+ <tr><td align="center"><b>Definition of floating-point percentile <i>v</i>(<i>r</i>) and rank <i>r</i>(<i>v</i>)
+ </td></tr>
+
+ <tr><td>
+ <p>Let <b>b</b>[0..<i>M</i>&minus;1] be an array of non-negative integer numbers, called
+ the <i>histogram</i> (and stored by this class), and let <i>N</i> be the sum of all these elements
+ (the length of the supposed, but not stored source sorted array <b>A</b>). In addition,
+ we suppose that there is an additional "virtual" element <b>b</b>[<i>M</i>], which is always zero.
+ The elements <b>b</b>[<i>k</i>] are called the <i>bars</i> of the histogram.</p>
+
+ <p>This class operates with the function <i>v</i>(<i>r</i>), called the <i>percentile</i>,
+ and its inverse function <i>v</i>(<i>r</i>), called the <i>rank</i>. Both variables <i>r</i> and <i>v</i>
+ are real (floating-point) numbers in the following ranges: <nobr>0.0&le;<i>r</i>&le;<i>N</i></nobr>,
+ <nobr>0.0&le;<i>v</i>&le;<i>M</i></nobr>. The definition of both functions depends on so called
+ <i>histogram model</i>. This class supports two following models.</p>
+
+ <dl>
+ <dt><b>Simple histogram model</b></dt>
+
+ <dd>
+ <p>In this case, <i>r</i>(<i>v</i>) is a simple polyline generalization of the integer function:
+ while <i>v</i> is increasing from some integer
+ <i>v</i><sub>0</sub> to the next integer <nobr><i>v</i><sub>0</sub>+1</nobr>
+ (some bar of the histogram),
+ the rank <nobr><i>r</i>(<i>v</i>)</nobr> is either the constant if <nobr><b>b</b>[<i>v</i><sub>0</sub>]=0</nobr>,
+ or uniformly increased from some <i>r</i><sub>0</sub> to
+ <nobr><i>r</i><sub>0</sub>+<b>b</b>[<i>v</i><sub>0</sub>]</nobr> if
+ <nobr><b>b</b>[<i>v</i><sub>0</sub>]&gt;0</nobr>.
+ More precisely:</p>
+ <ol>
+ <li>
+ <i>v</i>(<i>r</i>) = <i>v</i><sub>0</sub> +
+ (<i>r</i>&minus;<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>], where <i>v</i><sub>0</sub> is
+ the minimal integer value so that
+ <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;&lfloor;<i>r</i>&rfloor;
+ (here and below &lfloor;<i>x</i>&rfloor; means the integer part of <i>x</i> or <tt>(long)</tt><i>x</i>
+ for our non-negative numbers),
+ and <i>r</i><sub>0</sub> = this&nbsp;sum&minus;<b>b</b>[<i>v</i><sub>0</sub>] =
+ <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>.
+ In the only special case <i>r</i>=<i>N</i>
+ this formula is not correct, because the sum of histogram bars <b>b</b>[<i>k</i>] cannot be greater than
+ the sum of all bars <i>N</i>, and we consider, by definition, that
+ <nobr><i>v</i>(<i>N</i>) = lim<sub><i>x</i>&rarr;<i>N</i>+1</sub><i>v</i>(<i>x</i>) =
+ &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1</nobr>.<br>
+ Note: according this definition,
+ <nobr><i>v</i>(0) = <i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
+ and <nobr><i>v</i>(<i>N</i>) = &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1 = <i>max</i> (<i>k</i>&isin;<b>Z</b>:
+ <b>b</b>[<i>k</i>]&gt;0)+1</nobr>.<br>
+ In a case <i>N</i>=0 (empty histogram), <i>v</i>(<i>r</i>) functions is considered to be undefined.
+ <br>&nbsp;</li>
+
+ <li><i>r</i>(<i>v</i>) = <i>r</i><sub>0</sub> +
+ (<i>v</i>&minus;<i>v</i><sub>0</sub>)*<b>b</b>[<i>v</i><sub>0</sub>], where
+ <i>v</i><sub>0</sub>=&lfloor;<i>v</i>&rfloor; and
+ <i>r</i><sub>0</sub> = <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1].<br>
+ Note: according this definition, <i>r</i>(<i>v</i>)=0 when <i>v</i>&lt;<i>v</i>(0) and
+ <i>r</i>(<i>v</i>)=<i>N</i> when <i>v</i>&gt;<i>v</i>(<i>N</i>).
+ In particular, <nobr><i>r</i>(0)=0</nobr>
+ and <nobr><i>r</i>(<i>M</i>)=<i>N</i></nobr> (remember that <nobr><b>b</b>[<i>M</i>]=0</nobr> by definition).<br>
+ Unlike <i>v</i>(<i>r</i>), <i>r</i>(<i>v</i>) function is defined also if <i>N</i>=0: in this case it is
+ the zero constant.
+ </li>
+ </ol>
+ <p>It's easy to see that the <i>r</i>(<i>v</i>) function is continuous, but, unfortunately,
+ the <i>v</i>(<i>r</i>) function is discontinuous if some bars <b>b</b>[<i>k</i>] are zero.
+ This behaviour is not too good for calculating percentiles on sparse histograms, when a lot of bars are zero.
+ In this case, this generalization to floating-point almost does not improve the precision of
+ the calculated percentile.</p>
+ <p>To better understand the sense of this model, please also read the comments
+ to <A HREF="../../../net/algart/arrays/Histogram.html#value(long[], double)"><CODE>value(long[], double)</CODE></A> method.</p>
+ </dd>
+
+ <dt><b>Precise histogram model</b></dt>
+
+ <dd>
+ <p>Here <i>v</i>(<i>r</i>) and <i>r</i>(<i>v</i>) are also polyline functions, and they are identical
+ to these function of the simple model in all points where the rank is integer (<i>r</i>&isin;<b>Z</b>).
+ However, if the rank is not integer, we consider, by definition, that
+ <i>v</i>(<i>r</i>) is uniformly increased from <i>v</i>(<i>r</i><sub>0</sub>) to
+ <nobr><i>v</i>(<i>r</i><sub>0</sub>+1)</nobr>, where
+ <nobr><i>r</i><sub>0</sub>=&lfloor;<i>r</i>&rfloor;</nobr>.
+ In other words, we interpolate the percentile <i>v</i>(<i>r</i><sub>0</sub>) between integer ranks.
+ More precisely:</p>
+ <ol>
+ <li>
+ <i>v</i>(<i>r</i>) =
+     <ul type="disc">
+     <li><i>v</i><sub>0</sub> + (<i>r</i>&minus;<i>r</i><sub>0</sub>)/<i>b</i>,
+     where <i>v</i><sub>0</sub> is the minimal integer value so that
+     <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;&lfloor;<i>r</i>&rfloor;</nobr>,
+     <nobr><i>r</i><sub>0</sub> = <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>,
+     <nobr><i>b</i> = <b>b</b>[<i>v</i><sub>0</sub>]</nobr>
+     &mdash; if <i>b</i>&gt;1 and <nobr><i>r</i><sub>0</sub> &le; <i>r</i> &le;
+     <i>r</i><sub>0</sub>+<i>b</i>&minus;1 = <i>r</i><sub>0</sub>'</nobr>;
+     </li>
+     <li><i>v</i><sub>0</sub>' +
+     (<i>r</i>&minus;<i>r</i><sub>0</sub>')*(<i>v</i><sub>1</sub>&minus;<i>v</i><sub>0</sub>'),
+     where <nobr><i>v</i><sub>0</sub>' = <i>v</i><sub>0</sub>+(<i>b</i>&minus;1)/<i>b</i>
+     = <i>v</i>(<i>r</i><sub>0</sub>')</nobr>
+     and <nobr><i>v</i><sub>1</sub> = <i>min</i> (<i>k</i>&isin;<b>Z</b>: <i>k</i>&gt;<i>v</i><sub>0</sub>
+     &amp; <b>b</b>[<i>k</i>]&gt;0) = <i>v</i>(<i>r</i><sub>0</sub>'+1)</nobr> is the next non-zero histogram bar
+     &mdash; if <nobr><i>r</i><sub>0</sub>'&le;<i>r</i>&le;<i>r</i><sub>0</sub>'+1=<i>r</i><sub>1</sub></nobr>.
+     In a case <i>r</i>&gt;<i>N</i>&minus;1, there is no the next non-zero bar and we consider, by definition,
+     that <nobr><i>v</i><sub>1</sub> = <i>v</i><sub>0</sub>+1</nobr>.
+     </li>
+     </ul>
+ As in the simple model, in the special case <i>r</i>=<i>N</i> we consider, by definition, that
+ <nobr><i>v</i>(<i>N</i>) = lim<sub><i>x</i>&rarr;<i>N</i>+1</sub><i>v</i>(<i>x</i>) =
+ &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1</nobr>.<br>
+ As in the simple model, here
+ <nobr><i>v</i>(0) = <i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
+ and <nobr><i>v</i>(<i>N</i>) = &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1 = <i>max</i> (<i>k</i>&isin;<b>Z</b>:
+ <b>b</b>[<i>k</i>]&gt;0)+1</nobr>.<br>
+ In a case <i>N</i>=0 (empty histogram), <i>v</i>(<i>r</i>) functions is considered to be undefined.
+ <br>&nbsp;</li>
+
+ <li><i>r</i>(<i>v</i>) is defined as the inverse function for <i>v</i>(<i>r</i>) if
+ <i>v</i>(0)&le;<i>v</i>&le;<i>v</i>(<i>N</i>);
+ outside this range, we consider <i>r</i>(<i>v</i>)=0 when <i>v</i>&lt;<i>v</i>(0) and
+ <i>r</i>(<i>v</i>)=<i>N</i> when <i>v</i>&gt;<i>v</i>(<i>N</i>).
+ As in the simple model, in the special case <i>N</i>=0 we consider, by definition,
+ that <i>r</i>(<i>v</i>)=0 for any <i>v</i>.
+ </li>
+ </ol>
+ <p>In this model both functions <i>v</i>(<i>r</i>) and <i>r</i>(<i>v</i>) are increasing and continuous.
+ But calculations are more complicated. The difference appears if there are empty bars
+ (<nobr><b>b</b>[<i>k</i>]=0</nobr>); namely, in each non-empty bar
+ <nobr><b>b</b>[<i>v</i><sub>0</sub>]=<i>b</i></nobr>, followed by empty bars, there is new salient point of
+ the polyline <i>r</i>(<i>v</i>): <nobr><i>v</i> = <i>v</i><sub>0</sub>' =
+ <i>v</i><sub>0</sub>+(<i>b</i>&minus;1)/<i>b</i></nobr>,
+ and after it the rank <i>r</i>(<i>v</i>) is increasing until the next rank
+ <nobr><i>r</i>(<i>v</i><sub>0</sub>)+<i>b</i></nobr> during all zero bars following after
+ <nobr><b>b</b>[<i>v</i><sub>0</sub>]</nobr>.
+ This feature does not appear at the right end of the histogram, if all bars following after
+ <nobr><b>b</b>[<i>v</i><sub>0</sub>]</nobr> are zero.</p>
+
+ <p>Note: the traditional definition of the <i>median</i> of the source array <b>A</b> with even length
+ <i>N</i>=2<i>n</i> is <nobr>(<b>A</b>[<i>n</i>&minus;1]+<b>A</b>[<i>n</i>])/2</nobr>
+ (if we suppose <nobr><b>A</b>[0]&le;<b>A</b>[1]&le;...&le;<b>A</b>[<i>N</i>&minus;1]</nobr>).
+ This definition is identical to the percentile <nobr><i>v</i>(<i>n</i>&minus;0.5)</nobr>
+ in the precise histogram model, if all bars contains 0 or 1 elements
+ (all <nobr><b>b</b>[<i>k</i>]&le;1</nobr>).</p>
+ <p>To better understand the sense of this model, please also read the comments
+ to <A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue(long[], double)</CODE></A> method.</p>
+ </dd>
+ </dl>
+
+ </td></tr>
+ </table>
+ </blockquote>
+
+ <p>This class is optimized for the case, when we already know some corresponding pair <i>r</i> (rank)
+ and <i>v</i> (percentile), and we need to slightly change the situation: add or remove several <b>A</b> elements,
+ then, maybe, little increase or decrease the known rank <i>r</i> or the value <i>v</i> and, after this,
+ quickly find (recalculate) the second element of the pair: correspondingly the percentile <i>v</i> or the
+ rank <i>r</i>. To do this, this class provides methods <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include</CODE></A> and
+ <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exlcude</CODE></A>, allowing to increment or decrement elements of <b>b</b> array
+ (this action corresponds to adding or removing elements to/from the source array <b>A</b>),
+ and supports the concept of the <i>current rank</i> and <i>current value (percentile)</i>
+ with a necessary set of methods for setting and getting them.
+ Usually all these method work quickly (<i>O</i>(1) operations), so every time when you correct the histogram
+ (add/remove elements) or change the current rank or the value, you can immediately read the second element
+ of the pair (correspondingly the percentile or the rank).</p>
+
+ <p>More precisely, in every object of this class, at any moment, there are:</p>
+
+ <ul>
+ <li><i>the current value v</i>: a real number in range 0&le;<i>v</i>&le;<i>M</i>,
+ that can be set by <A HREF="../../../net/algart/arrays/Histogram.html#moveToValue(double)"><CODE>moveToValue(double)</CODE></A> method or got by <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>currentValue()</CODE></A> method;</li>
+
+ <li><i>the current simple rank r<sup>S</sup></i>: a real number in range 0&le;<i>v</i>&le;<i>N</i>,
+ that can be set by <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank(double)</CODE></A> method or got by <A HREF="../../../net/algart/arrays/Histogram.html#currentRank()"><CODE>currentRank()</CODE></A> method;</li>
+
+ <li><i>the current precise rank r<sup>P</sup></i>: a real number in range 0&le;<i>v</i>&le;<i>N</i>,
+ that can be set by <A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank(double)</CODE></A> method or got by <A HREF="../../../net/algart/arrays/Histogram.html#currentPreciseRank()"><CODE>currentPreciseRank()</CODE></A> method.</li>
+ </ul>
+
+ <p>The methods <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exlcude</CODE></A> do not change the current value,
+ but can change the current simple and precise ranks.</p>
+
+ <p>This class guarantees that for any <i>v</i> we have
+ <nobr><i>r<sup>S</sup></i>=<i>r</i>(<i>v</i>)</nobr> in terms of the simple histogram model and
+ <nobr><i>r<sup>P</sup></i>=<i>r</i>(<i>v</i>)</nobr> in terms of the precise histogram model.
+ In particular, in the case <i>N</i>=0 both ranks are always zero:
+ <nobr><i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0</nobr>.</p>
+
+ <p>This class guarantees that for any <i>r<sup>S</sup></i>
+ we have <nobr><i>v</i>=<i>v</i>(<i>r<sup>S</sup></i>)</nobr> in terms of the simple histogram
+ model, excepting extreme values
+ <nobr><i>r<sup>S</sup></i>=0</nobr> and <nobr><i>r<sup>S</sup></i>=<i>N</i></nobr>
+ and also <nobr><i>r<sup>S</sup></i></nobr> values where
+ <nobr><i>v</i>(<i>r<sup>S</sup></i>)</nobr> function is discontinuous in this model.
+ If such situation takes place after <A HREF="../../../net/algart/arrays/Histogram.html#moveToValue(double)"><CODE>moveToValue(double)</CODE></A> call, the current value is equal
+ to the argument of this method.
+ If such situation takes place after <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank(double)</CODE></A> call, the current value is equal
+ to the <nobr><i>v</i>(<i>r<sup>S</sup></i>)</nobr> according the definition of
+ <nobr><i>v</i>(<i>r</i>)</nobr> function in the simple histogram model.
+ In particular, after the call
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank(0)</CODE></A> the current value <i>v</i>
+ will be equal to <nobr><i>v</i>(0)</nobr> and after the call
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank(<i>N</i>)</CODE></A> the current value <i>v</i>
+ will be equal to <nobr><i>v</i>(<i>N</i>)</nobr>.
+ The case <i>N</i>=0 is processed in a special way: see comments to <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank(double)</CODE></A> method.</p>
+
+ <p>This class guarantees that for any <i>r<sup>P</sup></i>
+ we have <nobr><i>v</i>=<i>v</i>(<i>r<sup>P</sup></i>)</nobr> in terms of the precise histogram
+ model, excepting extreme values
+ <nobr><i>r<sup>P</sup></i>=0</nobr> and <nobr><i>r<sup>P</sup></i>=<i>N</i></nobr>.
+ If <nobr><i>r<sup>P</sup></i>=0</nobr>,
+ the corresponding value <i>v</i> can be any number in range <nobr>0..<i>v</i>(0)</nobr>
+ if you set it by <A HREF="../../../net/algart/arrays/Histogram.html#moveToValue(double)"><CODE>moveToValue(double)</CODE></A> method; but after the call
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank(0)</CODE></A> the current value <i>v</i>
+ will be equal to <nobr><i>v</i>(0)</nobr>.
+ If <nobr><i>r<sup>P</sup></i>=<i>N</i></nobr>,
+ the corresponding value <i>v</i> can be any number in range <nobr><i>v</i>(<i>N</i>)..<i>M</i></nobr>
+ if you set it by <A HREF="../../../net/algart/arrays/Histogram.html#moveToValue(double)"><CODE>moveToValue(double)</CODE></A> method; but after the call
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank(<i>N</i>)</CODE></A> the current value <i>v</i>
+ will be equal to <nobr><i>v</i>(<i>N</i>)</nobr>.
+ The case <i>N</i>=0 is processed in a special way: see comments to <A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank(double)</CODE></A> method.</p>
+
+ <p>There are additional methods for setting integer values and ranks:
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToIValue(int)"><CODE>moveToIValue(int)</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#moveToIRank(long)"><CODE>moveToIRank(long)</CODE></A>. They are strictly equivalent
+ to floating-point methods <A HREF="../../../net/algart/arrays/Histogram.html#moveToValue(double)"><CODE>moveToValue(double)</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank(double)</CODE></A>,
+ called with the same argument, but work little faster. There is no special integer version
+ of <A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank(double)</CODE></A> method, because for integer ranks the simple and the precise
+ histogram models are identical.</p>
+
+ <p>There are additional methods for getting integer values and ranks:
+ <A HREF="../../../net/algart/arrays/Histogram.html#currentIValue()"><CODE>currentIValue()</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#currentIRank()"><CODE>currentIRank()</CODE></A>.
+ The <A HREF="../../../net/algart/arrays/Histogram.html#currentIValue()"><CODE>currentIValue()</CODE></A> method returns the current value, rounded to an integer.
+ The rules of rounding are complicated enough and described in the comments to this method;
+ depending on the situation, it can work as rounding to the nearest integer (<tt>Math.round</tt>)
+ or as truncating (<tt>Math.floor</tt>). In any case, there is a guarantee that
+ <nobr><A HREF="../../../net/algart/arrays/Histogram.html#currentIValue()"><CODE>currentIValue()</CODE></A>&minus;0.5&le;<i>v</i>&lt;<A HREF="../../../net/algart/arrays/Histogram.html#currentIValue()"><CODE>currentIValue()</CODE></A>+1</nobr>.
+ The <A HREF="../../../net/algart/arrays/Histogram.html#currentIRank()"><CODE>currentIRank()</CODE></A> method return the rank, corresponding to <i>w</i>=<A HREF="../../../net/algart/arrays/Histogram.html#currentIValue()"><CODE>currentIValue()</CODE></A>:
+ it is equal to <nobr><i>r</i>(&lfloor;<i>w</i>&rfloor;)</nobr> (this rank is integer and does not
+ depend on the histogram model).</p>
+
+ <p>You can create an instance of this class by the following methods:</p>
+
+ <ul>
+ <li><A HREF="../../../net/algart/arrays/Histogram.html#newLongHistogram(int, int...)"><CODE>newLongHistogram(int histogramLength, int... bitLevelsOfPyramid)</CODE></A>;</li>
+ <li><A HREF="../../../net/algart/arrays/Histogram.html#newLongHistogram(long[], int...)"><CODE>newLongHistogram(long[] histogram, int... bitLevelsOfPyramid)</CODE></A>;</li>
+ <li><A HREF="../../../net/algart/arrays/Histogram.html#newIntHistogram(int, int...)"><CODE>newIntHistogram(int histogramLength, int... bitLevelsOfPyramid)</CODE></A>;</li>
+ <li><A HREF="../../../net/algart/arrays/Histogram.html#newIntHistogram(int[], int...)"><CODE>newIntHistogram(int[] histogram, int... bitLevelsOfPyramid)</CODE></A>.</li>
+ </ul>
+
+ <p>After creation, the only way to change the bars <b>b</b>[<i>k</i>] is using
+ <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A>, <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude(int)</CODE></A>,  <A HREF="../../../net/algart/arrays/Histogram.html#include(int...)"><CODE>include(int...)</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int...)"><CODE>exclude(int...)</CODE></A> methods.
+ After creation, the current value <i>v</i> and both current ranks
+ <nobr><i>r<sup>S</sup></i></nobr> and <nobr><i>r<sup>P</sup></i></nobr>
+ are zero.</p>
+
+ <p>Sometimes you need calculating (and supporting) not one, but several pairs "current value + current rank"
+ in the same histogram. If is possible to use a single object of this class and move from one pair to another,
+ but if the necessary values are not close to each other, the <tt>moveTo...</tt> methods work relatively
+ slowly. In this case, you can <i>share</i> the histogram <b>b</b>[<i>k</i>] between several instance of this
+ class by <A HREF="../../../net/algart/arrays/Histogram.html#share()"><CODE>share()</CODE></A> method. The sharing instances work with the same <b>b</b>[<i>k</i>] array:
+ any modification by <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include</CODE></A> / <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude</CODE></A> methods are immediately reflected
+ in all shared instances. But each sharing instance has an independent set of current value, current simple rank
+ and current precise rank. You can get all sharing instances by <A HREF="../../../net/algart/arrays/Histogram.html#nextSharing()"><CODE>nextSharing()</CODE></A> method.</p>
+
+ <p>This class also provides static methods for calculating <nobr><i>v</i>(<i>r</i>)</nobr> function:
+ <A HREF="../../../net/algart/arrays/Histogram.html#value(long[], double)"><CODE>value(long[] histogram, double rank)</CODE></A>, <A HREF="../../../net/algart/arrays/Histogram.html#value(int[], double)"><CODE>value(int[] histogram, double rank)</CODE></A>
+ for the simple histogram model,
+ <A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue(long[] histogram, double rank)</CODE></A>, <A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(int[], double)"><CODE>preciseValue(int[] histogram, double rank)</CODE></A>
+ for the precise histogram model.
+ These methods can be useful if you need to process the given histogram only once.</p>
+
+ <p>The floating-point calculations in this class are performed not in <tt>strictfp</tt>, but in the usual mode.
+ So, there is no guarantee that the results are absolutely identical on all platforms.
+ Moreover, there is no guarantee that the same results, got by different ways (for example,
+ by static methods and by creating an instance of this class and using its methods) are absolutely identical:
+ little mismatches in the last digits after the decimal point are possible.</p>
+
+ <p>This class does not implement own <tt>equals</tt> and <tt>hashCode</tt> methods.
+ So, this class does not provide a mechanism for comparing different histograms.</p>
+
+ <p>This class is not thread-safe, but <b>is thread-compatible</b>
+ and can be synchronized manually, if multithread access is necessary.</p>
+
+ <p>AlgART Laboratory 2007-2013</p>
+<P>
+
+<P>
+<DL>
+<DT><STRONG>Since:</STRONG></DT>
+  <DD>JDK 1.5</DD>
+<DT><STRONG>Version:</STRONG></DT>
+  <DD>1.2</DD>
+<DT><STRONG>Author:</STRONG></DT>
+  <DD>Daniel Alievsky</DD></DL>
+<HR>
+
+<P>
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#bar(int)">bar</A></STRONG>(int&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the bar <tt>#value</tt> of the histogram: <b>b</b>[<tt>value</tt>].</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;long[]</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#bars()">bars</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns all bars of the histogram.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#clear(int[], int)">clear</A></STRONG>(int[]&nbsp;histogram,
+      int&nbsp;sumOfColumns)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fills all non-zero elements of <tt>histogram</tt> by 0.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#currentIRank()">currentIRank</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the rank <nobr><i>r</i>(<i>w</i>)</nobr> of the value <i>w</i>=<A HREF="../../../net/algart/arrays/Histogram.html#currentIValue()"><CODE>currentIValue()</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#currentIValue()">currentIValue</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A> <i>v</i>, rounded to an integer number.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#currentPreciseRank()">currentPreciseRank</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the current precise rank: <nobr><i>r<sup>P</sup></i>=<i>r</i>(<i>v</i>)</nobr>
+ in terms of the precise histogram model.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#currentRank()">currentRank</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the current simple rank: <nobr><i>r<sup>S</sup></i>=<i>r</i>(<i>v</i>)</nobr>
+ in terms of the simple histogram model.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#currentValue()">currentValue</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the current value <i>v</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#exclude(int...)">exclude</A></STRONG>(int...&nbsp;values)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to a simple loop of calls of <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude(int)</CODE></A> method for all passed values.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)">exclude</A></STRONG>(int&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decrements the bar <tt>#value</tt> of the histogram by 1: <b>b</b>[<tt>value</tt>]<tt>--</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#include(int...)">include</A></STRONG>(int...&nbsp;values)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to a simple loop of calls of <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A> method for all passed values.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#include(int)">include</A></STRONG>(int&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increments the bar <tt>#value</tt> of the histogram by 1: <b>b</b>[<tt>value</tt>]<tt>++</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#iPreciseValue(int[], double)">iPreciseValue</A></STRONG>(int[]&nbsp;histogram,
+              double&nbsp;rank)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Precise equivalent of <A HREF="../../../net/algart/arrays/Histogram.html#iPreciseValue(long[], double)"><CODE>iPreciseValue(long[], double)</CODE></A> for a case
+ of <tt>int[]</tt> type of the histogram.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#iPreciseValue(long[], double)">iPreciseValue</A></STRONG>(long[]&nbsp;histogram,
+              double&nbsp;rank)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Interpolated" version of <A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A>, rounded to the "best" integer result.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#iValue(int[], long)">iValue</A></STRONG>(int[]&nbsp;histogram,
+       long&nbsp;rank)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Precise equivalent of <A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A> for a case
+ of <tt>int[]</tt> type of the histogram.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)">iValue</A></STRONG>(long[]&nbsp;histogram,
+       long&nbsp;rank)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the element with the given index <tt>rank</tt> in the sorted array
+ of integer numbers <tt>0..histogram.length-1</tt>, corresponding to this histogram.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#leftFromNonZeroPart()">leftFromNonZeroPart</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
+ (<i>v</i> is the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A>)
+ and all bars from the left are also zero: <b>b</b>[<i>k</i>]=0 for all <i>k</i>&lt;&lfloor;<i>v</i>&rfloor;.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#leftFromOrAtBoundOfNonZeroPart()">leftFromOrAtBoundOfNonZeroPart</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if and only all bars from the left of the current bar are zero:
+ <b>b</b>[<i>k</i>]=0 for all <i>k</i>&lt;&lfloor;<i>v</i>&rfloor;
+ (<i>v</i> is the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A>).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#length()">length</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the number <i>M</i> of bars of the histogram.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#moveToIRank(long)">moveToIRank</A></STRONG>(long&nbsp;rank)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the current simple rank <i>r<sup>S</sup></i> and
+ precise rank <i>r<sup>P</sup></i>
+ to be equal of the <tt>rank</tt> argument.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#moveToIValue(int)">moveToIValue</A></STRONG>(int&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the current value <i>v</i>
+ to be equal of the <tt>value</tt> argument.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)">moveToPreciseRank</A></STRONG>(double&nbsp;rank)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the current precise rank <i>r<sup>P</sup></i>
+ to be equal of the <tt>rank</tt> argument.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)">moveToRank</A></STRONG>(double&nbsp;rank)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the current simple rank <i>r<sup>S</sup></i>
+ to be equal of the <tt>rank</tt> argument.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#moveToValue(double)">moveToValue</A></STRONG>(double&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the current value <i>v</i>
+ to be equal of the <tt>value</tt> argument.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#newIntHistogram(int[], int...)">newIntHistogram</A></STRONG>(int[]&nbsp;histogram,
+                int...&nbsp;bitLevelsOfPyramid)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates new 32-bit histogram, consisting of <i>M</i>=<tt>histogram.length</tt> bars, equal to elements
+ of the given array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#newIntHistogram(int, int...)">newIntHistogram</A></STRONG>(int&nbsp;histogramLength,
+                int...&nbsp;bitLevelsOfPyramid)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates new 32-bit histogram, consisting of <i>M</i>=<tt>histogramLength</tt> empty bars.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#newLongHistogram(int, int...)">newLongHistogram</A></STRONG>(int&nbsp;histogramLength,
+                 int...&nbsp;bitLevelsOfPyramid)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates new histogram, consisting of <i>M</i>=<tt>histogramLength</tt> empty bars.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#newLongHistogram(long[], int...)">newLongHistogram</A></STRONG>(long[]&nbsp;histogram,
+                 int...&nbsp;bitLevelsOfPyramid)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates new histogram, consisting of <i>M</i>=<tt>histogram.length</tt> bars, equal to elements
+ of the given array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#nextSharing()">nextSharing</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the next instance of this class, sharing the histogram array <b>b</b>[<i>k</i>] with this instance.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#outsideNonZeroPart()">outsideNonZeroPart</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
+ (<i>v</i> is the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A>)
+ and either all bars from the left, or all bars from the right are also zero.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#percentile(int[], long, double)">percentile</A></STRONG>(int[]&nbsp;histogram,
+           long&nbsp;sumOfColumns,
+           double&nbsp;percentileLevel)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <tt><A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(int[], double)"><CODE>preciseValue</CODE></A>(histogram,percentileLevel*(sumOfColumns-1))</tt>,
+ if <tt>sumOfColumns&gt;0</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#percentile(long[], long, double)">percentile</A></STRONG>(long[]&nbsp;histogram,
+           long&nbsp;sumOfColumns,
+           double&nbsp;percentileLevel)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <tt><A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue</CODE></A>(histogram,percentileLevel*(sumOfColumns-1))</tt>,
+ if <tt>sumOfColumns&gt;0</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(int[], double)">preciseValue</A></STRONG>(int[]&nbsp;histogram,
+             double&nbsp;rank)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Precise equivalent of <A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue(long[], double)</CODE></A> for a case
+ of <tt>int[]</tt> type of the histogram.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)">preciseValue</A></STRONG>(long[]&nbsp;histogram,
+             double&nbsp;rank)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Interpolated" version of <A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#rightFromNonZeroPart()">rightFromNonZeroPart</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
+ (<i>v</i> is the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A>)
+ and all bars from the right are also zero: <b>b</b>[<i>k</i>]=0 for all <i>k</i>&gt;&lfloor;<i>v</i>&rfloor;.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#rightFromOrAtBoundOfNonZeroPart()">rightFromOrAtBoundOfNonZeroPart</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if and only all bars from the right of the current bar are zero:
+ <b>b</b>[<i>k</i>]=0 for all <i>k</i>&gt;&lfloor;<i>v</i>&rfloor;
+ (<i>v</i> is the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A>).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#share()">share</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates new instance of this class, which uses the same arrays of bars <b>b</b>[<i>k</i>].</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#shareCount()">shareCount</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the number of instances of this class, sharing the histogram array <b>b</b>[<i>k</i>]
+ with this instance.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#sumOf(int[])">sumOf</A></STRONG>(int[]&nbsp;histogram)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the sum of all elements of the passed <tt>histogram</tt> array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#sumOf(long[])">sumOf</A></STRONG>(long[]&nbsp;histogram)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the sum of all elements of the passed <tt>histogram</tt> array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#total()">total</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the sum <i>N</i> of all bars <b>b</b>[<i>k</i>] of the histogram.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#value(int[], double)">value</A></STRONG>(int[]&nbsp;histogram,
+      double&nbsp;rank)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Precise equivalent of <A HREF="../../../net/algart/arrays/Histogram.html#value(long[], double)"><CODE>value(long[], double)</CODE></A> for a case
+ of <tt>int[]</tt> type of the histogram.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Histogram.html#value(long[], double)">value</A></STRONG>(long[]&nbsp;histogram,
+      double&nbsp;rank)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Floating-point version of <A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class java.lang.Object</STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="newLongHistogram(int, int...)"><!-- --></A><H3>
+newLongHistogram</H3>
+<PRE>
+public static <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A> <STRONG>newLongHistogram</STRONG>(int&nbsp;histogramLength,
+                                         int...&nbsp;bitLevelsOfPyramid)</PRE>
+<DL>
+<DD>Creates new histogram, consisting of <i>M</i>=<tt>histogramLength</tt> empty bars.
+ In other words, all bars <b>b</b>[<i>k</i>]=0 at first; but they can be increased by
+ <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A> method.
+
+     <!--Repeat.SectionStart bitLevels_description-->
+ <p>The <tt>bitLevelsOfPyramid</tt> argument is used for optimization of large histograms, consisting
+ of thousands or millions bars. Namely, this class automatically builds and supports a
+ <i>pyramid of histograms</i>: <i>m</i>=<tt>bitLevelsOfPyramid.length</tt> additional arrays
+ <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
+ <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
+
+ <blockquote>
+ <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
+ &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
+ <b>b</b>[<i>j</i>], <i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1];<br>
+ <b>b</b><sup><i>q</i></sup><tt>.length</tt> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
+ = <tt>histogramLength</tt> &gt;&gt; <tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1].
+ </blockquote>
+
+ <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
+ where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
+ it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
+ excepting the last "wide" bar which can be a sum of less number of bars <b>b</b>[<i>j</i>].
+ The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
+ <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
+
+ <p>Supporting this pyramid little slows down <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude(int)</CODE></A> methods:
+ they require <i>O</i>(<i>m</i>) operations to correct <i>m</i> arrays <b>b</b><sup><i>q</i></sup>.
+ But it can essentially optimize all methods which set the current value and rank:
+ in the worst case they require
+
+ <blockquote>
+ <i>O</i> (<b>b</b><sup><i>m</i></sup><tt>.length</tt> + <big>&Sigma;</big>
+ <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup>)
+ </blockquote>
+
+ <p>and sequential settings of the current value and rank work much faster if the current value changes slightly.
+
+ <p>Without the pyramid of histograms (<i>m</i>=<tt>bitLevelsOfPyramid.length=0</tt>), the required time
+ of setting the current value or rank is <i>O</i>(<i>M</i>) in the worst case,
+ and sequential settings of the current value and rank also work much faster if the current
+ value changes slightly.
+ If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
+ will work faster without <tt>bitLevelsOfPyramid</tt> arguments.
+     <!--Repeat.SectionEnd bitLevels_description-->
+
+ <p>The passed <tt>bitLevelsOfPyramid</tt> argument is cloned by this method:
+ no references to it are maintained by the created object.
+
+ <p>If you are sure that the sum of all bars <b>b</b>[<i>k</i>] (the total length of the supposed
+ source array <b>A</b>) will never exceed <tt>Integer.MAX_VALUE</tt>, you can use
+ <A HREF="../../../net/algart/arrays/Histogram.html#newIntHistogram(int, int...)"><CODE>newIntHistogram(int, int...)</CODE></A> method instead of this one:
+ the created object will probably work little faster and will occupy less memory.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogramLength</CODE> - the number <i>M</i> of bars of the new histogram.</DD><DD><CODE>bitLevelsOfPyramid</CODE> - the bit levels: binary logarithms of widths of bars in the sub-histograms
+                           in the "histogram pyramid"; can be empty, then will be ignored
+                           (the histogram pyramid will not be used).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the new histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>histogramLength&lt;0</tt>,
+                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
+                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
+                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+                                  for some <i>k</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="newLongHistogram(long[], int...)"><!-- --></A><H3>
+newLongHistogram</H3>
+<PRE>
+public static <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A> <STRONG>newLongHistogram</STRONG>(long[]&nbsp;histogram,
+                                         int...&nbsp;bitLevelsOfPyramid)</PRE>
+<DL>
+<DD>Creates new histogram, consisting of <i>M</i>=<tt>histogram.length</tt> bars, equal to elements
+ of the given array.
+ In other words, the bars <nobr><b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>]</nobr> at first.
+
+     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)
+     histogramLength ==> histogram.length
+       !! Auto-generated: NOT EDIT !! -->
+ <p>The <tt>bitLevelsOfPyramid</tt> argument is used for optimization of large histograms, consisting
+ of thousands or millions bars. Namely, this class automatically builds and supports a
+ <i>pyramid of histograms</i>: <i>m</i>=<tt>bitLevelsOfPyramid.length</tt> additional arrays
+ <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
+ <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
+
+ <blockquote>
+ <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
+ &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
+ <b>b</b>[<i>j</i>], <i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1];<br>
+ <b>b</b><sup><i>q</i></sup><tt>.length</tt> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
+ = <tt>histogram.length</tt> &gt;&gt; <tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1].
+ </blockquote>
+
+ <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
+ where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
+ it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
+ excepting the last "wide" bar which can be a sum of less number of bars <b>b</b>[<i>j</i>].
+ The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
+ <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
+
+ <p>Supporting this pyramid little slows down <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude(int)</CODE></A> methods:
+ they require <i>O</i>(<i>m</i>) operations to correct <i>m</i> arrays <b>b</b><sup><i>q</i></sup>.
+ But it can essentially optimize all methods which set the current value and rank:
+ in the worst case they require
+
+ <blockquote>
+ <i>O</i> (<b>b</b><sup><i>m</i></sup><tt>.length</tt> + <big>&Sigma;</big>
+ <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup>)
+ </blockquote>
+
+ <p>and sequential settings of the current value and rank work much faster if the current value changes slightly.
+
+ <p>Without the pyramid of histograms (<i>m</i>=<tt>bitLevelsOfPyramid.length=0</tt>), the required time
+ of setting the current value or rank is <i>O</i>(<i>M</i>) in the worst case,
+ and sequential settings of the current value and rank also work much faster if the current
+ value changes slightly.
+ If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
+ will work faster without <tt>bitLevelsOfPyramid</tt> arguments.
+     <!--Repeat.IncludeEnd-->
+ <p>The passed <tt>histogram</tt> and <tt>bitLevelsOfPyramid</tt> arguments are cloned by this method:
+ no references to them are maintained by the created object.
+
+ <p>If you are sure that the sum of all bars <b>b</b>[<i>k</i>] (the total length of the supposed
+ source array <b>A</b>) will never exceed <tt>Integer.MAX_VALUE</tt>, you can use
+ <A HREF="../../../net/algart/arrays/Histogram.html#newIntHistogram(int[], int...)"><CODE>newIntHistogram(int[], int...)</CODE></A> method instead of this one:
+ the created object will probably work little faster and will occupy less memory.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - initial values of the bars <b>b</b>[<i>k</i>] of the histogram.</DD><DD><CODE>bitLevelsOfPyramid</CODE> - the bit levels: binary logarithms of widths of bars in the sub-histograms
+                           in the "histogram pyramid"; can be empty, then will be ignored
+                           (the histogram pyramid will not be used).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if some of <tt>histogram</tt> elements are negative (&lt;0),
+                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
+                                  than <tt>Long.MAX_VALUE</tt>,
+                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
+                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
+                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+                                  for some <i>k</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="newIntHistogram(int, int...)"><!-- --></A><H3>
+newIntHistogram</H3>
+<PRE>
+public static <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A> <STRONG>newIntHistogram</STRONG>(int&nbsp;histogramLength,
+                                        int...&nbsp;bitLevelsOfPyramid)</PRE>
+<DL>
+<DD>Creates new 32-bit histogram, consisting of <i>M</i>=<tt>histogramLength</tt> empty bars.
+ In other words, all bars <b>b</b>[<i>k</i>]=0 at first; but they can be increased by
+ <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A> method.
+ "32-bit" means that the sum of all bars <b>b</b>[<i>k</i>] (the total length of the supposed
+ source array <b>A</b>) will not be able to exceed <tt>Integer.MAX_VALUE</tt>.
+ If you need to process greater numbers, please use <A HREF="../../../net/algart/arrays/Histogram.html#newLongHistogram(int, int...)"><CODE>newLongHistogram(int, int...)</CODE></A> method
+ instead of this one.
+
+     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)   !! Auto-generated: NOT EDIT !! -->
+ <p>The <tt>bitLevelsOfPyramid</tt> argument is used for optimization of large histograms, consisting
+ of thousands or millions bars. Namely, this class automatically builds and supports a
+ <i>pyramid of histograms</i>: <i>m</i>=<tt>bitLevelsOfPyramid.length</tt> additional arrays
+ <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
+ <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
+
+ <blockquote>
+ <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
+ &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
+ <b>b</b>[<i>j</i>], <i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1];<br>
+ <b>b</b><sup><i>q</i></sup><tt>.length</tt> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
+ = <tt>histogramLength</tt> &gt;&gt; <tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1].
+ </blockquote>
+
+ <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
+ where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
+ it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
+ excepting the last "wide" bar which can be a sum of less number of bars <b>b</b>[<i>j</i>].
+ The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
+ <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
+
+ <p>Supporting this pyramid little slows down <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude(int)</CODE></A> methods:
+ they require <i>O</i>(<i>m</i>) operations to correct <i>m</i> arrays <b>b</b><sup><i>q</i></sup>.
+ But it can essentially optimize all methods which set the current value and rank:
+ in the worst case they require
+
+ <blockquote>
+ <i>O</i> (<b>b</b><sup><i>m</i></sup><tt>.length</tt> + <big>&Sigma;</big>
+ <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup>)
+ </blockquote>
+
+ <p>and sequential settings of the current value and rank work much faster if the current value changes slightly.
+
+ <p>Without the pyramid of histograms (<i>m</i>=<tt>bitLevelsOfPyramid.length=0</tt>), the required time
+ of setting the current value or rank is <i>O</i>(<i>M</i>) in the worst case,
+ and sequential settings of the current value and rank also work much faster if the current
+ value changes slightly.
+ If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
+ will work faster without <tt>bitLevelsOfPyramid</tt> arguments.
+     <!--Repeat.IncludeEnd-->
+
+ <p>The passed <tt>bitLevelsOfPyramid</tt> argument is cloned by this method:
+ no references to it are maintained by the created object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogramLength</CODE> - the number <i>M</i> of bars of the new histogram.</DD><DD><CODE>bitLevelsOfPyramid</CODE> - the bit levels: binary logarithms of widths of bars in the sub-histograms
+                           in the "histogram pyramid"; can be empty, then will be ignored
+                           (the histogram pyramid will not be used).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the new histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>histogramLength&lt;0</tt>,
+                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
+                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
+                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+                                  for some <i>k</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="newIntHistogram(int[], int...)"><!-- --></A><H3>
+newIntHistogram</H3>
+<PRE>
+public static <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A> <STRONG>newIntHistogram</STRONG>(int[]&nbsp;histogram,
+                                        int...&nbsp;bitLevelsOfPyramid)</PRE>
+<DL>
+<DD>Creates new 32-bit histogram, consisting of <i>M</i>=<tt>histogram.length</tt> bars, equal to elements
+ of the given array.
+ In other words, the bars <nobr><b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>]</nobr> at first.
+ "32-bit" means that the sum of all bars <b>b</b>[<i>k</i>] (the total length of the supposed
+ source array <b>A</b>) cannot exceed and will not be able to exceed <tt>Integer.MAX_VALUE</tt>.
+ If you need to process greater numbers, please use <A HREF="../../../net/algart/arrays/Histogram.html#newLongHistogram(long[], int...)"><CODE>newLongHistogram(long[], int...)</CODE></A> method
+ instead of this one.
+
+     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)
+     histogramLength ==> histogram.length
+       !! Auto-generated: NOT EDIT !! -->
+ <p>The <tt>bitLevelsOfPyramid</tt> argument is used for optimization of large histograms, consisting
+ of thousands or millions bars. Namely, this class automatically builds and supports a
+ <i>pyramid of histograms</i>: <i>m</i>=<tt>bitLevelsOfPyramid.length</tt> additional arrays
+ <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
+ <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
+
+ <blockquote>
+ <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
+ &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
+ <b>b</b>[<i>j</i>], <i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1];<br>
+ <b>b</b><sup><i>q</i></sup><tt>.length</tt> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
+ = <tt>histogram.length</tt> &gt;&gt; <tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1].
+ </blockquote>
+
+ <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
+ where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
+ it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
+ excepting the last "wide" bar which can be a sum of less number of bars <b>b</b>[<i>j</i>].
+ The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
+ <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
+
+ <p>Supporting this pyramid little slows down <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude(int)</CODE></A> methods:
+ they require <i>O</i>(<i>m</i>) operations to correct <i>m</i> arrays <b>b</b><sup><i>q</i></sup>.
+ But it can essentially optimize all methods which set the current value and rank:
+ in the worst case they require
+
+ <blockquote>
+ <i>O</i> (<b>b</b><sup><i>m</i></sup><tt>.length</tt> + <big>&Sigma;</big>
+ <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup>)
+ </blockquote>
+
+ <p>and sequential settings of the current value and rank work much faster if the current value changes slightly.
+
+ <p>Without the pyramid of histograms (<i>m</i>=<tt>bitLevelsOfPyramid.length=0</tt>), the required time
+ of setting the current value or rank is <i>O</i>(<i>M</i>) in the worst case,
+ and sequential settings of the current value and rank also work much faster if the current
+ value changes slightly.
+ If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
+ will work faster without <tt>bitLevelsOfPyramid</tt> arguments.
+     <!--Repeat.IncludeEnd-->
+ <p>The passed <tt>histogram</tt> and <tt>bitLevelsOfPyramid</tt> arguments are cloned by this method:
+ no references to them are maintained by the created object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - initial values of the bars <b>b</b>[<i>k</i>] of the histogram.</DD><DD><CODE>bitLevelsOfPyramid</CODE> - the bit levels: binary logarithms of widths of bars in the sub-histograms
+                           in the "histogram pyramid"; can be empty, then will be ignored
+                           (the histogram pyramid will not be used).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if some of <tt>histogram</tt> elements are negative (&lt;0),
+                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
+                                  than <tt>Integer.MAX_VALUE</tt>,
+                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
+                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
+                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+                                  for some <i>k</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="length()"><!-- --></A><H3>
+length</H3>
+<PRE>
+public final int <STRONG>length</STRONG>()</PRE>
+<DL>
+<DD>Returns the number <i>M</i> of bars of the histogram.
+
+ <p>The result of this method is always non-negative (&ge;0).
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number <i>M</i> of bars of the histogram.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="total()"><!-- --></A><H3>
+total</H3>
+<PRE>
+public abstract long <STRONG>total</STRONG>()</PRE>
+<DL>
+<DD>Returns the sum <i>N</i> of all bars <b>b</b>[<i>k</i>] of the histogram.
+ In other words, it is the current length of the supposed source array <b>A</b>,
+ on the base of which this histogram is built.
+
+ <p>The result of this method is always non-negative (&ge;0).
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the sum <i>N</i> of all bars <b>b</b>[<i>k</i>] of the histogram.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="bar(int)"><!-- --></A><H3>
+bar</H3>
+<PRE>
+public abstract long <STRONG>bar</STRONG>(int&nbsp;value)</PRE>
+<DL>
+<DD>Returns the bar <tt>#value</tt> of the histogram: <b>b</b>[<tt>value</tt>].
+ If the index <tt>value</tt> is negative or &ge;<i>M</i>=<A HREF="../../../net/algart/arrays/Histogram.html#length()"><CODE>length()</CODE></A>,
+ this method returns <tt>0</tt> and does not throw an exception
+ (unlike <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude</CODE></A> methods).
+
+ <p>The result of this method is always non-negative (&ge;0).
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>value</CODE> - the index of the bar; can be out of <tt>0..</tt><i>M</i></tt> range.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the bar <tt>#value</tt> of the histogram.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="bars()"><!-- --></A><H3>
+bars</H3>
+<PRE>
+public abstract long[] <STRONG>bars</STRONG>()</PRE>
+<DL>
+<DD>Returns all bars of the histogram. The length of the returned array is <i>M</i>=<A HREF="../../../net/algart/arrays/Histogram.html#length()"><CODE>length()</CODE></A>,
+ and the element #<i>k</i> is equal to <b>b</b>[<i>k</i>].
+
+ <p>The returned array is never a reference to an internal array stored in this object:
+ if necessary, the internal Java array is cloned.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>all bars of the histogram as <tt>long[]</tt> Java array.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="include(int)"><!-- --></A><H3>
+include</H3>
+<PRE>
+public abstract void <STRONG>include</STRONG>(int&nbsp;value)</PRE>
+<DL>
+<DD>Increments the bar <tt>#value</tt> of the histogram by 1: <b>b</b>[<tt>value</tt>]<tt>++</tt>.
+ It can be interpreted as adding one element <tt>value</tt> to the source array <b>A</b>,
+ on the base of which this histogram is built.
+
+ <p>If this histogram is 32-bit, that is created by <A HREF="../../../net/algart/arrays/Histogram.html#newIntHistogram(int, int...)"><CODE>newIntHistogram(int, int...)</CODE></A> or
+ <A HREF="../../../net/algart/arrays/Histogram.html#newIntHistogram(int[], int...)"><CODE>newIntHistogram(int[], int...)</CODE></A> method, this method throws <tt>IllegalStateException</tt>
+ if the current sum of all bars <A HREF="../../../net/algart/arrays/Histogram.html#total()"><CODE>total()</CODE></A> is <tt>Integer.MAX_VALUE</tt> (2<sup>31</sup>&minus;1).
+ In other cases, this method throws <tt>IllegalStateException</tt>
+ if the current sum of all bars is <tt>Long.MAX_VALUE</tt> (2<sup>63</sup>&minus;1).
+ In a case of throwing an exception, this method does not change the histogram.
+
+ <p>This method does not change the current value, but can change the current simple and precise ranks.
+ If there are some <A HREF="../../../net/algart/arrays/Histogram.html#nextSharing()"><CODE>sharing instances</CODE></A>, this method change ranks in all sharing instances.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>value</CODE> - the index of the increased histogram bar.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IndexOutOfBoundsException</CODE> - if <tt>value&lt;0</tt> or <tt>value&gt;=</tt><i>M</i>=<A HREF="../../../net/algart/arrays/Histogram.html#length()"><CODE>length()</CODE></A>.</DD>
+<DD><CODE>java.lang.IllegalStateException</CODE> - if <tt><A HREF="../../../net/algart/arrays/Histogram.html#total()"><CODE>total()</CODE></A>==Long.MAX_VALUE</tt> (or <tt>Integer.MAX_VALUE</tt>
+                                   for 32-bit histogram).</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude(int)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#include(int...)"><CODE>include(int...)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#exclude(int...)"><CODE>exclude(int...)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="exclude(int)"><!-- --></A><H3>
+exclude</H3>
+<PRE>
+public abstract void <STRONG>exclude</STRONG>(int&nbsp;value)</PRE>
+<DL>
+<DD>Decrements the bar <tt>#value</tt> of the histogram by 1: <b>b</b>[<tt>value</tt>]<tt>--</tt>.
+ It can be interpreted as removing one element, equal to <tt>value</tt>, from the source array <b>A</b>,
+ on the base of which this histogram is built.
+
+ <p>If the bar <tt>#value</tt> of the histogram is zero (<b>b</b>[<tt>value</tt>]=0), this method
+ throws <tt>IllegalStateException</tt> and does not change the histogram.
+ So, the bars of the histogram cannot become negative.
+
+ <p>This method does not change the current value, but can change the current simple and precise ranks.
+ If there are some <A HREF="../../../net/algart/arrays/Histogram.html#nextSharing()"><CODE>sharing instances</CODE></A>, this method change ranks in all sharing instances.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>value</CODE> - the index of the increased histogram bar.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IndexOutOfBoundsException</CODE> - if <tt>value&lt;0</tt> or <tt>value&gt;=</tt><i>M</i>=<A HREF="../../../net/algart/arrays/Histogram.html#length()"><CODE>length()</CODE></A>.</DD>
+<DD><CODE>java.lang.IllegalStateException</CODE> - if <b>b</b>[<tt>value</tt>]=0.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#include(int...)"><CODE>include(int...)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#exclude(int...)"><CODE>exclude(int...)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="include(int...)"><!-- --></A><H3>
+include</H3>
+<PRE>
+public abstract void <STRONG>include</STRONG>(int...&nbsp;values)</PRE>
+<DL>
+<DD>Equivalent to a simple loop of calls of <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A> method for all passed values.
+
+ <p>The only possible difference from this loop is that the exception, if it occur, can be thrown
+ at the very beginning (but can also be thrown only while increasing the corresponding bar).
+ As well as the simple loop of <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A>, this method
+ <b>can be non-atomic regarding this failure</b>: it can increase some histogram bars
+ and then throw an exception.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>values</CODE> - the indexes of the increased histogram bars. If some index is repeated several times
+               in this array, the corresponding histogram bar will be increased several times.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>values</tt> array is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IndexOutOfBoundsException</CODE> - if some <tt>values[k]&lt;0</tt> or
+                                   <tt>values[k]&gt;=</tt><i>M</i>=<A HREF="../../../net/algart/arrays/Histogram.html#length()"><CODE>length()</CODE></A>.</DD>
+<DD><CODE>java.lang.IllegalStateException</CODE> - if <tt><A HREF="../../../net/algart/arrays/Histogram.html#total()"><CODE>total()</CODE></A>&gt;Long.MAX_VALUE-values.length</tt>
+                                   (or <tt>Integer.MAX_VALUE-values.length</tt> for 32-bit histogram).</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude(int)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#exclude(int...)"><CODE>exclude(int...)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="exclude(int...)"><!-- --></A><H3>
+exclude</H3>
+<PRE>
+public abstract void <STRONG>exclude</STRONG>(int...&nbsp;values)</PRE>
+<DL>
+<DD>Equivalent to a simple loop of calls of <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude(int)</CODE></A> method for all passed values.
+
+ <p>The only possible difference from this loop is that the exception, if it occur, can be thrown
+ at the very beginning (but can also be thrown only while decreasing the corresponding bar).
+ As well as the simple loop of <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude(int)</CODE></A>, this method
+ <b>can be non-atomic regarding this failure</b>: it can decrease some histogram bars
+ and then throw an exception.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>values</CODE> - the indexes of the decreased histogram bars. If some index is repeated several times
+               in this array, the corresponding histogram bar will be decreased several times.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>values</tt> array is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IndexOutOfBoundsException</CODE> - if some <tt>values[k]&lt;0</tt> or
+                                   <tt>values[k]&gt;=</tt><i>M</i>=<A HREF="../../../net/algart/arrays/Histogram.html#length()"><CODE>length()</CODE></A>.</DD>
+<DD><CODE>java.lang.IllegalStateException</CODE> - if <b>b</b>[<tt>values[k]</tt>]=0 for some <tt>k</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include(int)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude(int)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#include(int...)"><CODE>include(int...)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="currentIRank()"><!-- --></A><H3>
+currentIRank</H3>
+<PRE>
+public abstract long <STRONG>currentIRank</STRONG>()</PRE>
+<DL>
+<DD>Returns the rank <nobr><i>r</i>(<i>w</i>)</nobr> of the value <i>w</i>=<A HREF="../../../net/algart/arrays/Histogram.html#currentIValue()"><CODE>currentIValue()</CODE></A>.
+ (This rank is the same in both histogram models.)
+ In other words, it is the sum of all histogram bars <b>b</b>[<i>k</i>] from the left
+ of the bar #<i>w</i>:
+ <nobr><big>&Sigma;</big><sub><i>k</i>&lt;<i>w</i></sub> <b>b</b>[<i>k</i>]</nobr>.
+ See <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the rank of the integer part of the current value.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#currentRank()"><CODE>currentRank()</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#currentPreciseRank()"><CODE>currentPreciseRank()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="currentRank()"><!-- --></A><H3>
+currentRank</H3>
+<PRE>
+public final double <STRONG>currentRank</STRONG>()</PRE>
+<DL>
+<DD>Returns the current simple rank: <nobr><i>r<sup>S</sup></i>=<i>r</i>(<i>v</i>)</nobr>
+ in terms of the simple histogram model.
+ See <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the current simple rank.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#currentPreciseRank()"><CODE>currentPreciseRank()</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#currentIRank()"><CODE>currentIRank()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="currentPreciseRank()"><!-- --></A><H3>
+currentPreciseRank</H3>
+<PRE>
+public final double <STRONG>currentPreciseRank</STRONG>()</PRE>
+<DL>
+<DD>Returns the current precise rank: <nobr><i>r<sup>P</sup></i>=<i>r</i>(<i>v</i>)</nobr>
+ in terms of the precise histogram model.
+ See <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the current precise rank.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#currentRank()"><CODE>currentRank()</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#currentIRank()"><CODE>currentIRank()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="currentIValue()"><!-- --></A><H3>
+currentIValue</H3>
+<PRE>
+public final int <STRONG>currentIValue</STRONG>()</PRE>
+<DL>
+<DD>Returns the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A> <i>v</i>, rounded to an integer number.
+
+ <p>The rules of rounding depend on the order of previous calls of 5 methods, changing
+ the current value and ranks: <A HREF="../../../net/algart/arrays/Histogram.html#moveToValue(double)"><CODE>moveToValue(double)</CODE></A>, <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank(double)</CODE></A>,
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank(double)</CODE></A>, <A HREF="../../../net/algart/arrays/Histogram.html#moveToIValue(int)"><CODE>moveToIValue(int)</CODE></A>, <A HREF="../../../net/algart/arrays/Histogram.html#moveToIRank(long)"><CODE>moveToIRank(long)</CODE></A>.
+ (Calls of any other methods, in particular, <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude</CODE></A>,
+ do not affect to the result of this method.)
+
+ <p>If the last from those methods was
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToValue(double)"><CODE>moveToValue</CODE></A>,
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank</CODE></A>,
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToIValue(int)"><CODE>moveToIValue</CODE></A> or
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToIRank(long)"><CODE>moveToIRank</CODE></A>,
+ then the result of this method is just the integer part of the current value: &lfloor;<i>v</i>&rfloor;.
+ But after <A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank</CODE></A> method the returned value will be equal to
+ <A HREF="../../../net/algart/arrays/Histogram.html#iPreciseValue(long[], double)"><CODE>iPreciseValue(histogram, rank)</CODE></A>, where <tt>histogram</tt>
+ is this histogram (the result of <A HREF="../../../net/algart/arrays/Histogram.html#bars()"><CODE>bars()</CODE></A> method) and <tt>rank</tt> is the argument of
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank(double)</CODE></A>.
+
+ <p>The special case
+ <nobr><i>N</i>=<A HREF="../../../net/algart/arrays/Histogram.html#total()"><CODE>total()</CODE></A>=0</nobr> is an exception from the last rule:
+ in this case, all 3 methods <A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank</CODE></A>,
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank</CODE></A> and <A HREF="../../../net/algart/arrays/Histogram.html#moveToIRank(long)"><CODE>moveToIRank</CODE></A> are equivalent,
+ but the concrete results of <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>currentValue()</CODE></A> method (i.e. <i>v</i>)
+ and this method <i>are not documented</i> &mdash; unlike the result of
+ <A HREF="../../../net/algart/arrays/Histogram.html#iPreciseValue(long[], double)"><CODE>iPreciseValue</CODE></A> static function, which returns 0 in this case.
+ However, in this case, as after any call of <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank</CODE></A> /
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToIRank(long)"><CODE>moveToIRank</CODE></A>, there is a guarantee that the result of this method is equal to
+ the integer part of the current value &lfloor;<i>v</i>&rfloor;.
+
+ <p>Immediately after creating a new histogram this method always returns 0 (like <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>currentValue()</CODE></A>).
+
+ <p>This result of this method always lies between <tt>(int)</tt><i>v</i>=&lfloor;<i>v</i>&rfloor;
+ and <nobr><tt>Math.round</tt>(<i>v</i>)</nobr>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the current value (percentile), rounded to an integer number.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>currentValue()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="currentValue()"><!-- --></A><H3>
+currentValue</H3>
+<PRE>
+public final double <STRONG>currentValue</STRONG>()</PRE>
+<DL>
+<DD>Returns the current value <i>v</i>.
+ It is equal to the percentile of this histogram, found either in terms of the simple histogram model,
+ if before this we called <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank(double)</CODE></A> method, or in terms of the precise histogram model,
+ if before this we called <A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank(double)</CODE></A> method.
+ See <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the current value (percentile).</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#currentIValue()"><CODE>currentIValue()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="outsideNonZeroPart()"><!-- --></A><H3>
+outsideNonZeroPart</H3>
+<PRE>
+public final boolean <STRONG>outsideNonZeroPart</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
+ (<i>v</i> is the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A>)
+ and either all bars from the left, or all bars from the right are also zero.
+ Equivalent to <nobr><tt><A HREF="../../../net/algart/arrays/Histogram.html#leftFromNonZeroPart()"><CODE>leftFromNonZeroPart()</CODE></A> || <A HREF="../../../net/algart/arrays/Histogram.html#rightFromNonZeroPart()"><CODE>rightFromNonZeroPart()</CODE></A></tt></nobr>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if the current bar (containing the current value)
+         and all bars rightward or leftward from it are zero.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="leftFromNonZeroPart()"><!-- --></A><H3>
+leftFromNonZeroPart</H3>
+<PRE>
+public final boolean <STRONG>leftFromNonZeroPart</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
+ (<i>v</i> is the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A>)
+ and all bars from the left are also zero: <b>b</b>[<i>k</i>]=0 for all <i>k</i>&lt;&lfloor;<i>v</i>&rfloor;.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if the current bar (containing the current value)
+         and all bars leftward from it are zero.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="leftFromOrAtBoundOfNonZeroPart()"><!-- --></A><H3>
+leftFromOrAtBoundOfNonZeroPart</H3>
+<PRE>
+public final boolean <STRONG>leftFromOrAtBoundOfNonZeroPart</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if and only all bars from the left of the current bar are zero:
+ <b>b</b>[<i>k</i>]=0 for all <i>k</i>&lt;&lfloor;<i>v</i>&rfloor;
+ (<i>v</i> is the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A>).
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if all bars leftward from the current value are zero.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="rightFromNonZeroPart()"><!-- --></A><H3>
+rightFromNonZeroPart</H3>
+<PRE>
+public final boolean <STRONG>rightFromNonZeroPart</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
+ (<i>v</i> is the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A>)
+ and all bars from the right are also zero: <b>b</b>[<i>k</i>]=0 for all <i>k</i>&gt;&lfloor;<i>v</i>&rfloor;.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if the current bar (containing the current value)
+         and all bars rightward from it are zero.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="rightFromOrAtBoundOfNonZeroPart()"><!-- --></A><H3>
+rightFromOrAtBoundOfNonZeroPart</H3>
+<PRE>
+public final boolean <STRONG>rightFromOrAtBoundOfNonZeroPart</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if and only all bars from the right of the current bar are zero:
+ <b>b</b>[<i>k</i>]=0 for all <i>k</i>&gt;&lfloor;<i>v</i>&rfloor;
+ (<i>v</i> is the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A>).
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if all bars rightward from the current value are zero.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="moveToIRank(long)"><!-- --></A><H3>
+moveToIRank</H3>
+<PRE>
+public abstract <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A> <STRONG>moveToIRank</STRONG>(long&nbsp;rank)</PRE>
+<DL>
+<DD>Sets the current simple rank <i>r<sup>S</sup></i> and
+ precise rank <i>r<sup>P</sup></i>
+ to be equal of the <tt>rank</tt> argument.
+ (Because the argument is integer, both <i>r<sup>S</sup></i>
+ and <i>r<sup>P</sup></i> ranks are the same.)
+ If the <tt>rank</tt> argument is negative, it is replaced with 0 (minimal possible rank);
+ if <nobr><tt>rank</tt>&gt;<i>N</i>=<A HREF="../../../net/algart/arrays/Histogram.html#total()"><CODE>total()</CODE></A></nobr>,
+ it is replaced with <i>N</i> (maximal possible rank).
+ The <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A> <i>v</i> automatically changes
+ in accordance to the new rank.
+ See <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+
+ <p>In the special case <i>N</i>=0 (all bars of the histograms are zero),
+ both simple and precise ranks are always zero, not depending on calls of this method:
+ <nobr><i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0</nobr>
+ (because <nobr><i>r</i>(<i>v</i>)</nobr> is a zero constant by definition).
+ But <nobr><i>v</i>(<i>r</i>)</nobr> function
+ (unlike <nobr><i>r</i>(<i>v</i>)</nobr>) is not defined in this case, so, if <i>N</i>=0,
+ the current value <i>v</i> after calling this method is not documented &mdash;
+ there is the only guarantee that <nobr>0&le;<i>v</i>&le;<i>M</i></nobr>.
+
+ <p>This method works little faster than equivalent calls
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank(rank)</CODE></A> and
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank(rank)</CODE></A>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>rank</CODE> - new rank <i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the reference to this object.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank(double)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank(double)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="moveToRank(double)"><!-- --></A><H3>
+moveToRank</H3>
+<PRE>
+public abstract <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A> <STRONG>moveToRank</STRONG>(double&nbsp;rank)</PRE>
+<DL>
+<DD>Sets the current simple rank <i>r<sup>S</sup></i>
+ to be equal of the <tt>rank</tt> argument.
+ If the <tt>rank</tt> argument is negative, it is replaced with 0 (minimal possible rank);
+ if <nobr><tt>rank</tt>&gt;<i>N</i>=<A HREF="../../../net/algart/arrays/Histogram.html#total()"><CODE>total()</CODE></A></nobr>,
+ it is replaced with <i>N</i> (maximal possible rank).
+ The <A HREF="../../../net/algart/arrays/Histogram.html#currentPreciseRank()"><CODE>current precise rank</CODE></A> <i>r<sup>P</sup></i>
+ and the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A> <i>v</i>
+ automatically change in accordance to the new simple rank.
+ See <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+
+ <p>In the special case <i>N</i>=0 (all bars of the histograms are zero),
+ both simple and precise ranks are always zero, not depending on calls of this method:
+ <nobr><i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0</nobr>
+ (because <nobr><i>r</i>(<i>v</i>)</nobr> is a zero constant by definition).
+ But <nobr><i>v</i>(<i>r</i>)</nobr> function
+ (unlike <nobr><i>r</i>(<i>v</i>)</nobr>) is not defined in this case, so, if <i>N</i>=0,
+ the current value <i>v</i> after calling this method is not documented &mdash;
+ there is the only guarantee that <nobr>0&le;<i>v</i>&le;<i>M</i></nobr>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>rank</CODE> - new simple rank <i>r<sup>S</sup></i>.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the reference to this object.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>Double.isNaN(rank)</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#moveToPreciseRank(double)"><CODE>moveToPreciseRank(double)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#moveToIRank(long)"><CODE>moveToIRank(long)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="moveToPreciseRank(double)"><!-- --></A><H3>
+moveToPreciseRank</H3>
+<PRE>
+public <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A> <STRONG>moveToPreciseRank</STRONG>(double&nbsp;rank)</PRE>
+<DL>
+<DD>Sets the current precise rank <i>r<sup>P</sup></i>
+ to be equal of the <tt>rank</tt> argument.
+ If the <tt>rank</tt> argument is negative, it is replaced with 0 (minimal possible rank);
+ if <nobr><tt>rank</tt>&gt;<i>N</i>=<A HREF="../../../net/algart/arrays/Histogram.html#total()"><CODE>total()</CODE></A></nobr>,
+ it is replaced with <i>N</i> (maximal possible rank).
+ The <A HREF="../../../net/algart/arrays/Histogram.html#currentRank()"><CODE>current simple rank</CODE></A> <i>r<sup>S</sup></i>
+ and the <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A> <i>v</i> automatically change
+ in accordance to the new precise rank.
+ See <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+
+ <p>In the special case <i>N</i>=0 (all bars of the histograms are zero),
+ both simple and precise ranks are always zero, not depending on calls of this method:
+ <nobr><i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0</nobr>
+ (because <nobr><i>r</i>(<i>v</i>)</nobr> is a zero constant by definition).
+ But <nobr><i>v</i>(<i>r</i>)</nobr> function
+ (unlike <nobr><i>r</i>(<i>v</i>)</nobr>) is not defined in this case, so, if <i>N</i>=0,
+ the current value <i>v</i> after calling this method is not documented &mdash;
+ there is the only guarantee that <nobr>0&le;<i>v</i>&le;<i>M</i></nobr>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>rank</CODE> - new precise rank <i>r<sup>P</sup></i>.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the reference to this object.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>Double.isNaN(rank)</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#moveToRank(double)"><CODE>moveToRank(double)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#moveToIRank(long)"><CODE>moveToIRank(long)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="moveToIValue(int)"><!-- --></A><H3>
+moveToIValue</H3>
+<PRE>
+public abstract <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A> <STRONG>moveToIValue</STRONG>(int&nbsp;value)</PRE>
+<DL>
+<DD>Sets the current value <i>v</i>
+ to be equal of the <tt>value</tt> argument.
+ If the <tt>value</tt> argument is negative, it is replaced with 0 (minimal possible value);
+ if <nobr><tt>value</tt>&gt;<i>M</i>=<A HREF="../../../net/algart/arrays/Histogram.html#length()"><CODE>length()</CODE></A></nobr>,
+ it is replaced with <i>M</i> (maximal possible value).
+ The <A HREF="../../../net/algart/arrays/Histogram.html#currentRank()"><CODE>current simple rank</CODE></A> <i>r<sup>S</sup></i>
+ and the <A HREF="../../../net/algart/arrays/Histogram.html#currentPreciseRank()"><CODE>current precise rank</CODE></A> <i>r<sup>P</sup></i>
+ automatically change in accordance to the new value.
+ See <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+
+ <p>This methods works little faster than the equivalent call
+ <A HREF="../../../net/algart/arrays/Histogram.html#moveToValue(double)"><CODE>moveToValue(value)</CODE></A>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>value</CODE> - new current value (percentile).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the reference to this object.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#moveToValue(double)"><CODE>moveToValue(double)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="moveToValue(double)"><!-- --></A><H3>
+moveToValue</H3>
+<PRE>
+public <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A> <STRONG>moveToValue</STRONG>(double&nbsp;value)</PRE>
+<DL>
+<DD>Sets the current value <i>v</i>
+ to be equal of the <tt>value</tt> argument.
+ If the <tt>value</tt> argument is negative, it is replaced with 0 (minimal possible value);
+ if <nobr><tt>value</tt>&gt;<i>M</i>=<A HREF="../../../net/algart/arrays/Histogram.html#length()"><CODE>length()</CODE></A></nobr>,
+ it is replaced with <i>M</i> (maximal possible value).
+ The <A HREF="../../../net/algart/arrays/Histogram.html#currentRank()"><CODE>current simple rank</CODE></A> <i>r<sup>S</sup></i>
+ and the <A HREF="../../../net/algart/arrays/Histogram.html#currentPreciseRank()"><CODE>current precise rank</CODE></A> <i>r<sup>P</sup></i>
+ automatically change in accordance to the new value.
+ See <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>value</CODE> - new current value (percentile).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the reference to this object.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>Double.isNaN(value)</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#moveToIValue(int)"><CODE>moveToIValue(int)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="shareCount()"><!-- --></A><H3>
+shareCount</H3>
+<PRE>
+public abstract long <STRONG>shareCount</STRONG>()</PRE>
+<DL>
+<DD>Returns the number of instances of this class, sharing the histogram array <b>b</b>[<i>k</i>]
+ with this instance. In other words, it returns the length of the circular list returned by
+ <A HREF="../../../net/algart/arrays/Histogram.html#nextSharing()"><CODE>nextSharing()</CODE></A> method. Returns 1 if <A HREF="../../../net/algart/arrays/Histogram.html#share()"><CODE>share()</CODE></A> method was not used.
+
+ <p>It is obvious that this method always returns the same value for all instances sharing the same
+ histogram array.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of instances of this class, sharing the histogram array <b>b</b>[<i>k</i>] with this one.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="nextSharing()"><!-- --></A><H3>
+nextSharing</H3>
+<PRE>
+public abstract <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A> <STRONG>nextSharing</STRONG>()</PRE>
+<DL>
+<DD>Returns the next instance of this class, sharing the histogram array <b>b</b>[<i>k</i>] with this instance.
+
+ <p>All instances, created by <A HREF="../../../net/algart/arrays/Histogram.html#share()"><CODE>share()</CODE></A> method, are connected into a circular list, and this method
+ returns the next element in this list. For example, if the instance <tt>h1</tt> was created by
+ <A HREF="../../../net/algart/arrays/Histogram.html#newLongHistogram(int, int...)"><CODE>newLongHistogram(int, int...)</CODE></A> method and, after this, the instance <tt>h2</tt> was created as
+ <nobr><tt>h2=h1.<A HREF="../../../net/algart/arrays/Histogram.html#share()"><CODE>share()</CODE></A></tt></nobr>, then this method in <tt>h1</tt> object returns <tt>h2</tt>
+ and in <tt>h2</tt> object returns <tt>h1</tt>. If there are no sharing instances, this method returns
+ the reference to this instance.
+
+ <p>You can get all instances, sharing the same array  <b>b</b>[<i>k</i>] with the given histogram
+ <tt>hist</tt>, by the following loop:
+
+ <pre>
+ Histogram h = hist.nextSharing();
+ do {
+     // some processing h instance
+     h = h.nextSharing();
+ } while (h != hist);
+ </pre>
+
+ <p>See <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the next instance sharing the histogram array <b>b</b>[<i>k</i>] with this instance,
+         or the reference to this instance if you did not use <A HREF="../../../net/algart/arrays/Histogram.html#share()"><CODE>share()</CODE></A> method.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#shareCount()"><CODE>shareCount()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="share()"><!-- --></A><H3>
+share</H3>
+<PRE>
+public abstract <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays">Histogram</A> <STRONG>share</STRONG>()</PRE>
+<DL>
+<DD>Creates new instance of this class, which uses the same arrays of bars <b>b</b>[<i>k</i>].
+ The returned instance will share the histogram <b>b</b>[<i>k</i>] with this instance:
+ any modification of <b>b</b> array by <A HREF="../../../net/algart/arrays/Histogram.html#include(int)"><CODE>include</CODE></A> / <A HREF="../../../net/algart/arrays/Histogram.html#exclude(int)"><CODE>exclude</CODE></A> methods
+ will be immediately reflected in all shared instances. However, the created sharing instance
+ has an independent set of <A HREF="../../../net/algart/arrays/Histogram.html#currentValue()"><CODE>current value</CODE></A>, <A HREF="../../../net/algart/arrays/Histogram.html#currentRank()"><CODE>current simple rank</CODE></A>
+ and <A HREF="../../../net/algart/arrays/Histogram.html#currentPreciseRank()"><CODE>current precise rank</CODE></A>, and they are initially set to 0.
+
+ <p>The returned instance has the absolutely same behaviour as this one: it uses the same set of
+ <i>bit levels</i> (see comments to <A HREF="../../../net/algart/arrays/Histogram.html#newLongHistogram(int, int...)"><CODE>newLongHistogram(int, int...)</CODE></A> method),
+ it is <A HREF="../../../net/algart/arrays/Histogram.html#newIntHistogram(int, int...)"><CODE>32-bit</CODE></A> if and only if this instance is 32-bit,
+ it is a <A HREF="../../../net/algart/arrays/SummingHistogram.html" title="class in net.algart.arrays"><CODE>SummingHistogram</CODE></A> if and only if this instance is a <A HREF="../../../net/algart/arrays/SummingHistogram.html" title="class in net.algart.arrays"><CODE>SummingHistogram</CODE></A>, etc.
+
+ <p>See <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>newly created instance sharing the histogram array <b>b</b>[<i>k</i>] with this instance.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#nextSharing()"><CODE>nextSharing()</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#shareCount()"><CODE>shareCount()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="iValue(long[], long)"><!-- --></A><H3>
+iValue</H3>
+<PRE>
+public static int <STRONG>iValue</STRONG>(long[]&nbsp;histogram,
+                         long&nbsp;rank)</PRE>
+<DL>
+<DD>Returns the element with the given index <tt>rank</tt> in the sorted array
+ of integer numbers <tt>0..histogram.length-1</tt>, corresponding to this histogram.
+
+ <p>More precisely, returns minimal integer value <i>v</i> so that
+ <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i>]&gt;<tt>rank</tt></nobr>,
+ <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
+ If <tt>rank&le;0</tt>, this method returns
+ <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
+ (the minimal element in the source array).
+ If <nobr><tt>rank&ge;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
+ <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
+ (the maximal element plus 1).
+ If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <tt>0</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - <tt>histogram[k]</tt> is the number of elements in some source array
+                  that are equal to <tt>k</tt>.
+                  All <tt>histogram[k]</tt> must be non-negative; in other case,
+                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).</DD><DD><CODE>rank</CODE> - the index in the source array.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>value of the found element (percentile).</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#value(long[], double)"><CODE>value(long[], double)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue(long[], double)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="iValue(int[], long)"><!-- --></A><H3>
+iValue</H3>
+<PRE>
+public static int <STRONG>iValue</STRONG>(int[]&nbsp;histogram,
+                         long&nbsp;rank)</PRE>
+<DL>
+<DD>Precise equivalent of <A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A> for a case
+ of <tt>int[]</tt> type of the histogram.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - <tt>histogram[k]</tt> is the number of elements in the source array
+                  that are equal to <tt>k</tt>.
+                  All <tt>histogram[k]</tt> must be non-negative; in other case,
+                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).</DD><DD><CODE>rank</CODE> - the index in the source array.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>value of the found element (percentile).</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#value(int[], double)"><CODE>value(int[], double)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(int[], double)"><CODE>preciseValue(int[], double)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="value(long[], double)"><!-- --></A><H3>
+value</H3>
+<PRE>
+public static double <STRONG>value</STRONG>(long[]&nbsp;histogram,
+                           double&nbsp;rank)</PRE>
+<DL>
+<DD>Floating-point version of <A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A>.
+ Alike <A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue(long[], double)</CODE></A>, this function supposes that the histogram
+ is built on an array of <i>floating-point</i> values after truncating them to an integer value
+ <tt>(long)value</tt>,  but it doesn't try to interpolate value between different bars of the histogram.
+
+ <p>More precisely, we suppose that if <b>b</b>[<i>k</i>]==<i>b</i>
+ (here and below <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>]),
+ it means that the source floating-point array contains <i>b</i> values
+ <nobr><i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1</nobr>.
+ With this suggestion, this method finds the element of the source array <i>v</i><sub>1</sub>
+ with the index #<i>r</i><sub>1</sub>=&lfloor;<tt>rank</tt>&rfloor;=<tt>(long)rank</tt>.
+ Obviously, <nobr><i>v</i><sub>1</sub> =
+ <i>v</i><sub>0</sub>+(<i>r</i><sub>1</sub>-<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>,
+ where <i>v</i><sub>0</sub> is the minimal integer value so that
+ <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;<i>r</i><sub>1</sub></nobr> and
+ <nobr><i>r</i><sub>0</sub>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>.
+ Then this method returns
+ <nobr><i>v</i><sub>1</sub>+(<tt>rank</tt>&minus;<i>r</i><sub>1</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>
+ (this value is equal to
+ <nobr><i>v</i><sub>0</sub>+(<tt>rank</tt>&minus;<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>).
+ Please compare: unlike <A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue(long[], double)</CODE></A>, we do not find the next element
+ <i>v</i><sub>2</sub>
+ in the following bars of the histogram, but just interpolate between <i>v</i><sub>1</sub>
+ and <i>v</i><sub>2</sub>=<i>v</i><sub>1</sub>+1/<b>b</b>[<i>v</i><sub>0</sub>].
+
+ <p>As <A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A>, if <tt>rank&lt;0</tt>, this method returns
+ <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
+ (the minimal element in the source array), and
+ if <nobr><tt>rank&ge;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
+ <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
+ (for floating-point array, it means the maximal element plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>).
+ If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <tt>0</tt>.
+
+ <p>The result of this method is equal to the percentile <i>v</i>(<i>r</i>) for the passed
+ <i>r</i>=<tt>rank</tt> in terms of the <i>simple histogram model</i>:
+ see <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - <tt>histogram[k]</tt> is the number of elements in the source floating-point array
+                  that are "almost equal" to <tt>k</tt>.
+                  All <tt>histogram[k]</tt> must be non-negative; in other case,
+                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).</DD><DD><CODE>rank</CODE> - the index in the source array (if non-integer, this method returns a real value,
+                  which is little greater than the element #<i>r</i><sub>1</sub>=(long)rank</tt>,
+                  but is less than the next element #<i>r</i><sub>1</sub>+1 and has the same integer part).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the found value (percentile).</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>Double.isNaN(rank)</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue(long[], double)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="value(int[], double)"><!-- --></A><H3>
+value</H3>
+<PRE>
+public static double <STRONG>value</STRONG>(int[]&nbsp;histogram,
+                           double&nbsp;rank)</PRE>
+<DL>
+<DD>Precise equivalent of <A HREF="../../../net/algart/arrays/Histogram.html#value(long[], double)"><CODE>value(long[], double)</CODE></A> for a case
+ of <tt>int[]</tt> type of the histogram.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - <tt>histogram[k]</tt> is the number of elements in the source floating-point array
+                  that are "almost equal" to <tt>k</tt>.
+                  All <tt>histogram[k]</tt> must be non-negative; in other case,
+                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).</DD><DD><CODE>rank</CODE> - the index in the source array (if non-integer, this method returns a real value,
+                  which is little greater than the element #<i>r</i><sub>1</sub>=(long)rank</tt>,
+                  but is less than the next element #<i>r</i><sub>1</sub>+1 and has the same integer part).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the found value (percentile).</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>Double.isNaN(rank)</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(int[], double)"><CODE>preciseValue(int[], double)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="iPreciseValue(long[], double)"><!-- --></A><H3>
+iPreciseValue</H3>
+<PRE>
+public static int <STRONG>iPreciseValue</STRONG>(long[]&nbsp;histogram,
+                                double&nbsp;rank)</PRE>
+<DL>
+<DD>"Interpolated" version of <A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A>, rounded to the "best" integer result.
+ Alike <A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue(long[], double)</CODE></A>, this function supposes that the histogram
+ is built on an array of <i>floating-point</i> values after truncating them to an integer value
+ <tt>(long)value</tt>. In addition to <A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue</CODE></A>,
+ this function tries to approximate the real result by some nearest integer value.
+
+ <p>More precisely, we suppose that if <b>b</b>[<i>k</i>]==<i>b</i>
+ (here and below <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>]),
+ it means that the source floating-point array contains <i>b</i> values
+ <nobr><i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1</nobr>.
+ With this suggestion, this method finds the element of the source array <i>v</i><sub>1</sub>
+ with the index #<i>r</i><sub>1</sub>=&lfloor;<tt>rank</tt>&rfloor;=<tt>(long)rank</tt>
+ and the element of the source array <i>v</i><sub>2</sub>
+ with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>.
+ Here <nobr><i>v</i><sub>1</sub> =
+ <i>v</i><sub>0</sub>+(<i>r</i><sub>1</sub>-<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>,
+ where <i>v</i><sub>0</sub> is the minimal integer value so that
+ <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;<i>r</i><sub>1</sub></nobr> and
+ <nobr><i>r</i><sub>0</sub>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>,
+ and there is the analogous formula for <i>v</i><sub>2</sub>.
+ If <tt>rank</tt> argument is integer (<nobr><tt>rank==(long)rank</tt></nobr>),
+ this method does not try to find <i>v</i><sub>2</sub> and just returns <i>v</i><sub>1</sub>.
+ Until this moment, this method works like <A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue</CODE></A>.
+
+ <p>After this, the behaviour of this method is more complicated. If <tt>rank</tt> is not integer,
+ we calculate <nobr><i>v</i><sub>1</sub>'=<i>v</i><sub>1</sub>+1/<b>b</b>[<i>v</i><sub>1</sub>]</nobr>
+ and <nobr><i>v</i><sub>2</sub>'=<i>v</i><sub>2</sub>+1/<b>b</b>[<i>v</i><sub>2</sub>]</nobr>.
+ Let's consider that the true real values in the source array
+ <nobr>#<i>r</i><sub>1</sub> (<i>w</i><sub>1</sub>)</nobr> and
+ <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1 (<i>w</i><sub>2</sub>)</nobr> are unknown, but lie in ranges
+ <nobr><i>v</i><sub>1</sub>&le;<i>w</i><sub>1</sub>&lt;<i>v</i><sub>1</sub>'</nobr> and
+ <nobr><i>v</i><sub>2</sub>&le;<i>w</i><sub>2</sub>&lt;<i>v</i><sub>2</sub>'</nobr>.
+ (We really don't know the precise real values, we only know that some
+ <nobr><b>b</b>[&lfloor;<i>v</i><sub>1</sub>&rfloor;]</nobr> values
+ lie in <nobr>&lfloor;<i>v</i><sub>1</sub>&rfloor;..&lfloor;<i>v</i><sub>1</sub>&rfloor;+1</nobr> range and some
+ <nobr><b>b</b>[&lfloor;<i>v</i><sub>2</sub>&rfloor;]</nobr> values
+ lie in <nobr>&lfloor;<i>v</i><sub>2</sub>&rfloor;..&lfloor;<i>v</i><sub>2</sub>&rfloor;+1</nobr> range.)
+ Then the value with real "index" <tt>rank</tt>,
+ interpolated between <i>w</i><sub>1</sub> and <i>w</i><sub>2</sub>, lies in range
+ <nobr><i>a</i>&le;<i>w</i>&lt;<i>b</i></nobr>, where
+ <nobr><i>a</i>=<i>v</i><sub>1</sub> +
+ (<tt>rank</tt>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>&minus;<i>v</i><sub>1</sub>)</nobr>
+ (the result of <A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue</CODE></A> call with the same arguments)
+ and <nobr><i>b</i>=<i>v</i><sub>1</sub>' +
+ (<tt>rank</tt>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>'&minus;<i>v</i><sub>1</sub>')</nobr>.
+
+ <p>This method finds the integer range <nobr><i>v</i>..<i>v</i>+1</nobr>, which "covers"
+ the range <i>a</i>..<i>b</i> in the best way. Namely, it calculates
+ <nobr><i>v</i>=&lfloor;(<i>a</i>+<i>b</i>)/2&rfloor;</nobr> and returns <tt>v</tt>
+ as the result.
+
+ <p>The result of this method always lies between <tt>(int)p</tt> and <tt>Math.round(p)</tt>,
+ where <tt>p=<A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue</CODE></A>(histogram,rank)</tt>.
+
+ <p>As <A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A>, if <tt>rank&lt;0</tt>, this method returns
+ <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
+ (the minimal element in the source array), and
+ if <nobr><tt>rank&ge;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
+ <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
+ (for floating-point array, it means the maximal element plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>).
+ If <nobr><tt>rank&gt;</tt>(sum of all <b>b</b>[<i>k</i>])&minus;1</nobr>, but
+ <nobr><tt>rank&lt;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, then in formulas above there is no element
+ <i>v</i><sub>2</sub> with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>;
+ in this case, this method returns
+ <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>.
+ If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <tt>0</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - <tt>histogram[k]</tt> is the number of elements in the source floating-point array
+                  that are "almost equal" to <tt>k</tt>.
+                  All <tt>histogram[k]</tt> must be non-negative; in other case,
+                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).</DD><DD><CODE>rank</CODE> - the index in the source array (if non-integer, this method interpolates nearest elements).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>interpolated value of the found element (percentile), rounded to the "best" integer value.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>Double.isNaN(rank)</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue(long[], double)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="iPreciseValue(int[], double)"><!-- --></A><H3>
+iPreciseValue</H3>
+<PRE>
+public static int <STRONG>iPreciseValue</STRONG>(int[]&nbsp;histogram,
+                                double&nbsp;rank)</PRE>
+<DL>
+<DD>Precise equivalent of <A HREF="../../../net/algart/arrays/Histogram.html#iPreciseValue(long[], double)"><CODE>iPreciseValue(long[], double)</CODE></A> for a case
+ of <tt>int[]</tt> type of the histogram.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - <tt>histogram[k]</tt> is the number of elements in the source floating-point array
+                  that are "almost equal" to <tt>k</tt>.
+                  All <tt>histogram[k]</tt> must be non-negative; in other case,
+                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).</DD><DD><CODE>rank</CODE> - the index in the source array (if non-integer, this method interpolates nearest elements).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>interpolated value of the found element (percentile), rounded to the "best" integer value.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>Double.isNaN(rank)</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="preciseValue(long[], double)"><!-- --></A><H3>
+preciseValue</H3>
+<PRE>
+public static double <STRONG>preciseValue</STRONG>(long[]&nbsp;histogram,
+                                  double&nbsp;rank)</PRE>
+<DL>
+<DD>"Interpolated" version of <A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A>.
+ This function supposes that the histogram is built on an array of
+ <i>floating-point</i> values after truncating them to an integer value <tt>(long)value</tt>.
+
+ <p>More precisely, we suppose that if <b>b</b>[<i>k</i>]==<i>b</i>
+ (here and below <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>]),
+ it means that the source floating-point array contains <i>b</i> values
+ <nobr><i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1</nobr>.
+ With this suggestion, this method finds the element of the source array <i>v</i><sub>1</sub>
+ with the index #<i>r</i><sub>1</sub>=&lfloor;<tt>rank</tt>&rfloor;=<tt>(long)rank</tt>
+ and the element of the source array <i>v</i><sub>2</sub>
+ with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>.
+ Obviously, <nobr><i>v</i><sub>1</sub> =
+ <i>v</i><sub>0</sub>+(<i>r</i><sub>1</sub>-<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>,
+ where <i>v</i><sub>0</sub> is the minimal integer value so that
+ <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;<i>r</i><sub>1</sub></nobr> and
+ <nobr><i>r</i><sub>0</sub>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>,
+ and there is the analogous formula for <i>v</i><sub>2</sub>.
+ Note: <nobr><i>v</i><sub>2</sub>=<i>v</i><sub>1</sub>+1/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>
+ if <nobr><i>r</i><sub>2</sub>&lt;<i>r</i><sub>0</sub>+<b>b</b>[<i>v</i><sub>0</sub>]</nobr> or
+ if <nobr><i>r</i><sub>2</sub>=<i>r</i><sub>0</sub>+<b>b</b>[<i>v</i><sub>0</sub>]</nobr> and
+ the next bar is non-zero: <nobr><b>b</b>[<i>v</i><sub>0</sub>+1]&gt;0</nobr>;
+ in other case, <i>v</i><sub>2</sub> is the minimal integer &gt;<i>v</i><sub>0</sub> so that
+ <nobr><b>b</b>[<i>v</i><sub>2</sub>]&gt;0</nobr>.
+
+ <p>After finding <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub>, this method returns the value
+ interpolated between them:  <nobr><i>v</i><sub>1</sub> +
+ (<tt>rank</tt>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>&minus;<i>v</i><sub>1</sub>)</nobr>.
+ Note: if <tt>rank</tt> argument is integer (<nobr><tt>rank==(long)rank</tt></nobr>),
+ this method does not try to find <i>v</i><sub>2</sub> and just returns <i>v</i><sub>1</sub>.
+
+ <p>As <A HREF="../../../net/algart/arrays/Histogram.html#iValue(long[], long)"><CODE>iValue(long[], long)</CODE></A>, if <tt>rank&lt;0</tt>, this method returns
+ <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
+ (the minimal element in the source array), and
+ if <nobr><tt>rank&ge;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
+ <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
+ (for floating-point array, it means the maximal element plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>).
+ If <nobr><tt>rank&gt;</tt>(sum of all <b>b</b>[<i>k</i>])&minus;1</nobr>, but
+ <nobr><tt>rank&lt;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, then in formulas above there is no element
+ <i>v</i><sub>2</sub> with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>;
+ in this case, it is supposed <nobr><i>v</i><sub>2</sub>=<i>v</i><sub>1</sub>+1</nobr>
+ (the maximal element of the floating-point array plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>,
+ <nobr><i>k</i>=<i>v</i><sub>1</sub></nobr>).
+ If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <tt>0</tt>.
+
+ <p>Please compare the described behaviour with little more simple behaviour of
+ <A HREF="../../../net/algart/arrays/Histogram.html#value(long[], double)"><CODE>value(long[], double)</CODE></A> method.
+
+ <p>The result of this method is equal to the percentile <i>v</i>(<i>r</i>) for the passed
+ <i>r</i>=<tt>rank</tt> in terms of the <i>precise histogram model</i>:
+ see <A HREF="../../../net/algart/arrays/Histogram.html" title="class in net.algart.arrays"><CODE>comments to Histogram class</CODE></A> for more details.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - <tt>histogram[k]</tt> is the number of elements in the source array
+                  that are "almost equal" to <tt>k</tt>.
+                  All <tt>histogram[k]</tt> must be non-negative; in other case,
+                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).</DD><DD><CODE>rank</CODE> - the index in the source array (if non-integer, this method interpolates nearest elements).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>interpolated value of the found element (percentile).</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>Double.isNaN(rank)</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#value(long[], double)"><CODE>value(long[], double)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Histogram.html#iPreciseValue(long[], double)"><CODE>iPreciseValue(long[], double)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="preciseValue(int[], double)"><!-- --></A><H3>
+preciseValue</H3>
+<PRE>
+public static double <STRONG>preciseValue</STRONG>(int[]&nbsp;histogram,
+                                  double&nbsp;rank)</PRE>
+<DL>
+<DD>Precise equivalent of <A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue(long[], double)</CODE></A> for a case
+ of <tt>int[]</tt> type of the histogram.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - <tt>histogram[k]</tt> is the number of elements in the source array
+                  that are "almost equal" to <tt>k</tt>.
+                  All <tt>histogram[k]</tt> must be non-negative; in other case,
+                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).</DD><DD><CODE>rank</CODE> - the index in the source array (if non-integer, this method interpolates nearest elements).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>interpolated value of the found element (percentile).</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>Double.isNaN(rank)</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#iPreciseValue(int[], double)"><CODE>iPreciseValue(int[], double)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="percentile(long[], long, double)"><!-- --></A><H3>
+percentile</H3>
+<PRE>
+public static double <STRONG>percentile</STRONG>(long[]&nbsp;histogram,
+                                long&nbsp;sumOfColumns,
+                                double&nbsp;percentileLevel)</PRE>
+<DL>
+<DD>Equivalent to <tt><A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue</CODE></A>(histogram,percentileLevel*(sumOfColumns-1))</tt>,
+ if <tt>sumOfColumns&gt;0</tt>.
+ If <tt>sumOfColumns==0</tt>, this method immediately returns <tt>0.0</tt>;
+ if <tt>sumOfColumns&lt;0</tt>, this method throws an exception.
+
+ <p>If is supposed that <tt>sumOfColumns</tt> is the sum of all histogram elements.
+ If it is true, the returned value is usually called the <i>percentile</i> of the source array
+ with the <i>level</i> specified by <tt>percentileLevel</tt> argument.
+ If <tt>percentileLevel==0.5</tt>, this value is also called the <i>median</i> of the source array.
+ But, of course, you can pass any positive value as <tt>sumOfColumns</tt>: in any case,
+ if <tt>sumOfColumns&gt;0</tt>, this method returns the result of <tt><A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(long[], double)"><CODE>preciseValue</CODE></A>(histogram,percentileLevel*(sumOfColumns-1))</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - <tt>histogram[k]</tt> is the number of elements in the source array
+                        that are "almost equal" to <tt>k</tt>.
+                        All <tt>histogram[k]</tt> must be non-negative; in other case,
+                        <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).</DD><DD><CODE>sumOfColumns</CODE> - should be equal to sum of all histogram elements
+                        (in other words, the length of the source array).</DD><DD><CODE>percentileLevel</CODE> - the percentile level (usually from 0.0 to 1.0).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>interpolated value of the found element (percentile).</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>Double.isNaN(percentileLevel)</tt> or if <tt>sumOfColumns&lt;0</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#sumOf(long[])"><CODE>sumOf(long[])</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="percentile(int[], long, double)"><!-- --></A><H3>
+percentile</H3>
+<PRE>
+public static double <STRONG>percentile</STRONG>(int[]&nbsp;histogram,
+                                long&nbsp;sumOfColumns,
+                                double&nbsp;percentileLevel)</PRE>
+<DL>
+<DD>Equivalent to <tt><A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(int[], double)"><CODE>preciseValue</CODE></A>(histogram,percentileLevel*(sumOfColumns-1))</tt>,
+ if <tt>sumOfColumns&gt;0</tt>.
+ If <tt>sumOfColumns==0</tt>, this method immediately returns <tt>0.0</tt>;
+ if <tt>sumOfColumns&lt;0</tt>, this method throws an exception.
+
+ <p>If is supposed that <tt>sumOfColumns</tt> is the sum of all histogram elements.
+ If it is true, the returned value is usually called the <i>percentile</i> of the source array
+ with the <i>level</i> specified by <tt>percentileLevel</tt> argument.
+ If <tt>percentileLevel==0.5</tt>, this value is also called the <i>median</i> of the source array.
+ But, of course, you can pass any positive value as <tt>sumOfColumns</tt>: in any case,
+ if <tt>sumOfColumns&gt;0</tt>, this method returns the result of <tt><A HREF="../../../net/algart/arrays/Histogram.html#preciseValue(int[], double)"><CODE>preciseValue</CODE></A>(histogram,percentileLevel*(sumOfColumns-1))</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - <tt>histogram[k]</tt> is the number of elements in the source array
+                        that are "almost equal" to <tt>k</tt>.
+                        All <tt>histogram[k]</tt> must be non-negative; in other case,
+                        <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).</DD><DD><CODE>sumOfColumns</CODE> - should be equal to sum of all histogram elements
+                        (in other words, the length of the source array).</DD><DD><CODE>percentileLevel</CODE> - the percentile level (usually from 0.0 to 1.0).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>interpolated value of the found element (percentile).</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>Double.isNaN(percentileLevel)</tt> or if <tt>sumOfColumns&lt;0</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Histogram.html#sumOf(int[])"><CODE>sumOf(int[])</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="sumOf(long[])"><!-- --></A><H3>
+sumOf</H3>
+<PRE>
+public static long <STRONG>sumOf</STRONG>(long[]&nbsp;histogram)</PRE>
+<DL>
+<DD>Returns the sum of all elements of the passed <tt>histogram</tt> array.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - any array (for example, a histogram).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the sum of all elements of the passed array.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="sumOf(int[])"><!-- --></A><H3>
+sumOf</H3>
+<PRE>
+public static int <STRONG>sumOf</STRONG>(int[]&nbsp;histogram)</PRE>
+<DL>
+<DD>Returns the sum of all elements of the passed <tt>histogram</tt> array.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - any array (for example, a histogram).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the sum of all elements of the passed array.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>histogram</tt> argument is <tt>null</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="clear(int[], int)"><!-- --></A><H3>
+clear</H3>
+<PRE>
+public static void <STRONG>clear</STRONG>(int[]&nbsp;histogram,
+                         int&nbsp;sumOfColumns)</PRE>
+<DL>
+<DD>Fills all non-zero elements of <tt>histogram</tt> by 0.
+
+ <p>Works faster then trivial loop for all elements <tt>histogram[0..histogram.length-1]</tt>,
+ if most of last elements of <tt>histogram</tt> array already contain zero.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>histogram</CODE> - cleared histogram.</DD><DD><CODE>sumOfColumns</CODE> - should be equal to sum of all histogram elements.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/GeneralizedBitProcessing.SliceOperation.html" title="interface in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/IllegalInfoSyntaxException.html" title="class in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/Histogram.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="Histogram.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

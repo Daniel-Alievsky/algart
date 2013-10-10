@@ -1,0 +1,61 @@
+package net.algart.matrices.spectra;
+
+strictfp class RootsOfUnity {
+    public static final int LOG_CACHE_SIZE = 20;
+    public static final int HALF_CACHE_SIZE = 1 << (LOG_CACHE_SIZE - 1);
+    public static final int CACHE_SIZE = 2 * HALF_CACHE_SIZE;
+
+    public static final double[] SINE_CACHE = new double[HALF_CACHE_SIZE + 1];
+    public static final double[] LOGARITHMICAL_SINE_CACHE = new double[65];
+
+    static {
+        SINE_CACHE[0] = 0.0;
+        for (int k = 1; k < HALF_CACHE_SIZE; k++) {
+            SINE_CACHE[k] = StrictMath.sin(0.5 * StrictMath.PI * k / HALF_CACHE_SIZE);
+        }
+        SINE_CACHE[HALF_CACHE_SIZE] = 1.0;
+    }
+
+    static {
+        LOGARITHMICAL_SINE_CACHE[0] = 0.0; // sin(PI)
+        LOGARITHMICAL_SINE_CACHE[1] = 1.0; // sin(PI/2)
+        double angle = 0.25 * StrictMath.PI;
+        for (int log = 2; log <= 64; log++) {
+            LOGARITHMICAL_SINE_CACHE[log] = StrictMath.sin(angle);
+            angle *= 0.5;
+        }
+    }
+
+
+    /**
+     * Returns sin &phi;, &phi; = &pi;<tt>*angleIndex/{@link #CACHE_SIZE}</tt>.
+     * The <tt>angleIndex</tt> must be in range <tt>0&lt;=angleIndex&lt;={@link #CACHE_SIZE}</tt>,
+     * so 0&le;&phi;&le;&pi;.
+     *
+     * @param angleIndex the angle &phi;, measured in &pi;/{@link #CACHE_SIZE} units
+     *                   (&phi; = &pi;<tt>*angleIndex/{@link #CACHE_SIZE}</tt>).
+     * @return           sin &phi;.
+     * @throws IndexOutOfBoundsException if <tt>angleIndex</tt> is not in <tt>0..{@link #CACHE_SIZE}</tt> range.
+     */
+    public static double quickSin(int angleIndex) {
+        return angleIndex < HALF_CACHE_SIZE ?
+            SINE_CACHE[angleIndex] :
+            SINE_CACHE[2 * HALF_CACHE_SIZE - angleIndex];
+    }
+
+    /**
+     * Returns cos &phi;, &phi; = &pi;<tt>*angleIndex/{@link #CACHE_SIZE}</tt>.
+     * The <tt>angleIndex</tt> must be in range <tt>0&lt;=angleIndex&lt;={@link #CACHE_SIZE}</tt>,
+     * so 0&le;&phi;&le;&pi;.
+     *
+     * @param angleIndex the angle &phi;, measured in &pi;/{@link #CACHE_SIZE} units
+     *                   (&phi; = &pi;<tt>*angleIndex/{@link #CACHE_SIZE}</tt>).
+     * @return           cos &phi;.
+     * @throws IndexOutOfBoundsException if <tt>angleIndex</tt> is not in <tt>0..{@link #CACHE_SIZE}</tt> range.
+     */
+    public static double quickCos(int angleIndex) {
+        return angleIndex < HALF_CACHE_SIZE ?
+            SINE_CACHE[HALF_CACHE_SIZE - angleIndex] :
+            -SINE_CACHE[angleIndex - HALF_CACHE_SIZE];
+    }
+}

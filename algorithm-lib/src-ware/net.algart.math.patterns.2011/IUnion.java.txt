@@ -1,0 +1,181 @@
+package net.algart.math.patterns;
+
+import java.util.*;
+import java.lang.ref.*;
+import net.algart.math.IPoint;
+import net.algart.math.IRange;
+
+/**
+ * <p>The implementation of the union of several pattern,
+ * returned by {@link Patterns#newUnion(Pattern[])} method.</p>
+ *
+ * <p>AlgART Laboratory 2007-2012</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ */
+final class IUnion extends AbstractIntegerPattern implements Pattern {
+    private final Pattern[] subsets;
+    private final Pattern[] projections;
+    private volatile Reference<Set<IPoint>> points;
+
+    IUnion(Pattern[] patterns) {
+        super(IMinkowskiSum.getDimCountAndCheck(patterns), false);
+        List<Pattern> allSubsets = new ArrayList<Pattern>();
+        for (Pattern ptn : patterns) {
+            if (ptn instanceof IUnion) {
+                allSubsets.addAll(Arrays.asList(((IUnion)ptn).subsets));
+            } else {
+                allSubsets.add(ptn);
+            }
+            // An alternate idea could be using ptn.unionDecomposition always.
+            // But it will lead to much worse results of multiply method
+            // for a case of simple subsets: they will be decomposed
+            // into sets of segments, sometimes with little coordinates, that cannot be
+            // multiplied with good precision.
+        }
+        long[] minCoord = new long[dimCount]; // zero-filled
+        long[] maxCoord = new long[dimCount]; // zero-filled
+        for (Pattern ptn : allSubsets) {
+            for (int k = 0; k < dimCount; k++) {
+                IRange range = ptn.roundedCoordRange(k);
+                minCoord[k] = Math.min(minCoord[k], range.min());
+                maxCoord[k] = Math.max(maxCoord[k], range.max());
+            }
+        }
+        for (int k = 0; k < dimCount; k++) {
+            this.integerCoordRanges[k] = IRange.valueOf(minCoord[k], maxCoord[k]);
+        }
+        this.subsets = allSubsets.toArray(new Pattern[allSubsets.size()]);
+        this.projections = new Pattern[dimCount]; //null-filled
+    }
+
+    @Override
+    public long pointCount() {
+        return roundedPoints().size();
+    }
+
+    @Override
+    public boolean contains(IPoint point) {
+        return roundedPoints().contains(point);
+    }
+
+    @Override
+    public Set<IPoint> roundedPoints() {
+        Set<IPoint> resultPoints = points == null ? null : points.get();
+        if (resultPoints == null) {
+            resultPoints = new HashSet<IPoint>();
+            // temporary "resultPoints" variable is necessary while accessing from several threads
+            for (Pattern ptn : subsets) {
+                resultPoints.addAll(ptn.roundedPoints());
+            }
+            resultPoints = Collections.unmodifiableSet(resultPoints);
+            points = new SoftReference<Set<IPoint>>(resultPoints);
+        }
+        return resultPoints;
+    }
+
+    @Override
+    public IRange roundedCoordRange(int coordIndex) {
+        return integerCoordRanges[coordIndex];
+    }
+
+    @Override
+    public IRange[] roundedCoordRanges() {
+        return integerCoordRanges.clone();
+    }
+
+    @Override
+    public Pattern projectionAlongAxis(int coordIndex) {
+        checkCoordIndex(coordIndex);
+        assert dimCount > 0;
+        if (dimCount == 1)
+            throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
+        synchronized (projections) {
+            if (projections[coordIndex] == null) {
+                Pattern[] newSubsets = new Pattern[subsets.length];
+                for (int k = 0; k < newSubsets.length; k++) {
+                    newSubsets[k] = subsets[k].projectionAlongAxis(coordIndex);
+                }
+                projections[coordIndex] = new IUnion(newSubsets);
+            }
+            return projections[coordIndex];
+        }
+    }
+
+    @Override
+    public UniformGridPattern shift(IPoint shift) {
+        if (shift.coordCount() != dimCount())
+            throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
+                + " is not equal to the number of pattern coordinates " + dimCount());
+        if (shift.isOrigin()) {
+            return this;
+        }
+        Pattern[] newSubsets = new Pattern[subsets.length];
+        for (int k = 0; k < newSubsets.length; k++) {
+            newSubsets[k] = subsets[k].shift(shift);
+        }
+        return new IUnion(newSubsets);
+    }
+
+    @Override
+    public UniformGridPattern scale(double... multipliers) {
+        if (multipliers == null)
+            throw new NullPointerException("Null multipliers argument");
+        if (multipliers.length != dimCount())
+            throw new IllegalArgumentException("Illegal number of multipliers: "
+                + multipliers.length + " instead of " + dimCount());
+        Pattern[] newSubsets = new Pattern[subsets.length];
+        for (int k = 0; k < newSubsets.length; k++) {
+            newSubsets[k] = subsets[k].scale(multipliers);
+        }
+        return new IUnion(newSubsets);
+    }
+
+    @Override
+    public List<Pattern> minkowskiDecomposition(int minimalPointCount) {
+        if (subsets.length == 1) {
+            return super.minkowskiDecomposition(minimalPointCount);
+        } else { // avoiding common algorithm: it checks isRectangular and may be too slow
+            return Collections.<Pattern> singletonList(this);
+        }
+    }
+
+    @Override
+    public List<List<Pattern>> allUnionDecompositions(int minimalPointCount) {
+        if (minimalPointCount < 0)
+            throw new IllegalArgumentException("Negative minimalPointCount");
+        List<Pattern> result = new ArrayList<Pattern>(subsets.length);
+        for (Pattern subset : subsets) {
+            result.addAll(subset.unionDecomposition(minimalPointCount));
+        }
+        result = Collections.unmodifiableList(result);
+        return Collections.singletonList(result);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(dimCount() + "D union of " + subsets.length + " patterns: ");
+        for (int k = 0; k < subsets.length; k++) {
+            if (k > 0)
+                sb.append(" U ");
+            sb.append(subsets[k]);
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(subsets) ^ getClass().getName().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof IUnion))
+            return false;
+        if (obj == this)
+            return true;
+        return Arrays.equals(subsets, ((IUnion)obj).subsets);
+    }
+}

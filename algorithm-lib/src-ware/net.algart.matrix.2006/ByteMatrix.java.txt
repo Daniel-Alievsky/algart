@@ -1,0 +1,44 @@
+package net.algart.matrix;
+
+import net.algart.arrays.MutableByteArray;
+
+/**
+ * <p>WARNING: WILL BE REMOVED SOON! Byte Matrix</p>
+ *
+ * <p>Copyright 2007 Smart Imaging Technologies</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.1
+ * @since JDK1.0
+ * @deprecated
+ */
+public interface ByteMatrix extends Matr {
+
+    /**
+     * Returns the unsigned byte element (0..255) at the given position (x, y).
+     * May return any results or produce an exception if the position is not in range 0..sx-1, 0..sy-1.
+     */
+    public int getByte(int x, int y);
+
+    /**
+     * Sets the byte element <tt>value</tt> at the given position (x, y).
+     * May corrupt the matrix or produce an exception if the position is not in range 0..sx-1, 0..sy-1.
+     */
+    public void setByte(int x, int y, byte value);
+
+    /**
+     * Returns some estimated value in 0.0..256.0 range for the given floating-point position (x, y).
+     * For example, an implementation may return the same result as <tt>getByte((int)x), (int)y)</tt>.
+     * May return any results or produce an exception if the position is not in range 0 &lt;= x &lt; sx-1,
+     * 0 &lt;= y &lt; sy-1. The precise sx-1 and sy-1 values <i>are not allowed</i> for floating-point
+     * x and y parameters.
+     */
+    public double getByteInterpolated(double x, double y);
+
+    /**
+     * Sets the byte element <tt>value</tt> at the given position (x, y).
+     * Does not anything if the position is not in range 0..sx-1, 0..sy-1 (unlike <tt>set</tt> method).
+     */
+    public void setByteIfInside(int x, int y, byte value);
+
+}

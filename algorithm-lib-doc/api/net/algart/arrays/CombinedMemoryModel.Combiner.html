@@ -1,0 +1,394 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+CombinedMemoryModel.Combiner
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="CombinedMemoryModel.Combiner";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/CombinedMemoryModel.BufferedCombiner.html" title="interface in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/CombinedMemoryModel.CombinerInPlace.html" title="interface in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/CombinedMemoryModel.Combiner.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="CombinedMemoryModel.Combiner.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.arrays</FONT>
+<BR>
+Interface CombinedMemoryModel.Combiner&lt;E&gt;</H2>
+<DL>
+<DT><STRONG>All Known Subinterfaces:</STRONG></DT> <DD><A HREF="../../../net/algart/arrays/CombinedMemoryModel.BufferedCombiner.html" title="interface in net.algart.arrays">CombinedMemoryModel.BufferedCombiner</A>&lt;E&gt;, <A HREF="../../../net/algart/arrays/CombinedMemoryModel.CombinerInPlace.html" title="interface in net.algart.arrays">CombinedMemoryModel.CombinerInPlace</A>&lt;E&gt;</DD>
+</DL>
+<DL>
+<DT><STRONG>All Known Implementing Classes:</STRONG></DT> <DD><A HREF="../../../net/algart/arrays/CombinedMemoryModel.AbstractByteBufferCombiner.html" title="class in net.algart.arrays">CombinedMemoryModel.AbstractByteBufferCombiner</A>, <A HREF="../../../net/algart/arrays/CombinedMemoryModel.AbstractByteBufferCombinerInPlace.html" title="class in net.algart.arrays">CombinedMemoryModel.AbstractByteBufferCombinerInPlace</A></DD>
+</DL>
+<DL>
+<DT><STRONG>Enclosing class:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/CombinedMemoryModel.html" title="class in net.algart.arrays">CombinedMemoryModel</A>&lt;<A HREF="../../../net/algart/arrays/CombinedMemoryModel.html" title="type parameter in CombinedMemoryModel">E</A>&gt;</DD>
+</DL>
+<HR>
+<PRE>public static interface <STRONG>CombinedMemoryModel.Combiner&lt;E&gt;</STRONG></PRE>
+
+<P>
+<p>This interface should be implemented to allow saving objects
+ in arrays created via <A HREF="../../../net/algart/arrays/CombinedMemoryModel.html#getInstance(net.algart.arrays.CombinedMemoryModel.Combiner)"><CODE>combined memory model</CODE></A>.</p>
+
+ <p>It describes how to store (or load) one object in (from) a set of AlgART arrays.
+ More precisely, this interface should provide methods for storing and loading
+ all data of one object (an element of a combined array) in/from
+ several "parallel" AlgART arrays, named "storage".
+ An element with given index should be stored in the following elements in storage:<pre>
+ &nbsp;&nbsp;&nbsp;&nbsp;storage[k][d[k]*index...d[k]*(index+1)-1], k=0,1,...</pre>
+ where <tt>d</tt> is an array returned by <A HREF="../../../net/algart/arrays/CombinedMemoryModel.Combiner.html#numbersOfElementsPerOneCombinedElement(int)"><CODE>numbersOfElementsPerOneCombinedElement(int)</CODE></A>
+ method.</p>
+
+ <p>Important! The classes of objects stored or loaded by this combiner <b>should
+ have correct <tt>hashCode</tt> method, based on the content of an object</b>:
+ the data stored or loaded by this combiner. See also <a href="CombinedMemoryModel.html#hashCodeEquals">comments
+ to <tt>CombinedMemoryModel</tt></a>.
+
+ <p>Typical implementation supposes that a storage is one or several arrays of primitive types
+ (created by <A HREF="../../../net/algart/arrays/SimpleMemoryModel.html" title="class in net.algart.arrays"><CODE>SimpleMemoryModel</CODE></A>).</p>
+
+ <p>The methods of this interface may not check indexes of elements:
+ all necessary checks are performed by AlgART array implementation created by <A HREF="../../../net/algart/arrays/CombinedMemoryModel.html" title="class in net.algart.arrays"><CODE>CombinedMemoryModel</CODE></A>.</p>
+<P>
+
+<P>
+<HR>
+
+<P>
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/UpdatableArray.html" title="interface in net.algart.arrays">UpdatableArray</A>[]</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/CombinedMemoryModel.Combiner.html#allocateStorage(long, boolean)">allocateStorage</A></STRONG>(long&nbsp;length,
+                boolean&nbsp;unresizable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Should create a storage (several AlgART arrays),
+ allowing to store elements of the combined arrays.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/CombinedMemoryModel.Combiner.html" title="type parameter in CombinedMemoryModel.Combiner">E</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/CombinedMemoryModel.Combiner.html#get(long, net.algart.arrays.Array[])">get</A></STRONG>(long&nbsp;index,
+    <A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays">Array</A>[]&nbsp;storage)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an element #<tt>index</tt> of the combined array from the given set of AlgART arrays.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/CombinedMemoryModel.Combiner.html#numbersOfElementsPerOneCombinedElement(int)">numbersOfElementsPerOneCombinedElement</A></STRONG>(int&nbsp;indexOfArrayInStorage)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Should return the number of sequential elements of the array #<tt>indexOfArrayInStorage</tt>
+ in the storage, used for storing one element of the combined array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/CombinedMemoryModel.Combiner.html#set(long, E, net.algart.arrays.UpdatableArray[])">set</A></STRONG>(long&nbsp;index,
+    <A HREF="../../../net/algart/arrays/CombinedMemoryModel.Combiner.html" title="type parameter in CombinedMemoryModel.Combiner">E</A>&nbsp;value,
+    <A HREF="../../../net/algart/arrays/UpdatableArray.html" title="interface in net.algart.arrays">UpdatableArray</A>[]&nbsp;storage)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stores the element <tt>value</tt> at position #<tt>index</tt> of the combined array
+ inside the given set of AlgART arrays.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="get(long, net.algart.arrays.Array[])"><!-- --></A><H3>
+get</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/CombinedMemoryModel.Combiner.html" title="type parameter in CombinedMemoryModel.Combiner">E</A> <STRONG>get</STRONG>(long&nbsp;index,
+      <A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays">Array</A>[]&nbsp;storage)</PRE>
+<DL>
+<DD>Returns an element #<tt>index</tt> of the combined array from the given set of AlgART arrays.
+ Unlike <A HREF="../../../net/algart/arrays/CombinedMemoryModel.CombinerInPlace.html#getInPlace(long, E, net.algart.arrays.Array[])"><CODE>CombinedMemoryModel.CombinerInPlace.getInPlace(long, Object, Array[])</CODE></A>,
+ this method always creates a new object and should work always.
+ This method is called by <A HREF="../../../net/algart/arrays/Array.html#getElement(long)"><CODE>Array.getElement(long)</CODE></A>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>index</CODE> - an index in the combined array.</DD><DD><CODE>storage</CODE> - a set of arrays where the retrieved content is stored now.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>new created object containing an element #<tt>index</tt> of combined array.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="set(long,java.lang.Object,net.algart.arrays.UpdatableArray[])"><!-- --></A><A NAME="set(long, E, net.algart.arrays.UpdatableArray[])"><!-- --></A><H3>
+set</H3>
+<PRE>
+void <STRONG>set</STRONG>(long&nbsp;index,
+         <A HREF="../../../net/algart/arrays/CombinedMemoryModel.Combiner.html" title="type parameter in CombinedMemoryModel.Combiner">E</A>&nbsp;value,
+         <A HREF="../../../net/algart/arrays/UpdatableArray.html" title="interface in net.algart.arrays">UpdatableArray</A>[]&nbsp;storage)</PRE>
+<DL>
+<DD>Stores the element <tt>value</tt> at position #<tt>index</tt> of the combined array
+ inside the given set of AlgART arrays.
+ This method is called by <A HREF="../../../net/algart/arrays/UpdatableArray.html#setElement(long, java.lang.Object)"><CODE>UpdatableArray.setElement(long, Object)</CODE></A>.
+
+ <p>Important: this method must not throw <tt>NullPointerException</tt>
+ if the <tt>value</tt> argument is <tt>null</tt>. Instead, it should
+ store some "signal" value in the storage, that cannot be stored for any
+ possible non-null elements, or just some default ("empty") value.
+ In the first case, further <A HREF="../../../net/algart/arrays/CombinedMemoryModel.Combiner.html#get(long, net.algart.arrays.Array[])"><CODE>get(index, storage)</CODE></A> should
+ return <tt>null</tt>; in the second case, it should return an instance
+ in the default state.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>index</CODE> - an index in the combined array.</DD><DD><CODE>value</CODE> - the stored element</DD><DD><CODE>storage</CODE> - a set of arrays where the content will be stored.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="allocateStorage(long, boolean)"><!-- --></A><H3>
+allocateStorage</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/UpdatableArray.html" title="interface in net.algart.arrays">UpdatableArray</A>[] <STRONG>allocateStorage</STRONG>(long&nbsp;length,
+                                 boolean&nbsp;unresizable)</PRE>
+<DL>
+<DD>Should create a storage (several AlgART arrays),
+ allowing to store elements of the combined arrays.
+ Called while creating new combined arrays.
+
+ <p>The initial lengths of created arrays should be calculated on the base of
+ passed <tt>length</tt> argument, that means the length of necessary
+ <i>combined</i> array. Namely, the length of returned array #<tt>k</tt>
+ should be equal to <tt>length*<A HREF="../../../net/algart/arrays/CombinedMemoryModel.Combiner.html#numbersOfElementsPerOneCombinedElement(int)"><CODE>numbersOfElementsPerOneCombinedElement</CODE></A>(k)</tt>. This condition is automatically
+ verified while creating combined arrays.
+
+ <p>If <tt>unresizable</tt> argument is <tt>true</tt>, it means that this method
+ is called for creating <A HREF="../../../net/algart/arrays/Array.html#isUnresizable()"><CODE>unresizable</CODE></A> combined array.
+ In this case we recommend to use <A HREF="../../../net/algart/arrays/MemoryModel.html#newUnresizableArray(java.lang.Class, long)"><CODE>MemoryModel.newUnresizableArray</CODE></A> method for creating storage arrays.
+ If <tt>unresizable</tt> argument is <tt>false</tt>, every element of returned
+ Java array <i>must</i> implement <A HREF="../../../net/algart/arrays/MutableArray.html" title="interface in net.algart.arrays"><CODE>MutableArray</CODE></A> interface.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>length</CODE> - initial length of corresponding <i>combined</i> arrays.</DD><DD><CODE>unresizable</CODE> - if <tt>true</tt>, the created arrays <i>should</i> be unresizable,
+ in other case they <i>must</i> be mutable and implement <A HREF="../../../net/algart/arrays/MutableArray.html" title="interface in net.algart.arrays"><CODE>MutableArray</CODE></A> interface.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>created storage.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="numbersOfElementsPerOneCombinedElement(int)"><!-- --></A><H3>
+numbersOfElementsPerOneCombinedElement</H3>
+<PRE>
+int <STRONG>numbersOfElementsPerOneCombinedElement</STRONG>(int&nbsp;indexOfArrayInStorage)</PRE>
+<DL>
+<DD>Should return the number of sequential elements of the array #<tt>indexOfArrayInStorage</tt>
+ in the storage, used for storing one element of the combined array.
+ Called while creating new combined arrays.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>indexOfArrayInStorage</CODE> - index of the storage array.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of sequential elements used for storing one combined element.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/CombinedMemoryModel.BufferedCombiner.html" title="interface in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/CombinedMemoryModel.CombinerInPlace.html" title="interface in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/CombinedMemoryModel.Combiner.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="CombinedMemoryModel.Combiner.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

@@ -1,0 +1,128 @@
+package net.algart.arrays;
+
+/**
+ * <p>AlgART array of some objects (non-primitive values) with the specified generic type <tt>E</tt>,
+ * read-only access.</p
+ *
+ * <p>Any class implementing this interface <b>must</b> contain non-primitive elements
+ * ({@link #elementType()} must not return a primitive type).</p>
+ *
+ * <p>AlgART Laboratory 2007-2013</p>
+ *
+ * @param &lt;E&gt; the generic type of array elements.
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ */
+public interface ObjectArray<E> extends Array {
+
+    public Class<E> elementType();
+
+    public Class<? extends ObjectArray<E>> type();
+
+    public Class<? extends UpdatableObjectArray<E>> updatableType();
+
+    public Class<? extends MutableObjectArray<E>> mutableType();
+
+    /**
+     * Equivalent to {@link #getElement(long) getElement(index)}.
+     *
+     * @param index index of element to get.
+     * @return      the element at the specified position in this array.
+     * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
+     */
+    public E get(long index);
+
+    /**
+     * Returns the minimal index <tt>k</tt>, so that
+     * <tt>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</tt>
+     * and <tt>value!=null?value.equals(thisArray.{@link #get(long)
+     * get}(k)):thisArray.{@link #get(long) get}(k)==null</tt>,
+     * or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>lowIndex&gt;=thisArray.{@link #length() length()}}</tt>
+     * or <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>,
+     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     *
+     * <p>You may specify <tt>lowIndex=0</tt> and <tt>highIndex=Long.MAX_VALUE</tt> to search
+     * through all array elements.
+     *
+     * <p>Unlike the standard <tt>List.indexOf</tt> method, this method never throws <tt>ClassCastException</tt>.
+     *
+     * @param lowIndex  the low index in the array for search (inclusive).
+     * @param highIndex the high index in the array for search (exclusive).
+     * @param value     the value to be found.
+     * @return          the index of the first occurrence of this value in this array
+     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
+     *                  or <tt>-1</tt> if this value does not occur in this range.
+     */
+    public long indexOf(long lowIndex, long highIndex, E value);
+
+
+    /**
+     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
+     * and <tt>value!=null?value.equals(thisArray.{@link #get(long)
+     * get}(k)):thisArray.{@link #get(long) get}(k)==null</tt>,
+     * or <tt>-1</tt> if there is no such array element.
+     *
+     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
+     * this method returns <tt>-1</tt>,
+     * and if <tt>highIndex&gt;=thisArray.{@link #length() length()}</tt>,
+     * the result is the same as if <tt>highIndex==thisArray.{@link #length() length()}</tt>.
+     *
+     * <p>You may specify <tt>lowIndex=0</tt> and <tt>highIndex=Long.MAX_VALUE</tt> to search
+     * through all array elements.
+     *
+     * <p>Unlike the standard <tt>List.indexOf</tt> method, this method never throws <tt>ClassCastException</tt>.
+     *
+     * @param lowIndex  the low index in the array for search (inclusive).
+     * @param highIndex the high index in the array for search (exclusive).
+     * @param value     the value to be found.
+     * @return          the index of the last occurrence of this value in this array
+     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
+     *                  or <tt>-1</tt> if this value does not occur in this range.
+     */
+    public long lastIndexOf(long lowIndex, long highIndex, E value);
+
+    /**
+     * Returns this array cast to the specified generic element type
+     * or throws <tt>ClassCastException</tt> if the elements cannot be cast
+     * to the required type (because the {@link #elementType() element type} is not its subclass).
+     * Equivalent to <tt>(ObjectArray<D>)thisArray</tt>, but is compiled
+     * without "unchecked cast" warning or "inconvertible type" error.
+     *
+     * <p>Unlike <tt>ArrayList</tt> architecture, such casting is safe here,
+     * because all methods, storing data in the AlgART array, always check the
+     * {@link #elementType() element type} and do not allow saving illegal elements.
+     *
+     * @param elementType the required generic type.
+     * @return            this array cast to the specified generic element type.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws ClassCastException   if the elements cannot be cast to the required type.
+     */
+    public <D> ObjectArray<D> cast(Class<D> elementType);
+
+    /*Repeat(INCLUDE_FROM_FILE, FloatArray.java, resultTypes)
+      Float(?!ing) ==> Object ;;
+      float ==> Object ;;
+      ObjectArray ==> ObjectArray<E> ;;
+      DataObjectBuffer ==> DataObjectBuffer<E>
+         !! Auto-generated: NOT EDIT !! */
+    public DataObjectBuffer<E> buffer(DataBuffer.AccessMode mode, long capacity);
+
+    public DataObjectBuffer<E> buffer(DataBuffer.AccessMode mode);
+
+    public DataObjectBuffer<E> buffer(long capacity);
+
+    public DataObjectBuffer<E> buffer();
+
+    public ObjectArray<E> asImmutable();
+
+    public ObjectArray<E> asTrustedImmutable();
+
+    public MutableObjectArray<E> mutableClone(MemoryModel memoryModel);
+
+    public UpdatableObjectArray<E> updatableClone(MemoryModel memoryModel);
+    /*Repeat.IncludeEnd*/
+}

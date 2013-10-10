@@ -1,0 +1,962 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+DefaultDataFileModel
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="DefaultDataFileModel";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/DataShortBuffer.html" title="interface in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/DefaultThreadPoolFactory.html" title="class in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/DefaultDataFileModel.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="DefaultDataFileModel.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_net.algart.arrays.AbstractDataFileModel">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.arrays</FONT>
+<BR>
+Class DefaultDataFileModel</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">net.algart.arrays.AbstractDataFileModel</A>
+      <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><STRONG>net.algart.arrays.DefaultDataFileModel</STRONG>
+</PRE>
+<DL>
+<DT><STRONG>All Implemented Interfaces:</STRONG></DT> <DD><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</DD>
+</DL>
+<HR>
+<PRE>public class <STRONG>DefaultDataFileModel</STRONG>
+extends <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">AbstractDataFileModel</A>
+implements <A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</PRE>
+
+<P>
+<p>Default implementation of <A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays"><CODE>DataFileModel</CODE></A> that creates usual Java files,
+ which are mapped via standard Java technique (<tt>FileChannel.map</tt> method).</p>
+
+ <p>The <A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays"><CODE>data files</CODE></A>, returned by this class, creates
+ <A HREF="../../../net/algart/arrays/DataFile.BufferHolder.html" title="interface in net.algart.arrays"><CODE>buffer holders</CODE></A> with the
+ <A HREF="../../../net/algart/arrays/DataFile.BufferHolder.html#unmap(boolean)"><CODE>unmap(boolean)</CODE></A> method which does not perform
+ actual unmapping: Java NIO package does not support unmapping.
+ File mapping will be released automatically by the built-in finalizers.</p>
+
+ <p>The <A HREF="../../../net/algart/arrays/DataFile.html#close()"><CODE>close()</CODE></A> method in data files, returned by this class,
+ perform closing via <tt>RandomAccessFile.close()</tt> method,
+ but it <i>may not completely close the disk file</i>!
+ The disk file will be completely closed and all connected system resources will be freed
+ only while the following garbage collection at the unspecified moment,
+ or while exiting JVM.
+ So, if you need to process a very large number of AlgART arrays (tens of thousands or millions),
+ we recommend to use the <A HREF="../../../net/algart/arrays/StandardIODataFileModel.html" title="class in net.algart.arrays"><CODE>StandardIODataFileModel</CODE></A> and
+ call <A HREF="../../../net/algart/arrays/Array.html#freeResources(net.algart.arrays.ArrayContext)"><CODE>Array.freeResources(ArrayContext)</CODE></A> method in time.</p>
+
+ <p>See comments to <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporary(boolean)"><CODE>AbstractDataFileModel.createTemporary(boolean)</CODE></A> method for information about temporary
+ files created by this class.</p>
+
+ <p>Warning: under Sun Java versions before 1.7 (i.e. 1.5 and 1.6),
+ this data file model <b>is not stable</b>,
+ due to the Sun's bug
+ "<a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6521677"
+ >(fc)&nbsp;"Cleaner terminated abnormally" error in simple mapping test</a>".
+ More precisely, for Java prior to 1.7:</p>
+
+ <ul>
+ <li>In <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#isLazyWriting()"><CODE>lazy-writing mode</CODE></A>, this model is <b>unstable at all</b>:
+ processing large arrays can lead to internal error while garbage collection,
+ that will lead to immediate abnormal JVM termination.
+ Due to this reason, the <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#defaultLazyWriting()"><CODE>default lazy-writing mode</CODE></A> is <tt>false</tt>
+ in Java versions prior to 1.7, but <tt>true</tt> in Java 1.7+.</li>
+
+ <li>In usual mode, this model can occasionally lead to unexpected <tt>IOError</tt>
+ while processing large arrays. Unlike an internal error in the lazy-writing mode,
+ this exception can be normally caught and shown to the user in GUI applications.
+ It can occur with large <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#recommendedBankSize(boolean)"><CODE>bank size</CODE></A>
+ (32 MB or more), if an array occupies several banks.
+ This probability of this situation is not too high for unresizable arrays
+ when <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#recommendedSingleMappingLimit()"><CODE>single mapping</CODE></A> is used.</li>
+ </ul>
+
+ <p>This class is <b>immutable</b> and <b>thread-safe</b>:
+ there are no ways to modify settings of the created instance.</p>
+
+ <p>AlgART Laboratory 2007-2013</p>
+<P>
+
+<P>
+<DL>
+<DT><STRONG>Since:</STRONG></DT>
+  <DD>JDK 1.5</DD>
+<DT><STRONG>Version:</STRONG></DT>
+  <DD>1.2</DD>
+<DT><STRONG>Author:</STRONG></DT>
+  <DD>Daniel Alievsky</DD>
+<DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/StandardIODataFileModel.html" title="class in net.algart.arrays"><CODE>StandardIODataFileModel</CODE></A></DD></DL>
+<HR>
+
+<P>
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Field Summary table, listing fields, and an explanation">
+<CAPTION CLASS="TableCaption">
+Field Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Field and Description</TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_net.algart.arrays.AbstractDataFileModel"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Fields inherited from class net.algart.arrays.<A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">AbstractDataFileModel</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#allTemporaryFiles">allTemporaryFiles</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#prefixSize">prefixSize</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath">tempPath</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Constructor Summary table, listing constructors, and an explanation">
+<CAPTION CLASS="TableCaption">
+Constructor Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Constructor and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel()">DefaultDataFileModel</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <tt>new <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File, long, boolean)"><CODE>DefaultDataFileModel</CODE></A>(null, 0, <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#defaultLazyWriting()"><CODE>defaultLazyWriting()</CODE></A>)</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(boolean)">DefaultDataFileModel</A></STRONG>(boolean&nbsp;lazyWriting)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <tt>new <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File, long, boolean)"><CODE>DefaultDataFileModel</CODE></A>(null, 0, lazyWriting)</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File)">DefaultDataFileModel</A></STRONG>(java.io.File&nbsp;tempPath)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <tt>new <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File, long, boolean)"><CODE>DefaultDataFileModel</CODE></A>(tempPath, 0, <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#defaultLazyWriting()"><CODE>defaultLazyWriting()</CODE></A>)</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File, boolean)">DefaultDataFileModel</A></STRONG>(java.io.File&nbsp;tempPath,
+                     boolean&nbsp;lazyWriting)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <tt>new <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File, long, boolean)"><CODE>DefaultDataFileModel</CODE></A>(tempPath, 0, lazyWriting)</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File, long, boolean)">DefaultDataFileModel</A></STRONG>(java.io.File&nbsp;tempPath,
+                     long&nbsp;prefixSize,
+                     boolean&nbsp;lazyWriting)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates new instance with specified lazy-writing mode.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#autoResizingOnMapping()">autoResizingOnMapping</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation returns the value
+ <tt>Boolean.getBoolean("net.algart.arrays.DefaultDataFileModel.autoResizingOnMapping")</tt>,
+ stored while initializing <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> class,
+ or <tt>false</tt> if there is no such system property or some exception occurred while
+ calling <tt>Boolean.getBoolean</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#defaultLazyWriting()">defaultLazyWriting</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#isLazyWriting()"><CODE>lazy-writing mode</CODE></A>, used when this this class
+ is instantiated by a constructor without <tt>lazyWriting</tt> argument.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#getDataFile(java.io.File, java.nio.ByteOrder)">getDataFile</A></STRONG>(java.io.File&nbsp;path,
+            java.nio.ByteOrder&nbsp;byteOrder)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation returns the data file corresponding to usual Java file <tt>new java.io.File(path)</tt>
+ with <A HREF="../../../net/algart/arrays/DataFile.html#map(net.algart.arrays.DataFile.Range, boolean)"><CODE>DataFile.map</CODE></A>
+ method based on standard Java mapping.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.io.File</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#getPath(net.algart.arrays.DataFile)">getPath</A></STRONG>(<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&nbsp;dataFile)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the absolute path to the disk file (<tt>java.io.File.getAbsoluteFile()</tt>).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#isAutoDeletionRequested()">isAutoDeletionRequested</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation returns <tt>true</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#isLazyWriting()">isLazyWriting</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <tt>lazyWriting</tt> argument, passed to
+ <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(boolean)"><CODE>the constructor</CODE></A> while creating this instance.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#maxMappedMemory()">maxMappedMemory</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximal amount of RAM (in bytes), allowed for simultaneous mapping by <tt>FileChannel.map</tt> method
+ without flushing data to the disk by <tt>MappedByteBuffer.force()</tt> method.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#recommendedBankSize(boolean)">recommendedBankSize</A></STRONG>(boolean&nbsp;unresizable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation returns the value
+ <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.bankSize",16777216)</tt> (16 MB)
+ when the argument is <tt>true</tt> and
+ <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.resizableBankSize",4194304)</tt> (4 MB)
+ when the argument is <tt>false</tt> on 64-bit Java machines.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#recommendedNumberOfBanks()">recommendedNumberOfBanks</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation returns the value
+ <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.numberOfBanksPerCPU",&nbsp;3)
+ * <A HREF="../../../net/algart/arrays/Arrays.SystemSettings.html#availableProcessors()"><CODE>Arrays.SystemSettings.availableProcessors()</CODE></A></tt>,
+ stored while initializing this <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> class,
+ or default value <tt>3&nbsp;*&nbsp;<A HREF="../../../net/algart/arrays/Arrays.SystemSettings.html#availableProcessors()"><CODE>Arrays.SystemSettings.availableProcessors()</CODE></A></tt>,
+ if some exception occurred while calling <tt>Integer.getInteger</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#recommendedSingleMappingLimit()">recommendedSingleMappingLimit</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation returns the value
+ <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.singleMappingLimit",268435456)</tt> (256 MB)
+ on 64-bit Java machines.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#temporaryFilePrefix()">temporaryFilePrefix</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation returns <tt>"mapmm"</tt>;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#toString()">toString</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a brief string description of this class.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_net.algart.arrays.AbstractDataFileModel"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class net.algart.arrays.<A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">AbstractDataFileModel</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#allTemporaryFiles()">allTemporaryFiles</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#byteOrderInTemporaryFiles()">byteOrderInTemporaryFiles</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporary(boolean)">createTemporary</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)">createTemporaryFile</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#delete(net.algart.arrays.DataFile)">delete</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#finalizationNotify(java.io.File, boolean)">finalizationNotify</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#isConcreteFile()">isConcreteFile</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#pathClass()">pathClass</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedPrefixSize()">recommendedPrefixSize</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#setTemporary(net.algart.arrays.DataFile, boolean)">setTemporary</A>, <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#tempPath()">tempPath</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class java.lang.Object</STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_net.algart.arrays.DataFileModel"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from interface net.algart.arrays.<A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#allTemporaryFiles()">allTemporaryFiles</A>, <A HREF="../../../net/algart/arrays/DataFileModel.html#createTemporary(boolean)">createTemporary</A>, <A HREF="../../../net/algart/arrays/DataFileModel.html#delete(net.algart.arrays.DataFile)">delete</A>, <A HREF="../../../net/algart/arrays/DataFileModel.html#finalizationNotify(P, boolean)">finalizationNotify</A>, <A HREF="../../../net/algart/arrays/DataFileModel.html#pathClass()">pathClass</A>, <A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedPrefixSize()">recommendedPrefixSize</A>, <A HREF="../../../net/algart/arrays/DataFileModel.html#setTemporary(net.algart.arrays.DataFile, boolean)">setTemporary</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Constructor Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="DefaultDataFileModel()"><!-- --></A><H3>
+DefaultDataFileModel</H3>
+<PRE>
+public <STRONG>DefaultDataFileModel</STRONG>()</PRE>
+<DL>
+<DD>Equivalent to <tt>new <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File, long, boolean)"><CODE>DefaultDataFileModel</CODE></A>(null, 0, <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#defaultLazyWriting()"><CODE>defaultLazyWriting()</CODE></A>)</tt>.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="DefaultDataFileModel(boolean)"><!-- --></A><H3>
+DefaultDataFileModel</H3>
+<PRE>
+public <STRONG>DefaultDataFileModel</STRONG>(boolean&nbsp;lazyWriting)</PRE>
+<DL>
+<DD>Equivalent to <tt>new <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File, long, boolean)"><CODE>DefaultDataFileModel</CODE></A>(null, 0, lazyWriting)</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>lazyWriting</CODE> - it <tt>true</tt>, lazy-writing mode will be used.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="DefaultDataFileModel(java.io.File)"><!-- --></A><H3>
+DefaultDataFileModel</H3>
+<PRE>
+public <STRONG>DefaultDataFileModel</STRONG>(java.io.File&nbsp;tempPath)</PRE>
+<DL>
+<DD>Equivalent to <tt>new <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File, long, boolean)"><CODE>DefaultDataFileModel</CODE></A>(tempPath, 0, <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#defaultLazyWriting()"><CODE>defaultLazyWriting()</CODE></A>)</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>tempPath</CODE> - the path where new temporary files will be created
+                    by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>AbstractDataFileModel.createTemporaryFile(boolean)</CODE></A> method
+                    or <tt>null</tt> if the default temporary-file directory is to be used.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="DefaultDataFileModel(java.io.File, boolean)"><!-- --></A><H3>
+DefaultDataFileModel</H3>
+<PRE>
+public <STRONG>DefaultDataFileModel</STRONG>(java.io.File&nbsp;tempPath,
+                            boolean&nbsp;lazyWriting)</PRE>
+<DL>
+<DD>Equivalent to <tt>new <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(java.io.File, long, boolean)"><CODE>DefaultDataFileModel</CODE></A>(tempPath, 0, lazyWriting)</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>tempPath</CODE> - the path where new temporary files will be created
+                    by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>AbstractDataFileModel.createTemporaryFile(boolean)</CODE></A> method
+                    or <tt>null</tt> if the default temporary-file directory is to be used.</DD><DD><CODE>lazyWriting</CODE> - it <tt>true</tt>, lazy-writing mode will be used.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="DefaultDataFileModel(java.io.File, long, boolean)"><!-- --></A><H3>
+DefaultDataFileModel</H3>
+<PRE>
+public <STRONG>DefaultDataFileModel</STRONG>(java.io.File&nbsp;tempPath,
+                            long&nbsp;prefixSize,
+                            boolean&nbsp;lazyWriting)</PRE>
+<DL>
+<DD>Creates new instance with specified lazy-writing mode.
+
+ <p>Please see <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#AbstractDataFileModel(java.io.File, long)"><CODE>AbstractDataFileModel.AbstractDataFileModel(File, long)</CODE></A> about
+ <tt>tempPath</tt> and <tt>prefixSize</tt> arguments.
+
+ <p>The <tt>lazyWriting</tt> argument specifies whether the data files
+ will use lazy writing mode. Namely, if this flag is set, flushing or unmapping
+ the mapped regions via <A HREF="../../../net/algart/arrays/DataFile.BufferHolder.html#flush(boolean)"><CODE>DataFile.BufferHolder.flush(false)</CODE></A>,
+ <A HREF="../../../net/algart/arrays/DataFile.BufferHolder.html#unmap(boolean)"><CODE>DataFile.BufferHolder.unmap(false)</CODE></A> calls
+ will not lead to immediate writing data
+ to the disk file: this method will not do anything.
+ Instead, the data will be really written by garbage collector.
+ If this flag is not set, any call of <A HREF="../../../net/algart/arrays/DataFile.BufferHolder.html#flush(boolean)"><CODE>DataFile.BufferHolder.flush(boolean)</CODE></A>
+ or <A HREF="../../../net/algart/arrays/DataFile.BufferHolder.html#unmap(boolean)"><CODE>DataFile.BufferHolder.unmap(boolean)</CODE></A> method
+ forces writing data to the disk by
+ <tt>force()</tt> method of <tt>MappedByteBuffer</tt> class.
+
+ <p>By default, if you use constructors without <tt>lazyWriting</tt> argument,
+ this flag is retrieved from the system property
+ "<tt>net.algart.arrays.DefaultDataFileModel.lazyWriting</tt>"
+ or, if there is no such property,
+ is set to <tt>true</tt> in Java 1.7+ or <tt>false</tt> in Java 1.5 and 1.6.
+ Please see <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#defaultLazyWriting()"><CODE>defaultLazyWriting()</CODE></A>.
+
+ <p>Usually, you should set <tt>lazyWriting</tt> flag to <tt>true</tt>.
+ It can essentially increase the performance, if you create and modify many large AlgART arrays,
+ because OS will store the new data in the cache and will not physically write data to the disk.
+ Even in this case, this class periodically flushs the unsaved data, when the summary
+ amount of mapped buffers exceeds the limit returned by <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#maxMappedMemory()"><CODE>maxMappedMemory()</CODE></A> method.
+
+ <p>The <tt>false</tt> value of this flag may be recommended if the stable behavior of your application
+ is more important than the speed. If lazy writing is disabled,
+ the application will use less RAM and the risk of swapping will be much less,
+ because each new data will be immediately saved to the disk and will not be cached in RAM.
+
+ <p>Unfortunately, <b>lazy-writing mode leads to internal Sun's bug in Java 1.5 and 1.6</b>:
+ we recommend never set it to <tt>true</tt> in these Java versions.
+ The detailed description of this bug is here:
+ "<a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6521677"
+ >(fc)&nbsp;"Cleaner terminated abnormally" error in simple mapping test</a>".
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>tempPath</CODE> - the path where new temporary files will be created
+                    by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#createTemporaryFile(boolean)"><CODE>AbstractDataFileModel.createTemporaryFile(boolean)</CODE></A> method
+                    or <tt>null</tt> if the default temporary-file directory is to be used.</DD><DD><CODE>prefixSize</CODE> - the value returned by <A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedPrefixSize()"><CODE>AbstractDataFileModel.recommendedPrefixSize()</CODE></A> implementation in this class.</DD><DD><CODE>lazyWriting</CODE> - it <tt>true</tt>, lazy-writing mode will be used.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#maxMappedMemory()"><CODE>maxMappedMemory()</CODE></A></DD></DL>
+</DD>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="defaultLazyWriting()"><!-- --></A><H3>
+defaultLazyWriting</H3>
+<PRE>
+public static boolean <STRONG>defaultLazyWriting</STRONG>()</PRE>
+<DL>
+<DD>Default <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#isLazyWriting()"><CODE>lazy-writing mode</CODE></A>, used when this this class
+ is instantiated by a constructor without <tt>lazyWriting</tt> argument.
+ More precisely, if there is the system property
+ "<tt>net.algart.arrays.DefaultDataFileModel.lazyWriting</tt>",
+ containing "<tt>true</tt>" or "<tt>false</tt>" string (in lower case),
+ this method returns <tt>true</tt> if this property contains "<tt>true</tt>"
+ and <tt>false</tt> if this property contains "<tt>false</tt>".
+ If there is no such property, or if it contains illegal string (not "<tt>true</tt>" or "<tt>false</tt>"),
+ or if some exception occurred while calling <tt>System.getProperty</tt>,
+ this method returns <tt>true</tt> in Java 1.7 or higher Java version
+ and <tt>false</tt> in Java 1.5 and Java 1.6.
+ The value of this system property is loaded and checked only once
+ while initializing <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> class.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>default <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#isLazyWriting()"><CODE>lazy-writing mode</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="maxMappedMemory()"><!-- --></A><H3>
+maxMappedMemory</H3>
+<PRE>
+public static long <STRONG>maxMappedMemory</STRONG>()</PRE>
+<DL>
+<DD>The maximal amount of RAM (in bytes), allowed for simultaneous mapping by <tt>FileChannel.map</tt> method
+ without flushing data to the disk by <tt>MappedByteBuffer.force()</tt> method.
+
+ <p>This value is important while using <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#isLazyWriting()"><CODE>lazy-writing mode</CODE></A>.
+ In this case, a lot of mapping requests (calls of <tt>FileChannel.map</tt>),
+ with modifications of the mapped data and without further <tt>MappedByteBuffer.force()</tt>,
+ will use RAM for storing the changed data in the system cache.
+ When all (or almost all) available RAM will be spent, it may lead to intensive disk swapping.
+ The reason is that the mapped memory is not controlled by Java garbage collector:
+ it is possible to map much more disk memory than <tt>Runtime.maxMemory()</tt>.
+ The result may be extremely slowing down of all other applications, working on the computer,
+ and even practical impossibility of any work: all RAM will be occupied by your application.
+
+ <p>To avoid this behavior, this class controls the total amount of mapped memory
+ (summary size of all mapped buffers in all files),
+ and when it exceeds the limit, returned by this method,
+ calls <tt>MappedByteBuffer.force()</tt> for all currently mapped buffers
+ and, so, flushs the data to the disk and frees the system memory.
+
+ <p>This value, returned by this method, is retrieved from the system property
+ "<tt>net.algart.arrays.maxMappedMemory</tt>",
+ if it exists and contains a valid integer number.
+ If this property contains zero or negative integer, this method returns 0, and
+ it means that the amount of RAM for simultaneous mapping is not limited at all:
+ the application will try to use all available system memory.
+ If this property contains an integer greater than the limit 2<sup>56</sup>~7.2*10<sup>16</sup>,
+ this limit is used instead: it guarantees that using this value will not lead to integer overflow.
+ If there is no such property, or if it contains not a number,
+ or if some exception occurred while calling <tt>Long.getLong</tt>,
+ this method returns the default value <tt>536870912</tt> (512 MB).
+ The value of this system property is loaded and checked only once
+ while initializing <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> class.
+
+ <p>We recommend to always set this system property in serious applications,
+ working with large AlgART arrays.
+ The suitable value is about 50-100% of the current RAM installed on the computer.
+ The default value 512 MB works well if you don't need to process larger amounts of data frequently.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the maximal amount of RAM (in bytes), allowed for simultaneous mapping by this class.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isLazyWriting()"><!-- --></A><H3>
+isLazyWriting</H3>
+<PRE>
+public final boolean <STRONG>isLazyWriting</STRONG>()</PRE>
+<DL>
+<DD>Returns the <tt>lazyWriting</tt> argument, passed to
+ <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html#DefaultDataFileModel(boolean)"><CODE>the constructor</CODE></A> while creating this instance.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the <tt>lazyWriting</tt> flag, passed to the constructor.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getDataFile(java.io.File, java.nio.ByteOrder)"><!-- --></A><H3>
+getDataFile</H3>
+<PRE>
+public <A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A> <STRONG>getDataFile</STRONG>(java.io.File&nbsp;path,
+                            java.nio.ByteOrder&nbsp;byteOrder)</PRE>
+<DL>
+<DD>This implementation returns the data file corresponding to usual Java file <tt>new java.io.File(path)</tt>
+ with <A HREF="../../../net/algart/arrays/DataFile.html#map(net.algart.arrays.DataFile.Range, boolean)"><CODE>DataFile.map</CODE></A>
+ method based on standard Java mapping.
+
+ <p>This method never throws <tt>java.io.IOError</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#getDataFile(P, java.nio.ByteOrder)">getDataFile</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#getDataFile(java.io.File, java.nio.ByteOrder)">getDataFile</A></CODE> in class <CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">AbstractDataFileModel</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>path</CODE> - the path to disk file (as the argument of <tt>new java.io.File(path)</tt>).</DD><DD><CODE>byteOrder</CODE> - the byte order that will be always used for mapping this file.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>new instance of <A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays"><CODE>DataFile</CODE></A> object.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if one of the passed arguments is <tt>null</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPath(net.algart.arrays.DataFile)"><!-- --></A><H3>
+getPath</H3>
+<PRE>
+public java.io.File <STRONG>getPath</STRONG>(<A HREF="../../../net/algart/arrays/DataFile.html" title="interface in net.algart.arrays">DataFile</A>&nbsp;dataFile)</PRE>
+<DL>
+<DD>Returns the absolute path to the disk file (<tt>java.io.File.getAbsoluteFile()</tt>).
+ The argument may be created by this data file model or by <A HREF="../../../net/algart/arrays/StandardIODataFileModel.html" title="class in net.algart.arrays"><CODE>StandardIODataFileModel</CODE></A>.
+
+ <p>This method never throws <tt>java.io.IOError</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#getPath(net.algart.arrays.DataFile)">getPath</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#getPath(net.algart.arrays.DataFile)">getPath</A></CODE> in class <CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">AbstractDataFileModel</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>dataFile</CODE> - the data file.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the absolute path to the disk file.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if the argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.ClassCastException</CODE> - if the data file was created by data file model, other than
+                              <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> or <A HREF="../../../net/algart/arrays/StandardIODataFileModel.html" title="class in net.algart.arrays"><CODE>StandardIODataFileModel</CODE></A>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isAutoDeletionRequested()"><!-- --></A><H3>
+isAutoDeletionRequested</H3>
+<PRE>
+public boolean <STRONG>isAutoDeletionRequested</STRONG>()</PRE>
+<DL>
+<DD><p>This implementation returns <tt>true</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#isAutoDeletionRequested()">isAutoDeletionRequested</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#isAutoDeletionRequested()">isAutoDeletionRequested</A></CODE> in class <CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">AbstractDataFileModel</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="recommendedNumberOfBanks()"><!-- --></A><H3>
+recommendedNumberOfBanks</H3>
+<PRE>
+public int <STRONG>recommendedNumberOfBanks</STRONG>()</PRE>
+<DL>
+<DD><p>This implementation returns the value
+ <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.numberOfBanksPerCPU",&nbsp;3)
+ * <A HREF="../../../net/algart/arrays/Arrays.SystemSettings.html#availableProcessors()"><CODE>Arrays.SystemSettings.availableProcessors()</CODE></A></tt>,
+ stored while initializing this <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> class,
+ or default value <tt>3&nbsp;*&nbsp;<A HREF="../../../net/algart/arrays/Arrays.SystemSettings.html#availableProcessors()"><CODE>Arrays.SystemSettings.availableProcessors()</CODE></A></tt>,
+ if some exception occurred while calling <tt>Integer.getInteger</tt>.
+ If this value is less than 2, returns 2.
+ If "net.algart.arrays.DefaultDataFileModel.numberOfBanksPerCPU" property contains negative or zero integer,
+ returns 2.
+
+     <!--Repeat(INCLUDE_FROM_FILE, DataFileModel.java, recommendedNumberOfBanks_multiprocessor)   !! Auto-generated: NOT EDIT !! -->
+ <p>Please note that many algorithms, on multiprocessor or multi-core systems,
+ use several parallel threads for processing arrays: see <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html" title="class in net.algart.arrays"><CODE>Arrays.ParallelExecutor</CODE></A>.
+ So, the number of banks should be enough for parallel using by all CPU units,
+ to avoid frequently bank swapping.
+ There should be at least 2 banks per each CPU unit,
+ better 3-4 banks (for complex random-access algorithms).
+     <!--Repeat.IncludeEnd-->
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedNumberOfBanks()">recommendedNumberOfBanks</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedNumberOfBanks()">recommendedNumberOfBanks</A></CODE> in class <CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">AbstractDataFileModel</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the recommended number of memory banks.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="recommendedBankSize(boolean)"><!-- --></A><H3>
+recommendedBankSize</H3>
+<PRE>
+public int <STRONG>recommendedBankSize</STRONG>(boolean&nbsp;unresizable)</PRE>
+<DL>
+<DD><p>This implementation returns the value
+ <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.bankSize",16777216)</tt> (16 MB)
+ when the argument is <tt>true</tt> and
+ <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.resizableBankSize",4194304)</tt> (4 MB)
+ when the argument is <tt>false</tt> on 64-bit Java machines.
+ On 32-bit JVM, this method returns
+ <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.bankSize32",4194304)</tt> (4 MB)
+ when the argument is <tt>true</tt> and
+ <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.resizableBankSize32",2097152)</tt> (2 MB)
+ when the argument is <tt>false</tt>.
+ These values are stored while initializing <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> class.
+ If some exceptions occur while calling <tt>Integer.getInteger</tt>,
+ the default values 16777216 / 4194304 (for 64-bit Java) or
+ 4194304 / 2097152 (for 32-bit Java) are returned.
+ If this property contains invalid value (for example, not a power of two),
+ this value is automatically corrected to the nearest valid one.
+
+ <p>This method distinguishes between 32-bit and 64-bit Java via <A HREF="../../../net/algart/arrays/Arrays.SystemSettings.html#isJava32()"><CODE>Arrays.SystemSettings.isJava32()</CODE></A> method.
+ Please remember that the result of that method is not 100% robust;
+ so, please not specify too high values if you are not quite sure that your JVM is not 32-bit
+ and has no 32-bit limitations for the address space.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedBankSize(boolean)">recommendedBankSize</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedBankSize(boolean)">recommendedBankSize</A></CODE> in class <CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">AbstractDataFileModel</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>unresizable</CODE> - <tt>true</tt> if this bank size will be used for unresizable arrays only.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the recommended size of every memory bank in bytes.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedSingleMappingLimit()"><CODE>DataFileModel.recommendedSingleMappingLimit()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="recommendedSingleMappingLimit()"><!-- --></A><H3>
+recommendedSingleMappingLimit</H3>
+<PRE>
+public int <STRONG>recommendedSingleMappingLimit</STRONG>()</PRE>
+<DL>
+<DD><p>This implementation returns the value
+ <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.singleMappingLimit",268435456)</tt> (256 MB)
+ on 64-bit Java machines. On 32-bit JVM, this method returns
+ <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.singleMappingLimit32",4194304)</tt> (4 MB).
+ This value is stored while initializing <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> class.
+ If some exceptions occur while calling <tt>Integer.getInteger</tt>,
+ the default value 268435456 (or 4194304 for 32-bit Java) is returned.
+
+ <p>This method distinguishes between 32-bit and 64-bit Java via <A HREF="../../../net/algart/arrays/Arrays.SystemSettings.html#isJava32()"><CODE>Arrays.SystemSettings.isJava32()</CODE></A> method.
+ Please remember that the result of that method is not 100% robust;
+ so, please not specify too high values if you are not quite sure that your JVM is not 32-bit
+ and has no 32-bit limitations for the address space.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#recommendedSingleMappingLimit()">recommendedSingleMappingLimit</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#recommendedSingleMappingLimit()">recommendedSingleMappingLimit</A></CODE> in class <CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">AbstractDataFileModel</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the recommended limit for file size, in bytes, so that less files, if they are unresizable,
+         should be mapped only once by single call of <A HREF="../../../net/algart/arrays/DataFile.html#map(net.algart.arrays.DataFile.Range, boolean)"><CODE>DataFile.map(net.algart.arrays.DataFile.Range, boolean)</CODE></A> method.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="autoResizingOnMapping()"><!-- --></A><H3>
+autoResizingOnMapping</H3>
+<PRE>
+public boolean <STRONG>autoResizingOnMapping</STRONG>()</PRE>
+<DL>
+<DD><p>This implementation returns the value
+ <tt>Boolean.getBoolean("net.algart.arrays.DefaultDataFileModel.autoResizingOnMapping")</tt>,
+ stored while initializing <A HREF="../../../net/algart/arrays/DefaultDataFileModel.html" title="class in net.algart.arrays"><CODE>DefaultDataFileModel</CODE></A> class,
+ or <tt>false</tt> if there is no such system property or some exception occurred while
+ calling <tt>Boolean.getBoolean</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/DataFileModel.html#autoResizingOnMapping()">autoResizingOnMapping</A></CODE> in interface <CODE><A HREF="../../../net/algart/arrays/DataFileModel.html" title="interface in net.algart.arrays">DataFileModel</A>&lt;java.io.File&gt;</CODE></DD>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#autoResizingOnMapping()">autoResizingOnMapping</A></CODE> in class <CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">AbstractDataFileModel</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if mapping outside the file length automatically increase the length.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="temporaryFilePrefix()"><!-- --></A><H3>
+temporaryFilePrefix</H3>
+<PRE>
+public java.lang.String <STRONG>temporaryFilePrefix</STRONG>()</PRE>
+<DL>
+<DD>This implementation returns <tt>"mapmm"</tt>;
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html#temporaryFilePrefix()">temporaryFilePrefix</A></CODE> in class <CODE><A HREF="../../../net/algart/arrays/AbstractDataFileModel.html" title="class in net.algart.arrays">AbstractDataFileModel</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>"mapmm"</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="toString()"><!-- --></A><H3>
+toString</H3>
+<PRE>
+public java.lang.String <STRONG>toString</STRONG>()</PRE>
+<DL>
+<DD>Returns a brief string description of this class.
+
+ <p>The result of this method may depend on implementation.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>toString</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>a brief string description of this object.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/DataShortBuffer.html" title="interface in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/DefaultThreadPoolFactory.html" title="class in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/DefaultDataFileModel.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="DefaultDataFileModel.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_net.algart.arrays.AbstractDataFileModel">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

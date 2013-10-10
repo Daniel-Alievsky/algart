@@ -1,0 +1,1258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+DataBuffer
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="DataBuffer";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/DataBitBuffer.html" title="interface in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html" title="enum in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/DataBuffer.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="DataBuffer.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.arrays</FONT>
+<BR>
+Interface DataBuffer</H2>
+<DL>
+<DT><STRONG>All Known Subinterfaces:</STRONG></DT> <DD><A HREF="../../../net/algart/arrays/DataBitBuffer.html" title="interface in net.algart.arrays">DataBitBuffer</A>, <A HREF="../../../net/algart/arrays/DataByteBuffer.html" title="interface in net.algart.arrays">DataByteBuffer</A>, <A HREF="../../../net/algart/arrays/DataCharBuffer.html" title="interface in net.algart.arrays">DataCharBuffer</A>, <A HREF="../../../net/algart/arrays/DataDoubleBuffer.html" title="interface in net.algart.arrays">DataDoubleBuffer</A>, <A HREF="../../../net/algart/arrays/DataFloatBuffer.html" title="interface in net.algart.arrays">DataFloatBuffer</A>, <A HREF="../../../net/algart/arrays/DataIntBuffer.html" title="interface in net.algart.arrays">DataIntBuffer</A>, <A HREF="../../../net/algart/arrays/DataLongBuffer.html" title="interface in net.algart.arrays">DataLongBuffer</A>, <A HREF="../../../net/algart/arrays/DataObjectBuffer.html" title="interface in net.algart.arrays">DataObjectBuffer</A>&lt;E&gt;, <A HREF="../../../net/algart/arrays/DataShortBuffer.html" title="interface in net.algart.arrays">DataShortBuffer</A></DD>
+</DL>
+<HR>
+<PRE>public interface <STRONG>DataBuffer</STRONG></PRE>
+
+<P>
+<p>Data buffer: an interface allowing to read and write blocks
+ from / to some linear data storage, containing a sequence of elements
+ of any Java type, with maximal performance.
+ It is the recommended basic way for block accessing <A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays"><CODE>AlgART arrays</CODE></A>.</p>
+
+ <p>Theoretically, this technology can be used for accessing any types of data storages:
+ <tt>java.nio.*</tt> buffers, <tt>RandomAccessFile</tt>, etc.
+ But the main application area of data buffers is accessing AlgART arrays &mdash;
+ the only storage variant, for which this package offers a ready implementation.
+ Below we shall suppose that data buffers are used for accessing AlgART arrays.</p>
+
+ <p>AlgART arrays support block read / write methods (<A HREF="../../../net/algart/arrays/Array.html#getData(long, java.lang.Object)"><CODE>Array.getData(long, Object)</CODE></A>,
+ <A HREF="../../../net/algart/arrays/UpdatableArray.html#setData(long, java.lang.Object)"><CODE>UpdatableArray.setData(long, Object)</CODE></A> and similar), that read / write some data block,
+ specified by it's position and size, into / from usual Java array.
+ However, such access way may be not most efficient.
+ For example, if an AlgART array implements <A HREF="../../../net/algart/arrays/DirectAccessible.html" title="interface in net.algart.arrays"><CODE>DirectAccessible</CODE></A> interface,
+ i.e. is backed by an accessible Java array, then
+ reading the fragment of this array into a separate Java array
+ (<A HREF="../../../net/algart/arrays/Array.html#getData(long, java.lang.Object)"><CODE>Array.getData</CODE></A> method) is not a good idea:
+ it's much more rational to work with the backing Java array directly.
+ If an AlgART array is a <A HREF="../../../net/algart/arrays/Arrays.html#isNCopies(net.algart.arrays.Array)"><CODE>constant array</CODE></A>,
+ then reading data by <A HREF="../../../net/algart/arrays/Array.html#getData(long, java.lang.Object)"><CODE>Array.getData(long, Object)</CODE></A> method
+ may be performed only once: the loaded data will be always the same.</p>
+
+ <p>Unlike the block read / write methods, the <i>data buffer</i>
+ provides the most efficient and convenient read / write block access to any kinds of AlgART arrays.</p>
+
+ <p>The scheme of usage is alike file mapping by <tt>java.nio.channels.FileChannel</tt> class,
+ with some little differences.</p>
+
+ <p>The model of data buffers is the following.
+ Every <i>data buffer</i> is associated with a single AlgART array and consists of:</p>
+
+ <ol type="A">
+ <li>A reference to the <i>data array</i>: a usual <i>Java</i> array, returned by <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> method.
+ This array contains all elements of some "mapped" region of the AlgART array.
+ The mapped region usually corresponds not to entire Java array, but only to its fragment
+ (see <i>actual region</i> in the section C below).
+ The type of elements of the Java array is the same as the type of AlgART array elements
+ (<A HREF="../../../net/algart/arrays/Array.html#elementType()"><CODE>Array.elementType()</CODE></A>), excepting the only case of <A HREF="../../../net/algart/arrays/BitArray.html" title="interface in net.algart.arrays"><CODE>bit arrays</CODE></A>.
+ For bit arrays, the elements are packed into <tt>long[]</tt> array (64 bits per every <tt>long</tt>),
+ as specified in <A HREF="../../../net/algart/arrays/PackedBitArrays.html" title="class in net.algart.arrays"><CODE>PackedBitArrays</CODE></A> class.
+ <br>&nbsp;</li>
+
+ <li>The <i>capacity</i>: maximal possible number of actual elements
+ in the data buffer, or, in other words, the maximal possible number of elements in a mapped region.
+ This value can be got by <A HREF="../../../net/algart/arrays/DataBuffer.html#capacity()"><CODE>capacity()</CODE></A> method. Please note that the <i>data array</i>
+ may contain more than <i>capacity</i> elements; but the length of its <i>actual region</i>
+ (<tt><i>toIndex</i>-<i>fromIndex</i></tt>) never exceeds <i>capacity</i>.
+ <br>&nbsp;</li>
+
+ <li>The <i>actual region</i> <tt><i>fromIndex</i>..<i>toIndex</i></tt> in the <i>data array</i>:
+ the elements of the AlgART array are always placed at the positions <tt><i>fromIndex</i>..<i>toIndex</i>-1</tt>
+ in this Java array. The region boundaries can be got by <A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A> and <A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A> methods.
+ The number of actual elements is <tt><i>count</i>=<i>toIndex</i>-<i>fromIndex</i></tt>
+ and can be also got by <A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A> method.
+ <br>&nbsp;</li>
+
+ <li>Current <i>mapping position</i> in the AlgART array.
+ The actual region in the Java array corresponds to the region of the same size in the AlgART array,
+ starting from current mapping position: <tt><i>position</i>..<i>position</i>+<i>count</i>-1</tt>.
+ This value can be got by <A HREF="../../../net/algart/arrays/DataBuffer.html#position()"><CODE>position()</CODE></A> method.
+ <br>&nbsp;</li>
+
+ <li>The <i>access mode</i>, describing possible access ways to the data:
+ see <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html" title="enum in net.algart.arrays"><CODE>DataBuffer.AccessMode</CODE></A>.</li>
+ </ol>
+
+ <p>Please note that all integer values, described above &mdash; <i>capacity</i>,
+ <i>fromIndex</i>, <i>toIndex</i>, <i>count</i>, <i>position</i> &mdash;
+ are <tt>long</tt>, not <tt>int</tt> values.
+ The reason is that data buffers for bit arrays are packed into <tt>long[]</tt> arrays and, so,
+ can contain <tt>2<sup>31</sup></tt> or more bits.
+ In any case, all describied integer characteristics cannot be greater than <tt>2<sup>37</sup>-1</tt> for bit arrays
+ and cannot be greater than <tt>Integer.MAX_VALUE==2<sup>31</sup>-1</tt> for all other element types.</p>
+
+ <p>There are additional methods <A HREF="../../../net/algart/arrays/DataBuffer.html#from()"><CODE>from()</CODE></A>, <A HREF="../../../net/algart/arrays/DataBuffer.html#to()"><CODE>to()</CODE></A>, <A HREF="../../../net/algart/arrays/DataBuffer.html#cnt()"><CODE>cnt()</CODE></A>,
+ that return the results of full methods <A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>, <A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>, <A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>,
+ cast to <tt>int</tt> type.
+ If the precise long values cannot be cast to <tt>int</tt>, because they are greater
+ than <tt>Integer.MAX_VALUE</tt>, these methods throw <A HREF="../../../net/algart/arrays/DataBufferIndexOverflowException.html" title="class in net.algart.arrays"><CODE>DataBufferIndexOverflowException</CODE></A>.
+ You may use these methods to simplify your code, if the element type is not bit.  </p>
+
+ <p>The scheme of using data buffers is the following.</p>
+
+ <ol>
+ <li>First, you must create the data buffer (an object implementing this interface),
+ that will correspond to an AlgART array (or maybe for another kind of storage).
+ For AlgART arrays, you may use <A HREF="../../../net/algart/arrays/Array.html#buffer(net.algart.arrays.DataBuffer.AccessMode, long)"><CODE>Array.buffer(DataBuffer.AccessMode mode, long capacity)</CODE></A> method.
+ At this stage, you specify the <i>access mode</i> and desired <i>capacity</i>.
+ You also may use one of overloaded simplified variants of this method,
+ allowing to choose its arguments automatically, for example, <A HREF="../../../net/algart/arrays/Array.html#buffer()"><CODE>Array.buffer()</CODE></A>.
+ <br>&nbsp;<br>
+ Note: the newly created data buffer, unlike <tt>java.nio.MappedByteBuffer</tt>, contains no elements!
+ Now <i>count</i> is zero, the value <i>fromIndex</i>=<i>toIndex</i> is unspecified,
+ <i>mapping position</i> is zero.
+ <br>&nbsp;<br>
+ Note also: the creation of the new buffer is supposed to be very quick operation.
+ In particular, all necessary memory and other "heavy" resources are allocated later,
+ usually while the first mapping at the step 2.
+ <br>&nbsp;</li>
+
+ <li>Then you call <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long position)</CODE></A> method of the created data buffer
+ for any desired <i>mapping position</i> in the AlgART array.
+ After this call, the <i>mapping position</i> becomes equal to the passed passition,
+ and the number of actual elements <tt><i>count</i></tt> <tt>(=<i>toIndex</i>-<i>fromIndex</i>)</tt>
+ becomes equal to <tt>min(<i>capacity</i>,<i>length</i>-<i>position</i>)</tt>,
+ where <tt>length</tt> is the length of the AlgART array (<A HREF="../../../net/algart/arrays/Array.html#length()"><CODE>Array.length()</CODE></A>)
+ and <tt><i>capacity</i></tt> is the buffer capacity specified while its creation at the step 1.
+ <br>&nbsp;<br>
+ If you don't need access all <i>capacity</i> elements (for example, the capacity, specified while
+ buffer creation, is 32 KB, but you need to read 100 elements only), you may use
+ <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long)"><CODE>map(long position, long maxCount)</CODE></A> method: it may work faster.
+ <br>&nbsp;<br>
+ Please compare: <tt>java.nio.MappedByteBuffer</tt> instance is always mapped to
+ the fixed file position, but an instance of this data buffer may be (and usually should be)
+ remapped to another positions of AlgART array by its
+ <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long position)</CODE></A> or
+ <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long)"><CODE>map(long position, long maxCount)</CODE></A> methods.
+ <br>&nbsp;</li>
+
+ <li>Now you may access the data elements via the Java array, the reference to which
+ is returned by <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> method.
+ The actual elements will be placed in this Java array at indexes
+ <tt><i>fromIndex</i>..<i>toIndex</i>-1</tt>. For bits arrays, it means the indexes
+ in terms of <A HREF="../../../net/algart/arrays/PackedBitArrays.html" title="class in net.algart.arrays"><CODE>PackedBitArrays</CODE></A> class; so, these elements may be get and set via
+ <A HREF="../../../net/algart/arrays/PackedBitArrays.html#getBit(long[], long)"><CODE>getBit(src,index)</CODE></A> and
+ <A HREF="../../../net/algart/arrays/PackedBitArrays.html#setBit(long[], long, boolean)"><CODE>setBit(dest,index,value)</CODE></A> methods of that class,
+ where <tt><i>fromIndex</i>&lt;=index&lt;<i>toIndex</i></tt>. For other element types,
+ the actual elements may be accessed via Java operator <tt>data[index]</tt>,
+ <tt><i>fromIndex</i>&lt;=index&lt;<i>toIndex</i></tt>, where <tt><i>elementType</i>[]&nbsp;data</tt> is the result
+ of <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> method.
+ <br>&nbsp;<br>
+ Note: you may change elements of the returned Java array, but these changes may reflect or not reflect
+ in the original data storage (in particular, the AlgART array). It depends on the nature of this storage.
+ For example, if it is backed by an accessible Java array, the changes will probably be reflected in
+ the storage immediately; if it is a <A HREF="../../../net/algart/arrays/LargeMemoryModel.html" title="class in net.algart.arrays"><CODE>large array</CODE></A> backed by a disk file,
+ the changes are stored in a local buffer only. See the step 4.
+ <br>&nbsp;<br>
+ Note also: for bit arrays, you must modify bits in the packed Java array
+ <i>only</i> by methods of <A HREF="../../../net/algart/arrays/PackedBitArrays.html" title="class in net.algart.arrays"><CODE>PackedBitArrays</CODE></A> class or by fully equivalent code, containing
+ the same synchronization while changing not all bits in some packed <tt>long</tt> element.
+ Without synchronization, some elements can be written incorrectly while multithreading using.
+ See comments to <A HREF="../../../net/algart/arrays/PackedBitArrays.html" title="class in net.algart.arrays"><CODE>PackedBitArrays</CODE></A> class for more details.
+ <br>&nbsp;<br>
+ Note also: the reference, returned by <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> method, may change after any call of
+ <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map</CODE></A> method. You should get this reference again after every its call.
+ <br>&nbsp;</li>
+
+ <li>If you need to write the changed data into the AlgART array,
+ you must call <A HREF="../../../net/algart/arrays/DataBuffer.html#force()"><CODE>force()</CODE></A> method after changing them.
+ If not all elements in the <i>actual region</i> were really changed,
+ you may use <A HREF="../../../net/algart/arrays/DataBuffer.html#force(long, long)"><CODE>force(long fromIndex, long toIndex)</CODE></A> method: it may work faster.
+ <br>&nbsp;</li>
+
+ <li>You may repeat steps 2-4 many times to access different <i>mapping positions</i>
+ in the same AlgART array.
+ It usually will not lead to allocating new memory and will be performed quickly.
+ To map the next region of the AlgART array, you may use <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A> method.
+ If the AlgART array is exhausted, the buffer becomes empty,
+ that may be checked by <A HREF="../../../net/algart/arrays/DataBuffer.html#hasData()"><CODE>hasData()</CODE></A> method.
+ </ol>
+
+ <h4><a name="directAndIndirect"></a>Direct and indirect data buffers</h4>
+
+ <p>The data buffers, provided by this package for AlgART arrays, are divided into 2 groups.</p>
+
+ <p>The first group is <i>direct buffers</i>.
+ They provide maximally efficient access to AlgART arrays.
+ Such kind of buffers is returned by
+ <A HREF="../../../net/algart/arrays/Array.html#buffer(net.algart.arrays.DataBuffer.AccessMode, long)"><CODE>Array.buffer</CODE></A> method, implemented
+ in this package, if and only if the following conditions are fulfilled:</p>
+
+ <ul>
+ <li>the AlgART array is not <A HREF="../../../net/algart/arrays/Array.html#asImmutable()"><CODE>immutable</CODE></A>;</li>
+ <li>and it is not <A HREF="../../../net/algart/arrays/Array.html#asCopyOnNextWrite()"><CODE>copy-on-next-write</CODE></A>;</li>
+ <li>and:
+ <ul>
+ <li>either it implements <A HREF="../../../net/algart/arrays/DirectAccessible.html" title="interface in net.algart.arrays"><CODE>DirectAccessible</CODE></A> interface and its
+ <A HREF="../../../net/algart/arrays/DirectAccessible.html#hasJavaArray()"><CODE>hasJavaArray()</CODE></A> method returns <tt>true</tt>,
+ <li>or it is a <A HREF="../../../net/algart/arrays/BitArray.html" title="interface in net.algart.arrays"><CODE>bit array</CODE></A> created by the <A HREF="../../../net/algart/arrays/SimpleMemoryModel.html" title="class in net.algart.arrays"><CODE>simple memory model</CODE></A>;
+ </ul>
+ <li>and the <i>access mode</i>, specified while buffer creation, is not
+ <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#PRIVATE"><CODE>PRIVATE</CODE></A>.
+ </ul>
+
+ <p>Direct buffers do not allocate any memory and work with maximal possible speed.
+ For these buffers, the <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> method returns a reference to the internal Java array
+ where the elements are stored. All <tt>map</tt> and <tt>mapNext</tt> methods work very quickly:
+ they just correct the <i>fromIndex</i> and <i>toIndex</i> offsets.
+ Any changes, made in the <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> array, immediately reflect in the original data storage;
+ the <A HREF="../../../net/algart/arrays/DataBuffer.html#force()"><CODE>force()</CODE></A> method, in <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#READ_WRITE"><CODE>READ_WRITE</CODE></A> access mode,
+ does nothing.</p>
+
+ <p>The second group is <i>indirect buffers</i>. These buffers are usually not so efficient
+ as direct ones, because every mapping / writing data requires copying a Java array from / to
+ an AlgART array. The <A HREF="../../../net/algart/arrays/Array.html#buffer(net.algart.arrays.DataBuffer.AccessMode, long)"><CODE>Array.buffer</CODE></A> method,
+ implemented in this package, returns an indirect buffer if one of the conditions listed above is not fulfilled,
+ in particular, if the AlgART array is created by the <A HREF="../../../net/algart/arrays/BufferMemoryModel.html" title="class in net.algart.arrays"><CODE>buffer memory model</CODE></A>
+ or the <A HREF="../../../net/algart/arrays/LargeMemoryModel.html" title="class in net.algart.arrays"><CODE>large memory model</CODE></A>,
+ if it is <A HREF="../../../net/algart/arrays/Array.html#asImmutable()"><CODE>immutable</CODE></A>
+ (and, so, direct access could violate immutability)
+ or it is <A HREF="../../../net/algart/arrays/Array.html#asCopyOnNextWrite()"><CODE>copy-on-next-write</CODE></A>
+ (and, so, an attempt of direct access could lead to cloning all internal storage).</p>
+
+ <p>The indirect buffer automatically allocates a Java array allowing
+ to store <i>capacity</i> elements.
+ (The memory is allocated not while the buffer creation, but while the first further mapping attempt.)
+ This array will is returned by <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> method.
+ The <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long)</CODE></A>, <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long)"><CODE>map(long, long)</CODE></A> and <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A>
+ methods load data into this Java array by <A HREF="../../../net/algart/arrays/Array.html#getData(long, java.lang.Object, int, int)"><CODE>Array.getData(long, Object, int, int)</CODE></A> or,
+ for bit arrays, <A HREF="../../../net/algart/arrays/BitArray.html#getBits(long, long[], long, long)"><CODE>BitArray.getBits(long, long[], long, long)</CODE></A> method.
+ (The <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, boolean)"><CODE>map(long, boolean)</CODE></A>, <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long, boolean)"><CODE>map(long, long, boolean)</CODE></A> and <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext(boolean)"><CODE>mapNext(boolean)</CODE></A>
+ methods allows to skip loading data by specifying the argument <tt>readData=false</tt>,
+ if you really don't need the current data.)
+ The <A HREF="../../../net/algart/arrays/DataBuffer.html#force()"><CODE>force()</CODE></A> method, in <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#READ_WRITE"><CODE>READ_WRITE</CODE></A> access mode,
+ writes data back to the AlgART array
+ by <A HREF="../../../net/algart/arrays/UpdatableArray.html#setData(long, java.lang.Object, int, int)"><CODE>UpdatableArray.setData(long, Object, int, int)</CODE></A> or, for bit arrays,
+ <A HREF="../../../net/algart/arrays/UpdatableBitArray.html#setBits(long, long[], long, long)"><CODE>UpdatableBitArray.setBits(long, long[], long, long)</CODE></A>  method.
+ The changes, made in the <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> array, do not reflect in the original AlgART array
+ until the <A HREF="../../../net/algart/arrays/DataBuffer.html#force()"><CODE>force()</CODE></A> call. Please note that the <i>fromIndex</i> offset is usually little,
+ but <i>not necessarily zero</i>: little non-zero offset may optimize copying data
+ due to better alignment.</p>
+
+ <p>For <A HREF="../../../net/algart/arrays/Arrays.html#isNCopies(net.algart.arrays.Array)"><CODE>constant arrays</CODE></A>, created by
+ <A HREF="../../../net/algart/arrays/Arrays.html#nBitCopies(long, boolean)"><CODE>Arrays.nBitCopies(long, boolean)</CODE></A>, <A HREF="../../../net/algart/arrays/Arrays.html#nCharCopies(long, char)"><CODE>Arrays.nCharCopies(long, char)</CODE></A>,
+ <A HREF="../../../net/algart/arrays/Arrays.html#nByteCopies(long, byte)"><CODE>Arrays.nByteCopies(long, byte)</CODE></A>, <A HREF="../../../net/algart/arrays/Arrays.html#nShortCopies(long, short)"><CODE>Arrays.nShortCopies(long, short)</CODE></A>,
+ <A HREF="../../../net/algart/arrays/Arrays.html#nIntCopies(long, int)"><CODE>Arrays.nIntCopies(long, int)</CODE></A>, <A HREF="../../../net/algart/arrays/Arrays.html#nLongCopies(long, long)"><CODE>Arrays.nLongCopies(long, long)</CODE></A>,
+ <A HREF="../../../net/algart/arrays/Arrays.html#nFloatCopies(long, float)"><CODE>Arrays.nFloatCopies(long, float)</CODE></A>, <A HREF="../../../net/algart/arrays/Arrays.html#nDoubleCopies(long, double)"><CODE>Arrays.nDoubleCopies(long, double)</CODE></A>,
+ <A HREF="../../../net/algart/arrays/Arrays.html#nObjectCopies(long, T)"><CODE>Arrays.nObjectCopies(long, T)</CODE></A> methods,
+ the returned data buffer is also indirect, but works quickly:
+ the sequential calls of all <tt>map</tt> and <tt>mapNext</tt> methods
+ do nothing, because the elements in <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> array are always the same.</p>
+
+ <p>For custom arrays, created by you (via custom <A HREF="../../../net/algart/arrays/MemoryModel.html" title="interface in net.algart.arrays"><CODE>memory model</CODE></A> implemented by you,
+ or via direct implementing <A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays"><CODE>Array</CODE></A> interface with its subinterfaces),
+ the <A HREF="../../../net/algart/arrays/Array.html#buffer(net.algart.arrays.DataBuffer.AccessMode, long)"><CODE>Array.buffer</CODE></A> method may return direct
+ or indirect buffers: it depends on your implementation. If you extend the skeletal
+ <A HREF="../../../net/algart/arrays/AbstractArray.html" title="class in net.algart.arrays"><CODE>AbstractArray</CODE></A> class, please see comments to
+ <A HREF="../../../net/algart/arrays/AbstractArray.html#buffer(net.algart.arrays.DataBuffer.AccessMode, long)"><CODE>AbstractArray.buffer(net.algart.arrays.DataBuffer.AccessMode, long)</CODE></A> method.</p>
+
+ <p>You may determine, whether the buffer is direct or indirect, via <A HREF="../../../net/algart/arrays/DataBuffer.html#isDirect()"><CODE>isDirect()</CODE></A> method.</p>
+
+ <h4><a name="invariants"></a>Invariants of the data buffers</h4>
+
+ <p>For any kind of the data buffer, there are the following guarantees:</p>
+
+ <ul>
+ <li>the <i>mapped position</i> is always inside the range
+ <nobr><tt>0 &lt;= <i>position</i> &lt;= <i>length</i></tt></nobr>,
+ where <i>length</i> is the total number of elements in the data storage
+ (<A HREF="../../../net/algart/arrays/Array.html#length()"><CODE>Array.length()</CODE></A> in a case of AlgART arrays);
+ <br>&nbsp;</li>
+
+ <li>the <i>mapped position</i> is <tt>0</tt> if
+ the buffer is newly created and <tt>map</tt> / <tt>mapNext</tt> methods were never called yet;
+ <br>&nbsp;</li>
+
+ <li>for bit arrays <tt>0&nbsp;&lt;&nbsp;<i>capacity</i>&nbsp;&lt;&nbsp;2<sup>37</sup></tt>,
+ for all other element types <tt>0&nbsp;&lt;&nbsp;<i>capacity</i>&nbsp;&lt;&nbsp;2<sup>31</sup></tt>;
+ <br>&nbsp;</li>
+
+ <li>for bit arrays <tt>0 &lt;= <i>fromIndex</i> &lt;= <i>toIndex</i> &lt;= 64*<i>bufferDataLength</i></tt>,
+ for all other element types <tt>0 &lt;= <i>fromIndex</i> &lt;= <i>toIndex</i> &lt;= <i>bufferDataLength</i></tt>,
+ where <tt><i>bufferDataLength</i></tt> is the length of data array returned by <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> method.
+ <br>&nbsp;</li>
+
+ <li><tt><i>count</i> = <i>toIndex</i> - <i>fromIndex</i> =...</tt>
+ <ul>
+ <li><tt>...= 0</tt>, if the buffer is newly created and
+ <tt>map</tt> / <tt>mapNext</tt> methods were never called yet;</li>
+ <li><tt>...= min(<i>capacity</i>, <i>length</i> - <i>position</i>)</tt>
+ after any call of <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long)</CODE></A>, <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, boolean)"><CODE>map(long, boolean)</CODE></A>, <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A> or <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext(boolean)"><CODE>mapNext(boolean)</CODE></A>
+ method, where <i>length</i> is the total number of elements in the data storage
+ (<A HREF="../../../net/algart/arrays/Array.html#length()"><CODE>Array.length()</CODE></A> in a case of AlgART arrays),</li>
+ <li><tt>...= min(<i>capacity</i>, <i>maxCount</i>, <i>length</i> - <i>position</i>)</tt>
+ after any call of <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long)"><CODE>map(long, long)</CODE></A> or <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long, boolean)"><CODE>map(long, long, boolean)</CODE></A> methods,
+ where <i>maxCount</i> is the second argument of these methods.</li>
+ </ul>
+ </li>
+ </ul>
+ </li>
+ </ul>
+
+ <h4><a name="subInterface"></a>Specific subinterfaces</h4>
+
+ <p>The <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> method, declared in this interface, returns <tt>Object</tt>
+ (the only existing superclass for all Java arrays), that is not too convenient.
+ But there are subinterfaces
+ <A HREF="../../../net/algart/arrays/DataBitBuffer.html" title="interface in net.algart.arrays"><CODE>DataBitBuffer</CODE></A>, <A HREF="../../../net/algart/arrays/DataCharBuffer.html" title="interface in net.algart.arrays"><CODE>DataCharBuffer</CODE></A>,
+ <A HREF="../../../net/algart/arrays/DataByteBuffer.html" title="interface in net.algart.arrays"><CODE>DataByteBuffer</CODE></A>, <A HREF="../../../net/algart/arrays/DataShortBuffer.html" title="interface in net.algart.arrays"><CODE>DataShortBuffer</CODE></A>,
+ <A HREF="../../../net/algart/arrays/DataIntBuffer.html" title="interface in net.algart.arrays"><CODE>DataIntBuffer</CODE></A>, <A HREF="../../../net/algart/arrays/DataLongBuffer.html" title="interface in net.algart.arrays"><CODE>DataLongBuffer</CODE></A>,
+ <A HREF="../../../net/algart/arrays/DataFloatBuffer.html" title="interface in net.algart.arrays"><CODE>DataFloatBuffer</CODE></A>, <A HREF="../../../net/algart/arrays/DataDoubleBuffer.html" title="interface in net.algart.arrays"><CODE>DataDoubleBuffer</CODE></A>,
+ <A HREF="../../../net/algart/arrays/DataObjectBuffer.html" title="interface in net.algart.arrays"><CODE>DataObjectBuffer</CODE></A>, where this method is overridden and returns corresponding type of Java array:
+ <tt>long[]</tt> (packed bit array), <tt>char[]</tt>, <tt>byte[]</tt>, <tt>short[]</tt>, etc.
+ The basic <A HREF="../../../net/algart/arrays/Array.html#buffer(net.algart.arrays.DataBuffer.AccessMode, long)"><CODE>Array.buffer(net.algart.arrays.DataBuffer.AccessMode, long)</CODE></A> method (as well as its overloaded
+ simplified versions) is overridden in specific AlgART arrays (<A HREF="../../../net/algart/arrays/BitArray.html" title="interface in net.algart.arrays"><CODE>BitArray</CODE></A>, <A HREF="../../../net/algart/arrays/CharArray.html" title="interface in net.algart.arrays"><CODE>CharArray</CODE></A>, etc.)
+ and returns one of the listed subinterfaces.</p>
+
+ <h4><a name="sequentialMapping"></a>Sequential mapping all AlgART array</h4>
+
+ <p>This interface has no methods allowing to get the reference to the underlying AlgART array
+ or get its <i>length</i>. But you may check,
+ whether all elements of the AlgART array were already mapped by sequential calls
+ of <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A> method, by <A HREF="../../../net/algart/arrays/DataBuffer.html#hasData()"><CODE>hasData()</CODE></A> method
+ (which is equivalent to "<tt><A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>&gt;0</tt>" check).
+ If <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A> is called when
+ <tt><i>mapping position</i>&nbsp;+&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>&nbsp;=&nbsp;<i>length</i></tt>,
+ then new mapping position becomes equal to <i>length</i> and,
+ so, the buffer size <A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A> becomes zero.
+ But please remember that <A HREF="../../../net/algart/arrays/DataBuffer.html#hasData()"><CODE>hasData()</CODE></A> returns <tt>false</tt> also before the first mapping
+ of a newly created data buffer.</p>
+
+ <h4><a name="usageExamples"></a>Usage examples</h4>
+
+ <p>Below is a typical usage example:</p>
+
+ <pre>
+ <A HREF="../../../net/algart/arrays/ByteArray.html" title="interface in net.algart.arrays"><CODE>ByteArray</CODE></A> a = ...; // some byte AlgART array
+ for (<A HREF="../../../net/algart/arrays/DataByteBuffer.html" title="interface in net.algart.arrays"><CODE>DataByteBuffer</CODE></A> buf = a.<A HREF="../../../net/algart/arrays/ByteArray.html#buffer()"><CODE>buffer()</CODE></A>.<A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map</CODE></A>(0); buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#hasData()"><CODE>hasData()</CODE></A>; buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A>) {
+ &#32;   byte[] data = buf.<A HREF="../../../net/algart/arrays/DataByteBuffer.html#data()"><CODE>data()</CODE></A>;
+ &#32;   for (int k = buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#from()"><CODE>from()</CODE></A>; k &lt; buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#to()"><CODE>to()</CODE></A>; k++) {
+ &#32;       // ... (analyzing and/or replacing data[k])
+ &#32;   }
+ &#32;   buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#force()"><CODE>force()</CODE></A>; // necessary only if data were modified
+ }
+ </pre>
+
+ <p>There is an equivalent form of this loop, little more complex, but easily
+ generalized for the case of another accessing order:</p>
+
+ <pre>
+ <A HREF="../../../net/algart/arrays/ByteArray.html" title="interface in net.algart.arrays"><CODE>ByteArray</CODE></A> a = ...; // some byte AlgART array
+ <A HREF="../../../net/algart/arrays/DataByteBuffer.html" title="interface in net.algart.arrays"><CODE>DataByteBuffer</CODE></A> buf = a.<A HREF="../../../net/algart/arrays/ByteArray.html#buffer()"><CODE>buffer()</CODE></A>;
+ for (long p = 0, n = a.length(); p &lt; n; p += buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>) {
+ &#32;   buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map</CODE></A>(p);
+ &#32;   byte[] data = buf.<A HREF="../../../net/algart/arrays/DataByteBuffer.html#data()"><CODE>data()</CODE></A>;
+ &#32;   for (int k = buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#from()"><CODE>from()</CODE></A>; k &lt; buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#to()"><CODE>to()</CODE></A>; k++) {
+ &#32;       // ... (analyzing and/or replacing data[k])
+ &#32;   }
+ &#32;   buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#force()"><CODE>force()</CODE></A>; // necessary only if data were modified
+ }
+ </pre>
+
+ <p>A usage example for bits:</p>
+
+ <pre>
+ <A HREF="../../../net/algart/arrays/BitArray.html" title="interface in net.algart.arrays"><CODE>BitArray</CODE></A> a = ...; // some bit AlgART array
+ for (<A HREF="../../../net/algart/arrays/DataBitBuffer.html" title="interface in net.algart.arrays"><CODE>DataBitBuffer</CODE></A> buf = a.<A HREF="../../../net/algart/arrays/BitArray.html#buffer()"><CODE>buffer()</CODE></A>.<A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map</CODE></A>(0); buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#hasData()"><CODE>hasData()</CODE></A>; buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A>) {
+ &#32;   long[] data = buf.<A HREF="../../../net/algart/arrays/DataBitBuffer.html#data()"><CODE>data</CODE></A>();
+ &#32;   for (long k = buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>; k &lt; buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>; k++) {
+ &#32;       boolean b = <A HREF="../../../net/algart/arrays/PackedBitArrays.html#getBit(long[], long)"><CODE>PackedBitArrays.getBit</CODE></A>(data, k);
+ &#32;       // it is the element a.<A HREF="../../../net/algart/arrays/BitArray.html#getBit(long)"><CODE>getBit</CODE></A>(<A HREF="../../../net/algart/arrays/DataBuffer.html#position()"><CODE>position()</CODE></A>+k)
+ &#32;       // processing this bit...
+ &#32;       // then, if necessary:
+ &#32;       <A HREF="../../../net/algart/arrays/PackedBitArrays.html#setBit(long[], long, boolean)"><CODE>PackedBitArrays.setBit</CODE></A>(data, k, someNewValue);
+ &#32;   }
+ &#32;   buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#force()"><CODE>force()</CODE></A>; // necessary only if data were modified
+ }
+ </pre>
+
+ <h4><a name="problems"></a>Performance problem connected with a lot of data buffers</h4>
+
+ <p>There is a problem connected with creating and using a lot of <i>indirect</i> data buffers
+ (thousands and tens of thousands). In this situation, every data buffer allocates its own
+ Java array for storing data, that cannot be shared with other data buffers.
+ Allocating thousands of Java array, where every array occupies tens of kilobytes or more
+ (typical capacity for data buffers), may require much time and create great workload for the garbage collector.
+ As a result, it may lead to reducing overall performance.
+ (Of course, the direct buffers do not lead to such a problem.)</p>
+
+ <p>The same problem occurs with usual Java arrays, used for temporary buffers instead of this class.
+ But <A HREF="../../../net/algart/arrays/JArrayPool.html" title="class in net.algart.arrays"><CODE>JArrayPool</CODE></A> class offers a solution for this problem for Java arrays.
+ So, if allocation of the data buffer may really create the described
+ performance problem, you should check the newly created buffer, <A HREF="../../../net/algart/arrays/DataBuffer.html#isDirect()"><CODE>is it direct</CODE></A>,
+ and, if not, ignore it and use standard Java arrays with help of <A HREF="../../../net/algart/arrays/JArrayPool.html" title="class in net.algart.arrays"><CODE>JArrayPool</CODE></A>.</p>
+
+ <h4><a name="notes"></a>Additional notes</h4>
+
+ <p>The data buffers are allowed not to implement <tt>hashCode</tt> and <tt>equals</tt> method.
+ Usually, the default implementation of these methods from <tt>Object</tt> class are used.</p>
+
+ <p>The data buffers are not thread-safe, but <b>are thread-compatible</b>
+ and can be synchronized manually (together with AlgART arrays accessed via the buffers)
+ if multithread access is necessary.</p>
+
+ <p>AlgART Laboratory 2007-2013</p>
+<P>
+
+<P>
+<DL>
+<DT><STRONG>Since:</STRONG></DT>
+  <DD>JDK 1.5</DD>
+<DT><STRONG>Version:</STRONG></DT>
+  <DD>1.2</DD>
+<DT><STRONG>Author:</STRONG></DT>
+  <DD>Daniel Alievsky</DD></DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Nested Class Summary table, listing nested classes, and an explanation">
+<CAPTION CLASS="TableCaption">
+Nested Class Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Interface and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html" title="enum in net.algart.arrays">DataBuffer.AccessMode</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access mode, describing access to <A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays"><CODE>data buffers</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#capacity()">capacity</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <i>capacity</i> of this data buffer.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#cnt()">cnt</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>(int)<A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A></tt>, if <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>&lt;=Integer.MAX_VALUE</tt>,
+ or throws <A HREF="../../../net/algart/arrays/DataBufferIndexOverflowException.html" title="class in net.algart.arrays"><CODE>DataBufferIndexOverflowException</CODE></A> in other case.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#count()">count</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the number of elements in the current <i>actual region</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.Object</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#data()">data</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the Java array which contains the mapped region of the data.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#force()">force</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Writes all elements in the <i>actual region</i> of the <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> Java array
+ (from <A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>, inclusive, to <A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>, exclusive)
+ back to the underlying data storage (usually AlgART array).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#force(long, long)">force</A></STRONG>(long&nbsp;fromIndex,
+      long&nbsp;toIndex)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Writes all elements in the specified region of the <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> Java array
+ (from the passed <tt>fromIndex</tt>, inclusive, to the passed <tt>toIndex</tt>, exclusive)
+ back to the underlying data storage (usually AlgART array).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#from()">from</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>(int)<A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A></tt>, if <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>&lt;=Integer.MAX_VALUE</tt>,
+ or throws <A HREF="../../../net/algart/arrays/DataBufferIndexOverflowException.html" title="class in net.algart.arrays"><CODE>DataBufferIndexOverflowException</CODE></A> in other case.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()">fromIndex</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the low boundary (inclusive) of the current <i>actual region</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#hasData()">hasData</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if and only if <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>&gt;0</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#isDirect()">isDirect</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if this buffer is <i>direct</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)">map</A></STRONG>(long&nbsp;position)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maps this data buffer to the specified position of the underlying data storage (usually AlgART array)
+ for accessing first <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#capacity()"><CODE>capacity()</CODE></A></tt> elements starting from this position.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, boolean)">map</A></STRONG>(long&nbsp;position,
+    boolean&nbsp;readData)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An analog of <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long)</CODE></A> with the only exception, that when <tt>readData=false</tt>,
+ <i>reading data from the data storage is not guaranteed</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long)">map</A></STRONG>(long&nbsp;position,
+    long&nbsp;maxCount)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equivalent to <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long, boolean)"><CODE>map(position, maxCount, true)</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long, boolean)">map</A></STRONG>(long&nbsp;position,
+    long&nbsp;maxCount,
+    boolean&nbsp;readData)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maps this data buffer to the specified position of the underlying data storage (usually AlgART array)
+ for accessing first <tt>min(maxCount,<A HREF="../../../net/algart/arrays/DataBuffer.html#capacity()"><CODE>capacity()</CODE></A>)</tt> elements starting from this position.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()">mapNext</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maps the next region in the underlying data storage (usually AlgART array).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext(boolean)">mapNext</A></STRONG>(boolean&nbsp;readData)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An analog of <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A> with the only exception, that when <tt>readData=false</tt>,
+ <i>reading data from the data storage is not guaranteed</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html" title="enum in net.algart.arrays">DataBuffer.AccessMode</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#mode()">mode</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#position()">position</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the current <i>mapping position</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#to()">to</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>(int)<A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A></tt>, if <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>&lt;=Integer.MAX_VALUE</tt>,
+ or throws <A HREF="../../../net/algart/arrays/DataBufferIndexOverflowException.html" title="class in net.algart.arrays"><CODE>DataBufferIndexOverflowException</CODE></A> in other case.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()">toIndex</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the high boundary (exclusive) of the current <i>actual region</i>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="mode()"><!-- --></A><H3>
+mode</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html" title="enum in net.algart.arrays">DataBuffer.AccessMode</A> <STRONG>mode</STRONG>()</PRE>
+<HR>
+
+<A NAME="data()"><!-- --></A><H3>
+data</H3>
+<PRE>
+java.lang.Object <STRONG>data</STRONG>()</PRE>
+<DL>
+<DD>Returns the Java array which contains the mapped region of the data.
+ The actual data elements are placed at the positions <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>..<A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>-1</tt>.
+ For bit elements, returned Java array is a packed <tt>long[]</tt> array,
+ and the positions in this array should be considered in terms of <A HREF="../../../net/algart/arrays/PackedBitArrays.html" title="class in net.algart.arrays"><CODE>PackedBitArrays</CODE></A> class.
+
+ <p>The length of the returned array is always enough to fit
+ the <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>..<A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>-1</tt> positions range in it.
+
+ <p><i>Note:</i> this method returns <tt>null</tt> if <tt>map</tt> / <tt>mapNext</tt> methods
+ were never called for this buffer yet, that is, if it is newly created.
+
+ <p><i>Warning:</i> the reference, returned by this method, may change after any call of
+ <tt>map</tt> or <tt>mapNext</tt> methods.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the Java array which contains the mapped region of the data.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="map(long)"><!-- --></A><H3>
+map</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A> <STRONG>map</STRONG>(long&nbsp;position)</PRE>
+<DL>
+<DD>Maps this data buffer to the specified position of the underlying data storage (usually AlgART array)
+ for accessing first <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#capacity()"><CODE>capacity()</CODE></A></tt> elements starting from this position.
+ The fragment of the data storage will be loaded and accessible in the <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> Java array
+ at the positions <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>..<A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>-1</tt>.
+ Equivalent to <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long, boolean)"><CODE>map</CODE></A>(<A HREF="../../../net/algart/arrays/DataBuffer.html#position()"><CODE>position()</CODE></A>,<A HREF="../../../net/algart/arrays/DataBuffer.html#capacity()"><CODE>capacity()</CODE></A>,true)</tt>.
+
+ <p>The passed argument must be in range <tt>0..<i>length</i></tt>,
+ where <tt><i>length</i></tt> is the total number of elements in the underlying data storage
+ (for an AlgART array, its <A HREF="../../../net/algart/arrays/Array.html#length()"><CODE>Array.length()</CODE></A>).
+ The number of actually mapped elements (<A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>) will be equal to
+ <tt>min(<A HREF="../../../net/algart/arrays/DataBuffer.html#capacity()"><CODE>capacity()</CODE></A>,<i>length</i>-<i>position</i>)</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>position</CODE> - new mapping position.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>a reference to this data buffer.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IndexOutOfBoundsException</CODE> - if the specified position is out of range <tt>0..<i>length</i></tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A>, 
+<A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long)"><CODE>map(long, long)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, boolean)"><CODE>map(long, boolean)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="map(long, boolean)"><!-- --></A><H3>
+map</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A> <STRONG>map</STRONG>(long&nbsp;position,
+               boolean&nbsp;readData)</PRE>
+<DL>
+<DD>An analog of <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long)</CODE></A> with the only exception, that when <tt>readData=false</tt>,
+ <i>reading data from the data storage is not guaranteed</i>.
+ (When <tt>readData=true</tt>, there is no difference with <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long)</CODE></A> method.)
+ Equivalent to <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long, boolean)"><CODE>map</CODE></A>(<A HREF="../../../net/algart/arrays/DataBuffer.html#position()"><CODE>position()</CODE></A>,<A HREF="../../../net/algart/arrays/DataBuffer.html#capacity()"><CODE>capacity()</CODE></A>,readData)</tt>.
+ The mode <tt>readData=false</tt> can be useful for optimization in <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#READ_WRITE"><CODE>DataBuffer.AccessMode.READ_WRITE</CODE></A> mode,
+ if you are sure that you will fully rewrite all mapped elements and, so, want
+ to save time by avoiding useless reading them.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>position</CODE> - new mapping position.</DD><DD><CODE>readData</CODE> - if <tt>true</tt>, all mapped elements will be really loaded from the data storage;
+                 if <tt>false</tt>, there is no such a guarantee.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>a reference to this data buffer.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IndexOutOfBoundsException</CODE> - if the specified position is out of range <tt>0..<i>length</i></tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext(boolean)"><CODE>mapNext(boolean)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long, boolean)"><CODE>map(long, long, boolean)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="mapNext()"><!-- --></A><H3>
+mapNext</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A> <STRONG>mapNext</STRONG>()</PRE>
+<DL>
+<DD>Maps the next region in the underlying data storage (usually AlgART array).
+ Equivalent to <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map</CODE></A>(<A HREF="../../../net/algart/arrays/DataBuffer.html#position()"><CODE>position()</CODE></A>&nbsp;+&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>).
+ In particular, if the buffer is newly created and <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long)</CODE></A> and <tt>mapNext()</tt>
+ were never called yet, this method is equivalent to <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map</CODE></A>(0)</tt>.
+
+ <p>The following loop allows to sequentially map all elements of the underlying data storage:
+ <pre>
+ for (buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map</CODE></A>(0); buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#hasData()"><CODE>hasData()</CODE></A>; buf.mapNext()) {
+ &#32;   // ... (processing elements of buf.<A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A>)
+ }
+ </pre>
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>a reference to this data buffer.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext(boolean)"><CODE>mapNext(boolean)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="mapNext(boolean)"><!-- --></A><H3>
+mapNext</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A> <STRONG>mapNext</STRONG>(boolean&nbsp;readData)</PRE>
+<DL>
+<DD>An analog of <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A> with the only exception, that when <tt>readData=false</tt>,
+ <i>reading data from the data storage is not guaranteed</i>.
+ (When <tt>readData=true</tt>, there is no difference with <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A> method.)
+ Equivalent to
+ <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, boolean)"><CODE>map</CODE></A>(<A HREF="../../../net/algart/arrays/DataBuffer.html#position()"><CODE>position()</CODE></A>&nbsp;+&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>,&nbsp;readData)</tt>.
+ The mode <tt>readData=false</tt> can be useful for optimization in <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#READ_WRITE"><CODE>DataBuffer.AccessMode.READ_WRITE</CODE></A> mode,
+ if you are sure that you will fully rewrite all mapped elements and, so, want
+ to save time by avoiding useless reading them.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>readData</CODE> - if <tt>true</tt>, all mapped elements will be really loaded from the data storage;
+                 if <tt>false</tt>, there is no such a guarantee.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>a reference to this data buffer.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, boolean)"><CODE>map(long, boolean)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="map(long, long)"><!-- --></A><H3>
+map</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A> <STRONG>map</STRONG>(long&nbsp;position,
+               long&nbsp;maxCount)</PRE>
+<DL>
+<DD>Equivalent to <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long, boolean)"><CODE>map(position, maxCount, true)</CODE></A>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>position</CODE> - new mapping position.</DD><DD><CODE>maxCount</CODE> - this method does not guarantee that the elements after <tt>#position+maxCount-1</tt>
+                 will be loaded into the buffer.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>a reference to this data buffer.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IndexOutOfBoundsException</CODE> - if the specified position is out of range <tt>0..<i>length</i></tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the specified <tt>maxCount</tt> is negative.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="map(long, long, boolean)"><!-- --></A><H3>
+map</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A> <STRONG>map</STRONG>(long&nbsp;position,
+               long&nbsp;maxCount,
+               boolean&nbsp;readData)</PRE>
+<DL>
+<DD>Maps this data buffer to the specified position of the underlying data storage (usually AlgART array)
+ for accessing first <tt>min(maxCount,<A HREF="../../../net/algart/arrays/DataBuffer.html#capacity()"><CODE>capacity()</CODE></A>)</tt> elements starting from this position.
+ If <tt>readData=true</tt>, the fragment of the data storage will be loaded
+ and accessible in the <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> Java array at the positions
+ <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>..<A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>-1</tt>.
+ If <tt>readData=false</tt>, the behaviour is the same with the exception of
+ <i>reading data from the data storage is not guaranteed</i>.
+ This mode can be useful for optimization in <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#READ_WRITE"><CODE>DataBuffer.AccessMode.READ_WRITE</CODE></A> mode,
+ if you are sure that you will fully rewrite all mapped elements and, so, want
+ to save time by avoiding useless reading them.
+
+ <p>The passed position must be in range <tt>0..<i>length</i></tt>,
+ where <tt><i>length</i></tt> is the total number of elements in the underlying data storage
+ (for an AlgART array, its <A HREF="../../../net/algart/arrays/Array.html#length()"><CODE>Array.length()</CODE></A>).
+ The number of actually mapped elements (<A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>) will be equal to
+ <tt>min(maxCount,<A HREF="../../../net/algart/arrays/DataBuffer.html#capacity()"><CODE>capacity()</CODE></A>,<i>length</i>-<i>position</i>)</tt>.
+
+ <p>This method should be used instead of the full <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(position)</CODE></A> version,
+ if you need to access a less number of elements than the full buffer capacity
+ or if you are going to fully rewrite all mapped elements.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>position</CODE> - new mapping position.</DD><DD><CODE>maxCount</CODE> - this method does not guarantee that the elements after <tt>#position+maxCount-1</tt>
+                 will be loaded into the buffer.</DD><DD><CODE>readData</CODE> - if <tt>true</tt>, all mapped elements will be really loaded from the data storage;
+                 if <tt>false</tt>, there is no such a guarantee.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>a reference to this data buffer.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IndexOutOfBoundsException</CODE> - if the specified position is out of range <tt>0..<i>length</i></tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the specified <tt>maxCount</tt> is negative.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/DataBuffer.html#map(long, long)"><CODE>map(long, long)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="force()"><!-- --></A><H3>
+force</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A> <STRONG>force</STRONG>()</PRE>
+<DL>
+<DD>Writes all elements in the <i>actual region</i> of the <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> Java array
+ (from <A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>, inclusive, to <A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>, exclusive)
+ back to the underlying data storage (usually AlgART array).
+ May do nothing if the changes in this Java array reflect in the storage immediately
+ (for example, for <a href="#directAndIndirect">direct buffers</a>).
+
+ <p>This method must be called to ensure that all changes, performed in the mapped
+ data elements, will be reflected in the original data storage.
+
+ <p>This method must not be called in the <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#READ"><CODE>READ</CODE></A> access mode.
+ This method does nothing in the <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#PRIVATE"><CODE>PRIVATE</CODE></A> access mode.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>a reference to this data buffer.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IllegalStateException</CODE> - if the access mode is <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#READ"><CODE>READ</CODE></A>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/DataBuffer.html#force(long, long)"><CODE>force(long, long)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="force(long, long)"><!-- --></A><H3>
+force</H3>
+<PRE>
+<A HREF="../../../net/algart/arrays/DataBuffer.html" title="interface in net.algart.arrays">DataBuffer</A> <STRONG>force</STRONG>(long&nbsp;fromIndex,
+                 long&nbsp;toIndex)</PRE>
+<DL>
+<DD>Writes all elements in the specified region of the <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> Java array
+ (from the passed <tt>fromIndex</tt>, inclusive, to the passed <tt>toIndex</tt>, exclusive)
+ back to the underlying data storage (usually AlgART array).
+ May do nothing if the changes in this Java array reflect in the storage immediately
+ (for example, for <a href="#directAndIndirect">direct buffers</a>).
+
+ <p>This method may be called instead of the full <A HREF="../../../net/algart/arrays/DataBuffer.html#force()"><CODE>force()</CODE></A> version,
+ if you changed only part of mapped elements (for example, only one or several elements).
+ In this case, this method may work faster.
+ The <A HREF="../../../net/algart/arrays/DataBuffer.html#force()"><CODE>force()</CODE></A> method is equivalent to the call
+ <tt>force(<A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>, <A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>)</tt>.
+
+ <p>This method must not be called in the <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#READ"><CODE>READ</CODE></A> access mode.
+ This method does nothing in the <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#PRIVATE"><CODE>PRIVATE</CODE></A> access mode.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>fromIndex</CODE> - low boundary (inclusive) of the written region.</DD><DD><CODE>toIndex</CODE> - high boundary (inclusive) of the written region.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>a reference to this data buffer.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IllegalStateException</CODE> - if the access mode is <A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html#READ"><CODE>READ</CODE></A>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>fromIndex&gt;toIndex</tt> or if the passed region is not
+                                  a fragment of full actual region
+                                  <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>..<A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>-1</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/DataBuffer.html#force()"><CODE>force()</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="position()"><!-- --></A><H3>
+position</H3>
+<PRE>
+long <STRONG>position</STRONG>()</PRE>
+<DL>
+<DD>Returns the current <i>mapping position</i>.
+ Cannot be negative.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the current <i>mapping position</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="capacity()"><!-- --></A><H3>
+capacity</H3>
+<PRE>
+long <STRONG>capacity</STRONG>()</PRE>
+<DL>
+<DD>Returns the <i>capacity</i> of this data buffer.
+ Cannot be negative.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the <i>capacity</i> of this data buffer.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fromIndex()"><!-- --></A><H3>
+fromIndex</H3>
+<PRE>
+long <STRONG>fromIndex</STRONG>()</PRE>
+<DL>
+<DD>Returns the low boundary (inclusive) of the current <i>actual region</i>.
+ Cannot be negative.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the low boundary (inclusive) of the current <i>actual region</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="toIndex()"><!-- --></A><H3>
+toIndex</H3>
+<PRE>
+long <STRONG>toIndex</STRONG>()</PRE>
+<DL>
+<DD>Returns the high boundary (exclusive) of the current <i>actual region</i>.
+ Cannot be negative.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the high boundary (exclusive) of the current <i>actual region</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="count()"><!-- --></A><H3>
+count</H3>
+<PRE>
+long <STRONG>count</STRONG>()</PRE>
+<DL>
+<DD>Returns the number of elements in the current <i>actual region</i>.
+ Equivalent to <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>-<A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A></tt>.
+ Cannot be negative.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of elements in the current <i>actual region</i>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="hasData()"><!-- --></A><H3>
+hasData</H3>
+<PRE>
+boolean <STRONG>hasData</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if and only if <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>&gt;0</tt>.
+
+ <p>After a call of <A HREF="../../../net/algart/arrays/DataBuffer.html#map(long)"><CODE>map(long)</CODE></A> or <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A>,
+ this method may be used to check that the current mapping position
+ is equal to the <i>length</i> of the underlying data storage.
+ For sequential calls of <A HREF="../../../net/algart/arrays/DataBuffer.html#mapNext()"><CODE>mapNext()</CODE></A>, this method returns <tt>false</tt>
+ when all elements from the data storage have been already mapped.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if this buffer is non-empty.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isDirect()"><!-- --></A><H3>
+isDirect</H3>
+<PRE>
+boolean <STRONG>isDirect</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if this buffer is <i>direct</i>.
+
+ <p>For buffers, created by this package, the "direct" term is quite specified:
+ please see "<a href="#directAndIndirect">Direct and indirect data buffers</a>" section above.
+
+ <p>For any kind of buffer, "direct" term means that all <tt>map</tt> and <tt>mapNext</tt> methods,
+ <A HREF="../../../net/algart/arrays/DataBuffer.html#force()"><CODE>force()</CODE></A> and <A HREF="../../../net/algart/arrays/DataBuffer.html#force(long, long)"><CODE>force(long, long)</CODE></A> methods,
+ <i>probably</i>, work very quickly, and the changes in the <A HREF="../../../net/algart/arrays/DataBuffer.html#data()"><CODE>data()</CODE></A> array,
+ <i>probably</i>, reflect in the original data storage immediately.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if this buffer is direct.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="from()"><!-- --></A><H3>
+from</H3>
+<PRE>
+int <STRONG>from</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>(int)<A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A></tt>, if <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>&lt;=Integer.MAX_VALUE</tt>,
+ or throws <A HREF="../../../net/algart/arrays/DataBufferIndexOverflowException.html" title="class in net.algart.arrays"><CODE>DataBufferIndexOverflowException</CODE></A> in other case.
+ May be used if you are sure that this buffer is not a <A HREF="../../../net/algart/arrays/DataBitBuffer.html" title="interface in net.algart.arrays"><CODE>bit buffer</CODE></A>,
+ or if you are sure that the AlgART array, processed by this buffer,
+ is not longer than <tt>Integer.MAX_VALUE</tt> elements.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>(int)<A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A></tt>.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE><A HREF="../../../net/algart/arrays/DataBufferIndexOverflowException.html" title="class in net.algart.arrays">DataBufferIndexOverflowException</A></CODE> - if <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#fromIndex()"><CODE>fromIndex()</CODE></A>&gt;Integer.MAX_VALUE</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="to()"><!-- --></A><H3>
+to</H3>
+<PRE>
+int <STRONG>to</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>(int)<A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A></tt>, if <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>&lt;=Integer.MAX_VALUE</tt>,
+ or throws <A HREF="../../../net/algart/arrays/DataBufferIndexOverflowException.html" title="class in net.algart.arrays"><CODE>DataBufferIndexOverflowException</CODE></A> in other case.
+ May be used if you are sure that this buffer is not a <A HREF="../../../net/algart/arrays/DataBitBuffer.html" title="interface in net.algart.arrays"><CODE>bit buffer</CODE></A>,
+ or if you are sure that the AlgART array, processed by this buffer,
+ is not longer than <tt>Integer.MAX_VALUE</tt> elements.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>(int)<A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A></tt>.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE><A HREF="../../../net/algart/arrays/DataBufferIndexOverflowException.html" title="class in net.algart.arrays">DataBufferIndexOverflowException</A></CODE> - if <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#toIndex()"><CODE>toIndex()</CODE></A>&gt;Integer.MAX_VALUE</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="cnt()"><!-- --></A><H3>
+cnt</H3>
+<PRE>
+int <STRONG>cnt</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>(int)<A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A></tt>, if <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>&lt;=Integer.MAX_VALUE</tt>,
+ or throws <A HREF="../../../net/algart/arrays/DataBufferIndexOverflowException.html" title="class in net.algart.arrays"><CODE>DataBufferIndexOverflowException</CODE></A> in other case.
+ May be used if you are sure that this buffer is not a <A HREF="../../../net/algart/arrays/DataBitBuffer.html" title="interface in net.algart.arrays"><CODE>bit buffer</CODE></A>,
+ or if you are sure that the AlgART array, processed by this buffer,
+ is not longer than <tt>Integer.MAX_VALUE</tt> elements.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>(int)<A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A></tt>.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE><A HREF="../../../net/algart/arrays/DataBufferIndexOverflowException.html" title="class in net.algart.arrays">DataBufferIndexOverflowException</A></CODE> - if <tt><A HREF="../../../net/algart/arrays/DataBuffer.html#count()"><CODE>count()</CODE></A>&gt;Integer.MAX_VALUE</tt>.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/DataBitBuffer.html" title="interface in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/DataBuffer.AccessMode.html" title="enum in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/DataBuffer.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="DataBuffer.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

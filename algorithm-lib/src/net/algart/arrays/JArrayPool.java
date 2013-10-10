@@ -1,0 +1,144 @@
+package net.algart.arrays;
+
+import java.lang.ref.*;
+import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * <p>A simple pool of the Java arrays (usually work buffers) with the same size and type of elements,
+ * based on a list of <tt>SoftReference</tt>.
+ * This class is useful in algorithms that frequently need to allocate little buffers (tens of kilobytes),
+ * because it allows to reduce time spent by the allocation of Java memory and the garbage collection.</p>
+ *
+ * <p>This class is <b>thread-safe</b>: you may use the same instance of this class in several threads.</p>
+ *
+ * <p>AlgART Laboratory 2007-2013</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ * @see ArrayPool
+ */
+public final class JArrayPool {
+    private final Class<?> elementType;
+    private final int arrayLength;
+    private final List<Reference<Object>> freeArrays = new LinkedList<Reference<Object>>();
+    private final ReentrantLock lock = new ReentrantLock();
+
+    private JArrayPool(Class<?> elementType, int arrayLength) {
+        if (elementType == null)
+            throw new NullPointerException("Null elementType argument");
+        if (arrayLength < 0)
+            throw new IllegalArgumentException("Negative arrayLength");
+        this.elementType = elementType;
+        this.arrayLength = arrayLength;
+    }
+
+    /**
+     * Creates the pool of Java arrays. Every array will have the given element type and length.
+     *
+     * @param elementType the type of elements in the arrays.
+     * @param arrayLength the length of the arrays.
+     * @return            new pool of Java arrays.
+     * @throws NullPointerException     if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>arrayLength</tt> is negative.
+     */
+    public static JArrayPool getInstance(Class<?> elementType, int arrayLength) {
+        return new JArrayPool(elementType, arrayLength);
+    }
+
+    /**
+     * Returns the type of elements in the arrays in this pool.
+     *
+     * @return the type of elements in the arrays in this pool.
+     */
+    public Class<?> elementType() {
+        return this.elementType;
+    }
+
+    /**
+     * Returns the size of all arrays in this pool.
+     *
+     * @return the size of all arrays in this pool.
+     */
+    public int arrayLength() {
+        return this.arrayLength;
+    }
+
+    /**
+     * Returns the ready for use Java array. If it is not found in the internal cache, it is created,
+     * in other case some free array from the cache is returned.
+     *
+     * <p>The {@link #releaseArray(Object)} should be called after finishing working with this array.
+     *
+     * @return the ready for use Java array.
+     */
+    public Object requestArray() {
+        lock.lock();
+        try {
+            for (Iterator<Reference<Object>> iterator = freeArrays.iterator(); iterator.hasNext(); ) {
+                Reference<Object> ref = iterator.next();
+                Object array = ref.get();
+                iterator.remove();
+                if (array != null) {
+                    return array;
+                }
+            }
+            return newJavaArray();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    /**
+     * Releases the Java array, returned by previous {@link #requestArray()} call,
+     * and adds it to the internal cache of arrays.
+     * Future calls of {@link #requestArray()}, maybe, will return it again.
+     *
+     * <p>Please note: it will not be an error if you will not call this method
+     * after {@link #requestArray()}. But calling this method improves performance
+     * of future {@link #requestArray()} calls.
+     *
+     * <p>This method must not be called twice for the same object.
+     *
+     * <p>This method does nothing if the passed argument is <tt>null</tt>.
+     *
+     * @param array some Java array, returned by previous {@link #requestArray()} call;
+     *        may be <tt>null</tt>, then the method does nothing.
+     * @throws IllegalArgumentException if the argument is not a Java array, or if its size or element type
+     *                                  do not match the arguments of {@link #getInstance} method.
+     */
+    public void releaseArray(Object array) {
+        if (array == null)
+            return;
+        if (!array.getClass().isArray())
+            throw new IllegalArgumentException("The array argument is not a Java array");
+        if (array.getClass().getComponentType() != elementType)
+            throw new IllegalArgumentException("The type of array elements does not match this Java array pool");
+        if (java.lang.reflect.Array.getLength(array) != arrayLength)
+            throw new IllegalArgumentException("The array length does not match this Java array pool");
+        lock.lock();
+        try {
+            freeArrays.add(new SoftReference<Object>(array));
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    /**
+     * Returns a brief string description of this object.
+     *
+     * <p>The result of this method may depend on implementation.
+     *
+     * @return a brief string description of this object.
+     */
+    public String toString() {
+        return "Java array pool for storing " + elementType.getCanonicalName() + "[" + arrayLength + "] ("
+            + freeArrays.size() + " arrays in the cache)";
+    }
+
+    private Object newJavaArray() {
+//        System.out.println("!!!Creating new Java array: " + this);
+        return java.lang.reflect.Array.newInstance(elementType, arrayLength);
+    }
+}

@@ -1,0 +1,14 @@
+net.algart.arrays
+net.algart.contexts
+net.algart.finalizing
+net.algart.math
+net.algart.math.functions
+net.algart.math.geom
+net.algart.math.patterns
+net.algart.matrices
+net.algart.matrices.linearfiltering
+net.algart.matrices.morphology
+net.algart.matrices.scanning
+net.algart.matrices.skeletons
+net.algart.matrices.spectra
+net.algart.matrices.stitching

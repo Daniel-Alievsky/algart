@@ -1,0 +1,113 @@
+package net.algart.arrays;
+
+/**
+ * <p>Resizable stack of any elements.</p>
+ *
+ * <p><tt>Stack</tt> is a restricted version (inheritor) of {@link MutableArray} interface,
+ * allowing only access to the top element.
+ *
+ * <p>Please keep in mind: this package does not contain classes
+ * that implements <tt>Stack</tt> but not implements {@link MutableArray}.
+ * It means that the following operation usually works successfully:</p><pre>
+ * void someMyMethod(Stack stack) {
+ * &#32;   MutableArray a = (MutableArray)stack;
+ * &#32;   ... // access to any non-top elements
+ * }</pre>
+ *
+ * <p>Of course, it is not an example of good programming style, and there are no guarantees
+ * that such operator will not throw <tt>ClassCastException</tt>.
+ * But such an operation is usually posssible. Please compare:</p><pre>
+ * void someMyMethod(Array readOnlyArray) {
+ * &#32;   MutableArray a = (MutableArray)readOnlyArray;
+ * &#32;   ... // attempt to modify elements
+ * }</pre>
+ *
+ * <p>This code will throw <tt>ClassCastException</tt>, if the caller of <tt>someMyMethod</tt>
+ * does not forget to use {@link UpdatableArray#asImmutable() asImmutable()} method for
+ * creating <tt>readOnlyArray</tt> argument.</p>
+ *
+ * <p>If this stack elements are primitive values (<tt>byte</tt>, <tt>short</tt>, etc.),
+ * the stack <b>must</b> implement one of
+ * {@link BitStack}, {@link CharStack}, {@link ByteStack}, {@link ShortStack},
+ * {@link IntStack}, {@link LongStack}, {@link FloatStack}, {@link DoubleStack}
+ * subinterfaces.
+ * In other case, the stack <b>must</b> implement {@link ObjectStack} subinterface.</p>
+ *
+ * <p>Objects, implementing this interface,
+ * are not thread-safe, but <b>are thread-compatible</b>
+ * and can be synchronized manually if multithread access is necessary.</p>
+ *
+ * <p>AlgART Laboratory 2007-2013</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ */
+
+public interface Stack {
+    /**
+     * Returns the number of elements in this stack.
+     *
+     * @return the number of elements in this stack.
+     */
+    public long length();
+
+    /**
+     * Removes the element at the top of this stack and returns it,
+     * or throws <tt>EmptyStackException</tt> if the stack is empty.
+     *
+     * <p>It this object is an AlgART array, impelementing {@link MutableArray} interface,
+     * and it is not empty, the same action may be performed by the following code:</p>
+     * <pre>
+     * Object result = array.{@link MutableArray#getElement(long) getElement}(array.{@link #length() length()}-1);
+     * array.{@link MutableArray#length(long) length}(array.{@link #length() length()}-1);
+     * </pre>
+     *
+     * <p>It is a low-level method.
+     * For stacks of primitive elements, implementing one of corresponding interfaces
+     * {@link BitStack}, {@link CharStack}, {@link ByteStack}, {@link ShortStack},
+     * {@link IntStack}, {@link LongStack}, {@link FloatStack}, {@link DoubleStack},
+     * we recommend to use more efficient equivalent method of that interfaces:
+     * {@link BitStack#popBit()}, {@link CharStack#popChar()},
+     * {@link ByteStack#popByte()}, {@link ShortStack#popShort()},
+     * {@link IntStack#popInt()}, {@link LongStack#popLong()},
+     * {@link FloatStack#popFloat()}, {@link DoubleStack#popDouble()}.
+     * For other stacks, implementing {@link ObjectStack},
+     * we recommend to use {@link ObjectStack#pop()}.
+     *
+     * @return the element at the top of this stack (it is removed from the stack by this method).
+     * @throws java.util.EmptyStackException if this stack is empty.
+     */
+    public Object popElement();
+
+    /**
+     * Appends <tt>value</tt> element to the top of this stack.
+     *
+     * <p>It this object is an AlgART array, impelementing {@link MutableArray} interface,
+     * the same action may be performed by the following code:</p>
+     * <pre>
+     * array.{@link MutableArray#length(long) length}(array.{@link #length() length()}+1);
+     * array.{@link UpdatableArray#setElement(long, Object) setElement}(array.{@link #length() length()}-1, value);
+     * </pre>
+     *
+     * <p>It is a low-level method.
+     * For stacks of primitive elements, implementing one of corresponding interfaces
+     * {@link BitStack}, {@link CharStack}, {@link ByteStack}, {@link ShortStack},
+     * {@link IntStack}, {@link LongStack}, {@link FloatStack}, {@link DoubleStack},
+     * we recommend to use more efficient equivalent method of that interfaces:
+     * {@link BitStack#pushBit(boolean)}, {@link CharStack#pushChar(char)},
+     * {@link ByteStack#pushByte(byte)}, {@link ShortStack#pushShort(short)},
+     * {@link IntStack#pushInt(int)}, {@link LongStack#pushLong(long)},
+     * {@link FloatStack#pushFloat(float)}, {@link DoubleStack#pushDouble(double)}.
+     * For other stacks, implementing {@link ObjectStack},
+     * we recommend to use {@link ObjectStack#push(Object)}.
+     *
+     * @param value to be added to the top of this stack.
+     * @throws ClassCastException        if it is a stack of primitive elements and <tt>value</tt> is not
+     *                                   a corresponding wrapped class (<tt>Boolean</tt>, <tt>Integer</tt>, etc.).
+     * @throws ArrayStoreException       if it is a stack of non-primitive elements and <tt>value</tt> is not
+     *                                   an instance of the class of stack elements.
+     * @throws TooLargeArrayException if the resulting stack length is too large for this type of stacks.
+     */
+    public void pushElement(Object value);
+}

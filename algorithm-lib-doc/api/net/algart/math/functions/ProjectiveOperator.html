@@ -1,0 +1,870 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+ProjectiveOperator
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="ProjectiveOperator";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/math/functions/PowerFunc.Updatable.html" title="class in net.algart.math.functions"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../../net/algart/math/functions/RectangularFunc.html" title="class in net.algart.math.functions"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/math/functions/ProjectiveOperator.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="ProjectiveOperator.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.math.functions</FONT>
+<BR>
+Class ProjectiveOperator</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../net/algart/math/functions/AbstractCoordinateTransformationOperator.html" title="class in net.algart.math.functions">net.algart.math.functions.AbstractCoordinateTransformationOperator</A>
+      <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><STRONG>net.algart.math.functions.ProjectiveOperator</STRONG>
+</PRE>
+<DL>
+<DT><STRONG>All Implemented Interfaces:</STRONG></DT> <DD><A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html" title="interface in net.algart.math.functions">CoordinateTransformationOperator</A>, <A HREF="../../../../net/algart/math/functions/Operator.html" title="interface in net.algart.math.functions">Operator</A></DD>
+</DL>
+<DL>
+<DT><STRONG>Direct Known Subclasses:</STRONG></DT> <DD><A HREF="../../../../net/algart/math/functions/LinearOperator.html" title="class in net.algart.math.functions">LinearOperator</A></DD>
+</DL>
+<HR>
+<PRE>public class <STRONG>ProjectiveOperator</STRONG>
+extends <A HREF="../../../../net/algart/math/functions/AbstractCoordinateTransformationOperator.html" title="class in net.algart.math.functions">AbstractCoordinateTransformationOperator</A>
+implements <A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html" title="interface in net.algart.math.functions">CoordinateTransformationOperator</A></PRE>
+
+<P>
+<p>Projective operator (projective transformation):
+ <nobr><i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>y</b>)</nobr>,
+ <nobr><i>y</i><sub><i>i</i></sub> =
+ (<b>a</b><sub><i>i</i></sub><b>x</b> + <i>b</i><sub><i>i</i></sub>) / (<b>cx</b> + <i>d</i>)</nobr>
+ (<b>a</b><sub><i>i</i></sub> means the line <i>i</i> of the matrix <b>A</b>),
+ where the numeric <i>n</i>&nbsp;x&nbsp;<i>n</i> matrix <b>A</b>,
+ the <i>n</i>-dimensional vectors <b>b</b> and <b>c</b> and the number <i>d</i>
+ are parameters of the transformation.
+ In other words, the argument of the function, the vector <b>x</b>, is mapped to the following vector <b>y</b>:</p>
+
+ <blockquote>
+ <table><tr>
+ <td><nobr><b>y</b> = </nobr></td>
+ <td><nobr><i>y</i><sub>0</sub><br><i>y</i><sub>1</sub><br>...<br><i>y</i><sub><i>n</i>&minus;1</sub></nobr></td>
+ <td><nobr> = </nobr></td>
+ <td>
+   <nobr>
+   (<b>A</b><sub>0</sub><b>x</b> + <i>b</i><sub>0</sub>) / (<b>cx</b> + <i>d</i>)<br>
+   (<b>A</b><sub>1</sub><b>x</b> + <i>b</i><sub>1</sub>) / (<b>cx</b> + <i>d</i>)<br>
+   ...<br>
+   (<b>A</b><sub><i>n</i>&minus;1</sub><b>x</b> + <i>b</i><sub><i>n</i>&minus;1</sub>) / (<b>cx</b> + <i>d</i>)
+   </nobr>
+ </td>
+ <td><nobr> = </nobr></td>
+ <td>
+   <nobr>
+   (<i>a</i><sub>00</sub><i>x</i><sub>0</sub> + <i>a</i><sub>01</sub><i>x</i><sub>1</sub> + ...
+     + <i>a</i><sub>0,<i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> + <i>b</i><sub>0</sub>) /
+     (<i>c</i><sub>0</sub><i>x</i><sub>0</sub> + <i>c</i><sub>1</sub><i>x</i><sub>1</sub> + ...
+     + <i>c</i><sub><i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> + <i>d</i>)<br>
+   (<i>a</i><sub>10</sub><i>x</i><sub>0</sub> + <i>a</i><sub>11</sub><i>x</i><sub>1</sub> + ...
+     + <i>a</i><sub>1,<i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> + <i>b</i><sub>1</sub>) /
+     (<i>c</i><sub>0</sub><i>x</i><sub>0</sub> + <i>c</i><sub>1</sub><i>x</i><sub>1</sub> + ...
+     + <i>c</i><sub><i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> + <i>d</i>)<br>
+   ...<br>
+   (<i>a</i><sub><i>n</i>&minus;1,0</sub><i>x</i><sub>0</sub>
+     + <i>a</i><sub><i>n</i>&minus;1,1</sub><i>x</i><sub>1</sub> + ...
+     + <i>a</i><sub><i>n</i>&minus;1,<i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub>
+     + <i>b</i><sub><i>n</i>&minus;1</sub>) /
+     (<i>c</i><sub>0</sub><i>x</i><sub>0</sub> + <i>c</i><sub>1</sub><i>x</i><sub>1</sub> + ...
+     + <i>c</i><sub><i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> + <i>d</i>)
+   </nobr>
+ </td>
+ </tr></table>
+ </blockquote>
+
+ <p>All calculations are performed in <tt>strictfp</tt> mode, so the result
+ is absolutely identical on all platforms.</p>
+
+ <p>However, please note: we do not guarantee that the divisions in the formulas above are performed strictly
+ by "<tt>c=a/b</tt>" Java operator.
+ They are possibly performed via the following code: "<tt>temp=1.0/b; c=a*temp;</tt>"
+ The difference here is very little and not important for most practical needs.</p>
+
+ <p>Please note: if <b>c</b> vector is zero (all <i>c</i><sub><i>i</i></sub>=0) &mdash;
+ in other words, if this transformation is really affine &mdash; then an instance of this class
+ is always an instance of its inheritor <A HREF="../../../../net/algart/math/functions/LinearOperator.html" title="class in net.algart.math.functions"><CODE>LinearOperator</CODE></A>.
+ This rule is provided by the instantiation methods
+ <A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#getInstance(double[], double[], double[], double)"><CODE>getInstance(double[], double[], double[], double)</CODE></A> getInstance} and
+ <A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#getInstanceByPoints(net.algart.math.Point[], net.algart.math.Point[])"><CODE>getInstanceByPoints(net.algart.math.Point[], net.algart.math.Point[])</CODE></A> getInstanceByPoints}.</p>
+
+ <p>This class is <b>immutable</b> and <b>thread-safe</b>:
+ there are no ways to modify settings of the created instance.</p>
+
+ <p>AlgART Laboratory 2007-2013</p>
+<P>
+
+<P>
+<DL>
+<DT><STRONG>Since:</STRONG></DT>
+  <DD>JDK 1.5</DD>
+<DT><STRONG>Version:</STRONG></DT>
+  <DD>1.2</DD>
+<DT><STRONG>Author:</STRONG></DT>
+  <DD>Daniel Alievsky</DD>
+<DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../../net/algart/math/functions/LinearOperator.html" title="class in net.algart.math.functions"><CODE>LinearOperator</CODE></A></DD></DL>
+<HR>
+
+<P>
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Field Summary table, listing fields, and an explanation">
+<CAPTION CLASS="TableCaption">
+Field Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Field and Description</TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_net.algart.math.functions.Operator"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Fields inherited from interface net.algart.math.functions.<A HREF="../../../../net/algart/math/functions/Operator.html" title="interface in net.algart.math.functions">Operator</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../net/algart/math/functions/Operator.html#IDENTITY">IDENTITY</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double[]</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#a()">a</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array containing <b>A</b> matrix.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double[]</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#b()">b</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array containing <b>b</b> vector.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double[]</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#c()">c</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array containing <b>c</b> vector.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#d()">d</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <i>d</i> parameter.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double[]</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#diagonal()">diagonal</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array containing the main diagonal of <b>A</b> matrix.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#equals(java.lang.Object)">equals</A></STRONG>(java.lang.Object&nbsp;obj)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Indicates whether some other object is also a <A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html" title="interface in net.algart.math.functions"><CODE>coordinate transformation operator</CODE></A>, performing the same coordinate transformation as this one.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html" title="class in net.algart.math.functions">ProjectiveOperator</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#getInstance(double[], double[], double[], double)">getInstance</A></STRONG>(double[]&nbsp;a,
+            double[]&nbsp;b,
+            double[]&nbsp;c,
+            double&nbsp;d)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an instance of this class, describing the projective operator with the specified matrix <b>A</b>,
+ the vectors <b>b</b> and <b>c</b> and the number <i>d</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html" title="class in net.algart.math.functions">ProjectiveOperator</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#getInstanceByPoints(net.algart.math.Point[], net.algart.math.Point[])">getInstanceByPoints</A></STRONG>(<A HREF="../../../../net/algart/math/Point.html" title="class in net.algart.math">Point</A>[]&nbsp;q,
+                    <A HREF="../../../../net/algart/math/Point.html" title="class in net.algart.math">Point</A>[]&nbsp;p)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the n-dimensional projective operator, that transforms (maps)
+ the given <i></i>n+2 points
+ <b>p</b><sub>0</sub>, <b>p</b><sub>1</sub>, ..., <b>p</b><sub><i>n</i>+1</sub> to
+ the given another <i>n</i>+2 points
+ <b>q</b><sub>0</sub>, <b>q</b><sub>1</sub>, ..., <b>q</b><sub><i>n</i>+1</sub>
+ of the n-dimensional space.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#hashCode()">hashCode</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the hash code of this object.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#isDiagonal()">isDiagonal</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if and only if <b>A</b> matrix is diagonal,
+ i&#46e&#46 if <i>a</i><sub><i>ij</i></sub>=0.0 when <i>i</i>!=<i>j</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#isShift()">isShift</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if and only if <b>A</b> matrix is identity
+ (i&#46e&#46 if <i>a</i><sub><i>ij</i></sub>=0.0 when <i>i</i>!=<i>j</i> and
+ <i>a</i><sub><i>ij</i></sub>=1.0 when <i>i</i>==<i>j</i>)
+ and <b>c</b> vector is zero.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#isZeroB()">isZeroB</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if and only if the <b>b</b> vector is zero,
+ i&#46e&#46 if <i>b</i><sub><i>i</i></sub>=0.0 for all <i>i</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#map(double[], double[])">map</A></STRONG>(double[]&nbsp;destPoint,
+    double[]&nbsp;srcPoint)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation calculates <tt>destPoint</tt> by the formula
+ <nobr><i>y</i><sub><i>i</i></sub> =
+ (<b>a</b><sub><i>i</i></sub><b>x</b> + <i>b</i><sub><i>i</i></sub>) / (<b>cx</b> + <i>d</i>)</nobr>,
+ where <b>x</b>=<tt>srcPoint</tt> and <b>y</b>=<tt>destPoint</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#n()">n</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the number of dimensions.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#toString()">toString</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a brief string description of this object.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_net.algart.math.functions.AbstractCoordinateTransformationOperator"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class net.algart.math.functions.<A HREF="../../../../net/algart/math/functions/AbstractCoordinateTransformationOperator.html" title="class in net.algart.math.functions">AbstractCoordinateTransformationOperator</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../net/algart/math/functions/AbstractCoordinateTransformationOperator.html#apply(net.algart.math.functions.Func)">apply</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class java.lang.Object</STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, finalize, getClass, notify, notifyAll, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_net.algart.math.functions.CoordinateTransformationOperator"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from interface net.algart.math.functions.<A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html" title="interface in net.algart.math.functions">CoordinateTransformationOperator</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html#apply(net.algart.math.functions.Func)">apply</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getInstance(double[], double[], double[], double)"><!-- --></A><H3>
+getInstance</H3>
+<PRE>
+public static <A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html" title="class in net.algart.math.functions">ProjectiveOperator</A> <STRONG>getInstance</STRONG>(double[]&nbsp;a,
+                                             double[]&nbsp;b,
+                                             double[]&nbsp;c,
+                                             double&nbsp;d)</PRE>
+<DL>
+<DD>Returns an instance of this class, describing the projective operator with the specified matrix <b>A</b>,
+ the vectors <b>b</b> and <b>c</b> and the number <i>d</i>.
+ See the <A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html" title="class in net.algart.math.functions"><CODE>comments to this class</CODE></A> for more details.
+ The coordinates of the vectors <b>b</b> and <b>c</b> must be listed in <tt>b</tt> and <tt>c</tt> arrays.
+ The elements of the matrix <b>A</b> must be listed, row by row, in the <tt>a</tt> array:
+ <b>A</b>={<i>a</i><sub><i>ij</i></sub>},
+ <i>a</i><sub><i>ij</i></sub>=<tt>a[<i>i</i>*<i>n</i>+<i>j</i>]</tt>,
+ <i>i</i> is the index of the row (0..<i>n</i>-1),
+ <i>j</i> is the index of the column (0..<i>n</i>-1),
+ <i>n</i>=<tt>b.length</tt>.
+ The lengths of <tt>b</tt> and <tt>c</tt> arrays must be the same: <tt>b.length</tt>=<tt>c.length</tt>=<i>n</i>.
+ The length <tt>a.length</tt> of the <tt>a</tt> array must be equal to its square <i>n</i><sup>2</sup>.
+ Empty arrays (<i>n</i>=0) are not allowed.
+
+ <p>Please note: the returned operator can have another <b>A</b>, <b>b</b>, <b>c</b>, <i>d</i> parameters
+ (returned by <A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#a()"><CODE>a()</CODE></A>, <A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#b()"><CODE>b()</CODE></A>, <A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#c()"><CODE>c()</CODE></A>, <A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#d()"><CODE>d()</CODE></A> methods),
+ than specified in the arguments of this method.
+ Namely, all these numbers can be multiplied by some constant: such modification does not change
+ the projective transformation.
+
+ <p>In particular, if the arguments of this method really describe
+ an affine transformation (<b>c</b>=<b>0</b>), then this method
+ returns an instance of <A HREF="../../../../net/algart/math/functions/LinearOperator.html" title="class in net.algart.math.functions"><CODE>LinearOperator</CODE></A> class, where all elements of <b>A</b> matrix
+ and <b>b</b> vector are divided by <i>d</i> number.
+
+ <p>The passed <tt>a</tt>, <tt>b</tt> and <tt>c</tt> Java arrays are cloned by this method:
+ no references to them are maintained by the created instance.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>a</CODE> - the elements of <b>A</b> matrix.</DD><DD><CODE>b</CODE> - the coordinates of <b>b</b> vector.</DD><DD><CODE>c</CODE> - the coordinates of <b>c</b> vector.</DD><DD><CODE>d</CODE> - the <i>d</i> parameter.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the projective operator described by these parameters.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if one of the arguments of the method is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>b.length==0</tt>, <tt>c.length==0</tt>, <tt>b.length!=c.length</tt>
+                                  or <tt>a.length!=b.length<sup>2</sup></tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getInstanceByPoints(net.algart.math.Point[], net.algart.math.Point[])"><!-- --></A><H3>
+getInstanceByPoints</H3>
+<PRE>
+public static <A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html" title="class in net.algart.math.functions">ProjectiveOperator</A> <STRONG>getInstanceByPoints</STRONG>(<A HREF="../../../../net/algart/math/Point.html" title="class in net.algart.math">Point</A>[]&nbsp;q,
+                                                     <A HREF="../../../../net/algart/math/Point.html" title="class in net.algart.math">Point</A>[]&nbsp;p)</PRE>
+<DL>
+<DD>Returns the n-dimensional projective operator, that transforms (maps)
+ the given <i></i>n+2 points
+ <b>p</b><sub>0</sub>, <b>p</b><sub>1</sub>, ..., <b>p</b><sub><i>n</i>+1</sub> to
+ the given another <i>n</i>+2 points
+ <b>q</b><sub>0</sub>, <b>q</b><sub>1</sub>, ..., <b>q</b><sub><i>n</i>+1</sub>
+ of the n-dimensional space. The parameter <i>d</i> in the returned operator is 1.0.
+ In other words, the matrix <b>A</b>, the vectors <b>b</b>, <b>c</b> and the parameter <i>d</i>
+ in the returned operator fulfil the following conditions:
+
+ <blockquote>
+ <table>
+ <tr>
+ <td><nobr><i>d</i> = 1.0;</nobr></td>
+ </tr>
+ <tr>
+ <td>
+   <nobr>
+   (<b>A</b><sub>0</sub><b>p</b><sub><i>k</i></sub> + <i>b</i><sub>0</sub>) /
+   (<b>cp</b><sub><i>k</i></sub> + 1)<br>
+   (<b>A</b><sub>1</sub><b>p</b><sub><i>k</i></sub> + <i>b</i><sub>1</sub>) /
+   (<b>cp</b><sub><i>k</i></sub> + 1)<br>
+   ...<br>
+   (<b>A</b><sub><i>n</i>&minus;1</sub><b>p</b><sub><i>k</i></sub> + <i>b</i><sub><i>n</i>&minus;1</sub>) /
+   (<b>cp</b><sub><i>k</i></sub> + 1)
+   </nobr>
+ </td>
+ <td><nobr> = </nobr></td>
+ <td><nobr><i>q</i><sub><i>k</i>0</sub><br><i>q</i><sub><i>k</i>1</sub><br>...<br>
+   <i>q</i><sub><i>k</i>,<i>n</i>&minus;1</sub></nobr></td>
+ <td><nobr> = <b>q</b><sub><i>k</i></sub> for <i>k</i> = 0, 1, ..., <i>n</i>+1</td>
+ </tr>
+ </table>
+ </blockquote>
+
+ <p>(<b>a</b><sub><i>i</i></sub> means the line <i>i</i> of the matrix <b>A</b>).
+ It is possible that there is no such operator
+ or there are many different solutions (degenerated cases).
+ In this case, this method still returns some operator, but some coefficients of <b>A</b> matrix,
+ <b>b</b> and <b>c</b> vectors in the returned operator will probably be <tt>Double.NaN</tt>,
+ <tt>Double.POSITIVE_INFINITY</tt> or <tt>Double.NEGATIVE_INFINITY</tt>.
+
+ <p>All passed points must be <i>n</i>-dimensional,
+ where <i>n</i><tt>+2=p.length=q.length</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>q</CODE> - the destination points.</DD><DD><CODE>p</CODE> - the source points.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the <i>n</i>-dimensional projective operator, which maps <b>p</b><sub><i>i</i></sub> to
+         <b>q</b><sub><i>i</i></sub> for all <i>i</i>=0,1,2,...,<i>n</i>+1.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if one of arguments of this method or one of elements of
+                                  <tt>p</tt> and <tt>q</tt> arrays <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the lengths of the passed <tt>p</tt> and <tt>q</tt> arrays are not equal,
+                                  or if for some <tt>k</tt>
+                                  <tt>p[k].<A HREF="../../../../net/algart/math/Point.html#coordCount()"><CODE>coordCount()</CODE></A>!=p.length-2</tt> or
+                                  <tt>q[k].<A HREF="../../../../net/algart/math/Point.html#coordCount()"><CODE>coordCount()</CODE></A>!=p.length-2</tt>.</DD>
+<DD><CODE>java.lang.OutOfMemoryError</CODE> - if there is not enough Java memory for storing Java array
+                                  <tt>double[n*(n+2)*n*(n+2)]</tt>,
+                                  where <tt>n+2=p.length</tt>,
+                                  or if <tt>n*(n+2)*n*(n+2)&gt;Integer.MAX_VALUE</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="a()"><!-- --></A><H3>
+a</H3>
+<PRE>
+public final double[] <STRONG>a</STRONG>()</PRE>
+<DL>
+<DD>Returns an array containing <b>A</b> matrix.
+
+ <p>The returned array is always newly created: it is not a reference
+ to some internal data stored in this object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><b>A</b> matrix.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.OutOfMemoryError</CODE> - if this instance was created by some creation method of
+                          the <A HREF="../../../../net/algart/math/functions/LinearOperator.html" title="class in net.algart.math.functions"><CODE>LinearOperator</CODE></A> class,
+                          besides <A HREF="../../../../net/algart/math/functions/LinearOperator.html#getInstance(double[], double[])"><CODE>LinearOperator.getInstance(double[], double[])</CODE></A>,
+                          and the matrix is too large to be stored in Java memory
+                          or its size is greater than <tt>Integer.MAX_VALUE</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="b()"><!-- --></A><H3>
+b</H3>
+<PRE>
+public final double[] <STRONG>b</STRONG>()</PRE>
+<DL>
+<DD>Returns an array containing <b>b</b> vector.
+
+ <p>The returned array is always newly created: it is not a reference
+ to some internal data stored in this object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><b>b</b> vector.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="c()"><!-- --></A><H3>
+c</H3>
+<PRE>
+public final double[] <STRONG>c</STRONG>()</PRE>
+<DL>
+<DD>Returns an array containing <b>c</b> vector.
+ In a case of <A HREF="../../../../net/algart/math/functions/LinearOperator.html" title="class in net.algart.math.functions"><CODE>LinearOperator</CODE></A>, the result is always zero-filled.
+
+ <p>The returned array is always newly created: it is not a reference
+ to some internal data stored in this object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><b>c</b> vector.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="d()"><!-- --></A><H3>
+d</H3>
+<PRE>
+public final double <STRONG>d</STRONG>()</PRE>
+<DL>
+<DD>Returns the <i>d</i> parameter.
+ In a case of <A HREF="../../../../net/algart/math/functions/LinearOperator.html" title="class in net.algart.math.functions"><CODE>LinearOperator</CODE></A>, the result is always 0.0.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><b>d</b> parameter.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="diagonal()"><!-- --></A><H3>
+diagonal</H3>
+<PRE>
+public final double[] <STRONG>diagonal</STRONG>()</PRE>
+<DL>
+<DD>Returns an array containing the main diagonal of <b>A</b> matrix.
+
+ <p>The returned array is always newly created: it is not a reference
+ to some internal data stored in this object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the main diagonal of <b>A</b> matrix.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="n()"><!-- --></A><H3>
+n</H3>
+<PRE>
+public final int <STRONG>n</STRONG>()</PRE>
+<DL>
+<DD>Returns the number of dimensions.
+ The result is equal to the number of components in the <b>b</b> and <b>c</b> vectors.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of dimensions.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isDiagonal()"><!-- --></A><H3>
+isDiagonal</H3>
+<PRE>
+public final boolean <STRONG>isDiagonal</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if and only if <b>A</b> matrix is diagonal,
+ i&#46e&#46 if <i>a</i><sub><i>ij</i></sub>=0.0 when <i>i</i>!=<i>j</i>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if and only if <b>A</b> matrix is diagonal.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isShift()"><!-- --></A><H3>
+isShift</H3>
+<PRE>
+public final boolean <STRONG>isShift</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if and only if <b>A</b> matrix is identity
+ (i&#46e&#46 if <i>a</i><sub><i>ij</i></sub>=0.0 when <i>i</i>!=<i>j</i> and
+ <i>a</i><sub><i>ij</i></sub>=1.0 when <i>i</i>==<i>j</i>)
+ and <b>c</b> vector is zero.
+ In this case, this operator corresponds to a parallel shift.
+ In this case, this object is always an instance of <A HREF="../../../../net/algart/math/functions/LinearOperator.html" title="class in net.algart.math.functions"><CODE>LinearOperator</CODE></A>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if and only if this operator describes a parallel shift in the space.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isZeroB()"><!-- --></A><H3>
+isZeroB</H3>
+<PRE>
+public final boolean <STRONG>isZeroB</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if and only if the <b>b</b> vector is zero,
+ i&#46e&#46 if <i>b</i><sub><i>i</i></sub>=0.0 for all <i>i</i>.
+ If <tt><A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#isZeroB()"><CODE>isZeroB()</CODE></A>&nbsp;&amp;&amp;&nbsp;<A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#isShift()"><CODE>isShift()</CODE></A></tt>,
+ this operator is identity: it doesn't change the passed function.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if and only if the <b>b</b> vector is zero.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="map(double[], double[])"><!-- --></A><H3>
+map</H3>
+<PRE>
+public void <STRONG>map</STRONG>(double[]&nbsp;destPoint,
+                double[]&nbsp;srcPoint)</PRE>
+<DL>
+<DD>This implementation calculates <tt>destPoint</tt> by the formula
+ <nobr><i>y</i><sub><i>i</i></sub> =
+ (<b>a</b><sub><i>i</i></sub><b>x</b> + <i>b</i><sub><i>i</i></sub>) / (<b>cx</b> + <i>d</i>)</nobr>,
+ where <b>x</b>=<tt>srcPoint</tt> and <b>y</b>=<tt>destPoint</tt>.
+ See more details in the comments to <A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html" title="class in net.algart.math.functions"><CODE>this class</CODE></A>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html#map(double[], double[])">map</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html" title="interface in net.algart.math.functions">CoordinateTransformationOperator</A></CODE></DD>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/AbstractCoordinateTransformationOperator.html#map(double[], double[])">map</A></CODE> in class <CODE><A HREF="../../../../net/algart/math/functions/AbstractCoordinateTransformationOperator.html" title="class in net.algart.math.functions">AbstractCoordinateTransformationOperator</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>destPoint</CODE> - the coordinates of the destinated point <b>y</b>, filled by this method.</DD><DD><CODE>srcPoint</CODE> - the coordinates of the source point <b>x</b>.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if one of the arguments is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>destPoint.length</tt> or <tt>srcPoint.length</tt>
+                                  is not equal to the <A HREF="../../../../net/algart/math/functions/ProjectiveOperator.html#n()"><CODE>number of dimensions</CODE></A>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="toString()"><!-- --></A><H3>
+toString</H3>
+<PRE>
+public java.lang.String <STRONG>toString</STRONG>()</PRE>
+<DL>
+<DD>Returns a brief string description of this object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>toString</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>a brief string description of this object.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="hashCode()"><!-- --></A><H3>
+hashCode</H3>
+<PRE>
+public int <STRONG>hashCode</STRONG>()</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html#hashCode()">CoordinateTransformationOperator</A></CODE></STRONG></DD>
+<DD>Returns the hash code of this object. The result depends on all parameters, specifying
+ coordinate transformation, performed by this operator.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html#hashCode()">hashCode</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html" title="interface in net.algart.math.functions">CoordinateTransformationOperator</A></CODE></DD>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>hashCode</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the hash code of this operator.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="equals(java.lang.Object)"><!-- --></A><H3>
+equals</H3>
+<PRE>
+public boolean <STRONG>equals</STRONG>(java.lang.Object&nbsp;obj)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html#equals(java.lang.Object)">CoordinateTransformationOperator</A></CODE></STRONG></DD>
+<DD>Indicates whether some other object is also a <A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html" title="interface in net.algart.math.functions"><CODE>coordinate transformation operator</CODE></A>, performing the same coordinate transformation as this one.
+
+ <p>There is high probability, but no guarantee that this method returns <tt>true</tt> if the passed operator
+ specifies a transformation, identical to this one.
+ There is a guarantee that this method returns <tt>false</tt>
+ if the passed operator specifies a transformation, different than this one.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html#equals(java.lang.Object)">equals</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/functions/CoordinateTransformationOperator.html" title="interface in net.algart.math.functions">CoordinateTransformationOperator</A></CODE></DD>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>equals</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>obj</CODE> - the object to be compared for equality with this operator.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if the specified object is a coordinate transformation operator equal to this one.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/math/functions/PowerFunc.Updatable.html" title="class in net.algart.math.functions"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../../net/algart/math/functions/RectangularFunc.html" title="class in net.algart.math.functions"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/math/functions/ProjectiveOperator.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="ProjectiveOperator.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

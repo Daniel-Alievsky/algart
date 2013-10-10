@@ -1,0 +1,551 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+WeightedPattern
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="WeightedPattern";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/math/patterns/UpperHalfEllipsoidOfRevolutionFunc.html" title="class in net.algart.math.patterns"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../../net/algart/math/patterns/WeightedPatterns.html" title="class in net.algart.math.patterns"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/math/patterns/WeightedPattern.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="WeightedPattern.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.math.patterns</FONT>
+<BR>
+Interface WeightedPattern</H2>
+<DL>
+<DT><STRONG>All Superinterfaces:</STRONG></DT> <DD><A HREF="../../../../net/algart/math/patterns/Pattern.html" title="interface in net.algart.math.patterns">Pattern</A></DD>
+</DL>
+<DL>
+<DT><STRONG>All Known Implementing Classes:</STRONG></DT> <DD><A HREF="../../../../net/algart/math/patterns/AbstractWeightedPattern.html" title="class in net.algart.math.patterns">AbstractWeightedPattern</A></DD>
+</DL>
+<HR>
+<PRE>public interface <STRONG>WeightedPattern</STRONG>
+extends <A HREF="../../../../net/algart/math/patterns/Pattern.html" title="interface in net.algart.math.patterns">Pattern</A></PRE>
+
+<P>
+<HR>
+
+<P>
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Field Summary table, listing fields, and an explanation">
+<CAPTION CLASS="TableCaption">
+Field Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Field and Description</TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_net.algart.math.patterns.Pattern"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Fields inherited from interface net.algart.math.patterns.<A HREF="../../../../net/algart/math/patterns/Pattern.html" title="interface in net.algart.math.patterns">Pattern</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../net/algart/math/patterns/Pattern.html#MAX_COORDINATE">MAX_COORDINATE</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#isConstant()">isConstant</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if the weights of all points are the same.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../net/algart/math/patterns/WeightedPattern.html" title="interface in net.algart.math.patterns">WeightedPattern</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#multiply(double)">multiply</A></STRONG>(double&nbsp;multiplier)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the pattern consisting of points, generated from points of this instance
+ by multiplying on the <tt>mult</tt> argument via <A HREF="../../../../net/algart/math/IPoint.html#multiply(double)"><CODE>IPoint.multiply(double)</CODE></A> method.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.util.List&lt;<A HREF="../../../../net/algart/math/patterns/WeightedPattern.html" title="interface in net.algart.math.patterns">WeightedPattern</A>&gt;</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#productDecomposition(int)">productDecomposition</A></STRONG>(int&nbsp;minimalPointCount)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the product decomposition:
+ the list of patterns such that the convolution with this pattern
+ is equivalent to sequential convolution with all patterns from the list.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../net/algart/math/patterns/WeightedPattern.html" title="interface in net.algart.math.patterns">WeightedPattern</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#scale(double...)">scale</A></STRONG>(double...&nbsp;multipliers)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns this pattern, scaled by the specified multipliers along all coordinates.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../net/algart/math/patterns/WeightedPattern.html" title="interface in net.algart.math.patterns">WeightedPattern</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#shift(net.algart.math.IPoint)">shift</A></STRONG>(<A HREF="../../../../net/algart/math/IPoint.html" title="class in net.algart.math">IPoint</A>&nbsp;shift)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the pattern shifted by the argument, that is consisting of points
+ with the same <A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#weight(net.algart.math.IPoint)"><CODE>weights</CODE></A>,
+ generated from points of this instance by adding the argument via <A HREF="../../../../net/algart/math/IPoint.html#add(net.algart.math.IPoint)"><CODE>IPoint.add(IPoint)</CODE></A> method.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../net/algart/math/patterns/WeightedPattern.html" title="interface in net.algart.math.patterns">WeightedPattern</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#symmetric()">symmetric</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the symmetric pattern: equivalent to <A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#multiply(double)"><CODE>multiply(-1.0)</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#weight(net.algart.math.IPoint)">weight</A></STRONG>(<A HREF="../../../../net/algart/math/IPoint.html" title="class in net.algart.math">IPoint</A>&nbsp;point)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the weight of the given point of the pattern.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../net/algart/math/Range.html" title="class in net.algart.math">Range</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#weightRange()">weightRange</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the minimal and maximal weights of all points of this pattern.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_net.algart.math.patterns.Pattern"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from interface net.algart.math.patterns.<A HREF="../../../../net/algart/math/patterns/Pattern.html" title="interface in net.algart.math.patterns">Pattern</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../net/algart/math/patterns/Pattern.html#allUnionDecompositions(int)">allUnionDecompositions</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#carcass()">carcass</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#coordArea()">coordArea</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#coordMax()">coordMax</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#coordMin()">coordMin</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#coordRange(int)">coordRange</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#dimCount()">dimCount</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#hasMinkowskiDecomposition()">hasMinkowskiDecomposition</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#isSurelyInteger()">isSurelyInteger</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#isSurelyOriginPoint()">isSurelyOriginPoint</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#isSurelySinglePoint()">isSurelySinglePoint</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#largePointCount()">largePointCount</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#maxBound(int)">maxBound</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#maxCarcassMultiplier()">maxCarcassMultiplier</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#minBound(int)">minBound</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#minkowskiAdd(net.algart.math.patterns.Pattern)">minkowskiAdd</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#minkowskiDecomposition(int)">minkowskiDecomposition</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#minkowskiSubtract(net.algart.math.patterns.Pattern)">minkowskiSubtract</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#pointCount()">pointCount</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#points()">points</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#projectionAlongAxis(int)">projectionAlongAxis</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#round()">round</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#roundedCoordArea()">roundedCoordArea</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#roundedCoordRange(int)">roundedCoordRange</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#roundedPoints()">roundedPoints</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#shift(net.algart.math.Point)">shift</A>, <A HREF="../../../../net/algart/math/patterns/Pattern.html#unionDecomposition(int)">unionDecomposition</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="weight(net.algart.math.IPoint)"><!-- --></A><H3>
+weight</H3>
+<PRE>
+double <STRONG>weight</STRONG>(<A HREF="../../../../net/algart/math/IPoint.html" title="class in net.algart.math">IPoint</A>&nbsp;point)</PRE>
+<DL>
+<DD>Returns the weight of the given point of the pattern.
+ The result is undefined if this point is outside the pattern.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>point</CODE> - some <A HREF="../../../../net/algart/math/IPoint.html" title="class in net.algart.math"><CODE>integer point</CODE></A>.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the weight of this point.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if the argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>point.<A HREF="../../../../net/algart/math/IPoint.html#coordCount()"><CODE>coordCount()</CODE></A>!=<A HREF="../../../../net/algart/math/patterns/Pattern.html#dimCount()"><CODE>Pattern.dimCount()</CODE></A>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="weightRange()"><!-- --></A><H3>
+weightRange</H3>
+<PRE>
+<A HREF="../../../../net/algart/math/Range.html" title="class in net.algart.math">Range</A> <STRONG>weightRange</STRONG>()</PRE>
+<DL>
+<DD>Returns the minimal and maximal weights of all points of this pattern.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the minimal and maximal weights of all points of this pattern.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isConstant()"><!-- --></A><H3>
+isConstant</H3>
+<PRE>
+boolean <STRONG>isConstant</STRONG>()</PRE>
+<DL>
+<DD>Returns <tt>true</tt> if the weights of all points are the same.
+ Equivalent to <tt><A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#weightRange()"><CODE>weightRange()</CODE></A>.<A HREF="../../../../net/algart/math/Range.html#size()"><CODE>size()</CODE></A>==0.0</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if the weights of all points are the same.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="shift(net.algart.math.IPoint)"><!-- --></A><H3>
+shift</H3>
+<PRE>
+<A HREF="../../../../net/algart/math/patterns/WeightedPattern.html" title="interface in net.algart.math.patterns">WeightedPattern</A> <STRONG>shift</STRONG>(<A HREF="../../../../net/algart/math/IPoint.html" title="class in net.algart.math">IPoint</A>&nbsp;shift)</PRE>
+<DL>
+<DD>Returns the pattern shifted by the argument, that is consisting of points
+ with the same <A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#weight(net.algart.math.IPoint)"><CODE>weights</CODE></A>,
+ generated from points of this instance by adding the argument via <A HREF="../../../../net/algart/math/IPoint.html#add(net.algart.math.IPoint)"><CODE>IPoint.add(IPoint)</CODE></A> method.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>shift</CODE> - the shift.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the shifted pattern.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if the argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>point.<A HREF="../../../../net/algart/math/IPoint.html#coordCount()"><CODE>coordCount()</CODE></A>!=<A HREF="../../../../net/algart/math/patterns/Pattern.html#dimCount()"><CODE>Pattern.dimCount()</CODE></A>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="multiply(double)"><!-- --></A><H3>
+multiply</H3>
+<PRE>
+<A HREF="../../../../net/algart/math/patterns/WeightedPattern.html" title="interface in net.algart.math.patterns">WeightedPattern</A> <STRONG>multiply</STRONG>(double&nbsp;multiplier)</PRE>
+<DL>
+<DD>Returns the pattern consisting of points, generated from points of this instance
+ by multiplying on the <tt>mult</tt> argument via <A HREF="../../../../net/algart/math/IPoint.html#multiply(double)"><CODE>IPoint.multiply(double)</CODE></A> method.
+
+ <p>If <tt>mult</tt> is not an integer, the generated real coordinates are rounded to integer values.
+ If several source points are rounded to the same integer point, the <A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#weight(net.algart.math.IPoint)"><CODE>weights</CODE></A>
+ of the resulting points may differ from the weights of the source ones,
+ but the sum of all weights will be approximately same.
+ If the all source points are transformed to different points,
+ their weights are preserved.
+
+ <p><i>Please note:</i> if <tt>mult</tt> is not an integer,
+ the algorithm of rounding <i>is not strictly specified</i>!
+ However, you can be sure that the new pattern will be near from the precise result.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/patterns/Pattern.html#multiply(double)">multiply</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/patterns/Pattern.html" title="interface in net.algart.math.patterns">Pattern</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>multiplier</CODE> - the multiplier.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the product of this pattern and the given scalar <tt>mult</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../../net/algart/math/patterns/Pattern.html#scale(double...)"><CODE>Pattern.scale(double...)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="scale(double...)"><!-- --></A><H3>
+scale</H3>
+<PRE>
+<A HREF="../../../../net/algart/math/patterns/WeightedPattern.html" title="interface in net.algart.math.patterns">WeightedPattern</A> <STRONG>scale</STRONG>(double...&nbsp;multipliers)</PRE>
+<DL>
+<DD><STRONG>Description copied from interface: <CODE><A HREF="../../../../net/algart/math/patterns/Pattern.html#scale(double...)">Pattern</A></CODE></STRONG></DD>
+<DD>Returns this pattern, scaled by the specified multipliers along all coordinates.
+
+ <p>More precisely, the resulting pattern consists of the points,
+ obtained from all points of this pattern by the call
+ <tt>point.<A HREF="../../../../net/algart/math/Point.html#scale(double...)"><CODE>scale</CODE></A>(multipliers)</tt>.
+
+ <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, simple_corrections_features)!! Auto-generated: NOT EDIT !! -->
+ <p>The returned pattern always implements <A HREF="../../../../net/algart/math/patterns/DirectPointSetPattern.html" title="interface in net.algart.math.patterns"><CODE>DirectPointSetPattern</CODE></A>
+ if this pattern implements <A HREF="../../../../net/algart/math/patterns/DirectPointSetPattern.html" title="interface in net.algart.math.patterns"><CODE>DirectPointSetPattern</CODE></A>
+
+ <p>The returned pattern always implements <A HREF="../../../../net/algart/math/patterns/RectangularPattern.html" title="interface in net.algart.math.patterns"><CODE>RectangularPattern</CODE></A>
+ if this pattern implements <A HREF="../../../../net/algart/math/patterns/RectangularPattern.html" title="interface in net.algart.math.patterns"><CODE>RectangularPattern</CODE></A>.
+
+ <p>The returned pattern always implements <A HREF="../../../../net/algart/math/patterns/UniformGridPattern.html" title="interface in net.algart.math.patterns"><CODE>UniformGridPattern</CODE></A>
+ if this pattern implements <A HREF="../../../../net/algart/math/patterns/UniformGridPattern.html" title="interface in net.algart.math.patterns"><CODE>UniformGridPattern</CODE></A>.
+
+ <p>There is a guarantee, that this method does not try to allocate much more memory,
+ that it is required for storing this pattern itself, and that it
+ never throws <A HREF="../../../../net/algart/math/patterns/TooManyPointsInPatternError.html" title="class in net.algart.math.patterns"><CODE>TooManyPointsInPatternError</CODE></A>.
+ For comparison, an attempt to do the same operation via getting all points (<A HREF="../../../../net/algart/math/patterns/Pattern.html#points()"><CODE>Pattern.points()</CODE></A> method),
+ correcting them and forming a new pattern via <A HREF="../../../../net/algart/math/patterns/Patterns.html#newPattern(java.util.Collection)"><CODE>Patterns.newPattern(java.util.Collection)</CODE></A>
+ will lead to <A HREF="../../../../net/algart/math/patterns/TooManyPointsInPatternError.html" title="class in net.algart.math.patterns"><CODE>TooManyPointsInPatternError</CODE></A> / <tt>OutOfMemoryError</tt> for some forms of large patterns.
+ <!--Repeat.IncludeEnd-->
+
+ <p>Warning: this method can fail with <A HREF="../../../../net/algart/math/patterns/TooLargePatternCoordinatesException.html" title="class in net.algart.math.patterns"><CODE>TooLargePatternCoordinatesException</CODE></A>, if some of new points
+ violate restrictions, described in the <A HREF="../../../../net/algart/math/patterns/Pattern.html" title="interface in net.algart.math.patterns"><CODE>comments to this interface</CODE></A>,
+ section "Coordinate restrictions" (for example, due to very large multipliers).
+ However, such failure is obviously impossible, if all multipliers are
+ in range <tt>-1.0&lt;=multipliers[k]&lt;=1.0</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/patterns/Pattern.html#scale(double...)">scale</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/patterns/Pattern.html" title="interface in net.algart.math.patterns">Pattern</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>multipliers</CODE> - the scales along coordinates.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the scaled pattern.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../../net/algart/math/patterns/Pattern.html#multiply(double)"><CODE>Pattern.multiply(double)</CODE></A></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="symmetric()"><!-- --></A><H3>
+symmetric</H3>
+<PRE>
+<A HREF="../../../../net/algart/math/patterns/WeightedPattern.html" title="interface in net.algart.math.patterns">WeightedPattern</A> <STRONG>symmetric</STRONG>()</PRE>
+<DL>
+<DD>Returns the symmetric pattern: equivalent to <A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#multiply(double)"><CODE>multiply(-1.0)</CODE></A>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../../net/algart/math/patterns/Pattern.html#symmetric()">symmetric</A></CODE> in interface <CODE><A HREF="../../../../net/algart/math/patterns/Pattern.html" title="interface in net.algart.math.patterns">Pattern</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the symmetric pattern.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="productDecomposition(int)"><!-- --></A><H3>
+productDecomposition</H3>
+<PRE>
+java.util.List&lt;<A HREF="../../../../net/algart/math/patterns/WeightedPattern.html" title="interface in net.algart.math.patterns">WeightedPattern</A>&gt; <STRONG>productDecomposition</STRONG>(int&nbsp;minimalPointCount)</PRE>
+<DL>
+<DD>Returns the product decomposition:
+ the list of patterns such that the convolution with this pattern
+ is equivalent to sequential convolution with all patterns from the list.
+
+ <p>Let the pattern consists of n-dimensional points <i>p</i><sub>1</sub>,&nbsp;<i>p</i><sub>2</sub>,&nbsp;...
+ with <A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#weight(net.algart.math.IPoint)"><CODE>weights</CODE></A> <i>w</i><sub>1</sub>,&nbsp;<i>w</i><sub>2</sub>,&nbsp;...,
+ and let the integer vector <b>i</b> defines the position of some element of the n-dimensional
+ numeric matrix <b>A</b>.
+ Here the convolution by this pattern means transforming
+ the matrix <b>A</b> to another matrix <b>B</b> by the following rules:
+
+ <blockquote>
+ <b>B</b>[<b>i</b>] = <big>&sum;</big>
+ <i>w</i><sub><i>k</i></sub><b>A</b>[<b>i</b>-<i>p</i><sub><i>k</i></sub>]
+ </blockquote>
+
+ <p>This method allows to optimize calculation of this convolution with help of several passes:
+ first you calculate the convolution with the 1st element of the returned list,
+ then you calculate  the convolution of the new matrix with the 2nd element of the returned list,
+ etc. The last convolution will be equal (or almost equal, due to possible rounding errors)
+ to the convolution of the source matrix with full this pattern.
+
+ <p>The simplest example of such decomposition is a case of the
+ <A HREF="../../../../net/algart/math/patterns/UniformGridPattern.html#isActuallyRectangular()"><CODE>rectangular</CODE></A> <A HREF="../../../../net/algart/math/patterns/WeightedPattern.html#isConstant()"><CODE>constant</CODE></A> pattern.
+ In this case, this method should return a list of <A HREF="../../../../net/algart/math/patterns/Pattern.html#dimCount()"><CODE>Pattern.dimCount()</CODE></A> linear constant patterns
+ (one-dimensional segments), the minkowski sum of which is equal to this one.
+ The linear constant segments should not be further decomposed, because there is an optimal algorithm
+ for convolution of any matrix with a linear constant segment, requiring 2 operations per element only.
+
+ <p>There is no guarantee that this method returns a good decomposition.
+ If this method cannot find required decomposition, it returns the list containing
+ this instance as the only element.
+
+ <p>The number of space dimensions in all returned patterns (<A HREF="../../../../net/algart/math/patterns/Pattern.html#dimCount()"><CODE>Pattern.dimCount()</CODE></A> is the same as in this one.
+
+ <p>The result of this method is immutable (<tt>Collections.unmodifiableList</tt>).
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>minimalPointCount</CODE> - this method does not try to decompose patterns that contain
+                          less than <tt>minimalPointCount</tt> points.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the decomposition of this pattern to the "product" (convolution) of smaller patterns.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the argument is negative.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../net/algart/math/patterns/UpperHalfEllipsoidOfRevolutionFunc.html" title="class in net.algart.math.patterns"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../../net/algart/math/patterns/WeightedPatterns.html" title="class in net.algart.math.patterns"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?net/algart/math/patterns/WeightedPattern.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="WeightedPattern.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

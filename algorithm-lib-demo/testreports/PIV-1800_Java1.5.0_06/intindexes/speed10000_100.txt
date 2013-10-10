@@ -1,0 +1,270 @@
+*** ITERATION #1
+
+Creating vectors (array-based vector int[10000], @18558d2, capacity 21870; array-based vector int[10000], @18a47e0, capacity 10000):
+0.099205 sec from 0 capacity, 0.063543 sec from 10000 elements
+Creating vector (array-based vector int[10000], @174cc1f, capacity 10000) from 0 via length/setInt:
+0.004788 sec
+Trimming the last vector: 0.000199 sec
+
+1st vector: array-based vector int[10000], @18558d2, capacity 21870
+2nd vector: array-based vector int[10000], @18a47e0, capacity 10000
+3rd vector: array-based vector int[10000], @174cc1f, capacity 10000
+Sum of 1st vector: 704532704 (3.8919936E7 ns, 38.92 ns/element)
+Sum of 2nd vector: 704532704 (2.5995008E7 ns, 26.00 ns/element)
+Sum of 3rd vector: 704532704 (2.6501376E7 ns, 26.50 ns/element)
+Sum of 1st vector via array():    704532704 (3683072.0 ns, 3.68 ns/element)
+Sum of 1st vector via toArray():  704532704 (3914752.0 ns, 3.91 ns/element)
+Sum of 1st vector via getIntTest: 704532704 (8252160.0 ns, 8.25 ns/element)
+
+Filling 1st vector by 0 via asIntArray (3859200.0 ns, 3.86 ns/element)
+Filling 2nd vector by 0 (2.9428736E7 ns, 29.43 ns/element)
+Creating 3rd vector by 0 via valueOf (1.14769408E8 ns, 114.77 ns/element)
+1st vector: array-based vector int[10000], @18558d2, capacity 10000
+2nd vector: array-based vector int[10000], @18a47e0, capacity 10000
+3rd vector: array-based vector int[10000], @1050e1f, capacity 10000
+Sum of 1st vector: 0 (2.5813248E7 ns, 25.81 ns/element)
+Sum of 2nd vector: 0 (2.5879552E7 ns, 25.88 ns/element)
+Sum of 3rd vector: 0 (2.4728576E7 ns, 24.73 ns/element)
+Sum of 1st vector via array():    0 (3458304.0 ns, 3.46 ns/element)
+Sum of 1st vector via toArray():  0 (3477760.0 ns, 3.48 ns/element)
+Sum of 1st vector via getIntTest: 0 (6985472.0 ns, 6.99 ns/element)
+
+Filling 1st vector by 1 via asIntArray (3709184.0 ns, 3.71 ns/element)
+Filling 2nd vector by 1 (2.5530624E7 ns, 25.53 ns/element)
+Creating 3rd vector by 1 via valueOf (1.68169472E8 ns, 168.17 ns/element)
+1st vector: array-based vector int[10000], @18558d2, capacity 10000
+2nd vector: array-based vector int[10000], @18a47e0, capacity 10000
+3rd vector: array-based vector int[10000], @d1e604, capacity 10000
+Sum of 1st vector: 1000000 (2.487552E7 ns, 24.88 ns/element)
+Sum of 2nd vector: 1000000 (2.5856512E7 ns, 25.86 ns/element)
+Sum of 3rd vector: 1000000 (2.6153984E7 ns, 26.15 ns/element)
+Sum of 1st vector via array():    1000000 (3531776.0 ns, 3.53 ns/element)
+Sum of 1st vector via toArray():  1000000 (3466752.0 ns, 3.47 ns/element)
+Sum of 1st vector via getIntTest: 1000000 (7794688.0 ns, 7.79 ns/element)
+
+Filling 1st vector by 2 via asIntArray (3634688.0 ns, 3.63 ns/element)
+Filling 2nd vector by 2 (2.6719744E7 ns, 26.72 ns/element)
+Creating 3rd vector by 2 via valueOf (8.5898752E7 ns, 85.90 ns/element)
+
+Extracting sub-vectors
+
+1st vector: array-based subvector int[5000], @18558d2, capacity 5000, start offset = 2500
+2nd vector: array-based subvector int[5000], @18a47e0, capacity 5000, start offset = 2500
+3rd vector: array-based subvector int[5000], @19c26f5, capacity 5000, start offset = 2500
+Sum of 1st vector: 1000000 (8.5585408E7 ns, 171.17 ns/element)
+Sum of 2nd vector: 1000000 (1.3016832E7 ns, 26.03 ns/element)
+Sum of 3rd vector: 1000000 (1.2795136E7 ns, 25.59 ns/element)
+Sum of 1st vector via array():    1000000 (2032128.0 ns, 4.06 ns/element)
+Sum of 1st vector via toArray():  1000000 (1858560.0 ns, 3.72 ns/element)
+Sum of 1st vector via getIntTest: 1000000 (3503872.0 ns, 7.01 ns/element)
+
+Filling 1st vector by 3 via asIntArray (1980416.0 ns, 3.96 ns/element)
+Filling 2nd vector by 3 (1.4372608E7 ns, 28.75 ns/element)
+Creating 3rd vector by 3 via valueOf (5.3811968E7 ns, 107.62 ns/element)
+1st vector: array-based subvector int[5000], @18558d2, capacity 5000, start offset = 2500
+2nd vector: array-based subvector int[5000], @18a47e0, capacity 5000, start offset = 2500
+3rd vector: array-based vector int[5000], @c1b531, capacity 5000
+Sum of 1st vector: 1500000 (1.3203456E7 ns, 26.41 ns/element)
+Sum of 2nd vector: 1500000 (2.1793792E7 ns, 43.59 ns/element)
+Sum of 3rd vector: 1500000 (1.6119296E7 ns, 32.24 ns/element)
+Sum of 1st vector via array():    1500000 (1711616.0 ns, 3.42 ns/element)
+Sum of 1st vector via toArray():  1500000 (1760768.0 ns, 3.52 ns/element)
+Sum of 1st vector via getIntTest: 1500000 (4184832.0 ns, 8.37 ns/element)
+
+Filling 1st vector by 4 via asIntArray (1742592.0 ns, 3.49 ns/element)
+Filling 2nd vector by 4 (1.2117248E7 ns, 24.23 ns/element)
+Creating 3rd vector by 4 via valueOf (4.2515456E7 ns, 85.03 ns/element)
+1st vector: array-based subvector int[5000], @18558d2, capacity 5000, start offset = 2500
+2nd vector: array-based subvector int[5000], @18a47e0, capacity 5000, start offset = 2500
+3rd vector: array-based vector int[5000], @15eb0a9, capacity 5000
+Sum of 1st vector: 2000000 (1.4809088E7 ns, 29.62 ns/element)
+Sum of 2nd vector: 2000000 (1.2996352E7 ns, 25.99 ns/element)
+Sum of 3rd vector: 2000000 (1.2887808E7 ns, 25.78 ns/element)
+Sum of 1st vector via array():    2000000 (1752576.0 ns, 3.51 ns/element)
+Sum of 1st vector via toArray():  2000000 (4355328.0 ns, 8.71 ns/element)
+Sum of 1st vector via getIntTest: 2000000 (4193280.0 ns, 8.39 ns/element)
+
+Filling 1st vector by 5 via asIntArray (1750784.0 ns, 3.50 ns/element)
+Filling 2nd vector by 5 (1.195136E7 ns, 23.90 ns/element)
+Creating 3rd vector by 5 via valueOf (4.2582272E7 ns, 85.16 ns/element)
+
+*** ITERATION #2
+
+Creating vectors (array-based vector int[5000], @1a05308, capacity 7290; array-based vector int[5000], @ab50cd, capacity 5000):
+0.002897 sec from 0 capacity, 0.000335 sec from 5000 elements
+Creating vector (array-based vector int[5000], @145d068, capacity 5000) from 0 via length/setInt:
+0.000645 sec
+Trimming the last vector: 0.000124 sec
+
+1st vector: array-based vector int[5000], @1a05308, capacity 7290
+2nd vector: array-based vector int[5000], @ab50cd, capacity 5000
+3rd vector: array-based vector int[5000], @145d068, capacity 5000
+Sum of 1st vector: 1249750000 (1.3021184E7 ns, 26.04 ns/element)
+Sum of 2nd vector: 1249750000 (1.304448E7 ns, 26.09 ns/element)
+Sum of 3rd vector: 1249750000 (1.3365248E7 ns, 26.73 ns/element)
+Sum of 1st vector via array():    1249750000 (1833472.0 ns, 3.67 ns/element)
+Sum of 1st vector via toArray():  1249750000 (1743104.0 ns, 3.49 ns/element)
+Sum of 1st vector via getIntTest: 1249750000 (4180480.0 ns, 8.36 ns/element)
+
+Filling 1st vector by 0 via asIntArray (1866752.0 ns, 3.73 ns/element)
+Filling 2nd vector by 0 (1.4865664E7 ns, 29.73 ns/element)
+Creating 3rd vector by 0 via valueOf (4.6529024E7 ns, 93.06 ns/element)
+1st vector: array-based vector int[5000], @1a05308, capacity 5000
+2nd vector: array-based vector int[5000], @ab50cd, capacity 5000
+3rd vector: array-based vector int[5000], @758fc9, capacity 5000
+Sum of 1st vector: 0 (1.2649728E7 ns, 25.30 ns/element)
+Sum of 2nd vector: 0 (1.2861952E7 ns, 25.72 ns/element)
+Sum of 3rd vector: 0 (1.3485056E7 ns, 26.97 ns/element)
+Sum of 1st vector via array():    0 (1710592.0 ns, 3.42 ns/element)
+Sum of 1st vector via toArray():  0 (1737472.0 ns, 3.47 ns/element)
+Sum of 1st vector via getIntTest: 0 (3423488.0 ns, 6.85 ns/element)
+
+Filling 1st vector by 1 via asIntArray (1746688.0 ns, 3.49 ns/element)
+Filling 2nd vector by 1 (1.4155776E7 ns, 28.31 ns/element)
+Creating 3rd vector by 1 via valueOf (4.5380608E7 ns, 90.76 ns/element)
+1st vector: array-based vector int[5000], @1a05308, capacity 5000
+2nd vector: array-based vector int[5000], @ab50cd, capacity 5000
+3rd vector: array-based vector int[5000], @32fb4f, capacity 5000
+Sum of 1st vector: 500000 (1.2841728E7 ns, 25.68 ns/element)
+Sum of 2nd vector: 500000 (1.3037824E7 ns, 26.08 ns/element)
+Sum of 3rd vector: 500000 (1.306624E7 ns, 26.13 ns/element)
+Sum of 1st vector via array():    500000 (1697792.0 ns, 3.40 ns/element)
+Sum of 1st vector via toArray():  500000 (1760768.0 ns, 3.52 ns/element)
+Sum of 1st vector via getIntTest: 500000 (4432896.0 ns, 8.87 ns/element)
+
+Filling 1st vector by 2 via asIntArray (1909504.0 ns, 3.82 ns/element)
+Filling 2nd vector by 2 (1.442688E7 ns, 28.85 ns/element)
+Creating 3rd vector by 2 via valueOf (4.2784768E7 ns, 85.57 ns/element)
+
+Extracting sub-vectors
+
+1st vector: array-based subvector int[2500], @1a05308, capacity 2500, start offset = 1250
+2nd vector: array-based subvector int[2500], @ab50cd, capacity 2500, start offset = 1250
+3rd vector: array-based subvector int[2500], @1113708, capacity 2500, start offset = 1250
+Sum of 1st vector: 500000 (6400768.0 ns, 25.60 ns/element)
+Sum of 2nd vector: 500000 (2.4089088E7 ns, 96.36 ns/element)
+Sum of 3rd vector: 500000 (6429440.0 ns, 25.72 ns/element)
+Sum of 1st vector via array():    500000 (873984.0 ns, 3.50 ns/element)
+Sum of 1st vector via toArray():  500000 (881152.0 ns, 3.52 ns/element)
+Sum of 1st vector via getIntTest: 500000 (1914624.0 ns, 7.66 ns/element)
+
+Filling 1st vector by 3 via asIntArray (893440.0 ns, 3.57 ns/element)
+Filling 2nd vector by 3 (2.5522944E7 ns, 102.09 ns/element)
+Creating 3rd vector by 3 via valueOf (3.7345792E7 ns, 149.38 ns/element)
+1st vector: array-based subvector int[2500], @1a05308, capacity 2500, start offset = 1250
+2nd vector: array-based subvector int[2500], @ab50cd, capacity 2500, start offset = 1250
+3rd vector: array-based vector int[2500], @133f1d7, capacity 2500
+Sum of 1st vector: 750000 (6931200.0 ns, 27.72 ns/element)
+Sum of 2nd vector: 750000 (6776064.0 ns, 27.10 ns/element)
+Sum of 3rd vector: 750000 (6776320.0 ns, 27.11 ns/element)
+Sum of 1st vector via array():    750000 (1007616.0 ns, 4.03 ns/element)
+Sum of 1st vector via toArray():  750000 (886528.0 ns, 3.55 ns/element)
+Sum of 1st vector via getIntTest: 750000 (1876736.0 ns, 7.51 ns/element)
+
+Filling 1st vector by 4 via asIntArray (903936.0 ns, 3.62 ns/element)
+Filling 2nd vector by 4 (7073792.0 ns, 28.30 ns/element)
+Creating 3rd vector by 4 via valueOf (9726464.0 ns, 38.91 ns/element)
+1st vector: array-based subvector int[2500], @1a05308, capacity 2500, start offset = 1250
+2nd vector: array-based subvector int[2500], @ab50cd, capacity 2500, start offset = 1250
+3rd vector: array-based vector int[2500], @14a9972, capacity 2500
+Sum of 1st vector: 1000000 (6464000.0 ns, 25.86 ns/element)
+Sum of 2nd vector: 1000000 (6376192.0 ns, 25.50 ns/element)
+Sum of 3rd vector: 1000000 (6817792.0 ns, 27.27 ns/element)
+Sum of 1st vector via array():    1000000 (868864.0 ns, 3.48 ns/element)
+Sum of 1st vector via toArray():  1000000 (881408.0 ns, 3.53 ns/element)
+Sum of 1st vector via getIntTest: 1000000 (1699840.0 ns, 6.80 ns/element)
+
+Filling 1st vector by 5 via asIntArray (893952.0 ns, 3.58 ns/element)
+Filling 2nd vector by 5 (6900992.0 ns, 27.60 ns/element)
+Creating 3rd vector by 5 via valueOf (3.7253376E7 ns, 149.01 ns/element)
+
+*** ITERATION #3
+
+Creating vectors (array-based vector int[2500], @a01335, capacity 7290; array-based vector int[2500], @14d3343, capacity 2500):
+0.000243 sec from 0 capacity, 0.000094 sec from 2500 elements
+Creating vector (array-based vector int[2500], @1608e05, capacity 2500) from 0 via length/setInt:
+0.000318 sec
+Trimming the last vector: 0.000036 sec
+
+1st vector: array-based vector int[2500], @a01335, capacity 7290
+2nd vector: array-based vector int[2500], @14d3343, capacity 2500
+3rd vector: array-based vector int[2500], @1608e05, capacity 2500
+Sum of 1st vector: 312375000 (6345984.0 ns, 25.38 ns/element)
+Sum of 2nd vector: 312375000 (6880256.0 ns, 27.52 ns/element)
+Sum of 3rd vector: 312375000 (6585856.0 ns, 26.34 ns/element)
+Sum of 1st vector via array():    312375000 (854784.0 ns, 3.42 ns/element)
+Sum of 1st vector via toArray():  312375000 (1012480.0 ns, 4.05 ns/element)
+Sum of 1st vector via getIntTest: 312375000 (1706240.0 ns, 6.82 ns/element)
+
+Filling 1st vector by 0 via asIntArray (887808.0 ns, 3.55 ns/element)
+Filling 2nd vector by 0 (7020800.0 ns, 28.08 ns/element)
+Creating 3rd vector by 0 via valueOf (9649408.0 ns, 38.60 ns/element)
+1st vector: array-based vector int[2500], @a01335, capacity 2500
+2nd vector: array-based vector int[2500], @14d3343, capacity 2500
+3rd vector: array-based vector int[2500], @bf32c, capacity 2500
+Sum of 1st vector: 0 (6582272.0 ns, 26.33 ns/element)
+Sum of 2nd vector: 0 (6686464.0 ns, 26.75 ns/element)
+Sum of 3rd vector: 0 (6640896.0 ns, 26.56 ns/element)
+Sum of 1st vector via array():    0 (861184.0 ns, 3.44 ns/element)
+Sum of 1st vector via toArray():  0 (893952.0 ns, 3.58 ns/element)
+Sum of 1st vector via getIntTest: 0 (1912064.0 ns, 7.65 ns/element)
+
+Filling 1st vector by 1 via asIntArray (874752.0 ns, 3.50 ns/element)
+Filling 2nd vector by 1 (7166208.0 ns, 28.66 ns/element)
+Creating 3rd vector by 1 via valueOf (4.1619968E7 ns, 166.48 ns/element)
+1st vector: array-based vector int[2500], @a01335, capacity 2500
+2nd vector: array-based vector int[2500], @14d3343, capacity 2500
+3rd vector: array-based vector int[2500], @89fbe3, capacity 2500
+Sum of 1st vector: 250000 (6349056.0 ns, 25.40 ns/element)
+Sum of 2nd vector: 250000 (6214912.0 ns, 24.86 ns/element)
+Sum of 3rd vector: 250000 (6715904.0 ns, 26.86 ns/element)
+Sum of 1st vector via array():    250000 (1086976.0 ns, 4.35 ns/element)
+Sum of 1st vector via toArray():  250000 (881152.0 ns, 3.52 ns/element)
+Sum of 1st vector via getIntTest: 250000 (1901312.0 ns, 7.61 ns/element)
+
+Filling 1st vector by 2 via asIntArray (895744.0 ns, 3.58 ns/element)
+Filling 2nd vector by 2 (7066624.0 ns, 28.27 ns/element)
+Creating 3rd vector by 2 via valueOf (1.3700864E7 ns, 54.80 ns/element)
+
+Extracting sub-vectors
+
+1st vector: array-based subvector int[1250], @a01335, capacity 1250, start offset = 625
+2nd vector: array-based subvector int[1250], @14d3343, capacity 1250, start offset = 625
+3rd vector: array-based subvector int[1250], @f81843, capacity 1250, start offset = 625
+Sum of 1st vector: 250000 (3202816.0 ns, 25.62 ns/element)
+Sum of 2nd vector: 250000 (3196928.0 ns, 25.58 ns/element)
+Sum of 3rd vector: 250000 (3283968.0 ns, 26.27 ns/element)
+Sum of 1st vector via array():    250000 (473344.0 ns, 3.79 ns/element)
+Sum of 1st vector via toArray():  250000 (441856.0 ns, 3.53 ns/element)
+Sum of 1st vector via getIntTest: 250000 (857856.0 ns, 6.86 ns/element)
+
+Filling 1st vector by 3 via asIntArray (453632.0 ns, 3.63 ns/element)
+Filling 2nd vector by 3 (3495936.0 ns, 27.97 ns/element)
+Creating 3rd vector by 3 via valueOf (4.1943552E7 ns, 335.55 ns/element)
+1st vector: array-based subvector int[1250], @a01335, capacity 1250, start offset = 625
+2nd vector: array-based subvector int[1250], @14d3343, capacity 1250, start offset = 625
+3rd vector: array-based vector int[1250], @dd5b, capacity 1250
+Sum of 1st vector: 375000 (3244032.0 ns, 25.95 ns/element)
+Sum of 2nd vector: 375000 (3331328.0 ns, 26.65 ns/element)
+Sum of 3rd vector: 375000 (3159552.0 ns, 25.28 ns/element)
+Sum of 1st vector via array():    375000 (433152.0 ns, 3.47 ns/element)
+Sum of 1st vector via toArray():  375000 (507904.0 ns, 4.06 ns/element)
+Sum of 1st vector via getIntTest: 375000 (1189632.0 ns, 9.52 ns/element)
+
+Filling 1st vector by 4 via asIntArray (471552.0 ns, 3.77 ns/element)
+Filling 2nd vector by 4 (1.257472E7 ns, 100.60 ns/element)
+Creating 3rd vector by 4 via valueOf (9157888.0 ns, 73.26 ns/element)
+1st vector: array-based subvector int[1250], @a01335, capacity 1250, start offset = 625
+2nd vector: array-based subvector int[1250], @14d3343, capacity 1250, start offset = 625
+3rd vector: array-based vector int[1250], @c4bcdc, capacity 1250
+Sum of 1st vector: 500000 (3427072.0 ns, 27.42 ns/element)
+Sum of 2nd vector: 500000 (3208192.0 ns, 25.67 ns/element)
+Sum of 3rd vector: 500000 (3692032.0 ns, 29.54 ns/element)
+Sum of 1st vector via array():    500000 (451584.0 ns, 3.61 ns/element)
+Sum of 1st vector via toArray():  500000 (464896.0 ns, 3.72 ns/element)
+Sum of 1st vector via getIntTest: 500000 (999680.0 ns, 8.00 ns/element)
+
+Filling 1st vector by 5 via asIntArray (469248.0 ns, 3.75 ns/element)
+Filling 2nd vector by 5 (3504384.0 ns, 28.04 ns/element)
+Creating 3rd vector by 5 via valueOf (4660992.0 ns, 37.29 ns/element)
+

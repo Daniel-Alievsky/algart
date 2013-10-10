@@ -1,0 +1,1166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+Arrays.ParallelExecutor
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Arrays.ParallelExecutor";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/Arrays.MinMaxInfo.html" title="class in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/Arrays.SystemSettings.html" title="class in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/Arrays.ParallelExecutor.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="Arrays.ParallelExecutor.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.arrays</FONT>
+<BR>
+Class Arrays.ParallelExecutor</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><STRONG>net.algart.arrays.Arrays.ParallelExecutor</STRONG>
+</PRE>
+<DL>
+<DT><STRONG>Direct Known Subclasses:</STRONG></DT> <DD><A HREF="../../../net/algart/arrays/Arrays.Copier.html" title="class in net.algart.arrays">Arrays.Copier</A></DD>
+</DL>
+<DL>
+<DT><STRONG>Enclosing class:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Arrays.html" title="class in net.algart.arrays">Arrays</A></DD>
+</DL>
+<HR>
+<PRE>public abstract static class <STRONG>Arrays.ParallelExecutor</STRONG>
+extends java.lang.Object</PRE>
+
+<P>
+<p>The class simplifying the parallel processing a large AlgART array in several threads,
+ where each thread process a set of ranges of the source array (<A HREF="../../../net/algart/arrays/Array.html#subArray(long, long)"><CODE>Array.subArray</CODE></A>).
+ Multithread processing can be very important on multiprocessor or multi-core computers
+ for complex processing algorithm.
+ In addition, this class provides an ability to interrupt calculations and
+ show the executing progress via the <A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays"><CODE>ArrayContext</CODE></A>.
+ This class lies in the base of such methods as
+ <A HREF="../../../net/algart/arrays/Arrays.html#copy(net.algart.arrays.ArrayContext, net.algart.arrays.UpdatableArray, net.algart.arrays.Array)"><CODE>Arrays.copy(ArrayContext, UpdatableArray, Array)</CODE></A>,
+ <A HREF="../../../net/algart/arrays/Arrays.html#rangeOf(net.algart.arrays.ArrayContext, net.algart.arrays.PArray)"><CODE>Arrays.rangeOf(ArrayContext, PArray)</CODE></A>,
+ <A HREF="../../../net/algart/arrays/Arrays.html#sumOf(net.algart.arrays.ArrayContext, net.algart.arrays.PArray)"><CODE>Arrays.sumOf(ArrayContext, PArray)</CODE></A>, etc.
+ and allows to easily create analogous multithread context-based algorithms.</p>
+
+ <p>The usage of this class is very simple. You just need to create an instance
+ by some of constructors and then call the only method <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A>.
+ This method performs full processing the source AlgART array
+ in the necessary number of threads, according the information
+ from the context passed to the constructor.
+ See the comments to the constructor for detailed specification of using the context information.</p>
+
+ <p>This class has the only abstract method <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processSubArr(long, int, int)"><CODE>processSubArr(long, int, int)</CODE></A>,
+ that should perform actual processing of some range of the source array.
+ You must override this method to specify the processing algorithm.
+ You may also override some other methods to clarify the behavior of the basic <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A>
+ method.</p>
+<P>
+
+<P>
+<HR>
+
+<P>
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Field Summary table, listing fields, and an explanation">
+<CAPTION CLASS="TableCaption">
+Field Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Field and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#blockSize">blockSize</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximal block size for processing array by
+ <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processSubArr(long, int, int)"><CODE>processSubArr(long, int, int)</CODE></A> method.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../net/algart/arrays/UpdatableArray.html" title="interface in net.algart.arrays">UpdatableArray</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#dest">dest</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The reference to the destination array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges">numberOfRanges</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of ranges that the source array is split into by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks">numberOfTasks</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of parallel tasks that will be used by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays">Array</A></CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#src">src</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The reference to the source processed array.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Constructor Summary table, listing constructors, and an explanation">
+<CAPTION CLASS="TableCaption">
+Constructor Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Constructor and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected </CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#Arrays.ParallelExecutor(net.algart.arrays.ArrayContext, net.algart.arrays.UpdatableArray, net.algart.arrays.Array, int, int, long)">Arrays.ParallelExecutor</A></STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                        <A HREF="../../../net/algart/arrays/UpdatableArray.html" title="interface in net.algart.arrays">UpdatableArray</A>&nbsp;dest,
+                        <A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays">Array</A>&nbsp;src,
+                        int&nbsp;blockSize,
+                        int&nbsp;numberOfTasks,
+                        long&nbsp;numberOfRanges)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates new instance of this class, intended for processing the passed <tt>src</tt> AlgART array.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#checkInterruption()">checkInterruption</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Checks, whether the user want to interrupt the calculations,
+ and returns <tt>true</tt> in this case.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#correctNumberOfRanges(long, int)">correctNumberOfRanges</A></STRONG>(long&nbsp;numberOfRanges,
+                      int&nbsp;numberOfTasks)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the nearest integer, greater or equal to <tt>numberOfRanges</tt> and
+ multiple of <tt>numberOfTasks</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#endGap(long)">endGap</A></STRONG>(long&nbsp;rangeIndex)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the number of elements that should be skipped by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long, long, int, long)</CODE></A>
+ method at the end of each processed block.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#finish()">finish</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This method is automatically called before finishing the <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#granularity()">granularity</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the granularity of splitting: an integer value so that the start index of any range is
+ multiple of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#granularity()"><CODE>granularity()</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#increaseReadyCount(int, long)">increaseReadyCount</A></STRONG>(int&nbsp;threadIndex,
+                   long&nbsp;increment)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds the argument to the counter of the processed elements in the given region of the source array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges()">numberOfRanges</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A> field.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks()">numberOfTasks</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks"><CODE>numberOfTasks</CODE></A> field.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()">process</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Performs full processing the source AlgART array, passed to the constructor.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)">processRange</A></STRONG>(long&nbsp;fromIndex,
+             long&nbsp;toIndex,
+             int&nbsp;threadIndex,
+             long&nbsp;rangeIndex)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Processes the region of the source AlgART array, passed to the constructor.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processSubArr(long, int, int)">processSubArr</A></STRONG>(long&nbsp;position,
+              int&nbsp;count,
+              int&nbsp;threadIndex)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Should process the specified region of the source AlgART array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#rangeFrom(long)">rangeFrom</A></STRONG>(long&nbsp;rangeIndex)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the starting index in the source array (inclusive) of the specified region.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#rangeLength(long)">rangeLength</A></STRONG>(long&nbsp;rangeIndex)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the length of the specified region.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#rangeTo(long)">rangeTo</A></STRONG>(long&nbsp;rangeIndex)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the ending index in the source array (exclusive) of the specified region.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#readyCount()">readyCount</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Return the total number of the processed elements of the source array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#recommendedNumberOfRanges(net.algart.arrays.Array, boolean)">recommendedNumberOfRanges</A></STRONG>(<A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays">Array</A>&nbsp;src,
+                          boolean&nbsp;recursive)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The default (recommended) number of ranges for splitting the given AlgART array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#startGap(long)">startGap</A></STRONG>(long&nbsp;rangeIndex)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the number of elements that should be skipped by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long, long, int, long)</CODE></A>
+ method at the beginning of each processed block.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#toString()">toString</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a brief string description of this object.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#updateProgress()">updateProgress</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Calls <A HREF="../../../net/algart/arrays/ArrayContext.html#updateProgress(net.algart.arrays.ArrayContext.Event)"><CODE>ArrayContext.updateProgress</CODE></A> method
+ with the context, passed to the constructor,
+ and correctly filled <A HREF="../../../net/algart/arrays/ArrayContext.Event.html" title="class in net.algart.arrays"><CODE>ArrayContext.Event</CODE></A> instance.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class java.lang.Object</STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Field Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="dest"><!-- --></A><H3>
+dest</H3>
+<PRE>
+protected final <A HREF="../../../net/algart/arrays/UpdatableArray.html" title="interface in net.algart.arrays">UpdatableArray</A> <STRONG>dest</STRONG></PRE>
+<DL>
+<DD>The reference to the destination array. Equal to the corresponding argument of the constructor.
+ May be <tt>null</tt> for algorithms that do not produce any destination arrays.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="src"><!-- --></A><H3>
+src</H3>
+<PRE>
+protected final <A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays">Array</A> <STRONG>src</STRONG></PRE>
+<DL>
+<DD>The reference to the source processed array. Equal to the corresponding argument of the constructor.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="blockSize"><!-- --></A><H3>
+blockSize</H3>
+<PRE>
+protected final int <STRONG>blockSize</STRONG></PRE>
+<DL>
+<DD>The maximal block size for processing array by
+ <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processSubArr(long, int, int)"><CODE>processSubArr(long, int, int)</CODE></A> method.
+ Equal to the corresponding argument of the constructor.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="numberOfTasks"><!-- --></A><H3>
+numberOfTasks</H3>
+<PRE>
+protected final int <STRONG>numberOfTasks</STRONG></PRE>
+<DL>
+<DD>The number of parallel tasks that will be used by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method.
+ Equal to the corresponding argument of the constructor, if this argument is non-zero,
+ or calculated automatically if that argument is 0.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="numberOfRanges"><!-- --></A><H3>
+numberOfRanges</H3>
+<PRE>
+protected final long <STRONG>numberOfRanges</STRONG></PRE>
+<DL>
+<DD>The number of ranges that the source array is split into by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method.
+ Equal to the corresponding argument of the constructor, if this argument is non-zero,
+ or <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#recommendedNumberOfRanges(net.algart.arrays.Array, boolean)"><CODE>calculated automatically</CODE></A> if that argument is 0,
+ but this value is automatically increased to the nearest value multiple of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks"><CODE>numberOfTasks</CODE></A>.
+
+ <p>The following conditions are always true:
+ <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A>&gt;=<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks"><CODE>numberOfTasks</CODE></A></tt> and
+ <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A>%<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks"><CODE>numberOfTasks</CODE></A>==0</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#correctNumberOfRanges(long, int)"><CODE>correctNumberOfRanges(long, int)</CODE></A></DD></DL>
+</DD>
+</DL>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Constructor Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="Arrays.ParallelExecutor(net.algart.arrays.ArrayContext, net.algart.arrays.UpdatableArray, net.algart.arrays.Array, int, int, long)"><!-- --></A><H3>
+Arrays.ParallelExecutor</H3>
+<PRE>
+protected <STRONG>Arrays.ParallelExecutor</STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                  <A HREF="../../../net/algart/arrays/UpdatableArray.html" title="interface in net.algart.arrays">UpdatableArray</A>&nbsp;dest,
+                                  <A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays">Array</A>&nbsp;src,
+                                  int&nbsp;blockSize,
+                                  int&nbsp;numberOfTasks,
+                                  long&nbsp;numberOfRanges)</PRE>
+<DL>
+<DD>Creates new instance of this class, intended for processing the passed <tt>src</tt> AlgART array.
+
+ <p>The <tt>context</tt> argument, if it is not <tt>null</tt>, allows to clarify
+ the behavior of this class. If it is <tt>null</tt>, the default behavior is used.
+ Please see comments for <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> and <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long, long, int, long)</CODE></A>
+ method for precise specification of using the context.
+
+ <p>The <tt>dest</tt> argument is not required and may be <tt>null</tt>: maybe, the algorithm
+ does not fill any resulting array (for example, <A HREF="../../../net/algart/arrays/Arrays.html#sumOf(net.algart.arrays.ArrayContext, net.algart.arrays.PArray)"><CODE>Arrays.sumOf(ArrayContext, PArray)</CODE></A> method).
+ But if it is specified, this class supposes that the implementation of its
+ <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processSubArr(long, int, int)"><CODE>processSubArr(long position, int count, int threadIndex)</CODE></A> abstract method
+ will save results in the corresponding fragment of <tt>dest</tt> array:
+ <tt>dest.<A HREF="../../../net/algart/arrays/UpdatableArray.html#subArr(long, long)"><CODE>subArr</CODE></A>(position,count)</tt>.
+ In this case, <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method will, maybe, perform some resource optimization
+ connected with the destination array, for example,
+ <A HREF="../../../net/algart/arrays/Array.html#flushResources(net.algart.arrays.ArrayContext)"><CODE>flush</CODE></A> the filled regions.
+ If this argument is not <tt>null</tt>, the lengths of the source and destination arrays
+ must be identical.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>context</CODE> - the context of processing; may be <tt>null</tt>, then it will be ignored.</DD><DD><CODE>dest</CODE> - the destination array or <tt>null</tt> if this algorithm does not write data
+                       to any resulting AlgART array.</DD><DD><CODE>src</CODE> - the source processed array.</DD><DD><CODE>blockSize</CODE> - the maximal length of subregions that can be processed by
+                       <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processSubArr(long, int, int)"><CODE>processSubArr(long, int, int)</CODE></A> method.</DD><DD><CODE>numberOfTasks</CODE> - the desired number of parallel tasks or 0 if you want to determine
+                       this number automatically, from the passed context or (if it is <tt>null</tt>)
+                       from <A HREF="../../../net/algart/arrays/DefaultThreadPoolFactory.html" title="class in net.algart.arrays"><CODE>DefaultThreadPoolFactory</CODE></A> instance.</DD><DD><CODE>numberOfRanges</CODE> - the desired number of ranges for splitting the source array.
+                       If this argument is positive, but <tt>numberOfRanges%<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks"><CODE>numberOfTasks</CODE></A>!=0</tt>,
+                       it is replaced with the minimal integer, multiple of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks"><CODE>numberOfTasks</CODE></A>,
+                       greater than this argument.
+                       If this argument is 0, then the number of ranges is chosen automatically as
+                       the minimal integer, multiple of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks"><CODE>numberOfTasks</CODE></A>
+                       and greater than or equal to
+                       <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#recommendedNumberOfRanges(net.algart.arrays.Array, boolean)"><CODE>recommendedNumberOfRanges(src,&nbsp;true)</CODE></A>.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if the <tt>src</tt> argument is <tt>null</tt>.</DD>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>blockSize &lt;= 0</tt>,
+                                  or if <tt>numberOfTasks &lt; 0</tt>,
+                                  or if <tt>numberOfRanges &lt; 0</tt>.</DD>
+<DD><CODE><A HREF="../../../net/algart/arrays/SizeMismatchException.html" title="class in net.algart.arrays">SizeMismatchException</A></CODE> - if <tt>dest!=null</tt> and <tt>dest.length()!=src.length()</tt>.</DD><DT><STRONG>See Also:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#correctNumberOfRanges(long, int)"><CODE>correctNumberOfRanges(long, int)</CODE></A></DD></DL>
+</DD>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="recommendedNumberOfRanges(net.algart.arrays.Array, boolean)"><!-- --></A><H3>
+recommendedNumberOfRanges</H3>
+<PRE>
+public static long <STRONG>recommendedNumberOfRanges</STRONG>(<A HREF="../../../net/algart/arrays/Array.html" title="interface in net.algart.arrays">Array</A>&nbsp;src,
+                                             boolean&nbsp;recursive)</PRE>
+<DL>
+<DD>The default (recommended) number of ranges for splitting the given AlgART array.
+ It is chosen as the minimal positive number <tt>n</tt> so, that:
+
+ <ol>
+ <li>the subarray of <tt>src</tt> array, consisting of <tt>Math.ceil((double)src.length()/n)</tt>
+ elements, occupies not greater than <A HREF="../../../net/algart/arrays/Arrays.SystemSettings.html#maxMultithreadingMemory()"><CODE>Arrays.SystemSettings.maxMultithreadingMemory()</CODE></A>
+ bytes (1&nbsp;MB by default).
+ (This value is stored while initializing <A HREF="../../../net/algart/arrays/Arrays.html" title="class in net.algart.arrays"><CODE>Arrays</CODE></A> class;
+ if some exception occurred while calling <tt>Integer.getInteger</tt>, default value 1048576 is used.)
+
+ <li>if <tt>recursive</tt> argument is <tt>true</tt>, the same condition is true for all underlying arrays,
+ returned by <A HREF="../../../net/algart/arrays/Arrays.html#getUnderlyingArrays(net.algart.arrays.Array)"><CODE>Arrays.getUnderlyingArrays(src)</CODE></A> call.</li>
+ </ol>
+
+ <p>In other words, the ranges for splitting should not be too large (by default, 1 MB is a maximum).
+ It allows to guarantee that the ranges, which are simultaneously processed by several threads,
+ are located not too far from each other. It can be important for large arrays located in disk files.
+
+ <p>The size estimation is performed via <A HREF="../../../net/algart/arrays/Arrays.html#sizeOf(net.algart.arrays.Array)"><CODE>Arrays.sizeOf(Array)</CODE></A> method.
+ If estimation is impossible (that method returns <tt>-1</tt>),
+ we suppose that every element requires 4 bytes.
+
+ <p>The <tt>recursive</tt> argument allows better estimation of the memory used by subarray of this array.
+ On the other hand, if this argument is <tt>false</tt>, the result is more obvious: it depends only
+ on <tt>src.elementType()</tt> (if it is not a <A HREF="../../../net/algart/arrays/CombinedMemoryModel.html#isCombinedArray(net.algart.arrays.Array)"><CODE>combined array</CODE></A>)
+ and does not depend on the internal nature of this array.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>src</CODE> - the source processed array.</DD><DD><CODE>recursive</CODE> - whether this method should check the
+                  <A HREF="../../../net/algart/arrays/Arrays.html#getUnderlyingArrays(net.algart.arrays.Array)"><CODE>underlying arrays</CODE></A>.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the recommended number of ranges for splitting this array by this class.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.NullPointerException</CODE> - if <tt>src</tt> argument is <tt>null</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="correctNumberOfRanges(long, int)"><!-- --></A><H3>
+correctNumberOfRanges</H3>
+<PRE>
+public static long <STRONG>correctNumberOfRanges</STRONG>(long&nbsp;numberOfRanges,
+                                         int&nbsp;numberOfTasks)</PRE>
+<DL>
+<DD>Returns the nearest integer, greater or equal to <tt>numberOfRanges</tt> and
+ multiple of <tt>numberOfTasks</tt>.
+ Used for calculating <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A> field.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>numberOfRanges</CODE> - the desired number of ranges.</DD><DD><CODE>numberOfTasks</CODE> - the desired number of tasks.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of ranges that will be really used by this class.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>numberOfTasks &lt;= 0</tt> or if <tt>numberOfRanges &lt;= 0</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="process()"><!-- --></A><H3>
+process</H3>
+<PRE>
+public void <STRONG>process</STRONG>()</PRE>
+<DL>
+<DD>Performs full processing the source AlgART array, passed to the constructor.
+
+ <p>This method uses a thread pool for performing calculations:
+ <tt>java.util.concurrent.ExecutorService</tt>.
+ The full processing task is split into <i>M</i>=<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks"><CODE>numberOfTasks</CODE></A> tasks,
+ and the source array is split into <i>n</i>=<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A> ranges
+ (<i>n</i>&gt;=<i>M</i>, <i>n</i>%<i>M</i>=0).
+ It is possible to use <i>M</i>=1 (recommended settings for 1 CPU kernel),
+ but even in this case we recommend to choice <i>n</i> big enough to split the array
+ into not too large regions: it can help this method to optimize preloading and flushing
+ external disk resources.
+ The lengths of ranges are chosen equal or almost equal, with the only condition
+ that the first index of every range (splitting position) is multiple of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#granularity()"><CODE>granularity()</CODE></A>.
+ Each task #<i>k</i>, 0&lt;=<i>k</i>&lt;<i>M</i>,
+ processes a set of regions of the <tt>src</tt> array with step <i>M</i> regions,
+ i.e. the regions #<i>k</i>, #<i>k</i>+M, #<i>k</i>+2M, ...
+ Processing each region means just a call of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long, long, int, long)</CODE></A> method
+ for the corresponding region of the array.
+
+ <p>All tasks are submitted to the thread pool, and then this method
+ waits until all tasks will be completed.
+ If some task throws an exception, this exception is stored and the internal flag
+ "interruptionRequested" is set, that should lead to interruption of
+ all <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long, long, int, long)</CODE></A> methods (due to calling
+ <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#checkInterruption()"><CODE>checkInterruption()</CODE></A> by them).
+ This exception will be re-thrown by this method before finishing.
+
+ <p>In addition to calling <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#checkInterruption()"><CODE>checkInterruption()</CODE></A>,
+ this method also interrupts all running threads, if the current thread,
+ that calls this method,
+ is interrupted by the standard <tt>Thread.interrupt()</tt> call.
+ In this (and only this) case this method throws <tt>java.io.IOError</tt>.
+ Usually, you should avoid interrupting the threads, processing AlgART arrays,
+ via <tt>Thread.interrupt()</tt> technique: see the package description
+ about runtime exceptions issue.
+
+ <p>The number of tasks and regions and the sizes of regions may be specified
+ by arguments of the constructor or may be chosen automatically (if that arguments are 0).
+
+ <p>The thread pool, performing the multithread processing,
+ is returned and (before finishing the processing) released by the methods of
+ <tt>context.<A HREF="../../../net/algart/arrays/ArrayContext.html#getThreadPoolFactory()"><CODE>getThreadPoolFactory()</CODE></A></tt> object,
+ where <tt>context</tt> is the argument of the constructor.
+ If <tt>context</tt> argument is <tt>null</tt>,
+ the <A HREF="../../../net/algart/arrays/DefaultThreadPoolFactory.html" title="class in net.algart.arrays"><CODE>DefaultThreadPoolFactory</CODE></A> instance is created and used instead
+ <tt>context.<A HREF="../../../net/algart/arrays/ArrayContext.html#getThreadPoolFactory()"><CODE>getThreadPoolFactory()</CODE></A></tt>.
+
+ <p>Note: if the number of parallel tasks is 1,
+ this method <i>performs processing in the current thread</i>
+ and does not use the thread pool at all.
+
+ <p>At the end, in <tt>finally</tt> section, this method calls
+ <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#finish()"><CODE>finish()</CODE></A> method. Please note: if some <tt>RuntimeException</tt> B is thrown
+ by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#finish()"><CODE>finish()</CODE></A> <i>and</i> there were some other exception A while executing
+ the main body of this <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method, than the finishing exception B is ignored,
+ but the main (usually more important) exception A is thrown.
+
+ <p>This method does nothing if the length the source array is 0.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="numberOfTasks()"><!-- --></A><H3>
+numberOfTasks</H3>
+<PRE>
+public int <STRONG>numberOfTasks</STRONG>()</PRE>
+<DL>
+<DD>Returns the value of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks"><CODE>numberOfTasks</CODE></A> field.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of parallel tasks that will be used by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="numberOfRanges()"><!-- --></A><H3>
+numberOfRanges</H3>
+<PRE>
+public long <STRONG>numberOfRanges</STRONG>()</PRE>
+<DL>
+<DD>Returns the value of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A> field.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of ranges that will be used by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="rangeLength(long)"><!-- --></A><H3>
+rangeLength</H3>
+<PRE>
+public final long <STRONG>rangeLength</STRONG>(long&nbsp;rangeIndex)</PRE>
+<DL>
+<DD>Returns the length of the specified region.
+ Equal to <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#rangeTo(long)"><CODE>rangeTo</CODE></A>(rangeIndex)-<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#rangeFrom(long)"><CODE>rangeFrom</CODE></A>(rangeIndex)</tt>.
+
+ <p>The following condition is true for any <tt>k</tt> excepting <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A>-1</tt>
+ (the last range):
+ <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#rangeLength(long)"><CODE>rangeLength(k)</CODE></A>%<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#granularity()"><CODE>granularity()</CODE></A>==0</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>rangeIndex</CODE> - the index of the region:
+                   <tt>0</tt> for the first region, starting from the element <tt>#0</tt>,
+                   <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A>-1</tt> for the last region,
+                   ending with the element <tt>#src.length()-1</tt></DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the size of the specified region.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IndexOutOfBoundsException</CODE> - if <tt>rangeIndex&lt;0</tt> or
+                                   <tt>rangeIndex&gt;=<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A></tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="rangeFrom(long)"><!-- --></A><H3>
+rangeFrom</H3>
+<PRE>
+public final long <STRONG>rangeFrom</STRONG>(long&nbsp;rangeIndex)</PRE>
+<DL>
+<DD>Returns the starting index in the source array (inclusive) of the specified region.
+ Calculated on the base of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A> and
+ <tt>src.length()</tt>, where <tt>src</tt> is the source processed array.
+
+ <p>The following condition is always true:
+ <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#rangeFrom(long)"><CODE>rangeFrom(k)</CODE></A>%<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#granularity()"><CODE>granularity()</CODE></A>==0</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>rangeIndex</CODE> - the index of the region:
+                   <tt>0</tt> for the first region, starting from the element <tt>#0</tt>,
+                   <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A>-1</tt> for the last region,
+                   ending with the element <tt>#src.length()-1</tt></DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the starting index of the specified region (inclusive).</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="rangeTo(long)"><!-- --></A><H3>
+rangeTo</H3>
+<PRE>
+public final long <STRONG>rangeTo</STRONG>(long&nbsp;rangeIndex)</PRE>
+<DL>
+<DD>Returns the ending index in the source array (exclusive) of the specified region.
+ Calculated on the base of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A> and
+ <tt>src.length()</tt>, where <tt>src</tt> is the source processed array.
+
+ <p>The following condition is true for any <tt>k</tt> excepting <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A>-1</tt>
+ (the last range):
+ <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#rangeTo(long)"><CODE>rangeTo(k)</CODE></A>%<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#granularity()"><CODE>granularity()</CODE></A>==0</tt>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>rangeIndex</CODE> - the index of the region:
+                   <tt>0</tt> for the first region, starting from the element <tt>#0</tt>,
+                   <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A>-1</tt> for the last region,
+                   ending with the element <tt>#src.length()-1</tt></DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the starting index of the specified region (inclusive).</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="finish()"><!-- --></A><H3>
+finish</H3>
+<PRE>
+protected void <STRONG>finish</STRONG>()</PRE>
+<DL>
+<DD>This method is automatically called before finishing the <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method.
+ This implementation does nothing, but you may override it to release some resources
+ allocated by your constructor of the inheritor if this class.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="processRange(long, long, int, long)"><!-- --></A><H3>
+processRange</H3>
+<PRE>
+protected void <STRONG>processRange</STRONG>(long&nbsp;fromIndex,
+                            long&nbsp;toIndex,
+                            int&nbsp;threadIndex,
+                            long&nbsp;rangeIndex)</PRE>
+<DL>
+<DD>Processes the region of the source AlgART array, passed to the constructor.
+ Called by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method once by every thread.
+
+ <p>This implementation splits the specified region into several subregions,
+ each not longer than the <tt>blockSize</tt> argument of the constructor.
+ For each subregion, this method calls <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processSubArr(long, int, int)"><CODE>processSubArr(long, int, int)</CODE></A>.
+ Then this method calls <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#increaseReadyCount(int, long)"><CODE>increaseReadyCount(int, long)</CODE></A>
+ with the first argument, equal to the passed <tt>threadIndex</tt>,
+ and the second argument, equal to the length of the processed subregion.
+ After this, it calls <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#checkInterruption()"><CODE>checkInterruption()</CODE></A> and <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#updateProgress()"><CODE>updateProgress()</CODE></A>.
+ If <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#checkInterruption()"><CODE>checkInterruption()</CODE></A> has returned <tt>true</tt>, this method immediately finishes.
+
+ <p>Before any operations, this method adds
+ <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#startGap(long)"><CODE>startGap(rangeIndex)</CODE></A> to <tt>fromIndex</tt> argument
+ and subtracts <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#endGap(long)"><CODE>endGap(rangeIndex)</CODE></A> from <tt>endIndex</tt> argument,
+ with calling <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#increaseReadyCount(int, long)"><CODE>increaseReadyCount(int, long)</CODE></A> for skipped elements.
+ If those methods return negative values, <tt>AssertionError</tt> is thrown.
+ If the sum <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#startGap(long)"><CODE>startGap(rangeIndex)</CODE></A>+<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#endGap(long)"><CODE>endGap(rangeIndex)</CODE></A>&gt;=toIndex-fromIndex</tt>,
+ this method does not process any elements.
+
+ <p>You may override this method, if this simple scheme is not appropriate for your algorithm.
+ In this case, please not forget to periodically call <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#increaseReadyCount(int, long)"><CODE>increaseReadyCount(int, long)</CODE></A>,
+ <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#updateProgress()"><CODE>updateProgress()</CODE></A> and <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#checkInterruption()"><CODE>checkInterruption()</CODE></A> methods.
+
+ <p>This method may not throw exceptions for incorrect arguments.
+ The <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method always pass the correct ones.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>fromIndex</CODE> - the start index of processed region, inclusive.</DD><DD><CODE>toIndex</CODE> - the end index of processed region, exclusive.</DD><DD><CODE>threadIndex</CODE> - the index of the processed task (<tt>0..<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks"><CODE>numberOfTasks</CODE></A>-1</tt>).
+                    This argument is not used by this method, but just passed to
+                    <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processSubArr(long, int, int)"><CODE>processSubArr(long, int, int)</CODE></A> method.</DD><DD><CODE>rangeIndex</CODE> - the index of the processed range (<tt>0..<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A>&minus;1</tt>:
+                    <tt>0</tt> for the first region, starting from the element <tt>#0</tt>,
+                    <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A>-1</tt> for the last region,
+                    ending with the element <tt><nobr>#source_array.length()-1</nobr></tt>).
+                    This argument is not used by this method, but just passed to
+                    <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#startGap(long)"><CODE>startGap(long)</CODE></A> and <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#endGap(long)"><CODE>endGap(long)</CODE></A> methods.</DD>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if <tt>fromIndex&gt;endIndex</tt>.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="startGap(long)"><!-- --></A><H3>
+startGap</H3>
+<PRE>
+public long <STRONG>startGap</STRONG>(long&nbsp;rangeIndex)</PRE>
+<DL>
+<DD>Returns the number of elements that should be skipped by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long, long, int, long)</CODE></A>
+ method at the beginning of each processed block.
+ This default implementation of this method returns 0.
+ The overridden implementation may return some positive value.
+ In this case, first <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#startGap(long)"><CODE>startGap(rangeIndex)</CODE></A>
+ ellements will not be processed
+ by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long fromIndex, long toIndex, int threadIndex, long rangeIndex)</CODE></A> method:
+ they will be skipped and not passed to <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processSubArr(long, int, int)"><CODE>processSubArr(long, int, int)</CODE></A> method.
+ This can be useful for some algorithms that change the source AlgART arrays depending
+ on some set of elements with "near" indexes, alike in some image processing filters.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>rangeIndex</CODE> - the index of the region:
+                   <tt>0</tt> for the first region, starting from the element <tt>#0</tt>,
+                   <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A>-1</tt> for the last region,
+                   ending with the element <tt><nobr>#source_array.length()-1</nobr></tt></DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of elements that should be skipped by
+         <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long fromIndex, long toIndex, int threadIndex, long rangeIndex)</CODE></A>
+         at the beginning of the processed block.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="endGap(long)"><!-- --></A><H3>
+endGap</H3>
+<PRE>
+public long <STRONG>endGap</STRONG>(long&nbsp;rangeIndex)</PRE>
+<DL>
+<DD>Returns the number of elements that should be skipped by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long, long, int, long)</CODE></A>
+ method at the end of each processed block.
+ This default implementation of this method returns 0.
+ The overridden implementation may return some positive value.
+ In this case, last <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#endGap(long)"><CODE>endGap(rangeIndex)</CODE></A>
+ ellements will not be processed
+ by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long fromIndex, long toIndex, int threadIndex, long rangeIndex)</CODE></A> method:
+ they will be skipped and not passed to <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processSubArr(long, int, int)"><CODE>processSubArr(long, int, int)</CODE></A> method.
+ This can be useful for some algorithms that change the source AlgART arrays depending
+ on some set of elements with "near" indexes, alike in some image processing filters.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>rangeIndex</CODE> - the index of the region:
+                   <tt>0</tt> for the first region, starting from the element <tt>#0</tt>,
+                   <tt><A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfRanges"><CODE>numberOfRanges</CODE></A>-1</tt> for the last region,
+                   ending with the element <tt><nobr>#source_array.length()-1</nobr></tt></DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of elements that should be skipped by
+         <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long fromIndex, long toIndex, int threadIndex, long rangeIndex)</CODE></A>
+         at the end of the processed block.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="granularity()"><!-- --></A><H3>
+granularity</H3>
+<PRE>
+public long <STRONG>granularity</STRONG>()</PRE>
+<DL>
+<DD>Returns the granularity of splitting: an integer value so that the start index of any range is
+ multiple of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#granularity()"><CODE>granularity()</CODE></A>.
+ The default implementation of this method returns 64 if the source processed array
+ is <A HREF="../../../net/algart/arrays/BitArray.html" title="interface in net.algart.arrays"><CODE>BitArray</CODE></A> (good splitting for processing packed bits)or 1 in other case.
+ You may override this method, for example, if you need every processed range to contain
+ an integer number of lines of some <A HREF="../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays"><CODE>AlgART matrix</CODE></A>.
+
+ <p>This method is called by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#rangeLength(long)"><CODE>rangeLength(long)</CODE></A>, <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#rangeFrom(long)"><CODE>rangeFrom(long)</CODE></A>, <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#rangeTo(long)"><CODE>rangeTo(long)</CODE></A>
+ and <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> methods. If this method returns zero or negative value,
+ <tt>AssertionError</tt> is thrown.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the granularity of splitting (must be positive).</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="processSubArr(long, int, int)"><!-- --></A><H3>
+processSubArr</H3>
+<PRE>
+protected abstract void <STRONG>processSubArr</STRONG>(long&nbsp;position,
+                                      int&nbsp;count,
+                                      int&nbsp;threadIndex)</PRE>
+<DL>
+<DD>Should process the specified region of the source AlgART array.
+ This method is called by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#processRange(long, long, int, long)"><CODE>processRange(long, long, int, long)</CODE></A> method
+ with the <tt>count</tt> argument, not greater than
+ the <tt>blockSize</tt> argument of the constructor.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>position</CODE> - the start index of processed region, inclusive.</DD><DD><CODE>count</CODE> - the number of the processed elements.</DD><DD><CODE>threadIndex</CODE> - the index of the processed task (<tt>0..<A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#numberOfTasks"><CODE>numberOfTasks</CODE></A>-1</tt>).
+                    You can use this argument, for example, to operate with some data concerning
+                    only one of the threads.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="readyCount()"><!-- --></A><H3>
+readyCount</H3>
+<PRE>
+protected final long <STRONG>readyCount</STRONG>()</PRE>
+<DL>
+<DD>Return the total number of the processed elements of the source array.
+ This number is 0 after creating the instance and changed
+ (its the only way) by the periodic calls of <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#increaseReadyCount(int, long)"><CODE>increaseReadyCount(int, long)</CODE></A> method.
+
+ <p>This method is internally synchronized to provide correct value,
+ that may be updated by several threads.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the number of successfully processed elements of the source array.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="increaseReadyCount(int, long)"><!-- --></A><H3>
+increaseReadyCount</H3>
+<PRE>
+protected final void <STRONG>increaseReadyCount</STRONG>(int&nbsp;threadIndex,
+                                        long&nbsp;increment)</PRE>
+<DL>
+<DD>Adds the argument to the counter of the processed elements in the given region of the source array.
+ The sum of the counters for all regions is returned by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#readyCount()"><CODE>readyCount()</CODE></A> method.
+
+ <p>This method is internally synchronized to correctly update the counters
+ from several threads.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>threadIndex</CODE> - the index of the processed region (thread), from 0 to (number of tasks)-1.</DD><DD><CODE>increment</CODE> - the desired increment of the number of processed elements.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="checkInterruption()"><!-- --></A><H3>
+checkInterruption</H3>
+<PRE>
+protected final boolean <STRONG>checkInterruption</STRONG>()</PRE>
+<DL>
+<DD>Checks, whether the user want to interrupt the calculations,
+ and returns <tt>true</tt> in this case.
+ Also returns <tt>true</tt> if some of another tasks, performed by <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method
+ in a parallel threads, was finished with an exception.
+
+ <p>More precisely, it checks the internal synchronized boolean flag
+ "interruptionRequested". If it's <tt>true</tt>, the method returns <tt>true</tt>.
+ If the context, passed to the constructor, was <tt>null</tt>, this method finishes
+ at this point (with <tt>false</tt> result).
+
+ <p>Else, if some time was elapsed from the last call of this method,
+ it calls <A HREF="../../../net/algart/arrays/ArrayContext.html#checkInterruption()"><CODE>ArrayContext.checkInterruption()</CODE></A> for the context, passed to the constructor.
+ If that method throws any exception, it is stored in an internal field,
+ the "interruptionRequested" flag is set and this method returns <tt>true</tt>.
+ This exception will be re-thrown by the basic <A HREF="../../../net/algart/arrays/Arrays.ParallelExecutor.html#process()"><CODE>process()</CODE></A> method
+ before its finishing.
+
+ <p>In all other cases, this method returns <tt>false</tt>.
+
+ <p>This method is internally synchronized to correctly check and update
+ "interruptionRequested" flag.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if the application requested the interruption of calculations.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="updateProgress()"><!-- --></A><H3>
+updateProgress</H3>
+<PRE>
+protected final void <STRONG>updateProgress</STRONG>()</PRE>
+<DL>
+<DD>Calls <A HREF="../../../net/algart/arrays/ArrayContext.html#updateProgress(net.algart.arrays.ArrayContext.Event)"><CODE>ArrayContext.updateProgress</CODE></A> method
+ with the context, passed to the constructor,
+ and correctly filled <A HREF="../../../net/algart/arrays/ArrayContext.Event.html" title="class in net.algart.arrays"><CODE>ArrayContext.Event</CODE></A> instance.
+ Does nothing if the context, passed to the constructor, was <tt>null</tt>,
+ or if this method was already called a little time ago.
+<P>
+</DD>
+</DL>
+<HR>
+
+<A NAME="toString()"><!-- --></A><H3>
+toString</H3>
+<PRE>
+public java.lang.String <STRONG>toString</STRONG>()</PRE>
+<DL>
+<DD>Returns a brief string description of this object.
+
+ <p>The result of this method may depend on implementation.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>toString</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>a brief string description of this object.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/Arrays.MinMaxInfo.html" title="class in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/Arrays.SystemSettings.html" title="class in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/Arrays.ParallelExecutor.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="Arrays.ParallelExecutor.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

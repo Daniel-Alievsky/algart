@@ -1,0 +1,20 @@
+/*Repeat.SectionStart sec1*/
+Some included text: section 1
+/*Repeat.SectionEnd sec1*/
+
+//[[Repeat.SectionStart sec2]]
+Some included text: section 2
+//[[Repeat.SectionEnd sec2]]
+
+(*Repeat.SectionStart sec3*)
+Some included text: section 3
+(*Repeat.SectionEnd sec3*)
+
+#[[Repeat.SectionStart sec4]]
+Some included text: section 4
+#[[Repeat.SectionEnd sec4]]
+
+<!--Repeat.SectionStart sec5-->
+Some included text: section 5
+<!--Repeat.SectionEnd sec5-->
+

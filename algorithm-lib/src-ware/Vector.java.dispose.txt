@@ -1,0 +1,75 @@
+    /**
+     * If there are some resources, associated with this vector, which are not controlled
+     * by Java garbage collectors - files, streams, sockets, locks, etc&#46; - this method
+     * releases or destroys them (for example, closes or deletes any files).
+     *
+     * <p>Unlike {@link #releaseResources()} method,
+     * the vector <b>does not stay alive</b>: future attempts to access the vector
+     * may lead to any <tt>RuntimeException</tt> or <tt>Error</tt>
+     * (but also may not, depending on implementation).
+     * We do not guarantee which type of exceptions will be thrown;
+     * for example, it may be <tt>NullPointerException</tt> or {@link IOError}.
+     * But: you are free to call this <tt>dispose()</tt> method again,
+     * its subsequent calls do nothing.
+     * We also guarantee that the vectors, created by the simplest {@link VMMArray}
+     * memory model, are not disposed: this method does nothing for these vectors.
+     *
+     * <p>Unlike {@link #releaseResources()} method, this method <i>may</i> not only release
+     * external resource, but also remove them.
+     * It depends on the way of creating this vector and should be specified
+     * in the creating method. For example, if the vector is based on a temporary mapped file,
+     * created while calling {@link VMM#newEmptyVector(Class)} method, this file may be automatically
+     * deleted by this method.
+     *
+     * <p>If there are some views of this vector, for example, created via {@link #shallowClone()},
+     * {@link #subVector(long, long)}, {@link #asImmutable()} or other methods, then
+     * all these views <b>do stay alive</b>! The <tt>dispose()</tt> call affects only
+     * this object, but not any other instances. For example, if <tt>dispose()</tt>,
+     * normally, should close or remove some file, then it will really do this
+     * only when the last of vector views, associated with this file, will be disposed.
+     *
+     * <p>Please note that this method, as well as {@link #releaseResources()},
+     * never frees any Java memory controlled by the garbage collectors:
+     * it frees external resources only.
+     * If the vector uses some Java memory (as vectors created by {@link VMMArray}),
+     * this memory <i>will not be utilized</i> as a result of calling <tt>dispose()</tt>.
+     * As well as in a case of any other objects, the garbage collector will utilize
+     * Java memory, occupied by a vector, when there will be no any references to it.
+     *
+     * <p>We <b>recommend</b> to dispose all large vectors in <tt>finally</tt>
+     * sections after using them, excepting the only case when you are sure that
+     * they have no associated resources, as for vectors created by {@link VMMArray}.
+     *
+     * <p>If it is impossible to create necessary <tt>finally</tt> section,
+     * and if you are not sure that the vector implementation will perform
+     * necessary clean-up procedures automatically (for example, will remove all
+     * created temporary files), then
+     * you <b>should</b> use {@link net.algart.finalizing.Finalizer} class (or an equivalent tool)
+     * to schedule <tt>dispose()</tt> call of the {@link #shallowClone() shallow clone} of this vector
+     * on deallocation of this vector:<pre>
+     * Finalizer fin = ...(some global application finalizer);
+     * final UpdatableVector dup = thisVector.shallowClone();
+     * // - must be here, not inside the following inner class, to allow deallocation of thisVector
+     * fin.invokeOnDeallocation(thisVector, new Runnable() {
+     * &#32;   public void run() {
+     * &#32;       dup.dispose();
+     * &#32;   }
+     * });
+     * </pre>
+     * Important: while using this finalization scheme, this vector <b>must not be
+     * {@link #isCopyOnNextWrite() copy-on-next-write}</b>!
+     * Disposing of a shallow clone of the vector always deallocates the same resources as disposing
+     * of the original vector, besides the only case when it is copy-on-next-write.
+     *
+     * <p>The described finalization technique <i>is not necessary</i> for vectors created
+     * by means of this package, because all they remove created temporary resources automatically,
+     * but can be necessary for third-party's VMM.
+     *
+     * <p>Please keep in mind, that this <tt>dispose()</tt> method is not called automatically
+     * in standard java <tt>finalize()</tt> method: the vector implementations have
+     * no <tt>finalize()</tt> method usually.
+     *
+     * @see UpdatableVector#flushResources()
+     * @see #releaseResources()
+     */
+    public void dispose();

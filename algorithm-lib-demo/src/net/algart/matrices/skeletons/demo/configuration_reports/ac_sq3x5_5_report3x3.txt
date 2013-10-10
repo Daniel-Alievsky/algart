@@ -1,0 +1,564 @@
+38 possible 3x3 configurations:
+      (1/38) 0=0x0 (3x3, 1 unit bits):
+      . . . 
+      . * . 
+      . . . 
+
+      (2/38) 1=0x1 (3x3, 2 unit bits):
+      * . . 
+      . * . 
+      . . . 
+
+      (3/38) 2=0x2 (3x3, 2 unit bits):
+      . * . 
+      . * . 
+      . . . 
+
+      (4/38) 5=0x5 (3x3, 3 unit bits):
+      * . * 
+      . * . 
+      . . . 
+
+      (5/38) 9=0x9 (3x3, 3 unit bits):
+      * . . 
+      . * * 
+      . . . 
+
+      (6/38) 17=0x11 (3x3, 3 unit bits):
+      * . . 
+      . * . 
+      . . * 
+
+      (7/38) 18=0x12 (3x3, 3 unit bits):
+      . * . 
+      . * . 
+      . . * 
+
+      (8/38) 34=0x22 (3x3, 3 unit bits):
+      . * . 
+      . * . 
+      . * . 
+
+      (9/38) 13=0xD (3x3, 4 unit bits):
+      * . * 
+      . * * 
+      . . . 
+
+    13=0xD (3x3, 4 unit bits) is possible inside 0x88 (5x5, +2 unit bits)
+    . . . * . 
+    . * . * . 
+    . . * * . 
+    . . . . * 
+    . . . . . 
+
+      (10/38) 19=0x13 (3x3, 4 unit bits):
+      * * . 
+      . * . 
+      . . * 
+
+    19=0x13 (3x3, 4 unit bits) is possible inside 0x9 (5x5, +2 unit bits)
+    * . . * . 
+    . * * . . 
+    . . * . . 
+    . . . * . 
+    . . . . . 
+
+      (11/38) 21=0x15 (3x3, 4 unit bits):
+      * . * 
+      . * . 
+      . . * 
+
+      (12/38) 22=0x16 (3x3, 4 unit bits):
+      . * * 
+      . * . 
+      . . * 
+
+    22=0x16 (3x3, 4 unit bits) is possible inside 0x12 (5x5, +2 unit bits)
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . . . * . 
+    . . . . . 
+
+      (13/38) 25=0x19 (3x3, 4 unit bits):
+      * . . 
+      . * * 
+      . . * 
+
+    25=0x19 (3x3, 4 unit bits) is possible inside 0x120 (5x5, +2 unit bits)
+    . . . . . 
+    . * . . * 
+    . . * * . 
+    . . . * . 
+    . . . . * 
+
+      (14/38) 35=0x23 (3x3, 4 unit bits):
+      * * . 
+      . * . 
+      . * . 
+
+    35=0x23 (3x3, 4 unit bits) is possible inside 0x9 (5x5, +2 unit bits)
+    * . . * . 
+    . * * . . 
+    . . * . . 
+    . . * . . 
+    . . . . . 
+
+      (15/38) 37=0x25 (3x3, 4 unit bits):
+      * . * 
+      . * . 
+      . * . 
+
+      (16/38) 38=0x26 (3x3, 4 unit bits):
+      . * * 
+      . * . 
+      . * . 
+
+    38=0x26 (3x3, 4 unit bits) is possible inside 0x12 (5x5, +2 unit bits)
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . . * . . 
+    . . . . . 
+
+      (17/38) 41=0x29 (3x3, 4 unit bits):
+      * . . 
+      . * * 
+      . * . 
+
+    41=0x29 (3x3, 4 unit bits) is possible inside 0x220 (5x5, +2 unit bits)
+    . . . . . 
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . . . * . 
+
+      (18/38) 23=0x17 (3x3, 5 unit bits):
+      * * * 
+      . * . 
+      . . * 
+
+  23=0x17 (3x3, 5 unit bits) is possible inside 0x15 (5x5, +3 unit bits) inside 0x8 (7x7, +1 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . . . * . . 
+  . . . . . . . 
+  . . . . . . . 
+
+      (19/38) 29=0x1D (3x3, 5 unit bits):
+      * . * 
+      . * * 
+      . . * 
+
+  29=0x1D (3x3, 5 unit bits) is possible inside 0x448 (5x5, +3 unit bits) inside 0x100 (7x7, +1 unit bits)
+  . . . . . . . 
+  . . . . * . . 
+  . . * . * . * 
+  . . . * * * . 
+  . . . . * . . 
+  . . . * . . . 
+  . . . . . . . 
+
+      (20/38) 39=0x27 (3x3, 5 unit bits):
+      * * * 
+      . * . 
+      . * . 
+
+  39=0x27 (3x3, 5 unit bits) is possible inside 0x15 (5x5, +3 unit bits) inside 0x8 (7x7, +1 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . . * . . . 
+  . . . . . . . 
+  . . . . . . . 
+
+      (21/38) 45=0x2D (3x3, 5 unit bits):
+      * . * 
+      . * * 
+      . * . 
+
+    45=0x2D (3x3, 5 unit bits) is possible inside 0x488 (5x5, +3 unit bits)
+    . . . * . 
+    . * . * . 
+    . . * * . 
+    . . * . * 
+    . . * . . 
+
+      (22/38) 51=0x33 (3x3, 5 unit bits):
+      * * . 
+      . * . 
+      . * * 
+
+    51=0x33 (3x3, 5 unit bits) is possible inside 0x849 (5x5, +4 unit bits)
+    * . . * . 
+    . * * . . 
+    . . * . * 
+    . . * * . 
+    . * . . . 
+
+      (23/38) 53=0x35 (3x3, 5 unit bits):
+      * . * 
+      . * . 
+      . * * 
+
+    53=0x35 (3x3, 5 unit bits) is possible inside 0x880 (5x5, +2 unit bits)
+    . . . . . 
+    . * . * . 
+    . . * . . 
+    . . * * * 
+    . * . . . 
+
+      (24/38) 54=0x36 (3x3, 5 unit bits):
+      . * * 
+      . * . 
+      . * * 
+
+    54=0x36 (3x3, 5 unit bits) is possible inside 0x892 (5x5, +4 unit bits)
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . . * * * 
+    . * . . . 
+
+      (25/38) 57=0x39 (3x3, 5 unit bits):
+      * . . 
+      . * * 
+      . * * 
+
+    57=0x39 (3x3, 5 unit bits) is possible inside 0x920 (5x5, +3 unit bits)
+    . . . . . 
+    . * . . * 
+    . . * * . 
+    . . * * . 
+    . * . . * 
+
+      (26/38) 85=0x55 (3x3, 5 unit bits):
+      * . * 
+      . * . 
+      * . * 
+
+      (27/38) 86=0x56 (3x3, 5 unit bits):
+      . * * 
+      . * . 
+      * . * 
+
+    86=0x56 (3x3, 5 unit bits) is possible inside 0x12 (5x5, +2 unit bits)
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . * . * . 
+    . . . . . 
+
+      (28/38) 90=0x5A (3x3, 5 unit bits):
+      . * . 
+      . * * 
+      * . * 
+
+    90=0x5A (3x3, 5 unit bits) is possible inside 0x122 (5x5, +3 unit bits)
+    . * . . . 
+    . . * . * 
+    . . * * . 
+    . * . * . 
+    . . . . * 
+
+      (29/38) 102=0x66 (3x3, 5 unit bits):
+      . * * 
+      . * . 
+      * * . 
+
+    102=0x66 (3x3, 5 unit bits) is possible inside 0x1212 (5x5, +4 unit bits)
+    . * . . * 
+    . . * * . 
+    . . * . . 
+    . * * . . 
+    * . . * . 
+
+      (30/38) 170=0xAA (3x3, 5 unit bits):
+      . * . 
+      * * * 
+      . * . 
+
+    170=0xAA (3x3, 5 unit bits) is possible inside 0x2222 (5x5, +4 unit bits)
+    . * . . . 
+    . . * . * 
+    . * * * . 
+    * . * . . 
+    . . . * . 
+
+      (31/38) 55=0x37 (3x3, 6 unit bits):
+      * * * 
+      . * . 
+      . * * 
+
+  55=0x37 (3x3, 6 unit bits) is possible inside 0x895 (5x5, +5 unit bits) inside 0x8 (7x7, +1 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . . * * * . 
+  . . * . . . . 
+  . . . . . . . 
+
+      (32/38) 61=0x3D (3x3, 6 unit bits):
+      * . * 
+      . * * 
+      . * * 
+
+  61=0x3D (3x3, 6 unit bits) is possible inside 0x948 (5x5, +4 unit bits) inside 0x100 (7x7, +1 unit bits)
+  . . . . . . . 
+  . . . . * . . 
+  . . * . * . * 
+  . . . * * * . 
+  . . . * * . . 
+  . . * . . * . 
+  . . . . . . . 
+
+      (33/38) 87=0x57 (3x3, 6 unit bits):
+      * * * 
+      . * . 
+      * . * 
+
+  87=0x57 (3x3, 6 unit bits) is possible inside 0x15 (5x5, +3 unit bits) inside 0x8 (7x7, +1 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . * . * . . 
+  . . . . . . . 
+  . . . . . . . 
+
+      (34/38) 94=0x5E (3x3, 6 unit bits):
+      . * * 
+      . * * 
+      * . * 
+
+  94=0x5E (3x3, 6 unit bits) is possible inside 0x152 (5x5, +4 unit bits) inside 0x200 (7x7, +1 unit bits)
+  . . . . . . . 
+  . . * . . * . 
+  . . . * * . . 
+  . . . * * * * 
+  . . * . * . . 
+  . . . . . * . 
+  . . . . . . . 
+
+      (35/38) 103=0x67 (3x3, 6 unit bits):
+      * * * 
+      . * . 
+      * * . 
+
+  103=0x67 (3x3, 6 unit bits) is possible inside 0x1215 (5x5, +5 unit bits) inside 0x8 (7x7, +1 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . * * . . . 
+  . * . . * . . 
+  . . . . . . . 
+
+      (36/38) 171=0xAB (3x3, 6 unit bits):
+      * * . 
+      * * * 
+      . * . 
+
+    171=0xAB (3x3, 6 unit bits) is possible inside 0x2249 (5x5, +5 unit bits)
+    * . . * . 
+    . * * . . 
+    . * * * * 
+    * . * . . 
+    . . . * . 
+
+      (37/38) 95=0x5F (3x3, 7 unit bits):
+      * * * 
+      . * * 
+      * . * 
+
+  95=0x5F (3x3, 7 unit bits) is possible inside 0x155 (5x5, +5 unit bits) inside 0x208 (7x7, +2 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * * * * 
+  . . * . * . . 
+  . . . . . * . 
+  . . . . . . . 
+
+      (38/38) 119=0x77 (3x3, 7 unit bits):
+      * * * 
+      . * . 
+      * * * 
+
+  119=0x77 (3x3, 7 unit bits) is possible inside 0x1495 (5x5, +6 unit bits) inside 0x4008 (7x7, +2 unit bits)
+  . . . * . . . 
+  . * . * . * . 
+  . . * * * . . 
+  . . . * . . . 
+  . . * * * * . 
+  . * . * . . . 
+  . . . . * . . 
+
+
+32 impossible 3x3 configurations:
+      (1/32) 3=0x3 (3x3, 3 unit bits):
+      * * . 
+      . * . 
+      . . . 
+
+      (2/32) 6=0x6 (3x3, 3 unit bits):
+      . * * 
+      . * . 
+      . . . 
+
+      (3/32) 10=0xA (3x3, 3 unit bits):
+      . * . 
+      . * * 
+      . . . 
+
+      (4/32) 7=0x7 (3x3, 4 unit bits):
+      * * * 
+      . * . 
+      . . . 
+
+      (5/32) 11=0xB (3x3, 4 unit bits):
+      * * . 
+      . * * 
+      . . . 
+
+      (6/32) 14=0xE (3x3, 4 unit bits):
+      . * * 
+      . * * 
+      . . . 
+
+      (7/32) 26=0x1A (3x3, 4 unit bits):
+      . * . 
+      . * * 
+      . . * 
+
+      (8/32) 42=0x2A (3x3, 4 unit bits):
+      . * . 
+      . * * 
+      . * . 
+
+      (9/32) 15=0xF (3x3, 5 unit bits):
+      * * * 
+      . * * 
+      . . . 
+
+      (10/32) 27=0x1B (3x3, 5 unit bits):
+      * * . 
+      . * * 
+      . . * 
+
+      (11/32) 30=0x1E (3x3, 5 unit bits):
+      . * * 
+      . * * 
+      . . * 
+
+      (12/32) 43=0x2B (3x3, 5 unit bits):
+      * * . 
+      . * * 
+      . * . 
+
+      (13/32) 46=0x2E (3x3, 5 unit bits):
+      . * * 
+      . * * 
+      . * . 
+
+      (14/32) 58=0x3A (3x3, 5 unit bits):
+      . * . 
+      . * * 
+      . * * 
+
+      (15/32) 106=0x6A (3x3, 5 unit bits):
+      . * . 
+      . * * 
+      * * . 
+
+      (16/32) 31=0x1F (3x3, 6 unit bits):
+      * * * 
+      . * * 
+      . . * 
+
+      (17/32) 47=0x2F (3x3, 6 unit bits):
+      * * * 
+      . * * 
+      . * . 
+
+      (18/32) 59=0x3B (3x3, 6 unit bits):
+      * * . 
+      . * * 
+      . * * 
+
+      (19/32) 62=0x3E (3x3, 6 unit bits):
+      . * * 
+      . * * 
+      . * * 
+
+      (20/32) 91=0x5B (3x3, 6 unit bits):
+      * * . 
+      . * * 
+      * . * 
+
+      (21/32) 107=0x6B (3x3, 6 unit bits):
+      * * . 
+      . * * 
+      * * . 
+
+      (22/32) 110=0x6E (3x3, 6 unit bits):
+      . * * 
+      . * * 
+      * * . 
+
+      (23/32) 122=0x7A (3x3, 6 unit bits):
+      . * . 
+      . * * 
+      * * * 
+
+      (24/32) 63=0x3F (3x3, 7 unit bits):
+      * * * 
+      . * * 
+      . * * 
+
+      (25/32) 111=0x6F (3x3, 7 unit bits):
+      * * * 
+      . * * 
+      * * . 
+
+      (26/32) 123=0x7B (3x3, 7 unit bits):
+      * * . 
+      . * * 
+      * * * 
+
+      (27/32) 126=0x7E (3x3, 7 unit bits):
+      . * * 
+      . * * 
+      * * * 
+
+      (28/32) 175=0xAF (3x3, 7 unit bits):
+      * * * 
+      * * * 
+      . * . 
+
+      (29/32) 187=0xBB (3x3, 7 unit bits):
+      * * . 
+      * * * 
+      . * * 
+
+      (30/32) 127=0x7F (3x3, 8 unit bits):
+      * * * 
+      . * * 
+      * * * 
+
+      (31/32) 191=0xBF (3x3, 8 unit bits):
+      * * * 
+      * * * 
+      . * * 
+
+      (32/32) 255=0xFF (3x3, 9 unit bits):
+      * * * 
+      * * * 
+      * * * 
+
+
+0 questionable 3x3 configurations:

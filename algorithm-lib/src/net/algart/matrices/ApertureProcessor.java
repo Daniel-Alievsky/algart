@@ -1,0 +1,254 @@
+package net.algart.matrices;
+
+import net.algart.arrays.Matrix;
+import net.algart.math.IRectangularArea;
+
+import java.util.Map;
+
+/**
+ * <p><i>Abstract aperture matrix processor</i>: an algorithm, processing a group of
+ * {@link Matrix <i>n</i>-dimensional matrices} and returning a group of resulting matrices,
+ * where the value of every element of every resulting matrix depends only on
+ * the elements of the source matrices in some aperture "around" the same position.
+ * This aperture should be a subset of some rectangular area ({@link IRectangularArea});
+ * this area (possibly different for different source matrices) is called <i>a dependence aperture</i>
+ * of the aperture processor. All matrices must have same dimensions.
+ * This interface is used, for example, together with {@link TiledApertureProcessorFactory} class.</p>
+ *
+ * <p>Below is more precise formal definition of the aperture matrix processors.
+ * All classes, implementing this interface, should comply this definition.</p>
+ *
+ * <p>The main method of this interface, {@link #process(Map, Map) process},
+ * works with some group of {@link Matrix AlgART matrices} <b>M</b><sub><i>i</i></sub>, <i>i</i>&isin;<i>Q</i>,
+ * called the <i>arguments</i> or <i>source matrices</i>,
+ * and a group of another AlgART matrices <b>M'</b><sub><i>j</i></sub>, <i>j</i>&isin;<i>R</i>,
+ * called the <i>results</i> or <i>resulting matrices</i>.
+ * Here the indexes <i>i</i> and <i>j</i> (elements of the index sets <i>Q</i> and <i>R</i>)
+ * can be objects of any nature and should be represented by Java objects of the generic type <tt>K</tt> &mdash;
+ * the generic argument of this interface (for example, <tt>Integer</tt> or <tt>String</tt>).
+ * The indexes of arguments and results are also called their <i>keys</i>.
+ * The group of the source arguments and the group of results are represented by <tt>java.util.Map</tt>,
+ * more precisely, by a generic type <nobr><tt>java.util.Map&lt;K, {@link Matrix}&lt;?&gt;&gt;</tt></nobr>:</p>
+ *
+ * <pre>
+ *     {@link #process(Map, Map)
+ * process}(java.util.Map&lt;K, {@link Matrix}&lt;?&gt;&gt; dest, java.util.Map&lt;K, {@link Matrix}&lt;?&gt;&gt; src)
+ * </pre>
+ *
+ * <p>The group <tt>dest</tt>of resulting matrices <b>M'</b><sub><i>j</i></sub> can be passed to
+ * {@link #process(Map, Map) process} method, or can be formed by this method dynamically
+ * (an empty map <tt>dest</tt> can be passed in this case),
+ * or it is possible that a part of resulting matrices is passed in <tt>dest</tt> while calling the method
+ * and other resulting matrices are added to <tt>dest</tt> map by the method itself.</p>
+ *
+ * <p>In all comments, the designations <b>M'</b><sub><i>j</i></sub>
+ * and <i>R</i> means the group (<tt>dest</tt>) and the index set (<tt>dest.keySet()</tt>) of resulting matrices
+ * <i>after</i> the call of {@link #process(Map, Map) process} method.</p>
+ *
+ * <p>Some of the resulting matrices <b>M'</b><sub><i>j</i></sub> (but not the source arguments),
+ * passed to {@link #process(Map, Map) process} method, may be <tt>null</tt> &mdash;
+ * it means that {@link #process(Map, Map) process} method <i>must</i> create them itself.
+ * (And it also <i>may</i> create some additional matrices <b>M'</b><sub><i>j</i></sub>, not contained
+ * in <tt>dest</tt> while calling this method.)
+ * All non-null resulting matrices <b>M'</b><sub><i>j</i></sub>, passed to the method in <tt>dest</tt>
+ * argument, must be <i>updatable</i>, i.e. their {@link Matrix#array() built-in arrays}
+ * must implement {@link net.algart.arrays.UpdatableArray} interface.
+ * The dimensions of all source and non-null resulting matrices must be the same:
+ * {@link Matrix#dimEquals(Matrix)} method must return <tt>true</tt> for any pair of them.
+ * The sets of indexes of arguments <i>Q</i> and results <i>R</i>, as well as the dimensions of matrices,
+ * may vary for different calls of {@link #process(Map, Map) process} method.
+ * (Even the number of dimensions <i>n</i> may vary, but it is a rarer situation.)
+ * Degenerated cases <i>Q</i>=&empty; (no arguments) and <i>R</i>=&empty; (no results) are allowed.
+ * If <i>Q</i>=&empty; (no matrices are passed in <tt>src</tt> map) and
+ * the <tt>dest</tt> map, passed to {@link #process(Map, Map) process} method,
+ * either is empty or contains only <tt>null</tt> matrices,
+ * then {@link #process(Map, Map) process} method usually does nothing.
+ * See {@link #process(Map, Map) comments to that method} for additional details.</p>
+ *
+ * <p>For each source argument <b>M</b><sub><i>i</i></sub> this aperture processor defines
+ * the corresponding <i>dependence aperture</i> <b>A</b><sub><i>i</i></sub>: a rectangular set of
+ * integer points, represented by {@link IRectangularArea} class and returned by
+ * <nobr>{@link #dependenceAperture(Object) dependenceAperture(<i>i</i>)}</nobr> method.
+ * This aperture can depend only on the argument index <i>i</i> and <i>cannot vary for different calls</i>
+ * of {@link #dependenceAperture(Object) dependenceAperture} method for the same processor.</p>
+ *
+ * <p>The goal of the main {@link #process(Map, Map) process} method is
+ * to fill elements of the resulting matrices <b>M'</b><sub><i>j</i></sub>
+ * (usually all elements of all <b>M'</b><sub><i>j</i></sub>, <i>j</i>&isin;<i>R</i>) on the base
+ * of the elements of the source matrices <b>M</b><sub><i>i</i></sub>.
+ * There should be a guarantee, that every element of any resulting <i>n</i>-dimensional matrix
+ * <b>M'</b><sub><i>j</i></sub> with coordinates
+ * <nobr><b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+ * can depend only on elements of each source matrix <b>M</b><sub><i>i</i></sub> with coordinates</p>
+ *
+ * <blockquote>
+ *     <b>x</b>+<b>a</b> =
+ *     <i>x</i><sub>0</sub>+<i>a</i><sub>0</sub>,
+ *     <i>x</i><sub>1</sub>+<i>a</i><sub>1</sub>, ...,
+ *     <i>x</i><sub><i>n</i>&minus;1</sub>+<i>a</i><sub><i>n</i>&minus;1</sub>,
+ * </blockquote>
+ *
+ * <p>where
+ * <nobr><b>a</b> = (<i>a</i><sub>0</sub>, <i>a</i><sub>1</sub>, ..., <i>a</i><sub><i>n</i>&minus;1</sub>)</nobr>
+ * is one of points belonging to the corresponding dependence aperture
+ * <nobr><b>A</b><sub><i>i</i></sub>={@link #dependenceAperture(Object) dependenceAperture(<i>i</i>)}</nobr>.
+ * Please draw attention that we use plus sing + in this definition, instead of more traditional minus sign &minus;
+ * (used, for example, in specifications of {@link StreamingApertureProcessor}
+ * or {@link net.algart.matrices.morphology.RankMorphology}).
+ * In many cases, it is convenient to use {@link DependenceApertureBuilder} class to create
+ * dependence apertures for an aperture processor.</p>
+ *
+ * <p>If this rule is violated, for example, if the aperture, returned by
+ * {@link #dependenceAperture(Object) dependenceAperture} method, is too little (the results depend on elements
+ * outside this aperture), then {@link #process(Map, Map) process} method still works,
+ * but the results of processing can be incorrect.
+ * If the aperture, returned by {@link #dependenceAperture(Object) dependenceAperture} method, is too large
+ * (the results do not depend on most of elements in the aperture),
+ * then {@link #process(Map, Map) process} method still works and the results are correct,
+ * but excessively large aperture sizes can slow down the calculations.</p>
+ *
+ * <p>The {@link #process(Map, Map) process} method fills all resulting matrices.
+ * But if some of the resulting matrices <b>M'</b><sub><i>j</i></sub>, passed via <tt>dest</tt> map
+ * while calling this method, is <tt>null</tt>, then it <i>must</i> be automatically created.
+ * Moreover, if some of the resulting matrices <b>M'</b><sub><i>j</i></sub> was not <tt>null</tt>
+ * while calling this method, the method still <i>may</i> create new matrix for this key (index) <i>j</i>
+ * and store it in <tt>dest</tt> map instead of the original matrix.
+ * In addition, this method may <i>create</i> (and store in <tt>dest</tt> map) some new resulting matrices
+ * with new keys (indexes), which were not contained in <tt>dest</tt> while calling the method.
+ * But here must be the following guarantee: <i>the set of indexes j of the resulting matrix
+ * <b>M'</b><sub>j</sub>, created and stored in <tt>dest</tt> map by this method in addition to
+ * existing key/value pairs in <tt>dest</tt> map,
+ * cannot vary for different calls of {@link #process(Map, Map) process}
+ * method of the same instance of the processor</i>.</p>
+ *
+ * <p>If {@link #process(Map, Map) process} method allocates some resulting matrix,
+ * then all these matrices must be created with the same dimensions as all the source and non-null resulting
+ * matrices, passed to the method.
+ * The type of elements of the newly created matrix is selected by some rules, depending on the implementation.
+ * Typical example &mdash; it is selected to be equal to the element type of some source matrices.
+ * But here must be the following guarantee: <i>the element type of the resulting matrix <b>M'</b><sub>j</sub>
+ * with the given index j cannot vary for different calls of {@link #process(Map, Map) process}
+ * method of the same processor, if the element types of all source matrices <b>M</b><sub>i</sub>
+ * do not vary while these calls</i>. In other words, a concrete instance of the processor may
+ * select the element type of newly created matrices only on the base of the element types of the arguments,
+ * but not, for example, on the base of the matrix dimensions.</p>
+ *
+ * <p>AlgART Laboratory 2007-2013</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ */
+public interface ApertureProcessor<K> {
+
+    /**
+     * Main method of the aperture processor, that performs processing the source matrices <tt>src</tt>
+     * with saving results in the resulting matrices <tt>dest</tt>.
+     * The source matrices
+     * <b>M</b><sub><i>i</i></sub>, <i>i</i>&isin;<i>Q</i>
+     * are passed in <tt>src</tt> map: <b>M</b><sub><i>i</i></sub>=<tt>src.get(<i>i</i>)</tt>.
+     * The resulting matrices
+     * <b>M'</b><sub><i>j</i></sub>, <i>j</i>&isin;<i>R</i>,
+     * are passed or, maybe, dynamically created and stored in <tt>dest</tt> map:
+     * <b>M'</b><sub><i>j</i></sub>=<tt>dest.get(<i>j</i>)</tt>.
+     * So, the sets of indexes <i>Q</i> and <i>R</i> are the Java sets
+     * <tt>src.keySet()</tt> and <tt>dest.keySet()</tt> (after the call of this method).
+     * See {@link ApertureProcessor comments to ApertureProcessor} for more details.
+     *
+     * <p>Note 1: some of the source matrices may be references to the same object
+     * (<tt>src.get(i)==src.get(j)</tt>) &mdash; such situations must be processed correctly by this method.
+     *
+     * <p>Note 2: this method must not modify <tt>src</tt> map and the source matrices, contained in this map.
+     *
+     * <p>Note 3: this method must not remove key/value pairs from <tt>dest</tt> map
+     * (but may add new resulting matrices).
+     *
+     * <p>Note 4: if some resulting matrix <b>M'</b><sub><i>j</i></sub>, passed in <tt>dest</tt> map
+     * as <tt>dest.get(<i>j</i>)</tt>, is <tt>null</tt> while calling this method,
+     * it <i>must</i> be automatically created and stored back in <tt>dest</tt> map for the same key (index) <i>j</i>.
+     * (Besides this, this method may create and store in <tt>dest</tt> another additional resulting matrices
+     * with another indexes.)
+     *
+     * <p>Note 5: if this method creates some resulting matrices itself, then <tt>dest</tt> map should be mutable.
+     * The created resulting matrices are saved in this map by <tt>dest.put(K,...)</tt> call.
+     *
+     * <p>Note 6: if this method stores some resulting matrices it <tt>dest</tt> map, they must have the same
+     * dimensions as all matrices, passed in <tt>src</tt> and <tt>dest</tt> maps while calling the method.
+     * This method must not store <tt>null</tt> values in <tt>dest</tt> map.
+     *
+     * <p>Note 7: resulting matrices, created by this method instead of <tt>null</tt> values in <tt>dest</tt> map
+     * or in addition to the existing matrices in <tt>dest</tt> map,
+     * <i>may</i> be not updatable, i.e. it is possible that their {@link Matrix#array() built-in arrays} will not
+     * implement {@link net.algart.arrays.UpdatableArray} interface.
+     * The simplest example: the algorithm may return, as a result (saved in <tt>dest</tt>),
+     * some lazy view of one of the source matrices <tt>src.get(i)</tt>
+     * or even just a reference to a source matrix <tt>src.get(i)</tt>.
+     * (But if this object is a tiled processors, returned by
+     * {@link TiledApertureProcessorFactory#tile(ApertureProcessor)} method, then it is impossible:
+     * in this case, all resulting matrices, created by this method and stored in
+     * <tt>dest</tt> map, are always updatable, and their {@link Matrix#array() built-in arrays}
+     * implement {@link net.algart.arrays.UpdatableArray}.)
+     *
+     * <p>Note 8: unlike this, all non-null values, present in <tt>dest</tt> map while calling this method,
+     * <i>must</i> be updatable &mdash; because this method may need to store results in them.
+     * It is true even if this method does not use the old non-null values
+     * <b>M'</b><sub><i>j</i></sub> and replace them with newly created matrices &mdash;
+     * even in this case the method may check, that they are not updatable, and throw an exception if so.
+     *
+     * <p>Note 9: the sets of indexes of arguments <i>Q</i> and results <i>R</i>,
+     * as well as the dimensions of matrices, may vary for different calls of this method.
+     * (Even the number of dimensions may vary in some implementations, but it is a rarer situation.
+     * The tiled processors, returned by {@link TiledApertureProcessorFactory#tile(ApertureProcessor)} method,
+     * work only with a fixed number of dimensions, equal to {@link TiledApertureProcessorFactory#dimCount()}.)
+     *
+     * <p>Note 10: degenerated cases <i>Q</i>=&empty; (<tt>src.isEmpty()</tt>: no arguments) and
+     * <i>R</i>=&empty; (<tt>dest.isEmpty()</tt>: no results) are allowed.
+     * If <i>Q</i>=<i>R</i>=&empty;, as well as if <i>Q</i>=&empty; and
+     * the <tt>dest</tt> map, passed to this method,
+     * either is empty or contains only <tt>null</tt> matrices,
+     * then this method usually does nothing &mdash;
+     * it is really true for the tiled processors, returned by
+     * {@link TiledApertureProcessorFactory#tile(ApertureProcessor)} method,
+     * but it is not a strict requirement for other implementations.
+     *
+     * @param dest the resulting matrices: the result <b>M'</b><sub><i>j</i></sub>
+     *             will be the value <tt>dest.get(<i>j</i>)</tt> of this map after calling this method.
+     * @param src  the source arguments: the argument <b>M</b><sub><i>i</i></sub> is the value
+     *             <tt>src.get(<i>i</i>)</tt> of this map.
+     * @throws NullPointerException                    if <tt>dest</tt> or <tt>src</tt> argument is <tt>null</tt>,
+     *                                                 or if one of values in <tt>src</tt> map is <tt>null</tt>.
+     * @throws IllegalArgumentException                if some values in <tt>dest</tt> map are not <tt>null</tt>
+     *                                                 and, at the same time, their {@link Matrix#array()
+     *                                                 built-in arrays} are not
+     *                                                 {@link net.algart.arrays.UpdatableArray updatable};
+     *                                                 <tt>ClassCastException</tt> can be also thrown in this case
+     *                                                 instead of this exception.
+     * @throws net.algart.arrays.SizeMismatchException if some matrices among the source arguments (values of
+     *                                                 <tt>src</tt> map) or non-null resulting matrices
+     *                                                 (values of <tt>dest</tt> map), passed while calling this
+     *                                                 method, have different dimensions. It is a typical run-time
+     *                                                 exception in this case, and it is really thrown by the tiled
+     *                                                 processors, created by
+     *                                                 {@link TiledApertureProcessorFactory#tile(ApertureProcessor)}
+     *                                                 method; but other implementations are permitted to throw
+     *                                                 another exceptions in this case.
+     */
+    public void process(Map<K, Matrix<?>> dest, Map<K, Matrix<?>> src);
+
+    /**
+     * Returns the dependence aperture <b>A</b><sub><i>i</i></sub>
+     * for the source matrix <b>M</b><sub><i>i</i></sub> with the given index
+     * <i>i</i>=<tt>srcMatrixKey</tt>.
+     * See {@link ApertureProcessor comments to ApertureProcessor} for more details.
+     *
+     * <p>This method must return correct result for any key, which can appear and can be processed in
+     * {@link #process(Map, Map) process} method as a key in its <tt>src</tt> map.
+     * If <tt>srcMatrixKey</tt> argument has some "impossible" value, the result is not specified.
+     *
+     * <p>This method should work quickly and must never throw exceptions.
+     *
+     * @param srcMatrixKey the index (key) of the source matrix.
+     * @return             the dependence aperture of the processing algorithm for this source matrix.
+     */
+    public IRectangularArea dependenceAperture(K srcMatrixKey);
+}

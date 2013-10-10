@@ -1,0 +1,2 @@
+call "%JAVA_HOME%\bin\javac" -cp algorithm-lib.jar -d src src/net/algart/arrays/BadClassViolatingAlgARTSealing.java
+call "%JAVA_HOME%\bin\java" -cp src;algorithm-lib.jar net.algart.arrays.BadClassViolatingAlgARTSealing

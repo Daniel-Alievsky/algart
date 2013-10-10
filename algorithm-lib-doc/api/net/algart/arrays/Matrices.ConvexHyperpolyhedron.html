@@ -1,0 +1,511 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+Matrices.ConvexHyperpolyhedron
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Matrices.ConvexHyperpolyhedron";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/Matrices.html" title="class in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/Matrices.Hyperparallelepiped.html" title="class in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/Matrices.ConvexHyperpolyhedron.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="Matrices.ConvexHyperpolyhedron.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.arrays</FONT>
+<BR>
+Class Matrices.ConvexHyperpolyhedron</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../net/algart/arrays/Matrices.Region.html" title="class in net.algart.arrays">net.algart.arrays.Matrices.Region</A>
+      <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><STRONG>net.algart.arrays.Matrices.ConvexHyperpolyhedron</STRONG>
+</PRE>
+<DL>
+<DT><STRONG>Direct Known Subclasses:</STRONG></DT> <DD><A HREF="../../../net/algart/arrays/Matrices.Simplex.html" title="class in net.algart.arrays">Matrices.Simplex</A></DD>
+</DL>
+<DL>
+<DT><STRONG>Enclosing class:</STRONG></DT><DD><A HREF="../../../net/algart/arrays/Matrices.html" title="class in net.algart.arrays">Matrices</A></DD>
+</DL>
+<HR>
+<PRE>public static class <STRONG>Matrices.ConvexHyperpolyhedron</STRONG>
+extends <A HREF="../../../net/algart/arrays/Matrices.Region.html" title="class in net.algart.arrays">Matrices.Region</A></PRE>
+
+<P>
+<p>Convex hyperpolyhedron: an intersection of several <nobr><i>n</i>-dimensional</nobr>
+ half-spaces and some <A HREF="../../../net/algart/arrays/Matrices.Hyperparallelepiped.html" title="class in net.algart.arrays"><CODE>hyperparallelepiped</CODE></A>.
+ While creating regions of this class, it is always necessary to specify some containing
+ hyperparallelepiped. The coordinate ranges, returned by <A HREF="../../../net/algart/arrays/Matrices.Region.html#coordRanges()"><CODE>Matrices.Region.coordRanges()</CODE></A> method of this class,
+ are the corresponding ranges of the specified containing hyperparallelepiped.</p>
+
+ <p>More precisely, the region, specified by this class, consists of all such points
+ <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>, that:</p>
+
+ <blockquote>
+ <i>a</i><sub>00</sub><i>x</i><sub>0</sub> + <i>a</i><sub>01</sub><i>x</i><sub>1</sub> + ...
+ + <i>a</i><sub>0,<i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> &le; <i>b</i><sub>0</sub>,<br>
+ <i>a</i><sub>10</sub><i>x</i><sub>0</sub> + <i>a</i><sub>11</sub><i>x</i><sub>1</sub> + ...
+ + <i>a</i><sub>1,<i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> &le; <i>b</i><sub>1</sub>,<br>
+ ...,<br>
+ <i>a</i><sub><i>m</i>&minus;1,0</sub><i>x</i><sub>0</sub>
+ + <i>a</i><sub><i>m</i>&minus;1,1</sub><i>x</i><sub>1</sub> + ...
+ + <i>a</i><sub><i>m</i>&minus;1,<i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> &le;
+ <i>b</i><sub><i>m</i>&minus;1</sub>,<br>
+ and also this point belongs to the specified containing <A HREF="../../../net/algart/arrays/Matrices.Hyperparallelepiped.html" title="class in net.algart.arrays"><CODE>hyperparallelepiped</CODE></A>:<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;<tt><A HREF="../../../net/algart/arrays/Matrices.Region.html#coordRange(int)"><CODE>coordRange</CODE></A>(<i>k</i>).<A HREF="../../../net/algart/math/IRange.html#min()"><CODE>min()</CODE></A></tt> &le;
+ <i>x</i><sub><i>k</i></sub> &le;
+ <tt><A HREF="../../../net/algart/arrays/Matrices.Region.html#coordRange(int)"><CODE>coordRange</CODE></A>(<i>k</i>).<A HREF="../../../net/algart/math/IRange.html#max()"><CODE>max()</CODE></A></tt> for all
+ <i>k</i>=0,1,...,<i>n</i>&minus;1.
+ </blockquote>
+
+ <p>The number of inequations <i>m</i> can be any non-negative integer 0,1,2,...
+ (the degenerated case <i>m</i>=0 is equivalent to the hyperparallelepiped).</p>
+
+ <p>Convex hyperpolyhedrons can be created by the following methods:</p>
+
+ <ul>
+ <li><A HREF="../../../net/algart/arrays/Matrices.Region.html#getConvexHyperpolyhedron(double[], double[], net.algart.math.IRange...)"><CODE>Matrices.Region.getConvexHyperpolyhedron(double[] a, double[] b, IRange... coordRanges)</CODE></A>,</li>
+ <li><A HREF="../../../net/algart/arrays/Matrices.Region.html#getSimplex(double[][])"><CODE>Matrices.Region.getSimplex(double[][] vertices)</CODE></A>,</li>
+ <li><A HREF="../../../net/algart/arrays/Matrices.Region.html#getTriangle2D(double, double, double, double, double, double)"><CODE>Matrices.Region.getTriangle2D(double x1, double y1, double x2, double y2, double x3, double y3)</CODE></A>,</li>
+ <li><A HREF="../../../net/algart/arrays/Matrices.Region.html#getTetrahedron3D(double, double, double, double, double, double, double, double, double, double, double, double)"><CODE>Matrices.Region.getTetrahedron3D(double x1, double y1, double z1,
+ double x2, double y2, double z2,
+ double x3, double y3, double z3,
+ double x4, double y4, double z4)</CODE></A>.</li>
+ </ul>
+
+ <p>In first method, you must directly specify the matrix <b>A</b> of coefficients <i>a</i><sub><i>ij</i></sub>,
+ the vector <b>b</b> of coefficients <i>b</i><sub><i>i</i></sub> and the containing hyperparallelepiped.
+ (The containing hyperparallelepiped will be identical to the hyperparallelepiped, constructed
+ by <A HREF="../../../net/algart/arrays/Matrices.Region.html#getHyperparallelepiped(net.algart.math.IRange...)"><CODE>Matrices.Region.getHyperparallelepiped(IRange... coordRanges)</CODE></A> method with the same <tt>coordRanges</tt>.)</p>
+
+ <p>Other 3 methods build a <A HREF="../../../net/algart/arrays/Matrices.Simplex.html" title="class in net.algart.arrays"><CODE>simplex</CODE></A> &mdash; a particular case of the convex hyperpolyhedron.
+ In these cases you need to specify its vertices only; necessary matrix <b>A</b> and vector <b>b</b>
+ are calculated automatically.</p>
+
+ <p>All calculations while building and processing hyperpolyhedrons are performed in <tt>strictfp</tt> mode,
+ so the results are absolutely identical on all platforms.</p>
+
+ <p>This class is <b>immutable</b> and <b>thread-safe</b>:
+ there are no ways to modify settings of the created instance.</p>
+<P>
+
+<P>
+<HR>
+
+<P>
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double[]</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Matrices.ConvexHyperpolyhedron.html#a()">a</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the matrix <b>A</b>: coefficients of the left side of inequations, defining the half-spaces
+ (see the <A HREF="../../../net/algart/arrays/Matrices.ConvexHyperpolyhedron.html" title="class in net.algart.arrays"><CODE>comments to this class</CODE></A>).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;double[]</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Matrices.ConvexHyperpolyhedron.html#b()">b</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the vector <b>b</b>: right sides of inequations, defining the half-spaces
+ (see the <A HREF="../../../net/algart/arrays/Matrices.ConvexHyperpolyhedron.html" title="class in net.algart.arrays"><CODE>comments to this class</CODE></A>).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Matrices.ConvexHyperpolyhedron.html#contains(long...)">contains</A></STRONG>(long...&nbsp;coordinates)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <tt>true</tt> if and only if the point with the specified integer coordinates
+ belongs to this region.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../net/algart/arrays/Matrices.Region.html" title="class in net.algart.arrays">Matrices.Region</A>[]</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Matrices.ConvexHyperpolyhedron.html#sectionAtLastCoordinate(long)">sectionAtLastCoordinate</A></STRONG>(long&nbsp;sectionCoordinateValue)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Finds the intersection of this region with the hyperplane, described by the equation
+ <i>x</i><sub><i><A HREF="../../../net/algart/arrays/Matrices.Region.html#n()"><CODE>n</CODE></A></i>&minus;1</sub>=<tt>sectionCoordinateValue</tt>,
+ and returns this intersection as an array of <nobr>(<i>n</i>&minus;1)-dimensional</nobr>
+ regions.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/arrays/Matrices.ConvexHyperpolyhedron.html#toString()">toString</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a brief string description of this object.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_net.algart.arrays.Matrices.Region"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class net.algart.arrays.<A HREF="../../../net/algart/arrays/Matrices.Region.html" title="class in net.algart.arrays">Matrices.Region</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../net/algart/arrays/Matrices.Region.html#checkSectionAtLastCoordinate(long)">checkSectionAtLastCoordinate</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#coordRange(int)">coordRange</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#coordRanges()">coordRanges</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#getConvexHyperpolyhedron(double[], double[], net.algart.math.IRange...)">getConvexHyperpolyhedron</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#getHyperparallelepiped(net.algart.math.IRange...)">getHyperparallelepiped</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#getParallelepiped3D(net.algart.math.IRange, net.algart.math.IRange, net.algart.math.IRange)">getParallelepiped3D</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#getPolygon2D(double[][])">getPolygon2D</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#getRectangle2D(net.algart.math.IRange, net.algart.math.IRange)">getRectangle2D</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#getSegment(net.algart.math.IRange)">getSegment</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#getSimplex(double[][])">getSimplex</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#getTetrahedron3D(double, double, double, double, double, double, double, double, double, double, double, double)">getTetrahedron3D</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#getTriangle2D(double, double, double, double, double, double)">getTriangle2D</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#isContainsSupported()">isContainsSupported</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#isRectangular()">isRectangular</A>, <A HREF="../../../net/algart/arrays/Matrices.Region.html#n()">n</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class java.lang.Object</STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="contains(long...)"><!-- --></A><H3>
+contains</H3>
+<PRE>
+public boolean <STRONG>contains</STRONG>(long...&nbsp;coordinates)</PRE>
+<DL>
+<DD><STRONG>Description copied from class: <CODE><A HREF="../../../net/algart/arrays/Matrices.Region.html#contains(long...)">Matrices.Region</A></CODE></STRONG></DD>
+<DD>Returns <tt>true</tt> if and only if the point with the specified integer coordinates
+ belongs to this region.
+
+ <p>The <tt>coordinates</tt> must contain at least <A HREF="../../../net/algart/arrays/Matrices.Region.html#n()"><CODE>Matrices.Region.n()</CODE></A> elements.
+ It can contain more than <A HREF="../../../net/algart/arrays/Matrices.Region.html#n()"><CODE>Matrices.Region.n()</CODE></A> elements; then the extra elements will be ignored.
+
+ <p><i>Warning!</i> Some inheritors of this class does not provide correct implementation of this method.
+ In this case, <A HREF="../../../net/algart/arrays/Matrices.Region.html#isContainsSupported()"><CODE>Matrices.Region.isContainsSupported()</CODE></A> method returns <tt>false</tt> and this method throws
+ <tt>UnsupportedOperationException</tt>. So, you must always check the result of
+ <A HREF="../../../net/algart/arrays/Matrices.Region.html#isContainsSupported()"><CODE>Matrices.Region.isContainsSupported()</CODE></A> method before calling this one.
+
+ <p>However, this method <i>must</i> be correctly implemented, if this region is a
+ <nobr>1-dimensional</nobr> (<tt><A HREF="../../../net/algart/arrays/Matrices.Region.html#n()"><CODE>Matrices.Region.n()</CODE></A>==1</tt>) and <A HREF="../../../net/algart/arrays/Matrices.Region.html#isRectangular()"><CODE>Matrices.Region.isRectangular()</CODE></A>
+ method returns <tt>false</tt>.
+
+ <p>Note: even if the inheritor does not provide correct implementation of this method,
+ it must always provide correct implementation of <A HREF="../../../net/algart/arrays/Matrices.Region.html#sectionAtLastCoordinate(long)"><CODE>Matrices.Region.sectionAtLastCoordinate(long)</CODE></A> method.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/Matrices.Region.html#contains(long...)">contains</A></CODE> in class <CODE><A HREF="../../../net/algart/arrays/Matrices.Region.html" title="class in net.algart.arrays">Matrices.Region</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>coordinates</CODE> - the coordinates of the point: the first element is <i>x</i>, the second is <i>y</i>, ...</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD><tt>true</tt> if and only if the point with the specified coordinates
+         belongs to this region.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="sectionAtLastCoordinate(long)"><!-- --></A><H3>
+sectionAtLastCoordinate</H3>
+<PRE>
+public <A HREF="../../../net/algart/arrays/Matrices.Region.html" title="class in net.algart.arrays">Matrices.Region</A>[] <STRONG>sectionAtLastCoordinate</STRONG>(long&nbsp;sectionCoordinateValue)</PRE>
+<DL>
+<DD><STRONG>Description copied from class: <CODE><A HREF="../../../net/algart/arrays/Matrices.Region.html#sectionAtLastCoordinate(long)">Matrices.Region</A></CODE></STRONG></DD>
+<DD>Finds the intersection of this region with the hyperplane, described by the equation
+ <i>x</i><sub><i><A HREF="../../../net/algart/arrays/Matrices.Region.html#n()"><CODE>n</CODE></A></i>&minus;1</sub>=<tt>sectionCoordinateValue</tt>,
+ and returns this intersection as an array of <nobr>(<i>n</i>&minus;1)-dimensional</nobr>
+ regions.
+ (Here <i>x</i><sub><i><A HREF="../../../net/algart/arrays/Matrices.Region.html#n()"><CODE>n</CODE></A></i>&minus;1</sub> is the last coordinate of the points:
+ <nobr><i>y</i>-coordinate</nobr> in <nobr>2-dimensional</nobr> case,
+ <nobr><i>z</i>-coordinate</nobr> in <nobr>3-dimensional</nobr> case, etc.)
+ If the intersection is empty, this method returns an empty array (<tt>"new&nbsp;Region[0]"</tt>).
+ This method never returns <tt>null</tt>.
+
+ <p>This method must not be used if this region is <nobr>1-dimensional</nobr>
+ (<tt><A HREF="../../../net/algart/arrays/Matrices.Region.html#n()"><CODE>Matrices.Region.n()</CODE></A>==1</tt>). In this case, it throws <tt>IllegalStateException</tt>.
+
+ <p>This default implementation is based on <A HREF="../../../net/algart/arrays/Matrices.Region.html#contains(long...)"><CODE>Matrices.Region.contains(long...)</CODE></A> method, which is supposed
+ to be correctly implemented.
+
+ <p>Note: it is possible (in some rare exotic cases), that the regions, returned by this method,
+ intersects with each other: some points will belong to 2 and more elements of the result.
+ In particular, it is possible for <A HREF="../../../net/algart/arrays/Matrices.Polygon2D.html" title="class in net.algart.arrays"><CODE>Matrices.Polygon2D</CODE></A>,
+ if some sides of the polygon lie exactly at the horizontal <i>y</i>=<tt>sectionCoordinateValue</tt>.
+
+ <p>Implementations of this method in this packages, besides the implementation in
+ <A HREF="../../../net/algart/arrays/Matrices.Polygon2D.html" title="class in net.algart.arrays"><CODE>Matrices.Polygon2D</CODE></A> class, never return more than 1 region in the result.
+
+ <p>You <i>must</i> override this method if you prefer not to implement <A HREF="../../../net/algart/arrays/Matrices.Region.html#contains(long...)"><CODE>Matrices.Region.contains(long...)</CODE></A> method
+ (<A HREF="../../../net/algart/arrays/Matrices.Region.html#isContainsSupported()"><CODE>Matrices.Region.isContainsSupported()</CODE></A> returns <tt>false</tt>). In this case, your implementation
+ must not call <A HREF="../../../net/algart/arrays/Matrices.Region.html#contains(long...)"><CODE>Matrices.Region.contains(long...)</CODE></A> method or
+ <nobr><tt>super.<A HREF="../../../net/algart/arrays/Matrices.Region.html#sectionAtLastCoordinate(long)"><CODE>Matrices.Region.sectionAtLastCoordinate(long)</CODE></A></tt></nobr>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/arrays/Matrices.Region.html#sectionAtLastCoordinate(long)">sectionAtLastCoordinate</A></CODE> in class <CODE><A HREF="../../../net/algart/arrays/Matrices.Region.html" title="class in net.algart.arrays">Matrices.Region</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>sectionCoordinateValue</CODE> - the value of the last coordinate.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the intersection of this region and the
+         <nobr>(<i>n</i>&minus;1)-dimensional</nobr> hyperplane,
+         corresponding to the specified value of the last coordinate
+         (0, 1 or more regions, every region is
+         <nobr>(<i>n</i>&minus;1)-dimensional</nobr>).</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="toString()"><!-- --></A><H3>
+toString</H3>
+<PRE>
+public java.lang.String <STRONG>toString</STRONG>()</PRE>
+<DL>
+<DD>Returns a brief string description of this object.
+
+ <p>The result of this method may depend on implementation.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>toString</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>a brief string description of this object.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="a()"><!-- --></A><H3>
+a</H3>
+<PRE>
+public double[] <STRONG>a</STRONG>()</PRE>
+<DL>
+<DD>Returns the matrix <b>A</b>: coefficients of the left side of inequations, defining the half-spaces
+ (see the <A HREF="../../../net/algart/arrays/Matrices.ConvexHyperpolyhedron.html" title="class in net.algart.arrays"><CODE>comments to this class</CODE></A>).
+ The elements of the matrix <b>A</b> will be listed in the returned array row by row:
+ <i>a</i><sub><i>ij</i></sub>=<tt>a[<i>i</i>*<i>n</i>+<i>j</i>]</tt>,
+ <i>i</i> is the index of the row (0..<i>m</i>-1),
+ <i>j</i> is the index of the column (0..<i>n</i>-1),
+ <tt>a</tt> is the result of this method with length <tt>a.length=</tt><i>nm</i>.
+
+ <p>The returned array is a clone of the internal array stored in this object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the matrix <b>A</b>: coefficients of the left side of inequations, defining the half-spaces.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="b()"><!-- --></A><H3>
+b</H3>
+<PRE>
+public double[] <STRONG>b</STRONG>()</PRE>
+<DL>
+<DD>Returns the vector <b>b</b>: right sides of inequations, defining the half-spaces
+ (see the <A HREF="../../../net/algart/arrays/Matrices.ConvexHyperpolyhedron.html" title="class in net.algart.arrays"><CODE>comments to this class</CODE></A>).
+ The elements of the vector <b>b</b> will be listed in the returned array.
+ The length of the returned array is the number of half-spaces.
+
+ <p>The returned array is a clone of the internal array stored in this object.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Returns:</STRONG></DT><DD>the vector <b>b</b>: right sides of inequations, defining the half-spaces.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/arrays/Matrices.html" title="class in net.algart.arrays"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/arrays/Matrices.Hyperparallelepiped.html" title="class in net.algart.arrays"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/arrays/Matrices.ConvexHyperpolyhedron.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="Matrices.ConvexHyperpolyhedron.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

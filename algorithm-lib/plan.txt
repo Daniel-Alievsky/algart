@@ -1,0 +1,2415 @@
+WebWarper: free codes for students, teachers, physicians
+
+TODO!! simplify Logger:
+  abstract class Logger (identical to standard and Log4J)
+  class ProxyLogger, allowing to call standard or Log4J
+  class SimpleConsoleLogger: all messages are logged to console, only it with setRequiredLevel(int value)
+  global logger and progress
+  NO! Use standard loggers; special logger getLogger("status.global") - this logger is customized in the application
+    start with handler performing SIMAGIS showStatus
+    test with another levels
+  NO! Only Context.updateProgress! Remove status.global!
+TODO!! use StatusUpdater in recognition and remove "status.global" Logger
+
+TODO!!
+   use "noSlowTests" for other tests in MainOperationsTest
+TODO!!
+   what Java memory is allocated while skeletonization? Not obvious
+
+TODO!!
+   comment speed of all operations also for Minkowski sum and union; better comments for Patterns methods
+   Common random test - comparison with simple newPattern
+
+TODO!!
+   microhelp (in russian) in separate HTML for all new plugins
+
+TODO>> (JIRA AA-6)
+  any Array: indexOf(value)
+  test it in common test
+  net.algart.arrays.Matrices: scanPerimeter, scanParticle
+  check skeletons that they save the number of particles
+
+TODO!!
+     +WeightedPattern extends Pattern: weight(IPoint) method
+       -Map<IntegerPoint, Double> weightedPoints()
+       +double minWeight(), double maxWeight()
+         linear filter should check minWeight==maxWeight in the case of one segment
+       productDecomposition - w(x,y,z)=w(x)*w(y)*w(z)
+     commment all
+     newMultiplePattern(double[][] segmentWeights[, IPoint coordMin]):
+        every line describes weights in one segment (in product decomposition),
+        number of lines is dimCount
+        without coordMin, it is auto-centered
+     newMultiplePattern(double[] segmentWeights, IPoint coordMin/int dimCount)
+        here we use dimCount identical segmentsWeights
+     newGaussWeightedPattern(IPoint coordMin/int dimCount)
+     implement toString()/hashCode()/equals()
+     ?? LinearFilter: useful argument requiredArrayType (may be skipped)
+TODO!!
+     net.algart.arrays.linearfiltering.Convolution: based on asLinearFunc
+       if isMultiplicative, do this operation recursively for every line, plane, 3d plane, etc.:
+       at every step we process SIMPLE-array if it is less than 1 MB or LARGE-array in other case
+       comment that the values near matrix bounds may differ from correct pseudocyclic model
+     if isMultiplicative and isConstant (i.e. rectangular mean), split by last coordinate
+       into several large blocks (according to recommendedNumberOfTasks),
+       containing integer number of hyperplanes, and use ParallelExecutor
+       for building each plane
+     if isConstant, in common case find left/rightBoundaries along x and fill the result via simple setDouble
+       (maybe, with optimization)
+     ?Also should use UnionDecomposition - not better than scanning
+
+TODO?? "D:\Program Files\Java\jdk1.6.0_02\jre\bin\java" -ea -server -Xmx200m -Dnet.algart.arrays.globalMemoryModel=BUFFER -Dnet.algart.arrays.DefaultDataFileModel.forceTimeoutX=0  -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=2048 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimitC=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT net.algart.arrays.demo.MainOperationsTest ALL 1000 100
+  sometimes cannot delete files, some files are not deleted even at the end
+
+TODO!! in profilingMode, also measure all array creation by all models
+
+
+SUN or software BUG?? (Stopped to be reproduced after some Windows updates)
+   resize for 30% (averaging) gives different (unstable) results while multithreading!
+     even without recursion! under 1.7 and 1.6 (not reproducible with -Xint)
+     even without any array allocation (get(x0,x1) clean version)
+     coordinates of errors are random enough, not on the boundaries 1/4, 2/4, 3/4
+     EVEN in somteimes in simple bilinear! even in rotation!
+     +strictfp? doesn't help
+     check unstability of each stage of the rotation
+     asResized and asCoordFuncMatrix:
+   "C:\Program Files (x86)\Java\jdk1.7.0\jre\bin\java" -ea  -server -Xmx1000m -Dnet.algart.arrays.globalMemoryModel=SIMPLE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=0  net.algart.arrays.demo.MainOperationsTest byte 85500000 70000 1 1 37
+   "C:\Program Files (x86)\Java\jdk1.7.0\jre\bin\java" -ea -Xincgc -server -Xmx1000m -Dnet.algart.arrays.globalMemoryModel=SIMPLE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=0  net.algart.arrays.demo.MainOperationsTest byte 35500000 7000 1 1 36
+   "C:\Program Files (x86)\Java\jdk1.6.0_05\jre\bin\java" -ea -Xincgc -server -Xmx1000m -Dnet.algart.arrays.globalMemoryModel=SIMPLE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=0  net.algart.arrays.demo.MainOperationsTest byte 55000 7000 1 1 36
+    BUT! Not reproduced under 64-bit version, not reproduced with -Xint
+    And in 32-bit (last example) is reproduces with 1 THREAD, if processRange is declared synchronized!!
+      "C:\Program Files (x86)\Java\jdk1.6.0_05\jre\bin\java" -ea -Xincgc -server -Xmx1000m -Dnet.algart.arrays.globalMemoryModel=SIMPLE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=1 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=0  net.algart.arrays.demo.MainOperationsTest byte 55000 7000 1 1 36
+    Resizing 200%: unstable even with 1 thread with usual compilation (usual processRange)!
+   !!"C:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -Xincgc -server -Xmx1000m -Dnet.algart.arrays.globalMemoryModel=BUFFER -Dnet.algart.arrays.blockOptimizationForResizing=true -Dnet.algart.arrays.maxTempJavaMemory=32 -Dnet.algart.arrays.minOptimizationJavaMemory=256 -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=0  net.algart.arrays.demo.MainOperationsTest ALL 15555 300 1 3 37
+    Already IN 64-BIT version with -Xint!??
+
+
+
+BUG!!
+"C:\Program Files (x86)\Java\jdk1.7.0\jre\bin\java" -ea  -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MainOperationsTest byte 5500 3000 1 1
+Main model: Large memory model [default data file model: 12 banks per 256/256 bytes, lazy-writing]
+Alternative model: Large memory model [standard I/O data file model: 32 banks per 65536 bytes, cached reading]
+Maximal number of parallel tasks: 4
+Maximal number of threads in pool: 128
+
+Testing 5500 elements 3000 times with start random seed 1
+
+Testing byte
+Creating test array...
+Shuffling first 1000000 elements...
+Allocating work memory...
+Used memory: 6*0.160 MB
+Used Java memory: 0.004 MB
+Tested array: 98,166,154,147,60,171,240,225,231,8,241,46,241,166,13,106,208,114,125,79,154,66,34,181,195,23,106,227,...
+(1)  Testing "copy(Array src)", "equals" and "hashCode" methods, two different arrays (both unresizable)...
+(2)  Testing "copy(Array src)", two different unresizable arrays, alternative src model...
+(3)  Testing "copy(Array src)", two different unresizable arrays, alternative this instance model...
+(5)  Testing "buffer().map" method, changing + forcing...
+(6)  Testing "newLazyCopy(Array array)", "newUnresizableLazyCopy(Array array)" and "flushResources()" methods...
+(7)  Testing "AbstractArray.defaultCopy" method, two different arrays...
+(8)  Testing "copy(long destIndex, long srcIndex, long count)" method, inside a single array...
+(9)  Testing "copy(Array src)" method, the same array, no overlap...
+(10) Testing "AbstractArray.defaultCopy" method, inside a single array, no overlap...
+(11) Testing "swap(Array src)" method, two different arrays...
+(12) Testing "AbstractArray.defaultSwap" method, two different arrays...
+(13) Testing "swap(long destIndex, long srcIndex, long count)" method, inside a single array, no overlap...
+(14) Testing "swap(Array src)" method, inside a single array, no overlap...
+(15) Testing "AbstractArray.defaultSwap" method, inside a single array, no overlap...
+(16) Testing "Arrays.zeroFill" and "PArray.isZeroFilled" methods...
+(17) Testing "Arrays.rangeOf" method...
+(18) Testing "Arrays.sumOf" method...
+(19) Testing "Arrays.preciseSumOf" method...
+(20) Testing "Arrays.histogramOf" method...
+(21) Testing "Arrays.asConcatenation" method...
+(22) Testing "Arrays.asShifted" method...
+(23) Testing "Matrix.subMatr" method, fully inside...
+(24) Testing "Matrix.subMatr" method...
+(25) Testing "Arrays.asFunc" method (min and max, 2 arguments)...
+(26) Testing "Arrays.asFunc" method (min and max, 3 arguments)...
+(27) Testing "Arrays.asShifted" + "Arrays.asFunc" method (random shift + min and max, 2 arguments)...
+(28) Testing "Arrays.asShifted" + "Arrays.asFunc" method (random shift + min and max, n <= 20 arguments)...
+(29) Testing "Arrays.asFunc" and "Arrays.asUpdatableFunc" methods (ax+b)...
+(30) Testing "Arrays.asFunc" method (ax+by+c)...
+(31) Testing "Arrays.asFunc" and "Arrays.asUpdatableFunc" methods (x^c)...
+557 java.lang.AssertionError: The bug C in asFunc found in test #611: c = 0.5, scale = 1.5, strict = false, srcPos = 227, count = 3564
+        at net.algart.arrays.demo.MainOperationsTest.testPowerFuncAndUpdatableFunc(MainOperationsTest.java:2306)
+        at net.algart.arrays.demo.MainOperationsTest.testElementType(MainOperationsTest.java:298)
+        at net.algart.arrays.demo.MainOperationsTest.testAll(MainOperationsTest.java:205)
+        at net.algart.arrays.demo.MainOperationsTest.main(MainOperationsTest.java:2532)
+Start random seed: 1
+  but not in SIMPLE model
+  unstable at all! not reproduced!
+
+
+BUG!! (rarely)
+  "C:\Program Files (x86)\Java\jdk1.7.0\jre\bin\java" -ea -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MainOperationsTest byte 5550 500 1 1
+Main model: Large memory model [default data file model: 12 banks per 262144/2097152 bytes, lazy-writing]
+Alternative model: Large memory model [standard I/O data file model: 32 banks per 65536 bytes, cached reading]
+Maximal number of parallel tasks: 4
+Maximal number of threads in pool: 128
+
+Testing 5550 elements 500 times with start random seed 1
+
+Testing byte
+Creating test array...
+Shuffling first 1000000 elements...
+Allocating work memory...
+Used memory: 6*0.118 MB
+Used Java memory: 0.001 MB
+Tested array: 10,200,217,155,152,195,74,0,49,15,148,58,11,177,101,108,251,195,174,175,178,92,226,213,8,214,205,10,61,...
+(1)  Testing "copy(Array src)", "equals" and "hashCode" methods, two different arrays (both unresizable)...
+(2)  Testing "copy(Array src)", two different unresizable arrays, alternative src model...
+(3)  Testing "copy(Array src)", two different unresizable arrays, alternative this instance model...
+(4)  Testing "asCopyOnNextWrite()" method...
+(6)  Testing "buffer().map" method, changing + forcing...
+(7)  Testing "newLazyCopy(Array array)", "newUnresizableLazyCopy(Array array)" and "flushResources()" methods...
+(8)  Testing "AbstractArray.defaultCopy" method, two different arrays...
+(9)  Testing "copy(long destIndex, long srcIndex, long count)" method, inside a single array...
+(10) Testing "copy(Array src)" method, the same array, no overlap...
+(11) Testing "AbstractArray.defaultCopy" method, inside a single array, no overlap...
+(12) Testing "swap(Array src)" method, two different arrays...
+(13) Testing "AbstractArray.defaultSwap" method, two different arrays...
+(14) Testing "swap(long destIndex, long srcIndex, long count)" method, inside a single array, no overlap...
+(15) Testing "swap(Array src)" method, inside a single array, no overlap...
+(16) Testing "AbstractArray.defaultSwap" method, inside a single array, no overlap...
+(17) Testing "Arrays.zeroFill" and "PArray.isZeroFilled" methods...
+(18) Testing "Arrays.rangeOf" method...
+(19) Testing "Arrays.sumOf" method...
+(20) Testing "Arrays.preciseSumOf" method...
+(21) Testing "Arrays.histogramOf" method...
+java.lang.AssertionError: The bug A in histogramOf found in test #17: srcPos = 3468, count = 1565: histogram[233] = 1 instead of 0
+        at net.algart.arrays.demo.MainOperationsTest.testHistogramOf(MainOperationsTest.java:1092)
+        at net.algart.arrays.demo.MainOperationsTest.testElementType(MainOperationsTest.java:287)
+        at net.algart.arrays.demo.MainOperationsTest.testAll(MainOperationsTest.java:205)
+        at net.algart.arrays.demo.MainOperationsTest.main(MainOperationsTest.java:2531)
+Start random seed: 1
+
+ *** Cleanup procedure started... ***
+ *** Cleanup procedure successfully performed in 82 ms ***
+   Very strange: randsees always 1!
+
+
+TODO??
+   Arrays.max(UpdatablePArray, PArray), min, sub, diff, neg - just applies the func to the arguments
+   Matrices.max(Matrix<? extends UpdatablePArray>, Matrix<? extends PArray>), min, sub, diff, neg
+   equivalents with other names for BitArray: or, and, xor, not
+   but usually the lazy logic is faster
+
+TODO!! (in future) granulometry must return PArray
+
+TODO?? Arrays.copy, etc. is not interrupted by Thread.interrupt() when 1 thread is used!
+
+TODO++
+   enhancement report: Random.nextLong(long n)
+TODO!!
+   recheck all my tests (after all optimizations in AbstractArray and SimpleMemoryModel)
+
+TODO?? own read/write/map methods, that cannot be thrown by Thread.interrupt - catch it, reopen the file,
+  perform the operation and then call Thread.currentThread().interrupt().
+  Not too safe - each next operation will lead to the same result
+
+SUN BUG!! in javadoc - cannot refer {@link #result()} from in OctupleThinningSkeleton2D
+  report it
+
+SUN BUG!!
+"C:\Program Files (x86)\Java\jdk1.6.0_04\jre\bin\java" -ea -server -Xincgc -Xmx500m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MainOperationsTest ALL 1000 100
+# An unexpected error has been detected by Java Runtime Environment:
+#
+# java.lang.OutOfMemoryError: requested 524360 bytes for Chunk::new. Out of swap space?
+#
+#  Internal Error (allocation.cpp:218), pid=4908, tid=4568
+#  Error: Chunk::new
+#
+# Java VM: Java HotSpot(TM) Server VM (10.0-b19 mixed mode windows-x86)
+# An error report file with more information is saved as:
+# D:\simagis\bin\algorithm-lib\src\hs_err_pid4908.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+
+
+BUG!! Some files are not deleted after ctrl-c or with -noGc:
+ "C:\Program Files\Java\jdk1.6.0_04\jre\bin\java" -ea -server -Xincgc -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MainOperationsTest -noGc char 1500 500
+WARNING: 2662 storage files were not deleted in the attempt #1; we shall sleep for 100 ms and try again
+WARNING: 1 storage files were not deleted in the attempt #2; we shall sleep for 100 ms and try again
+WARNING: 1 storage files were not deleted in the attempt #3; we shall sleep for 100 ms and try again
+WARNING: 1 storage files were not deleted in the attempt #4; we shall sleep for 100 ms and try again
+WARNING: 1 storage files were not deleted in the attempt #5; we shall sleep for 100 ms and try again
+ *** Cleanup procedure successfully performed in 3562 ms ***
+ Or:
+ "C:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -server -Xincgc -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.maxMappedMemory=1000000000 -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MultithreadAccess 100000 10 1 1
+The list of 16 non-deteled temporary files is saved in D:\TEMP\arrayfiles.txt
+  RECHECK all code with AV
+  1++. Really, the finalizer forgot the MappedDataStorage even if the deletion was blocked via disposeCalled.
+    Correct solution is setting disposeCalled only after succesful disposing and checking it in sync-block
+  2--. But some files "unmapped" and cannot be deleted without additional gc.
+    Maybe, sync problem in DefaultDataFileModel? Probable no.
+    Maybe, sometimes we creates 2 MappedByteBuffer for same position and forget one of them? NO!
+    Possible reason: the internal MappedByteBuffer finalizer may be not performed for all instances of
+      shared ByteByffers (including duplicate() results, some internal links, etc.),
+      though our controlled MappedByteBuffer already becomes weakly-unreachable and inaccessible via our table.
+
+
+BUG?? dead-lock in the cleanup procedure
+  "D:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -server -Xincgc -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=2048 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT net.algart.arrays.demo.MainOperationsTest int 10000 100
+  and Ctrl+C
+
+SUN BUG??
+"D:\Program Files\Java\jdk1.6.0_02\jre\bin\java" -ea -server -Xincgc -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MainOperationsTest -funcOnly int 15000 600
+Testing "Arrays.asShifted" + "Arrays.asFunc" method (random shift + min and max, 2 arguments)...
+Testing "Arrays.asShifted" + "Arrays.asFunc" method (random shift + min and max, n <= 20 arguments)...
+Testing "Arrays.asFunc" and "Arrays.asUpdatableFunc" methods (ax+b)...
+Java HotSpot(TM) Server VM warning: Exception java.lang.OutOfMemoryError occurred dispatching signal UNKNOWN to handler- the VM may need to be f
+orcibly terminated
+Exception in thread "main" java.io.IOError: java.io.IOException: Map failed
+        at net.algart.arrays.DefaultDataFileModel$MappableFile.map(DefaultDataFileModel.java:549)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.mapBank(MappedDataStorages.java:1855)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.translateFailedIndex(MappedDataStorages.java:788)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.translateIndex(MappedDataStorages.java:513)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.getData(MappedDataStorages.java:869)
+        at net.algart.arrays.BufferArraysImpl$AbstractBufferArray.getData(BufferArraysImpl.java:107)
+        at net.algart.arrays.ArraysLinearGetDataOp.getData(ArraysLinearGetDataOp.java:433)
+        at net.algart.arrays.ArraysFuncImpl$27.getData(ArraysFuncImpl.java:748)
+        at net.algart.arrays.AbstractIntArray$1.getData(AbstractIntArray.java:254)
+        at net.algart.arrays.AbstractIntArray$1.getData(AbstractIntArray.java:254)
+        at net.algart.arrays.DataBuffersImpl$ArrayBuffer.map(DataBuffersImpl.java:172)
+        at net.algart.arrays.DataBuffersImpl$ArrayIntBuffer.map(DataBuffersImpl.java:454)
+        at net.algart.arrays.DataBuffersImpl$ArrayIntBuffer.map(DataBuffersImpl.java:438)
+        at net.algart.arrays.DataBuffersImpl$ArrayBuffer.map(DataBuffersImpl.java:134)
+        at net.algart.arrays.DataBuffersImpl$ArrayIntBuffer.map(DataBuffersImpl.java:444)
+        at net.algart.arrays.DataBuffersImpl$ArrayIntBuffer.map(DataBuffersImpl.java:438)
+        at net.algart.arrays.AbstractArray.defaultCopy(AbstractArray.java:730)
+        at net.algart.arrays.AbstractArray.defaultCopy(AbstractArray.java:633)
+        at net.algart.arrays.BufferArraysImpl$AbstractBufferArray.copy(BufferArraysImpl.java:250)
+        at net.algart.arrays.ArraysOpImpl$Copier.processSubArr(ArraysOpImpl.java:40)
+        at net.algart.arrays.Arrays$ParallelExecutor.processRange(Arrays.java:4932)
+        at net.algart.arrays.Arrays$ParallelExecutor$1.run(Arrays.java:4836)
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+        at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+        at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:885)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:907)
+        at java.lang.Thread.run(Thread.java:619)
+Caused by: java.io.IOException: Map failed
+        at sun.nio.ch.FileChannelImpl.map(FileChannelImpl.java:761)
+        at net.algart.arrays.DefaultDataFileModel$MappableFile.map(DefaultDataFileModel.java:537)
+        ... 27 more
+Caused by: java.lang.OutOfMemoryError: Map failed
+        at sun.nio.ch.FileChannelImpl.map0(Native Method)
+        at sun.nio.ch.FileChannelImpl.map(FileChannelImpl.java:758)
+        ... 28 more
+ *** Cleanup procedure started... ***
+ *** Cleanup procedure successfully performed in 11797 ms ***
+The list of 29 non-deteled temporary files is saved in d:\temp\arrayfiles.txt
+
+
+TODO??
+  dirty flag in MappedDataStorage
+  never flush a bank that was not modified (in particular, optimize twice flushing in StandardIO)
+  then, maybe, DefaultDataFileModel:
+    constructor flag "supportWriteOnlyMode", if yes, special processing zero filling:
+    if it's true, mapping will not really map, but will be written only while unmapping/flush call
+
+SUN BUG (1.7)!! sometimes leads to a bug in swap (?!)
+  "D:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -server -Xincgc -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSizeX=2048 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=false -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimitX=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT net.algart.arrays.demo.MainOperationsTest ALL 10000 300
+  always leads to a bug in map! (with -server only, x32 only)
+  "C:\Program Files (x86)\Java\jdk1.7.0\jre\bin\java" -ea -server -Xincgc -Xmx200m -Dnet.algart.arrays.globalMemoryModel=BUFFER -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSizeX=2048 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=false -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimitX=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT net.algart.arrays.demo.MainOperationsTest boolean 1000 3300 1 11
+
+SUN BUG (1.7)!!
+  "C:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -server -Xincgc -Xmx500m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MainOperationsTest -funcOnly ALL 1000 500 1 2
+    (25) Testing "Arrays.asFunc" and "Arrays.asUpdatableFunc" methods (ax+b)...
+    java.lang.AssertionError: The in-place bug A'' in asFunc found in test #11: srcPos0 = 453, srcPos = 620, count = 201 (9.237462113676854x+0.0, boolean, truncateOverflows, checkSubArray=true)
+            at net.algart.arrays.demo.MainOperationsTest.testLinearFunc1ArgAndUpdatableFunc(MainOperationsTest.java:1808)
+            at net.algart.arrays.demo.MainOperationsTest.testElementType(MainOperationsTest.java:286)
+            at net.algart.arrays.demo.MainOperationsTest.testAll(MainOperationsTest.java:204)
+            at net.algart.arrays.demo.MainOperationsTest.main(MainOperationsTest.java:2125)
+    Start random seed: 2
+    in 32- and 64-bits, with and withour -server, but not with -Xint
+    since b25, works in 32-bit
+
+SUN BUG (1.6+1.7)!!
+  "C:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -Xmx200m -Dnet.algart.arrays.globalMemoryModel=BUFFER net.algart.arrays.demo.MainOperationsTest -funcOnly ALL 1000 1000 1 1
+Main model: Buffer memory model
+Alternative model: Large memory model [standard I/O data file model: 32 banks per 65536 bytes, cached reading]
+Maximal number of parallel tasks: 1
+Testing 1000 elements 1000 times with start random seed 1
+Testing boolean
+Creating test array...
+Shuffling first 1000000 elements...
+Allocating work memory...
+Used memory: 6*0.402 MB
+Used Java memory: 0.000 MB
+Tested array: false,true,false,true,true,false,false,false,true,false,true,true,false,false,false,false,true,false,...
+(1)  Testing "copy(Array src)", "equals" and "hashCode" methods, two different arrays (both unresizable)...
+(16) Testing "Arrays.zeroFill" and "PArray.isZeroFilled" methods...
+(17) Testing "Arrays.rangeOf" method...
+(18) Testing "Arrays.sumOf" method...
+(19) Testing "Arrays.preciseSumOf" method...
+(21) Testing "Arrays.asShifted" method...
+(24) Testing "Arrays.asFunc" method (min and max, 2 arguments)...
+(25) Testing "Arrays.asFunc" method (min and max, 3 arguments)...
+(26) Testing "Arrays.asShifted" + "Arrays.asFunc" method (random shift + min and max, 2 arguments)...
+java.lang.AssertionError: The bug C in asFunc found in test #100: srcPos1 = 864, srcPos2 = 519, count = 125
+        at net.algart.arrays.demo.MainOperationsTest.testMinMaxFunc2ArgsWithShift(MainOperationsTest.java:1794)
+        at net.algart.arrays.demo.MainOperationsTest.testElementType(MainOperationsTest.java:292)
+        at net.algart.arrays.demo.MainOperationsTest.testAll(MainOperationsTest.java:205)
+        at net.algart.arrays.demo.MainOperationsTest.main(MainOperationsTest.java:2427)
+Start random seed: 1
+
+  "C:\Program Files\Java\jdk1.6.0_04\jre\bin\java" -ea -Xmx200m -Dnet.algart.arrays.globalMemoryModel=BUFFER net.algart.arrays.demo.MainOperationsTest -funcOnly ALL 1000 1000 1 1
+Main model: Buffer memory model
+Alternative model: Large memory model [standard I/O data file model: 32 banks per 65536 bytes, cached reading]
+Maximal number of parallel tasks: 1
+
+Testing 1000 elements 1000 times with start random seed 1
+
+Testing boolean
+Creating test array...
+Shuffling first 1000000 elements...
+Allocating work memory...
+Used memory: 6*0.392 MB
+Used Java memory: 0.013 MB
+Tested array: false,true,false,true,true,false,false,false,true,false,true,true,false,false,false,false,true,false,...
+(1)  Testing "copy(Array src)", "equals" and "hashCode" methods, two different arrays (both unresizable)...
+(16) Testing "Arrays.zeroFill" and "PArray.isZeroFilled" methods...
+(17) Testing "Arrays.rangeOf" method...
+(18) Testing "Arrays.sumOf" method...
+(19) Testing "Arrays.preciseSumOf" method...
+(21) Testing "Arrays.asShifted" method...
+(24) Testing "Arrays.asFunc" method (min and max, 2 arguments)...
+(25) Testing "Arrays.asFunc" method (min and max, 3 arguments)...
+(26) Testing "Arrays.asShifted" + "Arrays.asFunc" method (random shift + min and max, 2 arguments)...
+java.lang.AssertionError: The bug D in asFunc found in test #62: srcPos1 = 697, srcPos2 = 69, count = 132
+        at net.algart.arrays.demo.MainOperationsTest.testMinMaxFunc2ArgsWithShift(MainOperationsTest.java:1798)
+        at net.algart.arrays.demo.MainOperationsTest.testElementType(MainOperationsTest.java:292)
+        at net.algart.arrays.demo.MainOperationsTest.testAll(MainOperationsTest.java:205)
+        at net.algart.arrays.demo.MainOperationsTest.main(MainOperationsTest.java:2427)
+Start random seed: 1
+
+
+TODO??
+   Image2DBox: frame, scale
+
+TODO!!
+   Arrays.asReordered(Array, Func, long resultSize, Double outsideValue) - Func translates index to f(index),
+     outsideValue==null means IndexOutOfBoundsException outside the array
+     optimized branche ArraysOpImpl.asPacked - when Func is ax+b, a==Math.round(a), 0<=a<=16
+       - reads the source by blocks (DataBuffer)
+   common test
+   tests: matrix compression/increasing along x, matrix transposition
+TODO??
+   asUpdatableReordered with Func.Updatable: test for compression/decompression of bit array
+     (for block bit map for the editor)
+   SelectFunc.Updatable: set(x0,x1,...,newResult) always sets x[i+1]=newResult and x0=i,
+     where i is the argument of getInstance
+TODO--
+   maybe, special asCompactCopyOnNextWrite: usually equivalent to asCopyOnNextWrite,
+     but in LargeMemoryModel use special algorithm for allocating new blocks in a new file
+     and saving only them (no full copying), until releaseResources or finalization
+     (when the actual copying is performed);
+     here modifications of the source array may lead to unspecified results
+
+TODO?? remove algart.net.algorithms from net.algart.arrays
+TODO!! quick sort should use ArrayContext for parallel execution and showing progress
+
+TODO??
+   i() method is illegal: it should have Context argument
+TODO??
+   ContextExecutor should finish calculations and re-call Thread.currentThread().interrupt()
+     instead throwing IOError? In other case, we cannot create non-interruptable rangeOf
+
+TODO!!
+   MathFuncDemo -> SimplestFuncDemo + SimpleMathFuncDemo + SimpleFilterDemo
+     Simplest: read and write by different ways (meanOf and making Image2D)
+     SimpleMath: all current functions
+     SimpleFilter: simpest linear, dilation/erosion
+   don't use PMatrix, Image2D only
+   russian comments (tutorial) for its methods
+
+TODO!!
+   leftBoundaries may be optimized in Minkowski sum if all patterns have no "holes" along this direction
+TODO!!
+   test: union decomposition + Patterns.union(...) + points() should return the same set
+TODO??
+   ??DataBuffer.data() may return internal (unsafe) Java array, if it is called from the safe package
+     with some "security" method. However, the hacker may use it by creating the package with the same name...
+
+TODO??
+   Pattern.intersect (optimized for rectangle), null if no intersection
+
+
+TODO?? show read and write times only if they >10ms
+
+TODO!! Autosegmentation in ColorConversions plugin, as in Phaser:
+  build histMin and histMax on 2-point erosion and dilation, and then accumulate them
+
+TODO?? asBitArray in BufferMemoryModel, for convenient conversion between packed byte/bit;
+  or model argument direct/heap - no, heap buffer is very inefficient if it supports ByteBufer
+
+TODO!! try to investigate Sun's (or not) bug with shutdown hook, when some classes are not initialized before the hook.
+  Will BufferMemoryModel lead to the same problem if we'll add there the newArray method from LargeMemoryModel?
+
+TODO!! reply to Ira's plan
+
+TODO!! PrimitiveArray.getAverage(long[] indexes, double[] weights), quick in single-mapping mode;
+  or better: getData/setData(long[] indexes, Object data, int ofs, int count)
+  use in Interpolation2D
+
+TODO!! Sun bug? try to avoid warnings: Reference holder = null; in Finalizer? Why?
+
+TODO!!
+   +getUnderlyingArrays (returns asImmutable for all underlying arrays)
+   PMatrix should understand this and create a scenario of building the result with FSCopy of underlying arrays
+
+TODO!!
+  net.algart.images.color.conversions: on the base on linear function
+  example for brightness calculation (0.69r+0.30r+0.11b)
+  additional complex methods for HLS
+
+TODO!! test: 2D integer (byte-bit-int...) matrix transposition
+  transpose; compare with optimized transposition (in an array) for SimpleMemoryModel;
+  calculate sum of elements
+
+TODO!! Matrices.asUpdatableMatrix(BufferedImage, int componentIndex) -
+  use AbstractUpdatableByteArray, it is enough for most goals
+
+TODO!! in future: uneven CombinedVector (separate array with indexes, as for spherepolyhedra) -
+   slow swap method
+
+TODO??
+   net.algart.images:
+     interface PMatrixLazyOp: Matrix<PArray> asPMatrix(Matrix<? extends PArray> ...args), asByteMatrix, asPFixedMatrix, ...
+       (immutable result, so we cannot generalize the type: else we may return Updatable matrix)
+     MathFuncOp and ShiftOp implements LazyOp
+     ? PMatrixInPlaceOp: processPMatrix - process 1st argument
+     PMatrixOp: Matrix<UpdatablePArray> getPMatrix(Matrix<? extends PArray> ...src)
+       (updatable result; we cannot generalize the type: else we may return Matrix<MutableArray>,
+       because the implementation must use InternalUtils.cast or equivalent)
+     Context is set in operation constructors: getInstance(Context context)
+     operation is immutable, for example: pattern(), ...Op modifyPattern(...Op, Pattern patter)
+       modifyXxx creates new instance and returns it
+     ?? maybe, in future we'll see that there are no needs in complex operation, but there are several
+       complex SIMAGIS objects - as patterns
+       maybe, colors will be processed via meta-information in simagis
+TODO!! Morphology:
+    -Maybe, use priority queue when the number of left/right points is much less than N log N
+    (separate algorithm, chosen by plugin); dilation()/erosion()
+      No: simple union of x-oriented segments leads to the performance
+    SinglePassMorphology class: single pass optimization for all morphology
+      proxy and "built-in" calculaion of dependencies area (pattern size for dilation, 2*size for opening, ...)
+    Think over connective erosion: A\(A opened P)) should be dilated "inside" A to connect with A(-)P
+
+
+TODO!! C++ and Java test for speed of multiply matrix 1000*1000 (not compact) * vector 1000
+TODO!! CombinedMemoryModel - use it in AlgorithmSegmentSearch
+
+TODO!! IntegerCirclePointsGenerator - replace with new class in net.algart.math.points or net.algart.images.patterns
+
+TODO!! Arrays.rotate(UpdatableArray, distance): extended analog of Collections.rotate,
+  working via 32768K buffers
+  Use it in compactCyclicPositions
+
+TODO!! Arrays.insertInSorted, binarySearch
+
+TODO!! in future:
+    getProperty and catching SecurityException: is there the better way for libraries
+    http://community.livejournal.com/ru_java/524330.html
+
+
+
+SUN BUG? super-finest doesn't work even when ALL is chosen
+    private static class ExtendedLevel extends Level {
+        private ExtendedLevel(String name, int value) {
+            super(name, value);
+        }
+        private static final long serialVersionUID = -1; // avoiding warning; never used
+    }
+    static final Level SUPER_FINEST = new ExtendedLevel("SUPER_FINEST", Level.FINEST.intValue() + 100);
+
+BUG!!
+java.io.IOError.
+java.io.FileNotFoundException: E:\My Simagis\MorphologyDemo\I2D.f6gajmyo.tmp\r\matrix (The process cannot access the file because it is being used by another process)
+java.io.IOError: java.io.FileNotFoundException: E:\My Simagis\MorphologyDemo\I2D.f6gajmyo.tmp\r\matrix (The process cannot access the file because it is being used by another process)
+at net.algart.arrays.DefaultDataFileModel$MappableFile.open(DefaultDataFileModel.java:433)
+at net.algart.arrays.DataStorages$MappedStorage.mapBank(DataStorages.java:3236)
+at net.algart.arrays.DataStorages$MappedStorage.translateFailedIndex(DataStorages.java:2345)
+at net.algart.arrays.DataStorages$MappedStorage.translateIndex(DataStorages.java:2140)
+at net.algart.arrays.DataStorages$MappedStorage.getData(DataStorages.java:2445)
+at net.algart.arrays.BufferArraysImpl$AbstractBufferArray.getData(BufferArraysImpl.java:107)
+at net.algart.arrays.ArraysOpImpl$ShiftedByteArray.getData(ArraysOpImpl.java:2133)
+at net.algart.arrays.ArraysMinMaxGetDataOp.getData(ArraysMinMaxGetDataOp.java:124)
+at net.algart.arrays.ArraysFuncImpl$10.getData(ArraysFuncImpl.java:277)
+at net.algart.arrays.AbstractByteArray$1.getData(AbstractByteArray.java:254)
+at net.algart.arrays.AbstractArray.defaultCopy(AbstractArray.java:714)
+at net.algart.arrays.AbstractArray.defaultCopy(AbstractArray.java:626)
+at net.algart.arrays.SimpleArraysImpl$UpdatableJAByteArray.copy(SimpleArraysImpl.java:4903)
+at net.algart.arrays.ArraysOpImpl$Copier.copyRange(ArraysOpImpl.java:125)
+at net.algart.arrays.ArraysOpImpl$Copier.access$000(ArraysOpImpl.java:19)
+at net.algart.arrays.ArraysOpImpl$Copier$1.run(ArraysOpImpl.java:76)
+at net.algart.arrays.ArraysOpImpl$Copier.copy(ArraysOpImpl.java:89)
+at net.algart.arrays.Arrays.copy(Arrays.java:3856)
+at net.algart.arrays.Arrays.copy(Arrays.java:3826)
+at net.algart.arrays.morphology.DefaultMorphology.simpleDilationOrErosion(DefaultMorphology.java:525)
+at net.algart.arrays.morphology.DefaultMorphology.dilationOrErosion(DefaultMorphology.java:275)
+at net.algart.arrays.morphology.DefaultMorphology.minkowskiDilationOrErosion(DefaultMorphology.java:458)
+at net.algart.arrays.morphology.DefaultMorphology.dilationOrErosion(DefaultMorphology.java:291)
+at net.algart.arrays.morphology.DefaultMorphology.dilation(DefaultMorphology.java:147)
+at com.simagis.matrix.demo.plugin3.MorphologyDemo$1.process(MorphologyDemo.java:189)
+at com.simagis.matrix.demo.plugin3.MorphologyDemo$MorphologyOp.process(MorphologyDemo.java:389)
+at com.simagis.matrix.demo.plugin3.MorphologyDemo.doOp(MorphologyDemo.java:357)
+at com.simagis.matrix.demo.plugin3.MorphologyDemo.dilation(MorphologyDemo.java:186)
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+at java.lang.reflect.Method.invoke(Method.java:597)
+at simagis.J5$J5Procedure.execute(J5.java:590)
+at simagis.J5$1.exec(J5.java:66)
+at siams.cell.Proc.exec(Proc.java:301)
+at siams.table.SModel.exec(SModel.java:1012)
+at siams.table.SModel.exec(SModel.java:1059)
+at siams.exec.SysExec$2.run(SysExec.java:452)
+Caused by: java.io.FileNotFoundException: E:\My Simagis\MorphologyDemo\I2D.f6gajmyo.tmp\r\matrix (The process cannot access the file because it is being used by another process)
+at java.io.RandomAccessFile.open(Native Method)
+at java.io.RandomAccessFile.<init>(RandomAccessFile.java:212)
+at net.algart.arrays.DefaultDataFileModel$MappableFile.open(DefaultDataFileModel.java:431)
+... 37 more
+
+
+SUN BUG?? corrected in 1.7?
+Large memory model [default data file model: 8 banks per 2097152 bytes, single mapping until 268435456 bytes, lazy-writing mode]
+Creating new array in a temporary file, 5150000002 bytes...
+Array created (0.88011 seconds):
+    unresizable AlgART array byte[5150000002], @<mapped file storage (D:\simagis\bin\classes\4, external)>, capacity 5150000002
+Exception in thread "main" java.io.IOError: java.io.IOException: Map failed
+        at net.algart.arrays.DefaultDataFileModel$MappableFile.map(DefaultDataFileModel.java:509)
+        at net.algart.arrays.DataStorages$MappedStorage.loadBank(DataStorages.java:2280)
+        at net.algart.arrays.DataStorages$MappedStorage.translateFailedIndex(DataStorages.java:1704)
+        at net.algart.arrays.DataStorages$MappedByteStorage.getByte(DataStorages.java:2736)
+        at net.algart.arrays.BufferArrayImplementations$BufferByteArray.getByte(BufferArrayImplementations.java:1153)
+        at net.algart.arrays.BufferArrayImplementations$BufferByteArray.getElement(BufferArrayImplementations.java:1129)
+        at net.algart.arrays.BufferArrayImplementations$AbstractBufferArray.flushResources(BufferArrayImplementations.java:290)
+        at net.algart.arrays.demo.CreateZeroFileDemo.main(CreateZeroFileDemo.java:87)
+Caused by: java.io.IOException: Map failed
+        at sun.nio.ch.FileChannelImpl.map(FileChannelImpl.java:785)
+        at net.algart.arrays.DefaultDataFileModel$MappableFile.map(DefaultDataFileModel.java:499)
+        ... 7 more
+Caused by: java.lang.OutOfMemoryError: Map failed
+        at sun.nio.ch.FileChannelImpl.map0(Native Method)
+        at sun.nio.ch.FileChannelImpl.map(FileChannelImpl.java:782)
+        ... 8 more
+ *** Cleanup procedure started... ***
+CONFIG: AlgART cleaner has unmapped (unsafe operation) all regions in D:\simagis\bin\classes\4 (630.649 ms)
+ *** Cleanup procedure successfully performed in 2437 ms ***
+
+
+
+SUN? BUG!!
+"D:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -Xmx500m -server -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.DefaultDataFileModel.bankSize=3000000 -Dnet.algart.arrays.StandardIODataFileModel.numberOfBanks=8 -Dnet.algart.arrays.DefaultDataFileModel.unsafeCleanBeforeDeletion=true -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=STANDARD_IO net.algart.arrays.demo.CopyFileDemo -fullGcAtEnd rt.jar
+  Infinite loop:
+WARNING: Finalization: cannot delete temporary array storage file d:\temp\largemm19510.uarray in 500 ms. Deletion is scheduled on the next...
+  Only 1.7
+  Shutdown also cannot delete a file.
+  If we close it before gc, all ok: releaseResources resolves the problem. Close does not work in finalization?
+  Resolved by removing open/length/close operations from our delete() method
+  try to create test for bug-report
+
+
+TODO!! BUGS+RFES
+  enhancement-report: Holder<T>
+  enhancement-report: opening allowing deletion of this and another hardlinks:
+    http://msdn2.microsoft.com/en-us/library/aa363858.aspx, FILE_SHARE_DELETE
+  enhancement-report: T extends Xxx && !extends Yyy
+  enhancement-report: warn in comments that duplicate() may change byte order
+  enhancement-report: remap method in MappedByteBuffer?
+  enhancement-report: double System.time(): more convenient in calculations and does not depend on ns precision
+  enhancement-report: long addressing in ByteBuffer: java.hio: HugeByteBuffer, HugeBuffer, ...
+  enhancement-report: how to say that the new file will be zero-filled
+  ??bug-report: how to delete a file after mapping? Simple test with phantom references
+  ??bug-report: how to delete a mapped file on exit? Simple test with unsafe closing.
+    Sun could schedule unmapping before deleteOnExit hook,
+    or provide a tool to unmap all unreachable references (sync version of gc)
+    Or provide unsafeUnmap method that is not more dangerous than stop or runFinalizationOnExit:
+    "we are not so stupid to be impossible to accurately work with unmapped files"
+    Or just comment is this work-around correct
+  enhancement-report: how to say that the data may be lost after this "map" call (to say AFTER calling map())
+  enhancement-report: FileChannel.invokeOnClose(Runnable) - called when all mappings are closed,
+    for example to delete it (if we know that it is not needful more)
+  own enhancement-report: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4922971 (inline)
+  enhancement-report: coerciveCopy (example: using CRC32)
+  enhancement-report: comment that file can be increased after mapping
+  enhancement-report: synchronized collection of all loaded class names in any ClassLoader
+     (to be sure that some class was never loaded)
+  enhancement-report: allow conform results in multi-inheritance case
+  community-fix: our Sorter
+  community-fix: our performance.*
+
+
+
+*****************
+
+TODO++ Lazy zero-fill and simple fill (before first access: special fill methods in MappedXxxStorage);
+  more, fill all storage should be lazy always.
+  Lazy logic in BufferArrayImplementations! No zero-filling in DataStorage
+  No! if b=a.subArray, lazy logic for b will lead to error
+  Only zero-fill! We cannot be sure that our fill() method really changes ALL elements:
+    we don't know the storage length
+  No! We may support RANGE in Storage that is filled by the filler. Then we may support any quick fill
+  No! Quick fill is too early optimization, probably will be never used.
+  Only zero-fill!
+  Then it's simple:
+    lazyZeroPosition (k*bankSize, after this all bytes are zero)
+    loadBank fills bank by zero (with ignorePreviousData=true in map) if position>=lazyZeroPosition and,
+       while position>lazyZeroPosition, a simple loop: lazyZeroPosition+=bankSize; clearData
+    ??LargeMemoryModel: static boolean randomData = false; can be changed via reflection;
+       if true, every file or DataStorage is randomly filled after creation
+  In BufferArrayImplementation, zero elements while DECREASING length
+
+
+TODO-- flag unsafeCleanInUnmap, default=true for 1.5 and 1.6 (check this by removing "1.6")
+  if this flag is set and model is DefaultDataFileModel, flushResources does the same things as releaseResources
+  NO! As a result, we just have "Cleaner terminated abnormally" instead IOException,
+  and the utility DOES NOT EXIT (only via Task Manager):
+"D:\Program Files\Java\jdk1.6.0\jre\bin\java" -ea -Xmx500m -server -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.DefaultDataFileModel.bankSize=100000000 -Dnet.algart.arrays.DefaultDataFileModel.unsafeCleanBeforeDeletion=true -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT net.algart.arrays.demo.CopyFileDemo 1 2
+Large memory model [default data file model: 8 banks per 67108864 bytes, write-through mode]
+Creating new array in a temporary file, 184057332 bytes...
+Array created (0.17894 seconds):
+    unresizable AlgART array byte[184057332], @<mapped file storage (d:\temp\largemm29698.uarray)>, capacity 184057332
+Copying 2 to temporary file, 184057332 bytes...
+java.lang.Error: Cleaner terminated abnormally
+        at sun.misc.Cleaner$1.run(Cleaner.java:130)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at sun.misc.Cleaner.clean(Cleaner.java:127)
+        at net.algart.arrays.DefaultDataFileModel$MappableFile$1.run(DefaultDataFileModel.java:536)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at net.algart.arrays.DefaultDataFileModel$MappableFile.unsafeUnmap(DefaultDataFileModel.java:531)
+        at net.algart.arrays.DefaultDataFileModel$MappableFile.access$000(DefaultDataFileModel.java:389)
+        at net.algart.arrays.DefaultDataFileModel$MappableFile$MappedByteBufferHolder.unmap(DefaultDataFileModel.java:589)
+        at net.algart.arrays.DataStorages$MappedStorage.unmapBank(DataStorages.java:2190)
+        at net.algart.arrays.DataStorages$MappedStorage.releaseFileAndMapping(DataStorages.java:2429)
+        at net.algart.arrays.DataStorages$MappedStorage.releaseResources(DataStorages.java:1977)
+        at net.algart.arrays.BufferArrayImplementations$AbstractBufferArray.releaseResources(BufferArrayImplementations.java:284)
+        at net.algart.arrays.demo.CopyFileDemo.main(CopyFileDemo.java:52)
+Caused by: java.io.IOException: The process cannot access the file because another process has locked a portion of the file
+        at sun.nio.ch.FileChannelImpl.unmap0(Native Method)
+        at sun.nio.ch.FileChannelImpl.access$100(FileChannelImpl.java:32)
+        at sun.nio.ch.FileChannelImpl$Unmapper.run(FileChannelImpl.java:680)
+        at sun.misc.Cleaner.clean(Cleaner.java:125)
+        ... 10 more
+
+TODO-- comment that DefaultDataFileModel and StandardIODataFileModel depends on the "following properties..."
+  No, there are no reasons to document "unsafeCleanBeforeDeletion".
+  We shall wait for Java 1.7
+
+TODO-- enhancement-report: Math.max(long...)
+http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6239196
+
+TODO-- strictfp for DataStorages - NO! Constants are always strict
+
+TODO?? can my unsafeUnmap stop JVM in shutdownHook stage? Cannot detect this in CopyFileDemo
+
+TODO?? isCreatedBy: equals instead == for DataFileModel?
+
+INFO++ sometimes unmapping is not enough with my timeout
+CONFIG: AlgART cleaner has unmapped (unsafe operation) all regions in d:\temp\largemm21793.uarray (0.974 ms)
+CONFIG: AlgART cleaner cannot delete temporary array storage file d:\temp\largemm21793.uarray in 300 ms (java.io.IOError: java.io.IOException: T
+he requested operation cannot be performed on a file with a user-mapped section open)
+
+TODO++ measure sorting speed after WeakReference
+DEFAULT data file model, with cache:
+Thread[Thread-8,5,main] 5 passes Sum of the array  per bytes:  -4991808 (3.511076864E9 ns, 70.22 ns/element)
+Thread[Thread-8,5,main] 5 passes Filling the array per blocks: -4991808 (2.61094144E9 ns, 52.22 ns/element)
+Thread[Thread-8,5,main] 5 passes Filling the array per bytes:  -4991808 (5.035190784E9 ns, 100.70 ns/element)
+Thread[Thread-8,5,main] 5 passes Sum of the array  per blocks: -4991808 (4.93773568E8 ns, 9.88 ns/element)
+without:
+Thread[Thread-8,5,main] 5 passes Sum of the array  per bytes:  -4991808 (3.888646144E9 ns, 77.77 ns/element)
+Thread[Thread-8,5,main] 5 passes Filling the array per blocks: -4991808 (2.237263104E9 ns, 44.75 ns/element)
+Thread[Thread-8,5,main] 5 passes Filling the array per bytes:  -4991808 (5.552717312E9 ns, 111.05 ns/element)
+Thread[Thread-8,5,main] 5 passes Sum of the array  per blocks: -4991808 (8.47904E8 ns, 16.96 ns/element)
+The similar results with STANDARD_IO
+
+TODO-- NOT comment synchronization in LargeMemoryModel: it's easy to add external synchronization,
+  and there may be no synchronization for mutable
+
+TODO-- quick zero-filling: try set asLongBuffer() and copying from constant bytebuffer
+  NO stable optimization
+
+
+TODO++ LargeMemoryModel:
+   static boolean isTemporary(Array)
+   static void setTemporary(Array, newStatus) - autodeletion will not be performed:
+     separate flag in MappedDataStorage, method MappedDataStorage.setAutoDeletion
+     false necessary to remove previous cell content
+   flushResources(false/true) (NOT setTemporaryStatus!) actualize lazy zero-filling:
+     just getElement(length()-1)
+   after this, the content of THIS array will be actual in the file after flush call;
+     if it's a subarray, all other data may be invalid
+   String getDataFilePath(Array) (not DataFile: it should be controlled and autoclosed)
+   getDataFileModel(Array)
+   CombinedMemoryModel: getStorage
+   CopyFileDemo: -preserveTempFile, -autoDeleteSourceFile
+   hard link: is it necessary to preserve original? Who will delete original?
+   test: create zero-filled file, excepting first start message
+
+TODO++ generics for Array: Array<E>, T getObject(long), Class<T> elementType, ...
+  but too complex to choose ByteArray/Array<Byte>
+  so, only for ObjectArray
+
+++ "D:\Program Files\Java\jdk1.6.0\jre\bin\java" -ea -Xmx500m -server -Dnet.algart.arrays.DefaultDataFileModel.bankSize=3000000 -Dnet.algart.arrays.DefaultDataFileModel.simultaneousMappingsLimit=10  -Dnet.algart.arrays.globalMemoryModel=LARGE net.algart.arrays.demo.SpeedOfPrimitiveArrays noHeap 80000000 1 2>1
+  "java.lang.Error: Cleaner terminated abnormally" in the last iteration
+
+TODO?? Buffer/LargeMemoryModel: PrimitiveArray asAnotherType(PrimitiveArray a, Class requiredPrimitiveType)
+  - it is possible via asUpdatableArray+getDataFilePath;
+  better implementation ("hot" replacing DataStorage) is complex and dangerous
+
+TODO?? in complex tests, sometimes some files are not deleted
+
+TODO-- simple solution:
+      ByteBufferCleaner: WeakReference<ByteBuffer>
+      method boolean clean(): if get() returns null (unreachable), performs cleaning, else returns false
+      special set of WeakReferences for given file, only public method save(MappedByteBuffer)
+      NO! we either allow to get ByteBuffer and, so, cannot know when the last direct link will be forgotten,
+      or we need to hide ByteBuffer and have special access methods to every byte - as I do in LargeMemoryModel
+
+TODO++ list of models should be weak? It contains only models with autodeletion
+
+TODO?? try to optimize at least SimpleMemoryModel: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5103956
+  no effect. Maybe we need more simple test? A lot of iterations?
+  http://blogs.sun.com/vmrobot/entry/microbenchmarking_hotspot
+  useful (?) keys: -Xprof -XX:+PrintCompilation -XX:MaxInlineSize=100 -XX:FreqInlineSize=100 (last 2 have no effect)
+
+TODO?? Array.waitForUnlocking(timeout) - use in the test
+
+TODO?? public LargeMemoryModel.getInstance with numberOfBanks and bankSize arguments
+  special variant bankSize=-1 is used only for unresizable arrays <2^31 and means one-bank mode,
+  in other case it's equivalent to 2^30
+
+TODO?? upgrade to 1.6, use copyOfRange
+
+TODO++ SpeedOfPrimitiveArrays: additional argument "number of threads",
+  and perform all calculations of the sum in parallel (check also cleaner problem here);
+
+TODO-- native mapping? or better - sun.nio.ch.FileChannelImpl.unmap0 via reflection?
+  or see "clean" in http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4724038
+
+TODO?? Arrays.randomFill(UpdatablePrimitiveArray)
+
+TODO-- comment deletion timeout properties - no, it may be removed in further versions
+
+TODO-- cannot delete some files: special deletion thread
+  net.algart.finalizing.ActionRepeater.tryPerform(Action, int numberOfAttempts, int delayBetweenAttempts)
+    repeat some action several times until it will return true
+    (common queue - ArrayList - of all actions;
+    calculate the nearest action every time and sleep until it)
+    !! Do not use system time, use own counter (someone can correct the system clock while this loop)
+  net.algart.finalizing.Action: boolean perform() throws Throwable
+    call .Listener.lastAttempt(boolean, Throwable) after last attempt
+
+!! "D:\Program Files\Java\jdk1.7.0\jre\bin\java" -server -Xmx500m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.DefaultDataFileModel.forceTimeoutX=0  -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=1605053600 -Dnet.algart.arrays.StandardIODataFileModel.bankSiz=1000000 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT net.algart.arrays.demo.PrimitiveArraysSpeed int 10000 100
+Exception in thread "main" java.io.IOError: java.io.IOException: Map failed
+  It means that too large banks are dangerous
+
+TODO++ synchronization is not needful if there is only 1 bank (unresizable array without unsafeUnmapOnExit)
+
+TODO?? dirty bit in StandardIO: BufferHolder.setDirty() - no, will slow set operations!
+   use second ByteBuffer and check equals: 4-5ns/byte (length may be not 8k!)
+   flag for STANDARD_IO
+   test speed after creating test for sum of file
+
+TODO?? releaseResources SHOULD NOT flush; unmap should not call force;
+  in particular, in finalizing releaseResource should call force() only if special flag is set (false in 1.7)
+  in finalizer and shutdown hook, unmap (that CAN lose data), but not force
+  NO? now in finalizers dispose is called; releaseResources, if it'll not call force, can lead to slow finalizing
+  NO! freeResources does not force flushing, but forces further reading
+      flushResources forces flushing (useful rarely, usually while mapping the same file)
+      ?? UpdatableArray.disposeResources - MAY delete a file in some implementations (then the file will be recreated)
+        - it optimizes STANDARD_IO only
+      no combination flush+freeResources: very rarely
+    DEFAULT:
+      unmap() calls force() depending on LazyWriting flag
+      free() and dispose() calls force() in WriteThrough depending on special flag (false in 1.7)
+      flush() calls force() always
+      free() is called in freeResources(), unmap() while swapping, dispose() in finalizers and dispose()
+  This solution allows quick freeResources() in write-through, but as well as LazyWriting can leave
+    a lot of non-finalized mappings. Is it needed?
+
+TODO-- if there are no immutable arrays attached to storage, it may not use synchronization,
+  if no unsafe removing is supported
+  BUT we cannot cancel the synchronization: it may destroy immutability of some views
+  NO! even for mutable arrays synchronization necessary to avoid illegal storage state.
+    Moreover, it is very unobvious why multithread read access to mutable array lead to another (illegal)
+    results than read access to immutable
+
+TODO++ Arrays: DirectAccessible mapData(Array array, long position, int length)
+  ?? DirectAccessible: add force() method (comment that do nothing if this instance is an Array)
+  if already direct accessible, just return subArr(...).DirectAccessible,
+  else create special version: force() will copy into the Array
+  NO! mapData should create new Java array here
+  Arrays.DataBuffer implements DirectAccessible
+  creation: DataBuffer newDataBuffer(Array, bufferLength) (special version for NCopies)
+  DataBuffer:
+     map(long position),
+     force() throws UnsupportedOpetationException
+  NO!
+  +interface net.algart.arrays.DataBuffer (not implement DirectAccessible):
+     Arrays: DataBuffer buffer(Array array, FileChannel.MapMode mode, int length)
+     map(long position)
+     force() (IllegalState if READ, nothing if PRIVATE)
+     long position()
+     int length()
+     Object data()
+  +special versions ByteDataBuffer, etc.:
+     ByteArrayBuffer buffer(ByteArray array, int length); for bits, returns packed results
+     ...
+  +comment this hashCode and equals are default
+  +comment that position==0 after creation, so we may use mapNext()
+  +comment all
+
+TODO?? little unresizable arrays (including "newCompatible...") in Large model can be automatically created
+  via Buffer model. Moreover, resizable arrays can be automatically converted Buffer -> Large if they become large
+
+TODO?? try volatile: will it be faster than synchronization?
+  If yes, bh + specBufs + bankPos should be declared volatile structure and
+    be always newly created instead modifications
+  Additional problem with unmapping:
+  Maybe volatile only if single mapping?
+
+TODO-- mistake in the book #2: page 62, "signal" is not Object method
+
+TODO?? Test with different gc() stragegies
+
+Warn!! "position" property as in ByteBuffer is impossible solution: it is mutable and impossible in immutable Vector
+
+TODO?? special VMMCombined.Comparator (with Vector[] argument);
+  if implemented by combiner, VMMCombined.accendingComparator(Vector) returns some comparator (else null)
+  use it in Vectors.sort, when possible ?? extra concepts!
+
+TODO++ loadBank/translateIndex may have an argument ignorePreviousData, that will be internally used
+  in DataStorages for setData, copy, fill, swap, ...
+  reason: too slow copying in StandardIO. But lazy mapping is already available!
+  But StandardIO is a good solution for file operations, unlike mapping
+  But only writing is slow, reading is quick enough
+  reason of slow copying is a lot of random accesses while writing previous and reading next banks
+
+TODO++ AbstractXxxArray should have constructor argument MemoryModel to use it instead SimpleMemoryModel
+  for asXxxCopy, it is too complex solution
+
+INFO++ DataFileModel.exist method is a bad idea: too difficult for HTTP and some another protocols
+
+TODO++ Interpolation2D: special implementations for all primitive types when DirectAccessible;
+  measure them to optimize AlgorithmSegmentSearch
+  better in 2-2.5 times
+
+TODO++ debug AImage.asByte/BitMatrix;
+  debug Matrix -> AImage
+  more thorough testing all methods of AlgorithmSegmentSearch; check with another memory model?
+  ? include autotest of all elements in debug mode
+
+TODO++ AlgorithmCircle/SegmentSearch: use new Matrix; maybe optimize Matrices.getInterpolated
+  Segments:
+  old times:
+  direct, no interpolation:
+    All finding and drawing 355 segments: 4078.7 ms (4.0 ms/preparing, 3999.0 ms/finding, 44.7 + 21.1 ms/drawing, 9.9 ms/making AImage)
+  direct, interpolation:
+    All finding and drawing 266 segments: 11147.0 ms (11.0 ms/preparing, 11068.8 ms/finding, 39.5 + 17.8 ms/drawing, 9.9 ms/making AImage)
+  AImage, no interpolation:
+    All finding and drawing 355 segments: 15385.6 ms (20.1 ms/preparing, 15261.4 ms/finding, 58.8 + 33.1 ms/drawing, 12.2 ms/making AImage)
+  AImage, interpolation:
+    All finding and drawing 266 segments: 72601.0 ms (18.0 ms/preparing, 72506.0 ms/finding, 41.9 + 23.3 ms/drawing, 11.8 ms/making AImage)
+  new times:
+  direct, no interpolation:
+    All finding and drawing 355 segments: 4468.1 ms (30.1 ms/preparing, 4360.4 ms/finding, 38.3 + 22.3 ms/drawing, 17.0 ms/making AImage)
+    without DirectAccessible: All finding and drawing 355 segments: 4351.7 ms (87.8 ms/preparing, 4181.0 ms/finding, 52.9 + 21.1 ms/drawing, 8.9 ms/making AImage)
+  direct, interpolation:
+    All finding and drawing 266 segments: 13047.8 ms (23.0 ms/preparing, 12946.2 ms/finding, 45.6 + 22.0 ms/drawing, 11.1 ms/making AImage)
+  AImage, no interpolation:
+    All finding and drawing 355 segments: 9950.6 ms (393.8 ms/preparing, 9146.3 ms/finding, 345.8 + 46.6 ms/drawing, 18.1 ms/making AImage)
+  AImage, interpolation:
+    All finding and drawing 266 segments: 58043.4 ms (22.7 ms/preparing, 57947.9 ms/finding, 42.8 + 22.2 ms/drawing, 7.9 ms/making AImage)
+
+  Circles:
+  old times:
+  direct:
+    All finding and drawing 94 circles: 5598.9 ms (40.3 ms/preparing, 5004.5 ms/finding, 482.6 + 34.7 ms/drawing, 36.8 ms/making AImage)
+    All finding and drawing 20 circles: 9407.7 ms (5.1 ms/preparing, 9312.9 ms/finding, 54.9 + 16.9 ms/drawing, 17.9 ms/making AImage)
+  AImage:
+    All finding and drawing 20 circles: 135525.8 ms (105.6 ms/preparing, 135341.1 ms/finding, 58.8 + 7.4 ms/drawing, 12.8 ms/making AImage)
+  new times:
+    All finding and drawing 94 circles: 5886.2 ms (90.9 ms/preparing, 5652.0 ms/finding, 71.2 + 43.7 ms/drawing, 28.4 ms/making AImage)
+    All finding and drawing 20 circles: 10570.2 ms (107.1 ms/preparing, 10390.2 ms/finding, 43.7 + 10.0 ms/drawing, 19.2 ms/making AImage)
+  AImage:
+    All finding and drawing 20 circles: 28833.6 ms (16.5 ms/preparing, 28665.0 ms/finding, 107.0 + 14.1 ms/drawing, 31.0 ms/making AImage)
+
+TODO++ AbstractUpdatableXxxArray - use for AImage->Matrix
+  No, better: special DataFileModel that represents AImage; createTemporary "unsupported"
+  No, still necessary: for example, to translate index (a(k)=b(4*k))
+  - Array/UpdatableArray Arrays.reindex(Array/UpdatableArray a, Arrays.IndexOp)
+  - separate test: matrix transposition (writing and reading in a little matrix n x m)
+  also necessary in asUpdatableLinearFunction
+
+TODO++
+  + <T extends PArray> Arrays.asLinearFunction(PArray[] arrays, double[] a, double b,
+     Class<T> targetArrayType, [boolean truncateOverflows=true])
+  - returns a0*arrays[0]+a1*arrays[1]+...+b with specified element type
+  + if !truncateOverflows, returns (int)(long)result, (byte)(long)result, ...
+  + exception if targetArrayType is updatable,
+  + overloaded versions for 1 array and 1 "a" argument
+  + asUpdatableLinearFunction(UpdatablePArray array, double a, double b, Class<T> targetArrayType,
+      [boolean truncateOverflows=true])
+  + while setXxx, corrects array to provide necessary result (no version for several arrays: no needs)
+
+TODO?? AImage2Matrix:
+  in future - use asLinearFunction for all other types
+
+TODO--
+  net.algart.algorithm.AlgorithmInterruptedException (extends RuntimeException):
+    called by algorithms instead InterruptedException on Thread.interrupt()
+    no! InterruptionContext: just exit if isInterrupted (context has ability to inform the caller)
+
+TODO++ same erasure in MathFuncDemo.makeResult - is it possible under 1.5? Yes, possible
+
+TODO++
+    MathFunc.DoubleVector, UpdatableMathFunc.UpdatableDoubleVector;
+       PArray/UpdatablePArray extend them
+       MathFunc.get(DoubleVector)
+       use in asMathFunc instead copying into local array - it was unsafe in multithread, though the array is immutable
+    No - we still must create new instance for each index
+    Check synchonization and creating temp array, choose better solution - it is synchronization!
+       asMathFunc: special versions for 1 and 2 arguments (check dilation time)
+       MathFunc: overridden get(double), get(double, double)
+
+TODO-- AnyArray extends all XxxArray, but not UpdatableXxxArray - then we may pass Matrix<? super XxxArray>
+
+TODO++ asShifted - array is 1st argument! It is a situation alike "PArray method", when asFunc is "Func method"
+
+TODO--
+    override subArray/subArr in asFunc/asUpdatableFunc/asShifted - return asFunc(subArray) or,
+      for asShifted, subArray() when possible;
+      test it (create subArray) in MainOperations
+      no? bad idea for asFunc: very complex cloning, necessity to avoid storing any information about x...
+        // WARNING! Anonymous inheritors MUST NOT use any copies of this "x" field,
+        // because it may be cloned for creating subarrays!
+      @Override
+        public Array subArray(final long fromIndex, final long toIndex) {
+            checkSubArrayArguments(this, fromIndex, toIndex);
+            FuncBitArray result = (FuncBitArray)this.standardObjectClone();
+            result.length = result.capacity = toIndex - fromIndex;
+            result.x = result.x.clone();
+            for (int k = 0; k < result.x.length; k++) {
+                result.x[k] = (PArray)result.x[k].subArray(fromIndex, toIndex);
+            }
+            result.x0 = result.x[0];
+            result.underlyingArrays = result.x;
+            return result;
+        }
+    but without this an access to subArr of asFunc will not optimize anything,
+      and subArray in asShifted does not help
+    but creating hundreds of subarrays (for all pattern points) slows down all!!
+    better idea is special recognition of asShifted for asMin/Max - the only situation when subArray may work faster
+    every time, when we need special direct access (DataStorage or Java array), we should check isShifted
+      and (arrayPos-shift)%length<=length-count, and then use underlyingArrays[0]
+    ?? or, maybe, asConcatenation: here not too many subarrays, and little optimization for single-element access
+
+TODO++
+    +Arrays.asConcatentaion(PArray... a)
+      +test in MainOperations: concatenation of 3 subarrays, maybe empty (per element and per blocks),
+        +then 5 random subarrays of it
+        +measure this in PArraySpeed: concatenation of all 3 arrays / subarray of this concatenation
+TODO-- try unlooping in minXxxs/maxXxxs - if a good idea, make corresponding system property. NO: no effect
+
+TODO++
+    -getBits must be implemented via getData in FuncBitArray impelemtations,
+      in particular, in Table (measure segmentation) ?? already quick!
+      NO! It's useful in asMin/Max, but in other situations it's much better to implement only getData
+      and nextQuickPosition==-1: then defaultCopy will use quick getData/setData,
+      where setData will call packBits
+    ??isSubArray+getSubArrayOffset is also necessary (at least for known classes):
+      due to asDilation is created via subArrays
+      a lot of implementations, maybe not necessary
+    +asFunc for 1 argument: never call asLinear/asIdentity/... for bit/byte/short, use tables for bytes/shorts
+      (for shorts/chars - if the argument.length()>=65536) and implement getData
+      (special branches for 3 source types in every result type)
+    -optimize also asUpdatableFunc for bit/byte/short - very complex, where necessary?
+      reading UpdatableFunc is not needed usually, instead we (maybe) need to quickly write there
+    ? measure whether strictfp slows down Linear filter; if no, declare LinearFunc as strict
+    ? or create special version StrictLinearFunc and special optimization branche for it
+    +UpdatableFunc extends Func: set(double[] previousArgumens, double newValue)
+    +LinearFunc.Updatable; getUpdatableInstance(b, a)
+    +InverseFunc, EmptyFunc: always updatable
+    +asUpdatableFunc instead asUpdatableLinearFunc;
+    +asMathFunc must check the case of MinFunc/MaxFunc, the same arguments type, and call package-private asMin/asMax
+    ? some version of asMathFunc depending on index, for example: i<100 - 0, i>=100 - 1 - is it just AbstractXxxArray?
+    -IntArray Arrays.rangeSelector(long[] indexes): getInt(i) = last k that i>=indexes[k]
+      check that indexes are sorted and use java.util.Arrays.binarySearch
+      NO - subArr + concatArrays is quite enough
+    -dilation, erosion, linear filter - use concatenation: subarray of current result or the begin
+      NO! the same effect is achieved by overriding subArray in functinos
+      + asFunc of many subarrays for most shifts + subarray of current result or the end;
+      measure speed
+    +BitArray:
+      +use nextQuickPosition() in asMinFunc/asMaxFunc for bits:
+        +getBits + and/or for every position%64, +copyBits (shifting) inside the buffer
+        +do not perform special shifting for positions where is only 0 or 1 array
+        +last operation is copying buf into result
+        +implement nextQuickPosition and getBits! Maybe nextQuickPosition(0)==0 always
+    +call from asMathFunc
+
+TODO++ LJ - ask about LongHolder in rangeOf (not simple min!)
+   Arrays.MinMaxPositions: no ways to fill it field execepting rangeOf
+   -net.algart.holders.ByteHolder, ..., ObjectHolder<T>
+
+TODO++
+   +Arrays.copy(UpdatableArray dest, Array src, CopyListener listener[, int numberOfThreads]) - use in PMatrix
+   +by default numberOfThreads is Runtime.getRuntime().availableProcessors()
+     or 1 if src.isFresh() or getUnderlyingArraysCount(src)==0
+   +CopyListener: update(CopyEvent event), isInterrupted()
+   +CopyEvent: getReadyPart(), getReadyElementsCount()
+   +why Linear filter slows down for 1 thread? Probably due to HotSpot problems in complex cases
+   -use some global installable class allowing to know the number of threads or the pool
+   ...use it in LinearFilter, Morphology, etc.
+
+TODO++ net.algart.math.points:
+   Point(real), IntegerPoint extends Point, valueOf(double[]), valueOf(long[])
+   No, cannot extend: coord(int i) should return different types
+   ?MutablePoint DOESN'T extend Point - when it will be really necessary!
+
+TODO++ DefaultArrayCopyContext should have arguments "double fromPart" and "double toPart" (0 and 1 by default)
+  to use in updateProgress
+
+TODO++
+   copy must have an argument "numberOfThreads"! Sometimes the algorithm knows that 1 thread is much better,
+     for example, for very simple actualization of a large file
+
+TODO++ very slow rectangular dilation/erosion
+  swap UpdatableMatrix: 2 swapped matrices are enough
+  if the size <10MB (system property), create temporary matrix (and the result) in SimpleMemoryModel
+
+TODO--
+  MatrixOp interface: get(Matrix src); Morphology.dilation(Pattern) returns this interface
+  MatrixOp: LongRange[] getMaximalDependenceAperture(Matrix src)
+     use it for universal Matrices.singlePassProcess for any MatrixOp, via SimpleMemoryModel and temporary matrix
+     use with dilation/erosion/...
+  But: very complex implementation, moreover, generics conflict:
+    result of dilation cannot be updatable (excepting the UpdatableArray, but it makes problem
+      with casting to UpdatablePArray); so, we cannot copy to it as to work memory
+  Moreover, it's necessary in Morphology ONLY - may be internal optimization in Morphology implementation
+  Moreover, Morphology as interface is much better solution
+
+TODO++ Arrays: long sizeOf(Array) - understand PArray and CombinedArray based on PArray, else -1;
+  for too large, returns Long.MAX_VALUE
+
+TODO++ Arrays.maximalTempJavaMemory() - returns the property net.algart.arrays.maximalTempJavaMemory,
+  use in DefaultMorphology
+
+TODO-- finalizationNotify is a bad idea.
+  LargeMemoryModel.add/removeFinalizationListener(Array, LargeMemoryModel.FinalizationListener)
+     it's possible to remove only own listener
+  LargeMemoryModel.FinalizationEvent:
+     Boolean deletionResult()
+     Throwable deletionException()
+     P path()
+TODO++
+  maybe more simple: just check in PMatrix that the data file model, created the file, is an instance
+     of our specific class with overridden delete (before FS_COPY)
+
+TODO++ Matrix.cyclicIndex (pseudocyclic), use in drawPattern
+
+TODO++
+  +gradients: extra actualization! Use asDilation/asErosion instead dilation/erosion,
+    if Pattern.isSimple && pointCount()>=3 (isSimple()==Minkowski decomposition contains 1 element)
+  +PackedBitArrays/Buffers: xor, andNot
+  +don't use truncateOverflow in gradients - but is's useful only for new optimized branche,
+    in LinearFunc it leads to slow (long)(double)double
+  +internal SubtractFunc (andNot for bits), special ArraySubtractionGetDataOp for the same element types
+    (optimization of LinearFunc is too complex here)
+    asFunc use it for x-y and (with inversion of arrays) for y-x
+  +AbsDiffFunc (XOR for bits), special ArrayAbsDiffGetDataOp for the same element types
+  +long Diff and AbsDiff: the overflow is processed not in the same manner as for doubles! Comment this!
+    +or not try to optimize long type
+    -or create special branche with truncation
+  + 0-1=1 for bit without truncateOverflow!
+  +debug (for example, bits: -asFuncOnly ALL 100 200 1 23)
+    test with/without server optimization in all models
+  +use in gradients
+  +measure gradients after this
+  +check whether gaps are correct (when srcPos1-srcPos2=64*k)
+  +test for asShift+asAbsDiff...
+  before optimization (external gradient, circle 2):
+    DEBUG [net.algart.arrays.Arrays @ Thread-30 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Array is copied in 287.188 ms (79.70 ns/element) [immutable AlgART array byte[3603456] built by linear function f(x0,x1)=1.0*x0-1.0*x1+0.0 with 2 underlying arrays -> unresizable AlgART array byte[3603456], @<mapped file (D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo\largemm53496.uarray.le.tmp, temporary)>, capacity 3603456, fresh] in externalGradient/process/process/doOp/externalGradient/invoke0/invoke/invoke/invoke/execute/exec/exec/exec/exec/run
+    DEBUG [net.algart.arrays.Arrays @ Thread-30 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Array is copied in 237.561 ms (65.93 ns/element) [immutable AlgART array byte[3603456] built by linear function f(x0,x1)=1.0*x0-1.0*x1+0.0 with 2 underlying arrays -> unresizable AlgART array byte[3603456], @<mapped file (D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo\largemm53497.uarray.le.tmp, temporary)>, capacity 3603456, fresh] in externalGradient/process/process/doOp/externalGradient/invoke0/invoke/invoke/invoke/execute/exec/exec/exec/exec/run
+    DEBUG [net.algart.arrays.Arrays @ Thread-30 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Array is copied in 237.533 ms (65.92 ns/element) [immutable AlgART array byte[3603456] built by linear function f(x0,x1)=1.0*x0-1.0*x1+0.0 with 2 underlying arrays -> unresizable AlgART array byte[3603456], @<mapped file (D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo\largemm53498.uarray.le.tmp, temporary)>, capacity 3603456, fresh] in externalGradient/process/process/doOp/externalGradient/invoke0/invoke/invoke/invoke/execute/exec/exec/exec/exec/run
+    DEBUG [com.simagis.matrix.demo.plugin3.MorphologyDemo @ Thread-30 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Morphology timing:
+      Component #0 processed in 390.078 ms
+      Component #1 processed in 244.064 ms
+      Component #2 processed in 271.025 ms
+      Image processed in 1380.702 = 6.454 (reading) + 906.538 + 467.710 (writing) ms
+      Pattern: 2D multipoint pattern (5 points)
+    BitArray:
+    DEBUG [net.algart.arrays.Arrays @ Thread-58 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Array is copied in 226.017 ms (62.72 ns/element) [immutable AlgART array boolean[3603456] built by linear function f(x0,x1)=1.0*x0-1.0*x1+0.0 with 2 underlying arrays -> unresizable AlgART array bit[3603456], @<mapped file (D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo\largemm21875.uarray.le.tmp, temporary)>, capacity 3603456, fresh] in externalGradient/process/process/doOp/externalGradient/invoke0/invoke/invoke/invoke/execute/exec/exec/exec/exec/run
+    DEBUG [com.simagis.matrix.demo.plugin3.MorphologyDemo @ Thread-58 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Morphology timing:
+      Image processed in 308.519 = 2.887 (reading) + 280.334 + 25.298 (writing) ms
+      Pattern: 2D multipoint pattern (5 points)
+
+  after:
+    DEBUG [net.algart.arrays.Arrays @ Thread-47 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Array is copied in 244.165 ms (67.76 ns/element) [immutable AlgART array byte[3603456] built by linear function f(x0,x1)=1.0*x0-1.0*x1+0.0 with 2 underlying arrays -> unresizable AlgART array byte[3603456], @<mapped file (D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo\largemm53677.uarray.le.tmp, temporary)>, capacity 3603456, fresh] in externalGradient/process/process/doOp/externalGradient/invoke0/invoke/invoke/invoke/execute/exec/exec/exec/exec/run
+    DEBUG [net.algart.arrays.Arrays @ Thread-47 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Array is copied in 176.315 ms (48.93 ns/element) [immutable AlgART array byte[3603456] built by linear function f(x0,x1)=1.0*x0-1.0*x1+0.0 with 2 underlying arrays -> unresizable AlgART array byte[3603456], @<mapped file (D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo\largemm53678.uarray.le.tmp, temporary)>, capacity 3603456, fresh] in externalGradient/process/process/doOp/externalGradient/invoke0/invoke/invoke/invoke/execute/exec/exec/exec/exec/run
+    DEBUG [net.algart.arrays.Arrays @ Thread-47 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Array is copied in 180.389 ms (50.06 ns/element) [immutable AlgART array byte[3603456] built by linear function f(x0,x1)=1.0*x0-1.0*x1+0.0 with 2 underlying arrays -> unresizable AlgART array byte[3603456], @<mapped file (D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo\largemm53679.uarray.le.tmp, temporary)>, capacity 3603456, fresh] in externalGradient/process/process/doOp/externalGradient/invoke0/invoke/invoke/invoke/execute/exec/exec/exec/exec/run
+    DEBUG [com.simagis.matrix.demo.plugin3.MorphologyDemo @ Thread-47 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Morphology timing:
+      Component #0 processed in 285.950 ms
+      Component #1 processed in 192.200 ms
+      Component #2 processed in 207.235 ms
+      Image processed in 1573.762 = 4.846 (reading) + 687.050 + 881.867 (writing) ms
+      Pattern: 2D multipoint pattern (5 points)
+    BitArray:
+    DEBUG [net.algart.arrays.Arrays @ Thread-33 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Array is copied in 40.031 ms (11.11 ns/element) [immutable AlgART array boolean[3603456] built by linear function f(x0,x1)=1.0*x0-1.0*x1+0.0 with 2 underlying arrays -> unresizable AlgART array bit[3603456], @<mapped file (D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo\largemm53636.uarray.le.tmp, temporary)>, capacity 3603456, fresh] in externalGradient/process/process/doOp/externalGradient/invoke0/invoke/invoke/invoke/execute/exec/exec/exec/exec/run
+    DEBUG [com.simagis.matrix.demo.plugin3.MorphologyDemo @ Thread-33 D:\simagis\bin\SimagisMatrixDemo\tables\MorphologyDemo]: Morphology timing:
+      Image processed in 135.076 = 1.921 (reading) + 88.651 + 44.503 (writing) ms
+      Pattern: 2D multipoint pattern (5 points)
+
+
+TODO++ an error on 2-kernel computer (Maxim) see in daniel@smartimtech.com
+  do I call duplication inside synchronized code?
+  NO! Moreover, I do not synchronize access sometimes! Try to catch it!!
+java.nio.BufferUnderflowException
+        at java.nio.DirectByteBuffer.get(DirectByteBuffer.java:221)
+        at net.algart.arrays.DataStorages$MappedByteStorage.getDataFromFirstBank(DataStorages.java:3778)
+        at net.algart.arrays.DataStorages$MappedStorage.getData(DataStorages.java:2252)
+        at net.algart.arrays.BufferArraysImpl$AbstractBufferArray.getData(BufferArraysImpl.java:107)
+        at net.algart.arrays.ArraysOpImpl$ShiftedByteArray.getData(ArraysOpImpl.java:1998)
+        at net.algart.arrays.ArraysMinMaxGetDataOp.getData(ArraysMinMaxGetDataOp.java:106)
+        at net.algart.arrays.ArraysFuncImpl$63.getData(ArraysFuncImpl.java:1368)
+        at net.algart.arrays.AbstractByteArray$1.getData(AbstractByteArray.java:254)
+        at net.algart.arrays.DataBuffersImpl$ArrayBuffer.map(DataBuffersImpl.java:143)
+        at net.algart.arrays.DataBuffersImpl$ArrayBuffer.map(DataBuffersImpl.java:101)
+        at net.algart.arrays.DataBuffersImpl$ArrayByteBuffer.map(DataBuffersImpl.java:302)
+        at net.algart.arrays.DataBuffersImpl$ArrayByteBuffer.map(DataBuffersImpl.java:296)
+        at net.algart.arrays.AbstractArray.defaultCopy(AbstractArray.java:647)
+        at net.algart.arrays.AbstractArray.defaultCopy(AbstractArray.java:595)
+        at net.algart.arrays.BufferArraysImpl$AbstractBufferArray.copy(BufferArraysImpl.java:250)
+        at net.algart.arrays.ArraysOpImpl$Copier.copyRange(ArraysOpImpl.java:115)
+        at net.algart.arrays.ArraysOpImpl$Copier.access$000(ArraysOpImpl.java:17)
+        at net.algart.arrays.ArraysOpImpl$Copier$1.run(ArraysOpImpl.java:66)
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+        at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+        at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:885)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:907)
+        at java.lang.Thread.run(Thread.java:619)
+algart.ASysException
+        at simagis.J5$J5Procedure.execute(J5.java:602)
+        at simagis.J5$1.exec(J5.java:65)
+        at siams.cell.Proc.exec(Proc.java:301)
+        at siams.table.SModel.exec(SModel.java:1012)
+        at siams.table.SModel.exec(SModel.java:1059)
+        at siams.exec.SysExec$2.run(SysExec.java:452)
+
+TODO++ Arrays.getFuncTruncationMode!
+
+TODO++
+  problem in PMatrix: sometimes never stops deferred deletion and also shows my config message
+  why I see files alike largemm18137.uarray.le.tmp after gc?
+  - The problem was the skipped synchronization of overrided delete()
+
+TODO++ check serverOptimization speed for linear filter under new 1.6.0_02 - still slower than without it
+
+TODO++ Do not allow to create more than 256 threads!
+   Use current (actual) value of the corresponding system property! Test in the MathFuncDemo table (macro)
+
+TODO++ IPoint.compareTo(IPoint, int mainCoordIndex) - cyclic shift of all coordinates
+
+TODO++
+   unionDecomposition(int minimalPointCount) - ~32 for bits, ~8 for others. But why 32?
+      2-point dilation means: for SIMPLE model, 1 max; for others, 1 copy to buffer + max + 1 saving to result = 3 ops
+      let the weight of quick max is 1.0; copy is 0.5, shifted or is 2.0
+      then we have: SIMPLE: 1.0 or 2.0 for bits (additional shift)
+                            2.0 or 3.0 for bits
+      so, SIMPLE bits and others all: <=8 points (7.5 for 8 ops in common, but 1 pass; 3*2.0=6.0 for 9 ops for mink)
+      SIMPLE all: <=4 points (3.5 for 4 ops in common, 2*1.0=2 ops for mink)
+      other bits: maybe also 8 points
+        NO! 4 work better even if decomposed, even before full optimization (dilation in place)
+   minkowskiDecomposition(int minimalPointCount) - no sense to decompose patterns from this number of points
+      so, little segments until 4 or 8 (in BUFFER model) should be included in a sum as sequential
+
+BUG++
+"D:\Program Files\Java\jdk1.6.0_02\jre\bin\java" -server -ea -Xmx200m -Dnet.algart.arrays.globalMemoryModel=SIMPLE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.DefaultDataFileModel.forceTimeoutX=0  -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=2048 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=false -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT net.algart.arrays.demo.MainOperationsTest byte 10000 2000 1 5 2>1
+Exception in thread "main" java.lang.AssertionError
+        at net.algart.arrays.ArraysOpImpl$ShiftedByteArray.getData(ArraysOpImpl.java:2118)
+        at net.algart.arrays.AbstractArray.defaultCopy(AbstractArray.java:714)
+        at net.algart.arrays.AbstractArray.defaultCopy(AbstractArray.java:626)
+        at net.algart.arrays.SimpleArraysImpl$UpdatableJAByteArray.copy(SimpleArraysImpl.java:4903)
+        at net.algart.arrays.AbstractArray.updatableClone(AbstractArray.java:314)
+        at net.algart.arrays.AbstractByteArray.updatableClone(AbstractByteArray.java:368)
+        at net.algart.arrays.AbstractByteArray.updatableClone(AbstractByteArray.java:21)
+        at net.algart.arrays.demo.MainOperationsTest.main(MainOperationsTest.java:698)
+ - the case length==count==0 was not checked
+
+TODO++
+   long Arrays.compactCyclicPositions(long length, long[] positions) - returns the start position
+     and subtracts it from all elements;
+     based on sort - random test with position 0..length/2;
+     then optimize - check if all positions are inside -length/2..length/2 arc, the solutions is the simplest
+       we may first subtract any position
+TODO++
+   dilation by ellipse
+
+TODO++
+   +bug when simpleDilationOrErosionInPlace is called several times
+   +Moreover! But in asMax, when copying left-to-right with SimpleMemoryModel
+   +!!! getData or another processing directly into the dest array (ArraysMinMaxGetDataOp) is a bug:
+     the dest array may be one of our source arrays!
+     It's possible only if one of sources is SimpleMemoryModel reflecting the same array;
+       we may check this!
+   +Correct all other operations, as |x-y|
+   +Comment that we have use asFunc in-place while left-to-right access
+   +Add the in-place tests for all operations
+
+TODO++
+   +optimize DataBuffer for not too large arrays (releaseArray in dispose())
+   +sometimes I see that full copy time is much greater than defaultCopy time - it was showing in console
+   -freeResources in asFunc-array may call dispose and set to null any internal DataBuffers
+     - much better is not to enforce users to call freeResources here
+
+TODO++
+   -does arraycopy something if arguments and offsets are the same? yes.
+     Create and use always own method JArrays.copyArray.
+     - No, it's enough to check AnalyseResult in ArraysMinMaxGetDataOp
+   (!)1 point pattern? Or we need to actualize shifting?
+     Yes, we need - if we want not to create extra matrices!
+       We must actually shift the resulting matrix
+       before we'll be able to use it for actualization of gradients
+       -Special method for this in Morphology interface
+       NO, private method shift() with buffer argument, using compactCyclicPositions with 2 positions
+       Not forget to check empty array
+     If we want to create only 1 result matrix, but not create new updatable one in PMatrix
+   +AbstractArray.defaultCopy must use DataBuffer for result, not only for source
+   +minkdilation must work in place, if the pattern allows it - doesn't create temp2 array in this case
+     complex dilationOrErosionInPlace method, using work Java memory if all shifts in 0..1024*1024 range
+   +both erosion and dilation should save the matrix begin! asFunc scans matrix from begin to end
+     in dilation, we need to shift all patterns from decomposition to work in place
+   +In a case of union or minkowski decomposition, we need to correct all patterns:
+     perform dilation/erosion not to original pattern, but to shifted pattern
+     (min/max from 0 all its "long" shifts-the minimal shift)
+     and accumulate necessary correction shift as "long" value
+   +-minkowskiSubtract: should return List<Pattern>, never return segment, but always several 2-points (optimal set)
+   +ergo: dilation by 2 points, when the 1st is origin, should not lead to any copying, only max loop
+   +check whether now we calls extra copying (in dilation by rectangle)
+
+TODO++ %n or \n in LoggerConfigurator? both work correctly. Ask in LJ. Probably - %n is better
+
+TODO++
+  in future com.simagis.images.color: (right now not supported by SIMAGIS; maybe ASysObj?)
+     abstract Image2D (ZBox): getR, getG, getB, getY
+       - Matrix<PArray> getAll - no, to process all components we must know their sense
+     GreyImage2D: setY, all getR/G/B returns it
+     RGBImage2D: setR, setG, setB, getY returns lazy
+
+BUG++ - not enough synchronization, corrected 11 Sep 2007
+java.lang.AssertionError: Internal error found in loadBank: bh[0] is not null, but bankCount is 0
+        at net.algart.arrays.DataStorages$MappedStorage.logAndCheckBanks(DataStorages.java:3446)
+        at net.algart.arrays.DataStorages$MappedStorage.mapBank(DataStorages.java:3309)
+        at net.algart.arrays.DataStorages$MappedStorage.translateFailedIndex(DataStorages.java:2345)
+        at net.algart.arrays.DataStorages$MappedStorage.translateIndex(DataStorages.java:2140)
+        at net.algart.arrays.DataStorages$MappedStorage.getData(DataStorages.java:2445)
+        at net.algart.arrays.BufferArraysImpl$AbstractBufferArray.getData(BufferArraysImpl.java:107)
+        at net.algart.arrays.ArraysLinearGetDataOp.getData(ArraysLinearGetDataOp.java:304)
+        at net.algart.arrays.ArraysFuncImpl$39.getData(ArraysFuncImpl.java:877)
+        at net.algart.arrays.AbstractByteArray$1.getData(AbstractByteArray.java:254)
+        at net.algart.arrays.DataBuffersImpl$ArrayBuffer.map(DataBuffersImpl.java:172)
+        at net.algart.arrays.DataBuffersImpl$ArrayBuffer.map(DataBuffersImpl.java:134)
+        at net.algart.arrays.DataBuffersImpl$ArrayByteBuffer.map(DataBuffersImpl.java:365)
+        at net.algart.arrays.DataBuffersImpl$ArrayByteBuffer.map(DataBuffersImpl.java:359)
+        at net.algart.arrays.AbstractArray.defaultCopy(AbstractArray.java:723)
+        at net.algart.arrays.AbstractArray.defaultCopy(AbstractArray.java:626)
+        at net.algart.arrays.BufferArraysImpl$AbstractBufferArray.copy(BufferArraysImpl.java:250)
+        at net.algart.arrays.ArraysOpImpl$Copier.copyRange(ArraysOpImpl.java:125)
+        at net.algart.arrays.ArraysOpImpl$Copier.access$000(ArraysOpImpl.java:19)
+        at net.algart.arrays.ArraysOpImpl$Copier$1.run(ArraysOpImpl.java:76)
+        at net.algart.arrays.ArraysOpImpl$Copier.copy(ArraysOpImpl.java:89)
+        at net.algart.arrays.Arrays.copy(Arrays.java:3802)
+        at algart.lib.Image2D.saveMatrix(Image2D.java:152)
+        at algart.lib.Image2D.newGrayscaleInstance(Image2D.java:76)
+        at algart.ASystem$SimagisContext.newGrayscaleImage2D(ASystem.java:188)
+        at com.simagis.matrix.demo.plugin3.ColorConversions.toGrayscale(ColorConversions.java:13)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+        at java.lang.reflect.Method.invoke(Method.java:597)
+        at simagis.J5$J5Procedure.execute(J5.java:590)
+        at simagis.J5$1.exec(J5.java:66)
+        at siams.cell.Proc.exec(Proc.java:301)
+        at siams.table.SModel.exec(SModel.java:1012)
+        at siams.table.SModel.exec(SModel.java:1059)
+        at siams.exec.SysExec$2.run(SysExec.java:452)
+algart.ASysException
+        at simagis.J5$J5Procedure.execute(J5.java:603)
+        at simagis.J5$1.exec(J5.java:66)
+        at siams.cell.Proc.exec(Proc.java:301)
+        at siams.table.SModel.exec(SModel.java:1012)
+        at siams.table.SModel.exec(SModel.java:1059)
+        at siams.exec.SysExec$2.run(SysExec.java:452)
+
+TODO-- "D:\Program Files\Java\jdk1.6.0_02\jre\bin\java" -ea -server -Xmx400m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.DefaultDataFileModel.forceTimeoutX=0  -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=2048 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=false -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT net.algart.arrays.demo.PArraysSpeed int 100000 3 5 2>1
+  A lot of "Map failed". But only 1.6, not in 1.7.0-ea-b19
+
+TODO++ remove zero-initialization of ByteBuffer
+
+TODO++
+   +?ConcurrentModification in patternOf when not enought memory: why? maybe impossible to delete while scanning...
+   +ArrayContext.Event: must be public constructor (for clients that what to use it without Arrays.copy method)
+   +Arrays.applyFunc(dest,Func) and applyShift
+
+TODO++
+   +newSpherePattern should have "center" argument, to provide ability to create sphere with non-integer center
+   -isSimple() should understand both Minkowski and union decomposition:
+     false for union! override in MinkowskiSum and Union!
+     NO! most simple patterns has good union decomposition
+
+TODO++
+   +strange NullPointerException while drawing pattern on gray image
+   +estimateNecessaryBufferLength may be INCORRECT if Minkowski decompositions of union elements are complex
+     how it works at all when they contain complex elements? then bufferLength must be =length!
+   -buffer should be MutablePArray, resized when necessary
+   +for minkowski sum, if some of subpatterns are complex, estimate memory as (2+bufferLength)*sizeof
+     instead (1+bufferLength)*sizeof
+
+TODO++
+   dilationOrErosion MUST be recoursive: now multidilation does not use good algorithms for 1-pattern dilation
+     for example, n(*)P U n(*)Q or n(*)(P U Q) - last case if usual multidilation
+     so, minkowskiDilationOrErosion should use main algorithm (with allocating new memory)
+       for all non-simple subpatterns
+   void dilationOrErosion(dest, src) - dest instead "accumulator"
+   use always minkowskiDilationOrErosion(UpdatablePArray, ...); it should check all patterns
+     and call dilationOrErosion for patterns that have non-trivial unionDecomposition
+   ?minkowskiDecomposition should have the worst pattern at the begin! In future, for multispheres
+   mink -> md; union -> ud
+   before this:
+    5 (*) circle 10 (byte):
+      Image processed in 10927.618 = 368.688 (reading) + 10275.315 + 283.615 (writing) ms
+      Pattern: 2D Minkowski sum of 6 patterns: 2D multipoint pattern (81 points) (+) 2D multipoint pattern (81 points) (+) 2D multipoint pattern (81 points) (+) 2D multipoint pattern (81 points) (+) 2D multipoint pattern (81 points) (+) 2D multipoint pattern (1 points)
+    5 (*) circle 20 (byte):
+      Image processed in 39137.044 = 3351.580 (reading) + 35270.952 + 514.511 (writing) ms
+      Pattern: 2D Minkowski sum of 6 patterns: 2D multipoint pattern (317 points) (+) 2D multipoint pattern (317 points) (+) 2D multipoint pattern (317 points) (+) 2D multipoint pattern (317 points) (+) 2D multipoint pattern (317 points) (+) 2D multipoint pattern (1 points)
+   after this:
+    5 (*) circle 10 (byte):
+      Image processed in 11128.260 = 3.219 (reading) + 10901.013 + 224.028 (writing) ms
+      Pattern: 2D Minkowski sum of 5 patterns: 2D multipoint pattern (81 points) (+) 2D multipoint pattern (81 points) (+) 2D multipoint pattern (81 points) (+) 2D multipoint pattern (81 points) (+) 2D multipoint pattern (81 points)
+    5 (*) circle 20 (byte):
+      Image processed in 23192.576 = 44.251 (reading) + 22548.214 + 600.112 (writing) ms
+      Pattern: 2D Minkowski sum of 5 patterns: 2D multipoint pattern (317 points) (+) 2D multipoint pattern (317 points) (+) 2D multipoint pattern (317 points) (+) 2D multipoint pattern (317 points) (+) 2D multipoint pattern (317 points)
+
+TODO++
+   volatile MappedStorage.validSpecBufForThisThread = new Object():
+     if !syncNecessary, every mapping saves current specBuf here (print this fact for debug), and
+     if only if lb[0]==validSpecBufForThisThread, getByte etc. may skip synchronization
+
+BUG++ 2 banks -> assertion
+   "D:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -server -Xincgc -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.DefaultDataFileModel.forceTimeoutX=0  -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.StandardIODataFileModel.bankSize=2048 -Dnet.algart.arrays.StandardIODataFileModel.numberOfBanks=2 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=false -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=STANDARD_IO net.algart.arrays.demo.MainOperationsTest boolean 100000 10 1 3
+
+TODO++
+   O(D) algorithm! Find all dilations by x-segments <=r (via difference between segments that exist in decomposition),
+     then every segment from decomposition may be processed by shifting one of this segments per O(1) operations!
+   ?it's better to return a lot of short segments instead of a little of long: return both variants,
+     choose the better in the DefaultMorphology
+   moreover, we may dilate the result of dilation by x-segment by the set of all shifts:
+     for rectangular, it means O(log D)
+   it means that unionDecomposition should be more intellectual and return the corresponding minkowski sum:
+     all equal segments should be returned as a Minkowski sum of one such segment + decomposition of
+     the pattern consisting of all shifts
+   NO, unfortunately: we should use previous dilations
+   List<PatternPair> compactUnionDecomposition(List<Pattern>);
+   MinkowskiPair: Pattern pattern + Pattern segment, segment may be null
+
+TODO++
+   +thoroughly review and test O(D) algorithm
+   +describe the algorithm idea in the comments
+
+TODO++
+   +check very large patterns (~matrix size) for complex cases
+   -cache compacted decompositions - no, quickly enough (sometimes much faster than allocation of a buffer)
+   -?use logger instead println in complex morphology
+
+TODO++
+     +Pattern.xxxDecomposition must save this immutable decomposition for future needs;
+     +the plugin must use SoftReference-based cache
+     don't call extra first copying for tempAccum: just use the first dilation/erosion as future tempAccum
+     default unionDecomposition() should join into rectangles
+     find all rectangles in union decomposition
+       sort rectangles by width, then by height, then by start vertex
+       don't perform several dilations by identical rectangles -
+       just shift, i.e. join several asShifted into accumulator calculation
+     too slow circle 80: 2-3 MB! antioptimization for bits! who eats this Java memory?
+     create special test (MathFuncDemo) with n primitive 2-point dilations,
+       n=number of patterns in decomposition; compare
+     try to change buffer size for Arrays.copy, for getData, etc.
+     before union decomposition:
+       circle d=80, byte:
+          Image processed in 83734.059 = 77.118 (reading) + 83456.843 + 200.097 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=40, byte:
+          Image processed in 21816.106 = 3.939 (reading) + 21608.616 + 203.551 (writing) ms
+          Pattern: 2D multipoint pattern (1257 points)
+       circle d=20, byte:
+          Image processed in 6209.934 = 3.313 (reading) + 6030.606 + 176.015 (writing) ms
+          Pattern: 2D multipoint pattern (317 points)
+       circle d=10, byte:
+          Image processed in 2210.568 = 2.327 (reading) + 1870.748 + 337.493 (writing) ms
+          Pattern: 2D multipoint pattern (81 points)
+       circle d=5, byte:
+          Image processed in 829.339 = 1.857 (reading) + 724.266 + 103.217 (writing) ms
+          Pattern: 2D multipoint pattern (21 points)
+       circle d=3, byte:
+          Image processed in 580.658 = 1.862 (reading) + 457.232 + 121.564 (writing) ms
+          Pattern: 2D multipoint pattern (9 points)
+       circle d=2, byte:
+          Image processed in 477.038 = 1.816 (reading) + 353.588 + 121.634 (writing) ms
+          Pattern: 2D multipoint pattern (5 points)
+
+       circle d=80, bit:
+          Image processed in 4183.104 = 11.248 (reading) + 4078.234 + 93.622 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=40, bit:
+          Image processed in 1224.948 = 3.729 (reading) + 1158.038 + 63.182 (writing) ms
+          Pattern: 2D multipoint pattern (1257 points)
+       circle d=20, bit:
+          Image processed in 420.753 = 3.066 (reading) + 364.331 + 53.356 (writing) ms
+          Pattern: 2D multipoint pattern (317 points)
+       circle d=10, bit:
+          Image processed in 217.665 = 1.932 (reading) + 137.866 + 77.868 (writing) ms
+          Pattern: 2D multipoint pattern (81 points)
+       circle d=5, bit:
+          Image processed in 182.889 = 1.760 (reading) + 165.274 + 15.856 (writing) ms
+          Pattern: 2D multipoint pattern (21 points)
+       circle d=3, bit:
+          Image processed in 128.010 = 1.767 (reading) + 96.652 + 29.591 (writing) ms
+          Pattern: 2D multipoint pattern (9 points)
+       circle d=2, bit:
+          Image processed in 97.094 = 12.380 (reading) + 47.527 + 37.187 (writing) ms
+          Pattern: 2D multipoint pattern (5 points)
+
+     after union decomposition (23 Aug):
+       circle d=80, byte:
+          Image processed in 39652.838 = 10.620 (reading) + 39364.231 + 277.987 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=40, byte:
+          Image processed in 16193.510 = 3.962 (reading) + 16018.575 + 170.974 (writing) ms
+          Pattern: 2D multipoint pattern (1257 points)
+       circle d=10, byte:
+          Image processed in 3507.019 = 2.476 (reading) + 3068.344 + 436.200 (writing) ms
+          Pattern: 2D multipoint pattern (81 points)
+       circle d=5, byte:
+          Image processed in 917.454 = 2.917 (reading) + 779.720 + 134.817 (writing) ms
+          Pattern: 2D multipoint pattern (21 points)
+       circle d=3, byte:
+          Image processed in 566.851 = 1.896 (reading) + 412.421 + 152.534 (writing) ms
+          Pattern: 2D multipoint pattern (9 points)
+       circle d=2, byte:
+          Image processed in 735.522 = 2.078 (reading) + 394.142 + 339.302 (writing) ms
+          Pattern: 2D multipoint pattern (5 points)
+
+       circle d=80, bit:
+          Image processed in 6489.407 = 10.099 (reading) + 6386.935 + 92.373 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+
+     union decomposition (28 Aug):
+       circle d=80, byte, old (slow):
+          Image processed in 168590.673 = 70.349 (reading) + 168273.733 + 246.591 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=80, byte, decomposition:
+          Image processed in 40350.186 = 62.017 (reading) + 39464.804 + 823.364 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=10, byte, old (slow):
+          Image processed in 3461.860 = 4.956 (reading) + 3017.175 + 439.729 (writing) ms
+          Pattern: 2D multipoint pattern (81 points)
+       circle d=10, byte, decomposition:
+          Image processed in 3384.510 = 2.466 (reading) + 3188.511 + 193.533 (writing) ms
+          Pattern: 2D multipoint pattern (81 points)
+
+     union decomposition (31 Aug), in-place algorithm (vertical for bits):
+       circle d=80, byte, decomposition:
+          Image processed in 31715.255 = 57.060 (reading) + 31318.004 + 340.191 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=10, byte, decomposition:
+          Image processed in 3261.186 = 2.347 (reading) + 2976.832 + 282.007 (writing) ms
+          Pattern: 2D multipoint pattern (81 points)
+       circle d=80, bit, simple (slow):
+          Image processed in 6529.361 = 16.255 (reading) + 6456.925 + 56.181 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=80, bit, decomposition:
+          Image processed in 2134.931 = 9.586 (reading) + 2054.160 + 71.184 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+
+     union decomposition (3 Sep), in-place algorithm without extra copying:
+       circle d=80, byte, decomposition:
+          Image processed in 27753.623 = 379.034 (reading) + 26846.428 + 528.162 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=10, byte, decomposition:
+          Image processed in 2986.214 = 4.498 (reading) + 2467.194 + 514.522 (writing) ms
+          Pattern: 2D multipoint pattern (81 points)
+       circle d=80, bit, simple (slow):
+          Image processed in 5475.947 = 15.872 (reading) + 5397.303 + 62.772 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=80, bit, decomposition:
+          Image processed in 1949.595 = 43.408 (reading) + 1861.872 + 44.315 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=2, color, external gradient:
+          Component #0 processed in 387.586 ms
+          Component #1 processed in 336.661 ms
+          Component #2 processed in 329.729 ms
+          Image processed in 2640.892 = 45.969 (reading) + 1066.634 + 1528.289 (writing) ms
+          Pattern: 2D multipoint pattern (5 points)
+
+    O(D) algorithm (17 Sep):
+       circle d=80, byte:
+          Image processed in 3980.577 = 0.434 (reading) + 3801.199 + 178.944 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=10, byte:
+          Image processed in 1385.775 = 0.255 (reading) + 1199.073 + 186.447 (writing) ms
+          Pattern: 2D multipoint pattern (81 points)
+       circle d=80, bit:
+          Image processed in 550.128 = 0.624 (reading) + 462.348 + 87.156 (writing) ms
+          Pattern: 2D multipoint pattern (5025 points)
+       circle d=10, bit:
+          Image processed in 147.705 = 0.252 (reading) + 60.697 + 86.757 (writing) ms
+          Pattern: 2D multipoint pattern (81 points)
+
+BUG++ circle 30 \ circle 28 - isolated segment and insufficient buffer
+
+TODO++
+   +points() must be cached via SoftReference
+   -pointsInterruptibly() throws InterruptedException, boundaryInterruptibly(), minkowskiAdd/SubtractInterruptibly
+    use in plugin via nontrivial InterruptionContext (addListener)
+    - bad idea: should never be too long in end-user tables
+
+BUG++ bits
+   circle 10.2, one point; depends on OPTIMIZE_AND_OR_ALIGNMENT)
+   - there was illegal processing "safe-in-place" situation: too early storing bits in the result
+     after complex algorithm, before possible processing x[0] by the simple algorithm
+
+TODO++
+     minkowskiAdd must use unionDecomposition to avoid very large execution time:
+       optimization: calculate each x-line separately: O(ND) operations for simplest algorithm
+         and use BitSet instead of a usual set, if the range is less than 1000000
+       no, too complex: maybe use BitSet if the pointCount in the circumscribed parallelepipeds is less than 1e7
+         translate all indexes into linear bitset, as in usual images
+       no, just clone (by Repeater) the minimal functionality from net.algart.arrays:
+         shifting and or'ing long[] arrays;
+         then allocate a "matrix" with sizes equal to the largest circumscribed parallelepiped
+         (non greater than 10 000 000) and dilate it
+       +add minimal carcas instead this for check first step
+       +check the number of points in MinkowskiSum of circumscribed parallelepipeds, not catch OutOfMemory
+       -TinyBitMatrix.subMatrix(long lastCoordFrom, long lastCoordTo)
+       +optimize Pattern.carcass: every time dilate only necessary subMatrix
+         (1+1/4+1/16+... operations instead 1+1+1+...)
+       +remove MAX_NUMBER_OF_PRIMITIVE_OPERATIONS_WHILE_CHECKING_LARGE_CARCASSES:
+         now MAX_NUMBER_OF_POINTS_IN_NEW_PARALLELEPIPED_WHILE_CHECKING_LARGE_CARCASSES will be enough
+       use 5x5x... shifts instead 3x3x... - better for 40.2 circle
+       before optimization:
+         circle 10.2:
+            Carcass (16 points) in 28217.93384 ms: 2D multipoint pattern containing 16 points
+            Maximal multiplier for carcass: 64
+            Minkowski sum with itselt (333 points) in 9.05813 ms: 2D multipoint pattern containing 333 points
+       after optimization:
+         circle 10.2:
+            Carcass (16 points) in 319.55654 ms: 2D multipoint pattern containing 16 points
+            Maximal multiplier for carcass: 128
+            Minkowski sum with itself (333 points) in 2.81321 ms: 2D multipoint pattern containing 333 points
+       after optimization with reduced matrices:
+         circle 10.2:
+            Carcass (16 points) in 43.97319 ms: 2D multipoint pattern containing 16 points
+            Maximal multiplier for carcass: 128
+            Minkowski sum with itself (333 points) in 1.60439 ms: 2D multipoint pattern containing 333 points
+         circle 20.2:
+            Carcass (24 points) in 124.56695 ms: 2D multipoint pattern containing 24 points
+            Maximal multiplier for carcass: 64
+            Minkowski sum with itself (1265 points) in 7.16125 ms: 2D multipoint pattern containing 1265 points
+
+
+TODO++
+    +Pattern.carcass and int Pattern.maxMultiplierAllowedForCarcass() - implemented in AbstractPattern
+      (simplest by default, always "this" if pointCount()<=2 - comment this)
+    -don't try to add this+this if the number of points > 100 and maximal coord range is >500000
+    +think over overflow in a case of point.shift
+    -Pattern.carcass(Pattern added) - will be used in MinkowskiSum for small with larger added pattern
+      (here only 1 check of this+added)
+      No, extra optimization: unuseful for octagon, too complex for multisphere:
+      for N(x)circle(R)(+)circle(r), r<=R, it's enough just to minkowskiAdd circle(R) (+) carcas of circle(r)
+      (very quick for little patterns)
+    +optimize OnePointPattern.minkowskiAdd (for example, adding rectangulars...)
+    +MinkowskiSum constructor must optimize all patterns (optimizeMinkowskiSum(List<Pattern>)):
+      get series of equal ones (for example, different point-pairs for diagonals)
+      optimize each serie; store both source and optimized patterns (for complex sums)
+      Join all rectangular patterns into one separate sum
+    +If the next serie (with less point count) may be added as carcas to the previous, use this
+    ?MinkowskiSum shift must work faster (use old optimizedSummands) Why to optimize this?
+    +strange result in octagon while drawing pattern - too low precision of multiply(0.5)
+    Before optimization:
+      10 x circle 10.2 (byte):
+        Image processed in 7511.720 = 8.013 (building pattern) + 0.693 (reading) + 6944.324 + 558.690 (writing) ms
+        Image: 2D grayscale 8-bit image 2944x2176
+        Pattern: 2D Minkowski sum of 10 patterns: 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1)
+      10 x circle 10.2 (bit):
+        Image processed in 835.290 = 5.207 (building pattern) + 0.308 (reading) + 782.810 + 46.964 (writing) ms
+        Image: 2D grayscale 1-bit image 2944x2176
+        Pattern: 2D Minkowski sum of 10 patterns: 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1) (+) 2D multipoint pattern containing 89 points (sphere, r = 5.1)
+    After optimization:
+      10 x circle 10.2 (byte):
+        Image processed in 2976.686 = 1.009 (building pattern) + 0.244 (reading) + 2776.272 + 199.161 (writing) ms
+        Image: 2D grayscale 8-bit image 2944x2176
+        Pattern: 2D Minkowski sum of 5 patterns: 2D multipoint pattern containing 89 points inside 11x11 (sphere, r = 5.1) (+) 2D multipoint pattern containing 16 points inside 11x11 (+) 2D multipoint pattern containing 16 points inside 21x21 (+) 2D multipoint pattern containing 16 points inside 41x41 (+) 2D multipoint pattern containing 16 points inside 21x21
+      10 x circle 10.2 (bit):
+        Image processed in 408.361 = 0.631 (building pattern) + 0.223 (reading) + 286.321 + 121.185 (writing) ms
+        Image: 2D grayscale 1-bit image 2944x2176
+        Pattern: 2D Minkowski sum of 5 patterns: 2D multipoint pattern containing 89 points inside 11x11 (sphere, r = 5.1) (+) 2D multipoint pattern containing 16 points inside 11x11 (+) 2D multipoint pattern containing 16 points inside 21x21 (+) 2D multipoint pattern containing 16 points inside 41x41 (+) 2D multipoint pattern containing 16 points inside 21x21
+
+TODO++
+     +Paterrn.unionDecomposition: use in dilation/erosion for simple pattern
+        +universal algorithm in AbstractPattern, joining all x-oriented segments in 1D or ND cases;
+        +test here the sorting of points by compareTo(IPoint, int)
+           in 2D case, it checks that the pattern is convex and contains (0,0):
+             in (x<=0,y>=0) area, we should sort the boundary lexicographically
+                and check that all coordinates are neighbour
+           (we may calculate the weight center and move 0,0 to it before calculations)
+           if its convex, we find the best (max area) rectangle (0,0)-(x,y) (at boundary),
+           then recursively find the best rectangular (x,0)-(x',y') and (0,y)-(x',y');
+           then (x,y')-(x'',y''), etc.
+           O(R) operations
+           special check for axes: maybe we can unite left/right and top/bottom rectangles
+        NO! simple linear segments, because:
+        any convex pattern P is 2*(P/2)uD, where D is a very little pattern
+           so: common union decomposition is 2*(P/2) and D, wish special memory that P*(P/2) is a good sum
+           (we may calculate all this while creation of any simple pattern)
+           use carcasization for 2*(P/2)
+        BUT: for large 3D patterns, it's very difficult to build sphere decomposition
+          (R^6 operations, or R^5 with segment optimization)
+     +Paterrns.union(Pattern ...patterns): returns special UnionPattern class
+     +use in "rectangular ring"
+
+TODO++
+     +net.algart.images.patterns:
+         +Pattern interface (multidimensional):
+           nDim(),
+           Set<IntegerPoint> leftPoints, Set<IntegerPoint> rightPoints,
+           Set<IntegerPoint> points() (unmodifiable),
+           int pointsCount() ("count", not "numberOf": alike dimCount()))
+           isRectangular(),
+           minCoord(int coordinate), maxCoord(int coordinate), containsOrigin() (is (0,0,...,0) in pattern)
+           minkowskiDecomposition() - for special patterns as MultiSpherePattern
+         test rectangular boundaries, rectangular decomposition:
+     +Pattern.boundary(): union of all left/right-boundaries
+       test: morph on the boundary, if the pattern description start by "bound"
+       -check on an image with 1 point
+     +The simplest carcas: P+P=P+P', where P' consists of all left/right ends of x-oriented P sections
+             (because P is union of all sections S,
+             P+P = union of all Si+Sj = sum of all Si+Sj with length |Si|>=|Sj|,
+             and if |Si|>=|Sj|, then Si+Sj=Si+Sj' - Sj' is left/right ends of Sj segment)
+             then P'+P'=P'+P'' - y-oriented top/bottom ends,
+             etc.
+             BUT: P+P''!=P+P ! (Triangle 0<=x,y, x+y<=100.) Only P+P+P=P+P'+P''. Not so good as previous implementation
+         +BUT: the previous implementation (for all possible directions) may be better, for example, for octagon
+           check ~10000^(1/dimCount) directions
+         +use carcas in MinkowskiSum.points() if all they are identical
+         +use carcas for better minkowskiDecomposition of the MinkowskiSum of all patterns are identical
+         +moreover, maybe carcas should be implemented inside MinkowskiSum not only for identical
+           (because the last sphere should be less):
+           we may check necessary equality P+Q=P+Q' for every summand
+         +Private implementations (generated by Patterns.newXxx(...)):
+           MinkowskiSum (slow cached points() method,
+             check equality of patterns at the start;
+             patterns[k].coordRange() are summed in the constructor to check the maximal range
+             in future cached optimized leftBoundary via sum of leftBoundary simple patterns
+             and carcas if all patterns are equal
+           newRectangularPattern(LongRange ...coordinateRanges)
+             (newMinkowskiSum returns RectangularPattern if all summands are RectangularPatterns)
+           SimplePattern - should be returned in left/rightBoundary methods
+           newMultisphere returns MinkowskiSum
+         +Patterns.minkowskiSum(Pattern ...patterns) - use MinkowskiSum;
+           +understand a case when patterns are a MinkowskiSum
+           ?comment Pattern.minkowskiAdd that Patterns.minkowskiSum may work better,
+             if the types of patterns are different
+     -newSpherePattern should return best union, maybe 1 cube + x-oriented lines in ND,
+       or the universal algorithm for 2D - worse than O(D)
+
+TODO++
+   -PointSeries pattern with good Minkowski decomposition, use in SIMAGIS for "oct" and "rhombe"
+      it's absolutely enough to use Minkowski multply n x {(0,0);(1,1)}
+   +5 x rect 10 - strange difference in B4 - it is a result of rounding. 5 x rect 13 works fine
+
+TODO++
+   +Arrays: all sumOf, rangeOf, etc. must use context: ArraysOpImpl.Executor with concrete inheritor Copier
+   +Comment all
+   +Comment that the index of min/max in rangeOf may not be the FIRST index
+   +Add test for sumOf
+
+TODO++
+   newMatrix is UNSAFE: it must return Matrix<? extends Array>
+   add newPMatrix, newPIntegerMatrix, ... -
+     or add requiredArrayClass argument to newMatrix
+
+TODO++
+   SimpleImageContext: move to algorithm-lib and ALWAYS use as a second argument of Context.as method
+
+TODO++
+   Arrays.ParallelelExecutor: constructor with set of ranges
+      protected processRange
+      protected final boolean checkInterruption (if true, processRange should stop)
+      protected final void updataProgress(long readyCount)
+   write about this in the tutorial (where we talk about parallelity)
+
+BUG++
+   rect 1 U points 1,0;2,1
+TODO++
+   more correct little octagons
+TODO++
+   more efficient sorting bit arrays
+TODO(+) JSlider instead SystemStatus (use ATools.setSys and string alike "B9\n17.3%")
+
+TODO++ illegal names for methods: first, second; change to names with the sense or _1, _2,...
+TODO++
+  +"Algart Home" -> algart.net/java/AlgART/
+  +add "no-frames" link
+
+TODO++
+   +ContextAdapter -> DefaultContext, getInstance() method; use service providers
+   +comment all
+   +comment about logging
+   +correct tutorial
+TODO++
+   publish SimlestTutorialDemo.java at algart.net and add a link to it in the tutorial
+TODO++
+   SubtaskContext implements ProgressUpdater, use in Eratosthenes
+   write about this in the tutorial
+
+SUN BUG++ Only in Java 1.7!! (fixed in build 1.7.0-ea-b24 or some earlier build)
+   "D:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -server -Xincgc -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.DefaultDataFileModel.forceTimeoutX=0  -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=2048 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=false -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT net.algart.arrays.demo.MainOperationsTest boolean 100000 10 1 1
+Testing "buffer().map" method, changing + forcing...
+Exception in thread "main" java.lang.AssertionError: The bug in map, get/setData or full copy found in test #6: destPos = 16359, count = 39376, ata buffer [indirect; mode=READ_WRITE, capacity=10021, position=53704, actual range 200..9063] for unresizable AlgART array bit[100000], @<mapped file (d:\temp\largemm19731.uarray.le.tmp, temporary)>, capacity 100000, fresh, error found at 49248: false instead of true
+        at net.algart.arrays.demo.MainOperationsTest.main(MainOperationsTest.java:342)
+
+TODO++
+   DefaultArrayContext should "understand" the argument: numberOfTasks, to allow to set it to 1 when necessary
+     Or, maybe, sumOf/rangeOf should always work with 1 thread when no contexts specified
+     Or it may be necessary argument together with context...
+   DefaultThreadPoolFactory: constructor must have the argument "numberOfThreads"
+   So, DefaultArrayContext constructor should have the argument "threadPoolFactory"
+
+TODO++
+  separate flushResources() method, equivalent to flushResource(false)
+    comment it, and additional comments for flushResource(boolean)
+
+BUG++
+  ++freeResources in BufferArraysImpl does not perform flushResources(false)!
+    actualization of zero-filling must be performed only while flushResources(true),
+  +there must be special method for this in DataStorage, that actualizes the given range
+  -it MUST be called in finalization if the temporary flag is not set!
+    - No, flush is necessary for actual saving on external device
+  +now "getElement(length() - 1)" fills only this array, not all arrays associated with the resource!
+    and it is necessary
+
+TODO++ MappedDataStorage.allNonFinalizedMappedStorages - static final (now only static)
+TODO++ DO_ZERO_INIT -> DO_LAZY_INIT
+TODO++ lazyFillMap -> lazyFillBanks
+TODO!! ThisTread -> ForThisThread
+TODO++ (int)(count << ...) in actualizeLazyFillingBank: remove (int) casting where count is int
+BUG++ actualizeZeroFillingBank: use duplicate for bytes (instead just removing ".asXxxBuffer")
+TODO++ ignorePreviousData --> notLoadDataFromFile
+
+BUG++
+  getBits è getData INVALID! Checking "pos" only (isBankLazyAndNotFilledYet(pos)) does not allow to find
+    lazy banks AFTER pos! Try to find it in the test.
+  Moreover, actualization the bank leads to failure of lazy filling while reading the next block,
+    if it overlaps the previous bank
+  Correct solution is checking this in the loop, instead "translateIndex()" + "getDataFromFirstBank" call
+
+TODO++ show percents of each thread in status line
+  to do this, ArrayContext.Event constructor must have readCountPerThread[] argument instead readyCount + numberOfParallelTasks
+
+BUG++
+  ArraysXxxTableGetDataOp, ...: remove all synchronizaion,
+    or maybe using several "mmgdo" (etc.), one per every thread: ThreadLocal in ArraysFuncImpl etc,
+    and remove synchronization at all
+
+BUG++
+"D:\Program Files\Java\jdk1.6.0_02\jre\bin\java" -ea -server -Xincgc -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 -Dnet.algart.arrays.globalThreadPoolSize=64  net.algart.arrays.demo.MainOperationsTest boolean 500 15 1 1 25
+  infinite loop AFTER fullGC! Because of the thread pool! Must be daemons
+
+BUG++ "D:\Program Files\Java\jdk1.6.0_02\jre\bin\java" -ea -server -Xincgc -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 net.algart.arrays.demo.MainOperationsTest -funcOnly int 15000 1240
+Testing 15000 elements 1240 times with start random seed -2779787284333271710
+Testing int
+Allocating memory...
+Used memory: 5*1.132 MB
+Used Java memory: 0.011 MB
+Tested array: 4114,8488,6668,8249,2377,11347,2356,12047,13883,4994,7475,2279,12626,5703,10996,8682,12987,13629,1946,...
+Testing "copy(Array src)", "equals" and "hashCode" methods, two different arrays (both unresizable)...
+Testing "Arrays.rangeOf" method...
+Testing "Arrays.sumOf" method...
+Exception in thread "main" java.lang.OutOfMemoryError: unable to create new native thread
+        at java.lang.Thread.start0(Native Method)
+        at java.lang.Thread.start(Thread.java:597)
+        at java.util.concurrent.ThreadPoolExecutor.addIfUnderCorePoolSize(ThreadPoolExecutor.java:703)
+        at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:652)
+        at java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:78)
+        at net.algart.arrays.Arrays$ParallelExecutor.process(Arrays.java:4861)
+        at net.algart.arrays.Arrays.sumOf(Arrays.java:2679)
+        at net.algart.arrays.Arrays.sumOf(Arrays.java:2648)
+        at net.algart.arrays.demo.MainOperationsTest.main(MainOperationsTest.java:763)
+Java HotSpot(TM) Server VM warning: Exception java.lang.OutOfMemoryError occurred dispatching signal UNKNOWN to handler- the VM may need to be forcibly terminated
+Java HotSpot(TM) Server VM warning: Exception java.lang.OutOfMemoryError occurred dispatching signal UNKNOWN to handler- the VM may need to be forcibly terminated
+Java HotSpot(TM) Server VM warning: Exception java.lang.OutOfMemoryError occurred dispatching signal UNKNOWN to handler- the VM may need to be forcibly terminated
+And cannot be terminated at all...
+
+TODO++ DefaultThreadPoolFactory should understand a constructor argument ExecutorService,
+    if not null, it is always returned
+  If there is a property net.algart.arrays.DefaultThreadPoolFactory.GlobalPoolSize, use it for a single pool
+    per one factory
+
+BUG++ infinite loop while normal exiting (gcAndAwaitFinalization), for example (stable!):
+  "D:\Program Files\Java\jdk1.6.0_02\jre\bin\java" -ea -Xincgc -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLengthX=100 -Dnet.algart.arrays.globalThreadPoolSizeX=64  net.algart.arrays.demo.MainOperationsTest -funcOnly byte 100 12
+  moreover, Ctrl+C cannot delete all files!
+  The reason is that ThreadLocal is a bad idea!
+    -More precisely, ThreadLocal should contain WeakReference - else the current thread NEVER allow to free the array
+    NO, much more simple to use little synchronization + array pools
+  +Use little array pools instead! For example, for quickPositions, etc.
+
+TODO++
+  the sleep delay in gcAndAwaitFinalization must be median(50,1000,the time of previous gc+runFinalization)
+
+TODO-- MultithreadedProgressUpdater - but how correctly transform the ready part of every CPU in subtasks?
+  Even the number of tasks may vary in subtasks!
+
+BUG++ (in test?) some percents are not cleared whilte testing combined
+  "D:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -Xincgc -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.maxMappedMemoryX=50000000 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 -Dnet.algart.arrays.globalThreadPoolSize=64  -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 net.algart.arrays.demo.MainOperationsTest ALL 10000 20 1 1 6
+  "continue;" blocked clearing while the last iteration
+
+BUG++ (The bug D in newLazyCopy found in test #2)
+ "D:\Program Files\Java\jdk1.6.0_02\jre\bin\java" -ea -Xincgc -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=1 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.maxMappedMemoryX=50000000 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 -Dnet.algart.arrays.globalThreadPoolSize=64  -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMap=2 net.algart.arrays.demo.MainOperationsTest byte 2000 420 1 1 6
+ complex bug:
+                lazyFillPosInBytes = Math.max(lazyFillPosInBytes, // it is the reason of the bug!
+                    ms.dataFileStartOffset + (newFillMapSize << ms.bankSizeInBytesLog));
+ filling via tempBh in mapBank method works correctly only if this bank was never used before,
+   in other case, we fill extra banks!
+   moreover, it is retrieved from WeakReference-cache, and setting some elements in the test to zero may destroy it
+
+TODO++ comment MAX_UNFORCED_MAPPING_MEMORY -> MAX_MAPPING_MEMORY, how to customize it
+   +comment in package-info.java, test in copying
+   +lazyWriting must be chosen automatically: defaultLazyWriting() method
+
+BUG++ warningEventInHook does not show anything at console (unlike "config")
+   No good solutions besides always using System.err/out while shutdown
+
+TODO++ recheck MAX_MAPPED_MEMORY - must be restricted also on the new Intel Quad + RAID computer!
+  Otherwise, does not respond ~1 hour or more
+
+TODO++ comment about synchronization in package-summary: that read-only access is always allowed (thread-safe),
+  even for non-immutable arrays, but any writing can lead to losing some data if at least one another thread
+  accesses (for example, reads). Refer to this comment in Array.java
+
+TODO++
+   +another idea: just use copying from the pattern array instead filling by zero
+   +it can be a special method in LargeMemoryModel: newVirtualCopy(Array src)
+   +any WRITE access to this array leads to copying a block from src
+     + however, here we must change the filling algorithm, to support a set of valid blocks
+       instead simple valid range and to support write-access only!
+     + moreover, the set of blocks may be used only for unresizable arrays
+       (no reasons to do this for growing resizable arrays)
+       but no problems to support resizable
+       use for first 8*128MB blocks only (constant loaded from system property):
+         2048TB for 2MB blocks (use <=128MB BitSet as a maximum);
+       we suppose that 1 bits in the set AND all all banks after lazyFillPosInBytes are non-initialized
+     + virtual method MappedDataStorage.actualizeFillingBank(int bank, long pos),
+     + overridden in all MappedXxxStorage
+     + every MappedXxxStorage has a field: 16K DataBuffer, used for actualization:
+         load data to this array from pattern, then save them in the target XxxBuffer
+     + SortingTest should sort virtual copy (when -virtualCopy flag)
+     ? test for bits also, especially very short bit array and for single mapping
+
+TODO++
+  -DefaultDataFileModel: constructor flag "supportWriteOnlyMode", if yes, special processing ignorePreviousData:
+  if it's true, mapping will not really map, but will be written only while unmapping/flush call
+  NO! We have no ways to know, whether the buffer was modified since first filling
+      and whether we need to write it while flush()/unmap() call
+  -To allow this, we could add the "modified" ("dirty") flag into MappedDataStorage...
+  Another way - check full buffer content only, via special flag in both Default... and StandardIODataFileModel
+  ++NO, much more simple: getData/getBits method in MappedDataStorage should
+    "know" about lazy banks and load data from the pattern
+
+BUG++ extra syncrhonization in MappedDataStorage and ArraysOpImpl, ArraysLinearGetDataOp, ...: no ability
+  for parallel execution by several CPU!
+  MappedDataStorage: Only retrieving ByteBuffer must be synchroized, not processing it!
+  if unsafe unmap, we must not try  to unmap buffers that in work: special synchronized counter!
+
+TODO++
+   +comment that the creating DataBuffer does not allocate memory; correct for nCopies
+   +bit/byte/shortTable - use pool when the buffer is indirect
+BUG?? under 1.6.0, lazyWriting leads to impossibility of unsafe unmapping even after mbb.force()
+  "D:\Program Files\Java\jdk1.6.0_02\jre\bin\java" -ea -Xincgc -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 -Dnet.algart.arrays.globalThreadPoolSize=64  net.algart.arrays.demo.MainOperationsTest -funcOnly ALL 3000 500 1 4
+  test more thoroughly how the number of non-deleted files is decreased per loops
+
+BUG?? (cannot reproduce)
+  "D:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -server -Xincgc -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=2048 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT net.algart.arrays.demo.ZeroInitialized short 1000000000 3 1
+  and Ctrl+C
+Unexpected error while AlgART arrays shutdown hook!
+java.lang.IllegalStateException: Cannot call dispose() method: the buffer was already unmapped or disposed
+        at net.algart.arrays.DefaultDataFileModel$MappableFile$MappedByteBufferHolder.dispose(DefaultDataFileModel.java:697)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.unmapBank(MappedDataStorages.java:1852)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.releaseFileAndMapping(MappedDataStorages.java:2010)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.dispose(MappedDataStorages.java:1480)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.access$100(MappedDataStorages.java:229)
+        at net.algart.arrays.MappedDataStorages$TempCleaner.run(MappedDataStorages.java:80)
+        at net.algart.arrays.InternalUtils$Hooks.run(InternalUtils.java:257)
+Exception in thread "main" java.io.IOError: java.lang.IllegalStateException: AlgART array @<mapped file (d:\temp\largemm36127.marray.le.tmp, tem
+porary)> is inaccessible: system shutdown in progress
+        at net.algart.arrays.MappedDataStorages$MappedStorage.checkIsDataFileDisposedOrShutdownInProgress(MappedDataStorages.java:2030)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.mapBank(MappedDataStorages.java:1705)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.translateFailedIndex(MappedDataStorages.java:788)
+        at net.algart.arrays.MappedDataStorages$MappedShortStorage.setShortSync(MappedDataStorages.java:3166)
+        at net.algart.arrays.MappedDataStorages$MappedShortStorage.setShort(MappedDataStorages.java:3151)
+        at net.algart.arrays.BufferArraysImpl$UpdatableBufferShortArray.setShort(BufferArraysImpl.java:1856)
+        at net.algart.arrays.demo.ZeroInitialized.myFillByProgression(ZeroInitialized.java:101)
+        at net.algart.arrays.demo.ZeroInitialized.main(ZeroInitialized.java:295)
+Caused by: java.lang.IllegalStateException: AlgART array @<mapped file (d:\temp\largemm36127.marray.le.tmp, temporary)> is inaccessible: system
+shutdown in progress
+
+BUG-- not all 4 CPU are used:
+"C:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -server -Xincgc -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.maxMappedMemory=1000000000 -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MultithreadAccess -readOnly 10000000 10 4 1
+ Because of often synchronizations. All used if block access only:
+ "C:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -server -Xincgc -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSizeX=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=100 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MultithreadAccess -shuffle 100000000 10 4 1
+ But why Shuffle mode works correctly in SIMPLE? If should work correctly: the same data are written and read.
+ In other case, LARGE also will not work
+
+BUG++ new tables do not work with 128 MB images
+  +test a lot of quick mappings: creating/filling/summing 100 arrays
+  maybe, try to use StandardIO while showing little images? No, just need to call freeResources()!
+
+TODO++
+  remove cleaning up when not delete
+
+TODO++
+  plugin and demo for common arithmetic: scaling for different arguments, ...
+
+TODO++
+  optimize getData in asFunc to use 4 CPU! compare times for power(float), select, exp/log
+     before:
+       power(float[])          4748,460 (118,60 ns/element)
+       exp(double[])           3*10394,728 ms (259,62 ns/element)
+       log(double[])           3*6922,536 ms (172,90 ns/element)
+       select(byte[], const)   3*15310,867 ms (382,40 ns/element)
+       select(byte[], short[]) 19683,674 ms (491,62 ns/element)
+     after:
+       power(float[])          1345,324 ms (33,60 ns/element)
+       exp(double[])           3*1388,116 ms (34,67 ns/element)
+       log(double[])           3*1058,988 ms (26,45 ns/element)
+       select(byte[], const)   3*805,254 ms (20,11 ns/element)
+       select(byte[], short[]) 833,898 ms (20,83 ns/element)
+
+  will actualization of bitarray be quick? yes, it will be based on getData, not getBits
+  check serverOptimization - good or bad idea?
+    dilation with serverOptimization:
+       Image processed in 14535,072 = 2,751 (building pattern) + 2,023 (reading) + 14521,783 + 8,514 (writing) ms
+    dilation without serverOptimization:
+       Image processed in 6993,126 = 0,300 (building pattern) + 0,144 (reading) + 6984,496 + 8,186 (writing) ms
+    BAD idea!
+
+TODO++
+   Morph: additional argument "double outsideValue" in all methods, usually null (cyclic scheme)
+TODO++
+   asShifted for any type, test it
+TODO++
+   Func: WeightedMean(a,x1,x2), use in the plugin: may be useful in stitching
+
+TODO++ (necessary for any solutions and even for our demo tables)
+   +Matrix: Matrix<T> subMatrix(long[] from, long[] to), subMatr(long[] position, long[] sizes)
+     - creates corresponding AbstractUpdatableXxxArray with complex getData/getBits/setData/setBits
+     (in a case of updatable)
+   +Matrix<T> subMatrix(long[] from, long[] to, Object outsideValue)
+     - unlike previous, does not throw IndexOutOfBoundsException, but returns outsideValue / ignores writing;
+     for primitive, outsideValue may be ANY wrapper and is automatically conterted to required
+   +getData/setData/getBits/setBits, not forget to check array indexes before calling Indexer.getData/setData/...
+      danger! if the base matrix is Long.MAX_VALUE x 1, and submatrix is 1 x 10,
+         then the lines has no appropriate indexes in the base matrix
+      separate branche for lines that are fully outside the base matrix: we need special quick method for check this
+         for these lines, we just need to fill result Java array
+      -no! at the very beginning, we must find intersection of base and sub matrices, and find positions
+        in the submatrix of the start and end of this intersection. Then, we must just fill
+        the fragments of the result array before start and after end
+      NO! Still incorrect if >2 dimensions
+      -Use "index" function for reduced dim array, without 0
+      -or - recursion?
+   +optimize also setBits
+   +comment it
+   +not use MemoryModel! only basic array functions newCompatible...
+   +SignalMemoryModel for checking this: does not support any types
+      +subArray are incorrect now! It sould also override newXxx... methods in AbstractXxxArray
+   +autoconvertion between primitive wrappers
+   ? Matrix.isSubMatrix
+   +com.simagis.p3.images.Geometry.getRectangle(left, top, right, bottom)
+     boolean flag: addSizesToRightBottom
+     boolean flag: percents
+   + .copyRectangle(dest, src, x1, y1, x2, y2, width, height), only after this - setData/setBits
+
+TODO++
+   what about atomic range exception in getBits/getData/setBits/setData? for data Java array?
+     maybe, comment this? to simplify implementations?
+TODO++
+   ScaledPowerFunc --> only a part of PowerFunc?
+TODO++
+   PArraysSpeed: add long[] branche
+TODO++
+   PArray.isZero() - maximally quick for all types; +0=-0 unlike equals; recheck speed of skeleton
+TODO++
+   non-public pool for simple Array's, use in CompareAndCopy
+TODO++
+   Concatenation - also support non-primitive
+BUG++
+  circle 20, rect 20 in Nx10 matrix leads to assertion error - foolish mistake with % (a%b+b may be ==b for a<0)
+TODO++
+  AbstractMorphology: all operations via dilation and erosion; asDilation MAY call dilation
+  MathMorphology -> Morphology, but plugin -> SimpleMorphology
+  DefaultMorphology -> SimpleMorphology
+
+BUG++
+  +dilation/erosion works little incorrectly on 4 CPU!
+  +the reason: simpleDilationOrErosionInPlace should save several parts of the array in buffers
+  -not forget to check the buffer length and maybe decrease the number of tasks: the user may increase this value
+    while execution
+  +clear DEBUG_MODE
+  +weakErosion(circle 50), before: 25-37sec, after: the same time
+  +retest and reread
+
+TODO++
+  +add pattern "cross"
+  +add weakOpening/Closing (String carcassingMethod: 3 standard: "carcass", "cross", "square 3", "circle 4",
+     custom is any pattern for making boundary
+  +add valleys/ridges/craters/peaks
+  -all operations besides dilation/erosion - flag "subtract to/from source"
+    (NOT aglomeration/deaglomeration! they are foolish functions, equivalent to opening/closing)
+   +via Morpholigy.dilationErosion, erosionDilation, maskedDilationErosion, maskedDilationErosion
+    (comment about maskedDilationErosion>=open if q<=p and opening(~q by p)=0
+
+TODO++
+  +granulometry (PNumberArray); result() may be null!
+  +check and comment iterative erosion/opening
+  +use carcass!
+    before: 38 sec (circle 3)
+      24 sec (optimized LinearFunc: special branch for a0=1, b=0 while assigning results)
+      20 sec (SimpleMemoryModel for result)
+      12 sec (8 erosions together), 39 sec on 1 CPU kernel
+      8 sec (optimized LinearFunc: special branch for long[] bit source Java array - addBitsToInts), 24 sec on 1 CPU
+    old SIMAGIS (native):
+      19 sec
+  +pattern sequence! cross-rect-cross-cross-rect
+  -use 4 kernels while estimation: NO, very short array (~2 KB), 1 kernel is chosen absolutely correctly
+
+TODO++
+  +comment IterativeMatrixProcessor,  Skeletons
+  +add package-info.java into skeletons
+  +process must call checkInterruption
+  +IterativeMatrixProcessor.chain(double weight, IterativeMatrixProcessor secondProcessor):
+     +summary estimatedNumberOfIterations is calculated as
+       the sum of weights[k]*processors[k].estimatedNumberOfIterations()
+     +all matrices in IterativeMatrixProcessor constructors are always updatable
+     +test by erodingSkeleton: several patterns via "|" in the pattern description
+
+TODO++
+  +draw chess pattern on my test picture
+  ?the holes 1x1, 1x2 or 1x2 cannot be broken by my skeletonization.
+    ?Special last iteration that breaks them down? "almostDone", then usual iterations
+  +try to thin complex chess sturctures
+    Quadruple3x5ThinningSkeleton that removes bad cases; in plugin, combinedSkeleton as a chain Octuple|Strong
+  +net.algart.arrays.bitgeom.skeletons.ErodingSkeleton with getInstance
+  +net.algart.arrays.bitgeom.skeletons.OctupleThinningSkeleton.get[Topological]Instance (algart-1992)
+    -setDiagonalPassed(boolean)
+    -setPairMode: simultaneously Xp and Xm, ...
+    special methods for ortho/diagonal thinning)
+    try to optimize: simultaneous left-right passes
+  +try to make QuadrupleThinningSkeleton, where we make remove center even if not all A column is zero, but only A2
+    A1 B1 C1
+    A2 B2 C2  unless A1&~B1 || A3&~B3 (don't know do we need diagonal passes here)
+    A3 B3 C3
+    NOT SIMULTANEOUSLY! Only left->right, then right-left
+        1
+    1 3
+      3 1
+    1
+  +maybe, add here diagonal passes? Moreover, diagonal passes here seem to be the same as Octuple!
+     - StrongThinningSkeleton2D extends OctupleThiningSkeleton2D? NO! Bad idea, instanceof will work incorrectly
+  +StrongThinningSkeleton2D must also support "topological" key
+      -octupleSkeleton in plugin: flag "weak" mode, when the old OctupleThinningSkeleton is used,
+       else StrongThinningSleleton
+  +Use OctupleSkeleton methods from WeakOctupleSkeleton
+  +MemoryModel should be used in asThinning method!
+
+  +plugin must use subMatr for zero outside
+  +Morphology.void dilation/erosion(Matrix<? extends UpdatablePArray> dest, Matrix src, Pattern,
+     boolean disableMemoryAllocation)
+
+TODO++
+   +Statistics.range: returns ZBox with min, max, range, minRaw, maxRaw, rangeRaw (works with i())
+   +Statistics.histogram(min, max, numberOfColumns) (works with i())
+   +Arrays.histogramOf:
+     +comment this, note about strictfp and using "*mult" instead "/"
+     +test in MainOperationsTest
+   +special branche when mult = 1, from = 0
+   +Functions.percentileContrast
+
+TODO++
+  asMaxFunc must accumulate several max funcs! or(or(x,y), or(z,t)) must be equivalent to or(x,y,z,t)
+    check skeletonization speed after this
+    before: (OctupleThinning, standard)
+      Matrix is processed in 87 iterations in 6362,584 ms
+    after:
+      Matrix is processed in 87 iterations in 5830,305 ms
+TODO++
+  notBits should be used by special function Func.INVERSE; use in skeletons
+    before: (OctupleThinning, standard)
+      Matrix is processed in 87 iterations in 5642,294 ms
+    after:
+      Matrix is processed in 87 iterations in 5162,388 ms
+
+TODO--
+  special method Arrays.copyByMask(ArrayContext, UpdatableArray dest, Array src, BitArray mask):
+    copy only elements from src that are 1 in the mask; special check the case when src is a constany array
+    (dest.elementType() must be assignbable from src.elementType())
+    check the speed
+    applyFunc may check this situation to optimize SelectFunc
+  !or, maybe, current version with summing is optimal enough!
+
+TODO++
+   +ArrayProcessor: very abstract interface with context()/context(ArrayContext)/part(double, double) methods
+      part returns this instance if context()==null
+   +very simple AbstractArrayProcessor
+   +bad idea: part method must be overridden almost always with conform type. Too complex
+     maybe, it's enough to declare a convenient static method part(context, from, to)?
+BUG++
+    +AbstractMorphology: we must inherit AbstractArrayProcessor and never call context().part, only part(...).context()
+    +check it in plugin
+BUG++
+  "C:\Program Files (x86)\Java\jdk1.7.0\jre\bin\java" -ea -Xincgc -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MainOperationsTest byte 555 100 1 1
+(4)  Testing "asCopyOnNextWrite()" method...
+java.lang.AssertionError: Illegal mappingPosition 1256 or mappingSize 0 (position = 256, bankSizeInBytes = 256, singleMapping = false)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.mapBank(MappedDataStorages.java:2038)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.translateFailedIndex(MappedDataStorages.java:849)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.translateIndex(MappedDataStorages.java:677)
+        at net.algart.arrays.MappedDataStorages$MappedStorage.copy(MappedDataStorages.java:1074)
+        at net.algart.arrays.BufferArraysImpl$AbstractBufferArray.copy(BufferArraysImpl.java:233)
+        at net.algart.arrays.Arrays.insertEmptyRange(Arrays.java:4004)
+        at net.algart.arrays.demo.MainOperationsTest.testAsCopyOnNextWrite(MainOperationsTest.java:437)
+        at net.algart.arrays.demo.MainOperationsTest.testElementType(MainOperationsTest.java:270)
+        at net.algart.arrays.demo.MainOperationsTest.testAll(MainOperationsTest.java:205)
+        at net.algart.arrays.demo.MainOperationsTest.main(MainOperationsTest.java:2529)
+Start random seed: 1
+
+BUG++
+  "C:\Program Files (x86)\Java\jdk1.7.0\jre\bin\java" -ea -Xincgc -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MainOperationsTest byte 5550 500 1 1 4
+  cannot finalize 23 tasks!
+  How works reallocateStorage()?? this.storage.attachArray - who will remove the storage?
+    This instance's finalizer will try to remove only the previous storage!
+    Maybe need to switch .finalizer, but it does not work now also...
+     because both clone and this try to deallocate storage in finalizer! remove cloning at all
+  Test asCopyOnNextWrite with SimpleMemoryModel
+
+BUG++
+  "C:\Program Files (x86)\Java\jdk1.7.0\jre\bin\java" -ea -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MainOperationsTest byte 5500 5000 1 1 4
+  "C:\Program Files (x86)\Java\jdk1.6.0_05\jre\bin\java" -ea  -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MainOperationsTest byte 5500 3000 1 1 4
+  cannot finalize many tasks!
+  or even stadard_IO:
+  "C:\Program Files (x86)\Java\jdk1.7.0\jre\bin\java" -ea  -Xmx100m -Dnet.algart.arrays.globalMemoryModel=LARGE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimitX=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=STANDARD_IO -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=128  net.algart.arrays.demo.MainOperationsTest byte 5500 5000 1 1 4
+  not reproduced under 64-bit jdk1.7, reproduced in jdk1.6.0_05
+  The reason is that I copied the storage AFTER switching the storage (forgetting this array for old storage):
+     it is absolutely incorrect. See comments in BufferArraysImpl.reallocateStorage
+
+TODO++ Array.clone() - is it a useful solution??? Remove it!
+  it DOES NOT PROVIDE guarantee that a clone will not be modified if the original is modified!
+  b=a.isImmutable(); c=b.clone() - chaning a will lead to changing c!
+  +check shallowClone anywhere: will work only if implements cloneable
+  -comment that asUpdatableFunc returns AbstractUpdatableXXX
+  correct package-info.java
+  +check newLazyCopy and asCopyOnNextWrite for combined also: another "objectEquals" here?
+
+TODO++
+   IterativeMatrixProcessor --> IterativeArrayProcessor<T> with T result();
+     if result() instanceof Array or Matrix, use it for ArrayContext.Event
+TODO++
+   +IterativeMatrixProcessor must extend ArrayProcessor, it's obvious solution; but performIteration ignores context
+   +remove context(ArrayContext newContext) from IterativeMatrixProcessor! but comment in ArrayProcessor
+     that such method is possible in context() method, and if it presents, refer to this comment
+     NO, separate ArrayProcessorWithContextSwitching
+   +check it with null context: correct AbstractIterativeMatrixProcessor and others to provide correct behaviour
+   +reread and check comments
+TODO++
+   versions Matrix.subMatr/subMatrix(long ...fromAndTo) - all "from", then all "to"
+TODO++
+   use asCopyOnNextWrite as default implementation of newLazyCopy, when the memory model is the same
+TODO--
+   ? SimpleArrayContext that does nothing, alike DefaultContext - I think it's better to always support null
+
+TODO++
+   remove Interpolation2D,
+   instead: Func Matrices.getBilinear/RoundingInterpolation instead (using direct access for immutable Simple)
+   testing segment recognition
+   before:
+     bilinear: All finding and drawing 266 segments: 4329.0 ms (4.2 ms/preparing, 4304.3 ms/finding, 11.5 + 6.8 ms/drawing, 2.2 ms/making AImage)
+     trivial:  All finding and drawing 364 segments: 2186.3 ms (11.1 ms/preparing, 2154.3 ms/finding, 11.3 + 7.7 ms/drawing, 1.9 ms/making AImage)
+   after (no optimization):
+     bilinear: All finding and drawing 266 segments: 13394.8 ms (13.2 ms/preparing, 13350.2 ms/finding, 22.3 + 6.8 ms/drawing, 2.2 ms/making AImage)
+     trivial:  All finding and drawing 364 segments: 3595.1 ms (8.0 ms/preparing, 3557.5 ms/finding, 20.9 + 6.9 ms/drawing, 1.8 ms/making AImage)
+   after (2-argument version):
+     bilinear: All finding and drawing 266 segments: 8407.2 ms (4.0 ms/preparing, 8383.7 ms/finding, 10.5 + 7.1 ms/drawing, 1.9 ms/making AImage)
+     trivial:  All finding and drawing 364 segments: 2684.3 ms (8.6 ms/preparing, 2646.8 ms/finding, 18.8 + 7.3 ms/drawing, 2.9 ms/making AImage)
+   after (byte unchecked version):
+     bilinear: All finding and drawing 266 segments: 4285.9 ms (5.6 ms/preparing, 4254.8 ms/finding, 17.4 + 6.6 ms/drawing, 1.6 ms/making AImage)
+     trivial:  All finding and drawing 364 segments: 2163.9 ms (10.6 ms/preparing, 2124.7 ms/finding, 19.8 + 6.9 ms/drawing, 1.8 ms/making AImage)
+
+TODO++
+   Matrices.InterpolationMode: STEP, POLYLINEAR. Necessary do find the method that converts matrix to function
+     Instead of two methods as...Func
+BUG++
+   difference when disabling lgdo-optimization in Elementwise functions E12
+     - because LinearFunc for 2 arguments had invalid branche get(...x)
+TODO++
+   comment asResizedMatrix
+   is it correct casting in asResized? Why not in asShifted?
+TODO++
+   +Geometry.resize
+   +Matrices.isMatrixAsFunc, getUnderlyingMatrix(Func), getDependenceCoordRange(Func, int coordIndex) (maybe null)
+   +special version Matrices.asCoordFuncMatrix with additional arguments: long[] probesPerElement, Func meaningFunc
+     (usually linear average)
+     +every element x,y,... will be meaningFunc(x+j*dx, y+i*dy, ...),
+        j=0...probesPerElement[0], dx=1/probesPerElement[0]
+     +the version without meaningFunc, where corresponding LinearFunc is build automatically
+     +special branche if meaningFunc is really meaning
+     +NO! no additional arguments, but special ApertureFilterOperator
+   +change default mode in resizing
+   +coordIncrements - incorrect idea for very strong resizing (in 10000 times); remove this
+   +comment ApertureFilteredFunc and ApertureFilterOperator
+     +comment about IllegalArgumentException for some cases of LinearFunc
+   +common test in MainOperationsTest
+   - -1 is very strange idea in rotation - no! 3x3 grid should be rotated aroung 1,1, not 1.5,1.5
+   +polylinear should work until dimX-1, but without interpolating last elements: for good resizing in 2 times
+   +compressing in 2 times of 10000x10000 byte with averaging, no interpolation:
+     first implementation:               4433,79089 ms
+     no coordIncrements array:           4597,96650 ms
+     special get() for 2D-case:          1207,95464 ms
+     special get(x0,x1) for 2D-case:     885,43628 ms
+     interpolation without check:        579,68625 ms
+
+TODO++
+   +Matrices.asCoordFuncMatrix(Func f, truncateOverflow, requiredArrayType, long[] dim): result[x]=f(x)
+     +optimize for 2-dimensional case
+     optimized indexer, using : ArraysCoordFuncGetDataImpl
+     beautifulDemoCircles 10000x10000, byte:
+       direct simple algorithm (old):    2379,185 ms (23,79 ns/element)
+       common n-dimensional asCoordFunc: 4059,825 ms (40,60 ns/element)
+       2-d branche:                      2421,725 ms (24,22 ns/element)
+   +remove old asFuncMatrix/Array without arguments
+TODO++
+   -special interface IterableFunc:iterator(double deltaX) and its IterableFunc.double nextX(),
+     implemented by TransformedFunc in a case of linear operator
+   +net.algart.math.functions: Operator.map(double[] dest, double[] src),
+      ?special method mapIncreasedX(dest, src): src[0]++ and new dest (implemented in AbstractOperator)
+        or maybe enough to detect LinearOperator
+      +LinearOperator
+      +Operator.apply(Func f): g(x)=f(operator(x));
+      +optimize TransformedFunc.get for cases of linear operator (special branche in getInstance)
+   +common test for LinearOperator (shifting, compare with subMatr)
+   +comment all
+   +geometrical transformations: use LinearOperator.apply(getBilinearInterpolation, rotation_operator)
+   rotation by 30 degree of 10000x10000 byte:
+     AImage:                                                 8.5 sec
+     before any optimizations:                               7464,79259 ms (24681,26759 on 1 CPU)
+     special TransformedFunc for 2D case of linear operator: 2990,07611 ms (9601,10964 on 1 CPU)
+     with correct processing dimX-1:                         2901,30869 ms (almost the same)
+   resizing in 1.5 times of 10000x10000 byte:
+     AImage:                                                 16.4 sec
+     special TransformedFunc for 2D case of linear operator: 5804,42095 ms (20750,42359 on 1 CPU)
+     special TransformedFunc for diagonal operator:          5459,82073 ms (18923,56096 on 1 CPU)
+     with correct processing dimX-1:                         5048,40308 ms
+TODO++
+   correct tutorial!
+
+TODO++
+   -special optimization asFuncArray for a case when it is resized another func!
+     here we may work quickly even for LARGE array
+   -NO! probably the simplest solution: special "Matrices.resize()", that splits the matrix
+     into several SIMPLE-memory-model submatrices (overridden by 1 pixel) with not too large size
+     and resizes them into the portions of the result
+   -NO! Arrays.ParallelExecutor shoud understand that the lazy array is asCoordFuncArray with LinearOperator
+     and it split the source into several SIMPLE-memory-model matrices, coordinates of which are
+     min/max values of linear operator for all vertices of the n-dimensional parallelepiped
+   -NO! Too non-obvious. Better - special
+     applyCoordFunc(Matrix<? extends UpdatablePArray>, Func f, ...,
+       [boolean tileOptimization [,long ...tileDimensions]]),
+     that use SimpleMemoryModel for every tile when possible, i.e. when f is TransformedFunc via LinearOperator,
+       and the source function of f.parent() is isMatrixAsFunc and the underlying matrix is not SIMPLE
+     automatically use in plugin
+     NO, too complex in use
+   +universal Geometry.affineTransform - the matrix a and the unmoved center
+   +Arrays.copy (copyWithBlockOptimization) must understand this situation and automatically process 2 cases:
+      1. diagonal linear operator (simple asShifted + resizing of SIMPLE matrices)
+      2? random linear operator, if
+         the size of necessary n-dimensional parallelepiped / size of the target parallelepiped <= 10
+         and if n < 15 (so, it's possible to quickly visit all vertices)
+      +Also we must detect that the underlying function is ApertureFilteredFunc
+   +special optimization for boundary tiles: make for them combinations from the src submatrix and outsideValue
+     -asInterpolationFunc with from[]/to[] arguments: outsideValue outside them
+   ?MainOperationsTest for random rotation and resizing: compare pixel by pixel with parallel clone
+     +some diagonal elements while resizing can be negative!
+     +need to check all corner elements: maybe, exception (IndexOutOfBoundes) should be thrown while interpolation?
+   +bilinear resizing 10000x10000 by 130% - Error while estimation in parentLayerToSrcDim (extra +1)
+   +bug: "C:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -Xincgc -server -Xmx1000m -Dnet.algart.arrays.globalMemoryModel=BUFFER -Dnet.algart.arrays.maxTempJavaMemory=32 -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=0  net.algart.arrays.demo.MainOperationsTest byte 5550 700 1 1 34
+     because correctionShift[n - 1] = srcFrom * diag[n - 1] - parentFrom, not -srcFrom * diag[n - 1] + parentFrom
+   +if no interpolation, large difference is POSSIBLE - don't test this case, in other cases test only differences >1
+   +special processing identity copying (interpolation+coordFunc):
+     +check rotation speed for 360 and 0 degree, maybe remove check for 0 (almost same, but why extra file?)
+   +bug: "C:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -Xincgc -server -Xmx1000m -Dnet.algart.arrays.globalMemoryModel=BUFFER -Dnet.algart.arrays.blockOptimizationForResizing=false -Dnet.algart.arrays.maxTempJavaMemory=32 -Dnet.algart.arrays.minOptimizationJavaMemory=512 -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=0  net.algart.arrays.demo.MainOperationsTest float 55555 300 1 1 34
+     (n-1 instead k)
+   +bug: "C:\Program Files\Java\jdk1.7.0\jre\bin\java" -ea -Xint -Xincgc -server -Xmx1000m -Dnet.algart.arrays.globalMemoryModel=BUFFER -Dnet.algart.arrays.blockOptimizationForResizing=true -Dnet.algart.arrays.maxTempJavaMemory=32 -Dnet.algart.arrays.minOptimizationJavaMemory=32 -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit=true -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.prefixSize=1000 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.DefaultDataFileModel.lazyWriting=true -Dnet.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMapX=2 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT -Dnet.algart.arrays.DefaultThreadPoolFactory.minimalMultithreadingLength=1 -Dnet.algart.arrays.globalThreadPoolSize=0  net.algart.arrays.demo.MainOperationsTest byte 15555 300 1 3 34
+     (dimLayers had to be corrected)
+   resizing to 30% of 10000x10000 byte (to 3000x3000):
+     AVERAGING:
+       before optimization:              12991,48774 ms
+       with blocks excepting boundary:   703,69949 ms
+       with almost all blocks:           623,94802 ms
+       in Java memory:                   641,86007ms
+       AImage:                           3931 ms
+     POLYLINEAR_AVERAGING
+       before optimization:              38223,83264 ms
+       with blocks excepting boundary:   2427,13417 ms
+       with almost all blocks:           885,27397 ms
+       in Java memory:                   914,17010 ms
+       AImage:                           3931 ms
+   rotation by 30 degree of 10000x10000 byte:
+       before optimization:              58409,68308 ms
+       with tiling:                      2620,54954 ms  (8928,40431 in 1 thread)
+       in Java memory:                   2621,84412 ms  (9361,31352 in 1 thread)
+       AImage:                           8603 ms
+
+TODO--
+   Matrices.asResized(long[] newDimensions):
+     recursive algorithm: resize(Matrix, DoubleArray temp, int coordIndexForResizing, long newDim)
+        temp is enough to store N "planes" and is splitted into N subarrays,
+        or not used if dimCount()==1 (in this case, work via either getDouble, or DirectAccessible)
+        temp is allocated in Simple when <maxTempJavaMemory, else in current MemoryModel
+     use linear interpolation between pixel centers and calculate the integral from x1 to x2:
+        |  .  |  .  |  .  |
+                ccc
+             ccc   ccc
+        ccccc         ccc
+          ^(x1)          ^(x2)
+     how Java AffineTransform does it?
+     the first iteration should be splitted via ParallelExecutor
+TODO++
+    rotate - should work with 64-MB rectangular blocks in Java memory sx*sy,
+      where sx>sy when angle is small and sx~=sy when angle=PI/2
+TODO++
+   remove net.algart.algorithms: move classes into arrays
+TODO++ (JIRA AA-11)
+   fill in UpdatablePArray
+
+TODO++
+     net.algart.arrays.morphology.Ranks - basic rank operations: asPercentile, asRank, asMean
+      -class Aperture (describes the pattern and what points of pattern are actual for the given x,y,z,...)
+        - NO: our algorithm allows only manipulation by z-aperture, that means just using varying percenile index
+        specified by custom Matrix<PArray> (getLong() calls)
+      RankMorphology - implementation of Morphology on the base of ranks, based on lazy asDilation/asErosion
+

@@ -1,0 +1,57 @@
+package net.algart.math.patterns;
+
+/**
+ * <p>Interface, used by {@link Pattern} implementations to indicate that
+ * they support quick access to the number of points in pattern.</p>
+ *
+ * <p>More precisely, if a pattern implements this interface, then there is a guarantee that the following
+ * methods work very quickly (<i>O</i>(1) operations) and without any exceptions:</p>
+ *
+ * <ul>
+ * <li>{@link #pointCount()},</li>
+ * <li>{@link #largePointCount()},</li>
+ * <li>{@link #isSurelySinglePoint()},</li>
+ * <li>{@link #isSurelyOriginPoint()}.</li>
+ * </ul>
+ *
+ * <p>There is a guarantee, that the following methods (and, in this package, only they)
+ * create patterns, implementing this interface:</p>
+ *
+ * <ul>
+ * <li>{@link SimplePattern} constructor,</li>
+ * <li>{@link Patterns#newPattern(net.algart.math.Point...)},</li>
+ * <li>{@link Patterns#newPattern(java.util.Collection)},</li>
+ * <li>{@link Patterns#newUniformGridPattern(net.algart.math.Point, double[], java.util.Collection)},</li>
+ * <li>{@link Patterns#newIntegerPattern(net.algart.math.IPoint...)},</li>
+ * <li>{@link Patterns#newIntegerPattern(java.util.Collection)},</li>
+ * <li>{@link Patterns#newSphereIntegerPattern(net.algart.math.Point, double)},</li>
+ * <li>{@link Patterns#newEllipsoidIntegerPattern(net.algart.math.Point, double...)},</li>
+ * <li>{@link Patterns#newSurface(Pattern, net.algart.math.functions.Func)},</li>
+ * <li>{@link Patterns#newSpaceSegment Patterns.newSpaceSegment(UniformGridPattern, Func, Func, double, double)},</li>
+ * <li>{@link Patterns#newRectangularUniformGridPattern(net.algart.math.Point, double[], net.algart.math.IRange...)},
+ * </li>
+ * <li>{@link Patterns#newRectangularIntegerPattern(net.algart.math.IRange...)},</li>
+ * <li>{@link Patterns#newRectangularIntegerPattern(net.algart.math.IPoint, net.algart.math.IPoint)}.</li>
+ * </ul>
+ *
+ * <p>AlgART Laboratory 2007-2013</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ *
+ * @see DirectPointSetPattern
+ */
+public interface QuickPointCountPattern extends Pattern {
+    /**
+     * Returns <tt>true</tt> if and only if the number of points in this pattern is greater
+     * than <tt>Long.MAX_VALUE</tt>. In this case, {@link #pointCount()} returns <tt>Long.MAX_VALUE</tt>,
+     * but you can get the approximate number of points by {@link #largePointCount()} method.
+     *
+     * <p>There is a guarantee that this method works very quickly (<i>O</i>(1) operations).
+     * This method never throws any exceptions.
+     *
+     * @return <tt>true</tt> if the number of points in this pattern is greater than <tt>Long.MAX_VALUE</tt>.
+     */
+    public boolean isPointCountVeryLarge();
+}
