@@ -5,20 +5,21 @@
         <antcall target="build-lib"/>
         <antcall target="compile"/>
         <antcall target="jar"/>
-        <delete dir="classes"/>
     </target>
 
     <target name="build-lib">
-        <ant antfile="../algorithm-lib/build.xml"/>
+        <ant antfile="../lib/build.xml"/>
     </target>
 
     <target name="compile">
+        <delete dir="classes"/>
+        <mkdir dir="classes"/>
         <javac srcdir="src" source="1.5" target="1.5" destdir="classes" includeAntRuntime="false">
             <compilerarg value="-version"/>
             <compilerarg value="-Xlint"/>
         </javac>
     </target>
     <target name="jar">
-        <jar destfile="algorithm-lib-plus-demo.jar" basedir="classes" index="true" compress="true"/>
+        <jar destfile="algart2-plus-demo.jar" basedir="classes" index="true" compress="true"/>
     </target>
 </project>

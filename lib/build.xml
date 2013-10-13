@@ -11,26 +11,26 @@
         <echo>Executing in ${basedir}</echo>
         <delete dir="classes"/>
         <mkdir dir="classes"/>
-        <javac srcdir="../algorithm-lib/src" source="1.5" target="1.5" destdir="classes" includeAntRuntime="false">
+        <javac srcdir="../lib/src" source="1.5" target="1.5" destdir="classes" includeAntRuntime="false">
             <compilerarg value="-version"/>
             <compilerarg value="-Xlint"/>
         </javac>
     </target>
     <target name="jar">
-        <jar destfile="algorithm-lib.jar" basedir="classes" index="true" compress="true">
+        <jar destfile="algart2.jar" basedir="classes" index="true" compress="true">
             <manifest>
                 <attribute name="Sealed" value="true"/>
             </manifest>
         </jar>
     </target>
     <target name="javadoc">
+        <mkdir dir="../doc/api/"/>
         <delete>
-            <fileset dir="../algorithm-lib-doc/api/" includes="**/*.html"/>
+            <fileset dir="../doc/api/" includes="**/*.html"/>
         </delete>
-        <mkdir dir="../algorithm-lib-doc/api/"/>
-        <javadoc destdir="../algorithm-lib-doc/api/" author="true" version="true" charset="UTF-8" Locale="en_US" additionalparam="-notimestamp">
+        <javadoc destdir="../doc/api/" author="true" version="true" charset="UTF-8" Locale="en_US" additionalparam="-notimestamp">
         <!-- Locale is necessary to provide English, not Breakiterator algorithm of parsing the first sentence -->
-            <packageset dir="../algorithm-lib/src">
+            <packageset dir="../lib/src">
                 <include name="net/algart/**"/>
                 <exclude name="net/algart/executable/**"/>
             </packageset>
@@ -79,8 +79,8 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
 <!--/algartBottom-->
 ]]></bottom>
         </javadoc>
-        <java classpath="../algorithm-lib/classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
-            <arg value="../algorithm-lib-doc/api/"/>
+        <java classpath="../lib/classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
+            <arg value="../doc/api/"/>
         </java>
     </target>
 </project>

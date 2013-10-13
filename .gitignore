@@ -1,0 +1,7 @@
+/lib/classes
+
+/lib/*.jar
+
+/demo/classes
+
+/demo/*.jar

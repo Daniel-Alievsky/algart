@@ -564,6 +564,13 @@ public class Repeater implements Cloneable {
         String mask = path.getName();
         if (parent != null && "**".equals(parent.getName())) {
             parent = parent.getParentFile();
+            if (!parent.isDirectory()) {
+                synchronized (lock) {
+                    System.out.print("\r" + dup(' ', msgMaxLen) + "\r");
+                    System.err.println("Directory " + parent + " does not exist");
+                }
+                return;
+            }
             File[] subDirs = parent.listFiles(new FilenameFilter() {
                 public boolean accept(File dir, String name) {
                     File f = new File(dir, name);

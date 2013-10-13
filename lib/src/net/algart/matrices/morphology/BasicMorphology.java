@@ -57,6 +57,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
 
     BasicMorphology(ArrayContext context, long maxTempJavaMemory) {
         super(context);
+        System.out.println("URA");
         if (maxTempJavaMemory < 0)
             throw new IllegalArgumentException("Negative maxTempJavaMemory argument");
         this.maxTempJavaMemory = maxTempJavaMemory;
