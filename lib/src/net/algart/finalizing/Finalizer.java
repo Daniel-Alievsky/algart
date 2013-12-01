@@ -145,7 +145,7 @@ public final class Finalizer {
     private Thread thread = null;
     private int priority = Thread.NORM_PRIORITY;
 
-    private Set<PhantomFinalizeHolder> taskSet = new HashSet<PhantomFinalizeHolder>();
+    private final Set<PhantomFinalizeHolder> taskSet = new HashSet<PhantomFinalizeHolder>();
     private boolean shutdownRequested = false;
     private ReferenceQueue<Object> refQueue = null;
 
@@ -186,10 +186,10 @@ public final class Finalizer {
      *
      * @param checkedForDeallocation some object.
      * @param task                   a task thah will be performed on deallocation
-     * of <tt>checkedForDeallocation</tt> object.
+     *                               of <tt>checkedForDeallocation</tt> object.
      */
     public void invokeOnDeallocation(Object checkedForDeallocation, Runnable task) {
-        synchronized(taskSet) {
+        synchronized (taskSet) {
             if (thread == null) {
                 refQueue = new ReferenceQueue<Object>();
                 shutdownRequested = false;
@@ -213,7 +213,7 @@ public final class Finalizer {
      * @return the current number of scheduled tasks.
      */
     public int activeTasksCount() {
-        synchronized(taskSet) {
+        synchronized (taskSet) {
             return taskSet.size();
         }
     }
@@ -228,7 +228,7 @@ public final class Finalizer {
      * It is the only way to stop the thread serving this finalizer before finishing the application.
      */
     public void shutdownNow() {
-        synchronized(taskSet) {
+        synchronized (taskSet) {
             if (thread != null) {
                 shutdownRequested = true;
                 thread.interrupt();
@@ -246,10 +246,10 @@ public final class Finalizer {
      *
      * @param priority priority to set the internal thread to.
      * @throws IllegalArgumentException if the priority is not in the
-     * range <tt>Thread.MIN_PRIORITY</tt>..<tt>Thread.MAX_PRIORITY</tt>.
+     *                                  range <tt>Thread.MIN_PRIORITY</tt>..<tt>Thread.MAX_PRIORITY</tt>.
      */
     public void setPriority(int priority) {
-        synchronized(taskSet) {
+        synchronized (taskSet) {
             if (priority > Thread.MAX_PRIORITY || priority < Thread.MIN_PRIORITY) {
                 throw new IllegalArgumentException();
             }
@@ -265,6 +265,7 @@ public final class Finalizer {
 
     private static class PhantomFinalizeHolder extends PhantomReference<Object> {
         final Runnable task;
+
         PhantomFinalizeHolder(Finalizer fin, Object checkedForDeallocation, Runnable task) {
             super(checkedForDeallocation, fin.refQueue);
             this.task = task;
@@ -275,16 +276,18 @@ public final class Finalizer {
 
     private static class CleanupThread extends Thread {
         final Finalizer fin;
+
         CleanupThread(Finalizer fin) {
             this.fin = fin;
         }
+
         public void run() {
             while (true) {
                 PhantomFinalizeHolder phantomHolder = null;
                 Reference<?> holder = null;
                 try {
                     holder = fin.refQueue.remove();
-                    phantomHolder = (PhantomFinalizeHolder)holder;
+                    phantomHolder = (PhantomFinalizeHolder) holder;
                 } catch (InterruptedException ex) {
                 }
                 if (phantomHolder != null) {

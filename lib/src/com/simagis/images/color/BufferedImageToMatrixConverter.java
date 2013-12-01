@@ -64,6 +64,9 @@ public abstract class BufferedImageToMatrixConverter {
             throw new NullPointerException("Null bufferedImage");
         ColorModel cm = bufferedImage.getColorModel();
         boolean gray = cm.getNumComponents() == 1;
+        // ...SampleModel sm = bufferedImage.getSampleModel();...
+        // || (sm.getNumBands() == 1 && sm.getNumDataElements() == 1) - not correct!
+        // In some TIF we have only 1 band, but RGB color model, because it uses palette; so, bandCount must be 3.
         return cm.hasAlpha() && addAlphaWhenExist ? 4 : gray ? 1 : 3;
     }
 
@@ -118,7 +121,7 @@ public abstract class BufferedImageToMatrixConverter {
             if (readPixelValuesViaColorModel || readPixelValuesViaGraphics2D) {
                 return byte.class;
             }
-            Class<?> result = getResultElementTypeViaSampleModel(bufferedImage.getSampleModel());
+            Class<?> result = getResultElementTypeOrNullForUnsupported(bufferedImage);
             return result == null ? byte.class : result;
         }
 
@@ -135,7 +138,6 @@ public abstract class BufferedImageToMatrixConverter {
             assert bandCount <= 4;
             assert java.lang.reflect.Array.getLength(resultJavaArray) >= dimX * dimY * bandCount;
             final ColorModel colorModel = bufferedImage.getColorModel();
-            final int colorComponentsCount = colorModel.getNumComponents();
             final SampleModel sampleModel = bufferedImage.getSampleModel();
             final boolean gray = bandCount == 1;
             if (readPixelValuesViaColorModel) {
@@ -178,11 +180,7 @@ public abstract class BufferedImageToMatrixConverter {
                 }
                 return;
             }
-            if (!readPixelValuesViaGraphics2D
-                && bandCount <= colorComponentsCount // in particular, when bandCount=3 and colorComponentsCount=4
-                && colorComponentsCount == sampleModel.getNumBands()
-                && getResultElementTypeViaSampleModel(sampleModel) != null)
-            {
+            if (!readPixelValuesViaGraphics2D && supportedStructure(bufferedImage)) {
                 // Default branch, used by this class without special settings.
                 // But in a case of strange colorModel.getNumComponents() (like 2 or 1 with alpha),
                 // or incompatibility of color components count and samples count (RGB, but indexed 1-band data),
@@ -210,12 +208,11 @@ public abstract class BufferedImageToMatrixConverter {
                                 }
                                 break;
                             }
-                            case DataBuffer.TYPE_SHORT:
                             case DataBuffer.TYPE_USHORT: {
                                 assert resultJavaArray instanceof short[];
                                 short[] result = (short[]) resultJavaArray;
                                 for (int i = 0, j = disp + bandIndex; i < numberOfPixels; i++, j += bandCount) {
-                                    result[j] = (byte) (buffer[i] & 0xFFFF);
+                                    result[j] = (short) (buffer[i] & 0xFFFF);
                                 }
                                 break;
                             }
@@ -240,7 +237,8 @@ public abstract class BufferedImageToMatrixConverter {
             }
             // Simplest algorithm: via BufferedImage.getGraphics
             assert resultJavaArray instanceof byte[];
-            //TODO!! why only byte[]? bandCount=3 and colorComponentsCount=4?
+            //TODO!! support in future ushort/int via getResultElementType
+            //TODO!! and what if bandCount=3 and colorComponentsCount=4?
             final byte[] result = (byte[]) resultJavaArray;
             final boolean banded = USE_3_BANDS_FOR_NON_BANDED_GRAY ?
                 bufferedImage.getSampleModel() instanceof BandedSampleModel :
@@ -280,19 +278,46 @@ public abstract class BufferedImageToMatrixConverter {
             resultImage.getGraphics().drawImage(bufferedImage, 0, 0, null);
         }
 
-        private Class<?> getResultElementTypeViaSampleModel(SampleModel sampleModel) {
-            if (sampleModel instanceof ComponentSampleModel) {
+        private boolean supportedStructure(BufferedImage bufferedImage) {
+            return getResultElementTypeOrNullForUnsupported(bufferedImage) != null;
+        }
+
+        private Class<?> getResultElementTypeOrNullForUnsupported(BufferedImage bufferedImage) {
+            final int bandCount = getBandCount(bufferedImage);
+            final ColorModel colorModel = bufferedImage.getColorModel();
+            final SampleModel sampleModel = bufferedImage.getSampleModel();
+            final int colorComponentsCount = colorModel.getNumComponents();
+            if (bandCount <= colorComponentsCount // in particular, when bandCount=3 and colorComponentsCount=4
+                && colorComponentsCount == sampleModel.getNumBands()
+                && colorModel instanceof ComponentColorModel
+                && sampleModel instanceof ComponentSampleModel)
+            {
                 switch (sampleModel.getDataType()) {
                     case DataBuffer.TYPE_BYTE :
-                        return byte.class;
-                    case DataBuffer.TYPE_SHORT :
                     case DataBuffer.TYPE_USHORT :
-                        return short.class;
                     case DataBuffer.TYPE_INT :
-                        return int.class;
+                        return getResultElementType(sampleModel);
                 }
             }
             return null;
+        }
+
+        private Class<?> getResultElementType(SampleModel sampleModel) {
+            switch (sampleModel.getDataType()) {
+                case DataBuffer.TYPE_BYTE :
+                    return byte.class;
+                case DataBuffer.TYPE_SHORT :
+                case DataBuffer.TYPE_USHORT :
+                    return short.class;
+                case DataBuffer.TYPE_INT :
+                    return int.class;
+                case DataBuffer.TYPE_FLOAT :
+                    return float.class;
+                case DataBuffer.TYPE_DOUBLE :
+                    return double.class;
+                default:
+                    return byte.class;
+            }
         }
     }
 }

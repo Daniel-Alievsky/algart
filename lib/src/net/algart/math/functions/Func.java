@@ -44,7 +44,7 @@ public interface Func {
     /**
      * Maximum from several numbers:
      * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>) =
-     * min(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>).
+     * max(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>).
      * The {@link #get} method of this object may process any number of arguments.
      * If the number of arguments is 0, it returns <tt>Double.NEGATIVE_INFINITY</tt>.
      *

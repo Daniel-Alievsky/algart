@@ -20,6 +20,6 @@
         </javac>
     </target>
     <target name="jar">
-        <jar destfile="algart2-plus-demo.jar" basedir="classes" index="true" compress="true"/>
+        <jar destfile="algart-plus-demo.jar" basedir="classes" index="true" compress="true"/>
     </target>
 </project>
