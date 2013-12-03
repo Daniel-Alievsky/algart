@@ -5,6 +5,7 @@
         <antcall target="build-lib"/>
         <antcall target="compile"/>
         <antcall target="jar"/>
+        <delete dir="classes"/>
     </target>
 
     <target name="build-lib">
@@ -12,8 +13,6 @@
     </target>
 
     <target name="compile">
-        <delete dir="classes"/>
-        <mkdir dir="classes"/>
         <javac srcdir="src" source="1.5" target="1.5" destdir="classes" includeAntRuntime="false">
             <compilerarg value="-version"/>
             <compilerarg value="-Xlint"/>
