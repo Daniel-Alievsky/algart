@@ -5,3 +5,7 @@
 /demo/classes
 
 /demo/*.jar
+
+/classes
+
+/*.jar
