@@ -1,0 +1,456 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML lang="en">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>
+MatrixToBufferedImageConverter.Packed3DToPackedRGB
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="MatrixToBufferedImageConverter.Packed3DToPackedRGB";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--algartHeader-->
+<div align="center" style="margin:0 0 8px 0">
+<noindex>
+<script type="text/javascript">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id="openstat877799"></span>
+<script type="text/javascript">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual="/ad_top_utf8.php"-->
+</div>
+<div style="margin:0"><noindex><a target="_top" href="http://algart.net/"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToBandedRGB.html" title="class in net.algart.external"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;NEXT CLASS</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/external/MatrixToBufferedImageConverter.Packed3DToPackedRGB.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="MatrixToBufferedImageConverter.Packed3DToPackedRGB.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_net.algart.external.MatrixToBufferedImageConverter">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+net.algart.external</FONT>
+<BR>
+Class MatrixToBufferedImageConverter.Packed3DToPackedRGB</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html" title="class in net.algart.external">net.algart.external.MatrixToBufferedImageConverter</A>
+      <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><STRONG>net.algart.external.MatrixToBufferedImageConverter.Packed3DToPackedRGB</STRONG>
+</PRE>
+<DL>
+<DT><STRONG>Direct Known Subclasses:</STRONG></DT> <DD><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.MonochromeToIndexed.html" title="class in net.algart.external">MatrixToBufferedImageConverter.MonochromeToIndexed</A></DD>
+</DL>
+<DL>
+<DT><STRONG>Enclosing class:</STRONG></DT><DD><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html" title="class in net.algart.external">MatrixToBufferedImageConverter</A></DD>
+</DL>
+<HR>
+<PRE>public static class <STRONG>MatrixToBufferedImageConverter.Packed3DToPackedRGB</STRONG>
+extends <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html" title="class in net.algart.external">MatrixToBufferedImageConverter</A></PRE>
+
+<P>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Nested Class Summary table, listing nested classes, and an explanation">
+<CAPTION CLASS="TableCaption">
+Nested Class Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Class and Description</TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_net.algart.external.MatrixToBufferedImageConverter"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Nested classes/interfaces inherited from class net.algart.external.<A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html" title="class in net.algart.external">MatrixToBufferedImageConverter</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.MonochromeToIndexed.html" title="class in net.algart.external">MatrixToBufferedImageConverter.MonochromeToIndexed</A>, <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToBandedRGB.html" title="class in net.algart.external">MatrixToBufferedImageConverter.Packed3DToBandedRGB</A>, <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToPackedRGB.html" title="class in net.algart.external">MatrixToBufferedImageConverter.Packed3DToPackedRGB</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Constructor Summary table, listing constructors, and an explanation">
+<CAPTION CLASS="TableCaption">
+Constructor Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Constructor and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><STRONG><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToPackedRGB.html#MatrixToBufferedImageConverter.Packed3DToPackedRGB(boolean)">MatrixToBufferedImageConverter.Packed3DToPackedRGB</A></STRONG>(boolean&nbsp;addAlpha)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Method Summary table, listing methods, and an explanation">
+<CAPTION CLASS="TableCaption">
+Method Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Method and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToPackedRGB.html#addAlpha()">addAlpha</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToPackedRGB.html#colorValue(net.algart.arrays.Matrix, java.awt.Color, int)">colorValue</A></STRONG>(<A HREF="../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../net/algart/arrays/PArray.html" title="interface in net.algart.arrays">PArray</A>&gt;&nbsp;packedMatrix,
+           java.awt.Color&nbsp;color,
+           int&nbsp;bankIndex)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Converts the color into a form, stored in the data buffer, returned by <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#toDataBuffer(net.algart.arrays.Matrix)"><CODE>MatrixToBufferedImageConverter.toDataBuffer(Matrix)</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;int[]</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToPackedRGB.html#rgbAlphaMasks(int)">rgbAlphaMasks</A></STRONG>(int&nbsp;bandCount)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the band masks, which will be passed to <tt>Raster.createPackedRaster</tt> method,
+ if you want to convert data into a packed <tt>BufferedImage</tt>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;java.awt.image.DataBuffer</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToPackedRGB.html#toDataBuffer(net.algart.arrays.PArray, int)">toDataBuffer</A></STRONG>(<A HREF="../../../net/algart/arrays/PArray.html" title="interface in net.algart.arrays">PArray</A>&nbsp;packedArray,
+             int&nbsp;bandCount)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Actual method, on which <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#toDataBuffer(net.algart.arrays.Matrix)"><CODE>MatrixToBufferedImageConverter.toDataBuffer(Matrix)</CODE></A> is based.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToPackedRGB.html#toString()">toString</A></STRONG>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_net.algart.external.MatrixToBufferedImageConverter"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class net.algart.external.<A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html" title="class in net.algart.external">MatrixToBufferedImageConverter</A></STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#byteArrayRequired()">byteArrayRequired</A>, <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#getBandCount(net.algart.arrays.Matrix)">getBandCount</A>, <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#getDataArray(java.awt.image.DataBuffer, int)">getDataArray</A>, <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#getHeight(net.algart.arrays.Matrix)">getHeight</A>, <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#getWidth(net.algart.arrays.Matrix)">getWidth</A>, <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#palette()">palette</A>, <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#toBufferedImage(net.algart.arrays.Matrix)">toBufferedImage</A>, <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#toBufferedImage(net.algart.arrays.Matrix, java.awt.image.DataBuffer)">toBufferedImage</A>, <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#toDataBuffer(net.algart.arrays.Matrix)">toDataBuffer</A>, <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#toDataBufferBand0Filter(byte[], int, byte[])">toDataBufferBand0Filter</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><STRONG>Methods inherited from class java.lang.Object</STRONG></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Constructor Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="MatrixToBufferedImageConverter.Packed3DToPackedRGB(boolean)"><!-- --></A><H3>
+MatrixToBufferedImageConverter.Packed3DToPackedRGB</H3>
+<PRE>
+public <STRONG>MatrixToBufferedImageConverter.Packed3DToPackedRGB</STRONG>(boolean&nbsp;addAlpha)</PRE>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<STRONG>Method Detail</STRONG></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="addAlpha()"><!-- --></A><H3>
+addAlpha</H3>
+<PRE>
+public boolean <STRONG>addAlpha</STRONG>()</PRE>
+<HR>
+
+<A NAME="colorValue(net.algart.arrays.Matrix, java.awt.Color, int)"><!-- --></A><H3>
+colorValue</H3>
+<PRE>
+public long <STRONG>colorValue</STRONG>(<A HREF="../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../net/algart/arrays/PArray.html" title="interface in net.algart.arrays">PArray</A>&gt;&nbsp;packedMatrix,
+                       java.awt.Color&nbsp;color,
+                       int&nbsp;bankIndex)</PRE>
+<DL>
+<DD><STRONG>Description copied from class: <CODE><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#colorValue(net.algart.arrays.Matrix, java.awt.Color, int)">MatrixToBufferedImageConverter</A></CODE></STRONG></DD>
+<DD>Converts the color into a form, stored in the data buffer, returned by <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#toDataBuffer(net.algart.arrays.Matrix)"><CODE>MatrixToBufferedImageConverter.toDataBuffer(Matrix)</CODE></A>.
+
+ <p>The default implementation is suitable for monochrome, indexed and multi-bank data buffers.
+
+ <p>Note: if the packed matrix is monochrome or indexed, i.e.
+ <tt><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#getBandCount(net.algart.arrays.Matrix)"><CODE>getBandCount</CODE></A>(packedMatrix)==1</tt>,
+ this method returns
+ <pre>
+ Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue())
+ </pre>
+ <p>The good idea is to provide identical R, G, B color components in such cases
+ (if this method is not overridden).
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#colorValue(net.algart.arrays.Matrix, java.awt.Color, int)">colorValue</A></CODE> in class <CODE><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html" title="class in net.algart.external">MatrixToBufferedImageConverter</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>packedMatrix</CODE> - the packed data.</DD><DD><CODE>color</CODE> - some color.</DD><DD><CODE>bankIndex</CODE> - index of the bank in terms of <tt>java.awt.image.DataBuffer</tt>.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the corresponded component of this color or packed RGB-Alpha value,
+                     depending on the structure of the data buffer.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="toString()"><!-- --></A><H3>
+toString</H3>
+<PRE>
+public java.lang.String <STRONG>toString</STRONG>()</PRE>
+<DL>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE>toString</CODE> in class <CODE>java.lang.Object</CODE></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="toDataBuffer(net.algart.arrays.PArray, int)"><!-- --></A><H3>
+toDataBuffer</H3>
+<PRE>
+protected java.awt.image.DataBuffer <STRONG>toDataBuffer</STRONG>(<A HREF="../../../net/algart/arrays/PArray.html" title="interface in net.algart.arrays">PArray</A>&nbsp;packedArray,
+                                                 int&nbsp;bandCount)</PRE>
+<DL>
+<DD><STRONG>Description copied from class: <CODE><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#toDataBuffer(net.algart.arrays.PArray, int)">MatrixToBufferedImageConverter</A></CODE></STRONG></DD>
+<DD>Actual method, on which <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#toDataBuffer(net.algart.arrays.Matrix)"><CODE>MatrixToBufferedImageConverter.toDataBuffer(Matrix)</CODE></A> is based.
+
+ <p>The passed AlgART array must be <A HREF="../../../net/algart/arrays/DirectAccessible.html" title="interface in net.algart.arrays"><CODE>direct accessible</CODE></A>.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Specified by:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#toDataBuffer(net.algart.arrays.PArray, int)">toDataBuffer</A></CODE> in class <CODE><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html" title="class in net.algart.external">MatrixToBufferedImageConverter</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>packedArray</CODE> - the packed data.</DD><DD><CODE>bandCount</CODE> - the number of bands: if called from <A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#toDataBuffer(net.algart.arrays.Matrix)"><CODE>MatrixToBufferedImageConverter.toDataBuffer(Matrix)</CODE></A>,
+                    it is 1 for 2-dimensional matrix and <A HREF="../../../net/algart/arrays/Matrix.html#dim(int)"><CODE>dim(0)</CODE></A>
+                    for 3-dimensional matrix.</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the newly allocated <tt>DataBuffer</tt> with the same data.</DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="rgbAlphaMasks(int)"><!-- --></A><H3>
+rgbAlphaMasks</H3>
+<PRE>
+protected int[] <STRONG>rgbAlphaMasks</STRONG>(int&nbsp;bandCount)</PRE>
+<DL>
+<DD><STRONG>Description copied from class: <CODE><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#rgbAlphaMasks(int)">MatrixToBufferedImageConverter</A></CODE></STRONG></DD>
+<DD>Returns the band masks, which will be passed to <tt>Raster.createPackedRaster</tt> method,
+ if you want to convert data into a packed <tt>BufferedImage</tt>.
+ The resulting array may be <tt>null</tt>, that means an unpacked form of the raster
+ (<tt>Raster.createBandedRaster</tt>), or an array containing <tt>bandCount</tt> elements:
+ red, green, blue and (if necessary) alpha masks.
+<P>
+</DD>
+<DD><DL>
+<DT><STRONG>Overrides:</STRONG></DT><DD><CODE><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html#rgbAlphaMasks(int)">rgbAlphaMasks</A></CODE> in class <CODE><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html" title="class in net.algart.external">MatrixToBufferedImageConverter</A></CODE></DD>
+</DL>
+</DD>
+<DD><DL>
+<DT><STRONG>Parameters:</STRONG></DT><DD><CODE>bandCount</CODE> - the number of masks (3 or 4, in other cases <tt>null</tt> is returned).</DD>
+<DT><STRONG>Returns:</STRONG></DT><DD>the bit masks for storing bands in the packed <tt>int</tt> values.</DD></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Overview</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><STRONG>Package</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><STRONG>Class</STRONG></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><STRONG>Tree</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><STRONG>Deprecated</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-all.html"><FONT CLASS="NavBarFont1"><STRONG>Index</STRONG></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><STRONG>Help</STRONG></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+
+<!--(removed by JavaDocCorrector)-->
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToBandedRGB.html" title="class in net.algart.external"><STRONG>PREV CLASS</STRONG></A>&nbsp;
+&nbsp;NEXT CLASS</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?net/algart/external/MatrixToBufferedImageConverter.Packed3DToPackedRGB.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+&nbsp;<A HREF="MatrixToBufferedImageConverter.Packed3DToPackedRGB.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><STRONG>All Classes</STRONG></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_net.algart.external.MatrixToBufferedImageConverter">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+<!--algartBottom-->
+<div align="center" style="margin-top:32px;margin-bottom:8px">
+<!--#include virtual="/ad_bottom_utf8.php"-->
+</div>
+<!--/algartBottom-->
+
+</BODY>
+</HTML>

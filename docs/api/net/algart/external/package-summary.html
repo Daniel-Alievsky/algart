@@ -4,7 +4,7 @@
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <TITLE>
-net.algart.finalizing
+net.algart.external
 </TITLE>
 
 
@@ -14,7 +14,7 @@ net.algart.finalizing
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="net.algart.finalizing";
+        parent.document.title="net.algart.external";
     }
 }
 </SCRIPT>
@@ -89,10 +89,10 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../net/algart/external/package-summary.html"><STRONG>PREV PACKAGE</STRONG></A>&nbsp;
-&nbsp;<A HREF="../../../net/algart/math/package-summary.html"><STRONG>NEXT PACKAGE</STRONG></A></FONT></TD>
+&nbsp;<A HREF="../../../net/algart/contexts/package-summary.html"><STRONG>PREV PACKAGE</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/finalizing/package-summary.html"><STRONG>NEXT PACKAGE</STRONG></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../index.html?net/algart/finalizing/package-summary.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+  <A HREF="../../../index.html?net/algart/external/package-summary.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
 &nbsp;<A HREF="package-summary.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
@@ -114,9 +114,10 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
 
 <HR>
 <H2>
-Package net.algart.finalizing
+Package net.algart.external
 </H2>
-Universal tool for finalization tasks.
+External tools: some classes and functions, useful for interaction with other systems (Java AWT,
+ other processes, etc.).
 <P>
 <STRONG>See:</STRONG>
 <BR>
@@ -131,19 +132,87 @@ Class Summary</CAPTION>
 <TH CLASS="TableHeader" SCOPE="col" NOWRAP>Description</TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/finalizing/Finalizer.html" title="class in net.algart.finalizing">Finalizer</A></STRONG></TD>
-<TD><i>Finalizer</i>: an universal tool allowing to perform any task on deallocation of some object.</TD>
+<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/external/BufferedImageToMatrixConverter.html" title="class in net.algart.external">BufferedImageToMatrixConverter</A></STRONG></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/external/BufferedImageToMatrixConverter.ToPacked3D.html" title="class in net.algart.external">BufferedImageToMatrixConverter.ToPacked3D</A></STRONG></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/external/ExternalAlgorithmCaller.html" title="class in net.algart.external">ExternalAlgorithmCaller</A></STRONG></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/external/ExternalJavaUtilityCaller.html" title="class in net.algart.external">ExternalJavaUtilityCaller</A></STRONG></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/external/ExternalUtilityCaller.html" title="class in net.algart.external">ExternalUtilityCaller</A></STRONG></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.html" title="class in net.algart.external">MatrixToBufferedImageConverter</A></STRONG></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.MonochromeToIndexed.html" title="class in net.algart.external">MatrixToBufferedImageConverter.MonochromeToIndexed</A></STRONG></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToBandedRGB.html" title="class in net.algart.external">MatrixToBufferedImageConverter.Packed3DToBandedRGB</A></STRONG></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/external/MatrixToBufferedImageConverter.Packed3DToPackedRGB.html" title="class in net.algart.external">MatrixToBufferedImageConverter.Packed3DToPackedRGB</A></STRONG></TD>
+<TD>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Exception Summary table, listing exceptions, and an explanation">
+<CAPTION CLASS="TableCaption">
+Exception Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Exception</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/external/ExternalAlgorithmCaller.TileProcessingException.html" title="class in net.algart.external">ExternalAlgorithmCaller.TileProcessingException</A></STRONG></TD>
+<TD>Thrown by this class in a case of any checked exception while processing a tile.</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="Error Summary table, listing errors, and an explanation">
+<CAPTION CLASS="TableCaption">
+Error Summary</CAPTION>
+<TR>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Error</TH>
+<TH CLASS="TableHeader" SCOPE="col" NOWRAP>Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><STRONG><A HREF="../../../net/algart/external/ExternalAlgorithmCaller.UnstableProcessingError.html" title="class in net.algart.external">ExternalAlgorithmCaller.UnstableProcessingError</A></STRONG></TD>
+<TD>Can be thrown by <A HREF="../../../net/algart/external/ExternalAlgorithmCaller.html#processImpl(net.algart.arrays.ExternalProcessor, java.util.Map, java.lang.Object, boolean)"><CODE>ExternalAlgorithmCaller.processImpl(net.algart.arrays.ExternalProcessor, java.util.Map<java.lang.String, java.util.List<net.algart.arrays.Matrix<? extends net.algart.arrays.PArray>>>, java.lang.Object, boolean)</CODE></A>
+ to indicate that this class should repeat an attempt to process the tile several times.</TD>
 </TR>
 </TABLE>
 &nbsp;
 
 <P>
 <A NAME="package_description"><!-- --></A><H2>
-Package net.algart.finalizing Description
+Package net.algart.external Description
 </H2>
 
 <P>
-<p>Universal tool for finalization tasks.</p>
+<p>External tools: some classes and functions, useful for interaction with other systems (Java AWT,
+ other processes, etc.).</p>
+
+ <p>This package is not fully documented and can be changed in future versions.</p>
 
  <p>AlgART Laboratory 2007-2013</p>
 <P>
@@ -187,10 +256,10 @@ Package net.algart.finalizing Description
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../net/algart/external/package-summary.html"><STRONG>PREV PACKAGE</STRONG></A>&nbsp;
-&nbsp;<A HREF="../../../net/algart/math/package-summary.html"><STRONG>NEXT PACKAGE</STRONG></A></FONT></TD>
+&nbsp;<A HREF="../../../net/algart/contexts/package-summary.html"><STRONG>PREV PACKAGE</STRONG></A>&nbsp;
+&nbsp;<A HREF="../../../net/algart/finalizing/package-summary.html"><STRONG>NEXT PACKAGE</STRONG></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../index.html?net/algart/finalizing/package-summary.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
+  <A HREF="../../../index.html?net/algart/external/package-summary.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
 &nbsp;<A HREF="package-summary.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
