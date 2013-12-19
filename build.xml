@@ -25,12 +25,12 @@
         </javac>
     </target>
     <target name="jar">
-        <jar destfile="algart.jar" basedir="classes" index="true" compress="true">
+        <jar destfile="algart.jar" basedir="classes" index="true" compress="false">
             <manifest>
                 <attribute name="Sealed" value="true"/>
             </manifest>
         </jar>
-        <jar destfile="algart-demo.jar" basedir="demo/classes" index="true" compress="true"/>
+        <jar destfile="algart-demo.jar" basedir="demo/classes" index="true" compress="false"/>
     </target>
     <target name="javadoc">
         <mkdir dir="docs/api/"/>
