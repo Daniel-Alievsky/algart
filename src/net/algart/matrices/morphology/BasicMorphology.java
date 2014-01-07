@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2013 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,7 @@ import java.util.*;
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
- * <p>AlgART Laboratory 2007-2009</p>
+ * <p>AlgART Laboratory 2007&ndash;2014</p>
  *
  * @author Daniel Alievsky
  * @version 1.2

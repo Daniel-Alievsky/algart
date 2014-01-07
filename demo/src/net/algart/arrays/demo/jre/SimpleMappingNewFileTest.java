@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2013 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ import java.util.ArrayList;
  * See <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6893654"
  * >http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6893654</a>.</p>
  *
- * <p>AlgART Laboratory 2007-2013</p>
+ * <p>AlgART Laboratory 2007&ndash;2014</p>
  *
  * @author Daniel Alievsky
  * @version 1.2

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2013 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@ package net.algart.arrays;
  * Please see more details in the
  * <a href="package-summary.html#multithreading">package description</a>.</p>
  *
- * <p>AlgART Laboratory 2007-2013</p>
+ * <p>AlgART Laboratory 2007&ndash;2014</p>
  *
  * @author Daniel Alievsky
  * @version 1.2
@@ -144,18 +144,11 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * if <tt>null</tt> elements are not supported
      * by the {@link MemoryModel memory model} (as in a case of {@link CombinedMemoryModel}).
      *
-     * <p>Note: if <tt>IndexOutOfBoundsException</tt> occurs due to attempt to read data outside the passed
-     * Java array, this AlgART array can be partially filled.
-     * In other words, this method <b>can be non-atomic regarding this failure</b>.
-     * All other possible exceptions are checked in the very beginning of this method
-     * before any other actions (the standard way for checking exceptions).
-     *
      * @param arrayPos       starting position in this AlgART array.
      * @param srcArray       the source Java array.
      * @return               a reference to this AlgART array.
      * @throws NullPointerException      if <tt>srcArray</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException  if <tt>srcArray</tt> argument is not an array.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
      * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
      *                                   {@link #elementType()}.
      * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array

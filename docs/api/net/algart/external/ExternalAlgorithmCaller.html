@@ -90,7 +90,7 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../net/algart/external/BufferedImageToMatrixConverter.ToPacked3D.html" title="class in net.algart.external"><STRONG>PREV CLASS</STRONG></A>&nbsp;
-&nbsp;<A HREF="../../../net/algart/external/ExternalAlgorithmCaller.TileProcessingException.html" title="class in net.algart.external"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+&nbsp;<A HREF="../../../net/algart/external/ExternalAlgorithmCaller.DeserializationMode.html" title="enum in net.algart.external"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?net/algart/external/ExternalAlgorithmCaller.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
 &nbsp;<A HREF="ExternalAlgorithmCaller.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;
@@ -149,6 +149,22 @@ Nested Class Summary</CAPTION>
 <TR>
 <TH CLASS="TableHeader" SCOPE="col" NOWRAP>Modifier and Type</TH>
 <TH CLASS="TableHeader" SCOPE="col" NOWRAP>Class and Description</TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/external/ExternalAlgorithmCaller.DeserializationMode.html" title="enum in net.algart.external">ExternalAlgorithmCaller.DeserializationMode</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/external/ExternalAlgorithmCaller.SerializationMode.html" title="enum in net.algart.external">ExternalAlgorithmCaller.SerializationMode</A></STRONG></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -321,6 +337,16 @@ Method Summary</CAPTION>
 <CODE>static&nbsp;java.util.List&lt;<A HREF="../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../net/algart/arrays/PArray.html" title="interface in net.algart.arrays">PArray</A>&gt;&gt;</CODE></FONT></TD>
 <TD><CODE><STRONG><A HREF="../../../net/algart/external/ExternalAlgorithmCaller.html#cloneImage(net.algart.arrays.MemoryModel, java.util.List)">cloneImage</A></STRONG>(<A HREF="../../../net/algart/arrays/MemoryModel.html" title="interface in net.algart.arrays">MemoryModel</A>&nbsp;mm,
            java.util.List&lt;<A HREF="../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../net/algart/arrays/PArray.html" title="interface in net.algart.arrays">PArray</A>&gt;&gt;&nbsp;image)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../net/algart/arrays/UpdatablePArray.html" title="interface in net.algart.arrays">UpdatablePArray</A>&gt;</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/external/ExternalAlgorithmCaller.html#deserializeAlgARTMatrix(net.algart.arrays.ArrayContext, java.io.InputStream, net.algart.external.ExternalAlgorithmCaller.DeserializationMode)">deserializeAlgARTMatrix</A></STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                        java.io.InputStream&nbsp;inputStream,
+                        <A HREF="../../../net/algart/external/ExternalAlgorithmCaller.DeserializationMode.html" title="enum in net.algart.external">ExternalAlgorithmCaller.DeserializationMode</A>&nbsp;deserializationMode)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -529,6 +555,17 @@ Method Summary</CAPTION>
 <CODE>static&nbsp;java.lang.String</CODE></FONT></TD>
 <TD><CODE><STRONG><A HREF="../../../net/algart/external/ExternalAlgorithmCaller.html#replaceDollarWithWorkDirectory(net.algart.arrays.ExternalProcessor, java.lang.String)">replaceDollarWithWorkDirectory</A></STRONG>(<A HREF="../../../net/algart/arrays/ExternalProcessor.html" title="class in net.algart.arrays">ExternalProcessor</A>&nbsp;processor,
                                java.lang.String&nbsp;s)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><STRONG><A HREF="../../../net/algart/external/ExternalAlgorithmCaller.html#serializeAlgARTMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, java.io.OutputStream, net.algart.external.ExternalAlgorithmCaller.SerializationMode)">serializeAlgARTMatrix</A></STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                      <A HREF="../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../net/algart/arrays/PArray.html" title="interface in net.algart.arrays">PArray</A>&gt;&nbsp;matrix,
+                      java.io.OutputStream&nbsp;outputStream,
+                      <A HREF="../../../net/algart/external/ExternalAlgorithmCaller.SerializationMode.html" title="enum in net.algart.external">ExternalAlgorithmCaller.SerializationMode</A>&nbsp;serializationMode)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -982,6 +1019,37 @@ public static java.util.List&lt;<A HREF="../../../net/algart/arrays/Matrix.html"
 </DL>
 <HR>
 
+<A NAME="serializeAlgARTMatrix(net.algart.arrays.ArrayContext, net.algart.arrays.Matrix, java.io.OutputStream, net.algart.external.ExternalAlgorithmCaller.SerializationMode)"><!-- --></A><H3>
+serializeAlgARTMatrix</H3>
+<PRE>
+public static void <STRONG>serializeAlgARTMatrix</STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                         <A HREF="../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../net/algart/arrays/PArray.html" title="interface in net.algart.arrays">PArray</A>&gt;&nbsp;matrix,
+                                         java.io.OutputStream&nbsp;outputStream,
+                                         <A HREF="../../../net/algart/external/ExternalAlgorithmCaller.SerializationMode.html" title="enum in net.algart.external">ExternalAlgorithmCaller.SerializationMode</A>&nbsp;serializationMode)
+                                  throws java.io.IOException</PRE>
+<DL>
+<DD><DL>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.io.IOException</CODE></DD></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="deserializeAlgARTMatrix(net.algart.arrays.ArrayContext, java.io.InputStream, net.algart.external.ExternalAlgorithmCaller.DeserializationMode)"><!-- --></A><H3>
+deserializeAlgARTMatrix</H3>
+<PRE>
+public static <A HREF="../../../net/algart/arrays/Matrix.html" title="interface in net.algart.arrays">Matrix</A>&lt;? extends <A HREF="../../../net/algart/arrays/UpdatablePArray.html" title="interface in net.algart.arrays">UpdatablePArray</A>&gt; <STRONG>deserializeAlgARTMatrix</STRONG>(<A HREF="../../../net/algart/arrays/ArrayContext.html" title="interface in net.algart.arrays">ArrayContext</A>&nbsp;context,
+                                                                        java.io.InputStream&nbsp;inputStream,
+                                                                        <A HREF="../../../net/algart/external/ExternalAlgorithmCaller.DeserializationMode.html" title="enum in net.algart.external">ExternalAlgorithmCaller.DeserializationMode</A>&nbsp;deserializationMode)
+                                                                 throws java.io.IOException</PRE>
+<DL>
+<DD><DL>
+<DT><STRONG>Throws:</STRONG></DT>
+<DD><CODE>java.io.IOException</CODE></DD></DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getContext()"><!-- --></A><H3>
 getContext</H3>
 <PRE>
@@ -1283,7 +1351,7 @@ protected abstract java.util.Map&lt;java.lang.String,java.util.List&lt;<A HREF="
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../net/algart/external/BufferedImageToMatrixConverter.ToPacked3D.html" title="class in net.algart.external"><STRONG>PREV CLASS</STRONG></A>&nbsp;
-&nbsp;<A HREF="../../../net/algart/external/ExternalAlgorithmCaller.TileProcessingException.html" title="class in net.algart.external"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
+&nbsp;<A HREF="../../../net/algart/external/ExternalAlgorithmCaller.DeserializationMode.html" title="enum in net.algart.external"><STRONG>NEXT CLASS</STRONG></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?net/algart/external/ExternalAlgorithmCaller.html" target="_top"><STRONG>FRAMES</STRONG></A>  &nbsp;
 &nbsp;<A HREF="ExternalAlgorithmCaller.html" target="_top"><STRONG>NO FRAMES</STRONG></A>  &nbsp;

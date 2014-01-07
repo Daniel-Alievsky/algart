@@ -142,7 +142,7 @@ extends <A HREF="../../../net/algart/arrays/ObjectStack.html" title="interface i
  <p>Any class implementing this interface <b>must</b> contain non-primitive elements
  (<A HREF="../../../net/algart/arrays/Array.html#elementType()"><CODE>Array.elementType()</CODE></A> must not return a primitive type).</p>
 
- <p>AlgART Laboratory 2007-2013</p>
+ <p>AlgART Laboratory 2007&ndash;2014</p>
 <P>
 
 <P>
@@ -436,12 +436,6 @@ setData</H3>
  but may set the corresponding array elements to some default value,
  if <tt>null</tt> elements are not supported
  by the <A HREF="../../../net/algart/arrays/MemoryModel.html" title="interface in net.algart.arrays"><CODE>memory model</CODE></A> (as in a case of <A HREF="../../../net/algart/arrays/CombinedMemoryModel.html" title="class in net.algart.arrays"><CODE>CombinedMemoryModel</CODE></A>).
-
- <p>Note: if <tt>IndexOutOfBoundsException</tt> occurs due to attempt to read data outside the passed
- Java array, this AlgART array can be partially filled.
- In other words, this method <b>can be non-atomic regarding this failure</b>.
- All other possible exceptions are checked in the very beginning of this method
- before any other actions (the standard way for checking exceptions).
 <P>
 </DD>
 <DD><DL>

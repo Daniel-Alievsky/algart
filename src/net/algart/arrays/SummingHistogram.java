@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2013 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -267,7 +267,7 @@ package net.algart.arrays;
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
  * and can be synchronized manually, if multithread access is necessary.</p>
  *
- * <p>AlgART Laboratory 2007-2013</p>
+ * <p>AlgART Laboratory 2007&ndash;2014</p>
  *
  * @author Daniel Alievsky
  * @version 1.2

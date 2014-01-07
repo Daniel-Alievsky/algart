@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2013 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -138,7 +138,7 @@ import net.algart.matrices.spectra.ComplexScalarSampleArray.*;
  * {@link #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix, Matrix, Matrix, Matrix)} method,
  * if all processed matrices have the same <tt>float</tt> or <tt>double</tt> element types.</p>
  *
- * <p>AlgART Laboratory 2007-2013</p>
+ * <p>AlgART Laboratory 2007&ndash;2014</p>
  *
  * @author Daniel Alievsky
  * @version 1.2

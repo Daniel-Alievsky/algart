@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2013 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -173,7 +173,7 @@ import java.util.logging.Logger;
  * there are no ways to modify settings of its instance returned by {@link #getInstance()}
  * or {@link #getInstance(DataFileModel)} methods.</p>
  *
- * <p>AlgART Laboratory 2007-2013</p>
+ * <p>AlgART Laboratory 2007&ndash;2014</p>
  *
  * @author Daniel Alievsky
  * @version 1.2
@@ -658,7 +658,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * <tt>byteValue&amp;(1&lt;&lt;(k%8))</tt>, where <tt>byteValue</tt> is a byte at position
      * depending on <tt>byteOrder</tt>.
      *
-     * <p>This method opens the data file in read-write mode
+     * <p>This method opens the data file in read-only mode
      * by {@link DataFile#open(boolean) DataFile.open(true)} method.
      *
      * <p>If the data file with the specified path <tt>filePath</tt> does not exist yet,
@@ -693,6 +693,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @see #asLongArray(Object, long, long, ByteOrder)
      * @see #asFloatArray(Object, long, long, ByteOrder)
      * @see #asDoubleArray(Object, long, long, ByteOrder)
+     * @see Arrays#copyBytesToArray(UpdatablePArray, byte[])
      */
     public PArray asArray(P filePath,
         Class<?> elementType, long filePosition, long fileAreaSize, ByteOrder byteOrder)
@@ -873,6 +874,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @see #asUpdatableLongArray(Object, long, long, boolean, ByteOrder)
      * @see #asUpdatableFloatArray(Object, long, long, boolean, ByteOrder)
      * @see #asUpdatableDoubleArray(Object, long, long, boolean, ByteOrder)
+     * @see Arrays#copyArrayToBytes(byte[], PArray)
      */
     public UpdatablePArray asUpdatableArray(P filePath,
         Class<?> elementType, long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)

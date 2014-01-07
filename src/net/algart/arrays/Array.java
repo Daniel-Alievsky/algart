@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2013 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ import java.nio.ByteOrder;
  * Please see more details in the
  * <a href="package-summary.html#multithreading">package description</a>.</p>
  *
- * <p>AlgART Laboratory 2007-2013</p>
+ * <p>AlgART Laboratory 2007&ndash;2014</p>
  *
  * @author Daniel Alievsky
  * @version 1.2
@@ -252,17 +252,10 @@ public interface Array {
      * In any case, you can be sure that if some of target elements <tt>destArray[k]==null</tt>,
      * this method always allocate new element.
      *
-     * <p>Note: if <tt>IndexOutOfBoundsException</tt> occurs due to attempt to write data outside the passed
-     * Java array, the target Java array can be partially filled.
-     * In other words, this method <b>can be non-atomic regarding this failure</b>.
-     * All other possible exceptions are checked in the very beginning of this method
-     * before any other actions (the standard way for checking exceptions).
-     *
      * @param arrayPos  starting position in this AlgART array.
      * @param destArray the target Java array.
      * @throws NullPointerException      if <tt>destArray</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException  if <tt>destArray</tt> argument is not an array.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target Java array.
      * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
      *                                   {@link #elementType()}.
      * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array

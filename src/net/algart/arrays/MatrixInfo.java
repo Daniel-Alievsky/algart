@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2013 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -155,7 +155,7 @@ import java.util.Map;
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
- * <p>AlgART Laboratory 2007-2013</p>
+ * <p>AlgART Laboratory 2007&ndash;2014</p>
  *
  * @author Daniel Alievsky
  * @version 1.2
@@ -170,12 +170,16 @@ public abstract class MatrixInfo {
      * This length is enough to store
      * <nobr>{@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS} =
      * {@value net.algart.arrays.Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</nobr>
-     * matrix dimensions, start signature, element type, byte order and more than 63 KB of additional information.
+     * matrix dimensions, start signature, element type, byte order and more than 7 KB of additional information.
+     *
+     * <p>Note that this limit guarantees that the string {@link #toChars()} can be written and restored via
+     * <tt>DataOutput.writeUTF</tt> and <tt>DataInput.readUTF</tt> methods, because the required number of
+     * bytes in the modified UTF-8 representation is much less than 65535 (the limit for these Java I/O methods).
      *
      * @see #toBytes()
      * @see #toChars()
      */
-    public static final int MAX_SERIALIZED_MATRIX_INFO_LENGTH = 65536;
+    public static final int MAX_SERIALIZED_MATRIX_INFO_LENGTH = 8192;
 
     /**
      * The maximal number of {@link #additionalProperties() additional properties}, that can be stored in this object:

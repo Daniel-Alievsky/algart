@@ -246,7 +246,7 @@ extends java.lang.Object</PRE>
  <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  there are no ways to modify settings of the created instance.</p>
 
- <p>AlgART Laboratory 2007-2013</p>
+ <p>AlgART Laboratory 2007&ndash;2014</p>
 <P>
 
 <P>
@@ -295,7 +295,7 @@ Field Summary</CAPTION>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The maximal allowed length of byte array or <tt>String</tt>, returned by
- <A HREF="../../../net/algart/arrays/MatrixInfo.html#toBytes()"><CODE>toBytes()</CODE></A> / <A HREF="../../../net/algart/arrays/MatrixInfo.html#toChars()"><CODE>toChars()</CODE></A> methods: 65536.</TD>
+ <A HREF="../../../net/algart/arrays/MatrixInfo.html#toBytes()"><CODE>toBytes()</CODE></A> / <A HREF="../../../net/algart/arrays/MatrixInfo.html#toChars()"><CODE>toChars()</CODE></A> methods: 8192.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -554,11 +554,15 @@ MAX_SERIALIZED_MATRIX_INFO_LENGTH</H3>
 public static final int <STRONG>MAX_SERIALIZED_MATRIX_INFO_LENGTH</STRONG></PRE>
 <DL>
 <DD>The maximal allowed length of byte array or <tt>String</tt>, returned by
- <A HREF="../../../net/algart/arrays/MatrixInfo.html#toBytes()"><CODE>toBytes()</CODE></A> / <A HREF="../../../net/algart/arrays/MatrixInfo.html#toChars()"><CODE>toChars()</CODE></A> methods: 65536.
+ <A HREF="../../../net/algart/arrays/MatrixInfo.html#toBytes()"><CODE>toBytes()</CODE></A> / <A HREF="../../../net/algart/arrays/MatrixInfo.html#toChars()"><CODE>toChars()</CODE></A> methods: 8192.
  This length is enough to store
  <nobr><A HREF="../../../net/algart/arrays/Matrix.html#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS"><CODE>Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS</CODE></A> =
  <A HREF="../../../net/algart/arrays/Matrix.html#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS">9</A></nobr>
- matrix dimensions, start signature, element type, byte order and more than 63 KB of additional information.
+ matrix dimensions, start signature, element type, byte order and more than 7 KB of additional information.
+
+ <p>Note that this limit guarantees that the string <A HREF="../../../net/algart/arrays/MatrixInfo.html#toChars()"><CODE>toChars()</CODE></A> can be written and restored via
+ <tt>DataOutput.writeUTF</tt> and <tt>DataInput.readUTF</tt> methods, because the required number of
+ bytes in the modified UTF-8 representation is much less than 65535 (the limit for these Java I/O methods).
 <P>
 </DD>
 <DD><DL>

@@ -273,7 +273,7 @@ extends <A HREF="../../../net/algart/arrays/AbstractMemoryModel.html" title="cla
  there are no ways to modify settings of its instance returned by <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#getInstance()"><CODE>getInstance()</CODE></A>
  or <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#getInstance(net.algart.arrays.DataFileModel)"><CODE>getInstance(DataFileModel)</CODE></A> methods.</p>
 
- <p>AlgART Laboratory 2007-2013</p>
+ <p>AlgART Laboratory 2007&ndash;2014</p>
 <P>
 
 <P>
@@ -1513,7 +1513,7 @@ public <A HREF="../../../net/algart/arrays/PArray.html" title="interface in net.
  <tt>byteValue&amp;(1&lt;&lt;(k%8))</tt>, where <tt>byteValue</tt> is a byte at position
  depending on <tt>byteOrder</tt>.
 
- <p>This method opens the data file in read-write mode
+ <p>This method opens the data file in read-only mode
  by <A HREF="../../../net/algart/arrays/DataFile.html#open(boolean)"><CODE>DataFile.open(true)</CODE></A> method.
 
  <p>If the data file with the specified path <tt>filePath</tt> does not exist yet,
@@ -1545,7 +1545,8 @@ public <A HREF="../../../net/algart/arrays/PArray.html" title="interface in net.
 <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#asIntArray(P, long, long, java.nio.ByteOrder)"><CODE>asIntArray(Object, long, long, ByteOrder)</CODE></A>, 
 <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#asLongArray(P, long, long, java.nio.ByteOrder)"><CODE>asLongArray(Object, long, long, ByteOrder)</CODE></A>, 
 <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#asFloatArray(P, long, long, java.nio.ByteOrder)"><CODE>asFloatArray(Object, long, long, ByteOrder)</CODE></A>, 
-<A HREF="../../../net/algart/arrays/LargeMemoryModel.html#asDoubleArray(P, long, long, java.nio.ByteOrder)"><CODE>asDoubleArray(Object, long, long, ByteOrder)</CODE></A></DD></DL>
+<A HREF="../../../net/algart/arrays/LargeMemoryModel.html#asDoubleArray(P, long, long, java.nio.ByteOrder)"><CODE>asDoubleArray(Object, long, long, ByteOrder)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Arrays.html#copyBytesToArray(net.algart.arrays.UpdatablePArray, byte[])"><CODE>Arrays.copyBytesToArray(UpdatablePArray, byte[])</CODE></A></DD></DL>
 </DD>
 </DL>
 <HR>
@@ -1647,7 +1648,8 @@ public <A HREF="../../../net/algart/arrays/UpdatablePArray.html" title="interfac
 <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#asUpdatableIntArray(P, long, long, boolean, java.nio.ByteOrder)"><CODE>asUpdatableIntArray(Object, long, long, boolean, ByteOrder)</CODE></A>, 
 <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#asUpdatableLongArray(P, long, long, boolean, java.nio.ByteOrder)"><CODE>asUpdatableLongArray(Object, long, long, boolean, ByteOrder)</CODE></A>, 
 <A HREF="../../../net/algart/arrays/LargeMemoryModel.html#asUpdatableFloatArray(P, long, long, boolean, java.nio.ByteOrder)"><CODE>asUpdatableFloatArray(Object, long, long, boolean, ByteOrder)</CODE></A>, 
-<A HREF="../../../net/algart/arrays/LargeMemoryModel.html#asUpdatableDoubleArray(P, long, long, boolean, java.nio.ByteOrder)"><CODE>asUpdatableDoubleArray(Object, long, long, boolean, ByteOrder)</CODE></A></DD></DL>
+<A HREF="../../../net/algart/arrays/LargeMemoryModel.html#asUpdatableDoubleArray(P, long, long, boolean, java.nio.ByteOrder)"><CODE>asUpdatableDoubleArray(Object, long, long, boolean, ByteOrder)</CODE></A>, 
+<A HREF="../../../net/algart/arrays/Arrays.html#copyArrayToBytes(byte[], net.algart.arrays.PArray)"><CODE>Arrays.copyArrayToBytes(byte[], PArray)</CODE></A></DD></DL>
 </DD>
 </DL>
 <HR>

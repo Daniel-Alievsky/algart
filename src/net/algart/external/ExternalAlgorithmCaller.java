@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2013 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,15 +36,36 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.ByteOrder;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class ExternalAlgorithmCaller {
+    public static enum SerializationMode {
+        JAVA_BASED(ByteOrder.LITTLE_ENDIAN),
+
+        BYTE_BUFFER_LITTLE_ENDIAN(ByteOrder.LITTLE_ENDIAN),
+
+        BYTE_BUFFER_BIG_ENDIAN(ByteOrder.BIG_ENDIAN);
+
+        final ByteOrder byteOrder;
+
+        private SerializationMode(ByteOrder byteOrder) {
+            this.byteOrder = byteOrder;
+        }
+    }
+
+    public static enum DeserializationMode {
+        JAVA_BASED, // cannot be used for deserializing matrices, serialized in BYTE_BUFFER_BIG_ENDIAN mode
+
+        BYTE_BUFFER
+    }
+
+    private static final int SERIALIZATION_BUFFER_SIZE = 65536;
+
     public static final String SYS_DIM_COUNT = "dimCount";                                 // default: 2
     public static final String SYS_COMPONENTWISE = "componentwise";                        // default: false
     public static final String SYS_TILING = "tiling";                                      // default: false
@@ -277,6 +298,100 @@ public abstract class ExternalAlgorithmCaller {
             }
         }
         return result;
+    }
+
+    public static void serializeAlgARTMatrix(
+        ArrayContext context,
+        Matrix<? extends PArray> matrix,
+        OutputStream outputStream,
+        SerializationMode serializationMode)
+        throws IOException
+    {
+        if (serializationMode == null)
+            throw new NullPointerException("Null serialization mode");
+        MatrixInfo matrixInfo = MatrixInfo.valueOf(matrix, 0);
+        matrixInfo = matrixInfo.cloneWithOtherByteOrder(serializationMode.byteOrder);
+        String serializedMatrixInfo = matrixInfo.toChars();
+        PArray array = matrix.array();
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+        dataOutputStream.writeUTF(serializedMatrixInfo);
+        switch (serializationMode) {
+            case JAVA_BASED: {
+                byte[] bytes = null;
+                for (long p = 0, n = array.length(); p < n; ) {
+                    int len = (int) Math.min(n - p, SERIALIZATION_BUFFER_SIZE);
+                    PArray subArray = (PArray) array.subArr(p, len);
+                    bytes = Arrays.copyArrayToBytes(bytes, subArray);
+                    dataOutputStream.write(bytes, 0, Arrays.copyArrayRequiredNumberOfBytes(subArray));
+                    p += len;
+                    if (context != null) {
+                        context.checkInterruptionAndUpdateProgress(array.elementType(), p, n);
+                    }
+                }
+                break;
+            }
+            case BYTE_BUFFER_BIG_ENDIAN:
+            case BYTE_BUFFER_LITTLE_ENDIAN: {
+                Arrays.write(dataOutputStream, array, serializationMode.byteOrder);
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException("Unsupported " + serializationMode);
+        }
+        dataOutputStream.flush();
+    }
+
+    public static Matrix<? extends UpdatablePArray> deserializeAlgARTMatrix(
+        ArrayContext context,
+        InputStream inputStream,
+        DeserializationMode deserializationMode)
+        throws IOException
+    {
+        if (deserializationMode == null)
+            throw new NullPointerException("Null deserialization mode");
+        MemoryModel mm = context == null ? Arrays.SMM : context.getMemoryModel();
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+        String serializedMatrixInfo = dataInputStream.readUTF();
+        MatrixInfo matrixInfo;
+        try {
+            matrixInfo = MatrixInfo.valueOf(serializedMatrixInfo);
+        } catch (IllegalInfoSyntaxException e) {
+            throw new IOException(e);
+        }
+        Matrix<? extends UpdatablePArray> matrix = mm.newMatrix(
+            UpdatablePArray.class, matrixInfo.elementType(), matrixInfo.dimensions());
+        UpdatablePArray array = matrix.array();
+        switch (deserializationMode) {
+            case JAVA_BASED: {
+                if (matrixInfo.byteOrder() != ByteOrder.LITTLE_ENDIAN)
+                    throw new IOException(new IllegalInfoSyntaxException("Cannot deserialize matrix, written "
+                        + "in big-endian byte order; please use " + DeserializationMode.BYTE_BUFFER + " mode"));
+                final long n = array.length();
+                byte[] bytes = null;
+                for (long p = 0; p < n; ) {
+                    int len = (int) Math.min(n - p, SERIALIZATION_BUFFER_SIZE);
+                    UpdatablePArray subArray = array.subArr(p, len);
+                    int numberOfBytes = Arrays.copyArrayRequiredNumberOfBytes(subArray);
+                    if (bytes == null) {
+                        bytes = new byte[numberOfBytes];
+                    }
+                    dataInputStream.readFully(bytes, 0, numberOfBytes);
+                    Arrays.copyBytesToArray(subArray, bytes);
+                    p += len;
+                    if (context != null) {
+                        context.checkInterruptionAndUpdateProgress(array.elementType(), p, n);
+                    }
+                }
+                break;
+            }
+            case BYTE_BUFFER: {
+                Arrays.read(dataInputStream, array, matrixInfo.byteOrder());
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException("Unsupported " + deserializationMode);
+        }
+        return matrix;
     }
 
     public final ArrayContext getContext() {
