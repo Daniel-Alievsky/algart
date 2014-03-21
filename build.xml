@@ -18,6 +18,7 @@
             <compilerarg value="-Xlint"/>
         </javac>
     </target>
+
     <target name="compile-demo">
         <delete dir="demo/classes"/>
         <mkdir dir="demo/classes"/>
@@ -25,6 +26,7 @@
             <compilerarg value="-Xlint"/>
         </javac>
     </target>
+
     <target name="jar">
         <jar destfile="algart.jar" basedir="classes" index="true" compress="false">
             <manifest>
@@ -33,6 +35,7 @@
         </jar>
         <jar destfile="algart-demo.jar" basedir="demo/classes" index="true" compress="false"/>
     </target>
+
     <target name="javadoc">
         <mkdir dir="docs/api/"/>
         <delete>
@@ -92,7 +95,66 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
         <java classpath="classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
             <arg value="docs/api/"/>
         </java>
+
+        <mkdir dir="algart2003/docs/api/"/>
+        <delete>
+            <fileset dir="algart2003/docs/api/" includes="**/*.html"/>
+        </delete>
+        <javadoc destdir="algart2003/docs/api/" author="true" version="true" charset="UTF-8" Locale="en_US" additionalparam="-notimestamp">
+        <!-- Locale is necessary to provide English, not Breakiterator algorithm of parsing the first sentence -->
+            <packageset dir="algart2003/src">
+                <include name="net/algart/**"/>
+            </packageset>
+            <header><![CDATA[
+<!--algartHeader-->
+<div align=\"center\" style=\"margin:0 0 8px 0\">
+<noindex>
+<script type=\"text/javascript\">
+  // Google Analytics
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8233371-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!--Openstat-->
+<span id=\"openstat877799\"></span>
+<script type=\"text/javascript\">
+var openstat = { counter: 877799, next: openstat };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = \"text/javascript\";
+j.src = (\"https:\" == p ? \"https:\" : \"http:\") + \"//openstat.net/cnt.js\";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, \"script\", document.location.protocol);
+</script>
+<!--/Openstat-->
+</noindex>
+
+<!--#include virtual=\"/ad_top_utf8.php\"-->
+</div>
+<div style=\"margin:0\"><noindex><a target=\"_top\" href=\"http://algart.net/\"><i>AlgART Home</i></a></noindex></div>
+<!--/algartHeader-->
+]]></header>
+            <bottom><![CDATA[
+<!--algartBottom-->
+<div align=\"center\" style=\"margin-top:32px;margin-bottom:8px\">
+<!--#include virtual=\"/ad_bottom_utf8.php\"-->
+</div>
+<!--/algartBottom-->
+]]></bottom>
+        </javadoc>
+        <java classpath="classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
+            <arg value="algart2003/docs/api/"/>
+        </java>
     </target>
+
     <target name="zip">
         <delete file="algart.zip" failonerror="false"/>
         <zip destfile="algart.zip" level="9">

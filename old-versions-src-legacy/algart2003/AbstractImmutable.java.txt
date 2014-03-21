@@ -1,0 +1,254 @@
+package net.algart.lib;
+
+import java.lang.reflect.*;
+
+public abstract class AbstractImmutable implements Immutable, Cloneable, java.io.Serializable {
+
+  public static final boolean NO_REFLECTION = ImmutableSystemProperties.getClassBooleanProperty(AbstractImmutable.class,"NO_REFLECTION",false);
+
+  private transient final Class surelyImmutableSuperclass;
+  protected AbstractImmutable(Class surelyImmutableSuperclass) {
+    if (surelyImmutableSuperclass == null)
+      throw new NullPointerException("Null surelyImmutableSuperclass argument in " + AbstractImmutable.class.getName() + " constructor");
+    if (!AbstractImmutable.class.isAssignableFrom(surelyImmutableSuperclass))
+      throw new IllegalArgumentException("Illegal surelyImmutableSuperclass argument in " + AbstractImmutable.class.getName() + " constructor: it must extend " + AbstractImmutable.class);
+    if (!surelyImmutableSuperclass.isAssignableFrom(this.getClass()))
+      throw new IllegalArgumentException("Illegal surelyImmutableSuperclass argument in " + AbstractImmutable.class.getName() + " constructor: it must be a superclass of " + this.getClass());
+    if (java.io.Externalizable.class.isAssignableFrom(this.getClass()))
+      throw new IllegalAccessError("Possible violation of immutability for \"" + this.getClass()
+        + "\" regarding serialized stream: it implements Externalizable interface "
+        + "that allows to create mutable serialized binary streams");
+    this.surelyImmutableSuperclass = surelyImmutableSuperclass;
+    if (!NO_REFLECTION) {
+      for (Class c = this.getClass(); c != surelyImmutableSuperclass; ) {
+        checkAreFieldsImmutable(c);
+        checkWriteObjectMethod(c);
+        c = c.getSuperclass();
+        if (c == null) throw new InternalError(AbstractImmutable.class + " constructor: cannot find " + surelyImmutableSuperclass + " in superclasses");
+      }
+      Method latestToString = null;
+      Method latestHashCode = null;
+      Method latestEquals = null;
+      Method latestClone = null;
+      for (Class c = surelyImmutableSuperclass; c != AbstractImmutable.class; ) {
+        if (latestToString == null) latestToString = findDeclaredMethod(c,"toString",new Class[0]);
+        if (latestHashCode == null) latestHashCode = findDeclaredMethod(c,"hashCode",new Class[0]);
+        if (latestEquals == null) latestEquals = findDeclaredMethod(c,"equals",new Class[] {Object.class});
+        if (latestClone == null) latestClone = findDeclaredMethod(c,"clone",new Class[0]);
+        checkWriteObjectMethod(c);
+        c = c.getSuperclass();
+        if (c == null) throw new InternalError(AbstractImmutable.class + " constructor: cannot find AbstractImmutable in superclasses");
+      }
+      checkStandardMethod("toString()",latestToString);
+      checkStandardMethod("hashCode()",latestHashCode);
+      checkStandardMethod("equals(Object)",latestEquals);
+      checkStandardMethod("clone(Object)",latestClone);
+      if (Modifier.isPublic(latestClone.getModifiers()))
+        throw new IllegalAccessError("Standard method \"" + latestClone + "\" in immutable class " + this.getClass()
+          + " must not be declared public: there are no reasons to clone immutable objects");
+      Throwable cloneException = null;
+      try {
+        this.clone();
+      } catch (Throwable e) {
+        cloneException = e;
+      }
+      if (!(cloneException instanceof CloneNotSupportedException))
+        throw new IllegalAccessError("Standard method \"" + latestClone + "\" in immutable class " + this.getClass()
+          + " must always throw CloneNotSupportedException: there are no reasons to clone immutable objects");
+    }
+  }
+
+  private void checkAreFieldsImmutable(Class c) {
+    Field[] fields = c.getDeclaredFields();
+    for (int k = 0; k < fields.length; k++) {
+      int mod = fields[k].getModifiers();
+      if (!Modifier.isStatic(mod)) {
+        if (!Modifier.isFinal(mod))
+          throw new IllegalAccessError("Possible violation of immutability for \"" + this.getClass()
+            + "\": its predecessor \"" + c.getName() + "\" declares non-static non-final field " + fields[k].getName());
+        Class fieldClass = fields[k].getType();
+        if (!isImmutable(fieldClass))
+          throw new IllegalAccessError("Possible violation of immutability for \"" + this.getClass()
+            + "\": its predecessor \"" + c.getName() + "\" declares non-static field \"" + fields[k]
+            + "\" that is not recognized as immutable by AbstractImmutable.isImmutable method");
+      }
+    }
+  }
+  private void checkAreMethodsFinal(Class c) {
+    int mod = c.getModifiers();
+    if (Modifier.isFinal(mod) ||
+      !(Modifier.isProtected(mod) || Modifier.isPublic(mod))) return;
+    Method[] methods = c.getDeclaredMethods();
+    for (int k = 0; k < methods.length; k++) {
+      mod = methods[k].getModifiers();
+      if (Modifier.isFinal(mod) ||
+        !(Modifier.isProtected(mod) || Modifier.isPublic(mod))) continue;
+      throw new IllegalAccessError("Possible violation of immutability for \"" + this.getClass()
+        + "\": its predecessor \"" + c.getName() + "\" declares non-final overridable method \"" + methods[k]);
+    }
+  }
+  private void checkWriteObjectMethod(Class c) {
+    if (findDeclaredMethod(c,"writeObject",new Class[] {java.io.ObjectOutputStream.class}) != null)
+      throw new IllegalAccessError("Possible violation of immutability for \"" + this.getClass()
+        + "\" regarding serialized stream: its predecessor \"" + c.getName() + "\" declares "
+        + "writeObject method that allows to create mutable serialized binary streams");
+  }
+  private void checkStandardMethod(String name, Method m) {
+    if (m == null)
+      throw new IllegalAccessError("Possible violation of immutability for \"" + this.getClass()
+        + "\": standard " + name + " method is not overrided by the final method");
+    if (!Modifier.isFinal(m.getModifiers()))
+      throw new IllegalAccessError("Possible violation of immutability for \"" + this.getClass()
+        + "\": standard method \"" + m + "\" is not final");
+  }
+  private Method findDeclaredMethod(Class c, String name, Class[] parameterTypes) {
+    try {
+      return c.getDeclaredMethod(name,parameterTypes);
+    } catch (NoSuchMethodException e) {
+      return null;
+    }
+
+  }
+
+  public final Class surelyImmutableSuperclass() {
+    return surelyImmutableSuperclass;
+  }
+  /**
+   * The unmodifiable set of names of all classes that
+   * are considered to be <i>immutable</i> (together with all their
+   * inheritors).
+   *
+   * @see Immutable
+   * @see FriendlyClassName
+   * @see FriendlyClassName.Tools#getRegisteredFriendlyClassNames
+   */
+  public static final java.util.Set FRIENDLY_IMMUTABLE_CLASS_NAMES = ExtendedFriendly.getFriendlyClassNames(Immutable.class);
+    // - The field guarantees that the first access to Immutable interface
+    // initializes TrueStaticSection class and leads to scanning friendly classes
+
+
+  /**
+   * The unmodifiable list of standard Java immutable classes. Unlike elements
+   * of {@link #IMMUTABLE_CLASSES} and immutable classes located in {@link
+   * net.algart.lib} package, inheritors of these classes may be mutable.
+   *
+   * <p>This list doesn't include primitive types (int.class, byte.class, etc.);
+   * they are always recognized as <i>immutable</i>.
+   *
+   * <p>Now contains the following classes:<pre><blockquote>
+    Object.class,
+    Class.class,
+    String.class,
+    Character.class,
+    Byte.class,
+    Short.class,
+    Integer.class,
+    Long.class,
+    Float.class,
+    Double.class,
+    Void.class,
+    java.math.BigInteger.class,
+    java.math.BigDecimal.class,
+    java.io.File.class,
+    java.awt.Color.class
+   * </blockquote></pre>
+   */
+  public static java.util.List STANDARD_JAVA_IMMUTABLE_CLASSES = java.util.Collections.unmodifiableList(java.util.Arrays.asList(new Class[] {
+    Object.class,
+    Class.class,
+    String.class,
+    Character.class,
+    Byte.class,
+    Short.class,
+    Integer.class,
+    Long.class,
+    Float.class,
+    Double.class,
+    Void.class,
+    java.math.BigInteger.class,
+    java.math.BigDecimal.class,
+    java.io.File.class,
+    java.awt.Color.class,
+  }));
+
+  /**
+   * This method does nothing, but calling it guarantees that this class
+   * will be completely initialized and that all friendly classes
+   * will be scanned.
+   * We recommend to call this method in the very beginning of the application.
+   */
+  public static void initializeClass() {
+  }
+
+  /**
+   * Checks whether the given class can be considered <i>immutable</i>:
+   * see comments to {@link Immutable} interface.
+   *
+   * @param clazz The checked class
+   * @return      true, if the checked class is immutable     *
+   * @see         Immutable
+   */
+  public static boolean isImmutable(Class clazz) {
+    if (clazz == null) throw new NullPointerException("Null clazz argument in isImmutable method");
+    if (knownImmutableClasses.contains(clazz))
+      return true;
+    if (clazz.isPrimitive())
+      return true;
+    for (; clazz != null; clazz = clazz.getSuperclass()) {
+      if (!Immutable.class.isAssignableFrom(clazz))
+        return false;
+      String name = clazz.getName();
+      int p = name.lastIndexOf(".");
+      if (name.substring(0,p+1).equals(algartPackageNameWithEndDot)) {
+        knownImmutableClasses.add(clazz);
+        return true;
+      }
+      if (FRIENDLY_IMMUTABLE_CLASS_NAMES.contains(name)) {
+        knownImmutableClasses.add(clazz);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Must be called at the end of the inheritor's constructor
+   */
+  protected final void storeCleanCopy() {
+    try {
+      this.cleanCopy = (AbstractImmutable)super.clone();
+    } catch (CloneNotSupportedException e) {
+      throw new InternalError(e.toString());
+    }
+  }
+
+  private transient AbstractImmutable cleanCopy = null;
+  protected final Object writeReplace() throws java.io.ObjectStreamException {
+    checkCleanCopy();
+    return this.cleanCopy;
+  }
+  private void checkCleanCopy() {
+    if (cleanCopy == null)
+      throw new IllegalStateException("storeCleanCopy() method has not been called in the constructor of " + surelyImmutableSuperclass);
+  }
+
+  private transient final Object finalizerGuardian = new Object() {
+    protected void finalize() throws Throwable {
+      try {
+        checkCleanCopy();
+      } catch (Exception e) {
+        System.err.println("Finalizer of " + AbstractImmutable.this + " detected the following problem");
+        e.printStackTrace();
+      }
+    }
+  };
+
+  private static final java.util.Set knownImmutableClasses = new java.util.HashSet(STANDARD_JAVA_IMMUTABLE_CLASSES);
+  private static final String algartPackageNameWithEndDot;
+  static {
+    String s = Immutable.class.getName();
+    int p = s.lastIndexOf(".");
+    algartPackageNameWithEndDot = s.substring(0,p+1);
+  }
+
+}

@@ -1,0 +1,186 @@
+package net.algart.lib;
+
+import java.util.*;
+
+/**
+ * <p><i>Immutable</i> equivalent of standard <code>Map</code> implementations.
+ * Allows to store only <code>String</code> keys and <@link Immutable} values.
+ *
+ * @author  Daniel Alievsky
+ * @version 1.0
+ */
+
+public class ImmutableMapOld implements Cloneable, Map {
+
+  /**
+   * Builds an immutable map with the same content as m parameter.
+   * Will use storageMapClass for creating internal data storage,
+   * for example, HashMap.class; it MUST BE one of the following classes:
+   *     HashMap, LinkedHashMap, TreeMap
+   * (It allows to be ensured that the resulting object will be truly immutable.)
+   * All non-String keys (including null) will be converted into String type.
+   * All non-String values that are not equal to null will be converted into String type.
+   *
+   * @throws IllegalArgumentException if storageMapClass is not one of permitted classes
+   */
+  public ImmutableMapOld(Map m, Class storageMapClass) {
+    if (storageMapClass != HashMap.class &&
+      storageMapClass != LinkedHashMap.class &&
+      storageMapClass != TreeMap.class)
+      throw new IllegalArgumentException("Cannot create ImmutableMap with storage map class \""+storageMapClass+"\": only HashMap, LinkedHashMap, TreeMap are allowed (to be ensured that the resulting map will be truly immutable)");
+    this.storage = createStorage(m,storageMapClass);
+    // - necessary to provide correct keySet, values and entrySet methods
+  }
+  /**
+   * An equivalent of <code>ImmutableMap(m,m.getClass())</code>.
+   * m.getClass() MUST BE equal to
+   *    HashMap.class, LinkedHashMap.class or TreeMap.class
+   *
+   * @throws IllegalArgumentException if m.getClass() is not one of permitted classes
+   */
+  public ImmutableMapOld(Map m) throws IllegalArgumentException {
+    this(m,m.getClass());
+  }
+
+  /**
+   * keyValuePairs should contain even number of strings: key, value, key, value, ..., or can be null
+   * In other case, the last element of the array is ignored.
+   * If some key appears twice or several times, the first appearance is the most important.
+   * Will use storageMapClass for creating internal data storage,
+   * for example, HasmMap.class; MUST BE one of the following classes:
+   *     HashMap, LinkedHashMap, TreeMap
+   * (It allows to be ensured that the resulting object will be truly immutable.)
+   *
+   * @throws IllegalArgumentException if storageMapClass is not one of permitted classes
+   */
+  public ImmutableMapOld(String[] keyValuePairs, boolean skipNullValues, Class storageMapClass) {
+    if (storageMapClass != HashMap.class &&
+      storageMapClass != LinkedHashMap.class &&
+      storageMapClass != TreeMap.class)
+      throw new IllegalArgumentException("Cannot create ImmutableMap with storage map class \""+storageMapClass+"\": only HashMap, LinkedHashMap, TreeMap are allowed (to be ensured that the resulting map will be truly immutable)");
+    try {
+      this.storage = (Map)storageMapClass.newInstance();
+    } catch (InstantiationException e) {
+      throw (InternalError)new InternalError(e.toString()).initCause(e);
+    } catch (IllegalAccessException e) {
+      throw (InternalError)new InternalError(e.toString()).initCause(e);
+    }
+    int len = keyValuePairs.length;
+    for (int k = len&~0x1; k > 0; k-=2) {
+      Object key = keyValuePairs[k-2];
+      Object value = keyValuePairs[k-1];
+      if (!skipNullValues || value != null) this.storage.put(key,value);
+    }
+  }
+  /**
+   * Internal data storage will be LinkedHashMap
+   */
+  public ImmutableMapOld(String[] keyValuePairs, boolean skipNullValues) {
+    this(keyValuePairs,skipNullValues,LinkedHashMap.class);
+  }
+
+  // Implementation of Map interface
+  public final int size() 		              {return storage.size();}
+  public final boolean isEmpty() 	              {return storage.isEmpty();}
+  public final boolean containsKey(Object key)      {return storage.containsKey(key);}
+  public final boolean containsValue(Object val)    {return storage.containsValue(val);}
+  public final Object get(Object key) 	      {return storage.get(key);}
+
+  public final Object put(Object key, Object value) {throw new UnsupportedOperationException();}
+  public final Object remove(Object key)            {throw new UnsupportedOperationException();}
+  public final void putAll(Map t)                   {throw new UnsupportedOperationException();}
+  public final void clear()                         {throw new UnsupportedOperationException();}
+
+  private transient Map storageUnmodifiable = null;
+  public final Set keySet() {
+    if (storageUnmodifiable == null) storageUnmodifiable = Collections.unmodifiableMap(storage);
+    return storageUnmodifiable.keySet();
+  }
+  public final Set entrySet() {
+    if (storageUnmodifiable == null) storageUnmodifiable = Collections.unmodifiableMap(storage);
+    return storageUnmodifiable.entrySet();
+  }
+  public final Collection values() {
+    if (storageUnmodifiable == null) storageUnmodifiable = Collections.unmodifiableMap(storage);
+    return storageUnmodifiable.values();
+  }
+
+  public final String toString() {
+    return storage.toString();
+  }
+  public final synchronized int hashCode() {
+    if (!hashCodeCalculated) hashCode = storage.hashCode();
+    return hashCode;
+  }
+  public final boolean equals(Object o) {
+    if (hashCodeCalculated
+      && o instanceof ImmutableMapOld
+      && ((ImmutableMapOld)o).hashCodeCalculated
+      && hashCode != ((ImmutableMapOld)o).hashCode)
+      return false;
+    return storage.equals(o);
+  }
+
+  // Implementation of Cloneable interface
+  protected final Object clone() throws CloneNotSupportedException {
+    throw new CloneNotSupportedException();
+  }
+
+  // Additional functions
+  public final String get(String key) {
+    return (String)storage.get(key);
+  }
+  public final Map toMutableMap() {
+    return createStorage(this.storage,this.storage.getClass());
+  }
+
+  public final ImmutableMapOld change(String key, String newValue, boolean skipNullValues) {
+    ImmutableMapOld result = null;
+    try {
+      result = (ImmutableMapOld)super.clone();
+    } catch (CloneNotSupportedException e) {
+      throw (InternalError)new InternalError(e.toString()).initCause(e);
+    }
+    result.storage = createStorage(this.storage,this.storage.getClass());
+    key = String.valueOf(key);
+    if (skipNullValues && newValue == null) {
+      result.privateRemove(key);
+    } else {
+      result.privatePut(key,newValue);
+    }
+    return result;
+  }
+
+  private Map storage;
+  private Map createStorage(Map m, Class storageMapClass) {
+    Map result;
+    try {
+      result = (Map)storageMapClass.newInstance();
+    } catch (InstantiationException e) {
+      throw (InternalError)new InternalError(e.toString()).initCause(e);
+    } catch (IllegalAccessException e) {
+      throw (InternalError)new InternalError(e.toString()).initCause(e);
+    }
+    Set entries = m.entrySet();
+    for (Iterator i = entries.iterator(); i.hasNext(); ) {
+      Map.Entry entry = (Map.Entry)i.next();
+      String key = String.valueOf(entry.getKey());
+      Object v = entry.getValue();
+      String value = v == null? null: v.toString();
+      result.put(key,value);
+    }
+    return result;
+  }
+
+  private boolean hashCodeCalculated = false;
+  private int hashCode = -1;
+  private Object privateRemove(String key) {
+    hashCodeCalculated = false;
+    return storage.remove(key);
+  }
+  private Object privatePut(String key, String value) {
+    hashCodeCalculated = false;
+    return storage.put(key,value);
+  }
+
+}

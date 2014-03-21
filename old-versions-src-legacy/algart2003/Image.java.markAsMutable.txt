@@ -1,0 +1,46 @@
+package net.algart.image;
+
+import java.util.*;
+
+/* UNDER CONSTRUCION! */
+public abstract class Image {
+    //TODO!! serializable
+    //TODO!! clone: always clone attributes
+    //TODO!! toString, hashCode, equals
+    //TODO!! ?? aperture access with quick move to another position; control whether pixels in it must be y-x-ordered
+    // For complex algorithm, difference ~20-30% as a maximum
+
+    final int sx, sy;
+    final long immCheckSum;
+
+    boolean dirty = false;
+    Hashtable attributes;
+
+    Image(int sx, int sy, long immCheckSum) {
+        this.sx = sx;
+        this.sy = sy;
+        this.immCheckSum = immCheckSum;
+    }
+
+    public final void markAsMutable() {
+    // Must be called before any changes in component arrays
+        dirty = true;
+    }
+
+    protected abstract long checkSum();
+
+    public final void checkIntegrity() {
+    //TODO!! call it from finalize
+        if (!dirty && checkSum() != immCheckSum)
+            throw new RuntimeException("Internal problem: image " + this + " is DESTROYED!");
+    }
+
+    public Object setAttribute(Object key, Object value) {
+        return attributes.put(key,value);
+        //TODO!! separate class for attribute non-string key constants
+    }
+    public Object getAttribute(Object key) {
+        return attributes.get(key);
+    }
+
+}
