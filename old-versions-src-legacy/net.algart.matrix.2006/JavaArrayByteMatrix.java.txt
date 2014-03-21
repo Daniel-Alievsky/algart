@@ -1,0 +1,91 @@
+package net.algart.matrix;
+
+/**
+ * <p>WARNING: WILL BE REMOVED SOON! Simplest Implementation of Byte Matrix</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.1
+ * @since JDK1.0
+ * @deprecated
+ */
+public class JavaArrayByteMatrix extends AbstractMatrix implements ByteMatrix {
+    final byte[] bytes;
+
+    JavaArrayByteMatrix(byte[] bytes, int sx, int sy) {
+        super(byte.class, sx, sy);
+        if (bytes == null)
+            throw new NullPointerException("Cannot allocate ArrayByteMatrix: null bytes array");
+        if (bytes.length == 0)
+            throw new NullPointerException("Cannot allocate ArrayByteMatrix: empty bytes array");
+        if ((long)sx * (long)sy != bytes.length)
+            throw new IllegalArgumentException("Cannot allocate ArrayByteMatrix: the length of bytes array "
+                + bytes.length + " != sx*sy = " + ((long)sx * (long)sy));
+        this.bytes = bytes;
+    }
+
+    public int getByte(int x, int y) {
+        return bytes[y * sx + x] & 0xFF;
+    }
+
+    public void setByte(int x, int y, byte value) {
+        bytes[y * sx + x] = value;
+    }
+
+    public double getByteInterpolated(double x, double y) {
+        return bytes[(int)y * sx + (int)x] & 0xFF;
+    }
+
+    public void setByteIfInside(int x, int y, byte value) {
+        if (x < 0 || y < 0 || x >= sx || y >= sy) return;
+        bytes[y * sx + x] = value;
+    }
+
+    /**
+     * Returns the byte matrix with the given sizes backed by the specified array.
+     * (Changes to the returned matrix "write through" to the array.)
+     * In the returned instance, <tt>getInterpolated</tt> method returns
+     * the same result as <tt>getByte((int)x), (int)y)</tt>.
+     */
+    public static JavaArrayByteMatrix asInstance(byte[] bytes, int sx, int sy) {
+        return new JavaArrayByteMatrix(bytes, sx, sy);
+    }
+
+    /**
+     * Returns the byte matrix with the given sizes backed by the specified array.
+     * (Changes to the returned matrix "write through" to the array.)
+     * In the returned instance, <tt>getInterpolated</tt> method returns
+     * the result of bilinear interpolation.
+     */
+    public static JavaArrayByteMatrix asInstanceBilinear(byte[] bytes, int sx, int sy) {
+        return new JavaArrayBilinearByteMatrix(bytes, sx, sy);
+    }
+
+    /**
+     * Returns the byte array that backs this matrix.
+     */
+    public byte[] asByteArray() {
+        return bytes;
+    }
+
+    private static class JavaArrayBilinearByteMatrix extends JavaArrayByteMatrix {
+        private JavaArrayBilinearByteMatrix(byte[] bytes, int sx, int sy) {
+            super(bytes, sx, sy);
+        }
+
+        public double getByteInterpolated(double x, double y) {
+            final int ix = (int)x;
+            final int iy = (int)y;
+            final int a = bytes[iy * sx + ix] & 0xFF;
+            final int b = bytes[iy * sx + ix + 1] & 0xFF;
+            final int c = bytes[(iy + 1) * sx + ix] & 0xFF;
+            final int d = bytes[(iy + 1) * sx + ix + 1] & 0xFF;
+            double v1 = (a - b) * (ix - x) + a;
+            double v2 = (c - d) * (ix - x) + c;
+            return (v1 - v2) * (iy - y) + v1;
+//            double v1 = (bytes[iy * sx + ix] & 0xFF) * (ix + 1 - x) + (bytes[iy * sx + ix + 1] & 0xFF) * (x - ix);
+//            double v2 = (bytes[(iy + 1) * sx + ix] & 0xFF) * (ix + 1 - x) + (bytes[(iy + 1) * sx + ix + 1] & 0xFF) * (x - ix);
+//            return v1 * (iy + 1 - y) + v2 * (y - iy);
+        }
+    }
+
+}

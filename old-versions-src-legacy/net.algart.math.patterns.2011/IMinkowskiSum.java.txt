@@ -1,0 +1,307 @@
+package net.algart.math.patterns;
+
+import net.algart.math.IPoint;
+import net.algart.math.IRange;
+
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
+import java.util.*;
+
+/**
+ * <p>The implementation of the Minkowski sum of several pattern,
+ * returned by {@link Patterns#newMinkowskiSum(Pattern[])} method.</p>
+ *
+ * <p>AlgART Laboratory 2007-2012</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ */
+final class IMinkowskiSum extends AbstractIntegerPattern implements Pattern {
+    private final Pattern[] summands;
+    private final List<Pattern> optimizedSummands;
+    private final Pattern[] projections;
+    private volatile Reference<Set<IPoint>> points;
+
+    IMinkowskiSum(Pattern[] patterns) {
+        this(patterns, null);
+    }
+
+    private IMinkowskiSum(Pattern[] patterns, List<Pattern> optimizedSummands) {
+        super(getDimCountAndCheck(patterns), true);
+        List<Pattern> allSummands = new ArrayList<Pattern>();
+        for (Pattern ptn : patterns) {
+            if (ptn instanceof IMinkowskiSum) {
+                allSummands.addAll(Arrays.asList(((IMinkowskiSum)ptn).summands));
+            } else {
+                allSummands.add(ptn);
+            }
+            // An alternate idea could be using ptn.minkowskiDecomposition always.
+            // But it will lead to much worse results of multiply method
+            // for a case of rectangular summands: they will be decomposed
+            // into sets of pairs with little coordinates, that cannot be
+            // multiplied with good precision.
+        }
+        long[] minCoord = new long[dimCount]; // zero-filled
+        long[] maxCoord = new long[dimCount]; // zero-filled
+        for (Pattern ptn : allSummands) {
+            for (int k = 0; k < dimCount; k++) {
+                IRange range = ptn.roundedCoordRange(k);
+                minCoord[k] = RectangularIPattern.sumWithOverflowCheck(minCoord[k], range.min());
+                maxCoord[k] = RectangularIPattern.sumWithOverflowCheck(maxCoord[k], range.max());
+            }
+        }
+        for (int k = 0; k < dimCount; k++) {
+            this.integerCoordRanges[k] = IRange.valueOf(minCoord[k], maxCoord[k]);
+        }
+        this.summands = allSummands.toArray(new Pattern[allSummands.size()]);
+        if (optimizedSummands == null) {
+            this.optimizedSummands = optimizeMinkowskiSum(allSummands);
+        } else {
+            this.optimizedSummands = optimizedSummands;
+        }
+        this.projections = new Pattern[dimCount]; //null-filled
+    }
+
+    @Override
+    public long pointCount() {
+        return roundedPoints().size();
+    }
+
+    @Override
+    public boolean contains(IPoint point) {
+        return roundedPoints().contains(point);
+    }
+
+    @Override
+    public Set<IPoint> roundedPoints() {
+        Set<IPoint> resultPoints = points == null ? null : points.get();
+        if (resultPoints == null) {
+            Pattern ptn = new SimpleIPattern(optimizedSummands.get(0).roundedPoints());
+            // this actualization is necessary for a case when minkowskiAdd method just return MinkowskiSum instance
+            for (int k = 1, n = optimizedSummands.size(); k < n; k++) {
+                ptn = ptn.minkowskiAdd(optimizedSummands.get(k));
+            }
+            resultPoints = ptn.roundedPoints(); // immutable set
+            points = new SoftReference<Set<IPoint>>(resultPoints);
+        }
+        return resultPoints;
+    }
+
+    @Override
+    public IRange roundedCoordRange(int coordIndex) {
+        return integerCoordRanges[coordIndex];
+    }
+
+    @Override
+    public IRange[] roundedCoordRanges() {
+        return integerCoordRanges.clone();
+    }
+
+    @Override
+    public Pattern projectionAlongAxis(int coordIndex) {
+        checkCoordIndex(coordIndex);
+        assert dimCount > 0;
+        if (dimCount == 1)
+            throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
+        synchronized (projections) {
+            if (projections[coordIndex] == null) {
+                Pattern[] newSummands = summands.clone();
+                for (int k = 0; k < newSummands.length; k++) {
+                    newSummands[k] = summands[k].projectionAlongAxis(coordIndex);
+                }
+                projections[coordIndex] = new IMinkowskiSum(newSummands);
+            }
+            return projections[coordIndex];
+        }
+    }
+
+    // Unfortunately, I don't know simple ways to override and optimize lowerSurface and upperSurface.
+    // The idea to sum all left boundaries of this.summands looks attractive, but is really incorrect.
+    // It's enough to consider 2 following summands:
+    //     P1 = {0..9, 20..29},
+    //     P2 = {0..15}.
+    // Then
+    //     P = P1(+)P2 = {0..44}, lowerSurface = {0}
+    // But
+    //     lowerSurface1 = {0, 20},
+    //     lowerSurface2 = {0},
+    //     lowerSurface1(+)lowerSurface2 = {0, 20}
+    // The extra point "20" and no ways to detect this fact without generating full set of P points.
+
+    @Override
+    public UniformGridPattern shift(IPoint shift) {
+        if (shift.coordCount() != dimCount())
+            throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
+                + " is not equal to the number of pattern coordinates " + dimCount());
+        if (shift.isOrigin())
+            return this;
+        Pattern[] newSummands = summands.clone();
+        newSummands[0] = newSummands[0].shift(shift);
+        List<Pattern> newOptimizedSummands = new ArrayList<Pattern>(optimizedSummands);
+        newOptimizedSummands.set(0, newOptimizedSummands.get(0).shift(shift));
+        return new IMinkowskiSum(newSummands, newOptimizedSummands);
+    }
+
+    @Override
+    public UniformGridPattern scale(double... multipliers) {
+        if (multipliers == null)
+            throw new NullPointerException("Null multipliers argument");
+        if (multipliers.length != dimCount())
+            throw new IllegalArgumentException("Illegal number of multipliers: "
+                + multipliers.length + " instead of " + dimCount());
+        Pattern[] newSummands = new Pattern[summands.length];
+        for (int k = 0; k < newSummands.length; k++) {
+            newSummands[k] = summands[k].scale(multipliers);
+        }
+        return new IMinkowskiSum(newSummands);
+    }
+
+    @Override
+    public Pattern minkowskiAdd(Pattern added) {
+        if (added == null)
+            throw new NullPointerException("Null added argument");
+        Pattern[] newSummands = new Pattern[summands.length + 1];
+        System.arraycopy(summands, 0, newSummands, 0, summands.length);
+        newSummands[summands.length] = added;
+        return new IMinkowskiSum(newSummands);
+    }
+
+    @Override
+    public List<Pattern> minkowskiDecomposition(int minimalPointCount) {
+        ArrayList<Pattern> result = new ArrayList<Pattern>();
+        for (Pattern summand : optimizedSummands) {
+            result.addAll(summand.minkowskiDecomposition(minimalPointCount));
+        }
+        int numberOfPatternsWithAtLeast2Points = 0;
+        for (Pattern ptn : result) {
+            long pointCount = ptn.pointCount();
+            if (pointCount > 2) {
+                return Collections.unmodifiableList(result);
+            }
+            if (pointCount > 1) {
+                numberOfPatternsWithAtLeast2Points++;
+            }
+        }
+        if (numberOfPatternsWithAtLeast2Points <= 1) {
+            return Collections.<Pattern> singletonList(this);
+        }
+        return Collections.unmodifiableList(result);
+    }
+
+    @Override
+    public String toString() {
+        int n = optimizedSummands.size();
+        StringBuilder sb = new StringBuilder(dimCount() + "D Minkowski sum of " + n + " patterns: ");
+        for (int k = 0; k < n; k++) {
+            if (k > 0)
+                sb.append(" (+) ");
+            sb.append(optimizedSummands.get(k));
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(summands) ^ getClass().getName().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof IMinkowskiSum))
+            return false;
+        if (obj == this)
+            return true;
+        return Arrays.equals(summands, ((IMinkowskiSum)obj).summands);
+    }
+
+    static int getDimCountAndCheck(Pattern[] patterns) {
+        if (patterns == null)
+            throw new NullPointerException("Null patterns argument");
+        if (patterns.length == 0)
+            throw new IllegalArgumentException("Empty patterns array");
+        if (patterns[0] == null)
+            throw new NullPointerException("Null pattern is the array");
+        int result = patterns[0].dimCount();
+        for (int k = 1; k < patterns.length; k++) {
+            if (patterns[k] == null)
+                throw new NullPointerException("Null pattern #" + k + " is the array");
+            if (patterns[k].dimCount() != result)
+                throw new IllegalArgumentException("Patterns dimensions mismatch: the first pattern has "
+                    + result + " dimensions, but pattern #" + k + " has " + patterns[k].dimCount());
+        }
+        return result;
+    }
+
+    private static List<Pattern> optimizeMinkowskiSum(List<Pattern> patterns) {
+        Map<Pattern, Integer> numbersOfEquals = new HashMap<Pattern, Integer>();
+        Pattern rectangularSummand = null;
+        for (Pattern ptn : patterns) {
+            if ((ptn instanceof OnePointPattern) ||
+                (ptn instanceof UniformGridPattern && ((UniformGridPattern)ptn).isRectangular()))
+            {
+                ptn = new RectangularIPattern(ptn.roundedCoordRanges());
+                rectangularSummand = rectangularSummand == null ? ptn : rectangularSummand.minkowskiAdd(ptn);
+            } else {
+                Integer previousNumber = numbersOfEquals.get(ptn);
+                if (previousNumber == null) {
+                    numbersOfEquals.put(ptn, 1);
+                } else {
+                    numbersOfEquals.put(ptn, previousNumber + 1);
+                }
+            }
+        }
+        List<Map.Entry<Pattern, Integer>> multiPatterns =
+            new ArrayList<Map.Entry<Pattern, Integer>>(numbersOfEquals.entrySet());
+        // Sorting by decreasing number of points
+        Collections.sort(multiPatterns, new Comparator<Map.Entry<Pattern, Integer>>() {
+            public int compare(Map.Entry<Pattern, Integer> o1, Map.Entry<Pattern, Integer> o2) {
+                long pointCount1 = o1.getKey().pointCount();
+                long pointCount2 = o2.getKey().pointCount();
+                return pointCount1 < pointCount2 ? 1 : pointCount1 > pointCount2 ? -1 : 0;
+            }
+        });
+        List<Pattern> result = new ArrayList<Pattern>();
+        if (rectangularSummand != null) {
+            result.add(rectangularSummand);
+        }
+        Pattern last = null;
+        for (Map.Entry<Pattern, Integer> multiPattern : multiPatterns) {
+            Pattern p = multiPattern.getKey();
+            int n = multiPattern.getValue();
+            Pattern c = null;
+            if (n > 1 || last != null) {
+                c = p.carcass();
+            }
+            if (last != null && last.minkowskiAdd(p).equals(last.minkowskiAdd(c))) {
+                // probably true, because patterns were sorted
+                result.add(c);
+            } else {
+                result.add(p);
+            }
+            n--; // 1 pattern used (included into result);
+            if (n > 0) {
+                int maxMultiplier = p.maxCarcassMultiplier();
+                for (int m = 1; ; ) {
+                    if (m > n) {
+                        m = n;
+                    }
+                    assert c != null; // because n > 0 after n--
+                    result.add(c.multiply(m));
+                    n -= m; // m patterns used now
+                    if (n == 0) {
+                        break;
+                    }
+                    assert n >= 0 : "Counter overflow while optimizing Minkowski sum";
+                    if (2 * m >= 0 && // no overflow yet
+                        2 * m <= maxMultiplier)
+                    {
+                        m *= 2;
+                    }
+                }
+            }
+            last = p;
+        }
+        return result;
+    }
+}

@@ -1,0 +1,42 @@
+    private static final int DEFAULT_SIMULTANEOUS_MAPPINGS_LIMIT =
+        InternalUtils.getIntegerProperty(
+        "net.algart.arrays.DefaultDataFileModel.simultaneousMappingsLimit", 0);
+
+    private static final double DEFAULT_ESTIMATED_MINIMAL_DISK_SPEED = Math.max(0.01,
+        InternalUtils.getDoubleProperty(
+        "net.algart.arrays.DefaultDataFileModel.estimatedMinimalDiskSpeed", 0.5)); // 0.5 MB/sec
+
+    /**
+     * <p>This implementation returns the value
+     * <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.simultaneousMappingsLimit",&nbsp;200)</tt>,
+     * stored while initializing this {@link DefaultDataFileModel} class,
+     * or default value 0 if some exception occurred while calling <tt>Integer.getInteger</tt>.
+     * If this value is less than 0, returns 0.
+     *
+     * @return the maximal allowed number of simultaneous mappings of the same file.
+     */
+    public int simultaneousMappingsLimit() {
+        return DEFAULT_SIMULTANEOUS_MAPPINGS_LIMIT <= 0 ? 0 :
+            Math.max(recommendedNumberOfBanks(), DEFAULT_SIMULTANEOUS_MAPPINGS_LIMIT);
+    }
+
+    /**
+     * <p>This implementation returns the value
+     * <tt>Double.parseDouble(System.getProperty("net.algart.arrays.DefaultDataFileModel.simultaneousMappingsLimit"))</tt>,
+     * stored while initializing this {@link DefaultDataFileModel} class,
+     * or default value 0.5 if a case of any problems.
+     * If this value is less than 0.01, returns 0.01.
+     *
+     * @return estimated minimal possible HDD speed, in MB/sec.
+     */
+    public double estimatedMinimalDiskSpeed() {
+        return DEFAULT_ESTIMATED_MINIMAL_DISK_SPEED;
+    }
+
+    public String toString() {
+        return "default data file model: " + recommendedNumberOfBanks()
+            + " banks per " + recommendedBankSize() + " bytes"
+            + (simultaneousMappingsLimit() <= 0 ?
+            "" :
+            ", simultaneous mappings limit " + simultaneousMappingsLimit());
+    }

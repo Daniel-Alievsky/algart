@@ -1,0 +1,347 @@
+package net.algart.performance;
+
+import java.lang.reflect.Method;
+
+/**
+ * <p><i>Time</i>: an object for representation of precise elapsed time
+ * for algorithms and other computer operations. This object is immutable.</p>
+ *
+ * <p>This class always represents some <i>time interval</i>, or a time between some start moment
+ * and another moment. It is not a calendar date or astronomical time.
+ * The way of representing time may depend on implementation; for example, it may be <tt>long</tt>
+ * number of nanoseconds, <tt>double</tt> number of seconds, etc.</p>
+ *
+ * <p>It is guaranteed that this class allows to represent, with maximal possible precision,
+ * any time interval not greater than <b>1000000 (1e6) seconds</b>, or ~13 days.
+ * For longer interval, this class will still work, but the precision may be less than usual.</p>
+ *
+ * <p>The precision of time representation depends on operation system and Java version.
+ * On JRE 1.4 or higher, this class usually provides at least microsecond precision.
+ * On JRE 1.5 or higher, this class provides at least the same precision as <tt>System.nanoTime</tt> method.</p>
+ *
+ * <p>AlgART Laboratory 2007-2008</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.0
+ * @since JDK 1.1
+ */
+public final class Time {
+    private final double nanoSeconds;
+
+    /**
+     * Creates new <tt>Time</tt> instance representing an the specified number of nanoseconds.
+     *
+     * @param nanoSeconds the number of nanoseconds in the created time interval.
+     */
+    private Time(double nanoSeconds) {
+        this.nanoSeconds = nanoSeconds;
+    }
+
+    /**
+     * Creates new <tt>Time</tt> instance representing an interval between the moment
+     * of initializing this class and the current moment.
+     *
+     * @return new <tt>Time</tt> instance representing an interval between the moment
+     * of initializing this class and the current moment.
+     */
+    public static Time currentTime() {
+        return new Time(currentTimeNanoseconds() - startNanoTime);
+    }
+
+    /**
+     * Returns the absolute value of time interval between this moment and <tt>t</tt> moment.
+     * For example:<pre>
+     * Time t1 = new Time(); // moment #1
+     * // ... the code being measured ...
+     * Time t2 = new Time(); // moment #2
+     * System.out.println(t2.diff(t1)); // prints elapsed time between moments #1 and #2
+     * </pre>
+     *
+     * @param t another time moment.
+     * @return  time interval between this and <tt>t</tt> moments (absolute value, always &gt;=0).
+     * @see #toString()
+     */
+    public Time diff(Time t) {
+        return new Time(Math.abs(nanoSeconds - t.nanoSeconds));
+    }
+
+    /**
+     * Returns the sum of this time and <tt>t</tt> time. May be useful for accumulation
+     * of elapsed time of some part of the loop.
+     *
+     * @param t another time interval.
+     * @return  sum of this and <tt>t</tt> time intervals.
+     */
+    public Time add(Time t) {
+        return new Time(nanoSeconds + t.nanoSeconds);
+    }
+
+    /**
+     * Multiplies this time by <tt>value</tt> and returns the result time.
+     *
+     * @param value a multiplier.
+     * @return      this time multiplied by <tt>value</tt>.
+     */
+    public Time mul(double value) {
+        return new Time(nanoSeconds * value);
+    }
+
+    /**
+     * Divides this time by <tt>value</tt> and returns the result time.
+     * Typical example:<pre>
+     * Time t1 = new Time(); // moment #1
+     * for (int k = 0; k < n; k++) {
+     * &#32;   // ... the code being measured ...
+     * }
+     * Time t2 = new Time(); // moment #2
+     * System.out.println(t2.diff(t1).div(n).ns(2));
+     * // prints time of one iteration in nanoseconds with 2 digits after the decimal point.
+     * </pre>
+     *
+     * @param value a divisor.
+     * @return      this time divided by <tt>value</tt>.
+     */
+    public Time div(double value) {
+        return new Time(nanoSeconds / value);
+    }
+
+    /**
+     * Returns this time as a number of nanoseconds with maximal supported presicion.
+     *
+     * @return this time as a number of nanoseconds.
+     */
+    public double ns() {
+        return nanoSeconds;
+    }
+
+    /**
+     * Returns the string decimal representation of this time in nanoseconds
+     * with <tt>digitsInMantissa</tt> digits after the decimal point.
+     * Special cases:<ul>
+     * <li>if <tt>digitsInMantissa &lt; 0</tt>,
+     * the method is equivalent to <tt>String.valueOf({@link #ns()})</tt> call;
+     * <li>if <tt>digitsInMantissa == 0</tt>, the mantissa is not included in the result
+     * (i.e. the method is equivalent to <tt>String.valueOf(Math.round({@link #ns()}))</tt>).
+     * </ul>
+     *
+     * <p>As for <tt>String.valueOf(v)</tt> call, the result is
+     * always written in american (scientific) standard, regardless
+     * of the current regional settings.
+     *
+     * @param digitsInMantissa the number of digits after the decimal point.
+     * @return                 the decimal representation of this time in nanoseconds.
+     */
+    public String ns(int digitsInMantissa) {
+        return toString(nanoSeconds, digitsInMantissa);
+    }
+
+    /**
+     * Returns this time as a number of microseconds with maximal supported presicion.
+     * Equivalent to <tt>thisTime.mul(1.0e-3).{@link #ns()}</tt>.
+     *
+     * @return this time as a number of microseconds.
+     */
+    public double mcs() {
+        return 1.0e-3 * nanoSeconds;
+    }
+
+    /**
+     * Returns the string decimal representation of this time in microseconds
+     * with <tt>digitsInMantissa</tt> digits after the decimal point.
+     * The same results will be returned by the call
+     * <tt>thisTime.mul(1.0e-3).{@link #ns(int)}ns(digitsInMantissa)</tt>.
+     *
+     * @param digitsInMantissa the number of digits after the decimal point.
+     * @return                 the decimal representation of this time in microseconds.
+     * @see #ns(int)
+     */
+    public String mcs(int digitsInMantissa) {
+        return toString(1.0e-3 * nanoSeconds, digitsInMantissa);
+    }
+
+    /**
+     * Returns this time as a number of milliseconds with maximal supported presicion.
+     * Equivalent to <tt>thisTime.mul(1.0e-6).{@link #ns()}</tt>.
+     *
+     * @return this time as a number of milliseconds.
+     */
+    public double ms() {
+        return 1.0e-6 * nanoSeconds;
+    }
+
+    /**
+     * Returns the string decimal representation of this time in milliseconds
+     * with <tt>digitsInMantissa</tt> digits after the decimal point.
+     * The same results will be returned by the call
+     * <tt>thisTime.mul(1.0e-6).{@link #ns(int)}ns(digitsInMantissa)</tt>.
+     *
+     * @param digitsInMantissa the number of digits after the decimal point.
+     * @return                 the decimal representation of this time in milliseconds.
+     * @see #ns(int)
+     */
+    public String ms(int digitsInMantissa) {
+        return toString(1.0e-6 * nanoSeconds, digitsInMantissa);
+    }
+
+    /**
+     * Returns this time as a number of seconds with maximal supported presicion.
+     * Equivalent to <tt>thisTime.mul(1.0e-9).{@link #ns()}</tt>.
+     *
+     * @return this time as a number of seconds.
+     */
+    public double seconds() {
+        return 1.0e-9 * nanoSeconds;
+    }
+
+    /**
+     * Returns the string decimal representation of this time in seconds
+     * with <tt>digitsInMantissa</tt> digits after the decimal point.
+     * The same results will be returned by the call
+     * <tt>thisTime.mul(1.0e-9).{@link #ns(int)}ns(digitsInMantissa)</tt>.
+     *
+     * @param digitsInMantissa the number of digits after the decimal point.
+     * @return                 the decimal representation of this time in seconds.
+     * @see #ns(int)
+     */
+    public String seconds(int digitsInMantissa) {
+        return toString(1.0e-9 * nanoSeconds, digitsInMantissa);
+    }
+
+    /**
+     * Returns the same result as <tt>{@link #ns(int) ns}(digitsInMantissa),</tt> where
+     * the number of digits in mantissa may depend on implementation (-1 in current implementation,
+     * that means the standard string representation).
+     *
+     * @return a string representation of this time.
+     */
+    public String toString() {
+        return String.valueOf(ns());
+    }
+
+    /**
+     * Equivalent to System.nanoTime(), but works also under JDK 1.4.
+     * Under earlier JDKs, returns System.currentTimeMillis() * 1000000L.
+     *
+     * <p>We recommend use <tt>new Time()</tt> construction instead of calling this method.
+     * The only exception is if you want to provide maximal possible speed of getting the current time
+     * for maximal precision of time measuring: this method works little faster than creating
+     * new <tt>Time</tt> instance.
+     *
+     * @return the current value of the system timer, in nanoseconds.
+     */
+    public static long currentTimeNanoseconds() {
+        if (nanoTime != null) {
+            try {
+                return ((Long)nanoTime.invoke(null, EMPTY_OBJECTS_ARRAY)).longValue();
+                // reflection here slows down the call from 1.7 mcs to 1.3 mcs on Pentium-IV, 1800 MHz, JRE 1.6
+            } catch (Exception e) {
+                throw new InternalError(e.toString());
+            }
+        } else if (highResCounter != null) {
+            try {
+                long counter = ((Long)highResCounter.invoke(perf, EMPTY_OBJECTS_ARRAY)).longValue();
+                return counter * 1000000000L / countFreq;
+            } catch (Exception e) {
+                throw new InternalError(e.toString());
+            }
+        } else {
+            return System.currentTimeMillis() * 1000000L;
+        }
+    }
+
+    /**
+     * Returns the string decimal representation of the double argument
+     * with <tt>digitsInMantissa</tt> digits after the decimal point.
+     * Special cases:<ul>
+     * <li>if <tt>digitsInMantissa &lt; 0</tt> or if <tt>v</tt> is <tt>NaN</tt> or infinitity,
+     * the method returns standard string representation of <tt>v</tt>
+     * (i.e. <tt>String.valueOf(v)</tt>);
+     * <li>if <tt>digitsInMantissa == 0</tt>, the mantissa is not included in the result
+     * (i.e. the method returns <tt>String.valueOf(Math.round(v))</tt>).
+     * </ul>
+     *
+     * <p>Examples:<pre>
+     *    toString(100*Math.PI, 5) is "314.15927",
+     *    toString(100.0/3.0, 1) is "33.3",
+     *    toString(100.0/3.0, -1) is "33.333333333333336"
+     * (any other negative <tt>digitsInMantissa</tt> leads to the same result),
+     *    toString(-2.0/3.0, 0) is "-1"
+     * </pre>
+     *
+     * <p>As for <tt>String.valueOf(v)</tt> call, the result is
+     * always written in american (scientific) standard, regardless
+     * of the current regional settings.
+     *
+     * @param v                the double number.
+     * @param digitsInMantissa the number of digits after the decimal point.
+     * @return                 the decimal representation of the given number.
+     */
+    static String toString(double v, int digitsInMantissa) {
+        if (Double.isNaN(v) || Double.isInfinite(v) || digitsInMantissa < -1)
+            return String.valueOf(v);
+        if (digitsInMantissa == 0)
+            return String.valueOf(Math.round(v));
+        for (int i = 1; i <= digitsInMantissa; i++)
+            v *= 10;
+        String s = String.valueOf(Math.round(Math.abs(v)));
+        int len = s.length();
+        while (len < digitsInMantissa + 1) {
+            s = "0" + s; len++;
+        } //it is needed when |v|<1.0
+        return ((v < 0.0) ? "-" : "") + s.substring(0, len - digitsInMantissa)
+            + "." + s.substring(len - digitsInMantissa, len);
+    }
+
+    private static Class[] EMPTY_CLASSES_ARRAY = new Class[0];
+    private static Object[] EMPTY_OBJECTS_ARRAY = new Object[0];
+    private static Object perf = null;
+    private static Method highResCounter = null;
+    private static Method nanoTime = null;
+    private static long countFreq;
+    static {
+        try {
+            nanoTime = System.class.getMethod("nanoTime", EMPTY_CLASSES_ARRAY);
+        } catch (Exception e) {
+            System.out.println("Java 1.1-1.4 code used in static initialization (" + e + ")");
+        }
+        if (nanoTime == null) {
+            try {
+                Method m = Class.forName("sun.misc.Perf").getMethod("getPerf", EMPTY_CLASSES_ARRAY);
+                // don't use Class variable to avoid unchecked warning
+                perf = m.invoke(null, EMPTY_OBJECTS_ARRAY);
+                m = m.getDeclaringClass().getMethod("highResFrequency", EMPTY_CLASSES_ARRAY);
+                countFreq = ((Long)m.invoke(perf, EMPTY_OBJECTS_ARRAY)).longValue();
+                highResCounter = m.getDeclaringClass().getMethod("highResCounter", EMPTY_CLASSES_ARRAY);
+            } catch (Exception e) {
+//                System.out.println("Java 1.1 code used in static initialization (" + e + ")");
+            }
+        }
+    }
+
+    private static long startNanoTime = currentTimeNanoseconds();
+    // should be declared AFTER initializing static fields for reflection
+
+    public static void main(String args[]) {
+        System.out.println("Start time in nanoseconds: " + startNanoTime);
+        System.out.println("Current time in nanoseconds: " + Time.currentTimeNanoseconds());
+        System.out.println("Current time: " + Time.currentTime().seconds(3) + " seconds");
+        long minInterval = Long.MAX_VALUE;
+        for (int k = 0; k < 100; k++) {
+            long t1 = Time.currentTimeNanoseconds();
+            try {
+                Thread.sleep(k);
+            } catch (InterruptedException ex) {
+            }
+            long t2 = Time.currentTimeNanoseconds();
+            if (t2 > t1)
+                minInterval = Math.min(minInterval, t2 - t1);
+        }
+        for (int k = 0; k < 1000000; k++) {
+            long t1 = Time.currentTimeNanoseconds();
+            long t2 = Time.currentTimeNanoseconds();
+            if (t2 > t1)
+                minInterval = Math.min(minInterval, t2 - t1);
+        }
+        System.out.println("Minimal measured interval: " + minInterval + " nanoseconds");
+    }
+}

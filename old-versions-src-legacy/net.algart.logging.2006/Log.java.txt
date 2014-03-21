@@ -1,0 +1,259 @@
+package net.algart.logging;
+
+/**
+ * <p><i>Log</i>: a basic part of functionality of the full {@link Logger} class,
+ * allowing to log messages only.</p>
+ *
+ * <p>This interface is more suitable than {@link Logger} class in the classes
+ * where you need to solve only the very simple task: logging messages,
+ * and don't need to configure logger (set source class, method, context, add handles, etc.)</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.0
+ * @since JDK 1.1
+ */
+public interface Log {
+    /**
+     * This level guarantees that the message will be published by all registered publishers.
+     *
+     * <p>The value of this constant is <tt>Integer.MIN_VALUE</tt>. (It is an analog of standard
+     * <tt>java.util.logging.Level.SEVERE</tt>, which numeric value is <tt>1000</tt>.)
+     *
+     * @see #log(int, Object, boolean)
+     */
+    public static final int ALWAYS = Integer.MIN_VALUE;
+
+    /**
+     * This level is intended for important messages, that should be logged or shown
+     * always or almost always.
+     *
+     * <p>Please use this level for messages about any unexpected situation,
+     * that indicates some errors in the implementation.
+     * For example, it can be used for logging <tt>RuntimeException</tt> or <tt>Error</tt>.
+     *
+     * <p>The value of this constant is <tt>-1000</tt>. (It is an analog of standard
+     * <tt>java.util.logging.Level.SEVERE</tt>, which numeric value is <tt>1000</tt>.)
+     *
+     * @see #logMajor(Object)
+     * @see #log(int, Object, boolean)
+     */
+    public static final int MAJOR = -1000;
+
+    /**
+     * This level is intended for normal messages, for example,
+     * for indicating the stage of algorithm execution or
+     * logging the beginning of some important section of the application.
+     *
+     * <p>It the maximal level which is never buffered, i.e. when {@link #flush()}
+     * method is always called automatically by {@link #log(int, Object, boolean)}.
+     *
+     * <p>The value of this constant is <tt>-800</tt>. (It is an analog of standard
+     * <tt>java.util.logging.Level.INFO</tt>, which numeric value is <tt>800</tt>.)
+     *
+     * @see #log(Object)
+     * @see #log(int, Object, boolean)
+     */
+    public static final int INFO = -800;
+
+    /**
+     * This level is intended for messages about the progress
+     * of algorithm execution, for example, for showing percent of calculations
+     * or logging the internal timing information.
+     *
+     * <p>It is the maximal level which is not blocked by default.
+     *
+     * <p>The value of this constant is <tt>-700</tt>. (It is an analog of standard
+     * <tt>java.util.logging.Level.CONFIG</tt>, which numeric value is <tt>700</tt>.)
+     *
+     * @see #logMinor(Object)
+     * @see #log(int, Object, boolean)
+     */
+    public static final int MINOR = -700;
+
+    /**
+     * This level is intended for additional messages, that are not useful for end-users,
+     * but can help the software author. For example, such messages
+     * may contain very detailed timing information.
+     *
+     * <p>The value of this constant is <tt>-500</tt>. (It is an analog of standard
+     * <tt>java.util.logging.Level.FINE</tt>, which numeric value is <tt>500</tt>.)
+     *
+     * @see #log(int, Object, boolean)
+     */
+    public static final int UNIMPORTANT = -500;
+
+    /**
+     * Maximal possible level: this value, passed to {@link Logger#setRequiredLevel(int)} method,
+     * enables all message levels.
+     *
+     * <p>The value of this constant is <tt>Integer.MAX_VALUE</tt>.
+     *
+     * @see #log(int, Object, boolean)
+     */
+    public static final int ANY = Integer.MAX_VALUE;
+
+    /**
+     * <p>Equivalent to <tt>{@link #log(int, Object, boolean) log}({@link #MAJOR}, message, false)</tt>.
+     * Note: though the <tt>flush</tt> argument is <tt>false</tt>, it is ignored and the message
+     * is never buffered (as well as for the INFO level and all more important levels).
+     *
+     * @param message the message.
+     * @see #log(int, Object, boolean)
+     */
+    public void logMajor(Object message);
+
+    /**
+     * <p>Equivalent to <tt>{@link #log(int, Object, boolean) log}({@link #INFO}, message, false)</tt>.
+     * Note: though the <tt>flush</tt> argument is <tt>false</tt>, it is ignored and the message
+     * is never buffered (as well as for all more important levels).
+     *
+     * @param message the message.
+     * @see #log(int, Object, boolean)
+     */
+    public void log(Object message);
+
+    /**
+     * <p>Equivalent to <tt>{@link #log(int, Object, boolean) log}({@link #MINOR}, message, false)</tt>.
+     *
+     * <p>It is a standard way for indicating progress of the long loops in an algorithm:
+     * showing percent of calculations, current iteration number, etc.
+     * Unlike {@link #log(Object)}, the message passed to this method is usually buffered,
+     * so this call does not slow down the loops.
+     *
+     * @param message the message.
+     * @see #log(int, Object, boolean)
+     * @see #logMinor(Object, boolean)
+     */
+    public void logMinor(Object message);
+
+    /**
+     * <p>Equivalent to <tt>{@link #log(int, Object, boolean) log}({@link #MINOR}, message, flush)</tt>.
+     *
+     * <p>It is a standard way for indicating progress of the long loops in an algorithm:
+     * showing percent of calculations, current iteration number, etc.
+     * The <tt>flush</tt> argument allows to control whether the message will be buffered or no.
+     *
+     * @param message the message.
+     * @param flush   is flushing all buffers necessary.
+     * @see #log(int, Object, boolean)
+     * @see #logMinor(Object)
+     */
+    public void logMinor(Object message, boolean flush);
+
+    /**
+     * <p>Equivalent to <tt>{@link #log(int, Object, boolean) log}(messageLevel, message, false)</tt>.
+     *
+     * @param message      the message.
+     * @param messageLevel the importance level of this message.
+     * @see #log(int, Object)
+     * @throws NullPointerException if the message is <tt>null</tt>.
+     */
+    public void log(int messageLevel, Object message);
+
+    /**
+     * Shows or logs some message. This method works only the passed message level
+     * <i>is not greater</i> than the maximal allowed level specified by
+     * {@link Logger#setRequiredLevel(int)} method.
+     * In other case, this method does nothing.
+     *
+     * <p>The message will be passed to all {@link Logger#addHandler(Handler) publishing handlers}
+     * of this logger and of all its {@link Logger#parent() parent} loggers.
+     * Namely, this logger instance and arguments of this method will be passed
+     * to {@link Logger.Handler#publish(Logger, int, Object)} method
+     * for all registered handlers.
+     * Results will depend on implementation of these handlers.
+     * For example, the message may be shown in some application status line, or logged in a file.
+     *
+     * <p>The message, in the simplest case, is a <tt>String</tt> object. For example,
+     * if this logger is used for indicating the progress of algorithm execution,
+     * it may be a short description of the progress, as the percent of processed data,
+     * elapsed time, the title of current calculation stage, etc.
+     * But it can be better idea to pass an instance of a special class, describing
+     * the execution progress by its fields (separate fields for the execution percent,
+     * number of processed objects, elapsed time, etc.), and provide
+     * an appropriate <tt>toString()</tt> method for publishing handlers
+     * that does not know anything about this class.
+     *
+     * <p>If this message informs about some exception, we recommend to pass corresponding
+     * <tt>Exception</tt> or <tt>Error</tt> object as the <tt>message</tt> argument.
+     *
+     * <p>The passed message level can be any integer value.
+     * But it is supposed that messages with positive levels should be used only for debugging
+     * and are blocked while normal program execution.
+     * For example, the level 1 may be used for showing simplest debugging information,
+     * level 2 for printing the main internal characteristics of the algorithm,
+     * levels 3-6 for very thorough debugging, including tracing the internal loops.
+     *
+     * <p>Negative levels should be used for information messages, that should not be removed
+     * from the ready end-user applcation (in particular, for messages
+     * indicating the progress of execution).
+     * There are the following predefined negative values,
+     * in order of decreasing message importance:
+     * <pre>
+     * {@link #ALWAYS} = Integer.MIN_VALUE,
+     * {@link #MAJOR} = -1000,
+     * {@link #INFO} = -800,
+     * {@link #MINOR} = -700,
+     * {@link #UNIMPORTANT} = -500.
+     * </pre>
+     *
+     * <p>By default, the logger blocks all messages with level &gt;{@link #MINOR}.
+     * The messages with level {@link #ALWAYS} are <i>never</i> blocked:
+     * the only way to disable such messages is not to add any publishing handlers
+     * while creating the logger.
+     *
+     * <p>If <tt>flush</tt> argument of this method is <tt>false</tt>,
+     * the output of this method may not be shown or logged immeidately:
+     * it can be accumulated in a buffer. You may flush all buffers later
+     * via {@link #flush()} method. If <tt>flush</tt> argument is <tt>true</tt>,
+     * or if the message level is {@link #INFO} or
+     * less (i.e. more important), {@link #flush()} method is called automatically.
+     *
+     * @param messageLevel the importance level of this message.
+     * @param message      the message.
+     * @param flush        is flushing all buffers necessary.
+     * @throws NullPointerException if the message is <tt>null</tt>.
+     * @see #logMajor(Object)
+     * @see #log(Object)
+     * @see #logMinor(Object)
+     * @see #logMinor(Object, boolean)
+     * @see #log(int, Object)
+     * @see #getRequiredLevel()
+     */
+    public void log(int messageLevel, Object message, boolean flush);
+
+    /**
+     * Flush any buffered output.
+     *
+     * <p>This method <b>must</b> be called to be sure
+     * that all messages <i>will be really published</i> (shown or logged).
+     * Also, it is <b>must</b> be called after a set of calls of {@link #log(int, Object, boolean)
+     * log(messageLevel, message, false)} with <tt>messageLevel&gt;=MINOR</tt>,
+     * if you want to be sure that the logger <i>will not show</i> the messages, accumulated
+     * in the buffer, in some unexpected moment in future.
+     *
+     * <p>It is a good idea to call this method at the end of
+     * any long-executed method.
+     *
+     * <p>This method calls {@link Logger.Handler#flush(Logger)} method
+     * for all {@link Logger#addHandler(Handler) publishing handlers}
+     * of this logger and of all its {@link Logger#parent() parent} loggers.
+     * However, this method does nothing if there were no calls any
+     * {@link Logger.Handler#publish(Logger, int, Object)} methods inside this logger
+     * (or its parents) after last flushing.
+     */
+    public void flush();
+
+    /**
+     * Returns the current <i>maximal allowed message level</i>.
+     * The basic {@link #log(int, Object, boolean) log(messageLevel, message)}
+     * method will ignore a message if the passed
+     * <tt>messageLevel</tt> is greater than the maximal allowed level.
+     *
+     * <p>By default, this level is {@link #MINOR}.
+     *
+     * @return the current maximal allowed message level.
+     * @see Logger#setRequiredLevel(int)
+     */
+    public int getRequiredLevel();
+}

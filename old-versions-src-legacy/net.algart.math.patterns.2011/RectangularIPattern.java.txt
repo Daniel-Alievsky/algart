@@ -1,0 +1,318 @@
+package net.algart.math.patterns;
+
+import java.util.*;
+import java.lang.ref.*;
+import net.algart.math.IPoint;
+import net.algart.math.IRange;
+
+/**
+ * <p>The implementation of the rectangular pattern,
+ * returned by {@link Patterns#newRectangularIPattern(IRange[])} method.</p>
+ *
+ * <p>AlgART Laboratory 2007-2012</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.5
+ */
+final class RectangularIPattern extends AbstractIntegerPattern implements Pattern {
+    private final long pointCount;
+    private final double largePointCount;
+    private final boolean veryLarge;
+    private volatile Reference<Set<IPoint>> points;
+
+    RectangularIPattern(IRange[] coordRanges) {
+        super(coordRanges.length, true);
+        System.arraycopy(coordRanges, 0, this.integerCoordRanges, 0, coordRanges.length);
+        long count = 1;
+        double largeCount = 1.0;
+        for (IRange coordRange : coordRanges) {
+            long size = coordRange.size();
+            if (count != Long.MIN_VALUE) {
+                count = Patterns.longMul(count, size);
+            }
+            largeCount *= size;
+        }
+        this.pointCount = count == Long.MIN_VALUE ? Long.MAX_VALUE : count;
+        this.largePointCount = largeCount;
+        this.veryLarge = count == Long.MIN_VALUE;
+    }
+
+    @Override
+    public long pointCount() {
+        return this.pointCount;
+    }
+
+    @Override
+    public double largePointCount() {
+        return this.largePointCount;
+    }
+
+    @Override
+    public boolean isVeryLarge() {
+        return this.veryLarge;
+    }
+
+    @Override
+    public boolean contains(IPoint point) {
+        if (point == null)
+            throw new NullPointerException("Null point argument");
+        if (point.coordCount() != dimCount())
+            throw new IllegalArgumentException("The number of point coordinates " + point.coordCount()
+                + " is not equal to the number of pattern coordinates " + dimCount());
+        for (int k = 0; k < integerCoordRanges.length; k++) {
+            if (!integerCoordRanges[k].contains(point.coord(k)))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Set<IPoint> roundedPoints() {
+        if (pointCount > Integer.MAX_VALUE)
+            throw new TooLargePatternException("Too large number of points: "
+                + largePointCount + " > Integer.MAX_VALUE");
+        Set<IPoint> resultPoints = points == null ? null : points.get();
+        if (resultPoints == null) {
+            resultPoints = new HashSet<IPoint>((int)pointCount);
+            addPointsToParallelepiped(resultPoints, new long[integerCoordRanges.length], 0, integerCoordRanges);
+            resultPoints = Collections.unmodifiableSet(resultPoints);
+            points = new SoftReference<Set<IPoint>>(resultPoints);
+        }
+        return resultPoints;
+    }
+
+    @Override
+    public IRange roundedCoordRange(int coordIndex) {
+        return integerCoordRanges[coordIndex];
+    }
+
+    @Override
+    public IRange[] roundedCoordRanges() {
+        return integerCoordRanges.clone();
+    }
+
+    @Override
+    public boolean isRectangular() {
+        return true;
+    }
+
+    @Override
+    public UniformGridPattern lowerSurface(int coordIndex) {
+        checkCoordIndex(coordIndex);
+        IRange[] boundRanges = integerCoordRanges.clone();
+        long coord = roundedCoordRange(coordIndex).min();
+        boundRanges[coordIndex] = IRange.valueOf(coord, coord);
+        return Patterns.newRectangularIPattern(boundRanges);
+    }
+
+    @Override
+    public UniformGridPattern upperSurface(int coordIndex) {
+        checkCoordIndex(coordIndex);
+        IRange[] boundRanges = integerCoordRanges.clone();
+        long coord = roundedCoordRange(coordIndex).max();
+        boundRanges[coordIndex] = IRange.valueOf(coord, coord);
+        return Patterns.newRectangularIPattern(boundRanges);
+    }
+
+    @Override
+    public Pattern surface() {
+        Pattern[] facets = new Pattern[2 * dimCount()];
+        IRange[] boundRanges = integerCoordRanges.clone();
+        int facetIndex = 0;
+        for (int coordIndex = boundRanges.length - 1; coordIndex >= 0; coordIndex--) {
+            long min = roundedCoordRange(coordIndex).min();
+            boundRanges[coordIndex] = IRange.valueOf(min, min);
+            facets[facetIndex++] = Patterns.newRectangularIPattern(boundRanges);
+            long max = roundedCoordRange(coordIndex).max();
+            assert max >= min;
+            if (max == min)
+                break;
+            boundRanges[coordIndex] = IRange.valueOf(max, max);
+            facets[facetIndex++] = Patterns.newRectangularIPattern(boundRanges);
+            if (max - min == 1)
+                break;
+            boundRanges[coordIndex] = IRange.valueOf(min + 1, max - 1);
+            // removing these 2 facets from the full parallelepiped: no sense to add vertices several times
+        }
+        Pattern[] result = new Pattern[facetIndex];
+        System.arraycopy(facets, 0, result, 0, facetIndex);
+        return Patterns.newUnion(result);
+    }
+
+    @Override
+    public Pattern projectionAlongAxis(int coordIndex) {
+        checkCoordIndex(coordIndex);
+        assert dimCount > 0;
+        if (dimCount == 1)
+            throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
+        IRange[] newRanges = new IRange[integerCoordRanges.length - 1];
+        System.arraycopy(integerCoordRanges, 0, newRanges, 0, coordIndex);
+        System.arraycopy(integerCoordRanges, coordIndex + 1, newRanges, coordIndex, newRanges.length - coordIndex);
+        return new RectangularIPattern(newRanges);
+    }
+
+    @Override
+    public Pattern minBound(int coordIndex) {
+        return lowerSurface(coordIndex);
+    }
+
+    @Override
+    public Pattern maxBound(int coordIndex) {
+        return upperSurface(coordIndex);
+    }
+
+    @Override
+    public UniformGridPattern shift(IPoint shift) {
+        if (shift == null)
+            throw new NullPointerException("Null shift argument");
+        if (shift.coordCount() != dimCount())
+            throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
+                + " is not equal to the number of pattern coordinates " + dimCount());
+        if (shift.isOrigin()) {
+            return this;
+        }
+        IRange[] newRanges = new IRange[integerCoordRanges.length];
+        for (int k = 0; k < integerCoordRanges.length; k++) {
+            long sh = shift.coord(k);
+            newRanges[k] = IRange.valueOf(integerCoordRanges[k].min() + sh, integerCoordRanges[k].max() + sh);
+        }
+        return new RectangularIPattern(newRanges);
+    }
+
+    @Override
+    public UniformGridPattern scale(double... multipliers) {
+        if (multipliers == null)
+            throw new NullPointerException("Null multipliers argument");
+        if (multipliers.length != dimCount())
+            throw new IllegalArgumentException("Illegal number of multipliers: "
+                + multipliers.length + " instead of " + dimCount());
+        IRange[] newRanges = new IRange[integerCoordRanges.length];
+        for (int k = 0; k < integerCoordRanges.length; k++) {
+            double mult = multipliers[k];
+            if (mult == 1.0) {
+                newRanges[k] = integerCoordRanges[k];
+            } else if (mult == 0.0) {
+                newRanges[k] = IRange.valueOf(0, 0);
+            } else if (mult == -1.0) {
+                newRanges[k] = IRange.valueOf(-integerCoordRanges[k].max(), -integerCoordRanges[k].min());
+            } else {
+                long newMin = (long) (integerCoordRanges[k].min() * mult);
+                long newMax = (long) (integerCoordRanges[k].max() * mult);
+                if (newMin <= newMax) {
+                    newRanges[k] = IRange.valueOf(newMin, newMax);
+                } else {
+                    newRanges[k] = IRange.valueOf(newMax, newMin);
+                }
+            }
+        }
+        return Patterns.newRectangularIPattern(newRanges);
+    }
+
+    @Override
+    public Pattern minkowskiAdd(Pattern added) {
+        if (!Patterns.isRectangular(added) || added.dimCount() != this.dimCount()) {
+            // Please note: if added is OnePointPattern, we also do not call super method,
+            // to avoid possible problems when that method needs correct minkowskiAdd for rectangular patterns.
+            return super.minkowskiAdd(added);
+        }
+        IRange[] sumRanges = new IRange[integerCoordRanges.length];
+        for (int k = 0; k < integerCoordRanges.length; k++) {
+            long newMin = sumWithOverflowCheck(integerCoordRanges[k].min(), added.roundedCoordRange(k).min());
+            long newMax = sumWithOverflowCheck(integerCoordRanges[k].max(), added.roundedCoordRange(k).max());
+            sumRanges[k] = IRange.valueOf(newMin, newMax);
+        }
+        return new RectangularIPattern(sumRanges);
+    }
+
+    @Override
+    public Pattern minkowskiSubtract(Pattern subtracted) {
+        if (!Patterns.isRectangular(subtracted) || subtracted.dimCount() != this.dimCount()) {
+            // Please note: if subtracted is OnePointPattern, we also do not call super method,
+            // to avoid possible problems when that method needs correct minkowskiSubtract for rectangular patterns.
+            return super.minkowskiSubtract(subtracted);
+        }
+        IRange[] sumRanges = new IRange[integerCoordRanges.length];
+        for (int k = 0; k < integerCoordRanges.length; k++) {
+            long newMin = diffWithOverflowCheck(integerCoordRanges[k].min(), subtracted.roundedCoordRange(k).min());
+            long newMax = diffWithOverflowCheck(integerCoordRanges[k].max(), subtracted.roundedCoordRange(k).max());
+            if (newMin > newMax)
+                return null;
+            sumRanges[k] = IRange.valueOf(newMin, newMax);
+        }
+        return new RectangularIPattern(sumRanges);
+    }
+
+    @Override
+    public boolean hasMinkowskiDecomposition() {
+        return pointCount > 1;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(dimCount() + "D rectangular pattern containing "
+            + (pointCount == Long.MAX_VALUE ? largePointCount + " points" : pointCount + " points ("));
+        for (int k = 0; k < integerCoordRanges.length; k++) {
+            if (k > 0)
+                sb.append(",");
+            sb.append(integerCoordRanges[k].min());
+        }
+        sb.append(")..(");
+        for (int k = 0; k < integerCoordRanges.length; k++) {
+            if (k > 0)
+                sb.append(",");
+            sb.append(integerCoordRanges[k].max());
+        }
+        sb.append(")");
+        return sb.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(integerCoordRanges);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof RectangularIPattern
+            && (obj == this || Arrays.equals(integerCoordRanges, ((RectangularIPattern)obj).integerCoordRanges));
+    }
+
+    static long sumWithOverflowCheck(long a, long b) {
+        long result = a + b;
+        if ((a < 0) != (b < 0)) // overflow impossible
+            return result;
+        if ((a < 0) != (result < 0)) // overflow: the sum has another sign than both summands
+            throw new TooLargePatternException("Some of point coordinates in the result "
+                + "are out of Long.MIN_VALUE..Long.MAX_VALUE range");
+        return result;
+    }
+
+    static long diffWithOverflowCheck(long a, long b) {
+        long result = a - b;
+        if ((a < 0) == (b < 0)) // overflow impossible
+            return result;
+        if ((a < b) != (result < 0)) // overflow
+            throw new TooLargePatternException("Some of point coordinates in the result "
+                + "are out of Long.MIN_VALUE..Long.MAX_VALUE range");
+        return result;
+    }
+
+    private static void addPointsToParallelepiped(Set<IPoint> points, long[] coordinates,
+        int lastCoordinatesCount, IRange[] ranges)
+    {
+        int dimCount = ranges.length;
+        int currentCoordIndex = dimCount - 1 - lastCoordinatesCount;
+        if (currentCoordIndex == 0) {
+            for (long i = ranges[0].min(), iMax = ranges[0].max(); i <= iMax; i++) {
+                coordinates[0] = i;
+                points.add(IPoint.valueOf(coordinates));
+            }
+        } else {
+            for (long i = ranges[currentCoordIndex].min(), iMax = ranges[currentCoordIndex].max(); i <= iMax; i++) {
+                coordinates[currentCoordIndex] = i;
+                addPointsToParallelepiped(points, coordinates, lastCoordinatesCount + 1, ranges);
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+package net.algart.arrays.interpolation;
+
+import net.algart.arrays.*; // for Javadoc only
+
+/**
+ * <p>Interpolation algorithm for 2D numeric matrices.</p>
+ *
+ * <p>Several implementations of this interface are available in {@link Interpolations2D} class.</p>
+ *
+ * <p>Implementations of this interface are <b>thread-compatible</b>
+ * (allow manual synchronization for multi-thread access).
+ * Without external synchronization, the methods of this interface may return unspecified results
+ * while parallel access to the same instance from several threads.</p>
+ *
+ * <p>AlgART Laboratory 2007-2008</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.1
+ * @since JDK 1.5
+ */
+public interface Interpolation2D {
+
+    /**
+     * Returns interpolated value for the given floating-point position (<tt>x</tt>, <tt>y</tt>).
+     *
+     * <p>The result of this method is calculated by some interpolation algorithm on the base of several
+     * elements of numeric matrix, located in "neighbour" positions for <tt>(x,y)</tt>, for example:
+     * <tt>(ix,iy)</tt>,
+     * <tt>(ix+1,iy}</tt>,
+     * <tt>(ix,iy+1)</tt>,
+     * <tt>(ix+1,iy+1)</tt>,
+     * where <tt>ix=(long)x</tt>, <tt>iy=(long)y</tt>.
+     * Some interpolation algorithms may use more or less "neighbour" positions.
+     *
+     * <p>For the {@link Matrix AlgART matrix} <tt>m</tt>, containing elements of any primitive type,
+     * the element, located at position <tt>(ix,iy)</tt>,
+     * means the result of <tt>m.{@link Matrix#array() array}().{@link PArray#getDouble(long)
+     * getDouble}(m.{@link Matrix#index(long, long) index}(ix,iy))</tt>.
+     * For another matrix implementations, the sense of "element, located at..."
+     * may be similar.
+     *
+     * @param x the x-coordinate in the 2-dimensional matrix.
+     * @param y the y-coordinate in the 2-dimensional matrix.
+     * @return  the interpolated value for this position.
+     */
+    public double get(double x, double y);
+}
