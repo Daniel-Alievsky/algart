@@ -6,6 +6,7 @@
         <antcall target="compile-demo"/>
         <antcall target="jar"/>
         <antcall target="javadoc"/>
+        <antcall target="zip"/>
     </target>
 
     <target name="compile">
@@ -92,4 +93,22 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
             <arg value="docs/api/"/>
         </java>
     </target>
+    <target name="zip">
+        <delete file="algart.zip" failonerror="false"/>
+        <zip destfile="algart.zip" level="9">
+            <zipfileset prefix="algart" dir="./" includes="readme.txt"/>
+            <zipfileset prefix="algart" dir="./" includes="LICENSE"/>
+            <zipfileset prefix="algart" dir="./">
+                <include name="/src/net/algart/**/"/>
+                <exclude name="/src/net/algart/executable/**"/>
+            </zipfileset>
+            <zipfileset prefix="algart" dir="./" includes="documentation.html"/>
+            <zipfileset prefix="algart" dir="./" includes="algart.jar"/>
+        </zip>
+        <delete file="algart-docs.zip" failonerror="false"/>
+        <zip destfile="algart-docs.zip" level="9">
+            <zipfileset prefix="algart-docs" dir="docs/"/>
+        </zip>
+    </target>
 </project>
+	

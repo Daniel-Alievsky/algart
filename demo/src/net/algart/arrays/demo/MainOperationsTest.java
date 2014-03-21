@@ -34,6 +34,7 @@ import net.algart.math.functions.*;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.nio.ByteOrder;
 import java.util.BitSet;
 import java.util.Locale;
 import java.util.Random;
@@ -1593,9 +1594,10 @@ public strictfp class MainOperationsTest implements Cloneable {
             PArray srcPArray = (PArray) a.subArr(srcPos, count);
             UpdatablePArray destPArray = (UpdatablePArray) work1.subArr(destPos, count);
             byte[] bytes = rnd.nextBoolean() ?
-                new byte[(int)(a instanceof BitArray ? (srcPArray.length() + 7) / 8 : Arrays.sizeOf(srcPArray))] :
+                new byte[(int) (a instanceof BitArray ? (srcPArray.length() + 7) / 8 : Arrays.sizeOf(srcPArray))] :
                 null;
-            bytes = Arrays.copyArrayToBytes(bytes, srcPArray);
+            ByteOrder byteOrder = rnd.nextBoolean() ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
+            bytes = Arrays.copyArrayToBytes(bytes, srcPArray, byteOrder);
             for (int k = 0; k < count; k++) {
                 boolean equal;
                 if (srcPArray instanceof BitArray) {
@@ -1604,53 +1606,87 @@ public strictfp class MainOperationsTest implements Cloneable {
                     equal = (byte) ((ByteArray) srcPArray).getByte(k) == bytes[k];
                 } else if (srcPArray instanceof CharArray) {
                     equal = ((CharArray) srcPArray).getChar(k) ==
-                        (bytes[2 * k] & 0xFF) + ((bytes[2 * k + 1] & 0xFF) << 8);
+                        (byteOrder == ByteOrder.LITTLE_ENDIAN ?
+                            (bytes[2 * k] & 0xFF) + ((bytes[2 * k + 1] & 0xFF) << 8) :
+                            (bytes[2 * k + 1] & 0xFF) + ((bytes[2 * k] & 0xFF) << 8));
                 } else if (srcPArray instanceof ShortArray) {
                     equal = ((ShortArray) srcPArray).getInt(k) ==
-                        (bytes[2 * k] & 0xFF) + ((bytes[2 * k + 1] & 0xFF) << 8);
+                        (byteOrder == ByteOrder.LITTLE_ENDIAN ?
+                            (bytes[2 * k] & 0xFF) + ((bytes[2 * k + 1] & 0xFF) << 8) :
+                            (bytes[2 * k + 1] & 0xFF) + ((bytes[2 * k] & 0xFF) << 8));
                 } else if (srcPArray instanceof IntArray) {
                     equal = ((IntArray) srcPArray).getInt(k) ==
-                        (bytes[4 * k] & 0xFF)
-                            + ((bytes[4 * k + 1] & 0xFF) << 8)
-                            + ((bytes[4 * k + 2] & 0xFF) << 16)
-                            + ((bytes[4 * k + 3] & 0xFF) << 24);
+                        (byteOrder == ByteOrder.LITTLE_ENDIAN ?
+                            (bytes[4 * k] & 0xFF)
+                                + ((bytes[4 * k + 1] & 0xFF) << 8)
+                                + ((bytes[4 * k + 2] & 0xFF) << 16)
+                                + ((bytes[4 * k + 3] & 0xFF) << 24) :
+                            (bytes[4 * k + 3] & 0xFF)
+                                + ((bytes[4 * k + 2] & 0xFF) << 8)
+                                + ((bytes[4 * k + 1] & 0xFF) << 16)
+                                + ((bytes[4 * k] & 0xFF) << 24));
                 } else if (srcPArray instanceof LongArray) {
                     equal = ((LongArray) srcPArray).getLong(k) ==
-                        ((long) bytes[8 * k] & 0xFF)
-                            + (((long) bytes[8 * k + 1] & 0xFF) << 8)
-                            + (((long)bytes [8 * k + 2] & 0xFF) << 16)
-                            + (((long) bytes[8 * k + 3] & 0xFF) << 24)
-                            + (((long) bytes[8 * k + 4] & 0xFF) << 32)
-                            + (((long) bytes[8 * k + 5] & 0xFF) << 40)
-                            + (((long) bytes[8 * k + 6] & 0xFF) << 48)
-                            + (((long) bytes[8 * k + 7] & 0xFF) << 56);
+                        (byteOrder == ByteOrder.LITTLE_ENDIAN ?
+                            ((long) bytes[8 * k] & 0xFF)
+                                + (((long) bytes[8 * k + 1] & 0xFF) << 8)
+                                + (((long) bytes[8 * k + 2] & 0xFF) << 16)
+                                + (((long) bytes[8 * k + 3] & 0xFF) << 24)
+                                + (((long) bytes[8 * k + 4] & 0xFF) << 32)
+                                + (((long) bytes[8 * k + 5] & 0xFF) << 40)
+                                + (((long) bytes[8 * k + 6] & 0xFF) << 48)
+                                + (((long) bytes[8 * k + 7] & 0xFF) << 56) :
+                            ((long) bytes[8 * k + 7] & 0xFF)
+                                + (((long) bytes[8 * k + 6] & 0xFF) << 8)
+                                + (((long) bytes[8 * k + 5] & 0xFF) << 16)
+                                + (((long) bytes[8 * k + 4] & 0xFF) << 24)
+                                + (((long) bytes[8 * k + 3] & 0xFF) << 32)
+                                + (((long) bytes[8 * k + 2] & 0xFF) << 40)
+                                + (((long) bytes[8 * k + 1] & 0xFF) << 48)
+                                + (((long) bytes[8 * k] & 0xFF) << 56));
                 } else if (srcPArray instanceof FloatArray) {
                     equal = Float.floatToRawIntBits(((FloatArray) srcPArray).getFloat(k)) ==
-                        (bytes[4 * k] & 0xFF)
-                            + ((bytes[4 * k + 1] & 0xFF) << 8)
-                            + ((bytes[4 * k + 2] & 0xFF) << 16)
-                            + ((bytes[4 * k + 3] & 0xFF) << 24);
+                        (byteOrder == ByteOrder.LITTLE_ENDIAN ?
+                            (bytes[4 * k] & 0xFF)
+                                + ((bytes[4 * k + 1] & 0xFF) << 8)
+                                + ((bytes[4 * k + 2] & 0xFF) << 16)
+                                + ((bytes[4 * k + 3] & 0xFF) << 24) :
+                            (bytes[4 * k + 3] & 0xFF)
+                                + ((bytes[4 * k + 2] & 0xFF) << 8)
+                                + ((bytes[4 * k + 1] & 0xFF) << 16)
+                                + ((bytes[4 * k] & 0xFF) << 24));
                 } else if (srcPArray instanceof DoubleArray) {
                     equal = Double.doubleToRawLongBits(((DoubleArray) srcPArray).getDouble(k)) ==
-                        ((long) bytes[8 * k] & 0xFF)
-                            + (((long) bytes[8 * k + 1] & 0xFF) << 8)
-                            + (((long)bytes [8 * k + 2] & 0xFF) << 16)
-                            + (((long) bytes[8 * k + 3] & 0xFF) << 24)
-                            + (((long) bytes[8 * k + 4] & 0xFF) << 32)
-                            + (((long) bytes[8 * k + 5] & 0xFF) << 40)
-                            + (((long) bytes[8 * k + 6] & 0xFF) << 48)
-                            + (((long) bytes[8 * k + 7] & 0xFF) << 56);
+                        (byteOrder == ByteOrder.LITTLE_ENDIAN ?
+                            ((long) bytes[8 * k] & 0xFF)
+                                + (((long) bytes[8 * k + 1] & 0xFF) << 8)
+                                + (((long) bytes[8 * k + 2] & 0xFF) << 16)
+                                + (((long) bytes[8 * k + 3] & 0xFF) << 24)
+                                + (((long) bytes[8 * k + 4] & 0xFF) << 32)
+                                + (((long) bytes[8 * k + 5] & 0xFF) << 40)
+                                + (((long) bytes[8 * k + 6] & 0xFF) << 48)
+                                + (((long) bytes[8 * k + 7] & 0xFF) << 56) :
+                            ((long) bytes[8 * k + 7] & 0xFF)
+                                + (((long) bytes[8 * k + 6] & 0xFF) << 8)
+                                + (((long) bytes[8 * k + 5] & 0xFF) << 16)
+                                + (((long) bytes[8 * k + 4] & 0xFF) << 24)
+                                + (((long) bytes[8 * k + 3] & 0xFF) << 32)
+                                + (((long) bytes[8 * k + 2] & 0xFF) << 40)
+                                + (((long) bytes[8 * k + 1] & 0xFF) << 48)
+                                + (((long) bytes[8 * k] & 0xFF) << 56));
                 } else
                     throw new AssertionError("Illegal type");
                 if (!equal)
                     throw new AssertionError("The bug in copyArrayToBytes found in test #" + testCount + ": "
-                        + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                        + "byteOrder = " + byteOrder
+                        + ", srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                         + ", error found at " + k + ": " + srcPArray.getDouble(k));
             }
-            Arrays.copyBytesToArray(destPArray, bytes);
+            Arrays.copyBytesToArray(destPArray, bytes, byteOrder);
             if (!srcPArray.equals(destPArray))
                 throw new AssertionError("The bug in copyBytesToArray found in test #" + testCount + ": "
-                    + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count + " ("
+                    + "byteOrder = " + byteOrder
+                    + ", srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count + " ("
                     + Arrays.toString(srcPArray, ", ", 200) + " and " + Arrays.toString(destPArray, ", ", 200) + ")");
             showProgress(testCount, numberOfTests);
         }

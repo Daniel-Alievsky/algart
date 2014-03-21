@@ -915,6 +915,8 @@ public interface Array {
      * this method returns <tt>ByteOrder.nativeOrder()</tt>, though the byte order in the
      * underlying storage arrays may be another.
      *
+     * <p>This method never returns <tt>null</tt>.
+     *
      * <p>There is a guarantee that this method works very quickly
      * (usually it just returns a constant or a value of some private field).
      *

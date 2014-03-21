@@ -4223,13 +4223,14 @@ public class Arrays {
      *
      * <p>The length of <tt>bytes</tt> array must be enough for storing all elements of the given AlgART
      * array (but may be greater than necessary). More precisely, <tt>bytes.length</tt> must be
-     * <nobr><tt>&ge;Arrays.{@link #copyArrayRequiredNumberOfBytes(PArray)
-     * copyArrayRequiredNumberOfBytes}(array)</tt></nobr>.
+     * <nobr><tt>&ge;Arrays.{@link #sizeOfBytesForCopying(PArray)
+     * sizeOfBytesForCopying}(array)</tt></nobr>.
      * Note that <nobr><tt>Arrays.{@link #sizeOf(Array) sizeOf}(array)</tt></nobr> is a suitable length
      * for all types (though for {@link BitArray} it can be little greater than necessary).
      *
      * <p>The <tt>bytes</tt> argument may be <tt>null</tt>; in this case, this method automatically allocates
-     * <tt>byte[]</tt> array with minimal necessary length (see above), copies all elements of the AlgART array
+     * <tt>byte[]</tt> array with minimal necessary length <nobr><tt>Arrays.{@link #sizeOfBytesForCopying(PArray)
+     * sizeOfBytesForCopying}(array)</tt></nobr>, copies all elements of the AlgART array
      * into it and returns it.
      *
      * <p>The array element #<i>k</i> (<tt>array.{@link Array#getElement(long) getElement}(<i>k</i>))</tt>
@@ -4251,7 +4252,8 @@ public class Arrays {
      *
      * <li>all elements, greater than 1 byte &mdash; <tt>char</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
      * <tt>float</tt>, <tt>double</tt> &mdash; are stored as sequences of 2, 2, 4, 8, 4, 8 bytes
-     * (correspondingly) in "little-endian" byte order (see <tt>java.nio.ByteOrder</tt>);</li>
+     * (correspondingly) according to the byte order, specified in the last argument
+     * (see <tt>java.nio.ByteOrder</tt>);</li>
      *
      * <li>every <tt>float</tt> element of {@link FloatArray} is stored as a sequence of
      * 4 bytes of <tt>int</tt> value, got by <nobr><tt>Float.floatToRawIntBits</tt></nobr> method
@@ -4264,42 +4266,54 @@ public class Arrays {
      * <p>This method can be used for serialization of AlgART arrays into a form, suitable for writing into
      * <tt>OutputStream</tt>, for example, for storing on external devices or passing through the network.
      *
-     * <p>Note: unlike {@link #write(java.io.OutputStream, PArray, java.nio.ByteOrder)} method,
+     * <p>Note: unlike {@link #write(OutputStream, PArray, ByteOrder)} method,
      * this method specifies the storage scheme absolutely strictly and does not depend on <tt>ByteBuffer</tt>
-     * implementation. Also note: this method does not support "big-endian" byte order.
+     * implementation. On the other hand, serialization via this method can work little slower than
+     * {@link #write(OutputStream, PArray, ByteOrder) write} method.
+     *
+     * <p>Also note: unlike {@link #write(OutputStream, PArray, ByteOrder)} method,
+     * for {@link BitArray} case this method requires little less bytes:
+     * {@link #sizeOfBytesForCopying(PArray) sizeOfBytesForCopying(array)} instead of
+     * {@link #sizeOf(Array) sizeOf(array)}. If you are interested in compatibility with
+     * {@link #write(OutputStream, PArray, ByteOrder) write} /
+     * {@link #read(InputStream, UpdatablePArray, ByteOrder) read} methods, you should allocate
+     * and serialize <nobr><tt>(int)Arrays.{@link #sizeOf(Array) sizeOf}(array)</tt></nobr> bytes instead of
+     * <nobr><tt>Arrays.{@link #sizeOfBytesForCopying(PArray) sizeOfBytesForCopying}(array)</tt></nobr>.
      *
      * <p>We recommend calling this method for relatively small arrays only, up to several megabytes,
      * to avoid extra usage of RAM. If you need to serialize a large AlgART array,
      * you may apply this method sequentially for its {@link Array#subArray(long, long) subarrays}.
      *
-     * @param array the source AlgART array.
-     * @param bytes Java array, to which the content of the source array will be copied;
-     *              may be <tt>null</tt>, then it will be allocated automatically
+     * @param array     the source AlgART array.
+     * @param bytes     Java array, to which the content of the source array will be copied;
+     *                  may be <tt>null</tt>, then it will be allocated automatically
+     * @param byteOrder the byte order for element types, greater than 1 byte;
+     *                  it is not used in cases of {@link ByteArray} and {@link BitArray}.
      * @return Java array with resulting data;
      *         if <tt>bytes</tt> argument is not <tt>null</tt>, a reference to this argument is returned.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>array</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException    if the required Java array length is greater
      *                                   than <tt>Integer.MAX_VALUE</tt> elements.
      * @throws IndexOutOfBoundsException if <tt>bytes!=null</tt> and the length of <tt>bytes</tt> array
      *                                   is not enough for storing all elements of the source AlgART array.
-     * @see #copyBytesToArray(UpdatablePArray, byte[])
-     * @see #write(java.io.OutputStream, PArray, java.nio.ByteOrder)
-     * @see LargeMemoryModel#asUpdatableArray(Object, Class, long, long, boolean, java.nio.ByteOrder)
+     * @see #copyBytesToArray(UpdatablePArray, byte[], ByteOrder)
+     * @see #write(OutputStream, PArray, ByteOrder)
+     * @see LargeMemoryModel#asUpdatableArray(Object, Class, long, long, boolean, ByteOrder)
      */
-    public static byte[] copyArrayToBytes(byte[] bytes, PArray array) {
-        return ArraysSerializationImpl.copyArrayToBytes(bytes, array);
+    public static byte[] copyArrayToBytes(byte[] bytes, PArray array, ByteOrder byteOrder) {
+        return ArraysSerializationImpl.copyArrayToBytes(bytes, array, byteOrder);
     }
 
     /**
      * Copies the elements, stored in the <tt>bytes</tt> Java array (2nd argument)
-     * by previous {@link #copyArrayToBytes(byte[], PArray)}
+     * by previous {@link #copyArrayToBytes(byte[], PArray, ByteOrder)}
      * call, back into the given AlgART array (1st argument).
      *
-     * <p>As in {@link #copyArrayToBytes(byte[], PArray) copyArrayToBytes} method,
+     * <p>As in {@link #copyArrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method,
      * the length of <tt>bytes</tt> array must be enough for storing all elements of the given AlgART
      * array. More precisely, <tt>bytes.length</tt> must be
-     * <nobr><tt>&ge;Arrays.{@link #copyArrayRequiredNumberOfBytes(PArray)
-     * copyArrayRequiredNumberOfBytes}(array)</tt></nobr>.
+     * <nobr><tt>&ge;Arrays.{@link #sizeOfBytesForCopying(PArray)
+     * sizeOfBytesForCopying}(array)</tt></nobr>.
      * Note that <nobr><tt>Arrays.{@link #sizeOf(Array) sizeOf}(array)</tt></nobr> is a suitable length
      * for all types (though for {@link BitArray} it can be little greater than necessary).
      * This method always copies all <tt>array.{@link Array#length() length()}</tt>
@@ -4307,50 +4321,53 @@ public class Arrays {
      *
      * <p>The array element #<i>k</i> (<tt>array.{@link Array#getElement(long) getElement}(<i>k</i>))</tt>
      * is retrieved from the same position in the <tt>bytes</tt> Java array, where it is stored by
-     * {@link #copyArrayToBytes(byte[], PArray)} method (see comments to it). The elements <tt>float</tt>
+     * {@link #copyArrayToBytes(byte[], PArray, ByteOrder)} method (see comments to it). The elements <tt>float</tt>
      * and <tt>double</tt> are retrieved from the corresponding byte sequences via
      * <tt>Float.intBitsToFloat</tt> and <tt>Double.longBitsToDouble</tt> methods.
      *
      * <p>This method can be used for deserialization of AlgART arrays from a form, created by
-     * {@link #copyArrayToBytes(byte[], PArray) copyArrayToBytes} method and loaded from
+     * {@link #copyArrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method and loaded from
      * <tt>InputStream</tt>, for example, after reading from external devices or passing through the network.
      *
-     * <p>Note: unlike {@link #read(java.io.InputStream, UpdatablePArray, java.nio.ByteOrder)} method,
+     * <p>Note: unlike {@link #read(InputStream, UpdatablePArray, ByteOrder)} method,
      * this method specify that storage algorithms absolutely strictly and does not depend on <tt>ByteBuffer</tt>
-     * implementation.
+     * implementation. On the other hand, deserialization via this method can work little slower than
+     * {@link #read(InputStream, UpdatablePArray, ByteOrder) read} method.
      *
      * <p>We recommend calling this method for relatively small arrays only, up to several megabytes,
      * to avoid extra usage of RAM. If you need to deserialize a large AlgART array,
      * you may apply this method sequentially for its {@link UpdatableArray#subArray(long, long) subarrays}.
      *
-     * @param array the target AlgART array, all elements of which should be copied from the Java array.
-     * @param bytes the source Java array, filled according the specification of
-     *               {@link #copyArrayToBytes(byte[], PArray) copyArrayToBytes} method.
-     * @throws NullPointerException if <tt>array</tt> or <tt>bytes</tt> argument is <tt>null</tt>.
+     * @param array     the target AlgART array, all elements of which should be copied from the Java array.
+     * @param bytes     the source Java array, filled according the specification of
+     *                  {@link #copyArrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method.
+     * @param byteOrder the byte order for element types, greater than 1 byte;
+     *                  it is not used in cases of {@link ByteArray} and {@link BitArray}.
+     * @throws NullPointerException      if any of the arguments is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if the length of <tt>bytes</tt> array
      *                                   is not enough for storing all elements of the target AlgART array.
-     * @see #read(java.io.InputStream, UpdatablePArray, java.nio.ByteOrder)
-     * @see LargeMemoryModel#asArray(Object, Class, long, long, java.nio.ByteOrder)
+     * @see #read(InputStream, UpdatablePArray, ByteOrder)
+     * @see LargeMemoryModel#asArray(Object, Class, long, long, ByteOrder)
      */
-    public static void copyBytesToArray(UpdatablePArray array, byte[] bytes) {
-        ArraysSerializationImpl.copyBytesToArray(array, bytes);
+    public static void copyBytesToArray(UpdatablePArray array, byte[] bytes, ByteOrder byteOrder) {
+        ArraysSerializationImpl.copyBytesToArray(array, bytes, byteOrder);
     }
 
     /**
      * Returns the minimal size of <tt>byte[]</tt> array, enough for copying there the given AlgART array
-     * by {@link #copyArrayToBytes(byte[], PArray)} method.
+     * by {@link #copyArrayToBytes(byte[], PArray, ByteOrder)} method.
      * More precisely, returns
      * <nobr><tt>array.{@link Array#length() length()}+7/8</tt></nobr> for {@link BitArray}
      * or <nobr><tt>Arrays.{@link #sizeOf(Array) sizeOf}(array)</tt></nobr> for other primitive types.
      *
      * @param array the source AlgART array.
      * @return the minimal size of <tt>byte[]</tt> array, enough for calling
-     *         {@link #copyArrayToBytes(byte[], PArray)} method.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws TooLargeArrayException    if the result (required Java array length) is greater
-     *                                   than <tt>Integer.MAX_VALUE</tt> elements.
+     *         {@link #copyArrayToBytes(byte[], PArray, ByteOrder)} method.
+     * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws TooLargeArrayException if the result (required Java array length) is greater
+     *                                than <tt>Integer.MAX_VALUE</tt> elements.
      */
-    public static int copyArrayRequiredNumberOfBytes(PArray array) {
+    public static int sizeOfBytesForCopying(PArray array) {
         if (array == null)
             throw new NullPointerException("Null array");
         final long requiredLength = array instanceof BitArray ? (array.length() + 7) >>> 3 : Arrays.sizeOf(array);
@@ -4367,7 +4384,7 @@ public class Arrays {
      * to the output stream (starting from the current position) by necessary number of sequential calls of
      * <tt>outputStream.write(byteArray,0,len)</tt>.
      * The necessary byte array <tt>byteArray</tt> is built by conversion (unpacking)
-     * of the Java array <tt>packedArray</tt>, read from the sequential ranges of the array: it is
+     * of the Java array <tt>packedArray</tt> and reading from the sequential ranges of the array: it is
      * <tt>long[]</tt>, <tt>char[]</tt>, <tt>byte[]</tt>, <tt>short[]</tt>, <tt>int[]</tt>,
      * <tt>long[]</tt>, <tt>float[]</tt>,  <tt>double[]</tt>,
      * if the array is correspondingly {@link BitArray}, {@link CharArray},
@@ -4375,7 +4392,8 @@ public class Arrays {
      * {@link LongArray}, {@link FloatArray}, {@link DoubleArray}
      * (if the array is already {@link ByteArray}, the read byte array is used without conversion).
      * This conversion is performed according the specified byte order, like in
-     * <tt>ByteBuffer.asXxxBuffer</tt> methods (after <tt>byteBuffer.order(byteOrder)</tt> call).
+     * <tt>ByteBuffer.asXxxBuffer</tt> methods (after <tt>byteBuffer.order(byteOrder)</tt> call),
+     * excepting the case of {@link BitArray}, when <tt>ByteOrder.LITTLE_ENDIAN</tt> order is used always.
      * The <tt>packedArray</tt> is sequentially read from the specified AlgART array,
      * from its element #0 to its last element #<tt>array.length()-1</tt>,
      * by sequential calls of <tt>{@link BitArray#getBits(long, long[], long, long)
@@ -4400,115 +4418,16 @@ public class Arrays {
      *
      * @param outputStream the output stream.
      * @param array        the array the should be written.
-     * @param byteOrder    the byte order in the stream; it is not used in the only case of {@link ByteArray}.
+     * @param byteOrder    the byte order in the stream;
+     *                     it is not used in cases of {@link ByteArray} and {@link BitArray}.
      * @throws NullPointerException if <tt>outputStream</tt>, <tt>array</tt> or <tt>byteOrder</tt>
      *                              argument is <tt>null</tt>.
      * @throws IOException          in the same situations as in the standard <tt>OutputStream.write</tt> method.
-     * @see #copyArrayToBytes(byte[], PArray)
+     * @see #copyArrayToBytes(byte[], PArray, ByteOrder)
      * @see #read(InputStream, UpdatablePArray, ByteOrder)
      */
     public static void write(OutputStream outputStream, PArray array, ByteOrder byteOrder) throws IOException {
-        if (outputStream == null)
-            throw new NullPointerException("Null outputStream array");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (byteOrder == null)
-            throw new NullPointerException("Null byteOrder argument");
-        final long n = array.length();
-        if (array instanceof BitArray) {
-            long[] bits = (long[]) DataBuffersImpl.LONG_BUFFERS.requestArray();
-            try {
-                BitArray bitArray = (BitArray) array;
-                ByteBuffer byteBuffer = ByteBuffer.allocate(8 * (int) Math.min(bits.length, (n + 63) >>> 6));
-                byteBuffer.order(byteOrder);
-                byte[] bytes = byteBuffer.array();
-                LongBuffer longBuffer = byteBuffer.asLongBuffer();
-                for (long p = 0; p < n; ) {
-                    int len = (int) Math.min(n - p, bits.length * 64);
-                    int packedLen = (len + 63) >>> 6;
-                    bitArray.getBits(p, bits, 0, len);
-                    if ((len & 63) != 0) {
-                        PackedBitArrays.fillBits(bits, len, 64 - (len & 63), false);
-                        // clearing extra bits in the last byte
-                    }
-                    longBuffer.rewind();
-                    longBuffer.put(bits, 0, packedLen);
-                    outputStream.write(bytes, 0, packedLen * 8);
-                    p += len;
-                }
-            } finally {
-                DataBuffersImpl.LONG_BUFFERS.releaseArray(bits);
-            }
-
-        } else {
-            DataBuffer buf = Arrays.bufferInternal(array, DataBuffer.AccessMode.READ,
-                AbstractArray.largeBufferCapacity(array), true);
-            enableCaching(buf);
-            try {
-                if (array instanceof ByteArray) {
-                    for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                        outputStream.write((byte[]) buf.data(), buf.from(), buf.cnt());
-                    }
-                } else {
-                    int sizeOfElement = (int) array.bitsPerElement() >>> 3;
-                    ByteBuffer byteBuffer = ByteBuffer.allocate(sizeOfElement * (int) Math.min(buf.capacity(), n));
-                    byteBuffer.order(byteOrder);
-                    //[[Repeat() Char ==> Short,,Int,,Long,,Float,,Double;;
-                    //           char ==> short,,int,,long,,float,,double]]
-                    if (array instanceof CharArray) {
-                        CharBuffer charBuffer = byteBuffer.asCharBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            charBuffer.rewind();
-                            charBuffer.put((char[]) buf.data(), buf.from(), buf.cnt());
-                            outputStream.write(byteBuffer.array(), 0, buf.cnt() * sizeOfElement);
-                        }
-                    } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-                    if (array instanceof ShortArray) {
-                        ShortBuffer shortBuffer = byteBuffer.asShortBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            shortBuffer.rewind();
-                            shortBuffer.put((short[]) buf.data(), buf.from(), buf.cnt());
-                            outputStream.write(byteBuffer.array(), 0, buf.cnt() * sizeOfElement);
-                        }
-                    } else
-                    if (array instanceof IntArray) {
-                        IntBuffer intBuffer = byteBuffer.asIntBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            intBuffer.rewind();
-                            intBuffer.put((int[]) buf.data(), buf.from(), buf.cnt());
-                            outputStream.write(byteBuffer.array(), 0, buf.cnt() * sizeOfElement);
-                        }
-                    } else
-                    if (array instanceof LongArray) {
-                        LongBuffer longBuffer = byteBuffer.asLongBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            longBuffer.rewind();
-                            longBuffer.put((long[]) buf.data(), buf.from(), buf.cnt());
-                            outputStream.write(byteBuffer.array(), 0, buf.cnt() * sizeOfElement);
-                        }
-                    } else
-                    if (array instanceof FloatArray) {
-                        FloatBuffer floatBuffer = byteBuffer.asFloatBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            floatBuffer.rewind();
-                            floatBuffer.put((float[]) buf.data(), buf.from(), buf.cnt());
-                            outputStream.write(byteBuffer.array(), 0, buf.cnt() * sizeOfElement);
-                        }
-                    } else
-                    if (array instanceof DoubleArray) {
-                        DoubleBuffer doubleBuffer = byteBuffer.asDoubleBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            doubleBuffer.rewind();
-                            doubleBuffer.put((double[]) buf.data(), buf.from(), buf.cnt());
-                            outputStream.write(byteBuffer.array(), 0, buf.cnt() * sizeOfElement);
-                        }
-                    } else //[[Repeat.AutoGeneratedEnd]]
-                            throw new AssertionError("Unallowed type of passed argument: " + array.getClass());
-                }
-            } finally {
-                Arrays.dispose(buf);
-            }
-        }
+        ArraysSerializationImpl.write(outputStream, array, byteOrder);
     }
 
     /**
@@ -4527,7 +4446,8 @@ public class Arrays {
      * {@link LongArray}, {@link FloatArray}, {@link DoubleArray}
      * (if the array is already {@link ByteArray}, the read byte array is used without conversion).
      * This conversion is performed according the specified byte order, like in
-     * <tt>ByteBuffer.asXxxBuffer</tt> methods (after <tt>byteBuffer.order(byteOrder)</tt> call).
+     * <tt>ByteBuffer.asXxxBuffer</tt> methods (after <tt>byteBuffer.order(byteOrder)</tt> call),
+     * excepting the case of {@link BitArray}, when <tt>ByteOrder.LITTLE_ENDIAN</tt> order is used always.
      * After this, the converted elements are sequentially written to the specified AlgART array,
      * from its element #0 to its last element #<tt>array.length()-1</tt>,
      * by sequential calls of <tt>{@link UpdatableBitArray#setBits(long, long[], long, long)
@@ -4546,121 +4466,17 @@ public class Arrays {
      *
      * @param inputStream the input stream.
      * @param array       the updatable array the should be read.
-     * @param byteOrder   the byte order in the stream; it is not used in the only case of {@link ByteArray}.
+     * @param byteOrder   the byte order in the stream;
+     *                    it is not used in cases of {@link ByteArray} and {@link BitArray}.
      * @throws NullPointerException if <tt>inputStream</tt>, <tt>array</tt> or <tt>byteOrder</tt>
      *                              argument is <tt>null</tt>.
      * @throws IOException          in the same situations as in the standard
      *                              <tt>DataInputStream.readFully</tt> method.
-     * @see #copyBytesToArray(UpdatablePArray, byte[])
+     * @see #copyBytesToArray(UpdatablePArray, byte[], ByteOrder)
      * @see #write(OutputStream, PArray, ByteOrder)
      */
     public static void read(InputStream inputStream, UpdatablePArray array, ByteOrder byteOrder) throws IOException {
-        if (inputStream == null)
-            throw new NullPointerException("Null inputStream array");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (byteOrder == null)
-            throw new NullPointerException("Null byteOrder argument");
-        final long n = array.length();
-        DataInputStream dataInputStream = new DataInputStream(inputStream); // DataInputStream - for readFully feature
-        if (array instanceof BitArray) {
-            long[] bits = (long[]) DataBuffersImpl.LONG_BUFFERS.requestArray();
-            try {
-                UpdatableBitArray bitArray = (UpdatableBitArray) array;
-                ByteBuffer byteBuffer = ByteBuffer.allocate(8 * (int) Math.min(bits.length, (n + 63) >>> 6));
-                byteBuffer.order(byteOrder);
-                byte[] bytes = byteBuffer.array();
-                LongBuffer longBuffer = byteBuffer.asLongBuffer();
-                for (long p = 0; p < n; ) {
-                    int len = (int) Math.min(n - p, bits.length * 64);
-                    int packedLen = (len + 63) >>> 6;
-                    dataInputStream.readFully(bytes, 0, packedLen * 8);
-                    longBuffer.rewind();
-                    longBuffer.get(bits, 0, packedLen);
-                    bitArray.setBits(p, bits, 0, len);
-                    p += len;
-                }
-            } finally {
-                DataBuffersImpl.LONG_BUFFERS.releaseArray(bits);
-            }
-
-        } else {
-            DataBuffer buf = Arrays.bufferInternal(array, DataBuffer.AccessMode.READ_WRITE,
-                AbstractArray.largeBufferCapacity(array), true);
-            enableCaching(buf);
-            try {
-                if (array instanceof ByteArray) {
-                    for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                        dataInputStream.readFully((byte[]) buf.data(), buf.from(), buf.cnt());
-                        buf.force();
-                    }
-                } else {
-                    int sizeOfElement = (int) array.bitsPerElement() >>> 3;
-                    ByteBuffer byteBuffer = ByteBuffer.allocate(sizeOfElement * (int) Math.min(buf.capacity(), n));
-                    byteBuffer.order(byteOrder);
-                    byte[] bytes = byteBuffer.array();
-                    //[[Repeat() Char ==> Short,,Int,,Long,,Float,,Double;;
-                    //           char ==> short,,int,,long,,float,,double]]
-                    if (array instanceof CharArray) {
-                        CharBuffer charBuffer = byteBuffer.asCharBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            dataInputStream.readFully(bytes, 0, buf.cnt() * sizeOfElement);
-                            charBuffer.rewind();
-                            charBuffer.get((char[]) buf.data(), buf.from(), buf.cnt());
-                            buf.force();
-                        }
-                    } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-                    if (array instanceof ShortArray) {
-                        ShortBuffer shortBuffer = byteBuffer.asShortBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            dataInputStream.readFully(bytes, 0, buf.cnt() * sizeOfElement);
-                            shortBuffer.rewind();
-                            shortBuffer.get((short[]) buf.data(), buf.from(), buf.cnt());
-                            buf.force();
-                        }
-                    } else
-                    if (array instanceof IntArray) {
-                        IntBuffer intBuffer = byteBuffer.asIntBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            dataInputStream.readFully(bytes, 0, buf.cnt() * sizeOfElement);
-                            intBuffer.rewind();
-                            intBuffer.get((int[]) buf.data(), buf.from(), buf.cnt());
-                            buf.force();
-                        }
-                    } else
-                    if (array instanceof LongArray) {
-                        LongBuffer longBuffer = byteBuffer.asLongBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            dataInputStream.readFully(bytes, 0, buf.cnt() * sizeOfElement);
-                            longBuffer.rewind();
-                            longBuffer.get((long[]) buf.data(), buf.from(), buf.cnt());
-                            buf.force();
-                        }
-                    } else
-                    if (array instanceof FloatArray) {
-                        FloatBuffer floatBuffer = byteBuffer.asFloatBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            dataInputStream.readFully(bytes, 0, buf.cnt() * sizeOfElement);
-                            floatBuffer.rewind();
-                            floatBuffer.get((float[]) buf.data(), buf.from(), buf.cnt());
-                            buf.force();
-                        }
-                    } else
-                    if (array instanceof DoubleArray) {
-                        DoubleBuffer doubleBuffer = byteBuffer.asDoubleBuffer();
-                        for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                            dataInputStream.readFully(bytes, 0, buf.cnt() * sizeOfElement);
-                            doubleBuffer.rewind();
-                            doubleBuffer.get((double[]) buf.data(), buf.from(), buf.cnt());
-                            buf.force();
-                        }
-                    } else //[[Repeat.AutoGeneratedEnd]]
-                            throw new AssertionError("Unallowed type of passed argument: " + array.getClass());
-                }
-            } finally {
-                Arrays.dispose(buf);
-            }
-        }
+        ArraysSerializationImpl.read(inputStream, array, byteOrder);
     }
 
     /**

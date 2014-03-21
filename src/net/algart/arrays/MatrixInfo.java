@@ -58,7 +58,7 @@ import java.util.Map;
  * {@link LargeMemoryModel#asArray asArray} /
  * {@link LargeMemoryModel#asUpdatableArray asUpdatableArray} methods).
  * This class can be used together with higher-level methods</p>
-
+ *
  * <ul>
  * <li>{@link LargeMemoryModel#asMatrix(Object, MatrixInfo)},</li>
  * <li>{@link LargeMemoryModel#asUpdatableMatrix(Object, MatrixInfo)},</li>
@@ -159,8 +159,8 @@ import java.util.Map;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
  * @see DataFileModel#recommendedPrefixSize()
+ * @since JDK 1.5
  */
 public abstract class MatrixInfo {
 
@@ -212,9 +212,11 @@ public abstract class MatrixInfo {
     final String version;
 
     private MatrixInfo(Class<?> elementType, ByteOrder byteOrder, long size, long[] dimensions,
-        long dataOffset, String version)
+                       long dataOffset, String version)
     {
         assert dimensions.length <= Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS; // always checked before this
+        assert elementType != null;
+        assert byteOrder != null;
         this.elementType = elementType;
         this.bitsPerElement = Arrays.bitsPerElement(elementType);
         this.size = size;
@@ -233,7 +235,7 @@ public abstract class MatrixInfo {
      * @param matrix     the matrix.
      * @param dataOffset the value that may be interpreted as an offset of some "main" data and
      *                   that will be stored in byte array returned by {@link #toBytes()} method.
-     * @return           full structural information about the matrix.
+     * @return full structural information about the matrix.
      * @throws NullPointerException   if the argument is <tt>null</tt>.
      * @throws TooLargeArrayException if the number of matrix dimensions is greater than
      *                                {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}.
@@ -258,7 +260,7 @@ public abstract class MatrixInfo {
      * @param dataOffset the value that may be interpreted as an offset of some "main" data and
      *                   that will be stored in byte array returned by {@link #toBytes()} method.
      * @param version    the version of the serialization format supported by the created instance.
-     * @return           full structural information about the matrix.
+     * @return full structural information about the matrix.
      * @throws NullPointerException     if the argument is <tt>null</tt>.
      * @throws TooLargeArrayException   if the number of matrix dimensions is greater than
      *                                  {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}.
@@ -311,7 +313,7 @@ public abstract class MatrixInfo {
      * in the sequence of bytes.
      *
      * @param bytes the byte array produced by some previous call of {@link #toBytes()} method.
-     * @return      new instance of this class, built on the base of the passed byte array.
+     * @return new instance of this class, built on the base of the passed byte array.
      * @throws NullPointerException       if the argument is <tt>null</tt>.
      * @throws IllegalInfoSyntaxException if the format of <tt>bytes</tt> argument is illegal.
      * @see #toBytes()
@@ -341,7 +343,7 @@ public abstract class MatrixInfo {
      * in the sequence of characters.
      *
      * @param chars the string produced by some previous call of {@link #toChars()} method.
-     * @return      new instance of this class, built on the base of the passed string.
+     * @return new instance of this class, built on the base of the passed string.
      * @throws NullPointerException       if the argument is <tt>null</tt>.
      * @throws IllegalInfoSyntaxException if the format of <tt>chars</tt> argument is illegal.
      * @see #toChars()
@@ -373,7 +375,7 @@ public abstract class MatrixInfo {
      * always fulfil this condition.
      *
      * @param name the checked property name.
-     * @return     whether the passed string is an allowed name for an additional property.
+     * @return whether the passed string is an allowed name for an additional property.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public static boolean isCorrectAdditionalPropertyName(String name) {
@@ -441,6 +443,8 @@ public abstract class MatrixInfo {
     /**
      * Returns the byte order used by the matrix for storing data.
      *
+     * <p>This method never returns <tt>null</tt>.
+     *
      * @return the byte order used by the matrix for storing data.
      * @see Array#byteOrder()
      */
@@ -490,7 +494,7 @@ public abstract class MatrixInfo {
      * Equivalent to <tt>n&lt;{@link #dimCount()}?{@link #dimensions()}[n]:1</tt>, but works faster.
      *
      * @param n the index of matrix dimension.
-     * @return  the dimension <tt>#n</tt> of the matrix.
+     * @return the dimension <tt>#n</tt> of the matrix.
      * @throws IndexOutOfBoundsException if <tt>n&lt;0</tt> (but <i>not</i> if <tt>n</tt> is too large).
      * @see Matrix#dim(int)
      */
@@ -536,7 +540,8 @@ public abstract class MatrixInfo {
      * difference that the new instance have the specified {@link #byteOrder() byte order}.
      *
      * @param byteOrder new value of byte order.
-     * @return          modified instance of this class.
+     * @return modified instance of this class.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public abstract MatrixInfo cloneWithOtherByteOrder(ByteOrder byteOrder);
 
@@ -552,7 +557,7 @@ public abstract class MatrixInfo {
      * In this case, this method throws <tt>UnsupportedOperationException</tt>.
      *
      * @param version required version.
-     * @return        modified instance of this class.
+     * @return modified instance of this class.
      * @throws NullPointerException          if the argument is <tt>null</tt>.
      * @throws IllegalArgumentException      if the specified version is not supported by this class.
      * @throws UnsupportedOperationException if the specified version cannot store all information, stored
@@ -591,7 +596,7 @@ public abstract class MatrixInfo {
      * difference that the new instance have the specified {@link #dataOffset() data offset}.
      *
      * @param dataOffset new value of data offset.
-     * @return           modified instance of this class.
+     * @return modified instance of this class.
      */
     public abstract MatrixInfo cloneWithOtherDataOffset(long dataOffset);
 
@@ -622,7 +627,7 @@ public abstract class MatrixInfo {
      * are maintained by the created instance.
      *
      * @param additionalProperties another additional properties.
-     * @return                     modified instance of this class.
+     * @return modified instance of this class.
      * @throws UnsupportedOperationException if the {@link #version() version} of this instance is 1.1.
      * @throws NullPointerException          if the argument is <tt>null</tt>
      *                                       or if some keys or values are <tt>null</tt>.
@@ -645,11 +650,11 @@ public abstract class MatrixInfo {
      * <p>The length of returned array never exceeds {@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH}.
      *
      * @return the content of this instance converted into a byte array.
-     * @see #valueOf(byte[])
-     * @see #toChars()
      * @throws IllegalStateException if the summary size of all {@link #additionalProperties() additional properties}
      *                               is very large and, so, this instance cannot be serialized in
      *                               {@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH} bytes.
+     * @see #valueOf(byte[])
+     * @see #toChars()
      */
     public byte[] toBytes() {
         // Note: this method must be overridden in versions where characters can be out of 0..255 range!
@@ -660,7 +665,7 @@ public abstract class MatrixInfo {
             if (ch >= 256)
                 throw new AssertionError("Cannot convert to bytes: some additional properties contain "
                     + "characters with codes higher than ASCII 255");
-            result[k] = (byte)ch;
+            result[k] = (byte) ch;
         }
         return result;
     }
@@ -672,11 +677,11 @@ public abstract class MatrixInfo {
      * <p>The length of returned string never exceeds {@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH}.
      *
      * @return the content of this instance converted into a string.
-     * @see #valueOf(String)
-     * @see #toBytes()
      * @throws IllegalStateException if the summary size of all {@link #additionalProperties() additional properties}
      *                               is very large and, so, this instance cannot be serialized in
      *                               {@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH} characters.
+     * @see #valueOf(String)
+     * @see #toBytes()
      */
     public abstract String toChars();
 
@@ -692,7 +697,7 @@ public abstract class MatrixInfo {
      * </ol>
      *
      * @param matrix the matrix to be compared with this matrix information.
-     * @return       <tt>true</tt> if this information correctly describes the given matrix.
+     * @return <tt>true</tt> if this information correctly describes the given matrix.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public boolean matches(Matrix<?> matrix) {
@@ -752,7 +757,7 @@ public abstract class MatrixInfo {
         int result = elementType.toString().hashCode();
         result = 31 * result + byteOrder.toString().hashCode();
         result = 31 * result + JArrays.arrayHashCode(dimensions, 0, dimensions.length);
-        result = 31 * result + ((int)dataOffset ^ (int)(dataOffset >>> 32));
+        result = 31 * result + ((int) dataOffset ^ (int) (dataOffset >>> 32));
         result = 31 * result + additionalProperties().hashCode();
         return result;
     }
@@ -774,12 +779,12 @@ public abstract class MatrixInfo {
      * {@link #version() versions} of the objects.
      *
      * @param obj the object to be compared for equality with this instance.
-     * @return    <tt>true</tt> if the specified object is a matrix information equal to this one.
+     * @return <tt>true</tt> if the specified object is a matrix information equal to this one.
      */
     public boolean equals(Object obj) {
         if (!(obj instanceof MatrixInfo))
             return false;
-        MatrixInfo mi = (MatrixInfo)obj;
+        MatrixInfo mi = (MatrixInfo) obj;
         return mi.elementType.equals(elementType)
             && mi.byteOrder == byteOrder
             && java.util.Arrays.equals(mi.dimensions, dimensions)
@@ -875,6 +880,8 @@ public abstract class MatrixInfo {
 
         @Override
         public MatrixInfo cloneWithOtherByteOrder(ByteOrder byteOrder) {
+            if (byteOrder == null)
+                throw new NullPointerException("Null byteOrder");
             return new Version1_1(
                 elementType,
                 byteOrder,
@@ -940,7 +947,8 @@ public abstract class MatrixInfo {
         private static final String SIGNATURE_VALUE_1_2 = "AlgART Matrix v" + VERSION_1_2;
         private final Map<String, String> additionalProperties;
 
-        private Version1_2(Class<?> elementType, ByteOrder byteOrder, long size, long[] dimensions,
+        private Version1_2(
+            Class<?> elementType, ByteOrder byteOrder, long size, long[] dimensions,
             long dataOffset, Map<String, String> additionalProperties)
         {
             super(elementType, byteOrder, size, dimensions, dataOffset, VERSION_1_2);
@@ -977,7 +985,7 @@ public abstract class MatrixInfo {
             long dataOffset = -1;
             Map<String, String> additional = new LinkedHashMap<String, String>();
             int q;
-            for (int p = 0, lineIndex = 0, len = chars.length();  p < len; p = q, lineIndex++) {
+            for (int p = 0, lineIndex = 0, len = chars.length(); p < len; p = q, lineIndex++) {
                 if (lineIndex > MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO + 500)
                     throw new IllegalInfoSyntaxException("More than " + (MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO + 500)
                         + " system and additional properties are found in the serialized form");
@@ -1125,6 +1133,8 @@ public abstract class MatrixInfo {
 
         @Override
         public MatrixInfo cloneWithOtherByteOrder(ByteOrder byteOrder) {
+            if (byteOrder == null)
+                throw new NullPointerException("Null byteOrder");
             return new Version1_2(
                 elementType,
                 byteOrder,
@@ -1163,7 +1173,7 @@ public abstract class MatrixInfo {
                 if (!(value instanceof String))
                     throw new ClassCastException("Illegal (not String) type of the value of additional property: "
                         + value.getClass());
-                additional.put((String)key, (String)value);
+                additional.put((String) key, (String) value);
             }
             return new Version1_2(
                 elementType,
