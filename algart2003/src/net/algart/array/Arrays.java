@@ -35,7 +35,6 @@ import net.algart.lib.*;
  *
  * @author  Daniel Alievsky
  * @version 1.1
- * @deprecated
  */
 
 public final class Arrays implements TrueStatic {
