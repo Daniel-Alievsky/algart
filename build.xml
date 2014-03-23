@@ -4,9 +4,19 @@
     <target name="all">
         <antcall target="compile"/>
         <antcall target="compile-demo"/>
-        <antcall target="jar"/>
         <antcall target="javadoc"/>
+        <antcall target="jar"/>
         <antcall target="zip"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="classes"/>
+        <delete dir="demo/classes"/>
+        <delete dir="docs"/>
+        <delete file="algart.jar" failonerror="false"/>
+        <delete file="algart-demo.jar" failonerror="false"/>
+        <delete file="algart.zip" failonerror="false"/>
+        <delete file="algart-docs.zip" failonerror="false"/>
     </target>
 
     <target name="compile">
@@ -16,6 +26,7 @@
         <javac srcdir="src" source="1.5" target="1.5" destdir="classes" includeAntRuntime="false">
             <compilerarg value="-version"/>
             <compilerarg value="-Xlint"/>
+            <compilerarg value="-Xlint:-options"/>
         </javac>
     </target>
 
@@ -24,23 +35,12 @@
         <mkdir dir="demo/classes"/>
         <javac srcdir="demo/src" source="1.5" target="1.5" classpath="classes" destdir="demo/classes" includeAntRuntime="false">
             <compilerarg value="-Xlint"/>
+            <compilerarg value="-Xlint:-options"/>
         </javac>
     </target>
 
-    <target name="jar">
-        <jar destfile="algart.jar" basedir="classes" index="true" compress="false">
-            <manifest>
-                <attribute name="Sealed" value="true"/>
-            </manifest>
-        </jar>
-        <jar destfile="algart-demo.jar" basedir="demo/classes" index="true" compress="false"/>
-    </target>
-
     <target name="javadoc">
-        <mkdir dir="docs/api/"/>
-        <delete>
-            <fileset dir="docs/api/" includes="**/*.html"/>
-        </delete>
+        <delete dir="docs"/>
         <javadoc destdir="docs/api/" author="true" version="true" charset="UTF-8" Locale="en_US" additionalparam="-notimestamp">
         <!-- Locale is necessary to provide English, not Breakiterator algorithm of parsing the first sentence -->
             <packageset dir="src">
@@ -153,6 +153,17 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
         <java classpath="classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
             <arg value="algart2003/docs/api/"/>
         </java>
+    </target>
+
+    <target name="jar">
+        <delete file="algart.jar" failonerror="false"/>
+        <jar destfile="algart.jar" basedir="classes" index="true" compress="false">
+            <manifest>
+                <attribute name="Sealed" value="true"/>
+            </manifest>
+        </jar>
+        <delete file="algart-demo.jar" failonerror="false"/>
+        <jar destfile="algart-demo.jar" basedir="demo/classes" index="true" compress="false"/>
     </target>
 
     <target name="zip">
