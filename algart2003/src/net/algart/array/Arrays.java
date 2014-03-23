@@ -2679,5 +2679,6 @@ class ArraysNative implements TrueStatic {
         message = e.toString();
       }
     initializationExceptionMessage = message;
+//    System.out.println("!!!!Arrays: " + initializationExceptionMessage);
     }
 }
