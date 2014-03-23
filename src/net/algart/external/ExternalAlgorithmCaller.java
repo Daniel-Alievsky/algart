@@ -357,7 +357,9 @@ public abstract class ExternalAlgorithmCaller {
                 return constant;
             }
         } catch (IllegalInfoSyntaxException e) {
-            throw new IOException(e);
+            final IOException exception = new IOException(e.getMessage());
+            exception.initCause(e);
+            throw exception;
         }
         Matrix<? extends UpdatablePArray> matrix = mm.newMatrix(
             UpdatablePArray.class, matrixInfo.elementType(), matrixInfo.dimensions());
