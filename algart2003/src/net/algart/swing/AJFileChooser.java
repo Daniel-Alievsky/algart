@@ -172,10 +172,6 @@ public class AJFileChooser extends JFileChooser {
      * @param b <code>true</code> if non-existing files should be approved;
      *    <code>false</code> it you want to disable approving non-existing files
      *
-     * @beaninfo
-     *   preferred: false
-     *   description: Sets whether the non-existing files can be approved
-     *
      * @see #isApprovingNonExistingFilesEnabled
      * @see #APPROVING_NON_EXISTING_FILES_ENABLED_CHANGED_PROPERTY
      */
@@ -217,10 +213,6 @@ public class AJFileChooser extends JFileChooser {
      *    is selected;
      *    <code>false</code> if existing files can be approved without
      *    warning.
-     *
-     * @beaninfo
-     *   preferred: false
-     *   description: Sets whether the non-existing files can be approved
      *
      * @see #isOverwriteWarningEnabled
      * @see #OVERWRITE_WARNING_ENABLED_CHANGED_PROPERTY
@@ -269,10 +261,6 @@ public class AJFileChooser extends JFileChooser {
      * @param b <code>true</code> if traversable elements should
      *    be never approved
      *
-     * @beaninfo
-     *   preferred: false
-     *   description: Sets whether traversable elements can be approved
-     *
      * @see #isApprovingFilesOnlyEnabled
      * @see #APPROVING_FILES_ONLY_ENABLED_CHANGED_PROPERTY
      */
@@ -314,10 +302,6 @@ public class AJFileChooser extends JFileChooser {
      *    correctly;
      *    <code>false</code> if links should be processed as
      *    usual files.
-     *
-     * @beaninfo
-     *   preferred: false
-     *   description: Sets whether links are processes
      *
      * @see #isTraversingLinksEnabled
      * @see #TRAVERSING_LINKS_ENABLED_CHANGED_PROPERTY
@@ -456,7 +440,7 @@ public class AJFileChooser extends JFileChooser {
              * All extensions are automatically converted to lower case
              * by the call <code>...toUpperCase().toLowerCase()</code>
              *
-             * @param extension - for example, {"jpg"} or {"HTML","htm"}
+             * @param extensions - for example, {"jpg"} or {"HTML","htm"}
              * @param description - for example, "JPeg images" or "HTML documents"
              */
             public Settings(String[] extensions, String description) {

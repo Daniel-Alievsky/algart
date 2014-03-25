@@ -5,6 +5,7 @@
         <antcall target="compile"/>
         <antcall target="compile-demo"/>
         <antcall target="javadoc"/>
+        <antcall target="javadoc2003"/>
         <antcall target="jar"/>
         <antcall target="zip"/>
     </target>
@@ -95,7 +96,9 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
         <java classpath="classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
             <arg value="docs/api/"/>
         </java>
+    </target>
 
+    <target name="javadoc2003">
         <mkdir dir="algart2003/docs/api/"/>
         <delete>
             <fileset dir="algart2003/docs/api/" includes="**/*.html"/>

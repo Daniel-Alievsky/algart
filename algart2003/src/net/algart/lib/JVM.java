@@ -129,14 +129,6 @@ public final class JVM {
     return isInMethod(clazz,"<clinit>");
   }
 
-  /**
-   * <p><code>SecurityException</code> is never thrown by this method;
-   * {@link CannotCheckStackTrace} is thrown instead.
-   * @param clazz
-   * @param methodName
-   * @return
-   * @throws CannotCheckStackTrace
-   */
   public static boolean isInMethod(Class clazz, String methodName) throws CannotCheckStackTrace {
     try {
       try {

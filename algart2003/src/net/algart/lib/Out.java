@@ -597,7 +597,7 @@ public final class Out implements TrueStatic {
 
     /**
     * Equivalent to<pre>
-    *    {@link #abc(long, char) abc((long)v,space)}
+    *    {@link #abc(long) abc((long)v)}
     * </pre>
     *
     * @param v the integer number
@@ -672,8 +672,7 @@ public final class Out implements TrueStatic {
     /**
     * If <code>o</code> is an instance of Java array, standard collection,
     * map (or Java 1 <code>Dictionary</code>), <code>Iterator</code>
-    * (or Java 1 <code>Enumeration</code>), {@link net.algart.array.ImmArray},
-    * {@link ImmSet} or {@link ImmMap}, joins and returns as a string
+    * (or Java 1 <code>Enumeration</code>), joins and returns as a string
     * the standard string representations for all elements of this array
     * (or collection, or all objects returned by the iterator),
     * separating elements by the given <code>separator</code>.
@@ -734,7 +733,7 @@ public final class Out implements TrueStatic {
     * call. Such a delay can greatly increase output performance,
     * especially while debugging under some IDE.
     *
-    * @param a   the printed string; if <code>null</code>, the <code>"null"</code>
+    * @param value the printed string; if <code>null</code>, the <code>"null"</code>
     *    string will be printed
     * @see #replaceLFToLineSeparator(String)
     * @see #avoidDebugSignalsForExceptions(String)
@@ -767,7 +766,6 @@ public final class Out implements TrueStatic {
     * {@link #print(String) print} method automatically replaces "\n"
     * with {@link GlobalProperties#LINE_SEPARATOR}).
     *
-    * @param value   the printed string
     * @see #print(String)
     * @see #println(String)
     */
@@ -788,13 +786,13 @@ public final class Out implements TrueStatic {
     }
     /**
     * This method differs from <code>System.out.println</code> in the same
-    * respects as the {@link print(String)} method differs from
+    * respects as the {@link #print(String)} method differs from
     * <code>System.out.print</code>. It's equivalent to<pre>
     *    print(value + "\n");
     * </pre>call. ({@link #print(String) print} call automatically replaces "\n"
     * with {@link GlobalProperties#LINE_SEPARATOR}.)
     *
-    * @param a   the printed string (followed by {@link GlobalProperties#LINE_SEPARATOR line separator}).
+    * @param value the printed string (followed by {@link GlobalProperties#LINE_SEPARATOR line separator}).
     * @see #replaceLFToLineSeparator(String)
     * @see #avoidDebugSignalsForExceptions(String)
     * @see #setAutomaticAvoidingDebugSignalsForExceptions(boolean)
@@ -931,7 +929,7 @@ public final class Out implements TrueStatic {
     * in the {@link #flush()} method.
     *
     * @param flusher New registered flusher.
-    * @see #removeFlusher()
+    * @see #removeFlusher(Out.Flusher)
     * @see #flush()
     */
     public static void addFlusher(Flusher flusher) {
@@ -939,10 +937,10 @@ public final class Out implements TrueStatic {
         flushers.put(flusher,"dummy");
     }
     /**
-    * Unregisters (removes from the internal list) the given flusher.
+    * Deregisters (removes from the internal list) the given flusher.
     *
     * @param flusher New registered flusher.
-    * @see #addFlusher()
+    * @see #addFlusher(Out.Flusher)
     * @see #flush()
     */
     public static void removeFlusher(Flusher flusher) {

@@ -26,7 +26,7 @@ package net.algart.lib;
 
 /**
  * <p>An interface to native class allowing to measure the time
- * with high resolution; used in {@link Tools}.
+ * with high resolution.
  *
  * @author  Daniel Alievsky
  * @version 1.1
