@@ -4,25 +4,21 @@ set flags= -trimTrailingWhitespace -warningOnTabs
 if %1.==-tempRemove. set flags=%flags% -removeAllIncludes
 if %1.==-trim. set flags=%flags% -onlyTrimTrailingWhitespace
 
-set trunk="..\..\..\..\..\..\..\.."
-if not exist %trunk%\simagis.iml set trunk="..\..\..\..\..\..\..\..\trunk"
-if not exist %trunk%\simagis.iml set trunk="..\..\..\..\..\..\..\..\simagis"
-if not exist %trunk%\simagis.iml echo Cannot find SIMAGIS trunk!
-if not exist %trunk%\simagis.iml goto end
+set f=%f% "..\..\..\..\..\..\**\*.java"
 
-if exist "..\..\..\..\..\..\..\..\algart\lib\*.*"  set f=%f% "..\..\..\..\..\..\..\lib\src\**\*.java"
-if exist "..\..\..\..\..\..\..\algorithm-lib\*.*"  set f=%f% "..\..\..\..\..\..\..\algorithm-lib\src\**\*.java"
-if exist "..\..\..\..\..\..\..\..\algart\demo\*.*" set f=%f% "..\..\..\..\..\..\..\demo\src\net\algart\**\*.java"
-if exist "..\..\..\..\..\..\..\algorithm-demo\*.*" set f=%f% "..\..\..\..\..\..\..\demo\src\net\algart\**\*.java"
-set f=%f% "%trunk%\bin\SimagisMatrixDemo\src\**\*.java"
-set f=%f% "%trunk%\bin\AlgartImagesP3\src\**\*.java"
-set f=%f% "%trunk%\bin\algart\src\net\algart\**\*.java"
-set f=%f% "%trunk%\bin\src-immutable\net\algart\immutable\**\*.java"
-set f=%f% "%trunk%\bin\MovementCommonModel3D\**\*.java"
-set f=%f% "%trunk%\bin\MovementCommonModel3D\*.html"
-set f=%f% "%trunk%\PlanePyramidSourceNDPRead\VisualStudio_NDPRead\**\NDPReadJNI.cpp"
-set f=%f% "%trunk%\OlympusVSI\src\**\*.java"
-set f=%f% "%trunk%\PlanePyramidSourceOlympus\src\**\*.java"
+set trunk=..\..\..\..\..\..\..\..
+if not exist %trunk%\simagis.iml set trunk=..\..\..\..\..\..\..\..\simagis
+if not exist %trunk%\simagis.iml set trunk=..\..\..\..\..\..\..\..\trunk
+if not exist %trunk%\simagis.iml echo Cannot find SIMAGIS trunk; it will not be processed
+if not exist %trunk%\simagis.iml goto skiptrunk
+
+if exist "%trunk%\bin\SimagisMatrixDemo\*.*"     set f=%f% "%trunk%\bin\SimagisMatrixDemo\src\**\*.java"
+if exist "%trunk%\bin\AlgartImagesP3\*.*"        set f=%f% "%trunk%\bin\AlgartImagesP3\src\**\*.java"
+if exist "%trunk%\bin\MovementCommonModel3D\*.*" set f=%f% "%trunk%\bin\MovementCommonModel3D\**\*.java"
+if exist "%trunk%\bin\MovementCommonModel3D\*.*" set f=%f% "%trunk%\bin\MovementCommonModel3D\*.html"
+if exist "%trunk%\PlanePyramidSourceNDPRead\*.*" set f=%f% "%trunk%\PlanePyramidSourceNDPRead\VisualStudio_NDPRead\**\NDPReadJNI.cpp"
+if exist "%trunk%\OlympusVSI\*.*"                set f=%f% "%trunk%\OlympusVSI\src\**\*.java"
+:skiptrunk
 
 if exist ..\..\..\..\..\..\classes\net\algart\executable\preprocessor\java\Repeater.class goto calljava
 if exist Repeater.class goto calljava

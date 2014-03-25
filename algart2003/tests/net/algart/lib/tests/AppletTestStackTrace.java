@@ -102,4 +102,3 @@ public class AppletTestStackTrace extends Applet {
         Memory.gc(true, true);
     }
 }
-

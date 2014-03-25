@@ -1677,6 +1677,3 @@ public class CommonSpeed {
         (args.length == 0 ? new CommonSpeed() : new CommonSpeed(Integer.parseInt(args[0]))).exec();
     }
 }
-
-
-

@@ -62,4 +62,3 @@ public class ATimer implements TrueStatic, ATools.TrueStatics.TimerReader {
         return timecpu();
     }
 }
-
