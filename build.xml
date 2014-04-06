@@ -14,6 +14,7 @@
         <delete dir="classes"/>
         <delete dir="demo/classes"/>
         <delete dir="docs"/>
+        <delete dir="algart2003/docs"/>
         <delete file="algart.jar" failonerror="false"/>
         <delete file="algart-demo.jar" failonerror="false"/>
         <delete file="algart.zip" failonerror="false"/>
@@ -99,10 +100,7 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
     </target>
 
     <target name="javadoc2003">
-        <mkdir dir="algart2003/docs/api/"/>
-        <delete>
-            <fileset dir="algart2003/docs/api/" includes="**/*.html"/>
-        </delete>
+        <delete dir="algart2003/docs"/>
         <javadoc destdir="algart2003/docs/api/" author="true" version="true" charset="UTF-8" Locale="en_US" additionalparam="-notimestamp">
         <!-- Locale is necessary to provide English, not Breakiterator algorithm of parsing the first sentence -->
             <packageset dir="algart2003/src">
