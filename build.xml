@@ -97,6 +97,11 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
         <java classpath="classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
             <arg value="docs/api/"/>
         </java>
+        <replace dir="docs/api" summary="true">
+            <include name="**/*.html"/>
+            <replacetoken><![CDATA[<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">]]></replacetoken>
+            <replacevalue><![CDATA[<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">]]></replacevalue>
+        </replace>
     </target>
 
     <target name="javadoc2003">
@@ -154,6 +159,11 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
         <java classpath="classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
             <arg value="algart2003/docs/api/"/>
         </java>
+        <replace dir="algart2003/docs/api" summary="true">
+            <include name="**/*.html"/>
+            <replacetoken><![CDATA[<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">]]></replacetoken>
+            <replacevalue><![CDATA[<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">]]></replacevalue>
+        </replace>
     </target>
 
     <target name="jar">
