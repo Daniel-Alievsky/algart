@@ -341,8 +341,9 @@ public interface ArrayContext {
     public int currentThreadIndex();
 
     /**
-     * Usually returns <tt>1</tt>, but in multithreading environment this method may return the number
-     * of currently executing threads in some group of parallel threads.
+     * Usually returns <tt>1</tt>, but in multithreading environment this method <i>may</i> return the number
+     * of currently executing threads in some group of parallel threads (but not must: in most contexts
+     * it still returns 1 even in multithreading environment).
      * This value is not the number of <i>all</i> executing threads and not the number of threads, which are
      * <i>really</i> executing at this moment &mdash; it is the number of elements in some group of tasks
      * (for example, created by {@link ThreadPoolFactory} class), which should be executed parallel in several threads

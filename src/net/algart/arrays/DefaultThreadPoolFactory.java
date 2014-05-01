@@ -170,8 +170,9 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * @throws IllegalArgumentException if <tt>numberOfTasks</tt> is negative.
      */
     public DefaultThreadPoolFactory(int numberOfTasks, ThreadPoolExecutor persistentThreadPool) {
-        if (numberOfTasks < 0)
+        if (numberOfTasks < 0) {
             throw new IllegalArgumentException("Negative numberOfTasks=" + numberOfTasks);
+        }
         this.numberOfTasks = numberOfTasks;
         this.persistentThreadPool = persistentThreadPool;
     }
@@ -225,12 +226,13 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * then this method is strictly equivalent to {@link #recommendedNumberOfTasks()}.
      *
      * @param sourceArray some AlgART array that should be processed.
-     * @return            the recommended number of parallel tasks to perform the processing.
+     * @return the recommended number of parallel tasks to perform the processing.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public int recommendedNumberOfTasks(Array sourceArray) {
-        if (sourceArray == null)
+        if (sourceArray == null) {
             throw new NullPointerException("Null sourceArray argument");
+        }
         if (numberOfTasks != 0) {
             return recommendedNumberOfTasks();
         }
@@ -238,7 +240,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
         if (len < MIN_MULTITHREADING_LENGTH) {
             return 1;
         } else {
-            return (int)Math.min(len, recommendedNumberOfTasks());
+            return (int) Math.min(len, recommendedNumberOfTasks());
             // no sense to create more threads than the number of elements
         }
     }
@@ -259,7 +261,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * @param threadFactory if not <tt>null</tt> and there is no
      *                      {@link #persistentThreadPool() persistent thread pool},
      *                      specifies the desired thread factory for using by new thread pool.
-     * @return              the thread pool for parallel processing the array.
+     * @return the thread pool for parallel processing the array.
      * @throws NullPointerException if <tt>sourceArray</tt> argument is <tt>null</tt>.
      * @see #getThreadPool(Array, ThreadFactory)
      */
@@ -283,12 +285,13 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * @param threadFactory if not <tt>null</tt> and there is no
      *                      {@link #persistentThreadPool() persistent thread pool},
      *                      specifies the desired thread factory for using by new thread pool.
-     * @return              the thread pool for parallel processing the array.
+     * @return the thread pool for parallel processing the array.
      * @throws NullPointerException if <tt>sourceArray</tt> argument is <tt>null</tt>.
      */
     public ExecutorService getThreadPool(Array sourceArray, ThreadFactory threadFactory) {
-        if (sourceArray == null)
+        if (sourceArray == null) {
             throw new NullPointerException("Null sourceArray argument");
+        }
         if (persistentThreadPool != null) {
             return persistentThreadPool;
         } else {
@@ -344,7 +347,9 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
                         t.setDaemon(true);
                         return t;
                     }
-                });
+                }
+            );
+
         static {
             if (GLOBAL_THREAD_POOL != null && GLOBAL_THREAD_POOL_KEEP_ALIVE_TIME > 0) {
                 try {
@@ -359,6 +364,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
                 }
             }
         }
+
         private static final DefaultThreadPoolFactory DEFAULT =
             new DefaultThreadPoolFactory(0, GLOBAL_THREAD_POOL);
         private static final DefaultThreadPoolFactory DEFAULT_SINGLE_THREAD =

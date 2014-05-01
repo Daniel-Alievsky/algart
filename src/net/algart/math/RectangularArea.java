@@ -789,9 +789,10 @@ public strictfp class RectangularArea {
 
     /**
      * Shifts this rectangular area by the specified vector and returns the shifted area.
-     * Equivalent to <tt>{@link #valueOf(Point, Point)
-     * valueOf}(thisInstance.{@link #min()}.{@link Point#add(Point) add}(vector),
-     * thisInstance.{@link #max()}.{@link Point#add(Point) add}(vector))</tt>.
+     * Equivalent to
+     * <pre>{@link #valueOf(Point, Point)
+     * valueOf}(thisInstance.{@link #min()}.{@link Point#add(Point)
+     * add}(vector), thisInstance.{@link #max()}.{@link Point#add(Point) add}(vector))</pre>
      *
      * @param vector the vector which is added to all vertices of this area.
      * @return       the shifted area.
@@ -809,6 +810,32 @@ public strictfp class RectangularArea {
             return this;
         }
         return new RectangularArea(min.add(vector), max.add(vector));
+    }
+
+    /**
+     * Shifts this rectangular area by <tt>vector.{@link Point#symmetric() symmetric()}</tt>
+     * and returns the shifted area.
+     * Equivalent to
+     * <pre>{@link #valueOf(Point, Point)
+     * valueOf}(thisInstance.{@link #min()}.{@link Point#subtract(Point)
+     * subtract}(vector), thisInstance.{@link #max()}.{@link Point#subtract(Point) subtract}(vector))</pre>
+     *
+     * @param vector the vector which is subtracted from all vertices of this area.
+     * @return       the shifted area.
+     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>vector.{@link Point#coordCount() coordCount()}</tt> is not equal to
+     *                                  the {@link #coordCount() number of dimensions} of this instance.
+     */
+    public RectangularArea shiftBack(Point vector) {
+        if (vector == null)
+            throw new NullPointerException("Null vector argument");
+        if (vector.coordinates.length != min.coordinates.length)
+            throw new IllegalArgumentException("Dimensions count mismatch: "
+                + vector.coordinates.length + " instead of " + min.coordinates.length);
+        if (vector.isOrigin()) {
+            return this;
+        }
+        return new RectangularArea(min.subtract(vector), max.subtract(vector));
     }
 
     /**

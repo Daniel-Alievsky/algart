@@ -821,9 +821,10 @@ public class IRectangularArea {
 
     /**
      * Shifts this rectangular area by the specified vector and returns the shifted area.
-     * Equivalent to <tt>{@link #valueOf(IPoint, IPoint)
-     * valueOf}(thisInstance.{@link #min()}.{@link IPoint#add(IPoint) add}(vector),
-     * thisInstance.{@link #max()}.{@link IPoint#add(IPoint) add}(vector))</tt>.
+     * Equivalent to
+     * <pre>{@link #valueOf(IPoint, IPoint)
+     * valueOf}(thisInstance.{@link #min()}.{@link IPoint#add(IPoint)
+     * add}(vector), thisInstance.{@link #max()}.{@link IPoint#add(IPoint) add}(vector))</pre>
      * Note that integer overflow is not checked here!
      *
      * @param vector the vector which is added to all vertices of this area.
@@ -842,7 +843,35 @@ public class IRectangularArea {
         if (vector.isOrigin()) {
             return this;
         }
-        return new IRectangularArea(min.add(vector), max.add(vector));
+        return IRectangularArea.valueOf(min.add(vector), max.add(vector));
+    }
+
+    /**
+     * Shifts this rectangular area by <tt>vector.{@link IPoint#symmetric() symmetric()}</tt>
+     * and returns the shifted area.
+     * Equivalent to
+     * <pre>{@link #valueOf(IPoint, IPoint)
+     * valueOf}(thisInstance.{@link #min()}.{@link IPoint#subtract(IPoint)
+     * subtract}(vector), thisInstance.{@link #max()}.{@link IPoint#subtract(IPoint) subtract}(vector))</pre>
+     * Note that integer overflow is not checked here!
+     *
+     * @param vector the vector which is subtracted from all vertices of this area.
+     * @return       the shifted area.
+     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>vector.{@link IPoint#coordCount() coordCount()}</tt> is not equal to
+     *                                  the {@link #coordCount() number of dimensions} of this instance,
+     *                                  or if the result is illegal due to the integer overflow.
+     */
+    public IRectangularArea shiftBack(IPoint vector) {
+        if (vector == null)
+            throw new NullPointerException("Null vector argument");
+        if (vector.coordinates.length != min.coordinates.length)
+            throw new IllegalArgumentException("Dimensions count mismatch: "
+                + vector.coordinates.length + " instead of " + min.coordinates.length);
+        if (vector.isOrigin()) {
+            return this;
+        }
+        return IRectangularArea.valueOf(min.subtract(vector), max.subtract(vector));
     }
 
     /**
