@@ -120,8 +120,9 @@ public abstract class ExternalAlgorithmCaller {
     }
 
     public static List<Matrix<? extends PArray>> cloneImage(MemoryModel mm, List<Matrix<? extends PArray>> image) {
-        if (mm == null)
+        if (mm == null) {
             throw new NullPointerException("Null memory model");
+        }
         List<Matrix<? extends PArray>> result = new ArrayList<Matrix<? extends PArray>>();
         for (Matrix<? extends PArray> m : image) {
             Matrix<UpdatablePArray> clone = mm.newMatrix(UpdatablePArray.class, m);
@@ -152,34 +153,39 @@ public abstract class ExternalAlgorithmCaller {
 
     public static void writeImage(File file, List<? extends Matrix<? extends PArray>> image) throws IOException {
         String formatName = getFileExtension(file);
-        if (formatName == null)
+        if (formatName == null) {
             throw new IllegalArgumentException("Cannot write image into a file without extension");
+        }
         ColorImageFormatter formatter = new SimpleColorImageFormatter();
         BufferedImage bufferedImage = formatter.toBufferedImage(image);
-        if (!ImageIO.write(bufferedImage, formatName, file))
+        if (!ImageIO.write(bufferedImage, formatName, file)) {
             throw new IOException("Cannot write " + file + ": no writer for " + formatName);
+        }
     }
 
     public static List<Matrix<? extends PArray>> readImage(File file) throws IOException {
-        if (!file.exists())
+        if (!file.exists()) {
             throw new FileNotFoundException("Image file " + file + " does not exist");
+        }
         ColorImageFormatter formatter = new SimpleColorImageFormatter();
         BufferedImage bufferedImage = ImageIO.read(file);
         return formatter.toImage(bufferedImage);
     }
 
     public static int[] readImageDimensions(File file) throws IOException {
-        if (!file.exists())
+        if (!file.exists()) {
             throw new FileNotFoundException("Image file " + file + " does not exist");
+        }
         ImageInputStream iis = ImageIO.createImageInputStream(file);
         try {
             Iterator<ImageReader> iterator = ImageIO.getImageReaders(iis);
-            if (!iterator.hasNext())
+            if (!iterator.hasNext()) {
                 throw new IIOException("Unknown image format: can't create an ImageInputStream");
+            }
             ImageReader reader = iterator.next();
             try {
                 reader.setInput(iis);
-                return new int[]{reader.getWidth(0), reader.getHeight(0)};
+                return new int[] {reader.getWidth(0), reader.getHeight(0)};
             } finally {
                 reader.dispose();
             }
@@ -214,8 +220,9 @@ public abstract class ExternalAlgorithmCaller {
     {
         image = new ArrayList<Matrix<? extends PArray>>(image);
         // cloning before checking guarantees correct check while multithreading
-        if (image.isEmpty())
+        if (image.isEmpty()) {
             throw new IllegalArgumentException("Empty list of image bands");
+        }
         dir.mkdir();
         ExternalProcessor.writeUTF8(new File(dir, "version"), "1.0");
         int index = 0;
@@ -253,10 +260,12 @@ public abstract class ExternalAlgorithmCaller {
     }
 
     public static List<Matrix<? extends PArray>> readAlgARTImage(File dir) throws IOException {
-        if (!dir.exists())
+        if (!dir.exists()) {
             throw new FileNotFoundException("Image subdirectory " + dir + " does not exist");
-        if (!dir.isDirectory())
+        }
+        if (!dir.isDirectory()) {
             throw new FileNotFoundException("Image subdirectory " + dir + " is not a directory");
+        }
         List<Matrix<? extends PArray>> result = new ArrayList<Matrix<? extends PArray>>();
         int index = 0;
         for (; ; index++) {
@@ -285,6 +294,56 @@ public abstract class ExternalAlgorithmCaller {
         return result;
     }
 
+    public static void writeAlgARTMatrix(ArrayContext context, File dir, Matrix<? extends PArray> matrix)
+        throws IOException
+    {
+        if (dir == null)
+            throw new NullPointerException("Null directory for writing matrix");
+        if (matrix == null)
+            throw new NullPointerException("Null matrix");
+        if (!dir.mkdir()) {
+            if (!dir.isDirectory()) {
+                // i.e. if doesn't really exist
+                throw new IOException("Cannot create matrix directory " + dir);
+            }
+            // Important note: we must attempt to create the directory BEFORE checking its existence;
+            // in other case, some parallel threads can attempt to create this directory twice,
+            // that will lead to illegal messages about "errors" while creation
+        }
+        final PArray array = LargeMemoryModel.getRawArrayForSavingInFile(matrix);
+        MatrixInfo mi = LargeMemoryModel.getMatrixInfoForSavingInFile(matrix, 0);
+        ExternalProcessor.writeUTF8(new File(dir, "version"), "1.0");
+        File matrixFile = new File(dir, matrix.dimCount() == 1 ? "vector" : "matrix");
+        File indexFile = new File(dir, "index");
+        final LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(
+            new StandardIODataFileModel(matrixFile, false, false));
+        final UpdatablePArray dest = (UpdatablePArray) mm.newUnresizableArray(matrix.elementType(), array.length());
+        LargeMemoryModel.setTemporary(dest, false);
+        mi = mi.cloneWithOtherByteOrder(dest.byteOrder());
+        ExternalProcessor.writeUTF8(indexFile, mi.toChars());
+        Arrays.copy(context, dest, array, 0, false);
+        dest.freeResources(null);
+        // - actually saves possible cached data to the file
+        array.freeResources(null);
+        // - necessary to avoid overflowing 2 GB limit in 32-bit JVM
+    }
+
+    public static Matrix<? extends PArray> readAlgARTMatrix(ArrayContext context, File dir) throws IOException {
+        if (dir == null)
+            throw new NullPointerException("Null directory for reading matrix");
+        File indexFile = new File(dir, "index");
+        try {
+            MatrixInfo mi = MatrixInfo.valueOf(ExternalProcessor.readUTF8(indexFile));
+            LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(new StandardIODataFileModel());
+            File matrixFile = new File(dir, mi.dimCount() == 1 ? "vector" : "matrix");
+            return mm.asMatrix(matrixFile, mi);
+        } catch (IllegalInfoSyntaxException e) {
+            IOException ex = new IOException(e.getMessage());
+            ex.initCause(e);
+            throw ex;
+        }
+    }
+
     public static void serializeAlgARTMatrix(
         ArrayContext context,
         Matrix<? extends PArray> matrix,
@@ -293,10 +352,12 @@ public abstract class ExternalAlgorithmCaller {
         ByteOrder byteOrder)
         throws IOException
     {
-        if (serializationMode == null)
+        if (serializationMode == null) {
             throw new NullPointerException("Null serialization mode");
-        if (byteOrder == null)
+        }
+        if (byteOrder == null) {
             throw new NullPointerException("Null byteOrder");
+        }
         MatrixInfo matrixInfo = LargeMemoryModel.getMatrixInfoForSavingInFile(matrix, 0);
         // - we shall use CONSTANT_PROPERTY_NAME here
         matrixInfo = matrixInfo.cloneWithOtherByteOrder(byteOrder);
@@ -344,8 +405,9 @@ public abstract class ExternalAlgorithmCaller {
         SerializationMode serializationMode)
         throws IOException
     {
-        if (serializationMode == null)
+        if (serializationMode == null) {
             throw new NullPointerException("Null serialization mode");
+        }
         MemoryModel mm = context == null ? Arrays.SMM : context.getMemoryModel();
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         String serializedMatrixInfo = dataInputStream.readUTF();
@@ -407,8 +469,9 @@ public abstract class ExternalAlgorithmCaller {
     }
 
     public final void setDimCount(int dimCount) {
-        if (dimCount <= 0)
+        if (dimCount <= 0) {
             throw new IllegalArgumentException("Zero or negative dimCount");
+        }
         this.dimCount = dimCount;
     }
 
@@ -438,15 +501,18 @@ public abstract class ExternalAlgorithmCaller {
      * @param tileDimensions new tile dimensions.
      */
     public final void setTileDimensions(long[] tileDimensions) {
-        if (tileDimensions == null)
+        if (tileDimensions == null) {
             throw new NullPointerException("Null tileDimensions array");
-        if (tileDimensions.length == 0)
+        }
+        if (tileDimensions.length == 0) {
             throw new IllegalArgumentException("Empty tileDimensions array");
+        }
         tileDimensions = tileDimensions.clone();
         for (int k = 0; k < tileDimensions.length; k++) {
-            if (tileDimensions[k] <= 0)
+            if (tileDimensions[k] <= 0) {
                 throw new IllegalArgumentException("Negative or zero tile dimension #"
                     + k + ": " + tileDimensions[k]);
+            }
         }
         setDimCount(tileDimensions.length);
         this.tileDimensions = tileDimensions;
@@ -458,8 +524,9 @@ public abstract class ExternalAlgorithmCaller {
      * @param tileDimension the value of all new tile dimensions.
      */
     public final void setTileDimension(long tileDimension) {
-        if (tileDimension <= 0)
+        if (tileDimension <= 0) {
             throw new IllegalArgumentException("Zero or negative tile dimension " + tileDimension);
+        }
         this.tileDimensions = new long[dimCount];
         JArrays.fillLongArray(this.tileDimensions, tileDimension);
     }
@@ -478,8 +545,9 @@ public abstract class ExternalAlgorithmCaller {
      * @param tileOverlapAperture new tile overlap aperture.
      */
     public final void setTileOverlapAperture(IRectangularArea tileOverlapAperture) {
-        if (tileOverlapAperture == null)
+        if (tileOverlapAperture == null) {
             throw new NullPointerException("Null tileOverlapAperture");
+        }
         setDimCount(tileOverlapAperture.coordCount());
         this.tileOverlapAperture = tileOverlapAperture;
     }
@@ -490,8 +558,9 @@ public abstract class ExternalAlgorithmCaller {
      * @param tileOverlap half of overlap aperture for all coordinates.
      */
     public final void setTileOverlap(long tileOverlap) {
-        if (tileOverlap < 0)
+        if (tileOverlap < 0) {
             throw new IllegalArgumentException("Negative tileOverlap = " + tileOverlap);
+        }
         setTileOverlapAperture(IRectangularArea.valueOf(
             IPoint.valueOfEqualCoordinates(dimCount, -tileOverlap),
             IPoint.valueOfEqualCoordinates(dimCount, tileOverlap)));
@@ -512,14 +581,16 @@ public abstract class ExternalAlgorithmCaller {
     }
 
     public final void setTilingContinuationMode(Matrix.ContinuationMode tilingContinuationMode) {
-        if (tilingContinuationMode == null)
+        if (tilingContinuationMode == null) {
             throw new NullPointerException("Null tilingContinuationMode");
+        }
         this.tilingContinuationMode = tilingContinuationMode;
     }
 
     public final void setTilingContinuationNormalizedValues(double[] tilingContinuationNormalizedValues) {
-        if (tilingContinuationNormalizedValues == null)
+        if (tilingContinuationNormalizedValues == null) {
             throw new NullPointerException("Null tilingContinuationNormalizedValues");
+        }
         this.tilingContinuationNormalizedValues = tilingContinuationNormalizedValues.clone();
     }
 
@@ -538,8 +609,9 @@ public abstract class ExternalAlgorithmCaller {
     }
 
     public final void setNumberOfThreads(int numberOfThreads) {
-        if (numberOfThreads < 0)
+        if (numberOfThreads < 0) {
             throw new IllegalArgumentException("Negative numberOfThreads");
+        }
         this.numberOfThreads = numberOfThreads;
     }
 
@@ -572,8 +644,9 @@ public abstract class ExternalAlgorithmCaller {
     }
 
     public final void setAlgorithmCode(String algorithmCode) {
-        if (algorithmCode == null)
+        if (algorithmCode == null) {
             throw new NullPointerException("Null algorithm code");
+        }
         this.algorithmCode = algorithmCode;
     }
 
@@ -725,10 +798,12 @@ public abstract class ExternalAlgorithmCaller {
             null :
             source.entrySet().iterator().next().getValue();
         if (componentwise) {
-            if (firstImage == null)
+            if (firstImage == null) {
                 throw new IllegalArgumentException("Cannot process componentwise an empty set of source matrices");
-            if (firstImage.isEmpty())
+            }
+            if (firstImage.isEmpty()) {
                 throw new IllegalArgumentException("Cannot process componentwise an empty components set");
+            }
             Map<String, List<Matrix<? extends PArray>>> result = newImageMap();
             for (int k = 0, n = firstImage.size(); k < n; k++) {
                 ArrayContext ac = this.context == null ? null : this.context.part(k, k + 1, n);
@@ -737,8 +812,9 @@ public abstract class ExternalAlgorithmCaller {
                 for (Map.Entry<String, List<Matrix<? extends PArray>>> entry : source.entrySet()) {
                     String key = entry.getKey();
                     List<Matrix<? extends PArray>> image = entry.getValue();
-                    if (image.isEmpty())
+                    if (image.isEmpty()) {
                         throw new IllegalArgumentException("Cannot process componentwise an empty components set");
+                    }
                     Matrix<? extends PArray> correspondingBand = image.get(k < image.size() ? k : 0);
                     sourceMono.put(key, Matrices.several(PArray.class, correspondingBand));
                 }
@@ -751,8 +827,9 @@ public abstract class ExternalAlgorithmCaller {
                 for (Map.Entry<String, List<Matrix<? extends PArray>>> entry : resultMono.entrySet()) {
                     String key = entry.getKey();
                     List<Matrix<? extends PArray>> image = entry.getValue();
-                    if (image.isEmpty())
+                    if (image.isEmpty()) {
                         throw new IllegalArgumentException("Cannot use componentwise an empty result components set");
+                    }
                     List<Matrix<? extends PArray>> resultImage = result.get(key);
                     if (resultImage == null) {
                         resultImage = new ArrayList<Matrix<? extends PArray>>();
@@ -846,15 +923,17 @@ public abstract class ExternalAlgorithmCaller {
     }
 
     static Object stringToJSON(Object jsonObjectOrString) {
-        if (jsonObjectOrString == null)
+        if (jsonObjectOrString == null) {
             throw new NullPointerException("Null jsonObjectOrString");
+        }
         try {
             if (jsonObjectOrString instanceof String) {
                 return jsonClass.getConstructor(String.class).newInstance(jsonObjectOrString);
             } else {
-                if (!jsonClass.isInstance(jsonObjectOrString))
+                if (!jsonClass.isInstance(jsonObjectOrString)) {
                     throw new IllegalArgumentException("Invalid class of jsonObjectOrString: "
                         + jsonObjectOrString.getClass() + " (only String and JSONObject allowed)");
+                }
                 return jsonObjectOrString;
             }
         } catch (InvocationTargetException e) {
@@ -870,7 +949,8 @@ public abstract class ExternalAlgorithmCaller {
 
     private class TilingExternalUtilityProcessor
         extends AbstractArrayProcessorWithContextSwitching
-        implements ApertureProcessor<StringAndIndexPair> {
+        implements ApertureProcessor<StringAndIndexPair>
+    {
         final IRectangularArea dependenceAperture;
         final Object additionalData;
 
@@ -926,8 +1006,9 @@ public abstract class ExternalAlgorithmCaller {
         final int index;
 
         private StringAndIndexPair(String s, int index) {
-            if (s == null)
+            if (s == null) {
                 throw new NullPointerException("Null string key");
+            }
             this.s = s;
             this.index = index;
         }
