@@ -62,7 +62,7 @@ package net.algart.arrays;
 public interface MemoryModel {
 
     /**
-     * Constructs an empty resizable array with the specified element type and a little initial capacity.
+     * Allocates an empty resizable array with the specified element type and a little initial capacity.
      * It is equivalent to {@link #newEmptyArray(Class, long) newEmptyArray(elementType, n)}, where
      * <tt>n</tt> is some little value.
      *
@@ -81,7 +81,7 @@ public interface MemoryModel {
     public MutableArray newEmptyArray(Class<?> elementType);
 
     /**
-     * Constructs an empty resizable array with the specified element type and initial capacity.
+     * Allocates an empty resizable array with the specified element type and initial capacity.
      *
      * <p>The element type can be either usual object class (as <tt>String.class</tt>),
      * or one of the primitive types: <tt>boolean.class</tt>,
@@ -126,7 +126,7 @@ public interface MemoryModel {
     public MutableArray newEmptyArray(Class<?> elementType, long initialCapacity);
 
     /**
-     * Constructs a zero-filled resizable array with the specified element type and initial length.
+     * Allocates a zero-filled resizable array with the specified element type and initial length.
      * The capacity of new array will be equal to its length.
      *
      * <p>This method is equivalent to the following call:
@@ -148,7 +148,7 @@ public interface MemoryModel {
     public MutableArray newArray(Class<?> elementType, long initialLength);
 
     /**
-     * Constructs a zero-filled unresizable array with the specified element type and length.
+     * Allocates a zero-filled unresizable array with the specified element type and length.
      * The capacity of new array will be equal to its length.
      *
      * <p>The analogous result may be obtained the following call:
@@ -779,7 +779,7 @@ public interface MemoryModel {
     public <E> UpdatableObjectArray<E> newUnresizableObjectArray(Class<E> elementType, long length);
 
     /**
-     * Constructs a resizable array with the same content as the passed one, where the actual copying the elements
+     * Allocates a resizable array with the same content as the passed one, where the actual copying the elements
      * will be deferred as long as possible, maybe, until the first access to elements.
      * The capacity of new array will be equal to its length (i.e. <tt>array.length()</tt>).
      *
@@ -861,7 +861,7 @@ public interface MemoryModel {
     public UpdatableArray newUnresizableLazyCopy(Array array);
 
     /**
-     * Constructs a zero-filled {@link Matrix matrix} with the specified element type and dimensions.
+     * Allocates a zero-filled {@link Matrix matrix} with the specified element type and dimensions.
      *
      * <p>The AlgART array, that backs the new matrix (and is will be returned by {@link Matrix#array()}
      * method), will be unresizable. It is created by the following call:
@@ -1249,7 +1249,7 @@ public interface MemoryModel {
 
 
     /**
-     * Constructs an unresizable AlgART array containing <tt>count</tt> elements of
+     * Allocates an unresizable AlgART array containing <tt>count</tt> elements of
      * the specified Java array:
      * <tt>array[offset], array[offset + 1], ..., array[offset + count - 1]</tt>.
      *
@@ -1274,7 +1274,7 @@ public interface MemoryModel {
     public UpdatableArray valueOf(Object array, int offset, int count);
 
     /**
-     * Constructs an unresizable AlgART array containing all elements of the specified Java array:
+     * Allocates an unresizable AlgART array containing all elements of the specified Java array:
      * <tt>array[0], array[1], ..., array[array.length - 1]</tt>.
      *
      * <p>The returned AlgART array will be "safe" in that no references to the passed Java array
@@ -1290,7 +1290,8 @@ public interface MemoryModel {
      *
      * @param array the source Java array with elements of constructed AlgART array.
      * @return      created unresizable AlgART array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>array</tt> argument is not a Java array.
      */
     public UpdatableArray valueOf(Object array);
 
@@ -1316,7 +1317,6 @@ public interface MemoryModel {
      * @param array the source Java array with elements of constructed AlgART array.
      * @return      created unresizable AlgART array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>array</tt> argument is not a Java array.
      */
     public UpdatableBitArray valueOf(boolean[] array);
 
@@ -1340,7 +1340,6 @@ public interface MemoryModel {
      * @param array the source Java array with elements of constructed AlgART array.
      * @return      created unresizable AlgART array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>array</tt> argument is not a Java array.
      */
     public UpdatableCharArray valueOf(char[] array);
 
@@ -1364,7 +1363,6 @@ public interface MemoryModel {
      * @param array the source Java array with elements of constructed AlgART array.
      * @return      created unresizable AlgART array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>array</tt> argument is not a Java array.
      */
     public UpdatableByteArray valueOf(byte[] array);
 
@@ -1388,7 +1386,6 @@ public interface MemoryModel {
      * @param array the source Java array with elements of constructed AlgART array.
      * @return      created unresizable AlgART array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>array</tt> argument is not a Java array.
      */
     public UpdatableShortArray valueOf(short[] array);
 
@@ -1412,7 +1409,6 @@ public interface MemoryModel {
      * @param array the source Java array with elements of constructed AlgART array.
      * @return      created unresizable AlgART array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>array</tt> argument is not a Java array.
      */
     public UpdatableIntArray valueOf(int[] array);
 
@@ -1436,7 +1432,6 @@ public interface MemoryModel {
      * @param array the source Java array with elements of constructed AlgART array.
      * @return      created unresizable AlgART array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>array</tt> argument is not a Java array.
      */
     public UpdatableLongArray valueOf(long[] array);
 
@@ -1460,7 +1455,6 @@ public interface MemoryModel {
      * @param array the source Java array with elements of constructed AlgART array.
      * @return      created unresizable AlgART array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>array</tt> argument is not a Java array.
      */
     public UpdatableFloatArray valueOf(float[] array);
 
@@ -1484,7 +1478,6 @@ public interface MemoryModel {
      * @param array the source Java array with elements of constructed AlgART array.
      * @return      created unresizable AlgART array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>array</tt> argument is not a Java array.
      */
     public UpdatableDoubleArray valueOf(double[] array);
 
@@ -1509,7 +1502,6 @@ public interface MemoryModel {
      * @param array the source Java array with elements of constructed AlgART array.
      * @return      created unresizable AlgART array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>array</tt> argument is not a Java array.
      */
     public <E> UpdatableObjectArray<E> valueOf(E[] array);
 
