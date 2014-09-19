@@ -134,7 +134,10 @@ public abstract class ExternalAlgorithmCaller {
     }
 
     public static String getFileExtension(File file) {
-        String fileName = file.getName();
+        return getFileExtension(file.getName());
+    }
+
+    public static String getFileExtension(String fileName) {
         int p = fileName.lastIndexOf('.');
         if (p == -1) {
             return null;
