@@ -326,7 +326,7 @@ public abstract class BufferedImageToMatrixConverter {
             return null;
         }
 
-        private Class<?> getResultElementType(SampleModel sampleModel) {
+        private static Class<?> getResultElementType(SampleModel sampleModel) {
             switch (sampleModel.getDataType()) {
                 case DataBuffer.TYPE_BYTE :
                     return byte.class;
