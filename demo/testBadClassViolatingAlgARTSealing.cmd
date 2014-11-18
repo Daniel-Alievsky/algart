@@ -1,2 +1,0 @@
-call "%JAVA_HOME%\bin\javac" -cp ../algart.jar -d classes src/net/algart/arrays/BadClassViolatingAlgARTSealing.java
-call "%JAVA_HOME%\bin\java" -cp classes;../algart.jar net.algart.arrays.BadClassViolatingAlgARTSealing
