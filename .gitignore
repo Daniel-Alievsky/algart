@@ -1,7 +1,8 @@
 /.idea/workspace.xml
 /target
-/legacy/algart2003/docs
-/legacy/algart-old-packages-legacy/classes
-/legacy/algart-old-packages-legacy/src/algart/lib/legacy/*.aqs
-/legacy/algart-old-packages-legacy/classes
+/docs
+/additional/legacy/algart2003/docs
+/additional/legacy/algart-old-packages-legacy/classes
+/additional/legacy/algart-old-packages-legacy/src/algart/lib/legacy/*.aqs
+/additional/legacy/algart-old-packages-legacy/classes
 *.class
