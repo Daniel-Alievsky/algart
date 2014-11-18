@@ -16,3 +16,5 @@
 /algart-old-packages-legacy/classes
 /algart-old-packages-legacy/src/algart/lib/legacy/*.aqs
 *.class
+/out
+/.idea/workspace.xml
