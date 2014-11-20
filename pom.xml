@@ -32,7 +32,7 @@
 
     <scm>
         <connection>scm:git:https://DanielAlievsky@bitbucket.org/DanielAlievsky/algart.git</connection>
-        <url>http://bitbucket.org/juven/hg-demo</url>
+        <url>https://DanielAlievsky@bitbucket.org/DanielAlievsky/algart.git</url>
     </scm>
 
     <build>
