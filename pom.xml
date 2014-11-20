@@ -8,6 +8,33 @@
     <artifactId>algart</artifactId>
     <version>1.2</version>
 
+    <name>AlgART Java Libraries</name>
+    <description>Open-source Java libraries, supporting generalized smart arrays and matrices with elements
+        of any types, including a wide set of of 2D-, 3D- and multidimensional image processing
+        and other algorithms, working with arrays and matrices.</description>
+    <url>http://algart.net/java/AlgART/</url>
+
+    <licenses>
+        <license>
+            <name>The MIT License (MIT)</name>
+            <url>http://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Daniel Alievsky</name>
+            <email>daniel@iskrael.org</email>
+            <organization>AlgART laboratory</organization>
+            <organizationUrl>http://algart.net</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://DanielAlievsky@bitbucket.org/DanielAlievsky/algart.git</connection>
+        <url>http://bitbucket.org/juven/hg-demo</url>
+    </scm>
+
     <build>
         <plugins>
             <plugin>
