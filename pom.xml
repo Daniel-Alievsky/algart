@@ -31,8 +31,8 @@
     </developers>
 
     <scm>
-        <connection>scm:git:https://DanielAlievsky@bitbucket.org/DanielAlievsky/algart.git</connection>
-        <url>https://DanielAlievsky@bitbucket.org/DanielAlievsky/algart.git</url>
+        <connection>scm:git:https://bitbucket.org/DanielAlievsky/algart.git</connection>
+        <url>https://bitbucket.org/DanielAlievsky/algart.git</url>
     </scm>
 
     <build>
