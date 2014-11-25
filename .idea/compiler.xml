@@ -25,6 +25,8 @@
         <module name="algart" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="algart" target="1.6" />
+    </bytecodeTargetLevel>
   </component>
 </project>
-
