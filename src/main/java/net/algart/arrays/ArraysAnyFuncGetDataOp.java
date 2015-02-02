@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2015 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,12 @@ import net.algart.math.functions.Func;
 /**
  * <p>Implementation of {@link Array#getData(long, Object, int, int)} methods
  * in the custom implementations of functional arrays, created by
- * {@link Arrays#asFuncArray(MemoryModel, boolean, Func, Class, PArray...)} method, for any functions.
+ * {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method, for any functions.
  * Used by {@link ArraysFuncImpl} class.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2014</p>
+ * <p>AlgART Laboratory 2007&ndash;2015</p>
  *
  * @author Daniel Alievsky
  * @version 1.2

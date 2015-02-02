@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2015 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ package net.algart.math.functions;
  * while simultaneous accessing the same instance from several threads.
  * All implementations of this interface from this package are <b>immutable</b>.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2014</p>
+ * <p>AlgART Laboratory 2007&ndash;2015</p>
  *
  * @author Daniel Alievsky
  * @version 1.2

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2014 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2015 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ import java.nio.ByteOrder;
  * <p>Inheritors of this class MUST NOT CONTAIN a link to AlgART array:
  * such link make impossible deallocation of the array before deallocation of the storage.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2014</p>
+ * <p>AlgART Laboratory 2007&ndash;2015</p>
  *
  * @author Daniel Alievsky
  * @version 1.2
