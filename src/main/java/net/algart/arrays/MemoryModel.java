@@ -805,11 +805,9 @@ public interface MemoryModel {
      * Since calling those methods, the returned array always becomes the actual, not lazy copy of the source one.
      *
      * <p>The described lazy copying is supported not by all memory models.
-     * In this package, only {@link LargeMemoryModel} completely supports this.
+     * In this package, only {@link LargeMemoryModel} supports this.
      * Other memory models of this package inherit implementation from {@link AbstractMemoryModel#newLazyCopy(Array)},
-     * where this method, if possible (if the type of the array is suitable), returns
-     * <tt>array.{@link Array#asCopyOnNextWrite() asCopyOnNextWrite()}</tt>,
-     * and in other cases just performs the actual copying as described in the code example above.
+     * where this method just performs the actual copying as described in the code example above.
      *
      * @param array the source array.
      * @return      the lazy copy of the source array, if lazy copying is supported by the memory model,
@@ -843,12 +841,10 @@ public interface MemoryModel {
      * See {@link #newUnresizableArray(Class, long)} method to learn more about this difference.
      *
      * <p>The described lazy copying is supported not by all memory models.
-     * In this package, only {@link LargeMemoryModel} completely supports this.
-     * Other memory models of this package inherit implementation from
-     * {@link AbstractMemoryModel#newUnresizableLazyCopy(Array)},
-     * where this method, if possible (if the type of the array is suitable), returns
-     * <tt>array.{@link Array#asCopyOnNextWrite() asCopyOnNextWrite()}</tt>,
-     * and in other cases just performs the actual copying as described in the code example above.
+     * In this package, only {@link LargeMemoryModel} supports this.
+     * Other memory models of this package inherit implementation
+     * from {@link AbstractMemoryModel#newUnresizableLazyCopy(Array)},
+     * where this method just performs the actual copying as described in the code example above.
      *
      * @param array the source array.
      * @return      the lazy unresizable copy of the source array, if lazy copying is supported by the memory model,

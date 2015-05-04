@@ -644,7 +644,19 @@ public interface Array {
      * via accessing the returned array. Any changes, it they will occur,
      * will be performed with the newly allocated storage only.
      *
-     * <p>Moreover, there are <i>no guarantees</i> that the returned array will be a view of this one,
+     * <p>Please be careful: it you will want to change arrays created by this method, the result may
+     * be unexpected! For example, an attempt to copy other arrays into copy-on-next-write array
+     * by some methods like {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} will probable
+     * do nothing. The reason is working with the array via its subarrays &mdash;
+     * for example, {@link Arrays#copy(ArrayContext, UpdatableArray, Array) Arrays.copy} method
+     * splits the source and target arrays into subarrays and copies these subarrays.
+     * (Usual {@link UpdatableArray#copy(Array)} method and other mutation methods
+     * of the resulting array will work normally.)
+     * The main goal of copy-on-next-write arrays is <i>protection</i> againts unwanted changing
+     * an original array; it is supposed that the client, in normal situation, will only read
+     * such arrays and will not try to change them.
+     *
+     * <p>There are <i>no guarantees</i> that the returned array will be a view of this one,
      * even immediately after creation.
      * Some implementations of updatable arrays may just return the full (deep) copy of this object,
      * alike {@link #mutableClone(MemoryModel)} method, and in this case

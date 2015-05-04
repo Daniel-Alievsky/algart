@@ -324,6 +324,8 @@ class BufferArraysImpl {
                 throw rangeException(destIndex);
             if (destIndex > length - count)
                 throw rangeException(destIndex + count - 1);
+            if (isCopyOnNextWrite())
+                reallocateStorage();
             storage.copy(storage, offset + srcIndex, offset + destIndex, count);
         }
 
@@ -339,9 +341,8 @@ class BufferArraysImpl {
                 throw rangeException(secondIndex);
             if (secondIndex > length - count)
                 throw rangeException(secondIndex + count - 1);
-            if (copyOnNextWrite) {
+            if (isCopyOnNextWrite())
                 reallocateStorage();
-            }
             storage.swap(storage, offset + firstIndex, offset + secondIndex, count);
         }
 
@@ -375,6 +376,8 @@ class BufferArraysImpl {
                 long count = a.length < length ? a.length : length;
                 if (a.storage.getClass() == storage.getClass()) {
                     checkCopyArguments((UpdatableArray) this, src);
+                    if (isCopyOnNextWrite())
+                        reallocateStorage();
                     if (storage.copy(a.storage, a.offset, offset, count)) {
                         return (UpdatableArray) this;
                     }
@@ -823,6 +826,9 @@ class BufferArraysImpl {
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
             storage.fillData(offset + position, count, Float.valueOf(value));
             // manual boxing necessary for preprocessing byte and short arrays
             return this;
@@ -1327,6 +1333,9 @@ class BufferArraysImpl {
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
             storage.fillData(offset + position, count, Character.valueOf(value));
             // manual boxing necessary for preprocessing byte and short arrays
             return this;
@@ -1831,6 +1840,9 @@ class BufferArraysImpl {
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
             storage.fillData(offset + position, count, Byte.valueOf(value));
             // manual boxing necessary for preprocessing byte and short arrays
             return this;
@@ -2335,6 +2347,9 @@ class BufferArraysImpl {
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
             storage.fillData(offset + position, count, Short.valueOf(value));
             // manual boxing necessary for preprocessing byte and short arrays
             return this;
@@ -2824,6 +2839,9 @@ class BufferArraysImpl {
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
             storage.fillData(offset + position, count, Integer.valueOf(value));
             // manual boxing necessary for preprocessing byte and short arrays
             return this;
@@ -3302,6 +3320,9 @@ class BufferArraysImpl {
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
             storage.fillData(offset + position, count, Long.valueOf(value));
             // manual boxing necessary for preprocessing byte and short arrays
             return this;
@@ -3780,6 +3801,9 @@ class BufferArraysImpl {
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
             storage.fillData(offset + position, count, Double.valueOf(value));
             // manual boxing necessary for preprocessing byte and short arrays
             return this;
@@ -4291,6 +4315,9 @@ class BufferArraysImpl {
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
             storage.fillData(offset + position, count, value);
             return this;
         }

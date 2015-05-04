@@ -1517,6 +1517,8 @@ class SimpleArraysImpl {
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             JArrays.fillFloatArray(this.floatArray, offset + (int)position, (int)count, value);
             return this;
         }
@@ -3056,6 +3058,8 @@ $1    };;
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             PackedBitArrays.fillBits(this.bitArray, offset + position, count, value);
             return this;
         }
@@ -4539,6 +4543,8 @@ $1    };;
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             JArrays.fillCharArray(this.charArray, offset + (int)position, (int)count, value);
             return this;
         }
@@ -6014,6 +6020,8 @@ $1    };;
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             JArrays.fillByteArray(this.byteArray, offset + (int)position, (int)count, value);
             return this;
         }
@@ -7469,6 +7477,8 @@ $1    };;
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             JArrays.fillShortArray(this.shortArray, offset + (int)position, (int)count, value);
             return this;
         }
@@ -8896,6 +8906,8 @@ $1    };;
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             JArrays.fillIntArray(this.intArray, offset + (int)position, (int)count, value);
             return this;
         }
@@ -10299,6 +10311,8 @@ $1    };;
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             JArrays.fillLongArray(this.longArray, offset + (int)position, (int)count, value);
             return this;
         }
@@ -11697,6 +11711,8 @@ $1    };;
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             JArrays.fillDoubleArray(this.doubleArray, offset + (int)position, (int)count, value);
             return this;
         }
@@ -13079,6 +13095,8 @@ $1    };;
                     + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             JArrays.fillObjectArray(this.objectArray, offset + (int)position, (int)count, value);
             return this;
         }

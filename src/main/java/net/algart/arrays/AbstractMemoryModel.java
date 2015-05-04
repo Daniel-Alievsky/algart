@@ -213,15 +213,10 @@ public abstract class AbstractMemoryModel implements MemoryModel {
     }
 
     /**
-     * This implementation returns <tt>array.{@link Array#asCopyOnNextWrite() asCopyOnNextWrite()}</tt>,
-     * if the array is resizable and {@link #isCreatedBy(Array) created by} this memory model,
-     * or usual actual copy of the array in other case.
-     * More precisely, it is equivalent to the following operators:
+     * This implementation returns usual actual copy of the array.
+     * More precisely, it is equivalent to the following operator:
      *
      * <pre>
-     * MutableArray result = (thisMemoryModel.{@link #isCreatedBy(Array)
-     * isCreatedBy}(array) && array instanceof MutableArray) ?
-     * ((MutableArray)array).{@link MutableArray#asCopyOnNextWrite() asCopyOnNextWrite()} :
      * thisMemoryModel.{@link #newArray(Class, long)
      * newArray}(array.{@link Array#elementType() elementType()}, array.{@link Array#length()
      * length()}).{@link UpdatableArray#copy(Array) copy}(array);
@@ -236,23 +231,21 @@ public abstract class AbstractMemoryModel implements MemoryModel {
      * @throws TooLargeArrayException          if the length of the passed array is too large for this memory model.
      */
     public MutableArray newLazyCopy(Array array) {
-        if (isCreatedBy(array) && array instanceof MutableArray) {
-            return ((MutableArray)array).asCopyOnNextWrite();
-        } else {
-            return newArray(array.elementType(), array.length()).copy(array);
-        }
+// OBSOLETE INCORRECT IMPLEMENTATION: attempt to copy another data into such "lazy copy" via standard
+// tools like Arrays.copy (based on subarrays) failed due to copy-on-write nature of the array!
+//        if (isCreatedBy(array) && array instanceof MutableArray) {
+//            return ((MutableArray)array).asCopyOnNextWrite();
+//        } else {
+//            return newArray(array.elementType(), array.length()).copy(array);
+//        }
+        return newArray(array.elementType(), array.length()).copy(array);
     }
 
     /**
-     * This implementation returns <tt>array.{@link Array#asCopyOnNextWrite() asCopyOnNextWrite()}</tt>,
-     * if the array is updatable and {@link #isCreatedBy(Array) created by} this memory model,
-     * or usual actual copy of the array in other case.
-     * More precisely, it is equivalent to the following operators:
+     * This implementation returns usual actual copy of the array.
+     * More precisely, it is equivalent to the following operator:
      *
      * <pre>
-     * UpdatableArray result = (thisMemoryModel.{@link #isCreatedBy(Array)
-     * isCreatedBy}(array) && array instanceof UpdatableArray) ?
-     * ((UpdatableArray)array).{@link UpdatableArray#asCopyOnNextWrite() asCopyOnNextWrite()} :
      * thisMemoryModel.{@link #newUnresizableArray(Class, long)
      * newUnresizableArray}(array.{@link Array#elementType() elementType()}, array.{@link Array#length()
      * length()}).{@link UpdatableArray#copy(Array) copy}(array);
@@ -266,11 +259,14 @@ public abstract class AbstractMemoryModel implements MemoryModel {
      * @throws TooLargeArrayException          if the length of the passed array is too large for this memory model.
      */
     public UpdatableArray newUnresizableLazyCopy(Array array) {
-        if (isCreatedBy(array) && array instanceof UpdatableArray) {
-            return ((UpdatableArray)array).asCopyOnNextWrite();
-        } else {
-            return newUnresizableArray(array.elementType(), array.length()).copy(array);
-        }
+// OBSOLETE INCORRECT IMPLEMENTATION: attempt to copy another data into such "lazy copy" via standard
+// tools like Arrays.copy (based on subarrays) failed due to copy-on-write nature of the array!
+//        if (isCreatedBy(array) && array instanceof UpdatableArray) {
+//            return ((UpdatableArray)array).asCopyOnNextWrite();
+//        } else {
+//            return newUnresizableArray(array.elementType(), array.length()).copy(array);
+//        }
+        return newUnresizableArray(array.elementType(), array.length()).copy(array);
     }
 
     /**
