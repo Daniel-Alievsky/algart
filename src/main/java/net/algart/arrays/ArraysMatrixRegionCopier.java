@@ -40,6 +40,8 @@ import net.algart.math.IRange;
  * @since JDK 1.5
  */
 abstract strictfp class ArraysMatrixRegionCopier {
+    private static final boolean OPTIMIZE_POLYGON_2D = false;
+    private static final int MINIMAL_VERTICES_COUNT_TO_OPTIMIZE_POLYGON_2D = 16;
     private static final long OUTSIDE_SRC_INDEX = -1;
 
     private final ArrayContext context;
@@ -168,6 +170,11 @@ abstract strictfp class ArraysMatrixRegionCopier {
             SegmentCopier segmentCopier = fullyInside ? new UncheckedSegmentCopier(buf) :
                 outsideConst == null ? new CheckedSegmentCopier(buf) :
                 new ContinuedSegmentCopier(buf);
+            if (OPTIMIZE_POLYGON_2D && destRegion instanceof Matrices.Polygon2D) {
+                if (processPolygon2D((Matrices.Polygon2D) destRegion, segmentCopier)) {
+                    return;
+                }
+            }
             processRecursively(destRegion, segmentCopier);
         } finally {
             if (bufferPool != null) {
@@ -229,6 +236,49 @@ abstract strictfp class ArraysMatrixRegionCopier {
                 }
             }
         }
+    }
+
+    private boolean processPolygon2D(Matrices.Polygon2D destPolygon, SegmentCopier segmentCopier) {
+        assert destPolygon.n() == 2;
+        final IRange destRange = destPolygon.coordRange(1);
+        if (destRange.size() > Integer.MAX_VALUE) {
+            return false;
+            // maybe it is relatively simple polygon, but very large in y-dimensions:
+            // there are changes that it can be processed by default algorithm
+        }
+        final int m = destPolygon.verticesCount();
+        if (m < MINIMAL_VERTICES_COUNT_TO_OPTIMIZE_POLYGON_2D) {
+            return false;
+            // for simple polygons we prefer to save memory
+        }
+        //TODO!! use matrix size info??
+        final long destMin = destRange.min();
+        final long destMax = destRange.max();
+        final int[] indexes = new int[(int) destRange.size()];
+        for (int k = 0; k < m; k++) {
+            double vx1 = destPolygon.vertexX(k > 0 ? k - 1 : m - 1);
+            double vy1 = destPolygon.vertexY(k > 0 ? k - 1 : m - 1);
+            double vx2 = destPolygon.vertexX(k);
+            double vy2 = destPolygon.vertexY(k);
+            if (vy1 == vy2) {
+                if (vy1 == (long) vy1) {
+                    //TODO!!
+                }
+                continue;
+            }
+            if (vy1 > vy2) {
+                double temp = vy1; vy1 = vy2; vy2 = temp;
+                temp = vx1; vx1 = vx2; vx2 = temp;
+            }
+            //TODO!!
+        }
+        //TODO!!
+        for (long k = destMin; k <= destMax; k++) {
+            destCoordinates[0] = k;
+            srcCoordinates[0] = shifts.length >= 2 ? k - shifts[1] : k;
+            //TODO!! some loope of segmentCopier.copyUninterruptedSegment
+        }
+        return true;
     }
 
     private void initializeProgress(Matrices.Region destRegion) {

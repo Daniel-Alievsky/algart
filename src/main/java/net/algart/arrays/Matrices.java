@@ -1428,6 +1428,38 @@ public class Matrices {
         }
 
         /**
+         * Returns the number of vertices of the polygon. It is the number of elements in the array,
+         * returned by {@link #vertices()} method.
+         *
+         * @return the number of vertices of the polygon.
+         */
+        public int verticesCount() {
+            return vx.length;
+        }
+
+        /**
+         * Returns the <i>x</i>-coordinate of the vertix <tt>#index</tt>.
+         *
+         * @param index the index of vertex.
+         * @return the <i>x</i>-coordinate of the vertix <tt>#index</tt>.
+         * @throws IndexOutOfBoundsException if <tt>index&lt;0</tt> or <tt>index&ge;{@link #verticesCount()}</tt>.
+         */
+        public double vertexX(int index) {
+            return vx[index];
+        }
+
+        /**
+         * Returns the <i>y</i>-coordinate of the vertix <tt>#index</tt>.
+         *
+         * @param index the index of vertex.
+         * @return the <i>y</i>-coordinate of the vertix <tt>#index</tt>.
+         * @throws IndexOutOfBoundsException if <tt>index&lt;0</tt> or <tt>index&ge;{@link #verticesCount()}</tt>.
+         */
+        public double vertexY(int index) {
+            return vy[index];
+        }
+
+        /**
          * Returns the coordinates of all vertices of the polygon.
          * The returned arrays is identical to an array, passed to {@link #getPolygon2D(double[][] vertices)}
          * method.
