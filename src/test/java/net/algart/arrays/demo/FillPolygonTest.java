@@ -27,6 +27,9 @@ package net.algart.arrays.demo;
 import net.algart.arrays.*;
 import net.algart.external.ExternalAlgorithmCaller;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -47,14 +50,15 @@ public class FillPolygonTest {
     public static void main(String[] args) throws IOException {
         if (args.length < 4) {
             System.out.println("Usage: " + FillPolygonTest.class.getName()
-                + " matrixWidth matrixHeight numberOfVertices resultFileName [randSeed]");
+                + " matrixWidth matrixHeight numberOfVertices resultFileName resultAWTFileName [randSeed]");
             return;
         }
         final long width = Long.parseLong(args[0]);
         final long height = Long.parseLong(args[1]);
         final int numberOfVertices = Integer.parseInt(args[2]);
         final File resultFile = new File(args[3]);
-        final Random rnd = args.length > 4 ? new Random(Long.parseLong(args[4])) : new Random();
+        final File resultAwtFile = new File(args[4]);
+        final Random rnd = args.length > 5 ? new Random(Long.parseLong(args[5])) : new Random();
 
         final Matrix<UpdatableBitArray> matrix = Arrays.SMM.newBitMatrix(width, height);
         final double[][] vertices = new double[numberOfVertices][2];
@@ -69,5 +73,23 @@ public class FillPolygonTest {
         long t2 = System.nanoTime();
         System.out.printf(Locale.US, "Polygon filled in %.3f ms%n", (t2 - t1) * 1e-6);
         ExternalAlgorithmCaller.writeImage(resultFile, Collections.singletonList(matrix));
+
+        if (width == (int) width && height == (int) height) {
+            final BufferedImage bufferedImage = new BufferedImage(
+                (int) width, (int) height, BufferedImage.TYPE_BYTE_BINARY);
+            final Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
+            final int[] xPoints = new int[numberOfVertices];
+            final int[] yPoints = new int[numberOfVertices];
+            for (int k = 0; k < numberOfVertices; k++) {
+                xPoints[k] = (int) vertices[k][0];
+                yPoints[k] = (int) vertices[k][1];
+            }
+            t1 = System.nanoTime();
+            graphics.fillPolygon(xPoints, yPoints, numberOfVertices);
+            t2 = System.nanoTime();
+            System.out.printf(Locale.US, "Polygon filled by AWT in %.3f ms%n", (t2 - t1) * 1e-6);
+            ImageIO.write(bufferedImage, ExternalAlgorithmCaller.getFileExtension(resultAwtFile), resultAwtFile);
+        }
+        System.out.println("Done");
     }
 }
