@@ -1318,13 +1318,6 @@ public class Matrices {
      *
      * <p>Any degenerated cases are allowed: for example, vertices can be equal.
      *
-     * <p>For more "beautiful" results, some floating-point coordinates
-     * may be rounded to nearest integers. For example, if for the given integer <i>y</i>-coordinate
-     * the polygon fully lies in an interval <i>k</i>&lt;<i>x</i>&lt;<i>k</i>+1, where <i>k</i>
-     * is some integer, we may consider that the point (<i>k</i>,<i>y</i>) or (<i>k</i>+1,<i>y</i>)
-     * still belongs to the polygon. But it is not a strict rule; some implementations may
-     * include <i>only</i> integer points really lying inside the precise polygon.
-     *
      * <p>Polygon is specified by its vertices and can be created by the following method:</p>
      *
      * <ul>

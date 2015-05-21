@@ -50,21 +50,31 @@ public class FillPolygonTest {
     public static void main(String[] args) throws IOException {
         if (args.length < 4) {
             System.out.println("Usage: " + FillPolygonTest.class.getName()
-                + " matrixWidth matrixHeight numberOfVertices resultFileName resultAWTFileName [randSeed]");
+                + " random}regular matrixWidth matrixHeight numberOfVertices resultFileName resultAWTFileName [randSeed]");
             return;
         }
-        final long width = Long.parseLong(args[0]);
-        final long height = Long.parseLong(args[1]);
-        final int numberOfVertices = Integer.parseInt(args[2]);
-        final File resultFile = new File(args[3]);
-        final File resultAwtFile = new File(args[4]);
-        final Random rnd = args.length > 5 ? new Random(Long.parseLong(args[5])) : new Random();
+        final String style = args[0];
+        final long width = Long.parseLong(args[1]);
+        final long height = Long.parseLong(args[2]);
+        final int numberOfVertices = Integer.parseInt(args[3]);
+        final File resultFile = new File(args[4]);
+        final File resultAwtFile = new File(args[5]);
+        final Random rnd = args.length > 6 ? new Random(Long.parseLong(args[6])) : new Random();
 
-        final Matrix<UpdatableBitArray> matrix = Arrays.SMM.newBitMatrix(width, height);
+        final Matrix<? extends UpdatablePArray> matrix = Arrays.SMM.newBitMatrix(width, height);
         final double[][] vertices = new double[numberOfVertices][2];
         for (int k = 0; k < numberOfVertices; k++) {
-            vertices[k][0] = rnd.nextDouble() * (width - 1);
-            vertices[k][1] = rnd.nextDouble() * (height - 1);
+            if (style.equals("regular")) {
+                final double fi = 2.0 * Math.PI * (double) k / (double) numberOfVertices;
+                vertices[k][0] = 0.5 * width + Math.cos(fi) * 0.5 * (width - 1);
+                vertices[k][1] = 0.5 * height + Math.sin(fi) * 0.5 * (height - 1) + 0.0000001;
+
+            } else if (style.equals("random")) {
+                vertices[k][0] = rnd.nextDouble() * (width - 1);
+                vertices[k][1] = rnd.nextDouble() * (height - 1);
+            } else {
+                throw new IllegalArgumentException("Unknown polygon style");
+            }
 //TODO!! enable the following
 //            if (rnd.nextBoolean()) {
 //                vertices[k][0] = Math.floor(vertices[k][0]);
