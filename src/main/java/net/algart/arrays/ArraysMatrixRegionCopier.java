@@ -26,6 +26,8 @@ package net.algart.arrays;
 
 import net.algart.math.IRange;
 
+import java.util.Locale;
+
 /**
  * <p>Implementation of
  * {@link Matrices#copyRegion(ArrayContext, Matrix, Matrix, net.algart.arrays.Matrices.Region, long...)}
@@ -41,6 +43,7 @@ import net.algart.math.IRange;
  */
 abstract strictfp class ArraysMatrixRegionCopier {
     private static final boolean OPTIMIZE_POLYGON_2D = false;
+    private static final boolean DEBUG_OPTIMIZE_POLYGON_2D = true;
     private static final int MINIMAL_VERTICES_COUNT_TO_OPTIMIZE_POLYGON_2D = 16;
     private static final long OUTSIDE_SRC_INDEX = -1;
 
@@ -240,8 +243,8 @@ abstract strictfp class ArraysMatrixRegionCopier {
 
     private boolean processPolygon2D(Matrices.Polygon2D destPolygon, SegmentCopier segmentCopier) {
         assert destPolygon.n() == 2;
-        final IRange destRange = destPolygon.coordRange(1);
-        if (destRange.size() > Integer.MAX_VALUE) {
+        final IRange yRange = destPolygon.coordRange(1);
+        if (yRange.size() > Integer.MAX_VALUE) {
             return false;
             // maybe it is relatively simple polygon, but very large in y-dimensions:
             // there are changes that it can be processed by default algorithm
@@ -252,9 +255,68 @@ abstract strictfp class ArraysMatrixRegionCopier {
             // for simple polygons we prefer to save memory
         }
         //TODO!! use matrix size info??
-        final long destMin = destRange.min();
-        final long destMax = destRange.max();
-        final int[] indexes = new int[(int) destRange.size()];
+
+        long t1 = DEBUG_OPTIMIZE_POLYGON_2D ? System.nanoTime() : 0;
+        final long yMin = yRange.min();
+        final long yMax = yRange.max();
+        final int[] intersectionsCounts = new int[(int) yRange.size()];
+        // - zero-filled by Java
+        for (int k = 0; k < m; k++) {
+            double vy1 = destPolygon.vertexY(k > 0 ? k - 1 : m - 1);
+            double vy2 = destPolygon.vertexY(k);
+            // Below we'll consider the half-open interval [v1,v2[ - the full polygon boundary
+            // is a strict union of such intervals
+            if (vy1 == vy2) {
+                if (vy1 == (long) vy1) {
+                    //TODO!! such a logic is correct only if previos and next vertices are on the different sides
+                    // of this horizontal
+
+                    // In this special case, we suppose that this line intersects
+                    // the integer horizontal only at its 1st vertex
+                    // (remember that the 2nd vertex does not belong to the half-interval)
+                    final int yIndex = (int) ((long) vy1 - yMin);
+                    intersectionsCounts[yIndex]++;
+                }
+            } else if (vy1 < vy2) {
+                final long vyMin = (long) StrictMath.ceil(vy1);
+                final long vyMax = (long) StrictMath.floor(vy2);
+                for (long sectionY = vyMin; sectionY <= vyMax; sectionY++) {
+                    final int yIndex = (int) (sectionY - yMin);
+                    intersectionsCounts[yIndex]++;
+                }
+            } else {
+                final long vyMax = (long) StrictMath.floor(vy1);
+                final long vyMin = (long) StrictMath.ceil(vy2);
+                for (long sectionY = vyMax; sectionY >= vyMin; sectionY--) {
+                    final int yIndex = (int) (sectionY - yMin);
+                    intersectionsCounts[yIndex]++;
+                }
+            }
+        }
+        for (int i = 0; i < intersectionsCounts.length; i++) {
+            if (intersectionsCounts[i] % 2 != 0) {
+                throw new AssertionError("Odd number of intersection at horizontal #" + (yMin + i)
+                    + ", line " + i + ": it's impossible");
+            }
+        }
+        long t2 = DEBUG_OPTIMIZE_POLYGON_2D ? System.nanoTime() : 0;
+        final int[] intersectionsIndexes = intersectionsCounts;
+        // - the same memory for 2nd role
+        for (int i = 1; i < intersectionsIndexes.length; i++) {
+            intersectionsIndexes[i] += intersectionsIndexes[i - 1];
+            // intersectionsIndexes[i] becomes equal to sum of all intersectionsCounts[0..i-1]
+            if (intersectionsIndexes[i] < 0) {
+                // sum of 2 non-negative integers is negative only in a case of overflow
+                throw new OutOfMemoryError("Very complex polygon (" + m + " vertices): "
+                    + "it consists of too large number of solid lines and cannot be drawn in reasonable time");
+            }
+        }
+        final double[] intersections = new double[intersectionsIndexes[intersectionsIndexes.length - 1]];
+        // the storage for all intersections, splitted to continuous blocks for each horizontal;
+        // positions of the end of blocks are in intersectionsIndexes
+        if (intersections.length % 2 != 0) {
+            throw new AssertionError("Odd number of intersections of the polygon and horizontals: it's impossible");
+        }
         for (int k = 0; k < m; k++) {
             double vx1 = destPolygon.vertexX(k > 0 ? k - 1 : m - 1);
             double vy1 = destPolygon.vertexY(k > 0 ? k - 1 : m - 1);
@@ -262,21 +324,77 @@ abstract strictfp class ArraysMatrixRegionCopier {
             double vy2 = destPolygon.vertexY(k);
             if (vy1 == vy2) {
                 if (vy1 == (long) vy1) {
-                    //TODO!!
+                    final int yIndex = (int) ((long) vy1 - yMin);
+                    intersections[--intersectionsIndexes[yIndex]] = vx1;
+                    // filling each block from the end to begin
                 }
-                continue;
+            } else if (vy1 < vy2) {
+                final long vyMin = (long) StrictMath.ceil(vy1);
+                final long vyMax = (long) StrictMath.floor(vy2);
+                final double rel = (vx2 - vx1) / (vy2 - vy1);
+                for (long sectionY = vyMin; sectionY <= vyMax; sectionY++) {
+                    final int yIndex = (int) (sectionY - yMin);
+                    final double x = vx1 + (sectionY - vy1) * rel;
+                    intersections[--intersectionsIndexes[yIndex]] = x;
+                }
+            } else {
+                final long vyMax = (long) StrictMath.floor(vy1);
+                final long vyMin = (long) StrictMath.ceil(vy2);
+                final double rel = (vx2 - vx1) / (vy2 - vy1);
+                for (long sectionY = vyMax; sectionY >= vyMin; sectionY--) {
+                    final int yIndex = (int) (sectionY - yMin);
+                    final double x = vx1 + (sectionY - vy1) * rel;
+                    intersections[--intersectionsIndexes[yIndex]] = x;
+                }
             }
-            if (vy1 > vy2) {
-                double temp = vy1; vy1 = vy2; vy2 = temp;
-                temp = vx1; vx1 = vx2; vx2 = temp;
-            }
-            //TODO!!
         }
-        //TODO!!
-        for (long k = destMin; k <= destMax; k++) {
-            destCoordinates[0] = k;
-            srcCoordinates[0] = shifts.length >= 2 ? k - shifts[1] : k;
-            //TODO!! some loope of segmentCopier.copyUninterruptedSegment
+        if (intersectionsIndexes[0] != 0) {
+            throw new AssertionError("Now the indexes must point to the begin of each block in intersections array");
+        }
+        long t3 = DEBUG_OPTIMIZE_POLYGON_2D ? System.nanoTime() : 0;
+        long segmentCount = 0;
+        for (long i = yMin; i <= yMax; i++) {
+            final int yIndex = (int) (i - yMin);
+            final int fromIndex = intersectionsIndexes[yIndex];
+            final int toIndex = i == yMax ? intersections.length : intersectionsIndexes[yIndex + 1];
+            if (fromIndex % 2 != 0 || toIndex % 2 != 0) {
+                throw new AssertionError("Odd indexes at horizontal #" + yIndex + ", line " + i + ": it's impossible");
+            }
+            java.util.Arrays.sort(intersections, fromIndex, toIndex);
+            destCoordinates[1] = i;
+            srcCoordinates[1] = shifts.length >= 2 ? i - shifts[1] : i;
+            long lastMinX = 0, lastMaxX = -1;
+            // - empty segment
+            for (int j = fromIndex; j < toIndex; j += 2) {
+                final long minX = (long) StrictMath.ceil(intersections[j]);
+                final long maxX = (long) StrictMath.floor(intersections[j + 1]);
+                if (minX > maxX) {
+                    continue;
+                }
+                if (j == fromIndex) {
+                    lastMinX = minX;
+                    lastMaxX = maxX;
+                } else if (minX == lastMaxX + 1) {
+                    lastMaxX = maxX;
+                    // continuing the previos segment
+                } else {
+                    segmentCopier.copyUninterruptedSegment(lastMinX, lastMaxX);
+                    segmentCount++;
+                    lastMinX = minX;
+                    lastMaxX = maxX;
+                }
+            }
+            if (lastMinX <= lastMaxX) {
+                segmentCopier.copyUninterruptedSegment(lastMinX, lastMaxX);
+                segmentCount++;
+            }
+        }
+        long t4 = DEBUG_OPTIMIZE_POLYGON_2D ? System.nanoTime() : 0;
+        if (DEBUG_OPTIMIZE_POLYGON_2D) {
+            System.out.printf(Locale.US, "amrc Filling polygon with %d vertices, %d horizontals, %d intersections: "
+                + "%.3f ms 1st pass, %.3f ms 2nd pass, %.3f ms actual filling (%.4f mcs/segment)%n",
+                m, intersectionsCounts.length, intersections.length,
+                (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, (t4 - t3) * 1e-6, (t4 - t3) * 1e-3 / (double) segmentCount);
         }
         return true;
     }

@@ -65,6 +65,18 @@ public class FillPolygonTest {
         for (int k = 0; k < numberOfVertices; k++) {
             vertices[k][0] = rnd.nextDouble() * (width - 1);
             vertices[k][1] = rnd.nextDouble() * (height - 1);
+//TODO!! enable the following
+//            if (rnd.nextBoolean()) {
+//                vertices[k][0] = Math.floor(vertices[k][0]);
+//            }
+//            if (rnd.nextBoolean()) {
+//                vertices[k][1] = Math.floor(vertices[k][1]);
+//            }
+            if (k < 20) {
+                System.out.printf(Locale.US, "Making vertex #%d: (%.3f, %.3f)%n", k, vertices[k][0], vertices[k][1]);
+            } else if (k == 20) {
+                System.out.println("...");
+            }
         }
         final Matrices.Polygon2D polygon = Matrices.Region.getPolygon2D(vertices);
         System.out.printf("Filling polygon with %d vertices...%n", numberOfVertices);
@@ -73,8 +85,10 @@ public class FillPolygonTest {
         long t2 = System.nanoTime();
         System.out.printf(Locale.US, "Polygon filled in %.3f ms%n", (t2 - t1) * 1e-6);
         ExternalAlgorithmCaller.writeImage(resultFile, Collections.singletonList(matrix));
+        System.out.printf(Locale.US, "Polygon saved in %s%n", resultFile);
 
         if (width == (int) width && height == (int) height) {
+            System.out.printf("Filling polygon by AWT with %d vertices...%n", numberOfVertices);
             final BufferedImage bufferedImage = new BufferedImage(
                 (int) width, (int) height, BufferedImage.TYPE_BYTE_BINARY);
             final Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
@@ -89,6 +103,7 @@ public class FillPolygonTest {
             t2 = System.nanoTime();
             System.out.printf(Locale.US, "Polygon filled by AWT in %.3f ms%n", (t2 - t1) * 1e-6);
             ImageIO.write(bufferedImage, ExternalAlgorithmCaller.getFileExtension(resultAwtFile), resultAwtFile);
+            System.out.printf(Locale.US, "Polygon saved in %s%n", resultAwtFile);
         }
         System.out.println("Done");
     }
