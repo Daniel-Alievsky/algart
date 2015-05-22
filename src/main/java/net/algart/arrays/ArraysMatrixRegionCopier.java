@@ -143,20 +143,24 @@ abstract strictfp class ArraysMatrixRegionCopier {
 
     public final void process(Matrices.Region destRegion) {
         initializeProgress(destRegion);
-        boolean fullyInside = true;
+        boolean destFullyInside = true;
+        boolean srcFullyInside = true;
+        boolean srcFullyOutside = true;
         for (int k = 0, n = destRegion.n(); k < n; k++) {
             IRange destRange = destRegion.coordRange(k);
             long destMin = destRange.min();
             long destMax = destRange.max();
             if (destMin < 0 || destMax >= dest.dim(k)) {
-                fullyInside = false;
+                destFullyInside = false;
                 break;
             }
             long srcMin = shifts.length > k ? destMin - shifts[k] : destMin;
             long srcMax = shifts.length > k ? destMax - shifts[k] : destMax;
             if (srcMin < 0 || srcMax >= src.dim(k)) {
-                fullyInside = false;
-                break;
+                srcFullyInside = false;
+            }
+            if (srcMin < src.dim(k) && srcMax >= 0) {
+                srcFullyOutside = false;
             }
         }
         JArrayPool bufferPool = this.destJArray != null || this.srcJArray != null ? null :
@@ -170,9 +174,11 @@ abstract strictfp class ArraysMatrixRegionCopier {
             null;
         Object buf = bufferPool == null ? null : bufferPool.requestArray();
         try {
-            SegmentCopier segmentCopier = fullyInside ? new UncheckedSegmentCopier(buf) :
-                outsideConst == null ? new CheckedSegmentCopier(buf) :
-                new ContinuedSegmentCopier(buf);
+            SegmentCopier segmentCopier = destFullyInside && srcFullyInside ? new UncheckedSegmentCopier(buf)
+                : outsideConst == null ? new CheckedSegmentCopier(buf)
+                : OPTIMIZE_POLYGON_2D && destCoordinates.length == 2 && srcFullyOutside
+                ? (destFullyInside ? new UncheckedSegmentFiller2D(buf) : new ContinuedSegmentFiller2D(buf))
+                : new ContinuedSegmentCopier(buf);
             if (OPTIMIZE_POLYGON_2D && destRegion instanceof Matrices.Polygon2D) {
                 if (processPolygon2D((Matrices.Polygon2D) destRegion, segmentCopier)) {
                     return;
@@ -262,31 +268,41 @@ abstract strictfp class ArraysMatrixRegionCopier {
         final int[] intersectionsCounts = new int[(int) yRange.size()];
         // - zero-filled by Java
         for (int k = 0; k < m; k++) {
-            double vy1 = destPolygon.vertexY(k > 0 ? k - 1 : m - 1);
-            double vy2 = destPolygon.vertexY(k);
-            // Below we'll consider the half-open interval [v1,v2[ - the full polygon boundary
-            // is a strict union of such intervals
+            final double vy1 = destPolygon.vertexY(k > 0 ? k - 1 : m - 1);
+            final double vy2 = destPolygon.vertexY(k);
+            final double vy3 = destPolygon.vertexY(k < m - 1 ? k + 1 : 0);
+            final boolean vy2Integer = vy2 == StrictMath.floor(vy2);
+            // If vy1 is integer, we'll use v1 always.
+            // But we'll use integer v2 only in the following cases:
+            //     1) vy1 < vy2, vy3 > vy2 or vy1 > vy2, vy3 < vy2 (changing y-direction)
+            //     2) vy1 == vy2 == vy3
+            // In more usual situation, when the y-direction (increasing or decreasing) is not changed at v2,
+            // we will not count it; it will be used as v1 at the next step.
             if (vy1 == vy2) {
-                if (vy1 == (long) vy1) {
-                    //TODO!! such a logic is correct only if previos and next vertices are on the different sides
-                    // of this horizontal
-
-                    // In this special case, we suppose that this line intersects
-                    // the integer horizontal only at its 1st vertex
-                    // (remember that the 2nd vertex does not belong to the half-interval)
+                if (vy2Integer) {
+                    // in other case, this edge does not contain any integer points
                     final int yIndex = (int) ((long) vy1 - yMin);
                     intersectionsCounts[yIndex]++;
+                    if (vy3 == vy1) {
+                        intersectionsCounts[yIndex]++;
+                    }
                 }
             } else if (vy1 < vy2) {
-                final long vyMin = (long) StrictMath.ceil(vy1);
-                final long vyMax = (long) StrictMath.floor(vy2);
+                long vyMin = (long) StrictMath.ceil(vy1);
+                long vyMax = (long) StrictMath.floor(vy2);
+                if (vy2Integer && vy2 <= vy3) {
+                    vyMax--;
+                }
                 for (long sectionY = vyMin; sectionY <= vyMax; sectionY++) {
                     final int yIndex = (int) (sectionY - yMin);
                     intersectionsCounts[yIndex]++;
                 }
             } else {
-                final long vyMax = (long) StrictMath.floor(vy1);
-                final long vyMin = (long) StrictMath.ceil(vy2);
+                long vyMax = (long) StrictMath.floor(vy1);
+                long vyMin = (long) StrictMath.ceil(vy2);
+                if (vy2Integer && vy2 >= vy3) {
+                    vyMin++;
+                }
                 for (long sectionY = vyMax; sectionY >= vyMin; sectionY--) {
                     final int yIndex = (int) (sectionY - yMin);
                     intersectionsCounts[yIndex]++;
@@ -318,28 +334,39 @@ abstract strictfp class ArraysMatrixRegionCopier {
             throw new AssertionError("Odd number of intersections of the polygon and horizontals: it's impossible");
         }
         for (int k = 0; k < m; k++) {
-            double vx1 = destPolygon.vertexX(k > 0 ? k - 1 : m - 1);
-            double vy1 = destPolygon.vertexY(k > 0 ? k - 1 : m - 1);
-            double vx2 = destPolygon.vertexX(k);
-            double vy2 = destPolygon.vertexY(k);
+            final double vx1 = destPolygon.vertexX(k > 0 ? k - 1 : m - 1);
+            final double vy1 = destPolygon.vertexY(k > 0 ? k - 1 : m - 1);
+            final double vx2 = destPolygon.vertexX(k);
+            final double vy2 = destPolygon.vertexY(k);
+            final double vy3 = destPolygon.vertexY(k < m - 1 ? k + 1 : 0);
+            final boolean vy2Integer = vy2 == StrictMath.floor(vy2);
             if (vy1 == vy2) {
                 if (vy1 == (long) vy1) {
                     final int yIndex = (int) ((long) vy1 - yMin);
                     intersections[--intersectionsIndexes[yIndex]] = vx1;
-                    // filling each block from the end to begin
+                    if (vy3 == vy1) {
+                        intersections[--intersectionsIndexes[yIndex]] = vx1;
+                    }
+                    // "--": we fill each block from the end to begin
                 }
             } else if (vy1 < vy2) {
-                final long vyMin = (long) StrictMath.ceil(vy1);
-                final long vyMax = (long) StrictMath.floor(vy2);
+                long vyMin = (long) StrictMath.ceil(vy1);
+                long vyMax = (long) StrictMath.floor(vy2);
                 final double rel = (vx2 - vx1) / (vy2 - vy1);
+                if (vy2Integer && vy2 <= vy3) {
+                    vyMax--;
+                }
                 for (long sectionY = vyMin; sectionY <= vyMax; sectionY++) {
                     final int yIndex = (int) (sectionY - yMin);
                     final double x = vx1 + (sectionY - vy1) * rel;
                     intersections[--intersectionsIndexes[yIndex]] = x;
                 }
             } else {
-                final long vyMax = (long) StrictMath.floor(vy1);
-                final long vyMin = (long) StrictMath.ceil(vy2);
+                long vyMax = (long) StrictMath.floor(vy1);
+                long vyMin = (long) StrictMath.ceil(vy2);
+                if (vy2Integer && vy2 >= vy3) {
+                    vyMin++;
+                }
                 final double rel = (vx2 - vx1) / (vy2 - vy1);
                 for (long sectionY = vyMax; sectionY >= vyMin; sectionY--) {
                     final int yIndex = (int) (sectionY - yMin);
@@ -686,6 +713,44 @@ abstract strictfp class ArraysMatrixRegionCopier {
             }
         }
     }
+
+    private class UncheckedSegmentFiller2D extends ContinuedSegmentCopier {
+        UncheckedSegmentFiller2D(Object workJArray) {
+            super(workJArray);
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            final long len = destMax - destMin + 1;
+            fill(destCoordinates[1] * destDimX + destMin, len);
+            copiedElementsCount += len;
+        }
+    }
+
+    private class ContinuedSegmentFiller2D extends ContinuedSegmentCopier {
+        ContinuedSegmentFiller2D(Object workJArray) {
+            super(workJArray);
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            if (destCoordinates[1] < 0 || destCoordinates[1] >= dest.dimY()) {
+                return; // the line is outside the destination matrix: nothing to do
+            }
+            if (destMin < 0) {
+                destMin = 0;
+            }
+            if (destMax > destDimX - 1) {
+                destMax = destDimX - 1;
+            }
+            if (destMin > destMax) {
+                return; // nothing to do
+            }
+            final long len = destMax - destMin + 1;
+            fill(destCoordinates[1] * destDimX + destMin, len);
+        }
+    }
+
 
     /*Repeat() bit|boolean(?!\smustBeInside) ==> char,,byte,,short,,int,,long,,float,,double;;
                Bit|Boolean                   ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double;;

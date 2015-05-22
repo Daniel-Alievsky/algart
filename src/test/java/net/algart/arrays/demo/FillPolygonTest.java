@@ -72,16 +72,28 @@ public class FillPolygonTest {
             } else if (style.equals("random")) {
                 vertices[k][0] = rnd.nextDouble() * (width - 1);
                 vertices[k][1] = rnd.nextDouble() * (height - 1);
+            } else if (style.equals("bigrandom")) {
+                vertices[k][0] = 3 * (rnd.nextDouble() - 0.5) * (width - 1);
+                vertices[k][1] = 3 * (rnd.nextDouble() - 0.5)  * (height - 1);
+            } else if (style.equals("rectangle")) {
+                int n1 = numberOfVertices / 4, n2 = numberOfVertices / 2, n3 = 3 * numberOfVertices / 4;
+                vertices[k][0] = k < n1 ? (double) k / n1 * width
+                    : k < n2 ? 0.9 * width
+                    : k < n3 ? (double) (n3 - k) / n1 * width
+                    : 0.1 * width;
+                vertices[k][1] = k < n1 ? 0.1 * height
+                    : k < n2 ? (double) (k - n1) / n1 * height
+                    : k < n3 ? 0.9 * height
+                    : (double) (numberOfVertices - k) / n1 * height;
             } else {
                 throw new IllegalArgumentException("Unknown polygon style");
             }
-//TODO!! enable the following
-//            if (rnd.nextBoolean()) {
-//                vertices[k][0] = Math.floor(vertices[k][0]);
-//            }
-//            if (rnd.nextBoolean()) {
-//                vertices[k][1] = Math.floor(vertices[k][1]);
-//            }
+            if (rnd.nextBoolean()) {
+                vertices[k][0] = Math.floor(vertices[k][0]);
+            }
+            if (rnd.nextBoolean()) {
+                vertices[k][1] = Math.floor(vertices[k][1]);
+            }
             if (k < 20) {
                 System.out.printf(Locale.US, "Making vertex #%d: (%.3f, %.3f)%n", k, vertices[k][0], vertices[k][1]);
             } else if (k == 20) {
@@ -91,7 +103,7 @@ public class FillPolygonTest {
         final Matrices.Polygon2D polygon = Matrices.Region.getPolygon2D(vertices);
         System.out.printf("Filling polygon with %d vertices...%n", numberOfVertices);
         long t1 = System.nanoTime();
-        Matrices.fillRegion(null, matrix, polygon, 1.0);
+        Matrices.fillRegion(null, matrix, polygon, matrix.array().maxPossibleValue(1.0));
         long t2 = System.nanoTime();
         System.out.printf(Locale.US, "Polygon filled in %.3f ms%n", (t2 - t1) * 1e-6);
         ExternalAlgorithmCaller.writeImage(resultFile, Collections.singletonList(matrix));
