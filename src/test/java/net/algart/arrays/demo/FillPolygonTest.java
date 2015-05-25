@@ -141,7 +141,8 @@ public class FillPolygonTest {
             final Matrix<? extends UpdatablePArray> matrix = Arrays.SMM.newMatrix(
                 UpdatablePArray.class, elementType, width, height);
             final Matrices.Polygon2D polygon = Matrices.Region.getPolygon2D(vertices);
-            System.out.printf("Filling polygon with %d vertices...%n", numberOfVertices);
+            System.out.printf("Filling polygon with %d vertices at matrix %s[%dx%d]...%n",
+                numberOfVertices, elementType, width, height);
             long t1 = System.nanoTime();
             Matrices.fillRegion(null, matrix, polygon, matrix.array().maxPossibleValue(1.0));
             long t2 = System.nanoTime();

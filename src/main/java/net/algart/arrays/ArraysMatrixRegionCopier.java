@@ -334,10 +334,10 @@ abstract strictfp class ArraysMatrixRegionCopier {
         for (int i = 1; i < intersectionsIndexes.length; i++) {
             intersectionsIndexes[i] += intersectionsIndexes[i - 1];
             // intersectionsIndexes[i] becomes equal to sum of all intersectionsCounts[0..i-1]
-            if (intersectionsIndexes[i] < 0 || intersectionsIndexes[i] > 512 * 1024L * 1024L) {
+            if (intersectionsIndexes[i] < 0 || intersectionsIndexes[i] > 128 * 1024L * 1024L) {
                 // sum of 2 non-negative integers is negative only in a case of overflow (>2^31);
                 // but we will not use the following algorithm even if the resulting number of intersections
-                // > 512 millions (the corresponding double[] array requires 4 GB memory)
+                // > 128 millions (the corresponding double[] array requires 1 GB memory)
                 if (DEBUG_OPTIMIZE_POLYGON_2D) {
                     System.out.println("Very complex polygon (" + m + " vertices): "
                         + "it consists of too large number of solid lines; "
