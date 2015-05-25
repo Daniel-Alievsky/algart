@@ -53,7 +53,7 @@ public class FillPolygonTest {
                 + " random}regular matrixWidth matrixHeight numberOfVertices resultFileName resultAWTFileName [randSeed]");
             return;
         }
-        final String style = args[0];
+        final String style = args[0].toLowerCase();
         final long width = Long.parseLong(args[1]);
         final long height = Long.parseLong(args[2]);
         final int numberOfVertices = Integer.parseInt(args[3]);
@@ -64,11 +64,11 @@ public class FillPolygonTest {
         final Matrix<? extends UpdatablePArray> matrix = Arrays.SMM.newBitMatrix(width, height);
         final double[][] vertices = new double[numberOfVertices][2];
         for (int k = 0; k < numberOfVertices; k++) {
+            boolean enableRounding = true;
             if (style.equals("regular")) {
                 final double fi = 2.0 * Math.PI * (double) k / (double) numberOfVertices;
                 vertices[k][0] = 0.5 * width + Math.cos(fi) * 0.5 * (width - 1);
-                vertices[k][1] = 0.5 * height + Math.sin(fi) * 0.5 * (height - 1) + 0.0000001;
-
+                vertices[k][1] = 0.5 * height + Math.sin(fi) * 0.5 * (height - 1);
             } else if (style.equals("random")) {
                 vertices[k][0] = rnd.nextDouble() * (width - 1);
                 vertices[k][1] = rnd.nextDouble() * (height - 1);
@@ -85,13 +85,25 @@ public class FillPolygonTest {
                     : k < n2 ? (double) (k - n1) / n1 * height
                     : k < n3 ? 0.9 * height
                     : (double) (numberOfVertices - k) / n1 * height;
+            } else if (style.equals("spiral")) {
+                final double fi = 50.0 * Math.PI * (double) k / (double) numberOfVertices;
+                final double r = 0.5 * height * (double) k / (double) numberOfVertices;
+                vertices[k][0]= 0.5 * width + r * Math.cos(fi);
+                vertices[k][1] = 0.5 * height + r * Math.sin(fi);
+            } else if (style.equals("horizontal")) {
+                vertices[k][0]= (0.1 + 0.8 * (double) k / (double) numberOfVertices) * width;
+                vertices[k][1] = Math.round(0.5 * height);
+            } else if (style.equals("emptyhorizontal")) {
+                vertices[k][0]= (0.1 + 0.8 * (double) k / (double) numberOfVertices) * width;
+                vertices[k][1] = Math.round(0.5 * height) + 0.1;
+                enableRounding = false;
             } else {
                 throw new IllegalArgumentException("Unknown polygon style");
             }
-            if (rnd.nextBoolean()) {
+            if (enableRounding && rnd.nextBoolean()) {
                 vertices[k][0] = Math.floor(vertices[k][0]);
             }
-            if (rnd.nextBoolean()) {
+            if (enableRounding && rnd.nextBoolean()) {
                 vertices[k][1] = Math.floor(vertices[k][1]);
             }
             if (k < 20) {

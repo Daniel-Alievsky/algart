@@ -145,22 +145,21 @@ abstract strictfp class ArraysMatrixRegionCopier {
         initializeProgress(destRegion);
         boolean destFullyInside = true;
         boolean srcFullyInside = true;
-        boolean srcFullyOutside = true;
+        boolean srcFullyOutside = false;
         for (int k = 0, n = destRegion.n(); k < n; k++) {
             IRange destRange = destRegion.coordRange(k);
             long destMin = destRange.min();
             long destMax = destRange.max();
             if (destMin < 0 || destMax >= dest.dim(k)) {
                 destFullyInside = false;
-                break;
             }
             long srcMin = shifts.length > k ? destMin - shifts[k] : destMin;
             long srcMax = shifts.length > k ? destMax - shifts[k] : destMax;
             if (srcMin < 0 || srcMax >= src.dim(k)) {
                 srcFullyInside = false;
             }
-            if (srcMin < src.dim(k) && srcMax >= 0) {
-                srcFullyOutside = false;
+            if (srcMin >= src.dim(k) || srcMax < 0) {
+                srcFullyOutside = true;
             }
         }
         JArrayPool bufferPool = this.destJArray != null || this.srcJArray != null ? null :
@@ -267,52 +266,56 @@ abstract strictfp class ArraysMatrixRegionCopier {
         final long yMax = yRange.max();
         final int[] intersectionsCounts = new int[(int) yRange.size()];
         // - zero-filled by Java
+        boolean increasingY = false;
+        for (int k = m - 1; k >= 0; k--) {
+            final double vy1 = destPolygon.vertexY(k);
+            final double vy2 = destPolygon.vertexY(k < m - 1 ? k + 1 : 0);
+            if (vy1 < vy2) {
+                increasingY = true;
+                break;
+            } else if (vy1 > vy2) {
+                increasingY = false;
+                break;
+            }
+            // else continue search: we need to know the common y-direction of the polyline
+        }
+        // In a degenerated case of single horizontal line, the value of increasingY will be never used
         for (int k = 0; k < m; k++) {
-            final double vy1 = destPolygon.vertexY(k > 0 ? k - 1 : m - 1);
-            final double vy2 = destPolygon.vertexY(k);
-            final double vy3 = destPolygon.vertexY(k < m - 1 ? k + 1 : 0);
-            final boolean vy2Integer = vy2 == StrictMath.floor(vy2);
-            // If vy1 is integer, we'll use v1 always.
-            // But we'll use integer v2 only in the following cases:
-            //     1) vy1 < vy2, vy3 > vy2 or vy1 > vy2, vy3 < vy2 (changing y-direction)
-            //     2) vy1 == vy2 == vy3
-            // In more usual situation, when the y-direction (increasing or decreasing) is not changed at v2,
-            // we will not count it; it will be used as v1 at the next step.
-            if (vy1 == vy2) {
-                if (vy2Integer) {
-                    // in other case, this edge does not contain any integer points
-                    final int yIndex = (int) ((long) vy1 - yMin);
-                    intersectionsCounts[yIndex]++;
-                    if (vy3 == vy1) {
-                        intersectionsCounts[yIndex]++;
-                    }
-                }
-            } else if (vy1 < vy2) {
+            final double vy1 = destPolygon.vertexY(k);
+            final double vy2 = destPolygon.vertexY(k < m - 1 ? k + 1 : 0);
+            final boolean vy1Integer = vy1 == StrictMath.floor(vy1);
+            if (vy1 < vy2) {
                 long vyMin = (long) StrictMath.ceil(vy1);
                 long vyMax = (long) StrictMath.floor(vy2);
-                if (vy2Integer && vy2 <= vy3) {
-                    vyMax--;
+                if (vy1Integer && increasingY) {
+                    // skipping v1 if the y-direction is not changed
+                    vyMin++;
                 }
+                increasingY = true;
                 for (long sectionY = vyMin; sectionY <= vyMax; sectionY++) {
                     final int yIndex = (int) (sectionY - yMin);
                     intersectionsCounts[yIndex]++;
                 }
-            } else {
+            } else if (vy1 > vy2){
                 long vyMax = (long) StrictMath.floor(vy1);
                 long vyMin = (long) StrictMath.ceil(vy2);
-                if (vy2Integer && vy2 >= vy3) {
-                    vyMin++;
+                if (vy1Integer && !increasingY) {
+                    // skipping v1 if the y-direction is not changed
+                    vyMax--;
                 }
+                increasingY = false;
                 for (long sectionY = vyMax; sectionY >= vyMin; sectionY--) {
                     final int yIndex = (int) (sectionY - yMin);
                     intersectionsCounts[yIndex]++;
                 }
             }
+            // else vy1 == vy2: even if it is integer, we will fill this edge by special algorithm
         }
+        // increasingY already has a correct value for the loop beginning
         for (int i = 0; i < intersectionsCounts.length; i++) {
             if (intersectionsCounts[i] % 2 != 0) {
                 throw new AssertionError("Odd number of intersection at horizontal #" + (yMin + i)
-                    + ", line " + i + ": it's impossible");
+                    + ", line " + i + ": it must not occur");
             }
         }
         long t2 = DEBUG_OPTIMIZE_POLYGON_2D ? System.nanoTime() : 0;
@@ -321,10 +324,16 @@ abstract strictfp class ArraysMatrixRegionCopier {
         for (int i = 1; i < intersectionsIndexes.length; i++) {
             intersectionsIndexes[i] += intersectionsIndexes[i - 1];
             // intersectionsIndexes[i] becomes equal to sum of all intersectionsCounts[0..i-1]
-            if (intersectionsIndexes[i] < 0) {
-                // sum of 2 non-negative integers is negative only in a case of overflow
-                throw new OutOfMemoryError("Very complex polygon (" + m + " vertices): "
-                    + "it consists of too large number of solid lines and cannot be drawn in reasonable time");
+            if (intersectionsIndexes[i] < 0 || intersectionsIndexes[i] > 512 * 1024L * 1024L) {
+                // sum of 2 non-negative integers is negative only in a case of overflow (>2^31);
+                // but we will not use the following algorithm even if the resulting number of intersections
+                // > 512 millions (the corresponding double[] array requires 4 GB memory)
+                if (DEBUG_OPTIMIZE_POLYGON_2D) {
+                    System.out.println("Very complex polygon (" + m + " vertices): "
+                        + "it consists of too large number of solid lines; "
+                        + "switching to more simple algorithm to avoid OutOfMemory error");
+                }
+                return false;
             }
         }
         final double[] intersections = new double[intersectionsIndexes[intersectionsIndexes.length - 1]];
@@ -333,46 +342,43 @@ abstract strictfp class ArraysMatrixRegionCopier {
         if (intersections.length % 2 != 0) {
             throw new AssertionError("Odd number of intersections of the polygon and horizontals: it's impossible");
         }
+        boolean hasHorizontalEdges = false;
         for (int k = 0; k < m; k++) {
-            final double vx1 = destPolygon.vertexX(k > 0 ? k - 1 : m - 1);
-            final double vy1 = destPolygon.vertexY(k > 0 ? k - 1 : m - 1);
-            final double vx2 = destPolygon.vertexX(k);
-            final double vy2 = destPolygon.vertexY(k);
-            final double vy3 = destPolygon.vertexY(k < m - 1 ? k + 1 : 0);
-            final boolean vy2Integer = vy2 == StrictMath.floor(vy2);
-            if (vy1 == vy2) {
-                if (vy1 == (long) vy1) {
-                    final int yIndex = (int) ((long) vy1 - yMin);
-                    intersections[--intersectionsIndexes[yIndex]] = vx1;
-                    if (vy3 == vy1) {
-                        intersections[--intersectionsIndexes[yIndex]] = vx1;
-                    }
-                    // "--": we fill each block from the end to begin
-                }
-            } else if (vy1 < vy2) {
+            final double vx1 = destPolygon.vertexX(k);
+            final double vy1 = destPolygon.vertexY(k);
+            final double vx2 = destPolygon.vertexX(k < m - 1 ? k + 1 : 0);
+            final double vy2 = destPolygon.vertexY(k < m - 1 ? k + 1 : 0);
+            final boolean vy1Integer = vy1 == StrictMath.floor(vy1);
+            if (vy1 < vy2) {
                 long vyMin = (long) StrictMath.ceil(vy1);
                 long vyMax = (long) StrictMath.floor(vy2);
-                final double rel = (vx2 - vx1) / (vy2 - vy1);
-                if (vy2Integer && vy2 <= vy3) {
-                    vyMax--;
+                if (vy1Integer && increasingY) {
+                    // skipping v1 if the y-direction is not changed
+                    vyMin++;
                 }
+                increasingY = true;
+                final double rel = (vx2 - vx1) / (vy2 - vy1);
                 for (long sectionY = vyMin; sectionY <= vyMax; sectionY++) {
                     final int yIndex = (int) (sectionY - yMin);
                     final double x = vx1 + (sectionY - vy1) * rel;
                     intersections[--intersectionsIndexes[yIndex]] = x;
                 }
-            } else {
+            } else if (vy1 > vy2){
                 long vyMax = (long) StrictMath.floor(vy1);
                 long vyMin = (long) StrictMath.ceil(vy2);
-                if (vy2Integer && vy2 >= vy3) {
-                    vyMin++;
+                if (vy1Integer && !increasingY) {
+                    // skipping v1 if the y-direction is not changed
+                    vyMax--;
                 }
+                increasingY = false;
                 final double rel = (vx2 - vx1) / (vy2 - vy1);
                 for (long sectionY = vyMax; sectionY >= vyMin; sectionY--) {
                     final int yIndex = (int) (sectionY - yMin);
                     final double x = vx1 + (sectionY - vy1) * rel;
                     intersections[--intersectionsIndexes[yIndex]] = x;
                 }
+            } else {
+                hasHorizontalEdges = true;
             }
         }
         if (intersectionsIndexes[0] != 0) {
@@ -380,6 +386,30 @@ abstract strictfp class ArraysMatrixRegionCopier {
         }
         long t3 = DEBUG_OPTIMIZE_POLYGON_2D ? System.nanoTime() : 0;
         long segmentCount = 0;
+        if (hasHorizontalEdges) {
+            for (int k = 0; k < m; k++) {
+                final double vy1 = destPolygon.vertexY(k);
+                final double vy2 = destPolygon.vertexY(k < m - 1 ? k + 1 : 0);
+                if (vy1 == vy2 && vy1 == StrictMath.floor(vy1)) {
+                    // just draw this edge at the result if it is integer
+                    final double vx1 = destPolygon.vertexX(k);
+                    final double vx2 = destPolygon.vertexX(k < m - 1 ? k + 1 : 0);
+                    final int i = (int) vy1;
+                    destCoordinates[1] = i;
+                    srcCoordinates[1] = shifts.length >= 2 ? i - shifts[1] : i;
+                    final long minX, maxX;
+                    if (vx1 < vx2) {
+                        minX = (long) StrictMath.ceil(vx1);
+                        maxX = (long) StrictMath.floor(vx2);
+                    } else {
+                        minX = (long) StrictMath.ceil(vx2);
+                        maxX = (long) StrictMath.floor(vx1);
+                    }
+                    segmentCopier.copyUninterruptedSegment(minX, maxX);
+                    segmentCount++;
+                }
+            }
+        }
         for (long i = yMin; i <= yMax; i++) {
             final int yIndex = (int) (i - yMin);
             final int fromIndex = intersectionsIndexes[yIndex];
@@ -390,29 +420,10 @@ abstract strictfp class ArraysMatrixRegionCopier {
             java.util.Arrays.sort(intersections, fromIndex, toIndex);
             destCoordinates[1] = i;
             srcCoordinates[1] = shifts.length >= 2 ? i - shifts[1] : i;
-            long lastMinX = 0, lastMaxX = -1;
-            // - empty segment
             for (int j = fromIndex; j < toIndex; j += 2) {
                 final long minX = (long) StrictMath.ceil(intersections[j]);
                 final long maxX = (long) StrictMath.floor(intersections[j + 1]);
-                if (minX > maxX) {
-                    continue;
-                }
-                if (j == fromIndex) {
-                    lastMinX = minX;
-                    lastMaxX = maxX;
-                } else if (minX == lastMaxX + 1) {
-                    lastMaxX = maxX;
-                    // continuing the previos segment
-                } else {
-                    segmentCopier.copyUninterruptedSegment(lastMinX, lastMaxX);
-                    segmentCount++;
-                    lastMinX = minX;
-                    lastMaxX = maxX;
-                }
-            }
-            if (lastMinX <= lastMaxX) {
-                segmentCopier.copyUninterruptedSegment(lastMinX, lastMaxX);
+                segmentCopier.copyUninterruptedSegment(minX, maxX);
                 segmentCount++;
             }
         }
