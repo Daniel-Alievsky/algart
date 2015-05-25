@@ -42,7 +42,7 @@ import java.util.Locale;
  * @since JDK 1.5
  */
 abstract strictfp class ArraysMatrixRegionCopier {
-    private static final boolean OPTIMIZE_POLYGON_2D = false;
+    private static final boolean OPTIMIZE_POLYGON_2D = true;
     private static final boolean DEBUG_OPTIMIZE_POLYGON_2D = true;
     private static final int MINIMAL_VERTICES_COUNT_TO_OPTIMIZE_POLYGON_2D = 16;
     private static final long OUTSIDE_SRC_INDEX = -1;
@@ -52,12 +52,13 @@ abstract strictfp class ArraysMatrixRegionCopier {
     private final Matrix<? extends Array> src;
     private final UpdatableArray destArray;
     private final Array srcArray;
-    private final Object destJArray;
+    final Object destJArray;
     private final Object srcJArray;
-    private final int destJArrayOffset;
+    final int destJArrayOffset;
     private final int srcJArrayOffset;
     private final long destDimX;
     private final long srcDimX;
+    final long destDimY;
     private final long[] shifts;
     private final long[] srcCoordinates;
     private final long[] destCoordinates;
@@ -83,6 +84,7 @@ abstract strictfp class ArraysMatrixRegionCopier {
         // checks above are necessary for a case of BitArray
         this.destDimX = dest.dimX();
         this.srcDimX = src.dimX();
+        this.destDimY = dest.dimY();
         this.shifts = shifts;
         this.srcCoordinates = new long[maxNumberOfDimensions];
         this.destCoordinates = new long[maxNumberOfDimensions];
@@ -176,7 +178,7 @@ abstract strictfp class ArraysMatrixRegionCopier {
             SegmentCopier segmentCopier = destFullyInside && srcFullyInside ? new UncheckedSegmentCopier(buf)
                 : outsideConst == null ? new CheckedSegmentCopier(buf)
                 : OPTIMIZE_POLYGON_2D && destCoordinates.length == 2 && srcFullyOutside
-                ? (destFullyInside ? new UncheckedSegmentFiller2D(buf) : new ContinuedSegmentFiller2D(buf))
+                ? (destFullyInside ? getUncheckedSegmentFiller2D() : getContinuedSegmentFiller2D())
                 : new ContinuedSegmentCopier(buf);
             if (OPTIMIZE_POLYGON_2D && destRegion instanceof Matrices.Polygon2D) {
                 if (processPolygon2D((Matrices.Polygon2D) destRegion, segmentCopier)) {
@@ -212,6 +214,14 @@ abstract strictfp class ArraysMatrixRegionCopier {
      * @see Arrays#zeroFill(UpdatableArray)
      */
     abstract void fill(long position, long count);
+
+    UncheckedSegmentFiller2D getUncheckedSegmentFiller2D() {
+        return new UncheckedSegmentFiller2D();
+    }
+
+    ContinuedSegmentFiller2D getContinuedSegmentFiller2D() {
+        return new ContinuedSegmentFiller2D();
+    }
 
     private void processRecursively(Matrices.Region destRegion, SegmentCopier segmentCopier) {
         final int n = destRegion.n();
@@ -625,7 +635,8 @@ abstract strictfp class ArraysMatrixRegionCopier {
         void copyUninterruptedSegment(long destMin, long destMax) {
             destCoordinates[0] = 0;
             if (!dest.inside(destCoordinates)) {
-                return; // the line is outside the destination matrix: nothing to do
+                // the line is outside the destination matrix: nothing to do
+                return;
             }
             if (destMin < 0) {
                 destMin = 0;
@@ -634,7 +645,8 @@ abstract strictfp class ArraysMatrixRegionCopier {
                 destMax = destDimX - 1;
             }
             if (destMin > destMax) {
-                return; // nothing to do
+                // nothing to do
+                return;
             }
             destCoordinates[0] = destMin;
             long srcMin = shifts.length >= 1 ? destMin - shifts[0] : destMin;
@@ -726,8 +738,8 @@ abstract strictfp class ArraysMatrixRegionCopier {
     }
 
     private class UncheckedSegmentFiller2D extends ContinuedSegmentCopier {
-        UncheckedSegmentFiller2D(Object workJArray) {
-            super(workJArray);
+        UncheckedSegmentFiller2D() {
+            super(null);
         }
 
         @Override
@@ -739,14 +751,15 @@ abstract strictfp class ArraysMatrixRegionCopier {
     }
 
     private class ContinuedSegmentFiller2D extends ContinuedSegmentCopier {
-        ContinuedSegmentFiller2D(Object workJArray) {
-            super(workJArray);
+        ContinuedSegmentFiller2D() {
+            super(null);
         }
 
         @Override
         void copyUninterruptedSegment(long destMin, long destMax) {
-            if (destCoordinates[1] < 0 || destCoordinates[1] >= dest.dimY()) {
-                return; // the line is outside the destination matrix: nothing to do
+            if (destCoordinates[1] < 0 || destCoordinates[1] >= destDimY) {
+                // the line is outside the destination matrix: nothing to do
+                return;
             }
             if (destMin < 0) {
                 destMin = 0;
@@ -755,17 +768,452 @@ abstract strictfp class ArraysMatrixRegionCopier {
                 destMax = destDimX - 1;
             }
             if (destMin > destMax) {
-                return; // nothing to do
+                // nothing to do
+                return;
             }
             final long len = destMax - destMin + 1;
             fill(destCoordinates[1] * destDimX + destMin, len);
         }
     }
 
+    // Current version does not try to optimize bit arrays
+    private class DirectBitArraysUncheckedSegmentFiller2D extends UncheckedSegmentFiller2D {
+        DirectBitArraysUncheckedSegmentFiller2D(long[] destArray, int offset, boolean filler) {
+            super();
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            super.copyUninterruptedSegment(destMin, destMax);
+        }
+    }
+
+    private class DirectBitArraysContinuedSegmentFiller2D extends ContinuedSegmentFiller2D {
+
+        DirectBitArraysContinuedSegmentFiller2D(long[] destArray, int offset, boolean filler) {
+            super();
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            super.copyUninterruptedSegment(destMin, destMax);
+        }
+    }
+
+    /*Repeat() char ==> byte,,short,,int,,long,,float,,double;;
+               Char ==> Byte,,Short,,Int,,Long,,Float,,Double
+     */
+    private class DirectCharArraysUncheckedSegmentFiller2D extends UncheckedSegmentFiller2D {
+        private final char[] destArray;
+        private final int offset;
+        private final char filler;
+
+        DirectCharArraysUncheckedSegmentFiller2D(char[] destArray, int offset, char filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectCharArraysContinuedSegmentFiller2D extends ContinuedSegmentFiller2D {
+        private final char[] destArray;
+        private final int offset;
+        private final char filler;
+
+        DirectCharArraysContinuedSegmentFiller2D(char[] destArray, int offset, char filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            if (destCoordinates[1] < 0 || destCoordinates[1] >= destDimY) {
+                // the line is outside the destination matrix: nothing to do
+                return;
+            }
+            if (destMin < 0) {
+                destMin = 0;
+            }
+            if (destMax > destDimX - 1) {
+                destMax = destDimX - 1;
+            }
+            if (destMin > destMax) {
+                // nothing to do
+                return;
+            }
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+    private class DirectByteArraysUncheckedSegmentFiller2D extends UncheckedSegmentFiller2D {
+        private final byte[] destArray;
+        private final int offset;
+        private final byte filler;
+
+        DirectByteArraysUncheckedSegmentFiller2D(byte[] destArray, int offset, byte filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectByteArraysContinuedSegmentFiller2D extends ContinuedSegmentFiller2D {
+        private final byte[] destArray;
+        private final int offset;
+        private final byte filler;
+
+        DirectByteArraysContinuedSegmentFiller2D(byte[] destArray, int offset, byte filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            if (destCoordinates[1] < 0 || destCoordinates[1] >= destDimY) {
+                // the line is outside the destination matrix: nothing to do
+                return;
+            }
+            if (destMin < 0) {
+                destMin = 0;
+            }
+            if (destMax > destDimX - 1) {
+                destMax = destDimX - 1;
+            }
+            if (destMin > destMax) {
+                // nothing to do
+                return;
+            }
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectShortArraysUncheckedSegmentFiller2D extends UncheckedSegmentFiller2D {
+        private final short[] destArray;
+        private final int offset;
+        private final short filler;
+
+        DirectShortArraysUncheckedSegmentFiller2D(short[] destArray, int offset, short filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectShortArraysContinuedSegmentFiller2D extends ContinuedSegmentFiller2D {
+        private final short[] destArray;
+        private final int offset;
+        private final short filler;
+
+        DirectShortArraysContinuedSegmentFiller2D(short[] destArray, int offset, short filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            if (destCoordinates[1] < 0 || destCoordinates[1] >= destDimY) {
+                // the line is outside the destination matrix: nothing to do
+                return;
+            }
+            if (destMin < 0) {
+                destMin = 0;
+            }
+            if (destMax > destDimX - 1) {
+                destMax = destDimX - 1;
+            }
+            if (destMin > destMax) {
+                // nothing to do
+                return;
+            }
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectIntArraysUncheckedSegmentFiller2D extends UncheckedSegmentFiller2D {
+        private final int[] destArray;
+        private final int offset;
+        private final int filler;
+
+        DirectIntArraysUncheckedSegmentFiller2D(int[] destArray, int offset, int filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectIntArraysContinuedSegmentFiller2D extends ContinuedSegmentFiller2D {
+        private final int[] destArray;
+        private final int offset;
+        private final int filler;
+
+        DirectIntArraysContinuedSegmentFiller2D(int[] destArray, int offset, int filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            if (destCoordinates[1] < 0 || destCoordinates[1] >= destDimY) {
+                // the line is outside the destination matrix: nothing to do
+                return;
+            }
+            if (destMin < 0) {
+                destMin = 0;
+            }
+            if (destMax > destDimX - 1) {
+                destMax = destDimX - 1;
+            }
+            if (destMin > destMax) {
+                // nothing to do
+                return;
+            }
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectLongArraysUncheckedSegmentFiller2D extends UncheckedSegmentFiller2D {
+        private final long[] destArray;
+        private final int offset;
+        private final long filler;
+
+        DirectLongArraysUncheckedSegmentFiller2D(long[] destArray, int offset, long filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectLongArraysContinuedSegmentFiller2D extends ContinuedSegmentFiller2D {
+        private final long[] destArray;
+        private final int offset;
+        private final long filler;
+
+        DirectLongArraysContinuedSegmentFiller2D(long[] destArray, int offset, long filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            if (destCoordinates[1] < 0 || destCoordinates[1] >= destDimY) {
+                // the line is outside the destination matrix: nothing to do
+                return;
+            }
+            if (destMin < 0) {
+                destMin = 0;
+            }
+            if (destMax > destDimX - 1) {
+                destMax = destDimX - 1;
+            }
+            if (destMin > destMax) {
+                // nothing to do
+                return;
+            }
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectFloatArraysUncheckedSegmentFiller2D extends UncheckedSegmentFiller2D {
+        private final float[] destArray;
+        private final int offset;
+        private final float filler;
+
+        DirectFloatArraysUncheckedSegmentFiller2D(float[] destArray, int offset, float filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectFloatArraysContinuedSegmentFiller2D extends ContinuedSegmentFiller2D {
+        private final float[] destArray;
+        private final int offset;
+        private final float filler;
+
+        DirectFloatArraysContinuedSegmentFiller2D(float[] destArray, int offset, float filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            if (destCoordinates[1] < 0 || destCoordinates[1] >= destDimY) {
+                // the line is outside the destination matrix: nothing to do
+                return;
+            }
+            if (destMin < 0) {
+                destMin = 0;
+            }
+            if (destMax > destDimX - 1) {
+                destMax = destDimX - 1;
+            }
+            if (destMin > destMax) {
+                // nothing to do
+                return;
+            }
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectDoubleArraysUncheckedSegmentFiller2D extends UncheckedSegmentFiller2D {
+        private final double[] destArray;
+        private final int offset;
+        private final double filler;
+
+        DirectDoubleArraysUncheckedSegmentFiller2D(double[] destArray, int offset, double filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+
+    private class DirectDoubleArraysContinuedSegmentFiller2D extends ContinuedSegmentFiller2D {
+        private final double[] destArray;
+        private final int offset;
+        private final double filler;
+
+        DirectDoubleArraysContinuedSegmentFiller2D(double[] destArray, int offset, double filler) {
+            super();
+            this.destArray = destArray;
+            this.offset = offset;
+            this.filler = filler;
+        }
+
+        @Override
+        void copyUninterruptedSegment(long destMin, long destMax) {
+            if (destCoordinates[1] < 0 || destCoordinates[1] >= destDimY) {
+                // the line is outside the destination matrix: nothing to do
+                return;
+            }
+            if (destMin < 0) {
+                destMin = 0;
+            }
+            if (destMax > destDimX - 1) {
+                destMax = destDimX - 1;
+            }
+            if (destMin > destMax) {
+                // nothing to do
+                return;
+            }
+            final int len = (int) destMax - (int) destMin + 1;
+            final int position = (int) destCoordinates[1] * (int) destDimX + (int) destMin;
+            for (int k = offset + position, kMax = k + len; k < kMax; k++) {
+                destArray[k] = filler;
+            }
+        }
+    }
+    /*Repeat.AutoGeneratedEnd*/
 
     /*Repeat() bit|boolean(?!\smustBeInside) ==> char,,byte,,short,,int,,long,,float,,double;;
                Bit|Boolean                   ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double;;
                (src(?:Byte|Short)Array\.get) ==> $1,,(byte)$1,,(short)$1,,$1,,...;;
+               \(long(\[\]\)\s*destJArray)   ==> (char$1,,(byte$1,,(short$1,,(int$1,,(long$1,,(float$1,,(double$1;;
                (set|get)Object               ==> $1Element,,...
      */
     private static class BitArraysMatrixRegionCopier extends ArraysMatrixRegionCopier {
@@ -791,6 +1239,24 @@ abstract strictfp class ArraysMatrixRegionCopier {
 
         void fill(long position, long count) {
             destBitArray.fill(position, count, outsideValue);
+        }
+
+        @Override
+        UncheckedSegmentFiller2D getUncheckedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectBitArraysUncheckedSegmentFiller2D(
+                    (long[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getUncheckedSegmentFiller2D();
+        }
+
+        @Override
+        ContinuedSegmentFiller2D getContinuedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectBitArraysContinuedSegmentFiller2D(
+                    (long[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getContinuedSegmentFiller2D();
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
@@ -818,6 +1284,24 @@ abstract strictfp class ArraysMatrixRegionCopier {
         void fill(long position, long count) {
             destCharArray.fill(position, count, outsideValue);
         }
+
+        @Override
+        UncheckedSegmentFiller2D getUncheckedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectCharArraysUncheckedSegmentFiller2D(
+                    (char[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getUncheckedSegmentFiller2D();
+        }
+
+        @Override
+        ContinuedSegmentFiller2D getContinuedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectCharArraysContinuedSegmentFiller2D(
+                    (char[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getContinuedSegmentFiller2D();
+        }
     }
 
     private static class ByteArraysMatrixRegionCopier extends ArraysMatrixRegionCopier {
@@ -843,6 +1327,24 @@ abstract strictfp class ArraysMatrixRegionCopier {
 
         void fill(long position, long count) {
             destByteArray.fill(position, count, outsideValue);
+        }
+
+        @Override
+        UncheckedSegmentFiller2D getUncheckedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectByteArraysUncheckedSegmentFiller2D(
+                    (byte[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getUncheckedSegmentFiller2D();
+        }
+
+        @Override
+        ContinuedSegmentFiller2D getContinuedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectByteArraysContinuedSegmentFiller2D(
+                    (byte[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getContinuedSegmentFiller2D();
         }
     }
 
@@ -870,6 +1372,24 @@ abstract strictfp class ArraysMatrixRegionCopier {
         void fill(long position, long count) {
             destShortArray.fill(position, count, outsideValue);
         }
+
+        @Override
+        UncheckedSegmentFiller2D getUncheckedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectShortArraysUncheckedSegmentFiller2D(
+                    (short[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getUncheckedSegmentFiller2D();
+        }
+
+        @Override
+        ContinuedSegmentFiller2D getContinuedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectShortArraysContinuedSegmentFiller2D(
+                    (short[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getContinuedSegmentFiller2D();
+        }
     }
 
     private static class IntArraysMatrixRegionCopier extends ArraysMatrixRegionCopier {
@@ -895,6 +1415,24 @@ abstract strictfp class ArraysMatrixRegionCopier {
 
         void fill(long position, long count) {
             destIntArray.fill(position, count, outsideValue);
+        }
+
+        @Override
+        UncheckedSegmentFiller2D getUncheckedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectIntArraysUncheckedSegmentFiller2D(
+                    (int[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getUncheckedSegmentFiller2D();
+        }
+
+        @Override
+        ContinuedSegmentFiller2D getContinuedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectIntArraysContinuedSegmentFiller2D(
+                    (int[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getContinuedSegmentFiller2D();
         }
     }
 
@@ -922,6 +1460,24 @@ abstract strictfp class ArraysMatrixRegionCopier {
         void fill(long position, long count) {
             destLongArray.fill(position, count, outsideValue);
         }
+
+        @Override
+        UncheckedSegmentFiller2D getUncheckedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectLongArraysUncheckedSegmentFiller2D(
+                    (long[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getUncheckedSegmentFiller2D();
+        }
+
+        @Override
+        ContinuedSegmentFiller2D getContinuedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectLongArraysContinuedSegmentFiller2D(
+                    (long[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getContinuedSegmentFiller2D();
+        }
     }
 
     private static class FloatArraysMatrixRegionCopier extends ArraysMatrixRegionCopier {
@@ -948,6 +1504,24 @@ abstract strictfp class ArraysMatrixRegionCopier {
         void fill(long position, long count) {
             destFloatArray.fill(position, count, outsideValue);
         }
+
+        @Override
+        UncheckedSegmentFiller2D getUncheckedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectFloatArraysUncheckedSegmentFiller2D(
+                    (float[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getUncheckedSegmentFiller2D();
+        }
+
+        @Override
+        ContinuedSegmentFiller2D getContinuedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectFloatArraysContinuedSegmentFiller2D(
+                    (float[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getContinuedSegmentFiller2D();
+        }
     }
 
     private static class DoubleArraysMatrixRegionCopier extends ArraysMatrixRegionCopier {
@@ -973,6 +1547,24 @@ abstract strictfp class ArraysMatrixRegionCopier {
 
         void fill(long position, long count) {
             destDoubleArray.fill(position, count, outsideValue);
+        }
+
+        @Override
+        UncheckedSegmentFiller2D getUncheckedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectDoubleArraysUncheckedSegmentFiller2D(
+                    (double[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getUncheckedSegmentFiller2D();
+        }
+
+        @Override
+        ContinuedSegmentFiller2D getContinuedSegmentFiller2D() {
+            if (destJArray != null) {
+                return new DirectDoubleArraysContinuedSegmentFiller2D(
+                    (double[]) destJArray, destJArrayOffset, outsideValue);
+            }
+            return super.getContinuedSegmentFiller2D();
         }
     }
     /*Repeat.AutoGeneratedEnd*/

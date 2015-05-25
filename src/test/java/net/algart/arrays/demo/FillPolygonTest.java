@@ -50,18 +50,38 @@ public class FillPolygonTest {
     public static void main(String[] args) throws IOException {
         if (args.length < 4) {
             System.out.println("Usage: " + FillPolygonTest.class.getName()
-                + " random}regular matrixWidth matrixHeight numberOfVertices resultFileName resultAWTFileName [randSeed]");
+                + " elementType style matrixWidth matrixHeight numberOfVertices"
+                + " resultFileName resultAWTFileName [randSeed]");
             return;
         }
-        final String style = args[0].toLowerCase();
-        final long width = Long.parseLong(args[1]);
-        final long height = Long.parseLong(args[2]);
-        final int numberOfVertices = Integer.parseInt(args[3]);
-        final File resultFile = new File(args[4]);
-        final File resultAwtFile = new File(args[5]);
-        final Random rnd = args.length > 6 ? new Random(Long.parseLong(args[6])) : new Random();
+        final Class<?> elementType;
+        if (args[0].equals("bit")) {
+            elementType = boolean.class;
+        } else if (args[0].equals("char")) {
+            elementType = char.class;
+        } else if (args[0].equals("byte")) {
+            elementType = byte.class;
+        } else if (args[0].equals("short")) {
+            elementType = short.class;
+        } else if (args[0].equals("int")) {
+            elementType = int.class;
+        } else if (args[0].equals("long")) {
+            elementType = long.class;
+        } else if (args[0].equals("float")) {
+            elementType = float.class;
+        } else if (args[0].equals("double")) {
+            elementType = double.class;
+        } else {
+            throw new IllegalArgumentException("Invalid element type");
+        }
+        final String style = args[1].toLowerCase();
+        final long width = Long.parseLong(args[2]);
+        final long height = Long.parseLong(args[3]);
+        final int numberOfVertices = Integer.parseInt(args[4]);
+        final File resultFile = new File(args[5]);
+        final File resultAwtFile = new File(args[6]);
+        final Random rnd = args.length > 6 ? new Random(Long.parseLong(args[7])) : new Random();
 
-        final Matrix<? extends UpdatablePArray> matrix = Arrays.SMM.newBitMatrix(width, height);
         final double[][] vertices = new double[numberOfVertices][2];
         for (int k = 0; k < numberOfVertices; k++) {
             boolean enableRounding = true;
@@ -69,12 +89,16 @@ public class FillPolygonTest {
                 final double fi = 2.0 * Math.PI * (double) k / (double) numberOfVertices;
                 vertices[k][0] = 0.5 * width + Math.cos(fi) * 0.5 * (width - 1);
                 vertices[k][1] = 0.5 * height + Math.sin(fi) * 0.5 * (height - 1);
+            } else if (style.equals("bigregular")) {
+                final double fi = 2.0 * Math.PI * (double) k / (double) numberOfVertices;
+                vertices[k][0] = 0.5 * width + 1.2 * Math.cos(fi) * 0.5 * (width - 1);
+                vertices[k][1] = 0.5 * height + 1.2 * Math.sin(fi) * 0.5 * (height - 1);
             } else if (style.equals("random")) {
                 vertices[k][0] = rnd.nextDouble() * (width - 1);
                 vertices[k][1] = rnd.nextDouble() * (height - 1);
             } else if (style.equals("bigrandom")) {
                 vertices[k][0] = 3 * (rnd.nextDouble() - 0.5) * (width - 1);
-                vertices[k][1] = 3 * (rnd.nextDouble() - 0.5)  * (height - 1);
+                vertices[k][1] = 3 * (rnd.nextDouble() - 0.5) * (height - 1);
             } else if (style.equals("rectangle")) {
                 int n1 = numberOfVertices / 4, n2 = numberOfVertices / 2, n3 = 3 * numberOfVertices / 4;
                 vertices[k][0] = k < n1 ? (double) k / n1 * width
@@ -88,13 +112,13 @@ public class FillPolygonTest {
             } else if (style.equals("spiral")) {
                 final double fi = 50.0 * Math.PI * (double) k / (double) numberOfVertices;
                 final double r = 0.5 * height * (double) k / (double) numberOfVertices;
-                vertices[k][0]= 0.5 * width + r * Math.cos(fi);
+                vertices[k][0] = 0.5 * width + r * Math.cos(fi);
                 vertices[k][1] = 0.5 * height + r * Math.sin(fi);
             } else if (style.equals("horizontal")) {
-                vertices[k][0]= (0.1 + 0.8 * (double) k / (double) numberOfVertices) * width;
+                vertices[k][0] = (0.1 + 0.8 * (double) k / (double) numberOfVertices) * width;
                 vertices[k][1] = Math.round(0.5 * height);
             } else if (style.equals("emptyhorizontal")) {
-                vertices[k][0]= (0.1 + 0.8 * (double) k / (double) numberOfVertices) * width;
+                vertices[k][0] = (0.1 + 0.8 * (double) k / (double) numberOfVertices) * width;
                 vertices[k][1] = Math.round(0.5 * height) + 0.1;
                 enableRounding = false;
             } else {
@@ -112,32 +136,38 @@ public class FillPolygonTest {
                 System.out.println("...");
             }
         }
-        final Matrices.Polygon2D polygon = Matrices.Region.getPolygon2D(vertices);
-        System.out.printf("Filling polygon with %d vertices...%n", numberOfVertices);
-        long t1 = System.nanoTime();
-        Matrices.fillRegion(null, matrix, polygon, matrix.array().maxPossibleValue(1.0));
-        long t2 = System.nanoTime();
-        System.out.printf(Locale.US, "Polygon filled in %.3f ms%n", (t2 - t1) * 1e-6);
-        ExternalAlgorithmCaller.writeImage(resultFile, Collections.singletonList(matrix));
-        System.out.printf(Locale.US, "Polygon saved in %s%n", resultFile);
+        for (int testCount = 0; testCount < 5; testCount++) {
+            System.out.printf("Test #%d%n", testCount + 1);
+            final Matrix<? extends UpdatablePArray> matrix = Arrays.SMM.newMatrix(
+                UpdatablePArray.class, elementType, width, height);
+            final Matrices.Polygon2D polygon = Matrices.Region.getPolygon2D(vertices);
+            System.out.printf("Filling polygon with %d vertices...%n", numberOfVertices);
+            long t1 = System.nanoTime();
+            Matrices.fillRegion(null, matrix, polygon, matrix.array().maxPossibleValue(1.0));
+            long t2 = System.nanoTime();
+            System.out.printf(Locale.US, "Polygon filled in %.3f ms%n", (t2 - t1) * 1e-6);
+            ExternalAlgorithmCaller.writeImage(resultFile, Collections.singletonList(matrix));
+            System.out.printf(Locale.US, "Polygon saved in %s%n", resultFile);
 
-        if (width == (int) width && height == (int) height) {
-            System.out.printf("Filling polygon by AWT with %d vertices...%n", numberOfVertices);
-            final BufferedImage bufferedImage = new BufferedImage(
-                (int) width, (int) height, BufferedImage.TYPE_BYTE_BINARY);
-            final Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
-            final int[] xPoints = new int[numberOfVertices];
-            final int[] yPoints = new int[numberOfVertices];
-            for (int k = 0; k < numberOfVertices; k++) {
-                xPoints[k] = (int) vertices[k][0];
-                yPoints[k] = (int) vertices[k][1];
+            if (width == (int) width && height == (int) height) {
+                System.out.printf("Filling polygon by AWT with %d vertices...%n", numberOfVertices);
+                final BufferedImage bufferedImage = new BufferedImage(
+                    (int) width, (int) height, BufferedImage.TYPE_BYTE_BINARY);
+                final Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
+                final int[] xPoints = new int[numberOfVertices];
+                final int[] yPoints = new int[numberOfVertices];
+                for (int k = 0; k < numberOfVertices; k++) {
+                    xPoints[k] = (int) vertices[k][0];
+                    yPoints[k] = (int) vertices[k][1];
+                }
+                t1 = System.nanoTime();
+                graphics.fillPolygon(xPoints, yPoints, numberOfVertices);
+                t2 = System.nanoTime();
+                System.out.printf(Locale.US, "Polygon filled by AWT in %.3f ms%n", (t2 - t1) * 1e-6);
+                ImageIO.write(bufferedImage, ExternalAlgorithmCaller.getFileExtension(resultAwtFile), resultAwtFile);
+                System.out.printf(Locale.US, "Polygon saved in %s%n", resultAwtFile);
             }
-            t1 = System.nanoTime();
-            graphics.fillPolygon(xPoints, yPoints, numberOfVertices);
-            t2 = System.nanoTime();
-            System.out.printf(Locale.US, "Polygon filled by AWT in %.3f ms%n", (t2 - t1) * 1e-6);
-            ImageIO.write(bufferedImage, ExternalAlgorithmCaller.getFileExtension(resultAwtFile), resultAwtFile);
-            System.out.printf(Locale.US, "Polygon saved in %s%n", resultAwtFile);
+            System.out.println();
         }
         System.out.println("Done");
     }
