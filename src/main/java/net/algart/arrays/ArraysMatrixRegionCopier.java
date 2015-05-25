@@ -43,7 +43,7 @@ import java.util.Locale;
  */
 abstract strictfp class ArraysMatrixRegionCopier {
     private static final boolean OPTIMIZE_POLYGON_2D = true;
-    private static final boolean DEBUG_OPTIMIZE_POLYGON_2D = true;
+    private static final boolean DEBUG_OPTIMIZE_POLYGON_2D = false;
     private static final int MINIMAL_VERTICES_COUNT_TO_OPTIMIZE_POLYGON_2D = 16;
     private static final long OUTSIDE_SRC_INDEX = -1;
 
