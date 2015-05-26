@@ -259,9 +259,16 @@ abstract strictfp class ArraysMatrixRegionCopier {
     private boolean processPolygon2D(Matrices.Polygon2D destPolygon, SegmentCopier segmentCopier) {
         assert destPolygon.n() == 2;
         final IRange yRange = destPolygon.coordRange(1);
-        if (yRange.size() > Integer.MAX_VALUE) {
+        final long yMin = Math.max(yRange.min(), 0);
+        final long yMax = Math.min(yRange.max(), destDimY - 1);
+        // limitation by 0..destDimY range is important to avoid "almost infinite" loops
+        // for extremely large polygons already at the 1st pass
+        if (yMin > yMax) {
+            return true;
+        }
+        if (yMax - yMin + 1 > Integer.MAX_VALUE) {
             return false;
-            // maybe it is relatively simple polygon, but very large in y-dimensions:
+            // maybe it is relatively simple polygon, but very large in y-dimension:
             // there are changes that it can be processed by default algorithm
         }
         final int m = destPolygon.verticesCount();
@@ -272,9 +279,7 @@ abstract strictfp class ArraysMatrixRegionCopier {
         //TODO!! use matrix size info??
 
         long t1 = DEBUG_OPTIMIZE_POLYGON_2D ? System.nanoTime() : 0;
-        final long yMin = yRange.min();
-        final long yMax = yRange.max();
-        final int[] intersectionsCounts = new int[(int) yRange.size()];
+        final int[] intersectionsCounts = new int[(int) (yMax - yMin + 1)];
         // - zero-filled by Java
         boolean increasingY = false;
         for (int k = m - 1; k >= 0; k--) {
@@ -302,6 +307,8 @@ abstract strictfp class ArraysMatrixRegionCopier {
                     vyMin++;
                 }
                 increasingY = true;
+                vyMin = Math.max(vyMin, yMin);
+                vyMax = Math.min(vyMax, yMax);
                 for (long sectionY = vyMin; sectionY <= vyMax; sectionY++) {
                     final int yIndex = (int) (sectionY - yMin);
                     intersectionsCounts[yIndex]++;
@@ -314,6 +321,8 @@ abstract strictfp class ArraysMatrixRegionCopier {
                     vyMax--;
                 }
                 increasingY = false;
+                vyMin = Math.max(vyMin, yMin);
+                vyMax = Math.min(vyMax, yMax);
                 for (long sectionY = vyMax; sectionY >= vyMin; sectionY--) {
                     final int yIndex = (int) (sectionY - yMin);
                     intersectionsCounts[yIndex]++;
@@ -367,6 +376,8 @@ abstract strictfp class ArraysMatrixRegionCopier {
                     vyMin++;
                 }
                 increasingY = true;
+                vyMin = Math.max(vyMin, yMin);
+                vyMax = Math.min(vyMax, yMax);
                 final double rel = (vx2 - vx1) / (vy2 - vy1);
                 for (long sectionY = vyMin; sectionY <= vyMax; sectionY++) {
                     final int yIndex = (int) (sectionY - yMin);
@@ -381,6 +392,8 @@ abstract strictfp class ArraysMatrixRegionCopier {
                     vyMax--;
                 }
                 increasingY = false;
+                vyMin = Math.max(vyMin, yMin);
+                vyMax = Math.min(vyMax, yMax);
                 final double rel = (vx2 - vx1) / (vy2 - vy1);
                 for (long sectionY = vyMax; sectionY >= vyMin; sectionY--) {
                     final int yIndex = (int) (sectionY - yMin);
@@ -402,9 +415,12 @@ abstract strictfp class ArraysMatrixRegionCopier {
                 final double vy2 = destPolygon.vertexY(k < m - 1 ? k + 1 : 0);
                 if (vy1 == vy2 && vy1 == StrictMath.floor(vy1)) {
                     // just draw this edge at the result if it is integer
+                    final long i = (long) vy1;
+                    if (i < yMin || i > yMax) {
+                        continue;
+                    }
                     final double vx1 = destPolygon.vertexX(k);
                     final double vx2 = destPolygon.vertexX(k < m - 1 ? k + 1 : 0);
-                    final int i = (int) vy1;
                     destCoordinates[1] = i;
                     srcCoordinates[1] = shifts.length >= 2 ? i - shifts[1] : i;
                     final long minX, maxX;
