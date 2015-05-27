@@ -86,10 +86,13 @@ public class FillPolygonTest {
 
         final double[][] vertices = new double[numberOfVertices][2];
         for (int testCount = 0; testCount < numberOfTests; testCount++) {
+            System.out.printf("Test #%d/%d%n", testCount + 1, numberOfTests);
+            final boolean roundAll = rnd.nextBoolean();
+            final boolean disableRoundingAll = rnd.nextBoolean();
             double brushAngle = 0.25 * Math.PI;
             // - for randombrush style
             for (int k = 0; k < numberOfVertices; k++) {
-                boolean enableRounding = true;
+                boolean enableRounding = !disableRoundingAll;
                 if (style.equals("regular")) {
                     final double fi = 2.0 * Math.PI * (double) k / (double) numberOfVertices;
                     vertices[k][0] = 0.5 * width + Math.cos(fi) * 0.5 * (width - 1);
@@ -148,7 +151,7 @@ public class FillPolygonTest {
                     vertices[k][1] = (0.1 + 0.8 * (double) k / (double) numberOfVertices) * height;
                 } else if (style.equals("largevertical")) {
                     vertices[k][0] = Math.round(0.5 * width);
-                    vertices[k][1] = 100000.0 * (-0.5 + (double) k / (double) numberOfVertices) * height;
+                    vertices[k][1] = 1e9 * (-0.5 + (double) k / (double) numberOfVertices) * height;
                 } else if (style.equals("emptyvertical")) {
                     vertices[k][0] = Math.round(0.5 * width) + 0.1;
                     vertices[k][1] = (0.1 + 0.8 * (double) k / (double) numberOfVertices) * height;
@@ -156,10 +159,10 @@ public class FillPolygonTest {
                 } else {
                     throw new IllegalArgumentException("Unknown polygon style");
                 }
-                if (enableRounding && rnd.nextBoolean()) {
+                if (enableRounding && (roundAll || rnd.nextBoolean())) {
                     vertices[k][0] = Math.floor(vertices[k][0]);
                 }
-                if (enableRounding && rnd.nextBoolean()) {
+                if (enableRounding && (roundAll || rnd.nextBoolean())) {
                     vertices[k][1] = Math.floor(vertices[k][1]);
                 }
                 if (testCount == 0) {
@@ -171,7 +174,6 @@ public class FillPolygonTest {
                     }
                 }
             }
-            System.out.printf("Test #%d/%d%n", testCount + 1, numberOfTests);
             final Matrix<? extends UpdatablePArray> matrix = Arrays.SMM.newMatrix(
                 UpdatablePArray.class, elementType, width, height);
             final Matrices.Polygon2D polygon = Matrices.Region.getPolygon2D(vertices);

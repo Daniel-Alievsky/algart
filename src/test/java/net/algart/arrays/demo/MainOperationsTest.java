@@ -2636,13 +2636,13 @@ public strictfp class MainOperationsTest implements Cloneable {
             work2.copy(a);
             double outsideDouble = a instanceof BitArray ? 1.0 : 157.0;
             Object outsideValue = a instanceof PArray ? outsideDouble : a.elementType() == String.class ? "Hi" : null;
-            for (int fullyInside = 0; fullyInside < 2; fullyInside++) {
+            for (int srcFullyInside = 0; srcFullyInside < 2; srcFullyInside++) {
                 if (trivial) {
                     continue;
                 }
                 Matrix<? extends Array> srcSubMatr;
                 Matrix<UpdatableArray> destSubMatr;
-                if (fullyInside == 0) {
+                if (srcFullyInside == 0) {
                     srcSubMatr = srcMatr.subMatr(srcPos, count,
                         Matrix.ContinuationMode.getConstantMode(outsideValue));
                     destSubMatr = destMatr2.subMatr(destPos, count, Matrix.ContinuationMode.NULL_CONSTANT);
@@ -2694,7 +2694,7 @@ public strictfp class MainOperationsTest implements Cloneable {
                 }
 //                System.out.println(region + "; " + JArrays.toString(srcDim, ",", 100));
                 boolean illegalRegion = false;
-                if (fullyInside == 0) {
+                if (srcFullyInside == 0) {
                     Matrices.copyRegion(null, destMatr1, srcMatr, region, shifts, outsideValue);
                 } else {
                     try {
@@ -2807,7 +2807,7 @@ public strictfp class MainOperationsTest implements Cloneable {
                                     }
                                 };
                             }
-                            if (fullyInside == 0) {
+                            if (srcFullyInside == 0) {
                                 Matrices.copyRegion(null, destMatr1, srcMatr, r, shifts, outsideValue);
                             } else {
                                 Matrices.copyRegion(null, destMatr1, srcMatr, r, shifts);
