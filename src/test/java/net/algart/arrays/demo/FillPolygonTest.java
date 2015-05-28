@@ -140,21 +140,24 @@ public class FillPolygonTest {
                     vertices[k][0] = 0.5 * width + r * Math.cos(fi);
                     vertices[k][1] = 0.5 * height + r * Math.sin(fi);
                 } else if (style.equals("horizontal")) {
-                    vertices[k][0] = (0.1 + 0.8 * (double) k / (double) numberOfVertices) * width;
+                    vertices[k][0] = (0.1 + 0.8 * (double) k / (double) (numberOfVertices - 1)) * width;
+                    vertices[k][1] = Math.round(0.5 * height);
+                } else if (style.equals("largehorizontal")) {
+                    vertices[k][0] = 1e9 * (-0.5 + (double) k / (double) (numberOfVertices - 1)) * width;
                     vertices[k][1] = Math.round(0.5 * height);
                 } else if (style.equals("emptyhorizontal")) {
-                    vertices[k][0] = (0.1 + 0.8 * (double) k / (double) numberOfVertices) * width;
+                    vertices[k][0] = (0.1 + 0.8 * (double) k / (double) (numberOfVertices - 1)) * width;
                     vertices[k][1] = Math.round(0.5 * height) + 0.1;
                     enableRounding = false;
                 } else if (style.equals("vertical")) {
                     vertices[k][0] = Math.round(0.5 * width);
-                    vertices[k][1] = (0.1 + 0.8 * (double) k / (double) numberOfVertices) * height;
+                    vertices[k][1] = (0.1 + 0.8 * (double) k / (double) (numberOfVertices - 1)) * height;
                 } else if (style.equals("largevertical")) {
                     vertices[k][0] = Math.round(0.5 * width);
-                    vertices[k][1] = 1e9 * (-0.5 + (double) k / (double) numberOfVertices) * height;
+                    vertices[k][1] = 1e9 * (-0.5 + (double) k / (double) (numberOfVertices - 1)) * height;
                 } else if (style.equals("emptyvertical")) {
                     vertices[k][0] = Math.round(0.5 * width) + 0.1;
-                    vertices[k][1] = (0.1 + 0.8 * (double) k / (double) numberOfVertices) * height;
+                    vertices[k][1] = (0.1 + 0.8 * (double) k / (double) (numberOfVertices - 1)) * height;
                     enableRounding = false;
                 } else {
                     throw new IllegalArgumentException("Unknown polygon style");

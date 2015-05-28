@@ -45,7 +45,7 @@ abstract strictfp class ArraysMatrixRegionCopier {
     private static final boolean OPTIMIZE_POLYGON_2D = true;
     private static final boolean DEBUG_OPTIMIZE_POLYGON_2D =
         InternalUtils.getBooleanProperty("net.algart.arrays.ArraysMatrixRegionCopier.debugOptimizePolygon2D", false);
-    private static final int MINIMAL_VERTICES_COUNT_TO_OPTIMIZE_POLYGON_2D = 2;
+    private static final int MINIMAL_VERTICES_COUNT_TO_OPTIMIZE_POLYGON_2D = 3;
     private static final int MAXIMAL_MEMORY_TO_OPTIMIZE_POLYGON_2D = 128 * 1048576; // ~128MB
     private static final long OUTSIDE_SRC_INDEX = -1;
 
