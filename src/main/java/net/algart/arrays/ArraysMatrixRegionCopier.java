@@ -1274,7 +1274,7 @@ abstract strictfp class ArraysMatrixRegionCopier {
 
     /*Repeat() bit|boolean(?!\smustBeInside) ==> char,,byte,,short,,int,,long,,float,,double;;
                Bit|Boolean                   ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double;;
-               (src(?:Byte|Short)Array\.get) ==> $1,,(byte)$1,,(short)$1,,$1,,...;;
+               (src(?:Byte|Short)Array\.get) ==> $1,,(byte) $1,,(short) $1,,$1,,...;;
                \(long(\[\]\)\s*destJArray)   ==> (char$1,,(byte$1,,(short$1,,(int$1,,(long$1,,(float$1,,(double$1;;
                (set|get)Object               ==> $1Element,,...
      */
@@ -1386,7 +1386,7 @@ abstract strictfp class ArraysMatrixRegionCopier {
 
         void copyElement(long destIndex, long srcIndex) {
             destByteArray.setByte(destIndex,
-                srcIndex == OUTSIDE_SRC_INDEX ? outsideValue : (byte)srcByteArray.getByte(srcIndex));
+                srcIndex == OUTSIDE_SRC_INDEX ? outsideValue : (byte) srcByteArray.getByte(srcIndex));
         }
 
         void fill(long position, long count) {
@@ -1431,7 +1431,7 @@ abstract strictfp class ArraysMatrixRegionCopier {
 
         void copyElement(long destIndex, long srcIndex) {
             destShortArray.setShort(destIndex,
-                srcIndex == OUTSIDE_SRC_INDEX ? outsideValue : (short)srcShortArray.getShort(srcIndex));
+                srcIndex == OUTSIDE_SRC_INDEX ? outsideValue : (short) srcShortArray.getShort(srcIndex));
         }
 
         void fill(long position, long count) {
