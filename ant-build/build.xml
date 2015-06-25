@@ -38,7 +38,7 @@
 
     <target name="javadoc">
         <delete dir="../docs"/>
-        <javadoc destdir="../docs/api/" author="true" version="true" charset="UTF-8" Locale="en_US" additionalparam="-notimestamp">
+        <javadoc destdir="../docs/api/" author="true" version="true" charset="UTF-8" Locale="en_US" additionalparam="-notimestamp -Xdoclint:none">
         <!-- Locale is necessary to provide English, not Breakiterator algorithm of parsing the first sentence -->
             <packageset dir="../src/main/java/">
                 <include name="net/algart/**"/>
@@ -101,7 +101,7 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
 
     <target name="javadoc2003">
         <delete dir="../additional/legacy/algart2003/docs"/>
-        <javadoc destdir="../additional/legacy/algart2003/docs/api/" author="true" version="true" charset="UTF-8" Locale="en_US" additionalparam="-notimestamp">
+        <javadoc destdir="../additional/legacy/algart2003/docs/api/" author="true" version="true" charset="UTF-8" Locale="en_US" additionalparam="-notimestamp -Xdoclint:none">
         <!-- Locale is necessary to provide English, not Breakiterator algorithm of parsing the first sentence -->
             <packageset dir="../additional/legacy/algart2003/src">
                 <include name="net/algart/**"/>

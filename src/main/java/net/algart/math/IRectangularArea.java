@@ -157,6 +157,52 @@ public class IRectangularArea {
     }
 
     /**
+     * Returns a 2-dimensional rectangle with the given minimal and maximal vertex.
+     * Equivalent to
+     * <pre>
+     * {@link #valueOf(IPoint, IPoint) valueOf}(
+     *      {@link IPoint#valueOf(long...) IPoint.valueOf}(minX, minY),
+     *      {@link IPoint#valueOf(long...) IPoint.valueOf}(maxX, maxY));
+     * </pre>
+     *
+     * @param minX the minimal <i>x</i>-coordinate, inclusive.
+     * @param minY the minimal <i>y</i>-coordinate, inclusive.
+     * @param maxX the maximal <i>x</i>-coordinate, inclusive.
+     * @param maxY the maximal <i>y</i>-coordinate, inclusive.
+     * @return the new 2-dimensional rectangle.
+     * @throws IllegalArgumentException in the same situations as {@link #valueOf(IPoint, IPoint)} method.
+     */
+    public static IRectangularArea valueOf(long minX, long minY, long maxX, long maxY) {
+        return valueOf(
+            IPoint.valueOf(minX, minY),
+            IPoint.valueOf(maxX, maxY));
+    }
+
+    /**
+     * Returns a 3-dimensional parallelepiped with the given minimal and maximal vertex.
+     * Equivalent to
+     * <pre>
+     * {@link #valueOf(IPoint, IPoint) valueOf}(
+     *      {@link IPoint#valueOf(long...) IPoint.valueOf}(minX, minY, minZ),
+     *      {@link IPoint#valueOf(long...) IPoint.valueOf}(maxX, maxY, maxZ));
+     * </pre>
+     *
+     * @param minX the minimal <i>x</i>-coordinate, inclusive.
+     * @param minY the minimal <i>y</i>-coordinate, inclusive.
+     * @param minZ the minimal <i>z</i>-coordinate, inclusive.
+     * @param maxX the maximal <i>x</i>-coordinate, inclusive.
+     * @param maxY the maximal <i>y</i>-coordinate, inclusive.
+     * @param maxZ the maximal <i>z</i>-coordinate, inclusive.
+     * @return the new 3-dimensional parallelepiped.
+     * @throws IllegalArgumentException in the same situations as {@link #valueOf(IPoint, IPoint)} method.
+     */
+    public static IRectangularArea valueOf(long minX, long minY, long minZ, long maxX, long maxY, long maxZ) {
+        return valueOf(
+            IPoint.valueOf(minX, minY, minZ),
+            IPoint.valueOf(maxX, maxY, maxZ));
+    }
+
+    /**
      * Returns a new rectangular area with the same coordinates as the given area.
      * All <tt>double</tt> coordinates of the passed area are converted
      * to <tt>long</tt> coordinates of the returned area by standard

@@ -158,6 +158,59 @@ public strictfp class RectangularArea {
     }
 
     /**
+     * Returns a 2-dimensional rectangle with the given minimal and maximal vertex.
+     * Equivalent to
+     * <pre>
+     * {@link #valueOf(Point, Point) valueOf}(
+     *      {@link Point#valueOf(double...) Point.valueOf}(minX, minY),
+     *      {@link Point#valueOf(double...) Point.valueOf}(maxX, maxY));
+     * </pre>
+     *
+     * @param minX the minimal <i>x</i>-coordinate, inclusive.
+     * @param minY the minimal <i>y</i>-coordinate, inclusive.
+     * @param maxX the maximal <i>x</i>-coordinate, inclusive.
+     * @param maxY the maximal <i>y</i>-coordinate, inclusive.
+     * @return the new 2-dimensional rectangle.
+     * @throws IllegalArgumentException in the same situations as {@link #valueOf(Point, Point)} method.
+     */
+    public static RectangularArea valueOf(double minX, double minY, double maxX, double maxY) {
+        return valueOf(
+            Point.valueOf(minX, minY),
+            Point.valueOf(maxX, maxY));
+    }
+
+    /**
+     * Returns a 3-dimensional parallelepiped with the given minimal and maximal vertex.
+     * Equivalent to
+     * <pre>
+     * {@link #valueOf(Point, Point) valueOf}(
+     *      {@link Point#valueOf(double...) Point.valueOf}(minX, minY, minZ),
+     *      {@link Point#valueOf(double...) Point.valueOf}(maxX, maxY, maxZ));
+     * </pre>
+     *
+     * @param minX the minimal <i>x</i>-coordinate, inclusive.
+     * @param minY the minimal <i>y</i>-coordinate, inclusive.
+     * @param minZ the minimal <i>z</i>-coordinate, inclusive.
+     * @param maxX the maximal <i>x</i>-coordinate, inclusive.
+     * @param maxY the maximal <i>y</i>-coordinate, inclusive.
+     * @param maxZ the maximal <i>z</i>-coordinate, inclusive.
+     * @return the new 3-dimensional parallelepiped.
+     * @throws IllegalArgumentException in the same situations as {@link #valueOf(Point, Point)} method.
+     */
+    public static RectangularArea valueOf(
+        double minX,
+        double minY,
+        double minZ,
+        double maxX,
+        double maxY,
+        double maxZ)
+    {
+        return valueOf(
+            Point.valueOf(minX, minY, minZ),
+            Point.valueOf(maxX, maxY, maxZ));
+    }
+
+    /**
      * Returns a new rectangular area with the same coordinates as the given area.
      * All <tt>long</tt> coordinates of the passed area are converted
      * to <tt>double</tt> coordinates of the returned area by standard
