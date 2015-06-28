@@ -115,7 +115,7 @@ public class IRectangleUnionTest {
                         final IRectangularArea r = IRectangularArea.valueOf(
                             x, y, x + frameWidth - 1, y + frameHeight - 1);
                         if (rectangles.size() < 10) {
-                            System.out.printf("Frame #%d %dx%d: %s%n", rectangles.size() + 1, r.size(0), r.size(1), r);
+                            System.out.printf("Frame #%d %dx%d: %s%n", rectangles.size(), r.size(0), r.size(1), r);
                         } else if (rectangles.size() == 10) {
                             System.out.println("...");
                         }
