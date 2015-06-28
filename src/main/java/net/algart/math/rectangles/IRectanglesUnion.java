@@ -271,28 +271,22 @@ public class IRectanglesUnion {
     }
 
     public static abstract class BoundaryLink implements Comparable<BoundaryLink> {
-        final Side containingSide;
         final long coord;
+        final boolean belongsTofirstOfTwoParallelSides;
         final long from;
         final long to;
 
         private BoundaryLink(
-            Side containingSide,
+            long coord,
+            boolean belongsTofirstOfTwoParallelSides,
             long from,
             long to)
         {
-            assert containingSide != null;
-            this.containingSide = containingSide;
-            this.coord = containingSide.boundCoord();
-            assert from >= containingSide.boundFrom();
-            assert to <= containingSide.boundTo();
+            this.coord = coord;
+            this.belongsTofirstOfTwoParallelSides = belongsTofirstOfTwoParallelSides;
             assert from <= to;
             this.from = from;
             this.to = to;
-        }
-
-        public Side containingSide() {
-            return containingSide;
         }
 
         /**
@@ -349,9 +343,8 @@ public class IRectanglesUnion {
 
         @Override
         public String toString() {
-            return (containingSide.isHorizontal() ? "horizontal" : "vertical")
-                + " boundary link " + from + ".." + to + " at " + coord
-                + " (containing sides: " + containingSide + ")";
+            return (this instanceof HorizontalBoundaryLink ? "horizontal" : "vertical")
+                + " boundary link " + from + ".." + to + " at " + coord;
         }
 
         @Override
@@ -372,10 +365,9 @@ public class IRectanglesUnion {
             return true;
         }
 
-
         @Override
         public int hashCode() {
-            int result = containingSide.hashCode();
+            int result = (int) (coord ^ (coord >>> 32));
             result = 31 * result + (int) (from ^ (from >>> 32));
             result = 31 * result + (int) (to ^ (to >>> 32));
             return result;
@@ -390,11 +382,15 @@ public class IRectanglesUnion {
         BoundaryLink linkTo = null;
 
         private HorizontalBoundaryLink(
-            HorizontalSide containingSide,
+            long coord,
+            boolean belongsTofirstOfTwoParallelSides,
             VerticalSide transversalSideFrom,
             VerticalSide transversalSideTo)
         {
-            super(containingSide, transversalSideFrom.boundCoord(), transversalSideTo.boundCoord());
+            super(coord,
+                belongsTofirstOfTwoParallelSides,
+                transversalSideFrom.boundCoord(),
+                transversalSideTo.boundCoord());
             this.transversalSideFrom = transversalSideFrom;
             this.transversalSideTo = transversalSideTo;
         }
@@ -402,18 +398,12 @@ public class IRectanglesUnion {
         @Override
         public IRectangularArea sidePart() {
             return IRectangularArea.valueOf(
-                from, containingSide.frameSideCoord(),
-                to - 1, containingSide.frameSideCoord());
+                from, belongsTofirstOfTwoParallelSides ? coord : coord - 1,
+                to - 1, belongsTofirstOfTwoParallelSides ? coord : coord - 1);
         }
 
         void setNeighbour(VerticalBoundaryLink neighbour) {
-            if (neighbour.containingSide == transversalSideFrom) {
-                linkFrom = neighbour;
-            } else if (neighbour.containingSide == transversalSideTo) {
-                linkTo = neighbour;
-            } else {
-                throw new AssertionError("Attempt to assing vertical neighbour from alien side");
-            }
+            //TODO!! either first, or second, when second - sort them
         }
     }
 
@@ -422,29 +412,31 @@ public class IRectanglesUnion {
         BoundaryLink linkTo = null;
 
         private VerticalBoundaryLink(
-            Side containingSide,
+            long coord,
+            boolean belongsTofirstOfTwoParallelSides,
             HorizontalBoundaryLink linkFrom,
             HorizontalBoundaryLink linkTo)
         {
-            super(containingSide, linkFrom.coord, linkTo.coord);
+            super(coord, belongsTofirstOfTwoParallelSides, linkFrom.coord, linkTo.coord);
             this.linkFrom = linkFrom;
             this.linkTo = linkTo;
         }
 
         private VerticalBoundaryLink(
-            VerticalSide containingSide,
+            long coord,
+            boolean belongsTofirstOfTwoParallelSides,
             long from,
             long to)
         {
-            super(containingSide, from, to);
+            super(coord, belongsTofirstOfTwoParallelSides, from, to);
             // linkFrom and linkTo stay null
         }
 
         @Override
         public IRectangularArea sidePart() {
             return IRectangularArea.valueOf(
-                containingSide.frameSideCoord(), from,
-                containingSide.frameSideCoord(), to - 1);
+                belongsTofirstOfTwoParallelSides ? coord : coord - 1, from,
+                belongsTofirstOfTwoParallelSides ? coord : coord - 1, to - 1);
         }
     }
 
@@ -755,13 +747,7 @@ public class IRectanglesUnion {
         assert !frames.isEmpty();
         List<List<HorizontalBoundaryLink>> intersectingHorizontals = createListOfLists(verticalSides.size());
         for (List<HorizontalBoundaryLink> linksOnSide : completedContainedBoundaryLinksForHorizontalSides) {
-            HorizontalSide side = null;
             for (HorizontalBoundaryLink link : linksOnSide) {
-                if (side == null) {
-                    side = (HorizontalSide) link.containingSide;
-                } else {
-                    assert side == link.containingSide;
-                }
                 intersectingHorizontals.get(link.transversalSideFrom.indexInSortedList).add(link);
                 intersectingHorizontals.get(link.transversalSideTo.indexInSortedList).add(link);
             }
@@ -772,6 +758,10 @@ public class IRectanglesUnion {
         HorizontalBoundaryLink[] horizontalLinks = new HorizontalBoundaryLink[0];
         for (int index = 0, count = intersectingHorizontals.size(); index < count; index++) {
             final VerticalSide verticalSide = verticalSides.get(index);
+            final long y = verticalSide.boundCoord();
+            final boolean first = verticalSide.first;
+            // really we use only information about y and first;
+            // several horizontal sides at the same horizontal are processed together
             if (chainOfVerticalLinks) {
                 assert lastVerticalSide != null;
                 assert lastVerticalLink != null;
@@ -791,7 +781,7 @@ public class IRectanglesUnion {
             if (horizontalsCount == 0) {
                 if (chainOfVerticalLinks) {
                     final VerticalBoundaryLink fullSideLink = new VerticalBoundaryLink(
-                        verticalSide, verticalSide.boundFrom(), verticalSide.boundTo());
+                        y, first, verticalSide.boundFrom(), verticalSide.boundTo());
                     fullSideLink.linkFrom = lastVerticalLink;
                     lastVerticalLink.linkTo = fullSideLink;
                     resultingContainedBoundaryLinksForVerticalSides.get(index).add(fullSideLink);
@@ -807,7 +797,7 @@ public class IRectanglesUnion {
                 // first horizontal link finishs the chain
                 final HorizontalBoundaryLink linkTo = horizontalLinks[0];
                 final VerticalBoundaryLink starting = new VerticalBoundaryLink(
-                    verticalSide, verticalSide.boundFrom(), linkTo.coord);
+                    y, first, verticalSide.boundFrom(), linkTo.coord);
                 lastVerticalLink.linkTo = starting;
                 k = 1;
                 chainOfVerticalLinks = false;
@@ -829,7 +819,7 @@ public class IRectanglesUnion {
                         + ") are incident with the same vertical side";
                 assert from < to :
                     "Empty vertical link #" + (k / 2) + ": " + from + ".." + to + ", vertical index " + index;
-                final VerticalBoundaryLink link = new VerticalBoundaryLink(verticalSide, linkFrom, linkTo);
+                final VerticalBoundaryLink link = new VerticalBoundaryLink(y, first, linkFrom, linkTo);
                 linkFrom.setNeighbour(link);
                 linkTo.setNeighbour(link);
                 resultingContainedBoundaryLinksForVerticalSides.get(index).add(link);
@@ -838,7 +828,7 @@ public class IRectanglesUnion {
             if (k < horizontalsCount) {
                 final HorizontalBoundaryLink linkFrom = horizontalLinks[k];
                 final VerticalBoundaryLink ending = new VerticalBoundaryLink(
-                    verticalSide, linkFrom.coord, verticalSide.boundTo());
+                    y, first, linkFrom.coord, verticalSide.boundTo());
                 k++;
                 chainOfVerticalLinks = true;
                 ending.linkFrom = linkFrom;
@@ -868,7 +858,8 @@ public class IRectanglesUnion {
         List<List<HorizontalBoundaryLink>> resultingContainedBoundaryLinksForHorizontalSides)
     {
         final HorizontalBoundaryLink link = new HorizontalBoundaryLink(
-            bracketSet.horizontal,
+            bracketSet.horizontal.boundCoord(),
+            bracketSet.horizontal.first,
             firstTransveralSide,
             secondTransveralSide);
         if (link.from < link.to) {

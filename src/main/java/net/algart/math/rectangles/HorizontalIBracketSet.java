@@ -80,6 +80,12 @@ class HorizontalIBracketSet {
                         index--;
                     }
                 }
+                if (IRectanglesUnion.DEBUG_LEVEL >= 3) {
+                    System.out.printf("  Horizontal #%d, y=%d%s; middle situation:%s",
+                        horizontalIndex, y,
+                        horizontal == null ? "" : horizontal.first ? " (starting)" : " (ending)",
+                        toDebugString(intersectingSides));
+                }
                 if (newHorizontal != null) {
                     int index = horizontalIndex + 1;
                     while (index < numberOfHorizontals
@@ -127,7 +133,7 @@ class HorizontalIBracketSet {
         if (IRectanglesUnion.DEBUG_LEVEL >= 3) {
             System.out.printf("  Horizontal #%d, y=%d%s; brackets:%s",
                 horizontalIndex, y,
-                horizontal == null ? " (LOOP FINISHED)" : horizontal.first ? "(starting)" : " (ending)",
+                horizontal == null ? " (LOOP FINISHED)" : horizontal.first ? " (starting)" : " (ending)",
                 toDebugString(intersectingSides));
         }
         return horizontal != null;
