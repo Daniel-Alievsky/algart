@@ -1,0 +1,12 @@
+regular
+5    //frameMinWidth
+30   //frameMaxWidth
+9    //frameMinHeight
+30   //frameMaxHeight
+-1   //imageWidth
+-1   //imageHeight
+53   //horizontalCount
+22   //verticalCount
+3    //overlap
+10   //maxError
+157  //randSeed
