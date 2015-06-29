@@ -6,7 +6,7 @@ regular
 -1   //imageWidth
 -1   //imageHeight
 53   //horizontalCount
-22   //verticalCount
+32   //verticalCount
 3    //overlap
 10   //maxError
 157  //randSeed

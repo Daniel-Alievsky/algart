@@ -430,7 +430,7 @@ public class IRectanglesUnion {
         }
     }
 
-    private static class HorizontalBoundaryLink extends BoundaryLink {
+    public static class HorizontalBoundaryLink extends BoundaryLink {
         final SideSeries transversalSideFrom;
         final SideSeries transversalSideTo;
         // - these two fields are necessary only while constructing the boundary
@@ -613,7 +613,7 @@ public class IRectanglesUnion {
         final List<HorizontalSideSeries> horizontalSeries = createHorizontalSideSeriesLists();
         final List<VerticalSideSeries> verticalSeries = createVerticalSideSeriesLists();
         long t2 = System.nanoTime();
-        doFindHorizontalBoundaries(horizontalSeries);
+        doFindHorizontalBoundaries();
         long t3 = System.nanoTime();
         doConvertHorizontalLinkInfoToAllBoundaryLinks(horizontalSeries, verticalSeries);
         long t4 = System.nanoTime();
@@ -796,17 +796,17 @@ public class IRectanglesUnion {
             }
         }
         if (DEBUG_LEVEL >= 3) {
+            System.out.printf("  %d side series:%n", sideSeries.size());
             for (int k = 0, n = sideSeries.size(); k < n; k++) {
-                System.out.printf("    Side series %d/%d: %s%n", k, n, sideSeries.get(k));
+                System.out.printf("    side series %d/%d: %s%n", k, n, sideSeries.get(k));
             }
-
         }
     }
 
-    private void doFindHorizontalBoundaries(List<HorizontalSideSeries> horizontalSeries) {
+    private void doFindHorizontalBoundaries() {
         assert !frames.isEmpty();
-        final HorizontalIBracketSet<HorizontalSideSeries> bracketSet =
-            new HorizontalIBracketSet<HorizontalSideSeries>(horizontalSeries, true);
+        final HorizontalIBracketSet<HorizontalSide> bracketSet =
+            new HorizontalIBracketSet<HorizontalSide>(horizontalSides, true);
         while (bracketSet.next()) {
             final NavigableSet<IBracket> brackets = bracketSet.currentIntersections();
             final IBracket lastBefore = bracketSet.lastIntersectionBeforeLeft();
@@ -951,19 +951,19 @@ public class IRectanglesUnion {
     }
 
     private static void addHorizontalLink(
-        HorizontalIBracketSet<HorizontalSideSeries> bracketSet,
-        Side firstTransveralSeries,
-        Side secondTransveralSeries)
+        HorizontalIBracketSet<HorizontalSide> bracketSet,
+        Side firstTransveral,
+        Side secondTransveral)
     {
         final HorizontalBoundaryLink link = new HorizontalBoundaryLink(
-            bracketSet.horizontal,
-            (VerticalSideSeries) firstTransveralSeries,
-            (VerticalSideSeries) secondTransveralSeries);
+            bracketSet.horizontal.containingSeries,
+            (VerticalSideSeries) ((FrameSide) firstTransveral).containingSeries,
+            (VerticalSideSeries) ((FrameSide) secondTransveral).containingSeries);
         if (link.from < link.to) {
             if (DEBUG_LEVEL >= 3) {
                 System.out.printf("    adding %s%n", link);
             }
-            bracketSet.horizontal.containedBoundaryLinks.add(link);
+            ((HorizontalSideSeries) bracketSet.horizontal.containingSeries).containedBoundaryLinks.add(link);
         }
     }
 

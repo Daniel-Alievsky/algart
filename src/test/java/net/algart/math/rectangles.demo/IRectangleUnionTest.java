@@ -147,6 +147,7 @@ public class IRectangleUnionTest {
             System.out.printf("%nTest #%d%n", testIndex + 1);
             rectangleUnion = IRectanglesUnion.newInstance(rectangles);
             rectangleUnion.findConnectedComponents();
+            final Random rnd = new Random(157);
             for (int k = 0; k < Math.min(10, rectangleUnion.connectedComponentCount()); k++) {
                 demo = newImage(imageWidth, imageHeight);
                 final IRectanglesUnion connectedSet = rectangleUnion.connectedComponent(k);
@@ -155,14 +156,22 @@ public class IRectangleUnionTest {
                     for (IRectanglesUnion.Frame frame : connectedSet.frames()) {
                         draw(demo, frame.rectangle(), coordinateDivider, Color.DARK_GRAY, Color.BLUE);
                     }
-                    for (IRectanglesUnion.BoundaryLink link : connectedSet.allHorizontalBoundaryLinks()) {
-                        draw(demo, link.sidePart(), coordinateDivider, Color.GREEN, Color.BLACK, 1);
+                    final List<IRectanglesUnion.HorizontalBoundaryLink> horizontals =
+                        connectedSet.allHorizontalBoundaryLinks();
+                    for (IRectanglesUnion.BoundaryLink link : horizontals) {
+                        draw(demo, link.sidePart(), coordinateDivider,
+                            new Color(0, 200 + rnd.nextInt(55), 0), Color.BLACK, 1);
                     }
-                    for (IRectanglesUnion.BoundaryLink link : connectedSet.allVerticalBoundaryLinks()) {
-                        draw(demo, link.sidePart(), coordinateDivider, Color.RED, Color.BLACK, 0);
+                    final List<IRectanglesUnion.VerticalBoundaryLink> verticals =
+                        connectedSet.allVerticalBoundaryLinks();
+                    for (IRectanglesUnion.BoundaryLink link : verticals) {
+                        draw(demo, link.sidePart(), coordinateDivider,
+                            new Color(200 + rnd.nextInt(55), 0, 0), Color.BLACK, 0);
                     }
                     final File f = new File(demoFolder, rectanglesFile.getName() + ".component" + k + ".bmp");
-                    System.out.printf("Writing component #%d into %s: %s%n%n", k, f, connectedSet);
+                    System.out.printf("Writing component #%d into %s: %s; "
+                        + "%d horizontal and %d vertical boundary links %n%n",
+                        k, f, connectedSet, horizontals.size(), verticals.size());
                     ExternalAlgorithmCaller.writeImage(f, demo);
                 }
             }

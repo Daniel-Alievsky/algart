@@ -80,7 +80,7 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
                         index--;
                     }
                 }
-                if (IRectanglesUnion.DEBUG_LEVEL >= 3) {
+                if (IRectanglesUnion.DEBUG_LEVEL >= 4) {
                     System.out.printf("  Horizontal #%d, y=%d%s; middle situation:%s",
                         horizontalIndex, y,
                         horizontal == null ? "" : horizontal.first ? " (starting)" : " (ending)",
