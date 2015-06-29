@@ -27,27 +27,27 @@ package net.algart.math.rectangles;
 import java.util.*;
 
 // This class should be used in a single thread.
-class HorizontalIBracketSet {
-    private final List<IRectanglesUnion.HorizontalSide> allHorizontalSides;
+class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
+    private final List<H> allHorizontals;
     private final int numberOfHorizontals;
     private boolean onlyStrictIntersections;
     int horizontalIndex;
-    IRectanglesUnion.HorizontalSide horizontal;
+    H horizontal;
     long y;
     private NavigableSet<IBracket> intersectingSides = new TreeSet<IBracket>();
 
-    HorizontalIBracketSet(List<IRectanglesUnion.HorizontalSide> allHorizontalSides, boolean onlyStrictIntersections) {
-        assert allHorizontalSides != null;
-        assert !allHorizontalSides.isEmpty();
+    HorizontalIBracketSet(List<H> allHorizontals, boolean onlyStrictIntersections) {
+        assert allHorizontals != null;
+        assert !allHorizontals.isEmpty();
         // - checked in the calling method to simplify the logic
-        this.allHorizontalSides = allHorizontalSides;
-        this.numberOfHorizontals = allHorizontalSides.size();
+        this.allHorizontals = allHorizontals;
+        this.numberOfHorizontals = allHorizontals.size();
         this.onlyStrictIntersections = onlyStrictIntersections;
         this.horizontalIndex = -1;
         this.horizontal = null;
         if (IRectanglesUnion.DEBUG_LEVEL >= 2) {
-            for (int k = 1, n = allHorizontalSides.size(); k < n; k++) {
-                assert allHorizontalSides.get(k).boundCoord() >= allHorizontalSides.get(k - 1).boundCoord();
+            for (int k = 1, n = allHorizontals.size(); k < n; k++) {
+                assert allHorizontals.get(k - 1).boundCoord() <= allHorizontals.get(k).boundCoord();
             }
         }
     }
@@ -57,8 +57,8 @@ class HorizontalIBracketSet {
             throw new IllegalArgumentException(getClass() + " should not be used more");
         }
         assert horizontalIndex < numberOfHorizontals;
-        final IRectanglesUnion.HorizontalSide newHorizontal = horizontalIndex + 1 < numberOfHorizontals ?
-            allHorizontalSides.get(horizontalIndex + 1) :
+        final H newHorizontal = horizontalIndex + 1 < numberOfHorizontals ?
+            allHorizontals.get(horizontalIndex + 1) :
             null;
         // Theoretically, if it is null, we may just return false and do not anything; but we prefer
         // to remove the last brackets for self-testing goals (intersectingSides must become empty)
@@ -68,11 +68,11 @@ class HorizontalIBracketSet {
                 || newHorizontal.boundCoord() != horizontal.boundCoord()
                 || newHorizontal.first != horizontal.first)
             {
-                IRectanglesUnion.HorizontalSide h;
+                IRectanglesUnion.Side h;
                 if (horizontal != null) {
                     int index = horizontalIndex;
                     while (index >= 0
-                        && (h = allHorizontalSides.get(index)).boundCoord() == y
+                        && (h = allHorizontals.get(index)).boundCoord() == y
                         && h.first == horizontal.first) {
                         if (h.isFirstOfTwoParallelSides()) {
                             addHorizontal(h);
@@ -89,7 +89,7 @@ class HorizontalIBracketSet {
                 if (newHorizontal != null) {
                     int index = horizontalIndex + 1;
                     while (index < numberOfHorizontals
-                        && (h = allHorizontalSides.get(index)).boundCoord() == newY
+                        && (h = allHorizontals.get(index)).boundCoord() == newY
                         && h.first == newHorizontal.first) {
                         if (h.isSecondOfTwoParallelSides()) {
                             removeHorizontal(h);
@@ -102,10 +102,10 @@ class HorizontalIBracketSet {
             if (horizontal == null || newHorizontal == null
                 || newHorizontal.boundCoord() != horizontal.boundCoord())
             {
-                IRectanglesUnion.HorizontalSide h;
+                IRectanglesUnion.Side h;
                 if (horizontal != null) {
                     int index = horizontalIndex;
-                    while (index >= 0 && (h = allHorizontalSides.get(index)).boundCoord() == y) {
+                    while (index >= 0 && (h = allHorizontals.get(index)).boundCoord() == y) {
                         if (h.isSecondOfTwoParallelSides()) {
                             removeHorizontal(h);
                         }
@@ -115,7 +115,7 @@ class HorizontalIBracketSet {
 
                 if (newHorizontal != null) {
                     int index = horizontalIndex + 1;
-                    while (index < numberOfHorizontals && (h = allHorizontalSides.get(index)).boundCoord() == newY) {
+                    while (index < numberOfHorizontals && (h = allHorizontals.get(index)).boundCoord() == newY) {
                         if (h.isFirstOfTwoParallelSides()) {
                             addHorizontal(h);
                         }
@@ -140,8 +140,8 @@ class HorizontalIBracketSet {
     }
 
     NavigableSet<IBracket> currentIntersections() {
-        final IBracket bracketFrom = new IBracket(horizontal, horizontal.frame.lessVerticalSide, true);
-        final IBracket bracketTo = new IBracket(horizontal, horizontal.frame.higherVerticalSide, false);
+        final IBracket bracketFrom = new IBracket(horizontal.sideFrom(), true);
+        final IBracket bracketTo = new IBracket(horizontal.sideTo(), false);
         if (IRectanglesUnion.DEBUG_LEVEL >= 1 && !onlyStrictIntersections) {
             assert intersectingSides.contains(bracketFrom);
             assert intersectingSides.contains(bracketTo);
@@ -154,18 +154,18 @@ class HorizontalIBracketSet {
     }
 
     IBracket lastIntersectionBeforeLeft() {
-        final IBracket bracketFrom = new IBracket(horizontal, horizontal.frame.lessVerticalSide, true);
+        final IBracket bracketFrom = new IBracket(horizontal.sideFrom(), true);
         return intersectingSides.lower(bracketFrom);
     }
 
     IBracket firstIntersectionAfterRight() {
-        final IBracket bracketTo = new IBracket(horizontal, horizontal.frame.higherVerticalSide, true);
+        final IBracket bracketTo = new IBracket(horizontal.sideTo(), true);
         return intersectingSides.higher(bracketTo);
     }
 
-    private void addHorizontal(IRectanglesUnion.HorizontalSide h) {
-        final IBracket bracketFrom = new IBracket(h, h.frame.lessVerticalSide, true);
-        final IBracket bracketTo = new IBracket(h, h.frame.higherVerticalSide, false);
+    private void addHorizontal(IRectanglesUnion.Side h) {
+        final IBracket bracketFrom = new IBracket(h.sideFrom(), true);
+        final IBracket bracketTo = new IBracket(h.sideTo(), false);
         // Note: theoretically it could be faster not to allocate brackets here,
         // but create them together with Side instance and store there as its fields.
         // But it is a bad idea, because can lead to problems with multithreading when
@@ -184,9 +184,9 @@ class HorizontalIBracketSet {
         intersectingSides.add(bracketTo);
     }
 
-    private void removeHorizontal(IRectanglesUnion.HorizontalSide h) {
-        final IBracket bracketFrom = new IBracket(h, h.frame.lessVerticalSide, true);
-        final IBracket bracketTo = new IBracket(h, h.frame.higherVerticalSide, false);
+    private void removeHorizontal(IRectanglesUnion.Side h) {
+        final IBracket bracketFrom = new IBracket(h.sideFrom(), true);
+        final IBracket bracketTo = new IBracket(h.sideTo(), false);
         for (IBracket bracket : intersectingSides.subSet(bracketFrom, false, bracketTo, false)) {
             --bracket.followingCoveringDepth;
         }

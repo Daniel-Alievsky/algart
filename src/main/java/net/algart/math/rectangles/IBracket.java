@@ -25,22 +25,17 @@
 package net.algart.math.rectangles;
 
 class IBracket implements Comparable<IBracket> {
-    final IRectanglesUnion.Frame frame;
-    final IRectanglesUnion.Side containingSide;
     final IRectanglesUnion.Side intersectingSide;
     final long coord;
     final boolean first;
     int followingCoveringDepth = -157;
 
-    public IBracket(IRectanglesUnion.Side containingSide, IRectanglesUnion.Side intersectingSide, boolean first) {
-        assert containingSide.getClass() != intersectingSide.getClass();
-        this.frame = containingSide.frame;
-        this.containingSide = containingSide;
+    public IBracket(IRectanglesUnion.Side intersectingSide, boolean first) {
         this.intersectingSide = intersectingSide;
         this.coord = intersectingSide.boundCoord();
-        assert this.frame == intersectingSide.frame;
-        assert first == intersectingSide.first;
         this.first = first;
+        assert intersectingSide.first == first;
+        // - built-in additional check
     }
 
     public boolean covers(long transversalCoord) {
@@ -62,13 +57,13 @@ class IBracket implements Comparable<IBracket> {
         if (this.first && !o.first) {
             return 1;
         }
-        // We need some unique identifier to allow storing in TreeSet several brackets with the same x.
-        // We use the frame index for this goal; though it is equal for two sides of the same frame,
-        // these sides have different "left" field.
-        if (this.frame.index < o.frame.index) {
+        // We need some unique identifier to allow storing in TreeSet several brackets with the same x:
+        final long thisUniqueId = this.intersectingSide.uniqueId();
+        final long otherUniqueId = o.intersectingSide.uniqueId();
+        if (thisUniqueId < otherUniqueId) {
             return -1;
         }
-        if (this.frame.index > o.frame.index) {
+        if (thisUniqueId > otherUniqueId) {
             return 1;
         }
         return 0;
@@ -76,7 +71,7 @@ class IBracket implements Comparable<IBracket> {
 
     @Override
     public String toString() {
-        return (first ? "opening" : "closing") + " bracket " + coord + " at line " + containingSide
+        return (first ? "opening" : "closing") + " bracket " + coord
             + ", covering level after it: " + followingCoveringDepth;
     }
 }
