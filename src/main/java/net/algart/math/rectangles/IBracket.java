@@ -50,11 +50,10 @@ class IBracket implements Comparable<IBracket> {
         if (this.coord > o.coord) {
             return 1;
         }
-        // Closing bracket is LESS than opening:
-        if (!this.first && o.first) {
+        if (this.first && !o.first) {
             return -1;
         }
-        if (this.first && !o.first) {
+        if (!this.first && o.first) {
             return 1;
         }
         // We need some unique identifier to allow storing in TreeSet several brackets with the same x:
