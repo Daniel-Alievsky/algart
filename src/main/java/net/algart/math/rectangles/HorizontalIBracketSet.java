@@ -68,7 +68,7 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
                 || newHorizontal.boundCoord() != horizontal.boundCoord()
                 || newHorizontal.first != horizontal.first)
             {
-                IRectanglesUnion.Side h;
+                H h;
                 if (horizontal != null) {
                     int index = horizontalIndex;
                     while (index >= 0
@@ -102,7 +102,7 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
             if (horizontal == null || newHorizontal == null
                 || newHorizontal.boundCoord() != horizontal.boundCoord())
             {
-                IRectanglesUnion.Side h;
+                H h;
                 if (horizontal != null) {
                     int index = horizontalIndex;
                     while (index >= 0 && (h = allHorizontals.get(index)).boundCoord() == y) {

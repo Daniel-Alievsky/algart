@@ -155,14 +155,14 @@ public class IRectangleUnionTest {
                     for (IRectanglesUnion.Frame frame : connectedSet.frames()) {
                         draw(demo, frame.rectangle(), coordinateDivider, Color.DARK_GRAY, Color.BLUE);
                     }
-                    for (IRectanglesUnion.BoundaryLink link : connectedSet.allVerticalBoundaryLinks()) {
+                    for (IRectanglesUnion.BoundaryLink link : connectedSet.allHorizontalBoundaryLinks()) {
                         draw(demo, link.sidePart(), coordinateDivider, Color.GREEN, Color.BLACK, 1);
                     }
                     for (IRectanglesUnion.BoundaryLink link : connectedSet.allVerticalBoundaryLinks()) {
                         draw(demo, link.sidePart(), coordinateDivider, Color.RED, Color.BLACK, 0);
                     }
-                    final File f = new File(demoFolder, rectanglesFile.getName() + ".component" + (k + 1) + ".bmp");
-                    System.out.printf("Writing component #%d into %s: %s%n%n", k + 1, f, connectedSet);
+                    final File f = new File(demoFolder, rectanglesFile.getName() + ".component" + k + ".bmp");
+                    System.out.printf("Writing component #%d into %s: %s%n%n", k, f, connectedSet);
                     ExternalAlgorithmCaller.writeImage(f, demo);
                 }
             }

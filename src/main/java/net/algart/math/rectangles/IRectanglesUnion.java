@@ -757,18 +757,16 @@ public class IRectanglesUnion {
         for (HorizontalSide side : horizontalSides) {
             boolean expanded = last != null && last.expand(side);
             if (!expanded) {
-                result.add(last);
+                if (last != null) {
+                    result.add(last);
+                }
                 last = new HorizontalSideSeries(side);
             }
         }
         if (last != null) {
             result.add(last);
         }
-        if (DEBUG_LEVEL >= 1) {
-            for (int k = 1, n = result.size(); k < n; k++) {
-                assert result.get(k - 1).compareTo(result.get(k)) <= 0;
-            }
-        }
+        checkSidesSeriesList(result);
         return result;
     }
 
@@ -778,19 +776,31 @@ public class IRectanglesUnion {
         for (VerticalSide side : verticalSides) {
             boolean expanded = last != null && last.expand(side);
             if (!expanded) {
-                result.add(last);
+                if (last != null) {
+                    result.add(last);
+                }
                 last = new VerticalSideSeries(side);
             }
         }
         if (last != null) {
             result.add(last);
         }
+        checkSidesSeriesList(result);
+        return result;
+    }
+
+    private void checkSidesSeriesList(List<? extends SideSeries> sideSeries) {
         if (DEBUG_LEVEL >= 1) {
-            for (int k = 1, n = result.size(); k < n; k++) {
-                assert result.get(k - 1).compareTo(result.get(k)) <= 0;
+            for (int k = 1, n = sideSeries.size(); k < n; k++) {
+                assert sideSeries.get(k - 1).compareTo(sideSeries.get(k)) <= 0;
             }
         }
-        return result;
+        if (DEBUG_LEVEL >= 3) {
+            for (int k = 0, n = sideSeries.size(); k < n; k++) {
+                System.out.printf("    Side series %d/%d: %s%n", k, n, sideSeries.get(k));
+            }
+
+        }
     }
 
     private void doFindHorizontalBoundaries(List<HorizontalSideSeries> horizontalSeries) {
@@ -1040,7 +1050,10 @@ public class IRectanglesUnion {
         }
 
         boolean expand(FrameSide followingSide) {
-            if (followingSide.isHorizontal() != this.isHorizontal() || followingSide.first != this.first) {
+            if (followingSide.isHorizontal() != this.isHorizontal()
+                || followingSide.boundCoord() != this.boundCoord()
+                || followingSide.first != this.first)
+            {
                 return false;
             }
             final long followingFrom = followingSide.boundFrom();
