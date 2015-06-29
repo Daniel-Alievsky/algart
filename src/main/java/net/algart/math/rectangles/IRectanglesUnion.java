@@ -323,8 +323,8 @@ public class IRectanglesUnion {
 
     public static abstract class BoundaryLink implements Comparable<BoundaryLink> {
         final SideSeries containingSeries;
-        final long from;
-        final long to;
+        long from;
+        long to;
 
         private BoundaryLink(
             SideSeries containingSeries,
@@ -431,8 +431,8 @@ public class IRectanglesUnion {
     }
 
     public static class HorizontalBoundaryLink extends BoundaryLink {
-        final SideSeries transversalSideFrom;
-        final SideSeries transversalSideTo;
+        SideSeries transversalSideFrom;
+        SideSeries transversalSideTo;
         // - these two fields are necessary only while constructing the boundary
         VerticalBoundaryLink linkFrom = null;
         VerticalBoundaryLink linkTo = null;
@@ -464,6 +464,25 @@ public class IRectanglesUnion {
             } else {
                 throw new AssertionError("Attempt to assing vertical neighbour from alien side series");
             }
+        }
+
+        boolean expand(HorizontalBoundaryLink followingLink) {
+            if (followingLink.containingSeries != this.containingSeries) {
+                return false;
+            }
+            final long followingTo = followingLink.to;
+            if (followingLink.from > to || followingTo < from) {
+                return false;
+            }
+            if (followingLink.from < from) {
+                from = followingLink.from;
+                transversalSideFrom = followingLink.transversalSideFrom;
+            }
+            if (followingTo > to) {
+                to = followingTo;
+                transversalSideTo = followingLink.transversalSideTo;
+            }
+            return true;
         }
     }
 
@@ -963,7 +982,11 @@ public class IRectanglesUnion {
             if (DEBUG_LEVEL >= 3) {
                 System.out.printf("    adding %s%n", link);
             }
-            ((HorizontalSideSeries) bracketSet.horizontal.containingSeries).containedBoundaryLinks.add(link);
+            final List<HorizontalBoundaryLink> linksAtSeries =
+                ((HorizontalSideSeries) bracketSet.horizontal.containingSeries).containedBoundaryLinks;
+            if (linksAtSeries.isEmpty() || !linksAtSeries.get(linksAtSeries.size() - 1).expand(link)) {
+                linksAtSeries.add(link);
+            }
         }
     }
 

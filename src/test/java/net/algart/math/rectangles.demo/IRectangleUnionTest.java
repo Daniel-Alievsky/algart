@@ -160,13 +160,13 @@ public class IRectangleUnionTest {
                         connectedSet.allHorizontalBoundaryLinks();
                     for (IRectanglesUnion.BoundaryLink link : horizontals) {
                         draw(demo, link.sidePart(), coordinateDivider,
-                            new Color(0, 200 + rnd.nextInt(55), 0), Color.BLACK, 1);
+                            new Color(0, 155 + rnd.nextInt(100), 0), Color.BLACK, 1);
                     }
                     final List<IRectanglesUnion.VerticalBoundaryLink> verticals =
                         connectedSet.allVerticalBoundaryLinks();
                     for (IRectanglesUnion.BoundaryLink link : verticals) {
                         draw(demo, link.sidePart(), coordinateDivider,
-                            new Color(200 + rnd.nextInt(55), 0, 0), Color.BLACK, 0);
+                            new Color(155 + rnd.nextInt(100), 0, 0), Color.BLACK, 0);
                     }
                     final File f = new File(demoFolder, rectanglesFile.getName() + ".component" + k + ".bmp");
                     System.out.printf("Writing component #%d into %s: %s; "
