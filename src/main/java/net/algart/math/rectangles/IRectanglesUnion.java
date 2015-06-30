@@ -62,6 +62,11 @@ public class IRectanglesUnion {
         public IRectangularArea rectangle() {
             return rectangle;
         }
+
+        @Override
+        public String toString() {
+            return "Frame #" + index + " (" + rectangle + ")";
+        }
     }
 
     public static abstract class Side implements Comparable<Side> {
@@ -677,6 +682,12 @@ public class IRectanglesUnion {
     }
 
     private void doFindConnectedComponents(List<List<Frame>> result) {
+        if (DEBUG_LEVEL >= 4) {
+            System.out.printf("  All verticals%n");
+            for (VerticalSide side : verticalSides) {
+                System.out.printf("    %s%n", side);
+            }
+        }
         final long[] allX = new long[verticalSides.size()];
         assert allX.length > 0;
         // - checked in the calling method
@@ -710,8 +721,31 @@ public class IRectanglesUnion {
                         frameVisited[neighbour.index] = true;
                     }
                 }
+                if (DEBUG_LEVEL >= 4) {
+                    System.out.printf("  Neighbours of %s:%n", frame);
+                    for (Frame neighbour : neighbours) {
+                        System.out.printf("    %s%n", neighbour);
+                    }
+                }
             }
             result.add(component);
+        }
+        if (DEBUG_LEVEL >= 3 && result.size() >= 2) {
+            for (int i = 0; i < result.size(); i++) {
+                for (Frame frame1 : result.get(i)) {
+                    for (int j = i + 1; j < result.size(); j++) {
+                        for (Frame frame2 : result.get(j)) {
+                            if (frame1.rectangle.intersects(frame2.rectangle)) {
+                                // Note: this check is even more strong than requirement of this class
+                                // (attached rectangles are considered to be in the single component)
+                                throw new AssertionError("First 2 connected component really have intersection: "
+                                    + frame1 + " (component " + i + ") intersects "
+                                    + frame2 + " (component " + j + ")");
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

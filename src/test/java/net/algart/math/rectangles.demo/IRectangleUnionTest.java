@@ -42,6 +42,8 @@ import java.util.Random;
 
 public class IRectangleUnionTest {
 
+    private static final boolean ACTUAL_CALL_FIND_METHODS = true;
+
     public static void main(String[] args) throws IOException {
         if (args.length < 3) {
             System.out.println("Usage:");
@@ -110,7 +112,7 @@ public class IRectangleUnionTest {
                 final int averageWidth = (frameMinWidth + frameMaxWidth) / 2;
                 final int averageHeight = (frameMinHeight + frameMaxHeight) / 2;
                 for (int i = 0; i < verticalCount; i++) {
-                    for (int j = 0; j < horizontalCount; j++) {
+                    for (int j = horizontalCount - 1; j >= 0; j--) {
                         final int frameWidth = frameMinWidth + rnd.nextInt(frameMaxWidth - frameMinWidth + 1);
                         final int frameHeight = frameMinHeight + rnd.nextInt(frameMaxHeight - frameMinHeight + 1);
                         final long x = Math.max(-5,
@@ -151,10 +153,14 @@ public class IRectangleUnionTest {
         for (int testIndex = 0; testIndex < numberOfTests; testIndex++) {
             System.out.printf("%nTest #%d%n", testIndex + 1);
             rectangleUnion = IRectanglesUnion.newInstance(rectangles);
-            rectangleUnion.findConnectedComponents();
+            if (ACTUAL_CALL_FIND_METHODS) {
+                rectangleUnion.findConnectedComponents();
+            }
             for (int k = -1; k < Math.min(10, rectangleUnion.connectedComponentCount()); k++) {
                 final IRectanglesUnion component = k == -1 ? rectangleUnion : rectangleUnion.connectedComponent(k);
-                component.findBoundaries();
+                if (ACTUAL_CALL_FIND_METHODS) {
+                    component.findBoundaries();
+                }
                 if (testIndex == 0) {
                     demo = drawUnion(imageWidth, imageHeight, component, coordinateDivider);
                     File f = new File(demoFolder, rectanglesFile.getName()
@@ -165,7 +171,7 @@ public class IRectangleUnionTest {
                     ExternalAlgorithmCaller.writeImage(f, demo);
                     int index = 0;
                     for (List<IRectanglesUnion.BoundaryLink> boundary : component.allBoundaries()) {
-                        demo = drawBoundary(imageWidth, imageHeight, boundary, index, coordinateDivider);
+                        demo = drawBoundary(imageWidth, imageHeight, boundary, coordinateDivider);
                         f = new File(demoFolder, rectanglesFile.getName()
                             + (k == -1 ? ".boundaries" : ".boundary-" + k) + "-" + index + ".bmp");
                         System.out.println("Writing boundary #" + index + " of "
@@ -226,7 +232,6 @@ public class IRectangleUnionTest {
     private static List<Matrix<? extends UpdatablePArray>> drawBoundary(
         long imageWidth, long imageHeight,
         List<IRectanglesUnion.BoundaryLink> boundary,
-        int boundaryIndex,
         double coordinateDivider)
     {
         final List<Matrix<? extends UpdatablePArray>> result = newImage(imageWidth, imageHeight);
