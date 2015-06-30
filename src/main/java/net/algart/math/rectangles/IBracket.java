@@ -25,12 +25,12 @@
 package net.algart.math.rectangles;
 
 class IBracket implements Comparable<IBracket> {
-    final IRectanglesUnion.Side intersectingSide;
+    final IRectanglesUnion.FrameSide intersectingSide;
     final long coord;
     final boolean first;
     int followingCoveringDepth = -157;
 
-    public IBracket(IRectanglesUnion.Side intersectingSide, boolean first) {
+    public IBracket(IRectanglesUnion.FrameSide intersectingSide, boolean first) {
         this.intersectingSide = intersectingSide;
         this.coord = intersectingSide.boundCoord();
         this.first = first;
@@ -56,9 +56,10 @@ class IBracket implements Comparable<IBracket> {
         if (!this.first && o.first) {
             return 1;
         }
-        // We need some unique identifier to allow storing in TreeSet several brackets with the same x:
-        final long thisUniqueId = this.intersectingSide.uniqueId();
-        final long otherUniqueId = o.intersectingSide.uniqueId();
+        // We need some unique identifier to allow storing in TreeSet several brackets
+        // with the same x (from different frames):
+        final int thisUniqueId = this.intersectingSide.frame.index;
+        final int otherUniqueId = o.intersectingSide.frame.index;
         if (thisUniqueId < otherUniqueId) {
             return -1;
         }

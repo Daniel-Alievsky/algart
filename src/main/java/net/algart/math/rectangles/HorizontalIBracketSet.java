@@ -27,6 +27,7 @@ package net.algart.math.rectangles;
 import java.util.*;
 
 // This class should be used in a single thread.
+// Really it can be used for verticals also.
 class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
     private final List<H> allHorizontals;
     private final int numberOfHorizontals;
@@ -139,9 +140,9 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
         return horizontal != null;
     }
 
-    NavigableSet<IBracket> currentIntersections() {
-        final IBracket bracketFrom = new IBracket(horizontal.sideFrom(), true);
-        final IBracket bracketTo = new IBracket(horizontal.sideTo(), false);
+    Set<IBracket> currentIntersections() {
+        final IBracket bracketFrom = new IBracket(horizontal.transversalFrameSideFrom(), true);
+        final IBracket bracketTo = new IBracket(horizontal.transversalFrameSideTo(), false);
         if (IRectanglesUnion.DEBUG_LEVEL >= 1 && !onlyStrictIntersections) {
             assert intersectingSides.contains(bracketFrom);
             assert intersectingSides.contains(bracketTo);
@@ -154,46 +155,45 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
     }
 
     IBracket lastIntersectionBeforeLeft() {
-        final IBracket bracketFrom = new IBracket(horizontal.sideFrom(), true);
+        final IBracket bracketFrom = new IBracket(horizontal.transversalFrameSideFrom(), true);
         return intersectingSides.lower(bracketFrom);
     }
 
-    IBracket firstIntersectionAfterRight() {
-        final IBracket bracketTo = new IBracket(horizontal.sideTo(), true);
-        return intersectingSides.higher(bracketTo);
-    }
-
     private void addHorizontal(IRectanglesUnion.Side h) {
-        final IBracket bracketFrom = new IBracket(h.sideFrom(), true);
-        final IBracket bracketTo = new IBracket(h.sideTo(), false);
-        // Note: theoretically it could be faster not to allocate brackets here,
-        // but create them together with Side instance and store there as its fields.
-        // But it is a bad idea, because can lead to problems with multithreading when
-        // two threads modify Bracket.rightNestingDepth fields.
-        // In any case, this solution requires comparable time for allocation
-        // while the single pass of the scanning by the horizontal.
-        final IBracket previousBracket = intersectingSides.lower(bracketFrom);
-        int nesting = previousBracket == null ? 1 : previousBracket.followingCoveringDepth + 1;
-        bracketFrom.followingCoveringDepth = nesting;
-        for (IBracket bracket : intersectingSides.subSet(bracketFrom, false, bracketTo, false)) {
-            // It is not the ideal O(log N) algorithm, but close to it, because this subset is usually very little
-            nesting = ++bracket.followingCoveringDepth;
+        for (IRectanglesUnion.FrameSide horizontalSide : h.allContainedFrameSides()) {
+            final IBracket bracketFrom = new IBracket(horizontalSide.transversalFrameSideFrom(), true);
+            final IBracket bracketTo = new IBracket(horizontalSide.transversalFrameSideTo(), false);
+            // Note: theoretically it could be faster not to allocate brackets here,
+            // but create them together with Side instance and store there as its fields.
+            // But it is a bad idea, because can lead to problems with multithreading when
+            // two threads modify Bracket.rightNestingDepth fields.
+            // In any case, this solution requires comparable time for allocation
+            // while the single pass of the scanning by the horizontal.
+            final IBracket previousBracket = intersectingSides.lower(bracketFrom);
+            int nesting = previousBracket == null ? 1 : previousBracket.followingCoveringDepth + 1;
+            bracketFrom.followingCoveringDepth = nesting;
+            for (IBracket bracket : intersectingSides.subSet(bracketFrom, false, bracketTo, false)) {
+                // It is not the ideal O(log N) algorithm, but close to it, because this subset is usually very little
+                nesting = ++bracket.followingCoveringDepth;
+            }
+            bracketTo.followingCoveringDepth = nesting - 1;
+            intersectingSides.add(bracketFrom);
+            intersectingSides.add(bracketTo);
         }
-        bracketTo.followingCoveringDepth = nesting - 1;
-        intersectingSides.add(bracketFrom);
-        intersectingSides.add(bracketTo);
     }
 
     private void removeHorizontal(IRectanglesUnion.Side h) {
-        final IBracket bracketFrom = new IBracket(h.sideFrom(), true);
-        final IBracket bracketTo = new IBracket(h.sideTo(), false);
-        for (IBracket bracket : intersectingSides.subSet(bracketFrom, false, bracketTo, false)) {
-            --bracket.followingCoveringDepth;
+        for (IRectanglesUnion.FrameSide horizontalSide : h.allContainedFrameSides()) {
+            final IBracket bracketFrom = new IBracket(horizontalSide.transversalFrameSideFrom(), true);
+            final IBracket bracketTo = new IBracket(horizontalSide.transversalFrameSideTo(), false);
+            for (IBracket bracket : intersectingSides.subSet(bracketFrom, false, bracketTo, false)) {
+                --bracket.followingCoveringDepth;
+            }
+            final boolean containedFrom = intersectingSides.remove(bracketFrom);
+            final boolean containedTo = intersectingSides.remove(bracketTo);
+            assert containedFrom;
+            assert containedTo;
         }
-        final boolean containedFrom = intersectingSides.remove(bracketFrom);
-        final boolean containedTo = intersectingSides.remove(bracketTo);
-        assert containedFrom;
-        assert containedTo;
     }
 
     private static String toDebugString(Collection<IBracket> brackets) {

@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Random;
 
 public class IRectangleUnionTest {
+
     public static void main(String[] args) throws IOException {
         if (args.length < 3) {
             System.out.println("Usage:");
@@ -106,12 +107,16 @@ public class IRectangleUnionTest {
                 final int maxError = Integer.parseInt(description[10]);
                 final int randSeed = Integer.parseInt(description[11]);
                 final Random rnd = randSeed == -1 ? new Random() : new Random(randSeed);
+                final int averageWidth = (frameMinWidth + frameMaxWidth) / 2;
+                final int averageHeight = (frameMinHeight + frameMaxHeight) / 2;
                 for (int i = 0; i < verticalCount; i++) {
                     for (int j = 0; j < horizontalCount; j++) {
                         final int frameWidth = frameMinWidth + rnd.nextInt(frameMaxWidth - frameMinWidth + 1);
                         final int frameHeight = frameMinHeight + rnd.nextInt(frameMaxHeight - frameMinHeight + 1);
-                        final long x = (j + 1) * (frameWidth - overlap) + rnd.nextInt(maxError + 1) - maxError / 2;
-                        final long y = (i + 1) * (frameHeight - overlap) + rnd.nextInt(maxError + 1) - maxError / 2;
+                        final long x = Math.max(-5,
+                            (j + 1) * (averageWidth - overlap) + rnd.nextInt(maxError + 1) - maxError / 2);
+                        final long y = Math.max(5,
+                            (i + 1) * (averageHeight - overlap) + rnd.nextInt(maxError + 1) - maxError / 2);
                         final IRectangularArea r = IRectangularArea.valueOf(
                             x, y, x + frameWidth - 1, y + frameHeight - 1);
                         if (rectangles.size() < 10) {
@@ -147,32 +152,31 @@ public class IRectangleUnionTest {
             System.out.printf("%nTest #%d%n", testIndex + 1);
             rectangleUnion = IRectanglesUnion.newInstance(rectangles);
             rectangleUnion.findConnectedComponents();
-            final Random rnd = new Random(157);
-            for (int k = 0; k < Math.min(10, rectangleUnion.connectedComponentCount()); k++) {
-                demo = newImage(imageWidth, imageHeight);
-                final IRectanglesUnion connectedSet = rectangleUnion.connectedComponent(k);
-                connectedSet.findBoundaries();
+            for (int k = -1; k < Math.min(10, rectangleUnion.connectedComponentCount()); k++) {
+                final IRectanglesUnion component = k == -1 ? rectangleUnion : rectangleUnion.connectedComponent(k);
+                component.findBoundaries();
                 if (testIndex == 0) {
-                    for (IRectanglesUnion.Frame frame : connectedSet.frames()) {
-                        draw(demo, frame.rectangle(), coordinateDivider, Color.DARK_GRAY, Color.BLUE);
-                    }
-                    final List<IRectanglesUnion.HorizontalBoundaryLink> horizontals =
-                        connectedSet.allHorizontalBoundaryLinks();
-                    for (IRectanglesUnion.BoundaryLink link : horizontals) {
-                        draw(demo, link.sidePart(), coordinateDivider,
-                            new Color(0, 155 + rnd.nextInt(100), 0), Color.BLACK, 1);
-                    }
-                    final List<IRectanglesUnion.VerticalBoundaryLink> verticals =
-                        connectedSet.allVerticalBoundaryLinks();
-                    for (IRectanglesUnion.BoundaryLink link : verticals) {
-                        draw(demo, link.sidePart(), coordinateDivider,
-                            new Color(155 + rnd.nextInt(100), 0, 0), Color.BLACK, 0);
-                    }
-                    final File f = new File(demoFolder, rectanglesFile.getName() + ".component" + k + ".bmp");
-                    System.out.printf("Writing component #%d into %s: %s; "
-                        + "%d horizontal and %d vertical boundary links %n%n",
-                        k, f, connectedSet, horizontals.size(), verticals.size());
+                    demo = drawUnion(imageWidth, imageHeight, component, coordinateDivider);
+                    File f = new File(demoFolder, rectanglesFile.getName()
+                        + (k == -1 ? ".all" : ".component-" + k) + ".bmp");
+                    System.out.println();
+                    System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
+                        + " into " + f + ": " + rectangleUnion);
                     ExternalAlgorithmCaller.writeImage(f, demo);
+                    int index = 0;
+                    for (List<IRectanglesUnion.BoundaryLink> boundary : component.allBoundaries()) {
+                        demo = drawBoundary(imageWidth, imageHeight, boundary, index, coordinateDivider);
+                        f = new File(demoFolder, rectanglesFile.getName()
+                            + (k == -1 ? ".boundaries" : ".boundary-" + k) + "-" + index + ".bmp");
+                        System.out.println("Writing boundary #" + index + " of "
+                            + (k == -1 ? "all union" : "component #" + k)
+                            + " into " + f);
+                        ExternalAlgorithmCaller.writeImage(f, demo);
+                        index++;
+                        if (index > 10) {
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -195,6 +199,54 @@ public class IRectangleUnionTest {
     {
         draw(demo, area, coordinateDivider, borderColor, innerColor, null);
     }
+
+    private static List<Matrix<? extends UpdatablePArray>> drawUnion(
+        long imageWidth, long imageHeight,
+        IRectanglesUnion union,
+        double coordinateDivider)
+    {
+        final List<Matrix<? extends UpdatablePArray>> result = newImage(imageWidth, imageHeight);
+        final Random rnd = new Random(157);
+        for (IRectanglesUnion.Frame frame : union.frames()) {
+            draw(result, frame.rectangle(), coordinateDivider, new Color(0, 0, 128), Color.BLUE);
+        }
+        final List<IRectanglesUnion.HorizontalBoundaryLink> horizontals = union.allHorizontalBoundaryLinks();
+        for (IRectanglesUnion.BoundaryLink link : horizontals) {
+            draw(result, link.sidePart(), coordinateDivider,
+                new Color(0, 155 + rnd.nextInt(100), 0), Color.BLACK, 1);
+        }
+        final List<IRectanglesUnion.VerticalBoundaryLink> verticals = union.allVerticalBoundaryLinks();
+        for (IRectanglesUnion.BoundaryLink link : verticals) {
+            draw(result, link.sidePart(), coordinateDivider,
+                new Color(155 + rnd.nextInt(100), 0, 0), Color.BLACK, 0);
+        }
+        return result;
+    }
+
+    private static List<Matrix<? extends UpdatablePArray>> drawBoundary(
+        long imageWidth, long imageHeight,
+        List<IRectanglesUnion.BoundaryLink> boundary,
+        int boundaryIndex,
+        double coordinateDivider)
+    {
+        final List<Matrix<? extends UpdatablePArray>> result = newImage(imageWidth, imageHeight);
+        final Color baseColor = Color.YELLOW;
+        int value = 256;
+        for (IRectanglesUnion.BoundaryLink link : boundary) {
+            if (value >= 256) {
+                value = 63;
+            }
+            Color color = new Color(
+                baseColor.getRed() * value / 255,
+                baseColor.getGreen() * value / 255,
+                baseColor.getBlue() * value / 255);
+            draw(result, link.sidePart(), coordinateDivider, color, Color.BLACK);
+            value += 32;
+        }
+        return result;
+    }
+
+
     private static void draw(
         List<Matrix<? extends UpdatablePArray>> demo,
         IRectangularArea area,
@@ -208,8 +260,7 @@ public class IRectangleUnionTest {
             area.max().multiply(1.0 / coordinateDivider));
         for (int k = chosenColorComponent == null ? 0 : chosenColorComponent;
              k < (chosenColorComponent == null ? demo.size() : chosenColorComponent + 1);
-             k++)
-        {
+             k++) {
             int borderValue = k == 0 ? borderColor.getRed() : k == 1 ? borderColor.getGreen() : borderColor.getBlue();
             int innerValue = k == 0 ? innerColor.getRed() : k == 1 ? innerColor.getGreen() : innerColor.getBlue();
             demo.get(k).subMatrix(divided, Matrix.ContinuationMode.NULL_CONSTANT).array().fill(borderValue);

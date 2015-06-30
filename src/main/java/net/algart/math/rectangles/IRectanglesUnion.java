@@ -206,11 +206,11 @@ public class IRectanglesUnion {
             return result;
         }
 
-        abstract Side sideFrom();
+        abstract List<FrameSide> allContainedFrameSides();
 
-        abstract Side sideTo();
+        abstract FrameSide transversalFrameSideFrom();
 
-        abstract long uniqueId();
+        abstract FrameSide transversalFrameSideTo();
     }
 
     public static abstract class FrameSide extends Side {
@@ -228,13 +228,9 @@ public class IRectanglesUnion {
             return frame;
         }
 
-        abstract FrameSide sideFrom();
-
-        abstract FrameSide sideTo();
-
         @Override
-        long uniqueId() {
-            return first ? frame.index : -frame.index - 1;
+        List<FrameSide> allContainedFrameSides() {
+            return Collections.singletonList(this);
         }
     }
 
@@ -269,12 +265,12 @@ public class IRectanglesUnion {
         }
 
         @Override
-        FrameSide sideFrom() {
+        FrameSide transversalFrameSideFrom() {
             return frame.lessVerticalSide;
         }
 
         @Override
-        FrameSide sideTo() {
+        FrameSide transversalFrameSideTo() {
             return frame.higherVerticalSide;
         }
     }
@@ -310,12 +306,12 @@ public class IRectanglesUnion {
         }
 
         @Override
-        FrameSide sideFrom() {
+        FrameSide transversalFrameSideFrom() {
             return frame.lessVerticalSide;
         }
 
         @Override
-        FrameSide sideTo() {
+        FrameSide transversalFrameSideTo() {
             return frame.higherVerticalSide;
         }
     }
@@ -324,6 +320,7 @@ public class IRectanglesUnion {
         final SideSeries containingSeries;
         long from;
         long to;
+        boolean joinedIntoAllBoundaries = false;
 
         private BoundaryLink(
             SideSeries containingSeries,
@@ -464,30 +461,11 @@ public class IRectanglesUnion {
                 throw new AssertionError("Attempt to assing vertical neighbour from alien side series");
             }
         }
-
-        boolean expand(HorizontalBoundaryLink followingLink) {
-            if (followingLink.containingSeries != this.containingSeries) {
-                return false;
-            }
-            final long followingTo = followingLink.to;
-            if (followingLink.from > to || followingTo < from) {
-                return false;
-            }
-            if (followingLink.from < from) {
-                from = followingLink.from;
-                transversalSeriesFrom = followingLink.transversalSeriesFrom;
-            }
-            if (followingTo > to) {
-                to = followingTo;
-                transversalSeriesTo = followingLink.transversalSeriesTo;
-            }
-            return true;
-        }
     }
 
     public static class VerticalBoundaryLink extends BoundaryLink {
-        final BoundaryLink linkFrom;
-        final BoundaryLink linkTo;
+        final HorizontalBoundaryLink linkFrom;
+        final HorizontalBoundaryLink linkTo;
 
         private VerticalBoundaryLink(
             VerticalSideSeries containingSeries,
@@ -516,8 +494,6 @@ public class IRectanglesUnion {
     private volatile List<HorizontalSideSeries> horizontalSideSeries = null;
     private volatile List<VerticalSideSeries> verticalSideSeries = null;
     private volatile List<List<Frame>> connectedComponents = null;
-    private volatile List<HorizontalSide> horizontalSidesAtBoundary = null;
-    private volatile List<VerticalSide> verticalSidesAtBoundary = null;
     private volatile List<List<BoundaryLink>> allBoundaries = null;
     private final Object lock = new Object();
 
@@ -579,19 +555,26 @@ public class IRectanglesUnion {
     }
 
     public List<HorizontalBoundaryLink> allHorizontalBoundaryLinks() {
+        findBoundaries();
         final List<HorizontalBoundaryLink> result = new ArrayList<HorizontalBoundaryLink>();
         for (HorizontalSideSeries series : horizontalSideSeries) {
             result.addAll(series.containedBoundaryLinks);
         }
-        return result;
+        return Collections.unmodifiableList(result);
     }
 
     public List<VerticalBoundaryLink> allVerticalBoundaryLinks() {
+        findBoundaries();
         final List<VerticalBoundaryLink> result = new ArrayList<VerticalBoundaryLink>();
         for (VerticalSideSeries series : verticalSideSeries) {
             result.addAll(series.containedBoundaryLinks);
         }
-        return result;
+        return Collections.unmodifiableList(result);
+    }
+
+    public List<List<BoundaryLink>> allBoundaries() {
+        findBoundaries();
+        return Collections.unmodifiableList(allBoundaries);
     }
 
     public void findConnectedComponents() {
@@ -631,18 +614,18 @@ public class IRectanglesUnion {
         final List<HorizontalSideSeries> horizontalSeries = createHorizontalSideSeriesLists();
         final List<VerticalSideSeries> verticalSeries = createVerticalSideSeriesLists();
         long t2 = System.nanoTime();
-        doFindHorizontalBoundaries();
+        final long hCount = doFindHorizontalBoundaries(horizontalSeries);
         long t3 = System.nanoTime();
-        doConvertHorizontalLinkInfoToAllBoundaryLinks(horizontalSeries, verticalSeries);
+        final long vCount = doConvertHorizontalToVerticalLinks(horizontalSeries, verticalSeries);
+        if (vCount != hCount) {
+            throw new AssertionError("Different number of horizontal and vertical links found");
+        }
         long t4 = System.nanoTime();
-        final List<List<BoundaryLink>> result = doJoinBoundaries(horizontalSeries, verticalSeries);
+        final List<List<BoundaryLink>> result = doJoinBoundaries(horizontalSeries, hCount);
         long t5 = System.nanoTime();
         synchronized (lock) {
             this.horizontalSideSeries = horizontalSeries;
             this.verticalSideSeries = verticalSeries;
-            this.horizontalSidesAtBoundary = null;
-            this.verticalSidesAtBoundary = null;
-            //TODO!! - actually fill them (or remove them)
             this.allBoundaries = result;
         }
         long t6 = System.nanoTime();
@@ -651,10 +634,10 @@ public class IRectanglesUnion {
             totalLinkCount += boundary.size();
         }
         debug(2, "Rectangle union (%d rectangles), finding %d boundaries with %d links: "
-                + "%.3f ms = %.3f initializing + %.3f horizontal links + %.3f vertical links + "
-                + "%.3f joining links + %.3f correcting data structures (%.3f mcs / rectangle)%n",
+                + "%.3f ms = %.3f ms initializing + %.3f ms %d horizontal links + %.3f ms %d vertical links + "
+                + "%.3f ms joining links + %.3f ms correcting data structures (%.3f mcs / rectangle)%n",
             frames.size(), result.size(), totalLinkCount,
-            (t6 - t1) * 1e-6, (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, (t4 - t3) * 1e-6,
+            (t6 - t1) * 1e-6, (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, hCount, (t4 - t3) * 1e-6, vCount,
             (t5 - t4) * 1e-6, (t6 - t5) * 1e-6,
             (t6 - t1) * 1e-3 / (double) frames.size());
     }
@@ -821,15 +804,16 @@ public class IRectanglesUnion {
         }
     }
 
-    private void doFindHorizontalBoundaries() {
+    private long doFindHorizontalBoundaries(List<HorizontalSideSeries> horizontalSeries) {
         assert !frames.isEmpty();
-        final HorizontalIBracketSet<HorizontalSide> bracketSet =
-            new HorizontalIBracketSet<HorizontalSide>(horizontalSides, true);
+        final HorizontalIBracketSet<HorizontalSideSeries> bracketSet =
+            new HorizontalIBracketSet<HorizontalSideSeries>(horizontalSeries, true);
+        long count = 0;
         while (bracketSet.next()) {
-            final NavigableSet<IBracket> brackets = bracketSet.currentIntersections();
+            final Set<IBracket> brackets = bracketSet.currentIntersections();
             final IBracket lastBefore = bracketSet.lastIntersectionBeforeLeft();
             boolean lastRightAtBoundary = lastBefore == null || lastBefore.followingCoveringDepth == 0;
-            Side lastLeftVertical = lastRightAtBoundary ? bracketSet.horizontal.sideFrom() : null;
+            FrameSide lastLeftVertical = lastRightAtBoundary ? bracketSet.horizontal.transversalFrameSideFrom() : null;
             for (IBracket bracket : brackets) {
                 assert bracket.covers(bracketSet.y);
                 boolean rightAtBoundary = bracket.followingCoveringDepth == 0;
@@ -844,12 +828,14 @@ public class IRectanglesUnion {
                 lastRightAtBoundary = rightAtBoundary;
             }
             if (lastRightAtBoundary) {
-                addHorizontalLink(bracketSet, lastLeftVertical, bracketSet.horizontal.sideTo());
+                addHorizontalLink(bracketSet, lastLeftVertical, bracketSet.horizontal.transversalFrameSideTo());
             }
+            count += bracketSet.horizontal.containedBoundaryLinks.size();
         }
+        return count;
     }
 
-    private void doConvertHorizontalLinkInfoToAllBoundaryLinks(
+    private long doConvertHorizontalToVerticalLinks(
         List<HorizontalSideSeries> horizontalSideSeries,
         List<VerticalSideSeries> verticalSideSeries)
     {
@@ -861,6 +847,7 @@ public class IRectanglesUnion {
             }
         }
         HorizontalBoundaryLink[] horizontalLinks = new HorizontalBoundaryLink[0];
+        long count = 0;
         for (VerticalSideSeries verticalSeries : verticalSideSeries) {
             final int horizontalsCount = verticalSeries.intersectingBoundaryLinks.size();
             assert horizontalsCount % 2 == 0;
@@ -875,7 +862,7 @@ public class IRectanglesUnion {
                 final long from = linkFrom.coord();
                 final long to = linkTo.coord();
                 assert k == 0 || from > horizontalLinks[k - 1].coord() :
-                    "Two horizontal links with the same ordinate " + from + "(" + horizontalLinks[k - 1].coord()
+                    "Two horizontal links with the same ordinate " + from + " (=" + horizontalLinks[k - 1].coord()
                         + ") are incident with the same vertical side";
                 assert from < to :
                     "Empty vertical link #" + (k / 2) + ": " + from + ".." + to;
@@ -884,105 +871,28 @@ public class IRectanglesUnion {
                 linkTo.setNeighbour(link);
                 verticalSeries.containedBoundaryLinks.add(link);
             }
+            count += verticalSeries.containedBoundaryLinks.size();
         }
-        /*
-        boolean chainOfVerticalLinks = false;
-        VerticalSide lastVerticalSide = null;
-        VerticalBoundaryLink lastVerticalLink = null;
-        for (int index = 0, count = intersectingHorizontals.size(); index < count; index++) {
-            final VerticalSeries verticalSide = verticalSideSeries.get(index);
-            final long y = verticalSide.boundCoord();
-            final boolean first = verticalSide.first;
-            // really we use only information about y and first;
-            // several horizontal sides at the same horizontal are processed together
-            if (chainOfVerticalLinks) {
-                assert lastVerticalSide != null;
-                assert lastVerticalLink != null;
-                if (!verticalSide.isContinuationOf(lastVerticalSide)) {
-                    throw new AssertionError("We met odd number of intersections ane left the vertical!");
-                }
-                // - it is the only situation, when we can meet odd number of intersections
-                // and enter into "chain-of-vertical-links" mode
-            }
-            final List<HorizontalBoundaryLink> horizontalsList = intersectingHorizontals.get(index);
-            final int horizontalsCount = horizontalsList.size();
-            if (DEBUG_LEVEL >= 3) {
-                System.out.printf("  Vertical #%d, %s; %s%d horizontal sides:%s",
-                    index, verticalSide, chainOfVerticalLinks ? "CHAIN; " : "",
-                    horizontalsCount, toDebugString(horizontalsList));
-            }
-            if (horizontalsCount == 0) {
-                if (chainOfVerticalLinks) {
-                    final VerticalBoundaryLink fullSideLink = new VerticalBoundaryLink(
-                        y, first, verticalSide.boundFrom(), verticalSide.boundTo());
-                    fullSideLink.linkFrom = lastVerticalLink;
-                    lastVerticalLink.linkTo = fullSideLink;
-                    resultingContainedBoundaryLinksForVerticalSides.get(index).add(fullSideLink);
-                    lastVerticalLink = fullSideLink;
-                    lastVerticalSide = verticalSide;
-                    continue;
-                }
-            }
-            horizontalLinks = horizontalsList.toArray(horizontalLinks);
-            Arrays.sort(horizontalLinks, 0, horizontalsCount);
-            int k = 0;
-            if (chainOfVerticalLinks) {
-                // first horizontal link finishs the chain
-                final HorizontalBoundaryLink linkTo = horizontalLinks[0];
-                final VerticalBoundaryLink starting = new VerticalBoundaryLink(
-                    y, first, verticalSide.boundFrom(), linkTo.coord);
-                lastVerticalLink.linkTo = starting;
-                k = 1;
-                chainOfVerticalLinks = false;
-                starting.linkFrom = lastVerticalLink;
-                starting.linkTo = linkTo;
-                linkTo.setNeighbour(starting);
-                resultingContainedBoundaryLinksForVerticalSides.get(index).add(starting);
-                lastVerticalLink = starting;
-            }
-            assert !chainOfVerticalLinks;
-            for (; k <= horizontalsCount - 2; k += 2) {
-                // even number of horizontal links are simple cases: they do not beglong to any chains
-                final HorizontalBoundaryLink linkFrom = horizontalLinks[k];
-                final HorizontalBoundaryLink linkTo = horizontalLinks[k + 1];
-                final long from = linkFrom.coord;
-                final long to = linkTo.coord;
-                assert k <= 1 || from > horizontalLinks[k - 1].coord :
-                    "Two horizontal links with the same ordinate " + from + "(" + horizontalLinks[k - 1].coord
-                        + ") are incident with the same vertical side";
-                assert from < to :
-                    "Empty vertical link #" + (k / 2) + ": " + from + ".." + to + ", vertical index " + index;
-                final VerticalBoundaryLink link = new VerticalBoundaryLink(first, y, linkFrom, linkTo);
-                linkFrom.setNeighbour(link);
-                linkTo.setNeighbour(link);
-                resultingContainedBoundaryLinksForVerticalSides.get(index).add(link);
-                lastVerticalLink = link;
-            }
-            if (k < horizontalsCount) {
-                final HorizontalBoundaryLink linkFrom = horizontalLinks[k];
-                final VerticalBoundaryLink ending = new VerticalBoundaryLink(
-                    y, first, linkFrom.coord, verticalSide.boundTo());
-                k++;
-                chainOfVerticalLinks = true;
-                ending.linkFrom = linkFrom;
-                linkFrom.setNeighbour(ending);
-                resultingContainedBoundaryLinksForVerticalSides.get(index).add(ending);
-                lastVerticalLink = ending;
-            }
-            assert k == horizontalsCount;
-            lastVerticalSide = verticalSide;
-        }
-        assert !chainOfVerticalLinks;
-        */
+        return count;
     }
 
     private List<List<BoundaryLink>> doJoinBoundaries(
         List<HorizontalSideSeries> horizontalSideSeries,
-        List<VerticalSideSeries> verticalSideSeries)
+        long numberOfHorizontalLinks)
     {
         assert !frames.isEmpty();
-        //TODO!!
-        return new ArrayList<List<BoundaryLink>>();
+        final long maxCount = 10 * Math.min(numberOfHorizontalLinks, Integer.MAX_VALUE);
+        // really the limit is 2 * numberOfHorizontalLinks;
+        // Integer.MAX_VALUE is also the limit due to 31-bit result.size()
+        List<List<BoundaryLink>> result = new ArrayList<List<BoundaryLink>>();
+        for (HorizontalSideSeries series : horizontalSideSeries) {
+            for (HorizontalBoundaryLink link : series.containedBoundaryLinks) {
+                if (!link.joinedIntoAllBoundaries) {
+                    result.add(Collections.unmodifiableList(scanBoundary(link, maxCount)));
+                }
+            }
+        }
+        return result;
     }
 
     static void debug(int level, String format, Object... args) {
@@ -992,24 +902,45 @@ public class IRectanglesUnion {
     }
 
     private static void addHorizontalLink(
-        HorizontalIBracketSet<HorizontalSide> bracketSet,
-        Side firstTransveral,
-        Side secondTransveral)
+        HorizontalIBracketSet<HorizontalSideSeries> bracketSet,
+        FrameSide firstTransveral,
+        FrameSide secondTransveral)
     {
+        assert firstTransveral.boundCoord() <= secondTransveral.boundCoord();
         final HorizontalBoundaryLink link = new HorizontalBoundaryLink(
-            bracketSet.horizontal.containingSeries,
-            (VerticalSideSeries) ((FrameSide) firstTransveral).containingSeries,
-            (VerticalSideSeries) ((FrameSide) secondTransveral).containingSeries);
+            bracketSet.horizontal,
+            (VerticalSideSeries) firstTransveral.containingSeries,
+            (VerticalSideSeries) secondTransveral.containingSeries);
         if (link.from < link.to) {
             if (DEBUG_LEVEL >= 3) {
                 System.out.printf("    adding %s%n", link);
             }
-            final List<HorizontalBoundaryLink> linksAtSeries =
-                ((HorizontalSideSeries) bracketSet.horizontal.containingSeries).containedBoundaryLinks;
-            if (linksAtSeries.isEmpty() || !linksAtSeries.get(linksAtSeries.size() - 1).expand(link)) {
-                linksAtSeries.add(link);
-            }
+            bracketSet.horizontal.containedBoundaryLinks.add(link);
         }
+    }
+
+    private static List<BoundaryLink> scanBoundary(HorizontalBoundaryLink start, long maxCount) {
+        List<BoundaryLink> result = new ArrayList<BoundaryLink>();
+        HorizontalBoundaryLink hLink = start;
+        VerticalBoundaryLink vLink = start.linkTo;
+        long count = 0;
+        do {
+            assert vLink.linkFrom != null && vLink.linkTo != null;
+            assert hLink == vLink.linkFrom || hLink == vLink.linkTo;
+            assert !hLink.joinedIntoAllBoundaries;
+            assert !vLink.joinedIntoAllBoundaries;
+            result.add(hLink);
+            result.add(vLink);
+            hLink.joinedIntoAllBoundaries = true;
+            vLink.joinedIntoAllBoundaries = true;
+            hLink = hLink == vLink.linkFrom ? vLink.linkTo : vLink.linkFrom;
+            assert hLink.linkFrom != null && hLink.linkTo != null;
+            vLink = vLink == hLink.linkFrom ? hLink.linkTo : hLink.linkFrom;
+            if (++count > maxCount) {
+                throw new AssertionError("Infinite loop detected while scanning the boundary");
+            }
+        } while (hLink != start);
+        return result;
     }
 
     private static List<Frame> checkAndConvertToFrames(Collection<IRectangularArea> rectangles) {
@@ -1053,14 +984,16 @@ public class IRectanglesUnion {
         long to;
         private FrameSide sideFrom;
         private FrameSide sideTo;
+        private List<FrameSide> sides = new ArrayList<FrameSide>();
 
         private SideSeries(FrameSide initialSide) {
             super(initialSide.first);
             this.coord = initialSide.boundCoord();
             this.from = initialSide.boundFrom();
             this.to = initialSide.boundTo();
-            this.sideFrom = initialSide.sideFrom();
-            this.sideTo = initialSide.sideTo();
+            this.sideFrom = initialSide.transversalFrameSideFrom();
+            this.sideTo = initialSide.transversalFrameSideTo();
+            this.sides.add(initialSide);
             initialSide.containingSeries = this;
         }
 
@@ -1080,18 +1013,18 @@ public class IRectanglesUnion {
         }
 
         @Override
-        SideSeries sideFrom() {
-            return sideFrom.containingSeries;
+        List<FrameSide> allContainedFrameSides() {
+            return sides;
         }
 
         @Override
-        SideSeries sideTo() {
-            return sideTo.containingSeries;
+        FrameSide transversalFrameSideFrom() {
+            return sideFrom;
         }
 
         @Override
-        long uniqueId() {
-            return first ? sideFrom.frame.index : -sideFrom.frame.index - 1;
+        FrameSide transversalFrameSideTo() {
+            return sideTo;
         }
 
         boolean expand(FrameSide followingSide) {
@@ -1108,12 +1041,13 @@ public class IRectanglesUnion {
             }
             if (followingFrom < from) {
                 from = followingFrom;
-                sideFrom = followingSide.sideFrom();
+                sideFrom = followingSide.transversalFrameSideFrom();
             }
             if (followingTo > to) {
                 to = followingTo;
-                sideTo = followingSide.sideTo();
+                sideTo = followingSide.transversalFrameSideTo();
             }
+            this.sides.add(followingSide);
             followingSide.containingSeries = this;
             return true;
         }

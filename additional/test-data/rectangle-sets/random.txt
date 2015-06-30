@@ -2,11 +2,11 @@ regular
 5    //frameMinWidth
 30   //frameMaxWidth
 9    //frameMinHeight
-30   //frameMaxHeight
+15   //frameMaxHeight
 -1   //imageWidth
 -1   //imageHeight
-173   //horizontalCount
-2   //verticalCount
+53   //horizontalCount
+33   //verticalCount
 3    //overlap
-3   //maxError
-53  //randSeed
+100  //maxError
+157  //randSeed
