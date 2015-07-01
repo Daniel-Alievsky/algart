@@ -29,6 +29,28 @@ import net.algart.math.IRectangularArea;
 import java.util.*;
 import java.util.Arrays;
 
+/**
+ * <p>Set-theoretic union of several 2-dimensional {@link IRectangularArea rectangles}
+ * with integer integer coordinates of vertices and sides, parallel to coordinate axes.
+ * This class allows to solve the following main tasks:
+ * <ol>
+ * <li>find connected components in this union;</li>
+ * <li>find its boundary as a polygon: a sequence of links, where each link is a horizontal or vertical
+ * segment (1st link is horizontal, 2nd is vertical, 3rd is horizontal, etc.)</li>
+ * </ol>
+ *
+ * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
+ * there are no ways to modify settings of the created instance.
+ * However, all important information is returned "lazily", i.e. while the 1st attempt to read it.
+ * So, the instance creation method {@link #newInstance(Collection)}
+ * works quickly and does not lead to complex calculations and allocating additional memory.</p>
+ *
+ * <p>AlgART Laboratory 2007&ndash;2015</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.6
+ */
 public class IRectanglesUnion {
     static final int DEBUG_LEVEL = net.algart.arrays.Arrays.SystemSettings.getIntProperty(
         "net.algart.math.rectangles.debugLevel", 0);
@@ -116,7 +138,6 @@ public class IRectanglesUnion {
          * @return the ending coordinate of this side + 0.5
          */
         public abstract long boundTo();
-
 
         @Override
         public int compareTo(Side o) {
