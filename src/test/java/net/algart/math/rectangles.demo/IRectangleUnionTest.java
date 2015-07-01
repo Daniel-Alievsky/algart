@@ -54,23 +54,15 @@ public class IRectangleUnionTest {
         final int numberOfTests = Integer.parseInt(args[0]);
         final File rectanglesFile = new File(args[1]);
         final File demoFolder = new File(args[2]);
-        final double coordinateDivider;
+        final long divider = args.length >= 4 ? Long.parseLong(args[3]) : 1;
         demoFolder.mkdirs();
-        final String[] description = ExternalProcessor.readUTF8(rectanglesFile).split("[\\r\\n]+");
-        for (int k = 0; k < description.length; k++) {
-            final int p = description[k].indexOf("//");
-            if (p != -1) {
-                description[k] = description[k].substring(0, p);
-            }
-            description[k] = description[k].trim();
-        }
+        String[] description = parseConfigurationFile(rectanglesFile);
         final String algorithm = description[0];
         Long imageWidth = null;
         Long imageHeight = null;
         final List<IRectangularArea> rectangles = new ArrayList<IRectangularArea>();
         if (algorithm.equals("rectangles")) {
             System.out.println("Reading rectangles...");
-            coordinateDivider = args.length >= 4 ? Double.parseDouble(args[3]) : 1.0;
             for (int k = 1; k < description.length; k++) {
                 final String[] rectangle = description[k].split("[\\s,]+");
                 rectangles.add(IRectangularArea.valueOf(
@@ -83,7 +75,6 @@ public class IRectangleUnionTest {
             }
         } else {
             System.out.println("Creating rectangles...");
-            coordinateDivider = 1.0;
             if (algorithm.equals("regular")) {
                 final int frameMinWidth = Integer.parseInt(description[1]);
                 final int frameMaxWidth = Integer.parseInt(description[2]);
@@ -140,10 +131,10 @@ public class IRectangleUnionTest {
         if (imageHeight == null) {
             imageHeight = rectangleUnion.circumscribedRectangle().max(1) + 100;
         }
-        List<Matrix<? extends UpdatablePArray>> demo = newImage(imageWidth, imageHeight);
-        draw(demo, rectangleUnion.circumscribedRectangle(), coordinateDivider, Color.YELLOW, Color.BLUE);
+        List<Matrix<? extends UpdatablePArray>> demo = newImage(imageWidth / divider, imageHeight / divider);
+        draw(demo, rectangleUnion.circumscribedRectangle(), divider, Color.YELLOW, Color.BLUE);
         for (IRectangularArea area : rectangles) {
-            draw(demo, area, coordinateDivider, Color.LIGHT_GRAY, Color.DARK_GRAY);
+            draw(demo, area, divider, Color.LIGHT_GRAY, Color.DARK_GRAY);
         }
         final File sourceFile = new File(demoFolder, rectanglesFile.getName() + ".source.bmp");
         System.out.printf("Writing source image %dx%d into %s: %d rectangles%n",
@@ -162,16 +153,16 @@ public class IRectangleUnionTest {
                     component.findBoundaries();
                 }
                 if (testIndex == 0) {
-                    demo = drawUnion(imageWidth, imageHeight, component, coordinateDivider);
+                    demo = drawUnion(imageWidth, imageHeight, component, divider);
                     File f = new File(demoFolder, rectanglesFile.getName()
                         + (k == -1 ? ".all" : ".component-" + k) + ".bmp");
                     System.out.println();
                     System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
-                        + " into " + f + ": " + rectangleUnion);
+                        + " into " + f + ": " + component);
                     ExternalAlgorithmCaller.writeImage(f, demo);
                     int index = 0;
                     for (List<IRectanglesUnion.BoundaryLink> boundary : component.allBoundaries()) {
-                        demo = drawBoundary(imageWidth, imageHeight, boundary, coordinateDivider);
+                        demo = drawBoundary(imageWidth, imageHeight, boundary, divider);
                         f = new File(demoFolder, rectanglesFile.getName()
                             + (k == -1 ? ".boundaries" : ".boundary-" + k) + "-" + index + ".bmp");
                         System.out.println("Writing boundary #" + index + " of "
@@ -188,6 +179,21 @@ public class IRectangleUnionTest {
         }
     }
 
+    private static String[] parseConfigurationFile(File rectanglesFile) throws IOException {
+        final List<String> result = new ArrayList<String>();
+        for ( String s : ExternalProcessor.readUTF8(rectanglesFile).split("[\\r\\n]+")) {
+            final int p = s.indexOf("//");
+            if (p != -1) {
+                s = s.substring(0, p);
+            }
+            s = s.trim();
+            if (!s.isEmpty()) {
+                result.add(s);
+            }
+        }
+        return result.toArray(new String[result.size()]);
+    }
+
     private static List<Matrix<? extends UpdatablePArray>> newImage(long width, long height) {
         ArrayList<Matrix<? extends UpdatablePArray>> result = new ArrayList<Matrix<? extends UpdatablePArray>>();
         result.add(Arrays.SMM.newByteMatrix(width, height));
@@ -196,34 +202,24 @@ public class IRectangleUnionTest {
         return result;
     }
 
-    private static void draw(
-        List<Matrix<? extends UpdatablePArray>> demo,
-        IRectangularArea area,
-        double coordinateDivider,
-        Color borderColor,
-        Color innerColor)
-    {
-        draw(demo, area, coordinateDivider, borderColor, innerColor, null);
-    }
-
     private static List<Matrix<? extends UpdatablePArray>> drawUnion(
         long imageWidth, long imageHeight,
         IRectanglesUnion union,
-        double coordinateDivider)
+        long divider)
     {
-        final List<Matrix<? extends UpdatablePArray>> result = newImage(imageWidth, imageHeight);
+        final List<Matrix<? extends UpdatablePArray>> result = newImage(imageWidth / divider, imageHeight / divider);
         final Random rnd = new Random(157);
         for (IRectanglesUnion.Frame frame : union.frames()) {
-            draw(result, frame.rectangle(), coordinateDivider, new Color(0, 0, 128), Color.BLUE);
+            draw(result, frame.rectangle(), divider, new Color(0, 0, 128), Color.BLUE);
         }
         final List<IRectanglesUnion.HorizontalBoundaryLink> horizontals = union.allHorizontalBoundaryLinks();
         for (IRectanglesUnion.BoundaryLink link : horizontals) {
-            draw(result, link.sidePart(), coordinateDivider,
+            draw(result, link.sidePart(), divider,
                 new Color(0, 155 + rnd.nextInt(100), 0), Color.BLACK, 1);
         }
         final List<IRectanglesUnion.VerticalBoundaryLink> verticals = union.allVerticalBoundaryLinks();
         for (IRectanglesUnion.BoundaryLink link : verticals) {
-            draw(result, link.sidePart(), coordinateDivider,
+            draw(result, link.sidePart(), divider,
                 new Color(155 + rnd.nextInt(100), 0, 0), Color.BLACK, 0);
         }
         return result;
@@ -232,9 +228,9 @@ public class IRectangleUnionTest {
     private static List<Matrix<? extends UpdatablePArray>> drawBoundary(
         long imageWidth, long imageHeight,
         List<IRectanglesUnion.BoundaryLink> boundary,
-        double coordinateDivider)
+        long  divider)
     {
-        final List<Matrix<? extends UpdatablePArray>> result = newImage(imageWidth, imageHeight);
+        final List<Matrix<? extends UpdatablePArray>> result = newImage(imageWidth / divider, imageHeight / divider);
         final Color baseColor = Color.YELLOW;
         int value = 256;
         for (IRectanglesUnion.BoundaryLink link : boundary) {
@@ -245,24 +241,33 @@ public class IRectangleUnionTest {
                 baseColor.getRed() * value / 255,
                 baseColor.getGreen() * value / 255,
                 baseColor.getBlue() * value / 255);
-            draw(result, link.sidePart(), coordinateDivider, color, Color.BLACK);
+            draw(result, link.sidePart(), divider, color, Color.BLACK);
             value += 32;
         }
         return result;
     }
 
+    private static void draw(
+        List<Matrix<? extends UpdatablePArray>> demo,
+        IRectangularArea area,
+        long divider,
+        Color borderColor,
+        Color innerColor)
+    {
+        draw(demo, area, divider, borderColor, innerColor, null);
+    }
 
     private static void draw(
         List<Matrix<? extends UpdatablePArray>> demo,
         IRectangularArea area,
-        double coordinateDivider,
+        long  divider,
         Color borderColor,
         Color innerColor,
         Integer chosenColorComponent)
     {
         final IRectangularArea divided = IRectangularArea.valueOf(
-            area.min().multiply(1.0 / coordinateDivider),
-            area.max().multiply(1.0 / coordinateDivider));
+            area.min().multiply(1.0 / divider),
+            area.max().multiply(1.0 / divider));
         for (int k = chosenColorComponent == null ? 0 : chosenColorComponent;
              k < (chosenColorComponent == null ? demo.size() : chosenColorComponent + 1);
              k++) {

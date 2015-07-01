@@ -609,17 +609,34 @@ public class IRectanglesUnion {
             if (this.connectedComponents != null) {
                 return;
             }
+            if (frames.isEmpty()) {
+                this.connectedComponents = Collections.emptyList();
+            }
         }
         long t1 = System.nanoTime();
-        final List<List<Frame>> result = new ArrayList<List<Frame>>();
-        if (!frames.isEmpty()) {
-            doFindConnectedComponents(result);
-        }
+        final List<List<Frame>> result = doFindConnectedComponentsDeprecated();
         long t2 = System.nanoTime();
+        if (DEBUG_LEVEL >= 3 && result.size() >= 2) {
+            for (int i = 0; i < result.size(); i++) {
+                for (Frame frame1 : result.get(i)) {
+                    for (int j = i + 1; j < result.size(); j++) {
+                        for (Frame frame2 : result.get(j)) {
+                            if (frame1.rectangle.intersects(frame2.rectangle)) {
+                                // Note: this check is even more strong than requirement of this class
+                                // (attached rectangles are considered to be in the single component)
+                                throw new AssertionError("First 2 connected component really have intersection: "
+                                    + frame1 + " (component " + i + ") intersects "
+                                    + frame2 + " (component " + j + ")");
+                            }
+                        }
+                    }
+                }
+            }
+        }
         synchronized (lock) {
             this.connectedComponents = result;
         }
-        debug(2, "Rectangle union (%d rectangles), finding %d connected components: "
+        debug(1, "Rectangle union (%d rectangles), finding %d connected components: "
                 + "%.3f ms (%.3f mcs / rectangle)%n",
             frames.size(), result.size(),
             (t2 - t1) * 1e-6, (t2 - t1) * 1e-3 / (double) frames.size());
@@ -632,7 +649,9 @@ public class IRectanglesUnion {
                 return;
             }
             if (frames.isEmpty()) {
-                this.allBoundaries = new ArrayList<List<BoundaryLink>>();
+                this.allBoundaries = Collections.emptyList();
+                this.horizontalSideSeries = Collections.emptyList();
+                this.verticalSides = Collections.emptyList();
                 return;
             }
         }
@@ -659,7 +678,7 @@ public class IRectanglesUnion {
         for (List<BoundaryLink> boundary : result) {
             totalLinkCount += boundary.size();
         }
-        debug(2, "Rectangle union (%d rectangles), finding %d boundaries with %d links: "
+        debug(1, "Rectangle union (%d rectangles), finding %d boundaries with %d links: "
                 + "%.3f ms = %.3f ms initializing + %.3f ms %d horizontal links + %.3f ms %d vertical links + "
                 + "%.3f ms joining links + %.3f ms correcting data structures (%.3f mcs / rectangle)%n",
             frames.size(), result.size(), totalLinkCount,
@@ -698,11 +717,54 @@ public class IRectanglesUnion {
             this.horizontalSides = horizontalSides;
             this.verticalSides = verticalSides;
         }
-        debug(2, "Rectangle union (%d rectangles), sorting sides: %.3f ms%n",
+        debug(1, "Rectangle union (%d rectangles), allocating and sorting sides: %.3f ms%n",
             frames.size(), (t2 - t1) * 1e-6);
     }
 
-    private void doFindConnectedComponents(List<List<Frame>> result) {
+    private List<List<Frame>> doFindConnectedComponents(List<List<Frame>> connectionLists) {
+        assert !frames.isEmpty();
+        final List<List<Frame>> result = new ArrayList<List<Frame>>();
+        final boolean[] frameVisited = new boolean[frames.size()];
+        final boolean[] added = new boolean[frames.size()];
+        // - arrays are filled by false by Java
+        final Queue<Frame> queue = new LinkedList<Frame>();
+        int index = 0;
+        for (; ; ) {
+            while (index < frameVisited.length && frameVisited[index]) {
+                index++;
+            }
+            if (index >= frameVisited.length) {
+                break;
+            }
+            final List<Frame> component = new ArrayList<Frame>();
+            // Breadth-first search:
+            queue.add(frames.get(index));
+            frameVisited[index] = true;
+            while (!queue.isEmpty()) {
+                final Frame frame = queue.poll();
+                component.add(frame);
+                final List<Frame> neighbours = connectionLists.get(frame.index);
+                for (Frame neighbour : neighbours) {
+                    if (!frameVisited[neighbour.index]) {
+                        queue.add(neighbour);
+                        frameVisited[neighbour.index] = true;
+                    }
+                }
+                if (DEBUG_LEVEL >= 4) {
+                    System.out.printf("  Neighbours of %s:%n", frame);
+                    for (Frame neighbour : neighbours) {
+                        System.out.printf("    %s%n", neighbour);
+                    }
+                }
+            }
+            result.add(component);
+        }
+        return result;
+    }
+
+    private List<List<Frame>> doFindConnectedComponentsDeprecated() {
+        assert !frames.isEmpty();
+        final List<List<Frame>> result = new ArrayList<List<Frame>>();
         if (DEBUG_LEVEL >= 4) {
             System.out.printf("  All verticals%n");
             for (VerticalSide side : verticalSides) {
@@ -735,7 +797,7 @@ public class IRectanglesUnion {
             while (!queue.isEmpty()) {
                 final Frame frame = queue.poll();
                 component.add(frame);
-                doFindIncidentFrames(neighbours, frame, allX, added);
+                doFindIncidentFramesDeprecated(neighbours, frame, allX, added);
                 for (Frame neighbour : neighbours) {
                     if (!frameVisited[neighbour.index]) {
                         queue.add(neighbour);
@@ -751,26 +813,10 @@ public class IRectanglesUnion {
             }
             result.add(component);
         }
-        if (DEBUG_LEVEL >= 3 && result.size() >= 2) {
-            for (int i = 0; i < result.size(); i++) {
-                for (Frame frame1 : result.get(i)) {
-                    for (int j = i + 1; j < result.size(); j++) {
-                        for (Frame frame2 : result.get(j)) {
-                            if (frame1.rectangle.intersects(frame2.rectangle)) {
-                                // Note: this check is even more strong than requirement of this class
-                                // (attached rectangles are considered to be in the single component)
-                                throw new AssertionError("First 2 connected component really have intersection: "
-                                    + frame1 + " (component " + i + ") intersects "
-                                    + frame2 + " (component " + j + ")");
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return result;
     }
 
-    private void doFindIncidentFrames(List<Frame> result, Frame frame, long[] allX, boolean added[]) {
+    private void doFindIncidentFramesDeprecated(List<Frame> result, Frame frame, long[] allX, boolean added[]) {
         result.clear();
         int left = Arrays.binarySearch(allX, frame.fromX);
         assert left >= 0;
@@ -846,7 +892,7 @@ public class IRectanglesUnion {
     }
 
     private void checkSidesSeriesList(List<? extends SideSeries> sideSeries) {
-        if (DEBUG_LEVEL >= 1) {
+        if (DEBUG_LEVEL >= 2) {
             for (int k = 1, n = sideSeries.size(); k < n; k++) {
                 assert sideSeries.get(k - 1).compareTo(sideSeries.get(k)) <= 0;
             }
@@ -1010,23 +1056,24 @@ public class IRectanglesUnion {
                 throw new IllegalArgumentException("Only 2-dimensional rectangles can be joined");
             }
         }
+        long t1 = System.nanoTime();
         List<Frame> frames = new ArrayList<Frame>();
         int index = 0;
         for (IRectangularArea rectangle : rectangles) {
             frames.add(new Frame(rectangle, index++));
         }
+        long t2 = System.nanoTime();
+        debug(1, "Rectangle union (%d rectangles), initial allocating frames: %.3f ms%n",
+            frames.size(), (t2 - t1) * 1e-6);
         return frames;
     }
 
-    private static String toDebugString(List<? extends BoundaryLink> links) {
-        if (links.isEmpty()) {
-            return String.format(" NONE%n");
+    private static <T> List<List<T>> createListOfLists(int n) {
+        final List<List<T>> result = new ArrayList<List<T>>();
+        for (int k = 0; k < n; k++) {
+            result.add(new ArrayList<T>());
         }
-        StringBuilder sb = new StringBuilder(String.format("%n"));
-        for (BoundaryLink link : links) {
-            sb.append(String.format("    %s%n", link));
-        }
-        return sb.toString();
+        return result;
     }
 
 
