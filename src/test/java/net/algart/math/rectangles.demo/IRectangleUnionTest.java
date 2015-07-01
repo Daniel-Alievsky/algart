@@ -33,7 +33,12 @@ import net.algart.math.IPoint;
 import net.algart.math.IRectangularArea;
 import net.algart.math.rectangles.IRectanglesUnion;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Area;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -131,6 +136,7 @@ public class IRectangleUnionTest {
         if (imageHeight == null) {
             imageHeight = rectangleUnion.circumscribedRectangle().max(1) + 100;
         }
+
         List<Matrix<? extends UpdatablePArray>> demo = newImage(imageWidth / divider, imageHeight / divider);
         draw(demo, rectangleUnion.circumscribedRectangle(), divider, Color.YELLOW, Color.BLUE);
         for (IRectangularArea area : rectangles) {
@@ -175,6 +181,59 @@ public class IRectangleUnionTest {
                         }
                     }
                 }
+            }
+        }
+        for (int testIndex = 0; testIndex < numberOfTests; testIndex++) {
+            System.out.printf("%nAWT test #%d%n", testIndex + 1);
+            Area area = new Area();
+            long t1 = System.nanoTime();
+            for (IRectangularArea r : rectangles) {
+                Shape shape = new Rectangle2D.Double(r.min(0), r.min(1), r.size(0), r.size(1));
+                area.add(new Area(shape));
+            }
+            long t2 = System.nanoTime();
+            double[] c = new double[6];
+            int count = 0;
+            final List<double[]> path = new ArrayList<double[]>();
+            for (PathIterator pi = area.getPathIterator(null); !pi.isDone(); pi.next()) {
+                pi.currentSegment(c);
+                path.add(c.clone());
+                count++;
+                if (testIndex == 0) {
+                    if (count < 20) {
+                        System.out.printf("AWT path iteration #%d: type %d, coordinates %.1f, %.1f, %.1f, %.1f%n",
+                            count, pi.getWindingRule(), c[0], c[1], c[2], c[3]);
+                    } else if (count == 20) {
+                        System.out.println("...");
+                    }
+                }
+            }
+            long t3 = System.nanoTime();
+            System.out.printf("AWT area: %.3f ms building, %.3f ms iterating path (%d elements)%n",
+                (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, count);
+            if (testIndex == 0) {
+                BufferedImage bufferedImage = new BufferedImage(
+                    (int) (imageWidth / divider), (int) (imageHeight / divider), BufferedImage.TYPE_INT_BGR);
+                final Graphics g = bufferedImage.getGraphics();
+                int value = 256;
+                for (int k = 1, n = path.size(); k < n; k++) {
+                    if (value >= 256) {
+                        value = 63;
+                    }
+                    double[] c1 = path.get(k - 1);
+                    double[] c2 = path.get(k);
+                    g.setColor(new Color(value, value, 0));
+                    g.drawLine(
+                        (int) (c1[0] / divider),
+                        (int) (c1[1] / divider),
+                        (int) (c2[0] / divider),
+                        (int) (c2[1] / divider));
+                    value += 32;
+                }
+                File f = new File(demoFolder, rectanglesFile.getName() + ".awt.bmp");
+                System.out.println();
+                System.out.println("Writing AWT path into " + f);
+                ImageIO.write(bufferedImage, "bmp", f);
             }
         }
     }
