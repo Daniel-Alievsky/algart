@@ -55,6 +55,9 @@ public class IRectanglesUnion {
     static final int DEBUG_LEVEL = net.algart.arrays.Arrays.SystemSettings.getIntProperty(
         "net.algart.math.rectangles.debugLevel", 0);
 
+    private static final boolean USE_SECOND_SIDES_WHILE_SEARCHING_CONNECTIONS = false;
+    // It seems that we can prove that this can stay false always
+
     public static class Frame {
         final HorizontalSide lessHorizontalSide;
         final HorizontalSide higherHorizontalSide;
@@ -614,9 +617,23 @@ public class IRectanglesUnion {
             }
         }
         long t1 = System.nanoTime();
-        final List<List<Frame>> result = doFindConnectedComponentsDeprecated();
+        List<List<Frame>> connectionLists = createListOfLists(frames.size());
         long t2 = System.nanoTime();
-        if (DEBUG_LEVEL >= 3 && result.size() >= 2) {
+        final long nConnections = doFillConnectionLists(connectionLists);
+        long t3 = System.nanoTime();
+        final List<List<Frame>> result = doFindConnectedComponents(connectionLists);
+        long t4 = System.nanoTime();
+        synchronized (lock) {
+            this.connectedComponents = result;
+        }
+        debug(1, "Rectangle union (%d rectangles), finding %d connected components: "
+                + "%.3f ms = %.3f ms initializing + %.3f finding %d connections + %.3f breadth-first search "
+                + "(%.3f mcs / rectangle)%n",
+            frames.size(), result.size(),
+            (t4 - t1) * 1e-6, (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, nConnections, (t4 - t3) * 1e-6,
+            (t4 - t1) * 1e-3 / (double) frames.size());
+        if (DEBUG_LEVEL >= 2 && result.size() >= 2) {
+            t1 = System.nanoTime();
             for (int i = 0; i < result.size(); i++) {
                 for (Frame frame1 : result.get(i)) {
                     for (int j = i + 1; j < result.size(); j++) {
@@ -632,14 +649,9 @@ public class IRectanglesUnion {
                     }
                 }
             }
+            t2 = System.nanoTime();
+            debug(2, "Testing connected components: %.3f ms%n", (t2 - t1) * 1e-6);
         }
-        synchronized (lock) {
-            this.connectedComponents = result;
-        }
-        debug(1, "Rectangle union (%d rectangles), finding %d connected components: "
-                + "%.3f ms (%.3f mcs / rectangle)%n",
-            frames.size(), result.size(),
-            (t2 - t1) * 1e-6, (t2 - t1) * 1e-3 / (double) frames.size());
     }
 
     public void findBoundaries() {
@@ -721,12 +733,43 @@ public class IRectanglesUnion {
             frames.size(), (t2 - t1) * 1e-6);
     }
 
+    private long doFillConnectionLists(List<List<Frame>> connectionLists) {
+        assert !frames.isEmpty();
+        final HorizontalIBracketSet<HorizontalSide> bracketSet =
+            new HorizontalIBracketSet<HorizontalSide>(horizontalSides, false);
+        long count = 0;
+        while (bracketSet.next()) {
+            if (bracketSet.horizontal.first) {
+                final IBracket lastBefore = bracketSet.lastIntersectionBeforeLeft();
+                if (lastBefore != null && lastBefore.followingCoveringDepth > 0) {
+                    // Special case. We can be sure that this previous frame is in the same connected component,
+                    // and we need to add a fictive connection with it to correctly process situation,
+                    // when some frame or set of frames lies strictly inside another rectangle.
+                    // Moreover, this fictive link allows to check only first horizontal sides:
+                    // even it fully lies inside another rectangle and does not intersect its vertical sides,
+                    // we can reach that rectangle via such fictive limks.
+                    addConnection(connectionLists, lastBefore.intersectingSide.frame, bracketSet.horizontal.frame);
+                    count++;
+                }
+            }
+            if (USE_SECOND_SIDES_WHILE_SEARCHING_CONNECTIONS || bracketSet.horizontal.first) {
+                for (IBracket bracket : bracketSet.currentIntersections()) {
+                    if (DEBUG_LEVEL >= 2) {
+                        assert bracket.covers(bracketSet.y);
+                    }
+                    addConnection(connectionLists, bracket.intersectingSide.frame, bracketSet.horizontal.frame);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     private List<List<Frame>> doFindConnectedComponents(List<List<Frame>> connectionLists) {
         assert !frames.isEmpty();
         final List<List<Frame>> result = new ArrayList<List<Frame>>();
         final boolean[] frameVisited = new boolean[frames.size()];
-        final boolean[] added = new boolean[frames.size()];
-        // - arrays are filled by false by Java
+        // - filled by false by Java
         final Queue<Frame> queue = new LinkedList<Frame>();
         int index = 0;
         for (; ; ) {
@@ -916,7 +959,9 @@ public class IRectanglesUnion {
             boolean lastRightAtBoundary = lastBefore == null || lastBefore.followingCoveringDepth == 0;
             FrameSide lastLeftVertical = lastRightAtBoundary ? bracketSet.horizontal.transversalFrameSideFrom() : null;
             for (IBracket bracket : brackets) {
-                assert bracket.covers(bracketSet.y);
+                if (DEBUG_LEVEL >= 2) {
+                    assert bracket.covers(bracketSet.y);
+                }
                 boolean rightAtBoundary = bracket.followingCoveringDepth == 0;
                 if (rightAtBoundary == lastRightAtBoundary) {
                     continue;
@@ -1000,6 +1045,12 @@ public class IRectanglesUnion {
         if (DEBUG_LEVEL >= level) {
             System.out.printf(Locale.US, format, args);
         }
+    }
+
+    private static void addConnection(List<List<Frame>> connectionLists, Frame a, Frame b) {
+        connectionLists.get(a.index).add(b);
+        connectionLists.get(b.index).add(a);
+        // If we even adds a connection twice, it is not a problem for searching connected components.
     }
 
     private static void addHorizontalLink(
