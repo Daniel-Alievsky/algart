@@ -56,7 +56,7 @@ public class IRectanglesUnion {
         "net.algart.math.rectangles.debugLevel", 0);
 
     private static final boolean USE_SECOND_SIDES_WHILE_SEARCHING_CONNECTIONS = false;
-    // It seems that we can prove that this can stay false always
+    // - it seems that we can prove that this can be false always
 
     public static class Frame {
         final HorizontalSide lessHorizontalSide;
@@ -244,8 +244,8 @@ public class IRectanglesUnion {
 
     public static abstract class FrameSide extends Side {
         final Frame frame;
-        volatile SideSeries containingSeries = null;
-        // Must be volatile, because initialized further and maybe from a parallel thread
+        SideSeries containingSeries = null;
+        // - creation of containingSeries is synchronized
 
         private FrameSide(boolean first, Frame frame) {
             super(first);
@@ -657,6 +657,8 @@ public class IRectanglesUnion {
     public void findBoundaries() {
         doCreateSideLists();
         synchronized (lock) {
+            // Global synchronization necessary, because we change internal fields like containingSeries
+            // in already existing structures.
             if (this.allBoundaries != null) {
                 return;
             }
@@ -666,37 +668,35 @@ public class IRectanglesUnion {
                 this.verticalSides = Collections.emptyList();
                 return;
             }
+            long t1 = System.nanoTime();
+            this.horizontalSideSeries = createHorizontalSideSeriesLists();
+            this.verticalSideSeries = createVerticalSideSeriesLists();
+            long t2 = System.nanoTime();
+            final long hCount = doFindHorizontalBoundaries();
+            long t3 = System.nanoTime();
+            final long vCount = doConvertHorizontalToVerticalLinks();
+            if (vCount != hCount) {
+                throw new AssertionError("Different number of horizontal and vertical links found");
+            }
+            long t4 = System.nanoTime();
+            final List<List<BoundaryLink>> result = doJoinBoundaries(hCount);
+            long t5 = System.nanoTime();
+            synchronized (lock) {
+                this.allBoundaries = result;
+            }
+            long t6 = System.nanoTime();
+            long totalLinkCount = 0;
+            for (List<BoundaryLink> boundary : result) {
+                totalLinkCount += boundary.size();
+            }
+            debug(1, "Rectangle union (%d rectangles), finding %d boundaries with %d links: "
+                    + "%.3f ms = %.3f ms initializing + %.3f ms %d horizontal links + %.3f ms %d vertical links + "
+                    + "%.3f ms joining links + %.3f ms correcting data structures (%.3f mcs / rectangle)%n",
+                frames.size(), result.size(), totalLinkCount,
+                (t6 - t1) * 1e-6, (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, hCount, (t4 - t3) * 1e-6, vCount,
+                (t5 - t4) * 1e-6, (t6 - t5) * 1e-6,
+                (t6 - t1) * 1e-3 / (double) frames.size());
         }
-        long t1 = System.nanoTime();
-        final List<HorizontalSideSeries> horizontalSeries = createHorizontalSideSeriesLists();
-        final List<VerticalSideSeries> verticalSeries = createVerticalSideSeriesLists();
-        long t2 = System.nanoTime();
-        final long hCount = doFindHorizontalBoundaries(horizontalSeries);
-        long t3 = System.nanoTime();
-        final long vCount = doConvertHorizontalToVerticalLinks(horizontalSeries, verticalSeries);
-        if (vCount != hCount) {
-            throw new AssertionError("Different number of horizontal and vertical links found");
-        }
-        long t4 = System.nanoTime();
-        final List<List<BoundaryLink>> result = doJoinBoundaries(horizontalSeries, hCount);
-        long t5 = System.nanoTime();
-        synchronized (lock) {
-            this.horizontalSideSeries = horizontalSeries;
-            this.verticalSideSeries = verticalSeries;
-            this.allBoundaries = result;
-        }
-        long t6 = System.nanoTime();
-        long totalLinkCount = 0;
-        for (List<BoundaryLink> boundary : result) {
-            totalLinkCount += boundary.size();
-        }
-        debug(1, "Rectangle union (%d rectangles), finding %d boundaries with %d links: "
-                + "%.3f ms = %.3f ms initializing + %.3f ms %d horizontal links + %.3f ms %d vertical links + "
-                + "%.3f ms joining links + %.3f ms correcting data structures (%.3f mcs / rectangle)%n",
-            frames.size(), result.size(), totalLinkCount,
-            (t6 - t1) * 1e-6, (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, hCount, (t4 - t3) * 1e-6, vCount,
-            (t5 - t4) * 1e-6, (t6 - t5) * 1e-6,
-            (t6 - t1) * 1e-3 / (double) frames.size());
     }
 
     @Override
@@ -948,10 +948,10 @@ public class IRectanglesUnion {
         }
     }
 
-    private long doFindHorizontalBoundaries(List<HorizontalSideSeries> horizontalSeries) {
+    private long doFindHorizontalBoundaries() {
         assert !frames.isEmpty();
         final HorizontalIBracketSet<HorizontalSideSeries> bracketSet =
-            new HorizontalIBracketSet<HorizontalSideSeries>(horizontalSeries, true);
+            new HorizontalIBracketSet<HorizontalSideSeries>(horizontalSideSeries, true);
         long count = 0;
         while (bracketSet.next()) {
             final Set<IBracket> brackets = bracketSet.currentIntersections();
@@ -981,10 +981,7 @@ public class IRectanglesUnion {
         return count;
     }
 
-    private long doConvertHorizontalToVerticalLinks(
-        List<HorizontalSideSeries> horizontalSideSeries,
-        List<VerticalSideSeries> verticalSideSeries)
-    {
+    private long doConvertHorizontalToVerticalLinks() {
         assert !frames.isEmpty();
         for (HorizontalSideSeries series : horizontalSideSeries) {
             for (HorizontalBoundaryLink link : series.containedBoundaryLinks) {
@@ -1022,10 +1019,7 @@ public class IRectanglesUnion {
         return count;
     }
 
-    private List<List<BoundaryLink>> doJoinBoundaries(
-        List<HorizontalSideSeries> horizontalSideSeries,
-        long numberOfHorizontalLinks)
-    {
+    private List<List<BoundaryLink>> doJoinBoundaries(long numberOfHorizontalLinks) {
         assert !frames.isEmpty();
         final long maxCount = 10 * Math.min(numberOfHorizontalLinks, Integer.MAX_VALUE);
         // really the limit is 2 * numberOfHorizontalLinks;
