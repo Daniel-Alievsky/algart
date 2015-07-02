@@ -200,42 +200,49 @@ public class IRectangleUnionTest {
                     area.add(new Area(shape));
                 }
                 long t2 = System.nanoTime();
-                double[] c = new double[6];
                 int count = 0;
-                final List<double[]> path = new ArrayList<double[]>();
                 for (PathIterator pi = area.getPathIterator(null); !pi.isDone(); pi.next()) {
-                    pi.currentSegment(c);
-                    path.add(c.clone());
                     count++;
-                    if (testIndex == 0) {
-                        if (count < 20) {
-                            System.out.printf("AWT path iteration #%d: type %d, coordinates %.1f, %.1f, %.1f, %.1f%n",
-                                count, pi.getWindingRule(), c[0], c[1], c[2], c[3]);
-                        } else if (count == 20) {
-                            System.out.println("...");
-                        }
-                    }
                 }
-                long t3 = System.nanoTime();
-                System.out.printf("AWT area: %.3f ms building, %.3f ms iterating path (%d elements)%n",
-                    (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, count);
+                System.out.printf("AWT area: %.3f ms building (%d elements)%n", (t2 - t1) * 1e-6, count);
                 if (testIndex == 0) {
                     BufferedImage bufferedImage = new BufferedImage(
                         (int) (imageWidth / divider), (int) (imageHeight / divider), BufferedImage.TYPE_INT_BGR);
-                    final Graphics g = bufferedImage.getGraphics();
+                    final Graphics2D g = (Graphics2D) bufferedImage.getGraphics();
+                    g.setColor(Color.DARK_GRAY);
+                    g.fill(area);
+                    g.setColor(Color.RED);
+                    g.draw(area);
                     int value = 256;
-                    for (int k = 1, n = path.size(); k < n; k++) {
+                    count = 0;
+                    double[] c1 = null;
+                    for (PathIterator pi = area.getPathIterator(null); !pi.isDone(); pi.next()) {
                         if (value >= 256) {
                             value = 63;
                         }
-                        double[] c1 = path.get(k - 1);
-                        double[] c2 = path.get(k);
-                        g.setColor(new Color(value, value, 0));
-                        g.drawLine(
-                            (int) (c1[0] / divider),
-                            (int) (c1[1] / divider),
-                            (int) (c2[0] / divider),
-                            (int) (c2[1] / divider));
+                        double[] c2 = new double[6];
+                        final int type = pi.currentSegment(c2);
+                        if (type == PathIterator.SEG_MOVETO) {
+                            value = 31;
+                        } else if (c1 != null && type == PathIterator.SEG_LINETO) {
+                            g.setColor(new Color(value, value, 0));
+                            g.drawLine(
+                                (int) (c1[0] / divider),
+                                (int) (c1[1] / divider),
+                                (int) (c2[0] / divider),
+                                (int) (c2[1] / divider));
+                        }
+                        count++;
+                        if (testIndex == 0) {
+                            if (count < 40) {
+                                System.out.printf(
+                                    "AWT path iteration #%d: type %d, rule %d, coordinates %.1f, %.1f%n",
+                                    count, type, pi.getWindingRule(), c2[0], c2[1]);
+                            } else if (count == 20) {
+                                System.out.println("...");
+                            }
+                        }
+                        c1 = c2;
                         value += 32;
                     }
                     File f = new File(demoFolder, rectanglesFile.getName() + ".awt.bmp");
