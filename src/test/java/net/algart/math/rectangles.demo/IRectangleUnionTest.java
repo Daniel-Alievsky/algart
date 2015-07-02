@@ -50,16 +50,21 @@ public class IRectangleUnionTest {
     private static final boolean ACTUAL_CALL_FIND_METHODS = true;
 
     public static void main(String[] args) throws IOException {
-        if (args.length < 3) {
+        boolean awt;
+        int startArgIndex = 0;
+        if (awt = startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-awt")) {
+            startArgIndex++;
+        }
+        if (args.length < startArgIndex + 3) {
             System.out.println("Usage:");
             System.out.println("    " + IRectangleUnionTest.class.getName()
-                + " numberOfTests rectangles-description.txt demo-files-folder [coordinate-divider]");
+                + " [-awt] numberOfTests rectangles-description.txt demo-files-folder [coordinate-divider]");
             return;
         }
-        final int numberOfTests = Integer.parseInt(args[0]);
-        final File rectanglesFile = new File(args[1]);
-        final File demoFolder = new File(args[2]);
-        final long divider = args.length >= 4 ? Long.parseLong(args[3]) : 1;
+        final int numberOfTests = Integer.parseInt(args[startArgIndex]);
+        final File rectanglesFile = new File(args[startArgIndex + 1]);
+        final File demoFolder = new File(args[startArgIndex + 2]);
+        final long divider = args.length > startArgIndex + 3 ? Long.parseLong(args[startArgIndex + 3]) : 1;
         demoFolder.mkdirs();
         String[] description = parseConfigurationFile(rectanglesFile);
         final String algorithm = description[0];
@@ -130,15 +135,16 @@ public class IRectangleUnionTest {
             }
         }
         IRectanglesUnion rectangleUnion = IRectanglesUnion.newInstance(rectangles);
+        final IRectangularArea circumscribedRectangle = rectangleUnion.circumscribedRectangle();
         if (imageWidth == null) {
-            imageWidth = rectangleUnion.circumscribedRectangle().max(0) + 100;
+            imageWidth = circumscribedRectangle == null ? 100 : circumscribedRectangle.max(0) + 100;
         }
         if (imageHeight == null) {
-            imageHeight = rectangleUnion.circumscribedRectangle().max(1) + 100;
+            imageHeight = circumscribedRectangle == null ? 100 : circumscribedRectangle.max(1) + 100;
         }
 
         List<Matrix<? extends UpdatablePArray>> demo = newImage(imageWidth / divider, imageHeight / divider);
-        draw(demo, rectangleUnion.circumscribedRectangle(), divider, Color.YELLOW, Color.BLUE);
+        draw(demo, circumscribedRectangle, divider, Color.YELLOW, Color.BLUE);
         for (IRectangularArea area : rectangles) {
             draw(demo, area, divider, Color.LIGHT_GRAY, Color.DARK_GRAY);
         }
@@ -153,7 +159,7 @@ public class IRectangleUnionTest {
             if (ACTUAL_CALL_FIND_METHODS) {
                 rectangleUnion.findConnectedComponents();
             }
-            for (int k = -1; k < Math.min(10, rectangleUnion.connectedComponentCount()); k++) {
+            for (int k = -1; k < Math.min(5, rectangleUnion.connectedComponentCount()); k++) {
                 final IRectanglesUnion component = k == -1 ? rectangleUnion : rectangleUnion.connectedComponent(k);
                 if (ACTUAL_CALL_FIND_METHODS) {
                     component.findBoundaries();
@@ -176,64 +182,67 @@ public class IRectangleUnionTest {
                             + " into " + f);
                         ExternalAlgorithmCaller.writeImage(f, demo);
                         index++;
-                        if (index > 10) {
+                        if (index > 5) {
                             break;
                         }
                     }
+                    System.out.println();
                 }
             }
         }
-        for (int testIndex = 0; testIndex < numberOfTests; testIndex++) {
-            System.out.printf("%nAWT test #%d%n", testIndex + 1);
-            Area area = new Area();
-            long t1 = System.nanoTime();
-            for (IRectangularArea r : rectangles) {
-                Shape shape = new Rectangle2D.Double(r.min(0), r.min(1), r.size(0), r.size(1));
-                area.add(new Area(shape));
-            }
-            long t2 = System.nanoTime();
-            double[] c = new double[6];
-            int count = 0;
-            final List<double[]> path = new ArrayList<double[]>();
-            for (PathIterator pi = area.getPathIterator(null); !pi.isDone(); pi.next()) {
-                pi.currentSegment(c);
-                path.add(c.clone());
-                count++;
+        if (awt) {
+            for (int testIndex = 0; testIndex < numberOfTests; testIndex++) {
+                System.out.printf("%nAWT test #%d%n", testIndex + 1);
+                Area area = new Area();
+                long t1 = System.nanoTime();
+                for (IRectangularArea r : rectangles) {
+                    Shape shape = new Rectangle2D.Double(r.min(0), r.min(1), r.size(0), r.size(1));
+                    area.add(new Area(shape));
+                }
+                long t2 = System.nanoTime();
+                double[] c = new double[6];
+                int count = 0;
+                final List<double[]> path = new ArrayList<double[]>();
+                for (PathIterator pi = area.getPathIterator(null); !pi.isDone(); pi.next()) {
+                    pi.currentSegment(c);
+                    path.add(c.clone());
+                    count++;
+                    if (testIndex == 0) {
+                        if (count < 20) {
+                            System.out.printf("AWT path iteration #%d: type %d, coordinates %.1f, %.1f, %.1f, %.1f%n",
+                                count, pi.getWindingRule(), c[0], c[1], c[2], c[3]);
+                        } else if (count == 20) {
+                            System.out.println("...");
+                        }
+                    }
+                }
+                long t3 = System.nanoTime();
+                System.out.printf("AWT area: %.3f ms building, %.3f ms iterating path (%d elements)%n",
+                    (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, count);
                 if (testIndex == 0) {
-                    if (count < 20) {
-                        System.out.printf("AWT path iteration #%d: type %d, coordinates %.1f, %.1f, %.1f, %.1f%n",
-                            count, pi.getWindingRule(), c[0], c[1], c[2], c[3]);
-                    } else if (count == 20) {
-                        System.out.println("...");
+                    BufferedImage bufferedImage = new BufferedImage(
+                        (int) (imageWidth / divider), (int) (imageHeight / divider), BufferedImage.TYPE_INT_BGR);
+                    final Graphics g = bufferedImage.getGraphics();
+                    int value = 256;
+                    for (int k = 1, n = path.size(); k < n; k++) {
+                        if (value >= 256) {
+                            value = 63;
+                        }
+                        double[] c1 = path.get(k - 1);
+                        double[] c2 = path.get(k);
+                        g.setColor(new Color(value, value, 0));
+                        g.drawLine(
+                            (int) (c1[0] / divider),
+                            (int) (c1[1] / divider),
+                            (int) (c2[0] / divider),
+                            (int) (c2[1] / divider));
+                        value += 32;
                     }
+                    File f = new File(demoFolder, rectanglesFile.getName() + ".awt.bmp");
+                    System.out.println();
+                    System.out.println("Writing AWT path into " + f);
+                    ImageIO.write(bufferedImage, "bmp", f);
                 }
-            }
-            long t3 = System.nanoTime();
-            System.out.printf("AWT area: %.3f ms building, %.3f ms iterating path (%d elements)%n",
-                (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, count);
-            if (testIndex == 0) {
-                BufferedImage bufferedImage = new BufferedImage(
-                    (int) (imageWidth / divider), (int) (imageHeight / divider), BufferedImage.TYPE_INT_BGR);
-                final Graphics g = bufferedImage.getGraphics();
-                int value = 256;
-                for (int k = 1, n = path.size(); k < n; k++) {
-                    if (value >= 256) {
-                        value = 63;
-                    }
-                    double[] c1 = path.get(k - 1);
-                    double[] c2 = path.get(k);
-                    g.setColor(new Color(value, value, 0));
-                    g.drawLine(
-                        (int) (c1[0] / divider),
-                        (int) (c1[1] / divider),
-                        (int) (c2[0] / divider),
-                        (int) (c2[1] / divider));
-                    value += 32;
-                }
-                File f = new File(demoFolder, rectanglesFile.getName() + ".awt.bmp");
-                System.out.println();
-                System.out.println("Writing AWT path into " + f);
-                ImageIO.write(bufferedImage, "bmp", f);
             }
         }
     }
@@ -324,6 +333,9 @@ public class IRectangleUnionTest {
         Color innerColor,
         Integer chosenColorComponent)
     {
+        if (area == null) {
+            return;
+        }
         final IRectangularArea divided = IRectangularArea.valueOf(
             area.min().multiply(1.0 / divider),
             area.max().multiply(1.0 / divider));

@@ -1,12 +1,12 @@
 regular
-20   //frameMinWidth
-20   //frameMaxWidth
+30   //frameMinWidth
+30   //frameMaxWidth
 18   //frameMinHeight
 18   //frameMaxHeight
 -1   //imageWidth
 -1   //imageHeight
-100   //horizontalCount
-100   //verticalCount
+100  //horizontalCount
+100  //verticalCount
 3    //overlap
 10   //maxError
 157  //randSeed

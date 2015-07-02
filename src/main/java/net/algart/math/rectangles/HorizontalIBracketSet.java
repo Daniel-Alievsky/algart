@@ -36,6 +36,7 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
     H horizontal;
     long y;
     private NavigableSet<IBracket> intersectingSides = new TreeSet<IBracket>();
+    private List<IRectanglesUnion.FrameSide> sidesBuffer = new ArrayList<IRectanglesUnion.FrameSide>();
 
     HorizontalIBracketSet(List<H> allHorizontals, boolean onlyStrictIntersections) {
         assert allHorizontals != null;
@@ -160,7 +161,8 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
     }
 
     private void addHorizontal(IRectanglesUnion.Side h) {
-        for (IRectanglesUnion.FrameSide horizontalSide : h.allContainedFrameSides()) {
+        h.allContainedFrameSides(sidesBuffer);
+        for (IRectanglesUnion.FrameSide horizontalSide : sidesBuffer) {
             final IBracket bracketFrom = new IBracket(horizontalSide.transversalFrameSideFrom(), true);
             final IBracket bracketTo = new IBracket(horizontalSide.transversalFrameSideTo(), false);
             // Note: theoretically it could be faster not to allocate brackets here,
@@ -183,7 +185,8 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
     }
 
     private void removeHorizontal(IRectanglesUnion.Side h) {
-        for (IRectanglesUnion.FrameSide horizontalSide : h.allContainedFrameSides()) {
+        h.allContainedFrameSides(sidesBuffer);
+        for (IRectanglesUnion.FrameSide horizontalSide : sidesBuffer) {
             final IBracket bracketFrom = new IBracket(horizontalSide.transversalFrameSideFrom(), true);
             final IBracket bracketTo = new IBracket(horizontalSide.transversalFrameSideTo(), false);
             for (IBracket bracket : intersectingSides.subSet(bracketFrom, false, bracketTo, false)) {
