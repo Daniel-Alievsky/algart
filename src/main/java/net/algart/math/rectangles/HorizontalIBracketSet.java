@@ -160,6 +160,35 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
         return intersectingSides.lower(bracketFrom);
     }
 
+    IRectanglesUnion.FrameSide maxLeftBeloningToUnion() {
+        assert onlyStrictIntersections : "non-strict version is not supported in this method";
+        IBracket bracket = new IBracket(horizontal.transversalFrameSideFrom(), true);
+        for (;;) {
+            final IBracket next = intersectingSides.lower(bracket);
+            if (next == null) {
+                assert bracket.followingCoveringDepth == 0;
+                return bracket.intersectingSide;
+            }
+            if (next.followingCoveringDepth == 0) {
+                return bracket.intersectingSide;
+            }
+            bracket = next;
+        }
+    }
+
+    IRectanglesUnion.FrameSide minRightBeloningToUnion() {
+        assert onlyStrictIntersections : "non-strict version is not supported in this method";
+        IBracket bracket = new IBracket(horizontal.transversalFrameSideTo(), false);
+        for (;;) {
+            if (bracket.followingCoveringDepth == 0) {
+                return bracket.intersectingSide;
+            }
+            final IBracket next = intersectingSides.higher(bracket);
+            assert next != null;
+            bracket = next;
+        }
+    }
+
     private void addHorizontal(IRectanglesUnion.Side h) {
         h.allContainedFrameSides(sidesBuffer);
         for (IRectanglesUnion.FrameSide horizontalSide : sidesBuffer) {

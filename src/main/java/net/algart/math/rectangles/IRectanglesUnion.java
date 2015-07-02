@@ -245,7 +245,6 @@ public class IRectanglesUnion {
     public static abstract class FrameSide extends Side {
         final Frame frame;
         SideSeries containingSeries = null;
-        // - creation of containingSeries is synchronized
 
         private FrameSide(boolean first, Frame frame) {
             super(first);
@@ -1003,8 +1002,10 @@ public class IRectanglesUnion {
     }
 
     private void doExtractHorizontalSeriesAtBoundary() {
+        int count = 0;
         for (HorizontalSideSeries series : horizontalSideSeries) {
             if (series.containedBoundaryLinks != null) {
+                series.indexInSortedListAtBoundary = count++;
                 this.horizontalSideSeriesAtBoundary.add(series);
             }
         }
@@ -1050,8 +1051,10 @@ public class IRectanglesUnion {
     }
 
     private void doExtractVerticalSeriesAtBoundary() {
+        int count = 0;
         for (VerticalSideSeries series : verticalSideSeries) {
             if (series.containedBoundaryLinks != null) {
+                series.indexInSortedListAtBoundary = count++;
                 this.verticalSideSeriesAtBoundary.add(series);
             }
         }
@@ -1172,6 +1175,7 @@ public class IRectanglesUnion {
         private FrameSide sideTo;
         private final FrameSide firstSide;
         private List<FrameSide> otherSides = null;
+        int indexInSortedListAtBoundary = -1;
 
         private SideSeries(FrameSide initialSide) {
             super(initialSide.first);
