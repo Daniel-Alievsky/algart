@@ -165,12 +165,18 @@ public class IRectangleUnionTest {
                     component.findBoundaries();
                 }
                 if (testIndex == 0) {
+                    System.out.println();
                     demo = drawUnion(imageWidth, imageHeight, component, divider);
                     File f = new File(demoFolder, rectanglesFile.getName()
                         + (k == -1 ? ".all" : ".component-" + k) + ".bmp");
-                    System.out.println();
                     System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
                         + " into " + f + ": " + component);
+                    ExternalAlgorithmCaller.writeImage(f, demo);
+                    demo = drawRectangles(imageWidth, imageHeight, component, divider);
+                    f = new File(demoFolder, rectanglesFile.getName()
+                        + (k == -1 ? ".all" : ".component-" + k) + ".rectangles.bmp");
+                    System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
+                        + " largest rectangles information into " + f + ": " + component);
                     ExternalAlgorithmCaller.writeImage(f, demo);
                     int index = 0;
                     for (List<IRectanglesUnion.BoundaryLink> boundary : component.allBoundaries()) {
@@ -287,15 +293,31 @@ public class IRectangleUnionTest {
         for (IRectanglesUnion.Frame frame : union.frames()) {
             draw(result, frame.rectangle(), divider, new Color(0, 0, 128), Color.BLUE);
         }
-        final List<IRectanglesUnion.HorizontalBoundaryLink> horizontals = union.allHorizontalBoundaryLinks();
-        for (IRectanglesUnion.BoundaryLink link : horizontals) {
-            draw(result, link.sidePart(), divider,
+        for (IRectanglesUnion.BoundaryLink link : union.allHorizontalBoundaryLinks()) {
+            draw(result, link.equivalentRectangle(), divider,
                 new Color(0, 155 + rnd.nextInt(100), 0), Color.BLACK, 1);
         }
-        final List<IRectanglesUnion.VerticalBoundaryLink> verticals = union.allVerticalBoundaryLinks();
-        for (IRectanglesUnion.BoundaryLink link : verticals) {
-            draw(result, link.sidePart(), divider,
+        for (IRectanglesUnion.BoundaryLink link : union.allVerticalBoundaryLinks()) {
+            draw(result, link.equivalentRectangle(), divider,
                 new Color(155 + rnd.nextInt(100), 0, 0), Color.BLACK, 0);
+        }
+        return result;
+    }
+
+    private static List<Matrix<? extends UpdatablePArray>> drawRectangles(
+        long imageWidth, long imageHeight,
+        IRectanglesUnion union,
+        long divider)
+    {
+        final List<Matrix<? extends UpdatablePArray>> result = newImage(imageWidth / divider, imageHeight / divider);
+        final Random rnd = new Random(157);
+        for (IRectanglesUnion.Frame frame : union.frames()) {
+            draw(result, frame.rectangle(), divider, new Color(0, 0, 128), Color.BLUE);
+        }
+        for (IRectanglesUnion.Side section : union.horizontalSectionsByLessSides()) {
+            final IRectangularArea rectangle = section.equivalentRectangle();
+            assert rectangle != null;
+            draw(result, rectangle, divider, new Color(255, 155 + rnd.nextInt(100), 0), Color.BLACK);
         }
         return result;
     }
@@ -316,7 +338,7 @@ public class IRectangleUnionTest {
                 baseColor.getRed() * value / 255,
                 baseColor.getGreen() * value / 255,
                 baseColor.getBlue() * value / 255);
-            draw(result, link.sidePart(), divider, color, Color.BLACK);
+            draw(result, link.equivalentRectangle(), divider, color, Color.BLACK);
             value += 32;
         }
         return result;

@@ -24,7 +24,7 @@
 
 package net.algart.math.rectangles;
 
-class SearchMaximalIRectangleUnderGraph {
+class SearchLargestIRectangleUnderGraph {
     final long[] x;
     final long[] y;
     long currentFromY;
@@ -34,8 +34,9 @@ class SearchMaximalIRectangleUnderGraph {
     long maxRectangleToX = Long.MIN_VALUE;
     long maxRectangleFromY = Long.MAX_VALUE;
     long maxRectangleToY = Long.MIN_VALUE;
+    boolean maxRectangleCorrected = false;
 
-    SearchMaximalIRectangleUnderGraph(long[] x, long[] y, long currentFromY) {
+    SearchLargestIRectangleUnderGraph(long[] x, long[] y, long currentFromY) {
         this.x = x;
         this.y = y;
         assert x.length == y.length + 1 : "number of function values must be 1 less than number of x values";
@@ -110,6 +111,7 @@ class SearchMaximalIRectangleUnderGraph {
             maxRectangleToX = toX;
             maxRectangleToY = toY;
             maxRectangleArea = area;
+            maxRectangleCorrected = true;
         }
     }
 

@@ -161,32 +161,31 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
     }
 
     IRectanglesUnion.FrameSide maxLeftBeloningToUnion() {
-        assert onlyStrictIntersections : "non-strict version is not supported in this method";
-        IBracket bracket = new IBracket(horizontal.transversalFrameSideFrom(), true);
-        for (;;) {
-            final IBracket next = intersectingSides.lower(bracket);
-            if (next == null) {
-                assert bracket.followingCoveringDepth == 0;
-                return bracket.intersectingSide;
+        assert !onlyStrictIntersections : "strict version is not supported in this method";
+        final IBracket bracketFrom = new IBracket(horizontal.transversalFrameSideFrom(), true);
+        final NavigableSet<IBracket> headSet = intersectingSides.headSet(bracketFrom, false).descendingSet();
+        IRectanglesUnion.FrameSide last = bracketFrom.intersectingSide;
+        for (IBracket bracket : headSet) {
+            assert bracket.followingCoveringDepth >= 0;
+            if (bracket.followingCoveringDepth == 0) {
+                return last;
             }
-            if (next.followingCoveringDepth == 0) {
-                return bracket.intersectingSide;
-            }
-            bracket = next;
+            last = bracket.intersectingSide;
         }
+        return last;
     }
 
     IRectanglesUnion.FrameSide minRightBeloningToUnion() {
-        assert onlyStrictIntersections : "non-strict version is not supported in this method";
-        IBracket bracket = new IBracket(horizontal.transversalFrameSideTo(), false);
-        for (;;) {
+        assert !onlyStrictIntersections : "strict version is not supported in this method";
+        final IBracket bracketTo = new IBracket(horizontal.transversalFrameSideTo(), false);
+        final NavigableSet<IBracket> tailSet = intersectingSides.tailSet(bracketTo, true);
+        for (IBracket bracket : tailSet) {
+            assert bracket.followingCoveringDepth >= 0;
             if (bracket.followingCoveringDepth == 0) {
                 return bracket.intersectingSide;
             }
-            final IBracket next = intersectingSides.higher(bracket);
-            assert next != null;
-            bracket = next;
         }
+        return bracketTo.intersectingSide;
     }
 
     private void addHorizontal(IRectanglesUnion.Side h) {

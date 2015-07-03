@@ -142,6 +142,20 @@ public class IRectanglesUnion {
          */
         public abstract long boundTo();
 
+        public IRectangularArea equivalentRectangle() {
+            final long coord = frameSideCoord();
+            final long from = boundFrom();
+            final long to = boundTo();
+            assert from <= to;
+            if (from == to) {
+                return null;
+            } else if (isHorizontal()) {
+                return IRectangularArea.valueOf(from, coord, to - 1, coord);
+            } else {
+                return IRectangularArea.valueOf(coord, from, coord, to - 1);
+            }
+        }
+
         @Override
         public int compareTo(Side o) {
             if (this.getClass() != o.getClass()) {
@@ -397,7 +411,7 @@ public class IRectanglesUnion {
             return to;
         }
 
-        public abstract IRectangularArea sidePart();
+        public abstract IRectangularArea equivalentRectangle();
 
         @Override
         public int compareTo(BoundaryLink o) {
@@ -476,7 +490,7 @@ public class IRectanglesUnion {
         }
 
         @Override
-        public IRectangularArea sidePart() {
+        public IRectangularArea equivalentRectangle() {
             return IRectangularArea.valueOf(
                 from, containingSeries.frameSideCoord(),
                 to - 1, containingSeries.frameSideCoord());
@@ -508,7 +522,7 @@ public class IRectanglesUnion {
         }
 
         @Override
-        public IRectangularArea sidePart() {
+        public IRectangularArea equivalentRectangle() {
             return IRectangularArea.valueOf(
                 containingSeries.frameSideCoord(), from,
                 containingSeries.frameSideCoord(), to - 1);
@@ -527,6 +541,8 @@ public class IRectanglesUnion {
     private volatile List<VerticalSideSeries> verticalSideSeriesAtBoundary = null;
     private volatile List<List<Frame>> connectedComponents = null;
     private volatile List<List<BoundaryLink>> allBoundaries = null;
+    private volatile List<HorizontalSection> horizontalSectionsByLessSides = null;
+    private volatile IRectangularArea largestRectangleInUnion = null;
     private final Object lock = new Object();
 
     IRectanglesUnion(List<Frame> frames) {
@@ -608,6 +624,16 @@ public class IRectanglesUnion {
     public List<List<BoundaryLink>> allBoundaries() {
         findBoundaries();
         return Collections.unmodifiableList(allBoundaries);
+    }
+
+    public List<Side> horizontalSectionsByLessSides() {
+        findLargestRectangleInUnion();
+        return Collections.<Side>unmodifiableList(horizontalSectionsByLessSides);
+    }
+
+    public IRectangularArea largestRectangleInUnion() {
+        findLargestRectangleInUnion();
+        return largestRectangleInUnion;
     }
 
     public void findConnectedComponents() {
@@ -716,6 +742,26 @@ public class IRectanglesUnion {
                     (t7 - t6) * 1e-6,
                     (t7 - t1) * 1e-3 / (double) frames.size(), (t7 - t1) * 1e-3 / (double) totalLinkCount);
             }
+        }
+    }
+
+    public void findLargestRectangleInUnion() {
+        findBoundaries();
+        synchronized (lock) {
+            if (this.largestRectangleInUnion != null) {
+                return;
+            }
+            if (frames.isEmpty()) {
+                this.horizontalSectionsByLessSides = Collections.emptyList();
+                this.largestRectangleInUnion = null;
+                return;
+            }
+        }
+        List<HorizontalSection> horizontalSectionsByLessSides = doFindHorizontalSectionsByLessSides();
+        final SearchLargestIRectangleUnderGraph searcher = doFindLargestRegtangles(horizontalSectionsByLessSides);
+        synchronized (lock) {
+            this.horizontalSectionsByLessSides = horizontalSectionsByLessSides;
+            this.largestRectangleInUnion = null; //TODO!!
         }
     }
 
@@ -1004,7 +1050,7 @@ public class IRectanglesUnion {
     private void doExtractHorizontalSeriesAtBoundary() {
         int count = 0;
         for (HorizontalSideSeries series : horizontalSideSeries) {
-            if (series.containedBoundaryLinks != null) {
+            if (series.containsBoundary()) {
                 series.indexInSortedListAtBoundary = count++;
                 this.horizontalSideSeriesAtBoundary.add(series);
             }
@@ -1053,7 +1099,7 @@ public class IRectanglesUnion {
     private void doExtractVerticalSeriesAtBoundary() {
         int count = 0;
         for (VerticalSideSeries series : verticalSideSeries) {
-            if (series.containedBoundaryLinks != null) {
+            if (series.containsBoundary()) {
                 series.indexInSortedListAtBoundary = count++;
                 this.verticalSideSeriesAtBoundary.add(series);
             }
@@ -1075,6 +1121,30 @@ public class IRectanglesUnion {
             }
         }
         return result;
+    }
+
+    private List<HorizontalSection> doFindHorizontalSectionsByLessSides() {
+        assert !frames.isEmpty();
+        List<HorizontalSection> result = new ArrayList<HorizontalSection>();
+        final HorizontalIBracketSet<HorizontalSideSeries> bracketSet =
+            new HorizontalIBracketSet<HorizontalSideSeries>(horizontalSideSeries, false);
+        while (bracketSet.next()) {
+            if (bracketSet.horizontal.first && bracketSet.horizontal.containsBoundary()) {
+                final FrameSide left = bracketSet.maxLeftBeloningToUnion();
+                final FrameSide right = bracketSet.minRightBeloningToUnion();
+                assert left != null;
+                assert right != null;
+                result.add(new HorizontalSection(true, bracketSet.y, left, right));
+            }
+        }
+        return result;
+    }
+
+    private SearchLargestIRectangleUnderGraph doFindLargestRegtangles(
+        List<HorizontalSection> horizontalSectionsByLessSides)
+    {
+        //TODO!!
+        return null;
     }
 
     static void debug(int level, String format, Object... args) {
@@ -1272,6 +1342,10 @@ public class IRectanglesUnion {
             containedBoundaryLinks.add(link);
         }
 
+        private boolean containsBoundary() {
+            return containedBoundaryLinks != null;
+        }
+
         private int containedLinksCount() {
             return containedBoundaryLinks == null ? 0 : containedBoundaryLinks.size();
         }
@@ -1306,8 +1380,62 @@ public class IRectanglesUnion {
             intersectingBoundaryLinks.add(link);
         }
 
+        private boolean containsBoundary() {
+            return containedBoundaryLinks != null;
+        }
+
         private int containedLinksCount() {
             return containedBoundaryLinks == null ? 0 : containedBoundaryLinks.size();
+        }
+    }
+
+    static class HorizontalSection extends Side {
+        private final long coord;
+        private final FrameSide sideFrom;
+        private final FrameSide sideTo;
+        private IRectangularArea largestRectangle = null;
+        // - can be accessed via reflection for debugging needs
+
+        public HorizontalSection(boolean first, long coord, FrameSide sideFrom, FrameSide sideTo) {
+            super(first);
+            this.coord = coord;
+            this.sideFrom = sideFrom;
+            this.sideTo = sideTo;
+        }
+
+        @Override
+        public boolean isHorizontal() {
+            return true;
+        }
+
+        @Override
+        public long boundCoord() {
+            return coord;
+        }
+
+        @Override
+        public long boundFrom() {
+            return sideFrom.boundCoord();
+        }
+
+        @Override
+        public long boundTo() {
+            return sideTo.boundCoord();
+        }
+
+        @Override
+        void allContainedFrameSides(List<FrameSide> result) {
+            // This method is not actual for such form of side.
+        }
+
+        @Override
+        FrameSide transversalFrameSideFrom() {
+            return sideFrom;
+        }
+
+        @Override
+        FrameSide transversalFrameSideTo() {
+            return sideTo;
         }
     }
 }
