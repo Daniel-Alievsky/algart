@@ -763,6 +763,24 @@ public class IRectanglesUnion {
             this.horizontalSectionsByLessSides = horizontalSectionsByLessSides;
             this.largestRectangleInUnion = null; //TODO!!
         }
+        if (DEBUG_LEVEL >= 2) {
+            long t1 = System.nanoTime();
+            for (HorizontalSection section : horizontalSectionsByLessSides) {
+                IRectangularArea r = section.equivalentRectangle();
+                Queue<IRectangularArea> queue = new LinkedList<IRectangularArea>();
+                queue.add(r);
+                for (Frame frame : frames) {
+                    IRectangularArea.subtractCollection(queue,
+                        IRectangularArea.valueOf(frame.fromX, frame.fromY, frame.toX - 1, frame.toY));
+                    // Note: we need to use toY instead of toY-1, because the section lies BETWEEN pixels
+                }
+                if (!queue.isEmpty()) {
+                    throw new AssertionError("Section " + section + " is not a subset of the union");
+                }
+            }
+            long t2 = System.nanoTime();
+            debug(2, "Testing horizontal sections: %.3f ms%n", (t2 - t1) * 1e-6);
+        }
     }
 
     @Override

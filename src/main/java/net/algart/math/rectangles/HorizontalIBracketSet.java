@@ -133,9 +133,10 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
             throw new AssertionError("Non-empty intersection set at the end of the loop");
         }
         if (IRectanglesUnion.DEBUG_LEVEL >= 3) {
-            System.out.printf("  Horizontal #%d, y=%d%s; brackets:%s",
+            System.out.printf("  Horizontal #%d, y=%d%s, %s; brackets:%s",
                 horizontalIndex, y,
                 horizontal == null ? " (LOOP FINISHED)" : horizontal.first ? " (starting)" : " (ending)",
+                horizontal,
                 toDebugString(intersectingSides));
         }
         return horizontal != null;
