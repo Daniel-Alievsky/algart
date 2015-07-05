@@ -24,34 +24,39 @@
 
 package net.algart.math.rectangles;
 
-class SearchLargestIRectangleUnderGraph {
-    final long[] x;
-    final long[] y;
+import java.util.Arrays;
+
+class SearchIRectangleUnderGraph {
+    private final long[] x;
+    private final long[] y;
     long currentFromY;
 
     double maxRectangleArea = Double.NEGATIVE_INFINITY;
-    long maxRectangleFromX = Long.MAX_VALUE;
-    long maxRectangleToX = Long.MIN_VALUE;
-    long maxRectangleFromY = Long.MAX_VALUE;
-    long maxRectangleToY = Long.MIN_VALUE;
+    long largestRectangleFromX = Long.MAX_VALUE;
+    long largestRectangleToX = Long.MIN_VALUE;
+    long largestRectangleFromY = Long.MAX_VALUE;
+    long largestRectangleToY = Long.MIN_VALUE;
     boolean maxRectangleCorrected = false;
 
-    SearchLargestIRectangleUnderGraph(long[] x, long[] y, long currentFromY) {
+    public SearchIRectangleUnderGraph(long[] x) {
         this.x = x;
-        this.y = y;
+        this.y = new long[x.length - 1];
         assert x.length == y.length + 1 : "number of function values must be 1 less than number of x values";
-        this.currentFromY = currentFromY;
+        this.currentFromY = Long.MAX_VALUE;
+        Arrays.fill(y, Long.MIN_VALUE);
     }
 
-    void correctMaximalRectangle(int fromIndex, int toIndex) {
-        assert fromIndex >= 0 && toIndex <= x.length && fromIndex <= toIndex;
+    public void setY(int index, long value) {
+        //TODO!! correct the pyramid of min/max
+        this.y[index] = value;
+    }
+
+    public void correctMaximalRectangle(int fromIndex, int toIndex) {
+        //TODO!! some problem in logic: sometimes assertion
+        assert fromIndex >= 0 && toIndex <= y.length && fromIndex <= toIndex :
+            "index out of ranges 0.." + y.length + ": " + fromIndex + ".." + toIndex;
         if (fromIndex == toIndex) {
             return;
-        }
-        for (int k = fromIndex; k < toIndex; k++) {
-            if (y[k] < currentFromY) {
-                throw new AssertionError("All y must be >= currentFromY");
-            }
         }
         // Unfortunately Java still does not support optimization of tail recursion (1.8),
         // so we should implement the stack manually
@@ -103,13 +108,14 @@ class SearchLargestIRectangleUnderGraph {
         }
     }
 
+
     private void correctMaxRectangle(long fromX, long fromY, long toX, long toY) {
         final double area = area(fromX, fromY, toX, toY);
         if (area > maxRectangleArea) {
-            maxRectangleFromX = fromX;
-            maxRectangleFromY = fromY;
-            maxRectangleToX = toX;
-            maxRectangleToY = toY;
+            largestRectangleFromX = fromX;
+            largestRectangleFromY = fromY;
+            largestRectangleToX = toX;
+            largestRectangleToY = toY;
             maxRectangleArea = area;
             maxRectangleCorrected = true;
         }
