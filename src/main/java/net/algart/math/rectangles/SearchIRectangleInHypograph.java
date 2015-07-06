@@ -24,21 +24,23 @@
 
 package net.algart.math.rectangles;
 
+import net.algart.math.IRectangularArea;
+
 import java.util.Arrays;
 
-class SearchIRectangleUnderGraph {
+class SearchIRectangleInHypograph {
     private final long[] x;
     private final long[] y;
-    long currentFromY;
+    private long currentFromY;
 
-    double maxRectangleArea = Double.NEGATIVE_INFINITY;
-    long largestRectangleFromX = Long.MAX_VALUE;
-    long largestRectangleToX = Long.MIN_VALUE;
-    long largestRectangleFromY = Long.MAX_VALUE;
-    long largestRectangleToY = Long.MIN_VALUE;
-    boolean maxRectangleCorrected = false;
+    private double maxRectangleArea = Double.NEGATIVE_INFINITY;
+    private long largestRectangleFromX = Long.MAX_VALUE;
+    private long largestRectangleToX = Long.MIN_VALUE;
+    private long largestRectangleFromY = Long.MAX_VALUE;
+    private long largestRectangleToY = Long.MIN_VALUE;
+    private boolean maxRectangleCorrected = false;
 
-    public SearchIRectangleUnderGraph(long[] x) {
+    public SearchIRectangleInHypograph(long[] x) {
         this.x = x;
         this.y = new long[x.length - 1];
         assert x.length == y.length + 1 : "number of function values must be 1 less than number of x values";
@@ -51,8 +53,31 @@ class SearchIRectangleUnderGraph {
         this.y[index] = value;
     }
 
+    public void resetAlreadyFoundRectangle() {
+        this.maxRectangleArea = Double.NEGATIVE_INFINITY;
+    }
+
+    public boolean isMaxRectangleCorrected() {
+        return maxRectangleCorrected;
+    }
+
+    public void resetMaxRectangleCorrected() {
+        this.maxRectangleCorrected = false;
+    }
+
+    public void setCurrentFromY(long currentFromY) {
+        this.currentFromY = currentFromY;
+    }
+
+    public IRectangularArea largestRectangle() {
+        assert largestRectangleFromX < largestRectangleToX;
+        assert largestRectangleFromY < largestRectangleToY;
+        return IRectangularArea.valueOf(
+            largestRectangleFromX, largestRectangleFromY,
+            largestRectangleToX - 1, largestRectangleToY - 1);
+    }
+
     public void correctMaximalRectangle(int fromIndex, int toIndex) {
-        //TODO!! some problem in logic: sometimes assertion
         assert fromIndex >= 0 && toIndex <= y.length && fromIndex <= toIndex :
             "index out of ranges 0.." + y.length + ": " + fromIndex + ".." + toIndex;
         if (fromIndex == toIndex) {
@@ -65,7 +90,11 @@ class SearchIRectangleUnderGraph {
         int stackTop = 2;
         stack[0] = fromIndex;
         stack[1] = toIndex;
-        for (;;) {
+        for (long iterationCount = 0; ; iterationCount++) {
+            if (iterationCount > 16 * (long) y.length + 16) {
+                // Really we can loop here ~ 2 * y.length times, including "empty" visits when fromIndex==toIndex
+                throw new AssertionError("Infinite loop detected");
+            }
             assert stackTop % 2 == 0;
             long maxY = currentFromY;
             for (int k = fromIndex; k < toIndex; k++) {
@@ -73,6 +102,7 @@ class SearchIRectangleUnderGraph {
                     maxY = y[k];
                 }
             }
+            // If fromIndex == toIndex, then maxY == currentFromY
             if (maxY == currentFromY || area(x[fromIndex], currentFromY, x[toIndex], maxY) <= maxRectangleArea) {
                 // we cannot find here a greater rectangle
                 if (stackTop == 0) {
@@ -98,11 +128,11 @@ class SearchIRectangleUnderGraph {
                 if (minIndex - fromIndex >= toIndex - (minIndex + 1)) {
                     stack[stackTop++] = fromIndex;
                     stack[stackTop++] = minIndex;
-                    toIndex = minIndex;
+                    fromIndex = minIndex + 1;
                 } else {
                     stack[stackTop++] = minIndex + 1;
                     stack[stackTop++] = toIndex;
-                    fromIndex = minIndex + 1;
+                    toIndex = minIndex;
                 }
             }
         }

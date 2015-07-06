@@ -720,11 +720,12 @@ public class IRectanglesUnion {
             final long vCount = doConvertHorizontalToVerticalLinks();
             this.verticalSideSeriesAtBoundary = new ArrayList<VerticalSideSeries>();
             long t5 = System.nanoTime();
-            this.allDifferentXAtBoundary = doExtractVerticalSeriesAtBoundary();
+            doExtractVerticalSeriesAtBoundary();
             if (vCount != hCount) {
-                throw new AssertionError("Different number of horizontal and vertical links found");
+                throw new AssertionError("Different numbers of horizontal and vertical links found");
             }
             long t6 = System.nanoTime();
+            this.allDifferentXAtBoundary = doExtractAllDifferentXAtBoundary();
             doSetLinkIndexes(hCount);
             assert hCount <= Integer.MAX_VALUE;
             // - it was checked in doSetLinkIndexes()
@@ -732,17 +733,14 @@ public class IRectanglesUnion {
             this.allBoundaries = doJoinBoundaries(hCount);
             long t7 = System.nanoTime();
             if (DEBUG_LEVEL >= 1) {
-                long totalLinkCount = 0;
-                for (List<BoundaryLink> boundary : allBoundaries) {
-                    totalLinkCount += boundary.size();
-                }
+                long totalLinkCount = totalCount(allBoundaries);
                 debug(1, "Rectangle union (%d rectangles), finding %d boundaries with %d links: "
                         + "%.3f ms = %.3f ms initializing "
                         + "+ %.3f ms %d horizontal links "
                         + "+ %.3f ms %d/%d horizontals at boundary "
                         + "+ %.3f ms %d vertical links "
                         + "+ %.3f ms %d/%d verticals at boundary "
-                        + "+ %.3f ms joining links "
+                        + "+ %.3f ms postprocessing and joining links "
                         + "(%.3f mcs / rectangle, %.3f mcs / link)%n",
                     frames.size(), allBoundaries().size(), totalLinkCount,
                     (t7 - t1) * 1e-6, (t2 - t1) * 1e-6,
@@ -770,21 +768,37 @@ public class IRectanglesUnion {
                 return;
             }
         }
-        final List<HorizontalSection> horizontalSectionsByLowerSides = new ArrayList<HorizontalSection>();
-        final SearchIRectangleUnderGraph searcher = doFindLargestRegtangles(horizontalSectionsByLowerSides);
+        long t1 = System.nanoTime();
+        final List<HorizontalSection> horizontalSectionsByLowerSides = doFindHorizontalSections();
+        long t2 = System.nanoTime();
+        final List<List<HorizontalBoundaryLink>> closingLinksIntersectingEachVertical =
+            doFindClosingLinksIntersectingEachVertical();
+        long t3 = System.nanoTime();
+        final SearchIRectangleInHypograph searcher = doFindLargestRegtangles(
+            horizontalSectionsByLowerSides,
+            closingLinksIntersectingEachVertical);
+        long t4 = System.nanoTime();
         synchronized (lock) {
             this.horizontalSectionsByLowerSides = horizontalSectionsByLowerSides;
-            //TODO!!
-//            assert searcher.largestRectangleFromX < searcher.largestRectangleToX;
-//            assert searcher.largestRectangleFromY < searcher.largestRectangleToY;
-//            this.largestRectangleInUnion = IRectangularArea.valueOf(
-//                searcher.largestRectangleFromX,
-//                searcher.largestRectangleFromY,
-//                searcher.largestRectangleToX - 1,
-//                searcher.largestRectangleToY - 1);
+            this.largestRectangleInUnion = searcher.largestRectangle();
+        }
+        if (DEBUG_LEVEL >= 1) {
+            long totalLinkCount = totalCount(allBoundaries);
+            debug(1, "Rectangle union (%d rectangles, %d links), finding largest rectangle %s: "
+                    + "%.3f ms = %.3f ms %d horizontal sections "
+                    + "+ %.3f ms %d links "
+                    + "intersecting with %d verticals "
+                    + "+ %.3f ms searching largest rectangle "
+                    + "(%.3f mcs / rectangle, %.3f mcs / link)%n",
+                frames.size(), totalLinkCount, this.largestRectangleInUnion,
+                (t4 - t1) * 1e-6, (t2 - t1) * 1e-6, horizontalSectionsByLowerSides.size(),
+                (t3 - t2) * 1e-6, totalCount(closingLinksIntersectingEachVertical),
+                allDifferentXAtBoundary.length - 1,
+                (t4 - t3) * 1e-6,
+                (t4 - t1) * 1e-3 / (double) frames.size(), (t4 - t1) * 1e-3 / (double) totalLinkCount);
         }
         if (DEBUG_LEVEL >= 2) {
-            long t1 = System.nanoTime();
+            t1 = System.nanoTime();
             for (HorizontalSection section : horizontalSectionsByLowerSides) {
                 IRectangularArea r = section.equivalentRectangle();
                 Queue<IRectangularArea> queue = new LinkedList<IRectangularArea>();
@@ -798,7 +812,7 @@ public class IRectanglesUnion {
                     throw new AssertionError("Section " + section + " is not a subset of the union");
                 }
             }
-            long t2 = System.nanoTime();
+            t2 = System.nanoTime();
             debug(2, "Testing horizontal sections: %.3f ms%n", (t2 - t1) * 1e-6);
         }
     }
@@ -1085,16 +1099,6 @@ public class IRectanglesUnion {
         return count;
     }
 
-    private void doExtractHorizontalSeriesAtBoundary() {
-        int count = 0;
-        for (HorizontalSideSeries series : horizontalSideSeries) {
-            if (series.containsBoundary()) {
-                series.indexInSortedListAtBoundary = count++;
-                this.horizontalSideSeriesAtBoundary.add(series);
-            }
-        }
-    }
-
     private long doConvertHorizontalToVerticalLinks() {
         assert !frames.isEmpty();
         for (HorizontalSideSeries series : horizontalSideSeriesAtBoundary) {
@@ -1134,32 +1138,46 @@ public class IRectanglesUnion {
         return count;
     }
 
-    private long[] doExtractVerticalSeriesAtBoundary() {
-        int count = 0, differentXCount = 0;
-        long lastX = 157;
-        for (VerticalSideSeries series : verticalSideSeries) {
-            series.numberOfLessCoordinatesAtBoundary = differentXCount;
+    private void doExtractHorizontalSeriesAtBoundary() {
+        int count = 0;
+        for (HorizontalSideSeries series : horizontalSideSeries) {
             if (series.containsBoundary()) {
-                final long coord = series.boundCoord();
-                if (count == 0 || coord != lastX) {
-                    lastX = coord;
-                    differentXCount++;
-                }
-                series.indexInSortedListAtBoundary = count;
-                count++;
+                series.indexInSortedListAtBoundary = count++;
+                this.horizontalSideSeriesAtBoundary.add(series);
+            }
+        }
+    }
+
+    private void doExtractVerticalSeriesAtBoundary() {
+        int count = 0;
+        for (VerticalSideSeries series : verticalSideSeries) {
+            if (series.containsBoundary()) {
+                series.indexInSortedListAtBoundary = count++;
                 this.verticalSideSeriesAtBoundary.add(series);
             }
         }
-        final long[] result = new long[differentXCount];
-        int index = 0;
-        lastX = 157;
+    }
+
+    private long[] doExtractAllDifferentXAtBoundary() {
+        int count = 0;
+        long lastX = 157;
         for (VerticalSideSeries series : verticalSideSeriesAtBoundary) {
             assert series.containsBoundary();
             final long coord = series.boundCoord();
-            if (index == 0 || coord != lastX) {
+            if (count == 0 || coord != lastX) {
                 lastX = coord;
-                result[index] = coord;
-                index++;
+                count++;
+            }
+            series.numberOfLessCoordinatesAtBoundary = count - 1;
+        }
+        final long[] result = new long[count];
+        count = 0;
+        for (VerticalSideSeries series : verticalSideSeriesAtBoundary) {
+            final long coord = series.boundCoord();
+            if (count == 0 || coord != lastX) {
+                lastX = coord;
+                result[count] = coord;
+                count++;
             }
         }
         return result;
@@ -1205,110 +1223,105 @@ public class IRectanglesUnion {
         return result;
     }
 
-    private SearchIRectangleUnderGraph doFindLargestRegtangles(
-        List<HorizontalSection> horizontalSectionsByLowerSides)
+
+    private List<HorizontalSection> doFindHorizontalSections() {
+        assert !frames.isEmpty();
+        final List<HorizontalSection> result = new ArrayList<HorizontalSection>();
+        final HorizontalIBracketSet<HorizontalSideSeries> bracketSet =
+            new HorizontalIBracketSet<HorizontalSideSeries>(horizontalSideSeries, false);
+        HorizontalSection lastSection = null;
+        while (bracketSet.next()) {
+            if (bracketSet.horizontal.first && bracketSet.horizontal.containsBoundary()) {
+                // We should remember that the current section of the whole figure (union)
+                // at this horizontal is always, at least, a superset of the current side series
+                // "bracketSet.horizontal"  (of course, the whole series lies non-strictly inside the union).
+                if (lastSection != null && bracketSet.coord == lastSection.coord) {
+                    assert lastSection.boundFrom() <=  bracketSet.horizontal.from : "sides series sorted incorrectly";
+                    if (bracketSet.horizontal.to <= lastSection.boundTo()) {
+                        // We did not leave the previous section: joning to previous section
+                        lastSection.boundaryLinksAtSection.addAll(bracketSet.horizontal.containedBoundaryLinks);
+                        continue;
+                    }
+                }
+                final FrameSide left = bracketSet.maxLeftBeloningToUnion();
+                final FrameSide right = bracketSet.minRightBeloningToUnion();
+                assert left != null;
+                assert right != null;
+                assert left.boundCoord() <= right.boundCoord();
+                // The range left..right is the current horizontal section
+                lastSection = new HorizontalSection(true, bracketSet.coord, left, right);
+                lastSection.boundaryLinksAtSection.addAll(bracketSet.horizontal.containedBoundaryLinks);
+                result.add(lastSection);
+            }
+        }
+        return result;
+    }
+
+    private List<List<HorizontalBoundaryLink>> doFindClosingLinksIntersectingEachVertical() {
+        assert !frames.isEmpty();
+        final List<List<HorizontalBoundaryLink>> result = createListOfLists(allDifferentXAtBoundary.length - 1);
+        for (HorizontalSideSeries series : horizontalSideSeriesAtBoundary) {
+            assert series.containsBoundary();
+            if (!series.first) {
+                for (HorizontalBoundaryLink closingLink : series.containedBoundaryLinks) {
+                    final int from = closingLink.transversalSeriesFrom.numberOfLessCoordinatesAtBoundary;
+                    final int to = closingLink.transversalSeriesTo.numberOfLessCoordinatesAtBoundary;
+                    for (int k = from; k < to; k++) {
+                        result.get(k).add(closingLink);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private SearchIRectangleInHypograph doFindLargestRegtangles(
+        List<HorizontalSection> horizontalSectionsByLowerSides,
+        List<List<HorizontalBoundaryLink>> closingLinksIntersectingEachVertical)
     {
         assert !frames.isEmpty();
         assert allDifferentXAtBoundary.length >= 2 : "If frames exist, they cannot have <2 vertical boundary links";
-        final HorizontalIBracketSet<HorizontalSideSeries> bracketSet =
-            new HorizontalIBracketSet<HorizontalSideSeries>(horizontalSideSeries, false);
-        final SearchIRectangleUnderGraph searcher = new SearchIRectangleUnderGraph(allDifferentXAtBoundary);
-        if (true) {
-            //TODO!!
-            return searcher;
-        }
+        final SearchIRectangleInHypograph searcher = new SearchIRectangleInHypograph(allDifferentXAtBoundary);
         final long[] workY = new long[allDifferentXAtBoundary.length - 1];
-        final boolean[] linkProcessed = new boolean[horizontalLinksCount];
-        List<List<HorizontalBoundaryLink>> secondLinksIntersectingEachVertical = createListOfLists(workY.length);
-        //TODO!! fill secondLinksIntersectingEachVertical
-        FrameSide left = null;
-        FrameSide right = null;
-        long lastCoord = 157;
-        while (bracketSet.next()) {
-            if (bracketSet.horizontal.containsBoundary()) {
-                if (left != null && bracketSet.coord != lastCoord) {
-                    // We leave a horizontal, so all links at that horizontal are actual in the searcher.
-                    // We can be sure that we will always leave the last horizontal, because there must be
-                    // second (closing) links after it.
-                    HorizontalSection lastSection = null;
-                    for (int index = horizontalSectionsByLowerSides.size() - 1; index >= 0; index--) {
-                        final HorizontalSection section = horizontalSectionsByLowerSides.get(index);
-                        if (section.coord != lastCoord) {
-                            break;
+        for (HorizontalSection section : horizontalSectionsByLowerSides) {
+            searcher.setCurrentFromY(section.coord);
+            for (HorizontalBoundaryLink openingLink : section.boundaryLinksAtSection) {
+                // Usually 1-2 horizontal links.
+                // We need to recalculate the hypograph above these links;
+                // above other parts of this section it was recalculated before this.
+                final int from = openingLink.transversalSeriesFrom.numberOfLessCoordinatesAtBoundary;
+                final int to = openingLink.transversalSeriesTo.numberOfLessCoordinatesAtBoundary;
+                Arrays.fill(workY, from, to, Long.MAX_VALUE);
+                for (int k = from; k < to; k++) {
+                    for (HorizontalBoundaryLink closingLink : closingLinksIntersectingEachVertical.get(k)) {
+                        final long y = closingLink.coord();
+                        if (y >= section.coord && y < workY[k]) {
+                            // Important: >=, not >! The can be second (closing) links
+                            // exactly at the same horizontal.
+                            workY[k] = y;
                         }
-                        if (!section.equals(lastSection)) {
-                            searcher.correctMaximalRectangle(
-                                ((VerticalSideSeries) section.sideFrom.parentSeries).numberOfLessCoordinatesAtBoundary,
-                                ((VerticalSideSeries) section.sideTo.parentSeries).numberOfLessCoordinatesAtBoundary);
-                        }
-                        lastSection = section;
+                        // It is interesting that we can just ignore here all first (opening)
+                        // horizontal links: inside all the horizontal section, which we should
+                        // analyse, the next horizontal openingLink is always second (closing)
                     }
-                    left = null;
-                    right = null;
                 }
-                if (bracketSet.horizontal.first) {
-                    left = bracketSet.maxLeftBeloningToUnion();
-                    right = bracketSet.minRightBeloningToUnion();
-                    assert left != null;
-                    assert right != null;
-                    // The range left..right is a superset of the current side series
-                    // (of course, the whole series lies non-strictly inside the union)
-                    horizontalSectionsByLowerSides.add(new HorizontalSection(true, bracketSet.coord, left, right));
-                    // We fill this list mostly for debugging and illustrative needs.
-                    // Note that the same section may be added here several times.
-                    for (HorizontalBoundaryLink link : bracketSet.horizontal.containedBoundaryLinks) {
-                        fillMinGreaterYGraph(
-                            searcher,
-                            secondLinksIntersectingEachVertical,
-                            linkProcessed,
-                            workY,
-                            link.transversalSeriesFrom.numberOfLessCoordinatesAtBoundary,
-                            link.transversalSeriesTo.numberOfLessCoordinatesAtBoundary);
-                    }
-                    lastCoord = bracketSet.coord;
+                for (int k = from; k < to; k++) {
+                    searcher.setY(k, workY[k]);
                 }
-                // no special action required for removed horizontal links
+            }
+            if (DEBUG_LEVEL >= 2) {
+                searcher.resetAlreadyFoundRectangle();
+            }
+            searcher.resetMaxRectangleCorrected();
+            searcher.correctMaximalRectangle(
+                ((VerticalSideSeries) section.left.parentSeries).numberOfLessCoordinatesAtBoundary,
+                ((VerticalSideSeries) section.right.parentSeries).numberOfLessCoordinatesAtBoundary);
+            // no special action required for removed horizontal links
+            if (searcher.isMaxRectangleCorrected()) {
+                section.largestRectangle = searcher.largestRectangle();
             }
         }
-        assert left == null : "No closing links after the last horizontal";
         return searcher;
-    }
-
-    private void fillMinGreaterYGraph(
-        SearchIRectangleUnderGraph searcher,
-        List<List<HorizontalBoundaryLink>> secondLinksIntersectingEachVertical,
-        boolean[] linkProcessed,
-        long[] workY,
-        int fromIndex,
-        int toIndex)
-    {
-        if (true) {
-            return;
-        }
-        Arrays.fill(workY, fromIndex, toIndex, Long.MAX_VALUE);
-        for (int k = fromIndex; k < toIndex; k++) {
-            for (HorizontalBoundaryLink link : secondLinksIntersectingEachVertical.get(k)) {
-                linkProcessed[link.indexInSortedList] = false;
-            }
-        }
-        for (int k = fromIndex; k < toIndex; k++) {
-            for (HorizontalBoundaryLink link : secondLinksIntersectingEachVertical.get(k)) {
-                if (!linkProcessed[link.indexInSortedList]) {
-                    final long y = link.coord();
-                    if (y >= searcher.currentFromY && y < workY[k]) {
-                        // Important: >=, not >! The can be second (closing) links exactly at the same horizontal.
-                        workY[k] = y;
-                    }
-                    // It is interesting that we can just ignore here all first (opening) horizontal links:
-                    // inside all the ahorizontal section, which we should analyse,
-                    // the next horizontal link is always second (closing)
-                    linkProcessed[link.indexInSortedList] = true;
-                }
-            }
-        }
-        for (int k = fromIndex; k < toIndex; k++) {
-            searcher.setY(k, workY[k]);
-        }
     }
 
 
@@ -1398,6 +1411,13 @@ public class IRectanglesUnion {
         return result;
     }
 
+    private static <T> long totalCount(List<List<T>> listOfLists) {
+        long result = 0;
+        for (List<T> list : listOfLists) {
+            result += list.size();
+        }
+        return result;
+    }
 
     // The following class is necessary for finding boundary:
     // we must join sides that can be a single boundary link
@@ -1557,16 +1577,17 @@ public class IRectanglesUnion {
 
     static class HorizontalSection extends Side {
         private final long coord;
-        private final FrameSide sideFrom;
-        private final FrameSide sideTo;
+        private final FrameSide left;
+        private final FrameSide right;
+        private final List<HorizontalBoundaryLink> boundaryLinksAtSection = new ArrayList<HorizontalBoundaryLink>();
         private IRectangularArea largestRectangle = null;
         // - can be accessed via reflection for debugging needs
 
-        public HorizontalSection(boolean first, long coord, FrameSide sideFrom, FrameSide sideTo) {
+        public HorizontalSection(boolean first, long coord, FrameSide left, FrameSide right) {
             super(first);
             this.coord = coord;
-            this.sideFrom = sideFrom;
-            this.sideTo = sideTo;
+            this.left = left;
+            this.right = right;
         }
 
         @Override
@@ -1581,12 +1602,12 @@ public class IRectanglesUnion {
 
         @Override
         public long boundFrom() {
-            return sideFrom.boundCoord();
+            return left.boundCoord();
         }
 
         @Override
         public long boundTo() {
-            return sideTo.boundCoord();
+            return right.boundCoord();
         }
 
         @Override
@@ -1596,12 +1617,12 @@ public class IRectanglesUnion {
 
         @Override
         FrameSide transversalFrameSideFrom() {
-            return sideFrom;
+            return left;
         }
 
         @Override
         FrameSide transversalFrameSideTo() {
-            return sideTo;
+            return right;
         }
     }
 }

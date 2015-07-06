@@ -5,8 +5,8 @@ regular
 18   //frameMaxHeight
 -1   //imageWidth
 -1   //imageHeight
-100  //horizontalCount
-100  //verticalCount
+1000  //horizontalCount
+1000  //verticalCount
 3    //overlap
-10   //maxError
+5   //maxError
 157  //randSeed

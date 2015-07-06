@@ -41,6 +41,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -163,6 +164,7 @@ public class IRectangleUnionTest {
                 final IRectanglesUnion component = k == -1 ? rectangleUnion : rectangleUnion.connectedComponent(k);
                 if (ACTUAL_CALL_FIND_METHODS) {
                     component.findBoundaries();
+                    component.findLargestRectangleInUnion();
                 }
                 if (testIndex == 0) {
                     System.out.println();
@@ -315,10 +317,22 @@ public class IRectangleUnionTest {
             draw(result, frame.rectangle(), divider, new Color(0, 0, 128), Color.BLUE);
         }
         for (IRectanglesUnion.Side section : union.horizontalSectionsByLessSides()) {
+            final IRectangularArea largestRectangle;
+            try {
+                final Field largestRectangleField = section.getClass().getDeclaredField("largestRectangle");
+                largestRectangleField.setAccessible(true);
+                largestRectangle = (IRectangularArea) largestRectangleField.get(section);
+            } catch (NoSuchFieldException e) {
+                throw new AssertionError("Unknown implementation", e);
+            } catch (IllegalAccessException e) {
+                throw new AssertionError("Unknown implementation", e);
+            }
+            draw(result, largestRectangle, divider, Color.RED, new Color(155 + rnd.nextInt(100), 0, 0), 0);
             final IRectangularArea rectangle = section.equivalentRectangle();
             assert rectangle != null;
             draw(result, rectangle, divider, new Color(255, 155 + rnd.nextInt(100), 0), Color.BLACK);
         }
+        draw(result, union.largestRectangleInUnion(), divider, Color.GREEN, Color.WHITE);
         return result;
     }
 
