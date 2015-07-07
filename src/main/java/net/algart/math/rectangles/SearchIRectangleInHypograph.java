@@ -49,7 +49,7 @@ class SearchIRectangleInHypograph {
     }
 
     public void setY(int index, long value) {
-        //TODO!! correct the pyramid of min/max
+        // In future version, here can be more optimal operations, for example, correction of the pyramid of minimums.
         this.y[index] = value;
     }
 

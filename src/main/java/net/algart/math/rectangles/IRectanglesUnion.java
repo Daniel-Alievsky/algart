@@ -113,7 +113,7 @@ public class IRectanglesUnion {
         public abstract boolean isHorizontal();
 
         public long frameSideCoord() {
-            return isFirstOfTwoParallelSides() ? boundCoord() : boundCoord() - 1;
+            return isFirstOfTwoParallelSides() ? coord() : coord() - 1;
         }
 
         /**
@@ -123,7 +123,7 @@ public class IRectanglesUnion {
          *
          * @return the perpendicular coordinate of this side + 0.5
          */
-        public abstract long boundCoord();
+        public abstract long coord();
 
         /**
          * Returns the starting coordinate of this frame side along the coordinate axis,
@@ -132,7 +132,7 @@ public class IRectanglesUnion {
          *
          * @return the starting coordinate of this side + 0.5
          */
-        public abstract long boundFrom();
+        public abstract long from();
 
         /**
          * Returns the ending coordinate of this frame side along the coordinate axis,
@@ -141,12 +141,12 @@ public class IRectanglesUnion {
          *
          * @return the ending coordinate of this side + 0.5
          */
-        public abstract long boundTo();
+        public abstract long to();
 
         public IRectangularArea equivalentRectangle() {
             final long coord = frameSideCoord();
-            final long from = boundFrom();
-            final long to = boundTo();
+            final long from = from();
+            final long to = to();
             assert from <= to;
             if (from == to) {
                 return null;
@@ -163,8 +163,8 @@ public class IRectanglesUnion {
                 throw new ClassCastException("Comparison of sides with different types: "
                     + getClass() + " != " + o.getClass());
             }
-            final long thisCoord = this.boundCoord();
-            final long otherCoord = o.boundCoord();
+            final long thisCoord = this.coord();
+            final long otherCoord = o.coord();
             if (thisCoord < otherCoord) {
                 return -1;
             }
@@ -194,16 +194,16 @@ public class IRectanglesUnion {
             }
             // Sorting along another coordinate is necessary for searching several sides,
             // which are really a single continuous segment
-            final long thisFrom = this.boundFrom();
-            final long otherFrom = o.boundFrom();
+            final long thisFrom = this.from();
+            final long otherFrom = o.from();
             if (thisFrom < otherFrom) {
                 return -1;
             }
             if (thisFrom > otherFrom) {
                 return 1;
             }
-            final long thisTo = this.boundTo();
-            final long otherTo = o.boundTo();
+            final long thisTo = this.to();
+            final long otherTo = o.to();
             if (thisTo < otherTo) {
                 return -1;
             }
@@ -217,7 +217,7 @@ public class IRectanglesUnion {
         public String toString() {
             return (isHorizontal() ? (first ? "top" : "bottom") : (first ? "left" : "right")) + " side"
                 + (this instanceof FrameSide ? " of frame #" + ((FrameSide) this).frame.index : "")
-                + ": " + boundFrom() + ".." + boundTo() + " at " + boundCoord();
+                + ": " + from() + ".." + to() + " at " + coord();
         }
 
         @Override
@@ -233,20 +233,20 @@ public class IRectanglesUnion {
             if (first != side.first) {
                 return false;
             }
-            return this.boundCoord() == side.boundCoord()
-                && this.boundFrom() == side.boundFrom()
-                && this.boundTo() == side.boundTo();
+            return this.coord() == side.coord()
+                && this.from() == side.from()
+                && this.to() == side.to();
         }
 
         @Override
         public int hashCode() {
             int result = (first ? 1 : 0);
-            final long boundCoord = boundCoord();
-            final long boundFrom = boundFrom();
-            final long boundTo = boundTo();
-            result = 31 * result + (int) (boundCoord ^ (boundCoord >>> 32));
-            result = 31 * result + (int) (boundFrom ^ (boundFrom >>> 32));
-            result = 31 * result + (int) (boundTo ^ (boundTo >>> 32));
+            final long coord = coord();
+            final long from = from();
+            final long to = to();
+            result = 31 * result + (int) (coord ^ (coord >>> 32));
+            result = 31 * result + (int) (from ^ (from >>> 32));
+            result = 31 * result + (int) (to ^ (to >>> 32));
             return result;
         }
 
@@ -295,17 +295,17 @@ public class IRectanglesUnion {
         }
 
         @Override
-        public long boundCoord() {
+        public long coord() {
             return first ? frame.fromY : frame.toY;
         }
 
         @Override
-        public long boundFrom() {
+        public long from() {
             return frame.fromX;
         }
 
         @Override
-        public long boundTo() {
+        public long to() {
             return frame.toX;
         }
 
@@ -336,17 +336,17 @@ public class IRectanglesUnion {
         }
 
         @Override
-        public long boundCoord() {
+        public long coord() {
             return first ? frame.fromX : frame.toX;
         }
 
         @Override
-        public long boundFrom() {
+        public long from() {
             return frame.fromY;
         }
 
         @Override
-        public long boundTo() {
+        public long to() {
             return frame.toY;
         }
 
@@ -380,6 +380,14 @@ public class IRectanglesUnion {
             this.to = to;
         }
 
+        public boolean atFirstOfTwoParallelSides() {
+            return parentSeries.first;
+        }
+
+        public boolean atSecondOfTwoParallelSides() {
+            return !parentSeries.first;
+        }
+
         /**
          * Returns the coordinate of this boundary element (link) along the coordinate axis,
          * to which this link is perpendicular, increased by 0.5
@@ -388,7 +396,7 @@ public class IRectanglesUnion {
          * @return the perpendicular coordinate of this link + 0.5
          */
         public long coord() {
-            return parentSeries.boundCoord();
+            return parentSeries.coord();
         }
 
         /**
@@ -413,6 +421,10 @@ public class IRectanglesUnion {
             return to;
         }
 
+        public abstract BoundaryLink linkFrom();
+
+        public abstract BoundaryLink linkTo();
+
         public abstract IRectangularArea equivalentRectangle();
 
         @Override
@@ -429,7 +441,6 @@ public class IRectanglesUnion {
             if (this.from > o.from) {
                 return 1;
             }
-            // Further comparisons are not important for our algorithms:
             if (this.to < o.to) {
                 return -1;
             }
@@ -485,10 +496,20 @@ public class IRectanglesUnion {
             VerticalSideSeries transversalSeriesTo)
         {
             super(parentSeries,
-                transversalSeriesFrom.boundCoord(),
-                transversalSeriesTo.boundCoord());
+                transversalSeriesFrom.coord(),
+                transversalSeriesTo.coord());
             this.transversalSeriesFrom = transversalSeriesFrom;
             this.transversalSeriesTo = transversalSeriesTo;
+        }
+
+        @Override
+        public VerticalBoundaryLink linkFrom() {
+            return linkFrom;
+        }
+
+        @Override
+        public VerticalBoundaryLink linkTo() {
+            return linkTo;
         }
 
         @Override
@@ -521,6 +542,16 @@ public class IRectanglesUnion {
             super(parentSeries, linkFrom.coord(), linkTo.coord());
             this.linkFrom = linkFrom;
             this.linkTo = linkTo;
+        }
+
+        @Override
+        public HorizontalBoundaryLink linkFrom() {
+            return linkFrom;
+        }
+
+        @Override
+        public HorizontalBoundaryLink linkTo() {
+            return linkTo;
         }
 
         @Override
@@ -613,7 +644,7 @@ public class IRectanglesUnion {
         for (HorizontalSideSeries series : horizontalSideSeriesAtBoundary) {
             result.addAll(series.containedBoundaryLinks);
         }
-        return Collections.unmodifiableList(result);
+        return result;
     }
 
     public List<VerticalBoundaryLink> allVerticalBoundaryLinks() {
@@ -622,7 +653,7 @@ public class IRectanglesUnion {
         for (VerticalSideSeries series : verticalSideSeriesAtBoundary) {
             result.addAll(series.containedBoundaryLinks);
         }
-        return Collections.unmodifiableList(result);
+        return result;
     }
 
     // First boundary in the result is the external contour.
@@ -750,8 +781,17 @@ public class IRectanglesUnion {
                     (t6 - t5) * 1e-6, verticalSideSeriesAtBoundary.size(), verticalSideSeries.size(),
                     (t7 - t6) * 1e-6,
                     (t7 - t1) * 1e-3 / (double) frames.size(), (t7 - t1) * 1e-3 / (double) totalLinkCount);
-                debug(2, "Found %d verticals with different x: %s%n",
-                    allDifferentXAtBoundary.length, JArrays.toString(allDifferentXAtBoundary, ", ", 200));
+            }
+            if (DEBUG_LEVEL >= 2) {
+                final StringBuilder sb = new StringBuilder();
+                for (int k = 0; k < allDifferentXAtBoundary.length; k++) {
+                    if (k == 100) {
+                        sb.append("...");
+                        break;
+                    }
+                    sb.append("(").append(k).append(":)").append(allDifferentXAtBoundary[k]).append(", ");
+                }
+                debug(2, "Found %d verticals with different x: %s%n", allDifferentXAtBoundary.length, sb);
             }
         }
     }
@@ -936,7 +976,7 @@ public class IRectanglesUnion {
         assert allX.length > 0;
         // - checked in the calling method
         for (int k = 0; k < allX.length; k++) {
-            allX[k] = verticalSides.get(k).boundCoord();
+            allX[k] = verticalSides.get(k).coord();
         }
         final boolean[] frameVisited = new boolean[frames.size()];
         final boolean[] added = new boolean[frames.size()];
@@ -1163,7 +1203,7 @@ public class IRectanglesUnion {
         long lastX = 157;
         for (VerticalSideSeries series : verticalSideSeriesAtBoundary) {
             assert series.containsBoundary();
-            final long coord = series.boundCoord();
+            final long coord = series.coord();
             if (count == 0 || coord != lastX) {
                 lastX = coord;
                 count++;
@@ -1173,7 +1213,7 @@ public class IRectanglesUnion {
         final long[] result = new long[count];
         count = 0;
         for (VerticalSideSeries series : verticalSideSeriesAtBoundary) {
-            final long coord = series.boundCoord();
+            final long coord = series.coord();
             if (count == 0 || coord != lastX) {
                 lastX = coord;
                 result[count] = coord;
@@ -1223,8 +1263,7 @@ public class IRectanglesUnion {
         return result;
     }
 
-
-    private List<HorizontalSection> doFindHorizontalSections() {
+    private List<HorizontalSection> doFindHorizontalSectionsDeprecated() {
         assert !frames.isEmpty();
         final List<HorizontalSection> result = new ArrayList<HorizontalSection>();
         final HorizontalIBracketSet<HorizontalSideSeries> bracketSet =
@@ -1236,8 +1275,8 @@ public class IRectanglesUnion {
                 // at this horizontal is always, at least, a superset of the current side series
                 // "bracketSet.horizontal"  (of course, the whole series lies non-strictly inside the union).
                 if (lastSection != null && bracketSet.coord == lastSection.coord) {
-                    assert lastSection.boundFrom() <=  bracketSet.horizontal.from : "sides series sorted incorrectly";
-                    if (bracketSet.horizontal.to <= lastSection.boundTo()) {
+                    assert lastSection.from() <=  bracketSet.horizontal.from : "sides series sorted incorrectly";
+                    if (bracketSet.horizontal.to <= lastSection.to()) {
                         // We did not leave the previous section: joning to previous section
                         lastSection.boundaryLinksAtSection.addAll(bracketSet.horizontal.containedBoundaryLinks);
                         continue;
@@ -1247,10 +1286,43 @@ public class IRectanglesUnion {
                 final FrameSide right = bracketSet.minRightBeloningToUnion();
                 assert left != null;
                 assert right != null;
-                assert left.boundCoord() <= right.boundCoord();
+                assert left.coord() <= right.coord();
                 // The range left..right is the current horizontal section
                 lastSection = new HorizontalSection(true, bracketSet.coord, left, right);
                 lastSection.boundaryLinksAtSection.addAll(bracketSet.horizontal.containedBoundaryLinks);
+                result.add(lastSection);
+            }
+        }
+        return result;
+    }
+
+    private List<HorizontalSection> doFindHorizontalSections() {
+        assert !frames.isEmpty();
+        final List<HorizontalSection> result = new ArrayList<HorizontalSection>();
+        final HorizontalBoundaryIBracketSet<HorizontalBoundaryLink> bracketSet =
+            new HorizontalBoundaryIBracketSet<HorizontalBoundaryLink>(allHorizontalBoundaryLinks());
+        HorizontalSection lastSection = null;
+        while (bracketSet.next()) {
+            if (bracketSet.horizontal.atFirstOfTwoParallelSides()) {
+                // We should remember that the current section of the whole figure (union)
+                // at this horizontal is always, at least, a superset of the current side series
+                // "bracketSet.horizontal"  (of course, the whole series lies non-strictly inside the union).
+                if (lastSection != null && bracketSet.coord == lastSection.coord) {
+                    assert lastSection.from() <=  bracketSet.horizontal.from : "sides series sorted incorrectly";
+                    if (bracketSet.horizontal.to <= lastSection.to()) {
+                        // We did not leave the previous section: joning to previous section
+                        lastSection.boundaryLinksAtSection.add(bracketSet.horizontal);
+                        continue;
+                    }
+                }
+                final int leftIndex = bracketSet.maxLeftIndexBeloningToUnion();
+                final int rightIndex = bracketSet.minRightIndexBeloningToUnion();
+                assert leftIndex <= rightIndex;
+                // The range left..right is the current horizontal section
+                final long left = allDifferentXAtBoundary[leftIndex];
+                final long right = allDifferentXAtBoundary[rightIndex];
+                lastSection = new HorizontalSection(true, bracketSet.coord, left, right, leftIndex, rightIndex);
+                lastSection.boundaryLinksAtSection.add(bracketSet.horizontal);
                 result.add(lastSection);
             }
         }
@@ -1314,8 +1386,8 @@ public class IRectanglesUnion {
             }
             searcher.resetMaxRectangleCorrected();
             searcher.correctMaximalRectangle(
-                ((VerticalSideSeries) section.left.parentSeries).numberOfLessCoordinatesAtBoundary,
-                ((VerticalSideSeries) section.right.parentSeries).numberOfLessCoordinatesAtBoundary);
+                section.leftNumberOfLessCoordinatesAtBoundary,
+                section.rightNumberOfLessCoordinatesAtBoundary);
             // no special action required for removed horizontal links
             if (searcher.isMaxRectangleCorrected()) {
                 section.largestRectangle = searcher.largestRectangle();
@@ -1342,7 +1414,7 @@ public class IRectanglesUnion {
         FrameSide firstTransveral,
         FrameSide secondTransveral)
     {
-        assert firstTransveral.boundCoord() <= secondTransveral.boundCoord();
+        assert firstTransveral.coord() <= secondTransveral.coord();
         final HorizontalBoundaryLink link = new HorizontalBoundaryLink(
             bracketSet.horizontal,
             (VerticalSideSeries) firstTransveral.parentSeries,
@@ -1431,12 +1503,13 @@ public class IRectanglesUnion {
         private final FrameSide firstSide;
         private List<FrameSide> otherSides = null;
         int indexInSortedListAtBoundary = -1;
+        int numberOfLessCoordinatesAtBoundary = -1;
 
         private SideSeries(FrameSide initialSide) {
             super(initialSide.first);
-            this.coord = initialSide.boundCoord();
-            this.from = initialSide.boundFrom();
-            this.to = initialSide.boundTo();
+            this.coord = initialSide.coord();
+            this.from = initialSide.from();
+            this.to = initialSide.to();
             this.sideFrom = initialSide.transversalFrameSideFrom();
             this.sideTo = initialSide.transversalFrameSideTo();
             this.firstSide = initialSide;
@@ -1444,17 +1517,17 @@ public class IRectanglesUnion {
         }
 
         @Override
-        public long boundCoord() {
+        public long coord() {
             return coord;
         }
 
         @Override
-        public long boundFrom() {
+        public long from() {
             return from;
         }
 
         @Override
-        public long boundTo() {
+        public long to() {
             return to;
         }
 
@@ -1479,13 +1552,13 @@ public class IRectanglesUnion {
 
         boolean expand(FrameSide followingSide) {
             if (followingSide.isHorizontal() != this.isHorizontal()
-                || followingSide.boundCoord() != this.boundCoord()
+                || followingSide.coord() != this.coord()
                 || followingSide.first != this.first)
             {
                 return false;
             }
-            final long followingFrom = followingSide.boundFrom();
-            final long followingTo = followingSide.boundTo();
+            final long followingFrom = followingSide.from();
+            final long followingTo = followingSide.to();
             if (followingFrom > to || followingTo < from) {
                 return false;
             }
@@ -1511,7 +1584,7 @@ public class IRectanglesUnion {
         // null means an emoty list: it saves memory and time for allocation
         // (in real applications most of series do not contain links usually)
 
-        public HorizontalSideSeries(FrameSide initialSide) {
+        private HorizontalSideSeries(FrameSide initialSide) {
             super(initialSide);
         }
 
@@ -1541,9 +1614,8 @@ public class IRectanglesUnion {
         private List<HorizontalBoundaryLink> intersectingBoundaryLinks = null;
         // null means an emoty list: it saves memory and time for allocation
         // (in real applications most of series do not contain links usually)
-        int numberOfLessCoordinatesAtBoundary = -1;
 
-        public VerticalSideSeries(FrameSide initialSide) {
+        private VerticalSideSeries(FrameSide initialSide) {
             super(initialSide);
         }
 
@@ -1577,17 +1649,38 @@ public class IRectanglesUnion {
 
     static class HorizontalSection extends Side {
         private final long coord;
-        private final FrameSide left;
-        private final FrameSide right;
+        private final long left;
+        private final long right;
+        private final int leftNumberOfLessCoordinatesAtBoundary;
+        private final int rightNumberOfLessCoordinatesAtBoundary;
         private final List<HorizontalBoundaryLink> boundaryLinksAtSection = new ArrayList<HorizontalBoundaryLink>();
         private IRectangularArea largestRectangle = null;
         // - can be accessed via reflection for debugging needs
 
-        public HorizontalSection(boolean first, long coord, FrameSide left, FrameSide right) {
+        private HorizontalSection(boolean first, long coord, FrameSide left, FrameSide right) {
+            this(
+                first,
+                coord,
+                left.coord(),
+                right.coord(),
+                left.parentSeries.numberOfLessCoordinatesAtBoundary,
+                right.parentSeries.numberOfLessCoordinatesAtBoundary);
+        }
+
+        private HorizontalSection(
+            boolean first,
+            long coord,
+            long left,
+            long right,
+            int leftNumberOfLessCoordinatesAtBoundary,
+            int rightNumberOfLessCoordinatesAtBoundary)
+        {
             super(first);
             this.coord = coord;
             this.left = left;
             this.right = right;
+            this.leftNumberOfLessCoordinatesAtBoundary = leftNumberOfLessCoordinatesAtBoundary;
+            this.rightNumberOfLessCoordinatesAtBoundary = rightNumberOfLessCoordinatesAtBoundary;
         }
 
         @Override
@@ -1596,33 +1689,33 @@ public class IRectanglesUnion {
         }
 
         @Override
-        public long boundCoord() {
+        public long coord() {
             return coord;
         }
 
         @Override
-        public long boundFrom() {
-            return left.boundCoord();
-        }
-
-        @Override
-        public long boundTo() {
-            return right.boundCoord();
-        }
-
-        @Override
-        void allContainedFrameSides(List<FrameSide> result) {
-            // This method is not actual for such form of side.
-        }
-
-        @Override
-        FrameSide transversalFrameSideFrom() {
+        public long from() {
             return left;
         }
 
         @Override
-        FrameSide transversalFrameSideTo() {
+        public long to() {
             return right;
+        }
+
+        @Override
+        void allContainedFrameSides(List<FrameSide> result) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        FrameSide transversalFrameSideFrom() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        FrameSide transversalFrameSideTo() {
+            throw new UnsupportedOperationException();
         }
     }
 }

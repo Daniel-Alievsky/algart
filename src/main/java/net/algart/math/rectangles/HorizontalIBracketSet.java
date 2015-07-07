@@ -49,7 +49,7 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
         this.horizontal = null;
         if (IRectanglesUnion.DEBUG_LEVEL >= 2) {
             for (int k = 1, n = allHorizontals.size(); k < n; k++) {
-                assert allHorizontals.get(k - 1).boundCoord() <= allHorizontals.get(k).boundCoord();
+                assert allHorizontals.get(k - 1).coord() <= allHorizontals.get(k).coord();
             }
         }
     }
@@ -64,17 +64,17 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
             null;
         // Theoretically, if it is null, we may just return false and do not anything; but we prefer
         // to remove the last brackets for self-testing goals (intersectingSides must become empty)
-        final long newCoord = newHorizontal == null ? -157 : newHorizontal.boundCoord();
+        final long newCoord = newHorizontal == null ? -157 : newHorizontal.coord();
         if (onlyStrictIntersections) {
             if (horizontal == null || newHorizontal == null
-                || newHorizontal.boundCoord() != horizontal.boundCoord()
+                || newHorizontal.coord() != horizontal.coord()
                 || newHorizontal.first != horizontal.first)
             {
                 H h;
                 if (horizontal != null) {
                     int index = horizontalIndex;
                     while (index >= 0
-                        && (h = allHorizontals.get(index)).boundCoord() == coord
+                        && (h = allHorizontals.get(index)).coord() == coord
                         && h.first == horizontal.first) {
                         if (h.isFirstOfTwoParallelSides()) {
                             addHorizontal(h);
@@ -91,7 +91,7 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
                 if (newHorizontal != null) {
                     int index = horizontalIndex + 1;
                     while (index < numberOfHorizontals
-                        && (h = allHorizontals.get(index)).boundCoord() == newCoord
+                        && (h = allHorizontals.get(index)).coord() == newCoord
                         && h.first == newHorizontal.first) {
                         if (h.isSecondOfTwoParallelSides()) {
                             removeHorizontal(h);
@@ -102,12 +102,12 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
             }
         } else {
             if (horizontal == null || newHorizontal == null
-                || newHorizontal.boundCoord() != horizontal.boundCoord())
+                || newHorizontal.coord() != horizontal.coord())
             {
                 H h;
                 if (horizontal != null) {
                     int index = horizontalIndex;
-                    while (index >= 0 && (h = allHorizontals.get(index)).boundCoord() == coord) {
+                    while (index >= 0 && (h = allHorizontals.get(index)).coord() == coord) {
                         if (h.isSecondOfTwoParallelSides()) {
                             removeHorizontal(h);
                         }
@@ -117,7 +117,7 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
 
                 if (newHorizontal != null) {
                     int index = horizontalIndex + 1;
-                    while (index < numberOfHorizontals && (h = allHorizontals.get(index)).boundCoord() == newCoord) {
+                    while (index < numberOfHorizontals && (h = allHorizontals.get(index)).coord() == newCoord) {
                         if (h.isFirstOfTwoParallelSides()) {
                             addHorizontal(h);
                         }

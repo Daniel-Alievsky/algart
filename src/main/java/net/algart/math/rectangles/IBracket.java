@@ -32,14 +32,14 @@ class IBracket implements Comparable<IBracket> {
 
     public IBracket(IRectanglesUnion.FrameSide intersectingSide, boolean first) {
         this.intersectingSide = intersectingSide;
-        this.coord = intersectingSide.boundCoord();
+        this.coord = intersectingSide.coord();
         this.first = first;
         assert intersectingSide.first == first;
         // - built-in additional check
     }
 
     public boolean covers(long transversalCoord) {
-        return intersectingSide.boundFrom() <= transversalCoord && intersectingSide.boundTo() >= transversalCoord;
+        return intersectingSide.from() <= transversalCoord && intersectingSide.to() >= transversalCoord;
     }
 
     @Override
