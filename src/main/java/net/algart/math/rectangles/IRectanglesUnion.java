@@ -963,97 +963,6 @@ public class IRectanglesUnion {
         return result;
     }
 
-    private List<List<Frame>> doFindConnectedComponentsDeprecated() {
-        assert !frames.isEmpty();
-        final List<List<Frame>> result = new ArrayList<List<Frame>>();
-        if (DEBUG_LEVEL >= 4) {
-            System.out.printf("  All verticals%n");
-            for (VerticalSide side : verticalSides) {
-                System.out.printf("    %s%n", side);
-            }
-        }
-        final long[] allX = new long[verticalSides.size()];
-        assert allX.length > 0;
-        // - checked in the calling method
-        for (int k = 0; k < allX.length; k++) {
-            allX[k] = verticalSides.get(k).coord();
-        }
-        final boolean[] frameVisited = new boolean[frames.size()];
-        final boolean[] added = new boolean[frames.size()];
-        // - arrays are filled by false by Java
-        final Queue<Frame> queue = new LinkedList<Frame>();
-        final List<Frame> neighbours = new ArrayList<Frame>();
-        int index = 0;
-        for (; ; ) {
-            while (index < frameVisited.length && frameVisited[index]) {
-                index++;
-            }
-            if (index >= frameVisited.length) {
-                break;
-            }
-            final List<Frame> component = new ArrayList<Frame>();
-            // Breadth-first search:
-            queue.add(frames.get(index));
-            frameVisited[index] = true;
-            while (!queue.isEmpty()) {
-                final Frame frame = queue.poll();
-                component.add(frame);
-                doFindIncidentFramesDeprecated(neighbours, frame, allX, added);
-                for (Frame neighbour : neighbours) {
-                    if (!frameVisited[neighbour.index]) {
-                        queue.add(neighbour);
-                        frameVisited[neighbour.index] = true;
-                    }
-                }
-                if (DEBUG_LEVEL >= 4) {
-                    System.out.printf("  Neighbours of %s:%n", frame);
-                    for (Frame neighbour : neighbours) {
-                        System.out.printf("    %s%n", neighbour);
-                    }
-                }
-            }
-            result.add(component);
-        }
-        return result;
-    }
-
-    private void doFindIncidentFramesDeprecated(List<Frame> result, Frame frame, long[] allX, boolean added[]) {
-        result.clear();
-        int left = Arrays.binarySearch(allX, frame.fromX);
-        assert left >= 0;
-        // - we should find at least this frame itself
-        assert allX[left] == frame.fromX;
-        while (left > 0 && allX[left - 1] == frame.fromX) {
-            left--;
-        }
-        int right = Arrays.binarySearch(allX, frame.toX);
-        assert right >= 0;
-        // - we should find at least this frame itself
-        assert allX[right] == frame.toX;
-        while (right + 1 < allX.length && allX[right + 1] == frame.toX) {
-            right++;
-        }
-        for (int k = left; k <= right; k++) {
-            final Frame other = verticalSides.get(k).frame;
-            assert other.toX >= frame.fromX && other.fromX <= frame.toX : "Binary search in allX failed";
-            if (other.toY < frame.fromY || other.fromY > frame.toY) {
-                continue;
-            }
-            if (other == frame) {
-                continue;
-            }
-            // they intersects!
-            if (!added[other.index]) {
-                result.add(other);
-                added[other.index] = true;
-                // this flag is necessary to avoid adding twice (for left and right sides)
-            }
-        }
-        for (Frame other : result) {
-            added[other.index] = false;
-        }
-    }
-
     private List<HorizontalSideSeries> createHorizontalSideSeriesLists() {
         final List<HorizontalSideSeries> result = new ArrayList<HorizontalSideSeries>();
         HorizontalSideSeries last = null;
@@ -1263,7 +1172,8 @@ public class IRectanglesUnion {
         return result;
     }
 
-    private List<HorizontalSection> doFindHorizontalSectionsDeprecated() {
+    // This method is saved for debugging needs
+    private List<HorizontalSection> doFindHorizontalSectionsSlowly() {
         assert !frames.isEmpty();
         final List<HorizontalSection> result = new ArrayList<HorizontalSection>();
         final HorizontalIBracketSet<HorizontalSideSeries> bracketSet =
