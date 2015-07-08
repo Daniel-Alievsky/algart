@@ -24,11 +24,9 @@
 
 package net.algart.math.rectangles;
 
-import net.algart.arrays.JArrays;
 import net.algart.math.IRectangularArea;
 
 import java.util.*;
-import java.util.Arrays;
 
 /**
  * <p>Set-theoretic union of several 2-dimensional {@link IRectangularArea rectangles}

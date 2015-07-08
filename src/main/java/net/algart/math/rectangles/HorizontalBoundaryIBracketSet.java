@@ -24,7 +24,6 @@
 
 package net.algart.math.rectangles;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
