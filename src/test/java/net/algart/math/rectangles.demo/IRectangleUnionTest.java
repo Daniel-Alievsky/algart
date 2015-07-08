@@ -42,9 +42,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class IRectangleUnionTest {
 
@@ -162,6 +161,7 @@ public class IRectangleUnionTest {
             }
             for (int k = -1; k < Math.min(5, rectangleUnion.connectedComponentCount()); k++) {
                 final IRectanglesUnion component = k == -1 ? rectangleUnion : rectangleUnion.connectedComponent(k);
+                System.out.println("Processing " + (k == -1 ? "all union" : "connectect component #" + k));
                 if (ACTUAL_CALL_FIND_METHODS) {
                     component.findBoundaries();
                     component.findLargestRectangleInUnion();
@@ -174,16 +174,41 @@ public class IRectangleUnionTest {
                     System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
                         + " into " + f + ": " + component);
                     ExternalAlgorithmCaller.writeImage(f, demo);
-                    demo = drawRectangles(imageWidth, imageHeight, component, divider);
-                    f = new File(demoFolder, rectanglesFile.getName()
-                        + (k == -1 ? ".all" : ".component-" + k) + ".rectangles.bmp");
-                    System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
-                        + " largest rectangles information into " + f + ": " + component);
-                    ExternalAlgorithmCaller.writeImage(f, demo);
+                }
+                IRectanglesUnion currentUnion = component;
+                for (int index = 0; index < 4; index++) {
+                    if (testIndex == 0) {
+                        if (index == 0) {
+                            demo = drawRectangles(imageWidth, imageHeight, currentUnion, divider);
+                        } else {
+                            final int v = 255 - index * 50;
+                            draw(demo, currentUnion.largestRectangleInUnion(), divider,
+                                Color.GREEN, new Color(v, v, v));
+                        }
+                        File f = new File(demoFolder, rectanglesFile.getName()
+                            + (k == -1 ? ".all" : ".component-" + k) + ".rectangles-" + index + ".bmp");
+                        System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
+                            + " largest rectangles information into " + f + ": " + currentUnion);
+                        ExternalAlgorithmCaller.writeImage(f, demo);
+                    }
+                    long t1 = System.nanoTime();
+                    final IRectanglesUnion newUnion = currentUnion.subtractLargestRectangle();
+                    long t2 = System.nanoTime();
+                    final IRectangularArea largest = currentUnion.largestRectangleInUnion();
+                    System.out.printf(Locale.US,
+                        "Largest rectangle %s (area %.1f) subtracted from the union %s (area %.1f) in %.3f ms%n",
+                        largest, largest == null ? Double.NaN : largest.volume(),
+                        currentUnion, currentUnion.unionArea(), (t2 - t1) * 1e-6);
+                    currentUnion = newUnion;
+                    if (largest == null) {
+                        break;
+                    }
+                }
+                if (testIndex == 0) {
                     int index = 0;
                     for (List<IRectanglesUnion.BoundaryLink> boundary : component.allBoundaries()) {
                         demo = drawBoundary(imageWidth, imageHeight, boundary, divider);
-                        f = new File(demoFolder, rectanglesFile.getName()
+                        File f = new File(demoFolder, rectanglesFile.getName()
                             + (k == -1 ? ".boundaries" : ".boundary-" + k) + "-" + index + ".bmp");
                         System.out.println("Writing boundary #" + index + " of "
                             + (k == -1 ? "all union" : "component #" + k)
@@ -264,7 +289,7 @@ public class IRectangleUnionTest {
 
     private static String[] parseConfigurationFile(File rectanglesFile) throws IOException {
         final List<String> result = new ArrayList<String>();
-        for ( String s : ExternalProcessor.readUTF8(rectanglesFile).split("[\\r\\n]+")) {
+        for (String s : ExternalProcessor.readUTF8(rectanglesFile).split("[\\r\\n]+")) {
             final int p = s.indexOf("//");
             if (p != -1) {
                 s = s.substring(0, p);
@@ -312,25 +337,32 @@ public class IRectangleUnionTest {
         long divider)
     {
         final List<Matrix<? extends UpdatablePArray>> result = newImage(imageWidth / divider, imageHeight / divider);
+        union.largestRectangleInUnion();
+        // - force calling this method before access to private fields
         final Random rnd = new Random(157);
         for (IRectanglesUnion.Frame frame : union.frames()) {
             draw(result, frame.rectangle(), divider, new Color(0, 0, 128), Color.BLUE);
         }
-        for (IRectanglesUnion.Side section : union.horizontalSectionsByLessSides()) {
-            final IRectangularArea largestRectangle;
-            try {
+        try {
+            final Field horizontalSectionsByLowerSidesField =
+                union.getClass().getDeclaredField("horizontalSectionsByLowerSides");
+            horizontalSectionsByLowerSidesField.setAccessible(true);
+            Collection<?> sections = (Collection<?>) horizontalSectionsByLowerSidesField.get(union);
+            for (Object o : sections) {
+                final IRectanglesUnion.Side section = (IRectanglesUnion.Side) o;
+                final IRectangularArea largestRectangle;
                 final Field largestRectangleField = section.getClass().getDeclaredField("largestRectangle");
                 largestRectangleField.setAccessible(true);
                 largestRectangle = (IRectangularArea) largestRectangleField.get(section);
-            } catch (NoSuchFieldException e) {
-                throw new AssertionError("Unknown implementation", e);
-            } catch (IllegalAccessException e) {
-                throw new AssertionError("Unknown implementation", e);
+                draw(result, largestRectangle, divider, Color.RED, new Color(155 + rnd.nextInt(100), 0, 0), 0);
+                final IRectangularArea rectangle = section.equivalentRectangle();
+                assert rectangle != null;
+                draw(result, rectangle, divider, new Color(255, 155 + rnd.nextInt(100), 0), Color.BLACK);
             }
-            draw(result, largestRectangle, divider, Color.RED, new Color(155 + rnd.nextInt(100), 0, 0), 0);
-            final IRectangularArea rectangle = section.equivalentRectangle();
-            assert rectangle != null;
-            draw(result, rectangle, divider, new Color(255, 155 + rnd.nextInt(100), 0), Color.BLACK);
+        } catch (NoSuchFieldException e) {
+            throw new AssertionError("Unknown implementation", e);
+        } catch (IllegalAccessException e) {
+            throw new AssertionError("Unknown implementation", e);
         }
         draw(result, union.largestRectangleInUnion(), divider, Color.GREEN, Color.WHITE);
         return result;
@@ -339,7 +371,7 @@ public class IRectangleUnionTest {
     private static List<Matrix<? extends UpdatablePArray>> drawBoundary(
         long imageWidth, long imageHeight,
         List<IRectanglesUnion.BoundaryLink> boundary,
-        long  divider)
+        long divider)
     {
         final List<Matrix<? extends UpdatablePArray>> result = newImage(imageWidth / divider, imageHeight / divider);
         final Color baseColor = Color.YELLOW;
@@ -371,7 +403,7 @@ public class IRectangleUnionTest {
     private static void draw(
         List<Matrix<? extends UpdatablePArray>> demo,
         IRectangularArea area,
-        long  divider,
+        long divider,
         Color borderColor,
         Color innerColor,
         Integer chosenColorComponent)

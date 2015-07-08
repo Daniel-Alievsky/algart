@@ -37,7 +37,8 @@ import java.util.Arrays;
  * <ol>
  * <li>find connected components in this union;</li>
  * <li>find its boundary as a polygon: a sequence of links, where each link is a horizontal or vertical
- * segment (1st link is horizontal, 2nd is vertical, 3rd is horizontal, etc.)</li>
+ * segment (1st link is horizontal, 2nd is vertical, 3rd is horizontal, etc.);</li>
+ * <li>find the largest rectangle (with sides, parallel to the coordinate axes), which is a subset of this union.</li>
  * </ol>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
@@ -573,11 +574,11 @@ public class IRectanglesUnion {
     private List<VerticalSideSeries> verticalSideSeries = null;
     private List<HorizontalSideSeries> horizontalSideSeriesAtBoundary = null;
     private List<VerticalSideSeries> verticalSideSeriesAtBoundary = null;
-    private int horizontalLinksCount = -1;
-    // - the number of vertical links is the same
     private long[] allDifferentXAtBoundary = null;
+    private double unionArea = Double.NaN;
     private List<List<BoundaryLink>> allBoundaries = null;
     private List<HorizontalSection> horizontalSectionsByLowerSides = null;
+    // - this field is accessed via reflection in the test
     private IRectangularArea largestRectangleInUnion = null;
     private final Object lock = new Object();
 
@@ -604,6 +605,28 @@ public class IRectanglesUnion {
         return new IRectanglesUnion(checkAndConvertToFrames(rectangles));
     }
 
+    public IRectanglesUnion subtractRectangle(IRectangularArea whatToSubtract) {
+        if (whatToSubtract == null) {
+            throw new NullPointerException("Null rectangle");
+        }
+        if (whatToSubtract.coordCount() != 2) {
+            throw new IllegalArgumentException("Only 2-dimensional rectangle can be subtracted");
+        }
+        Queue<IRectangularArea> rectangles = new LinkedList<IRectangularArea>();
+        for (Frame frame : frames) {
+            rectangles.add(frame.rectangle);
+        }
+        IRectangularArea.subtractCollection(rectangles, whatToSubtract);
+        return newInstance(rectangles);
+    }
+
+    public IRectanglesUnion subtractLargestRectangle() {
+        if (frames.isEmpty()) {
+            return this;
+        }
+        return subtractRectangle(largestRectangleInUnion());
+    }
+
     public List<Frame> frames() {
         return Collections.unmodifiableList(frames);
     }
@@ -613,11 +636,15 @@ public class IRectanglesUnion {
     }
 
     public List<HorizontalSide> horizontalSides() {
-        return Collections.unmodifiableList(horizontalSides);
+        synchronized (lock) {
+            return Collections.unmodifiableList(horizontalSides);
+        }
     }
 
     public List<VerticalSide> verticalSides() {
-        return Collections.unmodifiableList(verticalSides);
+        synchronized (lock) {
+            return Collections.unmodifiableList(verticalSides);
+        }
     }
 
     public int connectedComponentCount() {
@@ -640,38 +667,59 @@ public class IRectanglesUnion {
 
     public List<HorizontalBoundaryLink> allHorizontalBoundaryLinks() {
         findBoundaries();
-        final List<HorizontalBoundaryLink> result = new ArrayList<HorizontalBoundaryLink>();
-        for (HorizontalSideSeries series : horizontalSideSeriesAtBoundary) {
-            result.addAll(series.containedBoundaryLinks);
+        synchronized (lock) {
+            final List<HorizontalBoundaryLink> result = new ArrayList<HorizontalBoundaryLink>();
+            for (HorizontalSideSeries series : horizontalSideSeriesAtBoundary) {
+                result.addAll(series.containedBoundaryLinks);
+            }
+            return result;
         }
-        return result;
     }
 
     public List<VerticalBoundaryLink> allVerticalBoundaryLinks() {
         findBoundaries();
-        final List<VerticalBoundaryLink> result = new ArrayList<VerticalBoundaryLink>();
-        for (VerticalSideSeries series : verticalSideSeriesAtBoundary) {
-            result.addAll(series.containedBoundaryLinks);
+        synchronized (lock) {
+            final List<VerticalBoundaryLink> result = new ArrayList<VerticalBoundaryLink>();
+            for (VerticalSideSeries series : verticalSideSeriesAtBoundary) {
+                result.addAll(series.containedBoundaryLinks);
+            }
+            return result;
         }
-        return result;
     }
 
     // First boundary in the result is the external contour.
     public List<List<BoundaryLink>> allBoundaries() {
         findBoundaries();
-        return Collections.unmodifiableList(allBoundaries);
+        synchronized (lock) {
+            return Collections.unmodifiableList(allBoundaries);
+        }
     }
 
-    public List<Side> horizontalSectionsByLessSides() {
-        findLargestRectangleInUnion();
-        return Collections.<Side>unmodifiableList(horizontalSectionsByLowerSides);
+    public double unionArea() {
+        findBoundaries();
+        synchronized (lock) {
+            return unionArea;
+        }
     }
 
     public IRectangularArea largestRectangleInUnion() {
         findLargestRectangleInUnion();
-        return largestRectangleInUnion;
+        synchronized (lock) {
+            return largestRectangleInUnion;
+        }
     }
 
+    /**
+     * Forces this object to find all connected components.
+     * It does not affect to results of any other methods, but after this call the following methods
+     * will work quickly:
+     * <ul>
+     *     <li>{@link #connectedComponentCount()}</li>
+     *     <li>{@link #connectedComponent(int)}</li>
+     *     <li>{@link #horizontalSides()}</li>
+     *     <li>{@link #verticalSides()}</li>
+     * </ul>
+     */
     public void findConnectedComponents() {
         doCreateSideLists();
         synchronized (lock) {
@@ -721,6 +769,18 @@ public class IRectanglesUnion {
         }
     }
 
+    /**
+     * Forces this object to find the boundary of this union of rectangles.
+     * It does not affect to results of any other methods, but after this call the following methods
+     * will work quickly:
+     * <ul>
+     *     <li>{@link #allHorizontalBoundaryLinks()}</li>
+     *     <li>{@link #allVerticalBoundaryLinks()}</li>
+     *     <li>{@link #allBoundaries()}</li>
+     *     <li>{@link #horizontalSides()}</li>
+     *     <li>{@link #verticalSides()}</li>
+     * </ul>
+     */
     public void findBoundaries() {
         doCreateSideLists();
         synchronized (lock) {
@@ -734,8 +794,8 @@ public class IRectanglesUnion {
                 this.verticalSideSeries = Collections.emptyList();
                 this.horizontalSideSeriesAtBoundary = Collections.emptyList();
                 this.verticalSideSeriesAtBoundary = Collections.emptyList();
-                this.horizontalLinksCount = 0;
                 this.allDifferentXAtBoundary = new long[0];
+                this.unionArea = 0.0;
                 this.allBoundaries = Collections.emptyList();
                 return;
             }
@@ -757,15 +817,15 @@ public class IRectanglesUnion {
             }
             long t6 = System.nanoTime();
             this.allDifferentXAtBoundary = doExtractAllDifferentXAtBoundary();
+            this.unionArea = doCalculateArea();
             doSetLinkIndexes(hCount);
             assert hCount <= Integer.MAX_VALUE;
             // - it was checked in doSetLinkIndexes()
-            this.horizontalLinksCount = (int) hCount;
             this.allBoundaries = doJoinBoundaries(hCount);
             long t7 = System.nanoTime();
             if (DEBUG_LEVEL >= 1) {
                 long totalLinkCount = totalCount(allBoundaries);
-                debug(1, "Rectangle union (%d rectangles), finding %d boundaries with %d links: "
+                debug(1, "Rectangle union (%d rectangles), area %.1f, finding %d boundaries with %d links: "
                         + "%.3f ms = %.3f ms initializing "
                         + "+ %.3f ms %d horizontal links "
                         + "+ %.3f ms %d/%d horizontals at boundary "
@@ -773,7 +833,7 @@ public class IRectanglesUnion {
                         + "+ %.3f ms %d/%d verticals at boundary "
                         + "+ %.3f ms postprocessing and joining links "
                         + "(%.3f mcs / rectangle, %.3f mcs / link)%n",
-                    frames.size(), allBoundaries().size(), totalLinkCount,
+                    frames.size(), unionArea, allBoundaries().size(), totalLinkCount,
                     (t7 - t1) * 1e-6, (t2 - t1) * 1e-6,
                     (t3 - t2) * 1e-6, hCount,
                     (t4 - t3) * 1e-6, horizontalSideSeriesAtBoundary.size(), horizontalSideSeries.size(),
@@ -796,6 +856,20 @@ public class IRectanglesUnion {
         }
     }
 
+    /**
+     * Forces this object to find the largest rectangle (with sides, parallel to the coordinate axes),
+     * which is a subset of this union of rectangles.
+     * It does not affect to results of any other methods, but after this call the following methods
+     * will work quickly:
+     * <ul>
+     *     <li>{@link #largestRectangleInUnion()}</li>
+     *     <li>{@link #allHorizontalBoundaryLinks()}</li>
+     *     <li>{@link #allVerticalBoundaryLinks()}</li>
+     *     <li>{@link #allBoundaries()}</li>
+     *     <li>{@link #horizontalSides()}</li>
+     *     <li>{@link #verticalSides()}</li>
+     * </ul>
+     */
     public void findLargestRectangleInUnion() {
         findBoundaries();
         synchronized (lock) {
@@ -824,13 +898,15 @@ public class IRectanglesUnion {
         }
         if (DEBUG_LEVEL >= 1) {
             long totalLinkCount = totalCount(allBoundaries);
-            debug(1, "Rectangle union (%d rectangles, %d links), finding largest rectangle %s: "
+            debug(1, "Rectangle union (%d rectangles, %d links), "
+                    + "finding largest rectangle %s (area %.1f): "
                     + "%.3f ms = %.3f ms %d horizontal sections "
                     + "+ %.3f ms %d links "
                     + "intersecting with %d verticals "
                     + "+ %.3f ms searching largest rectangle "
                     + "(%.3f mcs / rectangle, %.3f mcs / link)%n",
-                frames.size(), totalLinkCount, this.largestRectangleInUnion,
+                frames.size(), totalLinkCount,
+                largestRectangleInUnion, largestRectangleInUnion.volume(),
                 (t4 - t1) * 1e-6, (t2 - t1) * 1e-6, horizontalSectionsByLowerSides.size(),
                 (t3 - t2) * 1e-6, totalCount(closingLinksIntersectingEachVertical),
                 allDifferentXAtBoundary.length - 1,
@@ -1155,6 +1231,21 @@ public class IRectanglesUnion {
         assert count == horizontalOrVerticalLinksCount;
     }
 
+    private double doCalculateArea() {
+        double result = 0.0;
+        for (HorizontalSideSeries series : horizontalSideSeriesAtBoundary) {
+            for (HorizontalBoundaryLink link : series.containedBoundaryLinks) {
+                double areaUnderLink = (double) (link.to - link.from) * (double) link.coord();
+                if (link.atFirstOfTwoParallelSides()) {
+                    result -= areaUnderLink;
+                } else {
+                    result += areaUnderLink;
+                }
+            }
+        }
+        return result;
+    }
+
     private List<List<BoundaryLink>> doJoinBoundaries(long numberOfHorizontalLinks) {
         assert !frames.isEmpty();
         final long maxCount = 10 * Math.min(numberOfHorizontalLinks, Integer.MAX_VALUE);
@@ -1291,7 +1382,8 @@ public class IRectanglesUnion {
                     searcher.setY(k, workY[k]);
                 }
             }
-            if (DEBUG_LEVEL >= 2) {
+            if (DEBUG_LEVEL >= 3) {
+                // Warning: it leads to incorrect global largest rectangle!
                 searcher.resetAlreadyFoundRectangle();
             }
             searcher.resetMaxRectangleCorrected();
@@ -1629,4 +1721,3 @@ public class IRectanglesUnion {
         }
     }
 }
-

@@ -326,6 +326,20 @@ public strictfp class RectangularArea {
     }
 
     /**
+     * Returns the volume of this rectangular area: the product of all sizes
+     * returned by {@link #sizes()} method.
+     *
+     * @return the multidimensional volume of this rectangular area (usual area in 2-dimensional case).
+     */
+    public double volume() {
+        double result = max.coordinates[0] - min.coordinates[0];
+        for (int k = 1; k < min.coordinates.length; k++) {
+            result *= max.coordinates[k] - min.coordinates[k];
+        }
+        return result;
+    }
+
+    /**
      * Returns <tt>{@link Range}.{@link Range#valueOf(double, double)
      * valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</tt>.
      *

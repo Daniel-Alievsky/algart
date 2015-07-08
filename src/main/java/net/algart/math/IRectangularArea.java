@@ -384,6 +384,20 @@ public class IRectangularArea {
     }
 
     /**
+     * Returns the volume of this rectangular area: the product of all sizes
+     * returned by {@link #sizes()} method. This area is calculated in <tt>double</tt> values.
+     *
+     * @return the multidimensional volume of this rectangular area (usual area in 2-dimensional case).
+     */
+    public double volume() {
+        double result = max.coordinates[0] - min.coordinates[0] + 1;
+        for (int k = 1; k < min.coordinates.length; k++) {
+            result *= max.coordinates[k] - min.coordinates[k] + 1;
+        }
+        return result;
+    }
+
+    /**
      * Returns <tt>{@link IRange}.{@link IRange#valueOf(long, long)
      * valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</tt>.
      *
