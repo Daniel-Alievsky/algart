@@ -605,6 +605,15 @@ public class IRectanglesUnion {
         return new IRectanglesUnion(checkAndConvertToFrames(rectangles));
     }
 
+    /**
+     * Subtracts the given rectangle (via {@link IRectangularArea#subtractCollection(Queue, Collection)} method)
+     * from the set of rectangles, containing in this object, and return the union of the resulting rectangles.
+     *
+     * @param whatToSubtract the subtracted rectangle.
+     * @return the union of the rest of rectangles after subtraction.
+     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>whatToSubtract.coordCount() != 2</tt>.
+     */
     public IRectanglesUnion subtractRectangle(IRectangularArea whatToSubtract) {
         if (whatToSubtract == null) {
             throw new NullPointerException("Null rectangle");
@@ -714,10 +723,10 @@ public class IRectanglesUnion {
      * It does not affect to results of any other methods, but after this call the following methods
      * will work quickly:
      * <ul>
-     *     <li>{@link #connectedComponentCount()}</li>
-     *     <li>{@link #connectedComponent(int)}</li>
-     *     <li>{@link #horizontalSides()}</li>
-     *     <li>{@link #verticalSides()}</li>
+     * <li>{@link #connectedComponentCount()}</li>
+     * <li>{@link #connectedComponent(int)}</li>
+     * <li>{@link #horizontalSides()}</li>
+     * <li>{@link #verticalSides()}</li>
      * </ul>
      */
     public void findConnectedComponents() {
@@ -774,11 +783,11 @@ public class IRectanglesUnion {
      * It does not affect to results of any other methods, but after this call the following methods
      * will work quickly:
      * <ul>
-     *     <li>{@link #allHorizontalBoundaryLinks()}</li>
-     *     <li>{@link #allVerticalBoundaryLinks()}</li>
-     *     <li>{@link #allBoundaries()}</li>
-     *     <li>{@link #horizontalSides()}</li>
-     *     <li>{@link #verticalSides()}</li>
+     * <li>{@link #allHorizontalBoundaryLinks()}</li>
+     * <li>{@link #allVerticalBoundaryLinks()}</li>
+     * <li>{@link #allBoundaries()}</li>
+     * <li>{@link #horizontalSides()}</li>
+     * <li>{@link #verticalSides()}</li>
      * </ul>
      */
     public void findBoundaries() {
@@ -862,12 +871,12 @@ public class IRectanglesUnion {
      * It does not affect to results of any other methods, but after this call the following methods
      * will work quickly:
      * <ul>
-     *     <li>{@link #largestRectangleInUnion()}</li>
-     *     <li>{@link #allHorizontalBoundaryLinks()}</li>
-     *     <li>{@link #allVerticalBoundaryLinks()}</li>
-     *     <li>{@link #allBoundaries()}</li>
-     *     <li>{@link #horizontalSides()}</li>
-     *     <li>{@link #verticalSides()}</li>
+     * <li>{@link #largestRectangleInUnion()}</li>
+     * <li>{@link #allHorizontalBoundaryLinks()}</li>
+     * <li>{@link #allVerticalBoundaryLinks()}</li>
+     * <li>{@link #allBoundaries()}</li>
+     * <li>{@link #horizontalSides()}</li>
+     * <li>{@link #verticalSides()}</li>
      * </ul>
      */
     public void findLargestRectangleInUnion() {
@@ -1276,7 +1285,7 @@ public class IRectanglesUnion {
                 // at this horizontal is always, at least, a superset of the current side series
                 // "bracketSet.horizontal"  (of course, the whole series lies non-strictly inside the union).
                 if (lastSection != null && bracketSet.coord == lastSection.coord) {
-                    assert lastSection.from() <=  bracketSet.horizontal.from : "sides series sorted incorrectly";
+                    assert lastSection.from() <= bracketSet.horizontal.from : "sides series sorted incorrectly";
                     if (bracketSet.horizontal.to <= lastSection.to()) {
                         // We did not leave the previous section: joning to previous section
                         lastSection.boundaryLinksAtSection.addAll(bracketSet.horizontal.containedBoundaryLinks);
@@ -1309,7 +1318,7 @@ public class IRectanglesUnion {
                 // at this horizontal is always, at least, a superset of the current side series
                 // "bracketSet.horizontal"  (of course, the whole series lies non-strictly inside the union).
                 if (lastSection != null && bracketSet.coord == lastSection.coord) {
-                    assert lastSection.from() <=  bracketSet.horizontal.from : "sides series sorted incorrectly";
+                    assert lastSection.from() <= bracketSet.horizontal.from : "sides series sorted incorrectly";
                     if (bracketSet.horizontal.to <= lastSection.to()) {
                         // We did not leave the previous section: joning to previous section
                         lastSection.boundaryLinksAtSection.add(bracketSet.horizontal);
