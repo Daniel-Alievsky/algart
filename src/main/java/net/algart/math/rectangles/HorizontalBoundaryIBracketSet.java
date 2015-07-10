@@ -94,7 +94,7 @@ class HorizontalBoundaryIBracketSet<L extends IRectanglesUnion.BoundaryLink> {
             throw new AssertionError("Non-empty intersection set at the end of the loop");
         }
         if (IRectanglesUnion.DEBUG_LEVEL >= 3) {
-            System.out.printf("  Horizontal #%d, y=%d%s, %s; brackets: %s%n",
+            IRectanglesUnion.debug(3, "  Horizontal #%d, y=%d%s, %s; brackets: %s%n",
                 horizontalIndex, coord,
                 horizontal == null ? " (LOOP FINISHED)" :
                     horizontal.atFirstOfTwoParallelSides() ? " (starting)" : " (ending)",

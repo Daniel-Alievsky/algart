@@ -35,6 +35,7 @@ import net.algart.math.rectangles.IRectanglesUnion;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
@@ -207,10 +208,17 @@ public class IRectangleUnionTest {
                 if (testIndex == 0) {
                     int index = 0;
                     for (List<IRectanglesUnion.BoundaryLink> boundary : component.allBoundaries()) {
-                        demo = drawBoundary(imageWidth, imageHeight, boundary, divider);
+                        demo = drawBoundary(imageWidth, imageHeight, boundary, divider, false);
                         File f = new File(demoFolder, rectanglesFile.getName()
                             + (k == -1 ? ".boundaries" : ".boundary-" + k) + "-" + index + ".bmp");
                         System.out.println("Writing boundary #" + index + " of "
+                            + (k == -1 ? "all union" : "component #" + k)
+                            + " into " + f);
+                        ExternalAlgorithmCaller.writeImage(f, demo);
+                        demo = drawBoundary(imageWidth, imageHeight, boundary, divider, true);
+                        f = new File(demoFolder, rectanglesFile.getName()
+                            + (k == -1 ? ".boundaries" : ".boundary-" + k) + "-" + index + "-precise.bmp");
+                        System.out.println("Writing precise boundary #" + index + " of "
                             + (k == -1 ? "all union" : "component #" + k)
                             + " into " + f);
                         ExternalAlgorithmCaller.writeImage(f, demo);
@@ -219,8 +227,30 @@ public class IRectangleUnionTest {
                             break;
                         }
                     }
-                    System.out.println();
                 }
+                if (k != -1) {
+                    // it is a connected component
+                    final List<List<IRectanglesUnion.BoundaryLink>> boundaries = component.allBoundaries();
+                    final int m = boundaries.size();
+                    final double area = IRectanglesUnion.areaInBoundary(boundaries.get(0));
+                    System.out.printf("Area inside boundaty #0/%d, connected component #%d: %.1f%n", m, k, area);
+                    if (area <= 0) {
+                        throw new AssertionError("First area must be positive!");
+                    }
+                    for (int i = 1; i < m; i++) {
+                        final double holeArea = IRectanglesUnion.areaInBoundary(boundaries.get(i));
+                        if (i < 5) {
+                            System.out.printf("Area inside boundaty #%d/%d (a hole), connected component %d: %.1f%n",
+                                i, m, k, holeArea);
+                        } else if (i == 5) {
+                            System.out.println("...");
+                        }
+                        if (holeArea >= 0) {
+                            throw new AssertionError("Hole area must be negative!");
+                        }
+                    }
+                }
+                System.out.println();
             }
         }
         if (awt) {
@@ -242,6 +272,7 @@ public class IRectangleUnionTest {
                     BufferedImage bufferedImage = new BufferedImage(
                         (int) (imageWidth / divider), (int) (imageHeight / divider), BufferedImage.TYPE_INT_BGR);
                     final Graphics2D g = (Graphics2D) bufferedImage.getGraphics();
+                    g.setTransform(AffineTransform.getScaleInstance(1.0 / divider, 1.0 / divider));
                     g.setColor(Color.DARK_GRAY);
                     g.fill(area);
                     g.setColor(Color.RED);
@@ -259,11 +290,7 @@ public class IRectangleUnionTest {
                             value = 31;
                         } else if (c1 != null && type == PathIterator.SEG_LINETO) {
                             g.setColor(new Color(value, value, 0));
-                            g.drawLine(
-                                (int) (c1[0] / divider),
-                                (int) (c1[1] / divider),
-                                (int) (c2[0] / divider),
-                                (int) (c2[1] / divider));
+                            g.drawLine((int) c1[0], (int) c1[1], (int) c2[0], (int) c2[1]);
                         }
                         count++;
                         if (testIndex == 0) {
@@ -371,20 +398,26 @@ public class IRectangleUnionTest {
     private static List<Matrix<? extends UpdatablePArray>> drawBoundary(
         long imageWidth, long imageHeight,
         List<IRectanglesUnion.BoundaryLink> boundary,
-        long divider)
+        long divider,
+        boolean precise)
     {
         final List<Matrix<? extends UpdatablePArray>> result = newImage(imageWidth / divider, imageHeight / divider);
-        final Color baseColor = Color.YELLOW;
         int value = 256;
-        for (IRectanglesUnion.BoundaryLink link : boundary) {
+        final List<IPoint> vertices = precise ?
+            IRectanglesUnion.boundaryVerticesPlusHalf(boundary) :
+            IRectanglesUnion.boundaryVerticesAtRectangles(boundary);
+        for (int k = 0; k < boundary.size(); k++) {
+            IRectanglesUnion.BoundaryLink link = boundary.get(k);
             if (value >= 256) {
                 value = 63;
             }
-            Color color = new Color(
-                baseColor.getRed() * value / 255,
-                baseColor.getGreen() * value / 255,
-                baseColor.getBlue() * value / 255);
-            draw(result, link.equivalentRectangle(), divider, color, Color.BLACK);
+            IPoint v1, v2;
+            v1 = vertices.get(k);
+            v2 = vertices.get(k == boundary.size() - 1 ? 0 : k + 1);
+            draw(result, IRectangularArea.valueOf(v1.min(v2), v1.max(v2)), divider, new Color(value, 0, 0), null);
+            if (!precise) {
+                draw(result, link.equivalentRectangle(), divider, new Color(value, value, 0), null);
+            }
             value += 32;
         }
         return result;
@@ -418,9 +451,9 @@ public class IRectangleUnionTest {
              k < (chosenColorComponent == null ? demo.size() : chosenColorComponent + 1);
              k++) {
             int borderValue = k == 0 ? borderColor.getRed() : k == 1 ? borderColor.getGreen() : borderColor.getBlue();
-            int innerValue = k == 0 ? innerColor.getRed() : k == 1 ? innerColor.getGreen() : innerColor.getBlue();
             demo.get(k).subMatrix(divided, Matrix.ContinuationMode.NULL_CONSTANT).array().fill(borderValue);
             if (divided.size(0) > 2 && divided.size(1) > 2) {
+                int innerValue = k == 0 ? innerColor.getRed() : k == 1 ? innerColor.getGreen() : innerColor.getBlue();
                 final IRectangularArea inner = IRectangularArea.valueOf(
                     divided.min().addToAllCoordinates(1),
                     divided.max().addToAllCoordinates(-1));

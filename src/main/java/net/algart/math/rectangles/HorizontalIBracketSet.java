@@ -82,12 +82,6 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
                         index--;
                     }
                 }
-                if (IRectanglesUnion.DEBUG_LEVEL >= 4) {
-                    System.out.printf("  Horizontal #%d, y=%d%s; middle situation:%s",
-                        horizontalIndex, coord,
-                        horizontal == null ? "" : horizontal.first ? " (starting)" : " (ending)",
-                        toDebugString(intersectingSides));
-                }
                 if (newHorizontal != null) {
                     int index = horizontalIndex + 1;
                     while (index < numberOfHorizontals
@@ -133,7 +127,7 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
             throw new AssertionError("Non-empty intersection set at the end of the loop");
         }
         if (IRectanglesUnion.DEBUG_LEVEL >= 3) {
-            System.out.printf("  Horizontal #%d, y=%d%s, %s; brackets:%s",
+            IRectanglesUnion.debug(3, "  Horizontal #%d, y=%d%s, %s; brackets:%s",
                 horizontalIndex, coord,
                 horizontal == null ? " (LOOP FINISHED)" : horizontal.first ? " (starting)" : " (ending)",
                 horizontal,
@@ -151,7 +145,7 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
         }
         final NavigableSet<IBracket> result = intersectingSides.subSet(bracketFrom, true, bracketTo, true);
         if (IRectanglesUnion.DEBUG_LEVEL >= 3) {
-            System.out.printf("  Intersections with %s; brackets:%s", horizontal, toDebugString(result));
+            IRectanglesUnion.debug(3, "  Intersections with %s; brackets:%s", horizontal, toDebugString(result));
         }
         return result;
     }

@@ -24,6 +24,7 @@
 
 package net.algart.math.rectangles;
 
+import net.algart.math.IPoint;
 import net.algart.math.IRectangularArea;
 
 import java.util.*;
@@ -387,6 +388,8 @@ public class IRectanglesUnion {
             return !parentSeries.first;
         }
 
+        public abstract boolean isHorizontal();
+
         /**
          * Returns the coordinate of this boundary element (link) along the coordinate axis,
          * to which this link is perpendicular, increased by 0.5
@@ -480,6 +483,11 @@ public class IRectanglesUnion {
             result = 31 * result + (int) (to ^ (to >>> 32));
             return result;
         }
+
+        double areaUnderLink() {
+            final double area = ((double) to - (double) from) * (double) coord();
+            return atFirstOfTwoParallelSides() ? -area : area;
+        }
     }
 
     public static class HorizontalBoundaryLink extends BoundaryLink {
@@ -490,7 +498,7 @@ public class IRectanglesUnion {
         VerticalBoundaryLink linkTo = null;
 
         private HorizontalBoundaryLink(
-            SideSeries parentSeries,
+            HorizontalSideSeries parentSeries,
             VerticalSideSeries transversalSeriesFrom,
             VerticalSideSeries transversalSeriesTo)
         {
@@ -499,6 +507,11 @@ public class IRectanglesUnion {
                 transversalSeriesTo.coord());
             this.transversalSeriesFrom = transversalSeriesFrom;
             this.transversalSeriesTo = transversalSeriesTo;
+        }
+
+        @Override
+        public boolean isHorizontal() {
+            return true;
         }
 
         @Override
@@ -541,6 +554,11 @@ public class IRectanglesUnion {
             super(parentSeries, linkFrom.coord(), linkTo.coord());
             this.linkFrom = linkFrom;
             this.linkTo = linkTo;
+        }
+
+        @Override
+        public boolean isHorizontal() {
+            return false;
         }
 
         @Override
@@ -948,6 +966,90 @@ public class IRectanglesUnion {
         }
     }
 
+    public static double areaInBoundary(List<BoundaryLink> boundary) {
+        if (boundary == null) {
+            throw new NullPointerException("Null boundary");
+        }
+        double result = 0.0;
+        for (BoundaryLink link : boundary) {
+            if (link.isHorizontal()) {
+                result += link.areaUnderLink();
+            }
+        }
+        return result;
+    }
+
+    public static List<IPoint> boundaryVerticesPlusHalf(List<BoundaryLink> boundary) {
+        if (boundary == null) {
+            throw new NullPointerException("Null boundary");
+        }
+        final List<IPoint> result = new ArrayList<IPoint>();
+        BoundaryLink last = null;
+        for (BoundaryLink link : boundary) {
+            final long coord = link.coord();
+            final long secondCoord = last == link.linkTo() ? link.to : link.from;
+            // Note: in boundaries, built by this class, last.isHorizontal() != link.isHorizontal(),
+            // but this may be not so in third-party boundaries.
+            result.add(link.isHorizontal() ?
+                IPoint.valueOf(secondCoord, coord) :
+                IPoint.valueOf(coord, secondCoord));
+            last = link;
+        }
+        if (DEBUG_LEVEL >= 3) {
+            debug(3, "Boundary precise vertices +0.5: %s%n", result);
+        }
+        return result;
+    }
+
+    public static List<IPoint> boundaryVerticesAtRectangles(List<BoundaryLink> boundary) {
+        if (boundary == null) {
+            throw new NullPointerException("Null boundary");
+        }
+        final List<IPoint> result = new ArrayList<IPoint>();
+        final int n = boundary.size();
+        if (n == 0) {
+            return result;
+        }
+        BoundaryLink last = boundary.get(n - 1);
+        for (BoundaryLink link : boundary) {
+            final boolean lastFirst = last.atFirstOfTwoParallelSides();
+            final boolean thisFirst = link.atFirstOfTwoParallelSides();
+            // Note: in boundaries, built by this class, last.isHorizontal() != link.isHorizontal(),
+            // but this may be not so in third-party boundaries.
+            final long coord = thisFirst ? link.coord() : link.coord() - 1;
+            final long secondCoord =
+                last == link.linkTo()
+                    ? lastFirst ? link.to : link.to - 1
+                    : lastFirst ? link.from : link.from - 1;
+            result.add(link.isHorizontal() ?
+                IPoint.valueOf(secondCoord, coord) :
+                IPoint.valueOf(coord, secondCoord));
+            last = link;
+        }
+        if (DEBUG_LEVEL >= 1) {
+            int k = 0;
+            for (BoundaryLink link : boundary) {
+                final IPoint v1 = result.get(k);
+                final IPoint v2 = result.get(k == n - 1 ? 0 : k + 1);
+                final IRectangularArea onVertices = IRectangularArea.valueOf(v1.min(v2), v1.max(v2));
+                final IRectangularArea onLink = link.equivalentRectangle();
+                if (!onVertices.contains(onLink)) {
+                    throw new AssertionError("Boundary rectangle does not contain the link #"
+                        + k + ": " + v1 + ", " + v2 + ", " + onLink);
+                }
+                if (onVertices.volume() - onLink.volume() > 2.0001) {
+                    throw new AssertionError("Boundary rectangle is too large: link #"
+                        + k + ": " + v1 + ", " + v2 + ", " + onLink);
+                }
+                k++;
+            }
+        }
+        if (DEBUG_LEVEL >= 3) {
+            debug(3, "Boundary vertices at rectangles: %s%n", result);
+        }
+        return result;
+    }
+
     private void doCreateSideLists() {
         synchronized (lock) {
             if (this.horizontalSides != null) {
@@ -1035,9 +1137,9 @@ public class IRectanglesUnion {
                     }
                 }
                 if (DEBUG_LEVEL >= 4) {
-                    System.out.printf("  Neighbours of %s:%n", frame);
+                    debug(4, "  Neighbours of %s:%n", frame);
                     for (Frame neighbour : neighbours) {
-                        System.out.printf("    %s%n", neighbour);
+                        debug(4, "    %s%n", neighbour);
                     }
                 }
             }
@@ -1091,9 +1193,9 @@ public class IRectanglesUnion {
             }
         }
         if (DEBUG_LEVEL >= 3) {
-            System.out.printf("  %d side series:%n", sideSeries.size());
+            debug(3, "  %d side series:%n", sideSeries.size());
             for (int k = 0, n = sideSeries.size(); k < n; k++) {
-                System.out.printf("    side series %d/%d: %s%n", k, n, sideSeries.get(k));
+                debug(3, "    side series %d/%d: %s%n", k, n, sideSeries.get(k));
             }
         }
     }
@@ -1242,12 +1344,7 @@ public class IRectanglesUnion {
         double result = 0.0;
         for (HorizontalSideSeries series : horizontalSideSeriesAtBoundary) {
             for (HorizontalBoundaryLink link : series.containedBoundaryLinks) {
-                double areaUnderLink = (double) (link.to - link.from) * (double) link.coord();
-                if (link.atFirstOfTwoParallelSides()) {
-                    result -= areaUnderLink;
-                } else {
-                    result += areaUnderLink;
-                }
+                result += link.areaUnderLink();
             }
         }
         return result;
@@ -1408,7 +1505,7 @@ public class IRectanglesUnion {
 
     static void debug(int level, String format, Object... args) {
         if (DEBUG_LEVEL >= level) {
-            System.out.printf(Locale.US, format, args);
+            System.out.printf(Locale.US, " IRU " + format, args);
         }
     }
 
@@ -1430,7 +1527,7 @@ public class IRectanglesUnion {
             (VerticalSideSeries) secondTransveral.parentSeries);
         if (link.from < link.to) {
             if (DEBUG_LEVEL >= 3) {
-                System.out.printf("    adding %s%n", link);
+                debug(3, "    adding %s%n", link);
             }
             bracketSet.horizontal.addLink(link);
         }
