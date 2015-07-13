@@ -673,26 +673,25 @@ public class IRectanglesUnion {
     }
 
     public int connectedComponentCount() {
-        findConnectedComponents();
         synchronized (lock) {
+            findConnectedComponents();
             return connectedComponents.size();
         }
     }
 
     public IRectanglesUnion connectedComponent(int index) {
-        findConnectedComponents();
-        final List<Frame> resultFrames;
         synchronized (lock) {
-            resultFrames = connectedComponents.get(index);
+            findConnectedComponents();
+            final List<Frame> resultFrames = cloneFrames(connectedComponents.get(index));
+            final IRectanglesUnion result = new IRectanglesUnion(resultFrames);
+            result.connectedComponents = Collections.singletonList(resultFrames);
+            return result;
         }
-        final IRectanglesUnion result = new IRectanglesUnion(resultFrames);
-        result.connectedComponents = Collections.singletonList(resultFrames);
-        return result;
     }
 
     public List<HorizontalBoundaryLink> allHorizontalBoundaryLinks() {
-        findBoundaries();
         synchronized (lock) {
+            findBoundaries();
             final List<HorizontalBoundaryLink> result = new ArrayList<HorizontalBoundaryLink>();
             for (HorizontalSideSeries series : horizontalSideSeriesAtBoundary) {
                 result.addAll(series.containedBoundaryLinks);
@@ -702,8 +701,8 @@ public class IRectanglesUnion {
     }
 
     public List<VerticalBoundaryLink> allVerticalBoundaryLinks() {
-        findBoundaries();
         synchronized (lock) {
+            findBoundaries();
             final List<VerticalBoundaryLink> result = new ArrayList<VerticalBoundaryLink>();
             for (VerticalSideSeries series : verticalSideSeriesAtBoundary) {
                 result.addAll(series.containedBoundaryLinks);
@@ -714,22 +713,22 @@ public class IRectanglesUnion {
 
     // First boundary in the result is the external contour.
     public List<List<BoundaryLink>> allBoundaries() {
-        findBoundaries();
         synchronized (lock) {
+            findBoundaries();
             return Collections.unmodifiableList(allBoundaries);
         }
     }
 
     public double unionArea() {
-        findBoundaries();
         synchronized (lock) {
+            findBoundaries();
             return unionArea;
         }
     }
 
     public IRectangularArea largestRectangleInUnion() {
-        findLargestRectangleInUnion();
         synchronized (lock) {
+            findLargestRectangleInUnion();
             return largestRectangleInUnion;
         }
     }
@@ -746,8 +745,8 @@ public class IRectanglesUnion {
      * </ul>
      */
     public void findConnectedComponents() {
-        doCreateSideLists();
         synchronized (lock) {
+            doCreateSideLists();
             if (this.connectedComponents != null) {
                 return;
             }
@@ -755,42 +754,40 @@ public class IRectanglesUnion {
                 this.connectedComponents = Collections.emptyList();
                 return;
             }
-        }
-        long t1 = System.nanoTime();
-        final List<List<Frame>> connectionLists = createListOfLists(frames.size());
-        long t2 = System.nanoTime();
-        final long nConnections = doFillConnectionLists(connectionLists);
-        long t3 = System.nanoTime();
-        final List<List<Frame>> result = doFindConnectedComponents(connectionLists);
-        long t4 = System.nanoTime();
-        synchronized (lock) {
+            long t1 = System.nanoTime();
+            final List<List<Frame>> connectionLists = createListOfLists(frames.size());
+            long t2 = System.nanoTime();
+            final long nConnections = doFillConnectionLists(connectionLists);
+            long t3 = System.nanoTime();
+            final List<List<Frame>> result = doFindConnectedComponents(connectionLists);
+            long t4 = System.nanoTime();
             this.connectedComponents = result;
-        }
-        debug(1, "Rectangle union (%d rectangles), finding %d connected components: "
-                + "%.3f ms = %.3f ms initializing + %.3f finding %d connections + %.3f breadth-first search "
-                + "(%.3f mcs / rectangle)%n",
-            frames.size(), result.size(),
-            (t4 - t1) * 1e-6, (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, nConnections, (t4 - t3) * 1e-6,
-            (t4 - t1) * 1e-3 / (double) frames.size());
-        if (DEBUG_LEVEL >= 2 && result.size() >= 2) {
-            t1 = System.nanoTime();
-            for (int i = 0; i < result.size(); i++) {
-                for (Frame frame1 : result.get(i)) {
-                    for (int j = i + 1; j < result.size(); j++) {
-                        for (Frame frame2 : result.get(j)) {
-                            if (frame1.rectangle.intersects(frame2.rectangle)) {
-                                // Note: this check is even more strong than requirement of this class
-                                // (attached rectangles are considered to be in the single component)
-                                throw new AssertionError("First 2 connected component really have intersection: "
-                                    + frame1 + " (component " + i + ") intersects "
-                                    + frame2 + " (component " + j + ")");
+            debug(1, "Rectangle union (%d rectangles), finding %d connected components: "
+                    + "%.3f ms = %.3f ms initializing + %.3f finding %d connections + %.3f breadth-first search "
+                    + "(%.3f mcs / rectangle)%n",
+                frames.size(), result.size(),
+                (t4 - t1) * 1e-6, (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, nConnections, (t4 - t3) * 1e-6,
+                (t4 - t1) * 1e-3 / (double) frames.size());
+            if (DEBUG_LEVEL >= 2 && result.size() >= 2) {
+                t1 = System.nanoTime();
+                for (int i = 0; i < result.size(); i++) {
+                    for (Frame frame1 : result.get(i)) {
+                        for (int j = i + 1; j < result.size(); j++) {
+                            for (Frame frame2 : result.get(j)) {
+                                if (frame1.rectangle.intersects(frame2.rectangle)) {
+                                    // Note: this check is even more strong than requirement of this class
+                                    // (attached rectangles are considered to be in the single component)
+                                    throw new AssertionError("First 2 connected component really have intersection: "
+                                        + frame1 + " (component " + i + ") intersects "
+                                        + frame2 + " (component " + j + ")");
+                                }
                             }
                         }
                     }
                 }
+                t2 = System.nanoTime();
+                debug(2, "Testing connected components: %.3f ms%n", (t2 - t1) * 1e-6);
             }
-            t2 = System.nanoTime();
-            debug(2, "Testing connected components: %.3f ms%n", (t2 - t1) * 1e-6);
         }
     }
 
@@ -807,8 +804,8 @@ public class IRectanglesUnion {
      * </ul>
      */
     public void findBoundaries() {
-        doCreateSideLists();
         synchronized (lock) {
+            doCreateSideLists();
             // Global synchronization necessary, because we change internal fields like parentSeries
             // in already existing structures.
             if (this.allBoundaries != null) {
@@ -896,8 +893,8 @@ public class IRectanglesUnion {
      * </ul>
      */
     public void findLargestRectangleInUnion() {
-        findBoundaries();
         synchronized (lock) {
+            findBoundaries();
             if (this.largestRectangleInUnion != null) {
                 return;
             }
@@ -906,55 +903,53 @@ public class IRectanglesUnion {
                 this.largestRectangleInUnion = null;
                 return;
             }
-        }
-        long t1 = System.nanoTime();
-        final List<HorizontalSection> horizontalSectionsByLowerSides = doFindHorizontalSections();
-        long t2 = System.nanoTime();
-        final List<List<HorizontalBoundaryLink>> closingLinksIntersectingEachVertical =
-            doFindClosingLinksIntersectingEachVertical();
-        long t3 = System.nanoTime();
-        final SearchIRectangleInHypograph searcher = doFindLargestRegtangles(
-            horizontalSectionsByLowerSides,
-            closingLinksIntersectingEachVertical);
-        long t4 = System.nanoTime();
-        synchronized (lock) {
+            long t1 = System.nanoTime();
+            final List<HorizontalSection> horizontalSectionsByLowerSides = doFindHorizontalSections();
+            long t2 = System.nanoTime();
+            final List<List<HorizontalBoundaryLink>> closingLinksIntersectingEachVertical =
+                doFindClosingLinksIntersectingEachVertical();
+            long t3 = System.nanoTime();
+            final SearchIRectangleInHypograph searcher = doFindLargestRegtangles(
+                horizontalSectionsByLowerSides,
+                closingLinksIntersectingEachVertical);
+            long t4 = System.nanoTime();
             this.horizontalSectionsByLowerSides = horizontalSectionsByLowerSides;
             this.largestRectangleInUnion = searcher.largestRectangle();
-        }
-        if (DEBUG_LEVEL >= 1) {
-            long totalLinkCount = totalCount(allBoundaries);
-            debug(1, "Rectangle union (%d rectangles, %d links), "
-                    + "finding largest rectangle %s (area %.1f): "
-                    + "%.3f ms = %.3f ms %d horizontal sections "
-                    + "+ %.3f ms %d links "
-                    + "intersecting with %d verticals "
-                    + "+ %.3f ms searching largest rectangle "
-                    + "(%.3f mcs / rectangle, %.3f mcs / link)%n",
-                frames.size(), totalLinkCount,
-                largestRectangleInUnion, largestRectangleInUnion.volume(),
-                (t4 - t1) * 1e-6, (t2 - t1) * 1e-6, horizontalSectionsByLowerSides.size(),
-                (t3 - t2) * 1e-6, totalCount(closingLinksIntersectingEachVertical),
-                allDifferentXAtBoundary.length - 1,
-                (t4 - t3) * 1e-6,
-                (t4 - t1) * 1e-3 / (double) frames.size(), (t4 - t1) * 1e-3 / (double) totalLinkCount);
-        }
-        if (DEBUG_LEVEL >= 2) {
-            t1 = System.nanoTime();
-            for (HorizontalSection section : horizontalSectionsByLowerSides) {
-                IRectangularArea r = section.equivalentRectangle();
-                Queue<IRectangularArea> queue = new LinkedList<IRectangularArea>();
-                queue.add(r);
-                for (Frame frame : frames) {
-                    IRectangularArea.subtractCollection(queue,
-                        IRectangularArea.valueOf(frame.fromX, frame.fromY, frame.toX - 1, frame.toY));
-                    // Note: we need to use toY instead of toY-1, because the section lies BETWEEN pixels
-                }
-                if (!queue.isEmpty()) {
-                    throw new AssertionError("Section " + section + " is not a subset of the union");
-                }
+            if (DEBUG_LEVEL >= 1) {
+                long totalLinkCount = totalCount(allBoundaries);
+                debug(1, "Rectangle union (%d rectangles, %d links), "
+                        + "finding largest rectangle %s (area %.1f): "
+                        + "%.3f ms = %.3f ms %d horizontal sections "
+                        + "+ %.3f ms %d links "
+                        + "intersecting with %d verticals "
+                        + "+ %.3f ms searching largest rectangle "
+                        + "(%.3f mcs / rectangle, %.3f mcs / link)%n",
+                    frames.size(), totalLinkCount,
+                    largestRectangleInUnion, largestRectangleInUnion.volume(),
+                    (t4 - t1) * 1e-6, (t2 - t1) * 1e-6, horizontalSectionsByLowerSides.size(),
+                    (t3 - t2) * 1e-6, totalCount(closingLinksIntersectingEachVertical),
+                    allDifferentXAtBoundary.length - 1,
+                    (t4 - t3) * 1e-6,
+                    (t4 - t1) * 1e-3 / (double) frames.size(), (t4 - t1) * 1e-3 / (double) totalLinkCount);
             }
-            t2 = System.nanoTime();
-            debug(2, "Testing horizontal sections: %.3f ms%n", (t2 - t1) * 1e-6);
+            if (DEBUG_LEVEL >= 2) {
+                t1 = System.nanoTime();
+                for (HorizontalSection section : horizontalSectionsByLowerSides) {
+                    IRectangularArea r = section.equivalentRectangle();
+                    Queue<IRectangularArea> queue = new LinkedList<IRectangularArea>();
+                    queue.add(r);
+                    for (Frame frame : frames) {
+                        IRectangularArea.subtractCollection(queue,
+                            IRectangularArea.valueOf(frame.fromX, frame.fromY, frame.toX - 1, frame.toY));
+                        // Note: we need to use toY instead of toY-1, because the section lies BETWEEN pixels
+                    }
+                    if (!queue.isEmpty()) {
+                        throw new AssertionError("Section " + section + " is not a subset of the union");
+                    }
+                }
+                t2 = System.nanoTime();
+                debug(2, "Testing horizontal sections: %.3f ms%n", (t2 - t1) * 1e-6);
+            }
         }
     }
 
@@ -1051,10 +1046,8 @@ public class IRectanglesUnion {
     }
 
     private void doCreateSideLists() {
-        synchronized (lock) {
-            if (this.horizontalSides != null) {
-                return;
-            }
+        if (this.horizontalSides != null) {
+            return;
         }
         long t1 = System.nanoTime();
         final List<HorizontalSide> horizontalSides = new ArrayList<HorizontalSide>();
@@ -1068,10 +1061,8 @@ public class IRectanglesUnion {
         Collections.sort(horizontalSides);
         Collections.sort(verticalSides);
         long t2 = System.nanoTime();
-        synchronized (lock) {
-            this.horizontalSides = horizontalSides;
-            this.verticalSides = verticalSides;
-        }
+        this.horizontalSides = horizontalSides;
+        this.verticalSides = verticalSides;
         debug(1, "Rectangle union (%d rectangles), allocating and sorting sides: %.3f ms%n",
             frames.size(), (t2 - t1) * 1e-6);
     }
@@ -1235,6 +1226,12 @@ public class IRectanglesUnion {
 
     private long doConvertHorizontalToVerticalLinks() {
         assert !frames.isEmpty();
+        for (VerticalSideSeries verticalSeries : verticalSideSeries) {
+            assert verticalSeries.containedBoundaryLinks == null :
+                "non-null containedBoundaryLinks = " + verticalSeries.containedBoundaryLinks;
+            assert verticalSeries.intersectingBoundaryLinks == null :
+                "non-null intersectingBoundaryLinks = " + verticalSeries.intersectingBoundaryLinks;
+        }
         for (HorizontalSideSeries series : horizontalSideSeriesAtBoundary) {
             for (HorizontalBoundaryLink link : series.containedBoundaryLinks) {
                 link.transversalSeriesFrom.addIntersectingLink(link);
@@ -1249,7 +1246,7 @@ public class IRectanglesUnion {
                 continue;
             }
             final int horizontalsCount = verticalSeries.intersectingBoundaryLinks.size();
-            assert horizontalsCount > 0 && horizontalsCount % 2 == 0;
+            assert horizontalsCount > 0 && horizontalsCount % 2 == 0 : "Invalid horizontalsCount=" + horizontalsCount;
             horizontalLinks = verticalSeries.intersectingBoundaryLinks.toArray(horizontalLinks);
             Arrays.sort(horizontalLinks, 0, horizontalsCount);
             for (int k = 0; k < horizontalsCount; k += 2) {
@@ -1570,15 +1567,33 @@ public class IRectanglesUnion {
             }
         }
         long t1 = System.nanoTime();
-        List<Frame> frames = new ArrayList<Frame>();
+        List<Frame> result = new ArrayList<Frame>();
         int index = 0;
         for (IRectangularArea rectangle : rectangles) {
-            frames.add(new Frame(rectangle, index++));
+            result.add(new Frame(rectangle, index++));
         }
         long t2 = System.nanoTime();
         debug(1, "Rectangle union (%d rectangles), initial allocating frames: %.3f ms%n",
-            frames.size(), (t2 - t1) * 1e-6);
-        return frames;
+            result.size(), (t2 - t1) * 1e-6);
+        return result;
+    }
+
+    private static List<Frame> cloneFrames(Collection<Frame> frames) {
+        assert frames != null;
+        long t1 = System.nanoTime();
+        List<Frame> result = new ArrayList<Frame>();
+        int index = 0;
+        for (Frame frame : frames) {
+            result.add(new Frame(frame.rectangle, index++));
+            // It is necessary to create new fields of Frame objects:
+            // lessHorizontalSide, higherHorizontalSide, lessVerticalSide, higherVerticalSide
+            // The current values of these fields provide access to SideSeries (parentSeries field)
+            // and then to lists of links, which have no relation to newly created union.
+        }
+        long t2 = System.nanoTime();
+        debug(1, "Rectangle union (%d rectangles), initial cloning frames: %.3f ms%n",
+            result.size(), (t2 - t1) * 1e-6);
+        return result;
     }
 
     private static <T> List<List<T>> createListOfLists(int n) {

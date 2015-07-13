@@ -9,4 +9,4 @@ regular
 1000 //verticalCount
 3    //overlap
 5    //maxError
-157  //randSeed
+137  //randSeed

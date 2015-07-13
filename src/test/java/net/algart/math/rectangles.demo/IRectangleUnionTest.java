@@ -51,15 +51,19 @@ public class IRectangleUnionTest {
     private static final boolean ACTUAL_CALL_FIND_METHODS = true;
 
     public static void main(String[] args) throws IOException {
-        boolean awt;
+        boolean awt, parallel;
         int startArgIndex = 0;
         if (awt = startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-awt")) {
+            startArgIndex++;
+        }
+        if (parallel = startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-parallel")) {
             startArgIndex++;
         }
         if (args.length < startArgIndex + 3) {
             System.out.println("Usage:");
             System.out.println("    " + IRectangleUnionTest.class.getName()
-                + " [-awt] numberOfTests rectangles-description.txt demo-files-folder [coordinate-divider]");
+                + " [-awt] [-parallel]"
+                + " numberOfTests rectangles-description.txt demo-files-folder [coordinate-divider]");
             return;
         }
         final int numberOfTests = Integer.parseInt(args[startArgIndex]);
@@ -69,8 +73,8 @@ public class IRectangleUnionTest {
         demoFolder.mkdirs();
         String[] description = parseConfigurationFile(rectanglesFile);
         final String algorithm = description[0];
-        Long imageWidth = null;
-        Long imageHeight = null;
+        Long width = null;
+        Long height = null;
         final List<IRectangularArea> rectangles = new ArrayList<IRectangularArea>();
         if (algorithm.equals("rectangles")) {
             System.out.println("Reading rectangles...");
@@ -97,13 +101,13 @@ public class IRectangleUnionTest {
                 if (frameMinHeight > frameMaxHeight) {
                     throw new IOException("frameMinHeight > frameMaxHeight");
                 }
-                imageWidth = Long.parseLong(description[5]);
-                imageHeight = Long.parseLong(description[6]);
-                if (imageWidth <= 0) {
-                    imageWidth = null;
+                width = Long.parseLong(description[5]);
+                height = Long.parseLong(description[6]);
+                if (width <= 0) {
+                    width = null;
                 }
-                if (imageHeight <= 0) {
-                    imageHeight = null;
+                if (height <= 0) {
+                    height = null;
                 }
                 final int horizontalCount = Integer.parseInt(description[7]);
                 final int verticalCount = Integer.parseInt(description[8]);
@@ -135,122 +139,155 @@ public class IRectangleUnionTest {
                 throw new IOException("Unknown generating algorithm " + algorithm);
             }
         }
-        IRectanglesUnion rectangleUnion = IRectanglesUnion.newInstance(rectangles);
+        final IRectanglesUnion rectangleUnion = IRectanglesUnion.newInstance(rectangles);
         final IRectangularArea circumscribedRectangle = rectangleUnion.circumscribedRectangle();
-        if (imageWidth == null) {
-            imageWidth = circumscribedRectangle == null ? 100 : circumscribedRectangle.max(0) + 100;
+        if (width == null) {
+            width = circumscribedRectangle == null ? 100 : circumscribedRectangle.max(0) + 100;
         }
-        if (imageHeight == null) {
-            imageHeight = circumscribedRectangle == null ? 100 : circumscribedRectangle.max(1) + 100;
+        if (height == null) {
+            height = circumscribedRectangle == null ? 100 : circumscribedRectangle.max(1) + 100;
         }
 
-        List<Matrix<? extends UpdatablePArray>> demo = newImage(imageWidth / divider, imageHeight / divider);
+        final List<Matrix<? extends UpdatablePArray>> demo = newImage(width / divider, height / divider);
         draw(demo, circumscribedRectangle, divider, Color.YELLOW, Color.BLUE);
         for (IRectangularArea area : rectangles) {
             draw(demo, area, divider, Color.LIGHT_GRAY, Color.DARK_GRAY);
         }
         final File sourceFile = new File(demoFolder, rectanglesFile.getName() + ".source.bmp");
         System.out.printf("Writing source image %dx%d into %s: %d rectangles%n",
-            imageWidth, imageHeight, sourceFile, rectangles.size());
+            width, height, sourceFile, rectangles.size());
         ExternalAlgorithmCaller.writeImage(sourceFile, demo);
 
-        for (int testIndex = 0; testIndex < numberOfTests; testIndex++) {
-            System.out.printf("%nTest #%d%n", testIndex + 1);
-            rectangleUnion = IRectanglesUnion.newInstance(rectangles);
-            if (ACTUAL_CALL_FIND_METHODS) {
-                rectangleUnion.findConnectedComponents();
+        final Thread[] tests = new Thread[numberOfTests];
+        for (int ti = 0; ti < numberOfTests; ti++) {
+            final int testIndex = ti;
+            final long imageWidth = width;
+            final long imageHeight = height;
+            tests[ti] = new Thread() {
+                public void run() {
+                    try {
+                        System.out.printf("%nTest #%d%n", testIndex + 1);
+                        if (ACTUAL_CALL_FIND_METHODS) {
+                            rectangleUnion.findConnectedComponents();
+                        }
+                        List<Matrix<? extends UpdatablePArray>> demo = null;
+                        for (int k = -1; k < Math.min(5, rectangleUnion.connectedComponentCount()); k++) {
+                            final IRectanglesUnion component = k == -1 ?
+                                rectangleUnion :
+                                rectangleUnion.connectedComponent(k);
+                            System.out.println("Processing " + (k == -1 ? "all union" : "connectect component #" + k));
+                            if (ACTUAL_CALL_FIND_METHODS) {
+                                component.findBoundaries();
+                                component.findLargestRectangleInUnion();
+                            }
+                            if (testIndex == 0) {
+                                System.out.println();
+                                demo = drawUnion(imageWidth, imageHeight, component, divider);
+                                File f = new File(demoFolder, rectanglesFile.getName()
+                                    + (k == -1 ? ".all" : ".component-" + k) + ".bmp");
+                                System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
+                                    + " into " + f + ": " + component);
+                                ExternalAlgorithmCaller.writeImage(f, demo);
+                            }
+                            IRectanglesUnion currentUnion = component;
+                            for (int index = 0; index < 4; index++) {
+                                if (testIndex == 0) {
+                                    if (index == 0) {
+                                        demo = drawRectangles(imageWidth, imageHeight, currentUnion, divider);
+                                    } else {
+                                        final int v = 255 - index * 50;
+                                        draw(demo, currentUnion.largestRectangleInUnion(), divider,
+                                            Color.GREEN, new Color(v, v, v));
+                                    }
+                                    File f = new File(demoFolder, rectanglesFile.getName()
+                                        + (k == -1 ? ".all" : ".component-" + k) + ".rectangles-" + index + ".bmp");
+                                    System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
+                                        + " largest rectangles information into " + f + ": " + currentUnion);
+                                    ExternalAlgorithmCaller.writeImage(f, demo);
+                                }
+                                long t1 = System.nanoTime();
+                                final IRectanglesUnion newUnion = currentUnion.subtractLargestRectangle();
+                                long t2 = System.nanoTime();
+                                final IRectangularArea largest = currentUnion.largestRectangleInUnion();
+                                System.out.printf(Locale.US,
+                                    "Largest rectangle %s (area %.1f) subtracted from the union %s (area %.1f) "
+                                        + "in %.3f ms%n",
+                                    largest, largest == null ? Double.NaN : largest.volume(),
+                                    currentUnion, currentUnion.unionArea(), (t2 - t1) * 1e-6);
+                                currentUnion = newUnion;
+                                if (largest == null) {
+                                    break;
+                                }
+                            }
+                            if (testIndex == 0) {
+                                int index = 0;
+                                for (List<IRectanglesUnion.BoundaryLink> boundary : component.allBoundaries()) {
+                                    demo = drawBoundary(imageWidth, imageHeight, boundary, divider, false);
+                                    File f = new File(demoFolder, rectanglesFile.getName()
+                                        + (k == -1 ? ".boundaries" : ".boundary-" + k) + "-" + index + ".bmp");
+                                    System.out.println("Writing boundary #" + index + " of "
+                                        + (k == -1 ? "all union" : "component #" + k)
+                                        + " into " + f);
+                                    ExternalAlgorithmCaller.writeImage(f, demo);
+                                    demo = drawBoundary(imageWidth, imageHeight, boundary, divider, true);
+                                    f = new File(demoFolder, rectanglesFile.getName()
+                                        + (k == -1 ? ".boundaries" : ".boundary-" + k) + "-" + index + "-precise.bmp");
+                                    System.out.println("Writing precise boundary #" + index + " of "
+                                        + (k == -1 ? "all union" : "component #" + k)
+                                        + " into " + f);
+                                    ExternalAlgorithmCaller.writeImage(f, demo);
+                                    index++;
+                                    if (index > 5) {
+                                        break;
+                                    }
+                                }
+                            }
+                            if (k != -1) {
+                                // it is a connected component
+                                final List<List<IRectanglesUnion.BoundaryLink>> boundaries = component.allBoundaries();
+                                final int m = boundaries.size();
+                                final double area = IRectanglesUnion.areaInBoundary(boundaries.get(0));
+                                System.out.printf("Area inside boundaty #0/%d, connected component #%d: %.1f%n",
+                                    m, k, area);
+                                if (area <= 0) {
+                                    throw new AssertionError("First area must be positive!");
+                                }
+                                for (int i = 1; i < m; i++) {
+                                    final double holeArea = IRectanglesUnion.areaInBoundary(boundaries.get(i));
+                                    if (i < 5) {
+                                        System.out.printf("Area inside boundaty #%d/%d (a hole), "
+                                                + "connected component %d: %.1f%n", i, m, k, holeArea);
+                                    } else if (i == 5) {
+                                        System.out.println("...");
+                                    }
+                                    if (holeArea >= 0) {
+                                        throw new AssertionError("Hole area must be negative!");
+                                    }
+                                }
+                            }
+                            System.out.println();
+                        }
+                    } catch (Throwable e) {
+                        e.printStackTrace();
+                        System.exit(1);
+                    }
+                }
+            };
+        }
+        if (parallel) {
+            for (Thread test : tests) {
+                test.start();
             }
-            for (int k = -1; k < Math.min(5, rectangleUnion.connectedComponentCount()); k++) {
-                final IRectanglesUnion component = k == -1 ? rectangleUnion : rectangleUnion.connectedComponent(k);
-                System.out.println("Processing " + (k == -1 ? "all union" : "connectect component #" + k));
-                if (ACTUAL_CALL_FIND_METHODS) {
-                    component.findBoundaries();
-                    component.findLargestRectangleInUnion();
+            for (Thread test : tests) {
+                try {
+                    test.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                if (testIndex == 0) {
-                    System.out.println();
-                    demo = drawUnion(imageWidth, imageHeight, component, divider);
-                    File f = new File(demoFolder, rectanglesFile.getName()
-                        + (k == -1 ? ".all" : ".component-" + k) + ".bmp");
-                    System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
-                        + " into " + f + ": " + component);
-                    ExternalAlgorithmCaller.writeImage(f, demo);
-                }
-                IRectanglesUnion currentUnion = component;
-                for (int index = 0; index < 4; index++) {
-                    if (testIndex == 0) {
-                        if (index == 0) {
-                            demo = drawRectangles(imageWidth, imageHeight, currentUnion, divider);
-                        } else {
-                            final int v = 255 - index * 50;
-                            draw(demo, currentUnion.largestRectangleInUnion(), divider,
-                                Color.GREEN, new Color(v, v, v));
-                        }
-                        File f = new File(demoFolder, rectanglesFile.getName()
-                            + (k == -1 ? ".all" : ".component-" + k) + ".rectangles-" + index + ".bmp");
-                        System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
-                            + " largest rectangles information into " + f + ": " + currentUnion);
-                        ExternalAlgorithmCaller.writeImage(f, demo);
-                    }
-                    long t1 = System.nanoTime();
-                    final IRectanglesUnion newUnion = currentUnion.subtractLargestRectangle();
-                    long t2 = System.nanoTime();
-                    final IRectangularArea largest = currentUnion.largestRectangleInUnion();
-                    System.out.printf(Locale.US,
-                        "Largest rectangle %s (area %.1f) subtracted from the union %s (area %.1f) in %.3f ms%n",
-                        largest, largest == null ? Double.NaN : largest.volume(),
-                        currentUnion, currentUnion.unionArea(), (t2 - t1) * 1e-6);
-                    currentUnion = newUnion;
-                    if (largest == null) {
-                        break;
-                    }
-                }
-                if (testIndex == 0) {
-                    int index = 0;
-                    for (List<IRectanglesUnion.BoundaryLink> boundary : component.allBoundaries()) {
-                        demo = drawBoundary(imageWidth, imageHeight, boundary, divider, false);
-                        File f = new File(demoFolder, rectanglesFile.getName()
-                            + (k == -1 ? ".boundaries" : ".boundary-" + k) + "-" + index + ".bmp");
-                        System.out.println("Writing boundary #" + index + " of "
-                            + (k == -1 ? "all union" : "component #" + k)
-                            + " into " + f);
-                        ExternalAlgorithmCaller.writeImage(f, demo);
-                        demo = drawBoundary(imageWidth, imageHeight, boundary, divider, true);
-                        f = new File(demoFolder, rectanglesFile.getName()
-                            + (k == -1 ? ".boundaries" : ".boundary-" + k) + "-" + index + "-precise.bmp");
-                        System.out.println("Writing precise boundary #" + index + " of "
-                            + (k == -1 ? "all union" : "component #" + k)
-                            + " into " + f);
-                        ExternalAlgorithmCaller.writeImage(f, demo);
-                        index++;
-                        if (index > 5) {
-                            break;
-                        }
-                    }
-                }
-                if (k != -1) {
-                    // it is a connected component
-                    final List<List<IRectanglesUnion.BoundaryLink>> boundaries = component.allBoundaries();
-                    final int m = boundaries.size();
-                    final double area = IRectanglesUnion.areaInBoundary(boundaries.get(0));
-                    System.out.printf("Area inside boundaty #0/%d, connected component #%d: %.1f%n", m, k, area);
-                    if (area <= 0) {
-                        throw new AssertionError("First area must be positive!");
-                    }
-                    for (int i = 1; i < m; i++) {
-                        final double holeArea = IRectanglesUnion.areaInBoundary(boundaries.get(i));
-                        if (i < 5) {
-                            System.out.printf("Area inside boundaty #%d/%d (a hole), connected component %d: %.1f%n",
-                                i, m, k, holeArea);
-                        } else if (i == 5) {
-                            System.out.println("...");
-                        }
-                        if (holeArea >= 0) {
-                            throw new AssertionError("Hole area must be negative!");
-                        }
-                    }
-                }
-                System.out.println();
+            }
+        } else {
+            for (Thread test : tests) {
+                test.run();
             }
         }
         if (awt) {
@@ -270,7 +307,7 @@ public class IRectangleUnionTest {
                 System.out.printf("AWT area: %.3f ms building (%d elements)%n", (t2 - t1) * 1e-6, count);
                 if (testIndex == 0) {
                     BufferedImage bufferedImage = new BufferedImage(
-                        (int) (imageWidth / divider), (int) (imageHeight / divider), BufferedImage.TYPE_INT_BGR);
+                        (int) (width / divider), (int) (height / divider), BufferedImage.TYPE_INT_BGR);
                     final Graphics2D g = (Graphics2D) bufferedImage.getGraphics();
                     g.setTransform(AffineTransform.getScaleInstance(1.0 / divider, 1.0 / divider));
                     g.setColor(Color.DARK_GRAY);
