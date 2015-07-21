@@ -171,7 +171,7 @@ public class IRectangleUnionTest {
                             rectangleUnion.findConnectedComponents();
                         }
                         List<Matrix<? extends UpdatablePArray>> demo = null;
-                        for (int k = -1; k < Math.min(5, rectangleUnion.connectedComponentCount()); k++) {
+                        for (int k = -1; k < Math.min(7, rectangleUnion.connectedComponentCount()); k++) {
                             final IRectanglesUnion component = k == -1 ?
                                 rectangleUnion :
                                 rectangleUnion.connectedComponent(k);
@@ -190,7 +190,7 @@ public class IRectangleUnionTest {
                                 ExternalAlgorithmCaller.writeImage(f, demo);
                             }
                             IRectanglesUnion currentUnion = component;
-                            for (int index = 0; index < 4; index++) {
+                            for (int index = 0; index < 3; index++) {
                                 if (testIndex == 0) {
                                     if (index == 0) {
                                         demo = drawRectangles(imageWidth, imageHeight, currentUnion, divider);
