@@ -318,7 +318,8 @@ class ArraysOpImpl {
         protected synchronized void finish() {
             if (src.length() > 0) {
                 result.setAll(indexOfMin, indexOfMax,
-                    ((PArray)src).getDouble(indexOfMin), ((PArray)src).getDouble(indexOfMax));
+                    ((PArray)src).getDouble(indexOfMin),
+                    ((PArray)src).getDouble(indexOfMax));
             }
             for (DataBuffer buf : buffers) {
                 Arrays.dispose(buf);

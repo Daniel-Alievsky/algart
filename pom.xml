@@ -6,7 +6,7 @@
 
     <groupId>net.algart</groupId>
     <artifactId>algart</artifactId>
-    <version>1.2.7</version>
+    <version>1.2.8</version>
 
     <name>AlgART Java Libraries</name>
     <description>Open-source Java libraries, supporting generalized smart arrays and matrices with elements
@@ -40,7 +40,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -50,7 +50,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -63,9 +63,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.1</version>
+                <version>3.0.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
+                    <doclint>none</doclint>
                 </configuration>
                 <executions>
                     <execution>
