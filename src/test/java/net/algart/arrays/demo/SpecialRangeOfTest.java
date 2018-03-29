@@ -31,21 +31,42 @@ import net.algart.arrays.SimpleMemoryModel;
 import net.algart.math.Range;
 
 public class SpecialRangeOfTest {
-    private static final double[] FILLERS = {Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.NaN, 0.0};
+    private static final double[] FILLERS = {Double.NaN, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0.0};
 
     public static void main(String[] args) {
+        double a = Double.NaN, b = Double.NaN;
+        System.out.printf("NaN < NaN: %s%nNaN <= NaN: %s%nNaN > NaN: %s%n157 < NaN: %s%n157 >= NaN: %s%n"
+                + "Double.NEGATIVE_INFINITY <= NaN: %s%n",
+                a < b, a <= b, a > b, 157 < a, 157 >= a, Double.NEGATIVE_INFINITY <= a);
         for (double filler : FILLERS) {
-            System.out.println("Testing " + filler + "...");
+            System.out.printf("%nTesting %s...%n", filler);
+
+            Arrays.MinMaxInfo minMaxInfo = new Arrays.MinMaxInfo();
+            double[] doubles = new double[100];
+            JArrays.fillDoubleArray(doubles, filler);
+            doubles[5] = 0.0;
+            Range range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(doubles), minMaxInfo);
+            System.out.printf("double[] rangeOf (0.0 at #5): %s (%s)%n", range, minMaxInfo);
+
+            JArrays.fillDoubleArray(doubles, filler);
+            doubles[5] = Double.NEGATIVE_INFINITY;
+            range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(doubles), minMaxInfo);
+            System.out.printf("double[] rangeOf (NEGATIVE_INFINITY at #5): %s (%s)%n", range, minMaxInfo);
+
+            JArrays.fillDoubleArray(doubles, filler);
+            doubles[5] = Double.POSITIVE_INFINITY;
+            range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(doubles), minMaxInfo);
+            System.out.printf("double[] rangeOf (POSITIVE_INFINITY at #5): %s (%s)%n", range, minMaxInfo);
+
+            JArrays.fillDoubleArray(doubles, filler);
+            range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(doubles), minMaxInfo);
+            System.out.printf("double[] rangeOf: %s (%s)%n", range, minMaxInfo);
 
             float[] floats= new float[100];
             JArrays.fillFloatArray(floats, (float) filler);
-            Range range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(floats));
-            System.out.println("float[] rangeOf: " + range);
+            range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(floats), minMaxInfo);
+            System.out.printf("float[] rangeOf: %s (%s)%n", range, minMaxInfo);
 
-            double[] doubles = new double[100];
-            JArrays.fillDoubleArray(doubles, filler);
-            range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(doubles));
-            System.out.println("double[] rangeOf: " + range);
         }
     }
 }

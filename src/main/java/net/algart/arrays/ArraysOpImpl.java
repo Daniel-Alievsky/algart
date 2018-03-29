@@ -112,7 +112,7 @@ class ArraysOpImpl {
         @Override
         public void process() {
             if (src.length() == 0) {
-                result.setAll(-1, -1, 0.0, 0.0);
+                result.setEmpty();
             } else if (src instanceof BitArray) {
                 // usually very quick algorithm, excepting very long constant bit arrays
                 boolean v0 = ((BitArray)src).getBit(0);
@@ -317,9 +317,7 @@ class ArraysOpImpl {
         @Override
         protected synchronized void finish() {
             if (src.length() > 0) {
-                result.setAll(indexOfMin, indexOfMax,
-                    ((PArray)src).getDouble(indexOfMin),
-                    ((PArray)src).getDouble(indexOfMax));
+                result.setAll(indexOfMin, indexOfMax, (PArray) src);
             }
             for (DataBuffer buf : buffers) {
                 Arrays.dispose(buf);

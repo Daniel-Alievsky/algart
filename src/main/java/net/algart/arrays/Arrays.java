@@ -3382,6 +3382,13 @@ public class Arrays {
      * if the <tt>minMaxInfo</tt> argument is not <tt>null</tt>,
      * the indexes of the minimum / maximum, stored in this object, will be equal to <tt>-1</tt>.
      *
+     * <p>If the passed array is {@link PFloatingArray}, please note that <tt>NaN</tt> values are
+     * exlcuded from comparison: this method finds minimums and maximum among all elements, excepting
+     * <tt>NaN</tt>. If all elements of the array are <tt>NaN</tt>, it is a special case:
+     * this method returns <tt>Range.valueOf(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY)</tt>.
+     * You can detect this situation with help of {@link MinMaxInfo#allNaN() allNaN()} method of
+     * <tt>minMaxInfo</tt> argument.
+     *
      * <p>Please note that the {@link MinMaxInfo} class is internally synchronized and, so,
      * <b>thread-safe</b>.
      * It can be useful if you call this method in a separate thread and need to use
@@ -6570,6 +6577,7 @@ public class Arrays {
         private boolean initialized = false;
         private long indexOfMin, indexOfMax;
         private Range range;
+        private boolean allNaN = false;
 
         /**
          * Creates new {@link #isInitialized() uninitialized} instance of this class.
@@ -6596,7 +6604,8 @@ public class Arrays {
         }
 
         /**
-         * Returns the index of the minimal array element stored in this object.
+         * Returns the index of the minimal array element stored in this object
+         * or &minus;1 if an array is empty (<tt>array.length()==0</tt>).
          *
          * @return the index of the minimal array element stored in this object.
          * @throws IllegalStateException if this instance is not {@link #isInitialized() initialized} yet.
@@ -6609,7 +6618,8 @@ public class Arrays {
         }
 
         /**
-         * Returns the index of the maximal array element stored in this object.
+         * Returns the index of the maximal array element stored in this object
+         * or &minus;1 if an array is empty (<tt>array.length()==0</tt>).
          *
          * @return the index of the maximal array element stored in this object.
          * @throws IllegalStateException if this instance is not {@link #isInitialized() initialized} yet.
@@ -6650,6 +6660,11 @@ public class Arrays {
         /**
          * Returns the values of both minimal and maximal array element stored in this object.
          *
+         * <p>Note: for array of floating-points values, where all elements are <tt>NaN</tt>,
+         * this method returns special value <tt>Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY</tt>
+         * (because {@link Range} class cannot store <tt>NaN</tt> limits).
+         * You can check this situation by {@link #allNaN()} method.
+         *
          * @return the values of both minimal and maximal array element stored in this object.
          * @throws IllegalStateException if this instance is not {@link #isInitialized() initialized} yet.
          */
@@ -6658,6 +6673,17 @@ public class Arrays {
                 checkInitialized();
                 return this.range;
             }
+        }
+
+        /**
+         * Returns <tt>true</tt> if the array is {@link PFloatingArray} and all its elements are <tt>NaN</tt>.
+         * In this case, {@link #range()} contains a special value
+         * <tt>Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY</tt>.
+         *
+         * @return <tt>true</tt> if and only if the array is floating-point and is filled by <tt>NaN</tt>.
+         */
+        public boolean allNaN() {
+            return allNaN;
         }
 
         /**
@@ -6673,7 +6699,8 @@ public class Arrays {
                 if (!initialized) {
                     return "not initialized MinMaxInfo";
                 }
-                return range + " (minimum at " + indexOfMin + ", maximum at " + indexOfMax + ")";
+                return allNaN ? "NaN-filled" :
+                        range + " (minimum at " + indexOfMin + ", maximum at " + indexOfMax + ")";
             }
         }
 
@@ -6686,7 +6713,8 @@ public class Arrays {
             synchronized (lock) {
                 int iMin = (int) indexOfMin * 37 + (int) (indexOfMin >>> 32);
                 int iMax = (int) indexOfMax * 37 + (int) (indexOfMax >>> 32);
-                return (iMin * 37 + iMax) * 37 + range.hashCode() + (initialized ? 157 : 11);
+                return (iMin * 37 + iMax) * 37 + range.hashCode()
+                        + (initialized ? 157 : 11) + (allNaN ? 73812 : 327);
             }
         }
 
@@ -6705,20 +6733,70 @@ public class Arrays {
             synchronized (lock) {
                 synchronized (o.lock) {
                     return o.initialized = this.initialized
-                        && o.indexOfMin == this.indexOfMin && o.indexOfMax == this.indexOfMax
-                        && o.range.equals(this.range);
+                            && o.indexOfMin == this.indexOfMin && o.indexOfMax == this.indexOfMax
+                            && o.range.equals(this.range)
+                            && o.allNaN == this.allNaN;
                 }
             }
         }
 
 
-        void setAll(long indexOfMin, long indexOfMax, double min, double max) {
-            if (min > max)
-                throw new AssertionError("Illegal min and max");
+        void setEmpty() {
             synchronized (lock) {
-                this.indexOfMin = indexOfMin;
-                this.indexOfMax = indexOfMax;
-                this.range = Range.valueOf(min, max);
+                this.indexOfMin = -1;
+                this.indexOfMax = -1;
+                this.range = Range.valueOf(0.0, 0.0);
+                this.allNaN = false;
+                this.initialized = true;
+            }
+        }
+
+        void setAll(long indexOfMin, long indexOfMax, PArray src) {
+            // Is is called for non-empty array only. Possible cases.
+            // 1) An array contains some "ordinary" values (the only possible case for PFixedArray).
+            //    In this case, indexOfMin and indexOfMax are initialized properly, and min/max contain
+            //    correct values ( < or > comparison worked at least once).
+            // 2) An array contains only special values NEGATIVE_INFINITY / POSITIVE_INFINITY / NaN,
+            //    and both NEGATIVE_INFINITY and POSITIVE_INFINITY appear. In this case,
+            //    indexOfMin and indexOfMax are also initialized properly: indexOfMin at NEGATIVE_INFINITY,
+            //    indexOfMax at NEGATIVE_INFINITY.
+            //    Remember that NaN < min and NaN > max always return false.
+            // 3) An array contains only NEGATIVE_INFINITY / NaN, and NEGATIVE_INFINITY appears.
+            //    In this case, indexOfMax == -1, but indexOfMin is initialized properly at NEGATIVE_INFINITY.
+            // 4) An array contains only POSITIVE_INFINITY / NaN, and POSITIVE_INFINITY appears.
+            //    In this case, indexOfMin == -1, but indexOfMax is initialized properly at POSITIVE_INFINITY.
+            // 5) An array contains only NaN. In this case, indexOfMin == indexOfMax == -1.
+            // It is a really special case, when we cannot create any Range.
+            synchronized (lock) {
+                if (indexOfMin == -1 && indexOfMax == -1) {
+                    // case 5): all NaN
+                    this.indexOfMin = this.indexOfMax = 0;
+                    this.range = Range.valueOf(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+                    // - special "strange" range (Range class does not allow to use NaN)
+                    this.allNaN = true;
+                } else {
+                    double min, max;
+                    if (indexOfMin == -1) {
+                        // case 4): float[]/double[] array filled by POSITIVE_INFINITY / NaN
+                        indexOfMin = indexOfMax; // - position of POSITIVE_INFINITY
+                        min = max = src.getDouble(indexOfMax);
+                        assert min == Double.POSITIVE_INFINITY;
+                    } else if (indexOfMax == -1) {
+                        // case 3): float[]/double[] array filled by NEGATIVE_INFINITY / NaN
+                        indexOfMax = indexOfMin; // - position of NEGATIVE_INFINITY
+                        min = max = src.getDouble(indexOfMin);
+                        assert max == Double.NEGATIVE_INFINITY;
+                    } else {
+                        min = src.getDouble(indexOfMin);
+                        max = src.getDouble(indexOfMax);
+                        if (min > max)
+                            throw new AssertionError("Illegal min and max");
+                    }
+                    this.indexOfMin = indexOfMin;
+                    this.indexOfMax = indexOfMax;
+                    this.range = Range.valueOf(min, max);
+                    this.allNaN = false;
+                }
                 this.initialized = true;
             }
         }
