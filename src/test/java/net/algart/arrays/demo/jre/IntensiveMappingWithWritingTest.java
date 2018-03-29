@@ -31,8 +31,6 @@ import java.nio.channels.*;
 /**
  * <p>Test for very intensive file mappings. See JVM bugs in comments at the end of the source file.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.4

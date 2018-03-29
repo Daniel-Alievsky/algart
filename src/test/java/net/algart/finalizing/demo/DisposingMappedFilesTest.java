@@ -32,8 +32,6 @@ import net.algart.finalizing.Finalizer;
 /**
  * <p>Test for close, resize and delete operations together with file mapping.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.4

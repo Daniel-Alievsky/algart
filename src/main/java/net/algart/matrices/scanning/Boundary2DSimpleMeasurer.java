@@ -69,8 +69,6 @@ import java.util.EnumSet;
  * <p>All calculations are performed by this class in <tt>strictfp</tt> mode, so the results
  * are absolutely identical on all platforms.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

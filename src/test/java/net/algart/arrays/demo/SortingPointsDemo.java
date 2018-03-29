@@ -31,8 +31,6 @@ import net.algart.arrays.ArraySorter;
 /**
  * <p>Sorting points: an example from comments to {@link net.algart.arrays.ArraySorter} class</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.1

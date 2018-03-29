@@ -28,8 +28,6 @@ package net.algart.contexts;
  * <p>Unchecked analog of the standard <tt>InterruptedException</tt>.
  * Thrown by {@link InterruptionContext#checkInterruption()} method.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

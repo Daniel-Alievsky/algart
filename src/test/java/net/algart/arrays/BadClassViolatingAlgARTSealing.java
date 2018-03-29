@@ -37,8 +37,6 @@ package net.algart.arrays;
  * <p>Here "src" is a directory where this class was compiled, and "algart.jar" is a correctly sealed jar-file
  * with basic AlgART libraries.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

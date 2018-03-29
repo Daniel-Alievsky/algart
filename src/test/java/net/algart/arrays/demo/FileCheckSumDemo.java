@@ -34,8 +34,6 @@ import net.algart.arrays.*;
 /**
  * <p>Simple test that calculates check sum of a file or all files in a directory via AlgART arrays.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

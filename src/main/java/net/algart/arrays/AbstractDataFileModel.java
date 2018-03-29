@@ -37,8 +37,6 @@ import java.util.Collections;
  * <p>A skeletal implementation of the {@link DataFileModel} interface to minimize
  * the effort required to implement this interface for processing usual disk files.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

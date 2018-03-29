@@ -38,8 +38,6 @@ import net.algart.arrays.*;
  * <p>One of examples of using this context is {@link DefaultArrayContext} class,
  * that can be passed to {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} method.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

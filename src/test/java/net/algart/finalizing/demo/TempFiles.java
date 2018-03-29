@@ -30,8 +30,6 @@ import java.util.*;
 /**
  * <p><i>TempFiles</i>: a tool for creating temporary files and deleting them before exiting program.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

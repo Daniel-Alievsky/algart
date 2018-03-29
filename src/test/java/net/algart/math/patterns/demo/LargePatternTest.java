@@ -35,8 +35,6 @@ import java.util.HashSet;
  * <p>Simple test illustrating operations with very large patterns (geometrically).
  * Please modify and debug this code to view how large patters are processed.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

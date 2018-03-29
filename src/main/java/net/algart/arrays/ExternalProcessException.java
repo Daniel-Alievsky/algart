@@ -30,8 +30,6 @@ import java.io.IOException;
  * <p>Unchecked exception thrown by {@link ExternalProcessor#execute(ProcessBuilder)} method,
  * if the called external process is finished with non-zero OS exit code.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

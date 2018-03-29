@@ -33,8 +33,6 @@ package net.algart.arrays;
  * if the array is too large for storing its content in a form of Java array
  * (Java arrays can contain, as a maximum, <tt>Integer.MAX_VALUE</tt> (2<sup>31</sup>-1) elements).</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

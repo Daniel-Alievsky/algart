@@ -34,8 +34,6 @@ import java.util.Random;
 /**
  * <p>Testing extra-large index calculation in the {@link Matrix matrices} (<tt>&gt;Long.MAX_VALUE</tt>).</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

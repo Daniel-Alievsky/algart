@@ -38,8 +38,6 @@ import java.util.ArrayList;
  * See <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6893654"
  * >http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6893654</a>.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

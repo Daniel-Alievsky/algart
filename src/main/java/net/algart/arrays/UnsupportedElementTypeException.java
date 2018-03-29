@@ -29,8 +29,6 @@ package net.algart.arrays;
  * (as {@link MemoryModel#newEmptyArray(Class)}), if the specified element type
  * is not supported by the {@link MemoryModel memory model}.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

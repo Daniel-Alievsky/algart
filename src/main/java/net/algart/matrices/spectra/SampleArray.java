@@ -79,8 +79,6 @@ package net.algart.matrices.spectra;
  * <p>The sample arrays are not thread-safe, but <b>are thread-compatible</b>
  * and can be synchronized manually if multithread access is necessary.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

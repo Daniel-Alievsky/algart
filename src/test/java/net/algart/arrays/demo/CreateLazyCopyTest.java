@@ -35,8 +35,6 @@ import net.algart.math.functions.*;
 /**
  * <p>The test illustrating performance of lazy filling of file-based AlgART arrays.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

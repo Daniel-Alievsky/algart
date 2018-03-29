@@ -30,8 +30,6 @@ package net.algart.arrays;
  * In other words, it is thrown while attempt to build degenerated simplex: such simplexes are not allowed
  * for {@link Matrices.Simplex} class.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

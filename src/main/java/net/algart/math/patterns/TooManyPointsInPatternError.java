@@ -34,8 +34,6 @@ package net.algart.math.patterns;
  *
  * <p>Usually <tt>OutOfMemoryError</tt> is also probable in situations, when this exception is probable.</tt>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

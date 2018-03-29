@@ -40,8 +40,6 @@ import java.util.Random;
  * <p>Test for {@link Matrices#fillRegion(ArrayContext, Matrix, Matrices.Region, Object)} method
  * for a case of {@link Matrices.Polygon2D}.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

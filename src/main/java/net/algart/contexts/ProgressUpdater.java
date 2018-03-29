@@ -27,8 +27,6 @@ package net.algart.contexts;
 /**
  * <p>The context allowing to inform the user about the percents of some long-working method.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

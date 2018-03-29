@@ -123,8 +123,6 @@ import java.util.Set;
  * These restrictions provide a guarantee that the method {@link #gridIndexPattern()} always
  * works successfully and creates a correct integer pattern.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

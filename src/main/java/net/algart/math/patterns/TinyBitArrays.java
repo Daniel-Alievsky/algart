@@ -27,8 +27,6 @@ package net.algart.math.patterns;
 /**
  * <p>A simple analog of <tt>net.algart.arrays.PackedBitArrays</tt> for internal use by this package.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

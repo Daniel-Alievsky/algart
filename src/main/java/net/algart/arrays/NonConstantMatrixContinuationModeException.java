@@ -28,8 +28,6 @@ package net.algart.arrays;
  * <p>Unchecked exception thrown by {@link Matrix.ContinuationMode#continuationConstant()} method,
  * if the continuation mode is not a {@link Matrix.ContinuationMode#isConstant() constant continuation}.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

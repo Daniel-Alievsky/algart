@@ -252,8 +252,6 @@ import java.util.Set;
  * there are no ways to modify settings of the created instance. It is not guaranteed for any classes,
  * but it is guaranteed for all instances created by the methods of the classes of this package.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

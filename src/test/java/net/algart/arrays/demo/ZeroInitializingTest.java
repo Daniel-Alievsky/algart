@@ -32,8 +32,6 @@ import net.algart.arrays.*;
 /**
  * <p>The test illustrating that all AlgART arrays, including file-based, are initialized by zeros.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

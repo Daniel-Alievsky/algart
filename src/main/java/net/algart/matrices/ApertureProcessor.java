@@ -157,8 +157,6 @@ import java.util.Map;
  * select the element type of newly created matrices only on the base of the element types of the arguments,
  * but not, for example, on the base of the matrix dimensions.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

@@ -32,8 +32,6 @@ package net.algart.arrays;
 /**
  * <p>AlgART array of <tt>byte</tt> values, read/write access, no resizing.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

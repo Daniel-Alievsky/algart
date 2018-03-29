@@ -28,8 +28,6 @@ package net.algart.arrays;
  * <p>Unchecked exception thrown by some methods, processing several AlgART arrays or matrices,
  * when the passed arrays / matrices have different lengths / dimensions.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

@@ -32,8 +32,6 @@ import java.util.Locale;
  * Illustrates correct (or incorrect) error messages while creating more than 2^31 elements.
  * Should be called in 64-bit JVMs.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

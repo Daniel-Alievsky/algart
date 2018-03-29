@@ -43,8 +43,6 @@ import net.algart.arrays.*;
  * <p>This class is a good possible superclass for implementation custom behavior of the contexts
  * or for overriding the behavior of an existing context, specified as a service provider.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

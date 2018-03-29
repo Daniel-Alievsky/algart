@@ -58,8 +58,6 @@ import net.algart.math.patterns.Pattern;
  * {@link #constantPercentileMatrix(Matrix, double)} method, convenient for implementing
  * methods which get the percentile indexes in a form of <tt>double</tt> parameters.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

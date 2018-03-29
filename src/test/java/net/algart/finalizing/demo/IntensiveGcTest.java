@@ -29,8 +29,6 @@ import java.io.*;
 /**
  * <p>Test for very intensive calls of <tt>System.gc()</tt> and <tt>System.runFinalization</tt> methods.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.4

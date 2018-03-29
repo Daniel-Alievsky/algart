@@ -115,8 +115,6 @@ import net.algart.math.Point;
  * <li>{@link Patterns#newRectangularIntegerPattern(net.algart.math.IPoint, net.algart.math.IPoint)}.</li>
  * </ul>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @see #isActuallyRectangular()

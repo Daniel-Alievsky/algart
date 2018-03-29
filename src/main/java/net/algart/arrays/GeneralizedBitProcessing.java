@@ -228,8 +228,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * However, usually there are no reasons to use the same instance of this class in different threads:
  * usually there is much better idea to create a separate instance for every thread.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

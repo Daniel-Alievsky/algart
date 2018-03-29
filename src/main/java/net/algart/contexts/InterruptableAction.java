@@ -32,8 +32,6 @@ package net.algart.contexts;
  *
  * <p>To use this class, please override its {@link #run()} method and call {@link #doInterruptibly()}.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

@@ -36,8 +36,6 @@ package net.algart.math.functions;
  * <nobr><i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>) = <i>x</i><sub>0</sub>/<i>x</i><sub>1</sub></nobr>,
  * you should override the version with two arguments: {@link #get(double, double)}.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

@@ -31,8 +31,6 @@ package net.algart.arrays;
  * <p>The arrays of object created via some {@link MemoryModel memory models} may not implement this interface.
  * You can check, is this interface implemented, by <tt>intstanceof</tt> operator.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

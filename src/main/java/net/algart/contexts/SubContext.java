@@ -65,8 +65,6 @@ import net.algart.arrays.SimpleMemoryModel;
  *
  * <p>Another constructors may provide another behavior: please see comments to that constructors.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

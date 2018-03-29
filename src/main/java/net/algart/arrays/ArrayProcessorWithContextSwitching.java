@@ -33,8 +33,6 @@ package net.algart.arrays;
  * with a context corresponding to this subtask
  * ({@link ArrayContext#part(double, double)} method).
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

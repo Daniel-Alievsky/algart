@@ -450,8 +450,6 @@ import java.util.*;
  * there are no ways to modify settings of the created instance.
  * The same is true for the tiled processors, created by {@link #tile(ApertureProcessor)} method.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

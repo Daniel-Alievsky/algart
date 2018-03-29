@@ -29,8 +29,6 @@ import net.algart.arrays.*;
 /**
  * <p>Simple test for behaviour of copy-on-write arrays while attempt to modify it.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

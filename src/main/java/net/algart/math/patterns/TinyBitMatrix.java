@@ -33,8 +33,6 @@ import java.util.Set;
  * <p>A simple multidimensional bit matrix. Used for optimization of some methods processing patterns.
  * All dimensions of this matrix must be not greater than Integer.MAX_VALUE.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

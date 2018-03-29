@@ -31,8 +31,6 @@ package net.algart.arrays;
  * The only {@link FloatArray#getFloat(long)} method is not defined in this class;
  * all other methods are implemented via calls of {@link FloatArray#getFloat(long)}.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

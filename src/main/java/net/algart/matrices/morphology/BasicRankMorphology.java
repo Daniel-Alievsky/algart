@@ -61,8 +61,6 @@ import net.algart.matrices.StreamingApertureProcessor;
  * <p>But you can also inherit this class yourself and implement dilation and erosion (the basic operations
  * of the mathematical morphology) in other way.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

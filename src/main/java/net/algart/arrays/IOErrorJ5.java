@@ -38,8 +38,6 @@ import java.io.IOException;
  * If you not need compatibility with Java 1.5, please don't use this class:
  * under 1.6 or later versions, this library throw <tt>java.io.IOError</tt>.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

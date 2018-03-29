@@ -138,8 +138,6 @@ import net.algart.matrices.spectra.ComplexScalarSampleArray.*;
  * {@link #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix, Matrix, Matrix, Matrix)} method,
  * if all processed matrices have the same <tt>float</tt> or <tt>double</tt> element types.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

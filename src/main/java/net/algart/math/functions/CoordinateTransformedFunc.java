@@ -47,8 +47,6 @@ package net.algart.math.functions;
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @see CoordinateTransformationOperator#apply(Func)
  * @author Daniel Alievsky
  * @version 1.2

@@ -33,8 +33,6 @@ import net.algart.arrays.*;
  * {@link InterruptionContext interruption} and
  * {@link ProgressUpdater progress} contexts defined in this package.
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

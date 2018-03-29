@@ -72,8 +72,6 @@ import java.util.EventListener;
  * In most situations the {@link #checkInterruption()} method is quite enough technique;
  * interruption listeners are usually needed in very advanced algorithms only.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

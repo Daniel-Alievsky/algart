@@ -33,8 +33,6 @@ import java.util.Locale;
 /**
  * <p>Basic test for {@link net.algart.arrays.ArraySorter} class</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.1

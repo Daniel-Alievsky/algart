@@ -62,8 +62,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p>There is a simple default implementation of this interface:
  * {@link DefaultThreadPoolFactory}.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

@@ -39,8 +39,6 @@ package net.algart.math.functions;
  * while simultaneous accessing the same instance from several threads.
  * All implementations of this interface from this package are <b>immutable</b>.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

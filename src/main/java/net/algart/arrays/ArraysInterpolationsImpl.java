@@ -29,8 +29,6 @@ import net.algart.math.functions.Func;
 /**
  * <p>Implementations of {@link Matrices} methods returning trivial interpolations of the matrix.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

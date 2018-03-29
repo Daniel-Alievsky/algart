@@ -101,8 +101,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * in this class, are designed to {@link Matrix#tile() tiled} matrices. For non-tiled matrices, these
  * algorithms can work slowly.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

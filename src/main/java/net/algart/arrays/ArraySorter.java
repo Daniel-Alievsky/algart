@@ -86,8 +86,6 @@ package net.algart.arrays;
  * <tt>int</tt> values, the slowing does not exceed 15-25% on Pentium-IV 32-bit processor.
  * While sorting more complex records, there is almost no difference.)</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.1

@@ -29,8 +29,6 @@ import java.util.Locale;
 /**
  * <p>Implementations of some {@link Arrays} methods.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

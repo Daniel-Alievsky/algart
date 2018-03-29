@@ -58,8 +58,6 @@ import java.util.Set;
  * and not <b>thread-safe</b>, but must be <b>thread-compatible</b>
  * (allow manual synchronization for multithread access).</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

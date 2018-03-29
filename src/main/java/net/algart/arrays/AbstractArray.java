@@ -47,8 +47,6 @@ import java.nio.ByteOrder;
  * via separate protected static methods: {@link #defaultCopy(UpdatableArray, Array)},
  * {@link #defaultSwap(UpdatableArray, UpdatableArray)}, {@link #defaultAppend(MutableArray, Array)}.
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

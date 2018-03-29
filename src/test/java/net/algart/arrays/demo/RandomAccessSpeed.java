@@ -33,8 +33,6 @@ import net.algart.arrays.*;
  * <p>Speed random read/write operations.
  * Useful also for testing bank swapping in {@link LargeMemoryModel}.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

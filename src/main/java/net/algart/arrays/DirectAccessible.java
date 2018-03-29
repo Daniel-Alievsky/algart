@@ -102,8 +102,6 @@ package net.algart.arrays;
  * but the bits in bit AlgART arrays are packed and cannot be viewed as <tt>boolean[]</tt> array.
  * However, you can use {@link DataBuffer data buffers} for direct block access to bit arrays.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @see DataBuffer

@@ -41,8 +41,6 @@ package net.algart.matrices.scanning;
  * The simplest example is {@link Boundary2DSimpleMeasurer} class, that adds measuring operation
  * to calling the parent {@link #next()} method.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

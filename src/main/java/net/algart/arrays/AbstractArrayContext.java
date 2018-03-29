@@ -33,8 +33,6 @@ import java.util.Locale;
  * <p>All non-abstract methods of this class are completely implemented
  * and usually should not be overridden.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

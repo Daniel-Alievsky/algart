@@ -29,8 +29,6 @@ package net.algart.math.geom;
  * with integer radii. Uses cache for optimization (don't calculate points
  * of not too large circles twice).</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.0
  * @since JDK 1.0

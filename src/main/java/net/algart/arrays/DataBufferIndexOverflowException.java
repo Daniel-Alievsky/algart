@@ -29,8 +29,6 @@ package net.algart.arrays;
  * {@link DataBuffer#to() to()} and {@link DataBuffer#cnt() cnt()}, if the values, they should be returned
  * by these methods, are greater than <tt>Integer.MAX_VALUE</tt>.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

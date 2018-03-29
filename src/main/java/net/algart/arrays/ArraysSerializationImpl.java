@@ -34,8 +34,6 @@ import java.nio.*;
  * <p>Implementations of {@link Arrays#copyArrayToBytes(byte[], PArray, ByteOrder)} and
  * {@link Arrays#copyBytesToArray(UpdatablePArray, byte[], ByteOrder)} methods.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

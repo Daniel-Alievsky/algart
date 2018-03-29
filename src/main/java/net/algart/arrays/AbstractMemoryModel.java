@@ -36,8 +36,6 @@ package net.algart.arrays;
  * via trivial calls of <tt>newMatrix</tt> method.
  * It also offers a simple implementation of some other methods: see comments to them.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

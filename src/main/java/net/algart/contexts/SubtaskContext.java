@@ -98,8 +98,6 @@ import java.util.Locale;
  * It is because {@link #as as} method of this class returns a <i>proxy class</i>,
  * wrapping all method of the parent context.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

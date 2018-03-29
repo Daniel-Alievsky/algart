@@ -28,8 +28,6 @@ package net.algart.arrays;
  * <p>Unchecked exception thrown by {@link DirectAccessible#javaArray()} method,
  * if the object cannot be viewed as a Java array.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

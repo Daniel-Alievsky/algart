@@ -31,8 +31,6 @@ import java.util.Locale;
 /**
  * <p>Test for overflow in {@link Arrays#preciseSumOf(PFixedArray, boolean)} method.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

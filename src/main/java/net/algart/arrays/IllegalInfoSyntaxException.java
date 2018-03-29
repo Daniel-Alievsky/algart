@@ -28,8 +28,6 @@ package net.algart.arrays;
  * <p>Checked exception thrown if the format of <tt>byte[]</tt> or <tt>String</tt>
  * serialized form of the {@link MatrixInfo} is invalid.
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

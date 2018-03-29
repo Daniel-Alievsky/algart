@@ -30,8 +30,6 @@ import net.algart.arrays.*;
 /**
  * <p>Test for {@link Arrays#compactCyclicPositions} method.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

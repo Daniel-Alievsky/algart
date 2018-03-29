@@ -54,8 +54,6 @@ import java.lang.reflect.Method;
  * In this case, the execution of the called {@link #as(Class)} or {@link #is(Class)} method is not interrupted,
  * but some (or all) service providers may be ignored in this and futher requests.</p>
  *
- * <p>AlgART Laboratory 2007&ndash;2015</p>
- *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5
