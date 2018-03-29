@@ -93,13 +93,22 @@ import java.util.List;
  * if the object was created by {@link #getGranulometryInstance getGranulometryInstance} method.</li>
  * </ul>
  *
+ * <p>Note: this method is based on {@link Morphology#dilation(Matrix, Pattern) dilation} method,
+ * called after erosion. It can be <b>important</b> for some continuation models of
+ * {@link ContinuedMorphology} class, if you use it as an argument of {@link #getInstance getInstance} methods.
+ * For example, continuation by positive infinity constant work correctly for original
+ * {@link Morphology#opening(Matrix, Pattern, Morphology.SubtractionMode) opening} method,
+ * but here it will lead to side effects as a result of dilation.
+ * We recommend not to use continuation by positive infinity or other high constants (greater
+ * than minimum of the source matrix).</p>
+ *
  * <p>The <tt>result</tt> matrix is created and zero-filled by {@link #getInstance getInstance} method,
  * and before the first iteration the source matrix is added to it (that means just copying).
  * The AlgART array, returned by {@link #sumsOfOpenings()} method, is created
  * as empty {@link MutablePNumberArray} by {@link #getGranulometryInstance getGranulometryInstance} method,
  * and before the first iteration the sum of elements of the source matrix is stored there as the first element.</p>
  *
- * <p>Please note: there is no guarantees that <tt>result</tt> matrix, returned by {@link #result()} method,
+ * <p>Also note: there is no guarantees that <tt>result</tt> matrix, returned by {@link #result()} method,
  * and the array returned by {@link #sumsOfOpenings()} method,
  * are updated after each iteration. This class contains some optimization, that can lead to updating results
  * only after some iteration, for example, after iteration #8, #16, etc.

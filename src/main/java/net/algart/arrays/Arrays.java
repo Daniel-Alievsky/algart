@@ -1751,6 +1751,31 @@ public class Arrays {
     }
 
     /**
+     * Returns <tt>true</tt> if the passed element type is <tt>boolean.class</tt>,
+     * <tt>short.class</tt>, <tt>byte.class</tt> or <tt>short.class</tt>.
+     *
+     * @param elementType some primitive element type; may be <tt>null</tt>, then <tt>false</tt> is returned.
+     * @return whether this element type is interpreted as unsigned primitive type.
+     */
+    public static boolean isUnsignedElementType(Class<?> elementType) {
+        return elementType == boolean.class
+                || elementType == char.class
+                || elementType == byte.class
+                || elementType == short.class;
+    }
+
+    /**
+     * Returns <tt>true</tt> if the passed element type is <tt>float.class</tt>
+     * or <tt>double.class</tt>.
+     *
+     * @param elementType some primitive element type; may be <tt>null</tt>, then <tt>false</tt> is returned.
+     * @return whether this element type is a floating-point primitive type.
+     */
+    public static boolean isUnsignedElementType(Class<?> elementType) {
+        return elementType == float.class || elementType == double.class;
+    }
+
+    /**
      * Returns the minimal possible value, that can be stored in elements of the fixed-point primitive array
      * (<tt>byte</tt> and <tt>short</tt> elements are interpreted as unsigned).
      * Namely, returns:

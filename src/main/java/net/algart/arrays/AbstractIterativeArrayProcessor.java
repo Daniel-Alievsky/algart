@@ -155,6 +155,7 @@ public abstract class AbstractIterativeArrayProcessor<T>
                 if (c != null)
                     c.updateProgress(new ArrayContext.Event(resultArray.elementType(), len, len));
             }
+//            System.out.print(count + "  ");
         }
         if (Arrays.CONFIG_LOGGABLE && Arrays.SystemSettings.profilingMode()) {
             long t2 = System.nanoTime();
