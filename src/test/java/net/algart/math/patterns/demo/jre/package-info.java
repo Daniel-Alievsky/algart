@@ -25,8 +25,6 @@
 /**
  Tests and demos for some JRE functionality, necessary for {@link net.algart.math.patterns} package.
 
- <p>AlgART Laboratory 2007&ndash;2015</p>
-
  @author Daniel Alievsky
  @version 1.2
  @since JDK 1.5
