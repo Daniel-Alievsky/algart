@@ -1771,7 +1771,7 @@ public class Arrays {
      * @param elementType some primitive element type; may be <tt>null</tt>, then <tt>false</tt> is returned.
      * @return whether this element type is a floating-point primitive type.
      */
-    public static boolean isUnsignedElementType(Class<?> elementType) {
+    public static boolean isFloatingPointElementType(Class<?> elementType) {
         return elementType == float.class || elementType == double.class;
     }
 
