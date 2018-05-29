@@ -335,9 +335,6 @@ public class IPoint implements Comparable<IPoint> {
         if (coordinates.length == 1) {
             return StrictMath.abs(coordinates[0]);
         }
-        if (coordinates.length == 2) {
-            return StrictMath.hypot(coordinates[0], coordinates[1]);
-        }
         double dSqr = 0.0;
         for (long coord : coordinates) {
             dSqr += (double) coord * (double) coord;

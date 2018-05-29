@@ -332,7 +332,7 @@ public strictfp class Point implements Comparable<Point> {
             return StrictMath.abs(coordinates[0]);
         }
         if (coordinates.length == 2) {
-            return StrictMath.hypot(coordinates[0], coordinates[1]);
+            return StrictMath.sqrt(coordinates[0] * coordinates[0] + coordinates[1] * coordinates[1]);
         }
         double dSqr = 0.0;
         for (double coord : coordinates) {
