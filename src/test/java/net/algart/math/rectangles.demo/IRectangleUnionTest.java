@@ -424,9 +424,9 @@ public class IRectangleUnionTest {
                 draw(result, rectangle, divider, new Color(255, 155 + rnd.nextInt(100), 0), Color.BLACK);
             }
         } catch (NoSuchFieldException e) {
-            throw new AssertionError("Unknown implementation", e);
+            throw new AssertionError("Unknown implementation: " + e);
         } catch (IllegalAccessException e) {
-            throw new AssertionError("Unknown implementation", e);
+            throw new AssertionError("Unknown implementation: " + e);
         }
         draw(result, union.largestRectangleInUnion(), divider, Color.GREEN, Color.WHITE);
         return result;

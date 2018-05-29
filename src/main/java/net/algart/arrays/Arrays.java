@@ -29,15 +29,11 @@ import net.algart.math.functions.ConstantFunc;
 import net.algart.math.functions.Func;
 import net.algart.math.functions.SelectConstantFunc;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.*;
-import java.util.AbstractList;
-import java.util.List;
-import java.util.Locale;
-import java.util.RandomAccess;
+import java.nio.ByteOrder;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
@@ -1128,6 +1124,23 @@ public class Arrays {
      * It is just a more compact  alternative for the expression "{@link SimpleMemoryModel#getInstance()}".
      */
     public static final SimpleMemoryModel SMM = SimpleMemoryModel.INSTANCE;
+
+
+    /**
+     * Unmodifiable list of all primitive types.
+     * All they, as well as any object types, can be elements of AlgART arrays.
+     */
+    public static List<Class<?>> PRIMITIVE_TYPES =
+        Collections.unmodifiableList(java.util.Arrays.<Class<?>>asList(
+            boolean.class,
+            char.class,
+            byte.class,
+            short.class,
+            int.class,
+            long.class,
+            float.class,
+            double.class));
+
 
     /*Repeat() bit(\s+array) ==> character$1,,<tt>byte</tt>$1,,<tt>short</tt>$1,,
                                  <tt>int</tt>$1,,<tt>long</tt>$1,,<tt>float</tt>$1,,<tt>double</tt>$1;;
