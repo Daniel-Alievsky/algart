@@ -259,7 +259,7 @@ strictfp class BasicDirectPointSetUniformGridPattern
         StringBuilder sb = new StringBuilder(dimCount + "D multipoint uniform-grid ("
             + gridToString() + ") pattern containing "
             + gridIndexes.size() + " points");
-        if (pointCount() <= 32) {
+        if (pointCount() <= 5) {
             sb.append(" ").append(points());
         }
         if (pointCount() <= 1024) {
