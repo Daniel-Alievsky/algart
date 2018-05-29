@@ -637,6 +637,24 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     }
 
     /**
+     * Returns the number of pixels inside the contour, following along the scanned boundary,
+     * with minus sign if the scanned boundary is an internal one.
+     *
+     * <p>It is the same value as {@link #area()} in a case
+     * <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt>,
+     * but it is available for any contour line type.
+     * (For comparison, the result of {@link #perimeter()} call for {@link ContourLineType#STRICT_BOUNDARY}
+     * can be retrieved for any contour line type by {@link #stepCount()} method.)
+     *
+     * @return the oriented area inside the scanned contour, corresponding always to
+     *         {@link ContourLineType#STRICT_BOUNDARY STRICT_BOUNDARY} model, independently on the current
+     *         {@link #contourLineType() contourLineType()}.
+     */
+    public long pixelCount() {
+        return iArea;
+    }
+
+    /**
      * Returns the oriented area inside the contour, following along the scanned boundary.
      * "Oriented" means that the result is equal to the area of the figure inside this contour,
      * if the scanned boundary is an external one, or the same value with minus sign if it is an internal one.
@@ -652,6 +670,7 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
      * "thin" 1-pixel "lines".
      *
      * @return the oriented area inside the scanned contour.
+     * @see #pixelCount()
      */
     public double area() {
         double result;
