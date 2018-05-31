@@ -3708,7 +3708,7 @@ public abstract class Boundary2DScanner {
         if (scanner.arrayLength == 0) {
             return false;
         }
-        final long index = scanner.currentIndexInArray();
+        final long index = scanner.currentIndexInArray(); // y * dimX + x
         // searching for the next inter-pixel position
         if (!scanner.get()) {
             // searching for nearest 1 after 0 (current)
@@ -3728,7 +3728,9 @@ public abstract class Boundary2DScanner {
             } else {
                 i -= index + 1;
             }
-            if (i == 0) { // at index there is the last unit bit in a series
+            // now x+i+1 and index+i+1 correspond to nearest 0 in this line or dimX if this line has no more 0
+            if (i == 0) {
+                // index+1 is 0 (or dimX), so the index corresponds to the last unit bit in a series
                 if (scanner.side() != Side.X_PLUS) {
                     scanner.goTo(x, scanner.y(), Side.X_PLUS);
                     return true;
@@ -3791,26 +3793,29 @@ public abstract class Boundary2DScanner {
         if (scanner.arrayLength == 0) {
             return false;
         }
-        long index = scanner.currentIndexInArray();
+        long index = scanner.currentIndexInArray(); // y * dimX + x
         boolean atLeftBoundary = bufferArray.getInt(index) != 0;
         if (!atLeftBoundary) {
             return nextSingleBoundary(scanner);
         }
         long x = scanner.x;
         do {
+            // not the index corresponds to a left bracket (boundary)
             long i = bufferArray.indexOf(index + 1, index + scanner.dimX - x, 1);
-            if (i != -1) {
+            if (i == -1) {
+                i = scanner.dimX - x - 1;
+            } else {
                 bufferArray.setInt(i, 0);
                 i -= index + 1;
-            } else {
-                i = scanner.dimX - x - 1;
             }
+            // now x+i+1 and index+i+1 correspond to the next bracket in this line or dimX if it has no more brackets
             bufferArray.fill(index + 1, i, 1);
             index += i;
 
             if (index >= scanner.arrayLength) {
                 return false;
             }
+            // now index+1 correspond to the next bracket in this line (or dimX if this line has no more brackets)
             index = scanner.array.indexOf(index + 1, scanner.arrayLength, true);
             if (index == -1) {
                 return false;
