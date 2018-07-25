@@ -31,11 +31,11 @@ package net.algart.arrays;
  * <p>Example of calling this method that should be rejected:</p>
  *
  * <pre>
- * "%JAVA_HOME%\bin\java" -cp src;algart.jar net.algart.arrays.BadClassViolatingAlgARTSealing
+ * "%JAVA_HOME%\bin\java" -cp target/test-classes;algart.jar net.algart.arrays.BadClassViolatingAlgARTSealing
  * </pre>
  *
- * <p>Here "src" is a directory where this class was compiled, and "algart.jar" is a correctly sealed jar-file
- * with basic AlgART libraries.</p>
+ * <p>Here "target/test-classes" is a directory where this class was compiled, and "algart.jar"
+ * is a correctly sealed jar-file with basic AlgART libraries.</p>
  *
  * @author Daniel Alievsky
  * @version 1.2
