@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2018 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2019 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -80,11 +80,7 @@ package net.algart.arrays;
  *
  * <p>Unlike standard Java sorting algorithms, this class has no restriction 2<sup>31</sup>-1
  * for the length of sorted arrays.
- * This class allows to sort up to 2<sup>63</sup>&minus;1 elements.
- * (Using <tt>long</tt> indexes, necessary for this, can little slow down sorting on 32-bit processors.
- * But slowing is not essential. Even in the simplest case of sorting 1 million
- * <tt>int</tt> values, the slowing does not exceed 15-25% on Pentium-IV 32-bit processor.
- * While sorting more complex records, there is almost no difference.)</p>
+ * This class allows to sort up to 2<sup>63</sup>&minus;1 elements.</p>
  *
  * @author Daniel Alievsky
  * @version 1.2
