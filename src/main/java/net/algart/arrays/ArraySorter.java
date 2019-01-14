@@ -88,7 +88,8 @@ package net.algart.arrays;
  */
 
 public abstract class ArraySorter {
-    private ArraySorter() {}
+    private ArraySorter() {
+    }
 
     private static final ArraySorter INSERTION_SORTER = new InsertionSorter();
     private static final ArraySorter SHELL_SORTER = new ShellSorter();
@@ -123,54 +124,54 @@ public abstract class ArraySorter {
     }
 
     /**
-     * Returns <tt>true</tt> if the <tt>fromIndex..toIndex-1</tt> range of <i>indexes</i> in some array is sorted.
-     * It means that for any <tt>k</tt>, <tt>fromIndex &lt;= k &lt; toIndex</tt>,
+     * Returns <tt>true</tt> if the <tt>from..to-1</tt> range of <i>indexes</i> in some array is sorted.
+     * It means that for any <tt>k</tt>, <tt>from &lt;= k &lt; to</tt>,
      * the following check returns <tt>false</tt>:<pre>
      *     comparator.less(indexes[k + 1], indexes[k])
      * </pre>
      *
      * @param indexes    indexes of elements in some data array.
-     * @param fromIndex  index of the first checked element of <tt>indexes</tt> array, inclusive.
-     * @param toIndex    index of the last checked element of <tt>indexes</tt> array, exclusive.
+     * @param from       index of the first checked element of <tt>indexes</tt> array, inclusive.
+     * @param to         index of the last checked element of <tt>indexes</tt> array, exclusive.
      * @param comparator comparator for checking order.
-     * @return           <tt>true</tt> if the specified range of indexes is sorted.
+     * @return <tt>true</tt> if the specified range of indexes is sorted.
      */
-    public static boolean areIndexesSorted(int[] indexes, int fromIndex, int toIndex, ArrayComparator comparator) {
+    public static boolean areIndexesSorted(int[] indexes, int from, int to, ArrayComparator comparator) {
         if (comparator == null)
             throw new NullPointerException("Null comparator argument");
-        check(indexes, fromIndex, toIndex);
-        for (int k = fromIndex; k < toIndex - 1; k++)
+        check(indexes, from, to);
+        for (int k = from; k < to - 1; k++)
             if (comparator.less(indexes[k + 1], indexes[k]))
                 return false;
         return true;
     }
 
     /**
-     * Returns <tt>true</tt> if the <tt>fromIndex..toIndex-1</tt> range of some array is sorted.
-     * It means that for any <tt>k</tt>, <tt>fromIndex &lt;= k &lt; toIndex</tt>,
+     * Returns <tt>true</tt> if the <tt>from..to-1</tt> range of some array is sorted.
+     * It means that for any <tt>k</tt>, <tt>from &lt;= k &lt; to</tt>,
      * the following check returns <tt>false</tt>:<pre>
      *     comparator.less(k + 1, k)
      * </pre>
      *
-     * @param fromIndex  index of the first checked element of some data array, inclusive.
-     * @param toIndex    index of the last checked element of some data array, exclusive.
+     * @param from  index of the first checked element of some data array, inclusive.
+     * @param to    index of the last checked element of some data array, exclusive.
      * @param comparator comparator for checking order.
-     * @return           <tt>true</tt> if the specified range of the data array is sorted.
+     * @return <tt>true</tt> if the specified range of the data array is sorted.
      * @throws NullPointerException if <tt>comparator</tt> argument is <tt>null</tt>.
      */
-    public static boolean areSorted(long fromIndex, long toIndex, ArrayComparator comparator) {
+    public static boolean areSorted(long from, long to, ArrayComparator comparator) {
         if (comparator == null)
             throw new NullPointerException("Null comparator argument");
-        check(fromIndex, toIndex);
-        for (long k = fromIndex; k < toIndex - 1; k++)
+        check(from, to);
+        for (long k = from; k < to - 1; k++)
             if (comparator.less(k + 1, k))
                 return false;
         return true;
     }
 
     /**
-     * Sorts <tt>indexes[fromIndex..toIndex-1]</tt> in increasing order.
-     * After sorting, for any <tt>i</tt>, <tt>j</tt>, <tt>fromIndex &lt;= i &lt; j &lt; toIndex</tt>,
+     * Sorts <tt>indexes[from..to-1]</tt> in increasing order.
+     * After sorting, for any <tt>i</tt>, <tt>j</tt>, <tt>from &lt;= i &lt; j &lt; to</tt>,
      * the following check will return <tt>false</tt>:<pre>
      *     comparator.less(indexes[j], indexes[i])
      * </pre>
@@ -186,18 +187,18 @@ public abstract class ArraySorter {
      * package never modify the passed array or collection in a case of some exceptions.
      *
      * @param indexes    indexes of elements in some data array: this array will be sorted.
-     * @param fromIndex  index of the first sorted element of <tt>indexes</tt> array, inclusive.
-     * @param toIndex    index of the last sorted element of <tt>indexes</tt> array, exclusive.
+     * @param from  index of the first sorted element of <tt>indexes</tt> array, inclusive.
+     * @param to    index of the last sorted element of <tt>indexes</tt> array, exclusive.
      * @param comparator comparator for checking order.
      * @throws NullPointerException     if <tt>indexes</tt> or <tt>comparator</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>fromIndex &gt; toIndex</tt>, <tt>fromIndex &lt; 0</tt>
-     *                                  or <tt>toIndex &gt; indexes.length</tt>
+     * @throws IllegalArgumentException if <tt>from &gt; to</tt>, <tt>from &lt; 0</tt>
+     *                                  or <tt>to &gt; indexes.length</tt>
      * @throws ClassCastException       may be thrown while calling methods of <tt>comparator</tt>
      *                                  during the sorting, if the types of the array elements
      *                                  are not appropriate (it is only a typical example of exception:
      *                                  those methods may throw another run-time exceptions).
      */
-    public abstract void sortIndexes(int[] indexes, int fromIndex, int toIndex, ArrayComparator comparator);
+    public abstract void sortIndexes(int[] indexes, int from, int to, ArrayComparator comparator);
 
     //Possible default implementation:
     //{
@@ -205,7 +206,7 @@ public abstract class ArraySorter {
     //        throw new NullPointerException("Null indexes argument");
     //    if (comparator == null)
     //        throw new NullPointerException("Null comparator argument");
-    //    sort(fromIndex, toIndex,
+    //    sort(from, to,
     //        new ArrayComparator() {
     //            public boolean less(long i, long j) {
     //                return comparator.less(indexes[(int) i], indexes[(int) j]);
@@ -221,8 +222,8 @@ public abstract class ArraySorter {
     //}
 
     /**
-     * Sorts <tt>fromIndex..toIndex-1</tt> fragment of some array in increasing order.
-     * After sorting, for any <tt>i</tt>, <tt>j</tt>, <tt>fromIndex &lt;= i &lt; j &lt; toIndex</tt>,
+     * Sorts <tt>from..to-1</tt> fragment of some array in increasing order.
+     * After sorting, for any <tt>i</tt>, <tt>j</tt>, <tt>from &lt;= i &lt; j &lt; to</tt>,
      * the following check will return <tt>false</tt>:<pre>
      *     comparator.less(j, i)
      * </pre>
@@ -250,12 +251,12 @@ public abstract class ArraySorter {
      * Unlike this, sorting methods from <tt>java.util</tt>
      * package never modify the passed array or collection in a case of some exceptions.
      *
-     * @param fromIndex  index of the first sorted element of some data array, inclusive.
-     * @param toIndex    index of the last sorted element of some data array, exclusive.
+     * @param from       index of the first sorted element of some data array, inclusive.
+     * @param to         index of the last sorted element of some data array, exclusive.
      * @param comparator comparator for checking order of elements.
      * @param exchanger  exchanger for exchanging sorted elements.
      * @throws NullPointerException          if <tt>comparator</tt> or <tt>exchanger</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException      if <tt>fromIndex &gt; toIndex</tt> or <tt>fromIndex &lt; 0</tt>
+     * @throws IllegalArgumentException      if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>
      * @throws UnsupportedOperationException if {@link #isExchangingSorter()} returns <tt>false</tt> and
      *                                       the <tt>exchanger</tt> does not implement interfaces, necessary
      *                                       to perform sorting by this algorithm. Never occurs in the current
@@ -265,7 +266,7 @@ public abstract class ArraySorter {
      *                                       are not appropriate (it is only a typical example of exception:
      *                                       those methods may throw another run-time exceptions).
      */
-    public abstract void sort(long fromIndex, long toIndex, ArrayComparator comparator, ArrayExchanger exchanger);
+    public abstract void sort(long from, long to, ArrayComparator comparator, ArrayExchanger exchanger);
 
     /**
      * Returns <tt>true</tt>, if it is enough to implement the pure {@link ArrayExchanger} interface by
@@ -279,27 +280,27 @@ public abstract class ArraySorter {
      * But this behaviour may change in future versions.
      *
      * @return whether {@link #sort sort} method works properly if its <tt>exchanger</tt> implements only
-     *         the simple {@link ArrayExchanger} interface.
+     * the simple {@link ArrayExchanger} interface.
      */
     public boolean isExchangingSorter() {
         return true;
     }
 
     static class InsertionSorter extends ArraySorter {
-        public void sortIndexes(int[] indexes, int fromIndex, int toIndex, ArrayComparator comparator) {
+        public void sortIndexes(int[] indexes, int from, int to, ArrayComparator comparator) {
             if (comparator == null)
                 throw new NullPointerException("Null comparator argument");
-            check(indexes, fromIndex, toIndex);
-            insertionSortIndexesWithoutChecks(indexes, fromIndex, toIndex, comparator);
+            check(indexes, from, to);
+            insertionSortIndexesWithoutChecks(indexes, from, to, comparator);
         }
 
-        public void sort(long fromIndex, long toIndex, ArrayComparator comparator, ArrayExchanger exchanger) {
+        public void sort(long from, long to, ArrayComparator comparator, ArrayExchanger exchanger) {
             if (comparator == null)
                 throw new NullPointerException("Null comparator argument");
             if (exchanger == null)
                 throw new NullPointerException("Null exchanger argument");
-            check(fromIndex, toIndex);
-            insertionSortWithoutChecks(fromIndex, toIndex, comparator, exchanger);
+            check(from, to);
+            insertionSortWithoutChecks(from, to, comparator, exchanger);
         }
 
         public String toString() {
@@ -307,59 +308,57 @@ public abstract class ArraySorter {
         }
     }
 
-    static void insertionSortIndexesWithoutChecks(int[] indexes, int fromIndex, int toIndex,
-        ArrayComparator comparator)
-    {
-        for (int i = fromIndex + 1; i < toIndex; i++) {
+    static void insertionSortIndexesWithoutChecks(int[] indexes, int from, int to,
+                                                  ArrayComparator comparator) {
+        for (int i = from + 1; i < to; i++) {
             int index = indexes[i];
             int j = i - 1;
-            for (; j >= fromIndex && comparator.less(index, indexes[j]); j--)
+            for (; j >= from && comparator.less(index, indexes[j]); j--)
                 indexes[j + 1] = indexes[j];
             indexes[j + 1] = index;
         }
     }
 
-    static void insertionSortWithoutChecks(long fromIndex, long toIndex,
-        ArrayComparator comparator, ArrayExchanger exchanger)
-    {
-        for (long i = fromIndex + 1; i < toIndex; i++) {
+    static void insertionSortWithoutChecks(long from, long to,
+                                           ArrayComparator comparator, ArrayExchanger exchanger) {
+        for (long i = from + 1; i < to; i++) {
             long j = i - 1;
-            for (; j >= fromIndex && comparator.less(j + 1, j); j--)
+            for (; j >= from && comparator.less(j + 1, j); j--)
                 exchanger.swap(j, j + 1);
         }
 
     }
 
     static class ShellSorter extends ArraySorter {
-        public void sortIndexes(int[] indexes, int fromIndex, int toIndex, ArrayComparator comparator) {
+        public void sortIndexes(int[] indexes, int from, int to, ArrayComparator comparator) {
             if (comparator == null)
                 throw new NullPointerException("Null comparator argument");
-            check(indexes, fromIndex, toIndex);
+            check(indexes, from, to);
             int step = 1;
-            for (int maxStep = (toIndex - 1 - fromIndex) / 9; step <= maxStep; step = 3 * step + 1);
+            for (int maxStep = (to - 1 - from) / 9; step <= maxStep; step = 3 * step + 1) ;
             for (; step > 0; step /= 3) {
-                for (int i = fromIndex + step; i < toIndex; i++) {
+                for (int i = from + step; i < to; i++) {
                     int index = indexes[i];
                     int j = i - step;
-                    for (; j >= fromIndex && comparator.less(index, indexes[j]); j -= step)
+                    for (; j >= from && comparator.less(index, indexes[j]); j -= step)
                         indexes[j + step] = indexes[j];
                     indexes[j + step] = index;
                 }
             }
         }
 
-        public void sort(long fromIndex, long toIndex, ArrayComparator comparator, ArrayExchanger exchanger) {
+        public void sort(long from, long to, ArrayComparator comparator, ArrayExchanger exchanger) {
             if (comparator == null)
                 throw new NullPointerException("Null comparator argument");
             if (exchanger == null)
                 throw new NullPointerException("Null exchanger argument");
-            check(fromIndex, toIndex);
+            check(from, to);
             long step = 1;
-            for (long maxStep = (toIndex - 1 - fromIndex) / 9; step <= maxStep; step = 3 * step + 1);
+            for (long maxStep = (to - 1 - from) / 9; step <= maxStep; step = 3 * step + 1) ;
             for (; step > 0; step /= 3) {
-                for (long i = fromIndex + step; i < toIndex; i++) {
+                for (long i = from + step; i < to; i++) {
                     long j = i - step;
-                    for (; j >= fromIndex && comparator.less(j + step, j); j -= step)
+                    for (; j >= from && comparator.less(j + step, j); j -= step)
                         exchanger.swap(j, j + step);
                 }
             }
@@ -373,11 +372,11 @@ public abstract class ArraySorter {
     static class QuickSorter extends ArraySorter {
         static final long THRESHOLD = 10; // shorter sub-arrays are sorted by insertion algorithm
 
-        public void sortIndexes(int[] indexes, int fromIndex, int toIndex, ArrayComparator comparator) {
+        public void sortIndexes(int[] indexes, int from, int to, ArrayComparator comparator) {
             if (comparator == null)
                 throw new NullPointerException("Null comparator argument");
             int temp;
-            check(indexes, fromIndex, toIndex);
+            check(indexes, from, to);
             //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, quicksort_method_impl)
             //  \blong\b ==> int ;;
             //  comparator\.less\(([^,]+),\s*([^\)]+)\) ==>
@@ -388,15 +387,15 @@ public abstract class ArraySorter {
             //  [ \t]*\/\/[^\n\r]* ==>  ;;
             //  insertionSortWithoutChecks\(([^,]+,[^,]+,\s*comparator),\s*exchanger\b ==>
             //  insertionSortIndexesWithoutChecks(indexes, $1     !! Auto-generated: NOT EDIT !! ]]
-            if (toIndex - fromIndex <= 1)
+            if (to - from <= 1)
                 return;
             int[] stackLeft = new int[32];
             int[] stackRight = new int[32];
             int stackTop = -1;
-            int left = fromIndex;
-            int right = toIndex - 1;
+            int left = from;
+            int right = to - 1;
 
-            for (;;) {
+            for (; ; ) {
 
                 if (right - left < THRESHOLD) {
 
@@ -411,21 +410,29 @@ public abstract class ArraySorter {
 
                     int baseIndex = (left + right) >> 1;
                     if (comparator.less(indexes[baseIndex], indexes[left])) {
-                        temp = indexes[baseIndex]; indexes[baseIndex] = indexes[left]; indexes[left] = temp;
+                        temp = indexes[baseIndex];
+                        indexes[baseIndex] = indexes[left];
+                        indexes[left] = temp;
                     }
                     if (comparator.less(indexes[right], indexes[baseIndex])) {
-                        temp = indexes[right]; indexes[right] = indexes[baseIndex]; indexes[baseIndex] = temp;
+                        temp = indexes[right];
+                        indexes[right] = indexes[baseIndex];
+                        indexes[baseIndex] = temp;
                         if (comparator.less(indexes[baseIndex], indexes[left])) {
-                            temp = indexes[baseIndex]; indexes[baseIndex] = indexes[left]; indexes[left] = temp;
+                            temp = indexes[baseIndex];
+                            indexes[baseIndex] = indexes[left];
+                            indexes[left] = temp;
                         }
                     }
 
-                    temp = indexes[left + 1]; indexes[left + 1] = indexes[baseIndex]; indexes[baseIndex] = temp;
+                    temp = indexes[left + 1];
+                    indexes[left + 1] = indexes[baseIndex];
+                    indexes[baseIndex] = temp;
                     baseIndex = left + 1;
 
                     int i = left + 1;
                     int j = right;
-                    for (;;) {
+                    for (; ; ) {
                         do
                             ++i;
                         while (comparator.less(indexes[i], indexes[baseIndex]));
@@ -434,10 +441,14 @@ public abstract class ArraySorter {
                         while (comparator.less(indexes[baseIndex], indexes[j]));
                         if (i >= j)
                             break;
-                        temp = indexes[i]; indexes[i] = indexes[j]; indexes[j] = temp;
+                        temp = indexes[i];
+                        indexes[i] = indexes[j];
+                        indexes[j] = temp;
                     }
 
-                    temp = indexes[j]; indexes[j] = indexes[baseIndex]; indexes[baseIndex] = temp;
+                    temp = indexes[j];
+                    indexes[j] = indexes[baseIndex];
+                    indexes[baseIndex] = temp;
 
                     ++stackTop;
                     if (right - j >= j - left) {
@@ -454,23 +465,23 @@ public abstract class ArraySorter {
             //[[Repeat.IncludeEnd]]
         }
 
-        public void sort(long fromIndex, long toIndex, ArrayComparator comparator, ArrayExchanger exchanger) {
+        public void sort(long from, long to, ArrayComparator comparator, ArrayExchanger exchanger) {
             if (comparator == null)
                 throw new NullPointerException("Null comparator argument");
             if (exchanger == null)
                 throw new NullPointerException("Null exchanger argument");
-            check(fromIndex, toIndex);
+            check(from, to);
             //[[Repeat.SectionStart quicksort_method_impl]]
-            if (toIndex - fromIndex <= 1)
+            if (to - from <= 1)
                 return;
             long[] stackLeft = new long[32];
             long[] stackRight = new long[32];
             // 32 stack elements allow to save bounds for sorting more than 2^32 elements (really, ~THRESHOLD/2 * 2^32)
             int stackTop = -1; // empty stack: the top element will be at stackLeft/Right[stackTop]
-            long left = fromIndex;
-            long right = toIndex - 1;
+            long left = from;
+            long right = to - 1;
 
-            for (;;) { // sorting left..right elements (inclusive)
+            for (; ; ) { // sorting left..right elements (inclusive)
 
                 if (right - left < THRESHOLD) {
 
@@ -510,7 +521,7 @@ public abstract class ArraySorter {
                     // where base = data[baseIndex]
                     long i = left + 1;
                     long j = right;
-                    for (;;) {
+                    for (; ; ) {
                         do
                             ++i;
                         while (comparator.less(i, baseIndex));
@@ -573,20 +584,20 @@ public abstract class ArraySorter {
         }
     }
 
-    static void check(long fromIndex, long toIndex) {
-        if (fromIndex < 0 || fromIndex > toIndex)
-            throw new IllegalArgumentException("Illegal fromIndex ("
-                + fromIndex + ") or toIndex (" + toIndex + ") arguments: "
-                + "should be 0 <= fromIndex <= toIndex");
+    static void check(long from, long to) {
+        if (from < 0 || from > to)
+            throw new IllegalArgumentException("Illegal from ("
+                    + from + ") or to (" + to + ") arguments: "
+                    + "should be 0 <= from <= to");
     }
 
-    static void check(int[] indexes, int fromIndex, int toIndex) {
+    static void check(int[] indexes, int from, int to) {
         if (indexes == null)
             throw new NullPointerException("Null indexes argument");
-        check(fromIndex, toIndex);
-        if (toIndex > indexes.length)
-            throw new IllegalArgumentException("The sorted range " + fromIndex + ".." + toIndex
-                + " is out of indexes array int[" + indexes.length + "]");
+        check(from, to);
+        if (to > indexes.length)
+            throw new IllegalArgumentException("The sorted range " + from + ".." + to
+                    + " is out of indexes array int[" + indexes.length + "]");
     }
 
     /* OBSOLETE
@@ -605,10 +616,10 @@ public abstract class ArraySorter {
                  for (; step > 0; step /= 3) {
                      if (exchanger instanceof ExtendedExchanger) {
                          ExtendedExchanger extendedExchanger = (ExtendedExchanger)exchanger;
-                         for (int i = fromIndex + step; i < toIndex; i++) {
+                         for (int i = from + step; i < to; i++) {
                              extendedExchanger.readWorkElement(i);
                              int j = i - step;
-                             for (; j >= fromIndex && extendedExchanger.greaterThanWorkElement(j); j -= step)
+                             for (; j >= from && extendedExchanger.greaterThanWorkElement(j); j -= step)
                                  extendedExchanger.copyTo(j, j + step);
                              extendedExchanger.writeWorkElement(j + step);
                          }
