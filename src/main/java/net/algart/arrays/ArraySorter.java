@@ -153,8 +153,8 @@ public abstract class ArraySorter {
      *     comparator.less(k + 1, k)
      * </pre>
      *
-     * @param from  index of the first checked element of some data array, inclusive.
-     * @param to    index of the last checked element of some data array, exclusive.
+     * @param from       index of the first checked element of some data array, inclusive.
+     * @param to         index of the last checked element of some data array, exclusive.
      * @param comparator comparator for checking order.
      * @return <tt>true</tt> if the specified range of the data array is sorted.
      * @throws NullPointerException if <tt>comparator</tt> argument is <tt>null</tt>.
@@ -187,8 +187,8 @@ public abstract class ArraySorter {
      * package never modify the passed array or collection in a case of some exceptions.
      *
      * @param indexes    indexes of elements in some data array: this array will be sorted.
-     * @param from  index of the first sorted element of <tt>indexes</tt> array, inclusive.
-     * @param to    index of the last sorted element of <tt>indexes</tt> array, exclusive.
+     * @param from       index of the first sorted element of <tt>indexes</tt> array, inclusive.
+     * @param to         index of the last sorted element of <tt>indexes</tt> array, exclusive.
      * @param comparator comparator for checking order.
      * @throws NullPointerException     if <tt>indexes</tt> or <tt>comparator</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt>, <tt>from &lt; 0</tt>
@@ -410,24 +410,16 @@ public abstract class ArraySorter {
 
                     int baseIndex = (left + right) >> 1;
                     if (comparator.less(indexes[baseIndex], indexes[left])) {
-                        temp = indexes[baseIndex];
-                        indexes[baseIndex] = indexes[left];
-                        indexes[left] = temp;
+                        temp = indexes[baseIndex]; indexes[baseIndex] = indexes[left]; indexes[left] = temp;
                     }
                     if (comparator.less(indexes[right], indexes[baseIndex])) {
-                        temp = indexes[right];
-                        indexes[right] = indexes[baseIndex];
-                        indexes[baseIndex] = temp;
+                        temp = indexes[right]; indexes[right] = indexes[baseIndex]; indexes[baseIndex] = temp;
                         if (comparator.less(indexes[baseIndex], indexes[left])) {
-                            temp = indexes[baseIndex];
-                            indexes[baseIndex] = indexes[left];
-                            indexes[left] = temp;
+                            temp = indexes[baseIndex]; indexes[baseIndex] = indexes[left]; indexes[left] = temp;
                         }
                     }
 
-                    temp = indexes[left + 1];
-                    indexes[left + 1] = indexes[baseIndex];
-                    indexes[baseIndex] = temp;
+                    temp = indexes[left + 1]; indexes[left + 1] = indexes[baseIndex]; indexes[baseIndex] = temp;
                     baseIndex = left + 1;
 
                     int i = left + 1;
@@ -441,14 +433,10 @@ public abstract class ArraySorter {
                         while (comparator.less(indexes[baseIndex], indexes[j]));
                         if (i >= j)
                             break;
-                        temp = indexes[i];
-                        indexes[i] = indexes[j];
-                        indexes[j] = temp;
+                        temp = indexes[i]; indexes[i] = indexes[j]; indexes[j] = temp;
                     }
 
-                    temp = indexes[j];
-                    indexes[j] = indexes[baseIndex];
-                    indexes[baseIndex] = temp;
+                    temp = indexes[j]; indexes[j] = indexes[baseIndex]; indexes[baseIndex] = temp;
 
                     ++stackTop;
                     if (right - j >= j - left) {
