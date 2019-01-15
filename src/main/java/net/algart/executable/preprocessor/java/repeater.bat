@@ -5,20 +5,7 @@ if %1.==-tempRemove. set flags=%flags% -removeAllIncludes
 if %1.==-trim. set flags=%flags% -onlyTrimTrailingWhitespace
 
 set f=%f% "..\..\..\..\..\..\**\*.java"
-
-rem set trunk=..\..\..\..\..\..\..\..
-rem if not exist %trunk%\simagis.iml set trunk=..\..\..\..\..\..\..\..\simagis
-rem if not exist %trunk%\simagis.iml set trunk=..\..\..\..\..\..\..\..\trunk
-rem if not exist %trunk%\simagis.iml echo Cannot find SIMAGIS trunk; it will not be processed
-rem if not exist %trunk%\simagis.iml goto skiptrunk
-
-rem if exist "%trunk%\bin\SimagisMatrixDemo\*.*"     set f=%f% "%trunk%\bin\SimagisMatrixDemo\src\**\*.java"
-rem if exist "%trunk%\bin\AlgartImagesP3\*.*"        set f=%f% "%trunk%\bin\AlgartImagesP3\src\**\*.java"
-rem if exist "%trunk%\bin\MovementCommonModel3D\*.*" set f=%f% "%trunk%\bin\MovementCommonModel3D\**\*.java"
-rem if exist "%trunk%\bin\MovementCommonModel3D\*.*" set f=%f% "%trunk%\bin\MovementCommonModel3D\*.html"
-rem if exist "%trunk%\PlanePyramidSourceNDPRead\*.*" set f=%f% "%trunk%\PlanePyramidSourceNDPRead\VisualStudio_NDPRead\**\NDPReadJNI.cpp"
-rem if exist "%trunk%\OlympusVSI\*.*"                set f=%f% "%trunk%\OlympusVSI\src\**\*.java"
-rem :skiptrunk
+rem set f=%f% "(some-folder)\src\main\java\**\*.java"
 
 if exist ..\..\..\..\..\..\..\..\target\classes\net\algart\executable\preprocessor\java\Repeater.class goto calljava
 if exist Repeater.class goto calljava

@@ -37,7 +37,7 @@ import java.util.Locale;
  * @version 1.2
  * @since JDK 1.1
  */
-public class SortingTest {
+public class ArraySorterTest {
     private String beginOfArray(double[] a, int[] indexes) {
         StringBuffer sb = new StringBuffer();
         int len = a != null ? a.length : indexes.length;
@@ -115,12 +115,12 @@ public class SortingTest {
 
     public static void main(String[] args) {
         if (args.length < 2) {
-            System.out.println("Usage: " + SortingTest.class.getName()
+            System.out.println("Usage: " + ArraySorterTest.class.getName()
                 + " Insertion|Shell|QuickSort arrayLength [leftGap [rightGap]]");
             return;
         }
 
-        SortingTest test = new SortingTest();
+        ArraySorterTest test = new ArraySorterTest();
         if (args[0].equalsIgnoreCase("Insertion")) {
             test.sorter = ArraySorter.getInsertionSorter();
         } else if (args[0].equalsIgnoreCase("Shell")) {

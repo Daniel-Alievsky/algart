@@ -1854,6 +1854,17 @@ public abstract class Boundary2DScanner {
     }
 
     /**
+     * Equivalient of {@link #scanBoundary(ArrayContext) scanBoundary(null)}.
+     *
+     * @return the length of scanned boundary (the number of visited pixel sides,
+     *         not the number of visited pixels!)
+     * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
+     */
+    public final long scanBoundary() {
+        return scanBoundary(null);
+    }
+
+    /**
      * Scans the current boundary. This method performs the following simple loop:
      *
      * <pre>
