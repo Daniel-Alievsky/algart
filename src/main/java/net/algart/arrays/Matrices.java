@@ -24,6 +24,7 @@
 
 package net.algart.arrays;
 
+import net.algart.math.Range;
 import net.algart.math.functions.*;
 import net.algart.math.IRange;
 
@@ -2398,6 +2399,52 @@ public class Matrices {
     }
 
     /**
+     * Returns an immutable view of the passed AlgART matrix, cast to another primitive element type
+     * (other precision) with automatic scaling, so that 0.0 is cast to 0.0 and
+     * {@link PArray#maxPossibleValue(double) maximal possible value} of the source matrix
+     * is scaled to maximal possible value of the result. (For <tt>float</tt> and <tt>double</tt>
+     * elements we suppose that maximal possible value is 1.0.)
+     *
+     * <p>More precisely, if <tt>newElementType==matrix.elementType()</tt>, this function just returns
+     * the <tt>matrix</tt> argument without changes, in other case it is equivalent to the following operators:
+     * <pre>
+     *     final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
+     *     final Range destRange = Range.valueOf(0.0, {@link Arrays#maxPossibleValue(Class, double)
+     *     Arrays.maxPossibleValue}(newType, 1.0));
+     *     final Range srcRange = Range.valueOf(0.0, matrix.array().{@link PArray#maxPossibleValue(double)
+     *     maxPossibleValue}(1.0));
+     *     return {@link Matrices#asFuncMatrix(Func, Class, Matrix)
+     *     Matrices.asFuncMatrix}(LinearFunc.getInstance(destRange, srcRange), newType, matrix);
+     * </pre>
+     *
+     * @param matrix         the source AlgART matrix.
+     * @param newElementType required element type.
+     * @return               the matrix with the required element type, where every element is equal to
+     *                       the corresponding element of the source matrix, multiplied
+     *                       by the automatically chosen scale.
+     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws IllegalArgumentException if the required element type is not a primitive type.
+     */
+    public static Matrix<? extends PArray> asPrecision(Matrix<? extends PArray> matrix, Class<?> newElementType) {
+        if (matrix == null)
+            throw new NullPointerException("Null matrix");
+        if (newElementType == null)
+            throw new NullPointerException("Null newElementType");
+        if (Arrays.bitsPerElement(newElementType) <= 0) {
+            throw new IllegalArgumentException("Element type must be primitive "
+                    + "(boolean, char, byte, short, int, long, float or double");
+        }
+        if (newElementType == matrix.elementType()) {
+            return matrix;
+        }
+        final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
+        final Range destRange = Range.valueOf(0.0, Arrays.maxPossibleValue(newType, 1.0));
+        final Range srcRange = Range.valueOf(0.0, matrix.array().maxPossibleValue(1.0));
+        // Note: ranges may be identical for some element type like boolean/float/double
+        return Matrices.asFuncMatrix(LinearFunc.getInstance(destRange, srcRange), newType, matrix);
+    }
+
+    /**
      * Returns an immutable view of the passed AlgART matrix, resized to the specified dimensions <tt>newDim</tt>.
      * If is also a good example of cooperative using
      * {@link #asInterpolationFunc(Matrix, net.algart.arrays.Matrices.InterpolationMethod, boolean)
@@ -3266,6 +3313,46 @@ public class Matrices {
         Array array = matrix.array();
         Array shifted = Arrays.asShifted(array, shift);
         return matrix.matrix(shifted);
+    }
+
+    /**
+     * Equivalent to {@link #clone(Matrix, MemoryModel) clone(matrix, Arrays.SMM)}.
+     *
+     * <p>Note: this operation can optimize access to this matrix in many times, if it is lazy-calculated
+     * and not too large (can be placed in available Java memory)
+     * It performs cloning with maximal speed via multithreading optimization. We recommend to call
+     * it after lazy calculations.</p>
+     *
+     * @return exact updatable clone of the passed matrix.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     */
+    public static Matrix<? extends UpdatablePArray> clone(Matrix<? extends PArray> matrix) {
+        return clone(matrix, Arrays.SMM);
+    }
+
+    /**
+     * Returns an exact updatable clone of the given matrix, created in the given memory model.
+     * Equivalent to the following operators:
+     * <pre>
+     *     final Matrix<UpdatablePArray> result = memoryModel.{@link MemoryModel#newMatrix(Class, Matrix)
+     *     newMatrix}(UpdatablePArray.class, matrix);
+     *     {@link Matrices#copy(ArrayContext, Matrix, Matrix)
+     *     Matrices.copy}(null, result, matrix); // - maximally fast multithreading copying
+     *     (return result)
+     * </pre>
+     *
+     * @return exact updatable clone of the passed matrix.
+     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     */
+    public static Matrix<? extends UpdatablePArray> clone(Matrix<? extends PArray> matrix, MemoryModel memoryModel) {
+        if (matrix == null)
+            throw new NullPointerException("Null matrix");
+        if (memoryModel == null)
+            throw new NullPointerException("Null memoryModel");
+        final Matrix<UpdatablePArray> result = memoryModel.newMatrix(UpdatablePArray.class, matrix);
+        Matrices.copy(null, result, matrix);
+        // - maximally fast multithreading copying
+        return result;
     }
 
     /**
