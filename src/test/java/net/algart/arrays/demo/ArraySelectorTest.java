@@ -69,7 +69,7 @@ public class ArraySelectorTest {
         selector.select(levels, array, array.length);
         long t2 = System.nanoTime();
         System.out.printf(Locale.US,
-                "      Selecting %d from %d elements (for float[]): %.6f ms, %.3f ns/element%s%n",
+                "      Selecting %d from %d float elements (for float[]): %.6f ms, %.3f ns/element%s%n",
                 levels.length, array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
 
         System.arraycopy(clone2, 0, array, 0, array.length);
@@ -77,14 +77,14 @@ public class ArraySelectorTest {
         selector.select(array.length, levels, comparator, exchanger);
         t2 = System.nanoTime();
         System.out.printf(Locale.US,
-                "      Selecting %d from %d elements (universal): %.6f ms, %.3f ns/element%s%n",
+                "      Selecting %d from %d float elements (universal): %.6f ms, %.3f ns/element%s%n",
                 levels.length, array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
 
         t1 = System.nanoTime();
         Arrays.sort(clone1);
         t2 = System.nanoTime();
         System.out.printf(Locale.US,
-                "      Full sorting %d elements (java.util): %.6f ms, %.3f ns/element%s%n",
+                "      Full sorting %d float elements (java.util): %.6f ms, %.3f ns/element%s%n",
                 array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
         check(array, clone1, levels, comparator);
 
@@ -93,7 +93,64 @@ public class ArraySelectorTest {
         ArraySorter.getQuickSorter().sort(0, array.length, comparator, exchanger);
         t2 = System.nanoTime();
         System.out.printf(Locale.US,
-                "      Full sorting %d elements (AlgART): %.6f ms, %.3f ns/element%s%n",
+                "      Full sorting %d float elements (AlgART): %.6f ms, %.3f ns/element%s%n",
+                array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+    }
+
+    private static void measureSpeed(final int[] array, final double[] levels) {
+        final ArraySelector selector = ArraySelector.getQuickSelector();
+        final ArrayComparator comparator = new ArrayComparator() {
+            @Override
+            public boolean less(long firstIndex, long secondIndex) {
+                return array[(int) firstIndex] < array[(int) secondIndex];
+            }
+        };
+        final ArrayExchanger exchanger = new ArrayExchanger() {
+            @Override
+            public void swap(long firstIndex, long secondIndex) {
+                int tmp = array[(int) firstIndex];
+                array[(int) firstIndex] = array[(int) secondIndex];
+                array[(int) secondIndex] = tmp;
+            }
+        };
+
+        int[] clone1 = array.clone();
+        int[] clone2 = array.clone();
+        String comment = "";
+        if (levels[0] == 0.0) {
+            comment = " MIN";
+        }
+        if (levels[levels.length - 1] == 1.0) {
+            comment += " MAX";
+        }
+        long t1 = System.nanoTime();
+        selector.select(levels, array, array.length);
+        long t2 = System.nanoTime();
+        System.out.printf(Locale.US,
+                "      Selecting %d from %d int elements (for int[]): %.6f ms, %.3f ns/element%s%n",
+                levels.length, array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+
+        System.arraycopy(clone2, 0, array, 0, array.length);
+        t1 = System.nanoTime();
+        selector.select(array.length, levels, comparator, exchanger);
+        t2 = System.nanoTime();
+        System.out.printf(Locale.US,
+                "      Selecting %d from %d int elements (universal): %.6f ms, %.3f ns/element%s%n",
+                levels.length, array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+
+        t1 = System.nanoTime();
+        Arrays.sort(clone1);
+        t2 = System.nanoTime();
+        System.out.printf(Locale.US,
+                "      Full sorting %d int elements (java.util): %.6f ms, %.3f ns/element%s%n",
+                array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+
+        System.arraycopy(clone2, 0, array, 0, array.length);
+        t1 = System.nanoTime();
+        ArraySorter.getQuickSorter().sort(0, array.length, comparator, exchanger);
+        t2 = System.nanoTime();
+        System.out.printf(Locale.US,
+                "      Full sorting %d int elements (AlgART): %.6f ms, %.3f ns/element%s%n",
                 array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
     }
 
@@ -237,7 +294,8 @@ public class ArraySelectorTest {
         Random rnd = new Random(0);
         for (int test = 1; test <= 16; test++) {
             System.out.printf("%nSpeed test #%d...%n", test);
-            final float[] array = new float[numberOfElements];
+            final float[] floats = new float[numberOfElements];
+            final int[] ints = new int[numberOfElements];
             final int[] numbersOfPercentiles = {1, 2, 3, 5, 10, 20};
             for (int numberOfPercentiles : numbersOfPercentiles) {
                 for (int kind = 1; kind <= (MEASURE_RANDOM_PERCENTILES ? 2 : 1); kind++) {
@@ -251,27 +309,45 @@ public class ArraySelectorTest {
                     Arrays.sort(levels);
 
                     System.out.println("    Increasing order:");
-                    for (int k = 0; k < array.length; k++) {
-                        array[k] = k;
+                    for (int k = 0; k < floats.length; k++) {
+                        floats[k] = k;
                     }
-                    measureSpeed(array, levels);
+                    measureSpeed(floats, levels);
                     System.out.println("    Decreasing order:");
-                    for (int k = 0; k < array.length; k++) {
-                        array[k] = -k;
+                    for (int k = 0; k < floats.length; k++) {
+                        floats[k] = -k;
                     }
-                    measureSpeed(array, levels);
+                    measureSpeed(floats, levels);
                     System.out.println("    Random array:");
                     rnd.setSeed(0);
-                    for (int k = 0; k < array.length; k++) {
-                        array[k] = (float) rnd.nextDouble();
+                    for (int k = 0; k < floats.length; k++) {
+                        floats[k] = (float) rnd.nextDouble();
                     }
-                    measureSpeed(array, levels);
-                    Arrays.fill(array, 1.0f);
+                    measureSpeed(floats, levels);
                     System.out.println("    Constant array:");
-                    for (int k = 0; k < array.length; k++) {
-                        array[k] = (float) rnd.nextDouble();
+                    Arrays.fill(floats, 1.0f);
+                    measureSpeed(floats, levels);
+
+                    System.out.println("    Increasing order:");
+                    for (int k = 0; k < ints.length; k++) {
+                        ints[k] = k;
                     }
-                    measureSpeed(array, levels);
+                    measureSpeed(ints, levels);
+                    System.out.println("    Decreasing order:");
+                    for (int k = 0; k < ints.length; k++) {
+                        ints[k] = -k;
+                    }
+                    measureSpeed(ints, levels);
+                    System.out.println("    Random array:");
+                    rnd.setSeed(0);
+                    for (int k = 0; k < ints.length; k++) {
+                        ints[k] = rnd.nextInt();
+                    }
+                    measureSpeed(ints, levels);
+                    System.out.println("    Constant array:");
+                    Arrays.fill(ints, 1);
+                    measureSpeed(ints, levels);
+
                     System.out.println();
                 }
             }
