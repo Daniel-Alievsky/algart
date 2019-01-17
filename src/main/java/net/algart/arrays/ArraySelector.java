@@ -2763,7 +2763,7 @@ public class ArraySelector {
             }
             if (k > 0 && percentileLevels[k] < percentileLevels[k - 1]) {
                 throw new IllegalArgumentException("Illegal percentile levels order: level #"
-                        + (k - 1) + " > level #" + k + " in array "
+                        + (k - 1) + " > level #" + k + " in array ("
                         + JArrays.toString(percentileLevels, ", ", 1024) + ")");
             }
         }
@@ -2780,7 +2780,7 @@ public class ArraySelector {
             }
             if (k > 0 && percentileIndexes[k] < percentileIndexes[k - 1]) {
                 throw new IllegalArgumentException("Illegal percentile indexes order: index #"
-                        + (k - 1) + " > index #" + k + " in array "
+                        + (k - 1) + " > index #" + k + " in array ("
                         + JArrays.toString(percentileIndexes, ", ", 1024) + ")");
             }
         }
@@ -2797,7 +2797,7 @@ public class ArraySelector {
             }
             if (k > 0 && percentileIndexes[k] < percentileIndexes[k - 1]) {
                 throw new IllegalArgumentException("Illegal percentile indexes order: index #"
-                        + (k - 1) + " > index #" + k + " in array "
+                        + (k - 1) + " > index #" + k + " in array ("
                         + JArrays.toString(percentileIndexes, ", ", 1024) + ")");
             }
         }
