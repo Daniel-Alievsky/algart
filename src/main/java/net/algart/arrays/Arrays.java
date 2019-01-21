@@ -1711,7 +1711,7 @@ public class Arrays {
     }
 
     /**
-     * Returns the size in bits, required for each element of an array with the given primitive element type.
+     * Returns the number of bits, required for each element of an array with the given primitive element type.
      *
      * <p>More precisely:
      * <ul>
@@ -1762,20 +1762,6 @@ public class Arrays {
     }
 
     /**
-     * Returns <tt>true</tt> if the passed element type is <tt>boolean.class</tt>,
-     * <tt>short.class</tt>, <tt>byte.class</tt> or <tt>short.class</tt>.
-     *
-     * @param elementType some primitive element type; may be <tt>null</tt>, then <tt>false</tt> is returned.
-     * @return whether this element type is interpreted as unsigned primitive type.
-     */
-    public static boolean isUnsignedElementType(Class<?> elementType) {
-        return elementType == boolean.class
-                || elementType == char.class
-                || elementType == byte.class
-                || elementType == short.class;
-    }
-
-    /**
      * Returns <tt>true</tt> if the passed element type is <tt>float.class</tt>
      * or <tt>double.class</tt>.
      *
@@ -1784,6 +1770,20 @@ public class Arrays {
      */
     public static boolean isFloatingPointElementType(Class<?> elementType) {
         return elementType == float.class || elementType == double.class;
+    }
+
+    /**
+     * Returns <tt>true</tt> if the passed element type is <tt>boolean.class</tt>,
+     * <tt>short.class</tt>, <tt>byte.class</tt> or <tt>short.class</tt>.
+     *
+     * @param elementType some primitive element type; may be <tt>null</tt>, then <tt>false</tt> is returned.
+     * @return whether this element type should be interpreted as unsigned primitive type.
+     */
+    public static boolean isUnsignedElementType(Class<?> elementType) {
+        return elementType == boolean.class
+                || elementType == char.class
+                || elementType == byte.class
+                || elementType == short.class;
     }
 
     /**
@@ -1954,14 +1954,49 @@ public class Arrays {
         if (PFixedArray.class.isAssignableFrom(arrayType))
             return maxPossibleIntegerValue(arrayType.asSubclass(PFixedArray.class));
         else if (DoubleArray.class.isAssignableFrom(arrayType) ||
-            FloatArray.class.isAssignableFrom(arrayType) ||
-            ObjectArray.class.isAssignableFrom(arrayType))
+                FloatArray.class.isAssignableFrom(arrayType) ||
+                ObjectArray.class.isAssignableFrom(arrayType))
             return valueForFloatingPoint;
         else
             throw new IllegalArgumentException(
-                "Only BitArray, CharArray, ByteArray, ShortArray, IntArray, LongArray, "
-                    + "FloatArray, DoubleArray, ObjectArray and their inheritors "
-                    + "are allowed here (passed type: " + arrayType + ")");
+                    "Only BitArray, CharArray, ByteArray, ShortArray, IntArray, LongArray, "
+                            + "FloatArray, DoubleArray, ObjectArray and their inheritors "
+                            + "are allowed here (passed type: " + arrayType + ")");
+    }
+
+    /**
+     * Returns {@link #minPossibleValue(Class, double) minPossibleValue(arrayType, 0.0)}.
+     * It is a good default for most application.
+     *
+     * @param arrayType the type of some AlgART array.
+     * @return the minimal possible value, that can be stored in such fixed-point primitive
+     * arrays, or <tt>0.0</tt> for other array types.
+     * @throws NullPointerException     if the passed <tt>arrayType</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException if the passed <tt>arrayType</tt> is not {@link BitArray}, {@link CharArray},
+     *                                  {@link ByteArray}, {@link ShortArray}, {@link IntArray}, {@link LongArray},
+     *                                  {@link FloatArray}, {@link DoubleArray}, {@link ObjectArray}
+     *                                  or an inheritor / implementing class of some of these interfaces.
+     */
+    public static double minPossibleValue(Class<? extends Array> arrayType) {
+        return minPossibleValue(arrayType, 0.0);
+    }
+
+    /**
+     * Returns {@link #minPossibleValue(Class, double) minPossibleValue(arrayType, 1.0)}.
+     * It is a good default for most application.
+     *
+     * @param arrayType the type of some AlgART array.
+     * @return the maximal possible value, that can be stored in such fixed-point primitive
+     * arrays, or <tt>1.0</tt> for other array types.
+     * @throws NullPointerException     if the passed <tt>arrayType</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException if the passed <tt>arrayType</tt> is not {@link BitArray}, {@link CharArray},
+     *                                  {@link ByteArray}, {@link ShortArray}, {@link IntArray}, {@link LongArray},
+     *                                  {@link FloatArray}, {@link DoubleArray}, {@link ObjectArray}
+     *                                  or an inheritor / implementing class of some of these interfaces.
+     * @see PArray#maxPossibleValue(double)
+     */
+    public static double maxPossibleValue(Class<? extends Array> arrayType) {
+        return maxPossibleValue(arrayType, 1.0);
     }
 
     /*Repeat() (?<!ArrayContext,\s)boolean|bit   ==> char,,byte,,short,,int,,long,,float,,double,,Object;;

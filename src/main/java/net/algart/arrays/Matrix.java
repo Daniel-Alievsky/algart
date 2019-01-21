@@ -660,6 +660,83 @@ public interface Matrix<T extends Array> extends Cloneable {
     public <U extends Array> Class<? extends U> updatableType(Class<U> arraySupertype);
 
     /**
+     * Returns <tt>true</tt> if and only if the {@link #elementType() element type} is primitive:
+     * <tt>{@link #array()} instanceof {@link PArray}</tt>.
+     *
+     * @return whether the type of matrix element is boolean, char, byte, short, int, long, float or double.
+     */
+    public boolean isPrimitive();
+
+    /**
+     * Returns <tt>true</tt> if and only if the {@link #elementType() element type} is <tt>float</tt>
+     * or <tt>double</tt>:
+     * <tt>{@link #array()} instanceof {@link PFloatingArray}</tt>.
+     *
+     * @return whether the type of matrix element is float or double.
+     */
+    public boolean isFloatingPoint();
+
+    /**
+     * Returns <tt>true</tt> if and only if the {@link #elementType() element type} is fixed-point:
+     * <tt>{@link #array()} instanceof {@link PFixedArray}</tt>.
+     *
+     * @return whether the type of matrix element is byte, short, int, long, char or boolean.
+     */
+    public boolean isFixedPoint();
+
+    /**
+     * Returns <tt>true</tt> if and only if the {@link #elementType() element type} is <tt>boolean.class</tt>,
+     * <tt>short.class</tt>, <tt>byte.class</tt> or <tt>short.class</tt>.
+     *
+     * <p>Equivalent to <tt>{@link Arrays#isUnsignedElementType(Class)
+     * Arrays.isUnsignedElementType}(thisMatrix.{@link #elementType() elementType()}).
+     *
+     * @return whether the element type of this matrix should be interpreted as unsigned primitive type.
+     */
+    public boolean isUnsigned();
+
+    /**
+     * Returns the number of in bits, required for each element of this matrix, if they are
+     * {@link #isPrimitive() primitive}; in other case returns &minus;1.
+     * Equivalent to <tt>{@link Arrays#bitsPerElement(Class)
+     * Arrays.bitsPerElement}(thisMatrix.{@link #elementType() elementType()}).
+     *
+     * @return the size of each element in bits or &minus;1 if for non-primitive elements.
+     */
+    public long bitsPerElement();
+
+    /**
+     * Returns the maximal possible value, that can stored in elements of this matrix,
+     * if they are fixed-point elements, or the argument for floating-point elements,
+     * or <tt>Double.NaN</tt> if elements are not primitive.
+     *
+     * <p>Equivalent to<pre>
+     *     thisMatrix.{@link #isPrimitive() isPrimitive()} ?
+     *         ((PArray) thisMatrix.array()).{@link PArray#maxPossibleValue(double)
+     *         maxPossibleValue(valueForFloatingPoint)} :
+     *         Double.NaN;
+     * </pre>
+     *
+     * @param valueForFloatingPoint some "default" value returned for floating-point element type.
+     * @return {@link #array()}.{@link PArray#maxPossibleValue maxPossibleValue()} for primitive element types,
+     * or <tt>Double.NaN</tt> for non-primitive element types.
+     */
+    public double maxPossibleValue(double valueForFloatingPoint);
+
+    /**
+     * Returns the maximal possible value, that can stored in elements of this matrix,
+     * if they are fixed-point elements, or <tt>1.0</tt> for floating-point elements,
+     * or <tt>Double.NaN</tt> if elements are not primitive.
+     *
+     * <p>Equivalent to {@link #maxPossibleValue(double) maxPossibleValue(1.0)}.
+     * It is a good default for most application.
+     *
+     * @return maximal possible value for primitive element types (1.0 for float/double),
+     * or <tt>Double.NaN</tt> for non-primitive element types.
+     */
+    public double maxPossibleValue();
+
+    /**
      * Returns an array containing all dimensions of this matrix.
      * Returned array is equal to the <tt>dim</tt> argument passed to methods that create new matrix instances.
      *

@@ -2409,10 +2409,10 @@ public class Matrices {
      * the <tt>matrix</tt> argument without changes, in other case it is equivalent to the following operators:
      * <pre>
      *     final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
-     *     final Range destRange = Range.valueOf(0.0, {@link Arrays#maxPossibleValue(Class, double)
-     *     Arrays.maxPossibleValue}(newType, 1.0));
-     *     final Range srcRange = Range.valueOf(0.0, matrix.array().{@link PArray#maxPossibleValue(double)
-     *     maxPossibleValue}(1.0));
+     *     final Range destRange = Range.valueOf(0.0, {@link Arrays#maxPossibleValue(Class)
+     *     Arrays.maxPossibleValue}(newType));
+     *     final Range srcRange = Range.valueOf(0.0, matrix.{@link Matrix#maxPossibleValue()
+     *     maxPossibleValue()});
      *     return {@link Matrices#asFuncMatrix(Func, Class, Matrix)
      *     Matrices.asFuncMatrix}(LinearFunc.getInstance(destRange, srcRange), newType, matrix);
      * </pre>
@@ -2438,8 +2438,8 @@ public class Matrices {
             return matrix;
         }
         final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
-        final Range destRange = Range.valueOf(0.0, Arrays.maxPossibleValue(newType, 1.0));
-        final Range srcRange = Range.valueOf(0.0, matrix.array().maxPossibleValue(1.0));
+        final Range destRange = Range.valueOf(0.0, Arrays.maxPossibleValue(newType));
+        final Range srcRange = Range.valueOf(0.0, matrix.maxPossibleValue());
         // Note: ranges may be identical for some element type like boolean/float/double
         return Matrices.asFuncMatrix(LinearFunc.getInstance(destRange, srcRange), newType, matrix);
     }

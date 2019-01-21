@@ -68,6 +68,19 @@ public class MinimalAndMaximalPossibleElementsDemo {
                         if (((PFixedArray)a).maxPossibleValue() != max)
                             throw new AssertionError("Illegal maxValue() in " + a);
                     }
+                    final Matrix<PArray> m = Matrices.matrix(a.asImmutable(), a.length());
+                    if (!m.isPrimitive()) {
+                        throw new AssertionError("Illegal isPrimitive() in " + m);
+                    }
+                    if (m.bitsPerElement() != Arrays.bitsPerElement(t)) {
+                        throw new AssertionError("Illegal bitsPerElement() in " + m);
+                    }
+                    if (m.maxPossibleValue() != a.maxPossibleValue(1.0)) {
+                        throw new AssertionError("Illegal maxValue() in " + m);
+                    }
+                    if (m.maxPossibleValue(Double.POSITIVE_INFINITY) != max) {
+                        throw new AssertionError("Illegal maxValue() in " + m);
+                    }
                 }
             }
         }

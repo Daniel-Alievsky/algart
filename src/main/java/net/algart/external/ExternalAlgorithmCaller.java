@@ -216,8 +216,30 @@ public abstract class ExternalAlgorithmCaller {
         }
     }
 
+    public static void writeAlgARTImage(File folder, List<? extends Matrix<? extends PArray>> image)
+            throws IOException
+    {
+        writeAlgARTImage(folder, image, false);
+    }
+
+    /**
+     * Saves the multi-channel <tt>image</tt> (list of matrices) in the specified folder.
+     * Matrices are saved in several files in very simple format without any compression.
+     * If this folder already contain an image, saved by previous call of this method,
+     * it is automatically deleted (replaced with the new one).
+     *
+     * @param folder folder to save the image.
+     * @param image  some multi-channel image
+     * @param allowReferencesToStandardLargeFiles if <tt>true</tt>, and if one of passed matrices is
+     *                                            mapped to some file F by {@link LargeMemoryModel},
+     *                                            this method does not write the matrix content and
+     *                                            saves a little text "reference" file with information about
+     *                                            the path to this file F.
+     * @throws IOException in a case of I/O error.
+     * @throws NullPointerException if one of the arguments or elements of <tt>image</tt> list is <tt>null</tt>.
+     */
     public static void writeAlgARTImage(
-        File dir,
+        File folder,
         List<? extends Matrix<? extends PArray>> image,
         boolean allowReferencesToStandardLargeFiles) throws IOException
     {
@@ -226,8 +248,8 @@ public abstract class ExternalAlgorithmCaller {
         if (image.isEmpty()) {
             throw new IllegalArgumentException("Empty list of image bands");
         }
-        dir.mkdir();
-        ExternalProcessor.writeUTF8(new File(dir, "version"), "1.0");
+        folder.mkdir();
+        ExternalProcessor.writeUTF8(new File(folder, "version"), "1.0");
         int index = 0;
         for (Matrix<? extends PArray> m : image) {
             DataFileModel<?> dataFileModel;
@@ -236,8 +258,8 @@ public abstract class ExternalAlgorithmCaller {
                 && ((dataFileModel = LargeMemoryModel.getDataFileModel(m.array())) instanceof DefaultDataFileModel
                 || dataFileModel instanceof StandardIODataFileModel))
             {
-                File infFile = new File(dir, index + ".inf");
-                File refFile = new File(dir, index + ".ref");
+                File infFile = new File(folder, index + ".inf");
+                File refFile = new File(folder, index + ".ref");
                 LargeMemoryModel<File> lmm = LargeMemoryModel.getInstance(dataFileModel).cast(File.class);
                 MatrixInfo mi = LargeMemoryModel.getMatrixInfoForSavingInFile(m, 0);
                 PArray raw = LargeMemoryModel.getRawArrayForSavingInFile(m);
@@ -246,8 +268,8 @@ public abstract class ExternalAlgorithmCaller {
                 ExternalProcessor.writeUTF8(refFile, lmm.getDataFilePath(raw).toString());
                 raw.flushResources(null, true);
             } else {
-                File infFile = new File(dir, index + ".inf");
-                File rawFile = new File(dir, String.valueOf(index));
+                File infFile = new File(folder, index + ".inf");
+                File rawFile = new File(folder, String.valueOf(index));
                 LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(
                     new StandardIODataFileModel(rawFile, false, false));
                 Matrix<? extends UpdatablePArray> clone = mm.newMatrix(UpdatablePArray.class, m);
@@ -256,30 +278,55 @@ public abstract class ExternalAlgorithmCaller {
                 MatrixInfo mi = LargeMemoryModel.getMatrixInfoForSavingInFile(clone, 0);
                 ExternalProcessor.writeUTF8(infFile, mi.toChars());
                 clone.array().copy(m.array());
-                clone.array().freeResources(null, true); // necessary to allow possible deletion
+                clone.array().freeResources(null, true);
+                // - close file to allow possible deletion
             }
             index++;
         }
+        for (; ; index++) {
+            // - remove all further channels if they were previously saved here
+            File infFile = new File(folder, index + ".inf");
+            File rawFile = new File(folder, String.valueOf(index));
+            if (!infFile.exists()) {
+                break;
+            }
+            infFile.delete();
+            rawFile.delete();
+        }
     }
 
-    public static List<Matrix<? extends PArray>> readAlgARTImage(File dir) throws IOException {
-        if (!dir.exists()) {
-            throw new FileNotFoundException("Image subdirectory " + dir + " does not exist");
+    /**
+     * Loads the multi-channel image (list of matrices), saved in the specified folder
+     * by {@link #writeAlgARTImage(File, List)} call.
+     *
+     * <p>Note: the files containing the matrices retain open, and any access to the returned
+     * matrices will lead to operations with these files (mapping).
+     * Usually you should copy the returned matrices to some other memory model
+     * and call {@link Matrix#freeResources()} for them to close these files.
+     *
+     * @param folder folder with multi-channel image, stored in a set of files.
+     * @return all channels of this image.
+     * @throws IOException in a case of I/O error.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     */
+    public static List<Matrix<? extends PArray>> readAlgARTImage(File folder) throws IOException {
+        if (!folder.exists()) {
+            throw new FileNotFoundException("Image subdirectory " + folder + " does not exist");
         }
-        if (!dir.isDirectory()) {
-            throw new FileNotFoundException("Image subdirectory " + dir + " is not a directory");
+        if (!folder.isDirectory()) {
+            throw new FileNotFoundException("Image subdirectory " + folder + " is not a directory");
         }
         List<Matrix<? extends PArray>> result = new ArrayList<Matrix<? extends PArray>>();
         int index = 0;
         for (; ; index++) {
-            File infFile = new File(dir, index + ".inf");
-            File refFile = new File(dir, index + ".ref");
-            File rawFile = new File(dir, String.valueOf(index));
+            File infFile = new File(folder, index + ".inf");
+            File refFile = new File(folder, index + ".ref");
+            File rawFile = new File(folder, String.valueOf(index));
             if (!infFile.exists()) {
                 if (index > 0) {
                     break;
                 }
-                throw new FileNotFoundException("Image subdirectory " + dir
+                throw new FileNotFoundException("Image subdirectory " + folder
                     + " does not contain 0.inf file (meta-information of the 1st image component)");
                 // so, we do not allow reading empty band lists
             }

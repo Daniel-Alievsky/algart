@@ -82,6 +82,38 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return InternalUtils.cast(result);
     }
 
+    public boolean isPrimitive() {
+        return array() instanceof PArray;
+    }
+
+    public boolean isFloatingPoint() {
+        return array() instanceof PFloatingArray;
+    }
+
+    public boolean isFixedPoint() {
+        return array() instanceof PFixedArray;
+    }
+
+    public boolean isUnsigned() {
+        return Arrays.isUnsignedElementType(elementType());
+    }
+
+    public long bitsPerElement() {
+        final T array = array();
+        return array instanceof PArray ? ((PArray) array).bitsPerElement() : -1;
+    }
+
+    public double maxPossibleValue(double valueForFloatingPoint) {
+        final T array = array();
+        return array instanceof PArray ?
+                ((PArray) array).maxPossibleValue(valueForFloatingPoint) :
+                Double.NaN;
+    }
+
+    public double maxPossibleValue() {
+        return maxPossibleValue(1.0);
+    }
+
     public abstract long[] dimensions();
 
     public abstract int dimCount();
