@@ -360,7 +360,6 @@ public class ArraySelector {
         if (length > array.length) {
             throw new IllegalArgumentException("length = " + length + " > array.length = " + array.length);
         }
-//        checkPercentileLevels(percentileLevels);
         selectSomePercentiles(
                 percentileLevels, 0, percentileLevels.length - 1,
                 length, array);
@@ -556,7 +555,6 @@ public class ArraySelector {
         if (length > array.length) {
             throw new IllegalArgumentException("length = " + length + " > array.length = " + array.length);
         }
-//        checkPercentileLevels(percentileLevels);
         selectSomePercentiles(
                 percentileLevels, 0, percentileLevels.length - 1,
                 length, array);
@@ -756,7 +754,6 @@ public class ArraySelector {
         if (length > array.length) {
             throw new IllegalArgumentException("length = " + length + " > array.length = " + array.length);
         }
-//        checkPercentileLevels(percentileLevels);
         selectSomePercentiles(
                 percentileLevels, 0, percentileLevels.length - 1,
                 length, array);
@@ -952,7 +949,6 @@ public class ArraySelector {
         if (length > array.length) {
             throw new IllegalArgumentException("length = " + length + " > array.length = " + array.length);
         }
-//        checkPercentileLevels(percentileLevels);
         selectSomePercentiles(
                 percentileLevels, 0, percentileLevels.length - 1,
                 length, array);
@@ -1144,7 +1140,6 @@ public class ArraySelector {
         if (length > array.length) {
             throw new IllegalArgumentException("length = " + length + " > array.length = " + array.length);
         }
-//        checkPercentileLevels(percentileLevels);
         selectSomePercentiles(
                 percentileLevels, 0, percentileLevels.length - 1,
                 length, array);
@@ -1336,7 +1331,6 @@ public class ArraySelector {
         if (length > array.length) {
             throw new IllegalArgumentException("length = " + length + " > array.length = " + array.length);
         }
-//        checkPercentileLevels(percentileLevels);
         selectSomePercentiles(
                 percentileLevels, 0, percentileLevels.length - 1,
                 length, array);
@@ -1528,7 +1522,6 @@ public class ArraySelector {
         if (length > array.length) {
             throw new IllegalArgumentException("length = " + length + " > array.length = " + array.length);
         }
-//        checkPercentileLevels(percentileLevels);
         selectSomePercentiles(
                 percentileLevels, 0, percentileLevels.length - 1,
                 length, array);
