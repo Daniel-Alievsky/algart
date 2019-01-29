@@ -38,6 +38,7 @@ import java.util.Random;
  */
 public class ArraySelectorTest {
     private static final boolean MEASURE_RANDOM_PERCENTILES = false;
+    private static final ByteArraySelector BYTE_ARRAY_SELECTOR = new ByteArraySelector();
 
     private static void measureSpeed(final float[] array, final double[] levels) {
         final ArraySelector selector = ArraySelector.getQuickSelector();
@@ -65,57 +66,71 @@ public class ArraySelectorTest {
         if (levels[levels.length - 1] == 1.0) {
             comment += " MAX";
         }
+        final int n = array.length >= 1000 ? 5 : array.length >= 100 ? 50 : 1000;
+
         long t1 = System.nanoTime();
-        selector.select(levels, array, array.length);
+        for (int k = 0; k < n; k++) {
+            selector.select(levels, array, array.length);
+        }
         long t2 = System.nanoTime();
         System.out.printf(Locale.US,
                 "      Selecting %d from %d float elements (for float[]): %.6f ms, %.3f ns/element%s%n",
-                levels.length, array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+                levels.length, array.length,
+                (t2 - t1) * 1e-6 / n, (t2 - t1) * 1.0 / array.length / n, comment);
 
         System.arraycopy(clone2, 0, array, 0, array.length);
         t1 = System.nanoTime();
-        selector.select(array.length, levels, comparator, exchanger);
+        for (int k = 0; k < n; k++) {
+            selector.select(array.length, levels, comparator, exchanger);
+        }
         t2 = System.nanoTime();
         System.out.printf(Locale.US,
                 "      Selecting %d from %d float elements (universal): %.6f ms, %.3f ns/element%s%n",
-                levels.length, array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+                levels.length, array.length,
+                (t2 - t1) * 1e-6 / n, (t2 - t1) * 1.0 / array.length / n, comment);
 
         t1 = System.nanoTime();
-        Arrays.sort(clone1);
+        for (int k = 0; k < n; k++) {
+            Arrays.sort(clone1);
+        }
         t2 = System.nanoTime();
         System.out.printf(Locale.US,
                 "      Full sorting %d float elements (java.util): %.6f ms, %.3f ns/element%s%n",
-                array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+                array.length,
+                (t2 - t1) * 1e-6 / n, (t2 - t1) * 1.0 / array.length / n, comment);
         check(array, clone1, levels, comparator);
 
         System.arraycopy(clone2, 0, array, 0, array.length);
         t1 = System.nanoTime();
-        ArraySorter.getQuickSorter().sort(0, array.length, comparator, exchanger);
+        for (int k = 0; k < n; k++) {
+            ArraySorter.getQuickSorter().sort(0, array.length, comparator, exchanger);
+        }
         t2 = System.nanoTime();
         System.out.printf(Locale.US,
                 "      Full sorting %d float elements (AlgART): %.6f ms, %.3f ns/element%s%n",
-                array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+                array.length,
+                (t2 - t1) * 1e-6 / n, (t2 - t1) * 1.0 / array.length / n, comment);
     }
 
-    private static void measureSpeed(final int[] array, final double[] levels) {
+    private static void measureSpeed(final byte[] array, final double[] levels) {
         final ArraySelector selector = ArraySelector.getQuickSelector();
         final ArrayComparator comparator = new ArrayComparator() {
             @Override
             public boolean less(long firstIndex, long secondIndex) {
-                return array[(int) firstIndex] < array[(int) secondIndex];
+                return (array[(int) firstIndex] & 0xFF) < (array[(int) secondIndex] & 0xFF);
             }
         };
         final ArrayExchanger exchanger = new ArrayExchanger() {
             @Override
             public void swap(long firstIndex, long secondIndex) {
-                int tmp = array[(int) firstIndex];
+                byte tmp = array[(int) firstIndex];
                 array[(int) firstIndex] = array[(int) secondIndex];
                 array[(int) secondIndex] = tmp;
             }
         };
 
-        int[] clone1 = array.clone();
-        int[] clone2 = array.clone();
+        byte[] clone1 = array.clone();
+        byte[] clone2 = array.clone();
         String comment = "";
         if (levels[0] == 0.0) {
             comment = " MIN";
@@ -123,35 +138,61 @@ public class ArraySelectorTest {
         if (levels[levels.length - 1] == 1.0) {
             comment += " MAX";
         }
+        final int n = array.length >= 1000 ? 5 : array.length >= 100 ? 50 : 1000;
+
         long t1 = System.nanoTime();
-        selector.select(levels, array, array.length);
+        for (int k = 0; k < n; k++) {
+            selector.select(levels, array, array.length);
+        }
         long t2 = System.nanoTime();
         System.out.printf(Locale.US,
-                "      Selecting %d from %d int elements (for int[]): %.6f ms, %.3f ns/element%s%n",
-                levels.length, array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+                "      Selecting %d from %d byte elements (for byte[]): %.6f ms, %.3f ns/element%s%n",
+                levels.length, array.length,
+                (t2 - t1) * 1e-6 / n, (t2 - t1) * 1.0 / array.length / n, comment);
 
         System.arraycopy(clone2, 0, array, 0, array.length);
         t1 = System.nanoTime();
-        selector.select(array.length, levels, comparator, exchanger);
+        for (int k = 0; k < n; k++) {
+            selector.select(array.length, levels, comparator, exchanger);
+        }
         t2 = System.nanoTime();
         System.out.printf(Locale.US,
-                "      Selecting %d from %d int elements (universal): %.6f ms, %.3f ns/element%s%n",
-                levels.length, array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+                "      Selecting %d from %d byte elements (universal): %.6f ms, %.3f ns/element%s%n",
+                levels.length, array.length,
+                (t2 - t1) * 1e-6 / n, (t2 - t1) * 1.0 / array.length / n, comment);
+
+        System.arraycopy(clone2, 0, array, 0, array.length);
+        byte[] results = new byte[levels.length];
+        t1 = System.nanoTime();
+        for (int k = 0; k < n; k++) {
+            BYTE_ARRAY_SELECTOR.select(results, levels, array, array.length);
+        }
+        t2 = System.nanoTime();
+        System.out.printf(Locale.US,
+                "      Selecting %d from %d byte elements (histogram-based): %.6f ms, %.3f ns/element%s%n",
+                levels.length, array.length,
+                (t2 - t1) * 1e-6 / n, (t2 - t1) * 1.0 / array.length / n, comment);
 
         t1 = System.nanoTime();
-        Arrays.sort(clone1);
+        for (int k = 0; k < n; k++) {
+            Arrays.sort(clone1);
+        }
         t2 = System.nanoTime();
         System.out.printf(Locale.US,
-                "      Full sorting %d int elements (java.util): %.6f ms, %.3f ns/element%s%n",
-                array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+                "      Full sorting %d byte elements (java.util): %.6f ms, %.3f ns/element%s%n",
+                array.length,
+                (t2 - t1) * 1e-6 / n, (t2 - t1) * 1.0 / array.length / n, comment);
 
         System.arraycopy(clone2, 0, array, 0, array.length);
         t1 = System.nanoTime();
-        ArraySorter.getQuickSorter().sort(0, array.length, comparator, exchanger);
+        for (int k = 0; k < n; k++) {
+            ArraySorter.getQuickSorter().sort(0, array.length, comparator, exchanger);
+        }
         t2 = System.nanoTime();
         System.out.printf(Locale.US,
-                "      Full sorting %d int elements (AlgART): %.6f ms, %.3f ns/element%s%n",
-                array.length, (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / array.length, comment);
+                "      Full sorting %d byte elements (AlgART): %.6f ms, %.3f ns/element%s%n",
+                array.length,
+                (t2 - t1) * 1e-6 / n, (t2 - t1) * 1.0 / array.length / n, comment);
     }
 
     private static void testCorrectness(final float[] array, final double[] levels, Random rnd) {
@@ -172,16 +213,20 @@ public class ArraySelectorTest {
         };
 
         float[] clone = array.clone();
+        int[] intIndexes = new int[levels.length];
+        long[] longIndexes = new long[levels.length];
+        for (int k = 0; k < levels.length; k++) {
+            longIndexes[k] = ArraySelector.percentileIndex(levels[k], (long) array.length);
+            intIndexes[k] = ArraySelector.percentileIndex(levels[k], array.length);
+        }
         if (rnd.nextBoolean()) {
             selector.select(array.length, levels, comparator, exchanger);
         } else if (rnd.nextBoolean()) {
             selector.select(levels, array, array.length);
+        } else if (rnd.nextBoolean()) {
+            selector.select(array.length, longIndexes, comparator, exchanger);
         } else {
-            long[] indexes = new long[levels.length];
-            for (int k = 0; k < levels.length; k++) {
-                indexes[k] = ArraySelector.percentileIndex(levels[k], array.length);
-            }
-            selector.select(array.length, indexes, comparator, exchanger);
+            selector.select(intIndexes, array, array.length);
         }
         Arrays.sort(clone);
         check(array, clone, levels, comparator);
@@ -193,54 +238,68 @@ public class ArraySelectorTest {
         }
     }
 
-    private static void testCorrectness(final short[] array, final double[] levels, Random rnd) {
+    private static void testCorrectness(final byte[] array, final double[] levels, Random rnd) {
         final ArraySelector selector = ArraySelector.getQuickSelector();
         final ArrayComparator comparator = new ArrayComparator() {
             @Override
             public boolean less(long firstIndex, long secondIndex) {
-                return (array[(int) firstIndex] & 0xFFFF) < (array[(int) secondIndex] & 0xFFFF);
+                return (array[(int) firstIndex] & 0xFF) < (array[(int) secondIndex] & 0xFF);
             }
         };
         final ArrayExchanger exchanger = new ArrayExchanger() {
             @Override
             public void swap(long firstIndex, long secondIndex) {
-                short tmp = array[(int) firstIndex];
+                byte tmp = array[(int) firstIndex];
                 array[(int) firstIndex] = array[(int) secondIndex];
                 array[(int) secondIndex] = tmp;
             }
         };
 
-        final short[] clone = array.clone();
+        final byte[] clone = array.clone();
+        int[] intIndexes = new int[levels.length];
+        long[] longIndexes = new long[levels.length];
+        for (int k = 0; k < levels.length; k++) {
+            longIndexes[k] = ArraySelector.percentileIndex(levels[k], (long) array.length);
+            intIndexes[k] = ArraySelector.percentileIndex(levels[k], array.length);
+        }
         if (rnd.nextBoolean()) {
             selector.select(array.length, levels, comparator, exchanger);
         } else if (rnd.nextBoolean()) {
             selector.select(levels, array, array.length);
+        } else if (rnd.nextBoolean()) {
+            selector.select(array.length, longIndexes, comparator, exchanger);
         } else {
-            long[] indexes = new long[levels.length];
-            for (int k = 0; k < levels.length; k++) {
-                indexes[k] = ArraySelector.percentileIndex(levels[k], array.length);
-            }
-            selector.select(array.length, indexes, comparator, exchanger);
+            selector.select(intIndexes, array, array.length);
+        }
+        byte[] percentiles = new byte[levels.length];
+        if (rnd.nextBoolean()) {
+            BYTE_ARRAY_SELECTOR.select(percentiles, levels, clone, clone.length);
+        } else {
+            BYTE_ARRAY_SELECTOR.select(percentiles, intIndexes, clone, clone.length);
         }
         ArraySorter.getQuickSorter().sort(0, clone.length,
                 new ArrayComparator() {
                     @Override
                     public boolean less(long firstIndex, long secondIndex) {
-                        return (clone[(int) firstIndex] & 0xFFFF) < (clone[(int) secondIndex] & 0xFFFF);
+                        return (clone[(int) firstIndex] & 0xFF) < (clone[(int) secondIndex] & 0xFF);
                     }
                 },
                 new ArrayExchanger() {
                     @Override
                     public void swap(long firstIndex, long secondIndex) {
-                        short tmp = clone[(int) firstIndex];
+                        byte tmp = clone[(int) firstIndex];
                         clone[(int) firstIndex] = clone[(int) secondIndex];
                         clone[(int) secondIndex] = tmp;
                     }
                 });
-        check(array, clone, levels, comparator);
+        check(array, clone, levels, comparator, percentiles);
     }
 
-    private static void check(float[] array, float[] sortedArray, double[] levels, ArrayComparator comparator) {
+    private static void check(
+            float[] array,
+            float[] sortedArray,
+            double[] levels,
+            ArrayComparator comparator) {
         for (int k = 0; k < levels.length; k++) {
             int percentileIndex = ArraySelector.percentileIndex(levels[k], array.length);
             float selected = array[percentileIndex];
@@ -262,14 +321,20 @@ public class ArraySelectorTest {
         }
     }
 
-    private static void check(short[] array, short[] sortedArray, double[] levels, ArrayComparator comparator) {
+    private static void check(
+            byte[] array,
+            byte[] sortedArray,
+            double[] levels,
+            ArrayComparator comparator,
+            byte[] percentiles) {
         for (int k = 0; k < levels.length; k++) {
             int percentileIndex = ArraySelector.percentileIndex(levels[k], array.length);
-            short selected = array[percentileIndex];
-            short sorted = sortedArray[percentileIndex];
+            byte selected = array[percentileIndex];
+            byte sorted = sortedArray[percentileIndex];
             if (selected != sorted) {
                 throw new AssertionError("Illegal selected = " + selected + " (position "
-                        + percentileIndex + "): array " + JArrays.toString(array, ", ", 1000));
+                        + percentileIndex + "): array "
+                        + JArrays.toHexString(array, ", ", 1000));
             }
             for (int i = 0; i < percentileIndex; i++) {
                 if (comparator.less(percentileIndex, i)) {
@@ -281,6 +346,13 @@ public class ArraySelectorTest {
                     throw new AssertionError("array[" + i + "] < array[" + percentileIndex + "]");
                 }
             }
+            if (selected != percentiles[k]) {
+                throw new AssertionError("Bug in ByteArraySelector (position "
+                        + percentileIndex + "): array "
+                        + JArrays.toHexString(array, ", ", 1000)
+                        + ", found percentiles "
+                        + JArrays.toHexString(percentiles, ", ", 1000));
+            }
         }
     }
 
@@ -291,11 +363,12 @@ public class ArraySelectorTest {
         }
         final int numberOfElements = Integer.parseInt(args[0]);
         final int numberOfTests = Integer.parseInt(args[1]);
+        final int numberOfMeasuringTest = numberOfElements <= 250 ? 300 : 16;
         Random rnd = new Random(0);
-        for (int test = 1; test <= 16; test++) {
+        for (int test = 1; test <= numberOfMeasuringTest; test++) {
             System.out.printf("%nSpeed test #%d...%n", test);
             final float[] floats = new float[numberOfElements];
-            final int[] ints = new int[numberOfElements];
+            final byte[] bytes = new byte[numberOfElements];
             final int[] numbersOfPercentiles = {1, 2, 3, 5, 10, 20};
             for (int numberOfPercentiles : numbersOfPercentiles) {
                 for (int kind = 1; kind <= (MEASURE_RANDOM_PERCENTILES ? 2 : 1); kind++) {
@@ -329,24 +402,24 @@ public class ArraySelectorTest {
                     measureSpeed(floats, levels);
 
                     System.out.println("    Increasing order:");
-                    for (int k = 0; k < ints.length; k++) {
-                        ints[k] = k;
+                    for (int k = 0; k < bytes.length; k++) {
+                        bytes[k] = (byte) (k * 127.0 / bytes.length);
                     }
-                    measureSpeed(ints, levels);
+                    measureSpeed(bytes, levels);
                     System.out.println("    Decreasing order:");
-                    for (int k = 0; k < ints.length; k++) {
-                        ints[k] = -k;
+                    for (int k = 0; k < bytes.length; k++) {
+                        bytes[k] = (byte) (-Math.round(k * 127.0 / bytes.length));
                     }
-                    measureSpeed(ints, levels);
+                    measureSpeed(bytes, levels);
                     System.out.println("    Random array:");
                     rnd.setSeed(0);
-                    for (int k = 0; k < ints.length; k++) {
-                        ints[k] = rnd.nextInt();
+                    for (int k = 0; k < bytes.length; k++) {
+                        bytes[k] = (byte) rnd.nextInt();
                     }
-                    measureSpeed(ints, levels);
+                    measureSpeed(bytes, levels);
                     System.out.println("    Constant array:");
-                    Arrays.fill(ints, 1);
-                    measureSpeed(ints, levels);
+                    Arrays.fill(bytes, (byte) 1);
+                    measureSpeed(bytes, levels);
 
                     System.out.println();
                 }
@@ -356,7 +429,7 @@ public class ArraySelectorTest {
 
         rnd.setSeed(157);
         for (int test = 1; test <= numberOfTests; test++) {
-            if (test % 50 == 0) {
+            if (test % 10 == 0) {
                 System.out.printf("\rTest for correctness #%d/%d for %d elements...",
                         test, numberOfTests, numberOfElements);
             }
@@ -380,25 +453,25 @@ public class ArraySelectorTest {
                 }
                 testCorrectness(floats, levels, rnd);
             }
-            final short[] shorts = new short[numberOfElements];
+            final byte[] bytes = new byte[numberOfElements];
             for (int numberOfPercentiles = 1; numberOfPercentiles <= 10; numberOfPercentiles++) {
                 double[] levels = new double[numberOfPercentiles];
                 for (int k = 0; k < levels.length; k++) {
                     levels[k] = rnd.nextDouble();
                 }
                 Arrays.sort(levels);
-                for (int k = 0; k < shorts.length; k++) {
-                    shorts[k] = (short) (10 + k);
+                for (int k = 0; k < bytes.length; k++) {
+                    bytes[k] = (byte) (10 + k);
                 }
-                testCorrectness(shorts, levels, rnd);
-                for (int k = 0; k < shorts.length; k++) {
-                    shorts[k] = (short) (10 - k);
+                testCorrectness(bytes, levels, rnd);
+                for (int k = 0; k < bytes.length; k++) {
+                    bytes[k] = (byte) (10 - k);
                 }
-                testCorrectness(shorts, levels, rnd);
-                for (int k = 0; k < shorts.length; k++) {
-                    shorts[k] = (short) rnd.nextInt();
+                testCorrectness(bytes, levels, rnd);
+                for (int k = 0; k < bytes.length; k++) {
+                    bytes[k] = (byte) rnd.nextInt();
                 }
-                testCorrectness(shorts, levels, rnd);
+                testCorrectness(bytes, levels, rnd);
             }
         }
         System.out.println("\r          \rO'k");
