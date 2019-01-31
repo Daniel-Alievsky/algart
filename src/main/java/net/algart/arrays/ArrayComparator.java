@@ -36,6 +36,8 @@ package net.algart.arrays;
  * The length of the array is limited only by 2<sup>63</sup>&minus;1 (maximal possible value for <tt>long</tt>
  * indexes).</p>
  *
+ * <p>In {@link JArrays} class you will find implementations of this interface for processing usual Java arrays.</p>
+ *
  * <p>This interface is used by {@link ArraySorter} class.</p>
  *
  * @author Daniel Alievsky

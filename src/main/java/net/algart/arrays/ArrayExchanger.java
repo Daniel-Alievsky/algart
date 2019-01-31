@@ -39,6 +39,8 @@ package net.algart.arrays;
  *
  * <p>Note: {@link UpdatableArray} interface extends this interface.</p>
  *
+ * <p>In {@link JArrays} class you will find implementations of this interface for processing usual Java arrays.</p>
+ *
  * @author Daniel Alievsky
  * @version 1.2
  * @since JDK 1.5

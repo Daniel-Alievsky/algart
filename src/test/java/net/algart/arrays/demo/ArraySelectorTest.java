@@ -42,20 +42,8 @@ public class ArraySelectorTest {
 
     private static void measureSpeed(final float[] array, final double[] levels) {
         final ArraySelector selector = ArraySelector.getQuickSelector();
-        final ArrayComparator comparator = new ArrayComparator() {
-            @Override
-            public boolean less(long firstIndex, long secondIndex) {
-                return array[(int) firstIndex] < array[(int) secondIndex];
-            }
-        };
-        final ArrayExchanger exchanger = new ArrayExchanger() {
-            @Override
-            public void swap(long firstIndex, long secondIndex) {
-                float tmp = array[(int) firstIndex];
-                array[(int) firstIndex] = array[(int) secondIndex];
-                array[(int) secondIndex] = tmp;
-            }
-        };
+        final ArrayComparator comparator = new JArrays.FloatArrayComparator(array);
+        final ArrayExchanger exchanger = new JArrays.FloatArrayExchanger(array);
 
         float[] clone1 = array.clone();
         float[] clone2 = array.clone();
@@ -114,20 +102,8 @@ public class ArraySelectorTest {
 
     private static void measureSpeed(final byte[] array, final double[] levels) {
         final ArraySelector selector = ArraySelector.getQuickSelector();
-        final ArrayComparator comparator = new ArrayComparator() {
-            @Override
-            public boolean less(long firstIndex, long secondIndex) {
-                return (array[(int) firstIndex] & 0xFF) < (array[(int) secondIndex] & 0xFF);
-            }
-        };
-        final ArrayExchanger exchanger = new ArrayExchanger() {
-            @Override
-            public void swap(long firstIndex, long secondIndex) {
-                byte tmp = array[(int) firstIndex];
-                array[(int) firstIndex] = array[(int) secondIndex];
-                array[(int) secondIndex] = tmp;
-            }
-        };
+        final ArrayComparator comparator = new JArrays.ByteArrayComparator(array);
+        final ArrayExchanger exchanger = new JArrays.ByteArrayExchanger(array);
 
         byte[] clone1 = array.clone();
         byte[] clone2 = array.clone();
@@ -197,20 +173,8 @@ public class ArraySelectorTest {
 
     private static void testCorrectness(final float[] array, final double[] levels, Random rnd) {
         final ArraySelector selector = ArraySelector.getQuickSelector();
-        final ArrayComparator comparator = new ArrayComparator() {
-            @Override
-            public boolean less(long firstIndex, long secondIndex) {
-                return array[(int) firstIndex] < array[(int) secondIndex];
-            }
-        };
-        final ArrayExchanger exchanger = new ArrayExchanger() {
-            @Override
-            public void swap(long firstIndex, long secondIndex) {
-                float tmp = array[(int) firstIndex];
-                array[(int) firstIndex] = array[(int) secondIndex];
-                array[(int) secondIndex] = tmp;
-            }
-        };
+        final ArrayComparator comparator = new JArrays.FloatArrayComparator(array);
+        final ArrayExchanger exchanger = new JArrays.FloatArrayExchanger(array);
 
         float[] clone = array.clone();
         int[] intIndexes = new int[levels.length];
@@ -240,20 +204,8 @@ public class ArraySelectorTest {
 
     private static void testCorrectness(final byte[] array, final double[] levels, Random rnd) {
         final ArraySelector selector = ArraySelector.getQuickSelector();
-        final ArrayComparator comparator = new ArrayComparator() {
-            @Override
-            public boolean less(long firstIndex, long secondIndex) {
-                return (array[(int) firstIndex] & 0xFF) < (array[(int) secondIndex] & 0xFF);
-            }
-        };
-        final ArrayExchanger exchanger = new ArrayExchanger() {
-            @Override
-            public void swap(long firstIndex, long secondIndex) {
-                byte tmp = array[(int) firstIndex];
-                array[(int) firstIndex] = array[(int) secondIndex];
-                array[(int) secondIndex] = tmp;
-            }
-        };
+        final ArrayComparator comparator = new JArrays.ByteArrayComparator(array);
+        final ArrayExchanger exchanger = new JArrays.ByteArrayExchanger(array);
 
         final byte[] clone = array.clone();
         int[] intIndexes = new int[levels.length];
@@ -278,20 +230,8 @@ public class ArraySelectorTest {
             BYTE_ARRAY_SELECTOR.select(percentiles, intIndexes, clone, clone.length);
         }
         ArraySorter.getQuickSorter().sort(0, clone.length,
-                new ArrayComparator() {
-                    @Override
-                    public boolean less(long firstIndex, long secondIndex) {
-                        return (clone[(int) firstIndex] & 0xFF) < (clone[(int) secondIndex] & 0xFF);
-                    }
-                },
-                new ArrayExchanger() {
-                    @Override
-                    public void swap(long firstIndex, long secondIndex) {
-                        byte tmp = clone[(int) firstIndex];
-                        clone[(int) firstIndex] = clone[(int) secondIndex];
-                        clone[(int) secondIndex] = tmp;
-                    }
-                });
+                new JArrays.ByteArrayComparator(clone),
+                new JArrays.ByteArrayExchanger(clone));
         check(array, clone, levels, comparator, percentiles);
     }
 
@@ -427,7 +367,7 @@ public class ArraySelectorTest {
             System.out.println();
         }
 
-        rnd.setSeed(157);
+        rnd.setSeed(new Random().nextLong());
         for (int test = 1; test <= numberOfTests; test++) {
             if (test % 10 == 0) {
                 System.out.printf("\rTest for correctness #%d/%d for %d elements...",

@@ -34,13 +34,15 @@ package net.algart.arrays;
  * for the length of arrays.
  * This class allows to select among up to 2<sup>63</sup>&minus;1 elements.</p>
  *
- * @see ByteArraySelector
  * @author Daniel Alievsky
  * @version 1.2
+ * @see ByteArraySelector
  */
 public class ArraySelector {
     private static final long THRESHOLD = 4;
-    // - shorter sub-arrays are sorted by insertion algorithm; must be >=3, because we find the median of 3 elements
+    // - Shorter sub-arrays are sorted by insertion algorithm; must be >=3, because we find the median of 3 elements.
+    // Note: this constant is used only in common method!
+    // Specific method for primitive types implements special code for 1, 2, 3, 4 elements.
 
     private ArraySelector() {
     }
@@ -204,19 +206,19 @@ public class ArraySelector {
         if (requiredIndex < left || requiredIndex > right) {
             throw new IllegalArgumentException("Index " + requiredIndex + " is out of range " + left + ".." + right);
         }
-        if (requiredIndex == left) {
-            selectMin(left, right, comparator, exchanger);
-            return;
-        }
-        if (requiredIndex == right) {
-            selectMax(left, right, comparator, exchanger);
-            return;
-        }
         for (; ; ) {
-            assert requiredIndex >= left;
-            assert requiredIndex <= right;
+            if (requiredIndex == left) {
+                selectMin(left, right, comparator, exchanger);
+                return;
+            }
+            if (requiredIndex == right) {
+                selectMax(left, right, comparator, exchanger);
+                return;
+            }
+            assert requiredIndex > left;
+            assert requiredIndex < right;
             if (right - left < THRESHOLD) {
-                insertionSort(left, right, comparator, exchanger);
+                sortLittleArray(left, right, comparator, exchanger);
                 break;
                 // Now
                 //     data[left..requiredIndex] <= data[requiredIndex],
@@ -302,6 +304,7 @@ public class ArraySelector {
                (\s+)\& 0xFF    ==> ,,$1& 0xFFFF,, ,,...;;
                (<p>Note that.*?\<\/p\>\s*\*\s*\*) ==> ,,$1,, ,,...
      */
+
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
      * the element from first <tt>length</tt> elements of <tt>byte[]</tt> array.</p>
@@ -398,50 +401,131 @@ public class ArraySelector {
         if (requiredIndex < left || requiredIndex > right) {
             throw new IllegalArgumentException("Index " + requiredIndex + " is out of range " + left + ".." + right);
         }
-        if (requiredIndex == left) {
-            return selectMin(left, right, array);
-        }
-        if (requiredIndex == right) {
-            return selectMax(left, right, array);
-        }
+        // - measuring at real data shows that it is better to check min/max only for ALL array, not for sub-arrays
         for (; ; ) {
-            assert requiredIndex >= left;
-            assert requiredIndex <= right;
-            if (right - left < THRESHOLD) {
-                insertionSort(left, right, array);
-                return array[requiredIndex];
-                // Now
-                //     data[left..requiredIndex] <= data[requiredIndex],
-                //     data[requiredIndex..right] >= data[requiredIndex]
+            if (requiredIndex == left) {
+                return selectMin(left, right, array);
             }
+            if (requiredIndex == right) {
+                return selectMax(left, right, array);
+            }
+            assert requiredIndex > left;
+            assert requiredIndex < right;
+            final int difference = right - left;
+            if (difference == 2) {
+                final int base = left + 1;
+                byte a = array[left];
+                byte b = array[base];
+                final byte c = array[right];
+                // Sorting a, b, c
+                if ((b & 0xFF) < (a & 0xFF)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((c & 0xFF) < (b & 0xFF)) {
+                    array[right] = b;
+                    b = c;
+                    // since this moment, c is not 3rd element
+                    if ((b & 0xFF) < (a & 0xFF)) {
+                        b = a;
+                        a = c;
+                    }
+                }
+                array[left] = a;
+                array[base] = b;
+                return array[requiredIndex];
+
+            } else if (difference == 3) {
+                final int afterLeft = left + 1;
+                final int beforeRight = right - 1;
+                byte a = array[left];
+                byte b = array[afterLeft];
+                byte c = array[beforeRight];
+                byte d = array[right];
+                // Sorting a, b, c, d
+                if ((b & 0xFF) < (a & 0xFF)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((d & 0xFF) < (c & 0xFF)) {
+                    d = c;
+                    c = array[right];
+                }
+                // Now a <= b, c <= d
+                if ((a & 0xFF) < (c & 0xFF)) {
+                    // a..b, then c..d
+                    array[left] = a;
+                    if ((b & 0xFF) < (d & 0xFF)) {
+                        array[right] = d;
+                        if ((b & 0xFF) < (c & 0xFF)) {
+                            array[afterLeft] = b;
+                            array[beforeRight] = c;
+                        } else {
+                            array[afterLeft] = c;
+                            array[beforeRight] = b;
+                        }
+                    } else {
+                        // a <= c <= d <= b
+                        array[afterLeft] = c;
+                        array[beforeRight] = d;
+                        array[right] = b;
+                    }
+                } else {
+                    // c..d, then a..b
+                    array[left] = c;
+                    if ((d & 0xFF) < (b & 0xFF)) {
+                        array[right] = b;
+                        if ((d & 0xFF) < (a & 0xFF)) {
+                            array[afterLeft] = d;
+                            array[beforeRight] = a;
+                        } else {
+                            array[afterLeft] = a;
+                            array[beforeRight] = d;
+                        }
+                    } else {
+                        // c <= a <= b <= d
+                        array[afterLeft] = a;
+                        array[beforeRight] = b;
+                        array[right] = d;
+                    }
+                }
+                return array[requiredIndex];
+            }
+
+            // Switch above is better than common code below:
+            // if (right - left < THRESHOLD) {
+            //    sortLittleArray(left, right, array);
+            //    return array[requiredIndex];
+            // }
+
+            byte a = array[left];
+            byte c = array[right];
             // Sorting 3 elements to find a median from 3: left, (left+right)/2, right:
             int base = (left + right) >>> 1;
             // ">>>" will be correct even in the case of overflow
-            byte a, b;
-            a = array[left];
-            b = array[base];
+            byte b = array[base];
+            // Sorting a, b, c
             if ((b & 0xFF) < (a & 0xFF)) {
-                array[left] = b;
-                array[base] = a;
-            }
-            a = array[right];
-            b = array[base];
-            if ((a & 0xFF) < (b & 0xFF)) {
-                array[right] = b;
-                array[base] = a;
+                a = b;
                 b = array[left];
-                if ((a & 0xFF) < (b & 0xFF)) {
-                    array[left] = a;
-                    array[base] = b;
+            }
+            if ((c & 0xFF) < (b & 0xFF)) {
+                array[right] = b;
+                b = c;
+                // since this moment, c is not 3rd element
+                if ((b & 0xFF) < (a & 0xFF)) {
+                    b = a;
+                    a = c;
                 }
             }
+            array[left] = a;
+            // array[base] = b; - virtually (really we can skip this operator)
 
             // Now data[left] <= data[base] <= data[right] (in other words, base is a median)
             // moving the base at the new position left+1
-            a = array[left + 1];
-            b = array[base];
+            byte tmp = array[left + 1];
             array[left + 1] = b;
-            array[base] = a;
+            array[base] = tmp;
             base = left + 1;
             assert b == array[base];
 
@@ -505,6 +589,7 @@ public class ArraySelector {
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
      * the element from first <tt>length</tt> elements of <tt>char[]</tt> array.</p>
@@ -589,50 +674,131 @@ public class ArraySelector {
         if (requiredIndex < left || requiredIndex > right) {
             throw new IllegalArgumentException("Index " + requiredIndex + " is out of range " + left + ".." + right);
         }
-        if (requiredIndex == left) {
-            return selectMin(left, right, array);
-        }
-        if (requiredIndex == right) {
-            return selectMax(left, right, array);
-        }
+        // - measuring at real data shows that it is better to check min/max only for ALL array, not for sub-arrays
         for (; ; ) {
-            assert requiredIndex >= left;
-            assert requiredIndex <= right;
-            if (right - left < THRESHOLD) {
-                insertionSort(left, right, array);
-                return array[requiredIndex];
-                // Now
-                //     data[left..requiredIndex] <= data[requiredIndex],
-                //     data[requiredIndex..right] >= data[requiredIndex]
+            if (requiredIndex == left) {
+                return selectMin(left, right, array);
             }
+            if (requiredIndex == right) {
+                return selectMax(left, right, array);
+            }
+            assert requiredIndex > left;
+            assert requiredIndex < right;
+            final int difference = right - left;
+            if (difference == 2) {
+                final int base = left + 1;
+                char a = array[left];
+                char b = array[base];
+                final char c = array[right];
+                // Sorting a, b, c
+                if ((b) < (a)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((c) < (b)) {
+                    array[right] = b;
+                    b = c;
+                    // since this moment, c is not 3rd element
+                    if ((b) < (a)) {
+                        b = a;
+                        a = c;
+                    }
+                }
+                array[left] = a;
+                array[base] = b;
+                return array[requiredIndex];
+
+            } else if (difference == 3) {
+                final int afterLeft = left + 1;
+                final int beforeRight = right - 1;
+                char a = array[left];
+                char b = array[afterLeft];
+                char c = array[beforeRight];
+                char d = array[right];
+                // Sorting a, b, c, d
+                if ((b) < (a)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((d) < (c)) {
+                    d = c;
+                    c = array[right];
+                }
+                // Now a <= b, c <= d
+                if ((a) < (c)) {
+                    // a..b, then c..d
+                    array[left] = a;
+                    if ((b) < (d)) {
+                        array[right] = d;
+                        if ((b) < (c)) {
+                            array[afterLeft] = b;
+                            array[beforeRight] = c;
+                        } else {
+                            array[afterLeft] = c;
+                            array[beforeRight] = b;
+                        }
+                    } else {
+                        // a <= c <= d <= b
+                        array[afterLeft] = c;
+                        array[beforeRight] = d;
+                        array[right] = b;
+                    }
+                } else {
+                    // c..d, then a..b
+                    array[left] = c;
+                    if ((d) < (b)) {
+                        array[right] = b;
+                        if ((d) < (a)) {
+                            array[afterLeft] = d;
+                            array[beforeRight] = a;
+                        } else {
+                            array[afterLeft] = a;
+                            array[beforeRight] = d;
+                        }
+                    } else {
+                        // c <= a <= b <= d
+                        array[afterLeft] = a;
+                        array[beforeRight] = b;
+                        array[right] = d;
+                    }
+                }
+                return array[requiredIndex];
+            }
+
+            // Switch above is better than common code below:
+            // if (right - left < THRESHOLD) {
+            //    sortLittleArray(left, right, array);
+            //    return array[requiredIndex];
+            // }
+
+            char a = array[left];
+            char c = array[right];
             // Sorting 3 elements to find a median from 3: left, (left+right)/2, right:
             int base = (left + right) >>> 1;
             // ">>>" will be correct even in the case of overflow
-            char a, b;
-            a = array[left];
-            b = array[base];
+            char b = array[base];
+            // Sorting a, b, c
             if ((b) < (a)) {
-                array[left] = b;
-                array[base] = a;
-            }
-            a = array[right];
-            b = array[base];
-            if ((a) < (b)) {
-                array[right] = b;
-                array[base] = a;
+                a = b;
                 b = array[left];
-                if ((a) < (b)) {
-                    array[left] = a;
-                    array[base] = b;
+            }
+            if ((c) < (b)) {
+                array[right] = b;
+                b = c;
+                // since this moment, c is not 3rd element
+                if ((b) < (a)) {
+                    b = a;
+                    a = c;
                 }
             }
+            array[left] = a;
+            // array[base] = b; - virtually (really we can skip this operator)
 
             // Now data[left] <= data[base] <= data[right] (in other words, base is a median)
             // moving the base at the new position left+1
-            a = array[left + 1];
-            b = array[base];
+            char tmp = array[left + 1];
             array[left + 1] = b;
-            array[base] = a;
+            array[base] = tmp;
             base = left + 1;
             assert b == array[base];
 
@@ -695,6 +861,7 @@ public class ArraySelector {
             }
         }
     }
+
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
@@ -792,50 +959,131 @@ public class ArraySelector {
         if (requiredIndex < left || requiredIndex > right) {
             throw new IllegalArgumentException("Index " + requiredIndex + " is out of range " + left + ".." + right);
         }
-        if (requiredIndex == left) {
-            return selectMin(left, right, array);
-        }
-        if (requiredIndex == right) {
-            return selectMax(left, right, array);
-        }
+        // - measuring at real data shows that it is better to check min/max only for ALL array, not for sub-arrays
         for (; ; ) {
-            assert requiredIndex >= left;
-            assert requiredIndex <= right;
-            if (right - left < THRESHOLD) {
-                insertionSort(left, right, array);
-                return array[requiredIndex];
-                // Now
-                //     data[left..requiredIndex] <= data[requiredIndex],
-                //     data[requiredIndex..right] >= data[requiredIndex]
+            if (requiredIndex == left) {
+                return selectMin(left, right, array);
             }
+            if (requiredIndex == right) {
+                return selectMax(left, right, array);
+            }
+            assert requiredIndex > left;
+            assert requiredIndex < right;
+            final int difference = right - left;
+            if (difference == 2) {
+                final int base = left + 1;
+                short a = array[left];
+                short b = array[base];
+                final short c = array[right];
+                // Sorting a, b, c
+                if ((b & 0xFFFF) < (a & 0xFFFF)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((c & 0xFFFF) < (b & 0xFFFF)) {
+                    array[right] = b;
+                    b = c;
+                    // since this moment, c is not 3rd element
+                    if ((b & 0xFFFF) < (a & 0xFFFF)) {
+                        b = a;
+                        a = c;
+                    }
+                }
+                array[left] = a;
+                array[base] = b;
+                return array[requiredIndex];
+
+            } else if (difference == 3) {
+                final int afterLeft = left + 1;
+                final int beforeRight = right - 1;
+                short a = array[left];
+                short b = array[afterLeft];
+                short c = array[beforeRight];
+                short d = array[right];
+                // Sorting a, b, c, d
+                if ((b & 0xFFFF) < (a & 0xFFFF)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((d & 0xFFFF) < (c & 0xFFFF)) {
+                    d = c;
+                    c = array[right];
+                }
+                // Now a <= b, c <= d
+                if ((a & 0xFFFF) < (c & 0xFFFF)) {
+                    // a..b, then c..d
+                    array[left] = a;
+                    if ((b & 0xFFFF) < (d & 0xFFFF)) {
+                        array[right] = d;
+                        if ((b & 0xFFFF) < (c & 0xFFFF)) {
+                            array[afterLeft] = b;
+                            array[beforeRight] = c;
+                        } else {
+                            array[afterLeft] = c;
+                            array[beforeRight] = b;
+                        }
+                    } else {
+                        // a <= c <= d <= b
+                        array[afterLeft] = c;
+                        array[beforeRight] = d;
+                        array[right] = b;
+                    }
+                } else {
+                    // c..d, then a..b
+                    array[left] = c;
+                    if ((d & 0xFFFF) < (b & 0xFFFF)) {
+                        array[right] = b;
+                        if ((d & 0xFFFF) < (a & 0xFFFF)) {
+                            array[afterLeft] = d;
+                            array[beforeRight] = a;
+                        } else {
+                            array[afterLeft] = a;
+                            array[beforeRight] = d;
+                        }
+                    } else {
+                        // c <= a <= b <= d
+                        array[afterLeft] = a;
+                        array[beforeRight] = b;
+                        array[right] = d;
+                    }
+                }
+                return array[requiredIndex];
+            }
+
+            // Switch above is better than common code below:
+            // if (right - left < THRESHOLD) {
+            //    sortLittleArray(left, right, array);
+            //    return array[requiredIndex];
+            // }
+
+            short a = array[left];
+            short c = array[right];
             // Sorting 3 elements to find a median from 3: left, (left+right)/2, right:
             int base = (left + right) >>> 1;
             // ">>>" will be correct even in the case of overflow
-            short a, b;
-            a = array[left];
-            b = array[base];
+            short b = array[base];
+            // Sorting a, b, c
             if ((b & 0xFFFF) < (a & 0xFFFF)) {
-                array[left] = b;
-                array[base] = a;
-            }
-            a = array[right];
-            b = array[base];
-            if ((a & 0xFFFF) < (b & 0xFFFF)) {
-                array[right] = b;
-                array[base] = a;
+                a = b;
                 b = array[left];
-                if ((a & 0xFFFF) < (b & 0xFFFF)) {
-                    array[left] = a;
-                    array[base] = b;
+            }
+            if ((c & 0xFFFF) < (b & 0xFFFF)) {
+                array[right] = b;
+                b = c;
+                // since this moment, c is not 3rd element
+                if ((b & 0xFFFF) < (a & 0xFFFF)) {
+                    b = a;
+                    a = c;
                 }
             }
+            array[left] = a;
+            // array[base] = b; - virtually (really we can skip this operator)
 
             // Now data[left] <= data[base] <= data[right] (in other words, base is a median)
             // moving the base at the new position left+1
-            a = array[left + 1];
-            b = array[base];
+            short tmp = array[left + 1];
             array[left + 1] = b;
-            array[base] = a;
+            array[base] = tmp;
             base = left + 1;
             assert b == array[base];
 
@@ -898,6 +1146,7 @@ public class ArraySelector {
             }
         }
     }
+
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
@@ -983,50 +1232,131 @@ public class ArraySelector {
         if (requiredIndex < left || requiredIndex > right) {
             throw new IllegalArgumentException("Index " + requiredIndex + " is out of range " + left + ".." + right);
         }
-        if (requiredIndex == left) {
-            return selectMin(left, right, array);
-        }
-        if (requiredIndex == right) {
-            return selectMax(left, right, array);
-        }
+        // - measuring at real data shows that it is better to check min/max only for ALL array, not for sub-arrays
         for (; ; ) {
-            assert requiredIndex >= left;
-            assert requiredIndex <= right;
-            if (right - left < THRESHOLD) {
-                insertionSort(left, right, array);
-                return array[requiredIndex];
-                // Now
-                //     data[left..requiredIndex] <= data[requiredIndex],
-                //     data[requiredIndex..right] >= data[requiredIndex]
+            if (requiredIndex == left) {
+                return selectMin(left, right, array);
             }
+            if (requiredIndex == right) {
+                return selectMax(left, right, array);
+            }
+            assert requiredIndex > left;
+            assert requiredIndex < right;
+            final int difference = right - left;
+            if (difference == 2) {
+                final int base = left + 1;
+                int a = array[left];
+                int b = array[base];
+                final int c = array[right];
+                // Sorting a, b, c
+                if ((b) < (a)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((c) < (b)) {
+                    array[right] = b;
+                    b = c;
+                    // since this moment, c is not 3rd element
+                    if ((b) < (a)) {
+                        b = a;
+                        a = c;
+                    }
+                }
+                array[left] = a;
+                array[base] = b;
+                return array[requiredIndex];
+
+            } else if (difference == 3) {
+                final int afterLeft = left + 1;
+                final int beforeRight = right - 1;
+                int a = array[left];
+                int b = array[afterLeft];
+                int c = array[beforeRight];
+                int d = array[right];
+                // Sorting a, b, c, d
+                if ((b) < (a)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((d) < (c)) {
+                    d = c;
+                    c = array[right];
+                }
+                // Now a <= b, c <= d
+                if ((a) < (c)) {
+                    // a..b, then c..d
+                    array[left] = a;
+                    if ((b) < (d)) {
+                        array[right] = d;
+                        if ((b) < (c)) {
+                            array[afterLeft] = b;
+                            array[beforeRight] = c;
+                        } else {
+                            array[afterLeft] = c;
+                            array[beforeRight] = b;
+                        }
+                    } else {
+                        // a <= c <= d <= b
+                        array[afterLeft] = c;
+                        array[beforeRight] = d;
+                        array[right] = b;
+                    }
+                } else {
+                    // c..d, then a..b
+                    array[left] = c;
+                    if ((d) < (b)) {
+                        array[right] = b;
+                        if ((d) < (a)) {
+                            array[afterLeft] = d;
+                            array[beforeRight] = a;
+                        } else {
+                            array[afterLeft] = a;
+                            array[beforeRight] = d;
+                        }
+                    } else {
+                        // c <= a <= b <= d
+                        array[afterLeft] = a;
+                        array[beforeRight] = b;
+                        array[right] = d;
+                    }
+                }
+                return array[requiredIndex];
+            }
+
+            // Switch above is better than common code below:
+            // if (right - left < THRESHOLD) {
+            //    sortLittleArray(left, right, array);
+            //    return array[requiredIndex];
+            // }
+
+            int a = array[left];
+            int c = array[right];
             // Sorting 3 elements to find a median from 3: left, (left+right)/2, right:
             int base = (left + right) >>> 1;
             // ">>>" will be correct even in the case of overflow
-            int a, b;
-            a = array[left];
-            b = array[base];
+            int b = array[base];
+            // Sorting a, b, c
             if ((b) < (a)) {
-                array[left] = b;
-                array[base] = a;
-            }
-            a = array[right];
-            b = array[base];
-            if ((a) < (b)) {
-                array[right] = b;
-                array[base] = a;
+                a = b;
                 b = array[left];
-                if ((a) < (b)) {
-                    array[left] = a;
-                    array[base] = b;
+            }
+            if ((c) < (b)) {
+                array[right] = b;
+                b = c;
+                // since this moment, c is not 3rd element
+                if ((b) < (a)) {
+                    b = a;
+                    a = c;
                 }
             }
+            array[left] = a;
+            // array[base] = b; - virtually (really we can skip this operator)
 
             // Now data[left] <= data[base] <= data[right] (in other words, base is a median)
             // moving the base at the new position left+1
-            a = array[left + 1];
-            b = array[base];
+            int tmp = array[left + 1];
             array[left + 1] = b;
-            array[base] = a;
+            array[base] = tmp;
             base = left + 1;
             assert b == array[base];
 
@@ -1089,6 +1419,7 @@ public class ArraySelector {
             }
         }
     }
+
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
@@ -1174,50 +1505,131 @@ public class ArraySelector {
         if (requiredIndex < left || requiredIndex > right) {
             throw new IllegalArgumentException("Index " + requiredIndex + " is out of range " + left + ".." + right);
         }
-        if (requiredIndex == left) {
-            return selectMin(left, right, array);
-        }
-        if (requiredIndex == right) {
-            return selectMax(left, right, array);
-        }
+        // - measuring at real data shows that it is better to check min/max only for ALL array, not for sub-arrays
         for (; ; ) {
-            assert requiredIndex >= left;
-            assert requiredIndex <= right;
-            if (right - left < THRESHOLD) {
-                insertionSort(left, right, array);
-                return array[requiredIndex];
-                // Now
-                //     data[left..requiredIndex] <= data[requiredIndex],
-                //     data[requiredIndex..right] >= data[requiredIndex]
+            if (requiredIndex == left) {
+                return selectMin(left, right, array);
             }
+            if (requiredIndex == right) {
+                return selectMax(left, right, array);
+            }
+            assert requiredIndex > left;
+            assert requiredIndex < right;
+            final int difference = right - left;
+            if (difference == 2) {
+                final int base = left + 1;
+                long a = array[left];
+                long b = array[base];
+                final long c = array[right];
+                // Sorting a, b, c
+                if ((b) < (a)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((c) < (b)) {
+                    array[right] = b;
+                    b = c;
+                    // since this moment, c is not 3rd element
+                    if ((b) < (a)) {
+                        b = a;
+                        a = c;
+                    }
+                }
+                array[left] = a;
+                array[base] = b;
+                return array[requiredIndex];
+
+            } else if (difference == 3) {
+                final int afterLeft = left + 1;
+                final int beforeRight = right - 1;
+                long a = array[left];
+                long b = array[afterLeft];
+                long c = array[beforeRight];
+                long d = array[right];
+                // Sorting a, b, c, d
+                if ((b) < (a)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((d) < (c)) {
+                    d = c;
+                    c = array[right];
+                }
+                // Now a <= b, c <= d
+                if ((a) < (c)) {
+                    // a..b, then c..d
+                    array[left] = a;
+                    if ((b) < (d)) {
+                        array[right] = d;
+                        if ((b) < (c)) {
+                            array[afterLeft] = b;
+                            array[beforeRight] = c;
+                        } else {
+                            array[afterLeft] = c;
+                            array[beforeRight] = b;
+                        }
+                    } else {
+                        // a <= c <= d <= b
+                        array[afterLeft] = c;
+                        array[beforeRight] = d;
+                        array[right] = b;
+                    }
+                } else {
+                    // c..d, then a..b
+                    array[left] = c;
+                    if ((d) < (b)) {
+                        array[right] = b;
+                        if ((d) < (a)) {
+                            array[afterLeft] = d;
+                            array[beforeRight] = a;
+                        } else {
+                            array[afterLeft] = a;
+                            array[beforeRight] = d;
+                        }
+                    } else {
+                        // c <= a <= b <= d
+                        array[afterLeft] = a;
+                        array[beforeRight] = b;
+                        array[right] = d;
+                    }
+                }
+                return array[requiredIndex];
+            }
+
+            // Switch above is better than common code below:
+            // if (right - left < THRESHOLD) {
+            //    sortLittleArray(left, right, array);
+            //    return array[requiredIndex];
+            // }
+
+            long a = array[left];
+            long c = array[right];
             // Sorting 3 elements to find a median from 3: left, (left+right)/2, right:
             int base = (left + right) >>> 1;
             // ">>>" will be correct even in the case of overflow
-            long a, b;
-            a = array[left];
-            b = array[base];
+            long b = array[base];
+            // Sorting a, b, c
             if ((b) < (a)) {
-                array[left] = b;
-                array[base] = a;
-            }
-            a = array[right];
-            b = array[base];
-            if ((a) < (b)) {
-                array[right] = b;
-                array[base] = a;
+                a = b;
                 b = array[left];
-                if ((a) < (b)) {
-                    array[left] = a;
-                    array[base] = b;
+            }
+            if ((c) < (b)) {
+                array[right] = b;
+                b = c;
+                // since this moment, c is not 3rd element
+                if ((b) < (a)) {
+                    b = a;
+                    a = c;
                 }
             }
+            array[left] = a;
+            // array[base] = b; - virtually (really we can skip this operator)
 
             // Now data[left] <= data[base] <= data[right] (in other words, base is a median)
             // moving the base at the new position left+1
-            a = array[left + 1];
-            b = array[base];
+            long tmp = array[left + 1];
             array[left + 1] = b;
-            array[base] = a;
+            array[base] = tmp;
             base = left + 1;
             assert b == array[base];
 
@@ -1280,6 +1692,7 @@ public class ArraySelector {
             }
         }
     }
+
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
@@ -1365,50 +1778,131 @@ public class ArraySelector {
         if (requiredIndex < left || requiredIndex > right) {
             throw new IllegalArgumentException("Index " + requiredIndex + " is out of range " + left + ".." + right);
         }
-        if (requiredIndex == left) {
-            return selectMin(left, right, array);
-        }
-        if (requiredIndex == right) {
-            return selectMax(left, right, array);
-        }
+        // - measuring at real data shows that it is better to check min/max only for ALL array, not for sub-arrays
         for (; ; ) {
-            assert requiredIndex >= left;
-            assert requiredIndex <= right;
-            if (right - left < THRESHOLD) {
-                insertionSort(left, right, array);
-                return array[requiredIndex];
-                // Now
-                //     data[left..requiredIndex] <= data[requiredIndex],
-                //     data[requiredIndex..right] >= data[requiredIndex]
+            if (requiredIndex == left) {
+                return selectMin(left, right, array);
             }
+            if (requiredIndex == right) {
+                return selectMax(left, right, array);
+            }
+            assert requiredIndex > left;
+            assert requiredIndex < right;
+            final int difference = right - left;
+            if (difference == 2) {
+                final int base = left + 1;
+                float a = array[left];
+                float b = array[base];
+                final float c = array[right];
+                // Sorting a, b, c
+                if ((b) < (a)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((c) < (b)) {
+                    array[right] = b;
+                    b = c;
+                    // since this moment, c is not 3rd element
+                    if ((b) < (a)) {
+                        b = a;
+                        a = c;
+                    }
+                }
+                array[left] = a;
+                array[base] = b;
+                return array[requiredIndex];
+
+            } else if (difference == 3) {
+                final int afterLeft = left + 1;
+                final int beforeRight = right - 1;
+                float a = array[left];
+                float b = array[afterLeft];
+                float c = array[beforeRight];
+                float d = array[right];
+                // Sorting a, b, c, d
+                if ((b) < (a)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((d) < (c)) {
+                    d = c;
+                    c = array[right];
+                }
+                // Now a <= b, c <= d
+                if ((a) < (c)) {
+                    // a..b, then c..d
+                    array[left] = a;
+                    if ((b) < (d)) {
+                        array[right] = d;
+                        if ((b) < (c)) {
+                            array[afterLeft] = b;
+                            array[beforeRight] = c;
+                        } else {
+                            array[afterLeft] = c;
+                            array[beforeRight] = b;
+                        }
+                    } else {
+                        // a <= c <= d <= b
+                        array[afterLeft] = c;
+                        array[beforeRight] = d;
+                        array[right] = b;
+                    }
+                } else {
+                    // c..d, then a..b
+                    array[left] = c;
+                    if ((d) < (b)) {
+                        array[right] = b;
+                        if ((d) < (a)) {
+                            array[afterLeft] = d;
+                            array[beforeRight] = a;
+                        } else {
+                            array[afterLeft] = a;
+                            array[beforeRight] = d;
+                        }
+                    } else {
+                        // c <= a <= b <= d
+                        array[afterLeft] = a;
+                        array[beforeRight] = b;
+                        array[right] = d;
+                    }
+                }
+                return array[requiredIndex];
+            }
+
+            // Switch above is better than common code below:
+            // if (right - left < THRESHOLD) {
+            //    sortLittleArray(left, right, array);
+            //    return array[requiredIndex];
+            // }
+
+            float a = array[left];
+            float c = array[right];
             // Sorting 3 elements to find a median from 3: left, (left+right)/2, right:
             int base = (left + right) >>> 1;
             // ">>>" will be correct even in the case of overflow
-            float a, b;
-            a = array[left];
-            b = array[base];
+            float b = array[base];
+            // Sorting a, b, c
             if ((b) < (a)) {
-                array[left] = b;
-                array[base] = a;
-            }
-            a = array[right];
-            b = array[base];
-            if ((a) < (b)) {
-                array[right] = b;
-                array[base] = a;
+                a = b;
                 b = array[left];
-                if ((a) < (b)) {
-                    array[left] = a;
-                    array[base] = b;
+            }
+            if ((c) < (b)) {
+                array[right] = b;
+                b = c;
+                // since this moment, c is not 3rd element
+                if ((b) < (a)) {
+                    b = a;
+                    a = c;
                 }
             }
+            array[left] = a;
+            // array[base] = b; - virtually (really we can skip this operator)
 
             // Now data[left] <= data[base] <= data[right] (in other words, base is a median)
             // moving the base at the new position left+1
-            a = array[left + 1];
-            b = array[base];
+            float tmp = array[left + 1];
             array[left + 1] = b;
-            array[base] = a;
+            array[base] = tmp;
             base = left + 1;
             assert b == array[base];
 
@@ -1471,6 +1965,7 @@ public class ArraySelector {
             }
         }
     }
+
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
@@ -1556,50 +2051,131 @@ public class ArraySelector {
         if (requiredIndex < left || requiredIndex > right) {
             throw new IllegalArgumentException("Index " + requiredIndex + " is out of range " + left + ".." + right);
         }
-        if (requiredIndex == left) {
-            return selectMin(left, right, array);
-        }
-        if (requiredIndex == right) {
-            return selectMax(left, right, array);
-        }
+        // - measuring at real data shows that it is better to check min/max only for ALL array, not for sub-arrays
         for (; ; ) {
-            assert requiredIndex >= left;
-            assert requiredIndex <= right;
-            if (right - left < THRESHOLD) {
-                insertionSort(left, right, array);
-                return array[requiredIndex];
-                // Now
-                //     data[left..requiredIndex] <= data[requiredIndex],
-                //     data[requiredIndex..right] >= data[requiredIndex]
+            if (requiredIndex == left) {
+                return selectMin(left, right, array);
             }
+            if (requiredIndex == right) {
+                return selectMax(left, right, array);
+            }
+            assert requiredIndex > left;
+            assert requiredIndex < right;
+            final int difference = right - left;
+            if (difference == 2) {
+                final int base = left + 1;
+                double a = array[left];
+                double b = array[base];
+                final double c = array[right];
+                // Sorting a, b, c
+                if ((b) < (a)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((c) < (b)) {
+                    array[right] = b;
+                    b = c;
+                    // since this moment, c is not 3rd element
+                    if ((b) < (a)) {
+                        b = a;
+                        a = c;
+                    }
+                }
+                array[left] = a;
+                array[base] = b;
+                return array[requiredIndex];
+
+            } else if (difference == 3) {
+                final int afterLeft = left + 1;
+                final int beforeRight = right - 1;
+                double a = array[left];
+                double b = array[afterLeft];
+                double c = array[beforeRight];
+                double d = array[right];
+                // Sorting a, b, c, d
+                if ((b) < (a)) {
+                    a = b;
+                    b = array[left];
+                }
+                if ((d) < (c)) {
+                    d = c;
+                    c = array[right];
+                }
+                // Now a <= b, c <= d
+                if ((a) < (c)) {
+                    // a..b, then c..d
+                    array[left] = a;
+                    if ((b) < (d)) {
+                        array[right] = d;
+                        if ((b) < (c)) {
+                            array[afterLeft] = b;
+                            array[beforeRight] = c;
+                        } else {
+                            array[afterLeft] = c;
+                            array[beforeRight] = b;
+                        }
+                    } else {
+                        // a <= c <= d <= b
+                        array[afterLeft] = c;
+                        array[beforeRight] = d;
+                        array[right] = b;
+                    }
+                } else {
+                    // c..d, then a..b
+                    array[left] = c;
+                    if ((d) < (b)) {
+                        array[right] = b;
+                        if ((d) < (a)) {
+                            array[afterLeft] = d;
+                            array[beforeRight] = a;
+                        } else {
+                            array[afterLeft] = a;
+                            array[beforeRight] = d;
+                        }
+                    } else {
+                        // c <= a <= b <= d
+                        array[afterLeft] = a;
+                        array[beforeRight] = b;
+                        array[right] = d;
+                    }
+                }
+                return array[requiredIndex];
+            }
+
+            // Switch above is better than common code below:
+            // if (right - left < THRESHOLD) {
+            //    sortLittleArray(left, right, array);
+            //    return array[requiredIndex];
+            // }
+
+            double a = array[left];
+            double c = array[right];
             // Sorting 3 elements to find a median from 3: left, (left+right)/2, right:
             int base = (left + right) >>> 1;
             // ">>>" will be correct even in the case of overflow
-            double a, b;
-            a = array[left];
-            b = array[base];
+            double b = array[base];
+            // Sorting a, b, c
             if ((b) < (a)) {
-                array[left] = b;
-                array[base] = a;
-            }
-            a = array[right];
-            b = array[base];
-            if ((a) < (b)) {
-                array[right] = b;
-                array[base] = a;
+                a = b;
                 b = array[left];
-                if ((a) < (b)) {
-                    array[left] = a;
-                    array[base] = b;
+            }
+            if ((c) < (b)) {
+                array[right] = b;
+                b = c;
+                // since this moment, c is not 3rd element
+                if ((b) < (a)) {
+                    b = a;
+                    a = c;
                 }
             }
+            array[left] = a;
+            // array[base] = b; - virtually (really we can skip this operator)
 
             // Now data[left] <= data[base] <= data[right] (in other words, base is a median)
             // moving the base at the new position left+1
-            a = array[left + 1];
-            b = array[base];
+            double tmp = array[left + 1];
             array[left + 1] = b;
-            array[base] = a;
+            array[base] = tmp;
             base = left + 1;
             assert b == array[base];
 
@@ -1882,6 +2458,7 @@ public class ArraySelector {
                     exchanger);
         }
     }
+
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
     private void selectSomePercentiles(
             double[] percentileLevels,
@@ -1961,6 +2538,7 @@ public class ArraySelector {
         }
     }
 
+
     private void selectSomePercentiles(
             double[] percentileLevels,
             final int leftPercentile,
@@ -2038,6 +2616,7 @@ public class ArraySelector {
                     array);
         }
     }
+
 
     private void selectSomePercentiles(
             double[] percentileLevels,
@@ -2117,6 +2696,7 @@ public class ArraySelector {
         }
     }
 
+
     private void selectSomePercentiles(
             double[] percentileLevels,
             final int leftPercentile,
@@ -2194,6 +2774,7 @@ public class ArraySelector {
                     array);
         }
     }
+
 
     private void selectSomePercentiles(
             double[] percentileLevels,
@@ -2273,6 +2854,7 @@ public class ArraySelector {
         }
     }
 
+
     private void selectSomePercentiles(
             double[] percentileLevels,
             final int leftPercentile,
@@ -2351,6 +2933,7 @@ public class ArraySelector {
         }
     }
 
+
     private void selectSomePercentiles(
             double[] percentileLevels,
             final int leftPercentile,
@@ -2428,6 +3011,7 @@ public class ArraySelector {
                     array);
         }
     }
+
     /*Repeat.AutoGeneratedEnd*/
 
     private static void selectMin(long left, long right, ArrayComparator comparator, ArrayExchanger exchanger) {
@@ -2446,7 +3030,7 @@ public class ArraySelector {
         }
     }
 
-    private static void insertionSort(long left, long right, ArrayComparator comparator, ArrayExchanger exchanger) {
+    private static void sortLittleArray(long left, long right, ArrayComparator comparator, ArrayExchanger exchanger) {
         for (long i = left + 1; i <= right; i++) {
             long j = i - 1;
             for (; j >= left && comparator.less(j + 1, j); j--) {
@@ -2494,7 +3078,90 @@ public class ArraySelector {
         return (byte) result;
     }
 
-    private static void insertionSort(int left, int right, byte[] array) {
+    private static void sortArray3(int left, int right, byte[] array) {
+        final int base = left + 1;
+        byte a = array[left];
+        byte b = array[base];
+        final byte c = array[right];
+        // Sorting a, b, c
+        if ((b & 0xFF) < (a & 0xFF)) {
+            a = b;
+            b = array[left];
+        }
+        if ((c & 0xFF) < (b & 0xFF)) {
+            array[right] = b;
+            b = c;
+            // since this moment, c is not 3rd element
+            if ((b & 0xFF) < (a & 0xFF)) {
+                b = a;
+                a = c;
+            }
+        }
+        array[left] = a;
+        array[base] = b;
+    }
+
+    private static void sortArray4(int left, int right, byte[] array) {
+        final int afterLeft = left + 1;
+        final int beforeRight = right - 1;
+        byte a = array[left];
+        byte b = array[afterLeft];
+        byte c = array[beforeRight];
+        byte d = array[right];
+        // Sorting a, b, c, d
+        if ((b & 0xFF) < (a & 0xFF)) {
+            a = b;
+            b = array[left];
+        }
+        if ((d & 0xFF) < (c & 0xFF)) {
+            d = c;
+            c = array[right];
+        }
+        // Now a <= b, c <= d
+        if ((a & 0xFF) < (c & 0xFF)) {
+            // a..b, then c..d
+            array[left] = a;
+            if ((b & 0xFF) < (d & 0xFF)) {
+                array[right] = d;
+                if ((b & 0xFF) < (c & 0xFF)) {
+                    array[afterLeft] = b;
+                    array[beforeRight] = c;
+                } else {
+                    array[afterLeft] = c;
+                    array[beforeRight] = b;
+                }
+            } else {
+                // a <= c <= d <= b
+                array[afterLeft] = c;
+                array[beforeRight] = d;
+                array[right] = b;
+            }
+        } else {
+            // c..d, then a..b
+            array[left] = c;
+            if ((d & 0xFF) < (b & 0xFF)) {
+                array[right] = b;
+                if ((d & 0xFF) < (a & 0xFF)) {
+                    array[afterLeft] = d;
+                    array[beforeRight] = a;
+                } else {
+                    array[afterLeft] = a;
+                    array[beforeRight] = d;
+                }
+            } else {
+                // c <= a <= b <= d
+                array[afterLeft] = a;
+                array[beforeRight] = b;
+                array[right] = d;
+            }
+        }
+    }
+
+
+    private static void sortLittleArray(int left, int right, byte[] array) {
+        switch (right - left) {
+            case 3:
+        }
         for (int i = left + 1; i <= right; i++) {
             int j = i - 1;
             int v = array[i] & 0xFF;
@@ -2541,7 +3208,90 @@ public class ArraySelector {
         return result;
     }
 
-    private static void insertionSort(int left, int right, char[] array) {
+    private static void sortArray3(int left, int right, char[] array) {
+        final int base = left + 1;
+        char a = array[left];
+        char b = array[base];
+        final char c = array[right];
+        // Sorting a, b, c
+        if ((b) < (a)) {
+            a = b;
+            b = array[left];
+        }
+        if ((c) < (b)) {
+            array[right] = b;
+            b = c;
+            // since this moment, c is not 3rd element
+            if ((b) < (a)) {
+                b = a;
+                a = c;
+            }
+        }
+        array[left] = a;
+        array[base] = b;
+    }
+
+    private static void sortArray4(int left, int right, char[] array) {
+        final int afterLeft = left + 1;
+        final int beforeRight = right - 1;
+        char a = array[left];
+        char b = array[afterLeft];
+        char c = array[beforeRight];
+        char d = array[right];
+        // Sorting a, b, c, d
+        if ((b) < (a)) {
+            a = b;
+            b = array[left];
+        }
+        if ((d) < (c)) {
+            d = c;
+            c = array[right];
+        }
+        // Now a <= b, c <= d
+        if ((a) < (c)) {
+            // a..b, then c..d
+            array[left] = a;
+            if ((b) < (d)) {
+                array[right] = d;
+                if ((b) < (c)) {
+                    array[afterLeft] = b;
+                    array[beforeRight] = c;
+                } else {
+                    array[afterLeft] = c;
+                    array[beforeRight] = b;
+                }
+            } else {
+                // a <= c <= d <= b
+                array[afterLeft] = c;
+                array[beforeRight] = d;
+                array[right] = b;
+            }
+        } else {
+            // c..d, then a..b
+            array[left] = c;
+            if ((d) < (b)) {
+                array[right] = b;
+                if ((d) < (a)) {
+                    array[afterLeft] = d;
+                    array[beforeRight] = a;
+                } else {
+                    array[afterLeft] = a;
+                    array[beforeRight] = d;
+                }
+            } else {
+                // c <= a <= b <= d
+                array[afterLeft] = a;
+                array[beforeRight] = b;
+                array[right] = d;
+            }
+        }
+    }
+
+
+    private static void sortLittleArray(int left, int right, char[] array) {
+        switch (right - left) {
+            case 3:
+        }
         for (int i = left + 1; i <= right; i++) {
             int j = i - 1;
             char v = array[i];
@@ -2588,7 +3338,90 @@ public class ArraySelector {
         return (short) result;
     }
 
-    private static void insertionSort(int left, int right, short[] array) {
+    private static void sortArray3(int left, int right, short[] array) {
+        final int base = left + 1;
+        short a = array[left];
+        short b = array[base];
+        final short c = array[right];
+        // Sorting a, b, c
+        if ((b & 0xFFFF) < (a & 0xFFFF)) {
+            a = b;
+            b = array[left];
+        }
+        if ((c & 0xFFFF) < (b & 0xFFFF)) {
+            array[right] = b;
+            b = c;
+            // since this moment, c is not 3rd element
+            if ((b & 0xFFFF) < (a & 0xFFFF)) {
+                b = a;
+                a = c;
+            }
+        }
+        array[left] = a;
+        array[base] = b;
+    }
+
+    private static void sortArray4(int left, int right, short[] array) {
+        final int afterLeft = left + 1;
+        final int beforeRight = right - 1;
+        short a = array[left];
+        short b = array[afterLeft];
+        short c = array[beforeRight];
+        short d = array[right];
+        // Sorting a, b, c, d
+        if ((b & 0xFFFF) < (a & 0xFFFF)) {
+            a = b;
+            b = array[left];
+        }
+        if ((d & 0xFFFF) < (c & 0xFFFF)) {
+            d = c;
+            c = array[right];
+        }
+        // Now a <= b, c <= d
+        if ((a & 0xFFFF) < (c & 0xFFFF)) {
+            // a..b, then c..d
+            array[left] = a;
+            if ((b & 0xFFFF) < (d & 0xFFFF)) {
+                array[right] = d;
+                if ((b & 0xFFFF) < (c & 0xFFFF)) {
+                    array[afterLeft] = b;
+                    array[beforeRight] = c;
+                } else {
+                    array[afterLeft] = c;
+                    array[beforeRight] = b;
+                }
+            } else {
+                // a <= c <= d <= b
+                array[afterLeft] = c;
+                array[beforeRight] = d;
+                array[right] = b;
+            }
+        } else {
+            // c..d, then a..b
+            array[left] = c;
+            if ((d & 0xFFFF) < (b & 0xFFFF)) {
+                array[right] = b;
+                if ((d & 0xFFFF) < (a & 0xFFFF)) {
+                    array[afterLeft] = d;
+                    array[beforeRight] = a;
+                } else {
+                    array[afterLeft] = a;
+                    array[beforeRight] = d;
+                }
+            } else {
+                // c <= a <= b <= d
+                array[afterLeft] = a;
+                array[beforeRight] = b;
+                array[right] = d;
+            }
+        }
+    }
+
+
+    private static void sortLittleArray(int left, int right, short[] array) {
+        switch (right - left) {
+            case 3:
+        }
         for (int i = left + 1; i <= right; i++) {
             int j = i - 1;
             int v = array[i] & 0xFFFF;
@@ -2635,7 +3468,90 @@ public class ArraySelector {
         return result;
     }
 
-    private static void insertionSort(int left, int right, int[] array) {
+    private static void sortArray3(int left, int right, int[] array) {
+        final int base = left + 1;
+        int a = array[left];
+        int b = array[base];
+        final int c = array[right];
+        // Sorting a, b, c
+        if ((b) < (a)) {
+            a = b;
+            b = array[left];
+        }
+        if ((c) < (b)) {
+            array[right] = b;
+            b = c;
+            // since this moment, c is not 3rd element
+            if ((b) < (a)) {
+                b = a;
+                a = c;
+            }
+        }
+        array[left] = a;
+        array[base] = b;
+    }
+
+    private static void sortArray4(int left, int right, int[] array) {
+        final int afterLeft = left + 1;
+        final int beforeRight = right - 1;
+        int a = array[left];
+        int b = array[afterLeft];
+        int c = array[beforeRight];
+        int d = array[right];
+        // Sorting a, b, c, d
+        if ((b) < (a)) {
+            a = b;
+            b = array[left];
+        }
+        if ((d) < (c)) {
+            d = c;
+            c = array[right];
+        }
+        // Now a <= b, c <= d
+        if ((a) < (c)) {
+            // a..b, then c..d
+            array[left] = a;
+            if ((b) < (d)) {
+                array[right] = d;
+                if ((b) < (c)) {
+                    array[afterLeft] = b;
+                    array[beforeRight] = c;
+                } else {
+                    array[afterLeft] = c;
+                    array[beforeRight] = b;
+                }
+            } else {
+                // a <= c <= d <= b
+                array[afterLeft] = c;
+                array[beforeRight] = d;
+                array[right] = b;
+            }
+        } else {
+            // c..d, then a..b
+            array[left] = c;
+            if ((d) < (b)) {
+                array[right] = b;
+                if ((d) < (a)) {
+                    array[afterLeft] = d;
+                    array[beforeRight] = a;
+                } else {
+                    array[afterLeft] = a;
+                    array[beforeRight] = d;
+                }
+            } else {
+                // c <= a <= b <= d
+                array[afterLeft] = a;
+                array[beforeRight] = b;
+                array[right] = d;
+            }
+        }
+    }
+
+
+    private static void sortLittleArray(int left, int right, int[] array) {
+        switch (right - left) {
+            case 3:
+        }
         for (int i = left + 1; i <= right; i++) {
             int j = i - 1;
             int v = array[i];
@@ -2682,7 +3598,90 @@ public class ArraySelector {
         return result;
     }
 
-    private static void insertionSort(int left, int right, long[] array) {
+    private static void sortArray3(int left, int right, long[] array) {
+        final int base = left + 1;
+        long a = array[left];
+        long b = array[base];
+        final long c = array[right];
+        // Sorting a, b, c
+        if ((b) < (a)) {
+            a = b;
+            b = array[left];
+        }
+        if ((c) < (b)) {
+            array[right] = b;
+            b = c;
+            // since this moment, c is not 3rd element
+            if ((b) < (a)) {
+                b = a;
+                a = c;
+            }
+        }
+        array[left] = a;
+        array[base] = b;
+    }
+
+    private static void sortArray4(int left, int right, long[] array) {
+        final int afterLeft = left + 1;
+        final int beforeRight = right - 1;
+        long a = array[left];
+        long b = array[afterLeft];
+        long c = array[beforeRight];
+        long d = array[right];
+        // Sorting a, b, c, d
+        if ((b) < (a)) {
+            a = b;
+            b = array[left];
+        }
+        if ((d) < (c)) {
+            d = c;
+            c = array[right];
+        }
+        // Now a <= b, c <= d
+        if ((a) < (c)) {
+            // a..b, then c..d
+            array[left] = a;
+            if ((b) < (d)) {
+                array[right] = d;
+                if ((b) < (c)) {
+                    array[afterLeft] = b;
+                    array[beforeRight] = c;
+                } else {
+                    array[afterLeft] = c;
+                    array[beforeRight] = b;
+                }
+            } else {
+                // a <= c <= d <= b
+                array[afterLeft] = c;
+                array[beforeRight] = d;
+                array[right] = b;
+            }
+        } else {
+            // c..d, then a..b
+            array[left] = c;
+            if ((d) < (b)) {
+                array[right] = b;
+                if ((d) < (a)) {
+                    array[afterLeft] = d;
+                    array[beforeRight] = a;
+                } else {
+                    array[afterLeft] = a;
+                    array[beforeRight] = d;
+                }
+            } else {
+                // c <= a <= b <= d
+                array[afterLeft] = a;
+                array[beforeRight] = b;
+                array[right] = d;
+            }
+        }
+    }
+
+
+    private static void sortLittleArray(int left, int right, long[] array) {
+        switch (right - left) {
+            case 3:
+        }
         for (int i = left + 1; i <= right; i++) {
             int j = i - 1;
             long v = array[i];
@@ -2729,7 +3728,90 @@ public class ArraySelector {
         return result;
     }
 
-    private static void insertionSort(int left, int right, float[] array) {
+    private static void sortArray3(int left, int right, float[] array) {
+        final int base = left + 1;
+        float a = array[left];
+        float b = array[base];
+        final float c = array[right];
+        // Sorting a, b, c
+        if ((b) < (a)) {
+            a = b;
+            b = array[left];
+        }
+        if ((c) < (b)) {
+            array[right] = b;
+            b = c;
+            // since this moment, c is not 3rd element
+            if ((b) < (a)) {
+                b = a;
+                a = c;
+            }
+        }
+        array[left] = a;
+        array[base] = b;
+    }
+
+    private static void sortArray4(int left, int right, float[] array) {
+        final int afterLeft = left + 1;
+        final int beforeRight = right - 1;
+        float a = array[left];
+        float b = array[afterLeft];
+        float c = array[beforeRight];
+        float d = array[right];
+        // Sorting a, b, c, d
+        if ((b) < (a)) {
+            a = b;
+            b = array[left];
+        }
+        if ((d) < (c)) {
+            d = c;
+            c = array[right];
+        }
+        // Now a <= b, c <= d
+        if ((a) < (c)) {
+            // a..b, then c..d
+            array[left] = a;
+            if ((b) < (d)) {
+                array[right] = d;
+                if ((b) < (c)) {
+                    array[afterLeft] = b;
+                    array[beforeRight] = c;
+                } else {
+                    array[afterLeft] = c;
+                    array[beforeRight] = b;
+                }
+            } else {
+                // a <= c <= d <= b
+                array[afterLeft] = c;
+                array[beforeRight] = d;
+                array[right] = b;
+            }
+        } else {
+            // c..d, then a..b
+            array[left] = c;
+            if ((d) < (b)) {
+                array[right] = b;
+                if ((d) < (a)) {
+                    array[afterLeft] = d;
+                    array[beforeRight] = a;
+                } else {
+                    array[afterLeft] = a;
+                    array[beforeRight] = d;
+                }
+            } else {
+                // c <= a <= b <= d
+                array[afterLeft] = a;
+                array[beforeRight] = b;
+                array[right] = d;
+            }
+        }
+    }
+
+
+    private static void sortLittleArray(int left, int right, float[] array) {
+        switch (right - left) {
+            case 3:
+        }
         for (int i = left + 1; i <= right; i++) {
             int j = i - 1;
             float v = array[i];
@@ -2776,7 +3858,90 @@ public class ArraySelector {
         return result;
     }
 
-    private static void insertionSort(int left, int right, double[] array) {
+    private static void sortArray3(int left, int right, double[] array) {
+        final int base = left + 1;
+        double a = array[left];
+        double b = array[base];
+        final double c = array[right];
+        // Sorting a, b, c
+        if ((b) < (a)) {
+            a = b;
+            b = array[left];
+        }
+        if ((c) < (b)) {
+            array[right] = b;
+            b = c;
+            // since this moment, c is not 3rd element
+            if ((b) < (a)) {
+                b = a;
+                a = c;
+            }
+        }
+        array[left] = a;
+        array[base] = b;
+    }
+
+    private static void sortArray4(int left, int right, double[] array) {
+        final int afterLeft = left + 1;
+        final int beforeRight = right - 1;
+        double a = array[left];
+        double b = array[afterLeft];
+        double c = array[beforeRight];
+        double d = array[right];
+        // Sorting a, b, c, d
+        if ((b) < (a)) {
+            a = b;
+            b = array[left];
+        }
+        if ((d) < (c)) {
+            d = c;
+            c = array[right];
+        }
+        // Now a <= b, c <= d
+        if ((a) < (c)) {
+            // a..b, then c..d
+            array[left] = a;
+            if ((b) < (d)) {
+                array[right] = d;
+                if ((b) < (c)) {
+                    array[afterLeft] = b;
+                    array[beforeRight] = c;
+                } else {
+                    array[afterLeft] = c;
+                    array[beforeRight] = b;
+                }
+            } else {
+                // a <= c <= d <= b
+                array[afterLeft] = c;
+                array[beforeRight] = d;
+                array[right] = b;
+            }
+        } else {
+            // c..d, then a..b
+            array[left] = c;
+            if ((d) < (b)) {
+                array[right] = b;
+                if ((d) < (a)) {
+                    array[afterLeft] = d;
+                    array[beforeRight] = a;
+                } else {
+                    array[afterLeft] = a;
+                    array[beforeRight] = d;
+                }
+            } else {
+                // c <= a <= b <= d
+                array[afterLeft] = a;
+                array[beforeRight] = b;
+                array[right] = d;
+            }
+        }
+    }
+
+
+    private static void sortLittleArray(int left, int right, double[] array) {
+        switch (right - left) {
+            case 3:
+        }
         for (int i = left + 1; i <= right; i++) {
             int j = i - 1;
             double v = array[i];
