@@ -3319,7 +3319,7 @@ public class Matrices {
      * Equivalent to {@link #clone(Matrix, MemoryModel) clone(matrix, Arrays.SMM)}.
      *
      * <p>Note: this operation can optimize access to this matrix in many times, if it is lazy-calculated
-     * and not too large (can be placed in available Java memory)
+     * and not too large (can be placed in available Java memory).
      * It performs cloning with maximal speed via multithreading optimization. We recommend to call
      * it after lazy calculations.</p>
      *
