@@ -4116,12 +4116,27 @@ public class Arrays {
     public static strictfp void unpackBits(ArrayContext context, UpdatablePArray array, BitArray bits,
                                            double filler0, double filler1)
     {
-        Class<?> et = array.elementType();
-        if (et == byte.class || et == short.class || et == int.class || et == char.class) {
-            filler0 = (int) filler0;
-            filler1 = (int) filler1;
+        // Obsolete (little slower) version:
+        // Class<?> et = array.elementType();
+        // if (et == byte.class || et == short.class || et == int.class || et == char.class) {
+        //     filler0 = (int) filler0;
+        //     filler1 = (int) filler1;
+        // }
+        // applyFunc(context, false, SelectConstantFunc.getInstance(filler0, filler1), array, bits);
+        if (bits == null)
+            throw new NullPointerException("Null bits argument");
+        if (array == null)
+            throw new NullPointerException("Null array argument");
+        if (isTiled(array) && isTiled(bits)
+                && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
+                && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
+        {
+            array = (UpdatablePArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
+            bits = (BitArray) ((ArraysTileMatrixImpl.TileMatrixArray) bits).baseMatrix().array();
         }
-        applyFunc(context, false, SelectConstantFunc.getInstance(filler0, filler1), array, bits);
+        ArraysOpImpl.BothBitsUnpacker unpacker = new ArraysOpImpl.BothBitsUnpacker(
+                context, array, bits, filler0, filler1);
+        unpacker.process();
     }
 
     /**
