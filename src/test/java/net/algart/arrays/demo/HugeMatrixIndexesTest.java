@@ -36,7 +36,7 @@ import java.util.Random;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class HugeMatrixIndexesTest {
     static final Matrix<DoubleArray> matrix2A = Matrices.asCoordFuncMatrix(

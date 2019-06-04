@@ -40,7 +40,7 @@ import net.algart.math.Range;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public final class RectangularFunc implements Func {
     final Range range;

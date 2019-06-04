@@ -34,7 +34,7 @@ package net.algart.arrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public interface UpdatableShortArray extends ShortArray, UpdatablePIntegerArray {
     /**

@@ -63,7 +63,7 @@ import net.algart.matrices.StreamingApertureProcessor;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public abstract class BasicRankMorphology extends AbstractRankMorphology implements RankMorphology {
     final boolean interpolated;

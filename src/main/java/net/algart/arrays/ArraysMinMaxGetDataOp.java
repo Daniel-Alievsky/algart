@@ -35,7 +35,7 @@ import net.algart.arrays.BufferArraysImpl.AbstractBufferArray;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 class ArraysMinMaxGetDataOp {
     private static final boolean OPTIMIZE_AND_OR_ALIGNMENT = true;

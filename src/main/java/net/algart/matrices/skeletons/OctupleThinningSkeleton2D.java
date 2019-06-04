@@ -110,7 +110,7 @@ import static net.algart.matrices.skeletons.ThinningTools.*;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  * @see WeakOctupleThinningSkeleton2D
  */
 public class OctupleThinningSkeleton2D extends AbstractThinningSkeleton2D implements ThinningSkeleton {

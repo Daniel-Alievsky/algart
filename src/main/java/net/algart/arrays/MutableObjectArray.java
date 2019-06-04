@@ -33,7 +33,7 @@ package net.algart.arrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public interface MutableObjectArray<E> extends ObjectStack<E>, MutableArray, UpdatableObjectArray<E> {
     public <D> MutableObjectArray<D> cast(Class<D> elementType);

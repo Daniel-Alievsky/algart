@@ -31,7 +31,7 @@ import net.algart.math.functions.Func;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 class ArraysInterpolationsImpl {
     static abstract class AbstractInterpolation implements Func {

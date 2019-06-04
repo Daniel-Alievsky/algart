@@ -38,7 +38,7 @@ import java.util.Locale;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class SynchronizedMappingTest {
     private static final int BLOCK_SIZE = 4096 * 1024;

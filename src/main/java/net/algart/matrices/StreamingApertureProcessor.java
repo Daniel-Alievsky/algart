@@ -254,7 +254,7 @@ import java.util.Set;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public abstract class StreamingApertureProcessor extends AbstractArrayProcessorWithContextSwitching {
     private static final boolean ENABLE_STREAMING = Arrays.SystemSettings.getBooleanProperty(

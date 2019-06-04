@@ -34,7 +34,7 @@ import net.algart.math.IRectangularArea;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
 

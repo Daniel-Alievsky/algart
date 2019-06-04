@@ -71,7 +71,7 @@ import java.util.EnumSet;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     private static final boolean DEBUG_MODE = false; // leads to 2-way calculation of non-trivial areas and centroids

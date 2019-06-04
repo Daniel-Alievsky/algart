@@ -36,7 +36,7 @@ import net.algart.math.functions.Func;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 class ArraysBitTableGetDataOp {
     private static final int BOOLEAN_BUFFER_LENGTH = 32768; // elements

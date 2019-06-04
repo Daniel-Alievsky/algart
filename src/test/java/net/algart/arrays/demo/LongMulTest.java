@@ -31,7 +31,7 @@ import net.algart.arrays.Arrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class LongMulTest {
     static String toHex(long n) {

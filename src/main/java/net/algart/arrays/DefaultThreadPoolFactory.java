@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implements ThreadPoolFactory {
     private static final long MIN_MULTITHREADING_LENGTH = InternalUtils.getLongProperty(

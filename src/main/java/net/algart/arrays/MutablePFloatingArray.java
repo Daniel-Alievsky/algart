@@ -32,7 +32,7 @@ package net.algart.arrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public interface MutablePFloatingArray extends UpdatablePFloatingArray, MutablePNumberArray {
     public MutablePFloatingArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);

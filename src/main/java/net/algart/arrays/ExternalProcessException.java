@@ -32,7 +32,7 @@ import java.io.IOException;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class ExternalProcessException extends IOException {
     private final int externalProcessExitCode;

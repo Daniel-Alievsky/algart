@@ -36,7 +36,7 @@ import net.algart.math.functions.Func;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 class ArraysAnyFuncGetDataOp {
     private static final int ANY_FUNC_BUFFER_LENGTH = 16384; // elements (nArgs * double[] + elementtype[])

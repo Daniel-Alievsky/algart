@@ -39,7 +39,7 @@ package net.algart.math.geom;
  *
  * @author Daniel Alievsky
  * @version 1.0
- * @since JDK 1.1
+ * @since JDK 1.6
  */
 public class UnsafeSegment2D implements Cloneable {
 

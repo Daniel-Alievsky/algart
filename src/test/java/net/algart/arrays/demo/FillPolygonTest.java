@@ -42,7 +42,7 @@ import java.util.Random;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class FillPolygonTest {
     public static void main(String[] args) throws IOException {

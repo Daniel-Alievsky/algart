@@ -38,7 +38,7 @@ import java.util.concurrent.ThreadFactory;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public abstract class AbstractThreadPoolFactory implements ThreadPoolFactory {
 

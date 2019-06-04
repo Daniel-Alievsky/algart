@@ -72,7 +72,7 @@ import java.util.zip.*;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.1
+ * @since JDK 1.6
  */
 public strictfp class PackedBitArrays {
     private PackedBitArrays() {}

@@ -33,7 +33,7 @@ package net.algart.math.geom;
  *
  * @author Daniel Alievsky
  * @version 1.0
- * @since JDK 1.0
+ * @since JDK 1.6
  */
 public final class Rotation2D implements Cloneable {
 

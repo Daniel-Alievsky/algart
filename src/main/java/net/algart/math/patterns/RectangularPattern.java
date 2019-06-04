@@ -119,7 +119,7 @@ import net.algart.math.Point;
  * @version 1.2
  * @see #isActuallyRectangular()
  * @see QuickPointCountPattern
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public interface RectangularPattern extends UniformGridPattern, QuickPointCountPattern {
     public RectangularPattern shift(Point shift);

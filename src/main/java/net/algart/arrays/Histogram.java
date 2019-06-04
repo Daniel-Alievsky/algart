@@ -341,7 +341,7 @@ package net.algart.arrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public abstract class Histogram {
     static final boolean DEBUG_MODE = false; // thorough checking invariants and algorithms; slows down calculations

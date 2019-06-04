@@ -29,7 +29,7 @@ package net.algart.arrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 class ArraysSubMatrixCyclicIndexer implements ArraysSubMatrixIndexer {
     private static final boolean DEBUG_MODE = false; // enable 1 additional division, 1 multiplication and some asserts

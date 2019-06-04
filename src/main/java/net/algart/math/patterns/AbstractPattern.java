@@ -36,7 +36,7 @@ import net.algart.math.*;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public strictfp abstract class AbstractPattern implements Pattern {
 

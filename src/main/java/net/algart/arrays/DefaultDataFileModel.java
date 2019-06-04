@@ -94,7 +94,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  * @see StandardIODataFileModel
  */
 public class DefaultDataFileModel extends AbstractDataFileModel implements DataFileModel<File> {

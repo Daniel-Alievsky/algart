@@ -32,7 +32,7 @@ package net.algart.math.geom;
  *
  * @author Daniel Alievsky
  * @version 1.0
- * @since JDK 1.0
+ * @since JDK 1.6
  */
 public class Segment2D extends UnsafeSegment2D {
 

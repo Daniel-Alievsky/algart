@@ -36,7 +36,7 @@ import net.algart.math.functions.LinearFunc;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 strictfp class ArraysLinearGetDataOp {
     static final int LINEAR_BUFFER_LENGTH = 16384; // elements (double[] + elementType[])

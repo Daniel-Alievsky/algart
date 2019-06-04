@@ -80,7 +80,7 @@ import static net.algart.matrices.DependenceApertureBuilder.*;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class ContinuedMorphology implements Morphology {
     private static final boolean SIMPLIFIED_CONSTANT_CONTINUATION = true; // little optimization

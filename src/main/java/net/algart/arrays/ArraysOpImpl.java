@@ -31,7 +31,7 @@ import java.util.Locale;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 class ArraysOpImpl {
     static class ComparingCopier extends Arrays.ParallelExecutor {

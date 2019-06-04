@@ -39,7 +39,7 @@ import java.util.Collections;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public abstract class AbstractDataFileModel implements DataFileModel<File> {
 

@@ -37,7 +37,7 @@ import java.util.Locale;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 abstract strictfp class ArraysMatrixRegionCopier {
     private static final boolean OPTIMIZE_POLYGON_2D = true;

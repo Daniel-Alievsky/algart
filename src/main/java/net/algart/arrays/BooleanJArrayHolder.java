@@ -42,7 +42,7 @@ import java.lang.ref.SoftReference;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public final class BooleanJArrayHolder {
     private SoftReference<boolean[]> reference = new SoftReference<boolean[]>(new boolean[0]);

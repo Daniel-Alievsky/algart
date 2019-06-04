@@ -35,7 +35,7 @@ import java.util.Locale;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public abstract class AbstractArrayContext implements ArrayContext {
     public ArrayContext part(final double fromPart, final double toPart) {

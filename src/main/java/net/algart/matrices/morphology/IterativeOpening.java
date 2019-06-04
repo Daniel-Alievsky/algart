@@ -119,7 +119,7 @@ import java.util.List;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? extends UpdatablePArray>>
     implements IterativeArrayProcessor<Matrix<? extends UpdatablePArray>>

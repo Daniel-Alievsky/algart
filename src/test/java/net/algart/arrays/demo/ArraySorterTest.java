@@ -35,7 +35,7 @@ import java.util.Locale;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.1
+ * @since JDK 1.6
  */
 public class ArraySorterTest {
     private String beginOfArray(double[] a, int[] indexes) {

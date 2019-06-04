@@ -50,7 +50,7 @@ import net.algart.arrays.JArrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class BasicSkeletonPixelClassifier2D extends ApertureBasedSkeletonPixelClassifier {
 

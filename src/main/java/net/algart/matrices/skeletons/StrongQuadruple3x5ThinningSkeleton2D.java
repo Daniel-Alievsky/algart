@@ -114,7 +114,7 @@ import static net.algart.matrices.skeletons.ThinningTools.*;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class StrongQuadruple3x5ThinningSkeleton2D extends AbstractThinningSkeleton2D implements ThinningSkeleton {
     static boolean TOP_3X5_WEAKENING = false; // should be false

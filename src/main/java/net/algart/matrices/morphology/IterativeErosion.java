@@ -89,7 +89,7 @@ import java.util.Random;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class IterativeErosion extends AbstractIterativeArrayProcessor<Matrix<? extends UpdatablePArray>>
     implements IterativeArrayProcessor<Matrix<? extends UpdatablePArray>>

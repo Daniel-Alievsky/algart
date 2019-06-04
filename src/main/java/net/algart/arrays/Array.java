@@ -57,7 +57,7 @@ import java.nio.ByteOrder;
  * @see UpdatableArray
  * @see MutableArray
  * @see Matrix
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public interface Array {
     /**

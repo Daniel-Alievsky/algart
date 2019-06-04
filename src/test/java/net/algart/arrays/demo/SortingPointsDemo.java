@@ -33,7 +33,7 @@ import net.algart.arrays.ArraySorter;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.1
+ * @since JDK 1.6
  */
 public class SortingPointsDemo {
     public static void main(String[] args) {

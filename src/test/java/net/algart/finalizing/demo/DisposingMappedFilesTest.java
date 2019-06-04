@@ -34,7 +34,7 @@ import net.algart.finalizing.Finalizer;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.4
+ * @since JDK 1.6
  */
 public class DisposingMappedFilesTest {
     boolean noPauses = false;

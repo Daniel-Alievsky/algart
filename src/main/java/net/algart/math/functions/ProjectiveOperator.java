@@ -97,7 +97,7 @@ import java.util.Arrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  * @see LinearOperator
  */
 public strictfp class ProjectiveOperator

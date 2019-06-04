@@ -105,7 +105,7 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  * @version 1.2
  * @see DataBuffer
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public interface DirectAccessible {
     /**

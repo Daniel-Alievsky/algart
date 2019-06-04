@@ -33,7 +33,7 @@ import java.util.Locale;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class MaximalSupportedLengthDemo {
     private static final MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();

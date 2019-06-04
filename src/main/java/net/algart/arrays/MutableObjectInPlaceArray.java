@@ -33,7 +33,7 @@ package net.algart.arrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public interface MutableObjectInPlaceArray<E> extends UpdatableObjectInPlaceArray<E>, MutableObjectArray<E> {
     /*Repeat(INCLUDE_FROM_FILE, MutableFloatArray.java, resultTypes)

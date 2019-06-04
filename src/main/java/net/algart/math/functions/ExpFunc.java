@@ -41,7 +41,7 @@ package net.algart.math.functions;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public abstract class ExpFunc implements Func {
     private final double base;

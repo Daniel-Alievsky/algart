@@ -29,7 +29,7 @@ package net.algart.arrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 class ArraysPolylinearInterpolationsImpl {
     static abstract class AbstractPolylinearInterpolation extends ArraysInterpolationsImpl.AbstractInterpolation {

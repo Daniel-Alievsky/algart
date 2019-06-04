@@ -125,7 +125,7 @@ import java.util.Set;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public interface UniformGridPattern extends Pattern {
     /**

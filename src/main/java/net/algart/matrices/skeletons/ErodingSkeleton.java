@@ -79,7 +79,7 @@ import net.algart.math.functions.*;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class ErodingSkeleton extends AbstractIterativeArrayProcessor<Matrix<? extends UpdatableBitArray>>
     implements IterativeArrayProcessor<Matrix<? extends UpdatableBitArray>>

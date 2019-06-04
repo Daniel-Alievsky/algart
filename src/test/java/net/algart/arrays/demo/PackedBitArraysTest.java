@@ -34,7 +34,7 @@ import net.algart.arrays.*;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class PackedBitArraysTest {
     private static final float FLOAT_BIT_0 = -1f, FLOAT_BIT_1 = 157f;

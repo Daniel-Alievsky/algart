@@ -84,7 +84,7 @@ package net.algart.arrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.1
+ * @since JDK 1.6
  */
 
 public abstract class ArraySorter {

@@ -37,7 +37,7 @@ import java.util.Locale;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public strictfp class ExtremelyLargePatternTest {
     static final long MAX = 1L << 61;

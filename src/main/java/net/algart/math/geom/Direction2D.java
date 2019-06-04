@@ -32,7 +32,7 @@ package net.algart.math.geom;
  *
  * @author Daniel Alievsky
  * @version 1.0
- * @since JDK 1.0
+ * @since JDK 1.6
  */
 public class Direction2D implements Cloneable {
     double fi = 0.0, dx = 1.0, dy = 0.0;

@@ -37,7 +37,7 @@ package net.algart.matrices.morphology;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public enum RankPrecision implements CustomRankPrecision {
     /*Repeat() \{1\} ==>       {2},,{3},,{4},,{5},,{6},,{7},,{8},,{4, 8},,{9},,{10},,{5, 10},,

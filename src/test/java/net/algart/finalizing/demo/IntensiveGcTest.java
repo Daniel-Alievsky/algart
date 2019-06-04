@@ -31,7 +31,7 @@ import java.io.*;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.4
+ * @since JDK 1.6
  */
 public class IntensiveGcTest {
     public static void main(String[] args) throws IOException {

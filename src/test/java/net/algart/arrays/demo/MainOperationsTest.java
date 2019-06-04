@@ -63,7 +63,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public strictfp class MainOperationsTest implements Cloneable {
     private static boolean objectEquals(Object o1, Object o2) {

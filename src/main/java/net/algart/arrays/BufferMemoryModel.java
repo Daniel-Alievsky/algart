@@ -91,7 +91,7 @@ import java.nio.ByteOrder;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class BufferMemoryModel extends AbstractMemoryModel {
     private static final BufferMemoryModel INSTANCE = new BufferMemoryModel();

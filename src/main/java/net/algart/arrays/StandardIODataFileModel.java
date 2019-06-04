@@ -90,7 +90,7 @@ import java.util.concurrent.Callable;
  * @author Daniel Alievsky
  * @version 1.2
  * @see DefaultDataFileModel
- * @since JDK 1.5
+ * @since JDK 1.6
  */
 public class StandardIODataFileModel extends AbstractDataFileModel implements DataFileModel<File> {
 

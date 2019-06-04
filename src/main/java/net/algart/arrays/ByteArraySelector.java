@@ -42,6 +42,10 @@ import java.util.Arrays;
  *
  * <p>This class is not <b>immutable</b> and not <b>thread-safe</b>, but is <b>thread-compatible</b>
  * (allows manual synchronization for multithreading access).</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.2
+ * @since JDK 1.6
  */
 public class ByteArraySelector {
     private static final int MAX_LENGTH_FOR_PARTIAL_CLEARING = 100;
