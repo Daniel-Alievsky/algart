@@ -24,12 +24,13 @@
 
 package net.algart.arrays;
 
+import java.io.FileNotFoundException;
+import java.io.IOError;
 import java.lang.reflect.*;
 import java.io.IOException;
 
 /**
- * <p>This error is thrown instead of <tt>java.io.IOError</tt> under Java 1.5.
- * (<tt>java.io.IOError</tt> appeared in Java 1.6 only.)</p>
+ * <p>This class is obsolete: it was created for compatibility with Java 1.5.</p>
  *
  * <p><b>Warning: this class may be excluded in future versions of this library!</b>
  * In this case, you will need to replace all operators
@@ -56,21 +57,7 @@ class IOErrorJ5 extends Error {
      * @return      new Error instance: this class or <tt>java.io.IOError</tt> is possible.
      */
     public static Error getInstance(Throwable cause) {
-        Error result = null;
-        try {
-            Class<?> clazz = Class.forName("java.io.IOError"); // Java 1.6
-            Constructor<?> constructor = clazz.getConstructor(Throwable.class);
-            result = (Error)constructor.newInstance(cause);
-        } catch (InvocationTargetException ex) {
-        } catch (IllegalArgumentException ex) {
-        } catch (IllegalAccessException ex) {
-        } catch (InstantiationException ex) {
-        } catch (SecurityException ex) {
-        } catch (NoSuchMethodException ex) {
-        } catch (ClassNotFoundException ex) {
-        }
-        if (result == null) // some exception: previous Java versions
-            result = new IOErrorJ5(cause);
+        Error result = new IOError(cause);
         result.fillInStackTrace();
         StackTraceElement[] stack = result.getStackTrace();
         stack = (StackTraceElement[])JArrays.copyOfRange(stack, 1, stack.length);
@@ -79,8 +66,7 @@ class IOErrorJ5 extends Error {
     }
 
     static IOException getIOException(Error error) {
-        if (error.getClass().getName().equals("java.io.IOError")
-            || error instanceof IOErrorJ5) {
+        if (error instanceof IOError || error instanceof IOErrorJ5) {
             Throwable cause = error.getCause();
             if (cause instanceof IOException)
                 return (IOException)cause;
@@ -89,4 +75,13 @@ class IOErrorJ5 extends Error {
     }
 
     private static final long serialVersionUID = 6083384198859120376L;
+
+    public static void main(String[] args) {
+        try {
+            throw IOErrorJ5.getInstance(new FileNotFoundException("No file"));
+        } catch (Error error) {
+            System.out.println("Exception: " + getIOException(error));
+            error.printStackTrace();
+        }
+    }
 }
