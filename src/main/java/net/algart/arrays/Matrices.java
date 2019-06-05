@@ -2430,18 +2430,45 @@ public class Matrices {
             throw new NullPointerException("Null matrix");
         if (newElementType == null)
             throw new NullPointerException("Null newElementType");
-        if (Arrays.bitsPerElement(newElementType) <= 0) {
-            throw new IllegalArgumentException("Element type must be primitive "
-                    + "(boolean, char, byte, short, int, long, float or double");
-        }
         if (newElementType == matrix.elementType()) {
             return matrix;
         }
-        final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
-        final Range destRange = Range.valueOf(0.0, Arrays.maxPossibleValue(newType));
-        final Range srcRange = Range.valueOf(0.0, matrix.maxPossibleValue());
-        // Note: ranges may be identical for some element type like boolean/float/double
-        return Matrices.asFuncMatrix(LinearFunc.getInstance(destRange, srcRange), newType, matrix);
+        return matrix.matrix(Arrays.asPrecision(matrix.array(), newElementType));
+    }
+
+    /**
+     * Equivalent to creating a "lazy" matrix by <nobr><tt>lazy = {@link #asPrecision(Matrix, Class)
+     * asPrecision(matrix, result.elementType()}</tt></nobr> call
+     * and copying it into the <tt>result</tt> argument by
+     * <nobr><tt>{@link #copy(ArrayContext, Matrix, Matrix) copy(context, result, lazy)}</tt></nobr> call.
+     *
+     * <p>In addition, this method checks, whether all passed matrices have the
+     * {@link Matrix#dimEquals(Matrix) same dimensions},
+     * and throws an exception in other case.
+     *
+     * <p>If the source and result matrices have the same element type, this method just copies <tt>matrix</tt>
+     * to <tt>result</tt>.
+     *
+     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param result  the destination matrix.
+     * @param matrix  the source matrix.
+     * @throws NullPointerException  if <tt>result</tt> or <tt>matrix</tt> is <tt>null</tt>.
+     * @throws SizeMismatchException if passed matrices have different dimensions.
+     * @throws java.io.IOError       if the current thread is interrupted by the standard
+     *                               <tt>Thread.interrupt()</tt> call.
+     */
+    public static void applyPrecision(
+            ArrayContext context,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> matrix) {
+        if (result == null)
+            throw new NullPointerException("Null result matrix");
+        if (matrix == null)
+            throw new NullPointerException("Null source matrix");
+        if (!matrix.dimEquals(result))
+            throw new SizeMismatchException("Source and result matrix dimensions mismatch: "
+                    + "source matrix is " + matrix + ", result matrix is " + result);
+        Arrays.applyPrecision(context, result.array(), matrix.array());
     }
 
     /**

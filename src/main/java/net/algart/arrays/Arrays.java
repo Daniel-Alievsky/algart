@@ -27,6 +27,7 @@ package net.algart.arrays;
 import net.algart.math.Range;
 import net.algart.math.functions.ConstantFunc;
 import net.algart.math.functions.Func;
+import net.algart.math.functions.LinearFunc;
 import net.algart.math.functions.SelectConstantFunc;
 
 import java.io.IOException;
@@ -4269,6 +4270,89 @@ public class Arrays {
         }
         ArraysOpImpl.ZeroBitsUnpacker unpacker = new ArraysOpImpl.ZeroBitsUnpacker(context, array, bits, filler0);
         unpacker.process();
+    }
+
+    /**
+     * Returns an immutable view of the passed AlgART array, cast to another primitive element type
+     * (other precision) with automatic scaling, so that 0.0 is cast to 0.0 and
+     * {@link PArray#maxPossibleValue(double) maximal possible value} of the source array
+     * is scaled to maximal possible value of the result. (For <tt>float</tt> and <tt>double</tt>
+     * elements we suppose that maximal possible value is 1.0.)
+     *
+     * <p>More precisely, if <tt>newElementType==array.elementType()</tt>, this function just returns
+     * the <tt>array</tt> argument without changes, in other case it is equivalent to the following operators:
+     * <pre>
+     *     final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
+     *     final Range destRange = Range.valueOf(0.0, {@link Arrays#maxPossibleValue(Class)
+     *     Arrays.maxPossibleValue}(newType));
+     *     final Range srcRange = Range.valueOf(0.0, array.{@link PArray#maxPossibleValue(double)
+     *     maxPossibleValue(1.0)});
+     *     return {@link Arrays#asFuncArray(Func, Class, PArray...)
+     *     Arrays.asFuncArray}(LinearFunc.getInstance(destRange, srcRange), newType, array);
+     * </pre>
+     *
+     * @param array          the source AlgART array.
+     * @param newElementType required element type.
+     * @return               the array with the required element type, where every element is equal to
+     *                       the corresponding element of the source array, multiplied
+     *                       by the automatically chosen scale.
+     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws IllegalArgumentException if the required element type is not a primitive type.
+     */
+    public static PArray asPrecision(PArray array, Class<?> newElementType) {
+        if (array == null)
+            throw new NullPointerException("Null array");
+        if (newElementType == null)
+            throw new NullPointerException("Null newElementType");
+        if (Arrays.bitsPerElement(newElementType) <= 0) {
+            throw new IllegalArgumentException("Element type must be primitive "
+                    + "(boolean, char, byte, short, int, long, float or double");
+        }
+        if (newElementType == array.elementType()) {
+            return array;
+        }
+        final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
+        final Range destRange = Range.valueOf(0.0, Arrays.maxPossibleValue(newType));
+        final Range srcRange = Range.valueOf(0.0, array.maxPossibleValue(1.0));
+        // Note: ranges may be identical for some element type like boolean/float/double
+        return asFuncArray(LinearFunc.getInstance(destRange, srcRange), newType, array);
+    }
+
+    /**
+     * Equivalent to creating a "lazy" array by <nobr><tt>lazy = {@link #asPrecision(PArray, Class)
+     * asPrecision(array, result.elementType()}</tt></nobr> call
+     * and copying it into the <tt>result</tt> argument by
+     * <nobr><tt>{@link #copy(ArrayContext, UpdatableArray, Array) copy(context, result, lazy)}</tt></nobr> call.
+     *
+     * <p>In addition, this method checks, whether the passed arrays have the same length,
+     * and throws an exception in other case.
+     *
+     * <p>If the source and result array have the same element type, this method just copies <tt>array</tt>
+     * to <tt>result</tt>.
+     *
+     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param result  the destination array.
+     * @param array   the source array.
+     * @throws NullPointerException  if <tt>result</tt> or <tt>array</tt> is <tt>null</tt>.
+     * @throws SizeMismatchException if passed arrays have different lengths.
+     * @throws java.io.IOError       if the current thread is interrupted by the standard
+     *                               <tt>Thread.interrupt()</tt> call.
+     */
+    public static void applyPrecision(ArrayContext context, UpdatablePArray result, PArray array) {
+        if (result == null)
+            throw new NullPointerException("Null result");
+        if (array == null)
+            throw new NullPointerException("Null array");
+        if (result.length() != array.length())
+            throw new SizeMismatchException("array.length() and result.length() mismatch");
+        if (result.elementType() == array.elementType()) {
+            copy(context, result, array);
+        } else if (array.elementType() == boolean.class) {
+            // optimization
+            unpackBits(context, result, (BitArray) array, 0, result.maxPossibleValue(1.0));
+        } else {
+            copy(context, result, asPrecision(array, result.elementType()));
+        }
     }
 
     /**
