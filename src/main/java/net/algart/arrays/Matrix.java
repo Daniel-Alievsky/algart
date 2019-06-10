@@ -1489,7 +1489,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws NullPointerException      if <tt>position</tt>, <tt>dimensions</tt> or <tt>continuationMode</tt>
      *                                   argument is <tt>null</tt>.
      * @throws IllegalArgumentException  if <tt>position.length</tt> or <tt>dimensions.length</tt>
-     *                                   is not equal to {@link #dimCount()}/
+     *                                   is not equal to {@link #dimCount()}.
      * @throws IndexOutOfBoundsException if, for some <tt>k</tt>, <tt>dimensions[k]&lt;0</tt>
      *                                   or <tt>position[k]+dimensions[k]&gt;Long.MAX_VALUE</tt>,
      *                                   or if the product of all <tt>dimensions[k]</tt>
