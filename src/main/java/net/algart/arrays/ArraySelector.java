@@ -36,8 +36,8 @@ package net.algart.arrays;
  *
  * @author Daniel Alievsky
  * @version 1.2
- * @since JDK 1.6
  * @see ByteArraySelector
+ * @since JDK 1.6
  */
 public class ArraySelector {
     private static final long THRESHOLD = 4;
@@ -303,7 +303,7 @@ public class ArraySelector {
 
     /*Repeat() byte    ==> char,,short,,int,,long,,float,,double;;
                (\s+)\& 0xFF    ==> ,,$1& 0xFFFF,, ,,...;;
-               (<p>Note that.*?\<\/p\>\s*\*\s*\*) ==> ,,$1,, ,,...
+               (<p>Note that.*?\<\/p\>\s*\*\s*\*\s*) ==> ,,$1,, ,,...
      */
 
     /**
@@ -600,7 +600,7 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
-     *  @param percentileIndexes list of indexes inside the array, that should be placed to correct place
+     * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
@@ -628,7 +628,7 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
-     *  @param percentileLevels list of percentile levels: required indexes, divided by array length.
+     * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
      * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
@@ -650,7 +650,7 @@ public class ArraySelector {
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
      * the element from <tt>char[]</tt> array.</p>
      *
-     *  @param from          index of the first analysed element of some data array, inclusive.
+     * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
@@ -1158,7 +1158,7 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
-     *  @param percentileIndexes list of indexes inside the array, that should be placed to correct place
+     * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
@@ -1186,7 +1186,7 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
-     *  @param percentileLevels list of percentile levels: required indexes, divided by array length.
+     * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
      * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
@@ -1208,7 +1208,7 @@ public class ArraySelector {
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
      * the element from <tt>int[]</tt> array.</p>
      *
-     *  @param from          index of the first analysed element of some data array, inclusive.
+     * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
@@ -1431,7 +1431,7 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
-     *  @param percentileIndexes list of indexes inside the array, that should be placed to correct place
+     * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
@@ -1459,7 +1459,7 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
-     *  @param percentileLevels list of percentile levels: required indexes, divided by array length.
+     * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
      * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
@@ -1481,7 +1481,7 @@ public class ArraySelector {
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
      * the element from <tt>long[]</tt> array.</p>
      *
-     *  @param from          index of the first analysed element of some data array, inclusive.
+     * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
@@ -1704,7 +1704,7 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
-     *  @param percentileIndexes list of indexes inside the array, that should be placed to correct place
+     * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
@@ -1732,7 +1732,7 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
-     *  @param percentileLevels list of percentile levels: required indexes, divided by array length.
+     * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
      * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
@@ -1754,7 +1754,7 @@ public class ArraySelector {
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
      * the element from <tt>float[]</tt> array.</p>
      *
-     *  @param from          index of the first analysed element of some data array, inclusive.
+     * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
@@ -1977,7 +1977,7 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
-     *  @param percentileIndexes list of indexes inside the array, that should be placed to correct place
+     * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
@@ -2005,7 +2005,7 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
-     *  @param percentileLevels list of percentile levels: required indexes, divided by array length.
+     * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
      * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
@@ -2027,7 +2027,7 @@ public class ArraySelector {
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
      * the element from <tt>double[]</tt> array.</p>
      *
-     *  @param from          index of the first analysed element of some data array, inclusive.
+     * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
