@@ -86,7 +86,7 @@ public class ArraySelectorTest {
                 "      Full sorting %d float elements (java.util): %.6f ms, %.3f ns/element%s%n",
                 array.length,
                 (t2 - t1) * 1e-6 / n, (t2 - t1) * 1.0 / array.length / n, comment);
-        check(array, clone1, levels, comparator);
+        check(array, clone1, levels, comparator, "double levels, optimized for float[]");
 
         System.arraycopy(clone2, 0, array, 0, array.length);
         t1 = System.nanoTime();
@@ -183,22 +183,30 @@ public class ArraySelectorTest {
             longIndexes[k] = ArraySelector.percentileIndex(levels[k], (long) array.length);
             intIndexes[k] = ArraySelector.percentileIndex(levels[k], array.length);
         }
+        String branch;
         if (rnd.nextBoolean()) {
+            branch = "double levels, common algorithm";
             selector.select(array.length, levels, comparator, exchanger);
         } else if (rnd.nextBoolean()) {
+            branch = "double levels, optimized for float[]";
             selector.select(levels, array, array.length);
         } else if (rnd.nextBoolean()) {
+            branch = "integer indexes, common algorithm";
             selector.select(array.length, longIndexes, comparator, exchanger);
         } else {
+            branch = "integer indexes, optimized for float[]";
             selector.select(intIndexes, array, array.length);
         }
         Arrays.sort(clone);
-        check(array, clone, levels, comparator);
+        check(array, clone, levels, comparator, branch);
         int levelIndex = rnd.nextInt(levels.length);
         int index = ArraySelector.percentileIndex(levels[levelIndex], array.length);
         final float percentile = selector.select(0, array.length, index, array);
-        if (percentile != array[index]) {
-            throw new AssertionError("Illegal result of select method");
+        if (!equalsWithNaN(percentile, array[index])) {
+            throw new AssertionError("Illegal result of select method: " + percentile + " (position "
+                    + index + ", " + branch
+                    + "): array " + JArrays.toString(array, ", ", 1000)
+                    + ", sorted " + JArrays.toString(clone, ", ", 1000));
         }
     }
 
@@ -239,14 +247,18 @@ public class ArraySelectorTest {
             float[] array,
             float[] sortedArray,
             double[] levels,
-            ArrayComparator comparator) {
+            ArrayComparator comparator,
+            String bramchName) {
         for (int k = 0; k < levels.length; k++) {
             int percentileIndex = ArraySelector.percentileIndex(levels[k], array.length);
             float selected = array[percentileIndex];
             float sorted = sortedArray[percentileIndex];
-            if (selected != sorted) {
-                throw new AssertionError("Illegal selected = " + selected + " (position "
-                        + percentileIndex + "): array " + JArrays.toString(array, ", ", 1000));
+            if (!equalsWithNaN(selected, sorted)) {
+                throw new AssertionError("Illegal selected = " + selected + " instead of "
+                        + sorted + " (position "
+                        + percentileIndex + ", " + bramchName
+                        + "):\n  array " + JArrays.toString(array, ", ", 1000)
+                        + "\n  sorted " + JArrays.toString(sortedArray, ", ", 1000));
             }
             for (int i = 0; i < percentileIndex; i++) {
                 if (comparator.less(percentileIndex, i)) {
@@ -296,14 +308,28 @@ public class ArraySelectorTest {
         }
     }
 
+    private static boolean equalsWithNaN(float a, float b) {
+        if (Float.isNaN(a) == Float.isNaN(b)) {
+            return Float.isNaN(a) || a == b;
+        } else {
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
-        if (args.length < 2) {
-            System.out.printf("Usage: %s numberOfElements numberOfTests%n", ArraySelectorTest.class);
+        boolean skipMeasuring = false;
+        int startArgIndex = 0;
+        if (args.length > 0 && args[startArgIndex].equalsIgnoreCase("-skipMeasuring")) {
+            skipMeasuring = true;
+            startArgIndex++;
+        }
+        if (args.length < startArgIndex + 2) {
+            System.out.printf("Usage: [-skipMeasuring] %s numberOfElements numberOfTests%n", ArraySelectorTest.class);
             return;
         }
-        final int numberOfElements = Integer.parseInt(args[0]);
-        final int numberOfTests = Integer.parseInt(args[1]);
-        final int numberOfMeasuringTest = numberOfElements <= 250 ? 300 : 16;
+        final int numberOfElements = Integer.parseInt(args[startArgIndex]);
+        final int numberOfTests = Integer.parseInt(args[startArgIndex + 1]);
+        final int numberOfMeasuringTest = skipMeasuring ? 0 : numberOfElements <= 250 ? 300 : 16;
         Random rnd = new Random(0);
         for (int test = 1; test <= numberOfMeasuringTest; test++) {
             System.out.printf("%nSpeed test #%d...%n", test);
@@ -390,6 +416,10 @@ public class ArraySelectorTest {
                 testCorrectness(floats, levels, rnd);
                 for (int k = 0; k < floats.length; k++) {
                     floats[k] = (float) rnd.nextDouble();
+                }
+                testCorrectness(floats, levels, rnd);
+                for (int k = 0; k < floats.length; k++) {
+                    floats[k] = rnd.nextBoolean() ? Float.NaN : (float) rnd.nextDouble();
                 }
                 testCorrectness(floats, levels, rnd);
             }

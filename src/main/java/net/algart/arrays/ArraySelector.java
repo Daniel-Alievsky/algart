@@ -414,6 +414,7 @@ public class ArraySelector {
             assert requiredIndex < right;
             final int difference = right - left;
             if (difference == 2) {
+                // 3 elements
                 final int base = left + 1;
                 byte a = array[left];
                 byte b = array[base];
@@ -437,6 +438,7 @@ public class ArraySelector {
                 return array[requiredIndex];
 
             } else if (difference == 3) {
+                // 4 elements
                 final int afterLeft = left + 1;
                 final int beforeRight = right - 1;
                 byte a = array[left];
@@ -528,7 +530,9 @@ public class ArraySelector {
             array[left + 1] = b;
             array[base] = tmp;
             base = left + 1;
-            assert b == array[base];
+            // assert b == array[base]; // - base=left+1 and array[left+1] = b
+            // NOTE: we must not actually perform assert operator, because for float/double types
+            // it will work incorrectly for NaN value (NaN != NaN in Java)
 
             // Reordering elements left+2..right-1 so that, for some K,
             //     data[left+2..K] <= data[base],
@@ -687,6 +691,7 @@ public class ArraySelector {
             assert requiredIndex < right;
             final int difference = right - left;
             if (difference == 2) {
+                // 3 elements
                 final int base = left + 1;
                 char a = array[left];
                 char b = array[base];
@@ -710,6 +715,7 @@ public class ArraySelector {
                 return array[requiredIndex];
 
             } else if (difference == 3) {
+                // 4 elements
                 final int afterLeft = left + 1;
                 final int beforeRight = right - 1;
                 char a = array[left];
@@ -801,7 +807,9 @@ public class ArraySelector {
             array[left + 1] = b;
             array[base] = tmp;
             base = left + 1;
-            assert b == array[base];
+            // assert b == array[base]; // - base=left+1 and array[left+1] = b
+            // NOTE: we must not actually perform assert operator, because for float/double types
+            // it will work incorrectly for NaN value (NaN != NaN in Java)
 
             // Reordering elements left+2..right-1 so that, for some K,
             //     data[left+2..K] <= data[base],
@@ -972,6 +980,7 @@ public class ArraySelector {
             assert requiredIndex < right;
             final int difference = right - left;
             if (difference == 2) {
+                // 3 elements
                 final int base = left + 1;
                 short a = array[left];
                 short b = array[base];
@@ -995,6 +1004,7 @@ public class ArraySelector {
                 return array[requiredIndex];
 
             } else if (difference == 3) {
+                // 4 elements
                 final int afterLeft = left + 1;
                 final int beforeRight = right - 1;
                 short a = array[left];
@@ -1086,7 +1096,9 @@ public class ArraySelector {
             array[left + 1] = b;
             array[base] = tmp;
             base = left + 1;
-            assert b == array[base];
+            // assert b == array[base]; // - base=left+1 and array[left+1] = b
+            // NOTE: we must not actually perform assert operator, because for float/double types
+            // it will work incorrectly for NaN value (NaN != NaN in Java)
 
             // Reordering elements left+2..right-1 so that, for some K,
             //     data[left+2..K] <= data[base],
@@ -1245,6 +1257,7 @@ public class ArraySelector {
             assert requiredIndex < right;
             final int difference = right - left;
             if (difference == 2) {
+                // 3 elements
                 final int base = left + 1;
                 int a = array[left];
                 int b = array[base];
@@ -1268,6 +1281,7 @@ public class ArraySelector {
                 return array[requiredIndex];
 
             } else if (difference == 3) {
+                // 4 elements
                 final int afterLeft = left + 1;
                 final int beforeRight = right - 1;
                 int a = array[left];
@@ -1359,7 +1373,9 @@ public class ArraySelector {
             array[left + 1] = b;
             array[base] = tmp;
             base = left + 1;
-            assert b == array[base];
+            // assert b == array[base]; // - base=left+1 and array[left+1] = b
+            // NOTE: we must not actually perform assert operator, because for float/double types
+            // it will work incorrectly for NaN value (NaN != NaN in Java)
 
             // Reordering elements left+2..right-1 so that, for some K,
             //     data[left+2..K] <= data[base],
@@ -1518,6 +1534,7 @@ public class ArraySelector {
             assert requiredIndex < right;
             final int difference = right - left;
             if (difference == 2) {
+                // 3 elements
                 final int base = left + 1;
                 long a = array[left];
                 long b = array[base];
@@ -1541,6 +1558,7 @@ public class ArraySelector {
                 return array[requiredIndex];
 
             } else if (difference == 3) {
+                // 4 elements
                 final int afterLeft = left + 1;
                 final int beforeRight = right - 1;
                 long a = array[left];
@@ -1632,7 +1650,9 @@ public class ArraySelector {
             array[left + 1] = b;
             array[base] = tmp;
             base = left + 1;
-            assert b == array[base];
+            // assert b == array[base]; // - base=left+1 and array[left+1] = b
+            // NOTE: we must not actually perform assert operator, because for float/double types
+            // it will work incorrectly for NaN value (NaN != NaN in Java)
 
             // Reordering elements left+2..right-1 so that, for some K,
             //     data[left+2..K] <= data[base],
@@ -1791,6 +1811,7 @@ public class ArraySelector {
             assert requiredIndex < right;
             final int difference = right - left;
             if (difference == 2) {
+                // 3 elements
                 final int base = left + 1;
                 float a = array[left];
                 float b = array[base];
@@ -1814,6 +1835,7 @@ public class ArraySelector {
                 return array[requiredIndex];
 
             } else if (difference == 3) {
+                // 4 elements
                 final int afterLeft = left + 1;
                 final int beforeRight = right - 1;
                 float a = array[left];
@@ -1905,7 +1927,9 @@ public class ArraySelector {
             array[left + 1] = b;
             array[base] = tmp;
             base = left + 1;
-            assert b == array[base];
+            // assert b == array[base]; // - base=left+1 and array[left+1] = b
+            // NOTE: we must not actually perform assert operator, because for float/double types
+            // it will work incorrectly for NaN value (NaN != NaN in Java)
 
             // Reordering elements left+2..right-1 so that, for some K,
             //     data[left+2..K] <= data[base],
@@ -2064,6 +2088,7 @@ public class ArraySelector {
             assert requiredIndex < right;
             final int difference = right - left;
             if (difference == 2) {
+                // 3 elements
                 final int base = left + 1;
                 double a = array[left];
                 double b = array[base];
@@ -2087,6 +2112,7 @@ public class ArraySelector {
                 return array[requiredIndex];
 
             } else if (difference == 3) {
+                // 4 elements
                 final int afterLeft = left + 1;
                 final int beforeRight = right - 1;
                 double a = array[left];
@@ -2178,7 +2204,9 @@ public class ArraySelector {
             array[left + 1] = b;
             array[base] = tmp;
             base = left + 1;
-            assert b == array[base];
+            // assert b == array[base]; // - base=left+1 and array[left+1] = b
+            // NOTE: we must not actually perform assert operator, because for float/double types
+            // it will work incorrectly for NaN value (NaN != NaN in Java)
 
             // Reordering elements left+2..right-1 so that, for some K,
             //     data[left+2..K] <= data[base],
@@ -3079,6 +3107,7 @@ public class ArraySelector {
         return (byte) result;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray3(int left, int right, byte[] array) {
         final int base = left + 1;
         byte a = array[left];
@@ -3102,6 +3131,7 @@ public class ArraySelector {
         array[base] = b;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray4(int left, int right, byte[] array) {
         final int afterLeft = left + 1;
         final int beforeRight = right - 1;
@@ -3158,7 +3188,7 @@ public class ArraySelector {
         }
     }
 
-
+    // Used in previous versions of the algorithm; not used now
     private static void sortLittleArray(int left, int right, byte[] array) {
         switch (right - left) {
             case 3:
@@ -3209,6 +3239,7 @@ public class ArraySelector {
         return result;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray3(int left, int right, char[] array) {
         final int base = left + 1;
         char a = array[left];
@@ -3232,6 +3263,7 @@ public class ArraySelector {
         array[base] = b;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray4(int left, int right, char[] array) {
         final int afterLeft = left + 1;
         final int beforeRight = right - 1;
@@ -3288,7 +3320,7 @@ public class ArraySelector {
         }
     }
 
-
+    // Used in previous versions of the algorithm; not used now
     private static void sortLittleArray(int left, int right, char[] array) {
         switch (right - left) {
             case 3:
@@ -3339,6 +3371,7 @@ public class ArraySelector {
         return (short) result;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray3(int left, int right, short[] array) {
         final int base = left + 1;
         short a = array[left];
@@ -3362,6 +3395,7 @@ public class ArraySelector {
         array[base] = b;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray4(int left, int right, short[] array) {
         final int afterLeft = left + 1;
         final int beforeRight = right - 1;
@@ -3418,7 +3452,7 @@ public class ArraySelector {
         }
     }
 
-
+    // Used in previous versions of the algorithm; not used now
     private static void sortLittleArray(int left, int right, short[] array) {
         switch (right - left) {
             case 3:
@@ -3469,6 +3503,7 @@ public class ArraySelector {
         return result;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray3(int left, int right, int[] array) {
         final int base = left + 1;
         int a = array[left];
@@ -3492,6 +3527,7 @@ public class ArraySelector {
         array[base] = b;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray4(int left, int right, int[] array) {
         final int afterLeft = left + 1;
         final int beforeRight = right - 1;
@@ -3548,7 +3584,7 @@ public class ArraySelector {
         }
     }
 
-
+    // Used in previous versions of the algorithm; not used now
     private static void sortLittleArray(int left, int right, int[] array) {
         switch (right - left) {
             case 3:
@@ -3599,6 +3635,7 @@ public class ArraySelector {
         return result;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray3(int left, int right, long[] array) {
         final int base = left + 1;
         long a = array[left];
@@ -3622,6 +3659,7 @@ public class ArraySelector {
         array[base] = b;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray4(int left, int right, long[] array) {
         final int afterLeft = left + 1;
         final int beforeRight = right - 1;
@@ -3678,7 +3716,7 @@ public class ArraySelector {
         }
     }
 
-
+    // Used in previous versions of the algorithm; not used now
     private static void sortLittleArray(int left, int right, long[] array) {
         switch (right - left) {
             case 3:
@@ -3729,6 +3767,7 @@ public class ArraySelector {
         return result;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray3(int left, int right, float[] array) {
         final int base = left + 1;
         float a = array[left];
@@ -3752,6 +3791,7 @@ public class ArraySelector {
         array[base] = b;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray4(int left, int right, float[] array) {
         final int afterLeft = left + 1;
         final int beforeRight = right - 1;
@@ -3808,7 +3848,7 @@ public class ArraySelector {
         }
     }
 
-
+    // Used in previous versions of the algorithm; not used now
     private static void sortLittleArray(int left, int right, float[] array) {
         switch (right - left) {
             case 3:
@@ -3859,6 +3899,7 @@ public class ArraySelector {
         return result;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray3(int left, int right, double[] array) {
         final int base = left + 1;
         double a = array[left];
@@ -3882,6 +3923,7 @@ public class ArraySelector {
         array[base] = b;
     }
 
+    // Used in previous versions of the algorithm; not used now
     private static void sortArray4(int left, int right, double[] array) {
         final int afterLeft = left + 1;
         final int beforeRight = right - 1;
@@ -3938,7 +3980,7 @@ public class ArraySelector {
         }
     }
 
-
+    // Used in previous versions of the algorithm; not used now
     private static void sortLittleArray(int left, int right, double[] array) {
         switch (right - left) {
             case 3:
