@@ -5,6 +5,7 @@ if %1.==-tempRemove. set flags=%flags% -removeAllIncludes
 if %1.==-trim. set flags=%flags% -onlyTrimTrailingWhitespace
 
 set f=%f% "..\..\..\..\..\..\**\*.java"
+set f=%f% "..\..\..\..\..\..\..\test\**\*.java"
 rem set f=%f% "(some-folder)\src\main\java\**\*.java"
 
 if exist ..\..\..\..\..\..\..\..\target\classes\net\algart\executable\preprocessor\java\Repeater.class goto calljava

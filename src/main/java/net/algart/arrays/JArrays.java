@@ -89,8 +89,18 @@ public class JArrays {
 
     /*Repeat() byte ==> char,,short,,int,,long,,float,,double;;
                Byte ==> Char,,Short,,Int,,Long,,Float,,Double;;
-               (\s+)\& 0xFF    ==> ,,$1& 0xFFFF,, ,,...;;
-               (\*\s*<p>Note that.*?\<\/p\>\s*) ==> ,,$1,, ,,...
+               (\s+)\& 0xFF ==> ,,$1& 0xFFFF,, ,,...;;
+               (\(array\[\(int\)\s*firstIndex\]\)) < (\(array\[\(int\)\s*secondIndex\]\)) ==>
+                   $1 < $2,,$1 < $2,,$1 < $2,,$1 < $2,,Float.compare($1, $2) < 0,,Double.compare($1, $2) < 0;;
+               (\*\s*<p>Note that.*?\<\/p\>\s*) ==> ,,$1,, ,, ,,
+               * <p>Note that elements of <tt>float[]</tt> array are compared by <tt>Float.compare(float, float)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float values
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     * ,,
+               * <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double alues
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     *
      */
 
     /**
@@ -717,7 +727,10 @@ public class JArrays {
     /**
      * Simple implementation of {@link ArrayComparator}, comparing elements of <tt>float[]</tt> array.
      *
-     */
+     * <p>Note that elements of <tt>float[]</tt> array are compared by <tt>Float.compare(float, float)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float values
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     **/
     public static class FloatArrayComparator implements ArrayComparator {
         private final float[] array;
 
@@ -745,7 +758,7 @@ public class JArrays {
          */
         @Override
         public boolean less(long firstIndex, long secondIndex) {
-            return (array[(int) firstIndex]) < (array[(int) secondIndex]);
+            return Float.compare((array[(int) firstIndex]), (array[(int) secondIndex])) < 0;
         }
     }
 
@@ -840,7 +853,10 @@ public class JArrays {
     /**
      * Simple implementation of {@link ArrayComparator}, comparing elements of <tt>double[]</tt> array.
      *
-     */
+     * <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double alues
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     **/
     public static class DoubleArrayComparator implements ArrayComparator {
         private final double[] array;
 
@@ -868,7 +884,7 @@ public class JArrays {
          */
         @Override
         public boolean less(long firstIndex, long secondIndex) {
-            return (array[(int) firstIndex]) < (array[(int) secondIndex]);
+            return Double.compare((array[(int) firstIndex]), (array[(int) secondIndex])) < 0;
         }
     }
 

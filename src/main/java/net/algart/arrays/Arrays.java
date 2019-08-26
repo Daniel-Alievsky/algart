@@ -5761,7 +5761,14 @@ public class Arrays {
     /**
      * Returns comparator allowing to sort the array in normal (increasing) order via
      * {@link #sort sort} method.
-     * For non-primitive arrays, the returned comparator will use standard <tt>Comparable</tt>
+     * <p>For <tt>byte</tt> and <tt>short</tt> element types, this comparator is based on usual Java comparison:
+     * it compares <i>signed</i> values, where the byte <tt>-1</tt> is interpreted as <tt>-1</tt> (not <tt>255</tt>,
+     * like in {@link ByteArray#getByte(long)} method).
+     * <p>For <tt>float</tt> and <tt>double</tt> element types, this comparator is based on
+     * <tt>Float.compare(float, float)</tt> and <tt>Double.compare(double, double)</tt> methods.
+     * So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float/double values
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.
+     * <p>For non-primitive arrays, this comparator will use standard <tt>Comparable</tt>
      * interface (all objects must implement this interface).
      *
      * @param array the array for sorting.
@@ -5775,7 +5782,14 @@ public class Arrays {
     /**
      * Returns comparator allowing to sort the array in reverse (decreasing) order via
      * {@link #sort sort} method.
-     * For non-primitive arrays, the returned comparator will use standard <tt>Comparable</tt>
+     * <p>For <tt>byte</tt> and <tt>short</tt> element types, this comparator is based on usual Java comparison:
+     * it compares <i>signed</i> values, where the byte <tt>-1</tt> is interpreted as <tt>-1</tt> (not <tt>255</tt>,
+     * like in {@link ByteArray#getByte(long)} method).
+     * <p>For <tt>float</tt> and <tt>double</tt> element types, this comparator is based on
+     * <tt>Float.compare(float, float)</tt> and <tt>Double.compare(double, double)</tt> methods.
+     * So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float/double values
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.
+     * <p>For non-primitive arrays, this comparator will use standard <tt>Comparable</tt>
      * interface (all objects must implement this interface).
      *
      * @param array the array for sorting.

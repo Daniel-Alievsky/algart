@@ -303,7 +303,21 @@ public class ArraySelector {
 
     /*Repeat() byte    ==> char,,short,,int,,long,,float,,double;;
                (\s+)\& 0xFF    ==> ,,$1& 0xFFFF,, ,,...;;
-               (<p>Note that.*?\<\/p\>\s*\*\s*\*\s*) ==> ,,$1,, ,,...
+               (\([\w\[\]]+\))\s<\s(\([\w\[\]]+\)) ==>
+                   $1 < $2,,$1 < $2,,$1 < $2,,$1 < $2,,Float.compare($1, $2) < 0,,Double.compare($1, $2) < 0;;
+               (<p>Note that.*?\<\/p\>\s*\*\s*\*\s) ==> ,,$1,, ,, ,,
+               <p>Note that elements of <tt>float[]</tt> array are compared by <tt>Float.compare(float, float)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float values
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     *
+     *
+     ,,
+                <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double alues
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     *
+     *;;
+               \*(\@param (?:from|percentile)) ==> * $1,,...
      */
 
     /**
@@ -1724,6 +1738,10 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
+     * <p>Note that elements of <tt>float[]</tt> array are compared by <tt>Float.compare(float, float)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float values
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     *
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
@@ -1752,6 +1770,10 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
+     * <p>Note that elements of <tt>float[]</tt> array are compared by <tt>Float.compare(float, float)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float values
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
@@ -1773,6 +1795,10 @@ public class ArraySelector {
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
      * the element from <tt>float[]</tt> array.</p>
+     *
+     * <p>Note that elements of <tt>float[]</tt> array are compared by <tt>Float.compare(float, float)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float values
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
@@ -1817,15 +1843,15 @@ public class ArraySelector {
                 float b = array[base];
                 final float c = array[right];
                 // Sorting a, b, c
-                if ((b) < (a)) {
+                if (Float.compare((b), (a)) < 0) {
                     a = b;
                     b = array[left];
                 }
-                if ((c) < (b)) {
+                if (Float.compare((c), (b)) < 0) {
                     array[right] = b;
                     b = c;
                     // since this moment, c is not 3rd element
-                    if ((b) < (a)) {
+                    if (Float.compare((b), (a)) < 0) {
                         b = a;
                         a = c;
                     }
@@ -1843,21 +1869,21 @@ public class ArraySelector {
                 float c = array[beforeRight];
                 float d = array[right];
                 // Sorting a, b, c, d
-                if ((b) < (a)) {
+                if (Float.compare((b), (a)) < 0) {
                     a = b;
                     b = array[left];
                 }
-                if ((d) < (c)) {
+                if (Float.compare((d), (c)) < 0) {
                     d = c;
                     c = array[right];
                 }
                 // Now a <= b, c <= d
-                if ((a) < (c)) {
+                if (Float.compare((a), (c)) < 0) {
                     // a..b, then c..d
                     array[left] = a;
-                    if ((b) < (d)) {
+                    if (Float.compare((b), (d)) < 0) {
                         array[right] = d;
-                        if ((b) < (c)) {
+                        if (Float.compare((b), (c)) < 0) {
                             array[afterLeft] = b;
                             array[beforeRight] = c;
                         } else {
@@ -1873,9 +1899,9 @@ public class ArraySelector {
                 } else {
                     // c..d, then a..b
                     array[left] = c;
-                    if ((d) < (b)) {
+                    if (Float.compare((d), (b)) < 0) {
                         array[right] = b;
-                        if ((d) < (a)) {
+                        if (Float.compare((d), (a)) < 0) {
                             array[afterLeft] = d;
                             array[beforeRight] = a;
                         } else {
@@ -1905,15 +1931,15 @@ public class ArraySelector {
             // ">>>" will be correct even in the case of overflow
             float b = array[base];
             // Sorting a, b, c
-            if ((b) < (a)) {
+            if (Float.compare((b), (a)) < 0) {
                 a = b;
                 b = array[left];
             }
-            if ((c) < (b)) {
+            if (Float.compare((c), (b)) < 0) {
                 array[right] = b;
                 b = c;
                 // since this moment, c is not 3rd element
-                if ((b) < (a)) {
+                if (Float.compare((b), (a)) < 0) {
                     b = a;
                     a = c;
                 }
@@ -1939,7 +1965,7 @@ public class ArraySelector {
             for (; ; ) {
                 do
                     ++i;
-                while ((array[i]) < (b));
+                while (Float.compare((array[i]), (b)) < 0);
                 // Now
                 //     data[left+2..i-1] <= data[base]
                 //         (= data[base] for left+1,
@@ -1949,7 +1975,7 @@ public class ArraySelector {
                 //     i <= j
                 do
                     --j;
-                while ((b) < (array[j]));
+                while (Float.compare((b), (array[j])) < 0);
                 // Now
                 //     data[j] <= data[base],
                 //     data[j+1..right-1] >= data[base],
@@ -2001,6 +2027,10 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
+     * <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double alues
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     *
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
@@ -2029,6 +2059,10 @@ public class ArraySelector {
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
+     * <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double alues
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
@@ -2050,6 +2084,10 @@ public class ArraySelector {
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
      * the element from <tt>double[]</tt> array.</p>
+     *
+     * <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double alues
+     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
@@ -2094,15 +2132,15 @@ public class ArraySelector {
                 double b = array[base];
                 final double c = array[right];
                 // Sorting a, b, c
-                if ((b) < (a)) {
+                if (Double.compare((b), (a)) < 0) {
                     a = b;
                     b = array[left];
                 }
-                if ((c) < (b)) {
+                if (Double.compare((c), (b)) < 0) {
                     array[right] = b;
                     b = c;
                     // since this moment, c is not 3rd element
-                    if ((b) < (a)) {
+                    if (Double.compare((b), (a)) < 0) {
                         b = a;
                         a = c;
                     }
@@ -2120,21 +2158,21 @@ public class ArraySelector {
                 double c = array[beforeRight];
                 double d = array[right];
                 // Sorting a, b, c, d
-                if ((b) < (a)) {
+                if (Double.compare((b), (a)) < 0) {
                     a = b;
                     b = array[left];
                 }
-                if ((d) < (c)) {
+                if (Double.compare((d), (c)) < 0) {
                     d = c;
                     c = array[right];
                 }
                 // Now a <= b, c <= d
-                if ((a) < (c)) {
+                if (Double.compare((a), (c)) < 0) {
                     // a..b, then c..d
                     array[left] = a;
-                    if ((b) < (d)) {
+                    if (Double.compare((b), (d)) < 0) {
                         array[right] = d;
-                        if ((b) < (c)) {
+                        if (Double.compare((b), (c)) < 0) {
                             array[afterLeft] = b;
                             array[beforeRight] = c;
                         } else {
@@ -2150,9 +2188,9 @@ public class ArraySelector {
                 } else {
                     // c..d, then a..b
                     array[left] = c;
-                    if ((d) < (b)) {
+                    if (Double.compare((d), (b)) < 0) {
                         array[right] = b;
-                        if ((d) < (a)) {
+                        if (Double.compare((d), (a)) < 0) {
                             array[afterLeft] = d;
                             array[beforeRight] = a;
                         } else {
@@ -2182,15 +2220,15 @@ public class ArraySelector {
             // ">>>" will be correct even in the case of overflow
             double b = array[base];
             // Sorting a, b, c
-            if ((b) < (a)) {
+            if (Double.compare((b), (a)) < 0) {
                 a = b;
                 b = array[left];
             }
-            if ((c) < (b)) {
+            if (Double.compare((c), (b)) < 0) {
                 array[right] = b;
                 b = c;
                 // since this moment, c is not 3rd element
-                if ((b) < (a)) {
+                if (Double.compare((b), (a)) < 0) {
                     b = a;
                     a = c;
                 }
@@ -2216,7 +2254,7 @@ public class ArraySelector {
             for (; ; ) {
                 do
                     ++i;
-                while ((array[i]) < (b));
+                while (Double.compare((array[i]), (b)) < 0);
                 // Now
                 //     data[left+2..i-1] <= data[base]
                 //         (= data[base] for left+1,
@@ -2226,7 +2264,7 @@ public class ArraySelector {
                 //     i <= j
                 do
                     --j;
-                while ((b) < (array[j]));
+                while (Double.compare((b), (array[j])) < 0);
                 // Now
                 //     data[j] <= data[base],
                 //     data[j+1..right-1] >= data[base],
@@ -3071,7 +3109,11 @@ public class ArraySelector {
     /*Repeat() \(byte\)(\s*)   ==> ,, (short)$1,, ,, ,, ,, ;;
                byte            ==> char,,short,,int,,long,,float,,double;;
                (\s+)\& 0xFF    ==> ,,$1& 0xFFFF,, ,,...;;
-               int\s(result|v) ==> char $1,,int $1,,int $1,,long $1,,float $1,,double $1
+               int\s(result|v) ==> char $1,,int $1,,int $1,,long $1,,float $1,,double $1;;
+               (\([\w\[\]]+\))\s<\s(\([\w\[\]]+\)) ==>
+                   $1 < $2,,$1 < $2,,$1 < $2,,$1 < $2,,Float.compare($1, $2) < 0,,Double.compare($1, $2) < 0;;
+               (v|result)\s<\s(v|result) ==>
+                   $1 < $2,,$1 < $2,,$1 < $2,,$1 < $2,,Float.compare($1, $2) < 0,,Double.compare($1, $2) < 0
      */
     private static byte selectMin(int left, int right, byte[] array) {
         int index = left;
@@ -3095,7 +3137,8 @@ public class ArraySelector {
         int result = array[right] & 0xFF;
         for (int i = right - 1; i >= left; i--) {
             int v = array[i] & 0xFF;
-            if (v > result) {
+            if (result < v) {
+                // IMPORTANT: use this comparison for correct work of Repeater
                 result = v;
                 index = i;
             }
@@ -3227,7 +3270,8 @@ public class ArraySelector {
         char result = array[right];
         for (int i = right - 1; i >= left; i--) {
             char v = array[i];
-            if (v > result) {
+            if (result < v) {
+                // IMPORTANT: use this comparison for correct work of Repeater
                 result = v;
                 index = i;
             }
@@ -3359,7 +3403,8 @@ public class ArraySelector {
         int result = array[right] & 0xFFFF;
         for (int i = right - 1; i >= left; i--) {
             int v = array[i] & 0xFFFF;
-            if (v > result) {
+            if (result < v) {
+                // IMPORTANT: use this comparison for correct work of Repeater
                 result = v;
                 index = i;
             }
@@ -3491,7 +3536,8 @@ public class ArraySelector {
         int result = array[right];
         for (int i = right - 1; i >= left; i--) {
             int v = array[i];
-            if (v > result) {
+            if (result < v) {
+                // IMPORTANT: use this comparison for correct work of Repeater
                 result = v;
                 index = i;
             }
@@ -3623,7 +3669,8 @@ public class ArraySelector {
         long result = array[right];
         for (int i = right - 1; i >= left; i--) {
             long v = array[i];
-            if (v > result) {
+            if (result < v) {
+                // IMPORTANT: use this comparison for correct work of Repeater
                 result = v;
                 index = i;
             }
@@ -3738,7 +3785,7 @@ public class ArraySelector {
         float result = array[left];
         for (int i = left + 1; i <= right; i++) {
             float v = array[i];
-            if (v < result) {
+            if (Float.compare(v, result) < 0) {
                 result = v;
                 index = i;
             }
@@ -3755,7 +3802,8 @@ public class ArraySelector {
         float result = array[right];
         for (int i = right - 1; i >= left; i--) {
             float v = array[i];
-            if (v > result) {
+            if (Float.compare(result, v) < 0) {
+                // IMPORTANT: use this comparison for correct work of Repeater
                 result = v;
                 index = i;
             }
@@ -3774,15 +3822,15 @@ public class ArraySelector {
         float b = array[base];
         final float c = array[right];
         // Sorting a, b, c
-        if ((b) < (a)) {
+        if (Float.compare((b), (a)) < 0) {
             a = b;
             b = array[left];
         }
-        if ((c) < (b)) {
+        if (Float.compare((c), (b)) < 0) {
             array[right] = b;
             b = c;
             // since this moment, c is not 3rd element
-            if ((b) < (a)) {
+            if (Float.compare((b), (a)) < 0) {
                 b = a;
                 a = c;
             }
@@ -3800,21 +3848,21 @@ public class ArraySelector {
         float c = array[beforeRight];
         float d = array[right];
         // Sorting a, b, c, d
-        if ((b) < (a)) {
+        if (Float.compare((b), (a)) < 0) {
             a = b;
             b = array[left];
         }
-        if ((d) < (c)) {
+        if (Float.compare((d), (c)) < 0) {
             d = c;
             c = array[right];
         }
         // Now a <= b, c <= d
-        if ((a) < (c)) {
+        if (Float.compare((a), (c)) < 0) {
             // a..b, then c..d
             array[left] = a;
-            if ((b) < (d)) {
+            if (Float.compare((b), (d)) < 0) {
                 array[right] = d;
-                if ((b) < (c)) {
+                if (Float.compare((b), (c)) < 0) {
                     array[afterLeft] = b;
                     array[beforeRight] = c;
                 } else {
@@ -3830,9 +3878,9 @@ public class ArraySelector {
         } else {
             // c..d, then a..b
             array[left] = c;
-            if ((d) < (b)) {
+            if (Float.compare((d), (b)) < 0) {
                 array[right] = b;
-                if ((d) < (a)) {
+                if (Float.compare((d), (a)) < 0) {
                     array[afterLeft] = d;
                     array[beforeRight] = a;
                 } else {
@@ -3870,7 +3918,7 @@ public class ArraySelector {
         double result = array[left];
         for (int i = left + 1; i <= right; i++) {
             double v = array[i];
-            if (v < result) {
+            if (Double.compare(v, result) < 0) {
                 result = v;
                 index = i;
             }
@@ -3887,7 +3935,8 @@ public class ArraySelector {
         double result = array[right];
         for (int i = right - 1; i >= left; i--) {
             double v = array[i];
-            if (v > result) {
+            if (Double.compare(result, v) < 0) {
+                // IMPORTANT: use this comparison for correct work of Repeater
                 result = v;
                 index = i;
             }
@@ -3906,15 +3955,15 @@ public class ArraySelector {
         double b = array[base];
         final double c = array[right];
         // Sorting a, b, c
-        if ((b) < (a)) {
+        if (Double.compare((b), (a)) < 0) {
             a = b;
             b = array[left];
         }
-        if ((c) < (b)) {
+        if (Double.compare((c), (b)) < 0) {
             array[right] = b;
             b = c;
             // since this moment, c is not 3rd element
-            if ((b) < (a)) {
+            if (Double.compare((b), (a)) < 0) {
                 b = a;
                 a = c;
             }
@@ -3932,21 +3981,21 @@ public class ArraySelector {
         double c = array[beforeRight];
         double d = array[right];
         // Sorting a, b, c, d
-        if ((b) < (a)) {
+        if (Double.compare((b), (a)) < 0) {
             a = b;
             b = array[left];
         }
-        if ((d) < (c)) {
+        if (Double.compare((d), (c)) < 0) {
             d = c;
             c = array[right];
         }
         // Now a <= b, c <= d
-        if ((a) < (c)) {
+        if (Double.compare((a), (c)) < 0) {
             // a..b, then c..d
             array[left] = a;
-            if ((b) < (d)) {
+            if (Double.compare((b), (d)) < 0) {
                 array[right] = d;
-                if ((b) < (c)) {
+                if (Double.compare((b), (c)) < 0) {
                     array[afterLeft] = b;
                     array[beforeRight] = c;
                 } else {
@@ -3962,9 +4011,9 @@ public class ArraySelector {
         } else {
             // c..d, then a..b
             array[left] = c;
-            if ((d) < (b)) {
+            if (Double.compare((d), (b)) < 0) {
                 array[right] = b;
-                if ((d) < (a)) {
+                if (Double.compare((d), (a)) < 0) {
                     array[afterLeft] = d;
                     array[beforeRight] = a;
                 } else {
