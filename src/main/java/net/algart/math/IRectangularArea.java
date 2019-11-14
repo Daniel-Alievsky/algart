@@ -155,6 +155,26 @@ public class IRectangularArea {
     }
 
     /**
+     * Returns a 1-dimensional rectangular area (range) with the given minimal and maximal vertex.
+     * Equivalent to
+     * <pre>
+     * {@link #valueOf(IPoint, IPoint) valueOf}(
+     *      {@link IPoint#valueOf(long) IPoint.valueOf}(minX),
+     *      {@link IPoint#valueOf(long) IPoint.valueOf}(maxX));
+     * </pre>
+     *
+     * @param minX the minimal <i>x</i>-coordinate, inclusive.
+     * @param maxX the maximal <i>x</i>-coordinate, inclusive.
+     * @return the new 1-dimensional rectangular area.
+     * @throws IllegalArgumentException in the same situations as {@link #valueOf(IPoint, IPoint)} method.
+     */
+    public static IRectangularArea valueOf(long minX, long maxX) {
+        return valueOf(
+                IPoint.valueOf(minX),
+                IPoint.valueOf(maxX));
+    }
+
+    /**
      * Returns a 2-dimensional rectangle with the given minimal and maximal vertex.
      * Equivalent to
      * <pre>
@@ -349,6 +369,138 @@ public class IRectangularArea {
      */
     public long width(int coordIndex) {
         return max.coordinates[coordIndex] - min.coordinates[coordIndex];
+    }
+
+    /**
+     * Returns <tt>{@link #min()}.{@link IPoint#x() x()}</tt>.
+     *
+     * @return  <tt>{@link #min()}.{@link IPoint#x() x()}</tt>.
+     */
+    public long minX() {
+        return min.coordinates[0];
+    }
+
+    /**
+     * Returns <tt>{@link #max()}.{@link IPoint#x() x()}</tt>.
+     *
+     * @return  <tt>{@link #max()}.{@link IPoint#x() x()}</tt>.
+     */
+    public long maxX() {
+        return max.coordinates[0];
+    }
+
+    /**
+     * Returns <tt>{@link #maxX() maxX()} - {@link #minX() minX()} + 1</tt>.
+     *
+     * @return <tt>{@link #maxX() maxX()} - {@link #minX() minX()} + 1</tt>.
+     */
+    public long sizeX() {
+        return max.coordinates[0] - min.coordinates[0] + 1;
+    }
+
+    /**
+     * Returns <tt>{@link #maxX() maxX()} - {@link #minX() minX()}</tt>.
+     *
+     * @return <tt>{@link #maxX() maxX()} - {@link #minX() minX()}</tt>.
+     */
+    public long widthX() {
+        return max.coordinates[0] - min.coordinates[0];
+    }
+
+    /**
+     * Returns <tt>{@link #min()}.{@link IPoint#y() y()}</tt>.
+     *
+     * @return  <tt>{@link #min()}.{@link IPoint#y() y()}</tt>.
+     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
+     */
+    public long minY() {
+        if (min.coordinates.length < 2)
+            throw new IllegalStateException("Cannot get y-coordinates of " + coordCount() + "-dimensional area");
+        return min.coordinates[1];
+    }
+
+    /**
+     * Returns <tt>{@link #max()}.{@link IPoint#y() y()}</tt>.
+     *
+     * @return  <tt>{@link #max()}.{@link IPoint#y() y()}</tt>.
+     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
+     */
+    public long maxY() {
+        if (min.coordinates.length < 2)
+            throw new IllegalStateException("Cannot get y-coordinates of " + coordCount() + "-dimensional area");
+        return max.coordinates[1];
+    }
+
+    /**
+     * Returns <tt>{@link #maxY() maxY()} - {@link #minY() minY()} + 1</tt>.
+     *
+     * @return <tt>{@link #maxY() maxY()} - {@link #minY() minY()} + 1</tt>.
+     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
+     */
+    public long sizeY() {
+        if (min.coordinates.length < 2)
+            throw new IllegalStateException("Cannot get y-coordinates of " + coordCount() + "-dimensional area");
+        return max.coordinates[1] - min.coordinates[1] + 1;
+    }
+
+    /**
+     * Returns <tt>{@link #maxY() maxY()} - {@link #minY() minY()}</tt>.
+     *
+     * @return <tt>{@link #maxY() maxY()} - {@link #minY() minY()}</tt>.
+     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
+     */
+    public long widthY() {
+        if (min.coordinates.length < 2)
+            throw new IllegalStateException("Cannot get y-coordinates of " + coordCount() + "-dimensional area");
+        return max.coordinates[1] - min.coordinates[1];
+    }
+
+    /**
+     * Returns <tt>{@link #min()}.{@link IPoint#z() z()}</tt>.
+     *
+     * @return  <tt>{@link #min()}.{@link IPoint#z() z()}</tt>.
+     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
+     */
+    public long minZ() {
+        if (min.coordinates.length < 3)
+            throw new IllegalStateException("Cannot get z-coordinates of " + coordCount() + "-dimensional area");
+        return min.coordinates[2];
+    }
+
+    /**
+     * Returns <tt>{@link #max()}.{@link IPoint#z() z()}</tt>.
+     *
+     * @return  <tt>{@link #max()}.{@link IPoint#z() z()}</tt>.
+     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
+     */
+    public long maxZ() {
+        if (min.coordinates.length < 3)
+            throw new IllegalStateException("Cannot get z-coordinates of " + coordCount() + "-dimensional area");
+        return max.coordinates[2];
+    }
+
+    /**
+     * Returns <tt>{@link #maxZ() maxZ()} - {@link #minZ() minZ()} + 1</tt>.
+     *
+     * @return <tt>{@link #maxZ() maxZ()} - {@link #minZ() minZ()} + 1</tt>.
+     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
+     */
+    public long sizeZ() {
+        if (min.coordinates.length < 3)
+            throw new IllegalStateException("Cannot get z-coordinates of " + coordCount() + "-dimensional area");
+        return max.coordinates[2] - min.coordinates[2] + 1;
+    }
+
+    /**
+     * Returns <tt>{@link #maxZ() maxZ()} - {@link #minZ() minZ()}</tt>.
+     *
+     * @return <tt>{@link #maxZ() maxZ()} - {@link #minZ() minZ()}</tt>.
+     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
+     */
+    public long widthZ() {
+        if (min.coordinates.length < 3)
+            throw new IllegalStateException("Cannot get z-coordinates of " + coordCount() + "-dimensional area");
+        return max.coordinates[2] - min.coordinates[2];
     }
 
     /**

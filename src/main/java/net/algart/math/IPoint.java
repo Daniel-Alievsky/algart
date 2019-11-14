@@ -92,6 +92,39 @@ public class IPoint implements Comparable<IPoint> {
     }
 
     /**
+     * Returns a new 1-dimensional point with the given coordinate.
+     *
+     * @param x cartesian coordinate of the point.
+     * @return point with the given coordinates.
+     */
+    public static IPoint valueOf(long x) {
+        return x == 0 ? originsCache[0] : new IPoint(new long[]{x});
+    }
+
+    /**
+     * Returns a new 2-dimensional point with the given coordinates.
+     *
+     * @param x cartesian x-coordinate of the point.
+     * @param y cartesian y-coordinate of the point.
+     * @return point with the given coordinates.
+     */
+    public static IPoint valueOf(long x, long y) {
+        return x == 0 && y == 0 ? originsCache[1] : new IPoint(new long[] {x, y});
+    }
+
+    /**
+     * Returns a new 3-dimensional point with the given coordinates.
+     *
+     * @param x cartesian x-coordinate of the point.
+     * @param y cartesian y-coordinate of the point.
+     * @param z cartesian z-coordinate of the point.
+     * @return point with the given coordinates.
+     */
+    public static IPoint valueOf(long x, long y, long z) {
+        return x == 0 && y == 0 && z == 0 ? originsCache[2] : new IPoint(new long[] {x, y, z});
+    }
+
+    /**
      * Returns a new point in <i>n</i>-dimensional space, where <i>n</i><tt>=coordCount</tt>
      * and all coordinates of the point are equal to the given value <tt>filler</tt>.
      * For example, <nobr><tt>valueOfEqualCoordinates(3, 1)</tt></nobr> returns the 3D point <nobr>(1,1,1)</nobr>.

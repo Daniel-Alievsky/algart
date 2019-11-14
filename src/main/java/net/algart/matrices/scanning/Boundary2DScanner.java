@@ -904,6 +904,7 @@ public abstract class Boundary2DScanner {
         final boolean samePixel, horizontal, vertical, straight, diagonal;
         final double d;
         final double segmentCenterDX, segmentCenterDY, pixelVertexX, pixelVertexY;
+        final int increasedPixelVertexX, increasedPixelVertexY;
         final Side oldSide, newSide;
 
         /**
@@ -943,10 +944,11 @@ public abstract class Boundary2DScanner {
                     newSide.centerX : oldSide.centerX;
                 this.pixelVertexY = newSide == Side.Y_MINUS || newSide == Side.Y_PLUS ?
                     newSide.centerY : oldSide.centerY;
-                if ((StrictMath.abs(0.5 * (oldSide.dxAlong() + newSide.dxAlong()) - this.segmentCenterDX) > 0.001) ||
-                    (StrictMath.abs(0.5 * (oldSide.dyAlong() + newSide.dyAlong()) - this.segmentCenterDY) > 0.001))
+                if ((StrictMath.abs(0.5 * (oldSide.dxAlong() + newSide.dxAlong()) - segmentCenterDX) > 0.001) ||
+                    (StrictMath.abs(0.5 * (oldSide.dyAlong() + newSide.dyAlong()) - segmentCenterDY) > 0.001)) {
                     throw new AssertionError("Incorrect class initialization: "
-                        + "dx/dyAlong do not match to centerX/Y in " + oldSide + " and " + newSide);
+                            + "dx/dyAlong do not match to centerX/Y in " + oldSide + " and " + newSide);
+                }
             } else {
                 this.segmentCenterDX = 0.5 * pixelCenterDX;
                 this.segmentCenterDY = 0.5 * pixelCenterDY;
@@ -955,9 +957,20 @@ public abstract class Boundary2DScanner {
                 this.pixelVertexY = newSide == Side.Y_MINUS || newSide == Side.Y_PLUS ?
                     newSide.centerY : -oldSide.centerY;
             }
-            if (StrictMath.abs(StrictMath.abs(this.pixelVertexX) + StrictMath.abs(this.pixelVertexY) - 1.0) > 0.001)
+            if (StrictMath.abs(StrictMath.abs(pixelVertexX) + StrictMath.abs(pixelVertexY) - 1.0) > 0.001) {
                 throw new AssertionError("Incorrect class initialization "
-                    + "(|pixelVertexX| + |this.pixelVertexY| != 1): " + this);
+                        + "(|pixelVertexX| + |this.pixelVertexY| != 1): " + this);
+            }
+            this.increasedPixelVertexX = (int) Math.round(this.pixelVertexX + 0.5);
+            this.increasedPixelVertexY = (int) Math.round(this.pixelVertexY + 0.5);
+            if (increasedPixelVertexX != 0 && increasedPixelVertexX != 1) {
+                throw new AssertionError("Incorrect class initialization "
+                        + "(increasedPixelVertexX != 0 and != 1): " + this);
+            }
+            if (increasedPixelVertexY != 0 && increasedPixelVertexY != 1) {
+                throw new AssertionError("Incorrect class initialization "
+                        + "(increasedPixelVertexY != 0 and != 1): " + this);
+            }
         }
 
         /**
@@ -1064,6 +1077,36 @@ public abstract class Boundary2DScanner {
          */
         public double pixelVertexY() {
             return pixelVertexY;
+        }
+
+        /**
+         * Returns <tt>{@link #pixelVertexX()}+0.5</tt>. It is always an integer value 0 or 1.
+         * Works very quickly (this method just returns an internal field).
+         *
+         * <p>In other words, returns <i>x</i>-coordinate of the vertex of the new (current) pixel,
+         * which is common for the current and previous segments (pixel sides),
+         * on the assumption that the left up corner of the new (current) pixel is at the origin of coordinates.
+         *
+         * @return 0.5 + <i>x</i>-coordinate of the vertex of the new (current) pixel,
+         *         lying between previous and current segments of the boundary.
+         */
+        public int increasedPixelVertexX() {
+            return increasedPixelVertexX;
+        }
+
+        /**
+         * Returns <tt>{@link #pixelVertexY()}+0.5</tt>. It is always an integer value 0 or 1.
+         * Works very quickly (this method just returns an internal field).
+         *
+         * <p>In other words, returns <i>y</i>-coordinate of the vertex of the new (current) pixel,
+         * which is common for the current and previous segments (pixel sides),
+         * on the assumption that the left up corner of the new (current) pixel is at the origin of coordinates.
+         *
+         * @return 0.5 + <i>y</i>-coordinate of the vertex of the new (current) pixel,
+         *         lying between previous and current segments of the boundary.
+         */
+        public int increasedPixelVertexY() {
+            return increasedPixelVertexY;
         }
 
         /**
