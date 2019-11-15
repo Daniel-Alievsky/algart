@@ -32,7 +32,7 @@ package net.algart.matrices.scanning;
  * <p>All methods of this object and its inheritors call the same methods of the parent scanner
  * and return their results. In addition, the {@link #nextBoundary()}
  * and {@link #goTo} methods of this class
- * call {@link #reset()} method after calling the method of the parent scanner.
+ * call {@link #resetCounters()} method after calling the method of the parent scanner.
  * An inheritor may add some other actions into any methods (usually into {@link #next()} method).</p>
  *
  * <p>Extending this class is a convenient way to process scanned boundaries without complication
@@ -131,7 +131,7 @@ public abstract class Boundary2DWrapper extends Boundary2DScanner {
     @Override
     public void goTo(long x, long y, Side side) {
         parent.goTo(x, y, side);
-        reset();
+        resetCounters();
     }
 
     @Override
@@ -141,9 +141,7 @@ public abstract class Boundary2DWrapper extends Boundary2DScanner {
 
     @Override
     public boolean nextBoundary() {
-        boolean result = parent.nextBoundary();
-        reset();
-        return result;
+        return parent.nextBoundary();
     }
 
     @Override
@@ -171,14 +169,12 @@ public abstract class Boundary2DWrapper extends Boundary2DScanner {
         return parent.stepCount();
     }
 
-    /**
-     * This method is automatically called by {@link #nextBoundary()} and
-     * {@link #goTo} methods
-     * <i>after</i> calling the same methods of the parent scanner.
-     * The default implementation does nothing.
-     * This method can be overridden, for example, to initialize analysis of the next boundary
-     * in the inheritor.
-     */
-    public void reset() {
+    @Override
+    public long orientedArea() {
+        return parent.orientedArea();
+    }
+
+    public void resetCounters() {
+        parent.resetCounters();
     }
 }

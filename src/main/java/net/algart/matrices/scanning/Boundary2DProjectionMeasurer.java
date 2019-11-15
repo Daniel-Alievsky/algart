@@ -245,7 +245,8 @@ public abstract class Boundary2DProjectionMeasurer extends Boundary2DWrapper {
         }
 
         @Override
-        public void reset() {
+        public void resetCounters() {
+            super.resetCounters();
             JArrays.fillDoubleArray(this.projectionMin, Double.POSITIVE_INFINITY);
             JArrays.fillDoubleArray(this.projectionMax, Double.NEGATIVE_INFINITY);
         }

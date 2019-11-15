@@ -29,12 +29,12 @@ import java.util.EnumSet;
 /**
  * <p>Wrapper of a boundary scanner, that measures some simple parameters of every scanned boundary.</p>
  *
- * <p>This class overrides only {@link #next()} and {@link #reset()} methods
+ * <p>This class overrides only {@link #next()} and {@link #resetCounters()} methods
  * of the abstract {@link Boundary2DWrapper} class.
  * Namely, {@link #next()} method, after calling {@link #parent parent}.{@link #next()},
  * corrects several internal fields, describing some parameters of the current measured object (more precisely,
  * parameters of its <a href="Boundary2DScanner.html#completion">completions</a>).
- * These fields are reset to initial values by {@link #reset()} method.
+ * These fields are reset to initial values by {@link #resetCounters()} method.
  * After finishing scanning some boundary, for example, after
  * {@link #scanBoundary(net.algart.arrays.ArrayContext) scanBoundary} call,
  * you may use the following access methods to get measured parameters:</p>
@@ -282,8 +282,8 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     }
 
     @Override
-    public void reset() {
-        super.reset();
+    public void resetCounters() {
+        super.resetCounters();
         straightStepCount = 0;
         iArea = 0;
         area = 0.0;
@@ -718,7 +718,8 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
      * Returns the minimal <i>x</i>-coordinate of all points at the contour, following along the scanned boundary.
      *
      * <p>If <tt>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>, the result
-     * is equal to the minimal value of the result of {@link #x() x()} method since the last {@link #reset()} call.
+     * is equal to the minimal value of the result of {@link #x() x()} method
+     * since the last {@link #resetCounters()} call.
      * If <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt> or
      * {@link #contourLineType()}=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}, the result
      * is less by 0.5.
@@ -733,7 +734,8 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
      * Returns the maximal <i>x</i>-coordinate of all points at the contour, following along the scanned boundary.
      *
      * <p>If <tt>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>, the result
-     * is equal to the maximal value of the result of {@link #x() x()} method since the last {@link #reset()} call.
+     * is equal to the maximal value of the result of {@link #x() x()} method
+     * since the last {@link #resetCounters()} call.
      * If <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt> or
      * {@link #contourLineType()}=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}, the result
      * is greater by 0.5.
@@ -748,7 +750,8 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
      * Returns the minimal <i>y</i>-coordinate of all points at the contour, following along the scanned boundary.
      *
      * <p>If <tt>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>, the result
-     * is equal to the minimal value of the result of {@link #y() y()} method since the last {@link #reset()} call.
+     * is equal to the minimal value of the result of {@link #y() y()} method
+     * since the last {@link #resetCounters()} call.
      * If <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt> or
      * {@link #contourLineType()}=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}, the result
      * is less by 0.5.
@@ -763,7 +766,8 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
      * Returns the maximal <i>y</i>-coordinate of all points at the contour, following along the scanned boundary.
      *
      * <p>If <tt>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>, the result
-     * is equal to the maximal value of the result of {@link #y() y()} method since the last {@link #reset()} call.
+     * is equal to the maximal value of the result of {@link #y() y()} method
+     * since the last{@link #resetCounters()} call.
      * If <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt> or
      * {@link #contourLineType()}=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}, the result
      * is greater by 0.5.

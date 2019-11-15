@@ -24,8 +24,7 @@
 
 package net.algart.math;
 
-import java.util.Collection;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * <p>Rectangular integer area, i&#46;e&#46;
@@ -601,6 +600,32 @@ public class IRectangularArea {
     }
 
     /**
+     * Returns <tt>true</tt> if at least one of the specified <tt>areas</tt> contains the passed <tt>point</tt>
+     * (see {@link #contains(IPoint)} method).
+     *
+     * @param areas list of checked rectangular areas.
+     * @param point the checked point.
+     * @return      <tt>true</tt> if one of the passed areas contains the given point.
+     * @throws NullPointerException     if one of the arguments or one of the areas is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>point.{@link IPoint#coordCount() coordCount()}</tt> is not equal to
+     *                                  the {@link #coordCount() number of dimensions} of one of areas.
+     */
+    public static boolean contains(Collection<IRectangularArea> areas, IPoint point) {
+        if (areas == null) {
+            throw new NullPointerException("Null areas argument");
+        }
+        if (point == null) {
+            throw new NullPointerException("Null point argument");
+        }
+        for (IRectangularArea a : areas) {
+            if (a.contains(point)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Returns <tt>true</tt> if and only if
      * <tt>{@link #min(int) min}(k)&lt;=area.{@link #min(int) min}(k)</tt>
      * and <tt>area.{@link #max(int) max}(k)&lt;={@link #max(int) max}(k)</tt>
@@ -625,6 +650,33 @@ public class IRectangularArea {
             }
         }
         return true;
+    }
+
+    /**
+     * Returns <tt>true</tt> if at least one of the specified <tt>areas</tt> contains the passed <tt>area</tt>
+     * (see {@link #contains(IRectangularArea)} method).
+     *
+     * @param areas list of checked rectangular areas.
+     * @param area  the checked area.
+     * @return      <tt>true</tt> if one of the passed areas (1st argument) contains the given area (2nd argument).
+     * @throws NullPointerException     if one of the arguments or one of the areas is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
+     *                                  the {@link #coordCount() number of dimensions} of one of areas
+     *                                  in the 1st argument.
+     */
+    public static boolean contains(Collection<IRectangularArea> areas, IRectangularArea area) {
+        if (areas == null) {
+            throw new NullPointerException("Null areas argument");
+        }
+        if (area == null) {
+            throw new NullPointerException("Null area argument");
+        }
+        for (IRectangularArea a : areas) {
+            if (a.contains(area)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -691,6 +743,42 @@ public class IRectangularArea {
             }
         }
         return new IRectangularArea(new IPoint(newMin), new IPoint(newMax));
+    }
+
+    /**
+     * Returns a list of set-theoretical intersections <b>A</b>&nbsp;&cap;&nbsp;<b>B<sub><i>i</i></sub></b>
+     * of this rectangular area (<b>A</b>) and all rectangular areas (<b>B<sub><i>i</i></sub></b>), specified
+     * by <tt>areas</tt> argument.
+     * If the passed collection doesn't contain areas, intersecting this area, the result will be an empty list.
+     * <p>Equivalent to the following loop:
+     * <pre>
+     * final List<IRectangularArea> result = ... (some empty list);
+     * for (IRectangularArea area : areas) {
+     *     IRectangularArea intersection = {@link #intersection(IRectangularArea) intersection}(area);
+     *     if (intersection != null) {
+     *         result.add(intersection);
+     *     }
+     * }
+     * </pre>.
+     *
+     * @param areas collection of areas (we find intersection with each from them).
+     * @return     intersection of this and the second rectangular area or <tt>null</tt> if they do not intersect.
+     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if this rectangular area or some of elements of the passed collection
+     *                                  have different {@link #coordCount()}.
+     */
+    public List<IRectangularArea> intersection(Collection<IRectangularArea> areas) {
+        if (areas == null) {
+            throw new NullPointerException("Null areas argument");
+        }
+        final List<IRectangularArea> result = new ArrayList<IRectangularArea>();
+        for (IRectangularArea area : areas) {
+            IRectangularArea intersection = intersection(area);
+            if (intersection != null) {
+                result.add(intersection);
+            }
+        }
+        return result;
     }
 
     /**
@@ -831,6 +919,45 @@ public class IRectangularArea {
         IRectangularArea... whatToSubtract)
     {
         return subtractCollection(fromWhatToSubtract, java.util.Arrays.asList(whatToSubtract));
+    }
+
+    /**
+     * Equivalent to <tt>{@link #subtractCollection(Queue, Collection)
+     * subtractCollection}(fromWhatToSubtract, whatToSubtract</tt>,
+     * where <tt>fromWhatToSubtract</tt> contains this object as the only element.
+     *
+     * @param whatToSubtract     the subtrahend <b>B</b>.
+     * @return                   new collection, containing the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>
+     *                           (<b>A</b> = this object, <b>B</b> = union of all <tt>whatToSubtract</tt>).
+     * @throws NullPointerException     if <tt>whatToSubtract</tt> argument
+     *                                  is <tt>null</tt> or if one of their elements it <tt>null</tt>.
+     * @throws IllegalArgumentException if this rectangular area or some of elements of the passed collection
+     *                                  have different {@link #coordCount()}.
+     */
+    public Queue<IRectangularArea> subtract(Collection<IRectangularArea> whatToSubtract) {
+        if (whatToSubtract == null) {
+            throw new NullPointerException("Null whatToSubtract");
+        }
+        Queue<IRectangularArea> difference = new ArrayDeque<IRectangularArea>();
+        difference.add(this);
+        IRectangularArea.subtractCollection(difference, whatToSubtract);
+        return difference;
+    }
+
+    /**
+     * Equivalent to <tt>{@link #subtract(Collection)
+     * subtract}(java.util.Arrays.asList(whatToSubtract))</tt>.
+     *
+     * @param whatToSubtract     the subtrahend <b>B</b>.
+     * @return                   new collection, containing the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>
+     *                           (<b>A</b> = this object, <b>B</b> = union of all <tt>whatToSubtract</tt>).
+     * @throws NullPointerException     if <tt>whatToSubtract</tt> argument
+     *                                  is <tt>null</tt> or if one of their elements it <tt>null</tt>.
+     * @throws IllegalArgumentException if this rectangular area or some of elements of the passed array
+     *                                  have different {@link #coordCount()}.
+     */
+    public Queue<IRectangularArea> subtract(IRectangularArea... whatToSubtract) {
+        return subtract(java.util.Arrays.asList(whatToSubtract));
     }
 
     /**
