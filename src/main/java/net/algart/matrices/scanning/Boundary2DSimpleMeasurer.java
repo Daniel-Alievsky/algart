@@ -146,14 +146,8 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     private final boolean contourPixelCenters;
     private final boolean contourSegmentCenters;
     private final EnumSet<ObjectParameter> measuredParameters;
-    private final boolean measureArea;
-    private final boolean measurePerimeter;
     private final boolean measureCoordRanges;
     private final boolean measureCentroid;
-    long straightStepCount = 0;
-    long iArea = 0;
-    double area = 0.0;
-    double perimeter = 0.0;
     private long minX = Long.MAX_VALUE, minY = Long.MAX_VALUE;
     private long minXPlusY = Long.MAX_VALUE, minXMinusY = Long.MAX_VALUE;
     private long maxX = Long.MIN_VALUE, maxY = Long.MIN_VALUE;
@@ -188,10 +182,8 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
         }
         this.contourLineType = contourLineType;
         this.measuredParameters = measuredParameters.clone();
-        this.measurePerimeter = measuredParameters.contains(ObjectParameter.PERIMETER);
         this.measureCoordRanges = measuredParameters.contains(ObjectParameter.COORD_RANGES);
         this.measureCentroid = measuredParameters.contains(ObjectParameter.CENTROID);
-        this.measureArea = measuredParameters.contains(ObjectParameter.AREA) || this.measureCentroid;
 
 //        this.intPrecision = this.contourStrictBoundary && arrayLength <= Integer.MAX_VALUE;
         // So, dimX and dimY < 2^31, and every x*(x+1) and y*(y+1) <= (2^31-1)*2^31 < Long.MAX_VALUE.
@@ -227,28 +219,6 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
             throw new NullPointerException("Null measuredParameters argument");
         if (contourLineType == null)
             throw new NullPointerException("Null contourLineType argument");
-        if (DEBUG_MODE) {
-            return new Boundary2DSimpleMeasurer(parent, contourLineType, measuredParameters);
-        }
-        if (measuredParameters.equals(EnumSet.of(ObjectParameter.AREA))) {
-            switch (contourLineType) {
-                case STRICT_BOUNDARY:
-                case SEGMENT_CENTERS_POLYLINE: // the same algorithm
-                    return new SimplestStrictBoundaryAreaMeasurer(parent, contourLineType);
-                case PIXEL_CENTERS_POLYLINE:
-                    return new SimplestPixelCentersAreaMeasurer(parent);
-            }
-        }
-        if (measuredParameters.equals(EnumSet.of(ObjectParameter.PERIMETER))) {
-            switch (contourLineType) {
-                case STRICT_BOUNDARY:
-                    return new SimplestStrictBoundaryPerimeterMeasurer(parent);
-                case PIXEL_CENTERS_POLYLINE:
-                    return new SimplestPixelCentersPerimeterMeasurer(parent);
-                case SEGMENT_CENTERS_POLYLINE:
-                    return new SimplestSegmentCentersPerimeterMeasurer(parent);
-            }
-        }
         return new Boundary2DSimpleMeasurer(parent, contourLineType, measuredParameters);
     }
 
@@ -284,10 +254,6 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     @Override
     public void resetCounters() {
         super.resetCounters();
-        straightStepCount = 0;
-        iArea = 0;
-        area = 0.0;
-        perimeter = 0.0;
         minX = minY = minXPlusY = minXMinusY = Long.MAX_VALUE;
         maxX = maxY = maxXPlusY = maxXMinusY = Long.MIN_VALUE;
         integralXSqr = integralYSqr = 0.0;
@@ -298,97 +264,9 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     @Override
     public void next() {
         parent.next();
-        long x = parent.x();
-        long y = parent.y();
-        Step step = parent.lastStep();
-        if (measureArea) {
-            //[[Repeat.SectionStart STRICT_BOUNDARY_area]]
-            switch (parent.side().code) {
-                case X_MINUS_CODE:
-                    iArea -= x - 1;
-                    break;
-                case X_PLUS_CODE:
-                    iArea += x;
-                    break;
-            }
-            //[[Repeat.SectionEnd STRICT_BOUNDARY_area]]
-            switch (contourLineType.code) {
-                case ContourLineType.PIXEL_CENTERS_POLYLINE_CODE:
-                    //[[Repeat.SectionStart PIXEL_CENTERS_area]]
-                    if (step.isStraight()) {
-                        straightStepCount++;
-                    }
-                    if (DEBUG_MODE) { // self-testing
-                        switch (step.code) {
-                            case Step.Y_MINUS_CODE:
-                                area -= x;
-                                break;
-                            case Step.Y_PLUS_CODE:
-                                area += x;
-                                break;
-                            case Step.X_MINUS_Y_MINUS_CODE:
-                                area -= x + 0.5;
-                                break;
-                            case Step.X_PLUS_Y_MINUS_CODE:
-                                area -= x - 0.5;
-                                break;
-                            case Step.X_MINUS_Y_PLUS_CODE:
-                                area += x + 0.5;
-                                break;
-                            case Step.X_PLUS_Y_PLUS_CODE:
-                                area += x - 0.5;
-                                break;
-                        }
-                    }
-                    //[[Repeat.SectionEnd PIXEL_CENTERS_area]]
-                    break;
-                case ContourLineType.SEGMENT_CENTERS_POLYLINE_CODE:
-                    //[[Repeat.SectionStart SEGMENT_CENTERS_area]]
-                    if (DEBUG_MODE) { // self-testing
-                        switch (step.code) {
-                            case Step.Y_MINUS_CODE:
-                                area -= x - 0.5;
-                                break;
-                            case Step.Y_PLUS_CODE:
-                                area += x + 0.5;
-                                break;
-                            case Step.X_MINUS_Y_MINUS_CODE:
-                                area -= 0.5 * (x + 0.25);
-                                break;
-                            case Step.X_PLUS_Y_MINUS_CODE:
-                                area -= 0.5 * (x - 0.75);
-                                break;
-                            case Step.X_MINUS_Y_PLUS_CODE:
-                                area += 0.5 * (x + 0.75);
-                                break;
-                            case Step.X_PLUS_Y_PLUS_CODE:
-                                area += 0.5 * (x - 0.25);
-                                break;
-                            case Step.ROTATION_X_MINUS_TO_Y_MINUS_CODE:
-                            case Step.ROTATION_Y_PLUS_TO_X_MINUS_CODE:
-                                area -= 0.5 * (x - 0.25);
-                                break;
-                            case Step.ROTATION_Y_MINUS_TO_X_PLUS_CODE:
-                            case Step.ROTATION_X_PLUS_TO_Y_PLUS_CODE:
-                                area += 0.5 * (x + 0.25);
-                                break;
-                        }
-                    }
-                    //[[Repeat.SectionEnd SEGMENT_CENTERS_area]]
-                    break;
-            }
-        }
-
-        if (measurePerimeter) {
-            switch (contourLineType.code) {
-                case ContourLineType.PIXEL_CENTERS_POLYLINE_CODE:
-                    perimeter += step.distanceBetweenPixelCenters();
-                    break;
-                case ContourLineType.SEGMENT_CENTERS_POLYLINE_CODE:
-                    perimeter += step.distanceBetweenSegmentCenters();
-                    break;
-            }
-        }
+        final long x = parent.x();
+        final long y = parent.y();
+        final Step step = parent.lastStep();
         if (measureCoordRanges) {
             if (x < minX) {
                 minX = x;
@@ -816,89 +694,6 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
      */
     public String toString() {
         return "simple measurer (" + contourLineType + " mode) " + parent;
-    }
-
-    static class SimplestStrictBoundaryAreaMeasurer extends Boundary2DSimpleMeasurer {
-        SimplestStrictBoundaryAreaMeasurer(Boundary2DScanner parent, ContourLineType contourLineType) {
-            super(parent, contourLineType, EnumSet.of(ObjectParameter.AREA));
-        }
-
-        @Override
-        public void next() {
-            parent.next();
-            long x = parent.x();
-            //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, STRICT_BOUNDARY_area)  !! Auto-generated: NOT EDIT !! ]]
-            switch (parent.side().code) {
-                case X_MINUS_CODE:
-                    iArea -= x - 1;
-                    break;
-                case X_PLUS_CODE:
-                    iArea += x;
-                    break;
-            }
-            //[[Repeat.IncludeEnd]]
-        }
-    }
-
-    static class SimplestPixelCentersAreaMeasurer extends Boundary2DSimpleMeasurer {
-        SimplestPixelCentersAreaMeasurer(Boundary2DScanner parent) {
-            super(parent, ContourLineType.PIXEL_CENTERS_POLYLINE, EnumSet.of(ObjectParameter.AREA));
-        }
-
-        @Override
-        public void next() {
-            parent.next();
-            long x = parent.x();
-            Step step = parent.lastStep();
-            //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, STRICT_BOUNDARY_area)  !! Auto-generated: NOT EDIT !! ]]
-            switch (parent.side().code) {
-                case X_MINUS_CODE:
-                    iArea -= x - 1;
-                    break;
-                case X_PLUS_CODE:
-                    iArea += x;
-                    break;
-            }
-            //[[Repeat.IncludeEnd]]
-            if (step.isStraight()) {
-                straightStepCount++;
-            }
-        }
-    }
-
-    static class SimplestStrictBoundaryPerimeterMeasurer extends Boundary2DSimpleMeasurer {
-        SimplestStrictBoundaryPerimeterMeasurer(Boundary2DScanner parent) {
-            super(parent, ContourLineType.STRICT_BOUNDARY, EnumSet.of(ObjectParameter.PERIMETER));
-        }
-
-        @Override
-        public void next() {
-            parent.next();
-        }
-    }
-
-    static class SimplestPixelCentersPerimeterMeasurer extends Boundary2DSimpleMeasurer {
-        SimplestPixelCentersPerimeterMeasurer(Boundary2DScanner parent) {
-            super(parent, ContourLineType.PIXEL_CENTERS_POLYLINE, EnumSet.of(ObjectParameter.PERIMETER));
-        }
-
-        @Override
-        public void next() {
-            parent.next();
-            perimeter += parent.lastStep().distanceBetweenPixelCenters();
-        }
-    }
-
-    static class SimplestSegmentCentersPerimeterMeasurer extends Boundary2DSimpleMeasurer {
-        SimplestSegmentCentersPerimeterMeasurer(Boundary2DScanner parent) {
-            super(parent, ContourLineType.SEGMENT_CENTERS_POLYLINE, EnumSet.of(ObjectParameter.PERIMETER));
-        }
-
-        @Override
-        public void next() {
-            parent.next();
-            perimeter += parent.lastStep().distanceBetweenSegmentCenters();
-        }
     }
 
     /* (Does not have measurable effect)

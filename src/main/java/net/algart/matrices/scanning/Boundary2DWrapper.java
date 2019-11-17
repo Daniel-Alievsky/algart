@@ -141,7 +141,13 @@ public abstract class Boundary2DWrapper extends Boundary2DScanner {
 
     @Override
     public boolean nextBoundary() {
-        return parent.nextBoundary();
+        final boolean result = parent.nextBoundary();
+        resetCounters();
+        // - Important: we MUST call here this.resetCounters(), because the parent object does not know
+        // anything about this one (it is composition, not subclassing!).
+        // So, parent.resetCounters() will be called twice, from parent.nextBoundary() and from
+        // this method resetCounters().
+        return result;
     }
 
     @Override
