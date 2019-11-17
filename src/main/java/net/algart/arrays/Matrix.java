@@ -1952,4 +1952,23 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return    <tt>true</tt> if the specified object is a matrix equal to this one.
      */
     public boolean equals(Object obj);
+
+    /**
+     * Returns an exact clone of this  matrix, created in {@link SimpleMemoryModel}.
+     *
+     * <p>For primitive element types, equivalent to
+     * <tt>{@link Matrices#clone(Matrix) Matrices.clone}(thisInstance)</tt>,
+     * but the generic type of the result is not {@link UpdatableArray updatable}.
+     * For any types, equivalent to the following operators:
+     * <pre>
+     *     final Matrix<UpdatableArray> result = Arrays.SMM.{@link MemoryModel#newMatrix(Class, Matrix)
+     *     newMatrix}(UpdatableArray.class, thisInstance);
+     *     {@link Matrices#copy(ArrayContext, Matrix, Matrix)
+     *     Matrices.copy}(null, result, thisInstance); // - maximally fast multithreading copying
+     *     (return result)
+     * </pre>
+     *
+     * @return exact clone of the passed matrix.
+     */
+    public Matrix<T> clone();
 }

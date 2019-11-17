@@ -6019,8 +6019,24 @@ public class Arrays {
         return ((AbstractArray) array).underlyingArrays.length;
     }
 
-    /*Repeat.SectionStart longMul*/
+    /**
+     * Analog of <tt>Math.round</tt>, but producing nearest <tt>int</tt> result
+     * in range <tt>-Integer.MAX_VALUE..+Integer.MAX_VALUE</tt> (with saturation in a case of overflow).
+     *
+     * <p>Note: <tt>Integer.MIN_VALUE</tt> is also impossible in the result: it will be replaced with
+     * <tt>-Integer.MAX_VALUE</tt> (<tt>=Integer.MIN_VALUE+1</tt>).
+     *
+     * @param value a floating-point value to be rounded to a {@code int}.
+     * @return the value of the argument rounded to the nearest {@code int} value in range
+     * <tt>-Integer.MAX_VALUE..+Integer.MAX_VALUE</tt>.
+     */
+    public static int round32(double value) {
+        final long i = Math.round(value);
+        return i < -Integer.MAX_VALUE ? -Integer.MAX_VALUE : i > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) i;
+    }
 
+
+    /*Repeat.SectionStart longMul*/
     /**
      * Returns the product of passed multipliers from the index, specified in <tt>from</tt> argument (inclusive),
      * until the index, specified in <tt>to</tt> argument (exclusive), i&#46;e&#46;

@@ -1022,136 +1022,41 @@ public class IRectangularArea {
     }
 
     /**
-     * Returns this rectangular area, dilated (expanded) according the argument. More precisely,
-     * returns
-     * <pre>IRectangularArea.valueOf(
-     * thisInstance.{@link #min() min()}.{@link IPoint#subtract(IPoint) subtract}(expansion),
-     * thisInstance.{@link #max() max()}.{@link IPoint#add(IPoint) add}(expansion))</pre>
-     * (but if <tt>expansion.{@link IPoint#isOrigin() isOrigin()}</tt>, return this object without changes).</tt>
+     * Returns the minimal rectangular area, containing all passed areas.
+     * Equivalent to the loop of {@link #expand(IRectangularArea)} methods, called for each element
+     * of the passed collection, but works faster.
      *
-     * @param expansion how to dilate this area.
-     * @return dilated area.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
-     *                                  the {@link #coordCount() number of dimensions} of this instance,
-     *                                  or if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(IPoint, IPoint)} method).
+     * <p>If the passed collection is empty, returns <tt>null</tt>.
+     *
+     * @param areas some collection of rectangular areas.
+     * @return      the minimal rectangular area, containing all them, or <tt>null</tt> for empty collection.
+     * @throws NullPointerException     if the argument or one of the passed areas is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>{@link #coordCount() coordCount()}</tt> is not equal for all areas.
      */
-    public IRectangularArea dilate(IPoint expansion) {
-        if (expansion == null) {
-            throw new NullPointerException("Null expansion");
+    public static IRectangularArea minimalContainingArea(Collection<IRectangularArea> areas) {
+        if (areas == null) {
+            throw new NullPointerException("Null areas");
         }
-        if (expansion.coordCount() != coordCount())
-            throw new IllegalArgumentException("Dimensions count mismatch: "
-                    + expansion.coordCount() + " instead of " + coordCount());
-        if (expansion.isOrigin()) {
-            return this;
+        if (areas.isEmpty()) {
+            return null;
         }
-        return IRectangularArea.valueOf(min().subtract(expansion), max().add(expansion));
-    }
-
-    /**
-     * Equivalent to <tt>{@link #dilate(IPoint) dilate}(IPoint.valueOfEqualCoordinates(thisObjects.{@link
-     * #coordCount() coordCount()}, expansion)</tt>.
-     *
-     * @param expansion how to dilate this area.
-     * @return dilated area.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(IPoint, IPoint)} method).
-     */
-    public IRectangularArea dilate(long expansion) {
-        return dilate(IPoint.valueOfEqualCoordinates(coordCount(), expansion));
-    }
-
-    /**
-     * Returns this area, dilated according the argument only <i>along coordinate axes</i>,
-     * without full hypercube areas near vertices (like in {@link #dilate(IPoint)} method).
-     *
-     * <p>More precisely, the result is a list, consisting of this area and (usually) 2*{@link #coordCount()}
-     * rectangular areas, lying along facets of this area, like in the following picture:
-     * <pre>
-     *     aaaaaaaaaaaa
-     *   bb<b>RRRRRRRRRRRR</b>cc
-     *   bb<b>RRRRRRRRRRRR</b>cc
-     *   bb<b>RRRRRRRRRRRR</b>cc
-     *     ddddddddddd
-     * </pre>
-     * This figure shows dilation of some 2-dimensional rectangle <tt><b>R</b></tt> by
-     * expansion=<tt>IPoint.valueOf(2,1)</tt>:
-     * the results consists of the original rectangle and 4 rectangles <tt>a</tt>, <tt>b</tt> (height 1) and
-     * <tt>c</tt>, <tt>d</tt> (width 2).
-     *
-     * <p>Note: all coordinates of <tt>expansion</tt> argument <b>must</b> be non-negative
-     * (unlike {@link #dilate(IPoint)} method).
-     *
-     * <p>If some of coordinates of the point <tt>expansion</tt> are zero, new areas along the corresponding
-     * facets are not added (recanglar area cannot be empty).
-     * In particular, if <tt>expansion.{@link IPoint#isOrigin() isOrigin()}</tt>,
-     * the result will contain this area as the only element.
-     *
-     * @param results the list to store results (new areas will be added to the end of this list).
-     * @param expansion how to dilate this area.
-     * @return a reference to the <tt>results</tt> argument.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
-     *                                  the {@link #coordCount() number of dimensions} of this instance,
-     *                                  or if one of coordinates of <tt>expansion</tt> is negative,
-     *                                  or if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(IPoint, IPoint)} method).
-     */
-    public List<IRectangularArea> dilateStraightOnly(List<IRectangularArea> results, IPoint expansion) {
-        if (results == null) {
-            throw new NullPointerException("Null results");
-        }
-        if (expansion == null) {
-            throw new NullPointerException("Null expansion");
-        }
-        results.add(this);
-        final int coordCount = coordCount();
-        if (expansion.coordCount() != coordCount)
-            throw new IllegalArgumentException("Dimensions count mismatch: "
-                    + expansion.coordCount() + " instead of " + coordCount);
-        final long[] min = this.min.coordinates();
-        final long[] max = this.max.coordinates();
-        for (int k = 0; k < coordCount; k++) {
-            final long delta = expansion.coordinates[k];
-            if (delta == 0) {
-                continue;
+        final int coordCount = areas.iterator().next().coordCount();
+        final long[] min = new long[coordCount];
+        final long[] max = new long[coordCount];
+        java.util.Arrays.fill(min, Long.MAX_VALUE);
+        java.util.Arrays.fill(max, Long.MIN_VALUE);
+        for (IRectangularArea area : areas) {
+            if (area.coordCount() != coordCount) {
+                throw new IllegalArgumentException("Some areas have different number of dimension: "
+                        + area.coordCount() + " and " + coordCount);
             }
-            if (delta < 0) {
-                throw new IllegalArgumentException("Negative expansion is impossible: " + expansion);
+            for (int k = 0; k < coordCount; k++) {
+                min[k] = Math.min(min[k], area.min(k));
+                max[k] = Math.max(max[k], area.max(k));
             }
-            final long saveMin = min[k];
-            final long saveMax = max[k];
-            min[k] = saveMin - delta;
-            max[k] = saveMin - 1;
-            results.add(IRectangularArea.valueOf(IPoint.valueOf(min), IPoint.valueOf(max)));
-            min[k] = saveMax + 1;
-            max[k] = saveMax + delta;
-            results.add(IRectangularArea.valueOf(IPoint.valueOf(min), IPoint.valueOf(max)));
-            min[k] = saveMin;
-            max[k] = saveMax;
         }
-        return results;
+        return IRectangularArea.valueOf(new IPoint(min), new IPoint(max));
     }
-
-    /**
-     * Equivalent to <tt>{@link #dilateStraightOnly(List, IPoint)
-     * dilateStraightOnly}(results, IPoint.valueOfEqualCoordinates(thisObjects.{@link
-     * #coordCount() coordCount()}, expansion)</tt>.
-     *
-     * @param results the list to store results (new areas will be added to the end of this list).
-     * @param expansion how to dilate this area.
-     * @return a reference to the <tt>results</tt> argument.
-     * @throws IllegalArgumentException if <tt>expansion &lt; 0</tt>
-     *                                  or if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(IPoint, IPoint)} method).
-     */
-    public List<IRectangularArea> dilateStraightOnly(List<IRectangularArea> results, long expansion) {
-        return dilateStraightOnly(results, IPoint.valueOfEqualCoordinates(coordCount(), expansion));
-    }
-
 
     /**
      * Returns the <i>parallel distance</i> from the given point to this rectangular area.
@@ -1296,9 +1201,10 @@ public class IRectangularArea {
      * Shifts this rectangular area by the specified vector and returns the shifted area.
      * Equivalent to
      * <pre>{@link #valueOf(IPoint, IPoint)
-     * valueOf}(thisInstance.{@link #min()}.{@link IPoint#add(IPoint)
-     * add}(vector), thisInstance.{@link #max()}.{@link IPoint#add(IPoint) add}(vector))</pre>
-     * Note that integer overflow is not checked here!
+     * valueOf}(thisInstance.{@link #min()}.{@link IPoint#addExact(IPoint)
+     * addExact}(vector), thisInstance.{@link #max()}.{@link IPoint#addExact(IPoint) addExact}(vector))</pre>
+     *
+     * <p>Note: the coordinates of new areas are calculated with overflow control.
      *
      * @param vector the vector which is added to all vertices of this area.
      * @return       the shifted area.
@@ -1306,17 +1212,18 @@ public class IRectangularArea {
      * @throws IllegalArgumentException if <tt>vector.{@link IPoint#coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance,
      *                                  or if the result is illegal due to the integer overflow.
+     * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
      */
     public IRectangularArea shift(IPoint vector) {
         if (vector == null)
             throw new NullPointerException("Null vector argument");
         if (vector.coordinates.length != min.coordinates.length)
             throw new IllegalArgumentException("Dimensions count mismatch: "
-                + vector.coordinates.length + " instead of " + min.coordinates.length);
+                    + vector.coordinates.length + " instead of " + min.coordinates.length);
         if (vector.isOrigin()) {
             return this;
         }
-        return IRectangularArea.valueOf(min.add(vector), max.add(vector));
+        return IRectangularArea.valueOf(min.addExact(vector), max.addExact(vector));
     }
 
     /**
@@ -1324,9 +1231,10 @@ public class IRectangularArea {
      * and returns the shifted area.
      * Equivalent to
      * <pre>{@link #valueOf(IPoint, IPoint)
-     * valueOf}(thisInstance.{@link #min()}.{@link IPoint#subtract(IPoint)
-     * subtract}(vector), thisInstance.{@link #max()}.{@link IPoint#subtract(IPoint) subtract}(vector))</pre>
-     * Note that integer overflow is not checked here!
+     * valueOf}(thisInstance.{@link #min()}.{@link IPoint#subtractExact(IPoint)
+     * subtractExact}(vector), thisInstance.{@link #max()}.{@link IPoint#subtractExact(IPoint) subtractExact}(vector))</pre>
+     *
+     * <p>Note: the coordinates of new areas are calculated with overflow control.
      *
      * @param vector the vector which is subtracted from all vertices of this area.
      * @return       the shifted area.
@@ -1334,17 +1242,157 @@ public class IRectangularArea {
      * @throws IllegalArgumentException if <tt>vector.{@link IPoint#coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance,
      *                                  or if the result is illegal due to the integer overflow.
+     * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
      */
     public IRectangularArea shiftBack(IPoint vector) {
         if (vector == null)
             throw new NullPointerException("Null vector argument");
         if (vector.coordinates.length != min.coordinates.length)
             throw new IllegalArgumentException("Dimensions count mismatch: "
-                + vector.coordinates.length + " instead of " + min.coordinates.length);
+                    + vector.coordinates.length + " instead of " + min.coordinates.length);
         if (vector.isOrigin()) {
             return this;
         }
-        return IRectangularArea.valueOf(min.subtract(vector), max.subtract(vector));
+        return IRectangularArea.valueOf(min.subtractExact(vector), max.subtractExact(vector));
+    }
+
+    /**
+     * Returns this rectangular area, dilated (expanded) according the argument. More precisely,
+     * returns
+     * <pre>IRectangularArea.valueOf(
+     * thisInstance.{@link #min() min()}.{@link IPoint#subtractExact(IPoint) subtractExact}(expansion),
+     * thisInstance.{@link #max() max()}.{@link IPoint#addExact(IPoint) addExact}(expansion))</pre>
+     * (but if <tt>expansion.{@link IPoint#isOrigin() isOrigin()}</tt>, return this object without changes).</tt>
+     *
+     * @param expansion how to dilate this area.
+     * @return dilated area.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
+     *                                  the {@link #coordCount() number of dimensions} of this instance,
+     *                                  or if the result area will be incorrect (see comments to
+     *                                  {@link #valueOf(IPoint, IPoint)} method).
+     * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
+     */
+    public IRectangularArea dilate(IPoint expansion) {
+        if (expansion == null) {
+            throw new NullPointerException("Null expansion");
+        }
+        if (expansion.coordCount() != coordCount())
+            throw new IllegalArgumentException("Dimensions count mismatch: "
+                    + expansion.coordCount() + " instead of " + coordCount());
+        if (expansion.isOrigin()) {
+            return this;
+        }
+        return IRectangularArea.valueOf(min().subtractExact(expansion), max().addExact(expansion));
+    }
+
+    /**
+     * Equivalent to <tt>{@link #dilate(IPoint) dilate}(IPoint.valueOfEqualCoordinates(thisObjects.{@link
+     * #coordCount() coordCount()}, expansion)</tt>.
+     *
+     * @param expansion how to dilate this area.
+     * @return dilated area.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if the result area will be incorrect (see comments to
+     *                                  {@link #valueOf(IPoint, IPoint)} method).
+     * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
+     */
+    public IRectangularArea dilate(long expansion) {
+        return dilate(IPoint.valueOfEqualCoordinates(coordCount(), expansion));
+    }
+
+    /**
+     * Returns this area, dilated according the argument only <i>along coordinate axes</i>,
+     * without full hypercube areas near vertices (like in {@link #dilate(IPoint)} method).
+     *
+     * <p>More precisely, the result is a list, consisting of this area and (usually) 2*{@link #coordCount()}
+     * rectangular areas, lying along facets of this area, like in the following picture:
+     * <pre>
+     *     aaaaaaaaaaaa
+     *   bb<b>RRRRRRRRRRRR</b>cc
+     *   bb<b>RRRRRRRRRRRR</b>cc
+     *   bb<b>RRRRRRRRRRRR</b>cc
+     *     ddddddddddd
+     * </pre>
+     * This figure shows dilation of some 2-dimensional rectangle <tt><b>R</b></tt> by
+     * expansion=<tt>IPoint.valueOf(2,1)</tt>:
+     * the results consists of the original rectangle and 4 rectangles <tt>a</tt>, <tt>b</tt> (height 1) and
+     * <tt>c</tt>, <tt>d</tt> (width 2).
+     *
+     * <p>Note: all coordinates of <tt>expansion</tt> argument <b>must</b> be non-negative
+     * (unlike {@link #dilate(IPoint)} method).
+     *
+     * <p>Note: the coordinates of new areas are calculated with overflow control:
+     * if the result cannot be exactly represented by 64-bit <tt>long</tt> integers,
+     * this method throws <tt>ArithmeticException</tt>.
+     *
+     * <p>If some of coordinates of the point <tt>expansion</tt> are zero, new areas along the corresponding
+     * facets are not added (recanglar area cannot be empty).
+     * In particular, if <tt>expansion.{@link IPoint#isOrigin() isOrigin()}</tt>,
+     * the result will contain this area as the only element.
+     *
+     * @param results the list to store results (new areas will be added to the end of this list).
+     * @param expansion how to dilate this area.
+     * @return a reference to the <tt>results</tt> argument.
+     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
+     *                                  the {@link #coordCount() number of dimensions} of this instance,
+     *                                  or if one of coordinates of <tt>expansion</tt> is negative,
+     *                                  or if the result area will be incorrect (see comments to
+     *                                  {@link #valueOf(IPoint, IPoint)} method).
+     * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
+     */
+    public List<IRectangularArea> dilateStraightOnly(List<IRectangularArea> results, IPoint expansion) {
+        if (results == null) {
+            throw new NullPointerException("Null results");
+        }
+        if (expansion == null) {
+            throw new NullPointerException("Null expansion");
+        }
+        results.add(this);
+        final int coordCount = coordCount();
+        if (expansion.coordCount() != coordCount)
+            throw new IllegalArgumentException("Dimensions count mismatch: "
+                    + expansion.coordCount() + " instead of " + coordCount);
+        final long[] min = this.min.coordinates();
+        final long[] max = this.max.coordinates();
+        for (int k = 0; k < coordCount; k++) {
+            final long delta = expansion.coordinates[k];
+            if (delta == 0) {
+                continue;
+            }
+            if (delta < 0) {
+                throw new IllegalArgumentException("Negative expansion is impossible: " + expansion);
+            }
+            final long saveMin = min[k];
+            final long saveMax = max[k];
+            min[k] = IPoint.subtractExact(saveMin, delta);
+            max[k] = IPoint.subtractExact(saveMin, 1);
+            results.add(IRectangularArea.valueOf(IPoint.valueOf(min), IPoint.valueOf(max)));
+            min[k] = IPoint.addExact(saveMax, 1);
+            max[k] = IPoint.addExact(saveMax, delta);
+            results.add(IRectangularArea.valueOf(IPoint.valueOf(min), IPoint.valueOf(max)));
+            min[k] = saveMin;
+            max[k] = saveMax;
+        }
+        return results;
+    }
+
+    /**
+     * Equivalent to <tt>{@link #dilateStraightOnly(List, IPoint)
+     * dilateStraightOnly}(results, IPoint.valueOfEqualCoordinates(thisObjects.{@link
+     * #coordCount() coordCount()}, expansion)</tt>.
+     *
+     * @param results the list to store results (new areas will be added to the end of this list).
+     * @param expansion how to dilate this area.
+     * @return a reference to the <tt>results</tt> argument.
+     * @throws IllegalArgumentException if <tt>expansion &lt; 0</tt>
+     *                                  or if the result area will be incorrect (see comments to
+     *                                  {@link #valueOf(IPoint, IPoint)} method).
+     * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
+     */
+    public List<IRectangularArea> dilateStraightOnly(List<IRectangularArea> results, long expansion) {
+        return dilateStraightOnly(results, IPoint.valueOfEqualCoordinates(coordCount(), expansion));
     }
 
     /**

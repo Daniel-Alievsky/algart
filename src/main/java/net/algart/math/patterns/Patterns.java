@@ -678,7 +678,6 @@ public strictfp class Patterns {
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/Arrays.java, longMul)
       public\s+static ==> static
          !! Auto-generated: NOT EDIT !! */
-
     /**
      * Returns the product of passed multipliers from the index, specified in <tt>from</tt> argument (inclusive),
      * until the index, specified in <tt>to</tt> argument (exclusive), i&#46;e&#46;

@@ -627,6 +627,16 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return dimEquals(m) && m.array().equals(array());
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public Matrix<T> clone() {
+
+        final Matrix<UpdatableArray> result = Arrays.SMM.newMatrix(UpdatableArray.class, this);
+        Matrices.copy(null, result, this);
+        // - maximally fast multithreading copying
+        return (Matrix<T>) result;
+    }
+
     static long normalizeMirrorCoord(long coord, long dim) {
         long repeatIndex = coord / dim;
         boolean mirror = (repeatIndex & 1) != 0;

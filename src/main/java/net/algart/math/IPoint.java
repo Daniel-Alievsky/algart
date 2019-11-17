@@ -941,6 +941,56 @@ public class IPoint implements Comparable<IPoint> {
     }
 
     /**
+     * Equivalent of {@link #add(IPoint)} with the only difference: in a case of long overflow
+     * (when the result cannot be exactly represented by 64-bit <tt>long</tt> integers),
+     * this method throws <tt>ArithmeticException</tt>.
+     *
+     * @param point the added point.
+     * @return the vector sum of this and given point.
+     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this and given points
+     *                                  are different.
+     * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
+     */
+    public IPoint addExact(IPoint point) {
+        if (point == null)
+            throw new NullPointerException("Null point argument");
+        if (point.coordCount() != coordinates.length)
+            throw new IllegalArgumentException("Dimensions count mismatch: "
+                    + point.coordCount() + " instead of " + coordinates.length);
+        long[] coordinates = new long[this.coordinates.length];
+        for (int k = 0; k < coordinates.length; k++) {
+            coordinates[k] = addExact(this.coordinates[k], point.coordinates[k]);
+        }
+        return new IPoint(coordinates);
+    }
+
+    /**
+     * Equivalent of {@link #subtract(IPoint)} with the only difference: in a case of long overflow
+     * (when the result cannot be exactly represented by 64-bit <tt>long</tt> integers),
+     * this method throws <tt>ArithmeticException</tt>.
+     *
+     * @param point the subtracted point.
+     * @return      the vector difference of this and given point.
+     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this and given points
+     *                                  are different.
+     * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
+     */
+    public IPoint subtractExact(IPoint point) {
+        if (point == null)
+            throw new NullPointerException("Null point argument");
+        if (point.coordCount() != coordinates.length)
+            throw new IllegalArgumentException("Dimensions count mismatch: "
+                    + point.coordCount() + " instead of " + coordinates.length);
+        long[] coordinates = new long[this.coordinates.length];
+        for (int k = 0; k < coordinates.length; k++) {
+            coordinates[k] = subtractExact(this.coordinates[k], point.coordinates[k]);
+        }
+        return new IPoint(coordinates);
+    }
+
+    /**
      * Returns the product of this point and the given scalar <tt>multiplier</tt>:
      * every coordinate <tt>#i</tt> in the result is
      * <tt>(long)(thisInstance.{@link #coord(int) coord(i)}*multiplier)</tt>.
@@ -1144,6 +1194,27 @@ public class IPoint implements Comparable<IPoint> {
             result[disp++] = (byte)(value >>> 16);
             result[disp++] = (byte)(value >>> 24);
         }
+    }
+
+    // From 1.8
+    static long addExact(long x, long y) {
+        long r = x + y;
+        // HD 2-12 Overflow iff both arguments have the opposite sign of the result
+        if (((x ^ r) & (y ^ r)) < 0) {
+            throw new ArithmeticException("long overflow");
+        }
+        return r;
+    }
+
+    // From 1.8
+    static long subtractExact(long x, long y) {
+        long r = x - y;
+        // HD 2-12 Overflow iff the arguments have different signs and
+        // the sign of the result is different than the sign of x
+        if (((x ^ y) & (x ^ r)) < 0) {
+            throw new ArithmeticException("long overflow");
+        }
+        return r;
     }
 
     /**
