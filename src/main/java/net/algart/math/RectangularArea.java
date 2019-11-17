@@ -649,6 +649,8 @@ public strictfp class RectangularArea {
       IRectangular ==> Rectangular;;
       IPoint ==> Point;;
       long ==> double;;
+      saveMin\s*-\s*1 ==> saveMin;;
+      saveMax\s*\+\s*1 ==> saveMax;;
       (\[k\])\s*[+-]\s*1 ==> $1 !! Auto-generated: NOT EDIT !! */
     /**
      * Returns the set-theoretical intersection <b>A</b>&nbsp;&cap;&nbsp;<b>B</b> of this (<b>A</b>) and
@@ -669,8 +671,9 @@ public strictfp class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public RectangularArea intersection(RectangularArea area) {
-        if (area == null)
+        if (area == null) {
             throw new NullPointerException("Null area argument");
+        }
         int n = min.coordinates.length;
         if (area.min.coordinates.length != n)
             throw new IllegalArgumentException("Dimensions count mismatch: "
@@ -751,7 +754,7 @@ public strictfp class RectangularArea {
      * is not documented, but this method tries to minimize the number <i>N</i> of such areas.
      * In any case, there is a guarantee that <i>N</i>&le;2*{@link #coordCount()}.
      *
-     * @param results the collection to store results.
+     * @param results the collection to store results (new areas will be added to this collection).
      * @param area    the area <b>B</b>, subtracted from this area <b>A</b>.
      * @return        a reference to the <tt>results</tt> argument.
      * @throws NullPointerException     if <tt>result</tt> or <tt>area</tt> argument is <tt>null</tt>.
@@ -760,8 +763,9 @@ public strictfp class RectangularArea {
      * @see #subtractCollection(java.util.Queue, java.util.Collection)
      */
     public Collection<RectangularArea> difference(Collection<RectangularArea> results, RectangularArea area) {
-        if (results == null)
+        if (results == null) {
             throw new NullPointerException("Null results argument");
+        }
         if (!intersects(area)) { // also checks number of dimensions
             results.add(this);
             return results;
@@ -922,6 +926,7 @@ public strictfp class RectangularArea {
      */
     public RectangularArea expand(Point point) {
         if (contains(point)) {
+            // - also checks number of dimensions
             return this;
         }
         double[] newMin = new double[min.coordinates.length];
@@ -948,6 +953,7 @@ public strictfp class RectangularArea {
      */
     public RectangularArea expand(RectangularArea area) {
         if (contains(area)) {
+            // - also checks number of dimensions
             return this;
         }
         double[] newMin = new double[min.coordinates.length];
@@ -958,6 +964,138 @@ public strictfp class RectangularArea {
         }
         return new RectangularArea(new Point(newMin), new Point(newMax));
     }
+
+    /**
+     * Returns this rectangular area, dilated (expanded) according the argument. More precisely,
+     * returns
+     * <pre>RectangularArea.valueOf(
+     * thisInstance.{@link #min() min()}.{@link Point#subtract(Point) subtract}(expansion),
+     * thisInstance.{@link #max() max()}.{@link Point#add(Point) add}(expansion))</pre>
+     * (but if <tt>expansion.{@link Point#isOrigin() isOrigin()}</tt>, return this object without changes).</tt>
+     *
+     * @param expansion how to dilate this area.
+     * @return dilated area.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
+     *                                  the {@link #coordCount() number of dimensions} of this instance,
+     *                                  or if the result area will be incorrect (see comments to
+     *                                  {@link #valueOf(Point, Point)} method).
+     */
+    public RectangularArea dilate(Point expansion) {
+        if (expansion == null) {
+            throw new NullPointerException("Null expansion");
+        }
+        if (expansion.coordCount() != coordCount())
+            throw new IllegalArgumentException("Dimensions count mismatch: "
+                    + expansion.coordCount() + " instead of " + coordCount());
+        if (expansion.isOrigin()) {
+            return this;
+        }
+        return RectangularArea.valueOf(min().subtract(expansion), max().add(expansion));
+    }
+
+    /**
+     * Equivalent to <tt>{@link #dilate(Point) dilate}(Point.valueOfEqualCoordinates(thisObjects.{@link
+     * #coordCount() coordCount()}, expansion)</tt>.
+     *
+     * @param expansion how to dilate this area.
+     * @return dilated area.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if the result area will be incorrect (see comments to
+     *                                  {@link #valueOf(Point, Point)} method).
+     */
+    public RectangularArea dilate(double expansion) {
+        return dilate(Point.valueOfEqualCoordinates(coordCount(), expansion));
+    }
+
+    /**
+     * Returns this area, dilated according the argument only <i>adouble coordinate axes</i>,
+     * without full hypercube areas near vertices (like in {@link #dilate(Point)} method).
+     *
+     * <p>More precisely, the result is a list, consisting of this area and (usually) 2*{@link #coordCount()}
+     * rectangular areas, lying adouble facets of this area, like in the following picture:
+     * <pre>
+     *     aaaaaaaaaaaa
+     *   bb<b>RRRRRRRRRRRR</b>cc
+     *   bb<b>RRRRRRRRRRRR</b>cc
+     *   bb<b>RRRRRRRRRRRR</b>cc
+     *     ddddddddddd
+     * </pre>
+     * This figure shows dilation of some 2-dimensional rectangle <tt><b>R</b></tt> by
+     * expansion=<tt>Point.valueOf(2,1)</tt>:
+     * the results consists of the original rectangle and 4 rectangles <tt>a</tt>, <tt>b</tt> (height 1) and
+     * <tt>c</tt>, <tt>d</tt> (width 2).
+     *
+     * <p>Note: all coordinates of <tt>expansion</tt> argument <b>must</b> be non-negative
+     * (unlike {@link #dilate(Point)} method).
+     *
+     * <p>If some of coordinates of the point <tt>expansion</tt> are zero, new areas adouble the corresponding
+     * facets are not added (recanglar area cannot be empty).
+     * In particular, if <tt>expansion.{@link Point#isOrigin() isOrigin()}</tt>,
+     * the result will contain this area as the only element.
+     *
+     * @param results the list to store results (new areas will be added to the end of this list).
+     * @param expansion how to dilate this area.
+     * @return a reference to the <tt>results</tt> argument.
+     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
+     *                                  the {@link #coordCount() number of dimensions} of this instance,
+     *                                  or if one of coordinates of <tt>expansion</tt> is negative,
+     *                                  or if the result area will be incorrect (see comments to
+     *                                  {@link #valueOf(Point, Point)} method).
+     */
+    public List<RectangularArea> dilateStraightOnly(List<RectangularArea> results, Point expansion) {
+        if (results == null) {
+            throw new NullPointerException("Null results");
+        }
+        if (expansion == null) {
+            throw new NullPointerException("Null expansion");
+        }
+        results.add(this);
+        final int coordCount = coordCount();
+        if (expansion.coordCount() != coordCount)
+            throw new IllegalArgumentException("Dimensions count mismatch: "
+                    + expansion.coordCount() + " instead of " + coordCount);
+        final double[] min = this.min.coordinates();
+        final double[] max = this.max.coordinates();
+        for (int k = 0; k < coordCount; k++) {
+            final double delta = expansion.coordinates[k];
+            if (delta == 0) {
+                continue;
+            }
+            if (delta < 0) {
+                throw new IllegalArgumentException("Negative expansion is impossible: " + expansion);
+            }
+            final double saveMin = min[k];
+            final double saveMax = max[k];
+            min[k] = saveMin - delta;
+            max[k] = saveMin;
+            results.add(RectangularArea.valueOf(Point.valueOf(min), Point.valueOf(max)));
+            min[k] = saveMax;
+            max[k] = saveMax + delta;
+            results.add(RectangularArea.valueOf(Point.valueOf(min), Point.valueOf(max)));
+            min[k] = saveMin;
+            max[k] = saveMax;
+        }
+        return results;
+    }
+
+    /**
+     * Equivalent to <tt>{@link #dilateStraightOnly(List, Point)
+     * dilateStraightOnly}(results, Point.valueOfEqualCoordinates(thisObjects.{@link
+     * #coordCount() coordCount()}, expansion)</tt>.
+     *
+     * @param results the list to store results (new areas will be added to the end of this list).
+     * @param expansion how to dilate this area.
+     * @return a reference to the <tt>results</tt> argument.
+     * @throws IllegalArgumentException if <tt>expansion &lt; 0</tt>
+     *                                  or if the result area will be incorrect (see comments to
+     *                                  {@link #valueOf(Point, Point)} method).
+     */
+    public List<RectangularArea> dilateStraightOnly(List<RectangularArea> results, double expansion) {
+        return dilateStraightOnly(results, Point.valueOfEqualCoordinates(coordCount(), expansion));
+    }
+
 
     /**
      * Returns the <i>parallel distance</i> from the given point to this rectangular area.

@@ -170,6 +170,16 @@ public abstract class Boundary2DWrapper extends Boundary2DScanner {
     }
 
     @Override
+    public long diagonalStepCount() {
+        return parent.diagonalStepCount();
+    }
+
+    @Override
+    public long rotationStepCount() {
+        return rotationStepCount();
+    }
+
+    @Override
     public long orientedArea() {
         return parent.orientedArea();
     }

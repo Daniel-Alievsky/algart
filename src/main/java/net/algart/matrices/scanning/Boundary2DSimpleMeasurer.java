@@ -83,7 +83,7 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
      * there are no ways to modify settings of the created instance.</p>
      */
-    public static enum ObjectParameter {
+    public enum ObjectParameter {
         /**
          * Instructs {@link Boundary2DSimpleMeasurer} to measure the oriented area
          * inside the contour, following along the scanned boundary.
@@ -636,82 +636,29 @@ public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
         }
     }
 
-    /**
-     * Returns the number of pixels inside the contour, following along the scanned boundary,
-     * with minus sign if the scanned boundary is an internal one.
-     *
-     * <p>It is the same value as {@link #area()} in a case
-     * <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt>,
-     * but it is available for any contour line type.
-     * (For comparison, the result of {@link #perimeter()} call for {@link ContourLineType#STRICT_BOUNDARY}
-     * can be retrieved for any contour line type by {@link #stepCount()} method.)
-     *
-     * @return the oriented area inside the scanned contour, corresponding always to
-     *         {@link ContourLineType#STRICT_BOUNDARY STRICT_BOUNDARY} model, independently on the current
-     *         {@link #contourLineType() contourLineType()}.
-     */
-    public long pixelCount() {
-        return iArea;
-    }
 
     /**
      * Returns the oriented area inside the contour, following along the scanned boundary.
      * "Oriented" means that the result is equal to the area of the figure inside this contour,
-     * if the scanned boundary is an external one, or the same value with minus sign if it is an internal one.
-     * (See the definition of <i>external</i> and <i>internal</i> boundaries in the comments to
-     * {@link Boundary2DScanner} class.)
-     *
-     * <p>In particular, if <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt>,
-     * the result is equal to the total number of pixels of the
-     * <a href="Boundary2DScanner.html#completion">completion</a> of the current measured object
-     * (with minus sign if it is an internal boundary, i.e. when it is the number of pixels in the "hole").
-     * In the case <tt>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>,
-     * the measured area can be 0.0 &mdash; for example, for 1-pixel objects (isolated pixels) or for
-     * "thin" 1-pixel "lines".
+     * Equivalent to <tt>{@link #area(ContourLineType) area}(thisObject.{@link #contourLineType()
+     * contourLineType()})</tt>.
      *
      * @return the oriented area inside the scanned contour.
-     * @see #pixelCount()
      */
     public double area() {
-        double result;
-        switch (contourLineType) {
-            case STRICT_BOUNDARY:
-                result = iArea;
-                break;
-            case PIXEL_CENTERS_POLYLINE:
-                result = iArea - 0.5 * straightStepCount - 0.25 * (stepCount() - straightStepCount);
-                break;
-            case SEGMENT_CENTERS_POLYLINE:
-                result = iArea > 0 ? iArea - 0.5 : iArea + 0.5;
-                break;
-            default:
-                throw new AssertionError("Unsupported contourLineType=" + contourLineType);
-        }
-        if (DEBUG_MODE) {
-            if (!contourStrictBoundary &&
-                (Math.abs(result) < 1000 ?
-                    Math.abs(area - result) > 0.001 :
-                    Math.abs(area - result) / Math.abs(result) > 0.00001))
-                throw new AssertionError("Incorrect algorithm of area calculation: " + result
-                    + " instead of " + area + " in " + this);
-        }
-        return result;
+        return area(contourLineType);
     }
 
     /**
      * Returns the total length of the contour, following along the scanned boundary:
      * an estimated perimeter of the measured object, "drawn" at the bit matrix.
-     *
-     * <p>In particular, if <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt>,
-     * the result is just the number of {@link #next()} calls for this boundary and is equal
-     * to the result of {@link #stepCount() stepCount()} method.
-     * In the case <tt>{@link #contourLineType()}=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}</tt>,
-     * the measured length is a good approximation for the real perimeter of the object.
+     * Equivalent to <tt>{@link #perimeter(ContourLineType) perimeter}(thisObject.{@link #contourLineType()
+     * contourLineType()})</tt>.
      *
      * @return the length of the contour line, following along the scanned boundary.
      */
     public double perimeter() {
-        return contourStrictBoundary ? stepCount() : perimeter;
+        return perimeter(contourLineType);
     }
 
     /**

@@ -76,6 +76,30 @@ public abstract class Boundary2DProjectionMeasurer extends Boundary2DWrapper {
         return startAngleInRadians + StrictMath.PI * (double) directionIndex / (double) m;
     }
 
+    /**
+     * Returns the oriented area inside the contour, following along the scanned boundary.
+     * "Oriented" means that the result is equal to the area of the figure inside this contour,
+     * Equivalent to <tt>{@link #area(ContourLineType) area}(thisObject.{@link #contourLineType()
+     * contourLineType()})</tt>.
+     *
+     * @return the oriented area inside the scanned contour.
+     */
+    public double area() {
+        return area(contourLineType);
+    }
+
+    /**
+     * Returns the total length of the contour, following along the scanned boundary:
+     * an estimated perimeter of the measured object, "drawn" at the bit matrix.
+     * Equivalent to <tt>{@link #perimeter(ContourLineType) perimeter}(thisObject.{@link #contourLineType()
+     * contourLineType()})</tt>.
+     *
+     * @return the length of the contour line, following along the scanned boundary.
+     */
+    public double perimeter() {
+        return perimeter(contourLineType);
+    }
+
     public abstract double projectionMin(int directionIndex);
 
     public abstract double projectionMax(int directionIndex);

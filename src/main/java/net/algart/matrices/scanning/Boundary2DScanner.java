@@ -394,6 +394,7 @@ public abstract class Boundary2DScanner {
 
         abstract AbstractBoundary2DScanner.AbstractMover getMover(AbstractBoundary2DScanner scanner);
 
+        // Note: diagonalStepCount and rotationStepCount are corrected not here, but directly in the scanner
         abstract void correctCounters(AbstractBoundary2DScanner scanner, long x);
     }
 
@@ -406,11 +407,11 @@ public abstract class Boundary2DScanner {
      * (all they are created while initialization). Namely:
      *
      * <ul>
-     * <li>4 straight movements: one of {@link #pixelCenterDX()}, {@link #pixelCenterDY()} is <tt>&plusmn;1</tt>, another is <tt>0</tt>,
+     * <li>4 <i>straight</i> movements: one of {@link #pixelCenterDX()}, {@link #pixelCenterDY()} is <tt>&plusmn;1</tt>, another is <tt>0</tt>,
      * <tt>{@link #newSide()}=={@link #oldSide()}</tt>;</li>
-     * <li>4 diagonal movements: <tt>{@link #pixelCenterDX()}==&plusmn;1</tt>, <tt>{@link #pixelCenterDY()}==&plusmn;1</tt>,
+     * <li>4 <i>diagonal</i> movements: <tt>{@link #pixelCenterDX()}==&plusmn;1</tt>, <tt>{@link #pixelCenterDY()}==&plusmn;1</tt>,
      * {@link #oldSide()} and {@link #newSide()} is a pair of adjacent pixel sides;</li>
-     * <li>4 kinds of movement around the same pixel, from one pixel side to next pixel side:
+     * <li>4 kinds of movement around the same pixel (<i>rotations</i>), from one pixel side to next pixel side:
      * here <tt>{@link #pixelCenterDX()}==0</tt>, <tt>{@link #pixelCenterDY()}==0</tt>,
      * {@link #oldSide()} and {@link #newSide()} is a pair of adjacent pixel sides.</li>
      * </ul>
@@ -1138,12 +1139,13 @@ public abstract class Boundary2DScanner {
         }
 
         /**
-         * Returns <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 && {@link #pixelCenterDY()}==0</tt>.
+         * Returns <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 && {@link #pixelCenterDY()}==0</tt>
+         * (<i>rotation</i> kind of movement).
          * Works very quickly (this method just returns an internal field).
          *
          * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 && {@link #pixelCenterDY()}==0</tt>.
          */
-        public boolean isSamePixel() {
+        public boolean isRotation() {
             return samePixel;
         }
 
@@ -1168,7 +1170,9 @@ public abstract class Boundary2DScanner {
         }
 
         /**
-         * Returns <tt>true</tt> if one of {@link #pixelCenterDX()} and {@link #pixelCenterDY()} values is &plusmn;1, but another is 0.
+         * Returns <tt>true</tt> if one of {@link #pixelCenterDX()} and {@link #pixelCenterDY()} values
+         * is &plusmn;1, but another is 0
+         * (<i>straight</i> kind of movement).
          * Works very quickly (this method just returns an internal field).
          *
          * @return <tt>true</tt> if <tt>{@link #isHorizontal()} || {@link #isVertical()}</tt>.
@@ -1178,7 +1182,8 @@ public abstract class Boundary2DScanner {
         }
 
         /**
-         * Returns <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 && {@link #pixelCenterDY()}!=0</tt>.
+         * Returns <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 && {@link #pixelCenterDY()}!=0</tt>
+         * (<i>diagonal</i> kind of movement).
          * Works very quickly (this method just returns an internal field).
          *
          * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 && {@link #pixelCenterDY()}!=0</tt>.
@@ -1190,7 +1195,7 @@ public abstract class Boundary2DScanner {
         /**
          * Returns the distance between the centers of the previous and current pixel;
          * equal to <tt>StrictMath.hypot({@link #pixelCenterDX()}, {@link #pixelCenterDY()})</tt>.
-         * In other words, returns 0 if {@link #isSamePixel()}, 1 for straight steps and
+         * In other words, returns 0 if {@link #isRotation()}, 1 for straight steps and
          * {@link #DIAGONAL_LENGTH}=&radic;2 for diagonal steps.
          * Works very quickly (this method just returns an internal field).
          *
@@ -1891,7 +1896,7 @@ public abstract class Boundary2DScanner {
      * {@link #side() current pixel side}.
      *
      * <p>Equivalent to
-     * <tt>!{@link #lastStep()}.{@link Step#isSamePixel() isSamePixel()}</tt>,
+     * <tt>!{@link #lastStep()}.{@link Step#isRotation() isSamePixel()}</tt>,
      * but works little faster.
      *
      * @return whether the last call of {@link #next()} method has changed current pixel coordinates.
@@ -1913,9 +1918,13 @@ public abstract class Boundary2DScanner {
     /**
      * Returns the total number of calls of {@link #next()} method since the last call of {@link #nextBoundary()},
      * {@link #goTo} or {@link #resetCounters()} method.
-     * <p>The result of this method is the current value of an internal counter,
-     * incremented by 1 in {@link #next()} method and reset to 0 while object creation
-     * and while every call of {@link #nextBoundary()} or {@link #goTo} method.
+     *
+     * <p>The result of this method is based on internal counters,
+     * incremented by 1 in {@link #next()} method and cleared to 0 while object creation
+     * and while every call of {@link #nextBoundary()}, {@link #goTo} or {@link #resetCounters()} methods.
+     *
+     * <p>Note that we always have: {@link #stepCount()} = {@link #straightStepCount()}
+     * + {@link #diagonalStepCount()} + {@link #rotationStepCount()}.
      *
      * @return number of calls of {@link #next()} method since the last call of {@link #nextBoundary()},
      * {@link #goTo} or {@link #resetCounters()}.
@@ -1923,11 +1932,53 @@ public abstract class Boundary2DScanner {
     public abstract long stepCount();
 
     /**
-     * Returns the <i>oriented area</i> inside the contour, traversed by {@link #next()} method since the last
+     * Returns the number of calls of {@link #next()} method since the last call of {@link #nextBoundary()},
+     * {@link #goTo} or {@link #resetCounters()} method, corresponding to {@link Step#isStraight() straight steps}.
+     *
+     * <p>The result of this method is based on internal counters,
+     * incremented by 1 in {@link #next()} method and cleared to 0 while object creation
+     * and while every call of {@link #nextBoundary()}, {@link #goTo} or {@link #resetCounters()} methods.
+     *
+     * @return number of straight steps since the last call of {@link #nextBoundary()},
+     * {@link #goTo} or {@link #resetCounters()}.
+     */
+    public final long straightStepCount() {
+        return stepCount() - (diagonalStepCount() + rotationStepCount());
+    }
+
+    /**
+     * Returns the number of calls of {@link #next()} method since the last call of {@link #nextBoundary()},
+     * {@link #goTo} or {@link #resetCounters()} method, corresponding to {@link Step#isDiagonal() diagonal steps}.
+     *
+     * <p>The result of this method is based on internal counters,
+     * incremented by 1 in {@link #next()} method and cleared to 0 while object creation
+     * and while every call of {@link #nextBoundary()}, {@link #goTo} or {@link #resetCounters()} methods.
+     *
+     * @return number of straight steps since the last call of {@link #nextBoundary()},
+     * {@link #goTo} or {@link #resetCounters()}.
+     */
+    public abstract long diagonalStepCount();
+
+    /**
+     * Returns the number of calls of {@link #next()} method since the last call of {@link #nextBoundary()},
+     * {@link #goTo} or {@link #resetCounters()} method, corresponding to {@link Step#isRotation() rotation steps}.
+     *
+     * <p>The result of this method is based on internal counters,
+     * incremented by 1 in {@link #next()} method and cleared to 0 while object creation
+     * and while every call of {@link #nextBoundary()}, {@link #goTo} or {@link #resetCounters()} methods.
+     *
+     * @return number of straight steps since the last call of {@link #nextBoundary()},
+     * {@link #goTo} or {@link #resetCounters()}.
+     */
+    public abstract long rotationStepCount();
+
+    /**
+     * Returns the <i>oriented area</i> inside the boundary, traversed by {@link #next()} method since the last
      * call of {@link #nextBoundary()}, {@link #goTo} or {@link #resetCounters()} method.
      *
      * <p>The <i>oriented area</i> is the current value of an internal counter, which is reset to 0
-     * while object creation and while every call of {@link #nextBoundary()} or {@link #goTo} method
+     * while object creation and while every call of {@link #nextBoundary()}, {@link #goTo}
+     * or {@link #resetCounters()} methods,
      * and which is incremented while each {@link #next()} method in the following manner:
      * <pre>
      * switch ({@link #side() side()} {
@@ -1941,12 +1992,91 @@ public abstract class Boundary2DScanner {
      * </pre>
      * <p>In other words, the absolute value of <i>oriented area</i> is the number of pixels inside the traversed
      * boundary, and its sign is positive when it is an object (<i>external</i> boundary) or negative when
-     * it is a pore inside an object (<i>internal</i> boundary).
+     * it is a pore inside an object (<i>internal</i> boundary). It is the total number of pixels of the
+     * <a href="Boundary2DScanner.html#completion">completion</a> of the current measured object
+     * (with minus sign if it is an internal boundary, i.e. when it is the number of pixels in the "hole").
      *
-     * @return the <i>oriented area</i> inside the contour, traversed by {@link #next()} method since the last
+     * @return the <i>oriented area</i> inside the boundary, traversed by {@link #next()} method since the last
      * call of {@link #nextBoundary()}, {@link #goTo} or {@link #resetCounters()} method
      */
     public abstract long orientedArea();
+
+    /**
+     * Returns the oriented area inside the contour line, following along the scanned boundary,
+     * estimated according the specified contour line type.
+     * "Oriented" means that the result is equal to the area of the figure inside this contour,
+     * if the scanned boundary is an <i>external</i> one, or the same value with minus sign
+     * if it is an <i>internal</i> one.
+     *
+     * <p>In particular, if <tt>contourLineType=={@link ContourLineType#STRICT_BOUNDARY}</tt>,
+     * this method just returns the result of {@link #orientedArea()}.
+     * In the case <tt>contourLineType=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>,
+     * the measured area can be 0.0 &mdash; for example, for 1-pixel objects (isolated pixels) or for
+     * "thin" 1-pixel "lines".
+     *
+     * @return the oriented area inside the scanned contour.
+     */
+    public double area(ContourLineType contourLineType) {
+        final long orientedArea = orientedArea();
+        switch (contourLineType) {
+            case STRICT_BOUNDARY: {
+                return orientedArea;
+            }
+            case PIXEL_CENTERS_POLYLINE: {
+                final long straightStepCount = straightStepCount();
+                return orientedArea - 0.5 * straightStepCount - 0.25 * (stepCount() - straightStepCount);
+            }
+            case SEGMENT_CENTERS_POLYLINE: {
+                return orientedArea > 0 ? orientedArea - 0.5 : orientedArea + 0.5;
+            }
+            default:
+                throw new AssertionError("Unsupported contourLineType=" + contourLineType);
+        }
+    }
+
+    /**
+     * Returns the total length of the contour, following along the scanned boundary:
+     * perimeter of the measured object, "drawn" at the bit matrix, estimated according
+     * the specified contour line type.
+     *
+     * <p>If <tt>contourLineType=={@link ContourLineType#STRICT_BOUNDARY}</tt>,
+     * this method just returns the result of {@link #stepCount()}.
+     *
+     * <p>In the case <tt>contourLineType=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>,
+     * this method returns
+     * <pre>
+     * {@link #straightStepCount()} + {@link Step#DIAGONAL_LENGTH
+     *     Step.DIAGONAL_LENGTH} * {@link #diagonalStepCount()}.
+     * </pre>
+     *
+     * <p>In the case <tt>contourLineType=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}</tt>,
+     * this method returns
+     * <pre>
+     * {@link #straightStepCount()} + {@link Step#HALF_DIAGONAL_LENGTH
+     *     Step.HALF_DIAGONAL_LENGTH} * ({@link #diagonalStepCount()}+{@link #rotationStepCount()}).
+     * </pre>Usually it is the best approximation for the real perimeter of the object among all 3 variants.
+     *
+     * @return the length of the contour line, following along the scanned boundary.
+     */
+    public double perimeter(ContourLineType contourLineType) {
+        final long stepCount = stepCount();
+        switch (contourLineType) {
+            case STRICT_BOUNDARY: {
+                return stepCount;
+            }
+            case PIXEL_CENTERS_POLYLINE: {
+                final long diagonalStepCount = diagonalStepCount();
+                return stepCount - diagonalStepCount - rotationStepCount() + Step.DIAGONAL_LENGTH * diagonalStepCount;
+            }
+            case SEGMENT_CENTERS_POLYLINE: {
+                final long nonStraightStepCount = diagonalStepCount() + rotationStepCount();
+                return stepCount - nonStraightStepCount + Step.HALF_DIAGONAL_LENGTH * nonStraightStepCount;
+            }
+            default:
+                throw new AssertionError("Unsupported contourLineType=" + contourLineType);
+        }
+    }
+
 
     /**
      * Returns <tt>true</tt> if and only if
@@ -2069,6 +2199,8 @@ public abstract class Boundary2DScanner {
         AbstractMover startMover = null;
         ShiftInfo lastShiftInfo = null;
         long stepCount = 0;
+        long diagonalStepCount = 0;
+        long rotationStepCount = 0;
         long orientedArea = 0;
 
         private AbstractBoundary2DScanner(Matrix<? extends BitArray> matrix) {
@@ -2147,6 +2279,8 @@ public abstract class Boundary2DScanner {
         @Override
         public void resetCounters() {
             this.stepCount = 0;
+            this.diagonalStepCount = 0;
+            this.rotationStepCount = 0;
             this.orientedArea = 0;
         }
 
@@ -2172,6 +2306,16 @@ public abstract class Boundary2DScanner {
         @Override
         public long stepCount() {
             return stepCount;
+        }
+
+        @Override
+        public long diagonalStepCount() {
+            return diagonalStepCount;
+        }
+
+        @Override
+        public long rotationStepCount() {
+            return rotationStepCount;
         }
 
         @Override
@@ -2236,13 +2380,13 @@ public abstract class Boundary2DScanner {
 
             abstract boolean straight();
 
-            abstract boolean straightRight();
+            abstract boolean rightAfterStraight();
 
-            abstract void straightLeft();
+            abstract void straightBackLeft();
 
             abstract boolean diag();
 
-            abstract boolean diagLeft();
+            abstract boolean leftAfterDiag();
 
             abstract void straightBack();
 
@@ -2250,39 +2394,69 @@ public abstract class Boundary2DScanner {
 
             abstract void setHorizontalBracket(AbstractAccessor accessor);
 
-            void next4() {
+            final void next4() {
                 if (!atMatrixBound()) {
+                    // For example, we at the right side (MoverXP)...
                     if (!straight()) {
+                        // attempt to move upward (y++)
+                        //     , .   ("," is the checked zero pixel)
+                        //     X .
                         straightBack();
-                    } else if (straightRight()) {
+                        // return back: we need to rotate and go to the top side
+                    } else if (rightAfterStraight()) {
+                        // attempt to move rightward (x++) after previous upward (y++)
+                        //     X x   ("x" is the checked unit pixel)
+                        //     X .
+                        // o'k, it is a diagonal step (x++ and y++)
                         lastShiftInfo = mover.diagonal;
                         mover = lastShiftInfo.newMover;
+                        diagonalStepCount++;
                         return;
                     } else {
-                        straightLeft();
+                        // return leftward (back) (x-- after previous x++)
+                        //     X .
+                        //     X .
+                        straightBackLeft();
+                        // o'k, it is the simplest straight step (y++)
                         lastShiftInfo = mover.straight;
                         return;
                     }
                 }
                 lastShiftInfo = mover.rotation;
                 mover = lastShiftInfo.newMover;
+                rotationStepCount++;
             }
 
+            // This method is overridden in some subclasses for maximal performance
             void next8() {
                 if (!atMatrixBound()) {
+                    // For example, we at the right side (MoverXP)...
                     if (diag()) {
+                        // attempt to move upward and rightward (y++, x++)
+                        //     X x   ("x" is the checked unit pixel)
+                        //     X .
+                        // o'k, it is a diagonal step
                         lastShiftInfo = mover.diagonal;
                         mover = lastShiftInfo.newMover;
+                        diagonalStepCount++;
                         return;
                     }
-                    if (diagLeft()) {
+                    if (leftAfterDiag()) {
+                        // attempt to move upward (y++ only): x-- after previous x++
+                        //     x .   ("x" is the checked unit pixel)
+                        //     X .
+                        // o'k, it is the simplest straight step (y++)
                         lastShiftInfo = mover.straight;
                         return;
                     }
+                    //     . .
+                    //     X .
+                    // return back: we need to rotate and go to the top side
                     straightBack();
                 }
                 lastShiftInfo = mover.rotation;
                 mover = lastShiftInfo.newMover;
+                rotationStepCount++;
             }
         }
 
@@ -2442,13 +2616,13 @@ public abstract class Boundary2DScanner {
                 return array.getBit(index);
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 x--;
                 index--;
                 return x >= 0 && array.getBit(index);
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 x++;
                 index++;
             }
@@ -2460,7 +2634,7 @@ public abstract class Boundary2DScanner {
                 return x >= 0 && array.getBit(index);
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 x++;
                 index++;
                 return array.getBit(index);
@@ -2479,13 +2653,13 @@ public abstract class Boundary2DScanner {
                 return array.getBit(index);
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 y--;
                 index -= dimX;
                 return y >= 0 && array.getBit(index);
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 y++;
                 index += dimX;
             }
@@ -2497,7 +2671,7 @@ public abstract class Boundary2DScanner {
                 return y >= 0 && array.getBit(index);
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 y++;
                 index += dimX;
                 return array.getBit(index);
@@ -2515,13 +2689,13 @@ public abstract class Boundary2DScanner {
                 return array.getBit(index);
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 x++;
                 index++;
                 return x < dimX && array.getBit(index);
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 x--;
                 index--;
             }
@@ -2533,7 +2707,7 @@ public abstract class Boundary2DScanner {
                 return x < dimX && array.getBit(index);
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 x--;
                 index--;
                 return array.getBit(index);
@@ -2552,13 +2726,13 @@ public abstract class Boundary2DScanner {
                 return array.getBit(index);
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 y++;
                 index += dimX;
                 return y < dimY && array.getBit(index);
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 y--;
                 index -= dimX;
             }
@@ -2570,7 +2744,7 @@ public abstract class Boundary2DScanner {
                 return y < dimY && array.getBit(index);
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 y--;
                 index -= dimX;
                 return array.getBit(index);
@@ -2802,7 +2976,7 @@ public abstract class Boundary2DScanner {
                 return (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 x--;
                 index--;
                 if ((jaMask >>>= 1) == 0) {
@@ -2812,7 +2986,7 @@ public abstract class Boundary2DScanner {
                 return x >= 0 && (ja[jaDisp] & jaMask) != 0;
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 x++;
                 index++;
                 if ((jaMask <<= 1) == 0) {
@@ -2830,7 +3004,7 @@ public abstract class Boundary2DScanner {
                 return x >= 0 && (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 x++;
                 index++;
                 if ((jaMask <<= 1) == 0) {
@@ -2859,7 +3033,7 @@ public abstract class Boundary2DScanner {
                 return (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 y--;
                 index -= dimX;
                 jaDisp = (int)((jaOfs + index) >>> 6);
@@ -2867,7 +3041,7 @@ public abstract class Boundary2DScanner {
                 return y >= 0 && (ja[jaDisp] & jaMask) != 0;
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 y++;
                 index += dimX;
                 jaDisp = (int)((jaOfs + index) >>> 6);
@@ -2883,7 +3057,7 @@ public abstract class Boundary2DScanner {
                 return y >= 0 && (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 y++;
                 index += dimX;
                 jaDisp = (int)((jaOfs + index) >>> 6);
@@ -2910,7 +3084,7 @@ public abstract class Boundary2DScanner {
                 return (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 x++;
                 index++;
                 if ((jaMask <<= 1) == 0) {
@@ -2920,7 +3094,7 @@ public abstract class Boundary2DScanner {
                 return x < dimX && (ja[jaDisp] & jaMask) != 0;
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 x--;
                 index--;
                 if ((jaMask >>>= 1) == 0) {
@@ -2938,7 +3112,7 @@ public abstract class Boundary2DScanner {
                 return x < dimX && (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 x--;
                 index--;
                 if ((jaMask >>>= 1) == 0) {
@@ -2967,7 +3141,7 @@ public abstract class Boundary2DScanner {
                 return (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 y++;
                 index += dimX;
                 jaDisp = (int)((jaOfs + index) >>> 6);
@@ -2975,7 +3149,7 @@ public abstract class Boundary2DScanner {
                 return y < dimY && (ja[jaDisp] & jaMask) != 0;
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 y--;
                 index -= dimX;
                 jaDisp = (int)((jaOfs + index) >>> 6);
@@ -2991,7 +3165,7 @@ public abstract class Boundary2DScanner {
                 return y < dimY && (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 y--;
                 index -= dimX;
                 jaDisp = (int)((jaOfs + index) >>> 6);
@@ -3017,7 +3191,7 @@ public abstract class Boundary2DScanner {
                 return (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 x--;
                 index--;
                 if ((jaMask >>>= 1) == 0) {
@@ -3027,7 +3201,7 @@ public abstract class Boundary2DScanner {
                 return x >= 0 && (ja[jaDisp] & jaMask) != 0;
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 x++;
                 index++;
                 if ((jaMask <<= 1) == 0) {
@@ -3047,7 +3221,7 @@ public abstract class Boundary2DScanner {
                 return x >= 0 && (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 x++;
                 if ((jaMask <<= 1) == 0) {
                     jaMask = 1L;
@@ -3073,6 +3247,7 @@ public abstract class Boundary2DScanner {
                     if (x >= 0 && (ja[jaDisp] & jaMask) != 0) {
                         lastShiftInfo = mover.diagonal;
                         mover = lastShiftInfo.newMover;
+                        diagonalStepCount++;
                         return;
                     }
                     x++;
@@ -3089,6 +3264,7 @@ public abstract class Boundary2DScanner {
                 }
                 lastShiftInfo = mover.rotation;
                 mover = lastShiftInfo.newMover;
+                rotationStepCount++;
             }
         }
 
@@ -3104,13 +3280,13 @@ public abstract class Boundary2DScanner {
                 return (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 y--;
                 jaDisp -= jaStep;
                 return y >= 0 && (ja[jaDisp] & jaMask) != 0;
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 y++;
                 jaDisp += jaStep;
             }
@@ -3126,7 +3302,7 @@ public abstract class Boundary2DScanner {
                 return y >= 0 && (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 y++;
                 jaDisp += jaStep;
                 return (ja[jaDisp] & jaMask) != 0;
@@ -3152,6 +3328,7 @@ public abstract class Boundary2DScanner {
                     if (y >= 0 && (ja[jaDisp] & jaMask) != 0) {
                         lastShiftInfo = mover.diagonal;
                         mover = lastShiftInfo.newMover;
+                        diagonalStepCount++;
                         return;
                     }
                     y++;
@@ -3168,6 +3345,7 @@ public abstract class Boundary2DScanner {
                 }
                 lastShiftInfo = mover.rotation;
                 mover = lastShiftInfo.newMover;
+                rotationStepCount++;
             }
         }
 
@@ -3179,7 +3357,7 @@ public abstract class Boundary2DScanner {
                 return (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 x++;
                 if ((jaMask <<= 1) == 0) {
                     jaMask = 1L;
@@ -3188,7 +3366,7 @@ public abstract class Boundary2DScanner {
                 return x < dimX && (ja[jaDisp] & jaMask) != 0;
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 x--;
                 index--;
                 if ((jaMask >>>= 1) == 0) {
@@ -3208,7 +3386,7 @@ public abstract class Boundary2DScanner {
                 return x < dimX && (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 x--;
                 if ((jaMask >>>= 1) == 0) {
                     jaMask = Long.MIN_VALUE;
@@ -3234,6 +3412,7 @@ public abstract class Boundary2DScanner {
                     if (x < dimX && (ja[jaDisp] & jaMask) != 0) {
                         lastShiftInfo = mover.diagonal;
                         mover = lastShiftInfo.newMover;
+                        diagonalStepCount++;
                         return;
                     }
                     x--;
@@ -3250,6 +3429,7 @@ public abstract class Boundary2DScanner {
                 }
                 lastShiftInfo = mover.rotation;
                 mover = lastShiftInfo.newMover;
+                rotationStepCount++;
             }
         }
 
@@ -3265,13 +3445,13 @@ public abstract class Boundary2DScanner {
                 return (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean straightRight() {
+            boolean rightAfterStraight() {
                 y++;
                 jaDisp += jaStep;
                 return y < dimY && (ja[jaDisp] & jaMask) != 0;
             }
 
-            void straightLeft() {
+            void straightBackLeft() {
                 y--;
                 jaDisp -= jaStep;
             }
@@ -3287,7 +3467,7 @@ public abstract class Boundary2DScanner {
                 return y < dimY && (ja[jaDisp] & jaMask) != 0;
             }
 
-            boolean diagLeft() {
+            boolean leftAfterDiag() {
                 y--;
                 jaDisp -= jaStep;
                 return (ja[jaDisp] & jaMask) != 0;
@@ -3313,6 +3493,7 @@ public abstract class Boundary2DScanner {
                     if (y < dimY && (ja[jaDisp] & jaMask) != 0) {
                         lastShiftInfo = mover.diagonal;
                         mover = lastShiftInfo.newMover;
+                        diagonalStepCount++;
                         return;
                     }
                     y--;
@@ -3329,6 +3510,7 @@ public abstract class Boundary2DScanner {
                 }
                 lastShiftInfo = mover.rotation;
                 mover = lastShiftInfo.newMover;
+                rotationStepCount++;
             }
         }
     }
@@ -3844,6 +4026,7 @@ public abstract class Boundary2DScanner {
         if (!scanner.get()) {
             // searching for nearest 1 after 0 (current)
             return goToNextUnitBit(scanner, index + 1);
+            // note: here we may skip some fully empty (zero) lines
         } else {
             if (scanner.mover == null) {
                 // special case: start scanning from a unit bit at (0,0)
@@ -3855,13 +4038,15 @@ public abstract class Boundary2DScanner {
             final long x = scanner.x();
             long i = scanner.array.indexOf(index + 1, index + scanner.dimX - x, false);
             if (i == -1) {
+                // all bits sinse index+1 until line end (dimX) are zero
                 i = scanner.dimX - x - 1;
             } else {
                 i -= index + 1;
             }
             // now x+i+1 and index+i+1 correspond to nearest 0 in this line or dimX if this line has no more 0
             if (i == 0) {
-                // index+1 is 0 (or dimX), so the index corresponds to the last unit bit in a series
+                // bit #(index+1) is 0 or index+1 corresponds to dimX,
+                // so the index corresponds to the last unit bit in a series
                 if (scanner.side() != Side.X_PLUS) {
                     scanner.goTo(x, scanner.y(), Side.X_PLUS);
                     return true;
@@ -3878,6 +4063,7 @@ public abstract class Boundary2DScanner {
         AbstractBoundary2DScanner.AbstractAccessor bufferAccessor1,
         AbstractBoundary2DScanner.AbstractAccessor bufferAccessor2)
     {
+        boundariesLoop:
         for (; ;) {
             if (!nextSingleBoundary(scanner)) {
                 return null;
@@ -3891,30 +4077,38 @@ public abstract class Boundary2DScanner {
             }
             if (bracket1 || bracket2) { // already scanned external / internal boundary
                 switch (scanner.mover.currentSide) {
-                    case X_MINUS:
+                    case X_MINUS: {
                         if (bracket1) {
                             scanner.nestingLevel++;
                         } else {
                             scanner.nestingLevel--;
                         }
-                        break;
-                    case X_PLUS:
+                        continue boundariesLoop;
+                    }
+                    case X_PLUS: {
                         if (bracket1) {
                             scanner.nestingLevel--;
                         } else {
                             scanner.nestingLevel++;
                         }
-                        break;
-                    default:
-                        throw new AssertionError("getHorizontalBracket must be false in " + scanner.mover.currentSide);
+                        continue boundariesLoop;
+                    }
+                    default: {
+                        throw new AssertionError("getHorizontalBracket must be false in "
+                                + scanner.mover.currentSide);
+                    }
                 }
             } else { // first time at this boundary
                 scanner.nestingLevel++;
                 switch (scanner.mover.currentSide) {
-                    case X_MINUS: // external boundary
+                    case X_MINUS: {
+                        // external boundary
                         return bufferAccessor1;
-                    case X_PLUS: // internal boundary
+                    }
+                    case X_PLUS: {
+                        // internal boundary
                         return bufferAccessor2;
+                    }
                 }
             }
         }
