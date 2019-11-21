@@ -119,6 +119,11 @@ public abstract class Boundary2DWrapper extends Boundary2DScanner {
     }
 
     @Override
+    public boolean atMatrixBoundary() {
+        return parent.atMatrixBoundary();
+    }
+
+    @Override
     public long nestingLevel() {
         return parent.nestingLevel();
     }

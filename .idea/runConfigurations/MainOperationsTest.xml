@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MainOperationsTest" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.MainOperationsTest" />
+    <module name="algart" />
+    <option name="PROGRAM_PARAMETERS" value="ALL 10000 200 " />
+    <option name="VM_PARAMETERS" value="-Dnet.algart.arrays.globalMemoryModel=BUFFER -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=2048 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="net.algart.arrays.demo.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -49,10 +49,6 @@ class DirectDataStorages {
             return BufferMemoryModel.getInstance();
         }
 
-        public String toString() {
-            return "direct NIO storage: @" + Integer.toHexString(System.identityHashCode(bb));
-        }
-
         ByteOrder byteOrder() {
             return ByteOrder.nativeOrder();
         }
@@ -91,10 +87,13 @@ class DirectDataStorages {
             if (this instanceof DirectBitStorage) {
                 arrayLength = PackedBitArrays.packedLength(capacity);
             }
-            if (arrayLength != (int)arrayLength)
-                throw new TooLargeArrayException("Too large desired array capacity for LargeMemoryModel: "
-                    + capacity + " (" + this + ")");
-            ByteBuffer result = ByteBuffer.allocateDirect((int)arrayLength << bytesPerBufferElementLog());
+            final long byteBufferLength = arrayLength << bytesPerBufferElementLog();
+            if (arrayLength != (int) arrayLength || byteBufferLength != (int) byteBufferLength)
+                // - 1st check is also necessary to be sure, that
+                // "<< bytesPerBufferElementLog()"  performed without overflow
+                throw new TooLargeArrayException("Too large desired array capacity for BufferMemoryModel: "
+                        + capacity + " = 0x" + Long.toHexString(capacity) + " (" + this + ")");
+            ByteBuffer result = ByteBuffer.allocateDirect((int) byteBufferLength);
             result.order(ByteOrder.nativeOrder());
             // The following code has become unnecessary after correction of JDK JavaDoc in Java 1.7:
             // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6535542
@@ -111,6 +110,10 @@ class DirectDataStorages {
 
         DataStorage newCompatibleEmptyStorage(boolean unresizable) {
             return new DirectBitStorage();
+        }
+
+        public String toString() {
+            return "direct NIO bit storage: @" + Integer.toHexString(System.identityHashCode(bb));
         }
 
         int bytesPerBufferElementLog() {
@@ -274,6 +277,10 @@ class DirectDataStorages {
             return new DirectByteStorage();
         }
 
+        public String toString() {
+            return "direct NIO byte storage: @" + Integer.toHexString(System.identityHashCode(bb));
+        }
+
         int bytesPerBufferElementLog() {
             return BYTES_PER_BYTE_LOG;
         }
@@ -412,6 +419,10 @@ class DirectDataStorages {
             return new DirectShortStorage();
         }
 
+        public String toString() {
+            return "direct NIO short storage: @" + Integer.toHexString(System.identityHashCode(bb));
+        }
+
         int bytesPerBufferElementLog() {
             return BYTES_PER_SHORT_LOG;
         }
@@ -541,6 +552,10 @@ class DirectDataStorages {
 
         DataStorage newCompatibleEmptyStorage(boolean unresizable) {
             return new DirectCharStorage();
+        }
+
+        public String toString() {
+            return "direct NIO char storage: @" + Integer.toHexString(System.identityHashCode(bb));
         }
 
         int bytesPerBufferElementLog() {
@@ -674,6 +689,10 @@ class DirectDataStorages {
             return new DirectIntStorage();
         }
 
+        public String toString() {
+            return "direct NIO int storage: @" + Integer.toHexString(System.identityHashCode(bb));
+        }
+
         int bytesPerBufferElementLog() {
             return BYTES_PER_INT_LOG;
         }
@@ -803,6 +822,10 @@ class DirectDataStorages {
 
         DataStorage newCompatibleEmptyStorage(boolean unresizable) {
             return new DirectLongStorage();
+        }
+
+        public String toString() {
+            return "direct NIO long storage: @" + Integer.toHexString(System.identityHashCode(bb));
         }
 
         int bytesPerBufferElementLog() {
@@ -936,6 +959,10 @@ class DirectDataStorages {
             return new DirectFloatStorage();
         }
 
+        public String toString() {
+            return "direct NIO float storage: @" + Integer.toHexString(System.identityHashCode(bb));
+        }
+
         int bytesPerBufferElementLog() {
             return BYTES_PER_FLOAT_LOG;
         }
@@ -1065,6 +1092,10 @@ class DirectDataStorages {
 
         DataStorage newCompatibleEmptyStorage(boolean unresizable) {
             return new DirectDoubleStorage();
+        }
+
+        public String toString() {
+            return "direct NIO double storage: @" + Integer.toHexString(System.identityHashCode(bb));
         }
 
         int bytesPerBufferElementLog() {

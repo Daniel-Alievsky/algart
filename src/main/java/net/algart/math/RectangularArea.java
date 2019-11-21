@@ -708,7 +708,7 @@ public strictfp class RectangularArea {
      *
      * @param areas collection of areas (we find intersection with each from them).
      * @return     intersection of this and the second rectangular area or <tt>null</tt> if they do not intersect.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is <tt>null</tt> or one of its elements is <tt>null</tt>.
      * @throws IllegalArgumentException if this rectangular area or some of elements of the passed collection
      *                                  have different {@link #coordCount()}.
      */
@@ -1315,12 +1315,62 @@ public strictfp class RectangularArea {
      * @param results the list to store results (new areas will be added to the end of this list).
      * @param expansion how to dilate this area.
      * @return a reference to the <tt>results</tt> argument.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>expansion &lt; 0</tt>
      *                                  or if the result area will be incorrect (see comments to
      *                                  {@link #valueOf(Point, Point)} method).
      */
     public List<RectangularArea> dilateStraightOnly(List<RectangularArea> results, double expansion) {
         return dilateStraightOnly(results, Point.valueOfEqualCoordinates(coordCount(), expansion));
+    }
+
+    /**
+     * Dilates all areas, specified by the argument, by {@link #dilate(Point) dilate} or
+     * {@link #dilateStraightOnly(List, Point) dilateStraightOnly} method,
+     * and returns the list of dilated areas.
+     * <p>If <tt>straightOnly</tt> argument is <tt>false</tt>, this method is equivalent to the following code:
+     * <pre>
+     * final List<RectangularArea> result = new ArrayList<RectangularArea>();
+     * for (RectangularArea area : areas) {
+     *     result.add(area.{@link #dilate(Point) dilate}(expansion));
+     * }</pre>
+     * <p>If <tt>straightOnly</tt> argument is <tt>true</tt>, this method is equivalent to the following code:
+     * <pre>
+     * final List<RectangularArea> result = new ArrayList<RectangularArea>();
+     * for (RectangularArea area : areas) {
+     *     area.{@link #dilateStraightOnly(List, Point) dilateStraightOnly}(result, expansion);
+     * }</pre>
+     * <p>Note that in the second case the resulting list will usually contain more elements than
+     * the source <tt>areas</tt> collection.
+     *
+     * @param areas areas to be dilated.
+     * @param expansion how to dilate these areas.
+     * @param straightOnly dilation mode.
+     * @return list of dilated areas.
+     * @throws NullPointerException  if one of the  arguments is <tt>null</tt> or one of areas is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
+     *                                  the {@link #coordCount() number of dimensions} of one of areas,
+     *                                  or if <tt>straightOnly</tt> amd one of coordinates of <tt>expansion</tt>
+     *                                  is negative (and collection of areas is not empty),
+     *                                  or if one of the result areas will be incorrect (see comments to
+     *                                  {@link #valueOf(Point, Point)} method).
+     */
+    public static List<RectangularArea> dilate(
+            Collection<RectangularArea> areas,
+            Point expansion,
+            boolean straightOnly) {
+        if (areas == null) {
+            throw new NullPointerException("Null areas");
+        }
+        final List<RectangularArea> result = new ArrayList<RectangularArea>();
+        for (RectangularArea area : areas) {
+            if (straightOnly) {
+                area.dilateStraightOnly(result, expansion);
+            } else {
+                result.add(area.dilate(expansion));
+            }
+        }
+        return result;
     }
 
     /**

@@ -112,9 +112,9 @@ class SimpleArraysImpl {
             if (this instanceof BitArray) {
                 arrayLength = PackedBitArrays.packedLength(capacity);
             }
-            if (arrayLength != (int)arrayLength)
+            if (arrayLength != (int) arrayLength)
                 throw new TooLargeArrayException("Too large desired array capacity for SimpleMemoryModel: "
-                    + capacity + " (" + this + ")");
+                        + capacity + " = 0x" + Long.toHexString(capacity) + " (" + this + ")");
             if (this instanceof BitArray)
                 return new long[(int)arrayLength];
             else

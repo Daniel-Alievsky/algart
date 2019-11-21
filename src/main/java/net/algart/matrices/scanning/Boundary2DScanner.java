@@ -242,9 +242,11 @@ public abstract class Boundary2DScanner {
             }
 
             @Override
-            void correctCounters(AbstractBoundary2DScanner scanner, long x) {
+            void correctState(AbstractBoundary2DScanner scanner) {
                 scanner.stepCount++;
+                final long x = scanner.x;
                 scanner.orientedArea -= x - 1;
+                scanner.atMatrixBoundary = x == 0;
             }
         },
 
@@ -259,8 +261,9 @@ public abstract class Boundary2DScanner {
             }
 
             @Override
-            void correctCounters(AbstractBoundary2DScanner scanner, long x) {
+            void correctState(AbstractBoundary2DScanner scanner) {
                 scanner.stepCount++;
+                scanner.atMatrixBoundary = scanner.y == 0;
             }
         },
 
@@ -275,9 +278,11 @@ public abstract class Boundary2DScanner {
             }
 
             @Override
-            void correctCounters(AbstractBoundary2DScanner scanner, long x) {
+            void correctState(AbstractBoundary2DScanner scanner) {
                 scanner.stepCount++;
-                scanner.orientedArea  += x;
+                final long x = scanner.x;
+                scanner.orientedArea += x;
+                scanner.atMatrixBoundary = x == scanner.dimX - 1;
             }
         },
 
@@ -292,8 +297,9 @@ public abstract class Boundary2DScanner {
             }
 
             @Override
-            void correctCounters(AbstractBoundary2DScanner scanner, long x) {
+            void correctState(AbstractBoundary2DScanner scanner) {
                 scanner.stepCount++;
+                scanner.atMatrixBoundary = scanner.y == scanner.dimY - 1;
             }
         };
 
@@ -395,7 +401,7 @@ public abstract class Boundary2DScanner {
         abstract AbstractBoundary2DScanner.AbstractMover getMover(AbstractBoundary2DScanner scanner);
 
         // Note: diagonalStepCount and rotationStepCount are corrected not here, but directly in the scanner
-        abstract void correctCounters(AbstractBoundary2DScanner scanner, long x);
+        abstract void correctState(AbstractBoundary2DScanner scanner);
     }
 
     /**
@@ -1642,6 +1648,24 @@ public abstract class Boundary2DScanner {
     }
 
     /**
+     * Returns <tt>{@link #matrix() matrix()}.{@link Matrix#dimX() dimX()}</tt>.
+     *
+     * @return x-dimension of the currently scanner matrix.
+     */
+    public final long dimX() {
+        return dimX;
+    }
+
+    /**
+     * Returns <tt>{@link #matrix() matrix()}.{@link Matrix#dimY() dimY()}</tt>.
+     *
+     * @return y-dimension of the currently scanner matrix.
+     */
+    public final long dimY() {
+        return dimY;
+    }
+
+    /**
      * Returns the connectivity kind, used by this object.
      * It is specified while creating this instance.
      *
@@ -1704,6 +1728,27 @@ public abstract class Boundary2DScanner {
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
     public abstract Side side();
+
+    /**
+     * Returns <tt>true</tt> if and only if the {@link #side() current pixel side} lies at the boundary
+     * of the {@link #matrix() scanned matrix}.
+     * In other words, returns <tt>true</tt> if:
+     * <ul>
+     *     <li><tt>{@link #side() side()}=={@link Side#X_MINUS Side.X_MINUS}</tt> and
+     *     <tt>{@link #x() x()}==0</tt>,</li>
+     *     <li>or <tt>{@link #side() side()}=={@link Side#Y_MINUS Side.Y_MINUS}</tt> and
+     *     <tt>{@link #y() y()}==0</tt>,</li>
+     *     <li>or <tt>{@link #side() side()}=={@link Side#X_PLUS Side.X_PLUS}</tt> and
+     *     <tt>{@link #x() x()}=={@link #dimX() dimX()}-1</tt>,</li>
+     *     <li>or <tt>{@link #side() side()}=={@link Side#Y_PLUS Side.Y_PLUS}</tt> and
+     *     <tt>{@link #y() y()}=={@link #dimY() dimY()}-1</tt>.</li>
+     * </ul>
+     * <p>Note: if this scanner was not {@link #isInitialized() positioned yet}, this method
+     * does not throw an exception and simply returns <tt>false</tt>.
+     *
+     * @return whether the current segment of the boundary is a part of the boundary of the whole scanned matrix.
+     */
+    public abstract boolean atMatrixBoundary();
 
     /**
      * Returns the current <i>nesting level</i> of object boundaries:
@@ -2198,6 +2243,7 @@ public abstract class Boundary2DScanner {
         AbstractMover mover = null; // indicator, that the object is not initialized
         AbstractMover startMover = null;
         ShiftInfo lastShiftInfo = null;
+        boolean atMatrixBoundary = false;
         long stepCount = 0;
         long diagonalStepCount = 0;
         long rotationStepCount = 0;
@@ -2248,6 +2294,11 @@ public abstract class Boundary2DScanner {
             if (mover == null)
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             return mover.currentSide;
+        }
+
+        @Override
+        public boolean atMatrixBoundary() {
+            return atMatrixBoundary;
         }
 
         @Override
@@ -2772,7 +2823,7 @@ public abstract class Boundary2DScanner {
             if (mover == null)
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next4();
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
     }
 
@@ -2791,7 +2842,7 @@ public abstract class Boundary2DScanner {
             if (mover == null)
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next8();
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
     }
 
@@ -3530,7 +3581,7 @@ public abstract class Boundary2DScanner {
             if (mover == null)
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next4();
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
     }
 
@@ -3549,7 +3600,7 @@ public abstract class Boundary2DScanner {
             if (mover == null)
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next8();
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
     }
 
@@ -3613,7 +3664,7 @@ public abstract class Boundary2DScanner {
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next4();
             mover.setHorizontalBracket(bufferAccessor);
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
 
         public String toString() {
@@ -3676,7 +3727,7 @@ public abstract class Boundary2DScanner {
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next8();
             mover.setHorizontalBracket(bufferAccessor);
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
 
         public String toString() {
@@ -3738,7 +3789,7 @@ public abstract class Boundary2DScanner {
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next4();
             mover.setHorizontalBracket(bufferAccessor);
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
 
         public String toString() {
@@ -3800,7 +3851,7 @@ public abstract class Boundary2DScanner {
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next8();
             mover.setHorizontalBracket(bufferAccessor);
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
 
         public String toString() {
@@ -3857,7 +3908,7 @@ public abstract class Boundary2DScanner {
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next4();
             mover.setHorizontalBracket(bufferAccessor);
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
 
         public String toString() {
@@ -3908,7 +3959,7 @@ public abstract class Boundary2DScanner {
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next8();
             mover.setHorizontalBracket(bufferAccessor);
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
 
         public String toString() {
@@ -3958,7 +4009,7 @@ public abstract class Boundary2DScanner {
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next4();
             mover.setHorizontalBracket(bufferAccessor);
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
 
         public String toString() {
@@ -4008,7 +4059,7 @@ public abstract class Boundary2DScanner {
                 throw new IllegalStateException("The boundary scanner is not positioned yet");
             mover.next8();
             mover.setHorizontalBracket(bufferAccessor);
-            mover.currentSide.correctCounters(this, x);
+            mover.currentSide.correctState(this);
         }
 
         public String toString() {
