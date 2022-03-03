@@ -269,7 +269,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
     long index;
     boolean forceClearing;
     long maxUsedMemory = 0;
-    Matrix<UpdatableBitArray> workMemory = null;
+    Matrix<UpdatableBitArray> workMemory = null; // - used only in clearAllBySizes
 
     private ConnectedObjectScanner(
         Matrix<? extends UpdatableBitArray> matrix,
@@ -911,24 +911,25 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * one unit (1) element of the first matrix. In other words, this method just calls
      * {@link #clear(ArrayContext, long...) clear} method for coordinates, corresponding to all unit
      * elements of the first matrix, in a {@link #clone() clone} of this scanner,
-     * where the processed matrix is {@link #matrix(Matrix) replaced} with <tt>secondaryMatrix</tt>.
+     * where the processed matrix is {@link #matrix(Matrix) replaced} with <tt>objects</tt>.
      *
      * @param context         the context of scanning; may be <tt>null</tt>, then will be ignored.
-     * @param secondaryMatrix the second matrix, where this method clears all objects connected with some objects
+     * @param objects the second matrix, where this method clears all objects connected with some objects
      *                        in the matrix, corresponding to this object.
-     * @return the total number of cleared elements in <tt>secondaryMatrix</tt>.
-     * @throws NullPointerException  if <tt>secondaryMatrix</tt> argument is <tt>null</tt>.
-     * @throws SizeMismatchException if <tt>secondaryMatrix</tt> and the scanned matrix have different dimensions.
+     * @return the total number of cleared elements in <tt>objects</tt>.
+     * @throws NullPointerException  if <tt>objects</tt> argument is <tt>null</tt>.
+     * @throws SizeMismatchException if <tt>objects</tt> and the scanned matrix have different dimensions.
      */
-    public long clearAllConnected(final ArrayContext context, Matrix<? extends UpdatableBitArray> secondaryMatrix) {
-        if (secondaryMatrix == null)
+    public long clearAllConnected(final ArrayContext context, Matrix<? extends UpdatableBitArray> objects) {
+        if (objects == null)
             throw new NullPointerException("Null secondary matrix");
-        if (!secondaryMatrix.dimEquals(matrix))
+        if (!objects.dimEquals(matrix))
             throw new SizeMismatchException("Current and secondary matrix dimensions mismatch: current matrix is "
-                + matrix + ", secondary is " + secondaryMatrix);
+                + matrix + ", secondary is " + objects);
         final ConnectedObjectScanner secondaryScanner = clone();
-        secondaryScanner.matrix(secondaryMatrix);
+        secondaryScanner.matrix(objects);
         ClearerOfSecondaryMatrix clearer = new ClearerOfSecondaryMatrix(context, secondaryScanner);
+        long[] coordinates = new long[matrix.dimCount()]; // zero-filled
         while (this.nextUnitBit(coordinates)) {
             this.clear(context, clearer, coordinates);
             if (context != null) {
