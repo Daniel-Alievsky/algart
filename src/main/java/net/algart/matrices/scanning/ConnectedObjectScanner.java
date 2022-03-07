@@ -524,6 +524,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
         return new UncheckedDepthFirstScanner(matrix, connectivityType);
     }
 
+
     /**
      * An analog of {@link #getStacklessDepthFirstScanner} method, returning the instance, which works correctly
      * only if all matrix elements with zero and maximal coordinates are zero.
