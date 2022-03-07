@@ -3443,11 +3443,11 @@ public class Arrays {
      * <p>If the <tt>minMaxInfo</tt> argument is not <tt>null</tt>,
      * the indexes of the found minimum / maximum, as well as the returned range, are stored in this object,
      * and this object becomes {@link Arrays.MinMaxInfo#isInitialized() initialized}.
-     * In future, this information may be retrieved by the corresponding methods of {@link MinMaxInfo} class.
+     * In the future, this information may be retrieved by the corresponding methods of {@link MinMaxInfo} class.
      * If there are several elements equal to the minimum,
-     * the index of minimum, stored in this object, may contain an index of any such element.
+     * the index of minimum, stored in this object, will contain an index of the <b>first</b> such element.
      * If there are several elements equal to the maximum,
-     * the index of maximum, stored in this object, may contain an index of any such element.
+     * the index of maximum, stored in this object, may contain an index of the <b>first</b> such element.
      *
      * <p>If the passed array is empty (its length is 0), the method returns <tt>0..0</tt> range
      * ({@link Range#valueOf(double, double) Range.valueOf(0.0, 0.0)}). In this case,
