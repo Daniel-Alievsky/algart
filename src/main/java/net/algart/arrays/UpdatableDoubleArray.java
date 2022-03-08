@@ -32,8 +32,6 @@ package net.algart.arrays;
  * <p>AlgART array of <tt>double</tt> values, read/write access, no resizing.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface UpdatableDoubleArray extends DoubleArray, UpdatablePFloatingArray {
     /**

@@ -47,8 +47,6 @@ import java.util.*;
  * works quickly and does not lead to complex calculations and allocating additional memory.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class IRectanglesUnion {
     static final int DEBUG_LEVEL = net.algart.arrays.Arrays.SystemSettings.getIntProperty(

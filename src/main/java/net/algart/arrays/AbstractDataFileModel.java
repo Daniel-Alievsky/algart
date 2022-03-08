@@ -38,8 +38,6 @@ import java.util.Collections;
  * the effort required to implement this interface for processing usual disk files.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractDataFileModel implements DataFileModel<File> {
 

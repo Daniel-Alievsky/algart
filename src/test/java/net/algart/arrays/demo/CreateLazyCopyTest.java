@@ -36,8 +36,6 @@ import net.algart.math.functions.*;
  * <p>The test illustrating performance of lazy filling of file-based AlgART arrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class CreateLazyCopyTest {
     private static void pause() {

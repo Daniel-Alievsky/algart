@@ -33,8 +33,6 @@ import net.algart.arrays.*;
  * <p>The test illustrating that all AlgART arrays, including file-based, are initialized by zeros.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class ZeroInitializingTest {
     private static long mySum(Array array, boolean reverseOrder) {

@@ -32,8 +32,6 @@ import java.util.*;
  * <p>Implementations of {@link Arrays} methods making functional arrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class ArraysFuncImpl {
     private static final long MIN_LENGTH_OF_SHORT_ARRAYS_FOR_TABLE_OPTIMIZATION = 65536;

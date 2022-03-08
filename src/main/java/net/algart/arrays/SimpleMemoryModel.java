@@ -79,8 +79,6 @@ import net.algart.arrays.SimpleArraysImpl.*;
  * Moreover, it is a <b>singleton</b>: {@link #getInstance()} always returns the same object.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public final class SimpleMemoryModel extends AbstractMemoryModel {
 

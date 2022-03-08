@@ -70,8 +70,6 @@ import java.util.logging.Logger;
  * but <b>are thread-compatible</b> and can be synchronized manually.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class ExternalProcessor implements ArrayProcessor, Closeable {
     /**

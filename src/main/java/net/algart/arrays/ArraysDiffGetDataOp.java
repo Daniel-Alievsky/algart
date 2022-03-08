@@ -34,8 +34,6 @@ import net.algart.arrays.BufferArraysImpl.AbstractBufferArray;
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class ArraysDiffGetDataOp {
     private static final boolean OPTIMIZE_SUBTRACT_FOR_JARRAYS = true;

@@ -34,8 +34,6 @@ import java.util.zip.Checksum;
  * <p>This class cannot be instantiated.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class JArrays {
     private static final int HASH_BLOCK_LEN = 256; // must be 2^k

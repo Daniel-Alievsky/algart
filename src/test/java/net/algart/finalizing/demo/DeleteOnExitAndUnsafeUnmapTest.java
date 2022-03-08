@@ -34,8 +34,6 @@ import java.security.*;
  * <p>Simplest test for <tt>File.deleteOnExit()</tt> method.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class DeleteOnExitAndUnsafeUnmapTest {
     private static void unsafeUnmap(final MappedByteBuffer mbb) {

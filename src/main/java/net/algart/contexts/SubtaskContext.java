@@ -99,8 +99,6 @@ import java.util.Locale;
  * wrapping all method of the parent context.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class SubtaskContext implements Context {
     private final Context parentContext;

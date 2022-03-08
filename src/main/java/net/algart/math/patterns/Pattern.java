@@ -412,8 +412,6 @@ import net.algart.math.*;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface Pattern {
     /**

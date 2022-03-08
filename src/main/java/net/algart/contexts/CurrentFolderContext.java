@@ -36,8 +36,6 @@ package net.algart.contexts;
  * <p>This package does not provide implementations of this context.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface CurrentFolderContext extends Context {
     /**

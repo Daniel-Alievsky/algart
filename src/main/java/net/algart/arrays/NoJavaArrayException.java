@@ -29,8 +29,6 @@ package net.algart.arrays;
  * if the object cannot be viewed as a Java array.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class NoJavaArrayException extends RuntimeException {
     /**

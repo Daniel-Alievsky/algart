@@ -36,8 +36,6 @@ package net.algart.contexts;
  * or be very brief and simple.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface StatusUpdater extends Context {
     /**

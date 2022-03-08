@@ -31,8 +31,6 @@ package net.algart.contexts;
  * and does not contain inside any other context that could be returned.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class UnsupportedContextException extends RuntimeException {
     /**

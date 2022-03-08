@@ -96,8 +96,6 @@ package net.algart.arrays;
  * all other methods are implemented via calls of these 2 methods.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractUpdatableBitArray extends AbstractBitArray implements UpdatableBitArray {
 

@@ -35,8 +35,6 @@ import net.algart.math.functions.Func;
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class ArraysBitTableGetDataOp {
     private static final int BOOLEAN_BUFFER_LENGTH = 32768; // elements

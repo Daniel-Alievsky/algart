@@ -36,8 +36,6 @@ import java.util.Locale;
  * Please modify and debug this code to view how large patters are processed.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public strictfp class ExtremelyLargePatternTest {
     static final long MAX = 1L << 61;

@@ -92,8 +92,6 @@ import static net.algart.matrices.skeletons.ThinningTools.*;
  * and can be synchronized manually, if multithread access is necessary.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  * @see StrongQuadruple3x5ThinningSkeleton2D
  */
 public class Quadruple3x5ThinningSkeleton2D extends AbstractThinningSkeleton2D implements ThinningSkeleton {

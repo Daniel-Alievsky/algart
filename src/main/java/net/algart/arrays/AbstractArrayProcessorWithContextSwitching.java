@@ -36,8 +36,6 @@ package net.algart.arrays;
  * if this algorithm is not suitable.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractArrayProcessorWithContextSwitching
     implements ArrayProcessorWithContextSwitching, Cloneable

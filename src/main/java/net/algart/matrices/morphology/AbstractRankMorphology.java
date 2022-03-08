@@ -59,8 +59,6 @@ import net.algart.math.patterns.Pattern;
  * methods which get the percentile indexes in a form of <tt>double</tt> parameters.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractRankMorphology extends AbstractMorphology implements RankMorphology {
 

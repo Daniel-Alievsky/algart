@@ -29,8 +29,6 @@ package net.algart.arrays;
  * <p>Data buffer for <tt>float</tt> elements.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface DataFloatBuffer extends DataBuffer {
     public DataFloatBuffer map(long position);

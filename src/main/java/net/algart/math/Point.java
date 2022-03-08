@@ -40,8 +40,6 @@ import java.util.zip.*;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  * @see IPoint
  */
 public strictfp class Point implements Comparable<Point> {

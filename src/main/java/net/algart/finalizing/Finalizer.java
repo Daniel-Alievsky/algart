@@ -160,8 +160,6 @@ import java.util.*;
  * <p>This class is <b>thread-safe</b>: you may use the same instance of this class in several threads.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public final class Finalizer {
     private Thread thread = null;

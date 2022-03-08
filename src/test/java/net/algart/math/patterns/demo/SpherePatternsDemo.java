@@ -39,8 +39,6 @@ import java.util.TreeSet;
  * <p>Simple test that creates sphere patterns.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class SpherePatternsDemo {
     public static void main(String[] args) {

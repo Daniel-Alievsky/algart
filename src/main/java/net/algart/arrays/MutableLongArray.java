@@ -33,8 +33,6 @@ package net.algart.arrays;
  * <p>Resizable AlgART array of <tt>long</tt> values.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface MutableLongArray extends LongStack, UpdatableLongArray, MutablePIntegerArray {
     public MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);

@@ -35,8 +35,6 @@ import java.util.Map;
  * <p>Simple demo of using {@link Matrix matrices}.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class SimpleMatrixDemo {
 //    private abstract static class MyIntArray extends AbstractIntArray implements IntArray {

@@ -62,8 +62,6 @@ import java.util.concurrent.ThreadPoolExecutor;
  * <p>Please not set low values for net.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMap property.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public strictfp class MainOperationsTest implements Cloneable {
     private static boolean objectEquals(Object o1, Object o2) {

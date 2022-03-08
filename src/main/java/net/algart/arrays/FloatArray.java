@@ -29,8 +29,6 @@ package net.algart.arrays;
  * <p>AlgART array of <tt>float</tt> values, read-only access.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface FloatArray extends PFloatingArray {
     public Class<? extends FloatArray> type();

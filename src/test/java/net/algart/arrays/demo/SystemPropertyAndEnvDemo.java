@@ -30,8 +30,6 @@ import static net.algart.arrays.Arrays.SystemSettings.*;
  * <p>Shows the system settings, loaded via {@link net.algart.arrays.Arrays.SystemSettings} methods.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class SystemPropertyAndEnvDemo {
     static final String PROPERTY_NAME = "net.algart.arrays.demo.test";

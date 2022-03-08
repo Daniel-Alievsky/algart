@@ -83,8 +83,6 @@ package net.algart.arrays;
  * This class allows to sort up to 2<sup>63</sup>&minus;1 elements.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 
 public abstract class ArraySorter {

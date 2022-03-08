@@ -124,8 +124,6 @@ import java.util.Set;
  * works successfully and creates a correct integer pattern.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface UniformGridPattern extends Pattern {
     /**

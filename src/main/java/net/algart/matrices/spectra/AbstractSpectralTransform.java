@@ -102,8 +102,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * algorithms can work slowly.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractSpectralTransform implements SpectralTransform {
 

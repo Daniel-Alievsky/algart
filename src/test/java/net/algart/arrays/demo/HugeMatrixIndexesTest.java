@@ -35,8 +35,6 @@ import java.util.Random;
  * <p>Testing extra-large index calculation in the {@link Matrix matrices} (<tt>&gt;Long.MAX_VALUE</tt>).</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class HugeMatrixIndexesTest {
     static final Matrix<DoubleArray> matrix2A = Matrices.asCoordFuncMatrix(

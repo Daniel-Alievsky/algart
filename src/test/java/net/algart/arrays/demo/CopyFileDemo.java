@@ -39,8 +39,6 @@ import java.util.Locale;
  * <p>Simple test that copies one file to another via AlgART arrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class CopyFileDemo {
     private static void pause(String msg) throws IOException {

@@ -44,8 +44,6 @@ import java.util.Arrays;
  * (allows manual synchronization for multithreading access).</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class ByteArraySelector {
     private static final int MAX_LENGTH_FOR_PARTIAL_CLEARING = 100;

@@ -32,8 +32,6 @@ import java.util.Locale;
  * <p>Demo of using combined arrays: buffered filling and reading.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class BufferedCombinedArraysDemo {
     static final MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();

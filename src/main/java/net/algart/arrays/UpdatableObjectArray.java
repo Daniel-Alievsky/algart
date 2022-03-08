@@ -31,8 +31,6 @@ package net.algart.arrays;
  * ({@link #elementType()} must not return a primitive type).</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface UpdatableObjectArray<E> extends ObjectArray<E>, UpdatableArray {
     /**

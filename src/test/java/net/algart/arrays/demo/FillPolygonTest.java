@@ -41,8 +41,6 @@ import java.util.Random;
  * for a case of {@link Matrices.Polygon2D}.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class FillPolygonTest {
     public static void main(String[] args) throws IOException {

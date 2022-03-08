@@ -28,8 +28,6 @@ package net.algart.arrays;
  * <p>Service interface for {@link ArraysSubMatrixImpl} class.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 interface ArraysSubMatrixIndexer {
     public boolean bitsBlocksImplemented();

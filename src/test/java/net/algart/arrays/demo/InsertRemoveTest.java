@@ -31,8 +31,6 @@ import net.algart.arrays.*;
  * <p>Test for inserting and removing AlgART array elements.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class InsertRemoveTest {
     private MutableCharArray a;

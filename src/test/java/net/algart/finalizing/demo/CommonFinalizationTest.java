@@ -34,8 +34,6 @@ import java.nio.channels.*;
  * <p>Common test for finalization via reference queues an <tt>finalize()</tt> method.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class CommonFinalizationTest {
 

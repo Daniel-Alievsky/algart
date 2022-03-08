@@ -29,8 +29,6 @@ package net.algart.arrays;
  * <p>Resizable AlgART array of <tt>float</tt> values.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface MutableFloatArray extends FloatStack, UpdatableFloatArray, MutablePFloatingArray {
     /*Repeat.SectionStart resultTypes*/

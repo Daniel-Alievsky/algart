@@ -34,8 +34,6 @@ package net.algart.arrays;
  * ({@link ArrayContext#part(double, double)} method).
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface ArrayProcessorWithContextSwitching extends ArrayProcessor {
 

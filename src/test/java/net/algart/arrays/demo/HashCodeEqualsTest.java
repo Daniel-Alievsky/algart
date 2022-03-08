@@ -34,8 +34,6 @@ import net.algart.arrays.*;
  * <p>Simple test for AlgART array hashCode and equals methods.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class HashCodeEqualsTest {
     public static void main(String[] args) {

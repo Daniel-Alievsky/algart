@@ -28,8 +28,6 @@ package net.algart.contexts;
  * <p>The context allowing to inform the user about the percents of some long-working method.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface ProgressUpdater extends Context {
     /**

@@ -33,8 +33,6 @@ import net.algart.arrays.*;
  * <p>Speed of primitive arrays: common speed test</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class PArraysSpeed {
     private static final MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();

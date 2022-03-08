@@ -253,8 +253,6 @@ import java.util.Set;
  * but it is guaranteed for all instances created by the methods of the classes of this package.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class StreamingApertureProcessor extends AbstractArrayProcessorWithContextSwitching {
     private static final boolean ENABLE_STREAMING = Arrays.SystemSettings.getBooleanProperty(

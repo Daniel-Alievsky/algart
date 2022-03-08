@@ -30,8 +30,6 @@ import java.util.EmptyStackException;
  * <p>Implementations of arrays for {@link SimpleMemoryModel}.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class SimpleArraysImpl {
     private static final int MIN_COUNT_FOR_USING_DEFAULT_SWAP = 100;

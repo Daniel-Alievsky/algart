@@ -28,8 +28,6 @@ package net.algart.arrays;
  * <p>Data buffer for <tt>Object</tt> elements.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface DataObjectBuffer<E> extends DataBuffer {
     public DataObjectBuffer<E> map(long position);

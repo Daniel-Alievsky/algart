@@ -30,8 +30,6 @@ import net.algart.arrays.*;
  * <p>Simple test for behaviour of copy-on-write arrays while attempt to modify it.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class ModifiyingCopyOnWriteTest {
     public static void main(String args[]) {

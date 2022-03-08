@@ -36,8 +36,6 @@ package net.algart.math.functions;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public strictfp class InverseNumberFunc implements Func {
     final double c;

@@ -32,8 +32,6 @@ package net.algart.arrays;
  * all other methods are implemented via calls of {@link FloatArray#getFloat(long)}.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractFloatArray extends AbstractArray implements FloatArray {
     final boolean underlyingArraysAreParallel;

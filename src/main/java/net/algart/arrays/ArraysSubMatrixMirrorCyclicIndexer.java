@@ -28,8 +28,6 @@ package net.algart.arrays;
  * <p>Indexer for creating mirror-cyclically continued submatrices.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
     private static final boolean DEBUG_MODE = false; // enable 1 additional division, 1 multiplication and some asserts

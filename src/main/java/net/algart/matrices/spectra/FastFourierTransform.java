@@ -139,8 +139,6 @@ import net.algart.matrices.spectra.ComplexScalarSampleArray.*;
  * if all processed matrices have the same <tt>float</tt> or <tt>double</tt> element types.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class FastFourierTransform extends AbstractSpectralTransform implements SpectralTransform {
 

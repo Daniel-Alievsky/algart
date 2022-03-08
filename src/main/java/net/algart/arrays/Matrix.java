@@ -132,8 +132,6 @@ import net.algart.math.*;
  * all creation methods throw <tt>IllegalArgumentException</tt> in this case.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  * @see Array
  * @see UpdatableArray
  * @see MutableArray

@@ -29,8 +29,6 @@ package net.algart.arrays;
  * AlgART arrays have been changed.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class UnallowedMutationError extends Error {
     /**

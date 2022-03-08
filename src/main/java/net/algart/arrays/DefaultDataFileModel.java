@@ -93,8 +93,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  * @see StandardIODataFileModel
  */
 public class DefaultDataFileModel extends AbstractDataFileModel implements DataFileModel<File> {

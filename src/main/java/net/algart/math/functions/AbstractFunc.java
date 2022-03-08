@@ -37,8 +37,6 @@ package net.algart.math.functions;
  * you should override the version with two arguments: {@link #get(double, double)}.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractFunc implements Func {
     private double[] EMPTY = new double[0];

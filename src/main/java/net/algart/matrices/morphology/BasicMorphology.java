@@ -54,8 +54,6 @@ import java.util.*;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class BasicMorphology extends AbstractMorphology implements Morphology {
     private static final int MIN_LENGTH_OF_DECOMPOSITION_FOR_USING_JAVA_MEMORY = 4;

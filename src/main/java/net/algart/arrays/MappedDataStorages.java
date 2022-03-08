@@ -39,8 +39,6 @@ import java.util.logging.Level;
  * for a case of {@link LargeMemoryModel}.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class MappedDataStorages {
     private MappedDataStorages() {}

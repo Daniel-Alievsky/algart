@@ -32,8 +32,6 @@ package net.algart.arrays;
  * <p>AlgART array of <tt>double</tt> values, read-only access.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface DoubleArray extends PFloatingArray {
     public Class<? extends DoubleArray> type();

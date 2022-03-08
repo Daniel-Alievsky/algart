@@ -35,8 +35,6 @@ import java.lang.annotation.Target;
  * if they are marked by this annotatiion, without corresponding changes in the native code.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 @Target({ElementType.PARAMETER, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
 public @interface UsedByNativeCode {}

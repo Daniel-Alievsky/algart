@@ -40,8 +40,6 @@ package net.algart.math.functions;
  * All implementations of this interface from this package are <b>immutable</b>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface CoordinateTransformationOperator extends Operator {
 

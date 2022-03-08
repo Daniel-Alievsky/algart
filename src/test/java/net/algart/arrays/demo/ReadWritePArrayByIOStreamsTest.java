@@ -35,8 +35,6 @@ import java.nio.ByteOrder;
  * that copies one file to another.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class ReadWritePArrayByIOStreamsTest {
     public static void main(String[] args) throws IOException, InterruptedException {

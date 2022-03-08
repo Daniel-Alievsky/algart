@@ -33,8 +33,6 @@ import java.util.Locale;
  * <p>Demo of using {@link BufferMemoryModel}.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class BufferMemoryModelTest {
     public static void main(String[] args) {

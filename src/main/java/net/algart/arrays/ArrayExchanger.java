@@ -42,8 +42,6 @@ package net.algart.arrays;
  * <p>In {@link JArrays} class you will find implementations of this interface for processing usual Java arrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface ArrayExchanger {
     /**

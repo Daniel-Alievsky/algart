@@ -38,8 +38,6 @@ import java.util.regex.Pattern;
  * <p>Simple preprocessor based on regular expression for Java and other source code.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class Repeater implements Cloneable {
     static class SyntaxException extends Exception {

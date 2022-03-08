@@ -33,8 +33,6 @@ import net.algart.arrays.*;
  * <p>Basic test for {@link PackedBitBuffers} class</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class PackedBitBuffersTest {
     public static void main(String[] args) {

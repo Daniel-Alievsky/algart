@@ -35,8 +35,6 @@ import java.nio.*;
  * {@link Arrays#copyBytesToArray(UpdatablePArray, byte[], ByteOrder)} methods.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class ArraysSerializationImpl {
 

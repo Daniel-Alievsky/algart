@@ -35,8 +35,6 @@ import net.algart.math.functions.LinearFunc;
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 strictfp class ArraysLinearGetDataOp {
     static final int LINEAR_BUFFER_LENGTH = 16384; // elements (double[] + elementType[])

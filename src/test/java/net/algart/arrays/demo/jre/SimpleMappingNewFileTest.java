@@ -39,8 +39,6 @@ import java.util.ArrayList;
  * >http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6893654</a>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class SimpleMappingNewFileTest {
     static final int BLOCK_SIZE = 8 * 1024 * 1024; // 8 MB

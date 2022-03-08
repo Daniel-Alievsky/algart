@@ -37,8 +37,6 @@ import java.math.BigInteger;
  * and can be synchronized manually if multithread access is necessary.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public final class MutableInt128 implements Cloneable, Comparable<MutableInt128> {
     private static final double EXP_2_63 = StrictMath.scalb(1.0, 63);

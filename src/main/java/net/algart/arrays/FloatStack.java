@@ -29,8 +29,6 @@ package net.algart.arrays;
  * <p>Stack of <tt>float</tt> values.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface FloatStack extends Stack {
     /**

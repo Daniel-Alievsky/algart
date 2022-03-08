@@ -32,8 +32,6 @@ package net.algart.arrays;
  * You may check, is this interface implemented, by <tt>intstanceof</tt> operator.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface UpdatableObjectInPlaceArray<E> extends ObjectInPlaceArray<E>, UpdatableObjectArray<E> {
     public UpdatableObjectInPlaceArray<E> subArray(long fromIndex, long toIndex);

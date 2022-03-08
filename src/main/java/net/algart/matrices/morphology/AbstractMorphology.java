@@ -45,8 +45,6 @@ import net.algart.math.patterns.Pattern;
  * <p>Usually the subclasses need to override only these 3 methods and {@link #isPseudoCyclic()}.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractMorphology extends AbstractArrayProcessorWithContextSwitching implements Morphology {
 

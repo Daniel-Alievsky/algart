@@ -80,8 +80,6 @@ package net.algart.math.patterns;
  * </ul>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  *
  * @see QuickPointCountPattern
  * @see DirectPointSetUniformGridPattern

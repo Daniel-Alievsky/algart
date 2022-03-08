@@ -33,8 +33,6 @@ package net.algart.arrays;
  * <p>Resizable AlgART array of <tt>short</tt> values.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface MutableShortArray extends ShortStack, UpdatableShortArray, MutablePIntegerArray {
     public MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);

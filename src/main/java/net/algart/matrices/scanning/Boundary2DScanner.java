@@ -211,8 +211,6 @@ import net.algart.arrays.*;
  * will be undefined.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class Boundary2DScanner {
 

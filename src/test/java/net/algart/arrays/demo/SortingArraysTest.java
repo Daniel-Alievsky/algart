@@ -33,8 +33,6 @@ import java.util.Random;
  * <p>Test for sorting AlgART arrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 
 public class SortingArraysTest {

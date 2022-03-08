@@ -268,8 +268,6 @@ package net.algart.arrays;
  * and can be synchronized manually, if multithread access is necessary.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class SummingHistogram extends Histogram {
     SummingHistogram(int length) {

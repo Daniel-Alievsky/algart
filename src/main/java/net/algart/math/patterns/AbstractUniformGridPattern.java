@@ -35,8 +35,6 @@ import java.util.*;
  * <p>All non-abstract methods are completely implemented here and may be not overridden in subclasses.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract strictfp class AbstractUniformGridPattern extends AbstractPattern implements UniformGridPattern {
 

@@ -28,8 +28,6 @@ package net.algart.arrays;
  * <p>Implementation of {@link Matrix#subMatrix} methods.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class ArraysSubMatrixImpl {
 

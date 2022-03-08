@@ -33,8 +33,6 @@ package net.algart.arrays;
  * <p>AlgART array of <tt>char</tt> values, read-only access.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface CharArray extends PFixedArray {
     public Class<? extends CharArray> type();

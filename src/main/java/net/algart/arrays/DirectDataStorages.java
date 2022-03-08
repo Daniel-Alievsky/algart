@@ -31,8 +31,6 @@ import java.nio.*;
  * for a case of {@link BufferMemoryModel}.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class DirectDataStorages {
     private DirectDataStorages() {}

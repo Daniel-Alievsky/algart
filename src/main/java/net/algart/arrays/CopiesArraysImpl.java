@@ -32,8 +32,6 @@ import java.nio.ByteOrder;
  * <p>Implementations of <tt>Arrays.nXxxCopies</tt> arrays.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class CopiesArraysImpl {
     /**

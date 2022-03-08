@@ -36,8 +36,6 @@ import java.util.HashSet;
  * Please modify and debug this code to view how large patters are processed.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class LargePatternTest {
     public static void main(String[] args) {

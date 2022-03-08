@@ -32,8 +32,6 @@ import java.util.Locale;
  * <p>Test for overflow in {@link Arrays#preciseSumOf(PFixedArray, boolean)} method.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class PreciseSumOverflowTest {
     static void test(PArray array) {

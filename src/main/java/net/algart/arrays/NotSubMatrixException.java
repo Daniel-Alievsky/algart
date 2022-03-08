@@ -32,8 +32,6 @@ package net.algart.arrays;
  * {@link Matrix#subMatrixTo()} or {@link Matrix#subMatrixContinuationMode()} methods.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class NotSubMatrixException extends RuntimeException {
     /**

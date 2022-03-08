@@ -34,8 +34,6 @@ package net.algart.arrays;
  * @param &lt;E&gt; the generic type of array elements.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface ObjectArray<E> extends Array {
 

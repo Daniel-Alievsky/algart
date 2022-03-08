@@ -33,8 +33,6 @@ import net.algart.math.IRange;
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class ArraysBufferedCopier {
     final ArrayContext context;

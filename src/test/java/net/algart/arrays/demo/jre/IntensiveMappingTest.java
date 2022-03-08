@@ -36,8 +36,6 @@ import java.util.Locale;
  * >http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6776490</a></p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class IntensiveMappingTest {
     private static final int MAPPING_DELAY = 1000; //ms

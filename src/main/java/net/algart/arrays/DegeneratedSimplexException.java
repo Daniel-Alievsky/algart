@@ -31,8 +31,6 @@ package net.algart.arrays;
  * for {@link Matrices.Simplex} class.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class DegeneratedSimplexException extends IllegalArgumentException {
     /**

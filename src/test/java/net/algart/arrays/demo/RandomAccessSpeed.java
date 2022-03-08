@@ -34,8 +34,6 @@ import net.algart.arrays.*;
  * Useful also for testing bank swapping in {@link LargeMemoryModel}.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class RandomAccessSpeed {
     private static final MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();

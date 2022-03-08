@@ -39,8 +39,6 @@ package net.algart.arrays;
  * Moreover, it is a <b>singleton</b>: {@link #getInstance()} always returns the same object.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class SignalMemoryModel extends AbstractMemoryModel {
     private static final SignalMemoryModel INSTANCE = new SignalMemoryModel();

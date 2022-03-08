@@ -39,8 +39,6 @@ import java.nio.ByteOrder;
  * such link make impossible deallocation of the array before deallocation of the storage.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 abstract class DataStorage {
     static boolean DO_LAZY_INIT = InternalUtils.getBooleanProperty( // It's non-final to allow changing via reflection.

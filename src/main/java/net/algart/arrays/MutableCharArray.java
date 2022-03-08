@@ -33,8 +33,6 @@ package net.algart.arrays;
  * <p>Resizable AlgART array of <tt>char</tt> values.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface MutableCharArray extends CharStack, UpdatableCharArray, MutablePFixedArray {
     public MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);

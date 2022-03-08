@@ -39,8 +39,6 @@ import net.algart.arrays.*;
  * that can be passed to {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} method.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface ArrayThreadPoolContext extends Context {
 

@@ -30,8 +30,6 @@ import net.algart.arrays.*;
  * <p>Simple test for subarrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class SubArraysTest {
     private static void showArrays(String msg, Array a, Array aSub1, Array aSub2) {

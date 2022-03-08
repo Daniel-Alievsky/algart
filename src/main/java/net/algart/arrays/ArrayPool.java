@@ -38,8 +38,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * <p>This class is <b>thread-safe</b>: you may use the same instance of this class in several threads.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  * @see JArrayPool
  */
 public class ArrayPool {

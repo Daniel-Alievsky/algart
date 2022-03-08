@@ -39,8 +39,6 @@ import net.algart.math.Range;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public final class RectangularFunc implements Func {
     final Range range;

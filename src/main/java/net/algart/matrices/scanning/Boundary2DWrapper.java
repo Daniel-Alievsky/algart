@@ -42,8 +42,6 @@ package net.algart.matrices.scanning;
  * to calling the parent {@link #next()} method.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class Boundary2DWrapper extends Boundary2DScanner {
     /**

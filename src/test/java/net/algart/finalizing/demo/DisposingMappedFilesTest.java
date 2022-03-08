@@ -33,8 +33,6 @@ import net.algart.finalizing.Finalizer;
  * <p>Test for close, resize and delete operations together with file mapping.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class DisposingMappedFilesTest {
     boolean noPauses = false;

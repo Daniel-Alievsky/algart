@@ -229,8 +229,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * usually there is much better idea to create a separate instance for every thread.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextSwitching {
 

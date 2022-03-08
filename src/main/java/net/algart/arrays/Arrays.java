@@ -52,8 +52,6 @@ import java.util.logging.Logger;
  * <p>This class cannot be instantiated.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class Arrays {
     private Arrays() {

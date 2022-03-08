@@ -451,8 +451,6 @@ import java.util.*;
  * The same is true for the tiled processors, created by {@link #tile(ApertureProcessor)} method.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public final class TiledApertureProcessorFactory {
 

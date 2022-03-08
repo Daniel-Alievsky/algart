@@ -77,8 +77,6 @@ import net.algart.math.patterns.*;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class ContinuedRankMorphology extends ContinuedMorphology implements RankMorphology {
     private final RankMorphology parent;

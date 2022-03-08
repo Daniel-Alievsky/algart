@@ -66,8 +66,6 @@ import net.algart.arrays.SimpleMemoryModel;
  * <p>Another constructors may provide another behavior: please see comments to that constructors.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class SubContext extends AbstractContext implements Context {
     private final Context superContext;

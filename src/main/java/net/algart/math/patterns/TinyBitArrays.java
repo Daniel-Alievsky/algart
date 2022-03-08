@@ -28,8 +28,6 @@ package net.algart.math.patterns;
  * <p>A simple analog of <tt>net.algart.arrays.PackedBitArrays</tt> for internal use by this package.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class TinyBitArrays {
     private TinyBitArrays() {

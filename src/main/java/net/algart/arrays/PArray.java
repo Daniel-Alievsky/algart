@@ -36,8 +36,6 @@ package net.algart.arrays;
  * subinterfaces.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface PArray extends Array {
     /**

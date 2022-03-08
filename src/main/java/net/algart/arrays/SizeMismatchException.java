@@ -29,8 +29,6 @@ package net.algart.arrays;
  * when the passed arrays / matrices have different lengths / dimensions.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class SizeMismatchException extends IllegalArgumentException {
     /**

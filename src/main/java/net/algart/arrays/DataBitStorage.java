@@ -28,8 +28,6 @@ package net.algart.arrays;
  * <p>Bit data storage: an addition to usual {@link DataStorage} allowing to read/write packed bits.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 interface DataBitStorage {
     /**

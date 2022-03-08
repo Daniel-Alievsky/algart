@@ -32,8 +32,6 @@ import java.util.Locale;
  * <p>Shows the maximal supported array length for all element types.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class MaximalSupportedLengthDemo {
     private static final MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();

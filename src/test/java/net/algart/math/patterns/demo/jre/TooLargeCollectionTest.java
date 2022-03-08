@@ -33,8 +33,6 @@ import java.util.Locale;
  * Should be called in 64-bit JVMs.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 @SuppressWarnings("unchecked")
 public class TooLargeCollectionTest {

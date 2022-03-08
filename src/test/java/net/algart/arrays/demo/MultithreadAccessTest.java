@@ -33,8 +33,6 @@ import net.algart.arrays.*;
  * <p>Simple access to large array from several threads.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class MultithreadAccessTest {
     private static final MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();

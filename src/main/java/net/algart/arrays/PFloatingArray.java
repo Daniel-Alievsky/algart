@@ -31,8 +31,6 @@ package net.algart.arrays;
  * {@link FloatArray}, {@link DoubleArray} subinterfaces.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface PFloatingArray extends PNumberArray {
     public Class<? extends PFloatingArray> type();

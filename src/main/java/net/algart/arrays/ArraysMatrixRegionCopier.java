@@ -36,8 +36,6 @@ import java.util.Locale;
  * <p>This class is <b>thread-compatible</b> and recommended to be used in a single thread.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 abstract strictfp class ArraysMatrixRegionCopier {
     private static final boolean OPTIMIZE_POLYGON_2D = true;

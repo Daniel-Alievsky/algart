@@ -30,8 +30,6 @@ import net.algart.arrays.*;
  * <p>Test for primitive type conversions in primitive arrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class PrimitiveTypeConversionsTest {
     private static MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();

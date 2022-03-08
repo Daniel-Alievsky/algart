@@ -37,8 +37,6 @@ import net.algart.math.functions.LinearFunc;
  * <p>Demo of using combined arrays: filling and sorting.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class CombinedArraysDemo {
     static class Circle implements Comparable<Circle> {

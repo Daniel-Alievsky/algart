@@ -58,8 +58,6 @@ import net.algart.math.IPoint;  // for Javadoc only
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface Morphology extends ArrayProcessorWithContextSwitching {
 

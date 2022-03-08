@@ -117,8 +117,6 @@ import net.algart.arrays.*;
  * usually there is much better idea to create a separate instance for every thread.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class ConnectedObjectScanner implements Cloneable {
 

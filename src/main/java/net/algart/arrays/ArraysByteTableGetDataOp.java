@@ -36,8 +36,6 @@ import net.algart.math.functions.Func;
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class ArraysByteTableGetDataOp {
     private final ReentrantLock lock = new ReentrantLock();

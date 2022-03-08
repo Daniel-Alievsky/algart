@@ -30,8 +30,6 @@ import java.io.*;
  * <p>Test for very intensive calls of <tt>System.gc()</tt> and <tt>System.runFinalization</tt> methods.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class IntensiveGcTest {
     public static void main(String[] args) throws IOException {

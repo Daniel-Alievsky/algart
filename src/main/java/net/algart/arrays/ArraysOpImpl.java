@@ -30,8 +30,6 @@ import java.util.Locale;
  * <p>Implementations of some {@link Arrays} methods.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class ArraysOpImpl {
     static class ComparingCopier extends Arrays.ParallelExecutor {

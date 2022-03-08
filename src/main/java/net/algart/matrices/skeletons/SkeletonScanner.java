@@ -447,8 +447,6 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * and can be synchronized manually, if multithread access is necessary.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  * @see SkeletonPixelClassifier
  */
 public final class SkeletonScanner implements ArrayProcessor {

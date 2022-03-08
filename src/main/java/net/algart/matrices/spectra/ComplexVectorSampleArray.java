@@ -50,8 +50,6 @@ import net.algart.math.functions.LinearFunc;
  * and can may be synchronized manually if multithread access is necessary.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class ComplexVectorSampleArray implements SampleArray {
 

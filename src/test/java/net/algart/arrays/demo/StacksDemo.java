@@ -32,8 +32,6 @@ import java.util.Locale;
  * <p>Simple test for Stack interface</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class StacksDemo {
     private static final MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();

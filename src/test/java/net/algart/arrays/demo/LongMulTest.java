@@ -30,8 +30,6 @@ import net.algart.arrays.Arrays;
  * <p>Test for {@link Arrays#longMul(long[])} method.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class LongMulTest {
     static String toHex(long n) {

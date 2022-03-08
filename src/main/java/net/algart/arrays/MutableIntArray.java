@@ -33,8 +33,6 @@ package net.algart.arrays;
  * <p>Resizable AlgART array of <tt>int</tt> values.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface MutableIntArray extends IntStack, UpdatableIntArray, MutablePIntegerArray {
     public MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);

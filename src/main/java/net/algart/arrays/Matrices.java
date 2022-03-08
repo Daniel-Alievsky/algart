@@ -38,8 +38,6 @@ import java.util.ArrayList;
  * <p>This class cannot be instantiated.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class Matrices {
     private Matrices() {

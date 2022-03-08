@@ -40,8 +40,6 @@ package net.algart.arrays;
  * all other methods are implemented via calls of {@link LongArray#getLong(long)}.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractLongArray extends AbstractArray implements LongArray {
     final boolean underlyingArraysAreParallel;

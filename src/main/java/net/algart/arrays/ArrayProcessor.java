@@ -46,8 +46,6 @@ package net.algart.arrays;
  * that also allows to change the current context.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface ArrayProcessor {
     /**

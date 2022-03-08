@@ -33,8 +33,6 @@ import java.util.ArrayList;
  * <p>Some internal service functions for this package.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class InternalUtils {
     private InternalUtils() {}

@@ -32,8 +32,6 @@ package net.algart.arrays;
  * <p>Stack of <tt>char</tt> values.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface CharStack extends Stack {
     /**

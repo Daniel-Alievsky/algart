@@ -31,8 +31,6 @@ package net.algart.arrays;
  * {@link UpdatableFloatArray}, {@link UpdatableDoubleArray} subinterfaces.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface UpdatablePFloatingArray extends PFloatingArray, UpdatablePNumberArray {
     public UpdatablePFloatingArray subArray(long fromIndex, long toIndex);

@@ -34,8 +34,6 @@ import java.util.Locale;
  * and usually should not be overridden.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractArrayContext implements ArrayContext {
     public ArrayContext part(final double fromPart, final double toPart) {

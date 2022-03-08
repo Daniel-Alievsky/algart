@@ -35,8 +35,6 @@ import net.algart.arrays.*;
  * <p>The test of accessing the region of file via AlgART array.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class FileRegionAccessDemo {
     public static void main(String[] args) throws IOException, InterruptedException {

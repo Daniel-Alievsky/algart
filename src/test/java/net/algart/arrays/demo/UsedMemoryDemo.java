@@ -34,8 +34,6 @@ import java.util.Locale;
  * <p>Test for amount of memory required for different AlgART arrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 
 public class UsedMemoryDemo {

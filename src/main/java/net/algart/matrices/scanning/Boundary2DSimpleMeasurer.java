@@ -70,8 +70,6 @@ import java.util.EnumSet;
  * are absolutely identical on all platforms.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     private static final boolean DEBUG_MODE = false; // leads to 2-way calculation of non-trivial areas and centroids

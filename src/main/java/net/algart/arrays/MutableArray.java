@@ -41,8 +41,6 @@ package net.algart.arrays;
  * <a href="package-summary.html#multithreading">package description</a>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  * @see Array
  * @see UpdatableArray
  * @see Matrix

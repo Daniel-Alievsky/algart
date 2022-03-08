@@ -31,8 +31,6 @@ package net.algart.arrays;
  * {@link MutableFloatArray}, {@link MutableDoubleArray} subinterfaces.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface MutablePFloatingArray extends UpdatablePFloatingArray, MutablePNumberArray {
     public MutablePFloatingArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);

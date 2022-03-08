@@ -32,8 +32,6 @@ package net.algart.arrays;
  * <p>Resizable AlgART array of <tt>double</tt> values.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface MutableDoubleArray extends DoubleStack, UpdatableDoubleArray, MutablePFloatingArray {
     public MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);

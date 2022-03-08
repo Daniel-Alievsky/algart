@@ -90,8 +90,6 @@ import java.nio.ByteOrder;
  * Moreover, it is a <b>singleton</b>: {@link #getInstance()} always returns the same object.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class BufferMemoryModel extends AbstractMemoryModel {
     private static final BufferMemoryModel INSTANCE = new BufferMemoryModel();

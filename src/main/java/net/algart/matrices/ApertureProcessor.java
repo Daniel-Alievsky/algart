@@ -158,8 +158,6 @@ import java.util.Map;
  * but not, for example, on the base of the matrix dimensions.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface ApertureProcessor<K> {
 

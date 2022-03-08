@@ -56,8 +56,6 @@ import java.util.*;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public strictfp class SimplePattern extends AbstractPattern implements DirectPointSetPattern {
     private final Set<Point> points;

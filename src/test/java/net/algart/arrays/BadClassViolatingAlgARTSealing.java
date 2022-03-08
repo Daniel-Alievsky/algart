@@ -38,8 +38,6 @@ package net.algart.arrays;
  * is a correctly sealed jar-file with basic AlgART libraries.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class BadClassViolatingAlgARTSealing {
     public static void test() {

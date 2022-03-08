@@ -174,8 +174,6 @@ import java.util.logging.Logger;
  * or {@link #getInstance(DataFileModel)} methods.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public final class LargeMemoryModel<P> extends AbstractMemoryModel {
 

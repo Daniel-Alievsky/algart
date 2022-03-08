@@ -41,8 +41,6 @@ package net.algart.arrays;
  * <p>This interface is used by {@link ArraySorter} class.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface ArrayComparator {
     /**

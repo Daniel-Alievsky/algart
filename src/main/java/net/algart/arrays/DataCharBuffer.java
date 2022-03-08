@@ -32,8 +32,6 @@ package net.algart.arrays;
  * <p>Data buffer for <tt>char</tt> elements.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface DataCharBuffer extends DataBuffer {
     public DataCharBuffer map(long position);

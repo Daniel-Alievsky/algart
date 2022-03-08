@@ -35,8 +35,6 @@ import net.algart.arrays.*;
  * <p>Simple test that calculates check sum of a file or all files in a directory via AlgART arrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class FileCheckSumDemo {
     private static final boolean ACCUMULATE_IN_LIST = true; // should not lead to map failure

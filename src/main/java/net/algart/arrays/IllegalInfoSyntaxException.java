@@ -29,8 +29,6 @@ package net.algart.arrays;
  * serialized form of the {@link MatrixInfo} is invalid.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class IllegalInfoSyntaxException extends Exception {
     /**

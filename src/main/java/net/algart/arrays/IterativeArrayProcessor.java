@@ -75,8 +75,6 @@ package net.algart.arrays;
  * while simultaneous accessing the same instance from several threads.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface IterativeArrayProcessor<T> extends ArrayProcessor {
 

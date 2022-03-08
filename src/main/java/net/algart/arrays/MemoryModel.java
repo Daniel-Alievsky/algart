@@ -54,8 +54,6 @@ package net.algart.arrays;
  * it must be internally synchronized.)
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface MemoryModel {
 

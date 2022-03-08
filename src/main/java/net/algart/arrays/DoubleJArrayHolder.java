@@ -41,8 +41,6 @@ import java.lang.ref.SoftReference;
  * <p>This class is <b>thread-safe</b>: you may use the same instance of this class in several threads.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public final class DoubleJArrayHolder {
     private SoftReference<double[]> reference = new SoftReference<double[]>(new double[0]);

@@ -118,8 +118,6 @@ import java.util.List;
  * <p>This class may be applied to a matrix with any number of dimensions.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? extends UpdatablePArray>>
     implements IterativeArrayProcessor<Matrix<? extends UpdatablePArray>>

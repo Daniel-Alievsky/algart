@@ -49,8 +49,6 @@ package net.algart.math.functions;
  *
  * @see CoordinateTransformationOperator#apply(Func)
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class CoordinateTransformedFunc implements Func {
     final Func parent;

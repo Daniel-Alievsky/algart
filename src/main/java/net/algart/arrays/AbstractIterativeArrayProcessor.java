@@ -34,8 +34,6 @@ import java.util.Locale;
  * should not be overridden in subclasses.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractIterativeArrayProcessor<T>
     implements IterativeArrayProcessor<T>

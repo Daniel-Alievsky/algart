@@ -45,8 +45,6 @@ package net.algart.matrices.stitching;
  * All implementations of this interface from this package are <b>immutable</b>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface StitchingFunc {
 

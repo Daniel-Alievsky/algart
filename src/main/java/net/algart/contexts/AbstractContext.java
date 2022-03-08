@@ -55,8 +55,6 @@ import java.lang.reflect.Method;
  * but some (or all) service providers may be ignored in this and futher requests.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractContext implements Context {
 

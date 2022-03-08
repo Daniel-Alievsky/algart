@@ -33,8 +33,6 @@ package net.algart.arrays;
  * <p>Data buffer for bit elements.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface DataBitBuffer extends DataBuffer {
     public DataBitBuffer map(long position);

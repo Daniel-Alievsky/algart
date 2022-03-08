@@ -28,8 +28,6 @@ package net.algart.arrays;
  * <p>Implementations of {@link Matrices} methods returning polylinear interpolations of the matrix.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class ArraysPolylinearInterpolationsImpl {
     static abstract class AbstractPolylinearInterpolation extends ArraysInterpolationsImpl.AbstractInterpolation {

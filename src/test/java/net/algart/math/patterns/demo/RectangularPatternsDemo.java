@@ -40,8 +40,6 @@ import java.util.TreeSet;
  * <p>Simple test that creates rectangular patterns.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class RectangularPatternsDemo {
     public static void main(String[] args) {

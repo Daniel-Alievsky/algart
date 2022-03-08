@@ -31,8 +31,6 @@ import java.util.*;
  * <p><i>TempFiles</i>: a tool for creating temporary files and deleting them before exiting program.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class TempFiles {
     private TempFiles() {}

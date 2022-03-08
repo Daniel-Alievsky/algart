@@ -31,8 +31,6 @@ import java.io.IOException;
  * if the called external process is finished with non-zero OS exit code.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class ExternalProcessException extends IOException {
     private final int externalProcessExitCode;

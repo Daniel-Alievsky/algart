@@ -28,8 +28,6 @@ package net.algart.arrays.demo.jre;
  * <p>Speed of get/set methods in comparison with direct field access</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class GetSetSpeed {
     static long nanoTime() {

@@ -35,8 +35,6 @@ import net.algart.contexts.*;
  * <p>Sieve of Eratoshpenes: test for {@link BitArray} class.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class EratosthenesDemo {
     private boolean useBitSet = false;

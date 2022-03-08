@@ -32,8 +32,6 @@ import java.nio.channels.*;
  * <p>Test for very intensive file mappings. See JVM bugs in comments at the end of the source file.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class IntensiveMappingWithWritingTest {
     public static void main(String[] args) throws IOException {

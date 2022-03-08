@@ -36,8 +36,6 @@ package net.algart.matrices.morphology;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public enum RankPrecision implements CustomRankPrecision {
     /*Repeat() \{1\} ==>       {2},,{3},,{4},,{5},,{6},,{7},,{8},,{4, 8},,{9},,{10},,{5, 10},,

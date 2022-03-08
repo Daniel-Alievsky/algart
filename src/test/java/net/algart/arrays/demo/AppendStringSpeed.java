@@ -33,8 +33,6 @@ import java.util.Locale;
  * <p>Simple test for {@link MutableCharArray#append(String)} method.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class AppendStringSpeed {
     public static void main(String[] args) {

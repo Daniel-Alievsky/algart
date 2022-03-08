@@ -40,8 +40,6 @@ import java.io.IOException;
  * under 1.6 or later versions, this library throw <tt>java.io.IOError</tt>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class IOErrorJ5 extends Error {
 

@@ -29,8 +29,6 @@ package net.algart.arrays;
  * if the continuation mode is not a {@link Matrix.ContinuationMode#isConstant() constant continuation}.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class NonConstantMatrixContinuationModeException extends RuntimeException {
     /**

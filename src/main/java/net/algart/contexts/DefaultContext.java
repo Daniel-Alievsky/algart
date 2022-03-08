@@ -44,8 +44,6 @@ import net.algart.arrays.*;
  * or for overriding the behavior of an existing context, specified as a service provider.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class DefaultContext extends AbstractContext
     implements

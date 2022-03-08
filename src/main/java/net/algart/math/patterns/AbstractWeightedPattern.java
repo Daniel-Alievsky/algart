@@ -43,8 +43,6 @@ import java.util.Set;
  * the {@link WeightedPattern} interface.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractWeightedPattern implements WeightedPattern {
     /**

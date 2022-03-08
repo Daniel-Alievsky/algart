@@ -34,8 +34,6 @@ import java.util.Locale;
  * <p>Basic test for {@link net.algart.arrays.ArraySorter} class</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class ArraySorterTest {
     private String beginOfArray(double[] a, int[] indexes) {

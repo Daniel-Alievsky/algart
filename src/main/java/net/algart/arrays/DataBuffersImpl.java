@@ -28,8 +28,6 @@ package net.algart.arrays;
  * <p>Implementations of {@link DataBuffer data buffers} for AlgART arrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class DataBuffersImpl {
     static final int BITS_GAP = 256; // a little gap for better bits alignment; must be 2^k

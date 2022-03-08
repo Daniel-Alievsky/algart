@@ -32,8 +32,6 @@ import java.util.Locale;
  * <p>Test for <tt>Arrays.n<i>Xxx</i>Copies<tt> methods.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class NCopiesSpeed {
     private static final MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();

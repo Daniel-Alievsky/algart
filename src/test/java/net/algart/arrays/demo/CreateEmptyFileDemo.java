@@ -34,8 +34,6 @@ import net.algart.contexts.*;
  * <p>Simple test that creates one zero-filled file via AlgART arrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class CreateEmptyFileDemo {
     public static void main(String[] args) {

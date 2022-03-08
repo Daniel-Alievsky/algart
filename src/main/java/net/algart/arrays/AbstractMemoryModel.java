@@ -37,8 +37,6 @@ package net.algart.arrays;
  * It also offers a simple implementation of some other methods: see comments to them.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractMemoryModel implements MemoryModel {
 

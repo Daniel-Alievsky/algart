@@ -30,8 +30,6 @@ package net.algart.arrays;
  * all other methods are implemented via calls of {@link ObjectArray#get(long)}.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractObjectArray<E> extends AbstractArray implements ObjectArray<E> {
     final boolean underlyingArraysAreParallel;

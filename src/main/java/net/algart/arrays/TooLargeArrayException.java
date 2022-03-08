@@ -34,8 +34,6 @@ package net.algart.arrays;
  * (Java arrays can contain, as a maximum, <tt>Integer.MAX_VALUE</tt> (2<sup>31</sup>-1) elements).</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class TooLargeArrayException extends RuntimeException {
     /**

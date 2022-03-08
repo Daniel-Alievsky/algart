@@ -35,8 +35,6 @@ package net.algart.arrays;
  * <p>AlgART array of <tt>byte</tt> values, read-only access.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface ByteArray extends PIntegerArray {
     public Class<? extends ByteArray> type();

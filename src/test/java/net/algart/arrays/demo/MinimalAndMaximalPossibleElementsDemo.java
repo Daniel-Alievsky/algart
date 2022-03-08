@@ -33,8 +33,6 @@ import java.util.Locale;
  * <p>Shows the minimal and maximal possible array elements for all element types.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class MinimalAndMaximalPossibleElementsDemo {
     public static void main(String[] args) {

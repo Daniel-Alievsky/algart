@@ -73,8 +73,6 @@ import java.util.EventListener;
  * interruption listeners are usually needed in very advanced algorithms only.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface InterruptionContext extends Context {
     /**

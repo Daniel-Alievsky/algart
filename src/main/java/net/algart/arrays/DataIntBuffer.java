@@ -32,8 +32,6 @@ package net.algart.arrays;
  * <p>Data buffer for <tt>int</tt> elements.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public interface DataIntBuffer extends DataBuffer {
     public DataIntBuffer map(long position);

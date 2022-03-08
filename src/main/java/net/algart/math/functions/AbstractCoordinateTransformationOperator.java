@@ -30,8 +30,6 @@ package net.algart.math.functions;
  * Namely, this class contain complete implementation of {@link CoordinateTransformationOperator#apply} method.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractCoordinateTransformationOperator implements CoordinateTransformationOperator {
     public abstract void map(double[] destPoint, double[] srcPoint);

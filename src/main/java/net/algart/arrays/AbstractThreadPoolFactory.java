@@ -37,8 +37,6 @@ import java.util.concurrent.ThreadFactory;
  * should not be overridden in subclasses.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractThreadPoolFactory implements ThreadPoolFactory {
 

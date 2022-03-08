@@ -82,8 +82,6 @@ import static net.algart.matrices.skeletons.ThinningTools.*;
  * and can be synchronized manually, if multithread access is necessary.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class WeakOctupleThinningSkeleton2D extends AbstractThinningSkeleton2D implements ThinningSkeleton {
     private static final int[][] SKELETON_XP = {

@@ -30,8 +30,6 @@ package net.algart.arrays;
  * is not supported by the {@link MemoryModel memory model}.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class UnsupportedElementTypeException extends RuntimeException {
     /**

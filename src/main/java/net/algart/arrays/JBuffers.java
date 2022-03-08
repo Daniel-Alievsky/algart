@@ -33,8 +33,6 @@ import java.nio.*;
  * <p>This class cannot be instantiated.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class JBuffers {
     private static final int FILL_NON_BLOCKED_LEN = 256; // must be 2^k

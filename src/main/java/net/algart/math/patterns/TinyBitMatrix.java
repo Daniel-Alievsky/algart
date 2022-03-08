@@ -34,8 +34,6 @@ import java.util.Set;
  * All dimensions of this matrix must be not greater than Integer.MAX_VALUE.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 class TinyBitMatrix {
     private final long[] array;

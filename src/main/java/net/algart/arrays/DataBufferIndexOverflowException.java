@@ -30,8 +30,6 @@ package net.algart.arrays;
  * by these methods, are greater than <tt>Integer.MAX_VALUE</tt>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public class DataBufferIndexOverflowException extends RuntimeException {
     /**

@@ -48,8 +48,6 @@ import java.nio.ByteOrder;
  * {@link #defaultSwap(UpdatableArray, UpdatableArray)}, {@link #defaultAppend(MutableArray, Array)}.
  *
  * @author Daniel Alievsky
- * @version 1.2
- * @since JDK 1.6
  */
 public abstract class AbstractArray implements Array, Cloneable {
 
