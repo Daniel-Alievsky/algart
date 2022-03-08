@@ -6285,6 +6285,38 @@ public class Arrays {
         return result + half;
     }
 
+    public static void splitToRanges(int[] result, int n) {
+        Objects.requireNonNull(result, "Null result");
+        if (result.length == 0) {
+            throw new IllegalArgumentException("Result ranges array must contain at least 1 element");
+        }
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative number of elements: " + n);
+        }
+        final int numberOfRanges = result.length - 1;
+        result[0] = 0;
+        result[numberOfRanges] = n;
+        for (int k = 1; k < numberOfRanges; k++) {
+            result[k] = (int) ((double) n * (double) k / (double) numberOfRanges);
+        }
+    }
+
+    public static void splitToRanges(long[] result, long n) {
+        Objects.requireNonNull(result, "Null result");
+        if (result.length == 0) {
+            throw new IllegalArgumentException("Result ranges array must contain at least 1 element");
+        }
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative number of elements: " + n);
+        }
+        final int numberOfRanges = result.length - 1;
+        result[0] = 0;
+        result[numberOfRanges] = n;
+        for (int k = 1; k < numberOfRanges; k++) {
+            result[k] = (long) ((double) n * (double) k / (double) numberOfRanges);
+        }
+    }
+
     /**
      * Returns <tt>context.{@link ArrayContext#getThreadPoolFactory() getThreadPoolFactory()}</tt>
      * if <tt>context!=null</tt>
