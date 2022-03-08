@@ -96,7 +96,7 @@ public abstract class AbstractConvolution extends AbstractArrayProcessorWithCont
      * @see #asConvolution(Class, Matrix, WeightedPattern)
      */
     public Matrix<? extends UpdatablePArray> convolution(Matrix<? extends PArray> src, WeightedPattern pattern) {
-        return convolution(src.updatableType(UpdatablePArray.class), src, pattern);
+        return convolution(src.updatableType(UpdatablePArray.class), src, pattern).cast(UpdatablePArray.class);
     }
 
     public <T extends PArray> Matrix<? extends T> convolution(Class<? extends T> requiredType,
