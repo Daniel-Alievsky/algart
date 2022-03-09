@@ -24,13 +24,15 @@
 
 package net.algart.arrays;
 
-import net.algart.math.Range;
-import net.algart.math.functions.*;
 import net.algart.math.IRange;
+import net.algart.math.functions.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Objects;
+import java.util.function.DoublePredicate;
+import java.util.function.DoubleUnaryOperator;
 
 /**
  * <p>Utilities useful for working with {@link Matrix AlgART matrices}.</p>
@@ -2934,7 +2936,7 @@ public class Matrices {
      *
      * @param f            the mathematical function applied to the passed AlgART matrix.
      * @param requiredType desired type of the built-in array in the returned matrix.
-     * @param x            the original AlgART matrix.
+     * @param x            the source matrix.
      * @return an updatable view of the passed <tt>x</tt> matrix, defined by the passed function.
      * @throws NullPointerException     if <tt>requiredType</tt> or <tt>x</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException in the same situations as {@link
@@ -2984,7 +2986,7 @@ public class Matrices {
      * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
-     * @param x       the AlgART matrix.
+     * @param x       the source matrix.
      * @throws NullPointerException     if <tt>f</tt>, <tt>result</tt>, <tt>x</tt>
      *                                  or one of <tt>x</tt> matrices is <tt>null</tt>.
      * @throws IllegalArgumentException in the same situations as {@link
@@ -3267,6 +3269,80 @@ public class Matrices {
     }
 
     /**
+     * Performs the specified predicate for all elements of <tt>source</tt> to produce <tt>result</tt>.
+     * <p>Equivalent to <tt>{@link #applyFunc(ArrayContext, Func, Matrix, List)
+     * applyFunc}(context, func, result, source)</tt>, where <tt>func</tt> has the following implementation:
+     * <pre>
+     *  public double get(double... x) {
+     *     return predicate.test(x[0]) ? 1.0 : 0.0;
+     *  }
+     * </pre>
+     *
+     * @param context   the context.
+     * @param predicate predicate to apply.
+     * @param result    the result matrix.
+     * @param source    the source matrix.
+     */
+    public static void applyPredicate(
+            ArrayContext context,
+            DoublePredicate predicate,
+            Matrix<? extends UpdatableBitArray> result,
+            Matrix<? extends PArray> source) {
+        Objects.requireNonNull(predicate);
+        Matrices.applyFunc(
+                context,
+                new AbstractFunc() {
+                    @Override
+                    public double get(double... x) {
+                        return get(x[0]);
+                    }
+
+                    @Override
+                    public double get(double x0) {
+                        return predicate.test(x0) ? 1.0 : 0.0;
+                    }
+                }, result, source);
+    }
+
+
+    /**
+     * Performs the specified function for all elements of <tt>source</tt> to produce <tt>result</tt>.
+     * <p>Equivalent to <tt>{@link #applyFunc(ArrayContext, Func, Matrix, List)
+     * applyFunc}(context, func, result, source)</tt>, where <tt>func</tt> has the following implementation:
+     * <pre>
+     *  public double get(double... x) {
+     *     return function.applyAsDouble(x[0]);
+     *  }
+     * </pre>
+     *
+     * @param context   the context.
+     * @param function  function to apply.
+     * @param result    the result matrix.
+     * @param source    the source matrix.
+     */
+    public static void applyFunction(
+            ArrayContext context,
+            DoubleUnaryOperator function,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> source) {
+        Objects.requireNonNull(function);
+        Matrices.applyFunc(
+                context,
+                new AbstractFunc() {
+                    @Override
+                    public double get(double... x) {
+                        return get(x[0]);
+                    }
+
+                    @Override
+                    public double get(double x0) {
+                        return function.applyAsDouble(x0);
+                    }
+                }, result, source);
+    }
+
+
+    /**
      * Returns an immutable view of the passed AlgART matrix,
      * pseudo-cyclically shifted to the right for every coordinate.
      *
@@ -3425,7 +3501,8 @@ public class Matrices {
      */
     public static Arrays.CopyStatus copy(
         ArrayContext context,
-        Matrix<? extends UpdatableArray> dest, Matrix<? extends Array> src,
+        Matrix<? extends UpdatableArray> dest,
+        Matrix<? extends Array> src,
         int numberOfTasks)
     {
         if (dest == null)
@@ -3461,7 +3538,8 @@ public class Matrices {
      */
     public static Arrays.CopyStatus copy(
         ArrayContext context,
-        Matrix<? extends UpdatableArray> dest, Matrix<? extends Array> src,
+        Matrix<? extends UpdatableArray> dest,
+        Matrix<? extends Array> src,
         int numberOfTasks, boolean strictMode)
     {
         if (dest == null)
@@ -3715,6 +3793,16 @@ public class Matrices {
         ArraysMatrixRegionCopier regionCopier = ArraysMatrixRegionCopier.getInstance(context, destRegion.n(),
             dest, src, shifts, outsideValue, false);
         regionCopier.process(destRegion);
+    }
+
+    /**
+     * Fills all elements of this matrix with zero value. Equivalent to
+     * <tt>result.array().fill(0.0)</tt>.
+     *
+     * @param result matrix to fill with zero.
+     */
+    public static void clear(Matrix<? extends UpdatablePArray> result) {
+        result.array().fill(0.0);
     }
 
     /**

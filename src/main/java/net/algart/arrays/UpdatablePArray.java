@@ -78,7 +78,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
     public void setInt(long index, int value);
 
     /**
-     * Fills all elements of this array by the specified value. Equivalent to
+     * Fills all elements of this array with the specified value. Equivalent to
      * <tt>{@link #fill(long, long, double) fill}(0, thisArray.length(), value)</tt>.
      *
      * @param value the value to be stored in all elements of the array.
