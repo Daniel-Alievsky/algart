@@ -3474,7 +3474,8 @@ public class Matrices {
      */
     public static Arrays.CopyStatus copy(
         ArrayContext context,
-        Matrix<? extends UpdatableArray> dest, Matrix<? extends Array> src)
+        Matrix<? extends UpdatableArray> dest,
+        Matrix<? extends Array> src)
     {
         return copy(context, dest, src, 0);
     }
@@ -3570,7 +3571,8 @@ public class Matrices {
      */
     public static Arrays.ComparingCopyStatus compareAndCopy(
         ArrayContext context,
-        Matrix<? extends UpdatableArray> dest, Matrix<? extends Array> src)
+        Matrix<? extends UpdatableArray> dest,
+        Matrix<? extends Array> src)
     {
         if (dest == null)
             throw new NullPointerException("Null dest argument");
@@ -3581,6 +3583,21 @@ public class Matrices {
                 + dest + " and " + src);
         return Arrays.compareAndCopy(context, dest.array(), src.array());
     }
+
+    /**
+     * Just copies <tt>src</tt> into <tt>dest</tt> without using multithreading.
+     * Equivalent to <tt>{@link #copy(ArrayContext, Matrix, Matrix)
+     * copy}(ArrayContext.{@link ArrayContext#DEFAULT_SINGLE_THREAD DEFAULT_SINGLE_THREAD}, dest, src).</tt>
+     * @param dest    the destination matrix.
+     * @param src     the src matrix.
+     * @throws NullPointerException     if <tt>src</tt> or <tt>dest</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if the src and destination element types do not match.
+     * @throws SizeMismatchException    if the passed matrices have different dimensions.
+     */
+    public static void copy(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src) {
+        copy(ArrayContext.DEFAULT_SINGLE_THREAD, dest, src);
+    }
+
 
     /**
      * Copies the specified region from <tt>src</tt> AlgART matrix to <tt>dest</tt> AlgART matrix.
@@ -3665,7 +3682,8 @@ public class Matrices {
      */
     public static void copyRegion(
         ArrayContext context,
-        Matrix<? extends UpdatableArray> dest, Matrix<? extends Array> src,
+        Matrix<? extends UpdatableArray> dest,
+        Matrix<? extends Array> src,
         Region destRegion, long... shifts)
     {
         if (dest == null)
@@ -3771,7 +3789,8 @@ public class Matrices {
      */
     public static void copyRegion(
         ArrayContext context,
-        Matrix<? extends UpdatableArray> dest, Matrix<? extends Array> src,
+        Matrix<? extends UpdatableArray> dest,
+        Matrix<? extends Array> src,
         Region destRegion, long[] shifts, Object outsideValue)
     {
         if (dest == null)
@@ -3796,17 +3815,27 @@ public class Matrices {
     }
 
     /**
-     * Fills all elements of this matrix with zero value. Equivalent to
-     * <tt>result.array().fill(0.0)</tt>.
+     * Fills all elements of the matrix with zero value. Equivalent to <tt>{@link #fill fill}(result, o.0)</tt>.
      *
      * @param result matrix to fill with zero.
      */
     public static void clear(Matrix<? extends UpdatablePArray> result) {
-        result.array().fill(0.0);
+        fill(result, 0.0);
     }
 
     /**
-     * Fills the specified region in <tt>dest</tt> AlgART matrix by the specified value.
+     * Fills all elements of the matrix with the specified value. Equivalent to
+     * <tt>result.array().fill(value)</tt>.
+     *
+     * @param result matrix to fill.
+     * @param value the value to be stored in all elements of the matrix.
+     */
+    public static void fill(Matrix<? extends UpdatablePArray> result, double value) {
+        result.array().fill(value);
+    }
+
+    /**
+     * Fills the specified region in <tt>dest</tt> AlgART matrix with the specified value.
      * Equivalent to the following call:
      * <pre>
      * {@link #copyRegion(ArrayContext, Matrix, Matrix, Region, long[], Object)
@@ -3843,6 +3872,95 @@ public class Matrices {
         Region destRegion, Object value)
     {
         copyRegion(context, dest, dest, destRegion, dest.dimensions(), value);
+    }
+
+    /**
+     * Equivalent to <tt>{@link #fillBoundary(Matrix, int, double) fillBoundary}(result, boundaryWidth, 0.0)</tt>.
+     * @param result        the matrix to process.
+     * @param boundaryWidth width of the boundary to fill.
+     */
+    public static void clearBoundary(Matrix<? extends UpdatablePArray> result, int boundaryWidth) {
+        fillBoundary(result, boundaryWidth, 0.0);
+    }
+
+    /**
+     * Fills the boundary <tt>result</tt> matrix with the given width with the specified value..
+     * If <tt>boundaryWidth==0</tt>, does nothing.
+     *
+     * <p>Equivalent to
+     * <pre>
+     * {@link #fillOutside fillOutsideInMatrix}(
+     *     result,
+     *     boundaryWidth,
+     *     boundaryWidth,
+     *     result.dimX() - 2 * (long) boundaryWidth,
+     *     result.dimY() - 2 * (long) boundaryWidth,
+     *     value)
+     * </pre>
+     *
+     * @param result        the matrix to process.
+     * @param boundaryWidth width of the boundary to fill.
+     * @param value         the value to be stored in all elements near the matrix boundary.
+     * @throws IllegalArgumentException if <tt>boundaryWidth&lt;0.</tt>
+     */
+    public static void fillBoundary(
+            Matrix<? extends UpdatablePArray> result,
+            int boundaryWidth,
+            double value) {
+        if (boundaryWidth < 0) {
+            throw new IllegalArgumentException("Negative boundaryWidth = " + boundaryWidth);
+        }
+        fillOutside(
+                result,
+                boundaryWidth,
+                boundaryWidth,
+                result.dimX() - 2 * (long) boundaryWidth,
+                result.dimY() - 2 * (long) boundaryWidth,
+                value);
+    }
+
+    /**
+     * Fills all <tt>result</tt> matrix, <i>excepting</i> elements in the rectangle
+     * <tt>minX&le;x&lt;minX+sizeX</tt>, <tt>minY&le;y&lt;minY+sizeY</tt>, with the specified value.
+     * If <tt>sizeX&le;0</tt> or <tt>sizeY&le;0</tt>, fills all the matrix.
+     *
+     * @param result the matrix to process.
+     * @param minX   minimal x-coordinate, which is <i>not</i> filled.
+     * @param minY   minimal y-coordinate, which is <i>not</i> filled.
+     * @param sizeX  width of the rectangle, which is <i>not</i> filled.
+     * @param sizeY  height of the rectangle, which is <i>not</i> filled.
+     * @param value  the value to be stored in all elements outside this rectangle.
+     * @throws IndexOutOfBoundsException if <tt>sizeX&gt;0</tt>, <tt>sizeY&gt;0</tt> and the specified area
+     *                                   is not fully inside the matrix.
+     */
+    public static void fillOutside(
+            Matrix<? extends UpdatablePArray> result,
+            long minX,
+            long minY,
+            long sizeX,
+            long sizeY,
+            double value) {
+        if (sizeX <= 0 || sizeY <= 0) {
+            result.array().fill(value);
+            return;
+        }
+        long toX = minX + sizeX;
+        long toY = minY + sizeY;
+        final long dimX = result.dimX();
+        final long dimY = result.dimY();
+        if (minX != 0) {
+            // if minX < 0, we throws an exception; etc.
+            result.subMatrix(0, 0, minX, dimY).array().fill(value);
+        }
+        if (toX != dimX) {
+            result.subMatrix(toX, 0, dimX, dimY).array().fill(value);
+        }
+        if (minY != 0) {
+            result.subMatrix(0, 0, dimX, minY).array().fill(value);
+        }
+        if (toY != dimY) {
+            result.subMatrix(0, toY, dimX, dimY).array().fill(value);
+        }
     }
 
     static Object castOutsideValue(Object outsideValue, Array array) {
