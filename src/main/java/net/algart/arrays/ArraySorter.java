@@ -198,6 +198,26 @@ public abstract class ArraySorter {
      */
     public abstract void sortIndexes(int[] indexes, int from, int to, ArrayComparator comparator);
 
+    /**
+     * Calls the previous {@link #sortIndexes(int[], int, int, ArrayComparator comparator)}
+     * method with the same arguments.
+     *
+     * @param indexes    indexes of elements in some data array: this array will be sorted.
+     * @param from       index of the first sorted element of <tt>indexes</tt> array, inclusive.
+     * @param to         index of the last sorted element of <tt>indexes</tt> array, exclusive.
+     * @param comparator comparator for checking order.
+     * @throws NullPointerException     if <tt>indexes</tt> or <tt>comparator</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>from &gt; to</tt>, <tt>from &lt; 0</tt>
+     *                                  or <tt>to &gt; indexes.length</tt>
+     * @throws ClassCastException       may be thrown while calling methods of <tt>comparator</tt>
+     *                                  during the sorting, if the types of the array elements
+     *                                  are not appropriate (it is only a typical example of exception:
+     *                                  those methods may throw another run-time exceptions).
+     */
+    public void sortIndexes(int[] indexes, int from, int to, ArrayComparator32 comparator) {
+        sortIndexes(indexes, from, to, (ArrayComparator) comparator);
+    }
+
     //Possible default implementation:
     //{
     //    if (indexes == null)
@@ -265,6 +285,28 @@ public abstract class ArraySorter {
      *                                       those methods may throw another run-time exceptions).
      */
     public abstract void sort(long from, long to, ArrayComparator comparator, ArrayExchanger exchanger);
+
+    /**
+     * Calls the previous {@link #sort(long, long, ArrayComparator, ArrayExchanger)} method with the same arguments.
+     *
+     * @param from       index of the first sorted element of some data array, inclusive.
+     * @param to         index of the last sorted element of some data array, exclusive.
+     * @param comparator comparator for checking order of elements.
+     * @param exchanger  exchanger for exchanging sorted elements.
+     * @throws NullPointerException          if <tt>comparator</tt> or <tt>exchanger</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException      if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>
+     * @throws UnsupportedOperationException if {@link #isExchangingSorter()} returns <tt>false</tt> and
+     *                                       the <tt>exchanger</tt> does not implement interfaces, necessary
+     *                                       to perform sorting by this algorithm. Never occurs in the current
+     *                                       version of this package.
+     * @throws ClassCastException            may be thrown while calling methods of <tt>comparator</tt> or
+     *                                       <tt>exchanger</tt> during the sorting, if the types of the array elements
+     *                                       are not appropriate (it is only a typical example of exception:
+     *                                       those methods may throw another run-time exceptions).
+     */
+    public void sort(int from, int to, ArrayComparator32 comparator, ArrayExchanger32 exchanger) {
+        sort((long) from, (long) to, (ArrayComparator) comparator, (ArrayExchanger) exchanger);
+    }
 
     /**
      * Returns <tt>true</tt>, if it is enough to implement the pure {@link ArrayExchanger} interface by

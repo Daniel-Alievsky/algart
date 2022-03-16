@@ -108,7 +108,7 @@ public class JArrays {
      * we always compare <tt>array[i] & 0xFF</tt> and <tt>array[j] & 0xFF</tt>
      * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
      */
-    public static class ByteArrayComparator implements ArrayComparator {
+    public static class ByteArrayComparator implements ArrayComparator32 {
         private final byte[] array;
 
         /**
@@ -125,24 +125,24 @@ public class JArrays {
         }
 
         /**
-         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)firstIndex]</tt>
-         * is less than the element <tt>array[(int)secondIndex]</tt>,
+         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)first]</tt>
+         * is less than the element <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first compared element.
-         * @param secondIndex index of the second compared element.
-         * @return whether the element <tt>#firstIndex</tt> is less than the element <tt>#secondIndex</tt>.
+         * @param first  index of the first compared element.
+         * @param second index of the second compared element.
+         * @return whether the element <tt>#first</tt> is less than the element <tt>#second</tt>.
          */
         @Override
-        public boolean less(long firstIndex, long secondIndex) {
-            return (array[(int) firstIndex] & 0xFF) < (array[(int) secondIndex] & 0xFF);
+        public boolean less(int first, int second) {
+            return (array[first] & 0xFF) < (array[second] & 0xFF);
         }
     }
 
     /**
      * Simple implementation of {@link ArrayExchanger}, exchanging elements of <tt>byte[]</tt> array.
      */
-    public static class ByteArrayExchanger implements ArrayExchanger {
+    public static class ByteArrayExchanger implements ArrayExchanger32 {
         private final byte[] array;
 
         /**
@@ -159,19 +159,17 @@ public class JArrays {
         }
 
         /**
-         * Exchanges the elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
+         * Exchanges the elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            byte temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
+        public void swap(int first, int second) {
+            byte temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
         }
     }
 
@@ -181,7 +179,7 @@ public class JArrays {
      * It is convenient, when the 1st array contains data and the 2nd array contains some "indexes",
      * and we want to exchange indexes simultaneously with sorting the data array.
      */
-    public static class ByteAndIndexArrayExchanger implements ArrayExchanger {
+    public static class ByteAndIndexArrayExchanger implements ArrayExchanger32 {
         private final byte[] array;
         private final int[] indexes;
 
@@ -204,23 +202,21 @@ public class JArrays {
         }
 
         /**
-         * Exchanges two pair: 1) elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
-         * 2) elements <tt>indexes[(int)firstIndex]</tt> and <tt>indexes[(int)secondIndex]</tt>,
+         * Exchanges two pair: 1) elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
+         * 2) elements <tt>indexes[(int)first]</tt> and <tt>indexes[(int)second]</tt>,
          * where <tt>array</tt> and <tt>indexes</tt>are the arguments of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            byte temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
-            int index = indexes[i];
-            indexes[i] = indexes[j];
-            indexes[j] = index;
+        public void swap(int first, int second) {
+            byte temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
+            int index = indexes[first];
+            indexes[first] = indexes[second];
+            indexes[second] = index;
         }
     }
 
@@ -231,7 +227,7 @@ public class JArrays {
      * Simple implementation of {@link ArrayComparator}, comparing elements of <tt>char[]</tt> array.
      *
      */
-    public static class CharArrayComparator implements ArrayComparator {
+    public static class CharArrayComparator implements ArrayComparator32 {
         private final char[] array;
 
         /**
@@ -248,24 +244,24 @@ public class JArrays {
         }
 
         /**
-         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)firstIndex]</tt>
-         * is less than the element <tt>array[(int)secondIndex]</tt>,
+         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)first]</tt>
+         * is less than the element <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first compared element.
-         * @param secondIndex index of the second compared element.
-         * @return whether the element <tt>#firstIndex</tt> is less than the element <tt>#secondIndex</tt>.
+         * @param first  index of the first compared element.
+         * @param second index of the second compared element.
+         * @return whether the element <tt>#first</tt> is less than the element <tt>#second</tt>.
          */
         @Override
-        public boolean less(long firstIndex, long secondIndex) {
-            return (array[(int) firstIndex]) < (array[(int) secondIndex]);
+        public boolean less(int first, int second) {
+            return (array[first]) < (array[second]);
         }
     }
 
     /**
      * Simple implementation of {@link ArrayExchanger}, exchanging elements of <tt>char[]</tt> array.
      */
-    public static class CharArrayExchanger implements ArrayExchanger {
+    public static class CharArrayExchanger implements ArrayExchanger32 {
         private final char[] array;
 
         /**
@@ -282,19 +278,17 @@ public class JArrays {
         }
 
         /**
-         * Exchanges the elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
+         * Exchanges the elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            char temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
+        public void swap(int first, int second) {
+            char temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
         }
     }
 
@@ -304,7 +298,7 @@ public class JArrays {
      * It is convenient, when the 1st array contains data and the 2nd array contains some "indexes",
      * and we want to exchange indexes simultaneously with sorting the data array.
      */
-    public static class CharAndIndexArrayExchanger implements ArrayExchanger {
+    public static class CharAndIndexArrayExchanger implements ArrayExchanger32 {
         private final char[] array;
         private final int[] indexes;
 
@@ -327,23 +321,21 @@ public class JArrays {
         }
 
         /**
-         * Exchanges two pair: 1) elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
-         * 2) elements <tt>indexes[(int)firstIndex]</tt> and <tt>indexes[(int)secondIndex]</tt>,
+         * Exchanges two pair: 1) elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
+         * 2) elements <tt>indexes[(int)first]</tt> and <tt>indexes[(int)second]</tt>,
          * where <tt>array</tt> and <tt>indexes</tt>are the arguments of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            char temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
-            int index = indexes[i];
-            indexes[i] = indexes[j];
-            indexes[j] = index;
+        public void swap(int first, int second) {
+            char temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
+            int index = indexes[first];
+            indexes[first] = indexes[second];
+            indexes[second] = index;
         }
     }
 
@@ -357,7 +349,7 @@ public class JArrays {
      * we always compare <tt>array[i] & 0xFFFF</tt> and <tt>array[j] & 0xFFFF</tt>
      * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
      */
-    public static class ShortArrayComparator implements ArrayComparator {
+    public static class ShortArrayComparator implements ArrayComparator32 {
         private final short[] array;
 
         /**
@@ -374,24 +366,24 @@ public class JArrays {
         }
 
         /**
-         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)firstIndex]</tt>
-         * is less than the element <tt>array[(int)secondIndex]</tt>,
+         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)first]</tt>
+         * is less than the element <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first compared element.
-         * @param secondIndex index of the second compared element.
-         * @return whether the element <tt>#firstIndex</tt> is less than the element <tt>#secondIndex</tt>.
+         * @param first  index of the first compared element.
+         * @param second index of the second compared element.
+         * @return whether the element <tt>#first</tt> is less than the element <tt>#second</tt>.
          */
         @Override
-        public boolean less(long firstIndex, long secondIndex) {
-            return (array[(int) firstIndex] & 0xFFFF) < (array[(int) secondIndex] & 0xFFFF);
+        public boolean less(int first, int second) {
+            return (array[first] & 0xFFFF) < (array[second] & 0xFFFF);
         }
     }
 
     /**
      * Simple implementation of {@link ArrayExchanger}, exchanging elements of <tt>short[]</tt> array.
      */
-    public static class ShortArrayExchanger implements ArrayExchanger {
+    public static class ShortArrayExchanger implements ArrayExchanger32 {
         private final short[] array;
 
         /**
@@ -408,19 +400,17 @@ public class JArrays {
         }
 
         /**
-         * Exchanges the elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
+         * Exchanges the elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            short temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
+        public void swap(int first, int second) {
+            short temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
         }
     }
 
@@ -430,7 +420,7 @@ public class JArrays {
      * It is convenient, when the 1st array contains data and the 2nd array contains some "indexes",
      * and we want to exchange indexes simultaneously with sorting the data array.
      */
-    public static class ShortAndIndexArrayExchanger implements ArrayExchanger {
+    public static class ShortAndIndexArrayExchanger implements ArrayExchanger32 {
         private final short[] array;
         private final int[] indexes;
 
@@ -453,23 +443,21 @@ public class JArrays {
         }
 
         /**
-         * Exchanges two pair: 1) elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
-         * 2) elements <tt>indexes[(int)firstIndex]</tt> and <tt>indexes[(int)secondIndex]</tt>,
+         * Exchanges two pair: 1) elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
+         * 2) elements <tt>indexes[(int)first]</tt> and <tt>indexes[(int)second]</tt>,
          * where <tt>array</tt> and <tt>indexes</tt>are the arguments of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            short temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
-            int index = indexes[i];
-            indexes[i] = indexes[j];
-            indexes[j] = index;
+        public void swap(int first, int second) {
+            short temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
+            int index = indexes[first];
+            indexes[first] = indexes[second];
+            indexes[second] = index;
         }
     }
 
@@ -480,7 +468,7 @@ public class JArrays {
      * Simple implementation of {@link ArrayComparator}, comparing elements of <tt>int[]</tt> array.
      *
      */
-    public static class IntArrayComparator implements ArrayComparator {
+    public static class IntArrayComparator implements ArrayComparator32 {
         private final int[] array;
 
         /**
@@ -497,24 +485,24 @@ public class JArrays {
         }
 
         /**
-         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)firstIndex]</tt>
-         * is less than the element <tt>array[(int)secondIndex]</tt>,
+         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)first]</tt>
+         * is less than the element <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first compared element.
-         * @param secondIndex index of the second compared element.
-         * @return whether the element <tt>#firstIndex</tt> is less than the element <tt>#secondIndex</tt>.
+         * @param first  index of the first compared element.
+         * @param second index of the second compared element.
+         * @return whether the element <tt>#first</tt> is less than the element <tt>#second</tt>.
          */
         @Override
-        public boolean less(long firstIndex, long secondIndex) {
-            return (array[(int) firstIndex]) < (array[(int) secondIndex]);
+        public boolean less(int first, int second) {
+            return (array[first]) < (array[second]);
         }
     }
 
     /**
      * Simple implementation of {@link ArrayExchanger}, exchanging elements of <tt>int[]</tt> array.
      */
-    public static class IntArrayExchanger implements ArrayExchanger {
+    public static class IntArrayExchanger implements ArrayExchanger32 {
         private final int[] array;
 
         /**
@@ -531,19 +519,17 @@ public class JArrays {
         }
 
         /**
-         * Exchanges the elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
+         * Exchanges the elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            int temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
+        public void swap(int first, int second) {
+            int temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
         }
     }
 
@@ -553,7 +539,7 @@ public class JArrays {
      * It is convenient, when the 1st array contains data and the 2nd array contains some "indexes",
      * and we want to exchange indexes simultaneously with sorting the data array.
      */
-    public static class IntAndIndexArrayExchanger implements ArrayExchanger {
+    public static class IntAndIndexArrayExchanger implements ArrayExchanger32 {
         private final int[] array;
         private final int[] indexes;
 
@@ -576,23 +562,21 @@ public class JArrays {
         }
 
         /**
-         * Exchanges two pair: 1) elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
-         * 2) elements <tt>indexes[(int)firstIndex]</tt> and <tt>indexes[(int)secondIndex]</tt>,
+         * Exchanges two pair: 1) elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
+         * 2) elements <tt>indexes[(int)first]</tt> and <tt>indexes[(int)second]</tt>,
          * where <tt>array</tt> and <tt>indexes</tt>are the arguments of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            int temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
-            int index = indexes[i];
-            indexes[i] = indexes[j];
-            indexes[j] = index;
+        public void swap(int first, int second) {
+            int temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
+            int index = indexes[first];
+            indexes[first] = indexes[second];
+            indexes[second] = index;
         }
     }
 
@@ -603,7 +587,7 @@ public class JArrays {
      * Simple implementation of {@link ArrayComparator}, comparing elements of <tt>long[]</tt> array.
      *
      */
-    public static class LongArrayComparator implements ArrayComparator {
+    public static class LongArrayComparator implements ArrayComparator32 {
         private final long[] array;
 
         /**
@@ -620,24 +604,24 @@ public class JArrays {
         }
 
         /**
-         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)firstIndex]</tt>
-         * is less than the element <tt>array[(int)secondIndex]</tt>,
+         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)first]</tt>
+         * is less than the element <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first compared element.
-         * @param secondIndex index of the second compared element.
-         * @return whether the element <tt>#firstIndex</tt> is less than the element <tt>#secondIndex</tt>.
+         * @param first  index of the first compared element.
+         * @param second index of the second compared element.
+         * @return whether the element <tt>#first</tt> is less than the element <tt>#second</tt>.
          */
         @Override
-        public boolean less(long firstIndex, long secondIndex) {
-            return (array[(int) firstIndex]) < (array[(int) secondIndex]);
+        public boolean less(int first, int second) {
+            return (array[first]) < (array[second]);
         }
     }
 
     /**
      * Simple implementation of {@link ArrayExchanger}, exchanging elements of <tt>long[]</tt> array.
      */
-    public static class LongArrayExchanger implements ArrayExchanger {
+    public static class LongArrayExchanger implements ArrayExchanger32 {
         private final long[] array;
 
         /**
@@ -654,19 +638,17 @@ public class JArrays {
         }
 
         /**
-         * Exchanges the elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
+         * Exchanges the elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            long temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
+        public void swap(int first, int second) {
+            long temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
         }
     }
 
@@ -676,7 +658,7 @@ public class JArrays {
      * It is convenient, when the 1st array contains data and the 2nd array contains some "indexes",
      * and we want to exchange indexes simultaneously with sorting the data array.
      */
-    public static class LongAndIndexArrayExchanger implements ArrayExchanger {
+    public static class LongAndIndexArrayExchanger implements ArrayExchanger32 {
         private final long[] array;
         private final int[] indexes;
 
@@ -699,23 +681,21 @@ public class JArrays {
         }
 
         /**
-         * Exchanges two pair: 1) elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
-         * 2) elements <tt>indexes[(int)firstIndex]</tt> and <tt>indexes[(int)secondIndex]</tt>,
+         * Exchanges two pair: 1) elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
+         * 2) elements <tt>indexes[(int)first]</tt> and <tt>indexes[(int)second]</tt>,
          * where <tt>array</tt> and <tt>indexes</tt>are the arguments of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            long temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
-            int index = indexes[i];
-            indexes[i] = indexes[j];
-            indexes[j] = index;
+        public void swap(int first, int second) {
+            long temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
+            int index = indexes[first];
+            indexes[first] = indexes[second];
+            indexes[second] = index;
         }
     }
 
@@ -729,7 +709,7 @@ public class JArrays {
      * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float values
      * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
      **/
-    public static class FloatArrayComparator implements ArrayComparator {
+    public static class FloatArrayComparator implements ArrayComparator32 {
         private final float[] array;
 
         /**
@@ -746,24 +726,24 @@ public class JArrays {
         }
 
         /**
-         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)firstIndex]</tt>
-         * is less than the element <tt>array[(int)secondIndex]</tt>,
+         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)first]</tt>
+         * is less than the element <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first compared element.
-         * @param secondIndex index of the second compared element.
-         * @return whether the element <tt>#firstIndex</tt> is less than the element <tt>#secondIndex</tt>.
+         * @param first  index of the first compared element.
+         * @param second index of the second compared element.
+         * @return whether the element <tt>#first</tt> is less than the element <tt>#second</tt>.
          */
         @Override
-        public boolean less(long firstIndex, long secondIndex) {
-            return Float.compare((array[(int) firstIndex]), (array[(int) secondIndex])) < 0;
+        public boolean less(int first, int second) {
+            return (array[first]) < (array[second]);
         }
     }
 
     /**
      * Simple implementation of {@link ArrayExchanger}, exchanging elements of <tt>float[]</tt> array.
      */
-    public static class FloatArrayExchanger implements ArrayExchanger {
+    public static class FloatArrayExchanger implements ArrayExchanger32 {
         private final float[] array;
 
         /**
@@ -780,19 +760,17 @@ public class JArrays {
         }
 
         /**
-         * Exchanges the elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
+         * Exchanges the elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            float temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
+        public void swap(int first, int second) {
+            float temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
         }
     }
 
@@ -802,7 +780,7 @@ public class JArrays {
      * It is convenient, when the 1st array contains data and the 2nd array contains some "indexes",
      * and we want to exchange indexes simultaneously with sorting the data array.
      */
-    public static class FloatAndIndexArrayExchanger implements ArrayExchanger {
+    public static class FloatAndIndexArrayExchanger implements ArrayExchanger32 {
         private final float[] array;
         private final int[] indexes;
 
@@ -825,23 +803,21 @@ public class JArrays {
         }
 
         /**
-         * Exchanges two pair: 1) elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
-         * 2) elements <tt>indexes[(int)firstIndex]</tt> and <tt>indexes[(int)secondIndex]</tt>,
+         * Exchanges two pair: 1) elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
+         * 2) elements <tt>indexes[(int)first]</tt> and <tt>indexes[(int)second]</tt>,
          * where <tt>array</tt> and <tt>indexes</tt>are the arguments of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            float temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
-            int index = indexes[i];
-            indexes[i] = indexes[j];
-            indexes[j] = index;
+        public void swap(int first, int second) {
+            float temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
+            int index = indexes[first];
+            indexes[first] = indexes[second];
+            indexes[second] = index;
         }
     }
 
@@ -855,7 +831,7 @@ public class JArrays {
      * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double alues
      * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
      **/
-    public static class DoubleArrayComparator implements ArrayComparator {
+    public static class DoubleArrayComparator implements ArrayComparator32 {
         private final double[] array;
 
         /**
@@ -872,24 +848,24 @@ public class JArrays {
         }
 
         /**
-         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)firstIndex]</tt>
-         * is less than the element <tt>array[(int)secondIndex]</tt>,
+         * Returns <tt>true</tt> if, and only if, the element <tt>array[(int)first]</tt>
+         * is less than the element <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first compared element.
-         * @param secondIndex index of the second compared element.
-         * @return whether the element <tt>#firstIndex</tt> is less than the element <tt>#secondIndex</tt>.
+         * @param first  index of the first compared element.
+         * @param second index of the second compared element.
+         * @return whether the element <tt>#first</tt> is less than the element <tt>#second</tt>.
          */
         @Override
-        public boolean less(long firstIndex, long secondIndex) {
-            return Double.compare((array[(int) firstIndex]), (array[(int) secondIndex])) < 0;
+        public boolean less(int first, int second) {
+            return (array[first]) < (array[second]);
         }
     }
 
     /**
      * Simple implementation of {@link ArrayExchanger}, exchanging elements of <tt>double[]</tt> array.
      */
-    public static class DoubleArrayExchanger implements ArrayExchanger {
+    public static class DoubleArrayExchanger implements ArrayExchanger32 {
         private final double[] array;
 
         /**
@@ -906,19 +882,17 @@ public class JArrays {
         }
 
         /**
-         * Exchanges the elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
+         * Exchanges the elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
          * where <tt>array</tt> is the argument of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            double temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
+        public void swap(int first, int second) {
+            double temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
         }
     }
 
@@ -928,7 +902,7 @@ public class JArrays {
      * It is convenient, when the 1st array contains data and the 2nd array contains some "indexes",
      * and we want to exchange indexes simultaneously with sorting the data array.
      */
-    public static class DoubleAndIndexArrayExchanger implements ArrayExchanger {
+    public static class DoubleAndIndexArrayExchanger implements ArrayExchanger32 {
         private final double[] array;
         private final int[] indexes;
 
@@ -951,23 +925,21 @@ public class JArrays {
         }
 
         /**
-         * Exchanges two pair: 1) elements <tt>array[(int)firstIndex]</tt> and <tt>array[(int)secondIndex]</tt>,
-         * 2) elements <tt>indexes[(int)firstIndex]</tt> and <tt>indexes[(int)secondIndex]</tt>,
+         * Exchanges two pair: 1) elements <tt>array[(int)first]</tt> and <tt>array[(int)second]</tt>,
+         * 2) elements <tt>indexes[(int)first]</tt> and <tt>indexes[(int)second]</tt>,
          * where <tt>array</tt> and <tt>indexes</tt>are the arguments of the constructor.
          *
-         * @param firstIndex  index of the first exchanged element.
-         * @param secondIndex index of the second exchanged element.
+         * @param first  index of the first exchanged element.
+         * @param second index of the second exchanged element.
          */
         @Override
-        public void swap(long firstIndex, long secondIndex) {
-            int i = (int) firstIndex;
-            int j = (int) secondIndex;
-            double temp = this.array[i];
-            this.array[i] = this.array[j];
-            this.array[j] = temp;
-            int index = indexes[i];
-            indexes[i] = indexes[j];
-            indexes[j] = index;
+        public void swap(int first, int second) {
+            double temp = this.array[first];
+            this.array[first] = this.array[second];
+            this.array[second] = temp;
+            int index = indexes[first];
+            indexes[first] = indexes[second];
+            indexes[second] = index;
         }
     }
 

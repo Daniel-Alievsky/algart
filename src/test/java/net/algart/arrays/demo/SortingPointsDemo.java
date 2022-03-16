@@ -24,9 +24,7 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.arrays.ArrayComparator;
-import net.algart.arrays.ArrayExchanger;
-import net.algart.arrays.ArraySorter;
+import net.algart.arrays.*;
 
 /**
  * <p>Sorting points: an example from comments to {@link net.algart.arrays.ArraySorter} class</p>
@@ -35,36 +33,38 @@ import net.algart.arrays.ArraySorter;
  */
 public class SortingPointsDemo {
     public static void main(String[] args) {
-        int n = 10;
+        int n = 100;
         final float[] xy = new float[2 * n];
+        final int[] indexes = new int[n];
         for (int k = 0; k < n; k++) {
-            xy[2 * k] = (float)Math.random();     // x-coordinate of the point #k
-            xy[2 * k + 1] = (float)Math.random(); // y-coordinate of the point #k
+            xy[2 * k] = (float) Math.random();     // x-coordinate of the point #k
+            xy[2 * k + 1] = (float) Math.random(); // y-coordinate of the point #k
+            indexes[k] = k;
         }
         System.out.println(n + " points before sorting:");
-        for (int k = 0; k < n; k++)
+        for (int k = 0; k < n; k++) {
             System.out.println("x = " + xy[2 * k] + ", y = " + xy[2 * k + 1]);
+        }
+        final float[] xyClone = xy.clone();
 
+        ArraySorter.getQuickSorter().sortIndexes(indexes, 0, n, (i, j) -> xy[2 * i] < xy[2 * j]);
         ArraySorter.getQuickSorter().sort(0, n,
-            new ArrayComparator() {
-                public boolean less(long i, long j) {
-                    return xy[2 * (int) i] < xy[2 * (int) j];
-                }
-            },
-            new ArrayExchanger() {
-                public void swap(long i, long j) {
-                    float temp = xy[2 * (int) i];
-                    xy[2 * (int) i] = xy[2 * (int) j];
-                    xy[2 * (int) j] = temp;
-                    temp = xy[2 * (int) i + 1];
-                    xy[2 * (int) i + 1] = xy[2 * (int) j + 1];
-                    xy[2 * (int) j + 1] = temp;
-                }
-            });
+                (i, j) -> xy[2 * i] < xy[2 * j],
+                (i, j) -> {
+                    float temp = xy[2 * i];
+                    xy[2 * i] = xy[2 * j];
+                    xy[2 * j] = temp;
+                    temp = xy[2 * i + 1];
+                    xy[2 * i + 1] = xy[2 * j + 1];
+                    xy[2 * j + 1] = temp;
+                });
 
         System.out.println(n + " points after sorting:");
         for (int k = 0; k < n; k++) {
             System.out.println("x = " + xy[2 * k] + ", y = " + xy[2 * k + 1]);
+            if (xy[2 * k] != xyClone[2 * indexes[k]] || xy[2 * k + 1] != xyClone[2 * indexes[k] + 1]) {
+                throw new AssertionError("Bug in sorting indexes for index " + k);
+            }
         }
     }
 }

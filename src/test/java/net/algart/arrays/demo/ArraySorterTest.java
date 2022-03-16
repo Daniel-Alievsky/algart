@@ -24,9 +24,7 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.arrays.ArrayComparator;
-import net.algart.arrays.ArrayExchanger;
-import net.algart.arrays.ArraySorter;
+import net.algart.arrays.*;
 
 import java.util.Locale;
 
@@ -65,15 +63,15 @@ public class ArraySorterTest {
             indexes = new int[a.length];
         // - avoid garbage collection for correct timing
 
-        class MyComparatorExchanger implements ArrayComparator, ArrayExchanger {
-            public boolean less(long i, long j) {
-                return a[(int)i] < a[(int)j];
+        class MyComparatorExchanger implements ArrayComparator32, ArrayExchanger32 {
+            public boolean less(int i, int j) {
+                return a[i] < a[j];
             }
 
-            public void swap(long i, long j) {
-                double temp = a[(int)i];
-                a[(int)i] = a[(int)j];
-                a[(int)j] = temp;
+            public void swap(int i, int j) {
+                double temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
             }
         };
         MyComparatorExchanger ce = new MyComparatorExchanger();

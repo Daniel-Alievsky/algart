@@ -669,12 +669,10 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         assert length == dest.length() : "src/dest array lengths mismatch";
         boolean additionalDimension = decrements != null;
         if (!additionalDimension) {
-            Arrays.sort(SimpleMemoryModel.asUpdatableLongArray(leftwardShifts), new ArrayComparator() {
-                public boolean less(long firstIndex, long secondIndex) {
-                    long first = leftwardShifts[(int) firstIndex] - length >> 2;
-                    long second = leftwardShifts[(int) secondIndex] - length >> 2;
-                    return Math.abs(first) < Math.abs(second);
-                }
+            Arrays.sort(SimpleMemoryModel.asUpdatableLongArray(leftwardShifts), (firstIndex, secondIndex) -> {
+                long first = leftwardShifts[(int) firstIndex] - length >> 2;
+                long second = leftwardShifts[(int) secondIndex] - length >> 2;
+                return Math.abs(first) < Math.abs(second);
             });
             // Sorting by absolute value of the shift allows to better performance for bit array:
             // nextPosition will be based on non-shifted matrix, if the zero shift is inside the pattern.

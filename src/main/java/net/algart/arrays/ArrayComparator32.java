@@ -25,25 +25,29 @@
 package net.algart.arrays;
 
 /**
- * <p>Comparison interface, designed for comparing elements in some data array.</p>
- *
- * <p>Unlike the standard <tt>java.util.Comparator</tt>, the basic method {@link #less(long, long)}
- * of this interface works not with data elements, but with their indexes in the array:
- * this method should get them from the analysed array itself.
- * So, every object, implementing this interface, is supposed to be working with some fixed linear data array.
- * The method of storing data in the array can be any; for example, it can be an {@link Array AlgART array}
- * or a usual Java array.
- * The length of the array is limited only by 2<sup>63</sup>&minus;1 (maximal possible value for <tt>long</tt>
- * indexes).</p>
- *
- * <p>In {@link JArrays} class you will find implementations of this interface for processing usual Java arrays.</p>
- *
- * <p>This interface is used by {@link ArraySorter} class.</p>
+ * <p>Version of {@link ArrayComparator} for a case of 32-bit indexes (<tt>int</tt> instead of <tt>long</tt>).
  *
  * @author Daniel Alievsky
  */
 @FunctionalInterface
-public interface ArrayComparator {
+public interface ArrayComparator32 extends ArrayComparator {
+    /**
+     * This method, implemented in this interface, just calls another <tt>less</tt> method with <tt>int</tt> indexes:
+     * <pre>
+     *     {@link #less(int, int) less}((int) first, (int) second);
+     * </pre>
+     * Note: for maximal performance, it does not check that the passed intexes are really 32-bit.
+     * While using with arrays, containing 2<sup>31</sup> elements or more, this comparator will work incorrecly.
+     *
+     * @param first  index of the first compared element.
+     * @param second index of the second compared element.
+     * @return <tt>true</tt> if, and only if, the element <tt>#first</tt> is "less"
+     * than the element <tt>#second</tt>.
+     */
+    default boolean less(long first, long second) {
+        return less((int) first, (int) second);
+    }
+
     /**
      * Should return <tt>true</tt> if, and only if, the element at position <tt>first</tt>
      * in the sorted array is "less" than the element at position <tt>second</tt>.
@@ -53,8 +57,8 @@ public interface ArrayComparator {
      *
      * @param first  index of the first compared element.
      * @param second index of the second compared element.
-     * @return            <tt>true</tt> if, and only if, the element <tt>#first</tt> is "less"
-     *                    than the element <tt>#second</tt>.
+     * @return <tt>true</tt> if, and only if, the element <tt>#first</tt> is "less"
+     * than the element <tt>#second</tt>.
      */
-    boolean less(long first, long second);
+    boolean less(int first, int second);
 }

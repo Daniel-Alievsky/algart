@@ -102,7 +102,7 @@ public class ArraySelectorTest {
 
     private static void measureSpeed(final byte[] array, final double[] levels) {
         final ArraySelector selector = ArraySelector.getQuickSelector();
-        final ArrayComparator comparator = new JArrays.ByteArrayComparator(array);
+        final ArrayComparator32 comparator = (first, second) -> (array[first] & 0xFF) < (array[second] & 0xFF);
         final ArrayExchanger exchanger = new JArrays.ByteArrayExchanger(array);
 
         byte[] clone1 = array.clone();

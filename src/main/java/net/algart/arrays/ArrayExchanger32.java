@@ -25,31 +25,32 @@
 package net.algart.arrays;
 
 /**
- * <p>Exchanging interface, designed for exchanging (swapping) two elements in some data array.</p>
- *
- * <p>The basic method {@link #swap(long, long)}
- * of this interface works with indexes of the exchanged elements in the array.
- * So, every object, implementing this interface, is supposed to be working with some fixed linear data array.
- * The method of storing data in the array can be any; for example, it can be an
- * {@link UpdatableArray updatable AlgART array} or a usual Java array.
- * The length of the array is limited only by 2<sup>63</sup>&minus;1 (maximal possible value for <tt>long</tt>
- * indexes).</p>
- *
- * <p>This interface is used by {@link ArraySorter} class.</p>
- *
- * <p>Note: {@link UpdatableArray} interface extends this interface.</p>
- *
- * <p>In {@link JArrays} class you will find implementations of this interface for processing usual Java arrays.</p>
+ * <p>Version of {@link ArrayExchanger} for a case of 32-bit indexes (<tt>int</tt> instead of <tt>long</tt>).
  *
  * @author Daniel Alievsky
  */
 @FunctionalInterface
-public interface ArrayExchanger {
+public interface ArrayExchanger32 extends ArrayExchanger {
     /**
-     * Should exchange the elements at position <tt>firstIndex</tt> and <tt>secondIndex</tt> in the data array.
+     * This method, implemented in this interface, just calls another <tt>swap</tt> method with <tt>int</tt> indexes:
+     * <pre>
+     *     {@link #swap(int, int) swap}((int) first, (int) second);
+     * </pre>
+     * Note: for maximal performance, it does not check that the passed intexes are really 32-bit.
+     * While using with arrays, containing 2<sup>31</sup> elements or more, this comparator will work incorrecly.
      *
-     * @param firstIndex  index of the first exchanged element.
-     * @param secondIndex index of the second exchanged element.
+     * @param first  index of the first exchanged element.
+     * @param second index of the second exchanged element.
      */
-    void swap(long firstIndex, long secondIndex);
+    default void swap(long first, long second) {
+        swap((int) first, (int) second);
+    }
+
+    /**
+     * Should exchange the elements at position <tt>first</tt> and <tt>second</tt> in the data array.
+     *
+     * @param first  index of the first exchanged element.
+     * @param second index of the second exchanged element.
+     */
+    void swap(int first, int second);
 }

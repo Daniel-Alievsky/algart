@@ -1623,17 +1623,9 @@ class ArraysOpImpl {
         if (array instanceof UpdatableBitArray) {
             final UpdatableBitArray a = (UpdatableBitArray)array;
             if (!reverse) {
-                return new ArrayComparator() {
-                    public boolean less(long firstIndex, long secondIndex) {
-                        return!a.getBit(firstIndex) && a.getBit(secondIndex);
-                    }
-                };
+                return (first, second) -> !a.getBit(first) && a.getBit(second);
             } else {
-                return new ArrayComparator() {
-                    public boolean less(long firstIndex, long secondIndex) {
-                        return!a.getBit(secondIndex) && a.getBit(firstIndex);
-                    }
-                };
+                return (first, second) -> !a.getBit(second) && a.getBit(first);
             }
         }
         //[[Repeat() char ==> byte,,short,,int,,long;;
@@ -1644,31 +1636,15 @@ class ArraysOpImpl {
                 final char[] ja = (char[])((DirectAccessible)a).javaArray();
                 final int offset = ((DirectAccessible)a).javaArrayOffset();
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return ja[offset + (int)firstIndex] < ja[offset + (int)secondIndex];
-                        }
-                    };
+                    return (first, second) -> ja[offset + (int) first] < ja[offset + (int) second];
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return ja[offset + (int)secondIndex] < ja[offset + (int)firstIndex];
-                        }
-                    };
+                    return (first, second) -> ja[offset + (int) second] < ja[offset + (int) first];
                 }
             } else {
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.getChar(firstIndex) < a.getChar(secondIndex);
-                        }
-                    };
+                    return (first, second) -> a.getChar(first) < a.getChar(second);
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.getChar(secondIndex) < a.getChar(firstIndex);
-                        }
-                    };
+                    return (first, second) -> a.getChar(second) < a.getChar(first);
                 }
             }
         }
@@ -1679,31 +1655,15 @@ class ArraysOpImpl {
                 final byte[] ja = (byte[])((DirectAccessible)a).javaArray();
                 final int offset = ((DirectAccessible)a).javaArrayOffset();
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return ja[offset + (int)firstIndex] < ja[offset + (int)secondIndex];
-                        }
-                    };
+                    return (first, second) -> ja[offset + (int) first] < ja[offset + (int) second];
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return ja[offset + (int)secondIndex] < ja[offset + (int)firstIndex];
-                        }
-                    };
+                    return (first, second) -> ja[offset + (int) second] < ja[offset + (int) first];
                 }
             } else {
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.getByte(firstIndex) < a.getByte(secondIndex);
-                        }
-                    };
+                    return (first, second) -> a.getByte(first) < a.getByte(second);
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.getByte(secondIndex) < a.getByte(firstIndex);
-                        }
-                    };
+                    return (first, second) -> a.getByte(second) < a.getByte(first);
                 }
             }
         }
@@ -1713,31 +1673,15 @@ class ArraysOpImpl {
                 final short[] ja = (short[])((DirectAccessible)a).javaArray();
                 final int offset = ((DirectAccessible)a).javaArrayOffset();
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return ja[offset + (int)firstIndex] < ja[offset + (int)secondIndex];
-                        }
-                    };
+                    return (first, second) -> ja[offset + (int) first] < ja[offset + (int) second];
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return ja[offset + (int)secondIndex] < ja[offset + (int)firstIndex];
-                        }
-                    };
+                    return (first, second) -> ja[offset + (int) second] < ja[offset + (int) first];
                 }
             } else {
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.getShort(firstIndex) < a.getShort(secondIndex);
-                        }
-                    };
+                    return (first, second) -> a.getShort(first) < a.getShort(second);
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.getShort(secondIndex) < a.getShort(firstIndex);
-                        }
-                    };
+                    return (first, second) -> a.getShort(second) < a.getShort(first);
                 }
             }
         }
@@ -1747,31 +1691,15 @@ class ArraysOpImpl {
                 final int[] ja = (int[])((DirectAccessible)a).javaArray();
                 final int offset = ((DirectAccessible)a).javaArrayOffset();
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return ja[offset + (int)firstIndex] < ja[offset + (int)secondIndex];
-                        }
-                    };
+                    return (first, second) -> ja[offset + (int) first] < ja[offset + (int) second];
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return ja[offset + (int)secondIndex] < ja[offset + (int)firstIndex];
-                        }
-                    };
+                    return (first, second) -> ja[offset + (int) second] < ja[offset + (int) first];
                 }
             } else {
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.getInt(firstIndex) < a.getInt(secondIndex);
-                        }
-                    };
+                    return (first, second) -> a.getInt(first) < a.getInt(second);
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.getInt(secondIndex) < a.getInt(firstIndex);
-                        }
-                    };
+                    return (first, second) -> a.getInt(second) < a.getInt(first);
                 }
             }
         }
@@ -1781,31 +1709,15 @@ class ArraysOpImpl {
                 final long[] ja = (long[])((DirectAccessible)a).javaArray();
                 final int offset = ((DirectAccessible)a).javaArrayOffset();
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return ja[offset + (int)firstIndex] < ja[offset + (int)secondIndex];
-                        }
-                    };
+                    return (first, second) -> ja[offset + (int) first] < ja[offset + (int) second];
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return ja[offset + (int)secondIndex] < ja[offset + (int)firstIndex];
-                        }
-                    };
+                    return (first, second) -> ja[offset + (int) second] < ja[offset + (int) first];
                 }
             } else {
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.getLong(firstIndex) < a.getLong(secondIndex);
-                        }
-                    };
+                    return (first, second) -> a.getLong(first) < a.getLong(second);
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.getLong(secondIndex) < a.getLong(firstIndex);
-                        }
-                    };
+                    return (first, second) -> a.getLong(second) < a.getLong(first);
                 }
             }
         }
@@ -1816,31 +1728,15 @@ class ArraysOpImpl {
                 final float[] ja = (float[])((DirectAccessible)a).javaArray();
                 final int offset = ((DirectAccessible)a).javaArrayOffset();
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return Float.compare(ja[offset + (int) firstIndex], ja[offset + (int) secondIndex]) < 0;
-                        }
-                    };
+                    return (first, second) -> Float.compare(ja[offset + (int) first], ja[offset + (int) second]) < 0;
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return Float.compare(ja[offset + (int)secondIndex], ja[offset + (int)firstIndex]) < 0;
-                        }
-                    };
+                    return (first, second) -> Float.compare(ja[offset + (int) second], ja[offset + (int) first]) < 0;
                 }
             } else {
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return Float.compare(a.getFloat(firstIndex), a.getFloat(secondIndex)) < 0;
-                        }
-                    };
+                    return (first, second) -> Float.compare(a.getFloat(first), a.getFloat(second)) < 0;
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return Float.compare(a.getFloat(secondIndex), a.getFloat(firstIndex)) < 0;
-                        }
-                    };
+                    return (first, second) -> Float.compare(a.getFloat(second), a.getFloat(first)) < 0;
                 }
             }
         }
@@ -1850,31 +1746,15 @@ class ArraysOpImpl {
                 final double[] ja = (double[])((DirectAccessible)a).javaArray();
                 final int offset = ((DirectAccessible)a).javaArrayOffset();
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return Double.compare(ja[offset + (int)firstIndex], ja[offset + (int)secondIndex]) < 0;
-                        }
-                    };
+                    return (first, second) -> Double.compare(ja[offset + (int) first], ja[offset + (int) second]) < 0;
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return Double.compare(ja[offset + (int)secondIndex], ja[offset + (int)firstIndex]) < 0;
-                        }
-                    };
+                    return (first, second) -> Double.compare(ja[offset + (int) second], ja[offset + (int) first]) < 0;
                 }
             } else {
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return Double.compare(a.getDouble(firstIndex), a.getDouble(secondIndex)) < 0;
-                        }
-                    };
+                    return (first, second) -> Double.compare(a.getDouble(first), a.getDouble(second)) < 0;
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return Double.compare(a.getDouble(secondIndex), a.getDouble(firstIndex)) < 0;
-                        }
-                    };
+                    return (first, second) -> Double.compare(a.getDouble(second), a.getDouble(first)) < 0;
                 }
             }
         }
@@ -1885,19 +1765,9 @@ class ArraysOpImpl {
             final Object work1 = a.allocateElement();
             final Object work2 = a.allocateElement();
             if (!reverse) {
-                return new ArrayComparator() {
-                    public boolean less(long firstIndex, long secondIndex) {
-                        return a.getInPlace(firstIndex, work1)
-                            .compareTo(a.getInPlace(secondIndex, work2)) < 0;
-                    }
-                };
+                return (first, second) -> a.getInPlace(first, work1).compareTo(a.getInPlace(second, work2)) < 0;
             } else {
-                return new ArrayComparator() {
-                    public boolean less(long firstIndex, long secondIndex) {
-                        return a.getInPlace(secondIndex, work1)
-                            .compareTo(a.getInPlace(firstIndex, work2)) < 0;
-                    }
-                };
+                return (first, second) -> a.getInPlace(second, work1).compareTo(a.getInPlace(first, work2)) < 0;
             }
         }
         if (array instanceof UpdatableObjectArray<?>) {
@@ -1905,36 +1775,18 @@ class ArraysOpImpl {
                 final Object[] ja = (Object[])((DirectAccessible)array).javaArray();
                 final int offset = ((DirectAccessible)array).javaArrayOffset();
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return InternalUtils.<Comparable<Object>> cast(ja[offset + (int)firstIndex])
-                                .compareTo(ja[offset + (int)secondIndex]) < 0;
-                        }
-                    };
+                    return (first, second) -> InternalUtils.<Comparable<Object>> cast(ja[offset + (int) first])
+                        .compareTo(ja[offset + (int) second]) < 0;
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return InternalUtils.<Comparable<Object>> cast(ja[offset + (int)secondIndex])
-                                .compareTo(ja[offset + (int)firstIndex]) < 0;
-                        }
-                    };
+                    return (first, second) -> InternalUtils.<Comparable<Object>> cast(ja[offset + (int) second])
+                        .compareTo(ja[offset + (int) first]) < 0;
                 }
             } else {
                 final UpdatableObjectArray<? extends Comparable<Object>> a = InternalUtils.cast(array);
                 if (!reverse) {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.get(firstIndex)
-                                .compareTo(a.get(secondIndex)) < 0;
-                        }
-                    };
+                    return (first, second) -> a.get(first).compareTo(a.get(second)) < 0;
                 } else {
-                    return new ArrayComparator() {
-                        public boolean less(long firstIndex, long secondIndex) {
-                            return a.get(secondIndex)
-                                .compareTo(a.get(firstIndex)) < 0;
-                        }
-                    };
+                    return (first, second) -> a.get(second).compareTo(a.get(first)) < 0;
                 }
             }
         }

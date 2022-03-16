@@ -769,22 +769,20 @@ public class AnalyseSkeletonConfigurations {
         Matrix<UpdatableBitArray> matrix8x8 = Arrays.SMM.newBitMatrix(8, 8);
         Matrix<UpdatableBitArray> mask8x8 = Arrays.SMM.newBitMatrix(8, 8);
         final UpdatablePIntegerArray sortedBits3x3 = bitsAList.updatableClone(Arrays.SMM);
-        Arrays.sort(sortedBits3x3, new ArrayComparator() {
-            public boolean less(long firstIndex, long secondIndex) {
-                int a = sortedBits3x3.getInt(firstIndex);
-                int b = sortedBits3x3.getInt(secondIndex);
-                int aCard = Integer.bitCount(a);
-                int bCard = Integer.bitCount(b);
-                if (aCard != bCard) {
-                    return aCard < bCard;
-                }
-                int aMinimalRotated = minimalRotated(a);
-                int bMinimalRotated = minimalRotated(b);
-                if (aMinimalRotated != bMinimalRotated) {
-                    return aMinimalRotated < bMinimalRotated;
-                }
-                return a < b;
+        Arrays.sort(sortedBits3x3, (first, second) -> {
+            int a = sortedBits3x3.getInt(first);
+            int b = sortedBits3x3.getInt(second);
+            int aCard = Integer.bitCount(a);
+            int bCard = Integer.bitCount(b);
+            if (aCard != bCard) {
+                return aCard < bCard;
             }
+            int aMinimalRotated = minimalRotated(a);
+            int bMinimalRotated = minimalRotated(b);
+            if (aMinimalRotated != bMinimalRotated) {
+                return aMinimalRotated < bMinimalRotated;
+            }
+            return a < b;
         });
         UpdatableBitArray array8x8 = matrix8x8.array();
         for (long k = 0, n = sortedBits3x3.length(); k < n; k++) {
@@ -1464,15 +1462,12 @@ public class AnalyseSkeletonConfigurations {
             result[k] = k;
         }
 //        final int capacity = 31 - Integer.numberOfLeadingZeros(n);
-        ArraySorter.getQuickSorter().sortIndexes(result, 0, n, new ArrayComparator() {
-            public boolean less(long firstIndex, long secondIndex) {
-                int a = (int) firstIndex;
-                int b = (int) secondIndex;
-                int aBitsCount = Integer.bitCount(a);
-                int bBitCount = Integer.bitCount(b);
-                if (aBitsCount != bBitCount) {
-                    return aBitsCount < bBitCount;
-                }
+        ArraySorter.getQuickSorter().sortIndexes(result, 0, n, (first, second) -> {
+            int aBitsCount = Integer.bitCount(first);
+            int bBitCount = Integer.bitCount(second);
+            if (aBitsCount != bBitCount) {
+                return aBitsCount < bBitCount;
+            }
 //                int aShifted = a >>> 1 | (a & 1) << (capacity - 1);
 //                int bShifted = b >>> 1 | (b & 1) << (capacity - 1);
 //                int aNeighbourBitsCount = Integer.bitCount(a & aShifted);
@@ -1480,8 +1475,7 @@ public class AnalyseSkeletonConfigurations {
 //                if (aNeighbourBitsCount != bNeighbourBitsCount) {
 //                    return aNeighbourBitsCount < bNeighbourBitsCount;
 //                }
-                return a < b;
-            }
+            return first < second;
         });
 //        System.out.println(JArrays.toString(result, ", ", 10000));
         return result;
