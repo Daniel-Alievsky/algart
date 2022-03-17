@@ -6018,7 +6018,7 @@ public class Arrays {
     }
 
     /**
-     * Analog of <tt>Math.round</tt>, but producing nearest <tt>int</tt> result
+     * Analog of <tt>StrictMath.round</tt>, but producing nearest <tt>int</tt> result
      * in range <tt>-Integer.MAX_VALUE..+Integer.MAX_VALUE</tt> (with saturation in a case of overflow).
      *
      * <p>Note: <tt>Integer.MIN_VALUE</tt> is also impossible in the result: it will be replaced with
@@ -6029,7 +6029,7 @@ public class Arrays {
      * <tt>-Integer.MAX_VALUE..+Integer.MAX_VALUE</tt>.
      */
     public static int round32(double value) {
-        final long i = Math.round(value);
+        final long i = StrictMath.round(value);
         return i < -Integer.MAX_VALUE ? -Integer.MAX_VALUE : i > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) i;
     }
 
