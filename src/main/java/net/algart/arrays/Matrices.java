@@ -1698,6 +1698,7 @@ public class Matrices {
      *                              of the type <tt>arrayClass</tt>
      *                              (<tt>!arrayClass.isInstance(matrices[k].{@link Matrix#array() array()})</tt>).
      */
+    @SafeVarargs
     public static <T extends Array> List<Matrix<? extends T>> several(Class<T> arrayClass, Matrix<?>... matrices) {
         if (arrayClass == null)
             throw new NullPointerException("Null arrayClass argument");

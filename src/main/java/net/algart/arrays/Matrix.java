@@ -1350,7 +1350,9 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws NullPointerException      if one of the arguments is <tt>null</tt>.
      * @throws IllegalArgumentException  if <tt>area.{@link IRectangularArea#coordCount() coordCount()}</tt>
      *                                   is not equal to {@link #dimCount()}.
-     * @throws IndexOutOfBoundsException if the product of all <tt>area.{@link IRectangularArea#sizes()}</tt>
+     * @throws IndexOutOfBoundsException for <tt>continuationMode=={@link ContinuationMode#NONE}</tt> &mdash;
+     *                                   see {@link Matrix#subMatrix(long[], long[])} method; for other cases &mdash;
+     *                                   if the product of all <tt>area.{@link IRectangularArea#sizes()}</tt>
      *                                   (i.e. desired total size of the new matrix)
      *                                   is greater than <tt>Long.MAX_VALUE</tt>.
      * @throws ClassCastException        if <tt>continuationMode</tt> is {@link
@@ -1377,7 +1379,9 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return             a view of the specified rectangular fragment within this matrix.
      * @throws NullPointerException      if <tt>continuationMode</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException  if <tt>{@link #dimCount()}!=2</tt>.
-     * @throws IndexOutOfBoundsException if <tt>fromX&gt;toX</tt> or <tt>toX-fromX&gt;Long.MAX_VALUE</tt>,
+     * @throws IndexOutOfBoundsException for <tt>continuationMode=={@link ContinuationMode#NONE}</tt> &mdash;
+     *                                   see {@link Matrix#subMatrix(long[], long[])} method; for other cases &mdash;
+     *                                   if <tt>fromX&gt;toX</tt> or <tt>toX-fromX&gt;Long.MAX_VALUE</tt>,
      *                                   or if <tt>fromY&gt;toY</tt> or <tt>toY-fromY&gt;Long.MAX_VALUE</tt>,
      *                                   or if the product <tt>(toX-fromX)*(toY-fromY)</tt>
      *                                   (i.e. desired total size of the new matrix)
@@ -1408,7 +1412,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return             a view of the specified rectangular fragment within this matrix.
      * @throws NullPointerException      if <tt>continuationMode</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException  if <tt>{@link #dimCount()}!=3</tt>.
-     * @throws IndexOutOfBoundsException if <tt>fromX&gt;toX</tt> or <tt>toX-fromX&gt;Long.MAX_VALUE</tt>,
+     * @throws IndexOutOfBoundsException for <tt>continuationMode=={@link ContinuationMode#NONE}</tt> &mdash;
+     *                                   see {@link Matrix#subMatrix(long[], long[])} method; for other cases &mdash;
      *                                   or if <tt>fromY&gt;toY</tt> or <tt>toY-fromY&gt;Long.MAX_VALUE</tt>,
      *                                   or if <tt>fromZ&gt;toZ</tt> or <tt>toZ-fromZ&gt;Long.MAX_VALUE</tt>,
      *                                   or if the product <tt>(toX-fromX)*(toY-fromY)*(toZ-fromZ)</tt>
@@ -1488,7 +1493,9 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   argument is <tt>null</tt>.
      * @throws IllegalArgumentException  if <tt>position.length</tt> or <tt>dimensions.length</tt>
      *                                   is not equal to {@link #dimCount()}.
-     * @throws IndexOutOfBoundsException if, for some <tt>k</tt>, <tt>dimensions[k]&lt;0</tt>
+     * @throws IndexOutOfBoundsException for <tt>continuationMode=={@link ContinuationMode#NONE}</tt> &mdash;
+     *                                   see {@link Matrix#subMatr(long[], long[])} method; for other cases &mdash;
+     *                                   if, for some <tt>k</tt>, <tt>dimensions[k]&lt;0</tt>
      *                                   or <tt>position[k]+dimensions[k]&gt;Long.MAX_VALUE</tt>,
      *                                   or if the product of all <tt>dimensions[k]</tt>
      *                                   (i.e. desired total size of the new matrix)
@@ -1518,7 +1525,9 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return             a view of the specified rectangular fragment within this matrix.
      * @throws NullPointerException      if <tt>continuationMode</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException  if <tt>{@link #dimCount()}!=2</tt>.
-     * @throws IndexOutOfBoundsException if <tt>dimX&lt;0</tt>, <tt>dimY&lt;0</tt>, <tt>x+dimX&gt;Long.MAX_VALUE</tt>
+     * @throws IndexOutOfBoundsException for <tt>continuationMode=={@link ContinuationMode#NONE}</tt> &mdash;
+     *                                   see {@link Matrix#subMatr(long[], long[])} method; for other cases &mdash;
+     *                                   if <tt>dimX&lt;0</tt>, <tt>dimY&lt;0</tt>, <tt>x+dimX&gt;Long.MAX_VALUE</tt>
      *                                   or <tt>y+dimY&gt;Long.MAX_VALUE</tt>,
      *                                   or if the product <tt>dimX*dimY</tt>
      *                                   (i.e. desired total size of the new matrix)
@@ -1549,7 +1558,9 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return             a view of the specified rectangular fragment within this matrix.
      * @throws NullPointerException      if <tt>continuationMode</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException  if <tt>{@link #dimCount()}!=3</tt>.
-     * @throws IndexOutOfBoundsException if <tt>dimX&lt;0</tt>, <tt>dimY&lt;0</tt>, <tt>dimZ&lt;0</tt>,
+     * @throws IndexOutOfBoundsException for <tt>continuationMode=={@link ContinuationMode#NONE}</tt> &mdash;
+     *                                   see {@link Matrix#subMatr(long[], long[])} method; for other cases &mdash;
+     *                                   if <tt>dimX&lt;0</tt>, <tt>dimY&lt;0</tt>, <tt>dimZ&lt;0</tt>,
      *                                   <tt>x+dimX&gt;Long.MAX_VALUE</tt>, <tt>y+dimY&gt;Long.MAX_VALUE</tt>
      *                                   or <tt>z+dimZ&gt;Long.MAX_VALUE</tt>,
      *                                   or if the product <tt>dimX*dimY*dimZ</tt>

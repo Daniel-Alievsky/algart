@@ -71,6 +71,15 @@ public interface MutableArray extends Stack, UpdatableArray {
     public MutableArray length(long newLength);
 
     /**
+     * Equivalnt to the call <tt>{@link #length(long) length}(0)</tt>.
+     *
+     * @return a reference to this array.
+     */
+    public default MutableArray clear() {
+        return length(0);
+    }
+
+    /**
      * Increases the capacity of this instance, if necessary,
      * to ensure that it can hold at least the given number of elements.
      * After this call, the current capacity will be &gt;=<tt>minCapacity</tt>.
