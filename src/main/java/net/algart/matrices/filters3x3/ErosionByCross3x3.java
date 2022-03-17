@@ -39,7 +39,7 @@ public abstract class ErosionByCross3x3 extends AbstractQuickFilter3x3 {
                                                             $1$2,,...;;
                (int)(\s+v\w|\s+w\w) ==> $1$2,,$1$2,,$1$2,,long$2,,float$2,,double$2;;
                (int)(\s+min)        ==> $1$2,,$1$2,,$1$2,,long$2,,float$2,,double$2;;
-               \(double\)\s+        ==> ,,...
+               \((?:int|long|float|double)\)\s+ ==> ,,...
      */
     private static class ForChar extends ErosionByCross3x3 {
         private ForChar(long[] dimensions) {
@@ -236,7 +236,7 @@ public abstract class ErosionByCross3x3 extends AbstractQuickFilter3x3 {
             int vU = source[firstLineOffset];
             int vD = source[lastLineOffset];
             int vC = source[middleLineOffset];
-            result[resultLineOffset] = (int) min(vL, vR, vU, vD, vC);
+            result[resultLineOffset] = min(vL, vR, vU, vD, vC);
             final int resultLineOffsetTo = resultLineOffset + dimX - 2;
             ++firstLineOffset;
             ++middleLineOffset;
@@ -252,7 +252,7 @@ public abstract class ErosionByCross3x3 extends AbstractQuickFilter3x3 {
                 // and even better than antiDozNoOverflow
                 int min2 = Math.min(vU, vD);
                 min1 = Math.min(min1, vC);
-                result[++resultLineOffset] = (int) Math.min(min1, min2);
+                result[++resultLineOffset] = Math.min(min1, min2);
             }
             if (dimX >= 2) {
                 vL = vC;
@@ -260,7 +260,7 @@ public abstract class ErosionByCross3x3 extends AbstractQuickFilter3x3 {
                 vR = source[middleLineOffset - dimXm1];
                 vU = source[firstLineOffset];
                 vD = source[lastLineOffset];
-                result[++resultLineOffset] = (int) min(vL, vR, vU, vD, vC);
+                result[++resultLineOffset] = min(vL, vR, vU, vD, vC);
             }
         }
 
@@ -294,7 +294,7 @@ public abstract class ErosionByCross3x3 extends AbstractQuickFilter3x3 {
             long vU = source[firstLineOffset];
             long vD = source[lastLineOffset];
             long vC = source[middleLineOffset];
-            result[resultLineOffset] = (long) min(vL, vR, vU, vD, vC);
+            result[resultLineOffset] = min(vL, vR, vU, vD, vC);
             final int resultLineOffsetTo = resultLineOffset + dimX - 2;
             ++firstLineOffset;
             ++middleLineOffset;
@@ -310,7 +310,7 @@ public abstract class ErosionByCross3x3 extends AbstractQuickFilter3x3 {
                 // and even better than antiDozNoOverflow
                 long min2 = Math.min(vU, vD);
                 min1 = Math.min(min1, vC);
-                result[++resultLineOffset] = (long) Math.min(min1, min2);
+                result[++resultLineOffset] = Math.min(min1, min2);
             }
             if (dimX >= 2) {
                 vL = vC;
@@ -318,7 +318,7 @@ public abstract class ErosionByCross3x3 extends AbstractQuickFilter3x3 {
                 vR = source[middleLineOffset - dimXm1];
                 vU = source[firstLineOffset];
                 vD = source[lastLineOffset];
-                result[++resultLineOffset] = (long) min(vL, vR, vU, vD, vC);
+                result[++resultLineOffset] = min(vL, vR, vU, vD, vC);
             }
         }
 
@@ -352,7 +352,7 @@ public abstract class ErosionByCross3x3 extends AbstractQuickFilter3x3 {
             float vU = source[firstLineOffset];
             float vD = source[lastLineOffset];
             float vC = source[middleLineOffset];
-            result[resultLineOffset] = (float) min(vL, vR, vU, vD, vC);
+            result[resultLineOffset] = min(vL, vR, vU, vD, vC);
             final int resultLineOffsetTo = resultLineOffset + dimX - 2;
             ++firstLineOffset;
             ++middleLineOffset;
@@ -368,7 +368,7 @@ public abstract class ErosionByCross3x3 extends AbstractQuickFilter3x3 {
                 // and even better than antiDozNoOverflow
                 float min2 = Math.min(vU, vD);
                 min1 = Math.min(min1, vC);
-                result[++resultLineOffset] = (float) Math.min(min1, min2);
+                result[++resultLineOffset] = Math.min(min1, min2);
             }
             if (dimX >= 2) {
                 vL = vC;
@@ -376,7 +376,7 @@ public abstract class ErosionByCross3x3 extends AbstractQuickFilter3x3 {
                 vR = source[middleLineOffset - dimXm1];
                 vU = source[firstLineOffset];
                 vD = source[lastLineOffset];
-                result[++resultLineOffset] = (float) min(vL, vR, vU, vD, vC);
+                result[++resultLineOffset] = min(vL, vR, vU, vD, vC);
             }
         }
 

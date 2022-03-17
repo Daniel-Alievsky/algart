@@ -47,7 +47,7 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
                (int)(\s+v\w|\s+w\w) ==> $1$2,,long$2,,float$2,,double$2;;
                (int)(\s+temp\b)     ==> $1$2,,long$2,,float$2,,double$2;;
                (int)(\s+median)     ==> $1$2,,long$2,,float$2,,double$2;;
-               \(double\)\s+        ==> ,,...
+               \((?:int|long|float|double)\)\s+ ==> ,,...
      */
     private static class ForChar extends MedianBySquare3x3 {
         private ForChar(long[] dimensions) {
@@ -273,7 +273,7 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
             int v6 = source[lastLineOffset + dimXm1];
             int v7 = source[lastLineOffset];
             int v8 = source[lastLineOffset + rem1ForDimX];
-            result[resultLineOffset] = (int) median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+            result[resultLineOffset] = median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             final int resultLineOffsetTo = resultLineOffset + dimX - 2;
             ++firstLineOffset;
             ++middleLineOffset;
@@ -361,7 +361,7 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
                 if (w4 > w2) {
                     w4 = w2;
                 }
-                result[++resultLineOffset] = (int) w4;
+                result[++resultLineOffset] = w4;
             }
             if (dimX >= 2) {
                 v0 = v1;
@@ -373,7 +373,7 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
                 v6 = v7;
                 v7 = v8;
                 v8 = source[lastLineOffset - dimXm1];
-                result[++resultLineOffset] = (int) median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+                result[++resultLineOffset] = median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             }
         }
 
@@ -472,7 +472,7 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
             long v6 = source[lastLineOffset + dimXm1];
             long v7 = source[lastLineOffset];
             long v8 = source[lastLineOffset + rem1ForDimX];
-            result[resultLineOffset] = (long) median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+            result[resultLineOffset] = median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             final int resultLineOffsetTo = resultLineOffset + dimX - 2;
             ++firstLineOffset;
             ++middleLineOffset;
@@ -560,7 +560,7 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
                 if (w4 > w2) {
                     w4 = w2;
                 }
-                result[++resultLineOffset] = (long) w4;
+                result[++resultLineOffset] = w4;
             }
             if (dimX >= 2) {
                 v0 = v1;
@@ -572,7 +572,7 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
                 v6 = v7;
                 v7 = v8;
                 v8 = source[lastLineOffset - dimXm1];
-                result[++resultLineOffset] = (long) median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+                result[++resultLineOffset] = median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             }
         }
 
@@ -671,7 +671,7 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
             float v6 = source[lastLineOffset + dimXm1];
             float v7 = source[lastLineOffset];
             float v8 = source[lastLineOffset + rem1ForDimX];
-            result[resultLineOffset] = (float) median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+            result[resultLineOffset] = median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             final int resultLineOffsetTo = resultLineOffset + dimX - 2;
             ++firstLineOffset;
             ++middleLineOffset;
@@ -759,7 +759,7 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
                 if (w4 > w2) {
                     w4 = w2;
                 }
-                result[++resultLineOffset] = (float) w4;
+                result[++resultLineOffset] = w4;
             }
             if (dimX >= 2) {
                 v0 = v1;
@@ -771,7 +771,7 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
                 v6 = v7;
                 v7 = v8;
                 v8 = source[lastLineOffset - dimXm1];
-                result[++resultLineOffset] = (float) median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+                result[++resultLineOffset] = median(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             }
         }
 

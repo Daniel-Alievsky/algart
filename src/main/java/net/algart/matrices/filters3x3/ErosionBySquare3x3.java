@@ -39,7 +39,7 @@ public abstract class ErosionBySquare3x3 extends PercentileBySquare3x3 {
                                                             $1$2,,...;;
                (int)(\s+v\w|\s+w\w) ==> $1$2,,$1$2,,$1$2,,long$2,,float$2,,double$2;;
                (int)(\s+min)        ==> $1$2,,$1$2,,$1$2,,long$2,,float$2,,double$2;;
-               \(double\)\s+        ==> ,,...
+               \((?:int|long|float|double)\)\s+ ==> ,,...
      */
     private static class ForChar extends ErosionBySquare3x3 {
         private ForChar(long[] dimensions) {
@@ -303,7 +303,7 @@ public abstract class ErosionBySquare3x3 extends PercentileBySquare3x3 {
             int v6 = source[lastLineOffset + dimXm1];
             int v7 = source[lastLineOffset];
             int v8 = source[lastLineOffset + rem1ForDimX];
-            result[resultLineOffset] = (int) min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+            result[resultLineOffset] = min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             final int resultLineOffsetTo = resultLineOffset + dimX - 2;
             ++firstLineOffset;
             ++middleLineOffset;
@@ -327,7 +327,7 @@ public abstract class ErosionBySquare3x3 extends PercentileBySquare3x3 {
                 min3 = Math.min(min3, v8);
                 min1 = Math.min(min1, min2);
                 min3 = Math.min(min3, min4);
-                result[++resultLineOffset] = (int) Math.min(min1, min3);
+                result[++resultLineOffset] = Math.min(min1, min3);
             }
             if (dimX >= 2) {
                 v0 = v1;
@@ -339,7 +339,7 @@ public abstract class ErosionBySquare3x3 extends PercentileBySquare3x3 {
                 v6 = v7;
                 v7 = v8;
                 v8 = source[lastLineOffset - dimXm1];
-                result[++resultLineOffset] = (int) min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+                result[++resultLineOffset] = min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             }
         }
 
@@ -382,7 +382,7 @@ public abstract class ErosionBySquare3x3 extends PercentileBySquare3x3 {
             long v6 = source[lastLineOffset + dimXm1];
             long v7 = source[lastLineOffset];
             long v8 = source[lastLineOffset + rem1ForDimX];
-            result[resultLineOffset] = (long) min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+            result[resultLineOffset] = min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             final int resultLineOffsetTo = resultLineOffset + dimX - 2;
             ++firstLineOffset;
             ++middleLineOffset;
@@ -406,7 +406,7 @@ public abstract class ErosionBySquare3x3 extends PercentileBySquare3x3 {
                 min3 = Math.min(min3, v8);
                 min1 = Math.min(min1, min2);
                 min3 = Math.min(min3, min4);
-                result[++resultLineOffset] = (long) Math.min(min1, min3);
+                result[++resultLineOffset] = Math.min(min1, min3);
             }
             if (dimX >= 2) {
                 v0 = v1;
@@ -418,7 +418,7 @@ public abstract class ErosionBySquare3x3 extends PercentileBySquare3x3 {
                 v6 = v7;
                 v7 = v8;
                 v8 = source[lastLineOffset - dimXm1];
-                result[++resultLineOffset] = (long) min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+                result[++resultLineOffset] = min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             }
         }
 
@@ -461,7 +461,7 @@ public abstract class ErosionBySquare3x3 extends PercentileBySquare3x3 {
             float v6 = source[lastLineOffset + dimXm1];
             float v7 = source[lastLineOffset];
             float v8 = source[lastLineOffset + rem1ForDimX];
-            result[resultLineOffset] = (float) min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+            result[resultLineOffset] = min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             final int resultLineOffsetTo = resultLineOffset + dimX - 2;
             ++firstLineOffset;
             ++middleLineOffset;
@@ -485,7 +485,7 @@ public abstract class ErosionBySquare3x3 extends PercentileBySquare3x3 {
                 min3 = Math.min(min3, v8);
                 min1 = Math.min(min1, min2);
                 min3 = Math.min(min3, min4);
-                result[++resultLineOffset] = (float) Math.min(min1, min3);
+                result[++resultLineOffset] = Math.min(min1, min3);
             }
             if (dimX >= 2) {
                 v0 = v1;
@@ -497,7 +497,7 @@ public abstract class ErosionBySquare3x3 extends PercentileBySquare3x3 {
                 v6 = v7;
                 v7 = v8;
                 v8 = source[lastLineOffset - dimXm1];
-                result[++resultLineOffset] = (float) min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
+                result[++resultLineOffset] = min(v0, v1, v2, v3, v4, v5, v6, v7, v8);
             }
         }
 
