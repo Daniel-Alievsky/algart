@@ -6,7 +6,7 @@ import net.algart.matrices.Abstract2DProcessor;
 
 import java.util.Objects;
 
-public abstract class QuickAverager extends Abstract2DProcessor {
+public abstract class Quick2DAverager extends Abstract2DProcessor {
     final boolean twoStage;
     final int dimX;
     final long dimY;
@@ -14,22 +14,22 @@ public abstract class QuickAverager extends Abstract2DProcessor {
     boolean strictDivision = false;
     boolean rounding = true;
 
-    private QuickAverager(Class<?> elementType, long[] dimensions, boolean twoStage) {
+    private Quick2DAverager(Class<?> elementType, long[] dimensions, boolean twoStage) {
         super(elementType, dimensions);
         this.twoStage = twoStage;
         this.dimX = dimX();
         this.dimY = dimY();
     }
 
-    public static QuickAverager newInstance(Class<?> elementType, long dimX, long dimY) {
+    public static Quick2DAverager newInstance(Class<?> elementType, long dimX, long dimY) {
         return newInstance(elementType, new long[]{dimX, dimY}, false);
     }
 
-    public static QuickAverager newTwoStageInstance(Class<?> elementType, long dimX, long dimY) {
+    public static Quick2DAverager newTwoStageInstance(Class<?> elementType, long dimX, long dimY) {
         return newInstance(elementType, new long[]{dimX, dimY}, true);
     }
 
-    public static QuickAverager newInstance(Class<?> elementType, long[] dimensions, boolean twoStage) {
+    public static Quick2DAverager newInstance(Class<?> elementType, long[] dimensions, boolean twoStage) {
         Objects.requireNonNull(elementType, "Null elementType");
         if (elementType == char.class) {
             return new ForChar(elementType, dimensions, twoStage);
@@ -62,7 +62,7 @@ public abstract class QuickAverager extends Abstract2DProcessor {
         return strictDivision;
     }
 
-    public QuickAverager setStrictDivision(boolean strictDivision) {
+    public Quick2DAverager setStrictDivision(boolean strictDivision) {
         this.strictDivision = strictDivision;
         return this;
     }
@@ -71,7 +71,7 @@ public abstract class QuickAverager extends Abstract2DProcessor {
         return rounding;
     }
 
-    public QuickAverager setRounding(boolean rounding) {
+    public Quick2DAverager setRounding(boolean rounding) {
         this.rounding = rounding;
         return this;
     }
@@ -327,7 +327,7 @@ public abstract class QuickAverager extends Abstract2DProcessor {
         return 0;
     }
 
-    private abstract static class ForInteger32 extends QuickAverager {
+    private abstract static class ForInteger32 extends Quick2DAverager {
         final long[] accumulator;
         final long[] accumulatorForStage2;
         final long[] summedLine;
@@ -461,7 +461,7 @@ public abstract class QuickAverager extends Abstract2DProcessor {
         }
     }
 
-    private abstract static class ForLongAndFloatingPoint extends QuickAverager {
+    private abstract static class ForLongAndFloatingPoint extends Quick2DAverager {
         final double[] accumulator;
         final double[] accumulatorForStage2;
         final double[] summedLine;

@@ -163,6 +163,16 @@ public interface Array {
     public long length();
 
     /**
+     * Equivalent to the call <tt>{@link #length() length}() == 0</tt>.
+     *
+     * @return <tt>true</tt> if the array is empty, i.e. its length is zero.
+     */
+    public default boolean isEmpty() {
+        return length() == 0;
+    }
+
+
+    /**
      * Returns the capacity of this array: the number of elements
      * allocated for storing elements in this array.
      * For resizable arrays (implementing {@link MutableArray} interface),

@@ -8,9 +8,6 @@ import net.algart.matrices.filters3x3.DilationByCross3x3;
 import net.algart.matrices.filters3x3.DilationBySquare3x3;
 import net.algart.matrices.filters3x3.ErosionByCross3x3;
 import net.algart.matrices.filters3x3.ErosionBySquare3x3;
-import net.algart.matrices.morphology.BasicMorphology;
-import net.algart.matrices.morphology.ContinuedMorphology;
-import net.algart.matrices.morphology.Morphology;
 
 import java.util.List;
 import java.util.Objects;

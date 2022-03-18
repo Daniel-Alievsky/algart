@@ -71,7 +71,7 @@ public interface MutableArray extends Stack, UpdatableArray {
     public MutableArray length(long newLength);
 
     /**
-     * Equivalnt to the call <tt>{@link #length(long) length}(0)</tt>.
+     * Equivalent to the call <tt>{@link #length(long) length}(0)</tt>.
      *
      * @return a reference to this array.
      */
