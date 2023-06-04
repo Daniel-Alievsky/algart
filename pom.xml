@@ -80,9 +80,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <configuration>
-                    <executable>gpg2.exe</executable>
-                </configuration>
+                <version>3.1.0</version>
+<!--                <configuration>-->
+<!--
+                     - Sometimes we need to clarify the nome of gpg executable file; for example,
+                     some old configuration required to specify here "gpg2.exe" for Windows platform
+-->
+<!--                    <executable>gpg.exe</executable>-->
+<!--                </configuration>-->
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
