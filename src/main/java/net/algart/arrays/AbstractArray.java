@@ -617,7 +617,9 @@ public abstract class AbstractArray implements Array, Cloneable {
             try {
                 Arrays.enableCaching(buf1);
                 Arrays.enableCaching(buf2);
-                for (buf1.map(0), buf2.map(0); buf1.hasData(); buf1.mapNext(), buf2.mapNext()) {
+                buf1.map(0);
+                buf2.map(0);
+                for (; buf1.hasData(); buf1.mapNext(), buf2.mapNext()) {
                     assert buf1.count() == buf2.count();
                     if (!PackedBitArrays.bitEquals(buf1.data(), buf1.fromIndex(),
                         buf2.data(), buf2.fromIndex(), buf1.count()))
@@ -636,7 +638,9 @@ public abstract class AbstractArray implements Array, Cloneable {
             try {
                 Arrays.enableCaching(buf1);
                 Arrays.enableCaching(buf2);
-                for (buf1.map(0), buf2.map(0); buf1.hasData(); buf1.mapNext(), buf2.mapNext()) {
+                buf1.map(0);
+                buf2.map(0);
+                for (; buf1.hasData(); buf1.mapNext(), buf2.mapNext()) {
                     assert buf1.count() == buf2.count();
                     if (!JArrays.arrayEquals(buf1.data(), buf1.from(), buf2.data(), buf2.from(), buf1.cnt()))
                         return false;
