@@ -33,6 +33,7 @@
 
     <scm>
         <connection>scm:git:https://bitbucket.org/DanielAlievsky/algart.git</connection>
+        <developerConnection>scm:git:https://bitbucket.org/DanielAlievsky/algart.git</developerConnection>
         <url>https://bitbucket.org/DanielAlievsky/algart.git</url>
     </scm>
 
