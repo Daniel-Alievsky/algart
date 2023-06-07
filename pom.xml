@@ -6,12 +6,13 @@
 
     <groupId>net.algart</groupId>
     <artifactId>algart</artifactId>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
 
     <name>AlgART Java Libraries</name>
     <description>Open-source Java libraries, supporting generalized smart arrays and matrices with elements
         of any types, including a wide set of of 2D-, 3D- and multidimensional image processing
-        and other algorithms, working with arrays and matrices.</description>
+        and other algorithms, working with arrays and matrices.
+    </description>
     <url>http://algart.net/java/AlgART/</url>
 
     <licenses>
@@ -35,22 +36,18 @@
         <url>https://bitbucket.org/DanielAlievsky/algart.git</url>
     </scm>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -63,7 +60,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.5.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <doclint>none</doclint>
@@ -81,13 +78,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>3.1.0</version>
-<!--                <configuration>-->
-<!--
-                     - Sometimes we need to clarify the nome of gpg executable file; for example,
-                     some old configuration required to specify here "gpg2.exe" for Windows platform
--->
-<!--                    <executable>gpg.exe</executable>-->
-<!--                </configuration>-->
+                <!--
+                Sometimes we need to clarify the nome of gpg executable file; for example,
+                some old configuration required to specify here "gpg2.exe" for Windows platform.
+                It can be made via settings.xml, as described at
+                https://central.sonatype.org/publish/publish-maven/#gpg-signed-components
+                -->
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
@@ -98,19 +94,25 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.13</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <distributionManagement>
         <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
+            <id>ossrh</id>
             <name>Sonatype Nexus Snapshots</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
-        <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Nexus Release Repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-        </repository>
     </distributionManagement>
 </project>
