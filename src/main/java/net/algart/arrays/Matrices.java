@@ -1699,6 +1699,8 @@ public class Matrices {
      *                              (<tt>!arrayClass.isInstance(matrices[k].{@link Matrix#array() array()})</tt>).
      */
     public static <T extends Array> List<Matrix<? extends T>> several(Class<T> arrayClass, Matrix<?>... matrices) {
+        // Note: we don't need @SafeVarargs annotation, because we use non-reifiable type Matrix<?>
+        // and avoid warnings by other way: explicit check of classes and InternalUtils.cast
         if (arrayClass == null)
             throw new NullPointerException("Null arrayClass argument");
         if (matrices.length == 0) {
