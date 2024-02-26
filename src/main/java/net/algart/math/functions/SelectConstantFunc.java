@@ -32,8 +32,6 @@ package net.algart.math.functions;
  * The {@link #get} method of the instance of this class requires at least <i>n</i> arguments
  * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is less
  * or if the argument, cast to <tt>int</tt> type, is negative or <tt>&gt;=values.length</tt>.</p>
- * All calculations are performed in <tt>strictfp</tt> mode, so the result
- * is absolutely identical on all platforms.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>

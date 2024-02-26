@@ -66,12 +66,9 @@ import java.util.EnumSet;
  * You should not specify extra parameters, that are not needful: extra calculations can slow down
  * the scanning.</p>
  *
- * <p>All calculations are performed by this class in <tt>strictfp</tt> mode, so the results
- * are absolutely identical on all platforms.</p>
- *
  * @author Daniel Alievsky
  */
-public strictfp class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
+public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     private static final boolean DEBUG_MODE = false; // leads to 2-way calculation of non-trivial areas and centroids
 
     /**

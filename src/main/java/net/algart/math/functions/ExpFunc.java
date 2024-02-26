@@ -114,46 +114,46 @@ public abstract class ExpFunc implements Func {
     public static ExpFunc getStrictInstance(double b) {
         if (b == Math.E) {
             return new ExpFunc(b) {
-                public strictfp double get(double ...x) {
+                public double get(double ...x) {
                     return StrictMath.exp(x[0]);
                 }
 
-                public strictfp double get(double x0) {
+                public double get(double x0) {
                     return StrictMath.exp(x0);
                 }
 
-                public strictfp double get(double x0, double x1) {
+                public double get(double x0, double x1) {
                     return StrictMath.exp(x0);
                 }
 
-                public strictfp double get(double x0, double x1, double x2) {
+                public double get(double x0, double x1, double x2) {
                     return StrictMath.exp(x0);
                 }
 
-                public strictfp double get(double x0, double x1, double x2, double x3) {
+                public double get(double x0, double x1, double x2, double x3) {
                     return StrictMath.exp(x0);
                 }
             };
         } else {
             final double mult = StrictMath.log(b);
             return new ExpFunc(b) {
-                public strictfp double get(double ...x) {
+                public double get(double ...x) {
                     return StrictMath.exp(x[0] * mult);
                 }
 
-                public strictfp double get(double x0) {
+                public double get(double x0) {
                     return StrictMath.exp(x0 * mult);
                 }
 
-                public strictfp double get(double x0, double x1) {
+                public double get(double x0, double x1) {
                     return StrictMath.exp(x0 * mult);
                 }
 
-                public strictfp double get(double x0, double x1, double x2) {
+                public double get(double x0, double x1, double x2) {
                     return StrictMath.exp(x0 * mult);
                 }
 
-                public strictfp double get(double x0, double x1, double x2, double x3) {
+                public double get(double x0, double x1, double x2, double x3) {
                     return StrictMath.exp(x0 * mult);
                 }
             };

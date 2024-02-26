@@ -39,7 +39,7 @@ import java.util.*;
  *
  * @author Daniel Alievsky
  */
-public strictfp class Patterns {
+public class Patterns {
     private Patterns() {
     }
 

@@ -77,9 +77,6 @@ import java.util.Arrays;
  * </tr></table>
  * </blockquote>
  *
- * <p>All calculations are performed in <tt>strictfp</tt> mode, so the result
- * is absolutely identical on all platforms.</p>
- *
  * <p>However, please note: we do not guarantee that the divisions in the formulas above are performed strictly
  * by "<tt>c=a/b</tt>" Java operator.
  * They are possibly performed via the following code: "<tt>temp=1.0/b; c=a*temp;</tt>"
@@ -98,7 +95,7 @@ import java.util.Arrays;
  * @author Daniel Alievsky
  * @see LinearOperator
  */
-public strictfp class ProjectiveOperator
+public class ProjectiveOperator
     extends AbstractCoordinateTransformationOperator
     implements CoordinateTransformationOperator
 {

@@ -91,7 +91,7 @@ public final class UniversalStitchingMethod<P extends UniversalFramePosition> im
         return "universal stitching method";
     }
 
-    private strictfp class UniversalNearestStitchingFunc extends AbstractStitchingFunc implements StitchingFunc {
+    private class UniversalNearestStitchingFunc extends AbstractStitchingFunc implements StitchingFunc {
         final RectangularArea[] areasInMatrices;
         final CoordinateTransformationOperator[] inverseTransforms;
 
@@ -516,7 +516,7 @@ public final class UniversalStitchingMethod<P extends UniversalFramePosition> im
         }
     }
 
-    private strictfp class Affine2DNearestStitchingFunc extends UniversalNearestStitchingFunc {
+    private class Affine2DNearestStitchingFunc extends UniversalNearestStitchingFunc {
         private final double[][] a, b;
         private final double[] a0, a1, a2, a3, a4, a5, a6, a7, b0, b1, b2, b3, b4, b5, b6, b7;
 
@@ -904,7 +904,7 @@ public final class UniversalStitchingMethod<P extends UniversalFramePosition> im
         }
     }
 
-    private strictfp class UniversalWeighedStitchingFunc extends AbstractStitchingFunc implements StitchingFunc {
+    private class UniversalWeighedStitchingFunc extends AbstractStitchingFunc implements StitchingFunc {
         final RectangularArea[] areasInMatrices;
         final CoordinateTransformationOperator[] inverseTransforms;
 
@@ -1492,7 +1492,7 @@ public final class UniversalStitchingMethod<P extends UniversalFramePosition> im
         }
     }
 
-    private strictfp class Affine2DWeighedStitchingFunc extends UniversalWeighedStitchingFunc {
+    private class Affine2DWeighedStitchingFunc extends UniversalWeighedStitchingFunc {
         private final double[][] a, b;
         private final double[] a0, a1, a2, a3, a4, a5, a6, a7, b0, b1, b2, b3, b4, b5, b6, b7;
 

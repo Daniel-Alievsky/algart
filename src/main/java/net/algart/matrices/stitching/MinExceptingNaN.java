@@ -26,7 +26,7 @@ package net.algart.matrices.stitching;
 
 import net.algart.math.functions.Func;
 
-public strictfp class MinExceptingNaN implements Func {
+public class MinExceptingNaN implements Func {
     private final double defaultValue;
 
     private MinExceptingNaN(double defaultValue) {

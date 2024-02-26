@@ -36,7 +36,7 @@ import java.util.*;
  *
  * @author Daniel Alievsky
  */
-public abstract strictfp class AbstractUniformGridPattern extends AbstractPattern implements UniformGridPattern {
+public abstract class AbstractUniformGridPattern extends AbstractPattern implements UniformGridPattern {
 
     private static final boolean DEBUG_MODE = false; // thorough checking carcass
 

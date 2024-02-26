@@ -47,7 +47,7 @@ package net.algart.math.functions;
  * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is less.
  * In a case of using {@link #getStrictBinaryInstance(double scale)} /
  * {@link #getStrictInstance(double c, double scale)} methods,
- * all calculations are performed in <tt>strictfp</tt> mode, so the result
+ * all calculations are performed with help of <tt>StrictMath</tt> class, so the result
  * is absolutely identical on all platforms.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
@@ -133,7 +133,7 @@ public abstract class PowerFunc implements Func {
      */
     public static PowerFunc getStrictBinaryInstance(double scale) {
         return new PowerFunc(null, scale) {
-            public strictfp double get(double... x) {
+            public double get(double... x) {
                 return this.scale * StrictMath.pow(x[0], x[1]);
             }
 
@@ -145,15 +145,15 @@ public abstract class PowerFunc implements Func {
                 throw new IndexOutOfBoundsException("At least 2 arguments required");
             }
 
-            public strictfp double get(double x0, double x1) {
+            public double get(double x0, double x1) {
                 return this.scale * StrictMath.pow(x0, x1);
             }
 
-            public strictfp double get(double x0, double x1, double x2) {
+            public double get(double x0, double x1, double x2) {
                 return this.scale * StrictMath.pow(x0, x1);
             }
 
-            public strictfp double get(double x0, double x1, double x2, double x3) {
+            public double get(double x0, double x1, double x2, double x3) {
                 return this.scale * StrictMath.pow(x0, x1);
             }
         };
@@ -174,9 +174,8 @@ public abstract class PowerFunc implements Func {
     public static PowerFunc getInstance(double c, double scale) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, getStrictUpdatableInstance)
         //  Updatable\((\w+\,\s*\w+)\) ==> PowerFunc($1) ;;
-        //  \s+public\s+strictfp\s+void\s+set\(.*?[\r\n]\s*} ==> ;;
+        //  \s+public\s+void\s+set\(.*?[\r\n]\s*} ==> ;;
         //  private\s+final\s+double\s+cInv.*?[\r\n]\s*(public) ==> $1 ;;
-        //  strictfp\s+ ==> ;;
         //  StrictMath ==> Math    !! Auto-generated: NOT EDIT !! ]]
         if (c == 1.0) {
             if (scale == 1.0) {
@@ -533,12 +532,12 @@ public abstract class PowerFunc implements Func {
     public static PowerFunc getStrictInstance(double c, double scale) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, getStrictUpdatableInstance)
         //  Updatable\((\w+\,\s*\w+)\) ==> PowerFunc($1) ;;
-        //  \s+public\s+strictfp\s+void\s+set\(.*?[\r\n]\s*} ==> ;;
+        //  \s+public\s+void\s+set\(.*?[\r\n]\s*} ==> ;;
         //  private\s+final\s+double\s+cInv.*?[\r\n]\s*(public) ==> $1   !! Auto-generated: NOT EDIT !! ]]
         if (c == 1.0) {
             if (scale == 1.0) {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return x[0];
                     }
 
@@ -546,25 +545,25 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return x0;
                     }
                 };
             } else {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * x[0];
                     }
 
@@ -572,19 +571,19 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * x0;
                     }
                 };
@@ -592,7 +591,7 @@ public abstract class PowerFunc implements Func {
         } else if (c == 2.0) {
             if (scale == 1.0) {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return x[0] * x[0];
                     }
 
@@ -600,25 +599,25 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return x0 * x0;
                     }
                 };
             } else {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * x[0] * x[0];
                     }
 
@@ -626,19 +625,19 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * x0 * x0;
                     }
                 };
@@ -646,7 +645,7 @@ public abstract class PowerFunc implements Func {
         } else if (c == 3.0) {
             if (scale == 1.0) {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return x[0] * x[0] * x[0];
                     }
 
@@ -654,25 +653,25 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return x0 * x0 * x0;
                     }
                 };
             } else {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * x[0] * x[0] * x[0];
                     }
 
@@ -680,19 +679,19 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * x0 * x0 * x0;
                     }
                 };
@@ -700,7 +699,7 @@ public abstract class PowerFunc implements Func {
         } else if (c == 0.5) {
             if (scale == 1.0) {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return StrictMath.sqrt(x[0]);
                     }
 
@@ -708,25 +707,25 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return StrictMath.sqrt(x0);
                     }
                 };
             } else {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * StrictMath.sqrt(x[0]);
                     }
 
@@ -734,19 +733,19 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * StrictMath.sqrt(x0);
                     }
                 };
@@ -754,7 +753,7 @@ public abstract class PowerFunc implements Func {
         } else if (c == 1.0 / 3.0) {
             if (scale == 1.0) {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return StrictMath.cbrt(x[0]);
                     }
 
@@ -762,25 +761,25 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return StrictMath.cbrt(x0);
                     }
                 };
             } else {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * StrictMath.cbrt(x[0]);
                     }
 
@@ -788,19 +787,19 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * StrictMath.cbrt(x0);
                     }
                 };
@@ -808,7 +807,7 @@ public abstract class PowerFunc implements Func {
         } else {
             if (scale == 1.0) {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return StrictMath.pow(x[0], this.c);
                     }
 
@@ -816,25 +815,25 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return StrictMath.pow(x0, this.c);
                     }
                 };
             } else {
                 return new PowerFunc(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * StrictMath.pow(x[0], this.c);
                     }
 
@@ -842,19 +841,19 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * StrictMath.pow(x0, this.c);
                     }
                 };
@@ -889,7 +888,6 @@ public abstract class PowerFunc implements Func {
      */
     public static Updatable getUpdatableInstance(double c, double scale) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, getStrictUpdatableInstance)
-        //  strictfp\s+ ==> ;;
         //  StrictMath ==> Math    !! Auto-generated: NOT EDIT !! ]]
         if (c == 1.0) {
             if (scale == 1.0) {
@@ -1290,7 +1288,7 @@ public abstract class PowerFunc implements Func {
         if (c == 1.0) {
             if (scale == 1.0) {
                 return new Updatable(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return x[0];
                     }
 
@@ -1298,29 +1296,29 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return x0;
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         x[0] = newResult;
                     }
                 };
             } else {
                 return new Updatable(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * x[0];
                     }
 
@@ -1328,23 +1326,23 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * x0;
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         x[0] = this.scaleInv * newResult;
                     }
                 };
@@ -1352,7 +1350,7 @@ public abstract class PowerFunc implements Func {
         } else if (c == 2.0) {
             if (scale == 1.0) {
                 return new Updatable(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return x[0] * x[0];
                     }
 
@@ -1360,29 +1358,29 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return x0 * x0;
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         x[0] = StrictMath.sqrt(newResult);
                     }
                 };
             } else {
                 return new Updatable(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * x[0] * x[0];
                     }
 
@@ -1390,23 +1388,23 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * x0 * x0;
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         x[0] = StrictMath.sqrt(this.scaleInv * newResult);
                     }
                 };
@@ -1414,7 +1412,7 @@ public abstract class PowerFunc implements Func {
         } else if (c == 3.0) {
             if (scale == 1.0) {
                 return new Updatable(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return x[0] * x[0] * x[0];
                     }
 
@@ -1422,29 +1420,29 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return x0 * x0 * x0;
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         x[0] = StrictMath.cbrt(newResult);
                     }
                 };
             } else {
                 return new Updatable(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * x[0] * x[0] * x[0];
                     }
 
@@ -1452,23 +1450,23 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * x0 * x0 * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * x0 * x0 * x0;
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         x[0] = StrictMath.cbrt(this.scaleInv * newResult);
                     }
                 };
@@ -1476,7 +1474,7 @@ public abstract class PowerFunc implements Func {
         } else if (c == 0.5) {
             if (scale == 1.0) {
                 return new Updatable(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return StrictMath.sqrt(x[0]);
                     }
 
@@ -1484,29 +1482,29 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return StrictMath.sqrt(x0);
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         x[0] = newResult * newResult;
                     }
                 };
             } else {
                 return new Updatable(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * StrictMath.sqrt(x[0]);
                     }
 
@@ -1514,23 +1512,23 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * StrictMath.sqrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * StrictMath.sqrt(x0);
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         double temp = this.scaleInv * newResult;
                         x[0] = temp * temp;
                     }
@@ -1539,7 +1537,7 @@ public abstract class PowerFunc implements Func {
         } else if (c == 1.0 / 3.0) {
             if (scale == 1.0) {
                 return new Updatable(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return StrictMath.cbrt(x[0]);
                     }
 
@@ -1547,29 +1545,29 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return StrictMath.cbrt(x0);
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         x[0] = newResult * newResult * newResult;
                     }
                 };
             } else {
                 return new Updatable(c, scale) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * StrictMath.cbrt(x[0]);
                     }
 
@@ -1577,23 +1575,23 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * StrictMath.cbrt(x0);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * StrictMath.cbrt(x0);
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         double temp = this.scaleInv * newResult;
                         x[0] = temp * temp * temp;
                     }
@@ -1604,7 +1602,7 @@ public abstract class PowerFunc implements Func {
                 return new Updatable(c, scale) {
                     private final double cInv = 1.0 / this.c;
 
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return StrictMath.pow(x[0], this.c);
                     }
 
@@ -1612,23 +1610,23 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         x[0] = StrictMath.pow(newResult, this.cInv);
                     }
                 };
@@ -1636,7 +1634,7 @@ public abstract class PowerFunc implements Func {
                 return new Updatable(c, scale) {
                     private final double cInv = 1.0 / this.c;
 
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.scale * StrictMath.pow(x[0], this.c);
                     }
 
@@ -1644,23 +1642,23 @@ public abstract class PowerFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.scale * StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.scale * StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.scale * StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.scale * StrictMath.pow(x0, this.c);
                     }
 
-                    public strictfp void set(double[] x, double newResult) {
+                    public void set(double[] x, double newResult) {
                         x[0] = StrictMath.pow(this.scaleInv * newResult, this.cInv);
                     }
                 };

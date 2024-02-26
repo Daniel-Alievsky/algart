@@ -343,13 +343,13 @@ class ArraysOpImpl {
                 Math.min(AbstractArray.largeBufferCapacity(src), src instanceof IntArray ? 32768 : 65536),
                 1, 1);
             // Very important! Here we MUST use only 1 thread to provide strict order of summing!
-            // In other case, though strictfp mode, we have a risk to produce different results
+            // In other case we have a risk to produce different results
             // even while different calls: the result of floating-point sum depends on the summing order.
             this.buffers = new DataBuffer[this.numberOfTasks];
         }
 
         @Override
-        protected strictfp void processSubArr(long position, int count, int threadIndex) {
+        protected void processSubArr(long position, int count, int threadIndex) {
             DataBuffer buf = buffers[threadIndex];
             if (buf == null) {
                 buf = Arrays.bufferInternal(src, DataBuffer.AccessMode.READ, blockSize, true);
@@ -541,7 +541,7 @@ class ArraysOpImpl {
         }
     }
 
-    static strictfp class HistogramCalculator extends Arrays.ParallelExecutor {
+    static class HistogramCalculator extends Arrays.ParallelExecutor {
         private final DataBuffer[] buffers;
         private final long[] histogram;
         private final long[][] histograms;
@@ -822,7 +822,7 @@ class ArraysOpImpl {
 
     /*Repeat.SectionStart BitsPacker*/
     //[[Repeat.SectionStart BitsGreaterPacker_commonPart]]
-    static strictfp class BitsGreaterPacker extends Arrays.ParallelExecutor {
+    static class BitsGreaterPacker extends Arrays.ParallelExecutor {
         private final UpdatableBitArray bits;
         private final DataBuffer[] srcBuffers;
         private final DataBitBuffer[] destBuffers;
@@ -958,7 +958,7 @@ class ArraysOpImpl {
 
     //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, BitsGreaterPacker_commonPart)
     //  Greater ==> Less   !! Auto-generated: NOT EDIT !! ]]
-    static strictfp class BitsLessPacker extends Arrays.ParallelExecutor {
+    static class BitsLessPacker extends Arrays.ParallelExecutor {
         private final UpdatableBitArray bits;
         private final DataBuffer[] srcBuffers;
         private final DataBitBuffer[] destBuffers;
@@ -1100,7 +1100,7 @@ class ArraysOpImpl {
       TTTT ==> floor ;;
       (threshold\s*[><])= ==> $1   !! Auto-generated: NOT EDIT !! */
 
-    static strictfp class BitsGreaterOrEqualPacker extends Arrays.ParallelExecutor {
+    static class BitsGreaterOrEqualPacker extends Arrays.ParallelExecutor {
         private final UpdatableBitArray bits;
         private final DataBuffer[] srcBuffers;
         private final DataBitBuffer[] destBuffers;
@@ -1228,7 +1228,7 @@ class ArraysOpImpl {
     }
 
 
-    static strictfp class BitsLessOrEqualPacker extends Arrays.ParallelExecutor {
+    static class BitsLessOrEqualPacker extends Arrays.ParallelExecutor {
         private final UpdatableBitArray bits;
         private final DataBuffer[] srcBuffers;
         private final DataBitBuffer[] destBuffers;

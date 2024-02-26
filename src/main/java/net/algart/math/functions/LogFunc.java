@@ -143,68 +143,68 @@ public abstract class LogFunc implements Func {
      public static LogFunc getStrictInstance(double b) {
          if (b == Math.E) {
              return new LogFunc(b) {
-                 public strictfp double get(double ...x) {
+                 public double get(double ...x) {
                      return StrictMath.log(x[0]);
                  }
 
-                 public strictfp double get(double x0) {
+                 public double get(double x0) {
                      return StrictMath.log(x0);
                  }
 
-                 public strictfp double get(double x0, double x1) {
+                 public double get(double x0, double x1) {
                      return StrictMath.log(x0);
                  }
 
-                 public strictfp double get(double x0, double x1, double x2) {
+                 public double get(double x0, double x1, double x2) {
                      return StrictMath.log(x0);
                  }
 
-                 public strictfp double get(double x0, double x1, double x2, double x3) {
+                 public double get(double x0, double x1, double x2, double x3) {
                      return StrictMath.log(x0);
                  }
              };
          } else if (b == 10.0) {
              return new LogFunc(b) {
-                 public strictfp double get(double ...x) {
+                 public double get(double ...x) {
                      return StrictMath.log10(x[0]);
                  }
 
-                 public strictfp double get(double x0) {
+                 public double get(double x0) {
                      return StrictMath.log10(x0);
                  }
 
-                 public strictfp double get(double x0, double x1) {
+                 public double get(double x0, double x1) {
                      return StrictMath.log10(x0);
                  }
 
-                 public strictfp double get(double x0, double x1, double x2) {
+                 public double get(double x0, double x1, double x2) {
                      return StrictMath.log10(x0);
                  }
 
-                 public strictfp double get(double x0, double x1, double x2, double x3) {
+                 public double get(double x0, double x1, double x2, double x3) {
                      return StrictMath.log10(x0);
                  }
              };
          } else {
              final double mult = 1.0 / Math.log(b);
              return new LogFunc(b) {
-                 public strictfp double get(double ...x) {
+                 public double get(double ...x) {
                      return StrictMath.log(x[0]) * mult;
                  }
 
-                 public strictfp double get(double x0) {
+                 public double get(double x0) {
                      return StrictMath.log(x0) * mult;
                  }
 
-                 public strictfp double get(double x0, double x1) {
+                 public double get(double x0, double x1) {
                      return StrictMath.log(x0) * mult;
                  }
 
-                 public strictfp double get(double x0, double x1, double x2) {
+                 public double get(double x0, double x1, double x2) {
                      return StrictMath.log(x0) * mult;
                  }
 
-                 public strictfp double get(double x0, double x1, double x2, double x3) {
+                 public double get(double x0, double x1, double x2, double x3) {
                      return StrictMath.log(x0) * mult;
                  }
              };

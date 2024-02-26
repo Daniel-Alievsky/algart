@@ -120,7 +120,7 @@ class ArraysBufferedCopier {
         }
     }
 
-    static strictfp class IndexFuncCopier extends ArraysBufferedCopier {
+    static class IndexFuncCopier extends ArraysBufferedCopier {
         final boolean strictMode;
         private final long[] dim;
         private final long[] dimParent;

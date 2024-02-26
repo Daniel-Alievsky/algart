@@ -307,7 +307,7 @@ public class Matrices {
      * while simultaneous accessing the same instance from several threads.
      * All inheritors of this class from this package are <b>immutable</b>.</p>
      */
-    public static abstract strictfp class Region {
+    public static abstract class Region {
         static final Region[] EMPTY_REGIONS = new Region[0];
 
         final IRange[] coordRanges;
@@ -426,9 +426,6 @@ public class Matrices {
          * On the other hand, {@link #getPolygon2D(double[][]) getPolygon2D} method works correcly even
          * if the vertices lie in the same straight line.
          *
-         * <p>All calculations while building the triangle are performed in <tt>strictfp</tt> mode, so the results
-         * are absolutely identical on all platforms.
-         *
          * @param x1 the <i>x</i>-coordinate of the 1st vertex.
          * @param y1 the <i>y</i>-coordinate of the 1st vertex.
          * @param x2 the <i>x</i>-coordinate of the 2nd vertex.
@@ -450,9 +447,6 @@ public class Matrices {
          * {{x1,y1,z1},{x2,y2,z2},{x3,y3,z3},{x4,y4,z4}})</tt></nobr>.
          *
          * <p>The specified vertices must not lie in the same plane.
-         *
-         * <p>All calculations while building the tetrahedron are performed in <tt>strictfp</tt> mode, so the results
-         * are absolutely identical on all platforms.
          *
          * @param x1 the <i>x</i>-coordinate of the 1st vertex.
          * @param y1 the <i>y</i>-coordinate of the 1st vertex.
@@ -506,9 +500,6 @@ public class Matrices {
          * <p>Note: this method allocates two Java <tt>double[]</tt> arrays containing <i>n+1</i> and
          * <i>n</i>*(<i>n</i>+1) elements. We do not recommend create simplexes with large number of dimensions:
          * this method can work very slowly when <i>n</i> is greater than 6&ndash;7.
-         *
-         * <p>All calculations while building the simplex are performed in <tt>strictfp</tt> mode, so the results
-         * are absolutely identical on all platforms.
          *
          * @param vertices coordinates of all vertices.
          * @return the simplex with the specified vertices.
@@ -845,7 +836,7 @@ public class Matrices {
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
      * there are no ways to modify settings of the created instance.</p>
      */
-    public static final strictfp class Hyperparallelepiped extends Region {
+    public static final class Hyperparallelepiped extends Region {
         private Hyperparallelepiped(IRange... coordRanges) {
             super(coordRanges);
         }
@@ -1031,13 +1022,10 @@ public class Matrices {
      * In these cases you need to specify its vertices only; necessary matrix <b>A</b> and vector <b>b</b>
      * are calculated automatically.</p>
      *
-     * <p>All calculations while building and processing hyperpolyhedrons are performed in <tt>strictfp</tt> mode,
-     * so the results are absolutely identical on all platforms.</p>
-     *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
      * there are no ways to modify settings of the created instance.</p>
      */
-    public static strictfp class ConvexHyperpolyhedron extends Region {
+    public static class ConvexHyperpolyhedron extends Region {
         final double[] a, b;
 
         // coordRanges is the first argument to provide early check of arguments in inheritors
@@ -1218,13 +1206,10 @@ public class Matrices {
      * Such simplexes cannot be constructed by the methods above:
      * {@link DegeneratedSimplexException} is thrown in these cases.
      *
-     * <p>All calculations while building and processing simplex are performed in <tt>strictfp</tt> mode,
-     * so the results are absolutely identical on all platforms.</p>
-     *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
      * there are no ways to modify settings of the created instance.</p>
      */
-    public static final strictfp class Simplex extends ConvexHyperpolyhedron {
+    public static final class Simplex extends ConvexHyperpolyhedron {
         private final double[][] vertices;
 
         private Simplex(double[][] vertices) {
@@ -1323,13 +1308,10 @@ public class Matrices {
      * <li>{@link #getPolygon2D(double[][] vertices)}.</li>
      * </ul>
      *
-     * <p>All calculations while building and processing polygons are performed in <tt>strictfp</tt> mode,
-     * so the results are absolutely identical on all platforms.</p>
-     *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
      * there are no ways to modify settings of the created instance.</p>
      */
-    public static final strictfp class Polygon2D extends Region {
+    public static final class Polygon2D extends Region {
         private final double[] vx, vy;
 
         private Polygon2D(double[][] vertices) {

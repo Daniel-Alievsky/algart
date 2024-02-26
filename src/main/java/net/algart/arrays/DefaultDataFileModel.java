@@ -25,23 +25,21 @@
 package net.algart.arrays;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.io.FileNotFoundException;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
 import java.util.*;
-import java.util.logging.Level;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Level;
 
 /**
  * <p>Default implementation of {@link DataFileModel} that creates usual Java files,
@@ -687,17 +685,18 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         return resultError;
     }
 
-    private static void unsafeUnmap(final MappedByteBuffer mbb) throws PrivilegedActionException {
-        AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
-            public Object run() throws Exception {
+    private static void unsafeUnmap(final MappedByteBuffer mbb)
+            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+//        AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
+//            public Object run() throws Exception {
                 Method getCleanerMethod = mbb.getClass().getMethod("cleaner");
                 getCleanerMethod.setAccessible(true);
                 Object cleaner = getCleanerMethod.invoke(mbb); // sun.misc.Cleaner instance
                 Method cleanMethod = cleaner.getClass().getMethod("clean");
                 cleanMethod.invoke(cleaner);
-                return null;
-            }
-        });
+//                return null;
+//            }
+//        });
     }
 
     static class RangeWeakReference<T> extends WeakReference<T> implements Comparable<RangeWeakReference<T>> {
@@ -764,7 +763,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             unmapped = true;
             try {
                 DefaultDataFileModel.unsafeUnmap(mbb);
-            } catch (PrivilegedActionException e) {
+            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
                 LargeMemoryModel.LOGGER.log(Level.WARNING, "MMMM unsafe unmapping: " + e, e);
             }
         }
@@ -986,7 +985,8 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             return file.exists();
         }
 
-        final boolean unsafeUnmapAll() throws PrivilegedActionException {
+        final boolean unsafeUnmapAll()
+                throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
             if (this.getClass() != MappableFile.class) {
                 return true; // applicable only to this class!
             }

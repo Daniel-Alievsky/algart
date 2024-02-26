@@ -27,7 +27,7 @@ package net.algart.math.patterns;
 import net.algart.math.functions.AbstractFunc;
 import net.algart.math.functions.Func;
 
-public final strictfp class UpperHalfEllipsoidOfRevolutionFunc extends AbstractFunc implements Func {
+public final class UpperHalfEllipsoidOfRevolutionFunc extends AbstractFunc implements Func {
     private final double r;
     private final double rSqr;
     private final double scaleForResult;

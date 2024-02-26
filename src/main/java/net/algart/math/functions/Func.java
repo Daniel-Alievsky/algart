@@ -97,8 +97,6 @@ public interface Func {
      * <tt>StrictMath.abs(x[0])</tt>.
      * The {@link #get} method of this object requires at least 1 argument
      * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0.
-     * All calculations are performed in <tt>strictfp</tt> mode, so the result
-     * is absolutely identical on all platforms.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -110,8 +108,6 @@ public interface Func {
      * |<i>x</i><sub>0</sub>-<i>x</i><sub>1</sub>|.
      * The {@link #get} method of this object requires at least 2 arguments
      * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0 or 1.
-     * All calculations are performed in <tt>strictfp</tt> mode, so the result
-     * is absolutely identical on all platforms.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -123,8 +119,6 @@ public interface Func {
      * max(<i>x</i><sub>0</sub>-<i>x</i><sub>1</sub>,0).
      * The {@link #get} method of this object requires at least 2 arguments
      * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0 or 1.
-     * All calculations are performed in <tt>strictfp</tt> mode, so the result
-     * is absolutely identical on all platforms.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -275,8 +269,6 @@ public interface Func {
      *
      * <p>The {@link #get} method of this object requires at least 2 arguments
      * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0 or 1.
-     * All calculations are performed in <tt>strictfp</tt> mode, so the result
-     * is absolutely identical on all platforms.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */

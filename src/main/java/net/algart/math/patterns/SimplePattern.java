@@ -49,15 +49,12 @@ import java.util.*;
  * {@link #multiply(double)}, {@link #scale(double...)}, {@link #projectionAlongAxis(int)},
  * {@link #minBound(int)}, {@link #maxBound(int)} &mdash; always return instances of this class.</p>
  *
- * <p>All calculations in this class are performed in <tt>strictfp</tt> mode, so the result
- * is absolutely identical on all platforms.</p>
- *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */
-public strictfp class SimplePattern extends AbstractPattern implements DirectPointSetPattern {
+public class SimplePattern extends AbstractPattern implements DirectPointSetPattern {
     private final Set<Point> points;
 
     /**

@@ -32,7 +32,7 @@ import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
 import java.util.*;
 
-final strictfp class MinkowskiSum extends AbstractPattern implements Pattern {
+final class MinkowskiSum extends AbstractPattern implements Pattern {
     private final Pattern[] summands;
     private final List<Pattern> optimizedSummands;
     private final Pattern[] projections;

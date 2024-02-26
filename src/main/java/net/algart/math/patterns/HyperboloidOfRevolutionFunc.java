@@ -27,7 +27,7 @@ package net.algart.math.patterns;
 import net.algart.math.functions.AbstractFunc;
 import net.algart.math.functions.Func;
 
-public abstract strictfp class HyperboloidOfRevolutionFunc extends AbstractFunc implements Func {
+public abstract class HyperboloidOfRevolutionFunc extends AbstractFunc implements Func {
     final double scale;
     final double scaleInvSqr;
     final double semiAxisForResultingCoordinate;

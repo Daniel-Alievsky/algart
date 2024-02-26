@@ -357,12 +357,9 @@ public class IPoint implements Comparable<IPoint> {
     /**
      * Returns the distance between this point and the origin of coordinates.
      *
-     * <p>All calculations are performed in <tt>strictfp</tt> mode, so the result
-     * is absolutely identical on all platforms.
-     *
      * @return the distance between this point and the origin of coordinates.
      */
-    public strictfp double distanceFromOrigin() {
+    public double distanceFromOrigin() {
         if (coordinates.length == 1) {
             return StrictMath.abs(coordinates[0]);
         }
@@ -378,9 +375,6 @@ public class IPoint implements Comparable<IPoint> {
      * If is also called the Hausdorff distance between the point and the point set.
      * If the passed collection is empty, returns <tt>Double.POSITIVE_INFINITY</tt>.
      *
-     * <p>All calculations are performed in <tt>strictfp</tt> mode, so the result
-     * is absolutely identical on all platforms.
-     *
      * @param points some collection of points.
      * @return       the Hausdorff distance from this point to the set of points, passed via the collection.
      * @throws NullPointerException     if the argument is <tt>null</tt> or if some elements of the passed
@@ -388,7 +382,7 @@ public class IPoint implements Comparable<IPoint> {
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this point and in some
      *                                  of the given points are different.
      */
-    public strictfp double distanceFrom(Collection<IPoint> points) {
+    public double distanceFrom(Collection<IPoint> points) {
         if (points == null)
             throw new NullPointerException("Null points argument");
         double result = Double.POSITIVE_INFINITY;
@@ -700,16 +694,13 @@ public class IPoint implements Comparable<IPoint> {
      * <tt>(double)thisInstance.{@link #coord(int) coord(i)}*(double)point.{@link #coord(int) coord(i)}</tt>
      * for all coordinate indexes <tt>i</tt>.
      *
-     * <p>All calculations are performed in <tt>strictfp</tt> mode, so the result
-     * is absolutely identical on all platforms.
-     *
      * @param point another point.
      * @return      the scalar product of this and given point.
      * @throws NullPointerException     if the argument is <tt>null</tt>.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this and given points
      *                                  are different.
      */
-    public strictfp double scalarProduct(IPoint point) {
+    public double scalarProduct(IPoint point) {
         if (point == null)
             throw new NullPointerException("Null point argument");
         if (point.coordCount() != coordinates.length)

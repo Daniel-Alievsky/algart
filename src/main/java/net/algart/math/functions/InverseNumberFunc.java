@@ -28,16 +28,14 @@ package net.algart.math.functions;
  * <p>Inverse function:
  * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>) =
  * <i>c</i>/<i>x</i><sub>0</sub>
- * (<i>c</i> is some constant).
- * All calculations are performed in <tt>strictfp</tt> mode, so the result
- * is absolutely identical on all platforms.</p>
+ * (<i>c</i> is some constant).</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */
-public strictfp class InverseNumberFunc implements Func {
+public class InverseNumberFunc implements Func {
     final double c;
 
     private InverseNumberFunc(double c) {
@@ -47,7 +45,7 @@ public strictfp class InverseNumberFunc implements Func {
     /**
      * <p>{@link Func.Updatable Updatable extension} of the {@link InverseNumberFunc inverse function}.</p>
      */
-    public static strictfp class Updatable extends InverseNumberFunc implements Func.Updatable {
+    public static class Updatable extends InverseNumberFunc implements Func.Updatable {
         private Updatable(double c) {
             super(c);
         }

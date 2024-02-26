@@ -32,16 +32,14 @@ import net.algart.math.Point;
  * where the numeric <i>n</i>&nbsp;x&nbsp;<i>n</i> matrix <b>A</b>
  * and the <i>n</i>-dimensional vector <b>b</b> are parameters of the transformation.
  * (It is a particular case of the {@link ProjectiveOperator projective transformation},
- * when <b>c</b> vector is zero and <i>d</i> number is 1.0.)
- * All calculations in all methods are performed in <tt>strictfp</tt> mode, so the results
- * are absolutely identical on all platforms.</p>
+ * when <b>c</b> vector is zero and <i>d</i> number is 1.0.)</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */
-public final strictfp class LinearOperator extends ProjectiveOperator {
+public final class LinearOperator extends ProjectiveOperator {
 
     LinearOperator(double[] a, double[] diagonal, double[] b) {
         super(a, diagonal, b, null, 1.0);
@@ -466,9 +464,6 @@ public final strictfp class LinearOperator extends ProjectiveOperator {
      *
      * <p>This method is called in the {@link #inverseMap(double[], double[])} method,
      * if the matrix <b>A</b> is not {@link #isDiagonal() diagonal}.
-     *
-     * <p>All calculations in all methods are performed in <tt>strictfp</tt> mode, so the results
-     * are absolutely identical on all platforms.
      *
      * <p><i>Warning:</i> this method destroys the content of the passed <tt>a</tt> and <tt>y</tt> arrays!
      * But this method does not occupy any additional memory, unlike {@link #inverseMap(double[], double[])} method.

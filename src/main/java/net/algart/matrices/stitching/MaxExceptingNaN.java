@@ -26,7 +26,7 @@ package net.algart.matrices.stitching;
 
 import net.algart.math.functions.Func;
 
-public strictfp class MaxExceptingNaN implements Func {
+public class MaxExceptingNaN implements Func {
     private final double defaultValue;
 
     private MaxExceptingNaN(double defaultValue) {

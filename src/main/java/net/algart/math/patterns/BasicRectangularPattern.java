@@ -36,7 +36,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-final strictfp class BasicRectangularPattern extends AbstractUniformGridPattern implements RectangularPattern {
+final class BasicRectangularPattern extends AbstractUniformGridPattern implements RectangularPattern {
     private final IRectangularArea gridIndexArea;
     private final long pointCount;
     private final double largePointCount;

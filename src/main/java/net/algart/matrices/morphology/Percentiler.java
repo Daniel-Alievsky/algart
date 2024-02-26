@@ -2930,7 +2930,7 @@ class Percentiler extends RankOperationProcessor {
                 final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                 if (!interpolated) { // float A: simple percentile, direct
                     return new AbstractFloatArray(src.length(), true, src) {
-                        public strictfp float getFloat(long index) {
+                        public float getFloat(long index) {
                             double percentileIndex = fPerc.getDouble(index);
                             checkNaN(percentileIndex);
                             int[] hist = new int[histLength];
@@ -3019,7 +3019,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 } else { // float B: precise percentile, direct
                     return new AbstractFloatArray(src.length(), true, src) {
-                        public strictfp float getFloat(long index) {
+                        public float getFloat(long index) {
                             double percentileIndex = fPerc.getDouble(index);
                             checkNaN(percentileIndex);
                             int[] hist = new int[histLength];
@@ -3109,7 +3109,7 @@ class Percentiler extends RankOperationProcessor {
                 }
             } else if (!interpolated) { // float C: simple percentile, indirect
                 return new AbstractFloatArray(src.length(), true, src) {
-                    public strictfp float getFloat(long index) {
+                    public float getFloat(long index) {
                         double percentileIndex = fPerc.getDouble(index);
                         checkNaN(percentileIndex);
                         int[] hist = new int[histLength];
@@ -3196,7 +3196,7 @@ class Percentiler extends RankOperationProcessor {
                 };
             } else { // float D: precise percentile, direct
                 return new AbstractFloatArray(src.length(), true, src) {
-                    public strictfp float getFloat(long index) {
+                    public float getFloat(long index) {
                         double percentileIndex = fPerc.getDouble(index);
                         checkNaN(percentileIndex);
                         int[] hist = new int[histLength];
@@ -3296,7 +3296,7 @@ class Percentiler extends RankOperationProcessor {
                 final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                 if (!interpolated) { // double A: simple percentile, direct
                     return new AbstractDoubleArray(src.length(), true, src) {
-                        public strictfp double getDouble(long index) {
+                        public double getDouble(long index) {
                             double percentileIndex = fPerc.getDouble(index);
                             checkNaN(percentileIndex);
                             int[] hist = new int[histLength];
@@ -3385,7 +3385,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 } else { // double B: precise percentile, direct
                     return new AbstractDoubleArray(src.length(), true, src) {
-                        public strictfp double getDouble(long index) {
+                        public double getDouble(long index) {
                             double percentileIndex = fPerc.getDouble(index);
                             checkNaN(percentileIndex);
                             int[] hist = new int[histLength];
@@ -3475,7 +3475,7 @@ class Percentiler extends RankOperationProcessor {
                 }
             } else if (!interpolated) { // double C: simple percentile, indirect
                 return new AbstractDoubleArray(src.length(), true, src) {
-                    public strictfp double getDouble(long index) {
+                    public double getDouble(long index) {
                         double percentileIndex = fPerc.getDouble(index);
                         checkNaN(percentileIndex);
                         int[] hist = new int[histLength];
@@ -3562,7 +3562,7 @@ class Percentiler extends RankOperationProcessor {
                 };
             } else { // double D: precise percentile, direct
                 return new AbstractDoubleArray(src.length(), true, src) {
-                    public strictfp double getDouble(long index) {
+                    public double getDouble(long index) {
                         double percentileIndex = fPerc.getDouble(index);
                         checkNaN(percentileIndex);
                         int[] hist = new int[histLength];

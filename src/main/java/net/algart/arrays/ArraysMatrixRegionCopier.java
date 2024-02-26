@@ -37,7 +37,7 @@ import java.util.Locale;
  *
  * @author Daniel Alievsky
  */
-abstract strictfp class ArraysMatrixRegionCopier {
+abstract class ArraysMatrixRegionCopier {
     private static final boolean OPTIMIZE_POLYGON_2D = true;
     private static final boolean DEBUG_OPTIMIZE_POLYGON_2D =
         InternalUtils.getBooleanProperty("net.algart.arrays.ArraysMatrixRegionCopier.debugOptimizePolygon2D", false);

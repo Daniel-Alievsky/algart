@@ -30,7 +30,7 @@ import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
 import java.util.*;
 
-final strictfp class Union extends AbstractPattern implements Pattern {
+final class Union extends AbstractPattern implements Pattern {
     private final Pattern[] subsets;
     private final Pattern[] projections;
     private volatile Reference<Set<Point>> points = null;

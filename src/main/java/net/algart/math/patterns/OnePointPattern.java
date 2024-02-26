@@ -35,7 +35,7 @@ import java.util.Set;
  * This easy implementation helps to save memory and time while using Minkowski decomposition,
  * build by {@link AbstractUniformGridPattern#minkowskiDecomposition(int)} method.
  */
-final strictfp class OnePointPattern extends AbstractPattern implements DirectPointSetPattern {
+final class OnePointPattern extends AbstractPattern implements DirectPointSetPattern {
     private final Point p;
 
     OnePointPattern(Point p) {

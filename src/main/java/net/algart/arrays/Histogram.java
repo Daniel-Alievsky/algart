@@ -327,9 +327,7 @@ package net.algart.arrays;
  * for the precise histogram model.
  * These methods can be useful if you need to process the given histogram only once.</p>
  *
- * <p>The floating-point calculations in this class are performed not in <tt>strictfp</tt>, but in the usual mode.
- * So, there is no guarantee that the results are absolutely identical on all platforms.
- * Moreover, there is no guarantee that the same results, got by different ways (for example,
+ * <p>There is no guarantee that the same results, got by different ways (for example,
  * by static methods and by creating an instance of this class and using its methods) are absolutely identical:
  * little mismatches in the last digits after the decimal point are possible.</p>
 

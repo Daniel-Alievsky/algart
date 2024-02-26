@@ -55,7 +55,7 @@ package net.algart.math.functions;
  * @author Daniel Alievsky
  * @see ApertureFilteredFunc
  */
-public final strictfp class ApertureFilterOperator implements Operator {
+public final class ApertureFilterOperator implements Operator {
     final long[] apertureDim;
     final double[] apertureFrom;
     final double[] apertureSteps;

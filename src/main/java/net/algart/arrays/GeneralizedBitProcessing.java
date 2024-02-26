@@ -696,7 +696,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
             this.interruptionRequest = interruptionRequest;
         }
 
-        public strictfp void run() {
+        public void run() {
             if (lock == null || range == null || dest == null || src == null)
                 throw new AssertionError(this + " is not initialized correctly");
             for (long sliceIndex = threadIndex + 1; sliceIndex <= numberOfRanges; sliceIndex += numberOfThreads) {

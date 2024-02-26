@@ -428,7 +428,7 @@ public class AJFileChooser extends JFileChooser {
         implements Arrays.MainValue
     {
         /**
-         * <code>Settings</code> is an argument for <code>ExtensionFileFilter</code
+         * <code>Settings</code> is an argument for <code>ExtensionFileFilter</code>
          * constructor. Unlike <code>ExtensionFileFilter</code, this class
          * it fully <i>immutable</i> and doesn't require <code>JFileChooser</code>
          * instance.

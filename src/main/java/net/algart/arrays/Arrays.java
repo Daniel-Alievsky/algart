@@ -3535,8 +3535,6 @@ public class Arrays {
      * Returns the sum of all array elements: the results of <tt>array.{@link PArray#getDouble(long)
      * getDouble(k)}</tt> for all <tt>k==0,1,...,array.length()-1</tt>.
      *
-     * <p>This method works in <tt>strictfp</tt> mode: the result will be absolutely same on all platforms.
-     *
      * <p>The <tt>context</tt> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      * However, unlike that method, this method <i>is always performed in a single thread
@@ -3754,8 +3752,6 @@ public class Arrays {
      * if {@link DefaultThreadPoolFactory} instance recommends it,
      * and may be interruptable by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
-     *
-     * <p>This method works in <tt>strictfp</tt> mode: the results will be absolutely same on all platforms.
      *
      * <p>Please remember that <tt>ByteArray</tt> and <tt>ShortArray</tt> are interpreted as unsigned.
      *
@@ -4112,7 +4108,7 @@ public class Arrays {
      * @see #unpackUnitBits(ArrayContext, UpdatablePArray, BitArray, double)
      * @see #unpackZeroBits(ArrayContext, UpdatablePArray, BitArray, double)
      */
-    public static strictfp void unpackBits(ArrayContext context, UpdatablePArray array, BitArray bits,
+    public static void unpackBits(ArrayContext context, UpdatablePArray array, BitArray bits,
                                            double filler0, double filler1)
     {
         // Obsolete (little slower) version:

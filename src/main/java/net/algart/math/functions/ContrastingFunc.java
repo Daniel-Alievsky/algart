@@ -76,16 +76,14 @@ package net.algart.math.functions;
  * <i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>)</nobr>.
  *
  * <p>The {@link #get} method of the instances of this class requires at least 3 arguments
- * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0, 1 or 2.
- * All calculations are performed in <tt>strictfp</tt> mode, so the result
- * is absolutely identical on all platforms.</p>
+ * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0, 1 or 2.</p>
  *
  * <p>All implementations of this class are <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */
-public abstract strictfp class ContrastingFunc implements Func {
+public abstract class ContrastingFunc implements Func {
 
     /**
      * Creates an instance of this class.
@@ -104,7 +102,7 @@ public abstract strictfp class ContrastingFunc implements Func {
     public static ContrastingFunc getInstance(final double m, final double threshold) {
         return new ContrastingFunc() {
             @Override
-            public strictfp double get(double... x) {
+            public double get(double... x) {
                 if (x.length < 3)
                     throw new IndexOutOfBoundsException("At least 3 arguments required");
                 if (x.length == 3) {
@@ -116,13 +114,13 @@ public abstract strictfp class ContrastingFunc implements Func {
             }
 
             @Override
-            public strictfp double get(double x0, double x1, double x2) {
+            public double get(double x0, double x1, double x2) {
                 double w = x0 < x1 ? x1 : x0 > x2 ? x2 : x0;
                 return m * (w - x1) / (x2 - x1 < threshold ? threshold : x2 - x1);
             }
 
             @Override
-            public strictfp double get(double x0, double x1, double x2, double x3) {
+            public double get(double x0, double x1, double x2, double x3) {
                 double w = x1 < x2 ? x2 : x1 > x3 ? x3 : x1;
                 return m * x0 * (w - x2) / ((x3 - x2 < threshold ? threshold : x3 - x2) * x1);
             }

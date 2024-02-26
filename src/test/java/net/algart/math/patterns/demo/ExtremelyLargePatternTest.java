@@ -37,7 +37,7 @@ import java.util.Locale;
  *
  * @author Daniel Alievsky
  */
-public strictfp class ExtremelyLargePatternTest {
+public class ExtremelyLargePatternTest {
     static final long MAX = 1L << 61;
 
     private static void printNeighbourhood(long m, double step) {

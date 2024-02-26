@@ -3854,7 +3854,7 @@ class AveragerBetweenValues extends RankOperationProcessor {
                 final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                 if (!interpolated) { // float A: simple, direct
                     return new AbstractDoubleArray(src.length(), true, src) {
-                        public strictfp double getDouble(long index) {
+                        public double getDouble(long index) {
                             double minValue = minV.getDouble(index);
                             checkNaN(minValue);
                             double maxValue = maxV.getDouble(index);
@@ -4000,7 +4000,7 @@ class AveragerBetweenValues extends RankOperationProcessor {
                 } else { // float B: precise, direct
                     assert interpolated;
                     return new AbstractDoubleArray(src.length(), true, src) {
-                        public strictfp double getDouble(long index) {
+                        public double getDouble(long index) {
                             double minValue = minV.getDouble(index);
                             checkNaN(minValue);
                             double maxValue = maxV.getDouble(index);
@@ -4147,7 +4147,7 @@ class AveragerBetweenValues extends RankOperationProcessor {
                 }
             } else if (!interpolated) { // float C: simple, indirect
                 return new AbstractDoubleArray(src.length(), true, src) {
-                    public strictfp double getDouble(long index) {
+                    public double getDouble(long index) {
                         double minValue = minV.getDouble(index);
                         checkNaN(minValue);
                         double maxValue = maxV.getDouble(index);
@@ -4291,7 +4291,7 @@ class AveragerBetweenValues extends RankOperationProcessor {
             } else { // float D: precise, direct
                 assert interpolated;
                 return new AbstractDoubleArray(src.length(), true, src) {
-                    public strictfp double getDouble(long index) {
+                    public double getDouble(long index) {
                         double minValue = minV.getDouble(index);
                         checkNaN(minValue);
                         double maxValue = maxV.getDouble(index);
@@ -4448,7 +4448,7 @@ class AveragerBetweenValues extends RankOperationProcessor {
                 final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                 if (!interpolated) { // double A: simple, direct
                     return new AbstractDoubleArray(src.length(), true, src) {
-                        public strictfp double getDouble(long index) {
+                        public double getDouble(long index) {
                             double minValue = minV.getDouble(index);
                             checkNaN(minValue);
                             double maxValue = maxV.getDouble(index);
@@ -4594,7 +4594,7 @@ class AveragerBetweenValues extends RankOperationProcessor {
                 } else { // double B: precise, direct
                     assert interpolated;
                     return new AbstractDoubleArray(src.length(), true, src) {
-                        public strictfp double getDouble(long index) {
+                        public double getDouble(long index) {
                             double minValue = minV.getDouble(index);
                             checkNaN(minValue);
                             double maxValue = maxV.getDouble(index);
@@ -4741,7 +4741,7 @@ class AveragerBetweenValues extends RankOperationProcessor {
                 }
             } else if (!interpolated) { // double C: simple, indirect
                 return new AbstractDoubleArray(src.length(), true, src) {
-                    public strictfp double getDouble(long index) {
+                    public double getDouble(long index) {
                         double minValue = minV.getDouble(index);
                         checkNaN(minValue);
                         double maxValue = maxV.getDouble(index);
@@ -4885,7 +4885,7 @@ class AveragerBetweenValues extends RankOperationProcessor {
             } else { // double D: precise, direct
                 assert interpolated;
                 return new AbstractDoubleArray(src.length(), true, src) {
-                    public strictfp double getDouble(long index) {
+                    public double getDouble(long index) {
                         double minValue = minV.getDouble(index);
                         checkNaN(minValue);
                         double maxValue = maxV.getDouble(index);

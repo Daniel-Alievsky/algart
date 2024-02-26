@@ -30,16 +30,14 @@ package net.algart.math.functions;
  * <i>scale</i>*<i>x</i><sub>0</sub><i>x</i><sub>1</sub>...<i>x</i><sub><i>n</i>-1</sub>,
  * where <i>scale</i> is a constant, passed to {@link #getInstance(double)} method.
  * The {@link #get} method of the instance of this class may process any number of arguments.
- * If the number of arguments is 0, it returns <i>scale</i> value.
- * All calculations are performed in <tt>strictfp</tt> mode, so the result
- * is absolutely identical on all platforms.</p>
+ * If the number of arguments is 0, it returns <i>scale</i> value.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */
-public final strictfp class MultiplyingFunc implements Func {
+public final class MultiplyingFunc implements Func {
     private final double scale;
 
     private MultiplyingFunc(double scale) {

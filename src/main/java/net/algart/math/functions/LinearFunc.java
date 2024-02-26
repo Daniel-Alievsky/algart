@@ -40,8 +40,6 @@ import java.util.Locale;
  *
  * <p>The {@link #get} method of the instance of this class requires at least <i>n</i> arguments
  * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is less.</p>
- * All calculations are performed in <tt>strictfp</tt> mode, so the result
- * is absolutely identical on all platforms.</p>
  *
  * <p>Please note: if all <i>a</i><sub><i>i</i></sub> coefficients are equal (averaging function),
  * this class does not spend Java memory for storing them.
@@ -53,12 +51,12 @@ import java.util.Locale;
  *
  * @author Daniel Alievsky
  */
-public abstract strictfp class LinearFunc implements Func {
+public abstract class LinearFunc implements Func {
     /**
      * <p>{@link Func.Updatable Updatable extension} of the {@link LinearFunc linear function}
      * with one argument.</p>
      */
-    public static strictfp class Updatable extends LinearFunc implements Func.Updatable {
+    public static class Updatable extends LinearFunc implements Func.Updatable {
         private final double aInv;
         private Updatable(double b, double a) {
             super(b, new double[] {a});
@@ -165,7 +163,7 @@ public abstract strictfp class LinearFunc implements Func {
         } else if (a.length == 1) {
             if (a[0] == 1.0) {
                 return new LinearFunc(b, a) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.b + x[0];
                     }
 
@@ -173,25 +171,25 @@ public abstract strictfp class LinearFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.b + x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.b + x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.b + x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.b + x0;
                     }
                 };
             } else {
                 return new LinearFunc(b, a) {
-                    public strictfp double get(double... x) {
+                    public double get(double... x) {
                         return this.b + this.a[0] * x[0];
                     }
 
@@ -199,19 +197,19 @@ public abstract strictfp class LinearFunc implements Func {
                         throw new IndexOutOfBoundsException("At least 1 argument required");
                     }
 
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         return this.b + this.a[0] * x0;
                     }
 
-                    public strictfp double get(double x0, double x1) {
+                    public double get(double x0, double x1) {
                         return this.b + this.a[0] * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         return this.b + this.a[0] * x0;
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         return this.b + this.a[0] * x0;
                     }
                 };
@@ -230,15 +228,15 @@ public abstract strictfp class LinearFunc implements Func {
                     throw new IndexOutOfBoundsException("At least 2 arguments required");
                 }
 
-                public strictfp double get(double x0, double x1) {
+                public double get(double x0, double x1) {
                     return this.b + this.a[0] * x0 + this.a[1] * x1;
                 }
 
-                public strictfp double get(double x0, double x1, double x2) {
+                public double get(double x0, double x1, double x2) {
                     return this.b + this.a[0] * x0 + this.a[1] * x1;
                 }
 
-                public strictfp double get(double x0, double x1, double x2, double x3) {
+                public double get(double x0, double x1, double x2, double x3) {
                     return this.b + this.a[0] * x0 + this.a[1] * x1;
                 }
             };
@@ -253,7 +251,7 @@ public abstract strictfp class LinearFunc implements Func {
                 return getNonweightedInstance(b, a[0], a.length);
             }
             return new LinearFunc(b, a) {
-                public strictfp double get(double ...x) {
+                public double get(double ...x) {
                     double result = this.b;
                     for (int k = 0; k < this.n; k++)
                         result += this.a[k] * x[k];
@@ -272,13 +270,13 @@ public abstract strictfp class LinearFunc implements Func {
                     throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
                 }
 
-                public strictfp double get(double x0, double x1, double x2) {
+                public double get(double x0, double x1, double x2) {
                     if (this.n > 3)
                         throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
                     return this.b + this.a[0] * x0 + this.a[1] * x1 + this.a[2] * x2;
                 }
 
-                public strictfp double get(double x0, double x1, double x2, double x3) {
+                public double get(double x0, double x1, double x2, double x3) {
                     if (this.n > 4)
                         throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
                     return this.b + this.a[0] * x0 + this.a[1] * x1 + this.a[2] * x2 + this.a[3] * x3;
@@ -311,7 +309,7 @@ public abstract strictfp class LinearFunc implements Func {
             default: {
                 assert n >= 3;
                 return new LinearFunc(b, a, n) {
-                    public strictfp double get(double ...x) {
+                    public double get(double ...x) {
                         double sum = 0.0;
                         for (int k = 0; k < this.n; k++)
                             sum += x[k];
@@ -330,13 +328,13 @@ public abstract strictfp class LinearFunc implements Func {
                         throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
                     }
 
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         if (this.n > 3)
                             throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
                         return this.b + this.a0 * (x0 + x1 + x2);
                     }
 
-                    public strictfp double get(double x0, double x1, double x2, double x3) {
+                    public double get(double x0, double x1, double x2, double x3) {
                         if (this.n > 4)
                             throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
                         return this.b + this.a0 * (x0 + x1 + x2 + x3);
@@ -374,7 +372,7 @@ public abstract strictfp class LinearFunc implements Func {
      * @return          the linear function mapping the source range to the destination range.
      * @throws NullPointerException if one of the arguments is <tt>null</tt>.
      */
-    public static strictfp LinearFunc getInstance(Range destRange, Range srcRange) {
+    public static LinearFunc getInstance(Range destRange, Range srcRange) {
         double mult = destRange.size() / srcRange.size();
         double b = destRange.min() - srcRange.min() * mult;
         return getInstance(b, mult);

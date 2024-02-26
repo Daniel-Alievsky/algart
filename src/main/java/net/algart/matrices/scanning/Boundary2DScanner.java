@@ -428,7 +428,7 @@ public abstract class Boundary2DScanner {
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
      * there are no ways to modify settings of the created instance.</p>
      */
-    public static strictfp class Step {
+    public static class Step {
         /**
          * Result of {@link #code()} method for the following scanning step:
          * {@link #pixelCenterDX()} = 0,

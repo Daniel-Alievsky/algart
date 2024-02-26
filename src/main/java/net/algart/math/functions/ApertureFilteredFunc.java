@@ -37,7 +37,7 @@ package net.algart.math.functions;
  * @author Daniel Alievsky
  * @see ApertureFilterOperator#apply(Func)
  */
-public strictfp class ApertureFilteredFunc implements Func {
+public class ApertureFilteredFunc implements Func {
     private static final boolean OPTIMIZE_LITTLE_DIMENSIONS = true;
 
     final Func parent;
@@ -69,7 +69,7 @@ public strictfp class ApertureFilteredFunc implements Func {
                 if (operator.isNonweightedSum) {
                     return new ApertureFilteredFunc(parent, operator) {
                         @Override
-                        public strictfp double get(double... x) {
+                        public double get(double... x) {
                             if (x.length != 1) {
                                 return super.get(x);
                             }
@@ -82,7 +82,7 @@ public strictfp class ApertureFilteredFunc implements Func {
                         }
 
                         @Override
-                        public strictfp double get(double x0) {
+                        public double get(double x0) {
                             double sum = 0.0;
                             for (int i = 0; i < n0; i++, x0 += step0) {
                                 sum += parent.get(x0);
@@ -93,7 +93,7 @@ public strictfp class ApertureFilteredFunc implements Func {
                 } else {
                     return new ApertureFilteredFunc(parent, operator) {
                         @Override
-                        public strictfp double get(double... x) {
+                        public double get(double... x) {
                             if (x.length < 1) {
                                 return super.get(x);
                             }
@@ -115,7 +115,7 @@ public strictfp class ApertureFilteredFunc implements Func {
                 if (operator.isNonweightedSum) {
                     return new ApertureFilteredFunc(parent, operator) {
                         @Override
-                        public strictfp double get(double... x) {
+                        public double get(double... x) {
                             if (x.length != 2) {
                                 return super.get(x);
                             }
@@ -131,7 +131,7 @@ public strictfp class ApertureFilteredFunc implements Func {
                         }
 
                         @Override
-                        public strictfp double get(double x0, double x1) {
+                        public double get(double x0, double x1) {
                             double sum = 0.0;
                             for (int i = 0; i < n0; i++, x0 += step0) {
                                 double px1 = x1 + operator.apertureFrom[1];
@@ -145,7 +145,7 @@ public strictfp class ApertureFilteredFunc implements Func {
                 } else {
                     return new ApertureFilteredFunc(parent, operator) {
                         @Override
-                        public strictfp double get(double... x) {
+                        public double get(double... x) {
                             if (x.length < 2) {
                                 return super.get(x);
                             }
@@ -172,7 +172,7 @@ public strictfp class ApertureFilteredFunc implements Func {
                 if (operator.isNonweightedSum) {
                     return new ApertureFilteredFunc(parent, operator) {
                         @Override
-                        public strictfp double get(double... x) {
+                        public double get(double... x) {
                             if (x.length != 3) {
                                 return super.get(x);
                             }
@@ -191,7 +191,7 @@ public strictfp class ApertureFilteredFunc implements Func {
                         }
 
                         @Override
-                        public strictfp double get(double x0, double x1, double x2) {
+                        public double get(double x0, double x1, double x2) {
                             double sum = 0.0;
                             for (int i = 0; i < n0; i++, x0 += step0) {
                                 double px1 = x1 + operator.apertureFrom[1];
@@ -208,7 +208,7 @@ public strictfp class ApertureFilteredFunc implements Func {
                 } else {
                     return new ApertureFilteredFunc(parent, operator) {
                         @Override
-                        public strictfp double get(double... x) {
+                        public double get(double... x) {
                             if (x.length < 3) {
                                 return super.get(x);
                             }

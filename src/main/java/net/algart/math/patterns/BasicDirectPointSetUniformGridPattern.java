@@ -30,7 +30,7 @@ import net.algart.math.Point;
 
 import java.util.*;
 
-strictfp class BasicDirectPointSetUniformGridPattern
+class BasicDirectPointSetUniformGridPattern
     extends AbstractUniformGridPattern
     implements DirectPointSetUniformGridPattern
 {

@@ -24,7 +24,7 @@
 
 package net.algart.matrices.spectra;
 
-strictfp class RootsOfUnity {
+class RootsOfUnity {
     public static final int LOG_CACHE_SIZE = 20;
     public static final int HALF_CACHE_SIZE = 1 << (LOG_CACHE_SIZE - 1);
     public static final int CACHE_SIZE = 2 * HALF_CACHE_SIZE;

@@ -1482,7 +1482,7 @@ class Summator extends RankOperationProcessor {
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
                 if (desiredType == FloatArray.class) { // float A: direct, returning FloatArray
                     return new AbstractFloatArray(src.length(), true, src) {
-                        public strictfp float getFloat(long index) {
+                        public float getFloat(long index) {
                             double sum = 0.0;
                             for (long shift : shifts) {
                                 long i = index - shift;
@@ -1587,7 +1587,7 @@ class Summator extends RankOperationProcessor {
                     };
                 } else { // float B: direct, returning DoubleArray
                     return new AbstractDoubleArray(src.length(), true, src) {
-                        public strictfp double getDouble(long index) {
+                        public double getDouble(long index) {
                             double sum = 0.0;
                             for (long shift : shifts) {
                                 long i = index - shift;
@@ -1693,7 +1693,7 @@ class Summator extends RankOperationProcessor {
                 }
             } else { // float C: indirect
                 return new AbstractDoubleArray(src.length(), true, src) {
-                    public strictfp double getDouble(long index) {
+                    public double getDouble(long index) {
                         double sum = 0.0;
                         for (long shift : shifts) {
                             long i = index - shift;
@@ -1758,7 +1758,7 @@ class Summator extends RankOperationProcessor {
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
                 if (desiredType == FloatArray.class) { // double A: direct, returning FloatArray
                     return new AbstractFloatArray(src.length(), true, src) {
-                        public strictfp float getFloat(long index) {
+                        public float getFloat(long index) {
                             double sum = 0.0;
                             for (long shift : shifts) {
                                 long i = index - shift;
@@ -1863,7 +1863,7 @@ class Summator extends RankOperationProcessor {
                     };
                 } else { // double B: direct, returning DoubleArray
                     return new AbstractDoubleArray(src.length(), true, src) {
-                        public strictfp double getDouble(long index) {
+                        public double getDouble(long index) {
                             double sum = 0.0;
                             for (long shift : shifts) {
                                 long i = index - shift;
@@ -1969,7 +1969,7 @@ class Summator extends RankOperationProcessor {
                 }
             } else { // double C: indirect
                 return new AbstractDoubleArray(src.length(), true, src) {
-                    public strictfp double getDouble(long index) {
+                    public double getDouble(long index) {
                         double sum = 0.0;
                         for (long shift : shifts) {
                             long i = index - shift;

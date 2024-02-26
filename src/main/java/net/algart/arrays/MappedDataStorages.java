@@ -24,12 +24,12 @@
 
 package net.algart.arrays;
 
+import java.lang.reflect.InvocationTargetException;
 import java.nio.*;
-import java.security.PrivilegedActionException;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
@@ -1893,7 +1893,8 @@ class MappedDataStorages {
                                     else
                                         warningEvenInHook(caller + " cannot unmap array storage file " + df
                                             + " (some arrays are not released yet)");
-                                } catch (PrivilegedActionException ex) {
+                                } catch (InvocationTargetException |
+                                         NoSuchMethodException | IllegalAccessException ex) {
                                     if (caller == DisposeCaller.SHUTDOWN_HOOK) {
                                         severeEvenInHook(
                                             caller + " cannot perform unmapping (unsafe operation) in " + df, ex);

@@ -24,7 +24,7 @@
 
 package net.algart.math.functions;
 
-final strictfp class PositiveDiffFunc implements Func {
+final class PositiveDiffFunc implements Func {
     PositiveDiffFunc() {
     }
 

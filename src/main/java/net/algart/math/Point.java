@@ -33,16 +33,13 @@ import java.util.zip.*;
  * <p>Point in multidimensional space with real coordinates.
  * Represented as an array of <tt>double</tt> numbers.</p>
  *
- * <p>All calculations in this class are performed in <tt>strictfp</tt> mode, so the result
- * is absolutely identical on all platforms.</p>
- *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  * @see IPoint
  */
-public strictfp class Point implements Comparable<Point> {
+public class Point implements Comparable<Point> {
     /*Repeat(INCLUDE_FROM_FILE, IPoint.java, begin)
       Long.MIN_VALUE ==> Double.NEGATIVE_INFINITY ;;
       Long.MAX_VALUE ==> Double.POSITIVE_INFINITY ;;
@@ -353,12 +350,9 @@ public strictfp class Point implements Comparable<Point> {
     /**
      * Returns the distance between this point and the origin of coordinates.
      *
-     * <p>All calculations are performed in <tt>strictfp</tt> mode, so the result
-     * is absolutely identical on all platforms.
-     *
      * @return the distance between this point and the origin of coordinates.
      */
-    public strictfp double distanceFromOrigin() {
+    public double distanceFromOrigin() {
         if (coordinates.length == 1) {
             return StrictMath.abs(coordinates[0]);
         }
@@ -374,9 +368,6 @@ public strictfp class Point implements Comparable<Point> {
      * If is also called the Hausdorff distance between the point and the point set.
      * If the passed collection is empty, returns <tt>Double.POSITIVE_INFINITY</tt>.
      *
-     * <p>All calculations are performed in <tt>strictfp</tt> mode, so the result
-     * is absolutely identical on all platforms.
-     *
      * @param points some collection of points.
      * @return       the Hausdorff distance from this point to the set of points, passed via the collection.
      * @throws NullPointerException     if the argument is <tt>null</tt> or if some elements of the passed
@@ -384,7 +375,7 @@ public strictfp class Point implements Comparable<Point> {
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this point and in some
      *                                  of the given points are different.
      */
-    public strictfp double distanceFrom(Collection<Point> points) {
+    public double distanceFrom(Collection<Point> points) {
         if (points == null)
             throw new NullPointerException("Null points argument");
         double result = Double.POSITIVE_INFINITY;
@@ -696,16 +687,13 @@ public strictfp class Point implements Comparable<Point> {
      * <tt>thisInstance.{@link #coord(int) coord(i)}*point.{@link #coord(int) coord(i)}</tt>
      * for all coordinate indexes <tt>i</tt>.
      *
-     * <p>All calculations are performed in <tt>strictfp</tt> mode, so the result
-     * is absolutely identical on all platforms.
-     *
      * @param point another point.
      * @return      the scalar product of this and given point.
      * @throws NullPointerException     if the argument is <tt>null</tt>.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this and given points
      *                                  are different.
      */
-    public strictfp double scalarProduct(Point point) {
+    public double scalarProduct(Point point) {
         if (point == null)
             throw new NullPointerException("Null point argument");
         if (point.coordCount() != coordinates.length)

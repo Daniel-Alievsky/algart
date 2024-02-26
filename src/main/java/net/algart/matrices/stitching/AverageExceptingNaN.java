@@ -26,7 +26,7 @@ package net.algart.matrices.stitching;
 
 import net.algart.math.functions.Func;
 
-public strictfp class AverageExceptingNaN implements Func {
+public class AverageExceptingNaN implements Func {
     private final double defaultValue;
 
     private AverageExceptingNaN(double defaultValue) {

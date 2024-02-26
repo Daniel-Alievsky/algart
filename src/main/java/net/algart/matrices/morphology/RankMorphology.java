@@ -358,12 +358,6 @@ import net.algart.math.patterns.Pattern;
  * it is possible that the result will be partially filled, and only after this the <b>NaN</b> value will lead to
  * <tt>IllegalArgumentException</tt>.</p>
  *
- * <p>The floating-point calculations in the implementations of this interface are usually performed
- * not in <tt>strictfp</tt>, but in the usual mode.
- * So, there is no guarantee that the results are absolutely identical on all platforms.
- * Moreover, there is no guarantee that the same results, got by different ways, are absolutely identical:
- * little mismatches in the last digits after the decimal point are possible.</p>
- *
  * <p>The classes, implementing this interface, are <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *

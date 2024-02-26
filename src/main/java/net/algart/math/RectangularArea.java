@@ -58,16 +58,13 @@ import java.util.*;
  * <b>max</b>.{@link Point#coord(int) coord(<i>i</i>)},
  * and all coordinates of both vertices are never <tt>Double.NaN</tt>.
  *
- * <p>All calculations in this class are performed in <tt>strictfp</tt> mode, so the result
- * is absolutely identical on all platforms.</p>
- *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  * @see IRectangularArea
  */
-public strictfp class RectangularArea {
+public class RectangularArea {
 
     final Point min;
     final Point max;

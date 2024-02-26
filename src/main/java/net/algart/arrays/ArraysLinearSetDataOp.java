@@ -35,7 +35,7 @@ import net.algart.math.functions.LinearFunc;
  *
  * @author Daniel Alievsky
  */
-strictfp class ArraysLinearSetDataOp {
+class ArraysLinearSetDataOp {
     private static final boolean OPTIMIZE_LINEAR_FOR_JARRAYS = true;
 
     private final boolean truncateOverflows;

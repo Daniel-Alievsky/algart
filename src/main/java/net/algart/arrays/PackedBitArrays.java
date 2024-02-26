@@ -72,7 +72,7 @@ import java.util.zip.*;
  *
  * @author Daniel Alievsky
  */
-public strictfp class PackedBitArrays {
+public class PackedBitArrays {
     private PackedBitArrays() {}
 
     /*Repeat.SectionStart primitives*/

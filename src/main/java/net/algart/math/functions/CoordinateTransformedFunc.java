@@ -89,7 +89,7 @@ public class CoordinateTransformedFunc implements Func {
                 final double[] a = lo.a();
                 return new CoordinateTransformedFunc(parent, operator) {
                     @Override
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         double y0 = a[0] * x0 + b[0];
                         return parent.get(y0);
                     }
@@ -100,14 +100,14 @@ public class CoordinateTransformedFunc implements Func {
                     if (b[0] == 0.0 && b[1] == 0.0) {
                         return new CoordinateTransformedFunc(parent, operator) {
                             @Override
-                            public strictfp double get(double x0, double x1) {
+                            public double get(double x0, double x1) {
                                 return parent.get(diagonal[0] * x0, diagonal[1] * x1);
                             }
                         };
                     } else {
                         return new CoordinateTransformedFunc(parent, operator) {
                             @Override
-                            public strictfp double get(double x0, double x1) {
+                            public double get(double x0, double x1) {
                                 double y0 = diagonal[0] * x0 + b[0];
                                 double y1 = diagonal[1] * x1 + b[1];
                                 return parent.get(y0, y1);
@@ -131,14 +131,14 @@ public class CoordinateTransformedFunc implements Func {
                     if (b[0] == 0.0 && b[1] == 0.0 && b[2] == 0.0) {
                         return new CoordinateTransformedFunc(parent, operator) {
                             @Override
-                            public strictfp double get(double x0, double x1, double x2) {
+                            public double get(double x0, double x1, double x2) {
                                 return parent.get(diagonal[0] * x0, diagonal[1] * x1, diagonal[2] * x2);
                             }
                         };
                     } else {
                         return new CoordinateTransformedFunc(parent, operator) {
                             @Override
-                            public strictfp double get(double x0, double x1, double x2) {
+                            public double get(double x0, double x1, double x2) {
                                 double y0 = diagonal[0] * x0 + b[0];
                                 double y1 = diagonal[1] * x1 + b[1];
                                 double y2 = diagonal[2] * x2 + b[2];
@@ -150,7 +150,7 @@ public class CoordinateTransformedFunc implements Func {
                     final double[] a = lo.a();
                     return new CoordinateTransformedFunc(parent, operator) {
                         @Override
-                        public strictfp double get(double x0, double x1, double x2) {
+                        public double get(double x0, double x1, double x2) {
                             double y0 = a[0] * x0 + a[1] * x1 + a[2] * x2 + b[0];
                             double y1 = a[3] * x0 + a[4] * x1 + a[5] * x2 + b[1];
                             double y2 = a[6] * x0 + a[7] * x1 + a[8] * x2 + b[2];
@@ -174,7 +174,7 @@ public class CoordinateTransformedFunc implements Func {
             if (dimCount == 1) {
                 return new CoordinateTransformedFunc(parent, operator) {
                     @Override
-                    public strictfp double get(double x0) {
+                    public double get(double x0) {
                         double y0 = (a[0] * x0 + b[0]) / (c[0] * x0 + d);
                         return parent.get(y0);
                     }
@@ -192,7 +192,7 @@ public class CoordinateTransformedFunc implements Func {
             } else if (dimCount == 3) {
                 return new CoordinateTransformedFunc(parent, operator) {
                     @Override
-                    public strictfp double get(double x0, double x1, double x2) {
+                    public double get(double x0, double x1, double x2) {
                         double multiplier = 1.0 / (c[0] * x0 + c[1] * x1 + c[2] * x2 + d);
                         double y0 = (a[0] * x0 + a[1] * x1 + a[2] * x2 + b[0]) * multiplier;
                         double y1 = (a[3] * x0 + a[4] * x1 + a[5] * x2 + b[1]) * multiplier;

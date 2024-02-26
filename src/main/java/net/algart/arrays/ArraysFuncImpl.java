@@ -727,7 +727,7 @@ class ArraysFuncImpl {
             + "): it must be one of primitive XxxArray interfaces");
     }
 
-    static strictfp <T extends PArray> T asFuncArray(
+    static <T extends PArray> T asFuncArray(
         final boolean truncateOverflows,
         Func f, Class<? extends T> requiredType, PArray[] x, long len)
     {
@@ -2712,10 +2712,10 @@ class ArraysFuncImpl {
             + "): it must implement one of primitive XxxArray interfaces");
     }
 
-    private strictfp static <T extends PArray> T asLinearFuncArray(
-        boolean truncateOverflows,
-        Class<? extends T> requiredType,
-        Func f, final PArray x[], long len)
+    private static <T extends PArray> T asLinearFuncArray(
+            boolean truncateOverflows,
+            Class<? extends T> requiredType,
+            Func f, final PArray[] x, long len)
     {
         if (requiredType == null)
             throw new NullPointerException("Null requiredType argument");
@@ -2756,7 +2756,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, BIT_TYPE_CODE);
 
-                            public strictfp boolean getBit(long index) {
+                            public boolean getBit(long index) {
                                 return a0 * x0.getDouble(index) != -b;
                             }
 
@@ -2782,7 +2782,7 @@ class ArraysFuncImpl {
                                 ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                     truncateOverflows, x, lf, CHAR_TYPE_CODE);
 
-                                public strictfp char getChar(long index) {
+                                public char getChar(long index) {
                                     int v = (int)(a0 * x0.getDouble(index) + b);
                                     return v < Character.MIN_VALUE ? Character.MIN_VALUE :
                                         v > Character.MAX_VALUE ? Character.MAX_VALUE :
@@ -2819,7 +2819,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, CHAR_TYPE_CODE);
 
-                            public strictfp char getChar(long index) {
+                            public char getChar(long index) {
                                 return (char)(long)(a0 * x0.getDouble(index) + b);
                                 // note: for float array, (char)(long)v will differ from (int)v for very large floats
                             }
@@ -2847,7 +2847,7 @@ class ArraysFuncImpl {
                                 ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                     truncateOverflows, x, lf, BYTE_TYPE_CODE);
 
-                                public strictfp int getByte(long index) {
+                                public int getByte(long index) {
                                     int v = (int)(a0 * x0.getDouble(index) + b);
                                     return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
                                 }
@@ -2882,7 +2882,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, BYTE_TYPE_CODE);
 
-                            public strictfp int getByte(long index) {
+                            public int getByte(long index) {
                                 return (int)(long)(a0 * x0.getDouble(index) + b) & 0xFF;
                                 // note: for float array, (int)(long)v will differ from (int)v for very large floats
                             }
@@ -2907,7 +2907,7 @@ class ArraysFuncImpl {
                                 ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                     truncateOverflows, x, lf, SHORT_TYPE_CODE);
 
-                                public strictfp int getShort(long index) {
+                                public int getShort(long index) {
                                     int v = (int)(a0 * x0.getDouble(index) + b);
                                     return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
                                 }
@@ -2942,7 +2942,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, SHORT_TYPE_CODE);
 
-                            public strictfp int getShort(long index) {
+                            public int getShort(long index) {
                                 return (int)(long)(a0 * x0.getDouble(index) + b) & 0xFFFF;
                                 // note: for float array, (int)(long)v will differ from (int)v for very large floats
                             }
@@ -2965,7 +2965,7 @@ class ArraysFuncImpl {
                                 ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                     truncateOverflows, x, lf, INT_TYPE_CODE);
 
-                                public strictfp int getInt(long index) {
+                                public int getInt(long index) {
                                     return (int)(a0 * x0.getDouble(index) + b);
                                     // Java automatically truncates float values to Integer.MIN_VALUE..MAX_VALUE here
                                 }
@@ -3000,7 +3000,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, INT_TYPE_CODE);
 
-                            public strictfp int getInt(long index) {
+                            public int getInt(long index) {
                                 return (int)(long)(a0 * x0.getDouble(index) + b);
                                 // note: for float array, (int)(long)v will differ from (int)v for very large floats
                             }
@@ -3038,7 +3038,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, LONG_TYPE_CODE);
 
-                            public strictfp long getLong(long index) {
+                            public long getLong(long index) {
                                 return (long)(a0 * x0.getDouble(index) + b);
                                 // Java automatically truncates float values to Long.MIN_VALUE..MAX_VALUE here
                             }
@@ -3079,7 +3079,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, FLOAT_TYPE_CODE);
 
-                            public strictfp float getFloat(long index) {
+                            public float getFloat(long index) {
                                 return (float)(a0 * x0.getDouble(index) + b);
                                 // Java automatically truncates float values to Float.MIN_VALUE..MAX_VALUE here
                             }
@@ -3116,7 +3116,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, DOUBLE_TYPE_CODE);
 
-                            public strictfp double getDouble(long index) {
+                            public double getDouble(long index) {
                                 return (a0 * x0.getDouble(index) + b);
                                 // Java automatically truncates double values to Double.MIN_VALUE..MAX_VALUE here
                             }
@@ -3144,7 +3144,7 @@ class ArraysFuncImpl {
                         ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, BIT_TYPE_CODE);
 
-                        public strictfp boolean getBit(long index) {
+                        public boolean getBit(long index) {
                             double sum = 0.0;
                             if (a == null) {
                                 for (int k = 0; k < n; k++)
@@ -3170,7 +3170,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, CHAR_TYPE_CODE);
 
-                            public strictfp char getChar(long index) {
+                            public char getChar(long index) {
                                 int v;
                                 if (a == null) {
                                     double sum = 0.0;
@@ -3198,7 +3198,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, CHAR_TYPE_CODE);
 
-                            public strictfp char getChar(long index) {
+                            public char getChar(long index) {
                                 if (a == null) {
                                     double sum = 0.0;
                                     for (int k = 0; k < n; k++)
@@ -3230,7 +3230,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, BYTE_TYPE_CODE);
 
-                            public strictfp int getByte(long index) {
+                            public int getByte(long index) {
                                 int v;
                                 if (a == null) {
                                     double sum = 0.0;
@@ -3256,7 +3256,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, BYTE_TYPE_CODE);
 
-                            public strictfp int getByte(long index) {
+                            public int getByte(long index) {
                                 if (a == null) {
                                     double sum = 0.0;
                                     for (int k = 0; k < n; k++)
@@ -3285,7 +3285,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, SHORT_TYPE_CODE);
 
-                            public strictfp int getShort(long index) {
+                            public int getShort(long index) {
                                 int v;
                                 if (a == null) {
                                     double sum = 0.0;
@@ -3311,7 +3311,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, SHORT_TYPE_CODE);
 
-                            public strictfp int getShort(long index) {
+                            public int getShort(long index) {
                                 if (a == null) {
                                     double sum = 0.0;
                                     for (int k = 0; k < n; k++)
@@ -3340,7 +3340,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, INT_TYPE_CODE);
 
-                            public strictfp int getInt(long index) {
+                            public int getInt(long index) {
                                 if (a == null) {
                                     double sum = 0.0;
                                     for (int k = 0; k < n; k++)
@@ -3365,7 +3365,7 @@ class ArraysFuncImpl {
                             ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, INT_TYPE_CODE);
 
-                            public strictfp int getInt(long index) {
+                            public int getInt(long index) {
                                 if (a == null) {
                                     double sum = 0.0;
                                     for (int k = 0; k < n; k++)
@@ -3399,7 +3399,7 @@ class ArraysFuncImpl {
                         ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, LONG_TYPE_CODE);
 
-                        public strictfp long getLong(long index) {
+                        public long getLong(long index) {
                             if (a == null) {
                                 double sum = 0.0;
                                 for (int k = 0; k < n; k++)
@@ -3427,7 +3427,7 @@ class ArraysFuncImpl {
                         ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, FLOAT_TYPE_CODE);
 
-                        public strictfp float getFloat(long index) {
+                        public float getFloat(long index) {
                             if (a == null) {
                                 double sum = 0.0;
                                 for (int k = 0; k < n; k++)
@@ -3454,7 +3454,7 @@ class ArraysFuncImpl {
                         ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, DOUBLE_TYPE_CODE);
 
-                        public strictfp double getDouble(long index) {
+                        public double getDouble(long index) {
                             if (a == null) {
                                 double sum = 0.0;
                                 for (int k = 0; k < n; k++)
@@ -3524,7 +3524,7 @@ class ArraysFuncImpl {
                     ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                         truncateOverflows, x[0], lf, BIT_TYPE_CODE);
 
-                    public strictfp boolean getBit(long index) {
+                    public boolean getBit(long index) {
                         return a * x[0].getDouble(index) != -b;
                     }
 
@@ -3557,7 +3557,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, CHAR_TYPE_CODE);
 
-                        public strictfp char getChar(long index) {
+                        public char getChar(long index) {
                             int v = (int)(a * x[0].getDouble(index) + b);
                             return v < Character.MIN_VALUE ? Character.MIN_VALUE :
                                 v > Character.MAX_VALUE ? Character.MAX_VALUE :
@@ -3568,7 +3568,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setChar(long index, char value) {
+                        public void setChar(long index, char value) {
                             if (truncateInSet) {
                                 double v = (value - b) * aInv;
                                 x[0].setDouble(index,
@@ -3618,7 +3618,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, CHAR_TYPE_CODE);
 
-                        public strictfp char getChar(long index) {
+                        public char getChar(long index) {
                             return (char)(long)(a * x[0].getDouble(index) + b);
                             // note: for float array, (char)(long)v will differ from (int)v for very large floats
                         }
@@ -3627,7 +3627,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setChar(long index, char value) {
+                        public void setChar(long index, char value) {
                             if (longPrecisionInSet) {
                                 x[0].setLong(index, (long)((value - b) * aInv));
                             } else {
@@ -3655,7 +3655,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, BYTE_TYPE_CODE);
 
-                        public strictfp int getByte(long index) {
+                        public int getByte(long index) {
                             int v = (int)(a * x[0].getDouble(index) + b);
                             return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
                         }
@@ -3664,7 +3664,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setByte(long index, byte value) {
+                        public void setByte(long index, byte value) {
                             if (truncateInSet) {
                                 double v = ((value & 0xFF) - b) * aInv;
                                 x[0].setDouble(index,
@@ -3714,7 +3714,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, BYTE_TYPE_CODE);
 
-                        public strictfp int getByte(long index) {
+                        public int getByte(long index) {
                             return (int)(long)(a * x[0].getDouble(index) + b) & 0xFF;
                             // note: for float array, (int)(long)v will differ from (int)v for very large floats
                         }
@@ -3723,7 +3723,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setByte(long index, byte value) {
+                        public void setByte(long index, byte value) {
                             if (longPrecisionInSet) {
                                 x[0].setLong(index, (long)(((value & 0xFF) - b) * aInv));
                             } else {
@@ -3748,7 +3748,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, SHORT_TYPE_CODE);
 
-                        public strictfp int getShort(long index) {
+                        public int getShort(long index) {
                             int v = (int)(a * x[0].getDouble(index) + b);
                             return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
                         }
@@ -3757,7 +3757,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setShort(long index, short value) {
+                        public void setShort(long index, short value) {
                             if (truncateInSet) {
                                 double v = ((value & 0xFFFF) - b) * aInv;
                                 x[0].setDouble(index,
@@ -3807,7 +3807,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, SHORT_TYPE_CODE);
 
-                        public strictfp int getShort(long index) {
+                        public int getShort(long index) {
                             return (int)(long)(a * x[0].getDouble(index) + b) & 0xFFFF;
                             // note: for float array, (int)(long)v will differ from (int)v for very large floats
                         }
@@ -3816,7 +3816,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setShort(long index, short value) {
+                        public void setShort(long index, short value) {
                             if (longPrecisionInSet) {
                                 x[0].setLong(index, (long)(((value & 0xFFFF) - b) * aInv));
                             } else {
@@ -3841,7 +3841,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, INT_TYPE_CODE);
 
-                        public strictfp int getInt(long index) {
+                        public int getInt(long index) {
                             return (int)(a * x[0].getDouble(index) + b);
                             // Java automatically truncates float values to Integer.MIN_VALUE..MAX_VALUE here
                         }
@@ -3850,7 +3850,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setInt(long index, int value) {
+                        public void setInt(long index, int value) {
                             if (truncateInSet) {
                                 double v = (value - b) * aInv;
                                 x[0].setDouble(index,
@@ -3900,7 +3900,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, INT_TYPE_CODE);
 
-                        public strictfp int getInt(long index) {
+                        public int getInt(long index) {
                             return (int)(long)(a * x[0].getDouble(index) + b);
                             // note: for float array, (int)(long)v will differ from (int)v for very large floats
                         }
@@ -3909,7 +3909,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setInt(long index, int value) {
+                        public void setInt(long index, int value) {
                             if (longPrecisionInSet) {
                                 x[0].setLong(index, (long)((value - b) * aInv));
                             } else {
@@ -3935,7 +3935,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, LONG_TYPE_CODE);
 
-                        public strictfp long getLong(long index) {
+                        public long getLong(long index) {
                             return (long)(a * x[0].getDouble(index) + b);
                             // Java automatically truncates float values to Integer.MIN_VALUE..MAX_VALUE here
                         }
@@ -3944,7 +3944,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setLong(long index, long value) {
+                        public void setLong(long index, long value) {
                             double v = (value - b) * aInv;
                             x[0].setDouble(index, v < minXElement ? minXElement : v > maxXElement ? maxXElement : v);
                         }
@@ -3988,7 +3988,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, LONG_TYPE_CODE);
 
-                        public strictfp long getLong(long index) {
+                        public long getLong(long index) {
                             return (long)(a * x[0].getDouble(index) + b);
                             // Java automatically truncates float values to Long.MIN_VALUE..MAX_VALUE here
                         }
@@ -3997,7 +3997,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setLong(long index, long value) {
+                        public void setLong(long index, long value) {
                             if (longPrecisionInSet) {
                                 x[0].setLong(index, (long)((value - b) * aInv));
                             } else {
@@ -4027,7 +4027,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, FLOAT_TYPE_CODE);
 
-                        public strictfp float getFloat(long index) {
+                        public float getFloat(long index) {
                             return (float)(a * x[0].getDouble(index) + b);
                             // Java automatically truncates float values to Integer.MIN_VALUE..MAX_VALUE here
                         }
@@ -4036,7 +4036,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setFloat(long index, float value) {
+                        public void setFloat(long index, float value) {
                             double v = (value - b) * aInv;
                             x[0].setDouble(index, v < minXElement ? minXElement : v > maxXElement ? maxXElement : v);
                         }
@@ -4083,7 +4083,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, FLOAT_TYPE_CODE);
 
-                        public strictfp float getFloat(long index) {
+                        public float getFloat(long index) {
                             return (float)(a * x[0].getDouble(index) + b);
                             // Java automatically truncates float values to Float.MIN_VALUE..MAX_VALUE here
                         }
@@ -4092,7 +4092,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setFloat(long index, float value) {
+                        public void setFloat(long index, float value) {
                             if (longPrecisionInSet) {
                                 x[0].setLong(index, (long)((value - b) * aInv));
                             } else {
@@ -4118,7 +4118,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, DOUBLE_TYPE_CODE);
 
-                        public strictfp double getDouble(long index) {
+                        public double getDouble(long index) {
                             return (a * x[0].getDouble(index) + b);
                             // Java automatically truncates double values to Integer.MIN_VALUE..MAX_VALUE here
                         }
@@ -4127,7 +4127,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setDouble(long index, double value) {
+                        public void setDouble(long index, double value) {
                             double v = (value - b) * aInv;
                             x[0].setDouble(index, v < minXElement ? minXElement : v > maxXElement ? maxXElement : v);
                         }
@@ -4174,7 +4174,7 @@ class ArraysFuncImpl {
                         ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, DOUBLE_TYPE_CODE);
 
-                        public strictfp double getDouble(long index) {
+                        public double getDouble(long index) {
                             return (a * x[0].getDouble(index) + b);
                             // Java automatically truncates double values to Double.MIN_VALUE..MAX_VALUE here
                         }
@@ -4183,7 +4183,7 @@ class ArraysFuncImpl {
                             lgdo.getData(arrayPos, destArray, destArrayOffset, count);
                         }
 
-                        public strictfp void setDouble(long index, double value) {
+                        public void setDouble(long index, double value) {
                             if (longPrecisionInSet) {
                                 x[0].setLong(index, (long)((value - b) * aInv));
                             } else {

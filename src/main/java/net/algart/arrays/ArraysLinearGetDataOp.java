@@ -36,7 +36,7 @@ import net.algart.math.functions.LinearFunc;
  *
  * @author Daniel Alievsky
  */
-strictfp class ArraysLinearGetDataOp {
+class ArraysLinearGetDataOp {
     static final int LINEAR_BUFFER_LENGTH = 16384; // elements (double[] + elementType[])
     private static final boolean OPTIMIZE_LINEAR_FOR_JARRAYS = true;
     private static final boolean OPTIMIZE_LINEAR_FOR_JBUFFERS = InternalUtils.SERVER_OPTIMIZATION;

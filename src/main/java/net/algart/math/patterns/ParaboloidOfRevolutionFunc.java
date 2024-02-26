@@ -27,7 +27,7 @@ package net.algart.math.patterns;
 import net.algart.math.functions.AbstractFunc;
 import net.algart.math.functions.Func;
 
-public final strictfp class ParaboloidOfRevolutionFunc extends AbstractFunc implements Func {
+public final class ParaboloidOfRevolutionFunc extends AbstractFunc implements Func {
     private final double multiplierForResult;
     private final double resultAtOrigin;
 

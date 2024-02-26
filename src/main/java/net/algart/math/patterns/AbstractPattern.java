@@ -36,7 +36,7 @@ import net.algart.math.*;
  *
  * @author Daniel Alievsky
  */
-public strictfp abstract class AbstractPattern implements Pattern {
+public abstract class AbstractPattern implements Pattern {
 
     volatile Boolean surelyOrigin = null;
     volatile Boolean surelyInteger = null;

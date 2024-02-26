@@ -30,16 +30,14 @@ package net.algart.math.functions;
  * <i>scale</i>*<i>x</i><sub>0</sub><i>x</i><sub>1</sub> + (1-<i>scale</i>*<i>x</i><sub>0</sub>)<i>x</i><sub>2</sub>,
  * where <i>scale</i> is a constant, passed to {@link #getInstance(double)} method.
  * The {@link #get} method of the instance of this class requires at least 3 arguments
- * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0, 1 or 2.
- * All calculations are performed in <tt>strictfp</tt> mode, so the result
- * is absolutely identical on all platforms.</p>
+ * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0, 1 or 2.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */
-public final strictfp class WeightedMeanFunc implements Func {
+public final class WeightedMeanFunc implements Func {
     private final double scale;
 
     private WeightedMeanFunc(double scale) {

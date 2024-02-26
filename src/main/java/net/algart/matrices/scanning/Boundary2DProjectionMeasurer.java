@@ -217,7 +217,7 @@ public abstract class Boundary2DProjectionMeasurer extends Boundary2DWrapper {
         return m + "-projection measurer of " + parent;
     }
 
-    strictfp static class DoubleVersion extends Boundary2DProjectionMeasurer {
+    static class DoubleVersion extends Boundary2DProjectionMeasurer {
         private final double[] projectionMin;
         private final double[] projectionMax;
         private final double[] dirX;
@@ -277,7 +277,7 @@ public abstract class Boundary2DProjectionMeasurer extends Boundary2DWrapper {
     }
 
     /* Below is an example of anti-optimization for PIXEL_CENTERS_POLYLINE:
-    strictfp static class IntVersion extends Boundary2DProjectionMeasurer {
+    static class IntVersion extends Boundary2DProjectionMeasurer {
         private static final double MULT = 1.0 / 65535;
         private final int[] projectionMin;
         private final int[] projectionMax;

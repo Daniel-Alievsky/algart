@@ -3776,7 +3776,7 @@ public class MainOperationsTest implements Cloneable {
         return result;
     }
 
-    private static strictfp double myStrictPow(double x, double c, double scale) {
+    private static double myStrictPow(double x, double c, double scale) {
         // This implementation must be FULLY identical to the implementation in PowerFunc class
         double result = c == 1.0 ? scale * x : c == 2.0 ? scale * x * x : c == 3.0 ? scale * x * x * x :
             c == 0.5 ? scale * StrictMath.sqrt(x) : c == 1.0 / 3.0 ? scale * StrictMath.cbrt(x) :
