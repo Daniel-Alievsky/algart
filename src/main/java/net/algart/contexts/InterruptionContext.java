@@ -41,7 +41,7 @@ import java.util.EventListener;
  * public void someComplexAlgorithm({@link Context} context, some-other-arguments...) {
  * &#32;   {@link InterruptionContext} ic = context.{@link #as(Class) as}({@link InterruptionContext}.class);
  * &#32;   . . .
- * &#32;   for (int k = 0; k < n; k++) { // the main long-working loop
+ * &#32;   for (int k = 0; k &lt; n; k++) { // the main long-working loop
  * &#32;       . . .
  * &#32;       ic.{@link #checkInterruption()}
  * &#32;   }

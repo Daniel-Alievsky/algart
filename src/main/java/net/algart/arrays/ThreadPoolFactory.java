@@ -181,7 +181,7 @@ public interface ThreadPoolFactory {
      * &#32;   results[threadIndex] = pool.submit(tasks[threadIndex]);
      * }
      * try {
-     * &#32;   for (int threadIndex = 0; threadIndex < tasks.length; threadIndex++) {
+     * &#32;   for (int threadIndex = 0; threadIndex &lt; tasks.length; threadIndex++) {
      * &#32;       results[threadIndex].get(); // waiting for finishing
      * &#32;   }
      * } catch (ExecutionException ex) {

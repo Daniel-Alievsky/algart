@@ -800,7 +800,7 @@ public strictfp class RectangularArea {
      *
      * <pre>
      * for (RectangularArea area : whatToSubtract) {
-     *     for (int i = 0, n = fromWhatToSubtract.size(); i < n; i++) {
+     *     for (int i = 0, n = fromWhatToSubtract.size(); i &lt; n; i++) {
      *         RectangularArea minuend = fromWhatToSubtract.poll();
      *         minuend.{@link #difference(Collection, RectangularArea) difference}(fromWhatToSubtract, area);
      *     }

@@ -43,7 +43,7 @@ package net.algart.arrays;
  * a special branch it the algorithm:</p>
  *
  * <pre>
- * if (array instanceof DirectAccessible && ((DirectAccessible) array).{@link #hasJavaArray()}) {
+ * if (array instanceof DirectAccessible &amp;&amp; ((DirectAccessible) array).{@link #hasJavaArray()}) {
  * &#32;   DirectAccessible da = (DirectAccessible) array;
  * &#32;   <i>elements_type</i>[] arr = (<i>elements_type</i>[]) da.{@link #javaArray()};
  * &#32;       // here "<i>elements_type</i>" is "byte", "short", "Object", "String", etc.:
@@ -64,8 +64,8 @@ package net.algart.arrays;
  * in addition, whether the array is {@link Array#isCopyOnNextWrite() copy-on-next-write}:</p>
  *
  * <pre>
- * if (array instanceof DirectAccessible && !array.{@link Array#isCopyOnNextWrite()
- * isCopyOnNextWrite()} && ((DirectAccessible) array).{@link #hasJavaArray()}) {
+ * if (array instanceof DirectAccessible &amp;&amp; !array.{@link Array#isCopyOnNextWrite()
+ * isCopyOnNextWrite()} &amp;&amp; ((DirectAccessible) array).{@link #hasJavaArray()}) {
  * &#32;   DirectAccessible da = (DirectAccessible) array;
  * &#32;   <i>elements_type</i>[] arr = (<i>elements_type</i>[]) da.{@link #javaArray()};
  * &#32;   int ofs = da.{@link #javaArrayOffset()};

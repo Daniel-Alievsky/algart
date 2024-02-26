@@ -1075,11 +1075,11 @@ public interface Array {
      * For example, if the size of this array is 10 GB, it is possible only first several megabytes
      * or tens of megabytes will be preloaded.
      * If you work with a large array, we recommend to call this method
-     * for its not too large {@link #subArray subarray}, which really should be processed now, for example:
+     * for a not too large its {@link #subArray subarray}, which really should be processed now, for example:
      *
      * <pre>
      * final int blockSize = 1048576;
-     * for (long pos = 0, n = array.{@link #length() length()}; pos < n; pos += blockSize) {
+     * for (long pos = 0, n = array.{@link #length() length()}; pos &lt; n; pos += blockSize) {
      * &#32;   int len = (int)Math.min(blockSize, n - pos);
      * &#32;   Array region = array.{@link #subArr subArr}(pos, len);
      * &#32;   region.loadResources(someContext)};

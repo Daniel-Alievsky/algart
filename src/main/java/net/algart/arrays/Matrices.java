@@ -2389,11 +2389,11 @@ public class Matrices {
      * created by this package, calculated on the base of coordinates only, not depending on another arrays/matrices.
      * This method is equivalent to the following operator:
      * <pre>
-     * <tt>matrix != null && {@link Arrays#isIndexFuncArray
+     * <tt>matrix != null &amp;&amp; {@link Arrays#isIndexFuncArray
      * Arrays.isIndexFuncArray}(matrix.{@link Matrix#array() array()})</tt>
      * </pre>
      *
-     * @param matrix the checked AlgART matrix (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param matrix the checked AlgART matrix (may be <tt>null</tt>, then the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed matrix a functional one, calculated on the base of coordinates only.
      */
     public static boolean isCoordFuncMatrix(Matrix<? extends PArray> matrix) {

@@ -331,7 +331,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  *     }
  *
  *     if (ss.{@link #isNodeOrFreeBranchEnd()} // necessary check: it is also possible an attached or illegal pixel
- *         && !ss.{@link #pixelVisitRemembered()}) // necessary for correct processing degenerated 0-pixel branches
+ *         &amp;&amp; !ss.{@link #pixelVisitRemembered()}) // for correct processing degenerated 0-pixel branches
  *     {
  *         Queue<Long> queue = new LinkedList<Long>();
  *         ss.{@link #visit()};
@@ -366,7 +366,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  *                 // On the other hand, when Q will appear in this loop (as the pixel at "saveIndex"),
  *                 // P will be already removed from the queue, so we'll not process PQ branch twice.
  *                 // This completes the proof.
- *                 if (degeneratedBranch && (
+ *                 if (degeneratedBranch &amp;&amp; (
  *                     !ss.{@link #neighbourVisitRemembered(int)
  *                     neighbourVisitRemembered}(dnb) || queue.contains(ss.{@link #neighbourIndexInArray(int)
  *                     neighbourIndexInArray}(dnb))))

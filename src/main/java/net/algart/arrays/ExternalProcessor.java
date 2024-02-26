@@ -557,7 +557,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * <pre>
      *     String s = {@link #getPropertyOrEnv(String, String) getPropertyOrEnv}(propertyKey, envVarName);
      *     File result = s != null ? new File(s) : defaultPath;
-     *     if (result != null && !result.exists())
+     *     if (result != null &amp;&amp; !result.exists())
      *         throw new FileNotFoundException(<i>some message</i>);
      *     return result;
      * </pre>

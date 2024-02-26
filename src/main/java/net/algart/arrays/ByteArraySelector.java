@@ -63,7 +63,7 @@ public class ByteArraySelector {
      * <tt>results[0]</tt>, <tt>results[1]</tt>, <tt>results[2]</tt>.
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] & 0xFF</tt> and <tt>array[j] & 0xFF</tt>
+     * we always compare <tt>array[i] &amp; 0xFF</tt> and <tt>array[j] &amp; 0xFF</tt>
      * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
      *
      * <p>Note: list of indexes <tt>percentileIndexes</tt> <b>must be sorted</b> in increasing order.
@@ -155,7 +155,7 @@ public class ByteArraySelector {
      * for every <tt>k=0,...,percentileLevels.length-1</tt>.</p>
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] & 0xFF</tt> and <tt>array[j] & 0xFF</tt>
+     * we always compare <tt>array[i] &amp; 0xFF</tt> and <tt>array[j] &amp; 0xFF</tt>
      * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
      *
      * <p>Note: list of levels <tt>percentileLevels</tt> <b>must be sorted</b> in increasing order.

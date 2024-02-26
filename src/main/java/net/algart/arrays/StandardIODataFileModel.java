@@ -238,8 +238,8 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      * the maximal possible speed. Unlike this, in a case of non-direct byte buffers such conversion is
      * performed in Java code, and access to each element of these views requires some calculations.
      * For example, reading any element of <tt>ByteBuffer.asDoubleBuffer()</tt> means reading 8 bytes,
-     * joining them into a long by "<<" and "|" operators and calling <tt>Double.longBitsToDouble</tt> method &mdash;
-     * and these operations will be performed while any form of reading elements from
+     * joining them into a long by "&lt;&lt;" and "|" operators and calling <tt>Double.longBitsToDouble</tt> method
+     * &mdash; and these operations will be performed while any form of reading elements from
      * the AlgART array {@link DoubleArray}. Thus, access to AlgART arrays, excepting {@link ByteArray},
      * becomes slower. The speed difference is usually not very large, but can be appreciable for simple
      * applications with intensive accessing AlgART arrays.

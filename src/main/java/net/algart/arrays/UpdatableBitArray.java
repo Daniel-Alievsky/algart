@@ -106,7 +106,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * into this array, starting from <tt>arrayPos</tt> index.
      *
      * <p>This method is equivalent to the following loop:<pre>
-     * for (long k = 0; k < count; k++)
+     * for (long k = 0; k &lt; count; k++)
      * &#32;   thisArray.{@link #setBit(long, boolean)
      * setBit}(arrayPos + k, {@link PackedBitArrays#getBit(long[], long)
      * PackedBitArrays.getBit}(srcArray, srcArrayOffset + k));

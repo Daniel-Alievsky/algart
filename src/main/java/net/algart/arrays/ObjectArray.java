@@ -26,7 +26,7 @@ package net.algart.arrays;
 
 /**
  * <p>AlgART array of some objects (non-primitive values) with the specified generic type <tt>E</tt>,
- * read-only access.</p
+ * read-only access.</p>
  *
  * <p>Any class implementing this interface <b>must</b> contain non-primitive elements
  * ({@link #elementType()} must not return a primitive type).</p>

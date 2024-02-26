@@ -1525,7 +1525,7 @@ public class JArrays {
      * by the following values: <tt>start</tt>, <tt>start+increment</tt>, <tt>start+2*increment</tt>, etc.
      * Equivalent to the following loop:
      * <pre>
-     *     for (int i = destPos, toIndex = destPos + count; i < toIndex; i++) {
+     *     for (int i = destPos, toIndex = destPos + count; i &lt; toIndex; i++) {
      *         dest[i] = start;
      *         start += increment;
      *     }
@@ -1554,7 +1554,7 @@ public class JArrays {
      * <tt>start</tt>, <tt>start+increment</tt>, <tt>start+2*increment</tt>, etc.
      * Equivalent to the following loop:
      * <pre>
-     *     for (int i = 0; i < dest.length; i++) {
+     *     for (int i = 0; i &lt; dest.length; i++) {
      *         dest[i] = start;
      *         start += increment;
      *     }

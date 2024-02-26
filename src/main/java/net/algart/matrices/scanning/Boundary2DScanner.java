@@ -1167,7 +1167,7 @@ public abstract class Boundary2DScanner {
          * Returns <tt>true</tt> if {@link #pixelCenterDY()} is &plusmn;1 and {@link #pixelCenterDX()} is 0.
          * Works very quickly (this method just returns an internal field).
          *
-         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 && {@link #pixelCenterDY()}!=0</tt>.
+         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 &amp;&amp; {@link #pixelCenterDY()}!=0</tt>.
          */
         public boolean isVertical() {
             return vertical;
@@ -1186,11 +1186,11 @@ public abstract class Boundary2DScanner {
         }
 
         /**
-         * Returns <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 && {@link #pixelCenterDY()}!=0</tt>
+         * Returns <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 &amp;&amp; {@link #pixelCenterDY()}!=0</tt>
          * (<i>diagonal</i> kind of movement).
          * Works very quickly (this method just returns an internal field).
          *
-         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 && {@link #pixelCenterDY()}!=0</tt>.
+         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 &amp;&amp; {@link #pixelCenterDY()}!=0</tt>.
          */
         public boolean isDiagonal() {
             return diagonal;

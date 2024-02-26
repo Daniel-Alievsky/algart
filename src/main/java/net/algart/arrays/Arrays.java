@@ -2407,8 +2407,8 @@ public class Arrays {
      * many times, for example:
      *
      * <pre>
-     * for (long disp = 0; disp < a.length(); disp += 1024) {
-     * &#32;   if (!(disp > 0 && Arrays.isNCopies(a))) {
+     * for (long disp = 0; disp &lt; a.length(); disp += 1024) {
+     * &#32;   if (!(disp &gt; 0 &amp;&amp; Arrays.isNCopies(a))) {
      * &#32;       // there is no sense to read data more than 1 time in a case of a constant array
      * &#32;       a.getData(disp, buffer);
      * &#32;   }
@@ -3591,7 +3591,7 @@ public class Arrays {
      *
      * <p>The result is the same as the sum calculated by the following loop:<pre>
      * long sum = 0;
-     * for (long k = 0; k < array.length(); k++)
+     * for (long k = 0; k &lt; array.length(); k++)
      * &#32;   sum += array.getLong(k);
      * </pre>
      *
@@ -4412,7 +4412,7 @@ public class Arrays {
      * is stored at the following position in the <tt>bytes</tt> Java array:
      * <ul>
      * <li>for {@link BitArray}, bit #<i>k</i> is stored in the bit #<i>k</i>%8 in the byte
-     * <tt>bytes[<i>k</i>/8]</tt>, i.e. in <tt>bytes[<i>k</i>/8]&(1&lt;&lt;(<i>k</i>%8))</tt>;
+     * <tt>bytes[<i>k</i>/8]</tt>, i.e. in <tt>bytes[<i>k</i>/8]&nbsp;&amp;&nbsp;(1&lt;&lt;(<i>k</i>%8))</tt>;
      * several last unused bits of the last byte are cleared to zero
      * (the number of these bits is <nobr><tt>8*(<i>N</i>/8)-<i>N</i></tt></nobr>,
      * where <tt><i>N</i>=array.{@link Array#length() length()}</tt>);</li>

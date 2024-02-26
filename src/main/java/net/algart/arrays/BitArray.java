@@ -123,7 +123,7 @@ public interface BitArray extends PFixedArray {
      * into the specified <i>packed</i> bit array, starting from <tt>destArrayOffset</tt> index.
      *
      * <p>This method is equivalent to the following loop:<pre>
-     * for (long k = 0; k < count; k++)
+     * for (long k = 0; k &lt; count; k++)
      * &#32;   {@link PackedBitArrays#setBit(long[], long, boolean)
      * PackedBitArrays.setBit}(destArray, destArrayOffset + k, thisArray.{@link #getBit(long)
      * getBit}(arrayPos + k);

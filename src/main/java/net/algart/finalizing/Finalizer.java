@@ -149,7 +149,7 @@ import java.util.*;
  * <i>after</i> the "<tt>while</tt>" loop listed above:</p>
  *
  * <pre>
- * for (int k = 0; k < 5; k++) {
+ * for (int k = 0; k &lt; 5; k++) {
  * &#32;   // finalizing some additional objects that could be
  * &#32;   // referred from finalization tasks performed above
  * &#32;   System.runFinalization();

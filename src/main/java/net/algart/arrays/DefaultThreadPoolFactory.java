@@ -79,7 +79,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * The value of these system properties are loaded and checked only once
      * while initializing {@link DefaultThreadPoolFactory} class.
      *
-     * <p>Note: the default value <tt><nobr{@link Arrays.SystemSettings#availableProcessors()}*MULT+1</nobr></tt>
+     * <p>Note: the default value <tt><nobr>{@link Arrays.SystemSettings#availableProcessors()}*MULT+1</nobr></tt>
      * can be changed in future implementations. It is only guaranteed that this value is chosen
      * not less than <tt><nobr>{@link Arrays.SystemSettings#availableProcessors()}</nobr></tt>.
      *

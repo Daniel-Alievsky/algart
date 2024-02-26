@@ -131,7 +131,7 @@ public class ContainingMainBoundaryFinder extends Abstract2DProcessor {
      * or {@link #setMatrix(Matrix)} method,
      * containing the specified position (x,y), and stores it inside this object.
      *
-     * <p>Returns the x-coordinate x' of the pixel of this main boundary, so that x'<=x
+     * <p>Returns the x-coordinate x' of the pixel of this main boundary, so that x'&lt;=x
      * and (x',y) belongs to this boundary. You can trace this boundary again starting from
      * position (x',y), X_MINUS pixel side. If the given position is outside any main boundary,
      * returns -1.

@@ -272,7 +272,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
          * <i>t</i><sub><i>i</i></sub> =
          * <i>a<sub>min</sub></i> + <i>i</i> * (<i>a<sub>max</sub></i>&minus;<i>a<sub>min</sub></i>)/<i>n</i>,
          * &nbsp;<i>i</i> = <tt>sliceIndex</tt>
-         * </blockquote
+         * </blockquote>
          *
          * <p>(here <i>a<sub>min</sub></i>..<i>a<sub>max</sub></i> is the range of processed values and
          * <i>n</i>+1 is the desired number of slices, passed via <tt>range</tt> and <tt>numberOfSlices</tt>

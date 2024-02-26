@@ -1817,7 +1817,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                which can be less).
      * @return        a tiled view of this matrix.
      * @throws NullPointerException      if <tt>tileDim</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException  if <tt>tileDim.length</tt is not equal to {@link #dimCount()},
+     * @throws IllegalArgumentException  if <tt>tileDim.length</tt> is not equal to {@link #dimCount()},
      *                                   or if some <tt>tileDim[k]&lt;=0</tt>,
      *                                   or if the product of all tile dimensions <tt>tileDim[k]</tt>
      *                                   is greater than <nobr><tt>Long.MAX_VALUE</tt></nobr>.

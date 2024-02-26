@@ -49,7 +49,7 @@ import java.nio.ByteBuffer;
  *
  * <p>For example,</p><pre>
  * &#32;   Point[] points = new Point[10000000];
- * &#32;   for (int k = 0; k < points.length; k++)
+ * &#32;   for (int k = 0; k &lt; points.length; k++)
  * &#32;       points[k] = new Point();</pre>
  *
  * <p>Such an array occupies more than 200 MB and is created very slowly (several seconds on

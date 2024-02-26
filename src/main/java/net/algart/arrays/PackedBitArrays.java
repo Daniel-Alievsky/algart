@@ -41,7 +41,7 @@ import java.util.zip.*;
  * (<tt>false</tt> or <tt>true</tt> value) can be extracted by the following operator:</p>
  *
  * <pre>
- * (array[k >>> 6] &amp; (1L << (k &amp; 63))) != 0L
+ * (array[k &gt;&gt;&gt; 6] &amp; (1L &lt;&lt; (k &amp; 63))) != 0L
  * </pre>
  *
  * <p>and can be set or cleared by the following operators:</p>
@@ -78,11 +78,11 @@ public strictfp class PackedBitArrays {
     /*Repeat.SectionStart primitives*/
 
     /**
-     * Returns <tt>(unpackedLength + 63) >>> 6</tt>: the minimal number of <tt>long</tt> values
+     * Returns <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt>: the minimal number of <tt>long</tt> values
      * allowing to store <tt>unpackedLength</tt> bits.
      *
      * @param unpackedLength the number of bits (the length of bit array).
-     * @return <tt>(unpackedLength + 63) >>> 6</tt> (the length of corresponding <tt>long[]</tt> array).
+     * @return <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt> (the length of corresponding <tt>long[]</tt> array).
      */
     public static long packedLength(long unpackedLength) {
         return (unpackedLength + 63) >>> 6;
@@ -92,7 +92,7 @@ public strictfp class PackedBitArrays {
     /**
      * Returns the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array.
      * Equivalent to the following expression:<pre>
-     * (src[(int)(index >>> 6)] &amp; (1L << (index &amp; 63))) != 0L;
+     * (src[(int)(index &gt;&gt;&gt; 6)] &amp; (1L &lt;&lt; (index &amp; 63))) != 0L;
      * </pre>
      *
      * @param src   the source array (bits are packed in <tt>long</tt> values).

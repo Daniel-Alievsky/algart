@@ -89,7 +89,7 @@ package net.algart.contexts;
  * public void someComplexAlgorithm({@link Context} context, <i>some other arguments</i>...) {
  * &#32;   {@link ProgressUpdater} pu = context.{@link #as(Class) as}({@link ProgressUpdater}.class);
  * &#32;   . . .
- * &#32;   for (int k = 0; k < n; k++) { // the main long-working loop
+ * &#32;   for (int k = 0; k &lt; n; k++) { // the main long-working loop
  * &#32;       . . .
  * &#32;       pu.{@link ProgressUpdater#updateProgress(double, boolean) updateProgress}((k + 1.0) / n, k == n - 1);
  * &#32;   }

@@ -107,8 +107,8 @@ public enum DependenceApertureBuilder {
      * <pre>
      * long[] allMin = new long[dimCount]; // zero-filled by Java
      * long[] allMax = new long[dimCount]; // zero-filled by Java
-     * for (int k = 0; k < dimCount; k++) {
-     *     for (int i = 0; i < patterns.length; i++) {
+     * for (int k = 0; k &lt; dimCount; k++) {
+     *     for (int i = 0; i &lt; patterns.length; i++) {
      *         {@link IRange} range = patterns[i].{@link Pattern#roundedCoordRange(int)
      *         roundedCoordRange}(k);
      *         long min = inverted[i] ? range.min() : -range.max();
@@ -158,8 +158,8 @@ public enum DependenceApertureBuilder {
      * <pre>
      * long[] allMin = new long[dimCount]; // zero-filled by Java
      * long[] allMax = new long[dimCount]; // zero-filled by Java
-     * for (int k = 0; k < dimCount; k++) {
-     *     for (int i = 0; i < patterns.length; i++) {
+     * for (int k = 0; k &lt; dimCount; k++) {
+     *     for (int i = 0; i &lt; patterns.length; i++) {
      *         {@link IRange} range = patterns[i].{@link Pattern#roundedCoordRange(int)
      *         roundedCoordRange}(k);
      *         long min = inverted[i] ? range.min() : -range.max();
@@ -208,8 +208,8 @@ public enum DependenceApertureBuilder {
      * <pre>
      * long[] allMin = new long[dimCount]; // zero-filled by Java
      * long[] allMax = new long[dimCount]; // zero-filled by Java
-     * for (int k = 0; k < dimCount; k++) {
-     *     for (int i = 0; i < patterns.length; i++) {
+     * for (int k = 0; k &lt; dimCount; k++) {
+     *     for (int i = 0; i &lt; patterns.length; i++) {
      *         {@link IRange} range = patterns[i].{@link Pattern#roundedCoordRange(int)
      *         roundedCoordRange}(k);
      *         long min = inverted[i] ? range.min() : -range.max();

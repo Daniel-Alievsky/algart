@@ -45,7 +45,7 @@ public interface ProgressUpdater extends Context {
      * <p>For example, if the main work of some method is a long loop, this method
      * can be called in the following manner:
      * <pre>
-     * &#32;   for (int k = 0; k < n; k++) {
+     * &#32;   for (int k = 0; k &lt; n; k++) {
      * &#32;       . . . // some long calculations
      * &#32;       pu.{@link #updateProgress updateProgress}((k + 1.0) / n, k == n - 1);
      * &#32;       // when k==n-1, we always show the last progress state (100%)

@@ -37,7 +37,7 @@ import java.nio.LongBuffer;
  * <p>In all methods of this class, it's supposed that the bit <tt>#k</tt>
  * in a packed <tt>LongBuffer b</tt> is the bit
  * <tt>#(k%64)</tt> in the long element <tt>b.get(k/64)</tt>. In other words, the bit <tt>#k</tt>
- * (<tt>false</tt> or <tt>true</tt> value) can be extracted by the following operator:</p
+ * (<tt>false</tt> or <tt>true</tt> value) can be extracted by the following operator:</p>
  *
  * <pre>
  * (b.get(k &gt;&gt;&gt; 6) &amp; (1L &lt;&lt; (k &amp; 63))) != 0L

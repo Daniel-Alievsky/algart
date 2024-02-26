@@ -330,8 +330,8 @@ public class ArraySelector {
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] & 0xFF</tt> and <tt>array[j] & 0xFF</tt>
-     * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
+     * we always compare {@code array[i] & 0xFF} and {@code array[j] & 0xFF}
+     * instead of simple {@code array[i]} and {@code array[j]}.</p>
      *
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
@@ -362,8 +362,8 @@ public class ArraySelector {
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] & 0xFF</tt> and <tt>array[j] & 0xFF</tt>
-     * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
+     * we always compare {@code array[i] & 0xFF} and {@code array[j] & 0xFF}
+     * instead of simple {@code array[i]} and {@code array[j]}.</p>
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
@@ -388,8 +388,8 @@ public class ArraySelector {
      * the element from <tt>byte[]</tt> array.</p>
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] & 0xFF</tt> and <tt>array[j] & 0xFF</tt>
-     * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
+     * we always compare {@code array[i] & 0xFF} and {@code array[j] & 0xFF}
+     * instead of simple {@code array[i]} and {@code array[j]}.</p>
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
@@ -397,7 +397,7 @@ public class ArraySelector {
      * @param array         data array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  or if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
     public byte select(
             final int from,
@@ -674,7 +674,7 @@ public class ArraySelector {
      * @param array         data array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  or if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
     public char select(
             final int from,
@@ -896,8 +896,8 @@ public class ArraySelector {
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] & 0xFFFF</tt> and <tt>array[j] & 0xFFFF</tt>
-     * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
+     * we always compare {@code array[i] & 0xFFFF} and {@code array[j] & 0xFFFF}
+     * instead of simple {@code array[i]} and {@code array[j]}.</p>
      *
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
@@ -928,8 +928,8 @@ public class ArraySelector {
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] & 0xFFFF</tt> and <tt>array[j] & 0xFFFF</tt>
-     * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
+     * we always compare {@code array[i] & 0xFFFF} and {@code array[j] & 0xFFFF}
+     * instead of simple {@code array[i]} and {@code array[j]}.</p>
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
@@ -954,8 +954,8 @@ public class ArraySelector {
      * the element from <tt>short[]</tt> array.</p>
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] & 0xFFFF</tt> and <tt>array[j] & 0xFFFF</tt>
-     * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
+     * we always compare {@code array[i] & 0xFFFF} and {@code array[j] & 0xFFFF}
+     * instead of simple {@code array[i]} and {@code array[j]}.</p>
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
@@ -963,7 +963,7 @@ public class ArraySelector {
      * @param array         data array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  or if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
     public short select(
             final int from,
@@ -1240,7 +1240,7 @@ public class ArraySelector {
      * @param array         data array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  or if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
     public int select(
             final int from,
@@ -1517,7 +1517,7 @@ public class ArraySelector {
      * @param array         data array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  or if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
     public long select(
             final int from,
@@ -1806,7 +1806,7 @@ public class ArraySelector {
      * @param array         data array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  or if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
     public float select(
             final int from,
@@ -2095,7 +2095,7 @@ public class ArraySelector {
      * @param array         data array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  or if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
     public double select(
             final int from,

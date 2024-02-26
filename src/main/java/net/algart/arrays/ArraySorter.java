@@ -43,14 +43,14 @@ package net.algart.arrays;
  * <blockquote><pre>
  * int n = 10;
  * final float[] xy = new float[2 * n];
- * for (int k = 0; k < n; k++) {
+ * for (int k = 0; k &lt; n; k++) {
  * &#32;   xy[2 * k] = (float)Math.random();     // x-coordinate of the point #k
  * &#32;   xy[2 * k + 1] = (float)Math.random(); // y-coordinate of the point #k
  * }
  * Sorter.getQuickSortInstance().sort(0, n,
  * &#32;   new {@link ArrayComparator}() {
  * &#32;   public boolean less(long i, long j) {
- * &#32;       return xy[2 * (int)i] < xy[2 * (int)j];
+ * &#32;       return xy[2 * (int)i] &lt; xy[2 * (int)j];
  * &#32;   }
  * },
  * &#32;   new {@link ArrayExchanger}() {

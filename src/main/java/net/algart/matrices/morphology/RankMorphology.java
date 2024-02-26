@@ -313,7 +313,7 @@ import net.algart.math.patterns.Pattern;
  * (for example, than copying it into a new matrix).
  * In implementations, offered by this package, there are no difference if the source
  * matrix <tt>src</tt> (for rank operations, <tt>baseMatrix</tt>) is direct accessible:
- * <tt>src.{@link Matrix#array() array()} instanceof {@link DirectAccessible} &&
+ * <tt>src.{@link Matrix#array() array()} instanceof {@link DirectAccessible} &amp;&amp;
  * ((DirectAccessible)src.{@link Matrix#array() array()}).{@link DirectAccessible#hasJavaArray()
  * hasJavaArray()}</tt>. If the source matrix is not direct accessible,
  * the implementations, offered by this package, use {@link net.algart.matrices.StreamingApertureProcessor} technique

@@ -481,7 +481,7 @@ public strictfp class ProjectiveOperator
 
     /**
      * Returns <tt>true</tt> if and only if <b>A</b> matrix is diagonal,
-     * i&#46e&#46 if <i>a</i><sub><i>ij</i></sub>=0.0 when <i>i</i>!=<i>j</i>.
+     * i&#46;e&#46; if <i>a</i><sub><i>ij</i></sub>=0.0 when <i>i</i>!=<i>j</i>.
      *
      * @return <tt>true</tt> if and only if <b>A</b> matrix is diagonal.
      */
@@ -491,7 +491,7 @@ public strictfp class ProjectiveOperator
 
     /**
      * Returns <tt>true</tt> if and only if <b>A</b> matrix is identity
-     * (i&#46e&#46 if <i>a</i><sub><i>ij</i></sub>=0.0 when <i>i</i>!=<i>j</i> and
+     * (i&#46;e&#46; if <i>a</i><sub><i>ij</i></sub>=0.0 when <i>i</i>!=<i>j</i> and
      * <i>a</i><sub><i>ij</i></sub>=1.0 when <i>i</i>==<i>j</i>)
      * and <b>c</b> vector is zero.
      * In this case, this operator corresponds to a parallel shift.
@@ -508,7 +508,7 @@ public strictfp class ProjectiveOperator
 
     /**
      * Returns <tt>true</tt> if and only if the <b>b</b> vector is zero,
-     * i&#46e&#46 if <i>b</i><sub><i>i</i></sub>=0.0 for all <i>i</i>.
+     * i&#46;e&#46; if <i>b</i><sub><i>i</i></sub>=0.0 for all <i>i</i>.
      * If <tt>{@link #isZeroB()}&nbsp;&amp;&amp;&nbsp;{@link #isShift()}</tt>,
      * this operator is identity: it doesn't change the passed function.
      *
