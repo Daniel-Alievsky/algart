@@ -132,7 +132,7 @@ public final class IRange {
      *
      * <p>Equivalent to the following check:
      * <pre>
-     *     min &lt;= max && min &gt; -Long.MAX_VALUE && max != Long.MAX_VALUE && max - min + 1L &gt; 0L
+     *     min &lt;= max && min &gt; -Long.MAX_VALUE &amp;&amp; max != Long.MAX_VALUE &amp;&amp; max - min + 1L &gt; 0L
      * </pre>
      *
      * @param min the minimum number in some range, inclusive.

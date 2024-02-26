@@ -87,7 +87,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      *
      * <ol>
      * <li><tt>tempPath</tt> is an existing directory or another non-file disk resource;
-     * more precisely, <nobr><tt>tempPath.exists() && !tempPath.isFile()</tt></nobr>.
+     * more precisely, <nobr><tt>tempPath.exists() &amp;&amp; !tempPath.isFile()</tt></nobr>.
      * In this case, new temporary files, created by {@link #createTemporaryFile(boolean)} method,
      * will be placed in this directory with unique names.</li>
      *
@@ -302,7 +302,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
     /**
      * Returns <tt>true</tt> if the {@link #tempPath} field is not <tt>null</tt> and
      * corresponds to existing file or non-existing file/directory:
-     * <tt>tempPath != null && (!tempPath.exists() || tempPath.isFile())</tt>
+     * <tt>tempPath != null &amp;&amp; (!tempPath.exists() || tempPath.isFile())</tt>
      * In such situations, this data file model always works with the only one constant file,
      * specified in {@link #tempPath} field.
      *
@@ -345,7 +345,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      *
      * <p>If {@link #isConcreteFile()} method returns <tt>false</tt>
      * (i.e. if {@link #tempPath} is <tt>null</tt> or an existing directory:
-     * <nobr><tt>tempPath.exists() && !tempPath.isFile()</tt></nobr>),
+     * <nobr><tt>tempPath.exists() &amp;&amp; !tempPath.isFile()</tt></nobr>),
      * this implementation returns the following result:
      * <tt>File.createTempFile(prefix,suffix,{@link #tempPath}).getAbsolutePath()</tt>, where
      * <tt>tempPath</tt> is the constructor argument (<tt>null</tt> for constructor without

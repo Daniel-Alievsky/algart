@@ -135,7 +135,7 @@ public abstract class AbstractArray implements Array, Cloneable {
     public abstract Class<? extends MutableArray> mutableType();
 
     /**
-     * This implementation returns <tt>{@link #length} & Long.MAX_VALUE</tt>.
+     * This implementation returns <tt>{@link #length} &amp; Long.MAX_VALUE</tt>.
      * (The high bit of length may be used for service goals.)
      *
      * @return the number of elements in this array.
@@ -145,7 +145,7 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * This implementation returns <tt>{@link #capacity} & Long.MAX_VALUE</tt>.
+     * This implementation returns <tt>{@link #capacity} &amp; Long.MAX_VALUE</tt>.
      * (The high bit of capacity may be used for service goals.)
      *
      * @return the capacity of this array.

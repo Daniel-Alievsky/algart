@@ -40,16 +40,16 @@ import java.nio.LongBuffer;
  * (<tt>false</tt> or <tt>true</tt> value) can be extracted by the following operator:</p
  *
  * <pre>
- * (b.get(k >>> 6) & (1L << (k & 63))) != 0L
+ * (b.get(k &gt;&gt;&gt; 6) &amp; (1L &lt;&lt; (k &amp; 63))) != 0L
  * </pre>
  *
  * <p>and can be set or cleared by the following operators:</p>
  *
  * <pre>
  * if (newValue) // we need to set bit #k to 1
- * &#32;   b.put(k >>> 6, b.get(k >>> 6) | 1L << (k & 63));
+ * &#32;   b.put(k &gt;&gt;&gt; 6, b.get(k &gt;&gt;&gt; 6) | 1L &lt;&lt; (k &amp; 63));
  * else          // we need to clear bit #k to 0
- * &#32;   b.put(k >>> 6, b.get(k >>> 6) & ~(1L << (k & 63)));
+ * &#32;   b.put(k &gt;&gt;&gt; 6, b.get(k &gt;&gt;&gt; 6) &amp; ~(1L &lt;&lt; (k &amp; 63)));
  * </pre>
  *
  * <p>If any method of this class modifies some portion of an element of a packed <tt>LongBuffer</tt>,
@@ -95,7 +95,7 @@ public class PackedBitBuffers {
     /**
      * Returns the bit <tt>#index</tt> in the packed <tt>dest</tt> bit buffer.
      * Equivalent to the following expression:<pre>
-     * (src.get((int)(index >>> 6)) & (1L << (index & 63))) != 0L;
+     * (src.get((int)(index &gt;&gt;&gt; 6)) &amp; (1L &lt;&lt; (index &amp; 63))) != 0L;
      * </pre>
      *
      * @param src   the source buffer (bits are packed into <tt>long</tt> values).
@@ -113,9 +113,11 @@ public class PackedBitBuffers {
      * Equivalent to the following operators:<pre>
      * synchronized ({@link #getLock PackedBitBuffers.getLock}(dest)) {
      * &#32;   if (value)
-     * &#32;       dest.put((int)(index >>> 6), dest.get((int)(index >>> 6)) | 1L << (index & 63));
+     * &#32;       dest.put((int)(index &gt;&gt;&gt; 6),
+     * &#32;           dest.get((int)(index &gt;&gt;&gt; 6)) | 1L &lt;&lt; (index &amp; 63));
      * &#32;   else
-     * &#32;       dest.put((int)(index >>> 6), dest.get((int)(index >>> 6)) & ~(1L << (index & 63)));
+     * &#32;       dest.put((int)(index &gt;&gt;&gt; 6),
+     * &#32;           dest.get((int)(index &gt;&gt;&gt; 6)) &amp; ~(1L &lt;&lt; (index &amp; 63)));
      * }
      * </pre>
      *

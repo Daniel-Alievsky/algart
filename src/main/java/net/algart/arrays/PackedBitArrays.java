@@ -41,16 +41,16 @@ import java.util.zip.*;
  * (<tt>false</tt> or <tt>true</tt> value) can be extracted by the following operator:</p>
  *
  * <pre>
- * (array[k >>> 6] & (1L << (k & 63))) != 0L
+ * (array[k >>> 6] &amp; (1L << (k &amp; 63))) != 0L
  * </pre>
  *
  * <p>and can be set or cleared by the following operators:</p>
  *
  * <pre>
  * if (newValue) // we need to set bit #k to 1
- * &#32;   array[k >>> 6] |= 1L << (k & 63);
+ * &#32;   array[k &gt;&gt;&gt; 6] |= 1L &lt;&lt; (k &amp; 63);
  * else          // we need to clear bit #k to 0
- * &#32;   array[k >>> 6] &= ~(1L << (k & 63));
+ * &#32;   array[k &gt;&gt;&gt; 6] &amp;= ~(1L &lt;&lt; (k &amp; 63));
  * </pre>
  *
  * <p>If any method of this class modifies some portion of an element of a packed <tt>long[]</tt> Java array,
@@ -92,7 +92,7 @@ public strictfp class PackedBitArrays {
     /**
      * Returns the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array.
      * Equivalent to the following expression:<pre>
-     * (src[(int)(index >>> 6)] & (1L << (index & 63))) != 0L;
+     * (src[(int)(index >>> 6)] &amp; (1L << (index &amp; 63))) != 0L;
      * </pre>
      *
      * @param src   the source array (bits are packed in <tt>long</tt> values).
@@ -110,9 +110,9 @@ public strictfp class PackedBitArrays {
      * Equivalent to the following operators:<pre>
      * synchronized (dest) {
      * &#32;   if (value)
-     * &#32;       dest[(int)(index >>> 6)] |= 1L << (index & 63);
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 6)] |= 1L &lt;&lt; (index &amp; 63);
      * &#32;   else
-     * &#32;       dest[(int)(index >>> 6)] &= ~(1L << (index & 63));
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 6)] &amp;= ~(1L &lt;&lt; (index &amp; 63));
      * }
      * </pre>
      *
@@ -782,7 +782,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &gt; threshold</tt></nobr>.
+     * <nobr>{@code src[k] > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -911,7 +911,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &lt; threshold</tt></nobr>.
+     * <nobr>{@code src[k] < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -1040,7 +1040,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &gt;= threshold</tt></nobr>.
+     * <nobr>{@code src[k] >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -1169,7 +1169,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &lt;= threshold</tt></nobr>.
+     * <nobr>{@code src[k] <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -1298,7 +1298,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>(src[k] & 0xFF) &gt; threshold</tt></nobr>.
+     * <nobr>{@code (src[k] & 0xFF) > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -1426,7 +1426,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>(src[k] & 0xFF) &lt; threshold</tt></nobr>.
+     * <nobr>{@code (src[k] & 0xFF) < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -1554,7 +1554,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>(src[k] & 0xFF) &gt;= threshold</tt></nobr>.
+     * <nobr>{@code (src[k] & 0xFF) >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -1682,7 +1682,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>(src[k] & 0xFF) &lt;= threshold</tt></nobr>.
+     * <nobr>{@code (src[k] & 0xFF) <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -1810,7 +1810,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>(src[k] & 0xFFFF) &gt; threshold</tt></nobr>.
+     * <nobr>{@code (src[k] & 0xFFFF) > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -1938,7 +1938,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>(src[k] & 0xFFFF) &lt; threshold</tt></nobr>.
+     * <nobr>{@code (src[k] & 0xFFFF) < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -2066,7 +2066,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>(src[k] & 0xFFFF) &gt;= threshold</tt></nobr>.
+     * <nobr>{@code (src[k] & 0xFFFF) >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -2194,7 +2194,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>(src[k] & 0xFFFF) &lt;= threshold</tt></nobr>.
+     * <nobr>{@code (src[k] & 0xFFFF) <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -2322,7 +2322,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &gt; threshold</tt></nobr>.
+     * <nobr>{@code src[k] > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -2450,7 +2450,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &lt; threshold</tt></nobr>.
+     * <nobr>{@code src[k] < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -2578,7 +2578,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &gt;= threshold</tt></nobr>.
+     * <nobr>{@code src[k] >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -2706,7 +2706,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &lt;= threshold</tt></nobr>.
+     * <nobr>{@code src[k] <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -2834,7 +2834,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &gt; threshold</tt></nobr>.
+     * <nobr>{@code src[k] > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -2962,7 +2962,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &lt; threshold</tt></nobr>.
+     * <nobr>{@code src[k] < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -3090,7 +3090,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &gt;= threshold</tt></nobr>.
+     * <nobr>{@code src[k] >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -3218,7 +3218,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &lt;= threshold</tt></nobr>.
+     * <nobr>{@code src[k] <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -3346,7 +3346,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &gt; threshold</tt></nobr>.
+     * <nobr>{@code src[k] > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -3474,7 +3474,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &lt; threshold</tt></nobr>.
+     * <nobr>{@code src[k] < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -3602,7 +3602,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &gt;= threshold</tt></nobr>.
+     * <nobr>{@code src[k] >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -3730,7 +3730,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &lt;= threshold</tt></nobr>.
+     * <nobr>{@code src[k] <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -3858,7 +3858,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &gt; threshold</tt></nobr>.
+     * <nobr>{@code src[k] > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -3986,7 +3986,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &lt; threshold</tt></nobr>.
+     * <nobr>{@code src[k] < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -4114,7 +4114,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &gt;= threshold</tt></nobr>.
+     * <nobr>{@code src[k] >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.
@@ -4242,7 +4242,7 @@ public strictfp class PackedBitArrays {
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
-     * <nobr><tt>src[k] &lt;= threshold</tt></nobr>.
+     * <nobr>{@code src[k] <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos   position of the first written bit in the destination array.

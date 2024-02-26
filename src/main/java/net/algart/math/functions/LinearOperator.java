@@ -156,7 +156,7 @@ public final strictfp class LinearOperator extends ProjectiveOperator {
      * <nobr><b>b</b>=<b>c</b>&minus;<b>Ac</b></nobr> (<nobr><b>c</b>=<tt>{centerX, centerY}</tt></nobr>).</li>
      * </ul>
      *
-     * <p>The only difference from these formulas is special processing some cases, when the angle is <i>k</i>&pi/2
+     * <p>The only difference from these formulas is special processing some cases, when the angle is <i>k</i>&pi;/2
      * with integer <i>k</i> (more precisely, <tt>k/2.0*StrictMath.PI</tt>):
      * <tt>StrictMath.cos</tt> and <tt>StrictMath.sin</tt> methods can return inexact results here,
      * but this method uses precise values &plusmn;1 in these cases.

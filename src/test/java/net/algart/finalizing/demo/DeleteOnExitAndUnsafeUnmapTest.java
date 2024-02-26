@@ -38,16 +38,11 @@ import java.security.*;
 public class DeleteOnExitAndUnsafeUnmapTest {
     private static void unsafeUnmap(final MappedByteBuffer mbb) {
         try {
-            AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
-                public Object run() throws Exception {
-                    Method getCleanerMethod = mbb.getClass().getMethod("cleaner");
-                    getCleanerMethod.setAccessible(true);
-                    Object cleaner = getCleanerMethod.invoke(mbb); // sun.misc.Cleaner instance
-                    Method cleanMethod = cleaner.getClass().getMethod("clean");
-                    cleanMethod.invoke(cleaner);
-                    return null;
-                }
-            });
+            Method getCleanerMethod = mbb.getClass().getMethod("cleaner");
+            getCleanerMethod.setAccessible(true);
+            Object cleaner = getCleanerMethod.invoke(mbb); // sun.misc.Cleaner instance
+            Method cleanMethod = cleaner.getClass().getMethod("clean");
+            cleanMethod.invoke(cleaner);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

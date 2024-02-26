@@ -333,9 +333,9 @@ public interface UniformGridPattern extends Pattern {
      * and all grid steps <i>d</i><sub><i>j</i></sub> are 1.0.
      * Equivalent to
      * <tt>{@link #originOfGrid()}.{@link Point#isOrigin() isOrigin()}
-     * && {@link #gridIndexRange(int) gridIndexRange}(0)==1.0
-     * && {@link #gridIndexRange(int) gridIndexRange}(1)==1.0
-     * &&&nbsp;...</tt>
+     * &amp;&amp; {@link #gridIndexRange(int) gridIndexRange}(0)==1.0
+     * &amp;&amp; {@link #gridIndexRange(int) gridIndexRange}(1)==1.0
+     * &amp;&amp;&nbsp;...</tt>
      * Ordinary integer patterns are a simplest form of <i>integer</i> pattern:
      * see comments to {@link Pattern} interface, section "Uniform-grid patterns".
      *

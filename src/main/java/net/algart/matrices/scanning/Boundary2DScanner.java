@@ -1143,11 +1143,11 @@ public abstract class Boundary2DScanner {
         }
 
         /**
-         * Returns <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 && {@link #pixelCenterDY()}==0</tt>
+         * Returns <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 &amp;&amp; {@link #pixelCenterDY()}==0</tt>
          * (<i>rotation</i> kind of movement).
          * Works very quickly (this method just returns an internal field).
          *
-         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 && {@link #pixelCenterDY()}==0</tt>.
+         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 &amp;&amp; {@link #pixelCenterDY()}==0</tt>.
          */
         public boolean isRotation() {
             return samePixel;
@@ -1157,7 +1157,7 @@ public abstract class Boundary2DScanner {
          * Returns <tt>true</tt> if {@link #pixelCenterDX()} is &plusmn;1 and {@link #pixelCenterDY()} is 0.
          * Works very quickly (this method just returns an internal field).
          *
-         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 && {@link #pixelCenterDY()}==0</tt>.
+         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 &amp;&amp; {@link #pixelCenterDY()}==0</tt>.
          */
         public boolean isHorizontal() {
             return horizontal;

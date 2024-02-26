@@ -850,7 +850,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * <pre>
      * Array a = m.array();
-     * for (long disp = 0, n = a.length(); disp < n; disp++)
+     * for (long disp = 0, n = a.length(); disp &lt; n; disp++)
      * &#32;   // process the element #k of the array
      * </pre>
      *

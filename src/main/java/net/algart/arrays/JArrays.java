@@ -105,7 +105,7 @@ public class JArrays {
      * Simple implementation of {@link ArrayComparator}, comparing elements of <tt>byte[]</tt> array.
      *
      * <p>Note that the elements of <tt>byte[]</tt> array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] & 0xFF</tt> and <tt>array[j] & 0xFF</tt>
+     * we always compare {@code array[i] & 0xFF} and {@code array[j] & 0xFF}
      * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
      */
     public static class ByteArrayComparator implements ArrayComparator32 {
@@ -346,7 +346,7 @@ public class JArrays {
      * Simple implementation of {@link ArrayComparator}, comparing elements of <tt>short[]</tt> array.
      *
      * <p>Note that the elements of <tt>short[]</tt> array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] & 0xFFFF</tt> and <tt>array[j] & 0xFFFF</tt>
+     * we always compare {@code array[i] & 0xFFFF} and {@code array[j] & 0xFFFF}
      * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
      */
     public static class ShortArrayComparator implements ArrayComparator32 {

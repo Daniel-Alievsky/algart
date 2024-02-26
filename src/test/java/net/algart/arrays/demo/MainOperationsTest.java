@@ -63,7 +63,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author Daniel Alievsky
  */
-public strictfp class MainOperationsTest implements Cloneable {
+public class MainOperationsTest implements Cloneable {
     private static boolean objectEquals(Object o1, Object o2) {
         return o1 == null ? o2 == null : o1.equals(o2);
     }
@@ -2199,13 +2199,13 @@ public strictfp class MainOperationsTest implements Cloneable {
             "bad implementation of getConstantMode(null)";
         assert Matrix.ContinuationMode.getConstantMode(0.0d) == Matrix.ContinuationMode.ZERO_CONSTANT :
             "bad implementation of getConstantMode(0.0d)";
-        assert Matrix.ContinuationMode.getConstantMode(new Double(0.0d)) == Matrix.ContinuationMode.ZERO_CONSTANT :
+        assert Matrix.ContinuationMode.getConstantMode(0.0d) == Matrix.ContinuationMode.ZERO_CONSTANT :
             "bad implementation of getConstantMode(new Double(0.0d))";
         assert Matrix.ContinuationMode.getConstantMode(0.0f) != Matrix.ContinuationMode.ZERO_CONSTANT;
         assert Matrix.ContinuationMode.getConstantMode(-0.0d) != Matrix.ContinuationMode.ZERO_CONSTANT;
         assert Matrix.ContinuationMode.getConstantMode(Double.NaN) == Matrix.ContinuationMode.NAN_CONSTANT :
             "bad implementation of getConstantMode(Double.NaN)";
-        assert Matrix.ContinuationMode.getConstantMode(new Double(Double.NaN))
+        assert Matrix.ContinuationMode.getConstantMode(Double.NaN)
             == Matrix.ContinuationMode.NAN_CONSTANT : "bad implementation of getConstantMode(new Double(Double.NaN))";
         if (!title(ti, "Testing \"Matrix.subMatr\" method, " + continuationMode + "...")) {
             return;

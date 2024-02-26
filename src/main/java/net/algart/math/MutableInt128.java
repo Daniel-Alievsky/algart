@@ -686,7 +686,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
 
     /**
      * Replaces all bits of the absolute value of this number with bitwise AND of this and other number:
-     * <tt>|this| = |this| & |other|</tt>.
+     * <tt>|this| = |this| &amp; |other|</tt>.
      *
      * <p>The sign of this number stays unchanged &mdash; excepting the case, when this number was non-zero,
      * but the result is zero (i.e. not positive and not negative).

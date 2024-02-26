@@ -43,17 +43,18 @@ import java.util.ArrayList;
 public class SimpleMappingNewFileTest {
     static final int BLOCK_SIZE = 8 * 1024 * 1024; // 8 MB
 
-    private static void unsafeUnmap(final MappedByteBuffer mbb) throws PrivilegedActionException {
-        AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
-            public Object run() throws Exception {
+    private static void unsafeUnmap(final MappedByteBuffer mbb) throws Exception {
+// (java.security.AccessController in java.security has been deprecated)
+//        AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
+//            public Object run() throws Exception {
                 Method getCleanerMethod = mbb.getClass().getMethod("cleaner");
                 getCleanerMethod.setAccessible(true);
                 Object cleaner = getCleanerMethod.invoke(mbb); // sun.misc.Cleaner instance
                 Method cleanMethod = cleaner.getClass().getMethod("clean");
                 cleanMethod.invoke(cleaner);
-                return null;
-            }
-        });
+//                return null;
+//            }
+//        });
     }
 
     public static void main(String[] args) throws Exception {

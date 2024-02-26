@@ -97,7 +97,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * {@link #convolution(Class, Matrix, WeightedPattern)} method for some complex patterns.
      * Usually you should use it only for very little patterns, or if you know that the implementation
      * of this interface does not provide better algorithm for non-"lazy"
-     * {@link #convolution(Class, , Matrix, WeightedPattern)} method.
+     * {@link #convolution(Class, Matrix, WeightedPattern)} method.
      *
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param src          the source matrix.

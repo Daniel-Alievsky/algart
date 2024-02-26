@@ -53,7 +53,7 @@ public class Matrices {
     public static enum InterpolationMethod {
 
         /**
-         * Simplest interpolation method: the real coordinates are truncated to integer numbers by <tt)(long)x</tt>
+         * Simplest interpolation method: the real coordinates are truncated to integer numbers by <tt>(long)x</tt>
          * Java operator. See details in comments to
          * {@link Matrices#asInterpolationFunc(Matrix, InterpolationMethod, boolean)}.
          */
@@ -707,7 +707,7 @@ public class Matrices {
          * So, if you prefer not to implement {@link #contains(long...)} method,
          * you must override this method and return <tt>false</tt>.
          * This method <i>must</i> return <tt>true</tt> if
-         * <nobr><tt>{@link #n()}==1 && !{@link #isRectangular()}</tt></nobr>.
+         * <nobr><tt>{@link #n()}==1 &amp;&amp; !{@link #isRectangular()}</tt></nobr>.
          *
          * @return <tt>true</tt> if {@link #contains(long...)} method works correctly;
          *         otherwise {@link #contains(long...)} method throws <tt>UnsupportedOperationException</tt>.
