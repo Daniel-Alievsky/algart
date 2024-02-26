@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2007-2023 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2024 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 
 package net.algart.matrices.stitching;
 
-import net.algart.math.functions.AbstractFunc;
 import net.algart.math.functions.Func;
 
 public strictfp class AverageExceptingNaN implements Func {
