@@ -394,10 +394,8 @@ class InternalUtils {
                 Class<?> clazz = Class.forName(className);
                 Object inst;
                 try {
-                    inst = clazz.newInstance();
-                } catch (IllegalAccessException ex) {
-                    inst = null;
-                } catch (InstantiationException ex) {
+                    inst = clazz.getDeclaredConstructor().newInstance();
+                } catch (IllegalAccessException | InstantiationException ex) {
                     inst = null;
                 }
                 if (inst == null) {
@@ -409,7 +407,6 @@ class InternalUtils {
                         + ": it creates null instance");
                 return requiredClass.cast(inst);
             } catch (Exception ex1) {
-                ex1.printStackTrace();
                 if (className.equals(defaultClassName))
                     throw new InternalError(ex1.toString());
                 logger.severe("Cannot create an instance of " + className + " class: " + ex1);
