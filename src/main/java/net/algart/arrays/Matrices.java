@@ -132,7 +132,7 @@ public class Matrices {
          * See details in comments to {@link Matrices#asResized Matrices.asResized}.
          */
         public static final ResizingMethod POLYLINEAR_INTERPOLATION = new ResizingMethod(
-            InterpolationMethod.POLYLINEAR_FUNCTION);
+                InterpolationMethod.POLYLINEAR_FUNCTION);
 
         /**
          * Resizing with polylinear interpolation and averaging while compression.
@@ -216,7 +216,7 @@ public class Matrices {
              *
              * @param apertureDim the sizes of averaged aperture in the source matrix.
              * @return the function that will be used for averaging; may be <tt>null</tt>
-             *         (default behavior).
+             * (default behavior).
              */
             protected Func getAveragingFunc(long[] apertureDim) {
                 return null;
@@ -346,7 +346,7 @@ public class Matrices {
          *
          * @param xRange the range of the only coordinate of all points of the segment.
          * @return the segment containing all points from the specified range
-         *         (including minimal and maximal values).
+         * (including minimal and maximal values).
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public static Hyperparallelepiped getSegment(IRange xRange) {
@@ -466,11 +466,10 @@ public class Matrices {
          *                                     via calculations with standard Java <tt>double</tt> numbers).
          */
         public static Simplex getTetrahedron3D(
-            double x1, double y1, double z1,
-            double x2, double y2, double z2,
-            double x3, double y3, double z3,
-            double x4, double y4, double z4)
-        {
+                double x1, double y1, double z1,
+                double x2, double y2, double z2,
+                double x3, double y3, double z3,
+                double x4, double y4, double z4) {
             return new Simplex(new double[][]{{x1, y1, z1}, {x2, y2, z2}, {x3, y3, z3}, {x4, y4, z4}});
         }
 
@@ -561,8 +560,7 @@ public class Matrices {
          *                                  or if <tt>a.length!=coordRanges.length*b.length</tt>.
          */
         public static ConvexHyperpolyhedron getConvexHyperpolyhedron(
-            double[] a, double[] b, IRange... coordRanges)
-        {
+                double[] a, double[] b, IRange... coordRanges) {
             return new ConvexHyperpolyhedron(coordRanges, a, b);
         }
 
@@ -636,7 +634,7 @@ public class Matrices {
          *
          * @param coordIndex the index of coordinate.
          * @return the ranges that guaranteedly contain the coordinate <tt>#coordIndex</tt>
-         *         of all points of this region.
+         * of all points of this region.
          * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #n()}</tt>.
          */
         public final IRange coordRange(int coordIndex) {
@@ -681,7 +679,7 @@ public class Matrices {
          *
          * @param coordinates the coordinates of the point: the first element is <i>x</i>, the second is <i>y</i>, ...
          * @return <tt>true</tt> if and only if the point with the specified coordinates
-         *         belongs to this region.
+         * belongs to this region.
          * @throws NullPointerException          if the argument is <tt>null</tt>.
          * @throws IndexOutOfBoundsException     if the length of the passed array is less than {@link #n()}.
          * @throws UnsupportedOperationException if the inheritor does not implement this operation.
@@ -701,7 +699,7 @@ public class Matrices {
          * <nobr><tt>{@link #n()}==1 &amp;&amp; !{@link #isRectangular()}</tt></nobr>.
          *
          * @return <tt>true</tt> if {@link #contains(long...)} method works correctly;
-         *         otherwise {@link #contains(long...)} method throws <tt>UnsupportedOperationException</tt>.
+         * otherwise {@link #contains(long...)} method throws <tt>UnsupportedOperationException</tt>.
          */
         public boolean isContainsSupported() {
             return true;
@@ -739,10 +737,10 @@ public class Matrices {
          *
          * @param sectionCoordinateValue the value of the last coordinate.
          * @return the intersection of this region and the
-         *         <nobr>(<i>n</i>&minus;1)-dimensional</nobr> hyperplane,
-         *         corresponding to the specified value of the last coordinate
-         *         (0, 1 or more regions, every region is
-         *         <nobr>(<i>n</i>&minus;1)-dimensional</nobr>).
+         * <nobr>(<i>n</i>&minus;1)-dimensional</nobr> hyperplane,
+         * corresponding to the specified value of the last coordinate
+         * (0, 1 or more regions, every region is
+         * <nobr>(<i>n</i>&minus;1)-dimensional</nobr>).
          * @throws IllegalStateException if this region is <nobr>1-dimensional</nobr> (<tt>{@link #n()}==1</tt>).
          */
         public Region[] sectionAtLastCoordinate(final long sectionCoordinateValue) {
@@ -780,7 +778,7 @@ public class Matrices {
          *
          * @param sectionCoordinateValue the value of the last coordinate.
          * @return <tt>true</tt> if and only the specified coordinate value lies inside
-         *         the corresponding {@link #coordRange(int) coordinate range}.
+         * the corresponding {@link #coordRange(int) coordinate range}.
          * @throws IllegalStateException if this region is <nobr>1-dimensional</nobr> (<tt>{@link #n()}==1</tt>).
          */
         protected final boolean checkSectionAtLastCoordinate(long sectionCoordinateValue) {
@@ -926,7 +924,7 @@ public class Matrices {
          * @param matrix     the matrix.
          * @param backShifts the shifts, which are subtracted from all coordinates of this region before the check.
          * @return <tt>true</tt> if this region, shifted backwards by the specified shifts,
-         *         lies fully inside the specified matrix.
+         * lies fully inside the specified matrix.
          * @throws NullPointerException if the <tt>matrix</tt> or <tt>backShifts</tt> argument is <tt>null</tt>.
          */
         public boolean isInsideMatrix(Matrix<?> matrix, long... backShifts) {
@@ -1037,7 +1035,7 @@ public class Matrices {
                 throw new NullPointerException("Null b coefficients");
             if (a.length != (long) n * (long) b.length)
                 throw new IllegalArgumentException("Illegal size of A matrix: a.length=" + a.length
-                    + " must be equal to b.length*n=" + (long) n * (long) b.length);
+                        + " must be equal to b.length*n=" + (long) n * (long) b.length);
             this.a = a.clone();
             this.b = b.clone();
         }
@@ -1083,8 +1081,8 @@ public class Matrices {
                     ofs++;
                 }
                 return new Region[]{new ConvexHyperpolyhedron(
-                    (IRange[]) JArrays.copyOfRange(coordRanges, 0, n - 1),
-                    newA, newB)
+                        (IRange[]) JArrays.copyOfRange(coordRanges, 0, n - 1),
+                        newA, newB)
                 };
             } else {
                 assert n == 2;
@@ -1106,7 +1104,7 @@ public class Matrices {
         @Override
         public String toString() {
             return n + "-dimensional convex hyperpolyhedral region (inside "
-                + JArrays.toString(coordRanges, "x", 100) + ")";
+                    + JArrays.toString(coordRanges, "x", 100) + ")";
         }
 
         @Override
@@ -1214,9 +1212,9 @@ public class Matrices {
 
         private Simplex(double[][] vertices) {
             super(coordRangesOfVertices(vertices, 0),
-                new double[(int) Math.min(Integer.MAX_VALUE,
-                    (long) vertices[0].length * ((long) vertices[0].length + 1))],
-                new double[(int) Math.min(Integer.MAX_VALUE, (long) vertices[0].length + 1)]);
+                    new double[(int) Math.min(Integer.MAX_VALUE,
+                            (long) vertices[0].length * ((long) vertices[0].length + 1))],
+                    new double[(int) Math.min(Integer.MAX_VALUE, (long) vertices[0].length + 1)]);
             this.vertices = vertices.clone(); // this field must be assigned before the following exception
             boolean degenerated = !buildSimplexByVertices(vertices, this.a, this.b);
             if (degenerated)
@@ -1238,7 +1236,7 @@ public class Matrices {
          *
          * @param vertices coordinates of all vertices.
          * @return whether the simplex with the specified vertices is degenerated and cannot be described
-         *         by this class.
+         * by this class.
          * @throws NullPointerException     if the <tt>vertices</tt> array or some of its elements is <tt>null</tt>.
          * @throws IllegalArgumentException if the <tt>vertices</tt> array or some of its elements is empty
          *                                  (has zero length),
@@ -1248,9 +1246,9 @@ public class Matrices {
         public static boolean isSimplexDegenerated(double[][] vertices) {
             coordRangesOfVertices(vertices, 0);
             return !buildSimplexByVertices(vertices,
-                new double[(int) Math.min(Integer.MAX_VALUE,
-                    (long) vertices[0].length * ((long) vertices[0].length + 1))],
-                new double[(int) Math.min(Integer.MAX_VALUE, (long) vertices[0].length + 1)]);
+                    new double[(int) Math.min(Integer.MAX_VALUE,
+                            (long) vertices[0].length * ((long) vertices[0].length + 1))],
+                    new double[(int) Math.min(Integer.MAX_VALUE, (long) vertices[0].length + 1)]);
         }
 
         /**
@@ -1262,7 +1260,7 @@ public class Matrices {
          * no references, maintained by this object, are returned.
          *
          * @return the coordinates of all vertices of the simplex: the element (line) #<tt>k</tt> of the returned
-         *         2-dimensional array contains <i>n</i> coordinates of the vertex #<tt>k</tt>.
+         * 2-dimensional array contains <i>n</i> coordinates of the vertex #<tt>k</tt>.
          */
         public double[][] vertices() {
             double[][] result = new double[vertices.length][];
@@ -1282,8 +1280,8 @@ public class Matrices {
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder(n + "-dimensional simplex"
-                + (n == 2 ? " (triangle)" : n == 3 ? " (tetrahedron)" : "")
-                + " with vertices ");
+                    + (n == 2 ? " (triangle)" : n == 3 ? " (tetrahedron)" : "")
+                    + " with vertices ");
             for (int k = 0; k < vertices.length; k++) {
                 if (k > 0) {
                     sb.append(", ");
@@ -1348,7 +1346,7 @@ public class Matrices {
                     if (vy[k] > sectionY ? vyPrev < sectionY : vyPrev > sectionY) {
                         // intersection in an internal point
                         sectionX[sectionCount++] = vx[k]
-                            + (vxPrev - vx[k]) * (sectionY - vy[k]) / (vyPrev - vy[k]);
+                                + (vxPrev - vx[k]) * (sectionY - vy[k]) / (vyPrev - vy[k]);
                     }
                 } else if (vyPrev != sectionY) { // && vy[k] == sectionY
                     // We come at this horizontal; we should scan futher vertices and find, how we shall leave it
@@ -1376,7 +1374,7 @@ public class Matrices {
             }
             if (sectionCount % 2 != 0)
                 throw new AssertionError("Odd number " + sectionCount + " of intersections of " + this
-                    + " and the horizontal y=" + sectionY);
+                        + " and the horizontal y=" + sectionY);
             if ((long) (sectionCount / 2) + (long) horizontalCount > Integer.MAX_VALUE)
                 throw new OutOfMemoryError("Too large number of horizontal segments");
             java.util.Arrays.sort(sectionX, 0, sectionCount);
@@ -1451,7 +1449,7 @@ public class Matrices {
          * no references, maintained by this object, are returned.
          *
          * @return the coordinates of all vertices of the simplex: the element (line) #<tt>k</tt> of the returned
-         *         2-dimensional array contains <i>2</i> coordinates of the vertex #<tt>k</tt>.
+         * 2-dimensional array contains <i>2</i> coordinates of the vertex #<tt>k</tt>.
          */
         public double[][] vertices() {
             double[][] result = new double[vx.length][2];
@@ -1557,13 +1555,13 @@ public class Matrices {
         if (array != null && dim != null) {
             if (position < 0 || position > array.length())
                 throw new IndexOutOfBoundsException("Illegal position = " + position
-                    + " (must be in range 0.." + array.length() + ")");
+                        + " (must be in range 0.." + array.length() + ")");
             dim = dim.clone();
             long correctLen = AbstractMatrix.checkDimensions(dim);
             if (correctLen > array.length() - position)
                 throw new SizeMismatchException("Dimensions are too large for the given position and length:"
-                    + " dim[0] * dim[1] * ... = " + correctLen + ", which is greater than the array length "
-                    + array.length() + " + position " + position);
+                        + " dim[0] * dim[1] * ... = " + correctLen + ", which is greater than the array length "
+                        + array.length() + " + position " + position);
             array = InternalUtils.<T>cast(array.subArr(position, correctLen));
         }
         return new MatrixImpl<T>(array, dim);
@@ -1615,11 +1613,11 @@ public class Matrices {
         Arrays.checkElementTypeForNullAndVoid(elementType);
         if (MutableArray.class.isAssignableFrom(arraySupertype))
             throw new IllegalArgumentException("Illegal arraySupertype = " + arraySupertype
-                + ": it is MutableArray or its subtype, but a matrix cannot be based on a resizable array");
+                    + ": it is MutableArray or its subtype, but a matrix cannot be based on a resizable array");
         Class<UpdatableArray> type = Arrays.type(UpdatableArray.class, elementType);
         if (!arraySupertype.isAssignableFrom(type))
             throw new ClassCastException("The passed array supertype " + arraySupertype.getName()
-                + " is not a supertype for " + type.getName());
+                    + " is not a supertype for " + type.getName());
     }
 
     /**
@@ -1654,6 +1652,29 @@ public class Matrices {
         double result = 0.0;
         for (Matrix<?> matrix : matrices) {
             result += sizeOf(matrix);
+        }
+        return result;
+    }
+
+    /**
+     * Returns default dimensions of a tile, used by {@link Matrix#tile()} method to create a tiled matrix.
+     *
+     * <p>The returned array is a newly created Java array, containing <tt>dimCount</tt> elements.
+     * The elements of the returned array are positive numbers, probably equal to each other and not too large
+     * (several hundreds or thousands).
+     *
+     * @param dimCount the number of dimensions of the matrix.
+     * @return an array containing all dimensions of every tile in a tiled matrix,
+     * created by {@link Matrix#tile()} method.
+     */
+    public static long[] defaultTileDimensions(int dimCount) {
+        if (dimCount <= 0)
+            throw new IllegalArgumentException("Zero or negative number of dimensions");
+        long[] result = new long[dimCount];
+        long defaultTileSide = InternalUtils.DEFAULT_MATRIX_TILE_SIDES[
+                Math.min(result.length, InternalUtils.DEFAULT_MATRIX_TILE_SIDES.length - 1)];
+        for (int k = 0; k < result.length; k++) {
+            result[k] = defaultTileSide;
         }
         return result;
     }
@@ -1694,7 +1715,7 @@ public class Matrices {
                 throw new NullPointerException("Null matrices[" + k + "] argument");
             if (!arrayClass.isInstance(matrices[k].array()))
                 throw new ClassCastException("Illegal type of matrices[" + k + "] argument (" + matrices[k]
-                    + "; required array class is " + arrayClass.getName() + ")");
+                        + "; required array class is " + arrayClass.getName() + ")");
         }
         Matrix<? extends T>[] cast = InternalUtils.cast(matrices);
         return java.util.Arrays.asList(cast);
@@ -1721,56 +1742,141 @@ public class Matrices {
      *                               it is impossible if you use generalized arguments.
      */
     public static <T extends Array> T[] arraysOfParallelMatrices(
-        Class<T> arrayClass,
-        List<? extends Matrix<? extends T>> matrices)
-    {
-        if (arrayClass == null)
-            throw new NullPointerException("Null arrayClass argument");
-        if (matrices == null)
-            throw new NullPointerException("Null list of matrices");
-        matrices = new ArrayList<Matrix<? extends T>>(matrices);
+            Class<T> arrayClass,
+            List<? extends Matrix<?>> matrices) {
+        return arraysOfParallelMatrices(arrayClass, matrices, false);
+    }
+
+    /**
+     * Equivalent of {@link #arraysOfParallelMatrices(Class, List)} method, but,
+     * if <tt>requireIdenticalType=true</tt>, also checks that all passed matrices have identical
+     * {@link Matrix#elementType() element type}.
+     *
+     * @param arrayClass the required class / interface of built-in arrays for all passed matrices.
+     * @param matrices   list of some matrices.
+     * @return array of {@link Matrix#array() built-in AlgART arrays} of all passed matrices.
+     * @throws NullPointerException     if <tt>arrayClass</tt> argument, the <tt>matrices</tt> list
+     *                                  or one of its elements is <tt>null</tt>.
+     * @throws SizeMismatchException    if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     *                                  different dimensions.
+     * @throws IllegalArgumentException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     *                                  different element type.
+     * @throws ClassCastException       if one of matrices contains built-in AlgART array that is not an instance
+     *                                  of the type <tt>arrayClass</tt>
+     *                                  (<tt>!arrayClass.isInstance(matrices[k].{@link Matrix#array() array()})</tt>).
+     */
+    public static <T extends Array> T[] arraysOfParallelMatrices(
+            Class<T> arrayClass,
+            Collection<? extends Matrix<?>> matrices,
+            boolean requireIdenticalType) {
+        Objects.requireNonNull(arrayClass, "Null arrayClass argument");
+        Objects.requireNonNull(matrices, "Null list of matrices");
+        matrices = new ArrayList<Matrix<?>>(matrices);
         // - to be sure that its size and content cannot be changed in parallel thread
-        Matrix<? extends T> m0 = null;
+        Matrix<?> m0 = null;
+        Class<?> elementType = null;
         int k = 0;
         T[] result = InternalUtils.cast(java.lang.reflect.Array.newInstance(arrayClass, matrices.size()));
-        for (Matrix<? extends T> m : matrices) {
+        for (Matrix<?> m : matrices) {
             if (m == null)
                 throw new NullPointerException("Null matrix #" + k);
             if (!arrayClass.isInstance(m.array()))
                 throw new ClassCastException("Illegal type of the matrix #" + k + " (" + m
-                    + "; required array class is " + arrayClass.getName() + ")");
+                        + "; required array class is " + arrayClass.getName() + ")");
             if (m0 == null) {
                 m0 = m;
-            } else if (!m.dimEquals(m0))
-                throw new SizeMismatchException("The matrix #" + k + " and the matrix #0 dimensions mismatch: "
-                    + "the matrix #" + k + " is " + m + ", the matrix #0 is " + m0);
-            result[k] = m.array();
+                elementType = m.elementType();
+            } else {
+                if (requireIdenticalType && m.elementType() != elementType) {
+                    throw new IllegalArgumentException("The matrix #" + k +
+                            " and the matrix #0 element type mismatch: "
+                            + "the matrix #" + k + " has " + m.elementType() +
+                            " elements, the matrix #0 has " + elementType + " elements");
+                }
+                if (!m.dimEquals(m0)) {
+                    throw new SizeMismatchException("The matrix #" + k + " and the matrix #0 dimensions mismatch: "
+                            + "the matrix #" + k + " is " + m + ", the matrix #0 is " + m0);
+                }
+            }
+            result[k] = InternalUtils.cast(m.array());
             k++;
         }
         return result;
     }
 
-    /**
-     * Returns default dimensions of a tile, used by {@link Matrix#tile()} method to create a tiled matrix.
-     *
-     * <p>The returned array is a newly created Java array, containing <tt>dimCount</tt> elements.
-     * The elements of the returned array are positive numbers, probably equal to each other and not too large
-     * (several hundreds or thousands).
-     *
-     * @param dimCount the number of dimensions of the matrix.
-     * @return an array containing all dimensions of every tile in a tiled matrix,
-     *         created by {@link Matrix#tile()} method.
-     */
-    public static long[] defaultTileDimensions(int dimCount) {
-        if (dimCount <= 0)
-            throw new IllegalArgumentException("Zero or negative number of dimensions");
-        long[] result = new long[dimCount];
-        long defaultTileSide = InternalUtils.DEFAULT_MATRIX_TILE_SIDES[
-            Math.min(result.length, InternalUtils.DEFAULT_MATRIX_TILE_SIDES.length - 1)];
-        for (int k = 0; k < result.length; k++) {
-            result[k] = defaultTileSide;
+    public static <T extends Array> Matrix<T> joinToNewDimension(
+            Class<T> arrayClass,
+            Collection<? extends Matrix<?>> matrices) {
+        return joinToNewDimension(arrayClass, matrices, Arrays.SMM);
+    }
+
+    public static <T extends Array> Matrix<T> joinToNewDimension(
+            Class<T> arrayClass,
+            Collection<? extends Matrix<?>> matrices,
+            MemoryModel memoryModel) {
+        Objects.requireNonNull(arrayClass, "Null arrayClass argument");
+        Objects.requireNonNull(matrices, "Null matrices argument");
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        List<Matrix<?>> list = new ArrayList<>(matrices);
+        if (list.isEmpty()) {
+            throw new IllegalArgumentException("Empty matrices collection");
         }
-        return result;
+        T[] arrays = arraysOfParallelMatrices(arrayClass, list, true);
+        Matrix<?> m0 = list.get(0);
+        final long[] dimensions = java.util.Arrays.copyOf(m0.dimensions(), m0.dimCount() + 1);
+        final long size = m0.size();
+        dimensions[dimensions.length - 1] = arrays.length;
+        Matrix<UpdatableArray> result = memoryModel.newMatrix(UpdatableArray.class, m0.elementType(), dimensions);
+        final UpdatableArray array = result.array();
+        long p = 0;
+        for (Matrix<?> m : list) {
+            array.subArr(p, size).copy(m.array());
+            p += size;
+        }
+        return InternalUtils.cast(result);
+    }
+
+    /**
+     * Checks the same condition as {@link #checkDimensionEquality(Collection)} and,
+     * if <tt>requireIdenticalType=true</tt>, also checks that all passed matrices have identical
+     * {@link Matrix#elementType() element type}.
+     *
+     * @param matrices list of some matrices.
+     * @throws NullPointerException     if the <tt>matrices</tt> list or one of its elements is <tt>null</tt>.
+     * @throws SizeMismatchException    if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     *                                  different dimensions.
+     * @throws IllegalArgumentException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     *                                  different element type.
+     * @see #checkDimensionEquality(Matrix[])
+     */
+    public static void checkDimensionEquality(
+            Collection<? extends Matrix<?>> matrices,
+            boolean requireIdenticalType) {
+        Objects.requireNonNull(matrices, "Null list of matrices");
+        Matrix<? extends Array> m0 = null;
+        Class<?> elementType = null;
+        int k = 0;
+        for (Matrix<? extends Array> m : matrices) {
+            if (m == null)
+                throw new NullPointerException("Null matrix #" + k);
+            if (m0 == null) {
+                m0 = m;
+                elementType = m.elementType();
+            } else {
+                if (requireIdenticalType && m.elementType() != elementType) {
+                    throw new IllegalArgumentException("The matrix #" + k +
+                            " and the matrix #0 element type mismatch: "
+                            + "the matrix #" + k + " has " + m.elementType() +
+                            " elements, the matrix #0 has " + elementType + " elements");
+                }
+                if (!m.dimEquals(m0)) {
+                    throw new SizeMismatchException("The matrix #" + k +
+                            " and the matrix #0 dimensions mismatch: "
+                            + "the matrix #" + k + " is " + m + ", the matrix #0 is " + m0);
+                }
+            }
+            k++;
+        }
     }
 
     /**
@@ -1785,27 +1891,14 @@ public class Matrices {
      *                               different dimensions.
      * @see #checkDimensionEquality(Matrix[])
      */
-    public static void checkDimensionEquality(List<? extends Matrix<? extends Array>> matrices) {
-        if (matrices == null)
-            throw new NullPointerException("Null list of matrices");
-        Matrix<? extends Array> m0 = null;
-        int k = 0;
-        for (Matrix<? extends Array> m : matrices) {
-            if (m == null)
-                throw new NullPointerException("Null matrix #" + k);
-            if (m0 == null) {
-                m0 = m;
-            } else if (!m.dimEquals(m0))
-                throw new SizeMismatchException("The matrix #" + k + " and the matrix #0 dimensions mismatch: "
-                    + "the matrix #" + k + " is " + m + ", the matrix #0 is " + m0);
-            k++;
-        }
+    public static void checkDimensionEquality(Collection<? extends Matrix<?>> matrices) {
+        checkDimensionEquality(matrices, false);
     }
 
     /**
      * Checks whether all passed matrices are not <tt>null</tt> and have
      * {@link Matrix#dimEquals(Matrix) equal dimensions} and, it is not so, throws a corresponding exception.
-     * Equivalent to <tt>{@link #checkDimensionEquality(java.util.List)
+     * Equivalent to <tt>{@link #checkDimensionEquality(java.util.Collection)
      * checkDimensionEquality}({@link Matrices#several Matrices.several}(matrices))</tt>.
      *
      * @param matrices list of some matrices.
@@ -1814,14 +1907,13 @@ public class Matrices {
      *                               different dimensions.
      */
     public static void checkDimensionEquality(Matrix<?>... matrices) {
-        if (matrices == null)
-            throw new NullPointerException("Null array of matrices");
+        Objects.requireNonNull(matrices, "Null array of matrices");
         for (int k = 0; k < matrices.length; k++) {
             if (matrices[k] == null)
                 throw new NullPointerException("Null matrix #" + k);
             if (k > 0 && !(matrices[k]).dimEquals(matrices[0]))
                 throw new SizeMismatchException("The matrix #" + k + " and the matrix #0 dimensions mismatch: "
-                    + "the matrix #" + k + " is " + matrices[k] + ", the matrix #0 is " + matrices[0]);
+                        + "the matrix #" + k + " is " + matrices[k] + ", the matrix #0 is " + matrices[0]);
         }
     }
 
@@ -1885,16 +1977,15 @@ public class Matrices {
      * @param interpolationMethod the algorithm of interpolation for non-integer arguments of the returned function.
      * @param checkRanges         whether the returned function must check all indexes to be inside the matrix.
      * @return the view of the matrix as a mathematical function of
-     *         <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> arguments.
+     * <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> arguments.
      * @throws NullPointerException if <tt>matrix</tt> or <tt>interpolationMethod</tt> argument is <tt>null</tt>.
      * @see #asInterpolationFunc(Matrix, InterpolationMethod, double)
      * @see #isInterpolationFunc(Func)
      * @see #asResized(net.algart.arrays.Matrices.ResizingMethod, Matrix, long...)
      */
     public static Func asInterpolationFunc(
-        Matrix<? extends PArray> matrix,
-        InterpolationMethod interpolationMethod, boolean checkRanges)
-    {
+            Matrix<? extends PArray> matrix,
+            InterpolationMethod interpolationMethod, boolean checkRanges) {
         if (matrix == null)
             throw new NullPointerException("Null matrix argument");
         if (interpolationMethod == null)
@@ -1970,26 +2061,26 @@ public class Matrices {
                         //           if(?=\s+\(a\s+instanceof\s+) ==> } else if,,...]]
                         if (a instanceof ByteArray) {
                             return new ArraysPolylinearInterpolationsImpl.CheckedPolylinearByteInterpolation(
-                                matrix);
+                                    matrix);
                             //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
                         } else if (a instanceof CharArray) {
                             return new ArraysPolylinearInterpolationsImpl.CheckedPolylinearCharInterpolation(
-                                matrix);
+                                    matrix);
                         } else if (a instanceof ShortArray) {
                             return new ArraysPolylinearInterpolationsImpl.CheckedPolylinearShortInterpolation(
-                                matrix);
+                                    matrix);
                         } else if (a instanceof IntArray) {
                             return new ArraysPolylinearInterpolationsImpl.CheckedPolylinearIntInterpolation(
-                                matrix);
+                                    matrix);
                         } else if (a instanceof LongArray) {
                             return new ArraysPolylinearInterpolationsImpl.CheckedPolylinearLongInterpolation(
-                                matrix);
+                                    matrix);
                         } else if (a instanceof FloatArray) {
                             return new ArraysPolylinearInterpolationsImpl.CheckedPolylinearFloatInterpolation(
-                                matrix);
+                                    matrix);
                         } else if (a instanceof DoubleArray) {
                             return new ArraysPolylinearInterpolationsImpl.CheckedPolylinearDoubleInterpolation(
-                                matrix);
+                                    matrix);
                             //[[Repeat.AutoGeneratedEnd]]
                         } else {
                             return new ArraysPolylinearInterpolationsImpl.CheckedPolylinearInterpolation(matrix);
@@ -2004,26 +2095,26 @@ public class Matrices {
                         //           if(?=\s+\(a\s+instanceof\s+) ==> } else if,,...]]
                         if (a instanceof ByteArray) {
                             return new ArraysPolylinearInterpolationsImpl.UncheckedPolylinearByteInterpolation(
-                                matrix);
+                                    matrix);
                             //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
                         } else if (a instanceof CharArray) {
                             return new ArraysPolylinearInterpolationsImpl.UncheckedPolylinearCharInterpolation(
-                                matrix);
+                                    matrix);
                         } else if (a instanceof ShortArray) {
                             return new ArraysPolylinearInterpolationsImpl.UncheckedPolylinearShortInterpolation(
-                                matrix);
+                                    matrix);
                         } else if (a instanceof IntArray) {
                             return new ArraysPolylinearInterpolationsImpl.UncheckedPolylinearIntInterpolation(
-                                matrix);
+                                    matrix);
                         } else if (a instanceof LongArray) {
                             return new ArraysPolylinearInterpolationsImpl.UncheckedPolylinearLongInterpolation(
-                                matrix);
+                                    matrix);
                         } else if (a instanceof FloatArray) {
                             return new ArraysPolylinearInterpolationsImpl.UncheckedPolylinearFloatInterpolation(
-                                matrix);
+                                    matrix);
                         } else if (a instanceof DoubleArray) {
                             return new ArraysPolylinearInterpolationsImpl.UncheckedPolylinearDoubleInterpolation(
-                                matrix);
+                                    matrix);
                             //[[Repeat.AutoGeneratedEnd]]
                         } else {
                             return new ArraysPolylinearInterpolationsImpl.UncheckedPolylinearInterpolation(matrix);
@@ -2051,14 +2142,13 @@ public class Matrices {
      * @param interpolationMethod the algorithm of interpolation for non-integer arguments of the returned function.
      * @param outsideValue        the value returned by {@link Func#get(double...)} method outside the matrix.
      * @return the view of the matrix as a mathematical function of
-     *         <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> arguments.
+     * <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> arguments.
      * @throws NullPointerException if <tt>matrix</tt> or <tt>interpolationMethod</tt> argument is <tt>null</tt>.
      * @see #isInterpolationFunc(Func)
      */
     public static Func asInterpolationFunc(
-        Matrix<? extends PArray> matrix,
-        InterpolationMethod interpolationMethod, double outsideValue)
-    {
+            Matrix<? extends PArray> matrix,
+            InterpolationMethod interpolationMethod, double outsideValue) {
         if (matrix == null)
             throw new NullPointerException("Null matrix argument");
         if (interpolationMethod == null)
@@ -2103,34 +2193,34 @@ public class Matrices {
                     //           if(?=\s+\(a\s+instanceof\s+) ==> } else if,,...]]
                     if (a instanceof ByteArray) {
                         return new ArraysPolylinearInterpolationsImpl.ContinuedPolylinearByteInterpolation(
-                            matrix, outsideValue);
+                                matrix, outsideValue);
                         //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
                     } else if (a instanceof CharArray) {
                         return new ArraysPolylinearInterpolationsImpl.ContinuedPolylinearCharInterpolation(
-                            matrix, outsideValue);
+                                matrix, outsideValue);
                     } else if (a instanceof ShortArray) {
                         return new ArraysPolylinearInterpolationsImpl.ContinuedPolylinearShortInterpolation(
-                            matrix, outsideValue);
+                                matrix, outsideValue);
                     } else if (a instanceof IntArray) {
                         return new ArraysPolylinearInterpolationsImpl.ContinuedPolylinearIntInterpolation(
-                            matrix, outsideValue);
+                                matrix, outsideValue);
                     } else if (a instanceof LongArray) {
                         return new ArraysPolylinearInterpolationsImpl.ContinuedPolylinearLongInterpolation(
-                            matrix, outsideValue);
+                                matrix, outsideValue);
                     } else if (a instanceof FloatArray) {
                         return new ArraysPolylinearInterpolationsImpl.ContinuedPolylinearFloatInterpolation(
-                            matrix, outsideValue);
+                                matrix, outsideValue);
                     } else if (a instanceof DoubleArray) {
                         return new ArraysPolylinearInterpolationsImpl.ContinuedPolylinearDoubleInterpolation(
-                            matrix, outsideValue);
+                                matrix, outsideValue);
                         //[[Repeat.AutoGeneratedEnd]]
                     } else {
                         return new ArraysPolylinearInterpolationsImpl.ContinuedPolylinearInterpolation(
-                            matrix, outsideValue);
+                                matrix, outsideValue);
                     }
                 } else {
                     return new ArraysPolylinearInterpolationsImpl.ContinuedPolylinearInterpolation(
-                        matrix, outsideValue);
+                            matrix, outsideValue);
                 }
             }
         }
@@ -2174,7 +2264,7 @@ public class Matrices {
      */
     public static boolean isOnlyInsideInterpolationFunc(Func f) {
         return f instanceof ArraysInterpolationsImpl.AbstractInterpolation
-            && ((ArraysInterpolationsImpl.AbstractInterpolation) f).isChecked() != null;
+                && ((ArraysInterpolationsImpl.AbstractInterpolation) f).isChecked() != null;
     }
 
     /**
@@ -2186,15 +2276,15 @@ public class Matrices {
      *
      * @param f some mathematical function (may be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return whether this function is an interpolation view of some AlgART matrix without outside continuation
-     *         with checking indexes.
+     * with checking indexes.
      * @see #isInterpolationFunc(Func)
      * @see #getUnderlyingMatrix(Func)
      */
     public static boolean isCheckedOnlyInsideInterpolationFunc(Func f) {
         Boolean v;
         return f instanceof ArraysInterpolationsImpl.AbstractInterpolation
-            && (v = ((ArraysInterpolationsImpl.AbstractInterpolation) f).isChecked()) != null
-            && v;
+                && (v = ((ArraysInterpolationsImpl.AbstractInterpolation) f).isChecked()) != null
+                && v;
     }
 
     /**
@@ -2210,7 +2300,7 @@ public class Matrices {
      */
     public static boolean isContinuedInterpolationFunc(Func f) {
         return f instanceof ArraysInterpolationsImpl.AbstractInterpolation
-            && ((ArraysInterpolationsImpl.AbstractInterpolation) f).outsideValue() != null;
+                && ((ArraysInterpolationsImpl.AbstractInterpolation) f).outsideValue() != null;
     }
 
     /**
@@ -2295,8 +2385,7 @@ public class Matrices {
      *                                  {@link #asCoordFuncMatrix(boolean, Func, Class, long...)} method.
      */
     public static <T extends PArray> Matrix<T> constantMatrix(
-        double constant, Class<? extends T> requiredType, long... dim)
-    {
+            double constant, Class<? extends T> requiredType, long... dim) {
         return asCoordFuncMatrix(true, ConstantFunc.getInstance(constant), requiredType, dim);
     }
 
@@ -2313,8 +2402,7 @@ public class Matrices {
      *                                  {@link #asCoordFuncMatrix(boolean, Func, Class, long...)} method.
      */
     public static <T extends PArray> Matrix<T> asCoordFuncMatrix(
-        Func f, Class<? extends T> requiredType, long... dim)
-    {
+            Func f, Class<? extends T> requiredType, long... dim) {
         return asCoordFuncMatrix(true, f, requiredType, dim);
     }
 
@@ -2358,9 +2446,8 @@ public class Matrices {
      * @see Arrays#getFunc(Array)
      */
     public static <T extends PArray> Matrix<T> asCoordFuncMatrix(
-        boolean truncateOverflows,
-        Func f, Class<? extends T> requiredType, long... dim)
-    {
+            boolean truncateOverflows,
+            Func f, Class<? extends T> requiredType, long... dim) {
         dim = dim.clone(); // to be on the safe side
         T array = ArraysFuncImpl.asCoordFuncMatrix(truncateOverflows, f, requiredType, dim);
         return matrix(array, dim);
@@ -2403,9 +2490,9 @@ public class Matrices {
      *
      * @param matrix         the source AlgART matrix.
      * @param newElementType required element type.
-     * @return               the matrix with the required element type, where every element is equal to
-     *                       the corresponding element of the source matrix, multiplied
-     *                       by the automatically chosen scale.
+     * @return the matrix with the required element type, where every element is equal to
+     * the corresponding element of the source matrix, multiplied
+     * by the automatically chosen scale.
      * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
      * @throws IllegalArgumentException if the required element type is not a primitive type.
      */
@@ -2547,9 +2634,8 @@ public class Matrices {
      * @see #asResized(Matrices.ResizingMethod, Matrix, long[], double[])
      */
     public static Matrix<PArray> asResized(
-        ResizingMethod resizingMethod,
-        Matrix<? extends PArray> matrix, long... newDim)
-    {
+            ResizingMethod resizingMethod,
+            Matrix<? extends PArray> matrix, long... newDim) {
         return ArraysMatrixResizer.asResized(resizingMethod, matrix, newDim, null);
     }
 
@@ -2590,9 +2676,8 @@ public class Matrices {
      * @see #resize(ArrayContext, Matrices.ResizingMethod, Matrix, Matrix)
      */
     public static Matrix<PArray> asResized(
-        ResizingMethod resizingMethod,
-        Matrix<? extends PArray> matrix, long[] newDim, double[] scales)
-    {
+            ResizingMethod resizingMethod,
+            Matrix<? extends PArray> matrix, long[] newDim, double[] scales) {
         // Note! The following declaration would be incorrect:
         // public static <T extends PArray> Matrix<T> asResized(
         //    ResizingMethod resizingMethod,
@@ -2646,11 +2731,10 @@ public class Matrices {
      * @param src            the source matrix.
      */
     public static void resize(
-        ArrayContext context,
-        ResizingMethod resizingMethod,
-        Matrix<? extends UpdatablePArray> result,
-        Matrix<? extends PArray> src)
-    {
+            ArrayContext context,
+            ResizingMethod resizingMethod,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> src) {
         ArraysMatrixResizer.resize(context, resizingMethod, result, src);
     }
 
@@ -2668,9 +2752,8 @@ public class Matrices {
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-        Func f, Class<? extends T> requiredType,
-        Matrix<? extends PArray> x)
-    {
+            Func f, Class<? extends T> requiredType,
+            Matrix<? extends PArray> x) {
         return asFuncMatrix(f, requiredType, several(PArray.class, x));
     }
 
@@ -2692,9 +2775,8 @@ public class Matrices {
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-        boolean truncateOverflows, Func f, Class<? extends T> requiredType,
-        Matrix<? extends PArray> x)
-    {
+            boolean truncateOverflows, Func f, Class<? extends T> requiredType,
+            Matrix<? extends PArray> x) {
         return asFuncMatrix(truncateOverflows, f, requiredType, several(PArray.class, x));
     }
 
@@ -2715,9 +2797,8 @@ public class Matrices {
      * @throws SizeMismatchException    if some of passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-        Func f, Class<? extends T> requiredType,
-        Matrix<? extends PArray> x1, Matrix<? extends PArray> x2)
-    {
+            Func f, Class<? extends T> requiredType,
+            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2) {
         return asFuncMatrix(f, requiredType, several(PArray.class, x1, x2));
     }
 
@@ -2741,9 +2822,8 @@ public class Matrices {
      * @throws SizeMismatchException    if some of passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-        boolean truncateOverflows, Func f, Class<? extends T> requiredType,
-        Matrix<? extends PArray> x1, Matrix<? extends PArray> x2)
-    {
+            boolean truncateOverflows, Func f, Class<? extends T> requiredType,
+            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2) {
         return asFuncMatrix(truncateOverflows, f, requiredType, several(PArray.class, x1, x2));
     }
 
@@ -2765,9 +2845,8 @@ public class Matrices {
      * @throws SizeMismatchException    if some of passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-        Func f, Class<? extends T> requiredType,
-        Matrix<? extends PArray> x1, Matrix<? extends PArray> x2, Matrix<? extends PArray> x3)
-    {
+            Func f, Class<? extends T> requiredType,
+            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2, Matrix<? extends PArray> x3) {
         return asFuncMatrix(f, requiredType, several(PArray.class, x1, x2, x3));
     }
 
@@ -2792,9 +2871,8 @@ public class Matrices {
      * @throws SizeMismatchException    if some of passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-        boolean truncateOverflows, Func f, Class<? extends T> requiredType,
-        Matrix<? extends PArray> x1, Matrix<? extends PArray> x2, Matrix<? extends PArray> x3)
-    {
+            boolean truncateOverflows, Func f, Class<? extends T> requiredType,
+            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2, Matrix<? extends PArray> x3) {
         return asFuncMatrix(truncateOverflows, f, requiredType, several(PArray.class, x1, x2, x3));
     }
 
@@ -2817,10 +2895,9 @@ public class Matrices {
      * @throws SizeMismatchException    if some of passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-        Func f, Class<? extends T> requiredType,
-        Matrix<? extends PArray> x1, Matrix<? extends PArray> x2,
-        Matrix<? extends PArray> x3, Matrix<? extends PArray> x4)
-    {
+            Func f, Class<? extends T> requiredType,
+            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2,
+            Matrix<? extends PArray> x3, Matrix<? extends PArray> x4) {
         return asFuncMatrix(f, requiredType, several(PArray.class, x1, x2, x3, x4));
     }
 
@@ -2846,10 +2923,9 @@ public class Matrices {
      * @throws SizeMismatchException    if some of passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-        boolean truncateOverflows, Func f, Class<? extends T> requiredType,
-        Matrix<? extends PArray> x1, Matrix<? extends PArray> x2,
-        Matrix<? extends PArray> x3, Matrix<? extends PArray> x4)
-    {
+            boolean truncateOverflows, Func f, Class<? extends T> requiredType,
+            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2,
+            Matrix<? extends PArray> x3, Matrix<? extends PArray> x4) {
         return asFuncMatrix(truncateOverflows, f, requiredType, several(PArray.class, x1, x2, x3, x4));
     }
 
@@ -2869,9 +2945,8 @@ public class Matrices {
      *                                  different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-        Func f, Class<? extends T> requiredType,
-        List<? extends Matrix<? extends PArray>> x)
-    {
+            Func f, Class<? extends T> requiredType,
+            List<? extends Matrix<? extends PArray>> x) {
         return asFuncMatrix(true, f, requiredType, x);
     }
 
@@ -2905,9 +2980,8 @@ public class Matrices {
      *                                  different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-        boolean truncateOverflows, Func f, Class<? extends T> requiredType,
-        List<? extends Matrix<? extends PArray>> x)
-    {
+            boolean truncateOverflows, Func f, Class<? extends T> requiredType,
+            List<? extends Matrix<? extends PArray>> x) {
         PArray[] arrays = arraysOfParallelMatrices(PArray.class, x);
         if (arrays.length == 0) // check this, not x.size(), which can be changed in a parallel thread
             throw new IllegalArgumentException("Empty x (list of AlgART matrices)");
@@ -2927,9 +3001,8 @@ public class Matrices {
      *                                  Arrays#asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)} method.
      */
     public static <T extends UpdatablePArray> Matrix<T> asUpdatableFuncMatrix(
-        Func.Updatable f, Class<? extends T> requiredType,
-        Matrix<? extends UpdatablePArray> x)
-    {
+            Func.Updatable f, Class<? extends T> requiredType,
+            Matrix<? extends UpdatablePArray> x) {
         return asUpdatableFuncMatrix(true, f, requiredType, x);
     }
 
@@ -2957,9 +3030,8 @@ public class Matrices {
      *                                  method.
      */
     public static <T extends UpdatablePArray> Matrix<T> asUpdatableFuncMatrix(
-        boolean truncateOverflows, Func.Updatable f, Class<? extends T> requiredType,
-        Matrix<? extends UpdatablePArray> x)
-    {
+            boolean truncateOverflows, Func.Updatable f, Class<? extends T> requiredType,
+            Matrix<? extends UpdatablePArray> x) {
         return x.matrix(Arrays.asUpdatableFuncArray(truncateOverflows, f, requiredType, x.array()));
     }
 
@@ -2981,9 +3053,8 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-        ArrayContext context, Func f,
-        Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x)
-    {
+            ArrayContext context, Func f,
+            Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x) {
         applyFunc(context, true, f, result, x);
     }
 
@@ -3008,9 +3079,8 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-        ArrayContext context, boolean truncateOverflows, Func f,
-        Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x)
-    {
+            ArrayContext context, boolean truncateOverflows, Func f,
+            Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x) {
         applyFunc(context, truncateOverflows, f, result, several(PArray.class, x));
     }
 
@@ -3033,9 +3103,8 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-        ArrayContext context, Func f,
-        Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x1, Matrix<? extends PArray> x2)
-    {
+            ArrayContext context, Func f,
+            Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x1, Matrix<? extends PArray> x2) {
         applyFunc(context, true, f, result, x1, x2);
     }
 
@@ -3061,9 +3130,8 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-        ArrayContext context, boolean truncateOverflows, Func f,
-        Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x1, Matrix<? extends PArray> x2)
-    {
+            ArrayContext context, boolean truncateOverflows, Func f,
+            Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x1, Matrix<? extends PArray> x2) {
         applyFunc(context, truncateOverflows, f, result, several(PArray.class, x1, x2));
     }
 
@@ -3087,10 +3155,9 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-        ArrayContext context, Func f,
-        Matrix<? extends UpdatablePArray> result,
-        Matrix<? extends PArray> x1, Matrix<? extends PArray> x2, Matrix<? extends PArray> x3)
-    {
+            ArrayContext context, Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2, Matrix<? extends PArray> x3) {
         applyFunc(context, true, f, result, x1, x2, x3);
     }
 
@@ -3117,10 +3184,9 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-        ArrayContext context, boolean truncateOverflows, Func f,
-        Matrix<? extends UpdatablePArray> result,
-        Matrix<? extends PArray> x1, Matrix<? extends PArray> x2, Matrix<? extends PArray> x3)
-    {
+            ArrayContext context, boolean truncateOverflows, Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2, Matrix<? extends PArray> x3) {
         applyFunc(context, truncateOverflows, f, result, several(PArray.class, x1, x2, x3));
     }
 
@@ -3145,11 +3211,10 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-        ArrayContext context, Func f,
-        Matrix<? extends UpdatablePArray> result,
-        Matrix<? extends PArray> x1, Matrix<? extends PArray> x2,
-        Matrix<? extends PArray> x3, Matrix<? extends PArray> x4)
-    {
+            ArrayContext context, Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2,
+            Matrix<? extends PArray> x3, Matrix<? extends PArray> x4) {
         applyFunc(context, true, f, result, x1, x2, x3, x4);
     }
 
@@ -3177,11 +3242,10 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-        ArrayContext context, boolean truncateOverflows, Func f,
-        Matrix<? extends UpdatablePArray> result,
-        Matrix<? extends PArray> x1, Matrix<? extends PArray> x2,
-        Matrix<? extends PArray> x3, Matrix<? extends PArray> x4)
-    {
+            ArrayContext context, boolean truncateOverflows, Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2,
+            Matrix<? extends PArray> x3, Matrix<? extends PArray> x4) {
         applyFunc(context, truncateOverflows, f, result, several(PArray.class, x1, x2, x3, x4));
     }
 
@@ -3203,9 +3267,8 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-        ArrayContext context, Func f,
-        Matrix<? extends UpdatablePArray> result, List<? extends Matrix<? extends PArray>> x)
-    {
+            ArrayContext context, Func f,
+            Matrix<? extends UpdatablePArray> result, List<? extends Matrix<? extends PArray>> x) {
         applyFunc(context, true, f, result, x);
     }
 
@@ -3236,9 +3299,8 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-        ArrayContext context, boolean truncateOverflows, Func f,
-        Matrix<? extends UpdatablePArray> result, List<? extends Matrix<? extends PArray>> x)
-    {
+            ArrayContext context, boolean truncateOverflows, Func f,
+            Matrix<? extends UpdatablePArray> result, List<? extends Matrix<? extends PArray>> x) {
         if (result == null)
             throw new NullPointerException("Null result argument");
         PArray[] arrays = arraysOfParallelMatrices(PArray.class, x);
@@ -3246,7 +3308,7 @@ public class Matrices {
         for (Matrix<? extends PArray> m : x) {
             if (!m.dimEquals(result))
                 throw new SizeMismatchException("x.get(" + k + ") and result matrix dimensions mismatch: "
-                    + "matrix #" + k + " is " + m + ", result matrix is " + result);
+                        + "matrix #" + k + " is " + m + ", result matrix is " + result);
             arrays[k++] = m.array();
         }
         Arrays.applyFunc(context, truncateOverflows, f, result.array(), arrays);
@@ -3299,10 +3361,10 @@ public class Matrices {
      *  }
      * </pre>
      *
-     * @param context   the context.
-     * @param function  function to apply.
-     * @param result    the result matrix.
-     * @param source    the source matrix.
+     * @param context  the context.
+     * @param function function to apply.
+     * @param result   the result matrix.
+     * @param source   the source matrix.
      */
     public static void applyFunction(
             ArrayContext context,
@@ -3457,10 +3519,9 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static Arrays.CopyStatus copy(
-        ArrayContext context,
-        Matrix<? extends UpdatableArray> dest,
-        Matrix<? extends Array> src)
-    {
+            ArrayContext context,
+            Matrix<? extends UpdatableArray> dest,
+            Matrix<? extends Array> src) {
         return copy(context, dest, src, 0);
     }
 
@@ -3485,11 +3546,10 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static Arrays.CopyStatus copy(
-        ArrayContext context,
-        Matrix<? extends UpdatableArray> dest,
-        Matrix<? extends Array> src,
-        int numberOfTasks)
-    {
+            ArrayContext context,
+            Matrix<? extends UpdatableArray> dest,
+            Matrix<? extends Array> src,
+            int numberOfTasks) {
         if (dest == null)
             throw new NullPointerException("Null dest argument");
         if (src == null)
@@ -3522,18 +3582,17 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static Arrays.CopyStatus copy(
-        ArrayContext context,
-        Matrix<? extends UpdatableArray> dest,
-        Matrix<? extends Array> src,
-        int numberOfTasks, boolean strictMode)
-    {
+            ArrayContext context,
+            Matrix<? extends UpdatableArray> dest,
+            Matrix<? extends Array> src,
+            int numberOfTasks, boolean strictMode) {
         if (dest == null)
             throw new NullPointerException("Null dest argument");
         if (src == null)
             throw new NullPointerException("Null src argument");
         if (!dest.dimEquals(src))
             throw new SizeMismatchException("dest and src matrix dimensions mismatch: "
-                + dest + " and " + src);
+                    + dest + " and " + src);
         return Arrays.copy(context, dest.array(), src.array(), numberOfTasks, strictMode);
     }
 
@@ -3554,17 +3613,16 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static Arrays.ComparingCopyStatus compareAndCopy(
-        ArrayContext context,
-        Matrix<? extends UpdatableArray> dest,
-        Matrix<? extends Array> src)
-    {
+            ArrayContext context,
+            Matrix<? extends UpdatableArray> dest,
+            Matrix<? extends Array> src) {
         if (dest == null)
             throw new NullPointerException("Null dest argument");
         if (src == null)
             throw new NullPointerException("Null src argument");
         if (!dest.dimEquals(src))
             throw new SizeMismatchException("dest and src matrix dimensions mismatch: "
-                + dest + " and " + src);
+                    + dest + " and " + src);
         return Arrays.compareAndCopy(context, dest.array(), src.array());
     }
 
@@ -3572,8 +3630,9 @@ public class Matrices {
      * Just copies <tt>src</tt> into <tt>dest</tt> without using multithreading.
      * Equivalent to <tt>{@link #copy(ArrayContext, Matrix, Matrix)
      * copy}(ArrayContext.{@link ArrayContext#DEFAULT_SINGLE_THREAD DEFAULT_SINGLE_THREAD}, dest, src).</tt>
-     * @param dest    the destination matrix.
-     * @param src     the src matrix.
+     *
+     * @param dest the destination matrix.
+     * @param src  the src matrix.
      * @throws NullPointerException     if <tt>src</tt> or <tt>dest</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if the src and destination element types do not match.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
@@ -3665,11 +3724,10 @@ public class Matrices {
      * @see #copyRegion(ArrayContext, Matrix, Matrix, Region, long[], Object)
      */
     public static void copyRegion(
-        ArrayContext context,
-        Matrix<? extends UpdatableArray> dest,
-        Matrix<? extends Array> src,
-        Region destRegion, long... shifts)
-    {
+            ArrayContext context,
+            Matrix<? extends UpdatableArray> dest,
+            Matrix<? extends Array> src,
+            Region destRegion, long... shifts) {
         if (dest == null)
             throw new NullPointerException("Null dest argument");
         if (src == null)
@@ -3684,21 +3742,20 @@ public class Matrices {
             Hyperparallelepiped destParallelepiped = (Hyperparallelepiped) destRegion;
             if (!destParallelepiped.isInsideMatrix(dest)) {
                 throw new IndexOutOfBoundsException("The destination region (" + destRegion
-                    + ") is not inside the destination " + dest);
+                        + ") is not inside the destination " + dest);
             }
             if (!destParallelepiped.isInsideMatrix(src, shifts)) {
                 throw new IndexOutOfBoundsException("The source region (" + destRegion + ", shifted backwards by "
-                    + JArrays.toString(shifts, ",", 100) + ") is not inside the source " + src);
+                        + JArrays.toString(shifts, ",", 100) + ") is not inside the source " + src);
             }
             if (ArraysSubMatrixCopier.copySubMatrixRegion(
-                context, dest, src, Matrix.ContinuationMode.NONE,
-                destRegion, shifts))
-            {
+                    context, dest, src, Matrix.ContinuationMode.NONE,
+                    destRegion, shifts)) {
                 return;
             }
         }
         ArraysMatrixRegionCopier regionCopier = ArraysMatrixRegionCopier.getInstance(context, destRegion.n(),
-            dest, src, shifts, null, true);
+                dest, src, shifts, null, true);
         regionCopier.process(destRegion);
     }
 
@@ -3772,11 +3829,10 @@ public class Matrices {
      *                                  constant submatrix continuation mode}.
      */
     public static void copyRegion(
-        ArrayContext context,
-        Matrix<? extends UpdatableArray> dest,
-        Matrix<? extends Array> src,
-        Region destRegion, long[] shifts, Object outsideValue)
-    {
+            ArrayContext context,
+            Matrix<? extends UpdatableArray> dest,
+            Matrix<? extends Array> src,
+            Region destRegion, long[] shifts, Object outsideValue) {
         if (dest == null)
             throw new NullPointerException("Null dest argument");
         if (src == null)
@@ -3788,13 +3844,12 @@ public class Matrices {
         shifts = shifts.clone();
         AbstractArray.checkCopyArguments(dest.array(), src.array());
         if (ArraysSubMatrixCopier.copySubMatrixRegion(
-            context, dest, src, Matrix.ContinuationMode.getConstantMode(outsideValue),
-            destRegion, shifts))
-        {
+                context, dest, src, Matrix.ContinuationMode.getConstantMode(outsideValue),
+                destRegion, shifts)) {
             return;
         }
         ArraysMatrixRegionCopier regionCopier = ArraysMatrixRegionCopier.getInstance(context, destRegion.n(),
-            dest, src, shifts, outsideValue, false);
+                dest, src, shifts, outsideValue, false);
         regionCopier.process(destRegion);
     }
 
@@ -3812,7 +3867,7 @@ public class Matrices {
      * <tt>result.array().fill(value)</tt>.
      *
      * @param result matrix to fill.
-     * @param value the value to be stored in all elements of the matrix.
+     * @param value  the value to be stored in all elements of the matrix.
      */
     public static void fill(Matrix<? extends UpdatablePArray> result, double value) {
         result.array().fill(value);
@@ -3851,15 +3906,15 @@ public class Matrices {
      *                              constant submatrix continuation mode}.
      */
     public static void fillRegion(
-        ArrayContext context,
-        Matrix<? extends UpdatableArray> dest,
-        Region destRegion, Object value)
-    {
+            ArrayContext context,
+            Matrix<? extends UpdatableArray> dest,
+            Region destRegion, Object value) {
         copyRegion(context, dest, dest, destRegion, dest.dimensions(), value);
     }
 
     /**
      * Equivalent to <tt>{@link #fillBoundary(Matrix, int, double) fillBoundary}(result, boundaryWidth, 0.0)</tt>.
+     *
      * @param result        the matrix to process.
      * @param boundaryWidth width of the boundary to fill.
      */
@@ -3970,7 +4025,7 @@ public class Matrices {
                 number = (Double) outsideValue;
             } else {
                 throw new ClassCastException("Cannot cast outside value from "
-                    + outsideValue.getClass() + " to any primitive type");
+                        + outsideValue.getClass() + " to any primitive type");
             }
             if (array instanceof BitArray) {
                 return Boolean.valueOf(number.doubleValue() != 0);
@@ -3998,7 +4053,7 @@ public class Matrices {
                 return outsideValue;
             } else {
                 throw new ClassCastException("Cannot cast outside value from "
-                    + outsideValue.getClass() + " to " + array.elementType());
+                        + outsideValue.getClass() + " to " + array.elementType());
             }
         }
     }
@@ -4015,22 +4070,22 @@ public class Matrices {
                 throw new IllegalArgumentException("Empty vertices[" + k + "]: 0-dimensional points are not allowed");
             if (requiredDimCount > 0 && vertices[k].length != requiredDimCount)
                 throw new IllegalArgumentException("The vertex #" + k + " is " + vertices[k].length
-                    + "-dimensional, but only " + requiredDimCount + "-dimensional vertices are allowed");
+                        + "-dimensional, but only " + requiredDimCount + "-dimensional vertices are allowed");
             if (vertices[k].length != vertices[0].length)
                 throw new IllegalArgumentException("Different number of dimensions in the vertex #" + k + " ("
-                    + vertices[k].length + "-dimensional) and the vertex #0 (" + vertices[0].length + "-dimensional");
+                        + vertices[k].length + "-dimensional) and the vertex #0 (" + vertices[0].length + "-dimensional");
         }
         IRange[] result = new IRange[vertices[0].length];
         for (int j = 0; j < result.length; j++) {
             result[j] = IRange.valueOf(
-                (long) StrictMath.floor(vertices[0][j]),
-                (long) StrictMath.ceil(vertices[0][j]));
+                    (long) StrictMath.floor(vertices[0][j]),
+                    (long) StrictMath.ceil(vertices[0][j]));
         }
         for (int k = 1; k < vertices.length; k++) {
             for (int j = 0; j < result.length; j++) {
                 result[j] = IRange.valueOf(
-                    Math.min(result[j].min(), (long) StrictMath.floor(vertices[k][j])),
-                    Math.max(result[j].max(), (long) StrictMath.ceil(vertices[k][j])));
+                        Math.min(result[j].min(), (long) StrictMath.floor(vertices[k][j])),
+                        Math.max(result[j].max(), (long) StrictMath.ceil(vertices[k][j])));
             }
         }
         return result;
@@ -4044,8 +4099,8 @@ public class Matrices {
         final int n = vertices[0].length; // number of dimensions
         if (vertices.length != n + 1)
             throw new IllegalArgumentException("Illegal number of vertices " + vertices.length + ": the "
-                + (n == 2 ? "triangle" : n == 3 ? "tetrahedron" : n + "-dimensional simplex")
-                + " must be defined by " + (n + 1) + " vertices");
+                    + (n == 2 ? "triangle" : n == 3 ? "tetrahedron" : n + "-dimensional simplex")
+                    + " must be defined by " + (n + 1) + " vertices");
         if ((long) vertices.length * (long) n != a.length) // possible in overflow case only
             throw new OutOfMemoryError("Too large A matrix");
         if (vertices.length != b.length) // possible in overflow case only
@@ -4056,7 +4111,7 @@ public class Matrices {
             double[] vertex = vertices[k];
             if (vertex.length != n) // extra check for this class
                 throw new IllegalArgumentException("Different number of dimensions in the vertex #" + k + " ("
-                    + vertex.length + "-dimensional) and the vertex #0 (" + n + "-dimensional");
+                        + vertex.length + "-dimensional) and the vertex #0 (" + n + "-dimensional");
             // Let's consider the hyperfacet opposite to the vertex #i.
             // The equation set for this hyperfacet is (m=n-1):
             //     |   x0   x1 ...   xm 1 |
@@ -4084,8 +4139,8 @@ public class Matrices {
                     }
                 }
                 double minorValue = (minorIndex & 1) == 0 ?
-                    determinant(n, minorMatrix) :
-                    -determinant(n, minorMatrix);
+                        determinant(n, minorMatrix) :
+                        -determinant(n, minorMatrix);
                 if (minorIndex < n) {
                     a[aOfs + minorIndex] = minorValue;
                 } else {
