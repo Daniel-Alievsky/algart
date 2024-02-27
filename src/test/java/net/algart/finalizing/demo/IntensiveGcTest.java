@@ -27,35 +27,17 @@ package net.algart.finalizing.demo;
 import java.io.*;
 
 /**
- * <p>Test for very intensive calls of <tt>System.gc()</tt> and <tt>System.runFinalization</tt> methods.</p>
+ * <p>Test for very intensive calls of <tt>System.gc()</tt> methods.</p>
  *
  * @author Daniel Alievsky
  */
 public class IntensiveGcTest {
     public static void main(String[] args) throws IOException {
-        boolean doGc = false, doRunFinalization = false;
-        int startArgIndex = 0;
-        for (String arg : args) {
-            if (arg.equalsIgnoreCase("gc")) {
-                doGc = true;
-                startArgIndex++;
-            } else if (arg.equalsIgnoreCase("runFinalization")) {
-                doRunFinalization = true;
-                startArgIndex++;
-            }
-        }
-
-        if (args.length < startArgIndex + 1) {
-            System.out.println("Usage: " + IntensiveGcTest.class.getName()
-                + " [gc] [runFinalization] timeoutInMilliseconds");
+        if (args.length < 1) {
+            System.out.println("Usage: " + IntensiveGcTest.class.getName() + " timeoutInMilliseconds");
             return;
         }
-
-        if (!(doGc || doRunFinalization)) {
-            System.out.println("No gc or runFinalization flag is set: nothing to do");
-            return;
-        }
-        long timeoutInMilliseconds = Long.parseLong(args[startArgIndex]);
+        long timeoutInMilliseconds = Long.parseLong(args[0]);
 
         long tFix = System.currentTimeMillis(), t;
         int count = 0;
@@ -66,10 +48,7 @@ public class IntensiveGcTest {
             data = new byte[1024][];
             for (int k = 0; k < 100; k++) {
                 ++count;
-                if (doRunFinalization)
-                    System.runFinalization();
-                if (doGc)
-                    System.gc();
+                System.gc();
                 try {
                     Thread.sleep(5);
                 } catch (InterruptedException e) {

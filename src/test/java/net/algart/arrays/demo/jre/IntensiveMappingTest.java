@@ -50,7 +50,7 @@ public class IntensiveMappingTest {
                 boolean doGc = attempt >= NUMBER_OF_MAPPING_ATTEMPTS / 2;
                 System.out.println("...cannot map, try again " + attempt + (doGc ? " (with gc)" : ""));
                 if (doGc) {
-                    System.runFinalization();
+                    // System.runFinalization(); - deprecated
                     System.gc();
                 }
                 try {

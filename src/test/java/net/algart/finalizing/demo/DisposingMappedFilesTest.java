@@ -244,7 +244,7 @@ public class DisposingMappedFilesTest {
             long t = System.currentTimeMillis();
             System.out.println("Active task count: " + fin.activeTasksCount());
             while (fin.activeTasksCount() > 0) {
-                System.runFinalization();
+                // System.runFinalization(); - deprecated
                 System.gc();
                 Thread.sleep(50);
                 if (System.currentTimeMillis() - t > 5000)
@@ -254,7 +254,7 @@ public class DisposingMappedFilesTest {
             for (int k = 0; k < 5; k++) {
                 // finalizing some additional objects that could be
                 // referred from finalization tasks performed above
-                System.runFinalization();
+                // System.runFinalization(); - deprecated
                 System.gc();
             }
             pause("[System.gc() loop was performed]");

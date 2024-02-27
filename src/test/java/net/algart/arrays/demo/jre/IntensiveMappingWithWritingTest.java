@@ -107,7 +107,7 @@ public class IntensiveMappingWithWritingTest {
 
             if (doRunFinalization) {
                 System.out.print("System.runFinalization()...");
-                System.runFinalization();
+                finalization();
                 System.out.println(" done");
             }
             if (doGc) {
@@ -142,12 +142,10 @@ public class IntensiveMappingWithWritingTest {
                     }
                     if (gcStep > 0 && i % gcStep == 0) {
                         if (doRunFinalization) {
-                            System.runFinalization();
-                            System.out.print("&");
+                            finalization();
                         }
                         if (doGc) {
-                            System.gc();
-                            System.out.print("*");
+                            gc();
                         }
                     }
                 }
@@ -155,6 +153,17 @@ public class IntensiveMappingWithWritingTest {
             }
             raf.close();
         }
+    }
+
+    private static void gc() {
+        System.gc();
+        System.out.print("*");
+    }
+
+    @SuppressWarnings("removal")
+    private static void finalization() {
+        System.runFinalization();
+        System.out.print("&");
     }
 }
 
