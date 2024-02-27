@@ -24,6 +24,7 @@
 
 package net.algart.arrays;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Logger;
 import java.util.List;
@@ -395,7 +396,8 @@ class InternalUtils {
                 Object inst;
                 try {
                     inst = clazz.getDeclaredConstructor().newInstance();
-                } catch (IllegalAccessException | InstantiationException ex) {
+                } catch (IllegalAccessException | InstantiationException | NoSuchMethodException |
+                         InvocationTargetException ex) {
                     inst = null;
                 }
                 if (inst == null) {
@@ -403,8 +405,7 @@ class InternalUtils {
                     inst = method.invoke(null);
                 }
                 if (inst == null)
-                    throw new NullPointerException("Illegal class " + className
-                        + ": it creates null instance");
+                    throw new NullPointerException("Illegal class " + className + ": it creates null instance");
                 return requiredClass.cast(inst);
             } catch (Exception ex1) {
                 if (className.equals(defaultClassName))
