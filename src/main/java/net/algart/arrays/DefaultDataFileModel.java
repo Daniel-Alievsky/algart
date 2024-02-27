@@ -94,7 +94,6 @@ import java.util.logging.Level;
  * @see StandardIODataFileModel
  */
 public class DefaultDataFileModel extends AbstractDataFileModel implements DataFileModel<File> {
-
     private static final int DEFAULT_NUMBER_OF_BANKS =
         MappedDataStorages.MappingSettings.nearestCorrectNumberOfBanks(
             Math.max(0, (int) Math.min((long) Integer.MAX_VALUE,
@@ -131,7 +130,8 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         "net.algart.arrays.DefaultDataFileModel.lazyWriting", InternalUtils.JAVA_7);
 
     private static final String DEFAULT_FILE_WRITE_MODE = InternalUtils.getStringProperty(
-        "net.algart.arrays.DefaultDataFileModel.fileWriteMode", "rwd"); // used also in StandardIODataFileModel
+        "net.algart.arrays.DefaultDataFileModel.fileWriteMode", "rwd");
+    // used also in StandardIODataFileModel
 
     private static final long DEFAULT_PREFIX_SIZE = Math.max(0L,
         InternalUtils.getIntProperty(
@@ -140,23 +140,28 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     private static final int OPEN_SLEEP_DELAY = 200; // ms
     private static final int OPEN_TIMEOUT = Math.max(0,
         InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.openTimeout", 5000));  // 5 sec sleeping time
+            "net.algart.arrays.DefaultDataFileModel.openTimeout", 5000));
+        // 5 sec sleeping time
 
     private static final int MAP_SLEEP_DELAY = 200; // ms
     private static final int MAP_TIMEOUT = Math.max(0,
         InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.mapTimeout", 600));  // 0.6 sec sleeping time
+            "net.algart.arrays.DefaultDataFileModel.mapTimeout", 600));
+        // 0.6 sec sleeping time
     private static final int MAP_TIMEOUT_WITH_GC = Math.max(0,
         InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.mapTimeoutWithGc", 400));  // and 0.4 sec sleeping time with gc
+            "net.algart.arrays.DefaultDataFileModel.mapTimeoutWithGc", 400));
+        // and 0.4 sec sleeping time with gc
 
     private static final int FORCE_SLEEP_DELAY = 250; // ms
     private static final int FORCE_TIMEOUT = Math.max(0,
         InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.forceTimeout", 15000));  // 15 sec sleeping time (40 attempts)
+            "net.algart.arrays.DefaultDataFileModel.forceTimeout", 15000));
+        // 15 sec sleeping time (40 attempts)
     private static final int MEMORY_UTILIZATION_FORCE_TIMEOUT = Math.max(0,
         InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.memoryUtilizationForceTimeout", 1000)); // 1 sec sleeping time
+            "net.algart.arrays.DefaultDataFileModel.memoryUtilizationForceTimeout", 1000));
+        // 1 sec sleeping time
     private static final int WRITE_THROUGH_FORCE_TIMEOUT = Math.max(0,
         InternalUtils.getIntProperty(
             "net.algart.arrays.DefaultDataFileModel.writeThroughForceTimeout", 500));  // 0.5 sec sleeping time
@@ -169,14 +174,19 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         InternalUtils.getLongPropertyWithImportant(
             "net.algart.arrays.maxMappedMemory", 536870912L))); // 512 MB
 
-    static final boolean UNSAFE_UNMAP_ON_EXIT = InternalUtils.getBooleanProperty(
-        "net.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit", false); // false by default
+    static final boolean UNSAFE_UNMAP_ON_EXIT = false;
+//    InternalUtils.getBooleanProperty(
+//        "net.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExit", false);
+    // false by default; DOES NOT WORK since Java 9!
 
-    static final boolean UNSAFE_UNMAP_ON_DISPOSE = InternalUtils.getBooleanProperty(
-        "net.algart.arrays.DefaultDataFileModel.unsafeUnmapOnDispose", false); // false by default; not used now
+    static final boolean UNSAFE_UNMAP_ON_DISPOSE = false;
+//    InternalUtils.getBooleanProperty(
+//        "net.algart.arrays.DefaultDataFileModel.unsafeUnmapOnDispose", false);
+        // false by default; not used now; DOES NOT WORK since Java 9!
 
     static final boolean UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY = InternalUtils.getBooleanProperty(
-        "net.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExceedingMaxMappedMemory", false); // false by default
+        "net.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExceedingMaxMappedMemory", false);
+        // false by default
 
     static final boolean GC_ON_EXCEEDING_MAX_MAPPED_MEMORY = InternalUtils.getBooleanProperty(
         "net.algart.arrays.DefaultDataFileModel.gcOnExceedingMaxMappedMemory",
@@ -685,8 +695,8 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         return resultError;
     }
 
-    private static void unsafeUnmap(final MappedByteBuffer mbb)
-            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    // Note: this solution will not work since Java 9!
+    private static void unsafeUnmap(final MappedByteBuffer mbb) throws Exception {
 //        AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
 //            public Object run() throws Exception {
                 Method getCleanerMethod = mbb.getClass().getMethod("cleaner");
@@ -763,7 +773,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             unmapped = true;
             try {
                 DefaultDataFileModel.unsafeUnmap(mbb);
-            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+            } catch (Exception e) {
                 LargeMemoryModel.LOGGER.log(Level.WARNING, "MMMM unsafe unmapping: " + e, e);
             }
         }
@@ -985,8 +995,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             return file.exists();
         }
 
-        final boolean unsafeUnmapAll()
-                throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        final boolean unsafeUnmapAll() throws Exception {
             if (this.getClass() != MappableFile.class) {
                 return true; // applicable only to this class!
             }

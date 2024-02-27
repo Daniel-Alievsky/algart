@@ -107,7 +107,7 @@ class MappedDataStorages {
             for (int attemptCount = 1; attemptCount <= LargeMemoryModel.DELETION_LOOPS_IN_CLEANER; attemptCount++) {
                 Set<MappedStorage> all;
                 synchronized (allNonFinalizedMappedStorages) {
-                    all = new HashSet<MappedStorage>(allNonFinalizedMappedStorages);
+                    all = new HashSet<>(allNonFinalizedMappedStorages);
                 }
 
                 /* // for possible debugging
@@ -1893,11 +1893,12 @@ class MappedDataStorages {
                                     else
                                         warningEvenInHook(caller + " cannot unmap array storage file " + df
                                             + " (some arrays are not released yet)");
-                                } catch (InvocationTargetException |
-                                         NoSuchMethodException | IllegalAccessException ex) {
+                                } catch (Exception ex) {
                                     if (caller == DisposeCaller.SHUTDOWN_HOOK) {
                                         severeEvenInHook(
                                             caller + " cannot perform unmapping (unsafe operation) in " + df, ex);
+                                        return;
+                                        // - no any other actions, that could prevent normal shutdown
                                     } else {
                                         Error err = new InternalError("Error while calling undocumented "
                                             + "cleaning methods of DirectByteBuffer!");
