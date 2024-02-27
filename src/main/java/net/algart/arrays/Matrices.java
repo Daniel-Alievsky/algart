@@ -1713,7 +1713,7 @@ public class Matrices {
      * @return array of {@link Matrix#array() built-in AlgART arrays} of all passed matrices.
      * @throws NullPointerException  if <tt>arrayClass</tt> argument, the <tt>matrices</tt> list
      *                               or one of its elements is <tt>null</tt>.
-     * @throws SizeMismatchException if if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     * @throws SizeMismatchException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
      *                               different dimensions.
      * @throws ClassCastException    if one of matrices contains built-in AlgART array that is not an instance
      *                               of the type <tt>arrayClass</tt>
@@ -1781,7 +1781,7 @@ public class Matrices {
      *
      * @param matrices list of some matrices.
      * @throws NullPointerException  if the <tt>matrices</tt> list or one of its elements is <tt>null</tt>.
-     * @throws SizeMismatchException if if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     * @throws SizeMismatchException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
      *                               different dimensions.
      * @see #checkDimensionEquality(Matrix[])
      */
@@ -1810,7 +1810,7 @@ public class Matrices {
      *
      * @param matrices list of some matrices.
      * @throws NullPointerException  if the <tt>matrices</tt> list or one of its elements is <tt>null</tt>.
-     * @throws SizeMismatchException if if <tt>matrices.length&gt;1</tt> and some of passed matrices have
+     * @throws SizeMismatchException if <tt>matrices.length&gt;1</tt> and some of passed matrices have
      *                               different dimensions.
      */
     public static void checkDimensionEquality(Matrix<?>... matrices) {

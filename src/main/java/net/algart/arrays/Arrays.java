@@ -6615,7 +6615,7 @@ public class Arrays {
     }
 
     /**
-     * Performs a loop of <tt>System.runFinalization()</tt> and <tt>System.gc()</tt>,
+     * Performs a loop of <tt>System.gc()</tt>,
      * and waits for finishing all finalization tasks
      * that are scheduled by any classes of this package.
      * Does nothing if there are no scheduled finalization tasks.
@@ -6669,7 +6669,7 @@ public class Arrays {
             if (t1 - tFix > timeoutInMilliseconds) {
                 return false;
             }
-            System.runFinalization();
+            // System.runFinalization(); - deprecated in new Java versions
             System.gc();
             long t2 = System.currentTimeMillis();
             if (LargeMemoryModel.activeFinalizationTasksCount() == 0)
@@ -6686,7 +6686,6 @@ public class Arrays {
             // that could be referred from data storage finalized before.
             // Example of such objects: data file models stored in
             // LargeMemoryModel.allUsedDataFileModelsWithAutoDeletion
-            System.runFinalization();
             System.gc();
             Thread.sleep(50);
         }
