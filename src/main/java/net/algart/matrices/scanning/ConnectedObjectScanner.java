@@ -123,7 +123,8 @@ public abstract class ConnectedObjectScanner implements Cloneable {
     /**
      * <p>Visitor of matrix elements. Used by {@link ConnectedObjectScanner} class.</p>
      */
-    public static interface ElementVisitor {
+    @FunctionalInterface
+    public interface ElementVisitor {
         /**
          * Method, called by
          * {@link ConnectedObjectScanner#clear(ArrayContext, ConnectedObjectScanner.ElementVisitor, long[], boolean)}
@@ -140,7 +141,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
          * @param coordinatesInMatrix the coordinates of the element in the bit matrix or, maybe, <tt>null</tt>.
          * @param indexInArray        the index of this element in the underlying array.
          */
-        public void visit(long[] coordinatesInMatrix, long indexInArray);
+        void visit(long[] coordinatesInMatrix, long indexInArray);
     }
 
     /**
