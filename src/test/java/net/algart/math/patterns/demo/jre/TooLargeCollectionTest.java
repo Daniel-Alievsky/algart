@@ -43,7 +43,8 @@ public class TooLargeCollectionTest {
                 + " ArrayList|LinkedList|HashSet|TreeSet");
             return;
         }
-        Collection<Long> values = (Collection<Long>)Class.forName("java.util." + args[0]).newInstance();
+        Collection<Long> values = (Collection<Long>)Class.forName("java.util." + args[0])
+                .getDeclaredConstructor().newInstance();
         for (long k = 0; k < NUMBER_OF_VALUES; k++) {
             values.add(k);
             if (k % 1048576 == 0) {

@@ -54,7 +54,7 @@ public class BufferMemoryModelTest {
         IntBuffer ib = bb.asIntBuffer();
         bb.position(bb.limit() / 2); // must work even in this case
         UpdatableIntArray ia = BufferMemoryModel.asUpdatableIntArray(bb);
-        IntBuffer sib = n >= 10 ? ((IntBuffer)ib.position(10)).slice() : ib;
+        IntBuffer sib = n >= 10 ? ib.position(10).slice() : ib;
         UpdatableIntArray sia = n >= 10 ? ia.subArray(10, n) : ia;
         for (int iteration = 1; iteration <= numberOfIterations; iteration++) {
             System.out.println("Iteration #" + iteration + "/" + numberOfIterations);
