@@ -8591,9 +8591,8 @@ public class Arrays {
         }
     }
 
-    private static class AlgARTArrayList<E> extends AbstractList<E>
-        implements RandomAccess, java.io.Serializable {
-        private Array array;
+    private static class AlgARTArrayList<E> extends AbstractList<E> implements RandomAccess {
+        private final Array array;
 
         AlgARTArrayList(Array array) {
             if (array == null)
@@ -8678,8 +8677,6 @@ public class Arrays {
         public boolean contains(Object o) {
             return indexOf(o) != -1;
         }
-
-        private static final long serialVersionUID = 5079488082846510199L;
     }
 
     private static class AlgARTArrayCharSequence implements CharSequence {
