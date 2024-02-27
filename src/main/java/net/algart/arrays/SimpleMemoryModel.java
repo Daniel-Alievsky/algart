@@ -26,6 +26,8 @@ package net.algart.arrays;
 
 import net.algart.arrays.SimpleArraysImpl.*;
 
+import java.util.Objects;
+
 /**
  * <p>The simplest memory model, based on usual Java arrays.
  * It means that AlgART array of elements of some <tt><i>type</i></tt>
@@ -395,8 +397,7 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      *                                  or <tt>boolean[]</tt> array.
      */
     public static UpdatableArray asUpdatableArray(Object array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (array instanceof boolean[]) {
             throw new IllegalArgumentException("asUpdatableArray cannot be called for boolean[] array");
         } else
@@ -431,6 +432,32 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
         }
     }
 
+    /**
+     * Returns an unresizable AlgART bit array backed by the specified <tt>long[]</tt>>array
+     * according the packing rules, describing in {@link PackedBitArrays} class.
+     * Changes in the returned array "write through" to <tt>array</tt> argument.
+     * The length and capacity of the returned array are equal to the specified <tt>length</tt> argument.
+     *
+     * @param packedBitArray the source <tt>long[]</tt>> array.
+     * @param length the length of the returned bit array.
+     * @return      an unresizable AlgART bit array backed by the specified Java array.
+     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if the passed <tt>array</tt> is too short to store
+     *                                  <tt>length</tt> bits (i.e. if <tt>array.length &lt; (length+63)/64).</tt>
+     */
+    public static UpdatableBitArray asUpdatableBitArray(long[] packedBitArray, long length) {
+        Objects.requireNonNull(packedBitArray, "Null packedBitArray");
+        if (length < 0) {
+            throw new IllegalArgumentException("Negative length");
+        }
+        final long packedLength = PackedBitArrays.packedLength(length);
+        if (packedLength > packedBitArray.length) {
+            throw new IllegalArgumentException("Too short packedBitArray long[" + packedBitArray.length +
+                    "]: it must contain at least " + packedLength + " long elements to store " + length + " bits");
+        }
+        return new UpdatableJABitArray(packedBitArray, length);
+
+    }
     /*Repeat() char ==> byte,,short,,int,,long,,float,,double;;
                Char ==> Byte,,Short,,Int,,Long,,Float,,Double
      */

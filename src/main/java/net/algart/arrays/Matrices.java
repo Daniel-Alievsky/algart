@@ -1804,13 +1804,13 @@ public class Matrices {
         return result;
     }
 
-    public static <T extends Array> Matrix<T> joinToNewDimension(
+    public static <T extends Array> Matrix<T> mergeAlongLastDimension(
             Class<T> arrayClass,
             Collection<? extends Matrix<?>> matrices) {
-        return joinToNewDimension(arrayClass, matrices, Arrays.SMM);
+        return mergeAlongLastDimension(arrayClass, matrices, Arrays.SMM);
     }
 
-    public static <T extends Array> Matrix<T> joinToNewDimension(
+    public static <T extends Array> Matrix<T> mergeAlongLastDimension(
             Class<T> arrayClass,
             Collection<? extends Matrix<?>> matrices,
             MemoryModel memoryModel) {
@@ -1834,6 +1834,38 @@ public class Matrices {
             p += size;
         }
         return InternalUtils.cast(result);
+    }
+
+    public static <T extends Array> List<Matrix<T>> splitAlongLastDimension(Matrix<T> joined) {
+        return splitAlongLastDimension(joined, Integer.MAX_VALUE);
+    }
+
+    public static <T extends Array> List<Matrix<T>> splitAlongLastDimension(Matrix<T> joined, long limit) {
+        Objects.requireNonNull(joined, "Null joined matrix");
+        if (limit <= 0) {
+            throw new IllegalArgumentException("Zero or negative limit " + limit);
+        }
+        final long[] dimensions = joined.dimensions();
+        if (dimensions.length <= 1) {
+            throw new IllegalArgumentException("Joined matrix must have at least 2 dimensions");
+        }
+        final long numberOfMatrices = dimensions[dimensions.length - 1];
+        if (numberOfMatrices > limit) {
+            throw new IllegalArgumentException("Too large number of matrices, joined in the last dimension: "
+                    + numberOfMatrices + " > allowed limit " + limit);
+        }
+        final long[] reducedDimensions = java.util.Arrays.copyOf(dimensions, dimensions.length - 1);
+        dimensions[reducedDimensions.length] = 1;
+        final long[] position = new long[dimensions.length];
+        // - zero-filled by Java
+        List<Matrix<T>> result = new ArrayList<>();
+        for (long k = 0; k < numberOfMatrices; k++) {
+            position[position.length - 1] = k;
+            final Matrix<T> subMatrix = joined.subMatr(position, dimensions);
+            final Matrix<T> reduced = Matrices.matrix(subMatrix.array(), reducedDimensions);
+            result.add(reduced);
+        }
+        return result;
     }
 
     /**

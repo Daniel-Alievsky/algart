@@ -24,7 +24,6 @@
 
 package net.algart.matrices;
 
-import net.algart.arrays.ByteArray;
 import net.algart.arrays.Matrices;
 import net.algart.arrays.Matrix;
 import net.algart.arrays.PArray;
@@ -32,7 +31,6 @@ import net.algart.external.ExternalAlgorithmCaller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
 public class JoinSliceMatricesTest {
@@ -45,18 +43,14 @@ public class JoinSliceMatricesTest {
         final File matrixFolder = new File(args[1]);
         List<Matrix<? extends PArray>> matrices = ExternalAlgorithmCaller.readImage(sourceFile);
         System.out.printf("List: %s%n", matrices);
-        Matrix<? extends PArray> matrix = Matrices.joinToNewDimension(ByteArray.class, matrices);
-        System.out.printf("Joined: %s%n", matrix);
-        ExternalAlgorithmCaller.writeAlgARTImage(matrixFolder, List.of(matrix));
-
-//        MultiMatrix unpackedChannels = MultiMatrix.unpackChannels(matrix);
-//        if (!unpackedChannels.dimEquals(multiMatrix)) {
-//            throw new AssertionError("Dimensions mismatch!");
-//        }
-//        for (int k = 0; k < multiMatrix.numberOfChannels(); k++) {
-//            if (!multiMatrix.channel(k).equals(unpackedChannels.channel(k))) {
-//                throw new AssertionError("Channels #" + k + " mismatch!");
-//            }
-//        }
+        Matrix<PArray> joined = Matrices.mergeAlongLastDimension(PArray.class, matrices);
+        System.out.printf("Joined: %s%n", joined);
+        ExternalAlgorithmCaller.writeAlgARTImage(matrixFolder, List.of(joined));
+        List<Matrix<PArray>> unpacked = Matrices.splitAlongLastDimension(joined);
+        for (int k = 0; k < unpacked.size(); k++) {
+            if (!unpacked.get(k).equals(matrices.get(k))) {
+                throw new AssertionError("Channels #" + k + " mismatch!");
+            }
+        }
     }
 }
