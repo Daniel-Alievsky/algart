@@ -106,6 +106,7 @@ public class DisposingMappedFilesTest {
         MappedByteBuffer bb1, bb2, bb3, bb4;
         File fileToDeleteInFinalize;
         public class FinHolder {
+            @SuppressWarnings("removal")
             protected void finalize() throws Throwable {
                 // This solution never works! References to bb1, bb2, ... are alive while executing this finalizer.
                 try {

@@ -231,14 +231,14 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      *
      * <p>The created work directory can be used for exchanging data with the external application,
      * called by {@link #execute(ProcessBuilder)} method.
-     * The method {@link #close()}, as well as {@link #finalize()}, tries to completely remove this directory
+     * The method {@link #close()} tries to completely remove this directory
      * with all its files and subdirectories (you may {@link #cancelRemovingWorkDirectory() cancel}
      * this action). You should understand, that it is possible
-     * that neither {@link #close()}, nor even {@link #finalize()} method will not be able to remove it,
+     * that {@link #close()} method will not be able to remove it,
      * because some temporary files can be locked by OS &mdash; for example, if you map them via
      * {@link LargeMemoryModel}. You can use {@link #cleanup(String)} method at any time
      * to remove all "garbage", i.e. work directories, created by this class (maybe while previous calls
-     * of your application), but not successfully deleted by {@link #close()} or {@link #finalize()} methods.
+     * of your application), but not successfully deleted by {@link #close()} methods.
      *
      * <p>The created unique work directory always has a name, started with the character sequence<br>
      * &nbsp;&nbsp;&nbsp;&nbsp;<tt>{@link #WORK_DIRECTORY_PREFIX} + additionalPrefix</tt>.<br>
@@ -316,12 +316,12 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * Another typical reasons of appearing non-deleted work directories is canceling automatic deletion
      * of work data for some instance of this class by {@link #cancelRemovingWorkDirectory()} method
      * or abnormal termination of your application,
-     * when neither {@link #close()}, nor {@link #finalize()} were not called for some instance of this class.
+     * when {@link #close()}were not called for some instance of this class.
      *
      * <p>The cleanup technique, implemented in this method, is based on <tt>java.nio.channels.FileLock</tt> class.
      * When an instance of this class is created, it places into its {@link #getWorkDirectory() work directory}
      * an empty file with some reserved name {@link #USAGE_MARKER_FILE_NAME} and locks it via <tt>FileLock</tt>.
-     * When an instance finishes working, i.e. when its {@link #close()} method or the {@link #finalize() finalizer}
+     * When an instance finishes working, i.e. when its {@link #close()} method
      * is called, it unlocks this file and removes it.
      * It is obvious that all locked files are unlocked when the application is terminated, normally or abnormally.
      * So, if <tt>tempDirectory</tt> contains some subdirectory, the name of which is started
@@ -1363,7 +1363,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
 
     /**
      * Cancels automatic removing of the work directory, created while instantiation of this object,
-     * in {@link #close()} and {@link #finalize()} methods. If you call this method at least once,
+     * in {@link #close()} method. If you call this method at least once,
      * then the further call of {@link #close()} will just set the state
      * of this instance to "{@link #isClosedSuccessfully() successfully closed}" and will not try to
      * remove the temporary disk data, which you possibly used for exchanging information with an external
@@ -1416,7 +1416,6 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * In any case, after the first call of this method, {@link #isClosed()} method returns <tt>true</tt>
      * and {@link #execute(ProcessBuilder)} method throws <tt>IllegalStateException</tt>.
      *
-     * @see #finalize()
      * @see #cleanup(String)
      */
     public void close() {
@@ -1511,15 +1510,6 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
                 + (!isClosed() ? ")" : !isClosedSuccessfully() ?
                 ", CLOSED (but some files were not deleted)" : ", CLOSED)");
         }
-    }
-
-    /**
-     * Calls {@link #close()} method.
-     */
-    protected void finalize() {
-        close();
-//        System.out.println("Finalized " + this);
-        // No reasons to call super.finalize(): it is the method of Object class, which does nothing.
     }
 
     private static void writeStringOfPossible(BufferedWriter writer, String s) {
