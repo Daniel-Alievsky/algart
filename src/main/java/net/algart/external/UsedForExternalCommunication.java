@@ -25,16 +25,20 @@
 package net.algart.external;
 
 import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p>Annotation which indicates that the Java parameter, method or field
- * is probably used by some native code via JNI.</p>
+ * <p>Annotation indicating that a Java method, parameter, constructor or field
+ * is likely to be used for external communication, for example, they are accessed from some native code via JNI.</p>
  *
- * <p>It is especially useful for private fields or methods: you cannot change them,
- * if they are marked by this annotatiion, without corresponding changes in the native code.
+ * <p>Methods, constructors, parameters, or fields marked with this annotation should be considered
+ * part of the public API, even if they are declared private (because the native code can access even private members).
+ * If you change them, it may require corresponding corrections in some other libraries or applications.
  *
  * @author Daniel Alievsky
  */
-@Target({ElementType.PARAMETER, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
-public @interface UsedByNativeCode {}
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.FIELD})
+public @interface UsedForExternalCommunication {}
