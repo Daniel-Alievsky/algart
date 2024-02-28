@@ -1806,13 +1806,38 @@ public class Matrices {
 
     public static <T extends Array> Matrix<T> mergeAlongLastDimension(
             Class<T> arrayClass,
-            Collection<? extends Matrix<?>> matrices) {
+            List<? extends Matrix<?>> matrices) {
         return mergeAlongLastDimension(arrayClass, matrices, Arrays.SMM);
     }
 
+    /**
+     * Merges <i>K</i> <i>n</i>-dimensional matrices with identical element types and dimensions
+     * <i>M</i><sub>1</sub>x<i>M</i><sub>2</sub>x...x<i>M</i><sub><i>n</i></sub> into
+     * a single (<i>n</i>+1)-dimensional matrix
+     * <i>M</i><sub>1</sub>x<i>M</i><sub>2</sub>x...x<i>M</i><sub><i>n</i></sub>x<i>K</i>
+     * along the last dimension.
+     * So, the element with index (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n</sub></i>)
+     * of the returned matrix will be equal to the element with index
+     * (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>)
+     * of the matrix <tt>matrices.get(<i>i<sub>n</sub></i>)</tt>.
+     *
+     * @param arrayClass  the required class / interface of built-in arrays for all passed matrices.
+     * @param matrices    list of the source matrices.
+     * @param memoryModel memory model for creating the result matrix.
+     * @return result merged matrix.
+     * @throws NullPointerException     if <tt>arrayClass</tt> argument, the <tt>matrices</tt> list,
+     *                                  one of its elements or memory model is <tt>null</tt>.
+     * @throws SizeMismatchException    if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     *                                  different dimensions.
+     * @throws IllegalArgumentException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     *                                  different element type.
+     * @throws ClassCastException       if one of matrices contains built-in AlgART array that is not an instance
+     *                                  of the type <tt>arrayClass</tt>
+     *                                  (<tt>!arrayClass.isInstance(matrices[k].{@link Matrix#array() array()})</tt>).
+     */
     public static <T extends Array> Matrix<T> mergeAlongLastDimension(
             Class<T> arrayClass,
-            Collection<? extends Matrix<?>> matrices,
+            List<? extends Matrix<?>> matrices,
             MemoryModel memoryModel) {
         Objects.requireNonNull(arrayClass, "Null arrayClass argument");
         Objects.requireNonNull(matrices, "Null matrices argument");
