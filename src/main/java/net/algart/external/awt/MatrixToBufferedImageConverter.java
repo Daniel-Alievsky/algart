@@ -25,12 +25,11 @@
 package net.algart.external.awt;
 
 import net.algart.arrays.*;
-import net.algart.arrays.Arrays;
 
 import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.image.*;
-import java.util.*;
+import java.util.Locale;
 
 public abstract class MatrixToBufferedImageConverter {
     /**
@@ -38,7 +37,7 @@ public abstract class MatrixToBufferedImageConverter {
      * toBufferedImage}(packedMatrix, null)</tt>.
      *
      * @param packedMatrix the packed matrix.
-     * @return             the <tt>BufferedImage</tt> with the same data.
+     * @return the <tt>BufferedImage</tt> with the same data.
      */
     public final BufferedImage toBufferedImage(Matrix<? extends PArray> packedMatrix) {
         return toBufferedImage(packedMatrix, null);
@@ -54,12 +53,11 @@ public abstract class MatrixToBufferedImageConverter {
      * @param dataBuffer   the data for <tt>BufferedImage</tt>; may be <tt>null</tt>, then it is automatically
      *                     created as {@link #toDataBuffer(net.algart.arrays.Matrix)
      *                     toDataBuffer(packedMatrix)}.
-     * @return             the <tt>BufferedImage</tt> with the same data.
+     * @return the <tt>BufferedImage</tt> with the same data.
      */
     public final BufferedImage toBufferedImage(
-        Matrix<? extends PArray> packedMatrix,
-        java.awt.image.DataBuffer dataBuffer)
-    {
+            Matrix<? extends PArray> packedMatrix,
+            java.awt.image.DataBuffer dataBuffer) {
         checkMatrix(packedMatrix);
         if (dataBuffer == null) {
             dataBuffer = toDataBuffer(packedMatrix);
@@ -71,8 +69,8 @@ public abstract class MatrixToBufferedImageConverter {
         if (bandMasks != null) {
             WritableRaster wr = Raster.createPackedRaster(dataBuffer, dimX, dimY, dimX, bandMasks, null);
             DirectColorModel cm = bandMasks.length > 3 ?
-                new DirectColorModel(32, bandMasks[0], bandMasks[1], bandMasks[2], bandMasks[3]) :
-                new DirectColorModel(24, bandMasks[0], bandMasks[1], bandMasks[2], 0);
+                    new DirectColorModel(32, bandMasks[0], bandMasks[1], bandMasks[2], bandMasks[3]) :
+                    new DirectColorModel(24, bandMasks[0], bandMasks[1], bandMasks[2], 0);
             return new BufferedImage(cm, wr, false, null);
         }
         byte[][] palette = palette();
@@ -80,9 +78,10 @@ public abstract class MatrixToBufferedImageConverter {
             if (palette.length < 3)
                 throw new AssertionError("palette() method must return palette with 3 or 4 bands");
             IndexColorModel cm = palette.length == 3 ?
-                new IndexColorModel(Byte.SIZE, 256, palette[0], palette[1], palette[2]) :
-                new IndexColorModel(Byte.SIZE, 256, palette[0], palette[1], palette[2], palette[3]);
-            WritableRaster wr = Raster.createInterleavedRaster(dataBuffer, dimX, dimY, dimX, 1, new int[]{0}, null);
+                    new IndexColorModel(Byte.SIZE, 256, palette[0], palette[1], palette[2]) :
+                    new IndexColorModel(Byte.SIZE, 256, palette[0], palette[1], palette[2], palette[3]);
+            WritableRaster wr = Raster.createInterleavedRaster(
+                    dataBuffer, dimX, dimY, dimX, 1, new int[]{0}, null);
             return new BufferedImage(cm, wr, false, null);
         }
         int[] indexes = new int[dataBuffer.getNumBanks()];
@@ -91,11 +90,15 @@ public abstract class MatrixToBufferedImageConverter {
             indexes[k] = k;
             offsets[k] = 0;
         }
-        WritableRaster wr = Raster.createBandedRaster(dataBuffer, dimX, dimY, dimX, indexes, offsets, null);
+        WritableRaster wr = indexes.length == 1 ?
+                Raster.createInterleavedRaster(dataBuffer, dimX, dimY, dimX, 1, new int[]{0}, null) :
+                // - important! in other case,
+                // createGraphics().drawXxx method will use incorrect (translated) intensity
+                Raster.createBandedRaster(dataBuffer, dimX, dimY, dimX, indexes, offsets, null);
         ColorSpace cs = ColorSpace.getInstance(indexes.length == 1 ? ColorSpace.CS_GRAY : ColorSpace.CS_sRGB);
         boolean hasAlpha = indexes.length > 3;
         ComponentColorModel cm = new ComponentColorModel(cs, null,
-            hasAlpha, false, hasAlpha ? ColorModel.TRANSLUCENT : ColorModel.OPAQUE, dataBuffer.getDataType());
+                hasAlpha, false, hasAlpha ? ColorModel.TRANSLUCENT : ColorModel.OPAQUE, dataBuffer.getDataType());
         return new BufferedImage(cm, wr, false, null);
     }
 
@@ -104,7 +107,7 @@ public abstract class MatrixToBufferedImageConverter {
      * Note that it is <tt>int</tt>, not <tt>long</tt> (AWT images have 31-bit dimensions).
      *
      * @param packedMatrix the packed matrix.
-     * @return             the width of the corresponding image.
+     * @return the width of the corresponding image.
      */
     public int getWidth(Matrix<? extends PArray> packedMatrix) {
         checkMatrix(packedMatrix);
@@ -116,7 +119,7 @@ public abstract class MatrixToBufferedImageConverter {
      * Note that it is <tt>int</tt>, not <tt>long</tt> (AWT images have 31-bit dimensions).
      *
      * @param packedMatrix the packed matrix.
-     * @return             the height of the corresponding image.
+     * @return the height of the corresponding image.
      */
     public int getHeight(Matrix<? extends PArray> packedMatrix) {
         checkMatrix(packedMatrix);
@@ -128,7 +131,7 @@ public abstract class MatrixToBufferedImageConverter {
      * For example, it is 3 for RGB image or 4 for RGB-Alpha.
      *
      * @param packedMatrix the packed matrix.
-     * @return             the corresponding number of color bands.
+     * @return the corresponding number of color bands.
      */
     public int getBandCount(Matrix<? extends PArray> packedMatrix) {
         checkMatrix(packedMatrix);
@@ -141,7 +144,7 @@ public abstract class MatrixToBufferedImageConverter {
      * if you want to do something with the created DataBuffer, for example, to correct some its pixels.
      *
      * @param packedMatrix the packed data.
-     * @return             the newly allocated <tt>DataBuffer</tt> with the same data.
+     * @return the newly allocated <tt>DataBuffer</tt> with the same data.
      */
     public final java.awt.image.DataBuffer toDataBuffer(Matrix<? extends PArray> packedMatrix) {
         checkMatrix(packedMatrix);
@@ -170,8 +173,8 @@ public abstract class MatrixToBufferedImageConverter {
      * @param packedMatrix the packed data.
      * @param color        some color.
      * @param bankIndex    index of the bank in terms of <tt>java.awt.image.DataBuffer</tt>.
-     * @return             the corresponded component of this color or packed RGB-Alpha value,
-     *                     depending on the structure of the data buffer.
+     * @return the corresponded component of this color or packed RGB-Alpha value,
+     * depending on the structure of the data buffer.
      */
     public long colorValue(Matrix<? extends PArray> packedMatrix, java.awt.Color color, int bankIndex) {
         final int bandCount = getBandCount(packedMatrix);
@@ -227,7 +230,7 @@ public abstract class MatrixToBufferedImageConverter {
      * @param bandCount   the number of bands: if called from {@link #toDataBuffer(Matrix)},
      *                    it is 1 for 2-dimensional matrix and {@link Matrix#dim(int) dim(0)}
      *                    for 3-dimensional matrix.
-     * @return            the newly allocated <tt>DataBuffer</tt> with the same data.
+     * @return the newly allocated <tt>DataBuffer</tt> with the same data.
      */
     protected abstract java.awt.image.DataBuffer toDataBuffer(PArray packedArray, int bandCount);
 
@@ -239,7 +242,7 @@ public abstract class MatrixToBufferedImageConverter {
      * red, green, blue and (if necessary) alpha masks.
      *
      * @param bandCount the number of masks (3 or 4, in other cases <tt>null</tt> is returned).
-     * @return          the bit masks for storing bands in the packed <tt>int</tt> values.
+     * @return the bit masks for storing bands in the packed <tt>int</tt> values.
      */
 
     protected int[] rgbAlphaMasks(int bandCount) {
@@ -252,31 +255,27 @@ public abstract class MatrixToBufferedImageConverter {
      *
      * @param dataBuffer the data buffer.
      * @param bankIndex  the band index.
-     * @return           the data array for the specified bank.
+     * @return the data array for the specified bank.
      */
     public static Object getDataArray(java.awt.image.DataBuffer dataBuffer, int bankIndex) {
         //[[Repeat() Byte ==> Short,,UShort,,Int,,Float,,Double]]
         if (dataBuffer instanceof java.awt.image.DataBufferByte) {
             return ((java.awt.image.DataBufferByte) dataBuffer).getData(bankIndex);
         } else
-        //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-        if (dataBuffer instanceof java.awt.image.DataBufferShort) {
-            return ((java.awt.image.DataBufferShort) dataBuffer).getData(bankIndex);
-        } else
-        if (dataBuffer instanceof java.awt.image.DataBufferUShort) {
-            return ((java.awt.image.DataBufferUShort) dataBuffer).getData(bankIndex);
-        } else
-        if (dataBuffer instanceof java.awt.image.DataBufferInt) {
-            return ((java.awt.image.DataBufferInt) dataBuffer).getData(bankIndex);
-        } else
-        if (dataBuffer instanceof java.awt.image.DataBufferFloat) {
-            return ((java.awt.image.DataBufferFloat) dataBuffer).getData(bankIndex);
-        } else
-        if (dataBuffer instanceof java.awt.image.DataBufferDouble) {
-            return ((java.awt.image.DataBufferDouble) dataBuffer).getData(bankIndex);
-        } else
-        //[[Repeat.AutoGeneratedEnd]]
-            throw new UnsupportedOperationException("Unknown DataBuffer type");
+            //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
+            if (dataBuffer instanceof java.awt.image.DataBufferShort) {
+                return ((java.awt.image.DataBufferShort) dataBuffer).getData(bankIndex);
+            } else if (dataBuffer instanceof java.awt.image.DataBufferUShort) {
+                return ((java.awt.image.DataBufferUShort) dataBuffer).getData(bankIndex);
+            } else if (dataBuffer instanceof java.awt.image.DataBufferInt) {
+                return ((java.awt.image.DataBufferInt) dataBuffer).getData(bankIndex);
+            } else if (dataBuffer instanceof java.awt.image.DataBufferFloat) {
+                return ((java.awt.image.DataBufferFloat) dataBuffer).getData(bankIndex);
+            } else if (dataBuffer instanceof java.awt.image.DataBufferDouble) {
+                return ((java.awt.image.DataBufferDouble) dataBuffer).getData(bankIndex);
+            } else
+                //[[Repeat.AutoGeneratedEnd]]
+                throw new UnsupportedOperationException("Unknown DataBuffer type");
     }
 
     private void checkMatrix(Matrix<? extends PArray> packedMatrix) {
@@ -288,11 +287,15 @@ public abstract class MatrixToBufferedImageConverter {
         if (bandCount < 1 || bandCount > 4)
             throw new IllegalArgumentException("The number of color channels(RGBA) must be in 1..4 range");
         if (packedMatrix.dim(1) > Integer.MAX_VALUE || packedMatrix.dim(2) > Integer.MAX_VALUE)
-            throw new IllegalArgumentException("Too large packed " + packedMatrix
-                + ": dim(1)/dim(2) must be in <=Integer.MAX_VALUE");
+            throw new TooLargeArrayException("Too large packed " + packedMatrix
+                    + ": dim(1)/dim(2) must be in <=Integer.MAX_VALUE");
         PArray array = packedMatrix.array();
         if (!(array instanceof ByteArray) && byteArrayRequired())
             throw new IllegalArgumentException("ByteArray required");
+    }
+
+    protected void toDataBufferBand0Filter(byte[] src, int srcPos, byte[] dest) {
+        System.arraycopy(src, srcPos, dest, 0, dest.length);
     }
 
     public static class Packed3DToPackedRGB extends MatrixToBufferedImageConverter {
@@ -332,9 +335,9 @@ public abstract class MatrixToBufferedImageConverter {
                         int[] result = new int[len];
                         for (int j = 0, disp = offset; j < len; j++, disp++) {
                             result[j] = (ja[disp] & 0xFF) << 16
-                                | (ja[disp] & 0xFF) << 8
-                                | (ja[disp] & 0xFF)
-                                | 0xFF000000;
+                                    | (ja[disp] & 0xFF) << 8
+                                    | (ja[disp] & 0xFF)
+                                    | 0xFF000000;
                         }
                         return new java.awt.image.DataBufferInt(result, len);
                     } else {
@@ -347,9 +350,9 @@ public abstract class MatrixToBufferedImageConverter {
                     int[] result = new int[len];
                     for (int j = 0, disp = offset; j < len; j++, disp += 2) {
                         result[j] = (ja[disp] & 0xFF) << 16
-                            | (ja[disp] & 0xFF) << 8
-                            | (ja[disp] & 0xFF)
-                            | (ja[disp + 1] & 0xFF) << 24;
+                                | (ja[disp] & 0xFF) << 8
+                                | (ja[disp] & 0xFF)
+                                | (ja[disp + 1] & 0xFF) << 24;
                     }
                     return new java.awt.image.DataBufferInt(result, len);
                 }
@@ -357,9 +360,9 @@ public abstract class MatrixToBufferedImageConverter {
                     int[] result = new int[len];
                     for (int j = 0, disp = offset; j < len; j++, disp += 3) {
                         result[j] = (ja[disp] & 0xFF) << 16
-                            | (ja[disp + 1] & 0xFF) << 8
-                            | (ja[disp + 2] & 0xFF)
-                            | 0xFF000000;
+                                | (ja[disp + 1] & 0xFF) << 8
+                                | (ja[disp + 2] & 0xFF)
+                                | 0xFF000000;
                     }
                     return new java.awt.image.DataBufferInt(result, len);
                 }
@@ -367,9 +370,9 @@ public abstract class MatrixToBufferedImageConverter {
                     int[] result = new int[len];
                     for (int j = 0, disp = offset; j < len; j++, disp += 4) {
                         result[j] = (ja[disp] & 0xFF) << 16
-                            | (ja[disp + 1] & 0xFF) << 8
-                            | (ja[disp + 2] & 0xFF)
-                            | (ja[disp + 3] & 0xFF) << 24;
+                                | (ja[disp + 1] & 0xFF) << 8
+                                | (ja[disp + 2] & 0xFF)
+                                | (ja[disp + 3] & 0xFF) << 24;
                     }
                     return new java.awt.image.DataBufferInt(result, len);
                 }
@@ -390,8 +393,23 @@ public abstract class MatrixToBufferedImageConverter {
         }
     }
 
-    protected void toDataBufferBand0Filter(byte[] src, int srcPos, byte[] dest) {
-        System.arraycopy(src, srcPos, dest, 0, dest.length);
+    public static class Packed3DToPackedBGR extends Packed3DToPackedRGB {
+        static final Packed3DToPackedBGR INSTANCE = new Packed3DToPackedBGR();
+
+        private Packed3DToPackedBGR() {
+            super(false);
+        }
+
+        @Override
+        protected int[] rgbAlphaMasks(int bandCount) {
+            if (bandCount == 4 || bandCount == 2) {
+                return new int[]{0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000};
+            } else if (bandCount == 3) {
+                return new int[]{0x000000ff, 0x0000ff00, 0x00ff0000};
+            } else {
+                return null;
+            }
+        }
     }
 
     public static class Packed3DToBandedRGB extends MatrixToBufferedImageConverter {
@@ -491,16 +509,16 @@ public abstract class MatrixToBufferedImageConverter {
             if (baseColor255 == null)
                 throw new NullPointerException("Null baseColor255");
             this.baseColor0 = new byte[]{
-                (byte) baseColor0.getRed(),
-                (byte) baseColor0.getGreen(),
-                (byte) baseColor0.getBlue(),
-                (byte) baseColor0.getAlpha()
+                    (byte) baseColor0.getRed(),
+                    (byte) baseColor0.getGreen(),
+                    (byte) baseColor0.getBlue(),
+                    (byte) baseColor0.getAlpha()
             };
             this.baseColor255 = new byte[]{
-                (byte) baseColor255.getRed(),
-                (byte) baseColor255.getGreen(),
-                (byte) baseColor255.getBlue(),
-                (byte) baseColor255.getAlpha()
+                    (byte) baseColor255.getRed(),
+                    (byte) baseColor255.getGreen(),
+                    (byte) baseColor255.getBlue(),
+                    (byte) baseColor255.getAlpha()
             };
         }
 
@@ -542,9 +560,9 @@ public abstract class MatrixToBufferedImageConverter {
         @Override
         public String toString() {
             return "MonochromeToIndexed ("
-                + "baseColor0=(" + JArrays.toString(baseColor0, Locale.US, "0x%X", ",", 100)
-                + "(, baseColor255=(" + JArrays.toString(baseColor255, Locale.US, "0x%X", ",", 100)
-                + "))";
+                    + "baseColor0=(" + JArrays.toString(baseColor0, Locale.US, "0x%X", ",", 100)
+                    + "(, baseColor255=(" + JArrays.toString(baseColor255, Locale.US, "0x%X", ",", 100)
+                    + "))";
         }
 
         @Override

@@ -68,11 +68,10 @@ public abstract class BufferedImageToMatrixConverter {
         if (resultArray != null) {
             if (resultArray.elementType() != elementType)
                 throw new IllegalArgumentException("Incompatible result array: element type should be "
-                    + elementType);
+                        + elementType);
             if (resultArray instanceof DirectAccessible && ((DirectAccessible) resultArray).hasJavaArray()
-                && ((DirectAccessible) resultArray).javaArrayOffset() == 0
-                && resultArray.length() >= size)
-            {
+                    && ((DirectAccessible) resultArray).javaArrayOffset() == 0
+                    && resultArray.length() >= size) {
                 resultData = ((DirectAccessible) resultArray).javaArray();
             }
         }
@@ -100,9 +99,9 @@ public abstract class BufferedImageToMatrixConverter {
         if (bufferedImage == null)
             throw new NullPointerException("Null bufferedImage");
         return getResultMatrixDimensions(
-            bufferedImage.getWidth(),
-            bufferedImage.getHeight(),
-            getBandCount(bufferedImage));
+                bufferedImage.getWidth(),
+                bufferedImage.getHeight(),
+                getBandCount(bufferedImage));
     }
 
     public abstract long[] getResultMatrixDimensions(int width, int height, int bandCount);
@@ -151,7 +150,7 @@ public abstract class BufferedImageToMatrixConverter {
 
         @Override
         public long[] getResultMatrixDimensions(int width, int height, int bandCount) {
-            return new long[] {bandCount, width, height};
+            return new long[]{bandCount, width, height};
         }
 
         @Override
@@ -213,8 +212,8 @@ public abstract class BufferedImageToMatrixConverter {
                 final Raster r = bufferedImage.getRaster();
                 final int dataBufferType = sampleModel.getDataType();
                 final int[] buffer = dimX <= INT_ARRAY_POOL.arrayLength() ?
-                    (int[]) INT_ARRAY_POOL.requestArray() :
-                    new int[dimX];
+                        (int[]) INT_ARRAY_POOL.requestArray() :
+                        new int[dimX];
                 final int lineCount = buffer.length / dimX;
                 assert lineCount >= 1;
                 int numberOfPixels;
@@ -265,8 +264,8 @@ public abstract class BufferedImageToMatrixConverter {
             //TODO!! and what if bandCount=3 and colorComponentsCount=4?
             final byte[] result = (byte[]) resultJavaArray;
             final boolean banded = USE_3_BANDS_FOR_NON_BANDED_GRAY ?
-                bufferedImage.getSampleModel() instanceof BandedSampleModel :
-                true;
+                    bufferedImage.getSampleModel() instanceof BandedSampleModel :
+                    true;
             final byte[][] rgbAlpha = new byte[gray && !banded ? 3 : 1][];
             // even if gray, but not banded, we make full RGB banded image:
             // if no, ColorSpace.CS_GRAY produces invalid values (too dark)
@@ -287,7 +286,7 @@ public abstract class BufferedImageToMatrixConverter {
                 }
                 wr = Raster.createBandedRaster(db, dimX, dimY, dimX, indexes, offsets, null);
                 cm = new ComponentColorModel(cs, null, colorModel.hasAlpha(), false,
-                    ColorModel.OPAQUE, db.getDataType());
+                        ColorModel.OPAQUE, db.getDataType());
             } else {
                 int[] offsets = new int[bandCount];
                 for (int k = 0; k < offsets.length; k++) {
@@ -296,7 +295,7 @@ public abstract class BufferedImageToMatrixConverter {
                 wr = Raster.createInterleavedRaster(db, dimX, dimY, dimX * bandCount, bandCount, offsets, null);
                 boolean hasAlpha = bandCount >= 4;
                 cm = new ComponentColorModel(cs, null, hasAlpha, false,
-                    hasAlpha ? ColorModel.TRANSLUCENT : ColorModel.OPAQUE, db.getDataType());
+                        hasAlpha ? ColorModel.TRANSLUCENT : ColorModel.OPAQUE, db.getDataType());
             }
             final BufferedImage resultImage = new BufferedImage(cm, wr, false, null);
             resultImage.getGraphics().drawImage(bufferedImage, 0, 0, null);
@@ -312,14 +311,13 @@ public abstract class BufferedImageToMatrixConverter {
             final SampleModel sampleModel = bufferedImage.getSampleModel();
             final int colorComponentsCount = colorModel.getNumComponents();
             if (bandCount <= colorComponentsCount // in particular, when bandCount=3 and colorComponentsCount=4
-                && colorComponentsCount == sampleModel.getNumBands()
-                && colorModel instanceof ComponentColorModel
-                && sampleModel instanceof ComponentSampleModel)
-            {
+                    && colorComponentsCount == sampleModel.getNumBands()
+                    && colorModel instanceof ComponentColorModel
+                    && sampleModel instanceof ComponentSampleModel) {
                 switch (sampleModel.getDataType()) {
-                    case DataBuffer.TYPE_BYTE :
-                    case DataBuffer.TYPE_USHORT :
-                    case DataBuffer.TYPE_INT :
+                    case DataBuffer.TYPE_BYTE:
+                    case DataBuffer.TYPE_USHORT:
+                    case DataBuffer.TYPE_INT:
                         return getResultElementType(sampleModel);
                 }
             }
@@ -328,16 +326,16 @@ public abstract class BufferedImageToMatrixConverter {
 
         private static Class<?> getResultElementType(SampleModel sampleModel) {
             switch (sampleModel.getDataType()) {
-                case DataBuffer.TYPE_BYTE :
+                case DataBuffer.TYPE_BYTE:
                     return byte.class;
-                case DataBuffer.TYPE_SHORT :
-                case DataBuffer.TYPE_USHORT :
+                case DataBuffer.TYPE_SHORT:
+                case DataBuffer.TYPE_USHORT:
                     return short.class;
-                case DataBuffer.TYPE_INT :
+                case DataBuffer.TYPE_INT:
                     return int.class;
-                case DataBuffer.TYPE_FLOAT :
+                case DataBuffer.TYPE_FLOAT:
                     return float.class;
-                case DataBuffer.TYPE_DOUBLE :
+                case DataBuffer.TYPE_DOUBLE:
                     return double.class;
                 default:
                     return byte.class;
