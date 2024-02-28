@@ -1,0 +1,160 @@
+package net.algart.lib;
+
+/**
+ * <p>2D integer rectangle with sides parallel to coordinate axes:
+ * an <i>immutable</i> equivalent of the standard <code>java.awt.Rectangle</code> class.
+ *
+ * <p>The coordinates of the corners of the rectangle <i>ABCD</i> stored
+ * by this class (with <i>A</i>, <i>B</i>, <i>C</i> and <i>D</i> corners)
+ * are represented by {@link #x1}, {@link #y1}, {@link #x2}, {@link #y2} public
+ * final fields:<ul>
+ * <li><code>x1</code>, <code>y1</code> for <i>A</i> corner,
+ * <li><code>x2</code>, <code>y1</code> for <i>B</i> corner,
+ * <li><code>x2</code>, <code>y2</code> for <i>C</i> corner,
+ * <li><code>x1</code>, <code>y2</code> for <i>D</i> corner.
+ * </ul>
+ *
+ * <p>Usually the coordinates of the <code>Rect</code> corners fulfil the
+ * following conditions: <code>x1&lt;x2</code>, <code>y1&lt;y2</code>.
+ * However, "negative" rectangles, where <code>x1&gt;x2</code> or <code>y1&gt;y2</code>,
+ * and "degenerate" rectangles, where <code>x1==x2</code> or <code>y1==y2</code>,
+ * are also allowed.
+ *
+ * @author  Daniel Alievsky
+ * @version 1.0
+ */
+
+
+public final class Rect implements WithSizes, java.io.Serializable {
+  /**
+   * The <i>x</i> coordinate of <i>A</i> corner (and also <i>D</i>) of this <i>ABCD</i> rectangle (unmodifiable).
+   */
+  public final int x1;
+  /**
+   * The <i>y</i> coordinate of <i>A</i> corner (and also <i>B</i>) of this <i>ABCD</i> rectangle (unmodifiable).
+   */
+  public final int y1;
+  /**
+   * The <i>x</i> coordinate of <i>C</i> corner (and also <i>B</i>) of this <i>ABCD</i> rectangle (unmodifiable).
+   */
+  public final int x2;
+  /**
+   * The <i>y</i> coordinate of <i>C</i> corner (and also <i>D</i>) of this <i>ABCD</i> rectangle (unmodifiable).
+   */
+  public final int y2;
+
+  /**
+   * Creates a new immutable instance of this class.
+   * Let <i>A</i>, <i>B</i>, <i>C</i>, <i>D</i> will be the corners
+   * of the created rectangle; then <code>x1</code>,&nbsp;<code>y1</code>
+   * will be <i>A</i> coordinates, and <code>x2</code>,&nbsp;<code>y2</code>
+   * will be <i>C</i> coortinates.
+   *
+   * @param x1  The <i>x</i> coordinate of <i>A</i> corner (and also <i>D</i>)
+   * @param y1  The <i>y</i> coordinate of <i>A</i> corner (and also <i>B</i>)
+   * @param x2  The <i>x</i> coordinate of <i>C</i> corner (and also <i>B</i>)
+   * @param y2  The <i>y</i> coordinate of <i>C</i> corner (and also <i>D</i>)
+   * @return    The new <i>ABCD</i> rectangle
+   */
+  public Rect(int x1, int y1, int x2, int y2) {
+    this.x1 = x1;
+    this.y1 = y1;
+    this.x2 = x2;
+    this.y2 = y2;
+  }
+
+  /**
+   * Width of the rectangle (may be negative).
+   * @return  The difference <code>x2 - x1</code>
+   * @see     #x1
+   * @see     #x2
+   */
+  public int width() {
+    return x2 - x1;
+  }
+
+  /**
+   * Height of the rectangle (may be negative).
+   * @return  The difference <code>y2 - y1</code>
+   * @see     #y1
+   * @see     #y2
+   */
+  public int height() {
+    return y2 - y1;
+  }
+
+  /**
+   * Area of the rectangle (may be negative).
+   * @return  The <code>(x2 - x1) * (y2 - y1)</code> value.
+   * @see     #x1
+   * @see     #x2
+   * @see     #y1
+   * @see     #y2
+   */
+  public int area() {
+    return (x2 - x1) * (y2 - y1);
+  }
+
+  /**
+   * Area of the rectangle with <code>long</code> precision (may be negative).
+   * Unlike {@link #area()} method, returns correct result even in a case
+   * when the area is too high to be represented by <code>int</code> value.
+   *
+   * @return  The <code>(long)(x2 - x1) * (long)(y2 - y1)</code> value.
+   * @see     #x1
+   * @see     #x2
+   * @see     #y1
+   * @see     #y2
+   * @see     #area()
+   */
+  public long areaLong() {
+    return (long)(x2 - x1) * (long)(y2 - y1);
+  }
+
+  /*Repeat(INCLUDE_FROM_FILE, Xy.java, toString-hashCode-equals)
+    Xy ==> Rect ;;
+    \/\*toString\*\/.*?\/\*end\*\/  ==> x1 + "," + y1 + ";" + x2 + "," + y2 ;;
+    \/\*hashCode\*\/.*?\/\*end\*\/  ==> ((x1 * 37 + y1) * 37 + x2) * 37 + y2 ;;
+    \/\*equals\*\/.*?\/\*end\*\/    ==> o.x1 == x1 && o.y1 == y1 && o.x2 == x2 && o.y2 == y2
+  */
+  /**
+   * Returns a string representation of this object.
+   * This method is intended to be used only for debugging purposes,
+   * and the content and format of the returned string may vary between
+   * implementations.
+   * The returned string may be empty but may not be <code>null</code>.
+   *
+   * @return  A string representation of this object
+   */
+  public String toString() {
+    return x1 + "," + y1 + ";" + x2 + "," + y2;
+      // - "toString" and "end" marker commments are used by Repeater preprocessor
+  }
+
+  /**
+   * Returns the hashcode for this object.
+   * @return  A hash code for this object
+   */
+  public int hashCode() {
+    return (((x1 * 37 + y1) * 37 + x2) * 37 + y2) ^ CLASS_HASH_CODE;
+      // - "hashCode" and "end" marker commments are used by Repeater preprocessor
+  }
+
+  /**
+   * Determines whether or not two objects are equal.
+   * Two instances are equal if all arguments passed to their
+   * constructors were equal.
+   *
+   * @param obj   An object to be compared with this instance
+   * @return      <code>true</code> if the argument has the same type Rect and is equal to this instance
+   */
+  public boolean equals(Object obj) {
+    if (obj == null || obj.getClass() != getClass()) return false;
+    Rect o = (Rect)obj;
+    return o.x1 == x1 && o.y1 == y1 && o.x2 == x2 && o.y2 == y2;
+      // - "equals" and "end" marker commments are used by Repeater preprocessor
+  }
+
+  private static final int CLASS_HASH_CODE = Rect.class.getName().hashCode();
+  /*Repeat.IncludeEnd*/
+}

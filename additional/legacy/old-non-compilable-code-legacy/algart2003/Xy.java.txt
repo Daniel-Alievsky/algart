@@ -1,0 +1,71 @@
+package net.algart.lib;
+
+/**
+ * <p>2D integer point: an <i>immutable</i> equivalent of the standard <code>java.awt.Point</code> class.
+ *
+ * @author  Daniel Alievsky
+ * @version 1.0
+ */
+
+public final class Xy implements java.io.Serializable {
+  /**
+   * The <i>x</i> coordinate (unmodifiable).
+   */
+  public final int x;
+  /**
+   * The <i>y</i> coordinate (unmodifiable).
+   */
+  public final int y;
+
+  /**
+   * Creates a new immutable instance of this class.
+   * @param x   The <i>x</i> coordinate of the new point
+   * @param y   The <i>y</i> coordinate of the new point
+   */
+  public Xy(int x, int y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  /*Repeat.SectionStart toString-hashCode-equals*/
+  /**
+   * Returns a string representation of this object.
+   * This method is intended to be used only for debugging purposes,
+   * and the content and format of the returned string may vary between
+   * implementations.
+   * The returned string may be empty but may not be <code>null</code>.
+   *
+   * @return  A string representation of this object
+   */
+  public String toString() {
+    return /*toString*/x + "," + y/*end*/;
+      // - "toString" and "end" marker commments are used by Repeater preprocessor
+  }
+
+  /**
+   * Returns the hashcode for this object.
+   * @return  A hash code for this object
+   */
+  public int hashCode() {
+    return (/*hashCode*/x * 37 + y/*end*/) ^ CLASS_HASH_CODE;
+      // - "hashCode" and "end" marker commments are used by Repeater preprocessor
+  }
+
+  /**
+   * Determines whether or not two objects are equal.
+   * Two instances are equal if all arguments passed to their
+   * constructors were equal.
+   *
+   * @param obj   An object to be compared with this instance
+   * @return      <code>true</code> if the argument has the same type Xy and is equal to this instance
+   */
+  public boolean equals(Object obj) {
+    if (obj == null || obj.getClass() != getClass()) return false;
+    Xy o = (Xy)obj;
+    return /*equals*/o.x == x && o.y == y/*end*/;
+      // - "equals" and "end" marker commments are used by Repeater preprocessor
+  }
+
+  private static final int CLASS_HASH_CODE = Xy.class.getName().hashCode();
+  /*Repeat.SectionEnd toString-hashCode-equals*/
+}

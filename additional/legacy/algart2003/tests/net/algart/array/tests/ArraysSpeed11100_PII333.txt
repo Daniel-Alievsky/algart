@@ -1,0 +1,144 @@
+
+Testing native code
+Length of arrays: 11100
+Checking CPU...CPU characteristics: precise timer, MMX, no SSE, no SSE2
+CPU clock rate: 334091302 cycles/sec
+copy() (bytes) tested
+  (a,b,c offsets: 03125454,03127FFC,0312ABA4)
+min(byte):       2.938ns=  0.982cl/element, 3636.730ns=1215cl(=1238.1elements)/call
+max(byte):       2.869ns=  0.959cl/element, 2999.180ns=1002cl(=1046.3elements)/call
+min(ByteBuffer): 2.868ns=  0.958cl/element, 2074.283ns=693cl(=723.5elements)/call
+max(ByteBuffer): 2.883ns=  0.963cl/element, 2352.650ns=786cl(=816.3elements)/call
+minu(byte):      3.394ns=  1.134cl/element, 3540.948ns=1183cl(=1043.3elements)/call
+maxu(byte):      3.338ns=  1.115cl/element, 3448.159ns=1152cl(=1033.2elements)/call
+minu(ByteBuffer):3.419ns=  1.142cl/element, 1694.148ns=566cl(=495.9elements)/call
+maxu(ByteBuffer):3.441ns=  1.150cl/element, 2122.174ns=709cl(=617.4elements)/call
+copy() (shorts) tested
+min(short):      5.551ns=  1.855cl/element, 3663.669ns=1224cl(=660.2elements)/call
+max(short):      5.309ns=  1.774cl/element, 3286.527ns=1098cl(=619.5elements)/call
+minu(short):     6.257ns=  2.091cl/element, 3394.282ns=1134cl(=542.8elements)/call
+maxu(short):     6.323ns=  2.113cl/element, 3909.111ns=1306cl(=618.4elements)/call
+copy+min(int):   85.240ns= 28.478cl/element, 5648.157ns=1887cl(=66.3elements)/call
+copy+max(int):   109.770ns= 36.673cl/element, 5734.959ns=1916cl(=52.3elements)/call
+min(int):        52.582ns= 17.567cl/element, 5498.497ns=1837cl(=104.6elements)/call
+max(int):        50.450ns= 16.855cl/element, 7123.801ns=2380cl(=141.2elements)/call
+min[2](int):     48.318ns= 16.143cl/element, 5725.980ns=1913cl(=118.6elements)/call
+max[2](int):     37.556ns= 12.547cl/element, 5932.510ns=1982cl(=158.0elements)/call
+min(long):       155.272ns= 51.875cl/element, 6570.060ns=2195cl(=42.3elements)/call
+max(long):       149.243ns= 49.861cl/element, 5944.483ns=1986cl(=39.8elements)/call
+copy+min(float): 149.782ns= 50.041cl/element, 6013.326ns=2009cl(=40.2elements)/call
+copy+max(float): 175.597ns= 58.666cl/element, 5369.790ns=1794cl(=30.6elements)/call
+min(float):      48.260ns= 16.123cl/element, 8572.507ns=2864cl(=177.7elements)/call
+max(float):      48.517ns= 16.209cl/element, 5588.293ns=1867cl(=115.2elements)/call
+min[2](float):   48.051ns= 16.054cl/element, 5390.742ns=1801cl(=112.2elements)/call
+max[2](float):   41.918ns= 14.004cl/element, 5785.844ns=1933cl(=138.1elements)/call
+min(double):     101.881ns= 34.038cl/element, 3382.309ns=1130cl(=33.2elements)/call
+max(double):     101.815ns= 34.015cl/element, 3220.676ns=1076cl(=31.7elements)/call
+
+Testing native code
+Length of arrays: 11100
+Checking CPU...CPU characteristics: precise timer, MMX, no SSE, no SSE2
+CPU clock rate: 334100632 cycles/sec
+copy() (bytes) tested
+  (a,b,c offsets: 031458FC,031484A4,0314B04C)
+min(byte):       2.941ns=  0.982cl/element, 3858.119ns=1289cl(=1312.6elements)/call
+max(byte):       2.861ns=  0.956cl/element, 3531.870ns=1180cl(=1235.3elements)/call
+min(ByteBuffer): 2.860ns=  0.955cl/element, 2232.860ns=746cl(=781.4elements)/call
+max(ByteBuffer): 2.880ns=  0.962cl/element, 2071.232ns=692cl(=719.8elements)/call
+minu(byte):      3.356ns=  1.121cl/element, 3660.574ns=1223cl(=1091.2elements)/call
+maxu(byte):      3.324ns=  1.111cl/element, 3409.152ns=1139cl(=1025.9elements)/call
+minu(ByteBuffer):3.405ns=  1.137cl/element, 2008.377ns=671cl(=590.0elements)/call
+maxu(ByteBuffer):3.460ns=  1.156cl/element, 2089.191ns=698cl(=603.8elements)/call
+copy() (shorts) tested
+min(short):      5.459ns=  1.824cl/element, 3256.504ns=1088cl(=596.6elements)/call
+max(short):      5.397ns=  1.803cl/element, 3382.214ns=1130cl(=626.7elements)/call
+minu(short):     6.377ns=  2.130cl/element, 3244.531ns=1084cl(=508.9elements)/call
+maxu(short):     6.455ns=  2.157cl/element, 4076.616ns=1362cl(=631.9elements)/call
+copy+min(int):   76.508ns= 25.561cl/element, 3190.655ns=1066cl(=41.7elements)/call
+copy+max(int):   76.969ns= 25.715cl/element, 3292.421ns=1100cl(=42.8elements)/call
+min(int):        36.681ns= 12.255cl/element, 3307.387ns=1105cl(=90.2elements)/call
+max(int):        37.145ns= 12.410cl/element, 3026.034ns=1011cl(=81.5elements)/call
+min[2](int):     35.074ns= 11.718cl/element, 3094.876ns=1034cl(=88.3elements)/call
+max[2](int):     31.788ns= 10.620cl/element, 3397.180ns=1135cl(=106.9elements)/call
+min(long):       97.665ns= 32.630cl/element, 19398.347ns=6481cl(=198.6elements)/call
+max(long):       129.035ns= 43.111cl/element, 17249.294ns=5763cl(=133.7elements)/call
+copy+min(float): 584.753ns=195.366cl/element, 20957.757ns=7002cl(=35.8elements)/call
+copy+max(float): 524.107ns=175.104cl/element, 17841.930ns=5961cl(=34.0elements)/call
+min(float):      35.618ns= 11.900cl/element, 4800.949ns=1604cl(=134.8elements)/call
+max(float):      36.392ns= 12.159cl/element, 3052.972ns=1020cl(=83.9elements)/call
+min[2](float):   33.717ns= 11.265cl/element, 3112.835ns=1040cl(=92.4elements)/call
+max[2](float):   32.733ns= 10.936cl/element, 2687.813ns=898cl(=82.2elements)/call
+min(double):     92.516ns= 30.909cl/element, 5668.951ns=1894cl(=61.3elements)/call
+max(double):     104.080ns= 34.773cl/element, 17946.689ns=5996cl(=172.4elements)/call
+
+Testing native code
+Length of arrays: 11100
+Checking CPU...CPU characteristics: precise timer, no MMX, no SSE, no SSE2
+CPU clock rate: 363718133 cycles/sec
+copy() (bytes) tested
+  (a,b,c offsets: 031458FC,031484A4,0314B04C)
+min(byte):       36.611ns= 13.316cl/element, 22456.950ns=8168cl(=613.5elements)/call
+max(byte):       27.731ns= 10.086cl/element, 16856.460ns=6131cl(=607.9elements)/call
+min(ByteBuffer): 27.957ns= 10.169cl/element, 10527.383ns=3829cl(=376.6elements)/call
+max(ByteBuffer): 18.919ns=  6.881cl/element, 11102.004ns=4038cl(=586.9elements)/call
+minu(byte):      28.045ns= 10.200cl/element, 17466.822ns=6353cl(=622.9elements)/call
+maxu(byte):      32.154ns= 11.695cl/element, 18176.163ns=6611cl(=565.3elements)/call
+minu(ByteBuffer):25.371ns=  9.228cl/element, 9908.772ns=3604cl(=390.6elements)/call
+maxu(ByteBuffer):27.532ns= 10.014cl/element, 4717.939ns=1716cl(=171.4elements)/call
+copy() (shorts) tested
+min(short):      8.351ns=  3.037cl/element, 18772.779ns=6828cl(=2248.0elements)/call
+max(short):      43.265ns= 15.736cl/element, 17081.909ns=6213cl(=394.8elements)/call
+minu(short):     27.802ns= 10.112cl/element, 15220.577ns=5536cl(=547.5elements)/call
+maxu(short):     41.670ns= 15.156cl/element, 22140.771ns=8053cl(=531.4elements)/call
+copy+min(int):   414.675ns=150.825cl/element, 17793.999ns=6472cl(=42.9elements)/call
+copy+max(int):   413.722ns=150.478cl/element, 17422.832ns=6337cl(=42.1elements)/call
+min(int):        138.271ns= 50.292cl/element, 18269.642ns=6645cl(=132.1elements)/call
+max(int):        130.903ns= 47.612cl/element, 17521.810ns=6373cl(=133.9elements)/call
+min[2](int):     45.604ns= 16.587cl/element, 18376.868ns=6684cl(=403.0elements)/call
+max[2](int):     71.552ns= 26.025cl/element, 14931.892ns=5431cl(=208.7elements)/call
+min(long):       255.644ns= 92.982cl/element, 17458.574ns=6350cl(=68.3elements)/call
+max(long):       80.109ns= 29.137cl/element, 2479.942ns=902cl(=31.0elements)/call
+copy+min(float): 87.607ns= 31.864cl/element, 2688.895ns=978cl(=30.7elements)/call
+copy+max(float): 85.808ns= 31.210cl/element, 4443.001ns=1616cl(=51.8elements)/call
+min(float):      31.303ns= 11.385cl/element, 2765.878ns=1006cl(=88.4elements)/call
+max(float):      31.324ns= 11.393cl/element, 3945.363ns=1435cl(=126.0elements)/call
+min[2](float):   30.159ns= 10.969cl/element, 3222.275ns=1172cl(=106.9elements)/call
+max[2](float):   29.998ns= 10.911cl/element, 2617.411ns=952cl(=87.3elements)/call
+min(double):     84.171ns= 30.615cl/element, 2479.942ns=902cl(=29.5elements)/call
+max(double):     84.181ns= 30.618cl/element, 2466.195ns=897cl(=29.3elements)/call
+
+Testing Java code
+Length of arrays: 11100
+Checking CPU...CPU characteristics: precise timer, MMX, no SSE, no SSE2
+CPU clock rate: 334090924 cycles/sec
+copy() (bytes) tested
+  (a,b,c offsets: 00000000,00000000,00000000)
+min(byte):       27.315ns=  9.126cl/element, 164.626ns= 55cl(=6.1elements)/call
+max(byte):       27.295ns=  9.119cl/element, 215.510ns= 72cl(=8.0elements)/call
+min(ByteBuffer): 122.150ns= 40.809cl/element, 248.435ns= 83cl(=2.0elements)/call
+max(ByteBuffer): 122.087ns= 40.788cl/element, 272.381ns= 91cl(=2.3elements)/call
+minu(byte):      31.943ns= 10.672cl/element, 161.633ns= 54cl(=5.1elements)/call
+maxu(byte):      31.891ns= 10.655cl/element, 233.469ns= 78cl(=7.4elements)/call
+minu(ByteBuffer):132.798ns= 44.367cl/element, 275.374ns= 92cl(=2.1elements)/call
+maxu(ByteBuffer):132.775ns= 44.359cl/element, 269.388ns= 90cl(=2.0elements)/call
+copy() (shorts) tested
+min(short):      28.161ns=  9.408cl/element, 161.633ns= 54cl(=5.8elements)/call
+max(short):      28.186ns=  9.417cl/element, 158.639ns= 53cl(=5.6elements)/call
+minu(short):     31.895ns= 10.656cl/element, 176.599ns= 59cl(=5.6elements)/call
+maxu(short):     31.942ns= 10.671cl/element, 173.605ns= 58cl(=5.5elements)/call
+copy+min(int):   111.825ns= 37.360cl/element, 188.571ns= 63cl(=1.7elements)/call
+copy+max(int):   111.763ns= 37.339cl/element, 179.592ns= 60cl(=1.6elements)/call
+min(int):        42.389ns= 14.162cl/element, 209.524ns= 70cl(=5.0elements)/call
+max(int):        41.757ns= 13.951cl/element, 182.585ns= 61cl(=4.4elements)/call
+min[2](int):     40.941ns= 13.678cl/element, 176.599ns= 59cl(=4.4elements)/call
+max[2](int):     41.335ns= 13.810cl/element, 182.585ns= 61cl(=4.5elements)/call
+min(long):       120.809ns= 40.361cl/element, 212.517ns= 71cl(=1.8elements)/call
+max(long):       120.480ns= 40.251cl/element, 164.626ns= 55cl(=1.4elements)/call
+copy+min(float): 113.646ns= 37.968cl/element, 386.122ns=129cl(=3.4elements)/call
+copy+max(float): 113.907ns= 38.055cl/element, 386.122ns=129cl(=3.4elements)/call
+min(float):      47.773ns= 15.960cl/element, 389.116ns=130cl(=8.2elements)/call
+max(float):      47.165ns= 15.757cl/element, 395.102ns=132cl(=8.4elements)/call
+min[2](float):   49.324ns= 16.479cl/element, 386.122ns=129cl(=7.8elements)/call
+max[2](float):   50.166ns= 16.760cl/element, 386.122ns=129cl(=7.7elements)/call
+min(double):     112.417ns= 37.558cl/element, 164.626ns= 55cl(=1.5elements)/call
+max(double):     112.660ns= 37.639cl/element, 332.245ns=111cl(=3.0elements)/call

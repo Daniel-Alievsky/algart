@@ -1,0 +1,143 @@
+
+Number operation:
+int=157:                  104.9041748046875 ns
+int=int:                  134.46807861328125 ns
+byte=15:                  104.9041748046875 ns
+byte=byte:                133.514404296875 ns
+double=157.0:             114.44091796875 ns
+double=double:            123.9776611328125 ns
+float=157.0:              115.39459228515625 ns
+float=float:              143.0511474609375 ns
+int+=int:                 190.73486328125 ns
+byte+=byte:               190.73486328125 ns
+double+=double:           219.3450927734375 ns
+float+=float:             209.808349609375 ns
+int-=int:                 182.15179443359375 ns
+double-=double:           228.8818359375 ns
+float-=float:             200.2716064453125 ns
+int=max(int,int):         439.64385986328125 ns
+double=max(double,double):697.1359252929688 ns
+if (int>int) int=int:     171.661376953125 ns
+if (dbl>dbl) dbl=dbl:     220.29876708984375 ns
+int*=int:                 190.73486328125 ns
+double*=double:           228.8818359375 ns
+float*=float:             201.22528076171875 ns
+int/=int:                 247.955322265625 ns
+double/=double:           229.83551025390625 ns
+float/=float:             209.808349609375 ns
+int=Math.round(double):   953.67431640625 ns
+int=Math.round(float):    1033.782958984375 ns
+int=(int)double:          200.2716064453125 ns
+int=(int)(double+0.5):    228.8818359375 ns
+double=Math.sqrt(double): 2645.4925537109375 ns
+double=Math.sin(double):  869.7509765625 ns
+
+Number operation from other class:
+int=157:                  133.514404296875 ns
+int=int:                  228.8818359375 ns
+byte=15:                  134.46807861328125 ns
+byte=byte:                228.8818359375 ns
+double=157.0:             143.0511474609375 ns
+double=double:            209.808349609375 ns
+float=157.0:              153.54156494140625 ns
+float=float:              228.8818359375 ns
+int+=int:                 277.51922607421875 ns
+byte+=byte:               286.102294921875 ns
+double+=double:           296.59271240234375 ns
+float+=float:             286.102294921875 ns
+int-=int:                 277.51922607421875 ns
+double-=double:           305.17578125 ns
+float-=float:             277.51922607421875 ns
+int=max(int,int):         544.5480346679688 ns
+double=max(double,double):802.0401000976562 ns
+if (int>int) int=int:     267.02880859375 ns
+if (dbl>dbl) dbl=dbl:     277.51922607421875 ns
+int*=int:                 286.102294921875 ns
+double*=double:           306.12945556640625 ns
+float*=float:             276.5655517578125 ns
+int/=int:                 334.73968505859375 ns
+double/=double:           314.7125244140625 ns
+float/=float:             296.59271240234375 ns
+int=Math.round(double):   1068.115234375 ns
+int=Math.round(float):    1071.929931640625 ns
+int=(int)double:          286.102294921875 ns
+int=(int)(double+0.5):    315.66619873046875 ns
+double=Math.sqrt(double): 2740.8599853515625 ns
+double=Math.sin(double):  964.1647338867188 ns
+
+Array operation (fixed index 0):
+int=157:                  133.514404296875 ns
+int=int:                  182.15179443359375 ns
+byte=15:                  104.9041748046875 ns
+byte=byte:                190.73486328125 ns
+double=157.0:             143.0511474609375 ns
+double=double:            191.68853759765625 ns
+float=157.0:              114.44091796875 ns
+float=float:              181.1981201171875 ns
+int+=int:                 248.90899658203125 ns
+byte+=byte:               257.4920654296875 ns
+double+=double:           287.05596923828125 ns
+float+=float:             247.955322265625 ns
+int-=int:                 239.37225341796875 ns
+double-=double:           295.6390380859375 ns
+float-=float:             248.90899658203125 ns
+int=max(int,int):         476.837158203125 ns
+double=max(double,double):792.5033569335938 ns
+if (int>int) int=int:     201.22528076171875 ns
+if (dbl>dbl) dbl=dbl:     238.4185791015625 ns
+int*=int:                 248.90899658203125 ns
+double*=double:           286.102294921875 ns
+float*=float:             248.90899658203125 ns
+int/=int:                 286.102294921875 ns
+double/=double:           296.59271240234375 ns
+float/=float:             257.4920654296875 ns
+int=Math.round(double):   1071.929931640625 ns
+int=Math.round(float):    1068.115234375 ns
+int=(int)double:          267.02880859375 ns
+int=(int)(double+0.5):    325.20294189453125 ns
+double=Math.sqrt(double): 2759.9334716796875 ns
+double=Math.sin(double):  945.0912475585938 ns
+
+Array operation:
+int=157:                  144.00482177734375 ns
+int=int:                  209.808349609375 ns
+int=int (arraycopy):      47.6837158203125 ns
+byte=15:                  133.514404296875 ns
+byte=byte:                201.22528076171875 ns
+byte=byte (arraycopy):    19.073486328125 ns
+double=157.0:             143.0511474609375 ns
+double=double:            238.4185791015625 ns
+double=double (arraycopy):104.9041748046875 ns
+float=157.0:              124.93133544921875 ns
+float=float:              219.3450927734375 ns
+float=float (arraycopy):  47.6837158203125 ns
+int+=int:                 286.102294921875 ns
+byte+=byte:               276.5655517578125 ns
+double+=double:           363.34991455078125 ns
+float+=float:             295.6390380859375 ns
+int-=int:                 296.59271240234375 ns
+double-=double:           362.396240234375 ns
+float-=float:             296.59271240234375 ns
+int=max(int,int):         515.9378051757812 ns
+double=max(double,double):859.2605590820312 ns
+if (int>int) int=int:     238.4185791015625 ns
+if (dbl>dbl) dbl=dbl:     325.20294189453125 ns
+int*=int:                 286.102294921875 ns
+double*=double:           363.34991455078125 ns
+float*=float:             296.59271240234375 ns
+int/=int:                 324.249267578125 ns
+double/=double:           372.88665771484375 ns
+float/=float:             295.6390380859375 ns
+int=Math.round(double):   1148.223876953125 ns
+int=Math.round(float):    1106.26220703125 ns
+int=(int)double:          325.20294189453125 ns
+int=(int)(double+0.5):    371.9329833984375 ns
+double=Math.sqrt(double): 2826.690673828125 ns
+double=Math.sin(double):  995.635986328125 ns
+allocate 256K:            2473632.8125 ns
+allocate+fill 256K:       4166992.1875 ns
+allocate 4K:              45532.2265625 ns
+allocate+fill 4K:         56076.0498046875 ns
+allocate 512b:            4394.53125 ns
+allocate+fill 512b:       4161.834716796875 ns
+O'k

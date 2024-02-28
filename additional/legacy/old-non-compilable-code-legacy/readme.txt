@@ -1,0 +1,1 @@
+This old-versions-src-legacy folder contains very old and not supported (not compiled) code, but some implementations ideas can be found here.

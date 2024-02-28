@@ -1,0 +1,111 @@
+package net.algart.matrix;
+
+import java.lang.reflect.*;
+
+import net.algart.algorithms.*;
+
+/**
+ * <p>WARNING: WILL BE REMOVED SOON!
+ * This class allows to work with some another class as with ByteMatrix,
+ * if that class implements all ByteMatrix methods, but not implements ByteMatrix interface.
+ * It is useful if you do not want another class to depend on this package.</p>
+ *
+ * @author Daniel Alievsky
+ * @version 1.1
+ * @since JDK 1.5
+ * @deprecated
+ */
+public class ProxyByteMatrix implements ByteMatrix {
+
+    static Class[] EMPTY_CLASSES_ARRAY = new Class[0];
+    static Object[] EMPTY_OBJECTS_ARRAY = new Object[0];
+
+    protected final Object other;
+    protected final Class<? extends Object> otherClass;
+    private final Method sx, sy, size, getByte, setByte, getByteInterpolated, setByteIfInside;
+
+    protected ProxyByteMatrix(Object other) throws SecurityException, NoSuchMethodException {
+        this.other = other;
+        this.otherClass = other.getClass();
+        this.sx = this.otherClass.getMethod("sx", EMPTY_CLASSES_ARRAY);
+        this.sy = this.otherClass.getMethod("sy", EMPTY_CLASSES_ARRAY);
+        this.size = this.otherClass.getMethod("size", EMPTY_CLASSES_ARRAY);
+        this.getByte = this.otherClass.getMethod("getByte", new Class[] {
+            int.class, int.class});
+        this.setByte = this.otherClass.getMethod("setByte", new Class[] {
+            int.class, int.class, byte.class});
+        this.getByteInterpolated = this.otherClass.getMethod("getByteInterpolated", new Class[] {
+            double.class, double.class});
+        this.setByteIfInside = this.otherClass.getMethod("setByteIfInside", new Class[] {
+            int.class, int.class, byte.class});
+    }
+
+    public static ByteMatrix asInstance(Object other) {
+        try {
+            return new ProxyByteMatrix(other);
+        } catch (Exception ex) {
+            throw new IllegalArgumentException("The object passed to ProxyByteMatrix.getInstance "
+                + " does not implement all required methods: " + ex);
+        }
+    }
+
+    public Class elementType() {
+        return byte.class;
+    }
+
+    public int sx() {
+        try {
+            return ((Integer)sx.invoke(other, EMPTY_OBJECTS_ARRAY)).intValue();
+        } catch (Exception ex) {
+            throw new InternalError("Illegal object passed to ProxyByteMatrix: " + ex);
+        }
+    }
+
+    public int sy() {
+        try {
+            return ((Integer)sy.invoke(other, EMPTY_OBJECTS_ARRAY)).intValue();
+        } catch (Exception ex) {
+            throw new InternalError("Illegal object passed to ProxyByteMatrix: " + ex);
+        }
+    }
+
+    public int size() {
+        try {
+            return ((Integer)size.invoke(other, EMPTY_OBJECTS_ARRAY)).intValue();
+        } catch (Exception ex) {
+            throw new InternalError("Illegal object passed to ProxyByteMatrix: " + ex);
+        }
+    }
+
+    public int getByte(int x, int y) {
+        try {
+            return ((Integer)getByte.invoke(other, new Object[] {new Integer(x), new Integer(y)})).intValue();
+        } catch (Exception ex) {
+            throw new InternalError("Illegal object passed to ProxyByteMatrix: " + ex);
+        }
+    }
+
+    public void setByte(int x, int y, byte value) {
+        try {
+            setByte.invoke(other, new Object[] {new Integer(x), new Integer(y), new Byte(value)});
+        } catch (Exception ex) {
+            throw new InternalError("Illegal object passed to ProxyByteMatrix: " + ex);
+        }
+    }
+
+    public double getByteInterpolated(double x, double y) {
+        try {
+            return ((Double)getByteInterpolated.invoke(other, new Object[] {new Double(x), new Double(y)})).doubleValue();
+        } catch (Exception ex) {
+            throw new InternalError("Illegal object passed to ProxyByteMatrix: " + ex);
+        }
+    }
+
+    public void setByteIfInside(int x, int y, byte value) {
+        try {
+            setByteIfInside.invoke(other, new Object[] {new Integer(x), new Integer(y), new Byte(value)});
+        } catch (Exception ex) {
+            throw new InternalError("Illegal object passed to ProxyByteMatrix: " + ex);
+        }
+    }
+}
