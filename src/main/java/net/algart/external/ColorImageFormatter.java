@@ -30,7 +30,7 @@ import net.algart.arrays.PArray;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-// Deprecated - should be replaced with new methods in Converters
+// Deprecated - should be replaced with new ...Converters
 interface ColorImageFormatter {
     public BufferedImage toBufferedImage(List<? extends Matrix<? extends PArray>> image);
 

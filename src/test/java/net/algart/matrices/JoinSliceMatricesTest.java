@@ -27,7 +27,7 @@ package net.algart.matrices;
 import net.algart.arrays.Matrices;
 import net.algart.arrays.Matrix;
 import net.algart.arrays.PArray;
-import net.algart.external.ExternalAlgorithmCaller;
+import net.algart.external.MatrixIO;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,11 +41,11 @@ public class JoinSliceMatricesTest {
         }
         final File sourceFile = new File(args[0]);
         final File matrixFolder = new File(args[1]);
-        List<Matrix<? extends PArray>> matrices = ExternalAlgorithmCaller.readImage(sourceFile);
+        List<Matrix<? extends PArray>> matrices = MatrixIO.readImage(sourceFile);
         System.out.printf("List: %s%n", matrices);
         Matrix<PArray> joined = Matrices.mergeAlongLastDimension(PArray.class, matrices);
         System.out.printf("Joined: %s%n", joined);
-        ExternalAlgorithmCaller.writeAlgARTImage(matrixFolder, List.of(joined));
+        MatrixIO.writeAlgARTImage(matrixFolder, List.of(joined));
         List<Matrix<PArray>> unpacked = Matrices.splitAlongLastDimension(joined);
         for (int k = 0; k < unpacked.size(); k++) {
             if (!unpacked.get(k).equals(matrices.get(k))) {
