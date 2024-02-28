@@ -3382,6 +3382,138 @@ public class Matrices {
                 }, result, source);
     }
 
+    /**
+     * Binary OR: equivalent to
+     * <tt>{@link #bitOrToOther(Matrix, Matrix, Matrix) bitOrToOther}(result, result, other)</tt>.
+     *
+     * @param result matrix <b>a</b>, will be replaced with binary OR <b>a | b</b>.
+     * @param other  matrix <b>b</b>.
+     */
+    public static void bitOr(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> other) {
+        bitOrToOther(result, result, other);
+    }
+
+    /**
+     * Binary OR: equivalent to
+     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.MAX, result, a, b)</tt>.
+     *
+     * @param result binary OR <b>a | b</b>.
+     * @param a      matrix <b>a</b>.
+     * @param b      matrix <b>b</b>.
+     */
+    public static void bitOrToOther(
+            Matrix<? extends UpdatableBitArray> result,
+            Matrix<? extends BitArray> a,
+            Matrix<? extends BitArray> b) {
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.MAX, result, a, b);
+    }
+
+    /**
+     * Binary AND: equivalent to
+     * <tt>{@link #bitAndToOther(Matrix, Matrix, Matrix) bitAndToOther}(result, result, other)</tt>.
+     *
+     * @param result matrix <b>a</b>, will be replaced with binary AND <b>a &amp; b</b>.
+     * @param other  matrix <b>b</b>.
+     */
+    public static void bitAnd(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> other) {
+        bitAndToOther(result, result, other);
+    }
+
+    /**
+     * Binary AND: equivalent to
+     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.MIN, result, a, b)</tt>.
+     *
+     * @param result binary AND <b>a | b</b>.
+     * @param a      matrix <b>a</b>.
+     * @param b      matrix <b>b</b>.
+     */
+    public static void bitAndToOther(
+            Matrix<? extends UpdatableBitArray> result,
+            Matrix<? extends BitArray> a,
+            Matrix<? extends BitArray> b) {
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.MIN, result, a, b);
+    }
+
+
+    /**
+     * Binary XOR: equivalent to
+     * <tt>{@link #bitXorToOther(Matrix, Matrix, Matrix) bitXorToOther}(result, result, other)</tt>.
+     *
+     * @param result matrix <b>a</b>, will be replaced with binary XOR <b>a ^ b</b>.
+     * @param other  matrix <b>b</b>.
+     */
+    public static void bitXor(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> other) {
+        bitXorToOther(result, result, other);
+    }
+
+    /**
+     * Binary XOR: equivalent to
+     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.ABS_DIFF, result, a, b)</tt>.
+     *
+     * @param result binary XOR <b>a ^ b</b>.
+     * @param a      matrix <b>a</b>.
+     * @param b      matrix <b>b</b>.
+     */
+    public static void bitXorToOther(
+            Matrix<? extends UpdatableBitArray> result,
+            Matrix<? extends BitArray> a,
+            Matrix<? extends BitArray> b) {
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.ABS_DIFF, result, a, b);
+        // - actually this and other functions are performed by classes like ArraysDiffGetDataOp
+        // via maximally efficient binary operations
+    }
+
+    /**
+     * Binary AND-NOT: equivalent to
+     * <tt>{@link #bitDiffToOther(Matrix, Matrix, Matrix) bitDiffToOther}(result, result, other)</tt>.
+     *
+     * @param result matrix <b>a</b>, will be replaced with binary AND-NOT <b>a &amp; ~b</b>.
+     * @param other  matrix <b>b</b>.
+     */
+    public static void bitDiff(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> other) {
+        bitDiffToOther(result, result, other);
+    }
+
+    /**
+     * Binary AND-NOT: equivalent to
+     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.POSITIVE_DIFF, result, a, b)</tt>.
+     *
+     * @param result binary AND-NOT <b>a &amp; ~b</b>.
+     * @param a      matrix <b>a</b>.
+     * @param b      matrix <b>b</b>.
+     */
+    public static void bitDiffToOther(
+            Matrix<? extends UpdatableBitArray> result,
+            Matrix<? extends BitArray> a,
+            Matrix<? extends BitArray> b) {
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.POSITIVE_DIFF, result, a, b);
+    }
+
+    /**
+     * Binary NOT: equivalent to
+     * <tt>{@link #bitNotToOther(Matrix, Matrix) bitNotToOther}(bitMatrix, bitMatrix)</tt>.
+     *
+     * @param bitMatrix matrix <b>a</b>, will be replaced with binary NOT <b>~a</b>.
+     */
+    public static void bitNot(Matrix<? extends UpdatableBitArray> bitMatrix) {
+        bitNotToOther(bitMatrix, bitMatrix);
+    }
+
+    /**
+     * Binary NOT: equivalent to
+     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.REVERSE, result, source)</tt>.
+     *
+     * @param result binary NOT <b>~a</b>.
+     * @param source matrix <b>a</b>.
+     */
+    public static void bitNotToOther(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> source) {
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.REVERSE, result, source);
+    }
 
     /**
      * Performs the specified function for all elements of <tt>source</tt> to produce <tt>result</tt>.

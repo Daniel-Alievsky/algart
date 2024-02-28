@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.external;
+package net.algart.external.awt;
 
 import net.algart.arrays.*;
 import net.algart.math.functions.AbstractFunc;

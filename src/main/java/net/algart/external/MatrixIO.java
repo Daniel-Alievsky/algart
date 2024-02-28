@@ -71,6 +71,7 @@ public class MatrixIO {
         if (formatName == null) {
             throw new IllegalArgumentException("Cannot write image into a file without extension");
         }
+        //TODO!! call packBandsIntoSequentialSamples and use MatrixToBufferedImageConverter
         ColorImageFormatter formatter = new SimpleColorImageFormatter();
         BufferedImage bufferedImage = formatter.toBufferedImage(image);
         if (!ImageIO.write(bufferedImage, formatName, file)) {
