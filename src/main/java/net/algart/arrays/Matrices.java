@@ -1862,7 +1862,7 @@ public class Matrices {
     }
 
     public static <T extends Array> List<Matrix<T>> splitAlongLastDimension(Matrix<T> joined) {
-        return splitAlongLastDimension(joined, Integer.MAX_VALUE);
+        return splitAlongLastDimension(joined, Long.MAX_VALUE);
     }
 
     public static <T extends Array> List<Matrix<T>> splitAlongLastDimension(Matrix<T> joined, long limit) {
