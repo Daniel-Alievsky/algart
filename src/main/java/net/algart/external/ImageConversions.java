@@ -32,6 +32,8 @@ import net.algart.math.functions.RectangularFunc;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO!! Remove; replace with Matrices.merge/splitAlongFirstDimension
+@Deprecated
 public class ImageConversions {
     private ImageConversions() {
     }

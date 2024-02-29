@@ -2527,275 +2527,6 @@ public class Matrices {
     }
 
     /**
-     * Returns an immutable view of the passed AlgART matrix, cast to another primitive element type
-     * (other precision) with automatic scaling, so that 0.0 is cast to 0.0 and
-     * {@link PArray#maxPossibleValue(double) maximal possible value} of the source matrix
-     * is scaled to maximal possible value of the result. (For <tt>float</tt> and <tt>double</tt>
-     * elements we suppose that maximal possible value is 1.0.)
-     *
-     * <p>More precisely, if <tt>newElementType==matrix.elementType()</tt>, this function just returns
-     * the <tt>matrix</tt> argument without changes, in other case it is equivalent to the following operators:
-     * <pre>
-     *     final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
-     *     final Range destRange = Range.valueOf(0.0, {@link Arrays#maxPossibleValue(Class)
-     *     Arrays.maxPossibleValue}(newType));
-     *     final Range srcRange = Range.valueOf(0.0, matrix.{@link Matrix#maxPossibleValue()
-     *     maxPossibleValue()});
-     *     return {@link Matrices#asFuncMatrix(Func, Class, Matrix)
-     *     Matrices.asFuncMatrix}(LinearFunc.getInstance(destRange, srcRange), newType, matrix);
-     * </pre>
-     *
-     * @param matrix         the source AlgART matrix.
-     * @param newElementType required element type.
-     * @return the matrix with the required element type, where every element is equal to
-     * the corresponding element of the source matrix, multiplied
-     * by the automatically chosen scale.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
-     * @throws IllegalArgumentException if the required element type is not a primitive type.
-     */
-    public static Matrix<? extends PArray> asPrecision(Matrix<? extends PArray> matrix, Class<?> newElementType) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix");
-        if (newElementType == null)
-            throw new NullPointerException("Null newElementType");
-        if (newElementType == matrix.elementType()) {
-            return matrix;
-        }
-        return matrix.matrix(Arrays.asPrecision(matrix.array(), newElementType));
-    }
-
-    /**
-     * Equivalent to creating a "lazy" matrix by <nobr><tt>lazy = {@link #asPrecision(Matrix, Class)
-     * asPrecision(matrix, result.elementType()}</tt></nobr> call
-     * and copying it into the <tt>result</tt> argument by
-     * <nobr><tt>{@link #copy(ArrayContext, Matrix, Matrix) copy(context, result, lazy)}</tt></nobr> call.
-     *
-     * <p>In addition, this method checks, whether all passed matrices have the
-     * {@link Matrix#dimEquals(Matrix) same dimensions},
-     * and throws an exception in other case.
-     *
-     * <p>If the source and result matrices have the same element type, this method just copies <tt>matrix</tt>
-     * to <tt>result</tt>.
-     *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
-     * @param result  the destination matrix.
-     * @param matrix  the source matrix.
-     * @throws NullPointerException  if <tt>result</tt> or <tt>matrix</tt> is <tt>null</tt>.
-     * @throws SizeMismatchException if passed matrices have different dimensions.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
-     */
-    public static void applyPrecision(
-            ArrayContext context,
-            Matrix<? extends UpdatablePArray> result,
-            Matrix<? extends PArray> matrix) {
-        if (result == null)
-            throw new NullPointerException("Null result matrix");
-        if (matrix == null)
-            throw new NullPointerException("Null source matrix");
-        if (!matrix.dimEquals(result))
-            throw new SizeMismatchException("Source and result matrix dimensions mismatch: "
-                    + "source matrix is " + matrix + ", result matrix is " + result);
-        Arrays.applyPrecision(context, result.array(), matrix.array());
-    }
-
-    /**
-     * Returns an immutable view of the passed AlgART matrix, resized to the specified dimensions <tt>newDim</tt>.
-     * If is also a good example of cooperative using
-     * {@link #asInterpolationFunc(Matrix, net.algart.arrays.Matrices.InterpolationMethod, boolean)
-     * asInterpolationFunc},
-     * {@link #asCoordFuncMatrix(boolean, net.algart.math.functions.Func, Class, long...)
-     * asCoordFuncMatrix} and
-     * {@link LinearOperator affine transforms} of the functions: see below.
-     *
-     * <p>Namely, this method performs conversion of the matrix to
-     * a mathematical function from the coordinates
-     * (by {@link #asInterpolationFunc(Matrix, InterpolationMethod, double)} method),
-     * transforms that function by the resizing linear operator
-     * (see {@link LinearOperator#getDiagonalInstance(double...)} method)
-     * and then performs the back conversion of the transformed function to the result matrix
-     * (by {@link #asCoordFuncMatrix(Func, Class, long...)} method).
-     * The details depend on <tt>resizingMethod</tt> argument:
-     *
-     * <ol>
-     * <li>If <tt>resizingMethod</tt> is {@link ResizingMethod#SIMPLE}, this method is equivalent to:
-     * <pre>
-     * {@link Func} interpolation = {@link Matrices}.{@link #asInterpolationFunc(Matrix, InterpolationMethod, double)
-     * asInterpolationFunc}(
-     *     matrix, {@link InterpolationMethod#STEP_FUNCTION}, 0.0);
-     * {@link Func} transformed = {@link LinearOperator}.{@link LinearOperator#getDiagonalInstance(double...)
-     * getDiagonalInstance}(diagonal).apply(interpolation);
-     * {@link Matrix} result = {@link Matrices}.{@link #asCoordFuncMatrix(Func, Class, long...)
-     * asCoordFuncMatrix}(
-     *     transformed, matrix.{@link Matrix#type(Class) type}(PArray.class), newDim);
-     * </pre>
-     * Here <tt>diagonal</tt> is the array of relations between old and new dimensions:
-     * <pre>
-     *     diagonal[k] = (double)matrix.{@link Matrix#dim(int) dim}(k) / (double)newDim[k]
-     * </pre>
-     * It is the simplest possible resizing method without any interpolation or averaging:
-     * every element of the returned matrix is strictly equal to some element of the source one.
-     * <br>&nbsp;
-     *
-     * <li>If <tt>resizingMethod</tt> is {@link ResizingMethod#AVERAGING}, this method does the same,
-     * but if some of <tt>diagonal</tt> values are greater than 1.5 (that means compression),
-     * it also performs additional transformation of <tt>transformed</tt> function
-     * by the operator {@link ApertureFilterOperator#getAveragingInstance(long... apertureDim)},
-     * where <tt>apertureDim</tt> is the sizes of the aperture in the source matrix,
-     * mapped to a single result element.
-     * As a result, the value of each result element is an average from several source elements,
-     * that are mapped to that one by this compression.
-     * The details of this averaging are not specified.
-     * This method is necessary while compression, if you want to get maximally "good" result picture.
-     * It works fine while compression in the integer number of times (all <tt>diagonal</tt> values are integers).
-     * In other case, {@link ResizingMethod#POLYLINEAR_AVERAGING} mode can produce better results.
-     * <br>&nbsp;
-     *
-     * <li>If <tt>resizingMethod</tt> is {@link ResizingMethod#POLYLINEAR_INTERPOLATION} or
-     * {@link ResizingMethod#POLYLINEAR_AVERAGING}, this method does the same as in cases 1 and 2,
-     * but the argument of {@link #asInterpolationFunc(Matrix, InterpolationMethod, double) asInterpolationFunc}
-     * is {@link InterpolationMethod#POLYLINEAR_FUNCTION POLYLINEAR_FUNCTION}
-     * instead of {@link InterpolationMethod#STEP_FUNCTION STEP_FUNCTION}.
-     * These modes are useful while expanding the matrix, because allow to use interpolation
-     * for values "between" its elements.
-     * The {@link ResizingMethod#POLYLINEAR_AVERAGING} is usually the best choice.
-     * <br>&nbsp;
-     *
-     * <li>If <tt>resizingMethod</tt> is some inheritor of {@link ResizingMethod.Averaging} class,
-     * this method does the same as in cases {@link ResizingMethod#AVERAGING} and
-     * {@link ResizingMethod#POLYLINEAR_AVERAGING},
-     * but the averaging operator will be created not by
-     * {@link ApertureFilterOperator#getAveragingInstance(long... apertureDim)},
-     * but by {@link ApertureFilterOperator#getInstance(Func func, long... apertureDim)} method,
-     * where the first argument is the result of {@link ResizingMethod.Averaging#getAveragingFunc(long[])
-     * resizingMethod.getAveragingFunc(apertureDim)}.
-     * It allows to specify non-standard averaging algorithm.
-     * For example, for binary matrices, containing a little number of unit elements, {@link Func#MAX} can be
-     * a better choice than the usual linear averaging.
-     * </ol>
-     *
-     * <p>There is an exception from the rules listed above. If the source matrix is empty
-     * (at least one dimension is 0), the returned matrix will be zero-filled always.
-     * (In this case, there are no ways to calculate any elements.)
-     *
-     * @param resizingMethod the algorithm of resizing.
-     * @param matrix         the source AlgART matrix.
-     * @param newDim         the dimensions of resized matrix.
-     * @return the resized matrix.
-     * @throws NullPointerException     if <tt>resizingMethod</tt>, <tt>matrix</tt> or <tt>newDim</tt> argument
-     *                                  is <tt>null</tt>.
-     * @throws IllegalArgumentException if the number of <tt>newDim</tt> elements is not equal to
-     *                                  <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt>,
-     *                                  or if some of new dimensions are negative.
-     * @see #resize(ArrayContext, Matrices.ResizingMethod, Matrix, Matrix)
-     * @see #asResized(Matrices.ResizingMethod, Matrix, long[], double[])
-     */
-    public static Matrix<PArray> asResized(
-            ResizingMethod resizingMethod,
-            Matrix<? extends PArray> matrix, long... newDim) {
-        return ArraysMatrixResizer.asResized(resizingMethod, matrix, newDim, null);
-    }
-
-    /**
-     * An extended analog of {@link #asResized(Matrices.ResizingMethod, Matrix, long...)} method,
-     * allowing to precisely specify a custom scaling value along every coordinate.
-     * Namely, while that method scales every coordinate <tt>#k</tt> in
-     * <tt>newDim[k]/matrix.{@link Matrix#dim(int) dim}(k)</tt> times,
-     * this method scales it precisely in <tt>scales[k]</tt> time.
-     * If, for every <tt>k</tt>, we have
-     * <pre>
-     *     scales[k]==(double)newDim[k]/(double)matrix.{@link Matrix#dim(int) dim}(k)
-     * </pre>
-     * or if <tt>scales</tt> argument is <tt>null</tt>, this method is equivalent to
-     * {@link #asResized(Matrices.ResizingMethod, Matrix, long...)}.
-     *
-     * <p>To get a strict specification of behaviour of this method, please
-     * look at the comments to {@link #asResized(Matrices.ResizingMethod, Matrix, long...)},
-     * section 1, and replace definition of <tt>diagonal</tt> array with the following:
-     * <pre>
-     *     diagonal[k] = scales == null ? (double)matrix.{@link Matrix#dim(int)
-     * dim}(k) / (double)newDim[k] : 1.0 / scales[k]
-     * </pre>
-     *
-     * @param resizingMethod the algorithm of resizing.
-     * @param matrix         the source AlgART matrix.
-     * @param newDim         the dimensions of resized matrix.
-     * @param scales         the scales of resizing along every coordinate; may be <tt>null</tt>,
-     *                       then calculated automatically as
-     *                       <tt>scales[k] = (double)newDim[k]/(double)matrix.{@link Matrix#dim(int) dim}(k)</tt>.
-     * @return the resized matrix.
-     * @throws NullPointerException     if <tt>resizingMethod</tt>, <tt>matrix</tt> or <tt>newDim</tt> argument
-     *                                  is <tt>null</tt>.
-     * @throws IllegalArgumentException if the length of <tt>newDim</tt> or (when <tt>scales!=null</tt>)
-     *                                  <tt>scales</tt> array is not equal to
-     *                                  <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt>,
-     *                                  or if some of new dimensions are negative.
-     * @see #resize(ArrayContext, Matrices.ResizingMethod, Matrix, Matrix)
-     */
-    public static Matrix<PArray> asResized(
-            ResizingMethod resizingMethod,
-            Matrix<? extends PArray> matrix, long[] newDim, double[] scales) {
-        // Note! The following declaration would be incorrect:
-        // public static <T extends PArray> Matrix<T> asResized(
-        //    ResizingMethod resizingMethod,
-        //    Matrix<T> matrix, long... newDim)
-        // The reason is Matrix<UpdatableArray>: this method cannot return updatable matrices.
-        return ArraysMatrixResizer.asResized(resizingMethod, matrix, newDim, scales);
-    }
-
-    /**
-     * Resizes the source matrix to the dimensions of the passed <tt>result</tt> matrix
-     * and stores the resized matrix in <tt>result</tt> argument.
-     *
-     * <p>This method is equivalent to the following operators:
-     * <pre>
-     *     Matrix&lt;?&gt; lazy = {@link #asResized(Matrices.ResizingMethod, Matrix, long...)
-     *     Matrices.asResized}(resizingMethod, src, result.{@link Matrix#dimensions() dimensions()});
-     *     {@link #copy(ArrayContext, Matrix, Matrix, int, boolean)
-     *     Matrices.copy}(context, result, lazy, 0, false);
-     * </pre>
-     *
-     * <p>Note: in many cases this method works essentially faster than simple reading all elements of
-     * the result of {@link #asResized(net.algart.arrays.Matrices.ResizingMethod, Matrix, long...) asResized} method.
-     *
-     * <p>Please draw attention to the argument <tt>strictMode=false</tt> of <tt>Matrices.copy</tt> method:
-     * it is important for providing good performance for resizing large matrices.
-     * This argument specifies, that the precise results of this method may little differ from
-     * the elements of the {@link #asResized(Matrices.ResizingMethod, Matrix, long...) asResized} result
-     * (the "<tt>lazy</tt>" matrix above).
-     *
-     * <p>Moreover, the precise results of this method may little differ also from the results of the code above
-     * (calling <tt>Matrices.copy</tt> method).
-     *
-     * <p>Usually the differences are little numeric errors,
-     * connected with limited precision of floating-point calculations of the coordinates.
-     * For example, it is possible that the coordinates of the set of points,
-     * the values of which are averaged in {@link ResizingMethod#AVERAGING} resizing method,
-     * will be slightly different in this method and in the precise specification of
-     * {@link #asResized(net.algart.arrays.Matrices.ResizingMethod, Matrix, long...)}
-     * (according usage of {@link ApertureFilterOperator#getAveragingInstance(long... apertureDim)} operator).
-     * For {@link ResizingMethod#AVERAGING} mode it may lead to rounding coordinates to another integers,
-     * so, the result of averaging will be little other.
-     * For more accurate {@link ResizingMethod#POLYLINEAR_AVERAGING}) mode the result of averaging will
-     * be almost the same.
-     *
-     * <p>By the way, in a case of such differences the results of this method usually better correspond
-     * to intuitive expectations of the results of resizing.
-     *
-     * @param context        the context of resizing; may be <tt>null</tt>, then it will be ignored.
-     * @param resizingMethod the algorithm of resizing.
-     * @param result         the destination matrix.
-     * @param src            the source matrix.
-     */
-    public static void resize(
-            ArrayContext context,
-            ResizingMethod resizingMethod,
-            Matrix<? extends UpdatablePArray> result,
-            Matrix<? extends PArray> src) {
-        ArraysMatrixResizer.resize(context, resizingMethod, result, src);
-    }
-
-    /**
      * Equivalent to <tt>{@link #asFuncMatrix(Func, Class, List)
      * asFuncMatrix}(f, requiredType, {@link #several(Class, Matrix[]) several}(PArray.class, x))</tt>.
      *
@@ -3408,6 +3139,311 @@ public class Matrices {
     }
 
     /**
+     * Performs the specified function for all elements of <tt>source</tt> to produce <tt>result</tt>.
+     * <p>Equivalent to <tt>{@link #applyFunc(ArrayContext, Func, Matrix, List)
+     * applyFunc}(context, func, result, source)</tt>, where <tt>func</tt> has the following implementation:
+     * <pre>
+     *  public double get(double... x) {
+     *     return function.applyAsDouble(x[0]);
+     *  }
+     * </pre>
+     *
+     * @param context  the context.
+     * @param function function to apply.
+     * @param result   the result matrix.
+     * @param source   the source matrix.
+     */
+    public static void applyFunction(
+            ArrayContext context,
+            DoubleUnaryOperator function,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> source) {
+        Objects.requireNonNull(function);
+        Matrices.applyFunc(
+                context,
+                new AbstractFunc() {
+                    @Override
+                    public double get(double... x) {
+                        return get(x[0]);
+                    }
+
+                    @Override
+                    public double get(double x0) {
+                        return function.applyAsDouble(x0);
+                    }
+                }, result, source);
+    }
+
+    /**
+     * Returns an immutable view of the passed AlgART matrix, cast to another primitive element type
+     * (other precision) with automatic scaling, so that 0.0 is cast to 0.0 and
+     * {@link PArray#maxPossibleValue(double) maximal possible value} of the source matrix
+     * is scaled to maximal possible value of the result. (For <tt>float</tt> and <tt>double</tt>
+     * elements we suppose that maximal possible value is 1.0.)
+     *
+     * <p>More precisely, if <tt>newElementType==matrix.elementType()</tt>, this function just returns
+     * the <tt>matrix</tt> argument without changes, in other case it is equivalent to the following operators:
+     * <pre>
+     *     final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
+     *     final Range destRange = Range.valueOf(0.0, {@link Arrays#maxPossibleValue(Class)
+     *     Arrays.maxPossibleValue}(newType));
+     *     final Range srcRange = Range.valueOf(0.0, matrix.{@link Matrix#maxPossibleValue()
+     *     maxPossibleValue()});
+     *     return {@link Matrices#asFuncMatrix(Func, Class, Matrix)
+     *     Matrices.asFuncMatrix}(LinearFunc.getInstance(destRange, srcRange), newType, matrix);
+     * </pre>
+     *
+     * @param matrix         the source AlgART matrix.
+     * @param newElementType required element type.
+     * @return the matrix with the required element type, where every element is equal to
+     * the corresponding element of the source matrix, multiplied
+     * by the automatically chosen scale.
+     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws IllegalArgumentException if the required element type is not a primitive type.
+     */
+    public static Matrix<? extends PArray> asPrecision(Matrix<? extends PArray> matrix, Class<?> newElementType) {
+        if (matrix == null)
+            throw new NullPointerException("Null matrix");
+        if (newElementType == null)
+            throw new NullPointerException("Null newElementType");
+        if (newElementType == matrix.elementType()) {
+            return matrix;
+        }
+        return matrix.matrix(Arrays.asPrecision(matrix.array(), newElementType));
+    }
+
+    /**
+     * Equivalent to creating a "lazy" matrix by <nobr><tt>lazy = {@link #asPrecision(Matrix, Class)
+     * asPrecision(matrix, result.elementType()}</tt></nobr> call
+     * and copying it into the <tt>result</tt> argument by
+     * <nobr><tt>{@link #copy(ArrayContext, Matrix, Matrix) copy(context, result, lazy)}</tt></nobr> call.
+     *
+     * <p>In addition, this method checks, whether all passed matrices have the
+     * {@link Matrix#dimEquals(Matrix) same dimensions},
+     * and throws an exception in other case.
+     *
+     * <p>If the source and result matrices have the same element type, this method just copies <tt>matrix</tt>
+     * to <tt>result</tt>.
+     *
+     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param result  the destination matrix.
+     * @param matrix  the source matrix.
+     * @throws NullPointerException  if <tt>result</tt> or <tt>matrix</tt> is <tt>null</tt>.
+     * @throws SizeMismatchException if passed matrices have different dimensions.
+     * @throws java.io.IOError       if the current thread is interrupted by the standard
+     *                               <tt>Thread.interrupt()</tt> call.
+     */
+    public static void applyPrecision(
+            ArrayContext context,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> matrix) {
+        if (result == null)
+            throw new NullPointerException("Null result matrix");
+        if (matrix == null)
+            throw new NullPointerException("Null source matrix");
+        if (!matrix.dimEquals(result))
+            throw new SizeMismatchException("Source and result matrix dimensions mismatch: "
+                    + "source matrix is " + matrix + ", result matrix is " + result);
+        Arrays.applyPrecision(context, result.array(), matrix.array());
+    }
+
+    /**
+     * Returns an immutable view of the passed AlgART matrix, resized to the specified dimensions <tt>newDim</tt>.
+     * If is also a good example of cooperative using
+     * {@link #asInterpolationFunc(Matrix, net.algart.arrays.Matrices.InterpolationMethod, boolean)
+     * asInterpolationFunc},
+     * {@link #asCoordFuncMatrix(boolean, net.algart.math.functions.Func, Class, long...)
+     * asCoordFuncMatrix} and
+     * {@link LinearOperator affine transforms} of the functions: see below.
+     *
+     * <p>Namely, this method performs conversion of the matrix to
+     * a mathematical function from the coordinates
+     * (by {@link #asInterpolationFunc(Matrix, InterpolationMethod, double)} method),
+     * transforms that function by the resizing linear operator
+     * (see {@link LinearOperator#getDiagonalInstance(double...)} method)
+     * and then performs the back conversion of the transformed function to the result matrix
+     * (by {@link #asCoordFuncMatrix(Func, Class, long...)} method).
+     * The details depend on <tt>resizingMethod</tt> argument:
+     *
+     * <ol>
+     * <li>If <tt>resizingMethod</tt> is {@link ResizingMethod#SIMPLE}, this method is equivalent to:
+     * <pre>
+     * {@link Func} interpolation = {@link Matrices}.{@link #asInterpolationFunc(Matrix, InterpolationMethod, double)
+     * asInterpolationFunc}(
+     *     matrix, {@link InterpolationMethod#STEP_FUNCTION}, 0.0);
+     * {@link Func} transformed = {@link LinearOperator}.{@link LinearOperator#getDiagonalInstance(double...)
+     * getDiagonalInstance}(diagonal).apply(interpolation);
+     * {@link Matrix} result = {@link Matrices}.{@link #asCoordFuncMatrix(Func, Class, long...)
+     * asCoordFuncMatrix}(
+     *     transformed, matrix.{@link Matrix#type(Class) type}(PArray.class), newDim);
+     * </pre>
+     * Here <tt>diagonal</tt> is the array of relations between old and new dimensions:
+     * <pre>
+     *     diagonal[k] = (double)matrix.{@link Matrix#dim(int) dim}(k) / (double)newDim[k]
+     * </pre>
+     * It is the simplest possible resizing method without any interpolation or averaging:
+     * every element of the returned matrix is strictly equal to some element of the source one.
+     * <br>&nbsp;
+     *
+     * <li>If <tt>resizingMethod</tt> is {@link ResizingMethod#AVERAGING}, this method does the same,
+     * but if some of <tt>diagonal</tt> values are greater than 1.5 (that means compression),
+     * it also performs additional transformation of <tt>transformed</tt> function
+     * by the operator {@link ApertureFilterOperator#getAveragingInstance(long... apertureDim)},
+     * where <tt>apertureDim</tt> is the sizes of the aperture in the source matrix,
+     * mapped to a single result element.
+     * As a result, the value of each result element is an average from several source elements,
+     * that are mapped to that one by this compression.
+     * The details of this averaging are not specified.
+     * This method is necessary while compression, if you want to get maximally "good" result picture.
+     * It works fine while compression in the integer number of times (all <tt>diagonal</tt> values are integers).
+     * In other case, {@link ResizingMethod#POLYLINEAR_AVERAGING} mode can produce better results.
+     * <br>&nbsp;
+     *
+     * <li>If <tt>resizingMethod</tt> is {@link ResizingMethod#POLYLINEAR_INTERPOLATION} or
+     * {@link ResizingMethod#POLYLINEAR_AVERAGING}, this method does the same as in cases 1 and 2,
+     * but the argument of {@link #asInterpolationFunc(Matrix, InterpolationMethod, double) asInterpolationFunc}
+     * is {@link InterpolationMethod#POLYLINEAR_FUNCTION POLYLINEAR_FUNCTION}
+     * instead of {@link InterpolationMethod#STEP_FUNCTION STEP_FUNCTION}.
+     * These modes are useful while expanding the matrix, because allow to use interpolation
+     * for values "between" its elements.
+     * The {@link ResizingMethod#POLYLINEAR_AVERAGING} is usually the best choice.
+     * <br>&nbsp;
+     *
+     * <li>If <tt>resizingMethod</tt> is some inheritor of {@link ResizingMethod.Averaging} class,
+     * this method does the same as in cases {@link ResizingMethod#AVERAGING} and
+     * {@link ResizingMethod#POLYLINEAR_AVERAGING},
+     * but the averaging operator will be created not by
+     * {@link ApertureFilterOperator#getAveragingInstance(long... apertureDim)},
+     * but by {@link ApertureFilterOperator#getInstance(Func func, long... apertureDim)} method,
+     * where the first argument is the result of {@link ResizingMethod.Averaging#getAveragingFunc(long[])
+     * resizingMethod.getAveragingFunc(apertureDim)}.
+     * It allows to specify non-standard averaging algorithm.
+     * For example, for binary matrices, containing a little number of unit elements, {@link Func#MAX} can be
+     * a better choice than the usual linear averaging.
+     * </ol>
+     *
+     * <p>There is an exception from the rules listed above. If the source matrix is empty
+     * (at least one dimension is 0), the returned matrix will be zero-filled always.
+     * (In this case, there are no ways to calculate any elements.)
+     *
+     * @param resizingMethod the algorithm of resizing.
+     * @param matrix         the source AlgART matrix.
+     * @param newDim         the dimensions of resized matrix.
+     * @return the resized matrix.
+     * @throws NullPointerException     if <tt>resizingMethod</tt>, <tt>matrix</tt> or <tt>newDim</tt> argument
+     *                                  is <tt>null</tt>.
+     * @throws IllegalArgumentException if the number of <tt>newDim</tt> elements is not equal to
+     *                                  <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt>,
+     *                                  or if some of new dimensions are negative.
+     * @see #resize(ArrayContext, Matrices.ResizingMethod, Matrix, Matrix)
+     * @see #asResized(Matrices.ResizingMethod, Matrix, long[], double[])
+     */
+    public static Matrix<PArray> asResized(
+            ResizingMethod resizingMethod,
+            Matrix<? extends PArray> matrix, long... newDim) {
+        return ArraysMatrixResizer.asResized(resizingMethod, matrix, newDim, null);
+    }
+
+    /**
+     * An extended analog of {@link #asResized(Matrices.ResizingMethod, Matrix, long...)} method,
+     * allowing to precisely specify a custom scaling value along every coordinate.
+     * Namely, while that method scales every coordinate <tt>#k</tt> in
+     * <tt>newDim[k]/matrix.{@link Matrix#dim(int) dim}(k)</tt> times,
+     * this method scales it precisely in <tt>scales[k]</tt> time.
+     * If, for every <tt>k</tt>, we have
+     * <pre>
+     *     scales[k]==(double)newDim[k]/(double)matrix.{@link Matrix#dim(int) dim}(k)
+     * </pre>
+     * or if <tt>scales</tt> argument is <tt>null</tt>, this method is equivalent to
+     * {@link #asResized(Matrices.ResizingMethod, Matrix, long...)}.
+     *
+     * <p>To get a strict specification of behaviour of this method, please
+     * look at the comments to {@link #asResized(Matrices.ResizingMethod, Matrix, long...)},
+     * section 1, and replace definition of <tt>diagonal</tt> array with the following:
+     * <pre>
+     *     diagonal[k] = scales == null ? (double)matrix.{@link Matrix#dim(int)
+     * dim}(k) / (double)newDim[k] : 1.0 / scales[k]
+     * </pre>
+     *
+     * @param resizingMethod the algorithm of resizing.
+     * @param matrix         the source AlgART matrix.
+     * @param newDim         the dimensions of resized matrix.
+     * @param scales         the scales of resizing along every coordinate; may be <tt>null</tt>,
+     *                       then calculated automatically as
+     *                       <tt>scales[k] = (double)newDim[k]/(double)matrix.{@link Matrix#dim(int) dim}(k)</tt>.
+     * @return the resized matrix.
+     * @throws NullPointerException     if <tt>resizingMethod</tt>, <tt>matrix</tt> or <tt>newDim</tt> argument
+     *                                  is <tt>null</tt>.
+     * @throws IllegalArgumentException if the length of <tt>newDim</tt> or (when <tt>scales!=null</tt>)
+     *                                  <tt>scales</tt> array is not equal to
+     *                                  <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt>,
+     *                                  or if some of new dimensions are negative.
+     * @see #resize(ArrayContext, Matrices.ResizingMethod, Matrix, Matrix)
+     */
+    public static Matrix<PArray> asResized(
+            ResizingMethod resizingMethod,
+            Matrix<? extends PArray> matrix, long[] newDim, double[] scales) {
+        // Note! The following declaration would be incorrect:
+        // public static <T extends PArray> Matrix<T> asResized(
+        //    ResizingMethod resizingMethod,
+        //    Matrix<T> matrix, long... newDim)
+        // The reason is Matrix<UpdatableArray>: this method cannot return updatable matrices.
+        return ArraysMatrixResizer.asResized(resizingMethod, matrix, newDim, scales);
+    }
+
+    /**
+     * Resizes the source matrix to the dimensions of the passed <tt>result</tt> matrix
+     * and stores the resized matrix in <tt>result</tt> argument.
+     *
+     * <p>This method is equivalent to the following operators:
+     * <pre>
+     *     Matrix&lt;?&gt; lazy = {@link #asResized(Matrices.ResizingMethod, Matrix, long...)
+     *     Matrices.asResized}(resizingMethod, src, result.{@link Matrix#dimensions() dimensions()});
+     *     {@link #copy(ArrayContext, Matrix, Matrix, int, boolean)
+     *     Matrices.copy}(context, result, lazy, 0, false);
+     * </pre>
+     *
+     * <p>Note: in many cases this method works essentially faster than simple reading all elements of
+     * the result of {@link #asResized(net.algart.arrays.Matrices.ResizingMethod, Matrix, long...) asResized} method.
+     *
+     * <p>Please draw attention to the argument <tt>strictMode=false</tt> of <tt>Matrices.copy</tt> method:
+     * it is important for providing good performance for resizing large matrices.
+     * This argument specifies, that the precise results of this method may little differ from
+     * the elements of the {@link #asResized(Matrices.ResizingMethod, Matrix, long...) asResized} result
+     * (the "<tt>lazy</tt>" matrix above).
+     *
+     * <p>Moreover, the precise results of this method may little differ also from the results of the code above
+     * (calling <tt>Matrices.copy</tt> method).
+     *
+     * <p>Usually the differences are little numeric errors,
+     * connected with limited precision of floating-point calculations of the coordinates.
+     * For example, it is possible that the coordinates of the set of points,
+     * the values of which are averaged in {@link ResizingMethod#AVERAGING} resizing method,
+     * will be slightly different in this method and in the precise specification of
+     * {@link #asResized(net.algart.arrays.Matrices.ResizingMethod, Matrix, long...)}
+     * (according usage of {@link ApertureFilterOperator#getAveragingInstance(long... apertureDim)} operator).
+     * For {@link ResizingMethod#AVERAGING} mode it may lead to rounding coordinates to another integers,
+     * so, the result of averaging will be little other.
+     * For more accurate {@link ResizingMethod#POLYLINEAR_AVERAGING}) mode the result of averaging will
+     * be almost the same.
+     *
+     * <p>By the way, in a case of such differences the results of this method usually better correspond
+     * to intuitive expectations of the results of resizing.
+     *
+     * @param context        the context of resizing; may be <tt>null</tt>, then it will be ignored.
+     * @param resizingMethod the algorithm of resizing.
+     * @param result         the destination matrix.
+     * @param src            the source matrix.
+     */
+    public static void resize(
+            ArrayContext context,
+            ResizingMethod resizingMethod,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> src) {
+        ArraysMatrixResizer.resize(context, resizingMethod, result, src);
+    }
+
+    /**
      * Binary OR: equivalent to
      * <tt>{@link #bitOrToOther(Matrix, Matrix, Matrix) bitOrToOther}(result, result, other)</tt>.
      *
@@ -3539,43 +3575,6 @@ public class Matrices {
     public static void bitNotToOther(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> source) {
         Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.REVERSE, result, source);
     }
-
-    /**
-     * Performs the specified function for all elements of <tt>source</tt> to produce <tt>result</tt>.
-     * <p>Equivalent to <tt>{@link #applyFunc(ArrayContext, Func, Matrix, List)
-     * applyFunc}(context, func, result, source)</tt>, where <tt>func</tt> has the following implementation:
-     * <pre>
-     *  public double get(double... x) {
-     *     return function.applyAsDouble(x[0]);
-     *  }
-     * </pre>
-     *
-     * @param context  the context.
-     * @param function function to apply.
-     * @param result   the result matrix.
-     * @param source   the source matrix.
-     */
-    public static void applyFunction(
-            ArrayContext context,
-            DoubleUnaryOperator function,
-            Matrix<? extends UpdatablePArray> result,
-            Matrix<? extends PArray> source) {
-        Objects.requireNonNull(function);
-        Matrices.applyFunc(
-                context,
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0]);
-                    }
-
-                    @Override
-                    public double get(double x0) {
-                        return function.applyAsDouble(x0);
-                    }
-                }, result, source);
-    }
-
 
     /**
      * Returns an immutable view of the passed AlgART matrix,

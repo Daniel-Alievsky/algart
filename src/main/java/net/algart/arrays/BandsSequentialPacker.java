@@ -22,13 +22,11 @@
  * SOFTWARE.
  */
 
-package net.algart.external;
-
-import net.algart.arrays.*;
+package net.algart.arrays;
 
 import java.util.Objects;
 
-public abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
+abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
     final PArray[] bands;
     final UpdatablePArray packed;
 

@@ -22,12 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.external;
-
-import net.algart.arrays.Arrays;
-import net.algart.arrays.DirectAccessible;
-import net.algart.arrays.JArrayPool;
-import net.algart.arrays.PArray;
+package net.algart.arrays;
 
 abstract class AbstractBandsSequentialProcessor extends Arrays.ParallelExecutor implements AutoCloseable {
     private static final int BUFFER_SIZE = 32768;
