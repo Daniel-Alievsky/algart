@@ -46,35 +46,35 @@ public class ColorMatrices {
     public static final double INTENSITY_B_WEIGHT = 0.114;
     public static final double INTENSITY_G_WEIGHT = 1.0 - (INTENSITY_R_WEIGHT + INTENSITY_B_WEIGHT); // ~0.587
 
-    public static Matrix<? extends PArray> asIntensity(List<? extends Matrix<? extends PArray>> colorBands) {
+    public static Matrix<? extends PArray> asRGBIntensity(List<? extends Matrix<? extends PArray>> colorBands) {
         return colorBands.size() < 3 ?
                 colorBands.get(0) :
-                asIntensity(colorBands.get(0), colorBands.get(1), colorBands.get(2));
+                asRGBIntensity(colorBands.get(0), colorBands.get(1), colorBands.get(2));
     }
 
-    public static Matrix<? extends PArray> asIntensity(
+    public static Matrix<? extends PArray> asRGBIntensity(
             Matrix<? extends PArray> r,
             Matrix<? extends PArray> g,
             Matrix<? extends PArray> b)
     {
         if (g.type() == r.type() && g.type() == r.type()) {
-            return asIntensity(g.type(PArray.class), r, g, b);
+            return asRGBIntensity(g.type(PArray.class), r, g, b);
         } else if (r.array().bitsPerElement() <= 8
                 && g.array().bitsPerElement() <= 8
                 && b.array().bitsPerElement() <= 8)
         {
-            return asIntensity(ByteArray.class, r, g, b);
+            return asRGBIntensity(ByteArray.class, r, g, b);
         } else if (r.array().bitsPerElement() <= 16
                 && g.array().bitsPerElement() <= 16
                 && b.array().bitsPerElement() <= 16)
         {
-            return asIntensity(ShortArray.class, r, g, b);
+            return asRGBIntensity(ShortArray.class, r, g, b);
         } else {
-            return asIntensity(FloatArray.class, r, g, b);
+            return asRGBIntensity(FloatArray.class, r, g, b);
         }
     }
 
-    public static <T extends PArray> Matrix<T> asIntensity(
+    public static <T extends PArray> Matrix<T> asRGBIntensity(
             Class<T> resultType,
             Matrix<? extends PArray> r,
             Matrix<? extends PArray> g,
@@ -83,8 +83,10 @@ public class ColorMatrices {
         if (resultType == null)
             throw new NullPointerException("Null resultType");
         if (r.type() == resultType && g.type() == resultType && g.type() == resultType) {
+            final double increment = r.isFloatingPoint() ? 0.0 : 0.5;
+            // - for integer matrices with the same type (most popular case) we prefer rounding (by adding 0.5)
             return Matrices.asFuncMatrix(
-                    LinearFunc.getInstance(0.0, INTENSITY_R_WEIGHT, INTENSITY_G_WEIGHT, INTENSITY_B_WEIGHT),
+                    LinearFunc.getInstance(increment, INTENSITY_R_WEIGHT, INTENSITY_G_WEIGHT, INTENSITY_B_WEIGHT),
                     resultType, r, g, b);
         } else {
             final double scale = Arrays.maxPossibleValue(resultType, 1.0);
