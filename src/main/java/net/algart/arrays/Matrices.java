@@ -1804,6 +1804,23 @@ public class Matrices {
         return result;
     }
 
+    /**
+     * Equivalent to <tt>{@link #mergeAlongLastDimension(Class, List, MemoryModel)
+     * mergeAlongLastDimension}(arrayClass, matrices, Arrays.SMM)</tt>.
+     *
+     * @param arrayClass the required class / interface of built-in arrays for all passed matrices.
+     * @param matrices   list of the source matrices.
+     * @return result merged matrix.
+     * @throws NullPointerException     if <tt>arrayClass</tt> argument, the <tt>matrices</tt> list,
+     *                                  one of its elements or memory model is <tt>null</tt>.
+     * @throws SizeMismatchException    if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     *                                  different dimensions.
+     * @throws IllegalArgumentException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     *                                  different element type.
+     * @throws ClassCastException       if one of matrices contains built-in AlgART array that is not an instance
+     *                                  of the type <tt>arrayClass</tt>
+     *                                  (<tt>!arrayClass.isInstance(matrices[k].{@link Matrix#array() array()})</tt>).
+     */
     public static <T extends Array> Matrix<T> mergeAlongLastDimension(
             Class<T> arrayClass,
             List<? extends Matrix<?>> matrices) {
@@ -1812,11 +1829,11 @@ public class Matrices {
 
     /**
      * Merges <i>K</i> <i>n</i>-dimensional matrices with identical element types and dimensions
-     * <i>M</i><sub>1</sub>x<i>M</i><sub>2</sub>x...x<i>M</i><sub><i>n</i></sub> into
+     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i>&minus;1</sub> into
      * a single (<i>n</i>+1)-dimensional matrix
-     * <i>M</i><sub>1</sub>x<i>M</i><sub>2</sub>x...x<i>M</i><sub><i>n</i></sub>x<i>K</i>
+     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i>&minus;1</sub>x<i>K</i>
      * along the last dimension.
-     * So, the element with index (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n</sub></i>)
+     * The element with index (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n</sub></i>)
      * of the returned matrix will be equal to the element with index
      * (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>)
      * of the matrix <tt>matrices.get(<i>i<sub>n</sub></i>)</tt>.
@@ -1861,22 +1878,59 @@ public class Matrices {
         return InternalUtils.cast(result);
     }
 
-    public static <T extends Array> List<Matrix<T>> splitAlongLastDimension(Matrix<T> joined) {
-        return splitAlongLastDimension(joined, Long.MAX_VALUE);
+    /**
+     * Equivalent to <tt>{@link #splitAlongLastDimension(Matrix, long)
+     * splitAlongLastDimension}(joined, Long.MAX_VALUE)</tt> (no limitations).
+
+     * @param merged the source merged matrix.
+     * @return a list of matrices: "layers" of the source one along the last dimension.
+     * @throws NullPointerException     if <tt>merged</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>merged</tt> matrix is 1-dimensional.
+     */
+    public static <T extends Array> List<Matrix<T>> splitAlongLastDimension(Matrix<T> merged) {
+        return splitAlongLastDimension(merged, Long.MAX_VALUE);
     }
 
-    public static <T extends Array> List<Matrix<T>> splitAlongLastDimension(Matrix<T> joined, long limit) {
-        Objects.requireNonNull(joined, "Null joined matrix");
+    /**
+     * Splits a single (<i>n</i>+1)-dimensional matrix
+     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>x<i>M</i><sub><i>n</i></sub>
+     * to <i>M</i><sub><i>n</i></sub> separate <i>n</i>-dimensional matrices
+     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i>&minus;1</sub>
+     * and returns them as a list.
+     * The element with index (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n</sub></i>)
+     * of the source matrix will be equal to the element with index
+     * (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>)
+     * of the matrix <tt>list.get(<i>i<sub>n</sub></i>)</tt> in the returned list.
+     *
+     * <p>This method also checks, that the last dimension <tt>merged.dim(<i>n</i>)</tt> (that will be
+     * equal to the size of the returned list) is not greater than the passed limit
+     * and throws an exception if this limit is exceeded. Typically, this method is used for unpacking
+     * matrices where the last dimension cannot be too large &mdash; for example the number
+     * of color channels or the number of frames in a movie &mdash; so it makes sense to limit
+     * this value, because too large last dimension (millions) usually means incorrect usage of this function.
+     * In any case, the number of returned matrices, greater than {@code Integer.MAX_VALUE}, usually leads to
+     * <tt>OutOfMemoryError</tt>.
+     *
+     * @param merged the source merged matrix.
+     * @param limit  maximal allowed number of returned matrices (the last dimension of the source matrix).
+     * @return a list of matrices: "layers" of the source one along the last dimension.
+     * @throws NullPointerException     if <tt>merged</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>merged</tt> matrix is 1-dimensional,
+     *                                  if <tt>limit &le; 0</tt> or if the number of returned matrices {@code >limit}.
+     */
+    public static <T extends Array> List<Matrix<T>> splitAlongLastDimension(Matrix<T> merged, long limit) {
+        Objects.requireNonNull(merged, "Null merged matrix");
         if (limit <= 0) {
             throw new IllegalArgumentException("Zero or negative limit " + limit);
         }
-        final long[] dimensions = joined.dimensions();
+        final long[] dimensions = merged.dimensions();
         if (dimensions.length <= 1) {
             throw new IllegalArgumentException("Joined matrix must have at least 2 dimensions");
         }
+
         final long numberOfMatrices = dimensions[dimensions.length - 1];
         if (numberOfMatrices > limit) {
-            throw new IllegalArgumentException("Too large number of matrices, joined in the last dimension: "
+            throw new IllegalArgumentException("Too large number of matrices, merged in the last dimension: "
                     + numberOfMatrices + " > allowed limit " + limit);
         }
         final long[] reducedDimensions = java.util.Arrays.copyOf(dimensions, dimensions.length - 1);
@@ -1886,7 +1940,7 @@ public class Matrices {
         List<Matrix<T>> result = new ArrayList<>();
         for (long k = 0; k < numberOfMatrices; k++) {
             position[position.length - 1] = k;
-            final Matrix<T> subMatrix = joined.subMatr(position, dimensions);
+            final Matrix<T> subMatrix = merged.subMatr(position, dimensions);
             final Matrix<T> reduced = Matrices.matrix(subMatrix.array(), reducedDimensions);
             result.add(reduced);
         }
