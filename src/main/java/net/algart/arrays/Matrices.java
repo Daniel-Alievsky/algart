@@ -50,7 +50,7 @@ public class Matrices {
      * Used by {@link Matrices#asInterpolationFunc(Matrix, InterpolationMethod, boolean)} and
      * {@link Matrices#asInterpolationFunc(Matrix, InterpolationMethod, double)} methods.
      */
-    public static enum InterpolationMethod {
+    public enum InterpolationMethod {
 
         /**
          * Simplest interpolation method: the real coordinates are truncated to integer numbers by <tt>(long)x</tt>
