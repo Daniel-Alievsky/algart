@@ -200,7 +200,7 @@ public class FillPolygonTest {
                 graphics.fillPolygon(xPoints, yPoints, numberOfVertices);
                 t2 = System.nanoTime();
                 System.out.printf(Locale.US, "Polygon filled by AWT in %.3f ms%n", (t2 - t1) * 1e-6);
-                ImageIO.write(bufferedImage, MatrixIO.getFileExtension(resultAwtFile), resultAwtFile);
+                ImageIO.write(bufferedImage, MatrixIO.extension(resultAwtFile, "bmp"), resultAwtFile);
                 System.out.printf(Locale.US, "Polygon saved in %s%n", resultAwtFile);
             }
             System.out.println();
