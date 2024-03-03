@@ -52,7 +52,8 @@ import java.util.Objects;
  *
  * <p>All arrays created by this memory model, besides bit arrays and {@link Array#asImmutable()
  * immutable views} of the arrays, implement {@link DirectAccessible} interface,
- * and {@link DirectAccessible#hasJavaArray()} returns <tt>true</tt> for such arrays.</p>
+ * {@link DirectAccessible#hasJavaArray()} returns <tt>true</tt> for such arrays,
+ * and {@link DirectAccessible#javaArrayOffset()} returns 0 for them.</p>
  *
  * <p>All arrays, created by this memory model, have empty implementation of
  * {@link Array#loadResources(ArrayContext)},

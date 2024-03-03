@@ -123,7 +123,7 @@ public class MatrixIO {
     }
 
     /**
-     * Should be called if you are going to call {@link #writeAlgARTImage(File, List, boolean)}
+     * Should be called if you are going to call {@link #writeAlgARTImage(Path, List, boolean)}
      * with <tt>allowReferencesToStandardLargeFiles=true</tt> from an external algorithm before its finishing
      * (to return its results).
      *

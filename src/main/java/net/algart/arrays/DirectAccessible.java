@@ -29,10 +29,11 @@ package net.algart.arrays;
  *
  * <p>Some {@link Array AlgART arrays}, built on Java arrays internally, implement
  * this interface to provide quick access to their elements. Such arrays are called
- * "direct accessible".</p>
+ * "direct accessible".
+ * In this library, direct accessible arrays are created by the {@link SimpleMemoryModel} class.</p>
  *
  * <p>More precisely, a <i>direct accessibly array</i> is an object,
- * for which the following conditions are fulfiled:</p>
+ * for which the following conditions are fulfilled:</p>
  *
  * <ol>
  * <li>it implements this {@link DirectAccessible} interface;</li>
