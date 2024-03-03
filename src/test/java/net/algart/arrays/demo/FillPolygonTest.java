@@ -182,7 +182,7 @@ public class FillPolygonTest {
             Matrices.fillRegion(null, matrix, polygon, matrix.array().maxPossibleValue(1.0));
             long t2 = System.nanoTime();
             System.out.printf(Locale.US, "Polygon filled in %.3f ms%n", (t2 - t1) * 1e-6);
-            MatrixIO.writeImage(resultFile, Collections.singletonList(matrix));
+            MatrixIO.writeImage(resultFile.toPath(), Collections.singletonList(matrix));
             System.out.printf(Locale.US, "Polygon saved in %s%n", resultFile);
 
             if (width == (int) width && height == (int) height) {

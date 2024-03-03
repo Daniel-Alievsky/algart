@@ -30,6 +30,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.ByteOrder;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +46,20 @@ public class MatrixIO {
 
     public static String extension(Path file) {
         Objects.requireNonNull(file, "Null file");
-        return extension(file.getFileName());
+        final Path fileName = file.getFileName();
+        if (fileName == null) {
+            throw new IllegalArgumentException("Path without file name is not allowed: " + file);
+        }
+        return extension(fileName.toString());
     }
 
     public static String extension(Path file, String defaultExtension) {
         Objects.requireNonNull(file, "Null file");
-        return extension(file.getFileName(), defaultExtension);
+        final Path fileName = file.getFileName();
+        if (fileName == null) {
+            throw new IllegalArgumentException("Path without file name is not allowed: " + file);
+        }
+        return extension(fileName.toString(), defaultExtension);
     }
 
     public static String extension(File file) {
@@ -73,12 +82,15 @@ public class MatrixIO {
 
     public static String extension(String fileName, String defaultExtension) {
         Objects.requireNonNull(fileName, "Null fileName");
+        if (fileName.isEmpty()) {
+            throw new IllegalArgumentException("Empty file name is not allowed");
+        }
         int p = fileName.lastIndexOf('.');
         if (p == -1) {
             return defaultExtension;
-
         }
-        return fileName.substring(p + 1);
+        final String result = fileName.substring(p + 1);
+        return result.isEmpty() ? defaultExtension : result;
     }
 
     public static String removeExtension(String fileName) {
@@ -91,35 +103,22 @@ public class MatrixIO {
 
     public static void writeImage(Path file, List<? extends Matrix<? extends PArray>> image) throws IOException {
         Objects.requireNonNull(file, "Null file");
-        writeImage(file.toFile(), image);
-    }
-
-    public static void writeImage(File file, List<? extends Matrix<? extends PArray>> image) throws IOException {
-        Objects.requireNonNull(file, "Null file");
-        String formatName = extension(file, "bmp");
-        if (formatName == null) {
-            throw new IllegalArgumentException("Cannot write image into a file without extension");
-        }
+        String formatName = extension(file);
         //TODO!! call packBandsIntoSequentialSamples and use MatrixToBufferedImageConverter
         ColorImageFormatter formatter = new SimpleColorImageFormatter();
         BufferedImage bufferedImage = formatter.toBufferedImage(image);
-        if (!ImageIO.write(bufferedImage, formatName, file)) {
+        if (!ImageIO.write(bufferedImage, formatName, file.toFile())) {
             throw new IOException("Cannot write " + file + ": no writer for " + formatName);
         }
     }
 
     public static List<Matrix<? extends PArray>> readImage(Path file) throws IOException {
         Objects.requireNonNull(file, "Null file");
-        return readImage(file.toFile());
-    }
-
-    public static List<Matrix<? extends PArray>> readImage(File file) throws IOException {
-        Objects.requireNonNull(file, "Null file");
-        if (!file.exists()) {
+        if (!Files.exists(file)) {
             throw new FileNotFoundException("Image file " + file + " does not exist");
         }
         ColorImageFormatter formatter = new SimpleColorImageFormatter();
-        BufferedImage bufferedImage = ImageIO.read(file);
+        BufferedImage bufferedImage = ImageIO.read(file.toFile());
         return formatter.toImage(bufferedImage);
     }
 
@@ -146,18 +145,6 @@ public class MatrixIO {
         writeAlgARTImage(folder, image, false);
     }
 
-    public static void writeAlgARTImage(File folder, List<? extends Matrix<? extends PArray>> image)
-            throws IOException {
-        writeAlgARTImage(folder, image, false);
-    }
-
-    public static void writeAlgARTImage(
-            Path folder,
-            List<? extends Matrix<? extends PArray>> image,
-            boolean allowReferencesToStandardLargeFiles) throws IOException {
-        Objects.requireNonNull(folder, "Null folder");
-        writeAlgARTImage(folder.toFile(), image, allowReferencesToStandardLargeFiles);
-    }
     /**
      * Saves the multichannel <tt>image</tt> (list of matrices) in the specified folder.
      * Matrices are saved in several files in very simple format without any compression.
@@ -165,7 +152,7 @@ public class MatrixIO {
      * it is automatically deleted (replaced with the new one).
      *
      * @param folder                              folder to save the image.
-     * @param image                               some multi-channel image
+     * @param image                               some multichannel image
      * @param allowReferencesToStandardLargeFiles if <tt>true</tt>, and if one of passed matrices is
      *                                            mapped to some file F by {@link LargeMemoryModel},
      *                                            this method does not write the matrix content and
@@ -175,16 +162,19 @@ public class MatrixIO {
      * @throws NullPointerException if one of the arguments or elements of <tt>image</tt> list is <tt>null</tt>.
      */
     public static void writeAlgARTImage(
-            File folder,
+            Path folder,
             List<? extends Matrix<? extends PArray>> image,
             boolean allowReferencesToStandardLargeFiles) throws IOException {
+        Objects.requireNonNull(folder, "Null folder");
+        Objects.requireNonNull(image, "Null image");
+        File f = folder.toFile();
         image = new ArrayList<Matrix<? extends PArray>>(image);
         // cloning before checking guarantees correct check while multithreading
         if (image.isEmpty()) {
             throw new IllegalArgumentException("Empty list of image bands");
         }
-        folder.mkdir();
-        ExternalProcessor.writeUTF8(new File(folder, "version"), "1.0");
+        f.mkdir();
+        ExternalProcessor.writeUTF8(new File(f, "version"), "1.0");
         int index = 0;
         for (Matrix<? extends PArray> m : image) {
             DataFileModel<?> dataFileModel;
@@ -192,8 +182,8 @@ public class MatrixIO {
                     && LargeMemoryModel.isLargeArray(m.array())
                     && ((dataFileModel = LargeMemoryModel.getDataFileModel(m.array())) instanceof DefaultDataFileModel
                     || dataFileModel instanceof StandardIODataFileModel)) {
-                File infFile = new File(folder, index + ".inf");
-                File refFile = new File(folder, index + ".ref");
+                File infFile = new File(f, index + ".inf");
+                File refFile = new File(f, index + ".ref");
                 LargeMemoryModel<File> lmm = LargeMemoryModel.getInstance(dataFileModel).cast(File.class);
                 MatrixInfo mi = LargeMemoryModel.getMatrixInfoForSavingInFile(m, 0);
                 PArray raw = LargeMemoryModel.getRawArrayForSavingInFile(m);
@@ -202,8 +192,8 @@ public class MatrixIO {
                 ExternalProcessor.writeUTF8(refFile, lmm.getDataFilePath(raw).toString());
                 raw.flushResources(null, true);
             } else {
-                File infFile = new File(folder, index + ".inf");
-                File rawFile = new File(folder, String.valueOf(index));
+                File infFile = new File(f, index + ".inf");
+                File rawFile = new File(f, String.valueOf(index));
                 LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(
                         new StandardIODataFileModel(rawFile, false, false));
                 Matrix<? extends UpdatablePArray> clone = mm.newMatrix(UpdatablePArray.class, m);
@@ -219,8 +209,8 @@ public class MatrixIO {
         }
         for (; ; index++) {
             // - remove all further channels if they were previously saved here
-            File infFile = new File(folder, index + ".inf");
-            File rawFile = new File(folder, String.valueOf(index));
+            File infFile = new File(f, index + ".inf");
+            File rawFile = new File(f, String.valueOf(index));
             if (!infFile.exists()) {
                 break;
             }
@@ -229,44 +219,41 @@ public class MatrixIO {
         }
     }
 
-    public static List<Matrix<? extends PArray>> readAlgARTImage(Path folder) throws IOException {
-        Objects.requireNonNull(folder, "Null folder");
-        return readAlgARTImage(folder.toFile());
-    }
 
     /**
-     * Loads the multi-channel image (list of matrices), saved in the specified folder
-     * by {@link #writeAlgARTImage(File, List)} call.
+     * Loads the multichannel image (list of matrices), saved in the specified folder
+     * by {@link #writeAlgARTImage(Path, List)} call.
      *
      * <p>Note: the files containing the matrices retain open, and any access to the returned
      * matrices will lead to operations with these files (mapping).
      * Usually you should copy the returned matrices to some other memory model
      * and call {@link Matrix#freeResources()} for them to close these files.
      *
-     * @param folder folder with multi-channel image, stored in a set of files.
+     * @param folder folder with multichannel image, stored in a set of files.
      * @return all channels of this image.
      * @throws IOException          in a case of I/O error.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
-    public static List<Matrix<? extends PArray>> readAlgARTImage(File folder) throws IOException {
+    public static List<Matrix<? extends PArray>> readAlgARTImage(Path folder) throws IOException {
         Objects.requireNonNull(folder, "Null folder");
-        if (!folder.exists()) {
-            throw new FileNotFoundException("Image subdirectory " + folder + " does not exist");
+        File f = folder.toFile();
+        if (!f.exists()) {
+            throw new FileNotFoundException("Image subdirectory " + f + " does not exist");
         }
-        if (!folder.isDirectory()) {
-            throw new FileNotFoundException("Image subdirectory " + folder + " is not a directory");
+        if (!f.isDirectory()) {
+            throw new FileNotFoundException("Image subdirectory " + f + " is not a directory");
         }
         List<Matrix<? extends PArray>> result = new ArrayList<Matrix<? extends PArray>>();
         int index = 0;
         for (; ; index++) {
-            File infFile = new File(folder, index + ".inf");
-            File refFile = new File(folder, index + ".ref");
-            File rawFile = new File(folder, String.valueOf(index));
+            File infFile = new File(f, index + ".inf");
+            File refFile = new File(f, index + ".ref");
+            File rawFile = new File(f, String.valueOf(index));
             if (!infFile.exists()) {
                 if (index > 0) {
                     break;
                 }
-                throw new FileNotFoundException("Image subdirectory " + folder
+                throw new FileNotFoundException("Image subdirectory " + f
                         + " does not contain 0.inf file (meta-information of the 1st image component)");
                 // so, we do not allow reading empty band lists
             }
@@ -284,16 +271,15 @@ public class MatrixIO {
         return result;
     }
 
-    public static void writeAlgARTMatrix(File dir, Matrix<? extends PArray> matrix)
+    public static void writeAlgARTMatrix(Path folder, Matrix<? extends PArray> matrix)
             throws IOException {
-        if (dir == null)
-            throw new NullPointerException("Null directory for writing matrix");
-        if (matrix == null)
-            throw new NullPointerException("Null matrix");
-        if (!dir.mkdir()) {
-            if (!dir.isDirectory()) {
+        Objects.requireNonNull(folder, "Null folder");
+        Objects.requireNonNull(matrix, "Null matrix");
+        File f = folder.toFile();
+        if (!f.mkdir()) {
+            if (!f.isDirectory()) {
                 // i.e. if doesn't really exist
-                throw new IOException("Cannot create matrix directory " + dir);
+                throw new IOException("Cannot create matrix directory " + f);
             }
             // Important note: we must attempt to create the directory BEFORE checking its existence;
             // in other case, some parallel threads can attempt to create this directory twice,
@@ -301,9 +287,9 @@ public class MatrixIO {
         }
         final PArray array = LargeMemoryModel.getRawArrayForSavingInFile(matrix);
         MatrixInfo mi = LargeMemoryModel.getMatrixInfoForSavingInFile(matrix, 0);
-        ExternalProcessor.writeUTF8(new File(dir, "version"), "1.0");
-        File matrixFile = new File(dir, matrix.dimCount() == 1 ? "vector" : "matrix");
-        File indexFile = new File(dir, "index");
+        ExternalProcessor.writeUTF8(new File(f, "version"), "1.0");
+        File matrixFile = new File(f, matrix.dimCount() == 1 ? "vector" : "matrix");
+        File indexFile = new File(f, "index");
         final LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(
                 new StandardIODataFileModel(matrixFile, false, false));
         final UpdatablePArray dest = (UpdatablePArray) mm.newUnresizableArray(matrix.elementType(), array.length());
@@ -317,14 +303,14 @@ public class MatrixIO {
         // - necessary to avoid overflowing 2 GB limit in 32-bit JVM
     }
 
-    public static Matrix<? extends PArray> readAlgARTMatrix(File dir) throws IOException {
-        if (dir == null)
-            throw new NullPointerException("Null directory for reading matrix");
-        File indexFile = new File(dir, "index");
+    public static Matrix<? extends PArray> readAlgARTMatrix(Path folder) throws IOException {
+        Objects.requireNonNull(folder, "Null folder");
+        File f = folder.toFile();
+        File indexFile = new File(f, "index");
         try {
             MatrixInfo mi = MatrixInfo.valueOf(ExternalProcessor.readUTF8(indexFile));
             LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(new StandardIODataFileModel());
-            File matrixFile = new File(dir, mi.dimCount() == 1 ? "vector" : "matrix");
+            File matrixFile = new File(f, mi.dimCount() == 1 ? "vector" : "matrix");
             return mm.asMatrix(matrixFile, mi);
         } catch (IllegalInfoSyntaxException e) {
             IOException ex = new IOException(e.getMessage());
@@ -436,3 +422,4 @@ public class MatrixIO {
         return matrix;
     }
 }
+

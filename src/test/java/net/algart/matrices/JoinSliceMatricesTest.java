@@ -31,6 +31,8 @@ import net.algart.external.MatrixIO;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class JoinSliceMatricesTest {
@@ -39,8 +41,8 @@ public class JoinSliceMatricesTest {
             System.out.printf("Usage: %s some_image.png matrix_folder%n", JoinSliceMatricesTest.class);
             return;
         }
-        final File sourceFile = new File(args[0]);
-        final File matrixFolder = new File(args[1]);
+        final Path sourceFile = Paths.get(args[0]);
+        final Path matrixFolder = Paths.get(args[1]);
         List<Matrix<? extends PArray>> matrices = MatrixIO.readImage(sourceFile);
         System.out.printf("List: %s%n", matrices);
         Matrix<PArray> joined = Matrices.mergeAlongLastDimension(PArray.class, matrices);

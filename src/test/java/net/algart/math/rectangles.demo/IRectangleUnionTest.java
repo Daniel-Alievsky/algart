@@ -156,7 +156,7 @@ public class IRectangleUnionTest {
         final File sourceFile = new File(demoFolder, rectanglesFile.getName() + ".source.bmp");
         System.out.printf("Writing source image %dx%d into %s: %d rectangles%n",
             width, height, sourceFile, rectangles.size());
-        MatrixIO.writeImage(sourceFile, demo);
+        MatrixIO.writeImage(sourceFile.toPath(), demo);
 
         final Thread[] tests = new Thread[numberOfTests];
         for (int ti = 0; ti < numberOfTests; ti++) {
@@ -187,7 +187,7 @@ public class IRectangleUnionTest {
                                     + (k == -1 ? ".all" : ".component-" + k) + ".bmp");
                                 System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
                                     + " into " + f + ": " + component);
-                                MatrixIO.writeImage(f, demo);
+                                MatrixIO.writeImage(f.toPath(), demo);
                             }
                             IRectanglesUnion currentUnion = component;
                             for (int index = 0; index < 3; index++) {
@@ -203,7 +203,7 @@ public class IRectangleUnionTest {
                                         + (k == -1 ? ".all" : ".component-" + k) + ".rectangles-" + index + ".bmp");
                                     System.out.println("Writing " + (k == -1 ? "all union" : "component #" + k)
                                         + " largest rectangles information into " + f + ": " + currentUnion);
-                                    MatrixIO.writeImage(f, demo);
+                                    MatrixIO.writeImage(f.toPath(), demo);
                                 }
                                 long t1 = System.nanoTime();
                                 final IRectanglesUnion newUnion = currentUnion.subtractLargestRectangle();
@@ -228,14 +228,14 @@ public class IRectangleUnionTest {
                                     System.out.println("Writing boundary #" + index + " of "
                                         + (k == -1 ? "all union" : "component #" + k)
                                         + " into " + f);
-                                    MatrixIO.writeImage(f, demo);
+                                    MatrixIO.writeImage(f.toPath(), demo);
                                     demo = drawBoundary(imageWidth, imageHeight, boundary, divider, true);
                                     f = new File(demoFolder, rectanglesFile.getName()
                                         + (k == -1 ? ".boundaries" : ".boundary-" + k) + "-" + index + "-precise.bmp");
                                     System.out.println("Writing precise boundary #" + index + " of "
                                         + (k == -1 ? "all union" : "component #" + k)
                                         + " into " + f);
-                                    MatrixIO.writeImage(f, demo);
+                                    MatrixIO.writeImage(f.toPath(), demo);
                                     index++;
                                     if (index > 5) {
                                         break;
