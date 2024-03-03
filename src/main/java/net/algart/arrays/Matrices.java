@@ -1792,7 +1792,7 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #mergeAlongLastDimension(Class, List, MemoryModel)
+     * Equivalent to <tt>{@link #mergeAlongLastDimension(MemoryModel, Class, List)
      * mergeAlongLastDimension}(arrayClass, matrices, Arrays.SMM)</tt>.
      *
      * @param arrayClass the required class / interface of built-in arrays for all passed matrices.
@@ -1811,7 +1811,7 @@ public class Matrices {
     public static <T extends Array> Matrix<T> mergeAlongLastDimension(
             Class<T> arrayClass,
             List<? extends Matrix<?>> matrices) {
-        return mergeAlongLastDimension(arrayClass, matrices, Arrays.SMM);
+        return mergeAlongLastDimension(Arrays.SMM, arrayClass, matrices);
     }
 
     /**
@@ -1825,9 +1825,9 @@ public class Matrices {
      * (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>)
      * of the matrix <tt>matrices.get(<i>i<sub>n</sub></i>)</tt>.
      *
+     * @param memoryModel memory model for creating the result matrix.
      * @param arrayClass  the required class / interface of built-in arrays for all passed matrices.
      * @param matrices    list of the source matrices.
-     * @param memoryModel memory model for creating the result matrix.
      * @return result merged matrix.
      * @throws NullPointerException     if <tt>arrayClass</tt> argument, the <tt>matrices</tt> list,
      *                                  one of its elements or memory model is <tt>null</tt>.
@@ -1840,12 +1840,12 @@ public class Matrices {
      *                                  (<tt>!arrayClass.isInstance(matrices[k].{@link Matrix#array() array()})</tt>).
      */
     public static <T extends Array> Matrix<T> mergeAlongLastDimension(
+            MemoryModel memoryModel,
             Class<T> arrayClass,
-            List<? extends Matrix<?>> matrices,
-            MemoryModel memoryModel) {
+            List<? extends Matrix<?>> matrices) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
         Objects.requireNonNull(arrayClass, "Null arrayClass argument");
         Objects.requireNonNull(matrices, "Null matrices argument");
-        Objects.requireNonNull(memoryModel, "Null memory model");
         List<Matrix<?>> list = new ArrayList<>(matrices);
         if (list.isEmpty()) {
             throw new IllegalArgumentException("Empty matrices collection");
