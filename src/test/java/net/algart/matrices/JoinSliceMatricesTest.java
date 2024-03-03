@@ -24,12 +24,12 @@
 
 package net.algart.matrices;
 
+import net.algart.arrays.Arrays;
 import net.algart.arrays.Matrices;
 import net.algart.arrays.Matrix;
 import net.algart.arrays.PArray;
 import net.algart.external.MatrixIO;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -45,10 +45,10 @@ public class JoinSliceMatricesTest {
         final Path matrixFolder = Paths.get(args[1]);
         List<Matrix<? extends PArray>> matrices = MatrixIO.readImage(sourceFile);
         System.out.printf("List: %s%n", matrices);
-        Matrix<PArray> joined = Matrices.mergeAlongLastDimension(PArray.class, matrices);
-        System.out.printf("Joined: %s%n", joined);
-        MatrixIO.writeAlgARTImage(matrixFolder, List.of(joined));
-        List<Matrix<PArray>> unpacked = Matrices.splitAlongLastDimension(joined);
+        Matrix<PArray> merged = Matrices.mergeAlongNewDimension(Arrays.SMM, PArray.class, matrices);
+        System.out.printf("Joined: %s%n", merged);
+        MatrixIO.writeAlgARTImage(matrixFolder, List.of(merged));
+        List<Matrix<PArray>> unpacked = Matrices.splitAlongLastDimension(merged);
         for (int k = 0; k < unpacked.size(); k++) {
             if (!unpacked.get(k).equals(matrices.get(k))) {
                 throw new AssertionError("Channels #" + k + " mismatch!");

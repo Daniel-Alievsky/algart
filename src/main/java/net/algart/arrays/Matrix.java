@@ -176,7 +176,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * instance of this class. So, you can use <tt>==</tt> Java operator to compare objects with these constants,
      * instead of calling {@link #equals(Object)} method of this class.</p>
      */
-    public static class ContinuationMode {
+    class ContinuationMode {
 
         /**
          * Simplest continuation mode: any continuation outside the source matrix is disabled.
@@ -581,7 +581,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * It can be useful while storing indexes of elements of little 3x3x3x... submatrix (aperture):
      * signed <tt>short</tt> type is enough in this case.
      */
-    public static final int MAX_DIM_COUNT_FOR_SOME_ALGORITHMS = 9;
+    public final int MAX_DIM_COUNT_FOR_SOME_ALGORITHMS = 9;
 
     /**
      * Returns a reference to the built-in AlgART array.
@@ -591,7 +591,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return a reference to the built-in AlgART array.
      */
-    public T array();
+    T array();
 
     /**
      * Returns the type of matrix elements.
@@ -599,7 +599,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return the type of the matrix elements.
      */
-    public Class<?> elementType();
+    Class<?> elementType();
 
     /**
      * Returns the total number of matrix elements.
@@ -607,7 +607,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return the total number of matrix elements.
      */
-    public long size();
+    long size();
 
     /**
      * Returns <tt>{@link #array()}.{@link Array#type() type()}</tt>.
@@ -615,7 +615,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return the canonical type of AlgART array of the same kind as the built-in one.
      * @throws NullPointerException if the passed argument is <tt>null</tt>.
      */
-    public Class<? extends Array> type();
+    Class<? extends Array> type();
 
     /**
      * Returns <tt>{@link #array()}.{@link Array#updatableType() updatableType()}</tt>.
@@ -623,7 +623,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return the canonical updatable type of AlgART array of the same kind as the built-in one.
      * @throws NullPointerException if the passed argument is <tt>null</tt>.
      */
-    public Class<? extends UpdatableArray> updatableType();
+    Class<? extends UpdatableArray> updatableType();
 
     /**
      * Returns <tt>{@link #array()}.{@link Array#type() type()}</tt>,
@@ -642,7 +642,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws ClassCastException       if <tt>arraySupertype</tt> does not allow storing
      *                                  the immutable version of the built-in AlgART array.
      */
-    public <U extends Array> Class<? extends U> type(Class<U> arraySupertype);
+    <U extends Array> Class<? extends U> type(Class<U> arraySupertype);
 
     /**
      * Returns <tt>{@link #array()}.{@link Array#updatableType() updatableType()}</tt>,
@@ -655,7 +655,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws ClassCastException   if <tt>arraySupertype</tt> does not allow storing
      *                              the built-in AlgART array.
      */
-    public <U extends Array> Class<? extends U> updatableType(Class<U> arraySupertype);
+    <U extends Array> Class<? extends U> updatableType(Class<U> arraySupertype);
 
     /**
      * Returns <tt>true</tt> if and only if the {@link #elementType() element type} is primitive:
@@ -663,7 +663,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return whether the type of matrix element is boolean, char, byte, short, int, long, float or double.
      */
-    public boolean isPrimitive();
+    boolean isPrimitive();
 
     /**
      * Returns <tt>true</tt> if and only if the {@link #elementType() element type} is <tt>float</tt>
@@ -672,7 +672,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return whether the type of matrix element is float or double.
      */
-    public boolean isFloatingPoint();
+    boolean isFloatingPoint();
 
     /**
      * Returns <tt>true</tt> if and only if the {@link #elementType() element type} is fixed-point:
@@ -680,7 +680,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return whether the type of matrix element is byte, short, int, long, char or boolean.
      */
-    public boolean isFixedPoint();
+    boolean isFixedPoint();
 
     /**
      * Returns <tt>true</tt> if and only if the {@link #elementType() element type} is <tt>boolean.class</tt>,
@@ -691,7 +691,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return whether the element type of this matrix should be interpreted as unsigned primitive type.
      */
-    public boolean isUnsigned();
+    boolean isUnsigned();
 
     /**
      * Returns the number of in bits, required for each element of this matrix, if they are
@@ -701,7 +701,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return the size of each element in bits or &minus;1 if for non-primitive elements.
      */
-    public long bitsPerElement();
+    long bitsPerElement();
 
     /**
      * Returns the maximal possible value, that can stored in elements of this matrix,
@@ -719,7 +719,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return {@link #array()}.{@link PArray#maxPossibleValue maxPossibleValue()} for primitive element types,
      * or <tt>Double.NaN</tt> for non-primitive element types.
      */
-    public double maxPossibleValue(double valueForFloatingPoint);
+    double maxPossibleValue(double valueForFloatingPoint);
 
     /**
      * Returns the maximal possible value, that can stored in elements of this matrix,
@@ -732,7 +732,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return maximal possible value for primitive element types (1.0 for float/double),
      * or <tt>Double.NaN</tt> for non-primitive element types.
      */
-    public double maxPossibleValue();
+    double maxPossibleValue();
 
     /**
      * Returns an array containing all dimensions of this matrix.
@@ -744,7 +744,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return an array containing all dimensions of this matrix.
      */
-    public long[] dimensions();
+    long[] dimensions();
 
     /**
      * Returns the number of dimensions of this matrix.
@@ -756,7 +756,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return the number of dimensions of this matrix.
      */
-    public int dimCount();
+    int dimCount();
 
     /**
      * Returns the dimension <tt>#n</tt> of this matrix
@@ -769,28 +769,28 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return  the dimension <tt>#n</tt> of this matrix.
      * @throws IndexOutOfBoundsException if <tt>n&lt;0</tt> (but <i>not</i> if <tt>n</tt> is too large).
      */
-    public long dim(int n);
+    long dim(int n);
 
     /**
      * Equivalent to <tt>{@link #dim(int) dim}(0)</tt>.
      *
      * @return the first matrix dimension.
      */
-    public long dimX();
+    long dimX();
 
     /**
      * Equivalent to <tt>{@link #dim(int) dim}(1)</tt>.
      *
      * @return the second matrix dimension.
      */
-    public long dimY();
+    long dimY();
 
     /**
      * Equivalent to <tt>{@link #dim(int) dim}(2)</tt>.
      *
      * @return the third matrix dimension.
      */
-    public long dimZ();
+    long dimZ();
 
     /**
      * Indicates whether the other matrix has the same dimension array.
@@ -803,7 +803,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws NullPointerException if the passed argument is <tt>null</tt>.
      * @see #dimEquals(long...)
      */
-    public boolean dimEquals(Matrix<?> m);
+    boolean dimEquals(Matrix<?> m);
 
     /**
      * Indicates whether the passed dimensions are equal to the dimension array of this matrix.
@@ -820,7 +820,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws NullPointerException if the passed argument is <tt>null</tt>.
      * @see #dimEquals(Matrix)
      */
-    public boolean dimEquals(long... dimensions);
+    boolean dimEquals(long... dimensions);
 
     /**
      * Returns the linear index in the built-in AlgART array of the matrix element
@@ -867,7 +867,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @see #coordinates(long, long[])
      * @see IPoint#toOneDimensional(long[], boolean)
      */
-    public long index(long... coordinates);
+    long index(long... coordinates);
 
     /**
      * The simplified version of the full {@link #index(long...) index} method for the case
@@ -879,7 +879,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws IndexOutOfBoundsException if <tt>x&lt;0</tt>, <tt>x&gt;={@link #dimX()}</tt>,
      *                                   <tt>y&lt;0</tt> or <tt>y&gt;={@link #dimX()}</tt>.
      */
-    public long index(long x, long y);
+    long index(long x, long y);
 
     /**
      * The simplified version of the full {@link #index(long...) index} method for the case
@@ -893,7 +893,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   <tt>y&lt;0</tt>, <tt>y&gt;={@link #dimX()}</tt>,
      *                                   <tt>z&lt;0</tt> or <tt>z&gt;={@link #dimZ()}</tt>.
      */
-    public long index(long x, long y, long z);
+    long index(long x, long y, long z);
 
     /**
      * Returns the coordinates in the matrix, corresponding to the given linear index in the built-in AlgART array.
@@ -918,7 +918,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   dim}(0)*{@link #dim(int) dim}(1)*...={@link #array()}.{@link
      *                                   Array#length() length()}</tt>.
      */
-    public long[] coordinates(long index, long[] result);
+    long[] coordinates(long index, long[] result);
 
     /**
      * An analog of {@link #index(long...)} method, that does not check,
@@ -947,7 +947,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws NullPointerException     if the passed array is <tt>null</tt>.
      * @throws IllegalArgumentException if the passed array is empty (no coordinates are passed).
      */
-    public long uncheckedIndex(long... coordinates);
+    long uncheckedIndex(long... coordinates);
 
     /**
      * An analog of {@link #index(long...)} method, that, before all calculations,
@@ -985,7 +985,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws IllegalArgumentException if the passed array is empty (no coordinates are passed).
      * @see Matrix.ContinuationMode#CYCLIC
      */
-    public long cyclicIndex(long... coordinates);
+    long cyclicIndex(long... coordinates);
 
     /**
      * An analog of {@link #index(long...)} method, that does not check,
@@ -1035,7 +1035,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @see IPoint#toOneDimensional(long[], boolean)
      * @see Matrix.ContinuationMode#PSEUDO_CYCLIC
      */
-    public long pseudoCyclicIndex(long... coordinates);
+    long pseudoCyclicIndex(long... coordinates);
 
     /**
      * An analog of {@link #index(long...)} method, that, before all calculations,
@@ -1083,7 +1083,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws IllegalArgumentException if the passed array is empty (no coordinates are passed).
      * @see Matrix.ContinuationMode#MIRROR_CYCLIC
      */
-    public long mirrorCyclicIndex(long... coordinates);
+    long mirrorCyclicIndex(long... coordinates);
 
     /**
      * Returns <tt>true</tt> if all specified coordinates <tt><i>i<sub>k</sub></i></tt>
@@ -1107,7 +1107,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws NullPointerException     if the passed array is <tt>null</tt>.
      * @throws IllegalArgumentException if the passed array is empty (no coordinates are passed).
      */
-    public boolean inside(long... coordinates);
+    boolean inside(long... coordinates);
 
     /**
      * The simplified version of the full {@link #inside(long...) inside} method for the case
@@ -1117,7 +1117,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param y the second coordinate.
      * @return  tt>true</tt> if all specified coordinates are inside the matrix.
      */
-    public boolean inside(long x, long y);
+    boolean inside(long x, long y);
 
     /**
      * The simplified version of the full {@link #inside(long...) inside} method for the case
@@ -1128,7 +1128,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param z the third coordinate.
      * @return  tt>true</tt> if all specified coordinates are inside the matrix.
      */
-    public boolean inside(long x, long y, long z);
+    boolean inside(long x, long y, long z);
 
     /**
      * Returns the new matrix backed by the specified AlgART array with the same dimensions as this one.
@@ -1145,7 +1145,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                  (for example, implements {@link MutableArray}).
      * @throws SizeMismatchException    if the product of all dimensions is not equal to the passed array length.
      */
-    public <U extends Array> Matrix<U> matrix(U anotherArray);
+    <U extends Array> Matrix<U> matrix(U anotherArray);
 
     /**
      * Returns this matrix, cast to the specified generic array type,
@@ -1162,7 +1162,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws NullPointerException  if the argument is <tt>null</tt>.
      * @throws ClassCastException    if the built-in AlgART array cannot be cast to the required type.
      */
-    public <U extends Array> Matrix<U> cast(Class<U> arrayClass);
+    <U extends Array> Matrix<U> cast(Class<U> arrayClass);
 
     /**
      * Returns a view of the rectangular fragment of this matrix between <tt>from</tt>,
@@ -1212,7 +1212,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @see #subMatr(long[], long[])
      * @see #isSubMatrix()
      */
-    public Matrix<T> subMatrix(long[] from, long[] to);
+    Matrix<T> subMatrix(long[] from, long[] to);
 
     /**
      * Equivalent to {@link #subMatrix(long[] from, long[] to)} method, where
@@ -1232,7 +1232,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   <tt>max=area.{@link IRectangularArea#max()
      *                                   max()}.{@link IPoint#coordinates() coordinates()}</tt>.
      */
-    public Matrix<T> subMatrix(IRectangularArea area);
+    Matrix<T> subMatrix(IRectangularArea area);
 
     /**
      * Equivalent to <tt><nobr>{@link #subMatrix(long[], long[])
@@ -1247,7 +1247,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws IllegalArgumentException  if <tt>{@link #dimCount()}!=2</tt>.
      * @throws IndexOutOfBoundsException in the same situations as in {@link #subMatrix(long[], long[])}.
      */
-    public Matrix<T> subMatrix(long fromX, long fromY, long toX, long toY);
+    Matrix<T> subMatrix(long fromX, long fromY, long toX, long toY);
 
     /**
      * Equivalent to <tt><nobr>{@link #subMatrix(long[], long[])
@@ -1264,7 +1264,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws IllegalArgumentException  if <tt>{@link #dimCount()}!=3</tt>.
      * @throws IndexOutOfBoundsException in the same situations as in {@link #subMatrix(long[], long[])}.
      */
-    public Matrix<T> subMatrix(long fromX, long fromY, long fromZ, long toX, long toY, long toZ);
+    Matrix<T> subMatrix(long fromX, long fromY, long fromZ, long toX, long toY, long toZ);
 
     /**
      * An extended analog of {@link #subMatrix(long[], long[])} method, allowing to get a rectangular fragment
@@ -1336,7 +1336,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @see #subMatr(long[], long[])
      * @see #isSubMatrix()
      */
-    public Matrix<T> subMatrix(long[] from, long[] to, ContinuationMode continuationMode);
+    Matrix<T> subMatrix(long[] from, long[] to, ContinuationMode continuationMode);
 
     /**
      * Equivalent to {@link #subMatrix(long[] from, long[] to, ContinuationMode continuationMode)} method, where
@@ -1364,7 +1364,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      */
-    public Matrix<T> subMatrix(IRectangularArea area, ContinuationMode continuationMode);
+    Matrix<T> subMatrix(IRectangularArea area, ContinuationMode continuationMode);
 
     /**
      * Equivalent to <tt><nobr>{@link #subMatrix(long[], long[], ContinuationMode)
@@ -1395,7 +1395,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      */
-    public Matrix<T> subMatrix(long fromX, long fromY, long toX, long toY, ContinuationMode continuationMode);
+    Matrix<T> subMatrix(long fromX, long fromY, long toX, long toY, ContinuationMode continuationMode);
 
     /**
      * Equivalent to <tt><nobr>{@link #subMatrix(long[], long[], ContinuationMode)
@@ -1428,7 +1428,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      */
-    public Matrix<T> subMatrix(
+    Matrix<T> subMatrix(
         long fromX, long fromY, long fromZ, long toX, long toY, long toZ,
         ContinuationMode continuationMode);
 
@@ -1447,7 +1447,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   position[k]+dimensions[k]&gt;{@link #dim(int) dim(k)}</tt>.
      * @see #subMatr(long[], long[], ContinuationMode)
      */
-    public Matrix<T> subMatr(long[] position, long[] dimensions);
+    Matrix<T> subMatr(long[] position, long[] dimensions);
 
     /**
      * Equivalent to <tt><nobr>{@link #subMatr(long[], long[])
@@ -1462,7 +1462,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws IllegalArgumentException  if <tt>{@link #dimCount()}!=2</tt>.
      * @throws IndexOutOfBoundsException in the same situations as in {@link #subMatr(long[], long[])}.
      */
-    public Matrix<T> subMatr(long x, long y, long dimX, long dimY);
+    Matrix<T> subMatr(long x, long y, long dimX, long dimY);
 
     /**
      * Equivalent to <tt><nobr>{@link #subMatr(long[], long[])
@@ -1479,7 +1479,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws IllegalArgumentException  if <tt>{@link #dimCount()}!=2</tt>.
      * @throws IndexOutOfBoundsException in the same situations as in {@link #subMatr(long[], long[])}.
      */
-    public Matrix<T> subMatr(long x, long y, long z, long dimX, long dimY, long dimZ);
+    Matrix<T> subMatr(long x, long y, long z, long dimX, long dimY, long dimZ);
 
     /**
      * Equivalent to {@link #subMatrix(long[] from, long[] to, ContinuationMode continuationMode)} method, where
@@ -1510,7 +1510,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      * @see #subMatr(long[], long[])
      */
-    public Matrix<T> subMatr(long[] position, long[] dimensions, ContinuationMode continuationMode);
+    Matrix<T> subMatr(long[] position, long[] dimensions, ContinuationMode continuationMode);
 
     /**
      * Equivalent to <tt><nobr>{@link #subMatr(long[], long[], ContinuationMode)
@@ -1541,7 +1541,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      */
-    public Matrix<T> subMatr(long x, long y, long dimX, long dimY, ContinuationMode continuationMode);
+    Matrix<T> subMatr(long x, long y, long dimX, long dimY, ContinuationMode continuationMode);
 
     /**
      * Equivalent to <tt><nobr>{@link #subMatr(long[], long[], ContinuationMode)
@@ -1575,7 +1575,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      */
-    public Matrix<T> subMatr(
+    Matrix<T> subMatr(
         long x, long y, long z, long dimX, long dimY, long dimZ,
         ContinuationMode continuationMode);
 
@@ -1593,7 +1593,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @see #subMatr(long[], long[], ContinuationMode)
      * @see #subMatrixParent()
      */
-    public boolean isSubMatrix();
+    boolean isSubMatrix();
 
     /**
      * If this matrix is a {@link #subMatrix(long[], long[]) submatrix} of some <tt>parent</tt> matrix,
@@ -1606,7 +1606,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                               <tt>subMatr(...)</tt> or equivalent call.
      * @see #isSubMatrix()
      */
-    public Matrix<T> subMatrixParent();
+    Matrix<T> subMatrixParent();
 
     /**
      * If this matrix is a {@link #subMatrix(long[], long[]) submatrix} of some <tt>parent</tt> matrix,
@@ -1621,7 +1621,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                               <tt>subMatr(...)</tt> or equivalent call.
      * @see #isSubMatrix()
      */
-    public long[] subMatrixFrom();
+    long[] subMatrixFrom();
 
     /**
      * If this matrix is a {@link #subMatrix(long[], long[]) submatrix} of some <tt>parent</tt> matrix,
@@ -1636,7 +1636,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                               <tt>subMatr(...)</tt> or equivalent call.
      * @see #isSubMatrix()
      */
-    public long[] subMatrixTo();
+    long[] subMatrixTo();
 
     /**
      * If this matrix is a {@link #subMatrix(long[], long[], Matrix.ContinuationMode) submatrix}
@@ -1657,7 +1657,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                               <tt>subMatr(...)</tt> or equivalent call.
      * @see #isSubMatrix()
      */
-    public ContinuationMode subMatrixContinuationMode();
+    ContinuationMode subMatrixContinuationMode();
 
     /**
      * Returns a view ot this matrix, where the elements are reordered in some order "like"
@@ -1705,7 +1705,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @see #isStructuredLike(Matrix)
      * @throws NullPointerException if <tt>m</tt> argument is <tt>null</tt>.
      */
-    public Matrix<T> structureLike(Matrix<?> m);
+    Matrix<T> structureLike(Matrix<?> m);
 
     /**
      * Returns <tt>true</tt> if the elements of this matrix is ordered "alike" the elements
@@ -1725,7 +1725,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return  whether this matrix is reordered alike <tt>m</tt>.
      * @throws NullPointerException if <tt>m</tt> argument is <tt>null</tt>.
      */
-    public boolean isStructuredLike(Matrix<?> m);
+    boolean isStructuredLike(Matrix<?> m);
 
     /**
      * Returns a view ot this matrix, where the elements are reordered by <i>tiles</i>: a grid of rectangular
@@ -1825,7 +1825,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @see #isTiled()
      * @see #tileDimensions()
      */
-    public Matrix<T> tile(long... tileDim);
+    Matrix<T> tile(long... tileDim);
 
     /**
      * Returns a tiled view ot this matrix with some default dimensions of the tiles.
@@ -1859,28 +1859,28 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @see #isTiled()
      * @see #tileDimensions()
      */
-    public Matrix<T> tile();
+    Matrix<T> tile();
 
     /**
      * Not ready yet!
      *
      * @return        original non-tiled matrix.
      */
-    public Matrix<T> tileParent();
+    Matrix<T> tileParent();
 
     /**
      * Not ready yet!
      *
      * @return dimensions of the tile in this matrix, if it is tiled.
      */
-    public long[] tileDimensions();
+    long[] tileDimensions();
 
     /**
      * Not ready yet!
      *
      * @return <tt>true</tt> if and only if this matrix is tiled.
      */
-    public boolean isTiled();
+    boolean isTiled();
 
     /**
      * Equivalent to <tt>{@link #array()}.{@link Array#isImmutable() isImmutable()}</tt>.
@@ -1889,7 +1889,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return <tt>true</tt> if this instance is immutable.
      */
-    public boolean isImmutable();
+    boolean isImmutable();
 
     /**
      * Equivalent to <tt>{@link #array()}.{@link Array#isCopyOnNextWrite() isCopyOnNextWrite()}</tt>.
@@ -1898,7 +1898,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return <tt>true</tt> if this instance is copy-on-next-write.
      */
-    public boolean isCopyOnNextWrite();
+    boolean isCopyOnNextWrite();
 
     /**
      * Returns <tt>true</tt> if and only if the built-in AlgART array implements {@link DirectAccessible}
@@ -1909,26 +1909,26 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return whether this matrix can be viewed as a Java array or a part of Java array.
      */
-    public boolean isDirectAccessible();
+    boolean isDirectAccessible();
 
     /**
      * Equivalent to <tt>{@link #array()}.{@link Array#flushResources(ArrayContext) flushResources(context)}</tt>.
      *
      * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
      */
-    public void flushResources(ArrayContext context);
+    void flushResources(ArrayContext context);
 
     /**
      * Equivalent to <tt>{@link #array()}.{@link Array#freeResources(ArrayContext) freeResources(context)}</tt>.
      *
      * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
      */
-    public void freeResources(ArrayContext context);
+    void freeResources(ArrayContext context);
 
     /**
      * Equivalent to <tt>{@link #array()}.{@link Array#freeResources(ArrayContext) freeResources(null)}</tt>.
      */
-    public void freeResources();
+    void freeResources();
 
     /**
      * Returns a brief string description of this object.
@@ -1938,7 +1938,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return a brief string description of this object.
      */
-    public String toString();
+    String toString();
 
     /**
      * Returns the hash code of this matrix. The result depends on all elements of the built-in array
@@ -1946,7 +1946,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return the hash code of this matrix.
      */
-    public int hashCode();
+    int hashCode();
 
     /**
      * Indicates whether some other matrix is equal to this one.
@@ -1960,7 +1960,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param obj the object to be compared for equality with this matrix.
      * @return    <tt>true</tt> if the specified object is a matrix equal to this one.
      */
-    public boolean equals(Object obj);
+    boolean equals(Object obj);
 
     /**
      * Returns an exact clone of this  matrix, created in {@link SimpleMemoryModel}.
@@ -1979,5 +1979,5 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return exact clone of the passed matrix.
      */
-    public Matrix<T> clone();
+    Matrix<T> clone();
 }

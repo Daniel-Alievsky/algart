@@ -1792,29 +1792,6 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #mergeAlongLastDimension(MemoryModel, Class, List)
-     * mergeAlongLastDimension}(arrayClass, matrices, Arrays.SMM)</tt>.
-     *
-     * @param arrayClass the required class / interface of built-in arrays for all passed matrices.
-     * @param matrices   list of the source matrices.
-     * @return result merged matrix.
-     * @throws NullPointerException     if <tt>arrayClass</tt> argument, the <tt>matrices</tt> list,
-     *                                  one of its elements or memory model is <tt>null</tt>.
-     * @throws SizeMismatchException    if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
-     *                                  different dimensions.
-     * @throws IllegalArgumentException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
-     *                                  different element type.
-     * @throws ClassCastException       if one of matrices contains built-in AlgART array that is not an instance
-     *                                  of the type <tt>arrayClass</tt>
-     *                                  (<tt>!arrayClass.isInstance(matrices[k].{@link Matrix#array() array()})</tt>).
-     */
-    public static <T extends Array> Matrix<T> mergeAlongLastDimension(
-            Class<T> arrayClass,
-            List<? extends Matrix<?>> matrices) {
-        return mergeAlongLastDimension(Arrays.SMM, arrayClass, matrices);
-    }
-
-    /**
      * Merges <i>K</i> <i>n</i>-dimensional matrices with identical element types and dimensions
      * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i>&minus;1</sub> into
      * a single (<i>n</i>+1)-dimensional matrix
@@ -1839,35 +1816,24 @@ public class Matrices {
      *                                  of the type <tt>arrayClass</tt>
      *                                  (<tt>!arrayClass.isInstance(matrices[k].{@link Matrix#array() array()})</tt>).
      */
-    public static <T extends Array> Matrix<T> mergeAlongLastDimension(
+    public static <T extends Array> Matrix<T> mergeAlongNewDimension(
             MemoryModel memoryModel,
             Class<T> arrayClass,
             List<? extends Matrix<?>> matrices) {
-        Objects.requireNonNull(memoryModel, "Null memory model");
-        Objects.requireNonNull(arrayClass, "Null arrayClass argument");
-        Objects.requireNonNull(matrices, "Null matrices argument");
-        List<Matrix<?>> list = new ArrayList<>(matrices);
-        if (list.isEmpty()) {
-            throw new IllegalArgumentException("Empty matrices collection");
-        }
-        T[] arrays = arraysOfParallelMatrices(arrayClass, list, true);
-        Matrix<?> m0 = list.get(0);
-        final long[] dimensions = java.util.Arrays.copyOf(m0.dimensions(), m0.dimCount() + 1);
-        final long size = m0.size();
-        dimensions[dimensions.length - 1] = arrays.length;
-        Matrix<UpdatableArray> result = memoryModel.newMatrix(UpdatableArray.class, m0.elementType(), dimensions);
-        final UpdatableArray array = result.array();
-        long p = 0;
-        for (Matrix<?> m : list) {
-            array.subArr(p, size).copy(m.array());
-            p += size;
-        }
-        return InternalUtils.cast(result);
+        return mergeAlongDimensionImpl(memoryModel, arrayClass, matrices, null);
+    }
+
+    public static <T extends Array> Matrix<T> mergeAlongDimension(
+            MemoryModel memoryModel,
+            Class<T> arrayClass,
+            List<? extends Matrix<?>> matrices,
+            int dimIndex) {
+        return mergeAlongDimensionImpl(memoryModel, arrayClass, matrices, dimIndex);
     }
 
     /**
      * Equivalent to <tt>{@link #splitAlongLastDimension(Matrix, long)
-     * splitAlongLastDimension}(joined, Long.MAX_VALUE)</tt> (no limitations).
+     * splitAlongLastDimension}(merged, Long.MAX_VALUE)</tt> (no limitations).
 
      * @param merged the source merged matrix.
      * @return a list of matrices: "layers" of the source one along the last dimension.
@@ -1906,32 +1872,22 @@ public class Matrices {
      *                                  if <tt>limit &le; 0</tt> or if the number of returned matrices {@code >limit}.
      */
     public static <T extends Array> List<Matrix<T>> splitAlongLastDimension(Matrix<T> merged, long limit) {
-        Objects.requireNonNull(merged, "Null merged matrix");
-        if (limit <= 0) {
-            throw new IllegalArgumentException("Zero or negative limit " + limit);
-        }
-        final long[] dimensions = merged.dimensions();
-        if (dimensions.length <= 1) {
-            throw new IllegalArgumentException("Joined matrix must have at least 2 dimensions");
-        }
+        return splitAlongDimensionImpl(null, merged, null, limit);
+    }
 
-        final long numberOfMatrices = dimensions[dimensions.length - 1];
-        if (numberOfMatrices > limit) {
-            throw new IllegalArgumentException("Too large number of matrices, merged in the last dimension: "
-                    + numberOfMatrices + " > allowed limit " + limit);
-        }
-        final long[] reducedDimensions = java.util.Arrays.copyOf(dimensions, dimensions.length - 1);
-        dimensions[reducedDimensions.length] = 1;
-        final long[] position = new long[dimensions.length];
-        // - zero-filled by Java
-        List<Matrix<T>> result = new ArrayList<>();
-        for (long k = 0; k < numberOfMatrices; k++) {
-            position[position.length - 1] = k;
-            final Matrix<T> subMatrix = merged.subMatr(position, dimensions);
-            final Matrix<T> reduced = Matrices.matrix(subMatrix.array(), reducedDimensions);
-            result.add(reduced);
-        }
-        return result;
+    public static <T extends Array> List<Matrix<T>> splitAlongDimension(
+            MemoryModel memoryModel,
+            Matrix<T> merged,
+            int dimIndex) {
+        return splitAlongDimension(memoryModel, merged, dimIndex, Long.MAX_VALUE);
+    }
+
+    public static <T extends Array> List<Matrix<T>> splitAlongDimension(
+            MemoryModel memoryModel,
+            Matrix<T> merged,
+            int dimIndex,
+            long limit) {
+        return splitAlongDimensionImpl(memoryModel, merged, dimIndex, limit);
     }
 
     /**
@@ -4229,21 +4185,21 @@ public class Matrices {
                         + outsideValue.getClass() + " to any primitive type");
             }
             if (array instanceof BitArray) {
-                return Boolean.valueOf(number.doubleValue() != 0);
+                return number.doubleValue() != 0;
             } else if (array instanceof CharArray) {
-                return Character.valueOf((char) number.intValue());
+                return (char) number.intValue();
             } else if (array instanceof ByteArray) {
-                return Byte.valueOf(number.byteValue());
+                return number.byteValue();
             } else if (array instanceof ShortArray) {
-                return Short.valueOf(number.shortValue());
+                return number.shortValue();
             } else if (array instanceof IntArray) {
-                return Integer.valueOf(number.intValue());
+                return number.intValue();
             } else if (array instanceof LongArray) {
-                return Long.valueOf(number.longValue());
+                return number.longValue();
             } else if (array instanceof FloatArray) {
-                return Float.valueOf(number.floatValue());
+                return number.floatValue();
             } else if (array instanceof DoubleArray) {
-                return Double.valueOf(number.doubleValue());
+                return number.doubleValue();
             } else {
                 throw new AssertionError("Unallowed type of built-in array: " + array.getClass());
             }
@@ -4257,6 +4213,89 @@ public class Matrices {
                         + outsideValue.getClass() + " to " + array.elementType());
             }
         }
+    }
+
+    private static <T extends Array> Matrix<T> mergeAlongDimensionImpl(
+            MemoryModel memoryModel,
+            Class<T> arrayClass,
+            List<? extends Matrix<?>> matrices,
+            Integer dimIndex) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        Objects.requireNonNull(arrayClass, "Null arrayClass argument");
+        Objects.requireNonNull(matrices, "Null matrices argument");
+        if (dimIndex != null && dimIndex < 0) {
+            throw new IllegalArgumentException("Negative dimension index = " + dimIndex);
+        }
+        List<Matrix<?>> list = new ArrayList<>(matrices);
+        if (list.isEmpty()) {
+            throw new IllegalArgumentException("Empty matrices collection");
+        }
+        T[] arrays = arraysOfParallelMatrices(arrayClass, list, true);
+        Matrix<?> m0 = list.get(0);
+        final long[] dimensions = java.util.Arrays.copyOf(m0.dimensions(), m0.dimCount() + 1);
+        final int i = dimIndex == null ? dimensions.length - 1 : dimIndex;
+        if (i >= dimensions.length) {
+            throw new IllegalArgumentException("Too large dimension index " + dimIndex
+                    + " >= number of result dimensions " + dimensions.length);
+        }
+        final long size = m0.size();
+        dimensions[dimensions.length - 1] = arrays.length;
+        Matrix<UpdatableArray> result = memoryModel.newMatrix(UpdatableArray.class, m0.elementType(), dimensions);
+        final UpdatableArray array = result.array();
+        long p = 0;
+        for (Matrix<?> m : list) {
+            array.subArr(p, size).copy(m.array());
+            p += size;
+        }
+        return InternalUtils.cast(result);
+    }
+
+    private static <T extends Array> List<Matrix<T>> splitAlongDimensionImpl(
+            MemoryModel memoryModel,
+            Matrix<T> merged,
+            Integer dimIndex,
+            long limit) {
+        if (dimIndex != null) {
+            Objects.requireNonNull(memoryModel, "Null memory model");
+        }
+        Objects.requireNonNull(merged, "Null merged matrix");
+        if (limit <= 0) {
+            throw new IllegalArgumentException("Zero or negative limit " + limit);
+        }
+        if (dimIndex != null && dimIndex < 0) {
+            throw new IllegalArgumentException("Negative dimension index = " + dimIndex);
+        }
+        final long[] dimensions = merged.dimensions();
+        if (dimensions.length <= 1) {
+            throw new IllegalArgumentException("Joined matrix must have at least 2 dimensions");
+        }
+        final int i = dimIndex == null ? dimensions.length - 1 : dimIndex;
+        if (i >= dimensions.length) {
+            throw new IllegalArgumentException("Too large dimension index " + dimIndex
+                    + " >= number of dimensions " + dimensions.length);
+        }
+        final long numberOfMatrices = dimensions[dimensions.length - 1];
+        if (numberOfMatrices > limit) {
+            throw new IllegalArgumentException("Too large number of matrices, merged in the last dimension: "
+                    + numberOfMatrices + " > allowed limit " + limit);
+        }
+        final long[] reducedDimensions = java.util.Arrays.copyOf(dimensions, dimensions.length - 1);
+        dimensions[reducedDimensions.length] = 1;
+        final long[] position = new long[dimensions.length];
+        // - zero-filled by Java
+        List<Matrix<T>> result = new ArrayList<>();
+        for (long k = 0; k < numberOfMatrices; k++) {
+            position[position.length - 1] = k;
+            final Matrix<T> subMatrix = merged.subMatr(position, dimensions);
+            Matrix<T> reduced = Matrices.matrix(subMatrix.array(), reducedDimensions);
+            if (memoryModel != null) {
+                final Matrix<UpdatableArray> clone = memoryModel.newMatrix(UpdatableArray.class, reduced);
+                Matrices.copy(null, clone, reduced);
+                reduced = InternalUtils.cast(clone);
+            }
+            result.add(reduced);
+        }
+        return result;
     }
 
     private static IRange[] coordRangesOfVertices(double[][] vertices, int requiredDimCount) {
