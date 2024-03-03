@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>Sorting algorithms. This class provides several implementations for
  * Insertion, Shell and QuickSort algorithm.
@@ -135,8 +137,7 @@ public abstract class ArraySorter {
      * @return <tt>true</tt> if the specified range of indexes is sorted.
      */
     public static boolean areIndexesSorted(int[] indexes, int from, int to, ArrayComparator comparator) {
-        if (comparator == null)
-            throw new NullPointerException("Null comparator argument");
+        Objects.requireNonNull(comparator, "Null comparator argument");
         check(indexes, from, to);
         for (int k = from; k < to - 1; k++)
             if (comparator.less(indexes[k + 1], indexes[k]))
@@ -158,8 +159,7 @@ public abstract class ArraySorter {
      * @throws NullPointerException if <tt>comparator</tt> argument is <tt>null</tt>.
      */
     public static boolean areSorted(long from, long to, ArrayComparator comparator) {
-        if (comparator == null)
-            throw new NullPointerException("Null comparator argument");
+        Objects.requireNonNull(comparator, "Null comparator argument");
         check(from, to);
         for (long k = from; k < to - 1; k++)
             if (comparator.less(k + 1, k))
@@ -328,17 +328,14 @@ public abstract class ArraySorter {
 
     static class InsertionSorter extends ArraySorter {
         public void sortIndexes(int[] indexes, int from, int to, ArrayComparator comparator) {
-            if (comparator == null)
-                throw new NullPointerException("Null comparator argument");
+            Objects.requireNonNull(comparator, "Null comparator argument");
             check(indexes, from, to);
             insertionSortIndexesWithoutChecks(indexes, from, to, comparator);
         }
 
         public void sort(long from, long to, ArrayComparator comparator, ArrayExchanger exchanger) {
-            if (comparator == null)
-                throw new NullPointerException("Null comparator argument");
-            if (exchanger == null)
-                throw new NullPointerException("Null exchanger argument");
+            Objects.requireNonNull(comparator, "Null comparator argument");
+            Objects.requireNonNull(exchanger, "Null exchanger argument");
             check(from, to);
             insertionSortWithoutChecks(from, to, comparator, exchanger);
         }
@@ -371,8 +368,7 @@ public abstract class ArraySorter {
 
     static class ShellSorter extends ArraySorter {
         public void sortIndexes(int[] indexes, int from, int to, ArrayComparator comparator) {
-            if (comparator == null)
-                throw new NullPointerException("Null comparator argument");
+            Objects.requireNonNull(comparator, "Null comparator argument");
             check(indexes, from, to);
             int step = 1;
             for (int maxStep = (to - 1 - from) / 9; step <= maxStep; step = 3 * step + 1) ;
@@ -388,10 +384,8 @@ public abstract class ArraySorter {
         }
 
         public void sort(long from, long to, ArrayComparator comparator, ArrayExchanger exchanger) {
-            if (comparator == null)
-                throw new NullPointerException("Null comparator argument");
-            if (exchanger == null)
-                throw new NullPointerException("Null exchanger argument");
+            Objects.requireNonNull(comparator, "Null comparator argument");
+            Objects.requireNonNull(exchanger, "Null exchanger argument");
             check(from, to);
             long step = 1;
             for (long maxStep = (to - 1 - from) / 9; step <= maxStep; step = 3 * step + 1) ;
@@ -413,8 +407,7 @@ public abstract class ArraySorter {
         static final long THRESHOLD = 10; // shorter sub-arrays are sorted by insertion algorithm
 
         public void sortIndexes(int[] indexes, int from, int to, ArrayComparator comparator) {
-            if (comparator == null)
-                throw new NullPointerException("Null comparator argument");
+            Objects.requireNonNull(comparator, "Null comparator argument");
             int temp;
             check(indexes, from, to);
             //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, quicksort_method_impl)
@@ -494,10 +487,8 @@ public abstract class ArraySorter {
         }
 
         public void sort(long from, long to, ArrayComparator comparator, ArrayExchanger exchanger) {
-            if (comparator == null)
-                throw new NullPointerException("Null comparator argument");
-            if (exchanger == null)
-                throw new NullPointerException("Null exchanger argument");
+            Objects.requireNonNull(comparator, "Null comparator argument");
+            Objects.requireNonNull(exchanger, "Null exchanger argument");
             check(from, to);
             //[[Repeat.SectionStart quicksort_method_impl]]
             if (to - from <= 1)
@@ -620,8 +611,7 @@ public abstract class ArraySorter {
     }
 
     static void check(int[] indexes, int from, int to) {
-        if (indexes == null)
-            throw new NullPointerException("Null indexes argument");
+        Objects.requireNonNull(indexes, "Null indexes argument");
         check(from, to);
         if (to > indexes.length)
             throw new IllegalArgumentException("The sorted range " + from + ".." + to

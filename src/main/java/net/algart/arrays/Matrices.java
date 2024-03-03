@@ -143,8 +143,7 @@ public class Matrices {
         final InterpolationMethod interpolationMethod;
 
         private ResizingMethod(InterpolationMethod interpolationMethod) {
-            if (interpolationMethod == null)
-                throw new NullPointerException("Null interpolationMethod");
+            Objects.requireNonNull(interpolationMethod, "Null interpolationMethod");
             this.interpolationMethod = interpolationMethod;
         }
 
@@ -326,13 +325,11 @@ public class Matrices {
          * @throws IllegalArgumentException if the passed array is empty (<tt>coordRanges.length==0</tt>).
          */
         protected Region(IRange[] coordRanges) {
-            if (coordRanges == null)
-                throw new NullPointerException("Null coordRanges argument");
+            Objects.requireNonNull(coordRanges, "Null coordRanges argument");
             if (coordRanges.length == 0)
                 throw new IllegalArgumentException("Empty coordRanges array");
             for (int k = 0; k < coordRanges.length; k++) {
-                if (coordRanges[k] == null)
-                    throw new NullPointerException("Null coordRanges[" + k + "]");
+                Objects.requireNonNull(coordRanges[k], "Null coordRanges[" + k + "]");
             }
             this.n = coordRanges.length;
             this.coordRanges = coordRanges.clone();
@@ -928,10 +925,8 @@ public class Matrices {
          * @throws NullPointerException if the <tt>matrix</tt> or <tt>backShifts</tt> argument is <tt>null</tt>.
          */
         public boolean isInsideMatrix(Matrix<?> matrix, long... backShifts) {
-            if (matrix == null)
-                throw new NullPointerException("Null matrix argument");
-            if (backShifts == null)
-                throw new NullPointerException("Null backShifts argument");
+            Objects.requireNonNull(matrix, "Null matrix argument");
+            Objects.requireNonNull(backShifts, "Null backShifts argument");
             for (int k = 0; k < n; k++) {
                 long shift = k < backShifts.length ? backShifts[k] : 0;
                 if (coordRanges[k].min() - shift < 0) {
@@ -1029,10 +1024,8 @@ public class Matrices {
         // coordRanges is the first argument to provide early check of arguments in inheritors
         private ConvexHyperpolyhedron(IRange[] coordRanges, double[] a, double[] b) {
             super(coordRanges);
-            if (a == null)
-                throw new NullPointerException("Null A coefficients");
-            if (b == null)
-                throw new NullPointerException("Null b coefficients");
+            Objects.requireNonNull(a, "Null A coefficients");
+            Objects.requireNonNull(b, "Null b coefficients");
             if (a.length != (long) n * (long) b.length)
                 throw new IllegalArgumentException("Illegal size of A matrix: a.length=" + a.length
                         + " must be equal to b.length*n=" + (long) n * (long) b.length);
@@ -1608,8 +1601,7 @@ public class Matrices {
      * @throws ClassCastException       if <tt>arraySupertype</tt> and <tt>elementType</tt> do not match.
      */
     public static <T extends Array> void checkNewMatrixType(Class<T> arraySupertype, Class<?> elementType) {
-        if (arraySupertype == null)
-            throw new NullPointerException("Null arraySupertype argument");
+        Objects.requireNonNull(arraySupertype, "Null arraySupertype argument");
         Arrays.checkElementTypeForNullAndVoid(elementType);
         if (MutableArray.class.isAssignableFrom(arraySupertype))
             throw new IllegalArgumentException("Illegal arraySupertype = " + arraySupertype
@@ -1630,8 +1622,7 @@ public class Matrices {
      * @see Arrays#sizeOf(Array)
      */
     public static long sizeOf(Matrix<?> matrix) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
+        Objects.requireNonNull(matrix, "Null matrix argument");
         return Arrays.sizeOf(matrix.array());
     }
 
@@ -1647,8 +1638,7 @@ public class Matrices {
      * @see Arrays#sizeOf(Array)
      */
     public static <T extends Array> double sizeOf(Collection<Matrix<? extends T>> matrices) {
-        if (matrices == null)
-            throw new NullPointerException("Null matrices argument");
+        Objects.requireNonNull(matrices, "Null matrices argument");
         double result = 0.0;
         for (Matrix<?> matrix : matrices) {
             result += sizeOf(matrix);
@@ -1704,15 +1694,13 @@ public class Matrices {
     public static <T extends Array> List<Matrix<? extends T>> several(Class<T> arrayClass, Matrix<?>... matrices) {
         // Note: we don't need @SafeVarargs annotation, because we use non-reifiable type Matrix<?>
         // and avoid warnings by other way: explicit check of classes and InternalUtils.cast
-        if (arrayClass == null)
-            throw new NullPointerException("Null arrayClass argument");
+        Objects.requireNonNull(arrayClass, "Null arrayClass argument");
         if (matrices.length == 0) {
             return java.util.Collections.emptyList();
         }
         matrices = matrices.clone();
         for (int k = 0; k < matrices.length; k++) {
-            if (matrices[k] == null)
-                throw new NullPointerException("Null matrices[" + k + "] argument");
+            Objects.requireNonNull(matrices[k], "Null matrices[" + k + "] argument");
             if (!arrayClass.isInstance(matrices[k].array()))
                 throw new ClassCastException("Illegal type of matrices[" + k + "] argument (" + matrices[k]
                         + "; required array class is " + arrayClass.getName() + ")");
@@ -1778,8 +1766,7 @@ public class Matrices {
         int k = 0;
         T[] result = InternalUtils.cast(java.lang.reflect.Array.newInstance(arrayClass, matrices.size()));
         for (Matrix<?> m : matrices) {
-            if (m == null)
-                throw new NullPointerException("Null matrix #" + k);
+            Objects.requireNonNull(m, "Null matrix #" + k);
             if (!arrayClass.isInstance(m.array()))
                 throw new ClassCastException("Illegal type of the matrix #" + k + " (" + m
                         + "; required array class is " + arrayClass.getName() + ")");
@@ -1968,8 +1955,7 @@ public class Matrices {
         Class<?> elementType = null;
         int k = 0;
         for (Matrix<? extends Array> m : matrices) {
-            if (m == null)
-                throw new NullPointerException("Null matrix #" + k);
+            Objects.requireNonNull(m, "Null matrix #" + k);
             if (m0 == null) {
                 m0 = m;
                 elementType = m.elementType();
@@ -2020,8 +2006,7 @@ public class Matrices {
     public static void checkDimensionEquality(Matrix<?>... matrices) {
         Objects.requireNonNull(matrices, "Null array of matrices");
         for (int k = 0; k < matrices.length; k++) {
-            if (matrices[k] == null)
-                throw new NullPointerException("Null matrix #" + k);
+            Objects.requireNonNull(matrices[k], "Null matrix #" + k);
             if (k > 0 && !(matrices[k]).dimEquals(matrices[0]))
                 throw new SizeMismatchException("The matrix #" + k + " and the matrix #0 dimensions mismatch: "
                         + "the matrix #" + k + " is " + matrices[k] + ", the matrix #0 is " + matrices[0]);
@@ -2097,10 +2082,8 @@ public class Matrices {
     public static Func asInterpolationFunc(
             Matrix<? extends PArray> matrix,
             InterpolationMethod interpolationMethod, boolean checkRanges) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
-        if (interpolationMethod == null)
-            throw new NullPointerException("Null interpolationMethod argument");
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        Objects.requireNonNull(interpolationMethod, "Null interpolationMethod argument");
         PArray a = matrix.array();
         switch (interpolationMethod) {
             case STEP_FUNCTION: {
@@ -2260,10 +2243,8 @@ public class Matrices {
     public static Func asInterpolationFunc(
             Matrix<? extends PArray> matrix,
             InterpolationMethod interpolationMethod, double outsideValue) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
-        if (interpolationMethod == null)
-            throw new NullPointerException("Null interpolationMethod argument");
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        Objects.requireNonNull(interpolationMethod, "Null interpolationMethod argument");
         PArray a = matrix.array();
         switch (interpolationMethod) {
             case STEP_FUNCTION: {
@@ -2426,8 +2407,7 @@ public class Matrices {
      * @see #getInterpolationMethod(Func)
      */
     public static Matrix<? extends PArray> getUnderlyingMatrix(Func f) {
-        if (f == null)
-            throw new NullPointerException("Null f argument");
+        Objects.requireNonNull(f, "Null f argument");
         if (!isInterpolationFunc(f))
             throw new IllegalArgumentException("The passed function is not a view of a matrix");
         return ((ArraysInterpolationsImpl.AbstractInterpolation) f).m;
@@ -2449,8 +2429,7 @@ public class Matrices {
      * @see #getInterpolationMethod(Func)
      */
     public static double getOutsideValue(Func f) {
-        if (f == null)
-            throw new NullPointerException("Null f argument");
+        Objects.requireNonNull(f, "Null f argument");
         if (!isInterpolationFunc(f))
             throw new IllegalArgumentException("The passed function is not a view of a matrix");
         if (!isContinuedInterpolationFunc(f))
@@ -2474,8 +2453,7 @@ public class Matrices {
      * @see #isInterpolationFunc(Func)
      */
     public static InterpolationMethod getInterpolationMethod(Func f) {
-        if (f == null)
-            throw new NullPointerException("Null f argument");
+        Objects.requireNonNull(f, "Null f argument");
         if (!isInterpolationFunc(f))
             throw new IllegalArgumentException("The passed function is not a view of a matrix");
         return ((ArraysInterpolationsImpl.AbstractInterpolation) f).getInterpolationMethod();
@@ -3143,8 +3121,7 @@ public class Matrices {
     public static void applyFunc(
             ArrayContext context, boolean truncateOverflows, Func f,
             Matrix<? extends UpdatablePArray> result, List<? extends Matrix<? extends PArray>> x) {
-        if (result == null)
-            throw new NullPointerException("Null result argument");
+        Objects.requireNonNull(result, "Null result argument");
         PArray[] arrays = arraysOfParallelMatrices(PArray.class, x);
         int k = 0;
         for (Matrix<? extends PArray> m : x) {
@@ -3256,10 +3233,8 @@ public class Matrices {
      * @throws IllegalArgumentException if the required element type is not a primitive type.
      */
     public static Matrix<? extends PArray> asPrecision(Matrix<? extends PArray> matrix, Class<?> newElementType) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix");
-        if (newElementType == null)
-            throw new NullPointerException("Null newElementType");
+        Objects.requireNonNull(matrix, "Null matrix");
+        Objects.requireNonNull(newElementType, "Null newElementType");
         if (newElementType == matrix.elementType()) {
             return matrix;
         }
@@ -3705,7 +3680,7 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to {@link #clone(Matrix, MemoryModel) clone(matrix, Arrays.SMM)}.
+     * Equivalent to {@link #clone(MemoryModel, Matrix) clone(matrix, Arrays.SMM)}.
      *
      * <p>Note: this operation can optimize access to this matrix in many times, if it is lazy-calculated
      * and not too large (can be placed in available Java memory).
@@ -3716,7 +3691,7 @@ public class Matrices {
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public static Matrix<? extends UpdatablePArray> clone(Matrix<? extends PArray> matrix) {
-        return clone(matrix, Arrays.SMM);
+        return clone(Arrays.SMM, matrix);
     }
 
     /**
@@ -3733,11 +3708,9 @@ public class Matrices {
      * @return exact updatable clone of the passed matrix.
      * @throws NullPointerException if one of the arguments is <tt>null</tt>.
      */
-    public static Matrix<? extends UpdatablePArray> clone(Matrix<? extends PArray> matrix, MemoryModel memoryModel) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix");
-        if (memoryModel == null)
-            throw new NullPointerException("Null memoryModel");
+    public static Matrix<? extends UpdatablePArray> clone(MemoryModel memoryModel, Matrix<? extends PArray> matrix) {
+        Objects.requireNonNull(memoryModel, "Null memoryModel");
+        Objects.requireNonNull(matrix, "Null matrix");
         final Matrix<UpdatablePArray> result = memoryModel.newMatrix(UpdatablePArray.class, matrix);
         Matrices.copy(null, result, matrix);
         // - maximally fast multithreading copying
@@ -3792,10 +3765,8 @@ public class Matrices {
             Matrix<? extends UpdatableArray> dest,
             Matrix<? extends Array> src,
             int numberOfTasks) {
-        if (dest == null)
-            throw new NullPointerException("Null dest argument");
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         if (!dest.dimEquals(src))
             throw new SizeMismatchException("dest and src matrix dimensions mismatch: " + dest + " and " + src);
         return Arrays.copy(context, dest.array(), src.array(), numberOfTasks);
@@ -3828,10 +3799,8 @@ public class Matrices {
             Matrix<? extends UpdatableArray> dest,
             Matrix<? extends Array> src,
             int numberOfTasks, boolean strictMode) {
-        if (dest == null)
-            throw new NullPointerException("Null dest argument");
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         if (!dest.dimEquals(src))
             throw new SizeMismatchException("dest and src matrix dimensions mismatch: "
                     + dest + " and " + src);
@@ -3858,10 +3827,8 @@ public class Matrices {
             ArrayContext context,
             Matrix<? extends UpdatableArray> dest,
             Matrix<? extends Array> src) {
-        if (dest == null)
-            throw new NullPointerException("Null dest argument");
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         if (!dest.dimEquals(src))
             throw new SizeMismatchException("dest and src matrix dimensions mismatch: "
                     + dest + " and " + src);
@@ -3970,25 +3937,21 @@ public class Matrices {
             Matrix<? extends UpdatableArray> dest,
             Matrix<? extends Array> src,
             Region destRegion, long... shifts) {
-        if (dest == null)
-            throw new NullPointerException("Null dest argument");
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (destRegion == null)
-            throw new NullPointerException("Null destRegion argument");
-        if (shifts == null)
-            throw new NullPointerException("Null shifts argument");
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(destRegion, "Null destRegion argument");
+        Objects.requireNonNull(shifts, "Null shifts argument");
         shifts = shifts.clone();
         AbstractArray.checkCopyArguments(dest.array(), src.array());
-        if (destRegion instanceof Hyperparallelepiped) {
-            Hyperparallelepiped destParallelepiped = (Hyperparallelepiped) destRegion;
+        if (destRegion instanceof Hyperparallelepiped destParallelepiped) {
             if (!destParallelepiped.isInsideMatrix(dest)) {
                 throw new IndexOutOfBoundsException("The destination region (" + destRegion
                         + ") is not inside the destination " + dest);
             }
             if (!destParallelepiped.isInsideMatrix(src, shifts)) {
                 throw new IndexOutOfBoundsException("The source region (" + destRegion + ", shifted backwards by "
-                        + JArrays.toString(shifts, ",", 100) + ") is not inside the source " + src);
+                        + JArrays.toString(shifts, ",", 100) +
+                        ") is not inside the source " + src);
             }
             if (ArraysSubMatrixCopier.copySubMatrixRegion(
                     context, dest, src, Matrix.ContinuationMode.NONE,
@@ -4075,14 +4038,10 @@ public class Matrices {
             Matrix<? extends UpdatableArray> dest,
             Matrix<? extends Array> src,
             Region destRegion, long[] shifts, Object outsideValue) {
-        if (dest == null)
-            throw new NullPointerException("Null dest argument");
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (destRegion == null)
-            throw new NullPointerException("Null destRegion argument");
-        if (shifts == null)
-            throw new NullPointerException("Null shifts argument");
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(destRegion, "Null destRegion argument");
+        Objects.requireNonNull(shifts, "Null shifts argument");
         shifts = shifts.clone();
         AbstractArray.checkCopyArguments(dest.array(), src.array());
         if (ArraysSubMatrixCopier.copySubMatrixRegion(
@@ -4301,13 +4260,11 @@ public class Matrices {
     }
 
     private static IRange[] coordRangesOfVertices(double[][] vertices, int requiredDimCount) {
-        if (vertices == null)
-            throw new NullPointerException("Null vertices array");
+        Objects.requireNonNull(vertices, "Null vertices array");
         if (vertices.length == 0)
             throw new IllegalArgumentException("No vertices are specified");
         for (int k = 0; k < vertices.length; k++) {
-            if (vertices[k] == null)
-                throw new NullPointerException("Null vertices[" + k + "]");
+            Objects.requireNonNull(vertices[k], "Null vertices[" + k + "]");
             if (vertices[k].length == 0)
                 throw new IllegalArgumentException("Empty vertices[" + k + "]: 0-dimensional points are not allowed");
             if (requiredDimCount > 0 && vertices[k].length != requiredDimCount)
@@ -4334,8 +4291,7 @@ public class Matrices {
     }
 
     private static boolean buildSimplexByVertices(double[][] vertices, double[] a, double[] b) {
-        if (vertices == null)
-            throw new NullPointerException("Null vertices array");
+        Objects.requireNonNull(vertices, "Null vertices array");
         if (vertices.length == 0)
             throw new IllegalArgumentException("No vertices are specified");
         final int n = vertices[0].length; // number of dimensions

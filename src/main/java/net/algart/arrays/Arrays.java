@@ -1235,8 +1235,7 @@ public class Arrays {
      * @see Array#elementType()
      */
     public static Class<?> elementType(Class<? extends PArray> arrayType) {
-        if (arrayType == null)
-            throw new NullPointerException("Null arrayType argument");
+        Objects.requireNonNull(arrayType, "Null arrayType argument");
         //[[Repeat() bit|boolean ==> char,,byte,,short,,int,,long,,float,,double;;
         //           Bit         ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double]]
         if (BitArray.class.isAssignableFrom(arrayType)) {
@@ -1320,10 +1319,8 @@ public class Arrays {
      *                              a primitive type).
      */
     public static <T extends Array> Class<T> type(Class<T> arraySupertype, Class<?> elementType) {
-        if (arraySupertype == null)
-            throw new NullPointerException("Null arraySupertype argument");
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
+        Objects.requireNonNull(arraySupertype, "Null arraySupertype argument");
+        Objects.requireNonNull(elementType, "Null elementType argument");
         boolean updatable = UpdatableArray.class.isAssignableFrom(arraySupertype);
         boolean mutable = MutableArray.class.isAssignableFrom(arraySupertype);
         Class<?> result;
@@ -1564,8 +1561,7 @@ public class Arrays {
      * @see Matrices#sizeOf(Matrix)
      */
     public static long sizeOf(Array array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (array instanceof BitArray) {
             return PackedBitArrays.packedLength(array.length()) << 3;
         } else if (array instanceof PArray) {
@@ -1808,8 +1804,7 @@ public class Arrays {
      * @see PFixedArray#minPossibleValue()
      */
     public static long minPossibleIntegerValue(Class<? extends PFixedArray> arrayType) {
-        if (arrayType == null)
-            throw new NullPointerException("Null arrayType argument");
+        Objects.requireNonNull(arrayType, "Null arrayType argument");
         //[[Repeat() bit ==> char,,byte,,short,,int,,long;;
         //           Bit ==> Char,,Byte,,Short,,Int,,Long;;
         //           0   ==> 0,,0,,0,,Integer.MIN_VALUE,,Long.MIN_VALUE]]
@@ -1859,8 +1854,7 @@ public class Arrays {
      * @see PFixedArray#maxPossibleValue()
      */
     public static long maxPossibleIntegerValue(Class<? extends PFixedArray> arrayType) {
-        if (arrayType == null)
-            throw new NullPointerException("Null arrayType argument");
+        Objects.requireNonNull(arrayType, "Null arrayType argument");
         //[[Repeat() bit ==> char,,byte,,short,,int,,long;;
         //           Bit ==> Char,,Byte,,Short,,Int,,Long;;
         //           1   ==> 0xFFFF,,0xFF,,0xFFFF,,Integer.MAX_VALUE,,Long.MAX_VALUE]]
@@ -1910,8 +1904,7 @@ public class Arrays {
      * @see PArray#minPossibleValue(double)
      */
     public static double minPossibleValue(Class<? extends Array> arrayType, double valueForFloatingPoint) {
-        if (arrayType == null)
-            throw new NullPointerException("Null arrayType argument");
+        Objects.requireNonNull(arrayType, "Null arrayType argument");
         if (PFixedArray.class.isAssignableFrom(arrayType))
             return minPossibleIntegerValue(arrayType.asSubclass(PFixedArray.class));
         else if (DoubleArray.class.isAssignableFrom(arrayType) ||
@@ -1948,8 +1941,7 @@ public class Arrays {
      * @see PArray#maxPossibleValue(double)
      */
     public static double maxPossibleValue(Class<? extends Array> arrayType, double valueForFloatingPoint) {
-        if (arrayType == null)
-            throw new NullPointerException("Null arrayType argument");
+        Objects.requireNonNull(arrayType, "Null arrayType argument");
         if (PFixedArray.class.isAssignableFrom(arrayType))
             return maxPossibleIntegerValue(arrayType.asSubclass(PFixedArray.class));
         else if (DoubleArray.class.isAssignableFrom(arrayType) ||
@@ -2295,8 +2287,7 @@ public class Arrays {
      *                                  <tt>float.class</tt> or <tt>double.class</tt>.
      */
     public static PArray nPCopies(long n, Class<?> elementType, double element) {
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
+        Objects.requireNonNull(elementType, "Null elementType argument");
         if (elementType == boolean.class) {
             return nBitCopies(n, element != 0);
         } else if (elementType == char.class) {
@@ -2361,8 +2352,7 @@ public class Arrays {
      *                                  <tt>short.class</tt>, <tt>int.class</tt> or <tt>long.class</tt>.
      */
     public static PFixedArray nPFixedCopies(long n, Class<?> elementType, long element) {
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
+        Objects.requireNonNull(elementType, "Null elementType argument");
         if (elementType == boolean.class) {
             return nBitCopies(n, element != 0);
         } else if (elementType == char.class) {
@@ -2645,10 +2635,10 @@ public class Arrays {
     public static <T extends PArray> T asFuncArray(boolean truncateOverflows,
                                                    final Func f, Class<? extends T> requiredType, PArray... x)
     {
+        Objects.requireNonNull(x, "Null x");
         if (x.length == 0)
             throw new IllegalArgumentException("Empty x[] (array of AlgART arrays)");
-        if (x[0] == null)
-            throw new NullPointerException("Null x[0] argument");
+        Objects.requireNonNull(x[0], "Null x[0] argument");
         return ArraysFuncImpl.asFuncArray(truncateOverflows, f, requiredType, x, x[0].length());
     }
 
@@ -2858,12 +2848,10 @@ public class Arrays {
                                  int numberOfTasks, boolean strictMode, Func f,
                                  UpdatablePArray result, PArray... x)
     {
-        if (result == null)
-            throw new NullPointerException("Null result argument");
+        Objects.requireNonNull(result, "Null result argument");
         long len = result.length();
         for (int k = 0; k < x.length; k++) {
-            if (x[k] == null)
-                throw new NullPointerException("Null x[" + k + "] argument");
+            Objects.requireNonNull(x[k], "Null x[" + k + "] argument");
             if (x[k].length() != len)
                 throw new SizeMismatchException("x[" + k + "].length() and result.length() mismatch");
         }
@@ -2963,8 +2951,7 @@ public class Arrays {
      * @see #isFuncArray(Array)
      */
     public static Func getFunc(Array array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (!isFuncArray(array))
             throw new IllegalArgumentException("The passed argument is not a functional array");
         return ((ArraysFuncImpl.FuncArray) array).f();
@@ -2985,8 +2972,7 @@ public class Arrays {
      * @see #isFuncArray(Array)
      */
     public static boolean getTruncationMode(Array array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (!isFuncArray(array))
             throw new IllegalArgumentException("The passed argument is not a functional array");
         return ((ArraysFuncImpl.FuncArray) array).truncateOverflows();
@@ -3021,8 +3007,7 @@ public class Arrays {
      * @see #isIndexFuncArray(Array)
      */
     public static long[] getIndexDimensions(Array array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (!isIndexFuncArray(array))
             throw new IllegalArgumentException("The passed argument is not an index-based functional array");
         return ((ArraysFuncImpl.CoordFuncArray) array).dimensions();
@@ -3190,8 +3175,7 @@ public class Arrays {
      * @see #isShifted(Array)
      */
     public static long getShift(Array array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (!isShifted(array))
             throw new IllegalArgumentException("The passed argument is not a shifted array");
         return ((ArraysOpImpl.ShiftedArray) array).shift();
@@ -3475,8 +3459,7 @@ public class Arrays {
      *                              (this technique may be not supported in some cases).
      */
     public static Range rangeOf(ArrayContext context, PArray array, MinMaxInfo minMaxInfo) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array)) {
             array = (PArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
         }
@@ -3553,8 +3536,7 @@ public class Arrays {
      *                              (this technique may be not supported in some cases).
      */
     public static double sumOf(ArrayContext context, PArray array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array)) {
             array = (PArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
         }
@@ -3623,8 +3605,7 @@ public class Arrays {
     public static long preciseSumOf(ArrayContext context, PFixedArray array, boolean checkOverflow)
         throws ArithmeticException
     {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array)) {
             array = (PFixedArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
         }
@@ -3768,13 +3749,11 @@ public class Arrays {
      *                              (this technique may be not supported in some cases).
      */
     public static boolean histogramOf(ArrayContext context, PArray array, long[] histogram, double from, double to) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array)) {
             array = (PArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
         }
-        if (histogram == null)
-            throw new NullPointerException("Null histogram argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
         if (histogram.length == 0)
             throw new IllegalArgumentException("Empty histogram argument (histogram.length=0)");
         ArraysOpImpl.HistogramCalculator histogramCalculator = new ArraysOpImpl.HistogramCalculator(
@@ -3832,10 +3811,8 @@ public class Arrays {
         ArrayContext context, UpdatableBitArray bits, PArray array,
         double threshold)
     {
-        if (bits == null)
-            throw new NullPointerException("Null bits argument");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(bits, "Null bits argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
             && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
             && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
@@ -3895,10 +3872,8 @@ public class Arrays {
         ArrayContext context, UpdatableBitArray bits, PArray array,
         double threshold)
     {
-        if (bits == null)
-            throw new NullPointerException("Null bits argument");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(bits, "Null bits argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
             && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
             && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
@@ -3959,10 +3934,8 @@ public class Arrays {
         ArrayContext context, UpdatableBitArray bits, PArray array,
         double threshold)
     {
-        if (bits == null)
-            throw new NullPointerException("Null bits argument");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(bits, "Null bits argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
             && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
             && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
@@ -4022,10 +3995,8 @@ public class Arrays {
         ArrayContext context, UpdatableBitArray bits, PArray array,
         double threshold)
     {
-        if (bits == null)
-            throw new NullPointerException("Null bits argument");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(bits, "Null bits argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
             && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
             && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
@@ -4118,10 +4089,8 @@ public class Arrays {
         //     filler1 = (int) filler1;
         // }
         // applyFunc(context, false, SelectConstantFunc.getInstance(filler0, filler1), array, bits);
-        if (bits == null)
-            throw new NullPointerException("Null bits argument");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(bits, "Null bits argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
                 && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
                 && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
@@ -4185,10 +4154,8 @@ public class Arrays {
      * @see #unpackZeroBits(ArrayContext, UpdatablePArray, BitArray, double)
      */
     public static void unpackUnitBits(ArrayContext context, UpdatablePArray array, BitArray bits, double filler1) {
-        if (bits == null)
-            throw new NullPointerException("Null bits argument");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(bits, "Null bits argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
             && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
             && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
@@ -4251,10 +4218,8 @@ public class Arrays {
      * @see #unpackUnitBits(ArrayContext, UpdatablePArray, BitArray, double)
      */
     public static void unpackZeroBits(ArrayContext context, UpdatablePArray array, BitArray bits, double filler0) {
-        if (bits == null)
-            throw new NullPointerException("Null bits argument");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(bits, "Null bits argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
             && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
             && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
@@ -4294,10 +4259,8 @@ public class Arrays {
      * @throws IllegalArgumentException if the required element type is not a primitive type.
      */
     public static PArray asPrecision(PArray array, Class<?> newElementType) {
-        if (array == null)
-            throw new NullPointerException("Null array");
-        if (newElementType == null)
-            throw new NullPointerException("Null newElementType");
+        Objects.requireNonNull(array, "Null array");
+        Objects.requireNonNull(newElementType, "Null newElementType");
         if (Arrays.bitsPerElement(newElementType) <= 0) {
             throw new IllegalArgumentException("Element type must be primitive "
                     + "(boolean, char, byte, short, int, long, float or double");
@@ -4333,10 +4296,8 @@ public class Arrays {
      *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void applyPrecision(ArrayContext context, UpdatablePArray result, PArray array) {
-        if (result == null)
-            throw new NullPointerException("Null result");
-        if (array == null)
-            throw new NullPointerException("Null array");
+        Objects.requireNonNull(result, "Null result");
+        Objects.requireNonNull(array, "Null array");
         if (result.length() != array.length())
             throw new SizeMismatchException("array.length() and result.length() mismatch");
         if (result.elementType() == array.elementType()) {
@@ -4359,8 +4320,7 @@ public class Arrays {
      * @see UpdatablePArray#fill(long)
      */
     public static void zeroFill(UpdatableArray array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array)) {
             array = (UpdatableArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
         }
@@ -4539,8 +4499,7 @@ public class Arrays {
      *                                than <tt>Integer.MAX_VALUE</tt> elements.
      */
     public static int sizeOfBytesForCopying(PArray array) {
-        if (array == null)
-            throw new NullPointerException("Null array");
+        Objects.requireNonNull(array, "Null array");
         final long requiredLength = array instanceof BitArray ? (array.length() + 7) >>> 3 : Arrays.sizeOf(array);
         if (requiredLength > Integer.MAX_VALUE)
             throw new TooLargeArrayException("Cannot calculate required number of bytes for "
@@ -4688,8 +4647,7 @@ public class Arrays {
      * @see Array#getData(long, Object)
      */
     public static Object toJavaArray(Array array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         long len = array.length();
         if (len != (int) len)
             throw new TooLargeArrayException("Cannot convert AlgART array to Java array, "
@@ -4885,8 +4843,7 @@ public class Arrays {
      * @see CharArray#toString()
      */
     public static String toString(CharArray charArray) {
-        if (charArray == null)
-            throw new NullPointerException("Null charArray argument");
+        Objects.requireNonNull(charArray, "Null charArray argument");
         char[] array = (char[]) javaArrayInternal(charArray);
         int offset, count;
         if (array != null) {
@@ -4943,10 +4900,8 @@ public class Arrays {
      * @see JArrays#toString(Object[], String, int)
      */
     public static String toString(Array array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
         if (maxStringLength <= 0)
             throw new IllegalArgumentException("maxStringLength argument must be positive");
         long n = array.length();
@@ -5092,10 +5047,8 @@ public class Arrays {
      * @see JArrays#toString(double[], Locale, String, String, int)
      */
     public static String toString(Array array, Locale locale, String format, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
         if (maxStringLength <= 0)
             throw new IllegalArgumentException("maxStringLength argument must be positive");
         long n = array.length();
@@ -5202,10 +5155,8 @@ public class Arrays {
      * @see JArrays#toHexString(long[], String, int)
      */
     public static String toHexString(Array array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
         if (maxStringLength <= 0)
             throw new IllegalArgumentException("maxStringLength argument must be positive");
         long n = array.length();
@@ -5377,8 +5328,7 @@ public class Arrays {
      * @throws IllegalArgumentException if <tt>maxAvailableGap</tt> argument is negative.
      */
     public static int goodStartOffsetInArrayOfLongs(BitArray bitArray, long position, int maxAvailableGap) {
-        if (bitArray == null)
-            throw new NullPointerException("Null bitArray argument");
+        Objects.requireNonNull(bitArray, "Null bitArray argument");
         if (maxAvailableGap < 0)
             throw new IllegalArgumentException("Negative maxAvailableGap argument");
         if (maxAvailableGap == 0)
@@ -5731,8 +5681,7 @@ public class Arrays {
      * @throws NullPointerException if one of the arguments is <tt>null</tt>.
      */
     public static void sort(UpdatableArray array, ArrayComparator comparator) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (array instanceof UpdatableBitArray) { // no sense to use Quick-Sort here
             UpdatableBitArray bitArray = (UpdatableBitArray) array;
             MinMaxInfo mmInfo = new MinMaxInfo();
@@ -5854,10 +5803,8 @@ public class Arrays {
      * @see SimpleMemoryModel#asUpdatableArray(Object)
      */
     public static <E> List<E> asList(Array array, Class<E> listElementType) {
-        if (listElementType == null)
-            throw new NullPointerException("Null listElementType argument");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(listElementType, "Null listElementType argument");
         Class<?> eType = array.elementType();
         if (eType == boolean.class)
             eType = Boolean.class;
@@ -5892,8 +5839,7 @@ public class Arrays {
      *                                exceed this threshold later).
      */
     public static <E> List<E> asList(ObjectArray<E> array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return new AlgARTArrayList<E>(array);
     }
 
@@ -5978,8 +5924,7 @@ public class Arrays {
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
      */
     public static boolean[] getUnderlyingArraysNewStatus(Array array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (!(array instanceof AbstractArray))
             return new boolean[0];
         Array[] underlyingArrays = ((AbstractArray) array).underlyingArrays;
@@ -6006,8 +5951,7 @@ public class Arrays {
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
      */
     public static int getUnderlyingArraysCount(Array array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (!(array instanceof AbstractArray))
             return 0;
         return ((AbstractArray) array).underlyingArrays.length;
@@ -6475,8 +6419,7 @@ public class Arrays {
     public static long compactCyclicPositions(long length, long[] positions) {
         if (length <= 0)
             throw new IllegalArgumentException("Negative or zero length argument: " + length);
-        if (positions == null)
-            throw new NullPointerException("Null positions array");
+        Objects.requireNonNull(positions, "Null positions array");
         for (int k = 0; k < positions.length; k++) {
             if (positions[k] < 0 || positions[k] >= length)
                 throw new IllegalArgumentException("positions[" + k + "] is out of range 0..length-1=" + (length - 1));
@@ -6848,10 +6791,8 @@ public class Arrays {
      * @throws NullPointerException if <tt>task</tt> or <tt>whenToExecute</tt> is <tt>null</tt>.
      */
     public static void addShutdownTask(Runnable task, TaskExecutionOrder whenToExecute) {
-        if (task == null)
-            throw new NullPointerException("Null task argument");
-        if (whenToExecute == null)
-            throw new NullPointerException("Null whenToExecute argument");
+        Objects.requireNonNull(task, "Null task argument");
+        Objects.requireNonNull(whenToExecute, "Null whenToExecute argument");
         InternalUtils.addShutdownTask(task, whenToExecute);
     }
 
@@ -7407,8 +7348,7 @@ public class Arrays {
         protected ParallelExecutor(ArrayContext context, UpdatableArray dest, Array src,
                                    int blockSize, int numberOfTasks, long numberOfRanges)
         {
-            if (src == null)
-                throw new NullPointerException("Null src argument");
+            Objects.requireNonNull(src, "Null src argument");
             if (blockSize <= 0)
                 throw new IllegalArgumentException("Negative or zero blockSize=" + blockSize);
             if (numberOfTasks < 0)
@@ -7471,8 +7411,7 @@ public class Arrays {
          * @throws NullPointerException if <tt>src</tt> argument is <tt>null</tt>.
          */
         public static long recommendedNumberOfRanges(Array src, boolean recursive) {
-            if (src == null)
-                throw new NullPointerException("Null src argument");
+            Objects.requireNonNull(src, "Null src argument");
             long rangeLen = Math.max(1, lengthOf(src, SystemSettings.maxMultithreadingMemory()));
             long result = Math.max(1, (src.length() - 1) / rangeLen + 1);
             // =max(1, ceil(length/rangeLen)). Math.max here is necessary: if length=0, then we have -1/1+1=0.
@@ -8472,8 +8411,7 @@ public class Arrays {
      * @throws NullPointerException if the passed argument is <tt>null</tt>.
      */
     static Array[] getUnderlyingArrays(Array array, boolean trusted) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (!(array instanceof AbstractArray))
             return new Array[0];
         Array[] underlyingArrays = ((AbstractArray) array).underlyingArrays;
@@ -8560,8 +8498,7 @@ public class Arrays {
     }
 
     static void checkElementTypeForNullAndVoid(Class<?> elementType) {
-        if (elementType == null)
-            throw new NullPointerException("Null elementType");
+        Objects.requireNonNull(elementType, "Null elementType");
         if (elementType == void.class)
             throw new IllegalArgumentException("Illegal elementType: it cannot be void.class");
     }
@@ -8595,8 +8532,7 @@ public class Arrays {
         private final Array array;
 
         AlgARTArrayList(Array array) {
-            if (array == null)
-                throw new NullPointerException();
+            Objects.requireNonNull(array);
             if (array.length() > Integer.MAX_VALUE)
                 throw new TooLargeArrayException("Cannot view AlgART array as List, "
                     + "because it is too large: " + array);
@@ -8683,8 +8619,7 @@ public class Arrays {
         private CharArray charArray;
 
         private AlgARTArrayCharSequence(CharArray charArray) {
-            if (charArray == null)
-                throw new NullPointerException("Null charArray argument");
+            Objects.requireNonNull(charArray, "Null charArray argument");
             if (charArray.length() > Integer.MAX_VALUE)
                 throw new TooLargeArrayException("Cannot view AlgART array as CharSequence, "
                     + "because it is too large: " + charArray);
