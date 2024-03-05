@@ -3749,7 +3749,7 @@ public class Matrices {
      * @throws NullPointerException if one of the arguments is <tt>null</tt>.
      */
     public static Matrix<? extends UpdatablePArray> clone(MemoryModel memoryModel, Matrix<? extends PArray> matrix) {
-        Objects.requireNonNull(memoryModel, "Null memoryModel");
+        Objects.requireNonNull(memoryModel, "Null memory model");
         Objects.requireNonNull(matrix, "Null matrix");
         final Matrix<UpdatablePArray> result = memoryModel.newMatrix(UpdatablePArray.class, matrix);
         Matrices.copy(null, result, matrix);

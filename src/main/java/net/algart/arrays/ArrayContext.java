@@ -91,6 +91,32 @@ public interface ArrayContext {
     ArrayContext DEFAULT_SINGLE_THREAD = new AbstractArrayContext.DefaultSingleThread();
 
     /**
+     * Creates the simplest implementation of {@link ArrayContext} with the only difference from
+     * the {@link #DEFAULT} object,
+     * that {@link #getMemoryModel()} method will return the specified memory model.
+     *
+     * @param memoryModel memory model.
+     * @return new array context.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     */
+    static ArrayContext getSimple(MemoryModel memoryModel) {
+        return new AbstractArrayContext.Default(memoryModel);
+    }
+
+    /**
+     * Creates the simplest implementation of {@link ArrayContext} with the only difference from
+     * the {@link #DEFAULT_SINGLE_THREAD} object,
+     * that {@link #getMemoryModel()} method will return the specified memory model.
+     *
+     * @param memoryModel memory model.
+     * @return new array context.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     */
+    static ArrayContext getSimpleSingleThread(MemoryModel memoryModel) {
+        return new AbstractArrayContext.DefaultSingleThread(memoryModel);
+    }
+
+    /**
      * Returns new context, describing the execution of some subtask of the current task,
      * from <tt>fromPart*100%</tt> of total execution until <tt>toPart*100%</tt> of total execution.
      * The returned context works alike the current context with the only exception, that

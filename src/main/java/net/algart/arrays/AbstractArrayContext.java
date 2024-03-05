@@ -25,6 +25,7 @@
 package net.algart.arrays;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * <p>A skeletal implementation of the {@link ArrayContext} interface to minimize
@@ -126,6 +127,16 @@ public abstract class AbstractArrayContext implements ArrayContext {
     }
 
     static class Default extends AbstractArrayContext implements ArrayContext {
+        private final MemoryModel memoryModel;
+
+        public Default() {
+            this(SimpleMemoryModel.getInstance());
+        }
+
+        public Default(MemoryModel memoryModel) {
+            this.memoryModel = Objects.requireNonNull(memoryModel, "Null memory model");
+        }
+
         @Override
         public ArrayContext noProgressVersion() {
             return this;
@@ -133,12 +144,14 @@ public abstract class AbstractArrayContext implements ArrayContext {
 
         @Override
         public ArrayContext singleThreadVersion() {
-            return DEFAULT_SINGLE_THREAD;
+            return memoryModel == SimpleMemoryModel.getInstance() ?
+                    DEFAULT_SINGLE_THREAD :
+                    new DefaultSingleThread(memoryModel);
         }
 
         @Override
         public MemoryModel getMemoryModel() {
-            return SimpleMemoryModel.getInstance();
+            return memoryModel;
         }
 
         @Override
@@ -161,6 +174,14 @@ public abstract class AbstractArrayContext implements ArrayContext {
     }
 
     static class DefaultSingleThread extends Default implements ArrayContext {
+        public DefaultSingleThread() {
+            super();
+        }
+
+        public DefaultSingleThread(MemoryModel memoryModel) {
+            super(memoryModel);
+        }
+
         @Override
         public ThreadPoolFactory getThreadPoolFactory() {
             return DefaultThreadPoolFactory.getDefaultThreadPoolFactory(1);
