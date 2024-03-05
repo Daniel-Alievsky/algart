@@ -8155,7 +8155,7 @@ public class Arrays {
          * do not allow calculations simultaneously with preloading another bank.
          * But these algorithms are not removed at all due to profiling and another possible future needs.
          */
-        private static enum ProcessSynchronizationAlgorithm {
+        private enum ProcessSynchronizationAlgorithm {
             /**
              * The best and simplest algorithm: no synchronization, loadResources(null) is called outside the threads.
              */

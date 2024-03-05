@@ -45,10 +45,10 @@ public class JoinSliceMatricesTest {
         final Path matrixFolder = Paths.get(args[1]);
         List<Matrix<? extends PArray>> matrices = MatrixIO.readImage(sourceFile);
         System.out.printf("List: %s%n", matrices);
-        Matrix<PArray> merged = Matrices.mergeAlongNewDimension(Arrays.SMM, PArray.class, matrices);
+        Matrix<PArray> merged = Matrices.mergeLayers(Arrays.SMM, matrices);
         System.out.printf("Joined: %s%n", merged);
         MatrixIO.writeAlgARTImage(matrixFolder, List.of(merged));
-        List<Matrix<PArray>> unpacked = Matrices.splitAlongLastDimension(merged);
+        List<Matrix<PArray>> unpacked = Matrices.asLayers(merged);
         for (int k = 0; k < unpacked.size(); k++) {
             if (!unpacked.get(k).equals(matrices.get(k))) {
                 throw new AssertionError("Channels #" + k + " mismatch!");

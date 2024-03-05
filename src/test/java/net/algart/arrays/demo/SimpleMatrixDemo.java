@@ -53,20 +53,21 @@ public class SimpleMatrixDemo {
 
     public static void main(String[] args) throws IOException, IllegalInfoSyntaxException {
         int startArgIndex = 0;
-        boolean tile;
-        if (tile = startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-tile"))
+        boolean tile = false;
+        if (startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-tile")) {
+            tile = true;
             startArgIndex++;
+        }
         if (args.length < startArgIndex + 2) {
             System.out.println("Usage:");
             System.out.println("    " + SimpleMatrixDemo.class.getName()
-                + " [-tile] newMatrixFile value bit|byte|short|int size [version [additionalProperty]]");
-            System.out.println("or");
-            System.out.println("    " + SimpleMatrixDemo.class.getName()
-                + " oldMatrixFile value ");
+                + " [-tile] newMatrixFile value bit|byte|short|int N [version [additionalProperty]]");
+            System.out.println("to create matrix Nx(N+1)x(N+2) or");
+            System.out.println("    " + SimpleMatrixDemo.class.getName() + " oldMatrixFile value ");
             return;
         }
 
-        final boolean fromFile = args.length == startArgIndex + 2;
+        final boolean fromFile = args.length < startArgIndex + 4;
         final File file = new File(args[startArgIndex]);
         final int value = Integer.parseInt(args[startArgIndex + 1]);
         Matrix<? extends UpdatablePArray> m;
@@ -98,17 +99,13 @@ public class SimpleMatrixDemo {
             lmm = LargeMemoryModel.getInstance(dfm);
             System.out.println(lmm);
             System.out.println();
-            Class<?> elementType;
-            if (args[startArgIndex + 2].equals("bit"))
-                elementType = boolean.class;
-            else if (args[startArgIndex + 2].equals("byte"))
-                elementType = byte.class;
-            else if (args[startArgIndex + 2].equals("short"))
-                elementType = short.class;
-            else if (args[startArgIndex + 2].equals("int"))
-                elementType = int.class;
-            else
-                throw new IllegalArgumentException("Unknown element type");
+            Class<?> elementType = switch (args[startArgIndex + 2]) {
+                case "bit" -> boolean.class;
+                case "byte" -> byte.class;
+                case "short" -> short.class;
+                case "int" -> int.class;
+                default -> throw new IllegalArgumentException("Unknown element type");
+            };
             long n = Long.parseLong(args[startArgIndex + 3]);
             m = lmm.newMatrix(UpdatablePArray.class, elementType, n, n + 1, n + 2);
             if (tile) {

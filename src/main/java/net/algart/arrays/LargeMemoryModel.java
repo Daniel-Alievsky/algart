@@ -1431,7 +1431,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         if (matrixInfo.dataOffset() == 0) {
             ((AbstractArray) array).setNewReadOnlyViewStatus();
         }
-        Matrix<? extends PArray> matrix = Matrices.matrix(array, matrixInfo.dimensions());
+        Matrix<? extends PArray> matrix = array.matrix(matrixInfo.dimensions());
         long[] tileDimensions = getTileDimensions(matrix.dimCount(), matrixInfo.additionalProperties());
         if (tileDimensions != null) {
             matrix = matrix.tile(tileDimensions);
