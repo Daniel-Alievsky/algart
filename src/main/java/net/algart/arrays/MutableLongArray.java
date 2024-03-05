@@ -35,24 +35,24 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface MutableLongArray extends LongStack, UpdatableLongArray, MutablePIntegerArray {
-    public MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutableLongArray setData(long arrayPos, Object srcArray);
+    MutableLongArray setData(long arrayPos, Object srcArray);
 
-    public MutableLongArray copy(Array src);
+    MutableLongArray copy(Array src);
 
-    public MutableLongArray swap(UpdatableArray another);
+    MutableLongArray swap(UpdatableArray another);
 
-    public MutableLongArray length(long newLength);
+    MutableLongArray length(long newLength);
 
-    public MutableLongArray ensureCapacity(long minCapacity);
+    MutableLongArray ensureCapacity(long minCapacity);
 
-    public MutableLongArray trim();
+    MutableLongArray trim();
 
-    public MutableLongArray append(Array appendedArray);
+    MutableLongArray append(Array appendedArray);
 
-    public MutableLongArray asCopyOnNextWrite();
+    MutableLongArray asCopyOnNextWrite();
 
-    public MutableLongArray shallowClone();
+    MutableLongArray shallowClone();
     /*Repeat.IncludeEnd*/
 }

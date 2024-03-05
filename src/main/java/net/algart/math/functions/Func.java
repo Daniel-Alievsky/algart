@@ -52,14 +52,14 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final Func IDENTITY = new IdentityFunc();
+    Func IDENTITY = new IdentityFunc();
 
     /**
      * Updatable version of {@link #IDENTITY} function.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final Func.Updatable UPDATABLE_IDENTITY = new IdentityFunc.Updatable();
+    Func.Updatable UPDATABLE_IDENTITY = new IdentityFunc.Updatable();
 
     /**
      * Maximum from several numbers:
@@ -73,7 +73,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final Func MAX = new MaxFunc();
+    Func MAX = new MaxFunc();
 
     /**
      * Minimum from several numbers:
@@ -87,7 +87,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final Func MIN = new MinFunc();
+    Func MIN = new MinFunc();
 
     /**
      * Absolute value function:
@@ -100,7 +100,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final Func ABS = new AbsFunc();
+    Func ABS = new AbsFunc();
 
     /**
      * Absolute value of the difference of 2 numbers:
@@ -111,7 +111,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final Func ABS_DIFF = new AbsDiffFunc();
+    Func ABS_DIFF = new AbsDiffFunc();
 
     /**
      * Positive difference of 2 numbers:
@@ -122,7 +122,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final Func POSITIVE_DIFF = new PositiveDiffFunc();
+    Func POSITIVE_DIFF = new PositiveDiffFunc();
 
     /**
      * An instance of {@link LinearFunc} class, describing the linear function
@@ -131,7 +131,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final LinearFunc X_PLUS_Y = LinearFunc.getInstance(0.0, 1.0, 1.0);
+    LinearFunc X_PLUS_Y = LinearFunc.getInstance(0.0, 1.0, 1.0);
 
     /**
      * An instance of {@link LinearFunc} class, describing the linear function
@@ -140,7 +140,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final LinearFunc X_MINUS_Y = LinearFunc.getInstance(0.0, 1.0, -1.0);
+    LinearFunc X_MINUS_Y = LinearFunc.getInstance(0.0, 1.0, -1.0);
 
     /**
      * An instance of {@link LinearFunc} class, describing the linear function
@@ -149,7 +149,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final LinearFunc Y_MINUS_X = LinearFunc.getInstance(0.0, -1.0, 1.0);
+    LinearFunc Y_MINUS_X = LinearFunc.getInstance(0.0, -1.0, 1.0);
 
     /**
      * An instance of {@link LinearFunc} class, describing the linear function
@@ -158,7 +158,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final LinearFunc HALF_X_PLUS_Y = LinearFunc.getInstance(0.0, 0.5, 0.5);
+    LinearFunc HALF_X_PLUS_Y = LinearFunc.getInstance(0.0, 0.5, 0.5);
 
     /**
      * An instance of {@link LinearFunc} class, describing the linear function
@@ -167,7 +167,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final LinearFunc HALF_X_MINUS_Y = LinearFunc.getInstance(0.0, 0.5, -0.5);
+    LinearFunc HALF_X_MINUS_Y = LinearFunc.getInstance(0.0, 0.5, -0.5);
 
     /**
      * An instance of {@link LinearFunc} class, describing the linear function
@@ -176,7 +176,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final LinearFunc HALF_Y_MINUS_X = LinearFunc.getInstance(0.0, -0.5, 0.5);
+    LinearFunc HALF_Y_MINUS_X = LinearFunc.getInstance(0.0, -0.5, 0.5);
     /**
      * An instance of {@link LinearFunc} class, describing the linear function
      * 1.0 - <i>x</i><sub>0</sub>:
@@ -185,7 +185,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final LinearFunc REVERSE = LinearFunc.getInstance(1.0, -1.0);
+    LinearFunc REVERSE = LinearFunc.getInstance(1.0, -1.0);
 
     /**
      * Select function:
@@ -197,7 +197,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final Func SELECT = new SelectFunc();
+    Func SELECT = new SelectFunc();
 
     /**
      * Select function:
@@ -218,7 +218,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final Func SELECT_IF_GREATER = new SelectIfGreaterFunc();
+    Func SELECT_IF_GREATER = new SelectIfGreaterFunc();
 
     /**
      * Select function:
@@ -239,7 +239,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final Func SELECT_IF_GREATER_OR_EQUAL = new SelectIfGreaterOrEqualFunc();
+    Func SELECT_IF_GREATER_OR_EQUAL = new SelectIfGreaterOrEqualFunc();
 
     /**
      * Selecting from 8 "integer" directions on 2D plane:
@@ -272,7 +272,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
-    public static final Func SELECT_FROM_8_DIRECTIONS_2D = new SelectFrom8Directions2DFunc();
+    Func SELECT_FROM_8_DIRECTIONS_2D = new SelectFrom8Directions2DFunc();
 
     /**
      * Vectors, corresponding to 8 directions recognized by {@link #SELECT_FROM_8_DIRECTIONS_2D} function.
@@ -293,7 +293,7 @@ public interface Func {
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify it.
      */
-    public static List<IPoint> SHIFTS_ALONG_8_DIRECTIONS_2D = Collections.unmodifiableList(
+    List<IPoint> SHIFTS_ALONG_8_DIRECTIONS_2D = Collections.unmodifiableList(
         java.util.Arrays.asList(
             IPoint.valueOf(1, 0),
             IPoint.valueOf(1, 1),
@@ -317,7 +317,7 @@ public interface Func {
      * always <b>thread-safe</b>: <tt>get</tt> and <tt>set</tt> methods of this interface may be freely used
      * while simultaneous accessing the same instance from several threads.</p>
      */
-    public interface Updatable extends Func {
+    interface Updatable extends Func {
         /**
          * Correct some of <tt>x</tt> arguments so that
          * {@link #get get(x)} will be, as possible, equal to <tt>newResult</tt>.
@@ -335,7 +335,7 @@ public interface Func {
          * @throws IndexOutOfBoundsException may be thrown if the length of <tt>x</tt> array is less
          *                                   than the required number of this function arguments.
          */
-        public void set(double[] x, double newResult);
+        void set(double[] x, double newResult);
     }
 
     /**
@@ -349,7 +349,7 @@ public interface Func {
      * @throws IndexOutOfBoundsException may be thrown if the number of passed arguments is less
      *                                   than the required number of this function arguments.
      */
-    public double get(double ...x);
+    double get(double ...x);
 
     /**
      * Equivalent to <tt>{@link #get(double...) get}(new double[0])</tt>.
@@ -358,7 +358,7 @@ public interface Func {
      * @return   the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 1 argument.
      */
-    public double get();
+    double get();
 
     /**
      * Equivalent to <tt>{@link #get(double...) get}(new double[] {x0})</tt>.
@@ -368,7 +368,7 @@ public interface Func {
      * @return   the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 2 arguments.
      */
-    public double get(double x0);
+    double get(double x0);
 
     /**
      * Equivalent to <tt>{@link #get(double...) get}(new double[] {x0, x1})</tt>.
@@ -379,7 +379,7 @@ public interface Func {
      * @return   the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 3 arguments.
      */
-    public double get(double x0, double x1);
+    double get(double x0, double x1);
 
     /**
      * Equivalent to <tt>{@link #get(double...) get}(new double[] {x0, x1, x2})</tt>.
@@ -391,7 +391,7 @@ public interface Func {
      * @return   the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 4 arguments.
      */
-    public double get(double x0, double x1, double x2);
+    double get(double x0, double x1, double x2);
 
     /**
      * Equivalent to <tt>{@link #get(double...) get}(new double[] {x0, x1, x2, x3})</tt>.
@@ -404,5 +404,5 @@ public interface Func {
      * @return   the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 5 arguments.
      */
-    public double get(double x0, double x1, double x2, double x3);
+    double get(double x0, double x1, double x2, double x3);
 }

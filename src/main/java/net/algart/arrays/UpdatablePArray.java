@@ -50,7 +50,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      * @see #getDouble(long)
      */
-    public void setDouble(long index, double value);
+    void setDouble(long index, double value);
 
     /**
      * Sets the element #<tt>index</tt> by convertion from <tt>long</tt>,
@@ -64,7 +64,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      * @see PFixedArray#getLong(long)
      */
-    public void setLong(long index, long value);
+    void setLong(long index, long value);
 
     /**
      * Equivalent to {@link #setLong(long, long) setLong(index, (long)value)},
@@ -75,7 +75,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      * @see PFixedArray#getInt(long)
      */
-    public void setInt(long index, int value);
+    void setInt(long index, int value);
 
     /**
      * Fills all elements of this array with the specified value. Equivalent to
@@ -86,7 +86,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * @see #fill(long, long, double)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatablePArray fill(double value);
+    UpdatablePArray fill(double value);
 
     /**
      * Fills <tt>count</tt> elements of this array, starting from <tt>position</tt> index,
@@ -106,7 +106,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * @see #fill(double)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatablePArray fill(long position, long count, double value);
+    UpdatablePArray fill(long position, long count, double value);
 
     /**
      * Fills all elements of this array by the specified value. Equivalent to
@@ -117,7 +117,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * @see #fill(long, long, long)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatablePArray fill(long value);
+    UpdatablePArray fill(long value);
 
     /**
      * Fills <tt>count</tt> elements of this array, starting from <tt>position</tt> index,
@@ -137,13 +137,17 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * @see #fill(long)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatablePArray fill(long position, long count, long value);
+    UpdatablePArray fill(long position, long count, long value);
 
-    public Class<? extends UpdatablePArray> updatableType();
+    Class<? extends UpdatablePArray> updatableType();
 
-    public UpdatablePArray subArray(long fromIndex, long toIndex);
+    UpdatablePArray subArray(long fromIndex, long toIndex);
 
-    public UpdatablePArray subArr(long position, long count);
+    UpdatablePArray subArr(long position, long count);
 
-    public UpdatablePArray asUnresizable();
+    UpdatablePArray asUnresizable();
+
+    default Matrix<? extends UpdatablePArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 }

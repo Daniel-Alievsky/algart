@@ -73,7 +73,7 @@ public interface PArray extends Array {
      * @return the number of bytes occupied by every element of this array, or -1 if it cannot be determined.
      * @see Arrays#bitsPerElement(Class)
      */
-    public long bitsPerElement();
+    long bitsPerElement();
 
     /**
      * Returns 0 for {@link BitArray}, {@link ByteArray}, {@link CharArray} and {@link ShortArray},
@@ -92,7 +92,7 @@ public interface PArray extends Array {
      *                              if it is a fixed-point array, or the argument for floating-point arrays.
      * @see PFixedArray#minPossibleValue()
      */
-    public double minPossibleValue(double valueForFloatingPoint);
+    double minPossibleValue(double valueForFloatingPoint);
 
     /**
      * Returns 1 for {@link BitArray},
@@ -113,7 +113,7 @@ public interface PArray extends Array {
      *                              if it is a fixed-point array, or the argument for floating-point arrays.
      * @see PFixedArray#maxPossibleValue()
      */
-    public double maxPossibleValue(double valueForFloatingPoint);
+    double maxPossibleValue(double valueForFloatingPoint);
 
     /**
      * Returns the element #<tt>index</tt> converted to <tt>double</tt>:
@@ -131,7 +131,7 @@ public interface PArray extends Array {
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      * @see UpdatablePArray#setDouble(long, double)
      */
-    public double getDouble(long index);
+    double getDouble(long index);
 
     /**
      * Returns the minimal index <tt>k</tt>, so that
@@ -153,7 +153,7 @@ public interface PArray extends Array {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long indexOf(long lowIndex, long highIndex, double value);
+    long indexOf(long lowIndex, long highIndex, double value);
 
     /**
      * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
@@ -175,7 +175,7 @@ public interface PArray extends Array {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long lastIndexOf(long lowIndex, long highIndex, double value);
+    long lastIndexOf(long lowIndex, long highIndex, double value);
 
     /**
      * Returns <tt>true</tt> if all elements of this array are zero
@@ -191,21 +191,21 @@ public interface PArray extends Array {
      *
      * @return <tt>true</tt> if and only if all elements of this array are zero, or if this array is empty.
      */
-    public boolean isZeroFilled();
+    boolean isZeroFilled();
 
-    public Class<? extends PArray> type();
+    Class<? extends PArray> type();
 
-    public Class<? extends UpdatablePArray> updatableType();
+    Class<? extends UpdatablePArray> updatableType();
 
-    public Class<? extends MutablePArray> mutableType();
+    Class<? extends MutablePArray> mutableType();
 
-    public PArray asImmutable();
+    PArray asImmutable();
 
-    public PArray asTrustedImmutable();
+    PArray asTrustedImmutable();
 
-    public MutablePArray mutableClone(MemoryModel memoryModel);
+    MutablePArray mutableClone(MemoryModel memoryModel);
 
-    public UpdatablePArray updatableClone(MemoryModel memoryModel);
+    UpdatablePArray updatableClone(MemoryModel memoryModel);
 
     @Override
     default Matrix<? extends PArray> matrix(long... dim) {

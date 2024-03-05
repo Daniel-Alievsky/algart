@@ -42,11 +42,11 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface BitArray extends PFixedArray {
-    public Class<? extends BitArray> type();
+    Class<? extends BitArray> type();
 
-    public Class<? extends UpdatableBitArray> updatableType();
+    Class<? extends UpdatableBitArray> updatableType();
 
-    public Class<? extends MutableBitArray> mutableType();
+    Class<? extends MutableBitArray> mutableType();
 
     /**
      * Returns the element #<tt>index</tt>.
@@ -55,7 +55,7 @@ public interface BitArray extends PFixedArray {
      * @return      the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public boolean getBit(long index);
+    boolean getBit(long index);
 
     /**
      * Returns the minimal index <tt>k</tt>, so that
@@ -77,7 +77,7 @@ public interface BitArray extends PFixedArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long indexOf(long lowIndex, long highIndex, boolean value);
+    long indexOf(long lowIndex, long highIndex, boolean value);
 
     /**
      * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
@@ -99,23 +99,23 @@ public interface BitArray extends PFixedArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long lastIndexOf(long lowIndex, long highIndex, boolean value);
+    long lastIndexOf(long lowIndex, long highIndex, boolean value);
 
-    public DataBitBuffer buffer(DataBuffer.AccessMode mode, long capacity);
+    DataBitBuffer buffer(DataBuffer.AccessMode mode, long capacity);
 
-    public DataBitBuffer buffer(DataBuffer.AccessMode mode);
+    DataBitBuffer buffer(DataBuffer.AccessMode mode);
 
-    public DataBitBuffer buffer(long capacity);
+    DataBitBuffer buffer(long capacity);
 
-    public DataBitBuffer buffer();
+    DataBitBuffer buffer();
 
-    public BitArray asImmutable();
+    BitArray asImmutable();
 
-    public BitArray asTrustedImmutable();
+    BitArray asTrustedImmutable();
 
-    public MutableBitArray mutableClone(MemoryModel memoryModel);
+    MutableBitArray mutableClone(MemoryModel memoryModel);
 
-    public UpdatableBitArray updatableClone(MemoryModel memoryModel);
+    UpdatableBitArray updatableClone(MemoryModel memoryModel);
 
     default Matrix<? extends BitArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
@@ -149,7 +149,7 @@ public interface BitArray extends PFixedArray {
      * @see UpdatableBitArray#setBits(long, long[], long, long)
      * @see PackedBitArrays
      */
-    public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count);
+    void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count);
 
     /**
      * Returns the minimal <tt>pos &gt;= max(position,0)</tt>, for which the calls
@@ -213,5 +213,5 @@ public interface BitArray extends PFixedArray {
      * @return         the minimal "quick" (usually "aligned") position starting from this index.
      * @see Arrays#goodStartOffsetInArrayOfLongs(BitArray, long, int)
      */
-    public long nextQuickPosition(long position);
+    long nextQuickPosition(long position);
 }

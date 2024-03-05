@@ -81,7 +81,7 @@ public interface Array {
      * @return the type of array elements.
      * @see Arrays#elementType(Class)
      */
-    public Class<?> elementType();
+    Class<?> elementType();
 
     /**
      * Returns the <i>canonical AlgART type</i> of this array: the class of one of 9 basic interfaces,
@@ -103,7 +103,7 @@ public interface Array {
      *
      * @return canonical AlgART type of this array.
      */
-    public Class<? extends Array> type();
+    Class<? extends Array> type();
 
     /**
      * Returns the <i>canonical updatable AlgART type</i> of arrays with the same element types:
@@ -126,7 +126,7 @@ public interface Array {
      *
      * @return canonical AlgART type of an updatable array of the same kind.
      */
-    public Class<? extends UpdatableArray> updatableType();
+    Class<? extends UpdatableArray> updatableType();
 
     /**
      * Returns the <i>canonical resizable AlgART type</i> of arrays with the same element types:
@@ -149,7 +149,7 @@ public interface Array {
      *
      * @return canonical AlgART type of a resizable array of the same kind.
      */
-    public Class<? extends MutableArray> mutableType();
+    Class<? extends MutableArray> mutableType();
 
     /**
      * Returns the length: number of elements in this array.
@@ -160,14 +160,14 @@ public interface Array {
      *
      * @return the length: number of elements in this array.
      */
-    public long length();
+    long length();
 
     /**
      * Equivalent to the call <tt>{@link #length() length}() == 0</tt>.
      *
      * @return <tt>true</tt> if the array is empty, i.e. its length is zero.
      */
-    public default boolean isEmpty() {
+    default boolean isEmpty() {
         return length() == 0;
     }
 
@@ -184,7 +184,7 @@ public interface Array {
      *
      * @return the capacity of this array.
      */
-    public long capacity();
+    long capacity();
 
     /**
      * Returns the element #<tt>index</tt>.
@@ -210,7 +210,7 @@ public interface Array {
      * @return the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public Object getElement(long index);
+    Object getElement(long index);
 
     /**
      * Copies <tt>count</tt> elements of this array, starting from <tt>arrayPos</tt> index,
@@ -246,7 +246,7 @@ public interface Array {
      * @see UpdatableArray#setData(long, Object, int, int)
      * @see BitArray#getBits(long, long[], long, long)
      */
-    public void getData(long arrayPos, Object destArray, int destArrayOffset, int count);
+    void getData(long arrayPos, Object destArray, int destArrayOffset, int count);
 
     /**
      * Copies <tt>min(this.{@link #length() length() - arrayPos}, destArray.length})</tt>
@@ -274,7 +274,7 @@ public interface Array {
      * @see #getData(long, Object, int, int)
      * @see UpdatableArray#setData(long, Object)
      */
-    public void getData(long arrayPos, Object destArray);
+    void getData(long arrayPos, Object destArray);
 
     /**
      * Returns usual Java-array (zero-filled) with the specified length
@@ -291,7 +291,7 @@ public interface Array {
      * @return Java-array with the specified length and the same type of elements.
      * @throws NegativeArraySizeException if the specified <tt>length</tt> is negative.
      */
-    public Object newJavaArray(int length);
+    Object newJavaArray(int length);
 
     /**
      * Returns a view of the portion of this array between <tt>fromIndex</tt>,
@@ -343,7 +343,7 @@ public interface Array {
      *                                   || fromIndex &gt; toIndex</tt>).
      * @see #subArr(long, long)
      */
-    public Array subArray(long fromIndex, long toIndex);
+    Array subArray(long fromIndex, long toIndex);
 
     /**
      * Equivalent to {@link #subArray(long, long) subArray(position, position + count)}.
@@ -360,7 +360,7 @@ public interface Array {
      *                                   || position + count &gt; {@link #length()}</tt>).
      * @see #subArray(long, long)
      */
-    public Array subArr(long position, long count);
+    Array subArr(long position, long count);
 
     /**
      * Returns a {@link DataBuffer data buffer} allowing block access to this array
@@ -389,7 +389,7 @@ public interface Array {
      * @see #buffer(long)
      * @see #buffer()
      */
-    public DataBuffer buffer(DataBuffer.AccessMode mode, long capacity);
+    DataBuffer buffer(DataBuffer.AccessMode mode, long capacity);
 
     /**
      * Equivalent to {@link #buffer(net.algart.arrays.DataBuffer.AccessMode, long)
@@ -406,7 +406,7 @@ public interface Array {
      * @throws IllegalArgumentException if the <tt>mode</tt> is not the {@link DataBuffer.AccessMode#READ},
      *                                  but this arrays does not implement {@link UpdatableArray} interface.
      */
-    public DataBuffer buffer(DataBuffer.AccessMode mode);
+    DataBuffer buffer(DataBuffer.AccessMode mode);
 
     /**
      * Equivalent to {@link #buffer(net.algart.arrays.DataBuffer.AccessMode, long)
@@ -424,7 +424,7 @@ public interface Array {
      *                                  (&gt;=0..2<sup>37</sup> for bits or &gt;=0..2<sup>31</sup> for
      *                                  other element types).
      */
-    public DataBuffer buffer(long capacity);
+    DataBuffer buffer(long capacity);
 
     /**
      * Equivalent to {@link #buffer(net.algart.arrays.DataBuffer.AccessMode, long)
@@ -436,7 +436,7 @@ public interface Array {
      *
      * @return new data buffer for accessing this array.
      */
-    public DataBuffer buffer();
+    DataBuffer buffer();
 
     /**
      * Returns an <i>immutable</i> view of this array.
@@ -448,7 +448,7 @@ public interface Array {
      * In particular, immutable arrays never
      * implement {@link UpdatableArray} or {@link DirectAccessible} interfaces.
      * Moreover, any third-party implementation of <tt>Array</tt> interface
-     * <i>must</i> return an instance of a class, which has no public methods or fields
+     * <i>must</i> return an instance of a class, which has no methods or fields
      * allowing to change this instance.
      *
      * <p>Query operations on the returned array "read through"
@@ -496,7 +496,7 @@ public interface Array {
      * @see #updatableClone(MemoryModel)
      * @see UpdatableArray#asUnresizable()
      */
-    public Array asImmutable();
+    Array asImmutable();
 
     /**
      * Returns <tt>true</tt> if this instance is <i>immutable</i>, i&#46;e&#46; there are no ways to
@@ -539,7 +539,7 @@ public interface Array {
      * @return <tt>true</tt> if this instance is immutable.
      * @see #asImmutable()
      */
-    public boolean isImmutable();
+    boolean isImmutable();
 
     /**
      * Returns a <i>trusted immutable</i> view of this array.
@@ -592,7 +592,7 @@ public interface Array {
      * @see #asImmutable()
      * @see #checkUnallowedMutation()
      */
-    public Array asTrustedImmutable();
+    Array asTrustedImmutable();
 
     /**
      * Tries to check, whether some unallowed mutations of this {@link #asTrustedImmutable()
@@ -613,7 +613,7 @@ public interface Array {
      * final Array dup = thisArray.shallowClone();
      * // - must be here, not inside the following inner class, to allow deallocation of thisArray
      * fin.invokeOnDeallocation(thisArray, new Runnable() {
-     * &#32;   public void run() {
+     * &#32;   void run() {
      * &#32;       try {
      * &#32;           dup.checkUnallowedMutation();
      * &#32;       } catch (UnallowedMutationError ex) {
@@ -630,7 +630,7 @@ public interface Array {
      * @throws UnallowedMutationError if some unallowed mutations of this array took place.
      * @see #asTrustedImmutable()
      */
-    public void checkUnallowedMutation() throws UnallowedMutationError;
+    void checkUnallowedMutation() throws UnallowedMutationError;
 
     /**
      * Returns a <i>copy-on-next-write</i> view of this array.
@@ -693,7 +693,7 @@ public interface Array {
      * @see MemoryModel#newLazyCopy(Array)
      * @see MemoryModel#newUnresizableLazyCopy(Array)
      */
-    public Array asCopyOnNextWrite();
+    Array asCopyOnNextWrite();
 
     /**
      * Returns <tt>true</tt> if this array is copy-on-next-write.
@@ -722,7 +722,7 @@ public interface Array {
      * @return <tt>true</tt> if this array is copy-on-next-write.
      * @see #asCopyOnNextWrite()
      */
-    public boolean isCopyOnNextWrite();
+    boolean isCopyOnNextWrite();
 
     /**
      * Returns <tt>true</tt> if this instance is unresizable, i&#46;e&#46; there are no ways to
@@ -745,7 +745,7 @@ public interface Array {
      * @return <tt>true</tt> if this instance is unresizable.
      * @see UpdatableArray#asUnresizable()
      */
-    public boolean isUnresizable();
+    boolean isUnresizable();
 
     /**
      * Returns <tt>true</tt> if this array instance is <i>new</i>, i&#46;e&#46; it was created
@@ -797,7 +797,7 @@ public interface Array {
      * @return whether this array instance is <i>new</i>: a new object, allocated by some {@link MemoryModel}.
      * @see #isNewReadOnlyView()
      */
-    public boolean isNew();
+    boolean isNew();
 
     /**
      * Returns <tt>true</tt> if this array instance is <i>new-read-only-view</i>, i&#46;e&#46;
@@ -833,7 +833,7 @@ public interface Array {
      *
      * <p><i>New-read-only-view</i> status, returned by this method,
      * is final and cannot be changed after instantiation of the instance.
-     * (More precisely, there are no public methods, allowing to change it after finishing
+     * (More precisely, there are no methods, allowing to change it after finishing
      * the method, which has created a new array instance.)
      * Note that in updatable arrays, implementing {@link UpdatableArray}
      * interface, this method returns <tt>false</tt> always.
@@ -895,7 +895,7 @@ public interface Array {
      * @return whether this array instance is a newly created <i>view</i> of some
      * external data, providing <i>read-only</i> access to this data.
      */
-    public boolean isNewReadOnlyView();
+    boolean isNewReadOnlyView();
 
     /**
      * Returns <tt>true</tt> if this array instance is <i>lazy</i>, i&#46;e&#46;
@@ -915,7 +915,7 @@ public interface Array {
      *
      * @return whether this array instance if <i>lazy</i>.
      */
-    public boolean isLazy();
+    boolean isLazy();
 
     /**
      * Returns the byte order used by this array for storing data.
@@ -942,7 +942,7 @@ public interface Array {
      *
      * @return the byte order used by this array for storing data.
      */
-    public ByteOrder byteOrder();
+    ByteOrder byteOrder();
 
     /**
      * Returns a "shallow" clone of this object:
@@ -995,7 +995,7 @@ public interface Array {
      * @see DirectAccessible#javaArrayOffset()
      * @see #isCopyOnNextWrite()
      */
-    public Array shallowClone();
+    Array shallowClone();
 
     /**
      * Returns a mutable resizable copy of this array. This method is equivalent to the following code:
@@ -1025,7 +1025,7 @@ public interface Array {
      *                                         for this the specified memory model.
      * @see #updatableClone(MemoryModel)
      */
-    public MutableArray mutableClone(MemoryModel memoryModel);
+    MutableArray mutableClone(MemoryModel memoryModel);
 
     /**
      * Returns an unresizable updatable copy of this array.
@@ -1056,7 +1056,7 @@ public interface Array {
      *                                         for this the specified memory model.
      * @see #mutableClone(MemoryModel)
      */
-    public UpdatableArray updatableClone(MemoryModel memoryModel);
+    UpdatableArray updatableClone(MemoryModel memoryModel);
 
     /**
      * Equivalent to <tt>{@link Matrices#matrix(Array, long[]) matrix}(thisArray, dim)</tt>.
@@ -1126,7 +1126,7 @@ public interface Array {
      * @see #flushResources(ArrayContext)
      * @see #flushResources(ArrayContext, boolean)
      */
-    public void loadResources(ArrayContext context);
+    void loadResources(ArrayContext context);
 
     /**
      * Equivalent to <tt>{@link #flushResources(ArrayContext, boolean) flushResources}(context, false)</tt>.
@@ -1136,7 +1136,7 @@ public interface Array {
      * @see #loadResources(ArrayContext)
      * @see #freeResources(ArrayContext)
      */
-    public void flushResources(ArrayContext context);
+    void flushResources(ArrayContext context);
 
     /**
      * If there are some external resources, associated with this array, &mdash;
@@ -1222,7 +1222,7 @@ public interface Array {
      * @see #flushResources(ArrayContext)
      * @see #freeResources(ArrayContext, boolean)
      */
-    public void flushResources(ArrayContext context, boolean forcePhysicalWriting);
+    void flushResources(ArrayContext context, boolean forcePhysicalWriting);
 
     /**
      * Equivalent to <tt>{@link #freeResources(ArrayContext, boolean) freeResources}(context, false)</tt>.
@@ -1232,7 +1232,7 @@ public interface Array {
      * @see #loadResources(ArrayContext)
      * @see #flushResources(ArrayContext)
      */
-    public void freeResources(ArrayContext context);
+    void freeResources(ArrayContext context);
 
     /**
      * If there are some resources, associated with this array, which are not controlled
@@ -1333,7 +1333,7 @@ public interface Array {
      * @see #freeResources(ArrayContext)
      * @see Arrays#freeAllResources()
      */
-    public void freeResources(ArrayContext context, boolean forcePhysicalWriting);
+    void freeResources(ArrayContext context, boolean forcePhysicalWriting);
 
     /**
      * Returns a brief string description of this object.
@@ -1349,7 +1349,7 @@ public interface Array {
      *
      * @return a brief string description of this object.
      */
-    public String toString();
+    String toString();
 
     /**
      * Returns the hash code of this array. The result depends on all elements of the array
@@ -1396,5 +1396,5 @@ public interface Array {
      * @param obj the object to be compared for equality with this array.
      * @return <tt>true</tt> if the specified object is an array equal to this one.
      */
-    public boolean equals(Object obj);
+    boolean equals(Object obj);
 }

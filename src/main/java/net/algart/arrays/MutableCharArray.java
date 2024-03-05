@@ -35,25 +35,25 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface MutableCharArray extends CharStack, UpdatableCharArray, MutablePFixedArray {
-    public MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutableCharArray setData(long arrayPos, Object srcArray);
+    MutableCharArray setData(long arrayPos, Object srcArray);
 
-    public MutableCharArray copy(Array src);
+    MutableCharArray copy(Array src);
 
-    public MutableCharArray swap(UpdatableArray another);
+    MutableCharArray swap(UpdatableArray another);
 
-    public MutableCharArray length(long newLength);
+    MutableCharArray length(long newLength);
 
-    public MutableCharArray ensureCapacity(long minCapacity);
+    MutableCharArray ensureCapacity(long minCapacity);
 
-    public MutableCharArray trim();
+    MutableCharArray trim();
 
-    public MutableCharArray append(Array appendedArray);
+    MutableCharArray append(Array appendedArray);
 
-    public MutableCharArray asCopyOnNextWrite();
+    MutableCharArray asCopyOnNextWrite();
 
-    public MutableCharArray shallowClone();
+    MutableCharArray shallowClone();
     /*Repeat.IncludeEnd*/
 
     /**
@@ -62,5 +62,5 @@ public interface MutableCharArray extends CharStack, UpdatableCharArray, Mutable
      * @return      a reference to this object.
      * @throws TooLargeArrayException if the resulting array length is too large for this type of arrays.
      */
-    public MutableCharArray append(String value);
+    MutableCharArray append(String value);
 }

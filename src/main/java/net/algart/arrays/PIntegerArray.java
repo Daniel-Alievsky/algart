@@ -35,19 +35,19 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface PIntegerArray extends PFixedArray, PNumberArray {
-    public Class<? extends PIntegerArray> type();
+    Class<? extends PIntegerArray> type();
 
-    public Class<? extends UpdatablePIntegerArray> updatableType();
+    Class<? extends UpdatablePIntegerArray> updatableType();
 
-    public Class<? extends MutablePIntegerArray> mutableType();
+    Class<? extends MutablePIntegerArray> mutableType();
 
-    public PIntegerArray asImmutable();
+    PIntegerArray asImmutable();
 
-    public PIntegerArray asTrustedImmutable();
+    PIntegerArray asTrustedImmutable();
 
-    public MutablePIntegerArray mutableClone(MemoryModel memoryModel);
+    MutablePIntegerArray mutableClone(MemoryModel memoryModel);
 
-    public UpdatablePIntegerArray updatableClone(MemoryModel memoryModel);
+    UpdatablePIntegerArray updatableClone(MemoryModel memoryModel);
 
     default Matrix<? extends PIntegerArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

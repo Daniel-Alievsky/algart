@@ -41,7 +41,7 @@ public interface UpdatableDoubleArray extends DoubleArray, UpdatablePFloatingArr
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public void setDouble(long index, double value);
+    void setDouble(long index, double value);
 
     /**
      * Fills all elements of this array by the specified value. Equivalent to
@@ -52,7 +52,7 @@ public interface UpdatableDoubleArray extends DoubleArray, UpdatablePFloatingArr
      * @see #fill(long, long, double)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableDoubleArray fill(double value);
+    UpdatableDoubleArray fill(double value);
 
     /**
      * Fills <tt>count</tt> elements of this array, starting from <tt>position</tt> index,
@@ -72,13 +72,13 @@ public interface UpdatableDoubleArray extends DoubleArray, UpdatablePFloatingArr
      * @see #fill(double)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableDoubleArray fill(long position, long count, double value);
+    UpdatableDoubleArray fill(long position, long count, double value);
 
-    public UpdatableDoubleArray subArray(long fromIndex, long toIndex);
+    UpdatableDoubleArray subArray(long fromIndex, long toIndex);
 
-    public UpdatableDoubleArray subArr(long position, long count);
+    UpdatableDoubleArray subArr(long position, long count);
 
-    public UpdatableDoubleArray asUnresizable();
+    UpdatableDoubleArray asUnresizable();
 
     default Matrix<UpdatableDoubleArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

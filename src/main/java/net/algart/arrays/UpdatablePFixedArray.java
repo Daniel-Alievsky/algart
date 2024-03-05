@@ -38,11 +38,11 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface UpdatablePFixedArray extends PFixedArray, UpdatablePArray {
-    public UpdatablePFixedArray subArray(long fromIndex, long toIndex);
+    UpdatablePFixedArray subArray(long fromIndex, long toIndex);
 
-    public UpdatablePFixedArray subArr(long position, long count);
+    UpdatablePFixedArray subArr(long position, long count);
 
-    public UpdatablePFixedArray asUnresizable();
+    UpdatablePFixedArray asUnresizable();
 
     default Matrix<? extends UpdatablePFixedArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

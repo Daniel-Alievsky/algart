@@ -37,11 +37,11 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface ShortArray extends PIntegerArray {
-    public Class<? extends ShortArray> type();
+    Class<? extends ShortArray> type();
 
-    public Class<? extends UpdatableShortArray> updatableType();
+    Class<? extends UpdatableShortArray> updatableType();
 
-    public Class<? extends MutableShortArray> mutableType();
+    Class<? extends MutableShortArray> mutableType();
 
     /**
      * Returns the unsigned short (char) #<tt>index</tt>.
@@ -50,7 +50,7 @@ public interface ShortArray extends PIntegerArray {
      * @return      the unsigned short (char) at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public int getShort(long index);
+    int getShort(long index);
 
     /**
      * Returns the minimal index <tt>k</tt>, so that
@@ -72,7 +72,7 @@ public interface ShortArray extends PIntegerArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long indexOf(long lowIndex, long highIndex, short value);
+    long indexOf(long lowIndex, long highIndex, short value);
 
     /**
      * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
@@ -94,23 +94,23 @@ public interface ShortArray extends PIntegerArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long lastIndexOf(long lowIndex, long highIndex, short value);
+    long lastIndexOf(long lowIndex, long highIndex, short value);
 
-    public DataShortBuffer buffer(DataBuffer.AccessMode mode, long capacity);
+    DataShortBuffer buffer(DataBuffer.AccessMode mode, long capacity);
 
-    public DataShortBuffer buffer(DataBuffer.AccessMode mode);
+    DataShortBuffer buffer(DataBuffer.AccessMode mode);
 
-    public DataShortBuffer buffer(long capacity);
+    DataShortBuffer buffer(long capacity);
 
-    public DataShortBuffer buffer();
+    DataShortBuffer buffer();
 
-    public ShortArray asImmutable();
+    ShortArray asImmutable();
 
-    public ShortArray asTrustedImmutable();
+    ShortArray asTrustedImmutable();
 
-    public MutableShortArray mutableClone(MemoryModel memoryModel);
+    MutableShortArray mutableClone(MemoryModel memoryModel);
 
-    public UpdatableShortArray updatableClone(MemoryModel memoryModel);
+    UpdatableShortArray updatableClone(MemoryModel memoryModel);
 
     default Matrix<? extends ShortArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

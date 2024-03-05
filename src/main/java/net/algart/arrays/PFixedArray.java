@@ -49,7 +49,7 @@ public interface PFixedArray extends PArray {
      * @return the minimal possible value, that can stored in elements of this array.
      * @see PArray#minPossibleValue(double)
      */
-    public long minPossibleValue();
+    long minPossibleValue();
 
     /**
      * Returns 1 for {@link BitArray},
@@ -67,7 +67,7 @@ public interface PFixedArray extends PArray {
      * @return the maximal possible value, that can stored in elements of this array.
      * @see PArray#maxPossibleValue(double)
      */
-    public long maxPossibleValue();
+    long maxPossibleValue();
 
     /**
      * Returns the element #<tt>index</tt> converted to <tt>long</tt>:
@@ -85,7 +85,7 @@ public interface PFixedArray extends PArray {
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      * @see UpdatablePArray#setLong(long, long)
      */
-    public long getLong(long index);
+    long getLong(long index);
 
     /**
      * Returns the element #<tt>index</tt> converted to <tt>int</tt>:
@@ -106,7 +106,7 @@ public interface PFixedArray extends PArray {
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      * @see UpdatablePArray#setInt(long, int)
      */
-    public int getInt(long index);
+    int getInt(long index);
 
     /**
      * Returns the minimal index <tt>k</tt>, so that
@@ -128,7 +128,7 @@ public interface PFixedArray extends PArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long indexOf(long lowIndex, long highIndex, long value);
+    long indexOf(long lowIndex, long highIndex, long value);
 
     /**
      * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
@@ -150,15 +150,15 @@ public interface PFixedArray extends PArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long lastIndexOf(long lowIndex, long highIndex, long value);
+    long lastIndexOf(long lowIndex, long highIndex, long value);
 
-    public PFixedArray asImmutable();
+    PFixedArray asImmutable();
 
-    public PFixedArray asTrustedImmutable();
+    PFixedArray asTrustedImmutable();
 
-    public MutablePFixedArray mutableClone(MemoryModel memoryModel);
+    MutablePFixedArray mutableClone(MemoryModel memoryModel);
 
-    public UpdatablePFixedArray updatableClone(MemoryModel memoryModel);
+    UpdatablePFixedArray updatableClone(MemoryModel memoryModel);
 
     default Matrix<? extends PFixedArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

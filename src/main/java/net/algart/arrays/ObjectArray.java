@@ -37,13 +37,13 @@ package net.algart.arrays;
  */
 public interface ObjectArray<E> extends Array {
 
-    public Class<E> elementType();
+    Class<E> elementType();
 
-    public Class<? extends ObjectArray<E>> type();
+    Class<? extends ObjectArray<E>> type();
 
-    public Class<? extends UpdatableObjectArray<E>> updatableType();
+    Class<? extends UpdatableObjectArray<E>> updatableType();
 
-    public Class<? extends MutableObjectArray<E>> mutableType();
+    Class<? extends MutableObjectArray<E>> mutableType();
 
     /**
      * Equivalent to {@link #getElement(long) getElement(index)}.
@@ -52,7 +52,7 @@ public interface ObjectArray<E> extends Array {
      * @return      the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public E get(long index);
+    E get(long index);
 
     /**
      * Returns the minimal index <tt>k</tt>, so that
@@ -77,7 +77,7 @@ public interface ObjectArray<E> extends Array {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long indexOf(long lowIndex, long highIndex, E value);
+    long indexOf(long lowIndex, long highIndex, E value);
 
 
     /**
@@ -103,7 +103,7 @@ public interface ObjectArray<E> extends Array {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long lastIndexOf(long lowIndex, long highIndex, E value);
+    long lastIndexOf(long lowIndex, long highIndex, E value);
 
     /**
      * Returns this array cast to the specified generic element type
@@ -121,7 +121,7 @@ public interface ObjectArray<E> extends Array {
      * @throws NullPointerException if the argument is <tt>null</tt>.
      * @throws ClassCastException   if the elements cannot be cast to the required type.
      */
-    public <D> ObjectArray<D> cast(Class<D> elementType);
+    <D> ObjectArray<D> cast(Class<D> elementType);
 
     /*Repeat(INCLUDE_FROM_FILE, FloatArray.java, resultTypes)
       Float(?!ing) ==> Object ;;
@@ -129,21 +129,21 @@ public interface ObjectArray<E> extends Array {
       ObjectArray ==> ObjectArray<E> ;;
       DataObjectBuffer ==> DataObjectBuffer<E>
          !! Auto-generated: NOT EDIT !! */
-    public DataObjectBuffer<E> buffer(DataBuffer.AccessMode mode, long capacity);
+    DataObjectBuffer<E> buffer(DataBuffer.AccessMode mode, long capacity);
 
-    public DataObjectBuffer<E> buffer(DataBuffer.AccessMode mode);
+    DataObjectBuffer<E> buffer(DataBuffer.AccessMode mode);
 
-    public DataObjectBuffer<E> buffer(long capacity);
+    DataObjectBuffer<E> buffer(long capacity);
 
-    public DataObjectBuffer<E> buffer();
+    DataObjectBuffer<E> buffer();
 
-    public ObjectArray<E> asImmutable();
+    ObjectArray<E> asImmutable();
 
-    public ObjectArray<E> asTrustedImmutable();
+    ObjectArray<E> asTrustedImmutable();
 
-    public MutableObjectArray<E> mutableClone(MemoryModel memoryModel);
+    MutableObjectArray<E> mutableClone(MemoryModel memoryModel);
 
-    public UpdatableObjectArray<E> updatableClone(MemoryModel memoryModel);
+    UpdatableObjectArray<E> updatableClone(MemoryModel memoryModel);
 
     default Matrix<? extends ObjectArray<E>> matrix(long... dim) {
         return Matrices.matrix(this, dim);

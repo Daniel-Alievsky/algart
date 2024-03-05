@@ -31,11 +31,11 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface FloatArray extends PFloatingArray {
-    public Class<? extends FloatArray> type();
+    Class<? extends FloatArray> type();
 
-    public Class<? extends UpdatableFloatArray> updatableType();
+    Class<? extends UpdatableFloatArray> updatableType();
 
-    public Class<? extends MutableFloatArray> mutableType();
+    Class<? extends MutableFloatArray> mutableType();
 
     /**
      * Returns the element #<tt>index</tt>.
@@ -44,7 +44,7 @@ public interface FloatArray extends PFloatingArray {
      * @return      the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public float getFloat(long index);
+    float getFloat(long index);
 
     /**
      * Returns the minimal index <tt>k</tt>, so that
@@ -66,7 +66,7 @@ public interface FloatArray extends PFloatingArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long indexOf(long lowIndex, long highIndex, float value);
+    long indexOf(long lowIndex, long highIndex, float value);
 
     /**
      * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
@@ -88,24 +88,24 @@ public interface FloatArray extends PFloatingArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long lastIndexOf(long lowIndex, long highIndex, float value);
+    long lastIndexOf(long lowIndex, long highIndex, float value);
 
     /*Repeat.SectionStart resultTypes*/
-    public DataFloatBuffer buffer(DataBuffer.AccessMode mode, long capacity);
+    DataFloatBuffer buffer(DataBuffer.AccessMode mode, long capacity);
 
-    public DataFloatBuffer buffer(DataBuffer.AccessMode mode);
+    DataFloatBuffer buffer(DataBuffer.AccessMode mode);
 
-    public DataFloatBuffer buffer(long capacity);
+    DataFloatBuffer buffer(long capacity);
 
-    public DataFloatBuffer buffer();
+    DataFloatBuffer buffer();
 
-    public FloatArray asImmutable();
+    FloatArray asImmutable();
 
-    public FloatArray asTrustedImmutable();
+    FloatArray asTrustedImmutable();
 
-    public MutableFloatArray mutableClone(MemoryModel memoryModel);
+    MutableFloatArray mutableClone(MemoryModel memoryModel);
 
-    public UpdatableFloatArray updatableClone(MemoryModel memoryModel);
+    UpdatableFloatArray updatableClone(MemoryModel memoryModel);
 
     default Matrix<? extends FloatArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

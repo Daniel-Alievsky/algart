@@ -45,7 +45,7 @@ public interface FloatStack extends Stack {
      * @return the element at the top of this stack (it is removed from the stack by this method).
      * @throws java.util.EmptyStackException if this stack is empty.
      */
-    public float popFloat();
+    float popFloat();
 
     /**
      * Appends <tt>value</tt> element to the end of this stack.
@@ -61,6 +61,6 @@ public interface FloatStack extends Stack {
      * @param value to be added to the top of this stack.
      * @throws TooLargeArrayException if the resulting stack length is too large for this type of stacks.
      */
-    public void pushFloat(float value);
+    void pushFloat(float value);
 /*Repeat.SectionEnd all*/
 }

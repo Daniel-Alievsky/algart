@@ -42,7 +42,7 @@ public interface UpdatableByteArray extends ByteArray, UpdatablePIntegerArray {
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public void setByte(long index, byte value);
+    void setByte(long index, byte value);
 
     /**
      * Fills all elements of this array by the specified value. Equivalent to
@@ -53,7 +53,7 @@ public interface UpdatableByteArray extends ByteArray, UpdatablePIntegerArray {
      * @see #fill(long, long, byte)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableByteArray fill(byte value);
+    UpdatableByteArray fill(byte value);
 
     /**
      * Fills <tt>count</tt> elements of this array, starting from <tt>position</tt> index,
@@ -73,13 +73,13 @@ public interface UpdatableByteArray extends ByteArray, UpdatablePIntegerArray {
      * @see #fill(byte)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableByteArray fill(long position, long count, byte value);
+    UpdatableByteArray fill(long position, long count, byte value);
 
-    public UpdatableByteArray subArray(long fromIndex, long toIndex);
+    UpdatableByteArray subArray(long fromIndex, long toIndex);
 
-    public UpdatableByteArray subArr(long position, long count);
+    UpdatableByteArray subArr(long position, long count);
 
-    public UpdatableByteArray asUnresizable();
+    UpdatableByteArray asUnresizable();
 
     default Matrix<UpdatableByteArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

@@ -35,24 +35,24 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface MutableShortArray extends ShortStack, UpdatableShortArray, MutablePIntegerArray {
-    public MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutableShortArray setData(long arrayPos, Object srcArray);
+    MutableShortArray setData(long arrayPos, Object srcArray);
 
-    public MutableShortArray copy(Array src);
+    MutableShortArray copy(Array src);
 
-    public MutableShortArray swap(UpdatableArray another);
+    MutableShortArray swap(UpdatableArray another);
 
-    public MutableShortArray length(long newLength);
+    MutableShortArray length(long newLength);
 
-    public MutableShortArray ensureCapacity(long minCapacity);
+    MutableShortArray ensureCapacity(long minCapacity);
 
-    public MutableShortArray trim();
+    MutableShortArray trim();
 
-    public MutableShortArray append(Array appendedArray);
+    MutableShortArray append(Array appendedArray);
 
-    public MutableShortArray asCopyOnNextWrite();
+    MutableShortArray asCopyOnNextWrite();
 
-    public MutableShortArray shallowClone();
+    MutableShortArray shallowClone();
     /*Repeat.IncludeEnd*/
 }

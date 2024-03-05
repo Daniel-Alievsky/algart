@@ -33,23 +33,23 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface MutablePFloatingArray extends UpdatablePFloatingArray, MutablePNumberArray {
-    public MutablePFloatingArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutablePFloatingArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutablePFloatingArray setData(long arrayPos, Object srcArray);
+    MutablePFloatingArray setData(long arrayPos, Object srcArray);
 
-    public MutablePFloatingArray copy(Array src);
+    MutablePFloatingArray copy(Array src);
 
-    public MutablePFloatingArray swap(UpdatableArray another);
+    MutablePFloatingArray swap(UpdatableArray another);
 
-    public MutablePFloatingArray length(long newLength);
+    MutablePFloatingArray length(long newLength);
 
-    public MutablePFloatingArray ensureCapacity(long minCapacity);
+    MutablePFloatingArray ensureCapacity(long minCapacity);
 
-    public MutablePFloatingArray trim();
+    MutablePFloatingArray trim();
 
-    public MutablePFloatingArray append(Array appendedArray);
+    MutablePFloatingArray append(Array appendedArray);
 
-    public MutablePFloatingArray asCopyOnNextWrite();
+    MutablePFloatingArray asCopyOnNextWrite();
 
-    public MutablePFloatingArray shallowClone();
+    MutablePFloatingArray shallowClone();
 }

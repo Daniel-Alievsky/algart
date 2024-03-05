@@ -37,23 +37,23 @@ package net.algart.arrays;
 public interface MutablePIntegerArray
     extends UpdatablePIntegerArray, MutablePFixedArray, MutablePNumberArray
 {
-    public MutablePIntegerArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutablePIntegerArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutablePIntegerArray setData(long arrayPos, Object srcArray);
+    MutablePIntegerArray setData(long arrayPos, Object srcArray);
 
-    public MutablePIntegerArray copy(Array src);
+    MutablePIntegerArray copy(Array src);
 
-    public MutablePIntegerArray swap(UpdatableArray another);
+    MutablePIntegerArray swap(UpdatableArray another);
 
-    public MutablePIntegerArray length(long newLength);
+    MutablePIntegerArray length(long newLength);
 
-    public MutablePIntegerArray ensureCapacity(long minCapacity);
+    MutablePIntegerArray ensureCapacity(long minCapacity);
 
-    public MutablePIntegerArray trim();
+    MutablePIntegerArray trim();
 
-    public MutablePIntegerArray append(Array appendedArray);
+    MutablePIntegerArray append(Array appendedArray);
 
-    public MutablePIntegerArray asCopyOnNextWrite();
+    MutablePIntegerArray asCopyOnNextWrite();
 
-    public MutablePIntegerArray shallowClone();
+    MutablePIntegerArray shallowClone();
 }

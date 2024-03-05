@@ -35,24 +35,24 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface MutableByteArray extends ByteStack, UpdatableByteArray, MutablePIntegerArray {
-    public MutableByteArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutableByteArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutableByteArray setData(long arrayPos, Object srcArray);
+    MutableByteArray setData(long arrayPos, Object srcArray);
 
-    public MutableByteArray copy(Array src);
+    MutableByteArray copy(Array src);
 
-    public MutableByteArray swap(UpdatableArray another);
+    MutableByteArray swap(UpdatableArray another);
 
-    public MutableByteArray length(long newLength);
+    MutableByteArray length(long newLength);
 
-    public MutableByteArray ensureCapacity(long minCapacity);
+    MutableByteArray ensureCapacity(long minCapacity);
 
-    public MutableByteArray trim();
+    MutableByteArray trim();
 
-    public MutableByteArray append(Array appendedArray);
+    MutableByteArray append(Array appendedArray);
 
-    public MutableByteArray asCopyOnNextWrite();
+    MutableByteArray asCopyOnNextWrite();
 
-    public MutableByteArray shallowClone();
+    MutableByteArray shallowClone();
     /*Repeat.IncludeEnd*/
 }

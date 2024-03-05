@@ -42,7 +42,7 @@ public interface UpdatableObjectArray<E> extends ObjectArray<E>, UpdatableArray 
      * @throws NullPointerException      if <tt>value == null</tt> and it is an array of primitive elements.
      * @throws ArrayStoreException       if <tt>value</tt> is not an instance of {@link #elementType()} class.
      */
-    public void set(long index, E value);
+    void set(long index, E value);
 
     /**
      * Fills all elements of this array by the specified value. Equivalent to
@@ -53,7 +53,7 @@ public interface UpdatableObjectArray<E> extends ObjectArray<E>, UpdatableArray 
      * @see #fill(long, long, Object)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableObjectArray<E> fill(E value);
+    UpdatableObjectArray<E> fill(E value);
 
     /**
      * Fills <tt>count</tt> elements of this array, starting from <tt>position</tt> index,
@@ -77,20 +77,20 @@ public interface UpdatableObjectArray<E> extends ObjectArray<E>, UpdatableArray 
      * @see #fill(Object)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableObjectArray<E> fill(long position, long count, E value);
+    UpdatableObjectArray<E> fill(long position, long count, E value);
 
-    public <D> UpdatableObjectArray<D> cast(Class<D> elementType);
+    <D> UpdatableObjectArray<D> cast(Class<D> elementType);
 
     /*Repeat(INCLUDE_FROM_FILE, UpdatableFloatArray.java, resultTypes)
       Float(?!ing) ==> Object ;;
       float ==> Object ;;
       ObjectArray ==> ObjectArray<E>
          !! Auto-generated: NOT EDIT !! */
-    public UpdatableObjectArray<E> subArray(long fromIndex, long toIndex);
+    UpdatableObjectArray<E> subArray(long fromIndex, long toIndex);
 
-    public UpdatableObjectArray<E> subArr(long position, long count);
+    UpdatableObjectArray<E> subArr(long position, long count);
 
-    public UpdatableObjectArray<E> asUnresizable();
+    UpdatableObjectArray<E> asUnresizable();
 
     default Matrix<UpdatableObjectArray<E>> matrix(long... dim) {
         return Matrices.matrix(this, dim);

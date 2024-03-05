@@ -33,11 +33,11 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface UpdatablePFloatingArray extends PFloatingArray, UpdatablePNumberArray {
-    public UpdatablePFloatingArray subArray(long fromIndex, long toIndex);
+    UpdatablePFloatingArray subArray(long fromIndex, long toIndex);
 
-    public UpdatablePFloatingArray subArr(long position, long count);
+    UpdatablePFloatingArray subArr(long position, long count);
 
-    public UpdatablePFloatingArray asUnresizable();
+    UpdatablePFloatingArray asUnresizable();
 
     default Matrix<? extends UpdatablePFloatingArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

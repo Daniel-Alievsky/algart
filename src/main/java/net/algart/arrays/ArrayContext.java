@@ -61,7 +61,7 @@ public interface ArrayContext {
      * <p>In most methods, that use {@link ArrayContext} argument, you can specify <tt>null</tt> as context
      * with the same effect as passing this object.
      */
-    public static final ArrayContext DEFAULT = new AbstractArrayContext.Default();
+    ArrayContext DEFAULT = new AbstractArrayContext.Default();
 
     /**
      * The simplest single-thread implementation of {@link ArrayContext}, that does almost nothing.
@@ -88,7 +88,7 @@ public interface ArrayContext {
      * <p>Note: this object is also returned by
      * <tt>ArrayContext.{@link #DEFAULT}.{@link #singleThreadVersion() singleThreadVersion()}</tt> call.
      */
-    public static final ArrayContext DEFAULT_SINGLE_THREAD = new AbstractArrayContext.DefaultSingleThread();
+    ArrayContext DEFAULT_SINGLE_THREAD = new AbstractArrayContext.DefaultSingleThread();
 
     /**
      * Returns new context, describing the execution of some subtask of the current task,
@@ -109,7 +109,7 @@ public interface ArrayContext {
      * We can implement it in the following way:</p>
      *
      * <pre>
-     * public void fullTask({@link ArrayContext} context) {
+     * void fullTask({@link ArrayContext} context) {
      * &#32;   subTask1(context);
      * &#32;   subTask2(context);
      * }
@@ -125,7 +125,7 @@ public interface ArrayContext {
      * <p>This class provides solutions of this problem. Namely:</p>
      *
      * <pre>
-     * public void fullTask({@link ArrayContext} context) {
+     * void fullTask({@link ArrayContext} context) {
      * &#32;   subTask1(context.part(0.0, 0.5));
      * &#32;   subTask2(context.part(0.5, 1.0));
      * }
@@ -149,7 +149,7 @@ public interface ArrayContext {
      * @see #part(long, long, long)
      * @see #noProgressVersion()
      */
-    public ArrayContext part(double fromPart, double toPart);
+    ArrayContext part(double fromPart, double toPart);
 
     /**
      * Returns new context, describing the execution of some subtask of the current task,
@@ -174,7 +174,7 @@ public interface ArrayContext {
      * @see #part(double, double)
      * @see #noProgressVersion()
      */
-    public ArrayContext part(long from, long to, long total);
+    ArrayContext part(long from, long to, long total);
 
     /**
      * Returns new context, identical to this one with the only exception that its
@@ -188,7 +188,7 @@ public interface ArrayContext {
      * @see #part(double, double)
      * @see #part(long, long, long)
      */
-    public ArrayContext noProgressVersion();
+    ArrayContext noProgressVersion();
 
     /**
      * Returns new context, identical to this one with the only exception that the thread pool factory,
@@ -198,7 +198,7 @@ public interface ArrayContext {
      *
      * @return the single-thread version of this context.
      */
-    public ArrayContext singleThreadVersion();
+    ArrayContext singleThreadVersion();
 
     /**
      * Returns new context, identical to this one with the only exception that
@@ -226,7 +226,7 @@ public interface ArrayContext {
      * @throws IllegalArgumentException if <tt>numberOfThreads&le;0</tt> or if <tt>currentThreadIndex</tt>
      *                                  does not lie in <nobr><tt>0..numberOfThreads-1</tt></nobr> range.
      */
-    public ArrayContext multithreadedVersion(int currentThreadIndex, int numberOfThreads);
+    ArrayContext multithreadedVersion(int currentThreadIndex, int numberOfThreads);
 
     /**
      * Returns new context, identical to this one with the only exception that
@@ -251,7 +251,7 @@ public interface ArrayContext {
      * @return           the version of this context, where {@link #customData()} method returns the reference
      *                   to <tt>customData</tt> argument.
      */
-    public ArrayContext customDataVersion(Object customData);
+    ArrayContext customDataVersion(Object customData);
 
     /**
      * Returns the {@link MemoryModel memory model} that should be used
@@ -260,7 +260,7 @@ public interface ArrayContext {
      *
      * @return the desired memory model.
      */
-    public MemoryModel getMemoryModel();
+    MemoryModel getMemoryModel();
 
     /**
      * Returns the {@link ThreadPoolFactory thread pool factory} that should be used for
@@ -270,7 +270,7 @@ public interface ArrayContext {
      *
      * @return the desired thread pool factory.
      */
-    public ThreadPoolFactory getThreadPoolFactory();
+    ThreadPoolFactory getThreadPoolFactory();
 
     /**
      * This method is called periodically by long-working methods alike
@@ -287,7 +287,7 @@ public interface ArrayContext {
      *                          {@link Arrays#copy(ArrayContext, UpdatableArray, Array) copy},
      *                          and will be re-thrown by that method.
      */
-    public void checkInterruption() throws RuntimeException;
+    void checkInterruption() throws RuntimeException;
 
     /**
      * This method is called periodically by long-working methods alike
@@ -302,7 +302,7 @@ public interface ArrayContext {
      *
      * @param event information about the execution progress.
      */
-    public void updateProgress(Event event);
+    void updateProgress(Event event);
 
     /**
      * Equivalent to 2 sequential calls: <nobr><tt>{@link #checkInterruption()}</tt></nobr> and
@@ -315,7 +315,7 @@ public interface ArrayContext {
      *                              method in the event.
      * @param length                the result of {@link ArrayContext.Event#length()} method in the created event.
      */
-    public void checkInterruptionAndUpdateProgress(Class<?> elementType, long readyCount, long length);
+    void checkInterruptionAndUpdateProgress(Class<?> elementType, long readyCount, long length);
 
     /**
      * Usually returns <tt>0</tt>, but in multithreading environment this method may return the index
@@ -374,12 +374,12 @@ public interface ArrayContext {
      *
      * @return some custom information about the current execution environment.
      */
-    public Object customData();
+    Object customData();
 
     /**
      * The array processing event: an argument of {@link ArrayContext#updateProgress(Event)} method.
      */
-    public static class Event {
+    class Event {
         private final Class<?> elementType;
         private final long[] lengthPerTask;
         private final long length;

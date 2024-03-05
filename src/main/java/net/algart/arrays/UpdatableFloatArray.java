@@ -38,7 +38,7 @@ public interface UpdatableFloatArray extends FloatArray, UpdatablePFloatingArray
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public void setFloat(long index, float value);
+    void setFloat(long index, float value);
 
     /**
      * Fills all elements of this array by the specified value. Equivalent to
@@ -49,7 +49,7 @@ public interface UpdatableFloatArray extends FloatArray, UpdatablePFloatingArray
      * @see #fill(long, long, float)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableFloatArray fill(float value);
+    UpdatableFloatArray fill(float value);
 
     /**
      * Fills <tt>count</tt> elements of this array, starting from <tt>position</tt> index,
@@ -69,14 +69,14 @@ public interface UpdatableFloatArray extends FloatArray, UpdatablePFloatingArray
      * @see #fill(float)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableFloatArray fill(long position, long count, float value);
+    UpdatableFloatArray fill(long position, long count, float value);
 
     /*Repeat.SectionStart resultTypes*/
-    public UpdatableFloatArray subArray(long fromIndex, long toIndex);
+    UpdatableFloatArray subArray(long fromIndex, long toIndex);
 
-    public UpdatableFloatArray subArr(long position, long count);
+    UpdatableFloatArray subArr(long position, long count);
 
-    public UpdatableFloatArray asUnresizable();
+    UpdatableFloatArray asUnresizable();
 
     default Matrix<UpdatableFloatArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

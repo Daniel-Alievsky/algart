@@ -37,11 +37,11 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface ByteArray extends PIntegerArray {
-    public Class<? extends ByteArray> type();
+    Class<? extends ByteArray> type();
 
-    public Class<? extends UpdatableByteArray> updatableType();
+    Class<? extends UpdatableByteArray> updatableType();
 
-    public Class<? extends MutableByteArray> mutableType();
+    Class<? extends MutableByteArray> mutableType();
 
     /**
      * Returns the unsigned byte #<tt>index</tt>.
@@ -50,7 +50,7 @@ public interface ByteArray extends PIntegerArray {
      * @return      the unsigned byte at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public int getByte(long index);
+    int getByte(long index);
 
     /**
      * Returns the minimal index <tt>k</tt>, so that
@@ -72,7 +72,7 @@ public interface ByteArray extends PIntegerArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long indexOf(long lowIndex, long highIndex, byte value);
+    long indexOf(long lowIndex, long highIndex, byte value);
 
     /**
      * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
@@ -94,23 +94,23 @@ public interface ByteArray extends PIntegerArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long lastIndexOf(long lowIndex, long highIndex, byte value);
+    long lastIndexOf(long lowIndex, long highIndex, byte value);
 
-    public DataByteBuffer buffer(DataBuffer.AccessMode mode, long capacity);
+    DataByteBuffer buffer(DataBuffer.AccessMode mode, long capacity);
 
-    public DataByteBuffer buffer(DataBuffer.AccessMode mode);
+    DataByteBuffer buffer(DataBuffer.AccessMode mode);
 
-    public DataByteBuffer buffer(long capacity);
+    DataByteBuffer buffer(long capacity);
 
-    public DataByteBuffer buffer();
+    DataByteBuffer buffer();
 
-    public ByteArray asImmutable();
+    ByteArray asImmutable();
 
-    public ByteArray asTrustedImmutable();
+    ByteArray asTrustedImmutable();
 
-    public MutableByteArray mutableClone(MemoryModel memoryModel);
+    MutableByteArray mutableClone(MemoryModel memoryModel);
 
-    public UpdatableByteArray updatableClone(MemoryModel memoryModel);
+    UpdatableByteArray updatableClone(MemoryModel memoryModel);
 
     default Matrix<? extends ByteArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

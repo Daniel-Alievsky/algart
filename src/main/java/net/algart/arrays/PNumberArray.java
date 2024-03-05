@@ -36,11 +36,11 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface PNumberArray extends PArray {
-    public Class<? extends PNumberArray> type();
+    Class<? extends PNumberArray> type();
 
-    public Class<? extends UpdatablePNumberArray> updatableType();
+    Class<? extends UpdatablePNumberArray> updatableType();
 
-    public Class<? extends MutablePNumberArray> mutableType();
+    Class<? extends MutablePNumberArray> mutableType();
 
     default Matrix<? extends PNumberArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

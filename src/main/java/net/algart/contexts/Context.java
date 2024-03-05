@@ -86,7 +86,7 @@ package net.algart.contexts;
  * <p>A usage example:</p>
  *
  * <pre>
- * public void someComplexAlgorithm({@link Context} context, <i>some other arguments</i>...) {
+ * void someComplexAlgorithm({@link Context} context, <i>some other arguments</i>...) {
  * &#32;   {@link ProgressUpdater} pu = context.{@link #as(Class) as}({@link ProgressUpdater}.class);
  * &#32;   . . .
  * &#32;   for (int k = 0; k &lt; n; k++) { // the main long-working loop
@@ -124,7 +124,7 @@ public interface Context {
      * @throws UnsupportedContextException if this context cannot serve the request.
      * @see #is(Class)
      */
-    public <T extends Context> T as(Class<T> contextClass);
+    <T extends Context> T as(Class<T> contextClass);
 
     /**
      * Returns <tt>true</tt> if this context class can be processed by {@link #as(Class)} method.
@@ -137,5 +137,5 @@ public interface Context {
      * @return             <tt>true</tt> if this context class can be processed by {@link #as(Class)} method.
      * @see #as(Class)
      */
-    public boolean is(Class<? extends Context> contextClass);
+    boolean is(Class<? extends Context> contextClass);
 }

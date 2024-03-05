@@ -39,7 +39,7 @@ public interface Operator {
      * Identity operator, transforming any function to itself.
      * The {@link #apply(Func)} method of this operator returns the reference to its argument.
      */
-    public static final Operator IDENTITY = new IdentityOperator();
+    Operator IDENTITY = new IdentityOperator();
 
     /**
      * Returns the result of applying this operator to the given function.
@@ -47,5 +47,5 @@ public interface Operator {
      * @param f some function.
      * @return  new transformed function.
      */
-    public Func apply(Func f);
+    Func apply(Func f);
 }

@@ -35,24 +35,24 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface MutableIntArray extends IntStack, UpdatableIntArray, MutablePIntegerArray {
-    public MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutableIntArray setData(long arrayPos, Object srcArray);
+    MutableIntArray setData(long arrayPos, Object srcArray);
 
-    public MutableIntArray copy(Array src);
+    MutableIntArray copy(Array src);
 
-    public MutableIntArray swap(UpdatableArray another);
+    MutableIntArray swap(UpdatableArray another);
 
-    public MutableIntArray length(long newLength);
+    MutableIntArray length(long newLength);
 
-    public MutableIntArray ensureCapacity(long minCapacity);
+    MutableIntArray ensureCapacity(long minCapacity);
 
-    public MutableIntArray trim();
+    MutableIntArray trim();
 
-    public MutableIntArray append(Array appendedArray);
+    MutableIntArray append(Array appendedArray);
 
-    public MutableIntArray asCopyOnNextWrite();
+    MutableIntArray asCopyOnNextWrite();
 
-    public MutableIntArray shallowClone();
+    MutableIntArray shallowClone();
     /*Repeat.IncludeEnd*/
 }

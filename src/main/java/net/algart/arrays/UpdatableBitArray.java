@@ -44,7 +44,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public void setBit(long index, boolean value);
+    void setBit(long index, boolean value);
 
     /**
      * Fills all elements of this array by the specified value. Equivalent to
@@ -55,7 +55,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @see #fill(long, long, boolean)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableBitArray fill(boolean value);
+    UpdatableBitArray fill(boolean value);
 
     /**
      * Fills <tt>count</tt> elements of this array, starting from <tt>position</tt> index,
@@ -75,13 +75,13 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @see #fill(boolean)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableBitArray fill(long position, long count, boolean value);
+    UpdatableBitArray fill(long position, long count, boolean value);
 
-    public UpdatableBitArray subArray(long fromIndex, long toIndex);
+    UpdatableBitArray subArray(long fromIndex, long toIndex);
 
-    public UpdatableBitArray subArr(long position, long count);
+    UpdatableBitArray subArr(long position, long count);
 
-    public UpdatableBitArray asUnresizable();
+    UpdatableBitArray asUnresizable();
 
     default Matrix<UpdatableBitArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
@@ -94,7 +94,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @param index index of element to replace.
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      */
-    public void setBit(long index);
+    void setBit(long index);
 
     /**
      * Clears the bit #<tt>index</tt> to 0 (<tt>false</tt>).
@@ -102,7 +102,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @param index index of element to replace.
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      */
-    public void clearBit(long index);
+    void clearBit(long index);
 
     /**
      * Copies <tt>count</tt> bits from the specified <i>packed</i> bit array,
@@ -133,5 +133,5 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @see #getBits(long, long[], long, long)
      * @see PackedBitArrays
      */
-    public UpdatableBitArray setBits(long arrayPos, long[] srcArray, long srcArrayOffset, long count);
+    UpdatableBitArray setBits(long arrayPos, long[] srcArray, long srcArrayOffset, long count);
 }

@@ -34,31 +34,31 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface MutableObjectArray<E> extends ObjectStack<E>, MutableArray, UpdatableObjectArray<E> {
-    public <D> MutableObjectArray<D> cast(Class<D> elementType);
+    <D> MutableObjectArray<D> cast(Class<D> elementType);
 
     /*Repeat(INCLUDE_FROM_FILE, MutableFloatArray.java, resultTypes)
       Float(?!ing) ==> Object ;;
       float ==> Object ;;
       ObjectArray ==> ObjectArray<E>
          !! Auto-generated: NOT EDIT !! */
-    public MutableObjectArray<E> setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutableObjectArray<E> setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutableObjectArray<E> setData(long arrayPos, Object srcArray);
+    MutableObjectArray<E> setData(long arrayPos, Object srcArray);
 
-    public MutableObjectArray<E> copy(Array src);
+    MutableObjectArray<E> copy(Array src);
 
-    public MutableObjectArray<E> swap(UpdatableArray another);
+    MutableObjectArray<E> swap(UpdatableArray another);
 
-    public MutableObjectArray<E> length(long newLength);
+    MutableObjectArray<E> length(long newLength);
 
-    public MutableObjectArray<E> ensureCapacity(long minCapacity);
+    MutableObjectArray<E> ensureCapacity(long minCapacity);
 
-    public MutableObjectArray<E> trim();
+    MutableObjectArray<E> trim();
 
-    public MutableObjectArray<E> append(Array appendedArray);
+    MutableObjectArray<E> append(Array appendedArray);
 
-    public MutableObjectArray<E> asCopyOnNextWrite();
+    MutableObjectArray<E> asCopyOnNextWrite();
 
-    public MutableObjectArray<E> shallowClone();
+    MutableObjectArray<E> shallowClone();
     /*Repeat.IncludeEnd*/
 }

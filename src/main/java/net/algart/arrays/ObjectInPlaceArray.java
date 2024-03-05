@@ -48,7 +48,7 @@ public interface ObjectInPlaceArray<E> extends ObjectArray<E> {
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      * @throws NullPointerException if <tt>resultValue</tt> is <tt>null</tt>.
      */
-    public E getInPlace(long index, Object resultValue);
+    E getInPlace(long index, Object resultValue);
 
     /**
      * Creates one instance of {@link #elementType()} class in some state.
@@ -57,5 +57,5 @@ public interface ObjectInPlaceArray<E> extends ObjectArray<E> {
      *
      * @return some instance of {@link #elementType()} class
      */
-    public E allocateElement();
+    E allocateElement();
 }

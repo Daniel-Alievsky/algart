@@ -34,24 +34,24 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface MutableDoubleArray extends DoubleStack, UpdatableDoubleArray, MutablePFloatingArray {
-    public MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutableDoubleArray setData(long arrayPos, Object srcArray);
+    MutableDoubleArray setData(long arrayPos, Object srcArray);
 
-    public MutableDoubleArray copy(Array src);
+    MutableDoubleArray copy(Array src);
 
-    public MutableDoubleArray swap(UpdatableArray another);
+    MutableDoubleArray swap(UpdatableArray another);
 
-    public MutableDoubleArray length(long newLength);
+    MutableDoubleArray length(long newLength);
 
-    public MutableDoubleArray ensureCapacity(long minCapacity);
+    MutableDoubleArray ensureCapacity(long minCapacity);
 
-    public MutableDoubleArray trim();
+    MutableDoubleArray trim();
 
-    public MutableDoubleArray append(Array appendedArray);
+    MutableDoubleArray append(Array appendedArray);
 
-    public MutableDoubleArray asCopyOnNextWrite();
+    MutableDoubleArray asCopyOnNextWrite();
 
-    public MutableDoubleArray shallowClone();
+    MutableDoubleArray shallowClone();
     /*Repeat.IncludeEnd*/
 }

@@ -42,7 +42,7 @@ public interface UpdatableShortArray extends ShortArray, UpdatablePIntegerArray 
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public void setShort(long index, short value);
+    void setShort(long index, short value);
 
     /**
      * Fills all elements of this array by the specified value. Equivalent to
@@ -53,7 +53,7 @@ public interface UpdatableShortArray extends ShortArray, UpdatablePIntegerArray 
      * @see #fill(long, long, short)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableShortArray fill(short value);
+    UpdatableShortArray fill(short value);
 
     /**
      * Fills <tt>count</tt> elements of this array, starting from <tt>position</tt> index,
@@ -73,13 +73,13 @@ public interface UpdatableShortArray extends ShortArray, UpdatablePIntegerArray 
      * @see #fill(short)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableShortArray fill(long position, long count, short value);
+    UpdatableShortArray fill(long position, long count, short value);
 
-    public UpdatableShortArray subArray(long fromIndex, long toIndex);
+    UpdatableShortArray subArray(long fromIndex, long toIndex);
 
-    public UpdatableShortArray subArr(long position, long count);
+    UpdatableShortArray subArr(long position, long count);
 
-    public UpdatableShortArray asUnresizable();
+    UpdatableShortArray asUnresizable();
 
     default Matrix<UpdatableShortArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

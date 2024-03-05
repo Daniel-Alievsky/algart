@@ -35,11 +35,11 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface IntArray extends PIntegerArray {
-    public Class<? extends IntArray> type();
+    Class<? extends IntArray> type();
 
-    public Class<? extends UpdatableIntArray> updatableType();
+    Class<? extends UpdatableIntArray> updatableType();
 
-    public Class<? extends MutableIntArray> mutableType();
+    Class<? extends MutableIntArray> mutableType();
 
     /**
      * Returns the element #<tt>index</tt>.
@@ -48,7 +48,7 @@ public interface IntArray extends PIntegerArray {
      * @return      the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public int getInt(long index);
+    int getInt(long index);
 
     /**
      * Returns the minimal index <tt>k</tt>, so that
@@ -70,7 +70,7 @@ public interface IntArray extends PIntegerArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long indexOf(long lowIndex, long highIndex, int value);
+    long indexOf(long lowIndex, long highIndex, int value);
 
     /**
      * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
@@ -92,23 +92,23 @@ public interface IntArray extends PIntegerArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long lastIndexOf(long lowIndex, long highIndex, int value);
+    long lastIndexOf(long lowIndex, long highIndex, int value);
 
-    public DataIntBuffer buffer(DataBuffer.AccessMode mode, long capacity);
+    DataIntBuffer buffer(DataBuffer.AccessMode mode, long capacity);
 
-    public DataIntBuffer buffer(DataBuffer.AccessMode mode);
+    DataIntBuffer buffer(DataBuffer.AccessMode mode);
 
-    public DataIntBuffer buffer(long capacity);
+    DataIntBuffer buffer(long capacity);
 
-    public DataIntBuffer buffer();
+    DataIntBuffer buffer();
 
-    public IntArray asImmutable();
+    IntArray asImmutable();
 
-    public IntArray asTrustedImmutable();
+    IntArray asTrustedImmutable();
 
-    public MutableIntArray mutableClone(MemoryModel memoryModel);
+    MutableIntArray mutableClone(MemoryModel memoryModel);
 
-    public UpdatableIntArray updatableClone(MemoryModel memoryModel);
+    UpdatableIntArray updatableClone(MemoryModel memoryModel);
 
     default Matrix<? extends IntArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

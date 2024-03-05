@@ -42,7 +42,7 @@ public interface UpdatableIntArray extends IntArray, UpdatablePIntegerArray {
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public void setInt(long index, int value);
+    void setInt(long index, int value);
 
     /**
      * Fills all elements of this array by the specified value. Equivalent to
@@ -53,7 +53,7 @@ public interface UpdatableIntArray extends IntArray, UpdatablePIntegerArray {
      * @see #fill(long, long, int)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableIntArray fill(int value);
+    UpdatableIntArray fill(int value);
 
     /**
      * Fills <tt>count</tt> elements of this array, starting from <tt>position</tt> index,
@@ -73,13 +73,13 @@ public interface UpdatableIntArray extends IntArray, UpdatablePIntegerArray {
      * @see #fill(int)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableIntArray fill(long position, long count, int value);
+    UpdatableIntArray fill(long position, long count, int value);
 
-    public UpdatableIntArray subArray(long fromIndex, long toIndex);
+    UpdatableIntArray subArray(long fromIndex, long toIndex);
 
-    public UpdatableIntArray subArr(long position, long count);
+    UpdatableIntArray subArr(long position, long count);
 
-    public UpdatableIntArray asUnresizable();
+    UpdatableIntArray asUnresizable();
 
     default Matrix<UpdatableIntArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

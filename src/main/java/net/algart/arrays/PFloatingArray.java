@@ -33,19 +33,19 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface PFloatingArray extends PNumberArray {
-    public Class<? extends PFloatingArray> type();
+    Class<? extends PFloatingArray> type();
 
-    public Class<? extends UpdatablePFloatingArray> updatableType();
+    Class<? extends UpdatablePFloatingArray> updatableType();
 
-    public Class<? extends MutablePFloatingArray> mutableType();
+    Class<? extends MutablePFloatingArray> mutableType();
 
-    public PFloatingArray asImmutable();
+    PFloatingArray asImmutable();
 
-    public PFloatingArray asTrustedImmutable();
+    PFloatingArray asTrustedImmutable();
 
-    public MutablePFloatingArray mutableClone(MemoryModel memoryModel);
+    MutablePFloatingArray mutableClone(MemoryModel memoryModel);
 
-    public UpdatablePFloatingArray updatableClone(MemoryModel memoryModel);
+    UpdatablePFloatingArray updatableClone(MemoryModel memoryModel);
 
     default Matrix<? extends PFloatingArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

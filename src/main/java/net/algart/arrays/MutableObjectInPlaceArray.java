@@ -39,24 +39,24 @@ public interface MutableObjectInPlaceArray<E> extends UpdatableObjectInPlaceArra
       float ==> Object ;;
       ObjectArray ==> ObjectInPlaceArray<E>
          !! Auto-generated: NOT EDIT !! */
-    public MutableObjectInPlaceArray<E> setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutableObjectInPlaceArray<E> setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutableObjectInPlaceArray<E> setData(long arrayPos, Object srcArray);
+    MutableObjectInPlaceArray<E> setData(long arrayPos, Object srcArray);
 
-    public MutableObjectInPlaceArray<E> copy(Array src);
+    MutableObjectInPlaceArray<E> copy(Array src);
 
-    public MutableObjectInPlaceArray<E> swap(UpdatableArray another);
+    MutableObjectInPlaceArray<E> swap(UpdatableArray another);
 
-    public MutableObjectInPlaceArray<E> length(long newLength);
+    MutableObjectInPlaceArray<E> length(long newLength);
 
-    public MutableObjectInPlaceArray<E> ensureCapacity(long minCapacity);
+    MutableObjectInPlaceArray<E> ensureCapacity(long minCapacity);
 
-    public MutableObjectInPlaceArray<E> trim();
+    MutableObjectInPlaceArray<E> trim();
 
-    public MutableObjectInPlaceArray<E> append(Array appendedArray);
+    MutableObjectInPlaceArray<E> append(Array appendedArray);
 
-    public MutableObjectInPlaceArray<E> asCopyOnNextWrite();
+    MutableObjectInPlaceArray<E> asCopyOnNextWrite();
 
-    public MutableObjectInPlaceArray<E> shallowClone();
+    MutableObjectInPlaceArray<E> shallowClone();
     /*Repeat.IncludeEnd*/
 }

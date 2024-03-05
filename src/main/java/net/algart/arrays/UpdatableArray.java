@@ -88,7 +88,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @throws ArrayStoreException       if it is an array of non-primitive elements and <tt>value</tt>
      *                                   is not an instance of {@link #elementType()} class.
      */
-    public void setElement(long index, Object value);
+    void setElement(long index, Object value);
 
     /**
      * Copies <tt>count</tt> elements from the specified Java array of corresponding type,
@@ -125,7 +125,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @see DirectAccessible
      * @see #getData(long, Object, int, int)
      */
-    public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
     /**
      * Copies <tt>min(this.{@link #length() length()} - arrayPos, srcArray.length})</tt>
@@ -156,7 +156,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @see #getData(long, Object)
      * @see UpdatableBitArray#setBits(long, long[], long, long)
      */
-    public UpdatableArray setData(long arrayPos, Object srcArray);
+    UpdatableArray setData(long arrayPos, Object srcArray);
 
     /**
      * Copies element #<tt>srcIndex</tt> to position #<tt>destIndex</tt> inside this array.
@@ -165,7 +165,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @param srcIndex  index of element to be copied.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
      */
-    public void copy(long destIndex, long srcIndex);
+    void copy(long destIndex, long srcIndex);
 
     /**
      * Copies <tt>count</tt> elements, starting from <tt>srcIndex</tt> index,
@@ -184,7 +184,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @param count     the number of elements to be copied.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
      */
-    public void copy(long destIndex, long srcIndex, long count);
+    void copy(long destIndex, long srcIndex, long count);
 
     /**
      * Swaps elements at positions #<tt>firstIndex</tt> and #<tt>secondIndex</tt> inside this array.
@@ -193,7 +193,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @param secondIndex second index of element to exchange.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
      */
-    public void swap(long firstIndex, long secondIndex);
+    void swap(long firstIndex, long secondIndex);
 
     /**
      * Swaps <tt>count</tt> elements, starting from <tt>firstIndex</tt> index,
@@ -207,7 +207,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @param count       the number of elements to be exchanged.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
      */
-    public void swap(long firstIndex, long secondIndex, long count);
+    void swap(long firstIndex, long secondIndex, long count);
 
     /**
      * Copies <tt>min(this.{@link #length() length()}, src.{@link #length() length()})</tt> elements of
@@ -249,7 +249,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @throws IllegalArgumentException if the source and this element types do not match.
      * @see Arrays#copy(ArrayContext, UpdatableArray, Array)
      */
-    public UpdatableArray copy(Array src);
+    UpdatableArray copy(Array src);
 
     /**
      * Swaps <tt>min(this.{@link #length() length()}, src.{@link #length() length()})</tt> elements of
@@ -283,7 +283,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @throws NullPointerException           if <tt>another</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException       if another and this element types do not match.
      */
-    public UpdatableArray swap(UpdatableArray another);
+    UpdatableArray swap(UpdatableArray another);
 
     /**
      * Returns an unresizable view of this array.
@@ -308,7 +308,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @return an unresizable view of this array.
      * @see #isUnresizable()
      */
-    public UpdatableArray asUnresizable();
+    UpdatableArray asUnresizable();
 
     /**
      * Clears the "{@link #isNew() new status}" for this array instance.
@@ -320,13 +320,17 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * is always internally synchronized. So, clearing "new status" by this method
      * will be immediately visible in all threads, using this instance.
      */
-    public void setNonNew();
+    void setNonNew();
 
-    public UpdatableArray subArray(long fromIndex, long toIndex);
+    UpdatableArray subArray(long fromIndex, long toIndex);
 
-    public UpdatableArray subArr(long position, long count);
+    UpdatableArray subArr(long position, long count);
 
-    public UpdatableArray asCopyOnNextWrite();
+    UpdatableArray asCopyOnNextWrite();
 
-    public UpdatableArray shallowClone();
+    UpdatableArray shallowClone();
+
+    default Matrix<? extends UpdatableArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 }

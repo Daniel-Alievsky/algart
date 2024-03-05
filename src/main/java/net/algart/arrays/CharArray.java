@@ -35,11 +35,11 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface CharArray extends PFixedArray {
-    public Class<? extends CharArray> type();
+    Class<? extends CharArray> type();
 
-    public Class<? extends UpdatableCharArray> updatableType();
+    Class<? extends UpdatableCharArray> updatableType();
 
-    public Class<? extends MutableCharArray> mutableType();
+    Class<? extends MutableCharArray> mutableType();
 
     /**
      * Returns the element #<tt>index</tt>.
@@ -48,7 +48,7 @@ public interface CharArray extends PFixedArray {
      * @return      the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public char getChar(long index);
+    char getChar(long index);
 
     /**
      * Returns the minimal index <tt>k</tt>, so that
@@ -70,7 +70,7 @@ public interface CharArray extends PFixedArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long indexOf(long lowIndex, long highIndex, char value);
+    long indexOf(long lowIndex, long highIndex, char value);
 
     /**
      * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
@@ -92,23 +92,23 @@ public interface CharArray extends PFixedArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long lastIndexOf(long lowIndex, long highIndex, char value);
+    long lastIndexOf(long lowIndex, long highIndex, char value);
 
-    public DataCharBuffer buffer(DataBuffer.AccessMode mode, long capacity);
+    DataCharBuffer buffer(DataBuffer.AccessMode mode, long capacity);
 
-    public DataCharBuffer buffer(DataBuffer.AccessMode mode);
+    DataCharBuffer buffer(DataBuffer.AccessMode mode);
 
-    public DataCharBuffer buffer(long capacity);
+    DataCharBuffer buffer(long capacity);
 
-    public DataCharBuffer buffer();
+    DataCharBuffer buffer();
 
-    public CharArray asImmutable();
+    CharArray asImmutable();
 
-    public CharArray asTrustedImmutable();
+    CharArray asTrustedImmutable();
 
-    public MutableCharArray mutableClone(MemoryModel memoryModel);
+    MutableCharArray mutableClone(MemoryModel memoryModel);
 
-    public UpdatableCharArray updatableClone(MemoryModel memoryModel);
+    UpdatableCharArray updatableClone(MemoryModel memoryModel);
 
     default Matrix<? extends CharArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

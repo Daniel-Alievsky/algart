@@ -38,7 +38,7 @@ public interface ObjectStack<E> extends Stack {
      * @return the element at the top of this stack (it is removed from the stack by this method).
      * @throws java.util.EmptyStackException if this stack is empty.
      */
-    public E pop();
+    E pop();
 
     /**
      * Equivalent to {@link #pushElement(Object) pushElement(value)}.
@@ -47,6 +47,6 @@ public interface ObjectStack<E> extends Stack {
      * @throws ArrayStoreException    if <tt>value</tt> is notan instance of the class of stack elements.
      * @throws TooLargeArrayException if the resulting stack length is too large for this type of stacks.
      */
-    public void push(E value);
+    void push(E value);
 
 }

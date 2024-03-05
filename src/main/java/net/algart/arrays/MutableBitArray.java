@@ -36,24 +36,24 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface MutableBitArray extends BitStack, UpdatableBitArray, MutablePFixedArray {
-    public MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutableBitArray setData(long arrayPos, Object srcArray);
+    MutableBitArray setData(long arrayPos, Object srcArray);
 
-    public MutableBitArray copy(Array src);
+    MutableBitArray copy(Array src);
 
-    public MutableBitArray swap(UpdatableArray another);
+    MutableBitArray swap(UpdatableArray another);
 
-    public MutableBitArray length(long newLength);
+    MutableBitArray length(long newLength);
 
-    public MutableBitArray ensureCapacity(long minCapacity);
+    MutableBitArray ensureCapacity(long minCapacity);
 
-    public MutableBitArray trim();
+    MutableBitArray trim();
 
-    public MutableBitArray append(Array appendedArray);
+    MutableBitArray append(Array appendedArray);
 
-    public MutableBitArray asCopyOnNextWrite();
+    MutableBitArray asCopyOnNextWrite();
 
-    public MutableBitArray shallowClone();
+    MutableBitArray shallowClone();
     /*Repeat.IncludeEnd*/
 }

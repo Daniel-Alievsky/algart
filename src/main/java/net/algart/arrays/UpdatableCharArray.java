@@ -42,7 +42,7 @@ public interface UpdatableCharArray extends CharArray, UpdatablePFixedArray {
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public void setChar(long index, char value);
+    void setChar(long index, char value);
 
     /**
      * Fills all elements of this array by the specified value. Equivalent to
@@ -53,7 +53,7 @@ public interface UpdatableCharArray extends CharArray, UpdatablePFixedArray {
      * @see #fill(long, long, char)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableCharArray fill(char value);
+    UpdatableCharArray fill(char value);
 
     /**
      * Fills <tt>count</tt> elements of this array, starting from <tt>position</tt> index,
@@ -73,13 +73,13 @@ public interface UpdatableCharArray extends CharArray, UpdatablePFixedArray {
      * @see #fill(char)
      * @see Arrays#zeroFill(UpdatableArray)
      */
-    public UpdatableCharArray fill(long position, long count, char value);
+    UpdatableCharArray fill(long position, long count, char value);
 
-    public UpdatableCharArray subArray(long fromIndex, long toIndex);
+    UpdatableCharArray subArray(long fromIndex, long toIndex);
 
-    public UpdatableCharArray subArr(long position, long count);
+    UpdatableCharArray subArr(long position, long count);
 
-    public UpdatableCharArray asUnresizable();
+    UpdatableCharArray asUnresizable();
 
     default Matrix<UpdatableCharArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);

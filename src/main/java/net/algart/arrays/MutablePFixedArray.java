@@ -39,23 +39,23 @@ package net.algart.arrays;
 public interface MutablePFixedArray
     extends UpdatablePFixedArray, MutablePArray
 {
-    public MutablePFixedArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutablePFixedArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutablePFixedArray setData(long arrayPos, Object srcArray);
+    MutablePFixedArray setData(long arrayPos, Object srcArray);
 
-    public MutablePFixedArray copy(Array src);
+    MutablePFixedArray copy(Array src);
 
-    public MutablePFixedArray swap(UpdatableArray another);
+    MutablePFixedArray swap(UpdatableArray another);
 
-    public MutablePFixedArray length(long newLength);
+    MutablePFixedArray length(long newLength);
 
-    public MutablePFixedArray ensureCapacity(long minCapacity);
+    MutablePFixedArray ensureCapacity(long minCapacity);
 
-    public MutablePFixedArray trim();
+    MutablePFixedArray trim();
 
-    public MutablePFixedArray append(Array appendedArray);
+    MutablePFixedArray append(Array appendedArray);
 
-    public MutablePFixedArray asCopyOnNextWrite();
+    MutablePFixedArray asCopyOnNextWrite();
 
-    public MutablePFixedArray shallowClone();
+    MutablePFixedArray shallowClone();
 }

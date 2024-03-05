@@ -68,14 +68,14 @@ public interface MutableArray extends Stack, UpdatableArray {
      * @throws IllegalArgumentException if the specified length is negative.
      * @see Arrays#lengthUnsigned(MutableArray, long)
    */
-    public MutableArray length(long newLength);
+    MutableArray length(long newLength);
 
     /**
      * Equivalent to the call <tt>{@link #length(long) length}(0)</tt>.
      *
      * @return a reference to this array.
      */
-    public default MutableArray clear() {
+    default MutableArray clear() {
         return length(0);
     }
 
@@ -89,7 +89,7 @@ public interface MutableArray extends Stack, UpdatableArray {
      * @throws TooLargeArrayException   if the specified capacity is too large for this type of arrays.
      * @throws IllegalArgumentException if the specified capacity is negative.
      */
-    public MutableArray ensureCapacity(long minCapacity);
+    MutableArray ensureCapacity(long minCapacity);
 
     /**
      * Trims the capacity of this array to be the array's current length.
@@ -99,7 +99,7 @@ public interface MutableArray extends Stack, UpdatableArray {
      *
      * @return a reference to this array.
      */
-    public MutableArray trim();
+    MutableArray trim();
 
     /**
      * Appends the specified array to the end of this array.
@@ -114,17 +114,17 @@ public interface MutableArray extends Stack, UpdatableArray {
      * @throws TooLargeArrayException   if the resulting array length is too large for this type of arrays.
      * @see #asUnresizable()
      */
-    public MutableArray append(Array appendedArray);
+    MutableArray append(Array appendedArray);
 
-    public MutableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutableArray setData(long arrayPos, Object srcArray);
+    MutableArray setData(long arrayPos, Object srcArray);
 
-    public MutableArray copy(Array src);
+    MutableArray copy(Array src);
 
-    public MutableArray swap(UpdatableArray another);
+    MutableArray swap(UpdatableArray another);
 
-    public MutableArray asCopyOnNextWrite();
+    MutableArray asCopyOnNextWrite();
 
-    public MutableArray shallowClone();
+    MutableArray shallowClone();
 }

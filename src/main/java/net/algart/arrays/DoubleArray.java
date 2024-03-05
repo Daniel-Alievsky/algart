@@ -34,11 +34,11 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface DoubleArray extends PFloatingArray {
-    public Class<? extends DoubleArray> type();
+    Class<? extends DoubleArray> type();
 
-    public Class<? extends UpdatableDoubleArray> updatableType();
+    Class<? extends UpdatableDoubleArray> updatableType();
 
-    public Class<? extends MutableDoubleArray> mutableType();
+    Class<? extends MutableDoubleArray> mutableType();
 
     /**
      * Returns the element #<tt>index</tt>.
@@ -47,7 +47,7 @@ public interface DoubleArray extends PFloatingArray {
      * @return      the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
-    public double getDouble(long index);
+    double getDouble(long index);
 
     /**
      * Returns the minimal index <tt>k</tt>, so that
@@ -69,7 +69,7 @@ public interface DoubleArray extends PFloatingArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long indexOf(long lowIndex, long highIndex, double value);
+    long indexOf(long lowIndex, long highIndex, double value);
 
     /**
      * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
@@ -91,23 +91,23 @@ public interface DoubleArray extends PFloatingArray {
      *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
      *                  or <tt>-1</tt> if this value does not occur in this range.
      */
-    public long lastIndexOf(long lowIndex, long highIndex, double value);
+    long lastIndexOf(long lowIndex, long highIndex, double value);
 
-    public DataDoubleBuffer buffer(DataBuffer.AccessMode mode, long capacity);
+    DataDoubleBuffer buffer(DataBuffer.AccessMode mode, long capacity);
 
-    public DataDoubleBuffer buffer(DataBuffer.AccessMode mode);
+    DataDoubleBuffer buffer(DataBuffer.AccessMode mode);
 
-    public DataDoubleBuffer buffer(long capacity);
+    DataDoubleBuffer buffer(long capacity);
 
-    public DataDoubleBuffer buffer();
+    DataDoubleBuffer buffer();
 
-    public DoubleArray asImmutable();
+    DoubleArray asImmutable();
 
-    public DoubleArray asTrustedImmutable();
+    DoubleArray asTrustedImmutable();
 
-    public MutableDoubleArray mutableClone(MemoryModel memoryModel);
+    MutableDoubleArray mutableClone(MemoryModel memoryModel);
 
-    public UpdatableDoubleArray updatableClone(MemoryModel memoryModel);
+    UpdatableDoubleArray updatableClone(MemoryModel memoryModel);
 
     default Matrix<? extends DoubleArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
