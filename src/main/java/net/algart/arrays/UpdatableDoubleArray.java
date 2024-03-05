@@ -79,5 +79,9 @@ public interface UpdatableDoubleArray extends DoubleArray, UpdatablePFloatingArr
     public UpdatableDoubleArray subArr(long position, long count);
 
     public UpdatableDoubleArray asUnresizable();
+
+    default Matrix<UpdatableDoubleArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

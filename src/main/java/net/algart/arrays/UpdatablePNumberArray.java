@@ -37,4 +37,7 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface UpdatablePNumberArray extends PNumberArray, UpdatablePArray {
+    default Matrix<? extends UpdatablePNumberArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 }

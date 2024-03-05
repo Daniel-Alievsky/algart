@@ -206,4 +206,9 @@ public interface PArray extends Array {
     public MutablePArray mutableClone(MemoryModel memoryModel);
 
     public UpdatablePArray updatableClone(MemoryModel memoryModel);
+
+    @Override
+    default Matrix<? extends PArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 }

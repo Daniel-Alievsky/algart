@@ -109,5 +109,9 @@ public interface LongArray extends PIntegerArray {
     public MutableLongArray mutableClone(MemoryModel memoryModel);
 
     public UpdatableLongArray updatableClone(MemoryModel memoryModel);
+
+    default Matrix<? extends LongArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

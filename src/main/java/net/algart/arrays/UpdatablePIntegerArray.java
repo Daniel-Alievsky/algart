@@ -43,4 +43,8 @@ public interface UpdatablePIntegerArray
     public UpdatablePIntegerArray subArr(long position, long count);
 
     public UpdatablePIntegerArray asUnresizable();
+
+    default Matrix<? extends UpdatablePIntegerArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 }

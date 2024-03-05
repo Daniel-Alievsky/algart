@@ -48,4 +48,8 @@ public interface PIntegerArray extends PFixedArray, PNumberArray {
     public MutablePIntegerArray mutableClone(MemoryModel memoryModel);
 
     public UpdatablePIntegerArray updatableClone(MemoryModel memoryModel);
+
+    default Matrix<? extends PIntegerArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 }

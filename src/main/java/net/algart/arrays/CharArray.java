@@ -109,5 +109,9 @@ public interface CharArray extends PFixedArray {
     public MutableCharArray mutableClone(MemoryModel memoryModel);
 
     public UpdatableCharArray updatableClone(MemoryModel memoryModel);
+
+    default Matrix<? extends CharArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

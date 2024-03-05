@@ -43,4 +43,8 @@ public interface UpdatablePFixedArray extends PFixedArray, UpdatablePArray {
     public UpdatablePFixedArray subArr(long position, long count);
 
     public UpdatablePFixedArray asUnresizable();
+
+    default Matrix<? extends UpdatablePFixedArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 }

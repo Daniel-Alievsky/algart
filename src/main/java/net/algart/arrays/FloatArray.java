@@ -106,6 +106,10 @@ public interface FloatArray extends PFloatingArray {
     public MutableFloatArray mutableClone(MemoryModel memoryModel);
 
     public UpdatableFloatArray updatableClone(MemoryModel memoryModel);
+
+    default Matrix<? extends FloatArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.SectionEnd resultTypes*/
 /*Repeat.SectionEnd all*/
 }

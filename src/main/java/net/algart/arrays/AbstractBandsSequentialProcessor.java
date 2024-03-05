@@ -59,7 +59,7 @@ abstract class AbstractBandsSequentialProcessor extends Arrays.ParallelExecutor 
 
     static boolean allBandsDirect(PArray[] bands) {
         for (PArray band : bands) {
-            if (!(band instanceof DirectAccessible && ((DirectAccessible) band).hasJavaArray())) {
+            if (!(band instanceof DirectAccessible da && da.hasJavaArray())) {
                 return false;
             }
         }

@@ -80,5 +80,9 @@ public interface UpdatableLongArray extends LongArray, UpdatablePIntegerArray {
     public UpdatableLongArray subArr(long position, long count);
 
     public UpdatableLongArray asUnresizable();
+
+    default Matrix<UpdatableLongArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

@@ -41,4 +41,8 @@ public interface PNumberArray extends PArray {
     public Class<? extends UpdatablePNumberArray> updatableType();
 
     public Class<? extends MutablePNumberArray> mutableType();
+
+    default Matrix<? extends PNumberArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 }

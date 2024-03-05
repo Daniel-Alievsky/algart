@@ -30,6 +30,7 @@ import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.image.*;
 import java.util.Locale;
+import java.util.Objects;
 
 public abstract class MatrixToBufferedImageConverter {
     /**
@@ -317,14 +318,19 @@ public abstract class MatrixToBufferedImageConverter {
 
         @Override
         protected java.awt.image.DataBuffer toDataBuffer(PArray packedArray, int bandCount) {
-            if (!(packedArray instanceof ByteArray))
+            if (!(packedArray instanceof ByteArray)) {
                 throw new IllegalArgumentException("ByteArray required");
-            if (!(packedArray instanceof DirectAccessible))
+            }
+            if (!(packedArray instanceof DirectAccessible)) {
                 throw new IllegalArgumentException("DirectAccessible packedArray required");
+            }
             int len = (int) (packedArray.length() / bandCount);
+            if ((long) len * (long) bandCount != packedArray.length()) {
+                throw new IllegalArgumentException("Unaligned ByteArray: its length " + packedArray.length() +
+                        " is not divided by band count = " + bandCount);
+            }
             byte[] ja = (byte[]) ((DirectAccessible) packedArray).javaArray();
             int offset = ((DirectAccessible) packedArray).javaArrayOffset();
-            assert len * (long) bandCount == packedArray.length();
             switch (bandCount) {
                 case 1: {
                     if (addAlpha) {
@@ -426,14 +432,19 @@ public abstract class MatrixToBufferedImageConverter {
 
         @Override
         protected java.awt.image.DataBuffer toDataBuffer(PArray packedArray, int bandCount) {
-            if (!(packedArray instanceof ByteArray))
+            if (!(packedArray instanceof ByteArray)) {
                 throw new IllegalArgumentException("ByteArray required");
-            if (!(packedArray instanceof DirectAccessible))
+            }
+            if (!(packedArray instanceof DirectAccessible)) {
                 throw new IllegalArgumentException("DirectAccessible packedArray required");
+            }
             int len = (int) (packedArray.length() / bandCount);
+            if ((long) len * (long) bandCount != packedArray.length()) {
+                throw new IllegalArgumentException("Unaligned ByteArray: its length " + packedArray.length() +
+                        " is not divided by band count = " + bandCount);
+            }
             byte[] ja = (byte[]) ((DirectAccessible) packedArray).javaArray();
             int offset = ((DirectAccessible) packedArray).javaArrayOffset();
-            assert len * bandCount == packedArray.length();
             switch (bandCount) {
                 case 1: {
                     if (addAlpha) {
@@ -521,10 +532,8 @@ public abstract class MatrixToBufferedImageConverter {
         // Arguments must be in 0.0..1.0 range!
         public MonochromeToIndexed(double[] baseColor0, double[] baseColor255) {
             super(false);
-            if (baseColor0 == null)
-                throw new NullPointerException("Null baseColor0");
-            if (baseColor255 == null)
-                throw new NullPointerException("Null baseColor255");
+            Objects.requireNonNull(baseColor0, "Null baseColor0");
+            Objects.requireNonNull(baseColor255, "Null baseColor255");
             this.baseColor0 = new byte[4];
             this.baseColor255 = new byte[4];
             for (int k = 0; k < 4; k++) {

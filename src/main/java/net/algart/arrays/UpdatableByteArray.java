@@ -80,5 +80,9 @@ public interface UpdatableByteArray extends ByteArray, UpdatablePIntegerArray {
     public UpdatableByteArray subArr(long position, long count);
 
     public UpdatableByteArray asUnresizable();
+
+    default Matrix<UpdatableByteArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

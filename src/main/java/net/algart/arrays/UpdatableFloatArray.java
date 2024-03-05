@@ -77,6 +77,10 @@ public interface UpdatableFloatArray extends FloatArray, UpdatablePFloatingArray
     public UpdatableFloatArray subArr(long position, long count);
 
     public UpdatableFloatArray asUnresizable();
+
+    default Matrix<UpdatableFloatArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.SectionEnd resultTypes*/
 /*Repeat.SectionEnd all*/
 }

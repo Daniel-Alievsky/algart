@@ -159,4 +159,8 @@ public interface PFixedArray extends PArray {
     public MutablePFixedArray mutableClone(MemoryModel memoryModel);
 
     public UpdatablePFixedArray updatableClone(MemoryModel memoryModel);
+
+    default Matrix<? extends PFixedArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 }

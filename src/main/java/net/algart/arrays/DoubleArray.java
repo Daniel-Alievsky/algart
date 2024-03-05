@@ -108,5 +108,9 @@ public interface DoubleArray extends PFloatingArray {
     public MutableDoubleArray mutableClone(MemoryModel memoryModel);
 
     public UpdatableDoubleArray updatableClone(MemoryModel memoryModel);
+
+    default Matrix<? extends DoubleArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

@@ -116,6 +116,10 @@ public interface BitArray extends PFixedArray {
     public MutableBitArray mutableClone(MemoryModel memoryModel);
 
     public UpdatableBitArray updatableClone(MemoryModel memoryModel);
+
+    default Matrix<? extends BitArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 
     /**

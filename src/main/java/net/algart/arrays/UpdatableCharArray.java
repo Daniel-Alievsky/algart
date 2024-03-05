@@ -80,5 +80,9 @@ public interface UpdatableCharArray extends CharArray, UpdatablePFixedArray {
     public UpdatableCharArray subArr(long position, long count);
 
     public UpdatableCharArray asUnresizable();
+
+    default Matrix<UpdatableCharArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

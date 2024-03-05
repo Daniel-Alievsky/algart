@@ -262,14 +262,14 @@ public interface Array {
      *
      * @param arrayPos  starting position in this AlgART array.
      * @param destArray the target Java array.
-     * @throws NullPointerException      if <tt>destArray</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException  if <tt>destArray</tt> argument is not an array.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
-     *                                   {@link #elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
-     *                                   {@link #elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
-     *                                   depending on implementation).
+     * @throws NullPointerException     if <tt>destArray</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>destArray</tt> argument is not an array.
+     * @throws ArrayStoreException      if <tt>destArray</tt> element type mismatches with this array
+     *                                  {@link #elementType()}.
+     * @throws ClassCastException       if <tt>destArray</tt> element type mismatches with this array
+     *                                  {@link #elementType()}
+     *                                  (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                  depending on implementation).
      * @see DirectAccessible
      * @see #getData(long, Object, int, int)
      * @see UpdatableArray#setData(long, Object)
@@ -588,7 +588,7 @@ public interface Array {
      * to learn more about possible usage of this method.
      *
      * @return a trusted immutable view of this array (or a reference to this array if it is already
-     *         trusted immutable).
+     * trusted immutable).
      * @see #asImmutable()
      * @see #checkUnallowedMutation()
      */
@@ -893,7 +893,7 @@ public interface Array {
      * (usually it just returns a constant or a value of some private field).
      *
      * @return whether this array instance is a newly created <i>view</i> of some
-     *         external data, providing <i>read-only</i> access to this data.
+     * external data, providing <i>read-only</i> access to this data.
      */
     public boolean isNewReadOnlyView();
 
@@ -998,9 +998,7 @@ public interface Array {
     public Array shallowClone();
 
     /**
-     * Returns a mutable resizable copy of this array.
-     *
-     * This method is equivalent to the following code:
+     * Returns a mutable resizable copy of this array. This method is equivalent to the following code:
      *
      * <pre>
      * memoryModel.{@link MemoryModel#newArray(Array)
@@ -1020,12 +1018,11 @@ public interface Array {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return a mutable copy of this array.
-     * @throws NullPointerException   if the argument is <tt>null</tt>.
-     * @throws UnsupportedElementTypeException
-     *                                if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
-     *                                by the specified memory model.
-     * @throws TooLargeArrayException if the {@link Array#length() length} of this array is too large
-     *                                for this the specified memory model.
+     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws UnsupportedElementTypeException if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
+     *                                         by the specified memory model.
+     * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
+     *                                         for this the specified memory model.
      * @see #updatableClone(MemoryModel)
      */
     public MutableArray mutableClone(MemoryModel memoryModel);
@@ -1052,15 +1049,31 @@ public interface Array {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return an updatable copy of this array.
-     * @throws NullPointerException   if the argument is <tt>null</tt>.
-     * @throws UnsupportedElementTypeException
-     *                                if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
-     *                                by the specified memory model.
-     * @throws TooLargeArrayException if the {@link Array#length() length} of this array is too large
-     *                                for this the specified memory model.
+     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws UnsupportedElementTypeException if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
+     *                                         by the specified memory model.
+     * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
+     *                                         for this the specified memory model.
      * @see #mutableClone(MemoryModel)
      */
     public UpdatableArray updatableClone(MemoryModel memoryModel);
+
+    /**
+     * Equivalent to <tt>{@link Matrices#matrix(Array, long[]) matrix}(thisArray, dim)</tt>.
+     *
+     * @param dim the matrix dimensions.
+     * @return new matrix backed by <tt>array</tt> with the given dimensions.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>dim</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if the passed array is resizable
+     *                                  (for example, implements {@link MutableArray}),
+     *                                  or if the number of dimensions is 0 (empty <tt>dim</tt> Java array),
+     *                                  or if some of dimensions are negative.
+     * @throws SizeMismatchException    if the product of all dimensions is not equal to the array length.
+     * @throws TooLargeArrayException   if the product of all dimensions is greater than <tt>Long.MAX_VALUE</tt>.
+     */
+    default Matrix<? extends Array> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 
     /**
      * If there are some external resources, associated with this array, &mdash;

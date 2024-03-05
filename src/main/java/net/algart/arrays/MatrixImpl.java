@@ -24,16 +24,18 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 class MatrixImpl<T extends Array> extends AbstractMatrix<T> implements Matrix<T> {
     private final T array;
     private final long[] dimensions;
 
     MatrixImpl(T array, long[] dimensions) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (!array.isUnresizable())
+        Objects.requireNonNull(array, "Null array argument");
+        if (!array.isUnresizable()) {
             throw new IllegalArgumentException("Matrix cannot be created on the base of resizable array: "
                 + "please use UpdatableArray.asUnresizable() method before constructing a matrix");
+        }
         this.array = array;
         this.dimensions = dimensions.clone();
         checkDimensions(this.dimensions, array.length());

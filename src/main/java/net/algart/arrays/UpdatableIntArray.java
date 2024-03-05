@@ -80,5 +80,9 @@ public interface UpdatableIntArray extends IntArray, UpdatablePIntegerArray {
     public UpdatableIntArray subArr(long position, long count);
 
     public UpdatableIntArray asUnresizable();
+
+    default Matrix<UpdatableIntArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

@@ -111,5 +111,9 @@ public interface ByteArray extends PIntegerArray {
     public MutableByteArray mutableClone(MemoryModel memoryModel);
 
     public UpdatableByteArray updatableClone(MemoryModel memoryModel);
+
+    default Matrix<? extends ByteArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

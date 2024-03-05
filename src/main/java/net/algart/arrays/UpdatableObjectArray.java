@@ -91,5 +91,9 @@ public interface UpdatableObjectArray<E> extends ObjectArray<E>, UpdatableArray 
     public UpdatableObjectArray<E> subArr(long position, long count);
 
     public UpdatableObjectArray<E> asUnresizable();
+
+    default Matrix<UpdatableObjectArray<E>> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

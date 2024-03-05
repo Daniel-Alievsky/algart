@@ -46,4 +46,8 @@ public interface PFloatingArray extends PNumberArray {
     public MutablePFloatingArray mutableClone(MemoryModel memoryModel);
 
     public UpdatablePFloatingArray updatableClone(MemoryModel memoryModel);
+
+    default Matrix<? extends PFloatingArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 }

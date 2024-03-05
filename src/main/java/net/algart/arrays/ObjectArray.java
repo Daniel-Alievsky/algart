@@ -144,5 +144,9 @@ public interface ObjectArray<E> extends Array {
     public MutableObjectArray<E> mutableClone(MemoryModel memoryModel);
 
     public UpdatableObjectArray<E> updatableClone(MemoryModel memoryModel);
+
+    default Matrix<? extends ObjectArray<E>> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

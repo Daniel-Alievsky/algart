@@ -38,4 +38,8 @@ public interface UpdatablePFloatingArray extends PFloatingArray, UpdatablePNumbe
     public UpdatablePFloatingArray subArr(long position, long count);
 
     public UpdatablePFloatingArray asUnresizable();
+
+    default Matrix<? extends UpdatablePFloatingArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
 }

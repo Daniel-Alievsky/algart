@@ -80,5 +80,9 @@ public interface UpdatableShortArray extends ShortArray, UpdatablePIntegerArray 
     public UpdatableShortArray subArr(long position, long count);
 
     public UpdatableShortArray asUnresizable();
+
+    default Matrix<UpdatableShortArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }

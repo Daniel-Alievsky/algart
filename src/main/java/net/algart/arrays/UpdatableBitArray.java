@@ -82,6 +82,10 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     public UpdatableBitArray subArr(long position, long count);
 
     public UpdatableBitArray asUnresizable();
+
+    default Matrix<UpdatableBitArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 
     /**

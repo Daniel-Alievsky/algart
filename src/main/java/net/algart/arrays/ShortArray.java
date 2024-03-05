@@ -111,5 +111,9 @@ public interface ShortArray extends PIntegerArray {
     public MutableShortArray mutableClone(MemoryModel memoryModel);
 
     public UpdatableShortArray updatableClone(MemoryModel memoryModel);
+
+    default Matrix<? extends ShortArray> matrix(long... dim) {
+        return Matrices.matrix(this, dim);
+    }
     /*Repeat.IncludeEnd*/
 }
