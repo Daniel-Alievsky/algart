@@ -92,28 +92,20 @@ public interface ArrayContext {
 
     /**
      * Creates the simplest implementation of {@link ArrayContext} with the only difference from
-     * the {@link #DEFAULT} object,
+     * the {@link #DEFAULT}/{@link #DEFAULT_SINGLE_THREAD} objects,
      * that {@link #getMemoryModel()} method will return the specified memory model.
+     * (If <tt>multithreading</tt> argument is <tt>true</tt>, the result will work as
+     * {@link #DEFAULT} object, if <tt>false</tt>, it will work as {@link #DEFAULT_SINGLE_THREAD}.)
      *
      * @param memoryModel memory model.
+     * @param multithreading whether the returned context will use multithreading.
      * @return new array context.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
-    static ArrayContext getSimple(MemoryModel memoryModel) {
-        return new AbstractArrayContext.Default(memoryModel);
-    }
-
-    /**
-     * Creates the simplest implementation of {@link ArrayContext} with the only difference from
-     * the {@link #DEFAULT_SINGLE_THREAD} object,
-     * that {@link #getMemoryModel()} method will return the specified memory model.
-     *
-     * @param memoryModel memory model.
-     * @return new array context.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
-     */
-    static ArrayContext getSimpleSingleThread(MemoryModel memoryModel) {
-        return new AbstractArrayContext.DefaultSingleThread(memoryModel);
+    static ArrayContext getSimpleContext(MemoryModel memoryModel, boolean multithreading) {
+        return multithreading ?
+                new AbstractArrayContext.Default(memoryModel) :
+                new AbstractArrayContext.DefaultSingleThread(memoryModel);
     }
 
     /**
