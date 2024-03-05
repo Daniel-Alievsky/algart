@@ -211,9 +211,9 @@ public interface ArrayContext {
      * It can be necessary, for example, if an algorithm uses some external work memory,
      * which must be unique in every thread.
      *
-     * <p>Note: this method is often used together with {@link #singleThreadVersion()}, for example:<br>
+     * <p>Note: this method may be used together with {@link #singleThreadVersion()}, for example:<br>
      * <tt>&nbsp;&nbsp;&nbsp;&nbsp;arrayContext.{@link #singleThreadVersion()
-     * singleThreadVersion()}.multithreadedVersion(k,n)</tt>.<br>
+     * singleThreadVersion()}.multithreadingVersion(k,n)</tt>.<br>
      * Really, there is usually no sense to allow using multithreading (creating thread pools
      * by {@link ThreadPoolFactory} with more than 1 thread) in a thread, which is already called
      * in a multithreading environment simultaneously with other threads.
@@ -226,7 +226,7 @@ public interface ArrayContext {
      * @throws IllegalArgumentException if <tt>numberOfThreads&le;0</tt> or if <tt>currentThreadIndex</tt>
      *                                  does not lie in <nobr><tt>0..numberOfThreads-1</tt></nobr> range.
      */
-    ArrayContext multithreadedVersion(int currentThreadIndex, int numberOfThreads);
+    ArrayContext multithreadingVersion(int currentThreadIndex, int numberOfThreads);
 
     /**
      * Returns new context, identical to this one with the only exception that
@@ -325,7 +325,7 @@ public interface ArrayContext {
      * (usually, to optimize calculations on multiprocessor or multi-core computers).
      *
      * <p>To create a context, in which this method returns a value different than <tt>0</tt>, please use
-     * <nobr>{@link #multithreadedVersion(int currentThreadIndex, int numberOfThreads)}</nobr> method.
+     * <nobr>{@link #multithreadingVersion(int currentThreadIndex, int numberOfThreads)}</nobr> method.
      *
      * <p>The result of this method always lies in <tt>0..{@link #numberOfThreads() numberOfThreads()}-1</tt> range.
      *
@@ -334,7 +334,7 @@ public interface ArrayContext {
      * @return the index of the currently executing thread in a group of {@link #numberOfThreads()} parallel threads,
      *         or <tt>0</tt> if this feature is not used.
      */
-    public int currentThreadIndex();
+    int currentThreadIndex();
 
     /**
      * Usually returns <tt>1</tt>, but in multithreading environment this method <i>may</i> return the number
@@ -348,7 +348,7 @@ public interface ArrayContext {
      * the maximal possible value of {@link #currentThreadIndex()}.
      *
      * <p>To create a context, in which this method returns a value different than <tt>1</tt>, please use
-     * <nobr>{@link #multithreadedVersion(int currentThreadIndex, int numberOfThreads)}</nobr> method.
+     * <nobr>{@link #multithreadingVersion(int currentThreadIndex, int numberOfThreads)}</nobr> method.
      *
      * <p>The result of this method is always positive (<tt>&ge;1</tt>).
      *
@@ -357,7 +357,7 @@ public interface ArrayContext {
      * @return the number of executing threads in a group of parallel threads,
      *         or <tt>1</tt> if this feature is not used.
      */
-    public int numberOfThreads();
+    int numberOfThreads();
 
     /**
      * Usually returns <tt>null</tt>, but in a special environment this method may return some custom object,

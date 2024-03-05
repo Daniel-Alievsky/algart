@@ -391,7 +391,7 @@ import java.util.*;
  * with correctly filled {@link ArrayContext#customData() customData()} (an instance of {@link TileInformation}),
  * and in addition:</p>
  * <ul>
- *     <li>{@link ArrayContext#multithreadedVersion(int k, int n)} method is called &mdash; so,
+ *     <li>{@link ArrayContext#multithreadingVersion(int k, int n)} method is called &mdash; so,
  *     the one-tile processor can determine, in which of several parallel threads it is called
  *     (the index <tt>k</tt>) and what is the total number of parallel threads
  *     (the value <tt>n&le;{@link #numberOfTasks()}</tt> &mdash; it can be less than {@link #numberOfTasks()},
@@ -1007,7 +1007,7 @@ public final class TiledApertureProcessorFactory {
                 tasks[taskIndex] = new Runnable() {
                     public void run() {
                         ArrayContext tileContext = switchingContextSupported() ?
-                            ac.part(0.05, 0.95).multithreadedVersion(ti, nt).customDataVersion(new TileInformation(
+                            ac.part(0.05, 0.95).multithreadingVersion(ti, nt).customDataVersion(new TileInformation(
                                 IRectangularArea.valueOf(IPoint.valueOf(tilePos), IPoint.valueOf(tileMax)),
                                 IRectangularArea.valueOf(IPoint.valueOf(extTilePos), IPoint.valueOf(extTileMax)))) :
                             ac;

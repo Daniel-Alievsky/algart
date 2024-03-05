@@ -1264,7 +1264,7 @@
  All AlgART arrays <b>are thread-compatible</b>:
  there are no problems to use an external synchronization to provide simultaneous access
  to any kind of arrays from several threads. See <a href="#multithreading">above</a>
- the precise specification of array behaviour in a case of multithreaded access.</li>
+ the precise specification of array behaviour in a case of multithreading access.</li>
 
  <li>AlgART arrays <b>do not support serialization</b> (do not implement <tt>java.io.Serializable</tt>
  interface). However, the {@link net.algart.arrays.LargeMemoryModel Large memory model}

@@ -76,21 +76,21 @@ public abstract class AbstractArrayContext implements ArrayContext {
         return new SingleThreadVersion();
     }
 
-    public ArrayContext multithreadedVersion(int currentThreadIndex, int numberOfThreads) {
+    public ArrayContext multithreadingVersion(int currentThreadIndex, int numberOfThreads) {
         if (numberOfThreads <= 0)
             throw new IllegalArgumentException("Zero or negative number of threads " + numberOfThreads
-                + " while creating multithreaded array context");
+                + " while creating multithreading array context");
         if (currentThreadIndex < 0)
             throw new IllegalArgumentException("Negative index of the current thread " + currentThreadIndex
-                + " while creating multithreaded array context");
+                + " while creating multithreading array context");
         if (currentThreadIndex >= numberOfThreads)
             throw new IllegalArgumentException("Index of the current thread " + currentThreadIndex
                 + " is out of range 0..(numberOfThreads-1)=" + (numberOfThreads - 1)
-                + " while creating multithreaded array context");
+                + " while creating multithreading array context");
         if (currentThreadIndex == currentThreadIndex() && numberOfThreads == numberOfThreads()) {
             return this;
         }
-        return new MultithreadedVersion(currentThreadIndex, numberOfThreads);
+        return new MultithreadingVersion(currentThreadIndex, numberOfThreads);
     }
 
     public ArrayContext customDataVersion(Object customData) {
@@ -322,11 +322,11 @@ public abstract class AbstractArrayContext implements ArrayContext {
         }
     }
 
-    private class MultithreadedVersion extends AbstractArrayContext implements ArrayContext {
+    private class MultithreadingVersion extends AbstractArrayContext implements ArrayContext {
         private final int currentThreadIndex;
         private final int numberOfThreads;
 
-        private MultithreadedVersion(int currentThreadIndex, int numberOfThreads) {
+        private MultithreadingVersion(int currentThreadIndex, int numberOfThreads) {
             assert numberOfThreads > 0 && currentThreadIndex >= 0 && currentThreadIndex < numberOfThreads;
             this.currentThreadIndex = currentThreadIndex;
             this.numberOfThreads = numberOfThreads;
