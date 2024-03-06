@@ -7345,21 +7345,29 @@ public class Arrays {
          * @throws SizeMismatchException    if <tt>dest!=null</tt> and <tt>dest.length()!=src.length()</tt>.
          * @see #correctNumberOfRanges(long, int)
          */
-        protected ParallelExecutor(ArrayContext context, UpdatableArray dest, Array src,
-                                   int blockSize, int numberOfTasks, long numberOfRanges)
-        {
+        protected ParallelExecutor(
+                ArrayContext context,
+                UpdatableArray dest,
+                Array src,
+                int blockSize,
+                int numberOfTasks,
+                long numberOfRanges) {
             Objects.requireNonNull(src, "Null src argument");
-            if (blockSize <= 0)
+            if (blockSize <= 0) {
                 throw new IllegalArgumentException("Negative or zero blockSize=" + blockSize);
-            if (numberOfTasks < 0)
+            }
+            if (numberOfTasks < 0) {
                 throw new IllegalArgumentException("Negative numberOfTasks=" + numberOfTasks);
-            if (numberOfRanges < 0)
+            }
+            if (numberOfRanges < 0) {
                 throw new IllegalArgumentException("Negative numberOfRanges=" + numberOfRanges);
+            }
             this.context = context;
             this.dest = dest;
             this.src = src;
-            if (dest != null && src.length() != dest.length())
+            if (dest != null && src.length() != dest.length()) {
                 throw new SizeMismatchException("dest.length() and src.length() mismatch");
+            }
             this.length = src.length();
             this.blockSize = blockSize;
             this.threadPoolFactory = Arrays.getThreadPoolFactory(context);
@@ -7440,6 +7448,15 @@ public class Arrays {
                 throw new IllegalArgumentException("Zero or negative numberOfRanges=" + numberOfRanges);
             return numberOfRanges % numberOfTasks == 0 ? numberOfRanges :
                 numberOfRanges - numberOfRanges % numberOfTasks + numberOfTasks;
+        }
+
+        /**
+         * Returns context, passed as the argument of the constructor.
+         *
+         * @return context.
+         */
+        public ArrayContext context() {
+            return context;
         }
 
         /**

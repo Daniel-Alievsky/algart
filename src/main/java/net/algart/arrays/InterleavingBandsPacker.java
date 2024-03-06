@@ -83,6 +83,15 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
     }
 
     @Override
+    public void process() {
+        if (bands.length == 1) {
+            Arrays.copy(context(), packed, bands[0]);
+        } else {
+            super.process();
+        }
+    }
+
+    @Override
     public abstract void close();
 
     @Override

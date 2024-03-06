@@ -1791,6 +1791,23 @@ public class Matrices {
         return result;
     }
 
+    public static void separate(
+            ArrayContext context,
+            List<? extends Matrix<? extends UpdatablePArray>> result,
+            Matrix<? extends PArray> interleaved) {
+        Objects.requireNonNull(result, "Null result list");
+        Objects.requireNonNull(interleaved, "Null interleaved matrix");
+        final List<Matrix<? extends UpdatablePArray>> list = new ArrayList<>(result);
+        if (list.isEmpty()) {
+            throw new IllegalArgumentException("Empty separated list");
+        }
+        final UpdatablePArray[] arrays = arraysOfParallelMatrices(UpdatablePArray.class, list, true);
+        checkDimensionEqualityWithInterleaving(interleaved, list);
+        try (var unpacker = InterleavingBandsUnpacker.getInstance(context, arrays, interleaved.array())) {
+            unpacker.process();
+        }
+    }
+
     public static <T extends PArray> List<Matrix<T>> separate(ArrayContext context, Matrix<? extends T> interleaved) {
         return separate(context, interleaved, Integer.MAX_VALUE);
     }
@@ -1800,24 +1817,11 @@ public class Matrices {
             Matrix<? extends T> interleaved,
             int limit) {
         Objects.requireNonNull(interleaved, "Null interleaved matrix");
-        if (limit <= 0) {
-            throw new IllegalArgumentException("Zero or negative limit " + limit);
-        }
         final long[] dimensions = interleaved.dimensions();
-        if (dimensions.length <= 1) {
-            throw new IllegalArgumentException("Interleaved matrix must have at least 2 dimensions");
-        }
-        final long numberOfMatrices = dimensions[0];
-        if (numberOfMatrices > limit) {
-            throw new IllegalArgumentException("Too large number of matrices to separate: "
-                    + numberOfMatrices + " > allowed limit " + limit);
-        }
-        assert numberOfMatrices >= 0 : "illegal Matrix.dimensions() behaviour: negative dimension";
-        assert numberOfMatrices == (int) numberOfMatrices : "numberOfMatrices must be <= 31-bit limit " + limit;
-        final MemoryModel mm = context == null ? Arrays.SMM : context.getMemoryModel();
+        final long numberOfMatrices = numberOfChannels(dimensions, false, limit);
         final long[] reducedDimensions = java.util.Arrays.copyOfRange(dimensions, 1, dimensions.length);
-        final T array = interleaved.array();
-        Class<?> elementType = array.elementType();
+        final MemoryModel mm = context == null ? Arrays.SMM : context.getMemoryModel();
+        Class<?> elementType = interleaved.elementType();
         final UpdatablePArray[] arrays = new UpdatablePArray[(int) numberOfMatrices];
         final List<Matrix<T>> result = new ArrayList<>();
         for (int k = 0; k < numberOfMatrices; k++) {
@@ -1825,14 +1829,27 @@ public class Matrices {
             arrays[k] = m.array();
             result.add(InternalUtils.cast(m));
         }
-        if (numberOfMatrices == 1) {
-            Arrays.copy(null, (UpdatablePArray) result.get(0).array(), array);
-        } else {
-            try (InterleavingBandsUnpacker unpacker = InterleavingBandsUnpacker.getInstance(context, arrays, array)) {
-                unpacker.process();
-            }
+        try (var unpacker = InterleavingBandsUnpacker.getInstance(context, arrays, interleaved.array())) {
+            unpacker.process();
         }
         return result;
+    }
+
+    public static void interleave(
+            ArrayContext context,
+            Matrix<? extends UpdatablePArray> result,
+            List<? extends Matrix<? extends PArray>> separated) {
+        Objects.requireNonNull(result, "Null result argument");
+        Objects.requireNonNull(separated, "Null separated argument");
+        final List<Matrix<? extends PArray>> list = new ArrayList<>(separated);
+        if (list.isEmpty()) {
+            throw new IllegalArgumentException("Empty separated list");
+        }
+        final PArray[] arrays = arraysOfParallelMatrices(PArray.class, list, true);
+        checkDimensionEqualityWithInterleaving(result, separated);
+        try (var packer = InterleavingBandsPacker.getInstance(context, arrays, result.array())) {
+            packer.process();
+        }
     }
 
     public static <T extends PArray> Matrix<T> interleave(
@@ -1850,13 +1867,8 @@ public class Matrices {
         dimensions[0] = arrays.length;
         final MemoryModel mm = context == null ? Arrays.SMM : context.getMemoryModel();
         final Matrix<UpdatablePArray> result = mm.newMatrix(UpdatablePArray.class, m0.elementType(), dimensions);
-        final UpdatablePArray array = result.array();
-        if (arrays.length == 1) {
-            Arrays.copy(null, array, arrays[0]);
-        } else {
-            try (InterleavingBandsPacker packer = InterleavingBandsPacker.getInstance(context, arrays, array)) {
-                packer.process();
-            }
+        try (var packer = InterleavingBandsPacker.getInstance(context, arrays, result.array())) {
+            packer.process();
         }
         return InternalUtils.cast(result);
     }
@@ -1907,32 +1919,16 @@ public class Matrices {
      */
     public static <T extends Array> List<Matrix<T>> asLayers(Matrix<T> merged, int limit) {
         Objects.requireNonNull(merged, "Null merged matrix");
-        if (limit <= 0) {
-            throw new IllegalArgumentException("Zero or negative limit " + limit);
-        }
         final long[] dimensions = merged.dimensions();
-        if (dimensions.length <= 1) {
-            throw new IllegalArgumentException("Merged matrix must have at least 2 dimensions");
-        }
-        final long numberOfMatrices = dimensions[dimensions.length - 1];
-        if (numberOfMatrices > limit) {
-            throw new IllegalArgumentException("Too large number of matrices to split as layers: "
-                    + numberOfMatrices + " > allowed limit " + limit);
-        }
-        assert numberOfMatrices >= 0 : "illegal Matrix.dimensions() behaviour: negative dimension";
-        assert numberOfMatrices == (int) numberOfMatrices : "numberOfMatrices must be <= 31-bit limit " + limit;
+        final int numberOfMatrices = numberOfChannels(dimensions, true, limit);
         final long[] reducedDimensions = java.util.Arrays.copyOf(dimensions, dimensions.length - 1);
         final long size = Arrays.longMul(reducedDimensions);
-        dimensions[reducedDimensions.length] = 1;
         final T array = merged.array();
         final List<Matrix<T>> result = new ArrayList<>();
-        if (numberOfMatrices == 1) {
-            result.add(merged);
-        } else {
-            for (long k = 0, p = 0; k < numberOfMatrices; k++, p += size) {
-                final T subArray = InternalUtils.cast(array.subArr(p, size));
-                result.add(Matrices.matrix(subArray, reducedDimensions));
-            }
+        long p = 0;
+        for (int k = 0; k < numberOfMatrices; k++, p += size) {
+            final T subArray = InternalUtils.cast(array.subArr(p, size));
+            result.add(Matrices.matrix(subArray, reducedDimensions));
         }
         return result;
     }
@@ -1975,7 +1971,8 @@ public class Matrices {
         final long[] dimensions = java.util.Arrays.copyOf(m0.dimensions(), m0.dimCount() + 1);
         dimensions[dimensions.length - 1] = arrays.length;
         final long size = m0.size();
-        Matrix<UpdatableArray> result = memoryModel.newMatrix(UpdatableArray.class, m0.elementType(), dimensions);
+        final Matrix<UpdatableArray> result = memoryModel.newMatrix(
+                UpdatableArray.class, m0.elementType(), dimensions);
         final UpdatableArray array = result.array();
         long p = 0;
         for (Matrix<?> m : list) {
@@ -4255,6 +4252,10 @@ public class Matrices {
         }
     }
 
+    public static String dimensionsToString(long[] dim) {
+        return dim.length == 1 ? dim[0] + "(x1)" : JArrays.toString(dim, "x", 1000);
+    }
+
     static Object castOutsideValue(Object outsideValue, Array array) {
         if (array instanceof PArray) {
             Number number;
@@ -4309,6 +4310,52 @@ public class Matrices {
                         + outsideValue.getClass() + " to " + array.elementType());
             }
         }
+    }
+
+    private static void checkDimensionEqualityWithInterleaving(
+            Matrix<? extends PArray> interleaved,
+            List<? extends Matrix<? extends PArray>> list) {
+        final long[] dimensions = interleaved.dimensions();
+        if (list.size() != numberOfChannels(dimensions, false)) {
+            throw new IllegalArgumentException("Number of elements in the passed list of separated matrix = "
+                    + list.size() + " does not match to the first dimension of the interleaved matrix "
+                    + interleaved);
+        }
+        final long[] reducedDimensions = java.util.Arrays.copyOfRange(dimensions, 1, dimensions.length);
+        final Matrix<?> m0 = list.get(0);
+        if (!m0.dimEquals(reducedDimensions)) {
+            throw new SizeMismatchException("Dimensions mismatch: the interleaved matrix is " + interleaved +
+                    ", the separated matrices in the list are " + dimensionsToString(m0.dimensions()) +
+                    ", but their dimensions must be equal to the highest " + reducedDimensions.length +
+                    " of all " + dimensions.length + " dimensions of the interleaved matrix");
+        }
+        if (m0.elementType() != interleaved.elementType()) {
+            throw new IllegalArgumentException("Different element type: " +
+                    m0.elementType() + " in the separated matrices, " +
+                    interleaved.elementType() + " in the interleaved matrix");
+        }
+    }
+
+    private static long numberOfChannels(long[] dimensions, boolean lastDimension) {
+        if (dimensions.length <= 1) {
+            throw new IllegalArgumentException("The matrix must have at least 2 dimensions");
+        }
+        final long n = lastDimension ? dimensions[dimensions.length - 1] : dimensions[0];
+        assert n >= 0 : "illegal Matrix.dimensions() behaviour: negative dimension";
+        return n;
+    }
+
+    private static int numberOfChannels(long[] dimensions, boolean lastDimension, int limit) {
+        if (limit <= 0) {
+            throw new IllegalArgumentException("Zero or negative limit " + limit);
+        }
+        final long n = numberOfChannels(dimensions, lastDimension);
+        if (n > limit) {
+            throw new IllegalArgumentException("Too large number of result matrices: "
+                    + n + " > allowed limit " + limit);
+        }
+        assert n == (int) n : "n must be <= 31-bit limit " + limit;
+        return (int) n;
     }
 
     private static IRange[] coordRangesOfVertices(double[][] vertices, int requiredDimCount) {

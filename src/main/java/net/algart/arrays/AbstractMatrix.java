@@ -608,8 +608,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
 
     @Override
     public String toString() {
-        long[] dim = dimensions();
-        return "matrix " + (dim.length == 1 ? dim[0] + "(x1)" : JArrays.toString(dim, "x", 1000)) + " on " + array();
+        return "matrix " + Matrices.dimensionsToString(dimensions()) + " on " + array();
     }
 
     @Override
@@ -619,20 +618,19 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Matrix<?>))
+        if (!(obj instanceof Matrix<?> m)) {
             return false;
-        Matrix<?> m = (Matrix<?>) obj;
+        }
         return dimEquals(m) && m.array().equals(array());
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
-    @SuppressWarnings("unchecked")
     public Matrix<T> clone() {
-
         final Matrix<UpdatableArray> result = Arrays.SMM.newMatrix(UpdatableArray.class, this);
         Matrices.copy(null, result, this);
         // - maximally fast multithreading copying
-        return (Matrix<T>) result;
+        return InternalUtils.cast(result);
     }
 
     static long normalizeMirrorCoord(long coord, long dim) {
