@@ -1807,19 +1807,23 @@ public class Matrices {
         if (dimensions.length <= 1) {
             throw new IllegalArgumentException("Interleaved matrix must have at least 2 dimensions");
         }
-        final long numberOfMatrices = dimensions[dimensions.length - 1];
+        final long numberOfMatrices = dimensions[0];
         if (numberOfMatrices > limit) {
             throw new IllegalArgumentException("Too large number of matrices to separate: "
                     + numberOfMatrices + " > allowed limit " + limit);
         }
+        assert numberOfMatrices >= 0 : "illegal Matrix.dimensions() behaviour: negative dimension";
+        assert numberOfMatrices == (int) numberOfMatrices : "numberOfMatrices must be <= 31-bit limit " + limit;
         final MemoryModel mm = context == null ? Arrays.SMM : context.getMemoryModel();
         final long[] reducedDimensions = java.util.Arrays.copyOfRange(dimensions, 1, dimensions.length);
         final T array = interleaved.array();
+        Class<?> elementType = array.elementType();
         final UpdatablePArray[] arrays = new UpdatablePArray[(int) numberOfMatrices];
         final List<Matrix<T>> result = new ArrayList<>();
-        for (long k = 0; k < numberOfMatrices; k++) {
-            result.add(InternalUtils.cast(
-                    mm.newMatrix(UpdatablePArray.class, interleaved.elementType(), reducedDimensions)));
+        for (int k = 0; k < numberOfMatrices; k++) {
+            final Matrix<UpdatablePArray> m = mm.newMatrix(UpdatablePArray.class, elementType, reducedDimensions);
+            arrays[k] = m.array();
+            result.add(InternalUtils.cast(m));
         }
         if (numberOfMatrices == 1) {
             Arrays.copy(null, (UpdatablePArray) result.get(0).array(), array);
@@ -1837,7 +1841,7 @@ public class Matrices {
         Objects.requireNonNull(separated, "Null separated argument");
         final List<Matrix<? extends T>> list = new ArrayList<>(separated);
         if (list.isEmpty()) {
-            throw new IllegalArgumentException("Empty separated collection");
+            throw new IllegalArgumentException("Empty separated list");
         }
         final PArray[] arrays = arraysOfParallelMatrices(PArray.class, list, true);
         final Matrix<?> m0 = list.get(0);
@@ -1915,6 +1919,8 @@ public class Matrices {
             throw new IllegalArgumentException("Too large number of matrices to split as layers: "
                     + numberOfMatrices + " > allowed limit " + limit);
         }
+        assert numberOfMatrices >= 0 : "illegal Matrix.dimensions() behaviour: negative dimension";
+        assert numberOfMatrices == (int) numberOfMatrices : "numberOfMatrices must be <= 31-bit limit " + limit;
         final long[] reducedDimensions = java.util.Arrays.copyOf(dimensions, dimensions.length - 1);
         final long size = Arrays.longMul(reducedDimensions);
         dimensions[reducedDimensions.length] = 1;
@@ -1962,7 +1968,7 @@ public class Matrices {
         Objects.requireNonNull(matrices, "Null matrices argument");
         final List<Matrix<?>> list = new ArrayList<>(matrices);
         if (list.isEmpty()) {
-            throw new IllegalArgumentException("Empty matrices collection");
+            throw new IllegalArgumentException("Empty matrices list");
         }
         final Array[] arrays = arraysOfParallelMatrices(Array.class, list, true);
         final Matrix<?> m0 = list.get(0);

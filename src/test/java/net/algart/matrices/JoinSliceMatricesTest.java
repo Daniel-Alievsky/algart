@@ -24,10 +24,7 @@
 
 package net.algart.matrices;
 
-import net.algart.arrays.Arrays;
-import net.algart.arrays.Matrices;
-import net.algart.arrays.Matrix;
-import net.algart.arrays.PArray;
+import net.algart.arrays.*;
 import net.algart.external.MatrixIO;
 
 import java.io.IOException;
@@ -36,6 +33,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class JoinSliceMatricesTest {
+    private static ArrayContext CONTEXT = ArrayContext.DEFAULT_SINGLE_THREAD;
+
     public static void main(String[] args) throws IOException {
         if (args.length < 2) {
             System.out.printf("Usage: %s some_image.png matrix_folder%n", JoinSliceMatricesTest.class);
@@ -43,7 +42,10 @@ public class JoinSliceMatricesTest {
         }
         final Path sourceFile = Paths.get(args[0]);
         final Path matrixFolder = Paths.get(args[1]);
-        List<Matrix<? extends PArray>> matrices = MatrixIO.readImage(sourceFile);
+        List<Matrix<? extends PArray>> source = MatrixIO.readImage(sourceFile);
+        List<Matrix<? extends PNumberArray>> matrices = Matrices.several(
+                PNumberArray.class, source.toArray(new Matrix<?>[0]));
+        // - matrices, loaded by MatrixIO, are not binary
         System.out.printf("List: %s%n", matrices);
         Matrix<PArray> merged = Matrices.mergeLayers(Arrays.SMM, matrices);
         System.out.printf("Joined: %s%n", merged);
@@ -51,6 +53,13 @@ public class JoinSliceMatricesTest {
         List<Matrix<PArray>> unpacked = Matrices.asLayers(merged);
         for (int k = 0; k < unpacked.size(); k++) {
             if (!unpacked.get(k).equals(matrices.get(k))) {
+                throw new AssertionError("Channels #" + k + " mismatch!");
+            }
+        }
+        Matrix<PNumberArray> interleave = Matrices.interleave(CONTEXT, matrices);
+        List<Matrix<PArray>> separate = Matrices.separate(CONTEXT, interleave);
+        for (int k = 0; k < unpacked.size(); k++) {
+            if (!separate.get(k).equals(matrices.get(k))) {
                 throw new AssertionError("Channels #" + k + " mismatch!");
             }
         }
