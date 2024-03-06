@@ -103,6 +103,9 @@ public interface ArrayContext {
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     static ArrayContext getSimpleContext(MemoryModel memoryModel, boolean multithreading) {
+        if (memoryModel instanceof SimpleMemoryModel) {
+            return multithreading ? DEFAULT : DEFAULT_SINGLE_THREAD;
+        }
         return multithreading ?
                 new AbstractArrayContext.Default(memoryModel) :
                 new AbstractArrayContext.DefaultSingleThread(memoryModel);
