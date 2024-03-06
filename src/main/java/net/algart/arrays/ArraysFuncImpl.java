@@ -36,7 +36,7 @@ import java.util.*;
 class ArraysFuncImpl {
     private static final long MIN_LENGTH_OF_SHORT_ARRAYS_FOR_TABLE_OPTIMIZATION = 65536;
 
-    static final int BUFFER_SIZE = 32768; // bytes, or byte pairs for 64-bit types; must be <2^31
+    static final int BUFFER_SIZE = 65536; // bytes, or byte pairs for 64-bit types; must be <2^31
     static final int BIT_BUFFER_LENGTH = 64 * 8192; // bits; must be <2^31
     static final int BITS_GAP = 256; // a little gap for better bits alighment; must be 2^k and >=64
 
