@@ -24,7 +24,7 @@
 
 package net.algart.arrays;
 
-abstract class AbstractBandsSequentialProcessor extends Arrays.ParallelExecutor implements AutoCloseable {
+abstract class AbstractInterleavingBandsOperation extends Arrays.ParallelExecutor implements AutoCloseable {
     private static final int BUFFER_SIZE = 32768;
 
     static final JArrayPool BOOLEAN_BUFFERS = JArrayPool.getInstance(boolean.class, BUFFER_SIZE);
@@ -36,7 +36,7 @@ abstract class AbstractBandsSequentialProcessor extends Arrays.ParallelExecutor 
     static final JArrayPool FLOAT_BUFFERS = JArrayPool.getInstance(float.class, BUFFER_SIZE);
     static final JArrayPool DOUBLE_BUFFERS = JArrayPool.getInstance(double.class, BUFFER_SIZE);
 
-    AbstractBandsSequentialProcessor(ArrayContext context, PArray[] bands, PArray packed) {
+    AbstractInterleavingBandsOperation(ArrayContext context, PArray[] bands, PArray packed) {
         super(context, null, bands[0], BUFFER_SIZE / bands.length, 0, 0);
         // - note: we pass bands[0] as src argument, though while unpacking it is the destination!
         // We need this only to allow ParallelExecutor to calculate suitable blocks

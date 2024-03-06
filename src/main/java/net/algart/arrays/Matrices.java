@@ -1791,6 +1791,10 @@ public class Matrices {
         return result;
     }
 
+    public static <T extends PArray> List<Matrix<T>> separate(ArrayContext context, Matrix<T> interleaved) {
+        return separate(context, interleaved, Integer.MAX_VALUE);
+    }
+
     public static <T extends PArray> List<Matrix<T>> separate(
             ArrayContext context,
             Matrix<T> interleaved,
@@ -1820,16 +1824,14 @@ public class Matrices {
         if (numberOfMatrices == 1) {
             Arrays.copy(null, (UpdatablePArray) result.get(0).array(), array);
         } else {
-            try (BandsSequentialUnpacker unpacker = BandsSequentialUnpacker.getInstance(context, arrays, array)) {
+            try (InterleavingBandsUnpacker unpacker = InterleavingBandsUnpacker.getInstance(context, arrays, array)) {
                 unpacker.process();
             }
         }
         return result;
     }
 
-    public static <T extends PArray> Matrix<T> interleave(
-            ArrayContext context,
-            List<? extends Matrix<?>> separated) {
+    public static <T extends PArray> Matrix<T> interleave(ArrayContext context, List<? extends Matrix<?>> separated) {
         Objects.requireNonNull(separated, "Null separated argument");
         final List<Matrix<?>> list = new ArrayList<>(separated);
         if (list.isEmpty()) {
@@ -1841,11 +1843,12 @@ public class Matrices {
         System.arraycopy(m0.dimensions(), 0, dimensions, 1, dimensions.length - 1);
         dimensions[0] = arrays.length;
         final MemoryModel mm = context == null ? Arrays.SMM : context.getMemoryModel();
-        Matrix<UpdatablePArray> result = mm.newMatrix(UpdatablePArray.class, m0.elementType(), dimensions);
+        final Matrix<UpdatablePArray> result = mm.newMatrix(UpdatablePArray.class, m0.elementType(), dimensions);
+        final UpdatablePArray array = result.array();
         if (arrays.length == 1) {
-            Arrays.copy(null, result.array(), arrays[0]);
+            Arrays.copy(null, array, arrays[0]);
         } else {
-            try (BandsSequentialPacker packer = BandsSequentialPacker.getInstance(context, arrays, result.array())) {
+            try (InterleavingBandsPacker packer = InterleavingBandsPacker.getInstance(context, arrays, array)) {
                 packer.process();
             }
         }
@@ -1853,7 +1856,7 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #asLayers(Matrix, long)
+     * Equivalent to <tt>{@link #asLayers(Matrix, int)
      * asLayers}(merged, Integer.MAX_VALUE)</tt> (no limitations).
      *
      * @param merged the source merged matrix.
