@@ -29,6 +29,7 @@ import net.algart.arrays.*;
 import java.awt.color.ColorSpace;
 import java.awt.image.*;
 import java.awt.image.DataBuffer;
+import java.util.Objects;
 
 public abstract class BufferedImageToMatrixConverter {
     private static final JArrayPool INT_ARRAY_POOL = JArrayPool.getInstance(int.class, 32768);
@@ -56,12 +57,12 @@ public abstract class BufferedImageToMatrixConverter {
     public Matrix<? extends UpdatablePArray> toMatrix(BufferedImage bufferedImage, UpdatablePArray resultArray) {
         if (bufferedImage == null)
             throw new NullPointerException("Null bufferedImage");
-        int width = bufferedImage.getWidth();
-        int height = bufferedImage.getHeight();
-        int bandCount = getBandCount(bufferedImage);
-        long[] dimensions = getResultMatrixDimensions(width, height, bandCount);
-        Class<?> elementType = getResultElementType(bufferedImage);
-        long size = Arrays.longMul(dimensions);
+        final int dimX = bufferedImage.getWidth();
+        final int dimY = bufferedImage.getHeight();
+        final int bandCount = getBandCount(bufferedImage);
+        final long[] dimensions = getResultMatrixDimensions(dimX, dimY, bandCount);
+        final Class<?> elementType = getResultElementType(bufferedImage);
+        final long size = Arrays.longMul(dimensions);
         if (size > Integer.MAX_VALUE || size == Long.MIN_VALUE)
             throw new AssertionError("Illegal getResultMatrixDimensions implementation: too large results");
         Object resultData = null;
@@ -78,7 +79,7 @@ public abstract class BufferedImageToMatrixConverter {
         if (resultData == null) {
             resultData = java.lang.reflect.Array.newInstance(elementType, (int) size);
         }
-        toJavaArray(bufferedImage, resultData);
+        toJavaArray(resultData, bufferedImage);
         return Matrices.matrix((UpdatablePArray) SimpleMemoryModel.asUpdatableArray(resultData), dimensions);
     }
 
@@ -93,11 +94,11 @@ public abstract class BufferedImageToMatrixConverter {
         return cm.hasAlpha() && addAlphaWhenExist ? 4 : gray ? 1 : 3;
     }
 
-    public abstract Class<?> getResultElementType(BufferedImage bufferedImage); // must be primitive and not boolean
+    // must be primitive and not boolean
+    public abstract Class<?> getResultElementType(BufferedImage bufferedImage);
 
     public final long[] getResultMatrixDimensions(BufferedImage bufferedImage) {
-        if (bufferedImage == null)
-            throw new NullPointerException("Null bufferedImage");
+        Objects.requireNonNull(bufferedImage, "Null bufferedImage");
         return getResultMatrixDimensions(
                 bufferedImage.getWidth(),
                 bufferedImage.getHeight(),
@@ -106,7 +107,7 @@ public abstract class BufferedImageToMatrixConverter {
 
     public abstract long[] getResultMatrixDimensions(int width, int height, int bandCount);
 
-    protected abstract void toJavaArray(BufferedImage bufferedImage, Object resultJavaArray);
+    protected abstract void toJavaArray(Object resultJavaArray, BufferedImage bufferedImage);
 
     public static final class ToPacked3D extends BufferedImageToMatrixConverter {
         public static final boolean DEFAULT_READ_PIXEL_VALUES_VIA_COLOR_MODEL = false;
@@ -154,7 +155,7 @@ public abstract class BufferedImageToMatrixConverter {
         }
 
         @Override
-        protected void toJavaArray(BufferedImage bufferedImage, Object resultJavaArray) {
+        protected void toJavaArray(Object resultJavaArray, BufferedImage bufferedImage) {
             final int dimX = bufferedImage.getWidth();
             final int dimY = bufferedImage.getHeight();
             final int bandCount = getBandCount(bufferedImage);
@@ -264,7 +265,7 @@ public abstract class BufferedImageToMatrixConverter {
             //TODO!! and what if bandCount=3 and colorComponentsCount=4?
             final byte[] result = (byte[]) resultJavaArray;
             final boolean banded = USE_3_BANDS_FOR_NON_BANDED_GRAY ?
-                    bufferedImage.getSampleModel() instanceof BandedSampleModel :
+                    sampleModel instanceof BandedSampleModel :
                     true;
             final byte[][] rgbAlpha = new byte[gray && !banded ? 3 : 1][];
             // even if gray, but not banded, we make full RGB banded image:
@@ -292,7 +293,8 @@ public abstract class BufferedImageToMatrixConverter {
                 for (int k = 0; k < offsets.length; k++) {
                     offsets[k] = k;
                 }
-                wr = Raster.createInterleavedRaster(db, dimX, dimY, dimX * bandCount, bandCount, offsets, null);
+                wr = Raster.createInterleavedRaster(
+                        db, dimX, dimY, dimX * bandCount, bandCount, offsets, null);
                 boolean hasAlpha = bandCount >= 4;
                 cm = new ComponentColorModel(cs, null, hasAlpha, false,
                         hasAlpha ? ColorModel.TRANSLUCENT : ColorModel.OPAQUE, db.getDataType());

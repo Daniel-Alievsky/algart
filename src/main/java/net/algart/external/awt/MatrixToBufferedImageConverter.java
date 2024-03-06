@@ -184,17 +184,13 @@ public abstract class MatrixToBufferedImageConverter {
         }
         if (color == null)
             throw new NullPointerException("Null color argument");
-        switch (bankIndex) {
-            case 0:
-                return color.getRed();
-            case 1:
-                return color.getGreen();
-            case 2:
-                return color.getBlue();
-            case 3:
-                return color.getAlpha();
-        }
-        return 0;
+        return switch (bankIndex) {
+            case 0 -> color.getRed();
+            case 1 -> color.getGreen();
+            case 2 -> color.getBlue();
+            case 3 -> color.getAlpha();
+            default -> 0;
+        };
     }
 
     /**
