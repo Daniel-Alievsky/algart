@@ -1791,13 +1791,13 @@ public class Matrices {
         return result;
     }
 
-    public static <T extends PArray> List<Matrix<T>> separate(ArrayContext context, Matrix<T> interleaved) {
+    public static <T extends PArray> List<Matrix<T>> separate(ArrayContext context, Matrix<? extends T> interleaved) {
         return separate(context, interleaved, Integer.MAX_VALUE);
     }
 
     public static <T extends PArray> List<Matrix<T>> separate(
             ArrayContext context,
-            Matrix<T> interleaved,
+            Matrix<? extends T> interleaved,
             int limit) {
         Objects.requireNonNull(interleaved, "Null interleaved matrix");
         if (limit <= 0) {
@@ -1831,9 +1831,11 @@ public class Matrices {
         return result;
     }
 
-    public static <T extends PArray> Matrix<T> interleave(ArrayContext context, List<? extends Matrix<?>> separated) {
+    public static <T extends PArray> Matrix<T> interleave(
+            ArrayContext context,
+            List<? extends Matrix<? extends T>> separated) {
         Objects.requireNonNull(separated, "Null separated argument");
-        final List<Matrix<?>> list = new ArrayList<>(separated);
+        final List<Matrix<? extends T>> list = new ArrayList<>(separated);
         if (list.isEmpty()) {
             throw new IllegalArgumentException("Empty separated collection");
         }
