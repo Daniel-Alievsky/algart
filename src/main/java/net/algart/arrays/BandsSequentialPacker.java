@@ -30,50 +30,50 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
     final PArray[] bands;
     final UpdatablePArray packed;
 
-    BandsSequentialPacker(PArray[] bands, UpdatablePArray packed) {
-        super(Objects.requireNonNull(bands), Objects.requireNonNull(packed));
+    BandsSequentialPacker(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+        super(context, Objects.requireNonNull(bands), Objects.requireNonNull(packed));
         this.bands = bands;
         this.packed = packed;
     }
 
-    public static BandsSequentialPacker getInstance(PArray[] bands, UpdatablePArray packed) {
+    public static BandsSequentialPacker getInstance(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
         if (allBandsDirect(bands)) {
             // - most typical situation
             if (packed instanceof CharArray) {
-                return DirectForChars.getInstance(bands, packed);
+                return DirectForChars.getInstance(context, bands, packed);
             } else if (packed instanceof ByteArray) {
-                return DirectForBytes.getInstance(bands, packed);
+                return DirectForBytes.getInstance(context, bands, packed);
             } else if (packed instanceof ShortArray) {
-                return DirectForShorts.getInstance(bands, packed);
+                return DirectForShorts.getInstance(context, bands, packed);
             } else if (packed instanceof IntArray) {
-                return DirectForInts.getInstance(bands, packed);
+                return DirectForInts.getInstance(context, bands, packed);
             } else if (packed instanceof LongArray) {
-                return DirectForLongs.getInstance(bands, packed);
+                return DirectForLongs.getInstance(context, bands, packed);
             } else if (packed instanceof FloatArray) {
-                return DirectForFloats.getInstance(bands, packed);
+                return DirectForFloats.getInstance(context, bands, packed);
             } else if (packed instanceof DoubleArray) {
-                return DirectForDoubles.getInstance(bands, packed);
+                return DirectForDoubles.getInstance(context, bands, packed);
             } else {
                 assert packed instanceof BitArray;
                 // - and go to usual branch
             }
         }
         if (packed instanceof BitArray) {
-            return new ForBooleans(bands, packed);
+            return new ForBooleans(context, bands, packed);
         } else if (packed instanceof CharArray) {
-            return new ForChars(bands, packed);
+            return new ForChars(context, bands, packed);
         } else if (packed instanceof ByteArray) {
-            return new ForBytes(bands, packed);
+            return new ForBytes(context, bands, packed);
         } else if (packed instanceof ShortArray) {
-            return new ForShorts(bands, packed);
+            return new ForShorts(context, bands, packed);
         } else if (packed instanceof IntArray) {
-            return new ForInts(bands, packed);
+            return new ForInts(context, bands, packed);
         } else if (packed instanceof LongArray) {
-            return new ForLongs(bands, packed);
+            return new ForLongs(context, bands, packed);
         } else if (packed instanceof FloatArray) {
-            return new ForFloats(bands, packed);
+            return new ForFloats(context, bands, packed);
         } else if (packed instanceof DoubleArray) {
-            return new ForDoubles(bands, packed);
+            return new ForDoubles(context, bands, packed);
         } else {
             throw new AssertionError("Illegal " + packed);
         }
@@ -93,8 +93,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         private final boolean[][] threadBandArray;
         private final boolean[][] threadPackedArray;
 
-        ForBooleans(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        ForBooleans(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.threadBandArray = new boolean[numberOfTasks()][];
             this.threadPackedArray = new boolean[numberOfTasks()][];
             for (int k = 0; k < threadBandArray.length; k++) {
@@ -132,8 +132,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         private final char[][] threadBandArray;
         private final char[][] threadPackedArray;
 
-        ForChars(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        ForChars(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.threadBandArray = new char[numberOfTasks()][];
             this.threadPackedArray = new char[numberOfTasks()][];
             for (int k = 0; k < threadBandArray.length; k++) {
@@ -171,8 +171,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         private final byte[][] threadBandArray;
         private final byte[][] threadPackedArray;
 
-        ForBytes(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        ForBytes(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.threadBandArray = new byte[numberOfTasks()][];
             this.threadPackedArray = new byte[numberOfTasks()][];
             for (int k = 0; k < threadBandArray.length; k++) {
@@ -210,8 +210,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         private final short[][] threadBandArray;
         private final short[][] threadPackedArray;
 
-        ForShorts(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        ForShorts(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.threadBandArray = new short[numberOfTasks()][];
             this.threadPackedArray = new short[numberOfTasks()][];
             for (int k = 0; k < threadBandArray.length; k++) {
@@ -249,8 +249,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         private final int[][] threadBandArray;
         private final int[][] threadPackedArray;
 
-        ForInts(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        ForInts(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.threadBandArray = new int[numberOfTasks()][];
             this.threadPackedArray = new int[numberOfTasks()][];
             for (int k = 0; k < threadBandArray.length; k++) {
@@ -288,8 +288,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         private final long[][] threadBandArray;
         private final long[][] threadPackedArray;
 
-        ForLongs(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        ForLongs(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.threadBandArray = new long[numberOfTasks()][];
             this.threadPackedArray = new long[numberOfTasks()][];
             for (int k = 0; k < threadBandArray.length; k++) {
@@ -327,8 +327,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         private final float[][] threadBandArray;
         private final float[][] threadPackedArray;
 
-        ForFloats(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        ForFloats(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.threadBandArray = new float[numberOfTasks()][];
             this.threadPackedArray = new float[numberOfTasks()][];
             for (int k = 0; k < threadBandArray.length; k++) {
@@ -366,8 +366,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         private final double[][] threadBandArray;
         private final double[][] threadPackedArray;
 
-        ForDoubles(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        ForDoubles(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.threadBandArray = new double[numberOfTasks()][];
             this.threadPackedArray = new double[numberOfTasks()][];
             for (int k = 0; k < threadBandArray.length; k++) {
@@ -411,8 +411,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         final int[] bandArraysOffsets;
         final char[][] threadPackedArray;
 
-        DirectForChars(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        DirectForChars(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.bandArrays = new char[bands.length][];
             this.bandArraysOffsets = new int[bands.length];
             for (int b = 0; b < bands.length; b++) {
@@ -425,17 +425,13 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
             }
         }
 
-        public static DirectForChars getInstance(PArray[] bands, UpdatablePArray packed) {
-            switch (bands.length) {
-                case 2:
-                    return new For2Channels(bands, packed);
-                case 3:
-                    return new For3Channels(bands, packed);
-                case 4:
-                    return new For4Channels(bands, packed);
-                default:
-                    return new DirectForChars(bands, packed);
-            }
+        public static DirectForChars getInstance(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            return switch (bands.length) {
+                case 2 -> new For2Channels(context, bands, packed);
+                case 3 -> new For3Channels(context, bands, packed);
+                case 4 -> new For4Channels(context, bands, packed);
+                default -> new DirectForChars(context, bands, packed);
+            };
         }
 
         @Override
@@ -461,8 +457,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For2Channels extends DirectForChars {
-            For2Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For2Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 2;
             }
 
@@ -485,8 +481,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For3Channels extends DirectForChars {
-            For3Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For3Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 3;
             }
 
@@ -512,8 +508,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For4Channels extends DirectForChars {
-            For4Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For4Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 4;
             }
 
@@ -547,8 +543,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         final int[] bandArraysOffsets;
         final byte[][] threadPackedArray;
 
-        DirectForBytes(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        DirectForBytes(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.bandArrays = new byte[bands.length][];
             this.bandArraysOffsets = new int[bands.length];
             for (int b = 0; b < bands.length; b++) {
@@ -561,17 +557,13 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
             }
         }
 
-        public static DirectForBytes getInstance(PArray[] bands, UpdatablePArray packed) {
-            switch (bands.length) {
-                case 2:
-                    return new For2Channels(bands, packed);
-                case 3:
-                    return new For3Channels(bands, packed);
-                case 4:
-                    return new For4Channels(bands, packed);
-                default:
-                    return new DirectForBytes(bands, packed);
-            }
+        public static DirectForBytes getInstance(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            return switch (bands.length) {
+                case 2 -> new For2Channels(context, bands, packed);
+                case 3 -> new For3Channels(context, bands, packed);
+                case 4 -> new For4Channels(context, bands, packed);
+                default -> new DirectForBytes(context, bands, packed);
+            };
         }
 
         @Override
@@ -597,8 +589,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For2Channels extends DirectForBytes {
-            For2Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For2Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 2;
             }
 
@@ -621,8 +613,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For3Channels extends DirectForBytes {
-            For3Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For3Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 3;
             }
 
@@ -648,8 +640,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For4Channels extends DirectForBytes {
-            For4Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For4Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 4;
             }
 
@@ -683,8 +675,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         final int[] bandArraysOffsets;
         final short[][] threadPackedArray;
 
-        DirectForShorts(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        DirectForShorts(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.bandArrays = new short[bands.length][];
             this.bandArraysOffsets = new int[bands.length];
             for (int b = 0; b < bands.length; b++) {
@@ -697,17 +689,13 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
             }
         }
 
-        public static DirectForShorts getInstance(PArray[] bands, UpdatablePArray packed) {
-            switch (bands.length) {
-                case 2:
-                    return new For2Channels(bands, packed);
-                case 3:
-                    return new For3Channels(bands, packed);
-                case 4:
-                    return new For4Channels(bands, packed);
-                default:
-                    return new DirectForShorts(bands, packed);
-            }
+        public static DirectForShorts getInstance(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            return switch (bands.length) {
+                case 2 -> new For2Channels(context, bands, packed);
+                case 3 -> new For3Channels(context, bands, packed);
+                case 4 -> new For4Channels(context, bands, packed);
+                default -> new DirectForShorts(context, bands, packed);
+            };
         }
 
         @Override
@@ -733,8 +721,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For2Channels extends DirectForShorts {
-            For2Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For2Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 2;
             }
 
@@ -757,8 +745,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For3Channels extends DirectForShorts {
-            For3Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For3Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 3;
             }
 
@@ -784,8 +772,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For4Channels extends DirectForShorts {
-            For4Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For4Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 4;
             }
 
@@ -819,8 +807,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         final int[] bandArraysOffsets;
         final int[][] threadPackedArray;
 
-        DirectForInts(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        DirectForInts(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.bandArrays = new int[bands.length][];
             this.bandArraysOffsets = new int[bands.length];
             for (int b = 0; b < bands.length; b++) {
@@ -833,17 +821,13 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
             }
         }
 
-        public static DirectForInts getInstance(PArray[] bands, UpdatablePArray packed) {
-            switch (bands.length) {
-                case 2:
-                    return new For2Channels(bands, packed);
-                case 3:
-                    return new For3Channels(bands, packed);
-                case 4:
-                    return new For4Channels(bands, packed);
-                default:
-                    return new DirectForInts(bands, packed);
-            }
+        public static DirectForInts getInstance(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            return switch (bands.length) {
+                case 2 -> new For2Channels(context, bands, packed);
+                case 3 -> new For3Channels(context, bands, packed);
+                case 4 -> new For4Channels(context, bands, packed);
+                default -> new DirectForInts(context, bands, packed);
+            };
         }
 
         @Override
@@ -869,8 +853,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For2Channels extends DirectForInts {
-            For2Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For2Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 2;
             }
 
@@ -893,8 +877,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For3Channels extends DirectForInts {
-            For3Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For3Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 3;
             }
 
@@ -920,8 +904,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For4Channels extends DirectForInts {
-            For4Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For4Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 4;
             }
 
@@ -955,8 +939,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         final int[] bandArraysOffsets;
         final long[][] threadPackedArray;
 
-        DirectForLongs(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        DirectForLongs(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.bandArrays = new long[bands.length][];
             this.bandArraysOffsets = new int[bands.length];
             for (int b = 0; b < bands.length; b++) {
@@ -969,17 +953,13 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
             }
         }
 
-        public static DirectForLongs getInstance(PArray[] bands, UpdatablePArray packed) {
-            switch (bands.length) {
-                case 2:
-                    return new For2Channels(bands, packed);
-                case 3:
-                    return new For3Channels(bands, packed);
-                case 4:
-                    return new For4Channels(bands, packed);
-                default:
-                    return new DirectForLongs(bands, packed);
-            }
+        public static DirectForLongs getInstance(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            return switch (bands.length) {
+                case 2 -> new For2Channels(context, bands, packed);
+                case 3 -> new For3Channels(context, bands, packed);
+                case 4 -> new For4Channels(context, bands, packed);
+                default -> new DirectForLongs(context, bands, packed);
+            };
         }
 
         @Override
@@ -1005,8 +985,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For2Channels extends DirectForLongs {
-            For2Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For2Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 2;
             }
 
@@ -1029,8 +1009,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For3Channels extends DirectForLongs {
-            For3Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For3Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 3;
             }
 
@@ -1056,8 +1036,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For4Channels extends DirectForLongs {
-            For4Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For4Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 4;
             }
 
@@ -1091,8 +1071,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         final int[] bandArraysOffsets;
         final float[][] threadPackedArray;
 
-        DirectForFloats(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        DirectForFloats(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.bandArrays = new float[bands.length][];
             this.bandArraysOffsets = new int[bands.length];
             for (int b = 0; b < bands.length; b++) {
@@ -1105,17 +1085,13 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
             }
         }
 
-        public static DirectForFloats getInstance(PArray[] bands, UpdatablePArray packed) {
-            switch (bands.length) {
-                case 2:
-                    return new For2Channels(bands, packed);
-                case 3:
-                    return new For3Channels(bands, packed);
-                case 4:
-                    return new For4Channels(bands, packed);
-                default:
-                    return new DirectForFloats(bands, packed);
-            }
+        public static DirectForFloats getInstance(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            return switch (bands.length) {
+                case 2 -> new For2Channels(context, bands, packed);
+                case 3 -> new For3Channels(context, bands, packed);
+                case 4 -> new For4Channels(context, bands, packed);
+                default -> new DirectForFloats(context, bands, packed);
+            };
         }
 
         @Override
@@ -1141,8 +1117,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For2Channels extends DirectForFloats {
-            For2Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For2Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 2;
             }
 
@@ -1165,8 +1141,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For3Channels extends DirectForFloats {
-            For3Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For3Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 3;
             }
 
@@ -1192,8 +1168,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For4Channels extends DirectForFloats {
-            For4Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For4Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 4;
             }
 
@@ -1227,8 +1203,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         final int[] bandArraysOffsets;
         final double[][] threadPackedArray;
 
-        DirectForDoubles(PArray[] bands, UpdatablePArray packed) {
-            super(bands, packed);
+        DirectForDoubles(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            super(context, bands, packed);
             this.bandArrays = new double[bands.length][];
             this.bandArraysOffsets = new int[bands.length];
             for (int b = 0; b < bands.length; b++) {
@@ -1241,17 +1217,13 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
             }
         }
 
-        public static DirectForDoubles getInstance(PArray[] bands, UpdatablePArray packed) {
-            switch (bands.length) {
-                case 2:
-                    return new For2Channels(bands, packed);
-                case 3:
-                    return new For3Channels(bands, packed);
-                case 4:
-                    return new For4Channels(bands, packed);
-                default:
-                    return new DirectForDoubles(bands, packed);
-            }
+        public static DirectForDoubles getInstance(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+            return switch (bands.length) {
+                case 2 -> new For2Channels(context, bands, packed);
+                case 3 -> new For3Channels(context, bands, packed);
+                case 4 -> new For4Channels(context, bands, packed);
+                default -> new DirectForDoubles(context, bands, packed);
+            };
         }
 
         @Override
@@ -1277,8 +1249,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For2Channels extends DirectForDoubles {
-            For2Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For2Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 2;
             }
 
@@ -1301,8 +1273,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For3Channels extends DirectForDoubles {
-            For3Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For3Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 3;
             }
 
@@ -1328,8 +1300,8 @@ abstract class BandsSequentialPacker extends AbstractBandsSequentialProcessor {
         }
 
         static class For4Channels extends DirectForDoubles {
-            For4Channels(PArray[] bands, UpdatablePArray packed) {
-                super(bands, packed);
+            For4Channels(ArrayContext context, PArray[] bands, UpdatablePArray packed) {
+                super(context, bands, packed);
                 assert bands.length == 4;
             }
 

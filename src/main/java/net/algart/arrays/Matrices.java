@@ -1792,10 +1792,9 @@ public class Matrices {
     }
 
     public static <T extends PArray> List<Matrix<T>> separate(
-            MemoryModel memoryModel,
+            ArrayContext context,
             Matrix<T> interleaved,
             int limit) {
-        Objects.requireNonNull(memoryModel, "Null memory model");
         Objects.requireNonNull(interleaved, "Null interleaved matrix");
         if (limit <= 0) {
             throw new IllegalArgumentException("Zero or negative limit " + limit);
@@ -1809,18 +1808,19 @@ public class Matrices {
             throw new IllegalArgumentException("Too large number of matrices to separate: "
                     + numberOfMatrices + " > allowed limit " + limit);
         }
+        final MemoryModel mm = context == null ? Arrays.SMM : context.getMemoryModel();
         final long[] reducedDimensions = java.util.Arrays.copyOfRange(dimensions, 1, dimensions.length);
         final T array = interleaved.array();
         final UpdatablePArray[] arrays = new UpdatablePArray[(int) numberOfMatrices];
         final List<Matrix<T>> result = new ArrayList<>();
         for (long k = 0; k < numberOfMatrices; k++) {
             result.add(InternalUtils.cast(
-                    memoryModel.newMatrix(UpdatablePArray.class, interleaved.elementType(), reducedDimensions)));
+                    mm.newMatrix(UpdatablePArray.class, interleaved.elementType(), reducedDimensions)));
         }
         if (numberOfMatrices == 1) {
             Arrays.copy(null, (UpdatablePArray) result.get(0).array(), array);
         } else {
-            try (BandsSequentialUnpacker unpacker = BandsSequentialUnpacker.getInstance(arrays, array)) {
+            try (BandsSequentialUnpacker unpacker = BandsSequentialUnpacker.getInstance(context, arrays, array)) {
                 unpacker.process();
             }
         }
@@ -1828,9 +1828,8 @@ public class Matrices {
     }
 
     public static <T extends PArray> Matrix<T> interleave(
-            MemoryModel memoryModel,
+            ArrayContext context,
             List<? extends Matrix<?>> separated) {
-        Objects.requireNonNull(memoryModel, "Null memory model");
         Objects.requireNonNull(separated, "Null separated argument");
         final List<Matrix<?>> list = new ArrayList<>(separated);
         if (list.isEmpty()) {
@@ -1841,11 +1840,12 @@ public class Matrices {
         final long[] dimensions = new long[m0.dimCount() + 1];
         System.arraycopy(m0.dimensions(), 0, dimensions, 1, dimensions.length - 1);
         dimensions[0] = arrays.length;
-        Matrix<UpdatablePArray> result = memoryModel.newMatrix(UpdatablePArray.class, m0.elementType(), dimensions);
+        final MemoryModel mm = context == null ? Arrays.SMM : context.getMemoryModel();
+        Matrix<UpdatablePArray> result = mm.newMatrix(UpdatablePArray.class, m0.elementType(), dimensions);
         if (arrays.length == 1) {
             Arrays.copy(null, result.array(), arrays[0]);
         } else {
-            try (BandsSequentialPacker packer = BandsSequentialPacker.getInstance(arrays, result.array())) {
+            try (BandsSequentialPacker packer = BandsSequentialPacker.getInstance(context, arrays, result.array())) {
                 packer.process();
             }
         }
