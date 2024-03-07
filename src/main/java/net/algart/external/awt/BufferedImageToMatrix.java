@@ -31,30 +31,28 @@ import java.awt.image.*;
 import java.awt.image.DataBuffer;
 import java.util.Objects;
 
-public abstract class BufferedImageToMatrixConverter {
-    private static final JArrayPool INT_ARRAY_POOL = JArrayPool.getInstance(int.class, 32768);
-    // - too high values decrease performance!
-
+public abstract class BufferedImageToMatrix {
     private static final boolean USE_3_BANDS_FOR_NON_BANDED_GRAY = true;
     // - must be true to avoid a problem with reading gray images via Graphics2D ("simplest" algorithm)
 
-    private final boolean addAlphaWhenExist;
-    // if true and BufferedImage contains alpha-channel, the matrix 4xMxN will be returned by ToPacked3D class
+    private boolean enableAlpha = true;
+    // if true and BufferedImage contains alpha-channel, the matrix 4xMxN will be returned
     // if false, but the source has alpha, it may be interpreted, not ignored
 
-    protected BufferedImageToMatrixConverter(boolean addAlphaWhenExist) {
-        this.addAlphaWhenExist = addAlphaWhenExist;
+    public boolean isEnableAlpha() {
+        return enableAlpha;
     }
 
-    public final boolean addAlphaWhenExist() {
-        return addAlphaWhenExist;
+    public BufferedImageToMatrix setEnableAlpha(boolean enableAlpha) {
+        this.enableAlpha = enableAlpha;
+        return this;
     }
 
-    public Matrix<? extends UpdatablePArray> toMatrix(BufferedImage bufferedImage) {
+    public Matrix<UpdatablePArray> toMatrix(BufferedImage bufferedImage) {
         return toMatrix(bufferedImage, null);
     }
 
-    public Matrix<? extends UpdatablePArray> toMatrix(BufferedImage bufferedImage, UpdatablePArray resultArray) {
+    public Matrix<UpdatablePArray> toMatrix(BufferedImage bufferedImage, UpdatablePArray resultArray) {
         if (bufferedImage == null)
             throw new NullPointerException("Null bufferedImage");
         final int dimX = bufferedImage.getWidth();
@@ -91,7 +89,7 @@ public abstract class BufferedImageToMatrixConverter {
         // ...SampleModel sm = bufferedImage.getSampleModel();...
         // || (sm.getNumBands() == 1 && sm.getNumDataElements() == 1) - not correct!
         // In some TIF we have only 1 band, but RGB color model, because it uses palette; so, bandCount must be 3.
-        return cm.hasAlpha() && addAlphaWhenExist ? 4 : gray ? 1 : 3;
+        return cm.hasAlpha() && enableAlpha ? 4 : gray ? 1 : 3;
     }
 
     // must be primitive and not boolean
@@ -109,22 +107,18 @@ public abstract class BufferedImageToMatrixConverter {
 
     protected abstract void toJavaArray(Object resultJavaArray, BufferedImage bufferedImage);
 
-    public static final class ToPacked3D extends BufferedImageToMatrixConverter {
+    public static final class ToInterleaved extends BufferedImageToMatrix {
         public static final boolean DEFAULT_READ_PIXEL_VALUES_VIA_COLOR_MODEL = false;
         public static final boolean DEFAULT_READ_PIXEL_VALUES_VIA_GRAPHICS_2D = false;
 
         private boolean readPixelValuesViaColorModel = DEFAULT_READ_PIXEL_VALUES_VIA_COLOR_MODEL;
         private boolean readPixelValuesViaGraphics2D = DEFAULT_READ_PIXEL_VALUES_VIA_GRAPHICS_2D;
 
-        public ToPacked3D(boolean addAlphaWhenExist) {
-            super(addAlphaWhenExist);
-        }
-
         public boolean isReadPixelValuesViaColorModel() {
             return readPixelValuesViaColorModel;
         }
 
-        public ToPacked3D setReadPixelValuesViaColorModel(boolean readPixelValuesViaColorModel) {
+        public ToInterleaved setReadPixelValuesViaColorModel(boolean readPixelValuesViaColorModel) {
             this.readPixelValuesViaColorModel = readPixelValuesViaColorModel;
             return this;
         }
@@ -133,7 +127,7 @@ public abstract class BufferedImageToMatrixConverter {
             return readPixelValuesViaGraphics2D;
         }
 
-        public ToPacked3D setReadPixelValuesViaGraphics2D(boolean readPixelValuesViaGraphics2D) {
+        public ToInterleaved setReadPixelValuesViaGraphics2D(boolean readPixelValuesViaGraphics2D) {
             this.readPixelValuesViaGraphics2D = readPixelValuesViaGraphics2D;
             return this;
         }
@@ -212,9 +206,7 @@ public abstract class BufferedImageToMatrixConverter {
                 // we don't use it and prefer more stable "simplest" algorithm below.
                 final Raster r = bufferedImage.getRaster();
                 final int dataBufferType = sampleModel.getDataType();
-                final int[] buffer = dimX <= INT_ARRAY_POOL.arrayLength() ?
-                        (int[]) INT_ARRAY_POOL.requestArray() :
-                        new int[dimX];
+                final int[] buffer = new int[dimX];
                 final int lineCount = buffer.length / dimX;
                 assert lineCount >= 1;
                 int numberOfPixels;
@@ -252,9 +244,6 @@ public abstract class BufferedImageToMatrixConverter {
                                 throw new AssertionError("Unsupported type: illegal subclass implementation");
                         }
                     }
-                }
-                if (dimX <= INT_ARRAY_POOL.arrayLength()) {
-                    INT_ARRAY_POOL.releaseArray(buffer);
                 }
                 //                System.out.println("Quick loading");
                 return;
@@ -327,21 +316,14 @@ public abstract class BufferedImageToMatrixConverter {
         }
 
         private static Class<?> getResultElementType(SampleModel sampleModel) {
-            switch (sampleModel.getDataType()) {
-                case DataBuffer.TYPE_BYTE:
-                    return byte.class;
-                case DataBuffer.TYPE_SHORT:
-                case DataBuffer.TYPE_USHORT:
-                    return short.class;
-                case DataBuffer.TYPE_INT:
-                    return int.class;
-                case DataBuffer.TYPE_FLOAT:
-                    return float.class;
-                case DataBuffer.TYPE_DOUBLE:
-                    return double.class;
-                default:
-                    return byte.class;
-            }
+            return switch (sampleModel.getDataType()) {
+                case DataBuffer.TYPE_BYTE -> byte.class;
+                case DataBuffer.TYPE_SHORT, DataBuffer.TYPE_USHORT -> short.class;
+                case DataBuffer.TYPE_INT -> int.class;
+                case DataBuffer.TYPE_FLOAT -> float.class;
+                case DataBuffer.TYPE_DOUBLE -> double.class;
+                default -> byte.class;
+            };
         }
     }
 }

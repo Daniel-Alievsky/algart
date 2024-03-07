@@ -32,40 +32,40 @@ import java.awt.image.*;
 import java.util.Locale;
 import java.util.Objects;
 
-public abstract class MatrixToBufferedImageConverter {
+public abstract class MatrixToBufferedImage {
     /**
      * Equivalent to <tt>{@link #toBufferedImage(net.algart.arrays.Matrix, java.awt.image.DataBuffer)
-     * toBufferedImage}(packedMatrix, null)</tt>.
+     * toBufferedImage}(interleavedMatrix, null)</tt>.
      *
-     * @param packedMatrix the packed matrix.
+     * @param interleavedMatrix the interleaved matrix.
      * @return the <tt>BufferedImage</tt> with the same data.
      */
-    public final BufferedImage toBufferedImage(Matrix<? extends PArray> packedMatrix) {
-        return toBufferedImage(packedMatrix, null);
+    public final BufferedImage toBufferedImage(Matrix<? extends PArray> interleavedMatrix) {
+        return toBufferedImage(interleavedMatrix, null);
     }
 
     /**
-     * Converts the given packed matrix (2- or 3-dimensional) into <tt>BufferedImage</tt>.
+     * Converts the given interleaved matrix (2- or 3-dimensional) into <tt>BufferedImage</tt>.
      * Note: <tt>dataBuffer!=null</tt>, then the elements of the given matrix ignored, but the data
      * of the given buffer are used instead. (It is supposed, that this buffer was created
      * by {@link #toDataBuffer(net.algart.arrays.Matrix)} method, maybe with some post-processing.)
      *
-     * @param packedMatrix the packed matrix.
-     * @param dataBuffer   the data for <tt>BufferedImage</tt>; may be <tt>null</tt>, then it is automatically
-     *                     created as {@link #toDataBuffer(net.algart.arrays.Matrix)
-     *                     toDataBuffer(packedMatrix)}.
+     * @param interleavedMatrix the interleaved matrix.
+     * @param dataBuffer        the data for <tt>BufferedImage</tt>; may be <tt>null</tt>, then it is automatically
+     *                          created as {@link #toDataBuffer(net.algart.arrays.Matrix)
+     *                          toDataBuffer(interleavedMatrix)}.
      * @return the <tt>BufferedImage</tt> with the same data.
      */
     public final BufferedImage toBufferedImage(
-            Matrix<? extends PArray> packedMatrix,
+            Matrix<? extends PArray> interleavedMatrix,
             java.awt.image.DataBuffer dataBuffer) {
-        checkMatrix(packedMatrix);
+        checkMatrix(interleavedMatrix);
         if (dataBuffer == null) {
-            dataBuffer = toDataBuffer(packedMatrix);
+            dataBuffer = toDataBuffer(interleavedMatrix);
         }
-        final int dimX = getWidth(packedMatrix);
-        final int dimY = getHeight(packedMatrix);
-        final int bandCount = getBandCount(packedMatrix);
+        final int dimX = getWidth(interleavedMatrix);
+        final int dimY = getHeight(interleavedMatrix);
+        final int bandCount = getBandCount(interleavedMatrix);
         int[] bandMasks = rgbAlphaMasks(bandCount);
         if (bandMasks != null) {
             WritableRaster wr = Raster.createPackedRaster(dataBuffer, dimX, dimY, dimX, bandMasks, null);
@@ -104,53 +104,53 @@ public abstract class MatrixToBufferedImageConverter {
     }
 
     /**
-     * Returns the x-dimension of the image, corresponding to the given packed matrix.
+     * Returns the x-dimension of the image, corresponding to the given interleaved matrix.
      * Note that it is <tt>int</tt>, not <tt>long</tt> (AWT images have 31-bit dimensions).
      *
-     * @param packedMatrix the packed matrix.
+     * @param interleavedMatrix the packed matrix.
      * @return the width of the corresponding image.
      */
-    public int getWidth(Matrix<? extends PArray> packedMatrix) {
-        checkMatrix(packedMatrix);
-        return (int) packedMatrix.dim(packedMatrix.dimCount() - 2);
+    public int getWidth(Matrix<? extends PArray> interleavedMatrix) {
+        checkMatrix(interleavedMatrix);
+        return (int) interleavedMatrix.dim(interleavedMatrix.dimCount() - 2);
     }
 
     /**
-     * Returns the y-dimension of the image, corresponding to the given packed matrix.
+     * Returns the y-dimension of the image, corresponding to the given interleaved matrix.
      * Note that it is <tt>int</tt>, not <tt>long</tt> (AWT images have 31-bit dimensions).
      *
-     * @param packedMatrix the packed matrix.
+     * @param interleavedMatrix the packed matrix.
      * @return the height of the corresponding image.
      */
-    public int getHeight(Matrix<? extends PArray> packedMatrix) {
-        checkMatrix(packedMatrix);
-        return (int) packedMatrix.dim(packedMatrix.dimCount() - 1);
+    public int getHeight(Matrix<? extends PArray> interleavedMatrix) {
+        checkMatrix(interleavedMatrix);
+        return (int) interleavedMatrix.dim(interleavedMatrix.dimCount() - 1);
     }
 
     /**
-     * Returns the number of color bands of the image, corresponding to the given packed matrix.
+     * Returns the number of color bands of the image, corresponding to the given interleaved matrix.
      * For example, it is 3 for RGB image or 4 for RGB-Alpha.
      *
-     * @param packedMatrix the packed matrix.
+     * @param interleavedMatrix the packed matrix.
      * @return the corresponding number of color bands.
      */
-    public int getBandCount(Matrix<? extends PArray> packedMatrix) {
-        checkMatrix(packedMatrix);
-        return packedMatrix.dimCount() == 2 ? 1 : (int) packedMatrix.dim(0);
+    public int getBandCount(Matrix<? extends PArray> interleavedMatrix) {
+        checkMatrix(interleavedMatrix);
+        return interleavedMatrix.dimCount() == 2 ? 1 : (int) interleavedMatrix.dim(0);
     }
 
     /**
-     * Converts the given packed matrix (2- or 3-dimensional) into <tt>java.awt.image.DataBuffer</tt>.
+     * Converts the given interleaved matrix (2- or 3-dimensional) into <tt>java.awt.image.DataBuffer</tt>.
      * This method is useful in addition to {@link #toBufferedImage(Matrix, java.awt.image.DataBuffer)},
      * if you want to do something with the created DataBuffer, for example, to correct some its pixels.
      *
-     * @param packedMatrix the packed data.
+     * @param interleavedMatrix the packed data.
      * @return the newly allocated <tt>DataBuffer</tt> with the same data.
      */
-    public final java.awt.image.DataBuffer toDataBuffer(Matrix<? extends PArray> packedMatrix) {
-        checkMatrix(packedMatrix);
-        long bandCount = packedMatrix.dimCount() == 2 ? 1 : packedMatrix.dim(0);
-        PArray array = packedMatrix.array();
+    public final java.awt.image.DataBuffer toDataBuffer(Matrix<? extends PArray> interleavedMatrix) {
+        checkMatrix(interleavedMatrix);
+        long bandCount = interleavedMatrix.dimCount() == 2 ? 1 : interleavedMatrix.dim(0);
+        PArray array = interleavedMatrix.array();
         if (!SimpleMemoryModel.isSimpleArray(array)) {
             array = array.updatableClone(Arrays.SMM);
         }
@@ -162,8 +162,8 @@ public abstract class MatrixToBufferedImageConverter {
      *
      * <p>The default implementation is suitable for monochrome, indexed and multi-bank data buffers.
      *
-     * <p>Note: if the packed matrix is monochrome or indexed, i.e.
-     * <tt>{@link #getBandCount(Matrix) getBandCount}(packedMatrix)==1</tt>,
+     * <p>Note: if the interleaved matrix is monochrome or indexed, i.e.
+     * <tt>{@link #getBandCount(Matrix) getBandCount}(interleavedMatrix)==1</tt>,
      * this method returns
      * <pre>
      * Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue())
@@ -171,14 +171,14 @@ public abstract class MatrixToBufferedImageConverter {
      * <p>The good idea is to provide identical R, G, B color components in such cases
      * (if this method is not overridden).
      *
-     * @param packedMatrix the packed data.
+     * @param interleavedMatrix the interleaved data.
      * @param color        some color.
      * @param bankIndex    index of the bank in terms of <tt>java.awt.image.DataBuffer</tt>.
-     * @return the corresponded component of this color or packed RGB-Alpha value,
+     * @return the corresponded component of this color or interleaved RGB-Alpha value,
      * depending on the structure of the data buffer.
      */
-    public long colorValue(Matrix<? extends PArray> packedMatrix, java.awt.Color color, int bankIndex) {
-        final int bandCount = getBandCount(packedMatrix);
+    public long colorValue(Matrix<? extends PArray> interleavedMatrix, java.awt.Color color, int bankIndex) {
+        final int bandCount = getBandCount(interleavedMatrix);
         if (bandCount == 1) {
             return Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue());
         }
@@ -223,13 +223,13 @@ public abstract class MatrixToBufferedImageConverter {
      *
      * <p>The passed AlgART array must be {@link DirectAccessible direct accessible}.
      *
-     * @param packedArray the packed data.
+     * @param interleavedArray the interleaved data.
      * @param bandCount   the number of bands: if called from {@link #toDataBuffer(Matrix)},
      *                    it is 1 for 2-dimensional matrix and {@link Matrix#dim(int) dim(0)}
      *                    for 3-dimensional matrix.
      * @return the newly allocated <tt>DataBuffer</tt> with the same data.
      */
-    protected abstract java.awt.image.DataBuffer toDataBuffer(PArray packedArray, int bandCount);
+    protected abstract java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount);
 
     /**
      * Returns the band masks, which will be passed to <tt>Raster.createPackedRaster</tt> method,
@@ -271,18 +271,18 @@ public abstract class MatrixToBufferedImageConverter {
             throw new UnsupportedOperationException("Unknown DataBuffer type");
     }
 
-    private void checkMatrix(Matrix<? extends PArray> packedMatrix) {
-        if (packedMatrix == null)
-            throw new NullPointerException("Null packed matrix");
-        if (packedMatrix.dimCount() != 3 && packedMatrix.dimCount() != 2)
-            throw new IllegalArgumentException("Packed matrix must be 2- or 3-dimensional");
-        long bandCount = packedMatrix.dimCount() == 2 ? 1 : packedMatrix.dim(0);
+    private void checkMatrix(Matrix<? extends PArray> interleavedMatrix) {
+        Objects.requireNonNull(interleavedMatrix, "Null interleaved matrix");
+        if (interleavedMatrix.dimCount() != 3 && interleavedMatrix.dimCount() != 2) {
+            throw new IllegalArgumentException("Interleaved matrix must be 2- or 3-dimensional");
+        }
+        long bandCount = interleavedMatrix.dimCount() == 2 ? 1 : interleavedMatrix.dim(0);
         if (bandCount < 1 || bandCount > 4)
             throw new IllegalArgumentException("The number of color channels(RGBA) must be in 1..4 range");
-        if (packedMatrix.dim(1) > Integer.MAX_VALUE || packedMatrix.dim(2) > Integer.MAX_VALUE)
-            throw new TooLargeArrayException("Too large packed " + packedMatrix
+        if (interleavedMatrix.dim(1) > Integer.MAX_VALUE || interleavedMatrix.dim(2) > Integer.MAX_VALUE)
+            throw new TooLargeArrayException("Too large interleaved matrix " + interleavedMatrix
                     + ": dim(1)/dim(2) must be in <=Integer.MAX_VALUE");
-        PArray array = packedMatrix.array();
+        PArray array = interleavedMatrix.array();
         if (!(array instanceof ByteArray) && byteArrayRequired())
             throw new IllegalArgumentException("ByteArray required");
     }
@@ -291,45 +291,46 @@ public abstract class MatrixToBufferedImageConverter {
         System.arraycopy(src, srcPos, dest, 0, dest.length);
     }
 
-    public static class Packed3DToPackedRGB extends MatrixToBufferedImageConverter {
-        private final boolean addAlpha;
+    public static class InterleavedToInterleavedRGB extends MatrixToBufferedImage {
+        private boolean alwaysAddAlpha = false;
 
-        public Packed3DToPackedRGB(boolean addAlpha) {
-            this.addAlpha = addAlpha;
+        public boolean isAlwaysAddAlpha() {
+            return alwaysAddAlpha;
         }
 
-        public boolean addAlpha() {
-            return addAlpha;
+        public InterleavedToInterleavedRGB setAlwaysAddAlpha(boolean alwaysAddAlpha) {
+            this.alwaysAddAlpha = alwaysAddAlpha;
+            return this;
         }
 
         @Override
-        public long colorValue(Matrix<? extends PArray> packedMatrix, java.awt.Color color, int bankIndex) {
+        public long colorValue(Matrix<? extends PArray> interleavedMatrix, java.awt.Color color, int bankIndex) {
             return color.getRGB();
         }
 
         @Override
         public String toString() {
-            return "Packed3DToPackedRGB (addAlpha=" + addAlpha + ")";
+            return "InterleavedToInterleavedRGB (alwaysAddAlpha=" + alwaysAddAlpha + ")";
         }
 
         @Override
-        protected java.awt.image.DataBuffer toDataBuffer(PArray packedArray, int bandCount) {
-            if (!(packedArray instanceof ByteArray)) {
+        protected java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount) {
+            if (!(interleavedArray instanceof ByteArray)) {
                 throw new IllegalArgumentException("ByteArray required");
             }
-            if (!(packedArray instanceof DirectAccessible)) {
-                throw new IllegalArgumentException("DirectAccessible packedArray required");
+            if (!(interleavedArray instanceof DirectAccessible)) {
+                throw new IllegalArgumentException("DirectAccessible interleavedArray required");
             }
-            int len = (int) (packedArray.length() / bandCount);
-            if ((long) len * (long) bandCount != packedArray.length()) {
-                throw new IllegalArgumentException("Unaligned ByteArray: its length " + packedArray.length() +
+            int len = (int) (interleavedArray.length() / bandCount);
+            if ((long) len * (long) bandCount != interleavedArray.length()) {
+                throw new IllegalArgumentException("Unaligned ByteArray: its length " + interleavedArray.length() +
                         " is not divided by band count = " + bandCount);
             }
-            byte[] ja = (byte[]) ((DirectAccessible) packedArray).javaArray();
-            int offset = ((DirectAccessible) packedArray).javaArrayOffset();
+            byte[] ja = (byte[]) ((DirectAccessible) interleavedArray).javaArray();
+            int offset = ((DirectAccessible) interleavedArray).javaArrayOffset();
             switch (bandCount) {
                 case 1: {
-                    if (addAlpha) {
+                    if (alwaysAddAlpha) {
                         int[] result = new int[len];
                         for (int j = 0, disp = offset; j < len; j++, disp++) {
                             result[j] = (ja[disp] & 0xFF) << 16
@@ -381,7 +382,7 @@ public abstract class MatrixToBufferedImageConverter {
 
         @Override
         protected int[] rgbAlphaMasks(int bandCount) {
-            if (addAlpha || bandCount == 4 || bandCount == 2) {
+            if (alwaysAddAlpha || bandCount == 4 || bandCount == 2) {
                 return new int[]{0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000};
             } else if (bandCount == 3) {
                 return new int[]{0x00FF0000, 0x0000FF00, 0x000000FF};
@@ -391,13 +392,7 @@ public abstract class MatrixToBufferedImageConverter {
         }
     }
 
-    public static class Packed3DToPackedBGR extends Packed3DToPackedRGB {
-        static final Packed3DToPackedBGR INSTANCE = new Packed3DToPackedBGR();
-
-        private Packed3DToPackedBGR() {
-            super(false);
-        }
-
+    public static class InterleavedToInterleavedBGR extends InterleavedToInterleavedRGB {
         @Override
         protected int[] rgbAlphaMasks(int bandCount) {
             if (bandCount == 4 || bandCount == 2) {
@@ -408,42 +403,49 @@ public abstract class MatrixToBufferedImageConverter {
                 return null;
             }
         }
-    }
 
-    public static class Packed3DToBandedRGB extends MatrixToBufferedImageConverter {
-        private final boolean addAlpha;
-
-        public Packed3DToBandedRGB(boolean addAlpha) {
-            this.addAlpha = addAlpha;
+        @Override
+        public String toString() {
+            return "InterleavedToInterleavedBGR (alwaysAddAlpha=" + isAlwaysAddAlpha() + ")";
         }
 
-        public boolean addAlpha() {
-            return addAlpha;
+    }
+
+    public static class InterleavedToBandedRGB extends MatrixToBufferedImage {
+        private boolean alwaysAddAlpha = false;
+
+        public boolean isAlwaysAddAlpha() {
+            return alwaysAddAlpha;
+        }
+
+        public InterleavedToBandedRGB setAlwaysAddAlpha(boolean alwaysAddAlpha) {
+            this.alwaysAddAlpha = alwaysAddAlpha;
+            return this;
         }
 
         @Override
         public String toString() {
-            return "Packed3DToBandedRGB (addAlpha=" + addAlpha + ')';
+            return "InterleavedToBandedRGB (alwaysAddAlpha=" + alwaysAddAlpha + ')';
         }
 
         @Override
-        protected java.awt.image.DataBuffer toDataBuffer(PArray packedArray, int bandCount) {
-            if (!(packedArray instanceof ByteArray)) {
+        protected java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount) {
+            if (!(interleavedArray instanceof ByteArray)) {
                 throw new IllegalArgumentException("ByteArray required");
             }
-            if (!(packedArray instanceof DirectAccessible)) {
-                throw new IllegalArgumentException("DirectAccessible packedArray required");
+            if (!(interleavedArray instanceof DirectAccessible)) {
+                throw new IllegalArgumentException("DirectAccessible interleavedArray required");
             }
-            int len = (int) (packedArray.length() / bandCount);
-            if ((long) len * (long) bandCount != packedArray.length()) {
-                throw new IllegalArgumentException("Unaligned ByteArray: its length " + packedArray.length() +
+            int len = (int) (interleavedArray.length() / bandCount);
+            if ((long) len * (long) bandCount != interleavedArray.length()) {
+                throw new IllegalArgumentException("Unaligned ByteArray: its length " + interleavedArray.length() +
                         " is not divided by band count = " + bandCount);
             }
-            byte[] ja = (byte[]) ((DirectAccessible) packedArray).javaArray();
-            int offset = ((DirectAccessible) packedArray).javaArrayOffset();
+            byte[] ja = (byte[]) ((DirectAccessible) interleavedArray).javaArray();
+            int offset = ((DirectAccessible) interleavedArray).javaArrayOffset();
             switch (bandCount) {
                 case 1: {
-                    if (addAlpha) {
+                    if (alwaysAddAlpha) {
                         byte[][] result = new byte[4][len];
                         System.arraycopy(ja, offset, result[0], 0, len);
                         System.arraycopy(ja, offset, result[1], 0, len);
@@ -468,7 +470,7 @@ public abstract class MatrixToBufferedImageConverter {
                 }
                 case 3: {
                     byte[][] result;
-                    if (addAlpha) {
+                    if (alwaysAddAlpha) {
                         result = new byte[4][len];
                         for (int j = 0, disp = offset; j < len; j++, disp += 3) {
                             result[0][j] = ja[disp];
@@ -502,11 +504,10 @@ public abstract class MatrixToBufferedImageConverter {
         }
     }
 
-    public static class MonochromeToIndexed extends Packed3DToPackedRGB {
+    public static class MonochromeToIndexed extends InterleavedToInterleavedRGB {
         private final byte[] baseColor0, baseColor255;
 
         public MonochromeToIndexed(java.awt.Color baseColor0, java.awt.Color baseColor255) {
-            super(false);
             if (baseColor0 == null)
                 throw new NullPointerException("Null baseColor0");
             if (baseColor255 == null)
@@ -527,7 +528,6 @@ public abstract class MatrixToBufferedImageConverter {
 
         // Arguments must be in 0.0..1.0 range!
         public MonochromeToIndexed(double[] baseColor0, double[] baseColor255) {
-            super(false);
             Objects.requireNonNull(baseColor0, "Null baseColor0");
             Objects.requireNonNull(baseColor255, "Null baseColor255");
             this.baseColor0 = new byte[4];
@@ -541,7 +541,7 @@ public abstract class MatrixToBufferedImageConverter {
         }
 
         @Override
-        public long colorValue(Matrix<? extends PArray> packedMatrix, Color color, int bankIndex) {
+        public long colorValue(Matrix<? extends PArray> interleavedMatrix, Color color, int bankIndex) {
             return Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue());
         }
 
@@ -567,10 +567,10 @@ public abstract class MatrixToBufferedImageConverter {
         }
 
         @Override
-        protected java.awt.image.DataBuffer toDataBuffer(PArray packedArray, int bandCount) {
+        protected java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount) {
             if (bandCount != 1)
                 throw new IllegalArgumentException("Illegal bandCount = " + bandCount + " (must be 1)");
-            return super.toDataBuffer(packedArray, bandCount);
+            return super.toDataBuffer(interleavedArray, bandCount);
         }
     }
 }

@@ -1,0 +1,79 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2007-2024 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package net.algart.external.demo;
+
+import net.algart.arrays.*;
+import net.algart.external.MatrixIO;
+import net.algart.external.awt.BufferedImageToMatrix;
+import net.algart.external.awt.MatrixToBufferedImage;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+public class ReadWriteImageTest {
+    public static void main(String[] args) throws IOException {
+        if (args.length < 2) {
+            System.out.printf("Usage: %s source_image.jpg/png/bmp target_image.jpg/png/bmp%n", ReadWriteImageTest.class);
+            return;
+        }
+        final Path sourceFile = Paths.get(args[0]);
+        final Path targetFile = Paths.get(args[1]);
+
+        final List<Matrix<? extends PArray>> image = MatrixIO.readImage(sourceFile);
+        MatrixIO.writeImage(targetFile, image);
+
+        final BufferedImage bi = ImageIO.read(sourceFile.toFile());
+        for (int test = 1; test <= 10; test++) {
+            System.out.printf("%nTest #%d%n", test);
+            MatrixToBufferedImage.InterleavedToInterleavedRGB toBufferedImage =
+                    new MatrixToBufferedImage.InterleavedToInterleavedBGR();
+            BufferedImageToMatrix.ToInterleaved toMatrix =
+                    new BufferedImageToMatrix.ToInterleaved();
+            toBufferedImage.setAlwaysAddAlpha(false);
+            toMatrix.setEnableAlpha(true);
+
+            long t1 = System.nanoTime();
+            Matrix<UpdatablePArray> matrix1 = toMatrix.toMatrix(bi);
+            long t2 = System.nanoTime();
+            Matrix<UpdatablePArray> matrix2 = toMatrix.setReadPixelValuesViaGraphics2D(true).toMatrix(bi);
+            long t3 = System.nanoTime();
+            final BufferedImage bufferedImage = toBufferedImage.toBufferedImage(matrix1);
+            long t4 = System.nanoTime();
+            if (!matrix1.equals(matrix2)) {
+                throw new AssertionError("Different behaviour of BufferedImageToMatrix while using Graphics2D");
+            }
+            System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
+                    (t2 - t1) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t2 - t1) * 1e-9));
+            System.out.printf("MatrixToBufferedImage, Graphics2D: %.3f ms, %.3f MB/sec%n",
+                    (t3 - t2) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t3 - t2) * 1e-9));
+            System.out.printf("BufferedImageToMatrix: %.3f ms, %.3f MB/sec%n",
+                    (t4 - t3) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t4 - t3) * 1e-9));
+        }
+    }
+}
