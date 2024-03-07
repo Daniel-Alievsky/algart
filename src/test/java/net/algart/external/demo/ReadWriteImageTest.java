@@ -77,11 +77,11 @@ public class ReadWriteImageTest {
                     (t2 - t1) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t2 - t1) * 1e-9));
             System.out.printf("writeImage: %.3f ms, %.3f MB/sec%n",
                     (t3 - t2) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t3 - t2) * 1e-9));
-            System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
-                    (t4 - t3) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t4 - t3) * 1e-9));
-            System.out.printf("MatrixToBufferedImage, Graphics2D: %.3f ms, %.3f MB/sec%n",
-                    (t5 - t4) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t5 - t4) * 1e-9));
             System.out.printf("BufferedImageToMatrix: %.3f ms, %.3f MB/sec%n",
+                    (t4 - t3) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t4 - t3) * 1e-9));
+            System.out.printf("BufferedImageToMatrix, Graphics2D: %.3f ms, %.3f MB/sec%n",
+                    (t5 - t4) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t5 - t4) * 1e-9));
+            System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
                     (t6 - t5) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t6 - t5) * 1e-9));
         }
     }
