@@ -53,16 +53,16 @@ public abstract class BufferedImageToMatrix {
     }
 
     public Matrix<UpdatablePArray> toMatrix(BufferedImage bufferedImage, UpdatablePArray resultArray) {
-        if (bufferedImage == null)
-            throw new NullPointerException("Null bufferedImage");
+        Objects.requireNonNull(bufferedImage, "Null bufferedImage");
         final int dimX = bufferedImage.getWidth();
         final int dimY = bufferedImage.getHeight();
         final int bandCount = getBandCount(bufferedImage);
         final long[] dimensions = getResultMatrixDimensions(dimX, dimY, bandCount);
         final Class<?> elementType = getResultElementType(bufferedImage);
         final long size = Arrays.longMul(dimensions);
-        if (size > Integer.MAX_VALUE || size == Long.MIN_VALUE)
+        if (size > Integer.MAX_VALUE || size == Long.MIN_VALUE) {
             throw new AssertionError("Illegal getResultMatrixDimensions implementation: too large results");
+        }
         Object resultData = null;
         if (resultArray != null) {
             if (resultArray.elementType() != elementType)
@@ -82,8 +82,7 @@ public abstract class BufferedImageToMatrix {
     }
 
     public int getBandCount(BufferedImage bufferedImage) {
-        if (bufferedImage == null)
-            throw new NullPointerException("Null bufferedImage");
+        Objects.requireNonNull(bufferedImage, "Null bufferedImage");
         ColorModel cm = bufferedImage.getColorModel();
         boolean gray = cm.getNumComponents() == 1;
         // ...SampleModel sm = bufferedImage.getSampleModel();...
@@ -107,18 +106,28 @@ public abstract class BufferedImageToMatrix {
 
     protected abstract void toJavaArray(Object resultJavaArray, BufferedImage bufferedImage);
 
-    public static final class ToInterleaved extends BufferedImageToMatrix {
+    public static class ToInterleavedRGB extends BufferedImageToMatrix {
         public static final boolean DEFAULT_READ_PIXEL_VALUES_VIA_COLOR_MODEL = false;
         public static final boolean DEFAULT_READ_PIXEL_VALUES_VIA_GRAPHICS_2D = false;
 
+        private final boolean bgrOrder;
+
         private boolean readPixelValuesViaColorModel = DEFAULT_READ_PIXEL_VALUES_VIA_COLOR_MODEL;
         private boolean readPixelValuesViaGraphics2D = DEFAULT_READ_PIXEL_VALUES_VIA_GRAPHICS_2D;
+
+        public ToInterleavedRGB() {
+            this(false);
+        }
+
+        ToInterleavedRGB(boolean bgrOrder) {
+            this.bgrOrder = bgrOrder;
+        }
 
         public boolean isReadPixelValuesViaColorModel() {
             return readPixelValuesViaColorModel;
         }
 
-        public ToInterleaved setReadPixelValuesViaColorModel(boolean readPixelValuesViaColorModel) {
+        public ToInterleavedRGB setReadPixelValuesViaColorModel(boolean readPixelValuesViaColorModel) {
             this.readPixelValuesViaColorModel = readPixelValuesViaColorModel;
             return this;
         }
@@ -127,15 +136,14 @@ public abstract class BufferedImageToMatrix {
             return readPixelValuesViaGraphics2D;
         }
 
-        public ToInterleaved setReadPixelValuesViaGraphics2D(boolean readPixelValuesViaGraphics2D) {
+        public ToInterleavedRGB setReadPixelValuesViaGraphics2D(boolean readPixelValuesViaGraphics2D) {
             this.readPixelValuesViaGraphics2D = readPixelValuesViaGraphics2D;
             return this;
         }
 
         @Override
         public Class<?> getResultElementType(BufferedImage bufferedImage) {
-            if (bufferedImage == null)
-                throw new NullPointerException("Null bufferedImage");
+            Objects.requireNonNull(bufferedImage, "Null bufferedImage");
             if (readPixelValuesViaColorModel || readPixelValuesViaGraphics2D) {
                 return byte.class;
             }
@@ -158,20 +166,25 @@ public abstract class BufferedImageToMatrix {
             final ColorModel colorModel = bufferedImage.getColorModel();
             final SampleModel sampleModel = bufferedImage.getSampleModel();
             final boolean gray = bandCount == 1;
+            final boolean invertBandOrder = bgrOrder && (bandCount == 3 || bandCount == 4);
             if (readPixelValuesViaColorModel) {
                 assert resultJavaArray instanceof byte[];
                 byte[] result = (byte[]) resultJavaArray;
                 Raster r = bufferedImage.getRaster();
                 Object outData = null;
+                final int rIndex = bgrOrder ? 2 : 0;
+                final int gIndex = 1;
+                final int bIndex = bgrOrder ? 0 : 2;
                 switch (bandCount) {
                     case 4:
                         for (int y = 0, disp = 0; y < dimY; y++) {
                             for (int x = 0; x < dimX; x++) {
                                 outData = r.getDataElements(x, y, outData);
-                                result[disp++] = (byte) colorModel.getRed(outData);
-                                result[disp++] = (byte) colorModel.getGreen(outData);
-                                result[disp++] = (byte) colorModel.getBlue(outData);
-                                result[disp++] = (byte) colorModel.getAlpha(outData);
+                                result[disp + rIndex] = (byte) colorModel.getRed(outData);
+                                result[disp + gIndex] = (byte) colorModel.getGreen(outData);
+                                result[disp + bIndex] = (byte) colorModel.getBlue(outData);
+                                result[disp + 3] = (byte) colorModel.getAlpha(outData);
+                                disp += 4;
                             }
                         }
                         break;
@@ -179,9 +192,10 @@ public abstract class BufferedImageToMatrix {
                         for (int y = 0, disp = 0; y < dimY; y++) {
                             for (int x = 0; x < dimX; x++) {
                                 outData = r.getDataElements(x, y, outData);
-                                result[disp++] = (byte) colorModel.getRed(outData);
-                                result[disp++] = (byte) colorModel.getGreen(outData);
-                                result[disp++] = (byte) colorModel.getBlue(outData);
+                                result[disp + rIndex] = (byte) colorModel.getRed(outData);
+                                result[disp + gIndex] = (byte) colorModel.getGreen(outData);
+                                result[disp + bIndex] = (byte) colorModel.getBlue(outData);
+                                disp += 3;
                             }
                         }
                         break;
@@ -198,7 +212,7 @@ public abstract class BufferedImageToMatrix {
                 }
                 return;
             }
-            if (!readPixelValuesViaGraphics2D && supportedStructure(bufferedImage)) {
+            if (!readPixelValuesViaGraphics2D && isSupportedStructure(bufferedImage)) {
                 // Default branch, used by this class without special settings.
                 // But in a case of strange colorModel.getNumComponents() (like 2 or 1 with alpha),
                 // or incompatibility of color components count and samples count (RGB, but indexed 1-band data),
@@ -214,7 +228,8 @@ public abstract class BufferedImageToMatrix {
                     int m = Math.min(lineCount, dimY - y);
                     numberOfPixels = m * dimX;
                     for (int bandIndex = 0; bandIndex < bandCount; bandIndex++) {
-                        r.getSamples(0, y, dimX, m, bandIndex, buffer);
+                        final int correctedBandIndex = invertBandOrder && bandIndex < 3 ? 2 - bandIndex : bandIndex;
+                        r.getSamples(0, y, dimX, m, correctedBandIndex, buffer);
                         switch (dataBufferType) {
                             case DataBuffer.TYPE_BYTE: {
                                 assert resultJavaArray instanceof byte[];
@@ -280,7 +295,11 @@ public abstract class BufferedImageToMatrix {
             } else {
                 int[] offsets = new int[bandCount];
                 for (int k = 0; k < offsets.length; k++) {
-                    offsets[k] = k;
+                    if (invertBandOrder) {
+                        offsets[k] = k == 0 ? 2 : k == 2 ? 0 : k;
+                    } else {
+                        offsets[k] = k;
+                    }
                 }
                 wr = Raster.createInterleavedRaster(
                         db, dimX, dimY, dimX * bandCount, bandCount, offsets, null);
@@ -292,7 +311,7 @@ public abstract class BufferedImageToMatrix {
             resultImage.getGraphics().drawImage(bufferedImage, 0, 0, null);
         }
 
-        private boolean supportedStructure(BufferedImage bufferedImage) {
+        private boolean isSupportedStructure(BufferedImage bufferedImage) {
             return getResultElementTypeOrNullForUnsupported(bufferedImage) != null;
         }
 
@@ -324,6 +343,12 @@ public abstract class BufferedImageToMatrix {
                 case DataBuffer.TYPE_DOUBLE -> double.class;
                 default -> byte.class;
             };
+        }
+    }
+
+    public static final class ToInterleavedBGR extends ToInterleavedRGB {
+        public ToInterleavedBGR() {
+            super(true);
         }
     }
 }

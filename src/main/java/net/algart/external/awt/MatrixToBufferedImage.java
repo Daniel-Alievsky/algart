@@ -222,8 +222,7 @@ public abstract class MatrixToBufferedImage {
         if (bandCount == 1) {
             return Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue());
         }
-        if (color == null)
-            throw new NullPointerException("Null color argument");
+        Objects.requireNonNull(color, "Null color argument");
         return switch (bankIndex) {
             case 0 -> color.getRed();
             case 1 -> color.getGreen();
@@ -546,10 +545,8 @@ public abstract class MatrixToBufferedImage {
         private final byte[] baseColor0, baseColor255;
 
         public MonochromeToIndexed(java.awt.Color baseColor0, java.awt.Color baseColor255) {
-            if (baseColor0 == null)
-                throw new NullPointerException("Null baseColor0");
-            if (baseColor255 == null)
-                throw new NullPointerException("Null baseColor255");
+            Objects.requireNonNull(baseColor0, "Null baseColor0");
+            Objects.requireNonNull(baseColor255, "Null baseColor255");
             this.baseColor0 = new byte[]{
                     (byte) baseColor0.getRed(),
                     (byte) baseColor0.getGreen(),

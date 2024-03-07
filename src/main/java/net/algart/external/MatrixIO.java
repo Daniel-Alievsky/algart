@@ -145,7 +145,7 @@ public class MatrixIO {
         if (USE_DEPRECATED_READ_WRITE) {
             return ((ColorImageFormatter) new ColorImageFormatter.Simple()).toImage(bufferedImage);
         }
-        final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleaved().toMatrix(bufferedImage);
+        final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleavedRGB().toMatrix(bufferedImage);
         return Matrices.separate(null, matrix);
     }
 

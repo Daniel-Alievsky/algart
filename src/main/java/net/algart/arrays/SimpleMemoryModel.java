@@ -204,8 +204,7 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
     }
 
     public UpdatableArray valueOf(Object array, int offset, int count) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         UpdatableArray result;
         if (array instanceof boolean[]) {
             result = new UpdatableJABitArray(count, count);

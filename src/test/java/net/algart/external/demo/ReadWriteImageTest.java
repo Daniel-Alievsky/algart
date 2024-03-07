@@ -38,27 +38,27 @@ import java.util.List;
 
 public class ReadWriteImageTest {
     public static void main(String[] args) throws IOException {
-        if (args.length < 2) {
-            System.out.printf("Usage: %s source_image.jpg/png/bmp target_image.jpg/png/bmp%n", ReadWriteImageTest.class);
+        if (args.length < 3) {
+            System.out.printf("Usage: %s source_image.jpg/png/bmp copy_1.jpg/png/bmp copy_2.jpg/png/bmp%n",
+                    ReadWriteImageTest.class);
             return;
         }
         final Path sourceFile = Paths.get(args[0]);
-        final Path targetFile = Paths.get(args[1]);
+        final Path targetFile1 = Paths.get(args[1]);
+        final Path targetFile2 = Paths.get(args[2]);
 
         for (int test = 1; test <= 10; test++) {
             System.out.printf("%nTest #%d%n", test);
-            MatrixToBufferedImage.InterleavedRGBToInterleaved toBufferedImage =
-                    new MatrixToBufferedImage.InterleavedBGRToInterleaved();
-            BufferedImageToMatrix.ToInterleaved toMatrix =
-                    new BufferedImageToMatrix.ToInterleaved();
-            toBufferedImage.setAlwaysAddAlpha(false);
+            var toMatrix = new BufferedImageToMatrix.ToInterleavedBGR();
+            var toBufferedImage = new MatrixToBufferedImage.InterleavedBGRToInterleaved();
             toMatrix.setEnableAlpha(true);
+            toBufferedImage.setAlwaysAddAlpha(false);
 
             final BufferedImage bi = ImageIO.read(sourceFile.toFile());
             long t1 = System.nanoTime();
             final List<Matrix<UpdatablePArray>> image = MatrixIO.readImage(sourceFile);
             long t2 = System.nanoTime();
-            MatrixIO.writeImage(targetFile, image);
+            MatrixIO.writeImage(targetFile1, image);
             long t3 = System.nanoTime();
             Matrix<UpdatablePArray> matrix1 = toMatrix.toMatrix(bi);
             long t4 = System.nanoTime();
@@ -71,14 +71,16 @@ public class ReadWriteImageTest {
                 System.out.println("    " + matrix1);
                 System.out.println("    " + matrix2);
             }
+            MatrixIO.writeBufferedImage(targetFile2, bufferedImage);
+
             System.out.printf("readImage: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t2 - t1) * 1e-9));
             System.out.printf("writeImage: %.3f ms, %.3f MB/sec%n",
                     (t3 - t2) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t3 - t2) * 1e-9));
             System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
-                    (t4 - t2) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t4 - t3) * 1e-9));
+                    (t4 - t3) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t4 - t3) * 1e-9));
             System.out.printf("MatrixToBufferedImage, Graphics2D: %.3f ms, %.3f MB/sec%n",
-                    (t5 - t3) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t5 - t3) * 1e-9));
+                    (t5 - t4) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t5 - t4) * 1e-9));
             System.out.printf("BufferedImageToMatrix: %.3f ms, %.3f MB/sec%n",
                     (t6 - t5) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t6 - t5) * 1e-9));
         }
