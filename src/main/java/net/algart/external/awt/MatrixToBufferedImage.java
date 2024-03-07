@@ -291,14 +291,14 @@ public abstract class MatrixToBufferedImage {
         System.arraycopy(src, srcPos, dest, 0, dest.length);
     }
 
-    public static class InterleavedToInterleavedRGB extends MatrixToBufferedImage {
+    public static class InterleavedRGBToInterleaved extends MatrixToBufferedImage {
         private boolean alwaysAddAlpha = false;
 
         public boolean isAlwaysAddAlpha() {
             return alwaysAddAlpha;
         }
 
-        public InterleavedToInterleavedRGB setAlwaysAddAlpha(boolean alwaysAddAlpha) {
+        public InterleavedRGBToInterleaved setAlwaysAddAlpha(boolean alwaysAddAlpha) {
             this.alwaysAddAlpha = alwaysAddAlpha;
             return this;
         }
@@ -383,16 +383,16 @@ public abstract class MatrixToBufferedImage {
         @Override
         protected int[] rgbAlphaMasks(int bandCount) {
             if (alwaysAddAlpha || bandCount == 4 || bandCount == 2) {
-                return new int[]{0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000};
+                return new int[]{0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000};
             } else if (bandCount == 3) {
-                return new int[]{0x00FF0000, 0x0000FF00, 0x000000FF};
+                return new int[]{0x00ff0000, 0x0000ff00, 0x000000ff};
             } else {
                 return null;
             }
         }
     }
 
-    public static class InterleavedToInterleavedBGR extends InterleavedToInterleavedRGB {
+    public static class InterleavedBGRToInterleaved extends InterleavedRGBToInterleaved {
         @Override
         protected int[] rgbAlphaMasks(int bandCount) {
             if (bandCount == 4 || bandCount == 2) {
@@ -504,7 +504,7 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class MonochromeToIndexed extends InterleavedToInterleavedRGB {
+    public static class MonochromeToIndexed extends InterleavedRGBToInterleaved {
         private final byte[] baseColor0, baseColor255;
 
         public MonochromeToIndexed(java.awt.Color baseColor0, java.awt.Color baseColor255) {

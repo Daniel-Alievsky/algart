@@ -25,7 +25,10 @@
 package net.algart.external;
 
 import net.algart.arrays.*;
+import net.algart.external.awt.BufferedImageToMatrix;
+import net.algart.external.awt.MatrixToBufferedImage;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -37,6 +40,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class MatrixIO {
+    private static final boolean USE_DEPRECATED_READ_WRITE = false;
+
     public enum SerializationMode {
         JAVA_BASED,
         BYTE_BUFFER
@@ -103,23 +108,35 @@ public class MatrixIO {
 
     public static void writeImage(Path file, List<? extends Matrix<? extends PArray>> image) throws IOException {
         Objects.requireNonNull(file, "Null file");
+        Objects.requireNonNull(image, "Null image");
         String formatName = extension(file);
-        //TODO!! call packBandsIntoSequentialSamples and use MatrixToBufferedImageConverter
-        ColorImageFormatter formatter = new SimpleColorImageFormatter();
-        BufferedImage bufferedImage = formatter.toBufferedImage(image);
+        BufferedImage bufferedImage;
+        if (USE_DEPRECATED_READ_WRITE) {
+            bufferedImage =((ColorImageFormatter) new SimpleColorImageFormatter()).toBufferedImage(image);
+        } else {
+            final Matrix<PArray> matrix = Matrices.interleave(null, image);
+            bufferedImage = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(matrix);
+        }
         if (!ImageIO.write(bufferedImage, formatName, file.toFile())) {
             throw new IOException("Cannot write " + file + ": no writer for " + formatName);
         }
     }
 
-    public static List<Matrix<? extends PArray>> readImage(Path file) throws IOException {
+    public static List<Matrix<UpdatablePArray>> readImage(Path file) throws IOException {
         Objects.requireNonNull(file, "Null file");
         if (!Files.exists(file)) {
             throw new FileNotFoundException("Image file " + file + " does not exist");
         }
-        ColorImageFormatter formatter = new SimpleColorImageFormatter();
+
         BufferedImage bufferedImage = ImageIO.read(file.toFile());
-        return formatter.toImage(bufferedImage);
+        if (bufferedImage == null) {
+            throw new IIOException("Cannot read " + file + ": no suitable reader");
+        }
+        if (USE_DEPRECATED_READ_WRITE) {
+            return ((ColorImageFormatter) new SimpleColorImageFormatter()).toImage(bufferedImage);
+        }
+        final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleaved().toMatrix(bufferedImage);
+        return Matrices.separate(null, matrix);
     }
 
     /**

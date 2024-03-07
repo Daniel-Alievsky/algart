@@ -26,6 +26,7 @@ package net.algart.external;
 
 import net.algart.arrays.Matrix;
 import net.algart.arrays.PArray;
+import net.algart.arrays.UpdatablePArray;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -34,5 +35,5 @@ import java.util.List;
 interface ColorImageFormatter {
     public BufferedImage toBufferedImage(List<? extends Matrix<? extends PArray>> image);
 
-    public List<Matrix<? extends PArray>> toImage(BufferedImage bufferedImage);
+    public List<Matrix<UpdatablePArray>> toImage(BufferedImage bufferedImage);
 }

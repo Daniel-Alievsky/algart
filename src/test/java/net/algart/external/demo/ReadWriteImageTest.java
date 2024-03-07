@@ -45,35 +45,41 @@ public class ReadWriteImageTest {
         final Path sourceFile = Paths.get(args[0]);
         final Path targetFile = Paths.get(args[1]);
 
-        final List<Matrix<? extends PArray>> image = MatrixIO.readImage(sourceFile);
-        MatrixIO.writeImage(targetFile, image);
 
         final BufferedImage bi = ImageIO.read(sourceFile.toFile());
         for (int test = 1; test <= 10; test++) {
             System.out.printf("%nTest #%d%n", test);
-            MatrixToBufferedImage.InterleavedToInterleavedRGB toBufferedImage =
-                    new MatrixToBufferedImage.InterleavedToInterleavedBGR();
+            MatrixToBufferedImage.InterleavedRGBToInterleaved toBufferedImage =
+                    new MatrixToBufferedImage.InterleavedBGRToInterleaved();
             BufferedImageToMatrix.ToInterleaved toMatrix =
                     new BufferedImageToMatrix.ToInterleaved();
             toBufferedImage.setAlwaysAddAlpha(false);
             toMatrix.setEnableAlpha(true);
 
             long t1 = System.nanoTime();
-            Matrix<UpdatablePArray> matrix1 = toMatrix.toMatrix(bi);
+            final List<Matrix<UpdatablePArray>> image = MatrixIO.readImage(sourceFile);
             long t2 = System.nanoTime();
-            Matrix<UpdatablePArray> matrix2 = toMatrix.setReadPixelValuesViaGraphics2D(true).toMatrix(bi);
+            MatrixIO.writeImage(targetFile, image);
             long t3 = System.nanoTime();
-            final BufferedImage bufferedImage = toBufferedImage.toBufferedImage(matrix1);
+            Matrix<UpdatablePArray> matrix1 = toMatrix.toMatrix(bi);
             long t4 = System.nanoTime();
+            Matrix<UpdatablePArray> matrix2 = toMatrix.setReadPixelValuesViaGraphics2D(true).toMatrix(bi);
+            long t5 = System.nanoTime();
+            final BufferedImage bufferedImage = toBufferedImage.toBufferedImage(matrix1);
+            long t6 = System.nanoTime();
             if (!matrix1.equals(matrix2)) {
                 throw new AssertionError("Different behaviour of BufferedImageToMatrix while using Graphics2D");
             }
-            System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
+            System.out.printf("readImage: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t2 - t1) * 1e-9));
-            System.out.printf("MatrixToBufferedImage, Graphics2D: %.3f ms, %.3f MB/sec%n",
+            System.out.printf("writeImage: %.3f ms, %.3f MB/sec%n",
                     (t3 - t2) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t3 - t2) * 1e-9));
+            System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
+                    (t4 - t2) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t4 - t3) * 1e-9));
+            System.out.printf("MatrixToBufferedImage, Graphics2D: %.3f ms, %.3f MB/sec%n",
+                    (t5 - t3) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t5 - t3) * 1e-9));
             System.out.printf("BufferedImageToMatrix: %.3f ms, %.3f MB/sec%n",
-                    (t4 - t3) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t4 - t3) * 1e-9));
+                    (t6 - t5) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t6 - t5) * 1e-9));
         }
     }
 }

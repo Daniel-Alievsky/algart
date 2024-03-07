@@ -256,7 +256,7 @@ class SimpleColorImageFormatter implements ColorImageFormatter {
         return new BufferedImage(cm, wr, false, null);
     }
 
-    public List<Matrix<? extends PArray>> toImage(BufferedImage bufferedImage) {
+    public List<Matrix<UpdatablePArray>> toImage(BufferedImage bufferedImage) {
         if (bufferedImage == null)
             throw new NullPointerException("Null buffered image");
         int dimX = bufferedImage.getWidth();
@@ -303,7 +303,7 @@ class SimpleColorImageFormatter implements ColorImageFormatter {
                 rgbAlpha = new byte[][] {rgbAlpha[0]}; // only 1 band is interesting
             }
         }
-        List<Matrix<? extends PArray>> data = new ArrayList<Matrix<? extends PArray>>();
+        List<Matrix<UpdatablePArray>> data = new ArrayList<>();
         for (byte[] band : rgbAlpha) {
             data.add(Matrices.matrix(SimpleMemoryModel.asUpdatableByteArray(band), dimX, dimY));
         }

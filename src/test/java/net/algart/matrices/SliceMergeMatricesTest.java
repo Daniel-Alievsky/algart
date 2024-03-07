@@ -53,7 +53,7 @@ public class SliceMergeMatricesTest {
         final Path sourceFile = Paths.get(args[0]);
         final Path matrixFolder = Paths.get(args[1]);
         final ArrayContext context = ArrayContext.getSimpleContext(MEMORY_MODEL, MULTIHREADING);
-        List<Matrix<? extends PArray>> source = MatrixIO.readImage(sourceFile);
+        List<? extends Matrix<? extends PArray>> source = MatrixIO.readImage(sourceFile);
         List<Matrix<? extends PNumberArray>> matrices = Matrices.several(
                 PNumberArray.class,
                 source.toArray(new Matrix<?>[0]));
