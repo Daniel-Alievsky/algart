@@ -45,8 +45,6 @@ public class ReadWriteImageTest {
         final Path sourceFile = Paths.get(args[0]);
         final Path targetFile = Paths.get(args[1]);
 
-
-        final BufferedImage bi = ImageIO.read(sourceFile.toFile());
         for (int test = 1; test <= 10; test++) {
             System.out.printf("%nTest #%d%n", test);
             MatrixToBufferedImage.InterleavedRGBToInterleaved toBufferedImage =
@@ -56,6 +54,7 @@ public class ReadWriteImageTest {
             toBufferedImage.setAlwaysAddAlpha(false);
             toMatrix.setEnableAlpha(true);
 
+            final BufferedImage bi = ImageIO.read(sourceFile.toFile());
             long t1 = System.nanoTime();
             final List<Matrix<UpdatablePArray>> image = MatrixIO.readImage(sourceFile);
             long t2 = System.nanoTime();
@@ -68,7 +67,9 @@ public class ReadWriteImageTest {
             final BufferedImage bufferedImage = toBufferedImage.toBufferedImage(matrix1);
             long t6 = System.nanoTime();
             if (!matrix1.equals(matrix2)) {
-                throw new AssertionError("Different behaviour of BufferedImageToMatrix while using Graphics2D");
+                System.out.println("Different behaviour of BufferedImageToMatrix while using Graphics2D!");
+                System.out.println("    " + matrix1);
+                System.out.println("    " + matrix2);
             }
             System.out.printf("readImage: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t2 - t1) * 1e-9));

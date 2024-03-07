@@ -1493,7 +1493,7 @@ public class Matrices {
      * @throws IllegalArgumentException if the passed array is resizable
      *                                  (for example, implements {@link MutableArray}),
      *                                  or if the number of dimensions is 0 (empty <tt>dim</tt> Java array),
-     *                                  or if some of dimensions are negative.
+     *                                  or if some of the dimensions are negative.
      * @throws SizeMismatchException    if the product of all dimensions is not equal to the array length.
      * @throws TooLargeArrayException   if the product of all dimensions is greater than <tt>Long.MAX_VALUE</tt>.
      * @see MemoryModel#newMatrix(Class, Class, long...)
@@ -1879,8 +1879,8 @@ public class Matrices {
      *
      * @param merged the source merged matrix.
      * @return a list of matrices: "layers" of the source one along the last dimension.
-     * @throws NullPointerException     if <tt>merged</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>merged</tt> matrix is 1-dimensional.
+     * @throws NullPointerException  if <tt>merged</tt> argument is <tt>null</tt>.
+     * @throws IllegalStateException if <tt>merged</tt> matrix is 1-dimensional.
      */
     public static <T extends Array> List<Matrix<T>> asLayers(Matrix<T> merged) {
         return asLayers(merged, Integer.MAX_VALUE);
@@ -1914,8 +1914,8 @@ public class Matrices {
      * @param limit  maximal allowed number of returned matrices (the last dimension of the source matrix).
      * @return a list of matrices: "layers" of the source one along the last dimension.
      * @throws NullPointerException     if <tt>merged</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>merged</tt> matrix is 1-dimensional,
-     *                                  if <tt>limit &le; 0</tt> or if the number of returned matrices {@code >limit}.
+     * @throws IllegalStateException    if <tt>merged</tt> matrix is 1-dimensional.
+     * @throws IllegalArgumentException if <tt>limit &le; 0</tt> or if the number of returned matrices {@code >limit}.
      */
     public static <T extends Array> List<Matrix<T>> asLayers(Matrix<T> merged, int limit) {
         Objects.requireNonNull(merged, "Null merged matrix");
@@ -4338,7 +4338,7 @@ public class Matrices {
 
     private static long numberOfChannels(long[] dimensions, boolean lastDimension) {
         if (dimensions.length <= 1) {
-            throw new IllegalArgumentException("The matrix must have at least 2 dimensions");
+            throw new IllegalStateException("The matrix must have at least 2 dimensions");
         }
         final long n = lastDimension ? dimensions[dimensions.length - 1] : dimensions[0];
         assert n >= 0 : "illegal Matrix.dimensions() behaviour: negative dimension";

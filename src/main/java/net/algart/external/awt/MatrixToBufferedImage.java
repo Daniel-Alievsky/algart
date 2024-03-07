@@ -25,6 +25,7 @@
 package net.algart.external.awt;
 
 import net.algart.arrays.*;
+import net.algart.math.functions.LinearFunc;
 
 import java.awt.*;
 import java.awt.color.ColorSpace;
@@ -33,6 +34,27 @@ import java.util.Locale;
 import java.util.Objects;
 
 public abstract class MatrixToBufferedImage {
+    private boolean unsignedInt32 = false;
+
+    public boolean isUnsignedInt32() {
+        return unsignedInt32;
+    }
+
+    /**
+     * Specifies how to convert 32-bit <tt>int</tt> values to bytes: by simple unsigned shift ">>>24"
+     * (<tt>true</tt> value) or via usual AlgART scaling: 0 to 0, <tt>Integer.MAX_VALUE</tt>
+     * to 255 (<tt>false</tt> value).
+     * This flag is used in {@link #toDataBuffer(Matrix)} method.
+     *
+     * @param unsignedInt32 whether <tt>int</tt> values are considered to be unsigned 32-bit;
+     *                      default is <tt>false</tt>.
+     * @return a reference to this object.
+     */
+    public MatrixToBufferedImage setUnsignedInt32(boolean unsignedInt32) {
+        this.unsignedInt32 = unsignedInt32;
+        return this;
+    }
+
     /**
      * Equivalent to <tt>{@link #toBufferedImage(net.algart.arrays.Matrix, java.awt.image.DataBuffer)
      * toBufferedImage}(interleavedMatrix, null)</tt>.
@@ -107,7 +129,7 @@ public abstract class MatrixToBufferedImage {
      * Returns the x-dimension of the image, corresponding to the given interleaved matrix.
      * Note that it is <tt>int</tt>, not <tt>long</tt> (AWT images have 31-bit dimensions).
      *
-     * @param interleavedMatrix the packed matrix.
+     * @param interleavedMatrix the interleaved matrix.
      * @return the width of the corresponding image.
      */
     public int getWidth(Matrix<? extends PArray> interleavedMatrix) {
@@ -119,7 +141,7 @@ public abstract class MatrixToBufferedImage {
      * Returns the y-dimension of the image, corresponding to the given interleaved matrix.
      * Note that it is <tt>int</tt>, not <tt>long</tt> (AWT images have 31-bit dimensions).
      *
-     * @param interleavedMatrix the packed matrix.
+     * @param interleavedMatrix the interleaved matrix.
      * @return the height of the corresponding image.
      */
     public int getHeight(Matrix<? extends PArray> interleavedMatrix) {
@@ -131,7 +153,7 @@ public abstract class MatrixToBufferedImage {
      * Returns the number of color bands of the image, corresponding to the given interleaved matrix.
      * For example, it is 3 for RGB image or 4 for RGB-Alpha.
      *
-     * @param interleavedMatrix the packed matrix.
+     * @param interleavedMatrix the interleaved matrix.
      * @return the corresponding number of color bands.
      */
     public int getBandCount(Matrix<? extends PArray> interleavedMatrix) {
@@ -144,13 +166,31 @@ public abstract class MatrixToBufferedImage {
      * This method is useful in addition to {@link #toBufferedImage(Matrix, java.awt.image.DataBuffer)},
      * if you want to do something with the created DataBuffer, for example, to correct some its pixels.
      *
-     * @param interleavedMatrix the packed data.
+     * <p>This method automatically converts the source data to byte (8-bit) array,
+     * if {@link #bytesRequired()} returns <tt>true</tt>.
+     *
+     * @param interleavedMatrix the interleaved data.
      * @return the newly allocated <tt>DataBuffer</tt> with the same data.
      */
     public final java.awt.image.DataBuffer toDataBuffer(Matrix<? extends PArray> interleavedMatrix) {
         checkMatrix(interleavedMatrix);
         long bandCount = interleavedMatrix.dimCount() == 2 ? 1 : interleavedMatrix.dim(0);
         PArray array = interleavedMatrix.array();
+        if (bytesRequired() && array.elementType() != byte.class) {
+            if (array instanceof IntArray && unsignedInt32) {
+                int[] ints = Arrays.toJavaArray((IntArray) array);
+                byte[] bytes = new byte[ints.length];
+                for (int k = 0; k < bytes.length; k++) {
+                    bytes[k] = (byte) (ints[k] >>> 24);
+                }
+                array = SimpleMemoryModel.asUpdatableByteArray(bytes);
+            } else {
+                array = Arrays.asFuncArray(
+                        LinearFunc.getInstance(0.0, 255.0 / array.maxPossibleValue(1.0)),
+                        ByteArray.class,
+                        array);
+            }
+        }
         if (!SimpleMemoryModel.isSimpleArray(array)) {
             array = array.updatableClone(Arrays.SMM);
         }
@@ -172,8 +212,8 @@ public abstract class MatrixToBufferedImage {
      * (if this method is not overridden).
      *
      * @param interleavedMatrix the interleaved data.
-     * @param color        some color.
-     * @param bankIndex    index of the bank in terms of <tt>java.awt.image.DataBuffer</tt>.
+     * @param color             some color.
+     * @param bankIndex         index of the bank in terms of <tt>java.awt.image.DataBuffer</tt>.
      * @return the corresponded component of this color or interleaved RGB-Alpha value,
      * depending on the structure of the data buffer.
      */
@@ -195,15 +235,14 @@ public abstract class MatrixToBufferedImage {
 
     /**
      * Returns <tt>true</tt> if the AlgART array or matrix, passed to the methods of this class,
-     * must contain <tt>byte</tt> elements. In this case, the client of this class must convert
-     * all other element types into <tt>byte</tt> by some way, usually via
-     * {@link Matrices#asFuncMatrix(net.algart.math.functions.Func, Class, Matrix)} method.
+     * must contain <tt>byte</tt> elements. In this case, this class converts
+     * all other element types into <tt>byte</tt> (but the client may do this itself).
      *
      * <p>The default implementation returns <tt>true</tt>.
      * Please override this method if your implementation forms specific versions of
      * <tt>java.awt.image.DataBuffer</tt> for non-byte element types.
      */
-    public boolean byteArrayRequired() {
+    public boolean bytesRequired() {
         return true;
     }
 
@@ -224,9 +263,9 @@ public abstract class MatrixToBufferedImage {
      * <p>The passed AlgART array must be {@link DirectAccessible direct accessible}.
      *
      * @param interleavedArray the interleaved data.
-     * @param bandCount   the number of bands: if called from {@link #toDataBuffer(Matrix)},
-     *                    it is 1 for 2-dimensional matrix and {@link Matrix#dim(int) dim(0)}
-     *                    for 3-dimensional matrix.
+     * @param bandCount        the number of bands: if called from {@link #toDataBuffer(Matrix)},
+     *                         it is 1 for 2-dimensional matrix and {@link Matrix#dim(int) dim(0)}
+     *                         for 3-dimensional matrix.
      * @return the newly allocated <tt>DataBuffer</tt> with the same data.
      */
     protected abstract java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount);
@@ -277,14 +316,13 @@ public abstract class MatrixToBufferedImage {
             throw new IllegalArgumentException("Interleaved matrix must be 2- or 3-dimensional");
         }
         long bandCount = interleavedMatrix.dimCount() == 2 ? 1 : interleavedMatrix.dim(0);
-        if (bandCount < 1 || bandCount > 4)
+        if (bandCount < 1 || bandCount > 4) {
             throw new IllegalArgumentException("The number of color channels(RGBA) must be in 1..4 range");
-        if (interleavedMatrix.dim(1) > Integer.MAX_VALUE || interleavedMatrix.dim(2) > Integer.MAX_VALUE)
+        }
+        if (interleavedMatrix.dim(1) > Integer.MAX_VALUE || interleavedMatrix.dim(2) > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large interleaved matrix " + interleavedMatrix
                     + ": dim(1)/dim(2) must be in <=Integer.MAX_VALUE");
-        PArray array = interleavedMatrix.array();
-        if (!(array instanceof ByteArray) && byteArrayRequired())
-            throw new IllegalArgumentException("ByteArray required");
+        }
     }
 
     protected void toDataBufferBand0Filter(byte[] src, int srcPos, byte[] dest) {

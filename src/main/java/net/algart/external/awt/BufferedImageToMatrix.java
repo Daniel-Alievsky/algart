@@ -78,7 +78,7 @@ public abstract class BufferedImageToMatrix {
             resultData = java.lang.reflect.Array.newInstance(elementType, (int) size);
         }
         toJavaArray(resultData, bufferedImage);
-        return Matrices.matrix((UpdatablePArray) SimpleMemoryModel.asUpdatableArray(resultData), dimensions);
+        return SimpleMemoryModel.asMatrix(resultData, dimensions);
     }
 
     public int getBandCount(BufferedImage bufferedImage) {

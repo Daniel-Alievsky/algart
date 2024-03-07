@@ -26,6 +26,8 @@ package net.algart.arrays;
 
 import net.algart.math.*;
 
+import java.util.List;
+
 /**
  * <p>AlgART matrix: multidimensional array.</p>
  *
@@ -1881,6 +1883,16 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return <tt>true</tt> if and only if this matrix is tiled.
      */
     boolean isTiled();
+
+    /**
+     * Equivalent to <tt>{@link Matrices#asLayers(Matrix) Matrices.asLayers}(thisMatrix)</tt>.
+
+     * @return a list of matrices: "layers" of this matrix one along the last dimension.
+     * @throws IllegalStateException if this matrix is 1-dimensional.
+     */
+    default List<Matrix<T>> asLayers() {
+        return Matrices.asLayers(this);
+    }
 
     /**
      * Equivalent to <tt>{@link #array()}.{@link Array#isImmutable() isImmutable()}</tt>.

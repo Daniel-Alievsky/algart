@@ -106,34 +106,44 @@ public class MatrixIO {
         return p == -1 ? fileName : fileName.substring(0, p);
     }
 
-    public static void writeImage(Path file, List<? extends Matrix<? extends PArray>> image) throws IOException {
+    public static void writeBufferedImage(Path file, BufferedImage image) throws IOException {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
         String formatName = extension(file);
-        BufferedImage bufferedImage;
-        if (USE_DEPRECATED_READ_WRITE) {
-            bufferedImage =((ColorImageFormatter) new SimpleColorImageFormatter()).toBufferedImage(image);
-        } else {
-            final Matrix<PArray> matrix = Matrices.interleave(null, image);
-            bufferedImage = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(matrix);
-        }
-        if (!ImageIO.write(bufferedImage, formatName, file.toFile())) {
-            throw new IOException("Cannot write " + file + ": no writer for " + formatName);
+        if (!ImageIO.write(image, formatName, file.toFile())) {
+            throw new IOException("Cannot write " + file + ": no \"" + formatName +
+                    "\" format writer for this image type (" + image + ")");
         }
     }
 
-    public static List<Matrix<UpdatablePArray>> readImage(Path file) throws IOException {
+    public static BufferedImage readBufferedImage(Path file) throws IOException {
         Objects.requireNonNull(file, "Null file");
         if (!Files.exists(file)) {
             throw new FileNotFoundException("Image file " + file + " does not exist");
         }
-
-        BufferedImage bufferedImage = ImageIO.read(file.toFile());
-        if (bufferedImage == null) {
+        BufferedImage image = ImageIO.read(file.toFile());
+        if (image == null) {
             throw new IIOException("Cannot read " + file + ": no suitable reader");
         }
+        return image;
+    }
+
+    public static void writeImage(Path file, List<? extends Matrix<? extends PArray>> image) throws IOException {
+        Objects.requireNonNull(file, "Null file");
+        Objects.requireNonNull(image, "Null image");
+        BufferedImage bufferedImage;
         if (USE_DEPRECATED_READ_WRITE) {
-            return ((ColorImageFormatter) new SimpleColorImageFormatter()).toImage(bufferedImage);
+            writeBufferedImage(file, (new ColorImageFormatter.Simple()).toBufferedImage(image));
+            return;
+        }
+        final Matrix<PArray> matrix = Matrices.interleave(null, image);
+        writeBufferedImage(file, new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(matrix));
+    }
+
+    public static List<Matrix<UpdatablePArray>> readImage(Path file) throws IOException {
+        BufferedImage bufferedImage = readBufferedImage(file);
+        if (USE_DEPRECATED_READ_WRITE) {
+            return ((ColorImageFormatter) new ColorImageFormatter.Simple()).toImage(bufferedImage);
         }
         final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleaved().toMatrix(bufferedImage);
         return Matrices.separate(null, matrix);
