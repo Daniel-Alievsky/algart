@@ -125,7 +125,7 @@ public class ExternalUtilityCaller extends ExternalAlgorithmCaller {
         this.cloneResults = cloneResults;
     }
 
-    /*
+    @Override
     public void setParametersFromJSON(Object jsonObjectOrString) {
         super.setParametersFromJSON(jsonObjectOrString);
         try {
@@ -137,7 +137,6 @@ public class ExternalUtilityCaller extends ExternalAlgorithmCaller {
             throw (AssertionError) new AssertionError("Unexpected error while using org.json.JSONObject").initCause(e);
         }
     }
-     */
 
     public final List<String> getMainArguments(ExternalProcessor processor) {
         List<String> result = new ArrayList<String>();
@@ -188,9 +187,9 @@ public class ExternalUtilityCaller extends ExternalAlgorithmCaller {
                     + ": no input argument " + name);
             File f = processor.getWorkFile(name + "." + imageFormat);
             if (imageFormat.equals("aa")) {
-                MatrixIO.writeAlgARTImage(f, image, !calledForTile);
+                writeAlgARTImage(f, image, !calledForTile);
             } else {
-                MatrixIO.writeImage(f, image);
+                writeImage(f, image);
             }
         }
         execute(processor);
@@ -199,8 +198,8 @@ public class ExternalUtilityCaller extends ExternalAlgorithmCaller {
         for (String name : outputArgNames) {
             File f = processor.getWorkFile(name + "." + imageFormat);
             List<Matrix<? extends PArray>> image = imageFormat.equals("aa") ?
-                MatrixIO.readAlgARTImage(f) :
-                MatrixIO.readImage(f);
+                readAlgARTImage(f) :
+                readImage(f);
             result.put(name, calledForTile || cloneResults ?
                 cloneImage(mm, image) :
                 image);
