@@ -1120,9 +1120,21 @@ public class Arrays {
 
     /**
      * Contains {@link SimpleMemoryModel#getInstance()}.
-     * It is just a more compact  alternative for the expression "{@link SimpleMemoryModel#getInstance()}".
+     * It is just a more compact alternative for the expression "{@link SimpleMemoryModel#getInstance()}".
      */
     public static final SimpleMemoryModel SMM = SimpleMemoryModel.INSTANCE;
+
+    /**
+     * Copy of {@link ArrayContext#DEFAULT}.
+     * It is just a more compact alternative for the expression "{@link ArrayContext#DEFAULT}".
+     */
+    public static final ArrayContext AC = ArrayContext.DEFAULT;
+
+    /**
+     * Copy of {@link ArrayContext#DEFAULT_SINGLE_THREAD}.
+     * It is just a more compact alternative for the expression "{@link ArrayContext#DEFAULT_SINGLE_THREAD}".
+     */
+    public static final ArrayContext AC1 = ArrayContext.DEFAULT_SINGLE_THREAD;
 
 
     /**

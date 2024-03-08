@@ -3544,7 +3544,7 @@ public class Matrices {
             Matrix<? extends UpdatableBitArray> result,
             Matrix<? extends BitArray> a,
             Matrix<? extends BitArray> b) {
-        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.MAX, result, a, b);
+        Matrices.applyFunc(Arrays.AC1, Func.MAX, result, a, b);
     }
 
     /**
@@ -3571,7 +3571,7 @@ public class Matrices {
             Matrix<? extends UpdatableBitArray> result,
             Matrix<? extends BitArray> a,
             Matrix<? extends BitArray> b) {
-        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.MIN, result, a, b);
+        Matrices.applyFunc(Arrays.AC1, Func.MIN, result, a, b);
     }
 
 
@@ -3599,7 +3599,7 @@ public class Matrices {
             Matrix<? extends UpdatableBitArray> result,
             Matrix<? extends BitArray> a,
             Matrix<? extends BitArray> b) {
-        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.ABS_DIFF, result, a, b);
+        Matrices.applyFunc(Arrays.AC1, Func.ABS_DIFF, result, a, b);
         // - actually this and other functions are performed by classes like ArraysDiffGetDataOp
         // via maximally efficient binary operations
     }
@@ -3628,7 +3628,7 @@ public class Matrices {
             Matrix<? extends UpdatableBitArray> result,
             Matrix<? extends BitArray> a,
             Matrix<? extends BitArray> b) {
-        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.POSITIVE_DIFF, result, a, b);
+        Matrices.applyFunc(Arrays.AC1, Func.POSITIVE_DIFF, result, a, b);
     }
 
     /**
@@ -3650,7 +3650,7 @@ public class Matrices {
      * @param source matrix <b>a</b>.
      */
     public static void bitNotToOther(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> source) {
-        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.REVERSE, result, source);
+        Matrices.applyFunc(Arrays.AC1, Func.REVERSE, result, source);
     }
 
     /**
@@ -3895,7 +3895,7 @@ public class Matrices {
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
     public static void copy(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src) {
-        copy(ArrayContext.DEFAULT_SINGLE_THREAD, dest, src);
+        copy(Arrays.AC1, dest, src);
     }
 
 
