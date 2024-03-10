@@ -23,9 +23,8 @@
  */
 
 /**
- <p>Algorithms of <i>fast spectral transformations</i> of one- or multidimensional sample arrays, including
- <i>n</i>-dimensional {@link net.algart.arrays.Matrix AlgART&nbsp;matrices}.</p>
+ <p>Conversions AlgART matrices from/to AWT images.</p>
 
  @author Daniel Alievsky
  */
-package net.algart.matrices.spectra;
+package net.algart.external.awt;

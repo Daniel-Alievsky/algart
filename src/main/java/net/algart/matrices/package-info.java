@@ -26,7 +26,5 @@
  <p>Service tools for algorithms, processing {@link net.algart.arrays.Matrix AlgART&nbsp;matrices}.</p>
 
  @author Daniel Alievsky
- @version 1.2
- @since JDK 1.6
  */
 package net.algart.matrices;

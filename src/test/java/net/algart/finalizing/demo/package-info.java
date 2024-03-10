@@ -26,7 +26,5 @@
  Tests and demos for finalization operations in Java.
 
  @author Daniel Alievsky
- @version 1.2
- @since JDK 1.6
  */
 package net.algart.finalizing.demo;

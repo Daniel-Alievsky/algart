@@ -23,13 +23,8 @@
  */
 
 /**
- <p>External tools: some classes and functions, useful for interaction with other systems (Java AWT,
- other processes, etc.).</p>
-
- <p>This package is not fully documented and can be changed in future versions.</p>
+ <p>External tools: some classes and functions, useful for interaction with other systems (I/O, Java AWT, etc.).</p>
 
  @author Daniel Alievsky
- @version 1.2
- @since JDK 1.6
  */
 package net.algart.external;

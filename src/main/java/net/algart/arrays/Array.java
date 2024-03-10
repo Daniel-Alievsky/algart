@@ -53,11 +53,9 @@ import java.nio.ByteOrder;
  * <a href="package-summary.html#multithreading">package description</a>.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
  * @see UpdatableArray
  * @see MutableArray
  * @see Matrix
- * @since JDK 1.6
  */
 public interface Array {
     /**

@@ -26,7 +26,5 @@
  Tests and demos for some JRE functionality, necessary for {@link net.algart.math.patterns} package.
 
  @author Daniel Alievsky
- @version 1.2
- @since JDK 1.6
  */
 package net.algart.math.patterns.demo.jre;

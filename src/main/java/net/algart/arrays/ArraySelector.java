@@ -35,9 +35,7 @@ package net.algart.arrays;
  * This class allows to select among up to 2<sup>63</sup>&minus;1 elements.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
  * @see ByteArraySelector
- * @since JDK 1.6
  */
 public class ArraySelector {
     private static final long THRESHOLD = 4;

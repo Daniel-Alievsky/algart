@@ -104,9 +104,7 @@ package net.algart.arrays;
  * However, you can use {@link DataBuffer data buffers} for direct block access to bit arrays.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
  * @see DataBuffer
- * @since JDK 1.6
  */
 public interface DirectAccessible {
     /**
@@ -117,7 +115,7 @@ public interface DirectAccessible {
      *
      * @return <tt>true</tt> if this object is mutable and it is backed by an accessible Java array.
      */
-    public boolean hasJavaArray();
+    boolean hasJavaArray();
 
     /**
      * Returns an <i>array-view</i> of this object:
@@ -158,7 +156,7 @@ public interface DirectAccessible {
      * @return a pointer to internal Java array containing all content of this object.
      * @throws NoJavaArrayException if this object cannot be viewed as a Java array.
      */
-    public Object javaArray();
+    Object javaArray();
 
     /**
      * Returns the start offset in the Java array returned by {@link #javaArray()} call,
@@ -173,7 +171,7 @@ public interface DirectAccessible {
      *
      * @return the start offset in the array returned by {@link #javaArray()} call.
      */
-    public int javaArrayOffset();
+    int javaArrayOffset();
 
     /**
      * Returns the actual number of elements in the Java array returned by {@link #javaArray()} call,
@@ -188,5 +186,5 @@ public interface DirectAccessible {
      *
      * @return the actual number of elements in the array returned by {@link #javaArray()} call.
      */
-    public int javaArrayLength();
+    int javaArrayLength();
 }

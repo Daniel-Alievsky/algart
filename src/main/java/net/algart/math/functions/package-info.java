@@ -26,7 +26,5 @@
  <p>Abstraction of any mathematical functions and operators and some their implementations.</p>
 
  @author Daniel Alievsky
- @version 1.2
- @since JDK 1.6
  */
 package net.algart.math.functions;

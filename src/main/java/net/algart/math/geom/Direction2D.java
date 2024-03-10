@@ -31,8 +31,6 @@ package net.algart.math.geom;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.0
- * @since JDK 1.6
  */
 public class Direction2D implements Cloneable {
     double fi = 0.0, dx = 1.0, dy = 0.0;

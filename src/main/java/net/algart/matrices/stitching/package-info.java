@@ -29,7 +29,5 @@
  (<i>being stitched</i>) into a single resulting matrix (<i>stitched</i>).</p>
 
  @author Daniel Alievsky
- @version 1.2
- @since JDK 1.6
  */
 package net.algart.matrices.stitching;

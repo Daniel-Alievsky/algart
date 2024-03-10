@@ -45,7 +45,5 @@
  the structure of skeleton.</p>
 
  @author Daniel Alievsky
- @version 1.2
- @since JDK 1.6
  */
 package net.algart.matrices.skeletons;

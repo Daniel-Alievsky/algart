@@ -88,9 +88,7 @@ import java.util.concurrent.Callable;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
  * @see DefaultDataFileModel
- * @since JDK 1.6
  */
 public class StandardIODataFileModel extends AbstractDataFileModel implements DataFileModel<File> {
 

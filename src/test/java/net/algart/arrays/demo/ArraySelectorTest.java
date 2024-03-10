@@ -34,7 +34,6 @@ import java.util.Random;
  * <p>Basic test for {@link net.algart.arrays.ArraySelector} class</p>
  *
  * @author Daniel Alievsky
- * @version 1.2
  */
 public class ArraySelectorTest {
     private static final boolean MEASURE_RANDOM_PERCENTILES = false;

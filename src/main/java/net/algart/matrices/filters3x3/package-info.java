@@ -23,9 +23,9 @@
  */
 
 /**
- <p>Algorithms of <i>fast spectral transformations</i> of one- or multidimensional sample arrays, including
- <i>n</i>-dimensional {@link net.algart.arrays.Matrix AlgART&nbsp;matrices}.</p>
+ <p>Simplest algorithms of filtering 2-dimensional
+ {@link net.algart.arrays.Matrix AlgART&nbsp;matrices} by 3x3 aperture.</p>
 
  @author Daniel Alievsky
  */
-package net.algart.matrices.spectra;
+package net.algart.matrices.filters3x3;

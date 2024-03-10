@@ -32,8 +32,6 @@ package net.algart.math.geom;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @author Daniel Alievsky
- * @version 1.0
- * @since JDK 1.6
  */
 public final class Rotation2D implements Cloneable {
 

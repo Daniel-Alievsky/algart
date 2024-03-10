@@ -440,7 +440,7 @@ public interface Pattern {
      * about rounding <tt>double</tt> values in range
      * <tt>&minus;{@link #MAX_COORDINATE}&le;<i>x</i>&le;{@link #MAX_COORDINATE}</tt>.
      */
-    public static final long MAX_COORDINATE = 1L << 52;
+    long MAX_COORDINATE = 1L << 52;
 
 
     /**
@@ -452,7 +452,7 @@ public interface Pattern {
      *
      * @return the number of space dimensions of this pattern.
      */
-    public int dimCount();
+    int dimCount();
 
     /**
      * Returns the number of points in this pattern.
@@ -482,7 +482,7 @@ public interface Pattern {
      * @see #isSurelySinglePoint
      * @see QuickPointCountPattern#isPointCountVeryLarge()
      */
-    public long pointCount();
+    long pointCount();
 
     /**
      * Returns the number of points in this pattern as <tt>double</tt> value.
@@ -503,7 +503,7 @@ public interface Pattern {
      *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
      * @see QuickPointCountPattern#isPointCountVeryLarge()
      */
-    public double largePointCount();
+    double largePointCount();
 
     /**
      * Returns a set of all points of this pattern.
@@ -543,7 +543,7 @@ public interface Pattern {
      *                                     in some rare situations, is near this limit
      *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
      */
-    public Set<Point> points();
+    Set<Point> points();
 
     /**
      * <p>Returns the set of all {@link IPoint integer points}, obtained from the points of this pattern
@@ -590,7 +590,7 @@ public interface Pattern {
      *                                     in some rare situations, is near this limit
      *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
      */
-    public Set<IPoint> roundedPoints();
+    Set<IPoint> roundedPoints();
 
     /**
      * Returns the minimal and maximal coordinate with the given index
@@ -620,7 +620,7 @@ public interface Pattern {
      * @see #coordMax()
      * @see #coordArea()
      */
-    public Range coordRange(int coordIndex);
+    Range coordRange(int coordIndex);
 
     /**
      * Returns the minimal and maximal coordinates
@@ -640,7 +640,7 @@ public interface Pattern {
      * @return the ranges from minimal to maximal coordinate for all space dimensions.
      * @see #roundedCoordArea()
      */
-    public RectangularArea coordArea();
+    RectangularArea coordArea();
 
     /**
      * Returns the point, each coordinate of which
@@ -654,7 +654,7 @@ public interface Pattern {
      *
      * @return minimal coordinates for all space dimensions as a point.
      */
-    public Point coordMin();
+    Point coordMin();
 
     /**
      * Returns the point, each coordinate of which
@@ -668,7 +668,7 @@ public interface Pattern {
      *
      * @return maximal coordinates for all space dimensions as a point.
      */
-    public Point coordMax();
+    Point coordMax();
 
     /**
      * Returns the same result as {@link #coordRange(int coordIndex)} method,
@@ -692,7 +692,7 @@ public interface Pattern {
      * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
      * @see #roundedCoordArea()
      */
-    public IRange roundedCoordRange(int coordIndex);
+    IRange roundedCoordRange(int coordIndex);
 
     /**
      * Returns the same result as {@link #coordArea()} method,
@@ -708,7 +708,7 @@ public interface Pattern {
      * @return the ranges from minimal to maximal coordinate for all space dimensions,
      *         rounded to the <tt>long</tt> values.
      */
-    public IRectangularArea roundedCoordArea();
+    IRectangularArea roundedCoordArea();
 
     /**
      * Returns <tt>true</tt> if this pattern consists of the single point, i&#46;e&#46;
@@ -740,7 +740,7 @@ public interface Pattern {
      * @return <tt>true</tt> if it is one-point pattern.
      * @see #isSurelyOriginPoint()
      */
-    public boolean isSurelySinglePoint();
+    boolean isSurelySinglePoint();
 
     /**
      * Returns <tt>true</tt> if this pattern consists of the single point and
@@ -765,7 +765,7 @@ public interface Pattern {
      * @return <tt>true</tt> if it is one-point pattern containing the origin of coordinates as the single point.
      * @see #isSurelySinglePoint
      */
-    public boolean isSurelyOriginPoint();
+    boolean isSurelyOriginPoint();
 
     /**
      * Returns <tt>true</tt> if this pattern is <i>integer</i>:
@@ -798,7 +798,7 @@ public interface Pattern {
      *         ({@link #minkowskiDecomposition(int) Minkowski} or {@link #unionDecomposition(int) union})
      *         assuredly contain only {@link Point#isInteger() integer} points.
      */
-    public boolean isSurelyInteger();
+    boolean isSurelyInteger();
 
     /**
      * Returns this pattern, every point of which is rounded to the nearest integer point.
@@ -843,7 +843,7 @@ public interface Pattern {
      *                                     in some rare situations, is near this limit
      *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
      */
-    public UniformGridPattern round();
+    UniformGridPattern round();
 
     /**
      * Returns this pattern, shifted by the argument.
@@ -901,7 +901,7 @@ public interface Pattern {
      *                                  described in the {@link Pattern comments to this interface},
      *                                  section "Coordinate restrictions".
      */
-    public Pattern shift(Point shift);
+    Pattern shift(Point shift);
 
     /**
      * Returns the symmetric pattern: equivalent to {@link #multiply(double) multiply(-1.0)}.
@@ -926,7 +926,7 @@ public interface Pattern {
      *
      * @return the symmetric pattern.
      */
-    public Pattern symmetric();
+    Pattern symmetric();
 
     /**
      * Returns this pattern, scaled by the specified multiplier along all coordinates.
@@ -970,7 +970,7 @@ public interface Pattern {
      *                              section "Coordinate restrictions".
      * @see #scale(double...)
      */
-    public Pattern multiply(double multiplier);
+    Pattern multiply(double multiplier);
 
     /**
      * Returns this pattern, scaled by the specified multipliers along all coordinates.
@@ -1013,7 +1013,7 @@ public interface Pattern {
      *                                  section "Coordinate restrictions".
      * @see #multiply(double)
      */
-    public Pattern scale(double... multipliers);
+    Pattern scale(double... multipliers);
 
     /**
      * Returns the projection of this pattern along the given axis.
@@ -1048,7 +1048,7 @@ public interface Pattern {
      * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
      * @throws IllegalStateException     if this pattern is 1-dimensional (<tt>{@link #dimCount()}==1</tt>).
      */
-    public Pattern projectionAlongAxis(int coordIndex);
+    Pattern projectionAlongAxis(int coordIndex);
 
     /*Repeat()
         min(?!(us|g)) ==> max;;
@@ -1115,7 +1115,7 @@ public interface Pattern {
      *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
      * @see #maxBound(int)
      */
-    public Pattern minBound(int coordIndex);
+    Pattern minBound(int coordIndex);
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
@@ -1176,7 +1176,7 @@ public interface Pattern {
      *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
      * @see #minBound(int)
      */
-    public Pattern maxBound(int coordIndex);
+    Pattern maxBound(int coordIndex);
     /*Repeat.AutoGeneratedEnd*/
 
     /**
@@ -1260,7 +1260,7 @@ public interface Pattern {
      *
      * @return the <i>carcass</i> of this pattern.
      */
-    public Pattern carcass();
+    Pattern carcass();
 
     /**
      * Returns the maximal multiplier <i>k</i>, for which the calculation of
@@ -1280,7 +1280,7 @@ public interface Pattern {
      *         for which the calculation of the Minkowski multiple can be optimized
      *         by using the {@link #carcass() carcass}.
      */
-    public int maxCarcassMultiplier();
+    int maxCarcassMultiplier();
 
     /**
      * Calculates and returns the Minkowski sum of this and specified patterns.
@@ -1334,7 +1334,7 @@ public interface Pattern {
      * @see Patterns#newMinkowskiSum(java.util.Collection)
      * @see #minkowskiSubtract(Pattern)
      */
-    public Pattern minkowskiAdd(Pattern added);
+    Pattern minkowskiAdd(Pattern added);
 
     /**
      * Calculates and returns the erosion of this pattern by specified pattern
@@ -1383,7 +1383,7 @@ public interface Pattern {
      *                                     section "Coordinate restrictions".
      * @see #minkowskiAdd(Pattern)
      */
-    public Pattern minkowskiSubtract(Pattern subtracted);
+    Pattern minkowskiSubtract(Pattern subtracted);
 
     /**
      * Returns the Minkowski decomposition:
@@ -1433,7 +1433,7 @@ public interface Pattern {
      * @return the decomposition of this pattern to Minkowski sum; always contains &ge;1 elements.
      * @throws IllegalArgumentException if the argument is negative.
      */
-    public List<Pattern> minkowskiDecomposition(int minimalPointCount);
+    List<Pattern> minkowskiDecomposition(int minimalPointCount);
 
     /**
      * Returns <tt>true</tt> if and only if the Minkowski decomposition,
@@ -1450,7 +1450,7 @@ public interface Pattern {
      *
      * @return <tt>true</tt> if the Minkowski decomposition contains 2 or more elements.
      */
-    public boolean hasMinkowskiDecomposition();
+    boolean hasMinkowskiDecomposition();
 
     /**
      * Returns a union decomposition:
@@ -1489,7 +1489,7 @@ public interface Pattern {
      * @return a decomposition of this pattern into the union of patterns; always contains &ge;1 elements.
      * @throws IllegalArgumentException if the argument is negative.
      */
-    public List<Pattern> unionDecomposition(int minimalPointCount);
+    List<Pattern> unionDecomposition(int minimalPointCount);
 
     /**
      * Returns a non-empty list of all best or almost best
@@ -1515,5 +1515,5 @@ public interface Pattern {
      *         and all its elements also contain &ge;1 elements.
      * @throws IllegalArgumentException if the argument is negative.
      */
-    public List<List<Pattern>> allUnionDecompositions(int minimalPointCount);
+    List<List<Pattern>> allUnionDecompositions(int minimalPointCount);
 }

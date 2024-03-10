@@ -33,8 +33,6 @@ import java.lang.reflect.*;
  * <p>Applet allowing to run usual Java test: "main" static methods.</p>
  *
  * @author Daniel Alievsky
- * @version 1.0
- * @since JDK 1.1
  */
 public class AppletCallingTests extends Applet {
 

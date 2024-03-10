@@ -116,31 +116,29 @@ import net.algart.math.Point;
  * </ul>
  *
  * @author Daniel Alievsky
- * @version 1.2
  * @see #isActuallyRectangular()
  * @see QuickPointCountPattern
- * @since JDK 1.6
  */
 public interface RectangularPattern extends UniformGridPattern, QuickPointCountPattern {
-    public RectangularPattern shift(Point shift);
+    RectangularPattern shift(Point shift);
 
-    public RectangularPattern symmetric();
+    RectangularPattern symmetric();
 
-    public RectangularPattern multiply(double multiplier);
+    RectangularPattern multiply(double multiplier);
 
-    public RectangularPattern scale(double... multipliers);
+    RectangularPattern scale(double... multipliers);
 
-    public RectangularPattern projectionAlongAxis(int coordIndex);
+    RectangularPattern projectionAlongAxis(int coordIndex);
 
-    public RectangularPattern minBound(int coordIndex);
+    RectangularPattern minBound(int coordIndex);
 
-    public RectangularPattern maxBound(int coordIndex);
+    RectangularPattern maxBound(int coordIndex);
 
-    public RectangularPattern gridIndexPattern();
+    RectangularPattern gridIndexPattern();
 
-    public RectangularPattern shiftGridIndexes(IPoint shift);
+    RectangularPattern shiftGridIndexes(IPoint shift);
 
-    public RectangularPattern lowerSurface(int coordIndex);
+    RectangularPattern lowerSurface(int coordIndex);
 
-    public RectangularPattern upperSurface(int coordIndex);
+    RectangularPattern upperSurface(int coordIndex);
 }

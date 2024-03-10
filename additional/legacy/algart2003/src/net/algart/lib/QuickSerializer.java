@@ -37,7 +37,6 @@ import net.algart.array.*;
  * Such strings may damage the serialized file.
  *
  * @author  Daniel Alievsky
- * @version 1.2
  */
 
 public class QuickSerializer {

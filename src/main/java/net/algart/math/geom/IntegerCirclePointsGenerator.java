@@ -30,8 +30,6 @@ package net.algart.math.geom;
  * of not too large circles twice).</p>
  *
  * @author Daniel Alievsky
- * @version 1.0
- * @since JDK 1.6
  */
 public class IntegerCirclePointsGenerator {
 

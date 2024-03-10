@@ -33,8 +33,6 @@ import java.applet.*;
  * Can be also called as a Java application.</p>
  *
  * @author Daniel Alievsky
- * @version 1.0
- * @since JDK 1.0
  */
 public class AppletSystemProperties extends Applet {
     private TextArea textArea = new TextArea("", 30, 100);
