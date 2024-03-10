@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.zip.CRC32;
 import java.util.Locale;
 import java.nio.ByteOrder;
@@ -95,8 +97,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @throws NullPointerException if <tt>underlyingArrays</tt> is <tt>null</tt>.
      */
     protected AbstractArray(long initialCapacity, long initialLength, Array... underlyingArrays) {
-        if (underlyingArrays == null)
-            throw new NullPointerException("Null underlyingArrays argument");
+        Objects.requireNonNull(underlyingArrays, "Null underlyingArrays argument");
         this.capacity = initialCapacity;
         this.length = initialLength;
         this.underlyingArrays = underlyingArrays;
@@ -290,9 +291,9 @@ public abstract class AbstractArray implements Array, Cloneable {
      */
     public DataBuffer buffer(long capacity) {
         return buffer(this instanceof UpdatableArray ?
-            DataBuffer.AccessMode.READ_WRITE :
-            DataBuffer.AccessMode.READ,
-            capacity);
+                        DataBuffer.AccessMode.READ_WRITE :
+                        DataBuffer.AccessMode.READ,
+                capacity);
     }
 
     /**
@@ -306,8 +307,8 @@ public abstract class AbstractArray implements Array, Cloneable {
      */
     public DataBuffer buffer() {
         return buffer(this instanceof UpdatableArray ?
-            DataBuffer.AccessMode.READ_WRITE :
-            DataBuffer.AccessMode.READ);
+                DataBuffer.AccessMode.READ_WRITE :
+                DataBuffer.AccessMode.READ);
     }
 
     public abstract Array asImmutable();
@@ -341,7 +342,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * {@link #setNewReadOnlyViewStatus()} method.
      *
      * @return whether this array instance is a newly created <i>view</i> of some
-     *         external data, providing <i>read-only</i> access to this data.
+     * external data, providing <i>read-only</i> access to this data.
      */
     public boolean isNewReadOnlyView() {
         return (this.newAndNewReadOnlyViewStatus & 0x2) != 0;
@@ -390,16 +391,14 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return a mutable copy of this array.
-     * @throws NullPointerException   if the argument is <tt>null</tt>.
-     * @throws UnsupportedElementTypeException
-     *                                if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
-     *                                by the specified memory model.
-     * @throws TooLargeArrayException if the {@link Array#length() length} of this array is too large
-     *                                for this the specified memory model.
+     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws UnsupportedElementTypeException if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
+     *                                         by the specified memory model.
+     * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
+     *                                         for this the specified memory model.
      */
     public MutableArray mutableClone(MemoryModel memoryModel) {
-        if (memoryModel == null)
-            throw new NullPointerException("Null memory model");
+        Objects.requireNonNull(memoryModel, "Null memory model");
         return memoryModel.newArray(this).copy(this);
     }
 
@@ -410,17 +409,28 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return an updatable copy of this array.
-     * @throws NullPointerException   if the argument is <tt>null</tt>.
-     * @throws UnsupportedElementTypeException
-     *                                if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
-     *                                by the specified memory model.
-     * @throws TooLargeArrayException if the {@link Array#length() length} of this array is too large
-     *                                for this the specified memory model.
+     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws UnsupportedElementTypeException if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
+     *                                         by the specified memory model.
+     * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
+     *                                         for this the specified memory model.
      */
     public UpdatableArray updatableClone(MemoryModel memoryModel) {
-        if (memoryModel == null)
-            throw new NullPointerException("Null memory model");
+        Objects.requireNonNull(memoryModel, "Null memory model");
         return memoryModel.newUnresizableArray(this).copy(this);
+    }
+
+    /**
+     * This implementation returns <tt>Optional.empty()</tt>. Please override this method
+     * if you implement {@link DirectAccessible} interface.
+     * </pre>
+     *
+     * @return the underlying Java array "<tt>ja</tt>" that backs this AlgART array,
+     * if it exists and if the element #0 of this array corresponds to its first element <tt>ja[0]</tt>.
+     */
+    @Override
+    public Optional<Object> quick() {
+        return  Optional.empty();
     }
 
     /**
@@ -456,8 +466,8 @@ public abstract class AbstractArray implements Array, Cloneable {
     public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
         for (int k = 0; k < underlyingArrays.length; k++) {
             underlyingArrays[k].flushResources(
-                context == null ? null : context.part(k, k + 1, underlyingArrays.length),
-                forcePhysicalWriting);
+                    context == null ? null : context.part(k, k + 1, underlyingArrays.length),
+                    forcePhysicalWriting);
         }
     }
 
@@ -483,8 +493,8 @@ public abstract class AbstractArray implements Array, Cloneable {
     public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
         for (int k = 0; k < underlyingArrays.length; k++) {
             underlyingArrays[k].freeResources(
-                context == null ? null : context.part(k, k + 1, underlyingArrays.length),
-                forcePhysicalWriting);
+                    context == null ? null : context.part(k, k + 1, underlyingArrays.length),
+                    forcePhysicalWriting);
         }
     }
 
@@ -596,24 +606,29 @@ public abstract class AbstractArray implements Array, Cloneable {
             return false;
         Array a = (Array) obj2;
         long n = obj1.length();
-        if (a.length() != n)
+        if (a.length() != n) {
             return false;
-        if (obj1 instanceof PArray != a instanceof PArray)
+        }
+        if (obj1 instanceof PArray != a instanceof PArray) {
             return false;
-        if (obj1 instanceof PArray && a.elementType() != obj1.elementType())
+        }
+        if (obj1 instanceof PArray && a.elementType() != obj1.elementType()) {
             return false;
+        }
         Object ja1 = obj1 instanceof AbstractArray ? ((AbstractArray) obj1).javaArrayInternal() : null;
         Object ja2 = a instanceof AbstractArray ? ((AbstractArray) a).javaArrayInternal() : null;
-        if (ja1 != null && ja2 != null)
+        if (ja1 != null && ja2 != null) {
             return JArrays.arrayEquals(ja1, ((AbstractArray) obj1).javaArrayOffsetInternal(),
-                ja2, ((AbstractArray) a).javaArrayOffsetInternal(), (int) n);
-        if (n == 0)
+                    ja2, ((AbstractArray) a).javaArrayOffsetInternal(), (int) n);
+        }
+        if (n == 0) {
             return true;
+        }
         if (obj1 instanceof BitArray) {
             DataBitBuffer buf1 = (DataBitBuffer) Arrays.bufferInternal(obj1, DataBuffer.AccessMode.READ,
-                largeBufferCapacity(obj1), true);
+                    largeBufferCapacity(obj1), true);
             DataBitBuffer buf2 = (DataBitBuffer) Arrays.bufferInternal(a, DataBuffer.AccessMode.READ,
-                buf1.capacity(), true);
+                    buf1.capacity(), true);
             try {
                 Arrays.enableCaching(buf1);
                 Arrays.enableCaching(buf2);
@@ -622,7 +637,7 @@ public abstract class AbstractArray implements Array, Cloneable {
                 for (; buf1.hasData(); buf1.mapNext(), buf2.mapNext()) {
                     assert buf1.count() == buf2.count();
                     if (!PackedBitArrays.bitEquals(buf1.data(), buf1.fromIndex(),
-                        buf2.data(), buf2.fromIndex(), buf1.count()))
+                            buf2.data(), buf2.fromIndex(), buf1.count()))
                         return false;
                 }
             } finally {
@@ -631,10 +646,10 @@ public abstract class AbstractArray implements Array, Cloneable {
             }
         } else {
             DataBuffer buf1 = Arrays.bufferInternal(obj1, DataBuffer.AccessMode.READ,
-                largeBufferCapacity(obj1), // its better to use large blocks while scanning
-                true);
+                    largeBufferCapacity(obj1), // its better to use large blocks while scanning
+                    true);
             DataBuffer buf2 = Arrays.bufferInternal(a, DataBuffer.AccessMode.READ,
-                buf1.capacity(), true);
+                    buf1.capacity(), true);
             try {
                 Arrays.enableCaching(buf1);
                 Arrays.enableCaching(buf2);
@@ -673,8 +688,8 @@ public abstract class AbstractArray implements Array, Cloneable {
             // (most loops work with long[] array, and 32 KB means only 4096 longs)
         } else {
             int bitsPerElement = thisArray instanceof PArray ?
-                (int) Math.min(1024, ((PArray) thisArray).bitsPerElement()) :
-                32;
+                    (int) Math.min(1024, ((PArray) thisArray).bitsPerElement()) :
+                    32;
             if (bitsPerElement == -1) {
                 bitsPerElement = 32;
             }
@@ -703,13 +718,11 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @throws IllegalArgumentException if the source and destination element types do not match.
      */
     public static void checkCopyArguments(UpdatableArray thisArray, Array src) {
-        if (thisArray == null)
-            throw new NullPointerException("Null thisArray argument");
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(thisArray, "Null thisArray argument");
+        Objects.requireNonNull(src, "Null src argument");
         if (!thisArray.elementType().isAssignableFrom(src.elementType()))
             throw new IllegalArgumentException("Element types mismatch ("
-                + thisArray.elementType() + " cannot be assigned from " + src.elementType() + ")");
+                    + thisArray.elementType() + " cannot be assigned from " + src.elementType() + ")");
     }
 
     /**
@@ -726,13 +739,11 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @throws IllegalArgumentException if another and this element types do not match.
      */
     public static void checkSwapArguments(UpdatableArray thisArray, UpdatableArray another) {
-        if (thisArray == null)
-            throw new NullPointerException("Null thisArray argument");
-        if (another == null)
-            throw new NullPointerException("Null another argument");
+        Objects.requireNonNull(thisArray, "Null thisArray argument");
+        Objects.requireNonNull(another, "Null another argument");
         if (thisArray.elementType() != another.elementType())
             throw new IllegalArgumentException("Element types mismatch ("
-                + thisArray.elementType() + " and " + another.elementType() + ")");
+                    + thisArray.elementType() + " and " + another.elementType() + ")");
     }
 
     /**
@@ -778,7 +789,7 @@ public abstract class AbstractArray implements Array, Cloneable {
             throw rangeException(toIndex - 1, length(), getClass());
         if (fromIndex > toIndex)
             throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                + " > toIndex = " + toIndex + ") in " + getClass());
+                    + " > toIndex = " + toIndex + ") in " + getClass());
     }
 
     /**
@@ -796,7 +807,7 @@ public abstract class AbstractArray implements Array, Cloneable {
             throw rangeException(position, length(), getClass());
         if (count < 0)
             throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                + ") in " + getClass());
+                    + ") in " + getClass());
         if (position > length() - count)
             throw rangeException(position + count - 1, length(), getClass());
     }
@@ -861,7 +872,7 @@ public abstract class AbstractArray implements Array, Cloneable {
     protected final void setNewReadOnlyViewStatus() {
         if (this instanceof UpdatableArray)
             throw new UnsupportedOperationException("setNewReadOnlyViewStatus() "
-                + "must not be called for updatable arrays");
+                    + "must not be called for updatable arrays");
         assert (this.newAndNewReadOnlyViewStatus & 0x1) == 0 : "new status is possible only in UpdatableArray";
         this.newAndNewReadOnlyViewStatus = 0x2;
     }
@@ -920,8 +931,8 @@ public abstract class AbstractArray implements Array, Cloneable {
      */
     protected static void defaultCopy(UpdatableArray thisArray, Array src, boolean allowNulls) {
         boolean nullFilled = thisArray instanceof UpdatableObjectArray<?>
-            && src instanceof CopiesArraysImpl.CopiesObjectArray<?>
-            && ((CopiesArraysImpl.CopiesObjectArray<?>) src).element == null;
+                && src instanceof CopiesArraysImpl.CopiesObjectArray<?>
+                && ((CopiesArraysImpl.CopiesObjectArray<?>) src).element == null;
         if (!(allowNulls && nullFilled)) {
             checkCopyArguments(thisArray, src);
         } // in other case, thisArray and src are not null (they are ObjectArray), so we don't need to check null
@@ -1022,7 +1033,7 @@ public abstract class AbstractArray implements Array, Cloneable {
                 } else {
                     UpdatableBitArray dest = (UpdatableBitArray) thisArray;
                     DataBitBuffer srcBuf = (DataBitBuffer) Arrays.bufferInternal(src,
-                        DataBuffer.AccessMode.READ, largeBufferCapacity(src), true);
+                            DataBuffer.AccessMode.READ, largeBufferCapacity(src), true);
                     Arrays.enableCaching(srcBuf);
                     t1 = nanoTime();
                     try {
@@ -1052,8 +1063,8 @@ public abstract class AbstractArray implements Array, Cloneable {
                 tRead += (t2 = nanoTime()) - t1;
             } else {
                 DataBuffer srcBuf = Arrays.bufferInternal(src, DataBuffer.AccessMode.READ,
-                    largeBufferCapacity(thisArray), // its better to use large blocks while copying
-                    true);
+                        largeBufferCapacity(thisArray), // its better to use large blocks while copying
+                        true);
                 Arrays.enableCaching(srcBuf);
                 t1 = nanoTime();
                 try {
@@ -1074,18 +1085,17 @@ public abstract class AbstractArray implements Array, Cloneable {
         }
         t3 = nanoTime();
         if (DETAILED_PROFILING_COPY && t1 != -1 && t3 - t1 > 100 * 1000 * 1000 // 100 ms
-            && Arrays.SystemSettings.profilingMode())
-        {
+                && Arrays.SystemSettings.profilingMode()) {
             Arrays.LOGGER.config(String.format(Locale.US, "AbstractArray.defaultCopy: "
-                + "%.3f ms = %.3f ms init + %.3f ms reading + %.3f ms writing + %.3f dispose "
-                + "[%d iterations, %d underlying, %s -> %s]",
-                1e-6 * (t3 - t0), 1e-6 * (t1 - t0),
-                1e-6 * tRead, 1e-6 * tWrite, 1e-6 * (t3 - t2),
-                copyCount, Arrays.getUnderlyingArraysCount(src), src, thisArray));
+                            + "%.3f ms = %.3f ms init + %.3f ms reading + %.3f ms writing + %.3f dispose "
+                            + "[%d iterations, %d underlying, %s -> %s]",
+                    1e-6 * (t3 - t0), 1e-6 * (t1 - t0),
+                    1e-6 * tRead, 1e-6 * tWrite, 1e-6 * (t3 - t2),
+                    copyCount, Arrays.getUnderlyingArraysCount(src), src, thisArray));
             long t4 = System.nanoTime();
             if (t4 - t3 > 2 * 1000 * 1000) { // 2 ms
                 Arrays.LOGGER.config(String.format(Locale.US, "AbstractArray.defaultCopy: "
-                    + "+ %.3f ms or more for this logging", 1e-6 * (t4 - t3)));
+                        + "+ %.3f ms or more for this logging", 1e-6 * (t4 - t3)));
             }
         }
     }
@@ -1107,14 +1117,14 @@ public abstract class AbstractArray implements Array, Cloneable {
             return DataBuffersImpl.MAX_BUFFER_SIZE * 8;
         } else {
             int bitsPerElement = thisArray instanceof PArray ?
-                (int) Math.min(1024, ((PArray) thisArray).bitsPerElement()) :
-                32;
+                    (int) Math.min(1024, ((PArray) thisArray).bitsPerElement()) :
+                    32;
             if (bitsPerElement == -1) {
                 bitsPerElement = 32;
             }
             int maxBufferSizeInBits = bitsPerElement == 64 ?
-                DataBuffersImpl.MAX_BUFFER_SIZE * 16 :
-                DataBuffersImpl.MAX_BUFFER_SIZE * 8;
+                    DataBuffersImpl.MAX_BUFFER_SIZE * 16 :
+                    DataBuffersImpl.MAX_BUFFER_SIZE * 8;
             return maxBufferSizeInBits / bitsPerElement;
         }
     }
@@ -1153,8 +1163,8 @@ public abstract class AbstractArray implements Array, Cloneable {
 
     static IndexOutOfBoundsException rangeException(long index, long length, Class<?> clazz) {
         return new IndexOutOfBoundsException("Index (" + index
-            + (index < 0 ? ") < 0" : ") >= length (" + length + ")")
-            + " in " + clazz.getName() + " class");
+                + (index < 0 ? ") < 0" : ") >= length (" + length + ")")
+                + " in " + clazz.getName() + " class");
     }
 
     private static long nanoTime() {

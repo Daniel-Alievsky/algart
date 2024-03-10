@@ -25,6 +25,7 @@
 package net.algart.arrays;
 
 import java.nio.ByteOrder;
+import java.util.Optional;
 
 /**
  * <p>AlgART array of any elements, read-only access.</p>
@@ -1055,6 +1056,27 @@ public interface Array {
      * @see #mutableClone(MemoryModel)
      */
     UpdatableArray updatableClone(MemoryModel memoryModel);
+
+    /**
+     * Returns the Java array that backs this buffer, if it exists and the start offset in this array is 0,
+     * or <tt>Optional.empty()</tt> in other case.
+     * Equivalent to
+     * <pre>
+     *     thisArray instanceof {@link DirectAccessible DirectAccessible} da &&
+     *              da.hasJavaArray() && da.javaArrayOffset() == 0 ?
+     *          Optional.of(da.javaArray()) :
+     *          Optional.empty();
+     * </pre>
+     *
+     * <p>Note that usually you <b>should</b> prefer using {@link DirectAccessible} interface instead of this method,
+     * because that interface allows to quickly process sub-arrays with non-zero start offset.
+     * But if you are sure that your array is created by {@link SimpleMemoryModel} and is not a sub-array,
+     * this method provides the simplest way to access the underlying Java array.
+     *
+     * @return the underlying Java array "<tt>ja</tt>" that backs this AlgART array,
+     * if it exists and if the element #0 of this array corresponds to its first element <tt>ja[0]</tt>.
+     */
+    Optional<Object> quick();
 
     /**
      * Equivalent to <tt>{@link Matrices#matrix(Array, long[]) matrix}(thisArray, dim)</tt>.

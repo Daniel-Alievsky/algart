@@ -27,6 +27,7 @@ package net.algart.arrays;
 import net.algart.math.functions.Func;
 
 import java.nio.ByteOrder;
+import java.util.Optional;
 
 /**
  * <p>Implementations of <tt>Arrays.nXxxCopies</tt> arrays.
@@ -226,6 +227,10 @@ class CopiesArraysImpl {
             if (memoryModel == null)
                 throw new NullPointerException("Null memory model");
             return (UpdatableFloatArray) memoryModel.newUnresizableArray(this).copy(this);
+        }
+
+        public Optional<Object> quick() {
+            return Optional.empty();
         }
 
         public long bitsPerElement() {
@@ -553,6 +558,10 @@ class CopiesArraysImpl {
             if (memoryModel == null)
                 throw new NullPointerException("Null memory model");
             return (UpdatableBitArray) memoryModel.newUnresizableArray(this).copy(this);
+        }
+
+        public Optional<Object> quick() {
+            return Optional.empty();
         }
 
         public long bitsPerElement() {
@@ -900,6 +909,10 @@ class CopiesArraysImpl {
             return (UpdatableCharArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
+        public Optional<Object> quick() {
+            return Optional.empty();
+        }
+
         public long bitsPerElement() {
             return Arrays.BITS_PER_CHAR;
         }
@@ -1230,6 +1243,10 @@ class CopiesArraysImpl {
             if (memoryModel == null)
                 throw new NullPointerException("Null memory model");
             return (UpdatableByteArray) memoryModel.newUnresizableArray(this).copy(this);
+        }
+
+        public Optional<Object> quick() {
+            return Optional.empty();
         }
 
         public long bitsPerElement() {
@@ -1565,6 +1582,10 @@ class CopiesArraysImpl {
             return (UpdatableShortArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
+        public Optional<Object> quick() {
+            return Optional.empty();
+        }
+
         public long bitsPerElement() {
             return Arrays.BITS_PER_SHORT;
         }
@@ -1893,6 +1914,10 @@ class CopiesArraysImpl {
             return (UpdatableIntArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
+        public Optional<Object> quick() {
+            return Optional.empty();
+        }
+
         public long bitsPerElement() {
             return Arrays.BITS_PER_INT;
         }
@@ -2216,6 +2241,10 @@ class CopiesArraysImpl {
             return (UpdatableLongArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
+        public Optional<Object> quick() {
+            return Optional.empty();
+        }
+
         public long bitsPerElement() {
             return Arrays.BITS_PER_LONG;
         }
@@ -2529,6 +2558,10 @@ class CopiesArraysImpl {
             return (UpdatableDoubleArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
+        public Optional<Object> quick() {
+            return Optional.empty();
+        }
+
         public long bitsPerElement() {
             return Arrays.BITS_PER_DOUBLE;
         }
@@ -2802,6 +2835,10 @@ class CopiesArraysImpl {
             if (memoryModel == null)
                 throw new NullPointerException("Null memory model");
             return InternalUtils.cast(memoryModel.newUnresizableArray(this).copy(this));
+        }
+
+        public Optional<Object> quick() {
+            return Optional.empty();
         }
 
         public Object getElement(long index) {

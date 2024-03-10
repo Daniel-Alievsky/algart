@@ -25,6 +25,7 @@
 package net.algart.arrays;
 
 import java.util.EmptyStackException;
+import java.util.Optional;
 
 /**
  * <p>Implementations of arrays for {@link SimpleMemoryModel}.
@@ -285,17 +286,21 @@ class SimpleArraysImpl {
         }
 
         public final boolean hasJavaArray() {
-            if (this instanceof BitArray)
-                throw new InternalError("Internal error in SimpleMemoryModel implementation "
-                    + "(unallowed hasJavaArray())");
+            if (this instanceof BitArray) {
+                throw new InternalError("Internal error in SimpleMemoryModel implementation " +
+                        "(non-allowed hasJavaArray())");
+            }
             return true;
         }
 
         public final Object javaArray() {
-            if (this instanceof BitArray)
-                throw new InternalError("Internal error in SimpleMemoryModel implementation (unallowed javaArray())");
-            if (isCopyOnNextWrite())
+            if (this instanceof BitArray) {
+                throw new InternalError("Internal error in SimpleMemoryModel implementation " +
+                        "(non-allowed javaArray())");
+            }
+            if (isCopyOnNextWrite()) {
                 reallocateStorage();
+            }
             return this.array;
         }
 
@@ -404,8 +409,9 @@ class SimpleArraysImpl {
          * @return the same result as {@link DirectAccessible#javaArray()}.
          */
         final Object javaArrayInternal() {
-            if (this instanceof BitArray)
+            if (this instanceof BitArray) {
                 return null;
+            }
             return this.array;
         }
     }
@@ -908,6 +914,14 @@ class SimpleArraysImpl {
             return 0;
         }
 
+        @Override
+        public Optional<Object> quick() {
+            if (isCopyOnNextWrite()) {
+                reallocateStorage();
+            }
+            return Optional.of(this.array);
+        }
+
         public Array subArray(long fromIndex, long toIndex) {
             if (fromIndex < 0)
                 throw rangeException(fromIndex);
@@ -990,6 +1004,11 @@ class SimpleArraysImpl {
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        @Override
+        public Optional<Object> quick() {
+            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -3934,6 +3953,14 @@ $1    };;
             return 0;
         }
 
+        @Override
+        public Optional<Object> quick() {
+            if (isCopyOnNextWrite()) {
+                reallocateStorage();
+            }
+            return Optional.of(this.array);
+        }
+
         public Array subArray(long fromIndex, long toIndex) {
             if (fromIndex < 0)
                 throw rangeException(fromIndex);
@@ -4016,6 +4043,11 @@ $1    };;
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        @Override
+        public Optional<Object> quick() {
+            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -5411,6 +5443,14 @@ $1    };;
             return 0;
         }
 
+        @Override
+        public Optional<Object> quick() {
+            if (isCopyOnNextWrite()) {
+                reallocateStorage();
+            }
+            return Optional.of(this.array);
+        }
+
         public Array subArray(long fromIndex, long toIndex) {
             if (fromIndex < 0)
                 throw rangeException(fromIndex);
@@ -5493,6 +5533,11 @@ $1    };;
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        @Override
+        public Optional<Object> quick() {
+            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -6868,6 +6913,14 @@ $1    };;
             return 0;
         }
 
+        @Override
+        public Optional<Object> quick() {
+            if (isCopyOnNextWrite()) {
+                reallocateStorage();
+            }
+            return Optional.of(this.array);
+        }
+
         public Array subArray(long fromIndex, long toIndex) {
             if (fromIndex < 0)
                 throw rangeException(fromIndex);
@@ -6950,6 +7003,11 @@ $1    };;
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        @Override
+        public Optional<Object> quick() {
+            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -8311,6 +8369,14 @@ $1    };;
             return 0;
         }
 
+        @Override
+        public Optional<Object> quick() {
+            if (isCopyOnNextWrite()) {
+                reallocateStorage();
+            }
+            return Optional.of(this.array);
+        }
+
         public Array subArray(long fromIndex, long toIndex) {
             if (fromIndex < 0)
                 throw rangeException(fromIndex);
@@ -8393,6 +8459,11 @@ $1    };;
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        @Override
+        public Optional<Object> quick() {
+            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -9726,6 +9797,14 @@ $1    };;
             return 0;
         }
 
+        @Override
+        public Optional<Object> quick() {
+            if (isCopyOnNextWrite()) {
+                reallocateStorage();
+            }
+            return Optional.of(this.array);
+        }
+
         public Array subArray(long fromIndex, long toIndex) {
             if (fromIndex < 0)
                 throw rangeException(fromIndex);
@@ -9808,6 +9887,11 @@ $1    };;
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        @Override
+        public Optional<Object> quick() {
+            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -11126,6 +11210,14 @@ $1    };;
             return 0;
         }
 
+        @Override
+        public Optional<Object> quick() {
+            if (isCopyOnNextWrite()) {
+                reallocateStorage();
+            }
+            return Optional.of(this.array);
+        }
+
         public Array subArray(long fromIndex, long toIndex) {
             if (fromIndex < 0)
                 throw rangeException(fromIndex);
@@ -11208,6 +11300,11 @@ $1    };;
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        @Override
+        public Optional<Object> quick() {
+            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -12535,6 +12632,14 @@ $1    };;
             return 0;
         }
 
+        @Override
+        public Optional<Object> quick() {
+            if (isCopyOnNextWrite()) {
+                reallocateStorage();
+            }
+            return Optional.of(this.array);
+        }
+
         public Array subArray(long fromIndex, long toIndex) {
             if (fromIndex < 0)
                 throw rangeException(fromIndex);
@@ -12624,6 +12729,11 @@ $1    };;
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        @Override
+        public Optional<Object> quick() {
+            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
