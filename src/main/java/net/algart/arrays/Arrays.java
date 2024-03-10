@@ -1125,19 +1125,6 @@ public class Arrays {
     public static final SimpleMemoryModel SMM = SimpleMemoryModel.INSTANCE;
 
     /**
-     * Copy of {@link ArrayContext#DEFAULT}.
-     * It is just a more compact alternative for the expression "{@link ArrayContext#DEFAULT}".
-     */
-    public static final ArrayContext AC = ArrayContext.DEFAULT;
-
-    /**
-     * Copy of {@link ArrayContext#DEFAULT_SINGLE_THREAD}.
-     * It is just a more compact alternative for the expression "{@link ArrayContext#DEFAULT_SINGLE_THREAD}".
-     */
-    public static final ArrayContext AC1 = ArrayContext.DEFAULT_SINGLE_THREAD;
-
-
-    /**
      * Unmodifiable list of all primitive types.
      * All they, as well as any object types, can be elements of AlgART arrays.
      */

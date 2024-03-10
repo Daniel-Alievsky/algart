@@ -1797,6 +1797,9 @@ public class Matrices {
             Matrix<? extends PArray> interleaved) {
         Objects.requireNonNull(result, "Null result list");
         Objects.requireNonNull(interleaved, "Null interleaved matrix");
+        if (context == null) {
+            context = ArrayContext.DEFAULT_SINGLE_THREAD;
+        }
         final List<Matrix<? extends UpdatablePArray>> list = new ArrayList<>(result);
         if (list.isEmpty()) {
             throw new IllegalArgumentException("Empty separated list");
@@ -1817,10 +1820,13 @@ public class Matrices {
             Matrix<? extends T> interleaved,
             int limit) {
         Objects.requireNonNull(interleaved, "Null interleaved matrix");
+        if (context == null) {
+            context = ArrayContext.DEFAULT_SINGLE_THREAD;
+        }
         final long[] dimensions = interleaved.dimensions();
         final long numberOfMatrices = numberOfChannels(dimensions, false, limit);
         final long[] reducedDimensions = java.util.Arrays.copyOfRange(dimensions, 1, dimensions.length);
-        final MemoryModel mm = context == null ? Arrays.SMM : context.getMemoryModel();
+        final MemoryModel mm = context.getMemoryModel();
         Class<?> elementType = interleaved.elementType();
         final UpdatablePArray[] arrays = new UpdatablePArray[(int) numberOfMatrices];
         final List<Matrix<T>> result = new ArrayList<>();
@@ -1841,6 +1847,9 @@ public class Matrices {
             List<? extends Matrix<? extends PArray>> separated) {
         Objects.requireNonNull(result, "Null result argument");
         Objects.requireNonNull(separated, "Null separated argument");
+        if (context == null) {
+            context = ArrayContext.DEFAULT_SINGLE_THREAD;
+        }
         final List<Matrix<? extends PArray>> list = new ArrayList<>(separated);
         if (list.isEmpty()) {
             throw new IllegalArgumentException("Empty separated list");
@@ -1856,6 +1865,9 @@ public class Matrices {
             ArrayContext context,
             List<? extends Matrix<? extends T>> separated) {
         Objects.requireNonNull(separated, "Null separated argument");
+        if (context == null) {
+            context = ArrayContext.DEFAULT_SINGLE_THREAD;
+        }
         final List<Matrix<? extends T>> list = new ArrayList<>(separated);
         if (list.isEmpty()) {
             throw new IllegalArgumentException("Empty separated list");
@@ -1865,7 +1877,7 @@ public class Matrices {
         final long[] dimensions = new long[m0.dimCount() + 1];
         System.arraycopy(m0.dimensions(), 0, dimensions, 1, dimensions.length - 1);
         dimensions[0] = arrays.length;
-        final MemoryModel mm = context == null ? Arrays.SMM : context.getMemoryModel();
+        final MemoryModel mm = context.getMemoryModel();
         final Matrix<UpdatablePArray> result = mm.newMatrix(UpdatablePArray.class, m0.elementType(), dimensions);
         try (var packer = InterleavingBandsPacker.getInstance(context, arrays, result.array())) {
             packer.process();
@@ -3544,7 +3556,7 @@ public class Matrices {
             Matrix<? extends UpdatableBitArray> result,
             Matrix<? extends BitArray> a,
             Matrix<? extends BitArray> b) {
-        Matrices.applyFunc(Arrays.AC1, Func.MAX, result, a, b);
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.MAX, result, a, b);
     }
 
     /**
@@ -3571,7 +3583,7 @@ public class Matrices {
             Matrix<? extends UpdatableBitArray> result,
             Matrix<? extends BitArray> a,
             Matrix<? extends BitArray> b) {
-        Matrices.applyFunc(Arrays.AC1, Func.MIN, result, a, b);
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.MIN, result, a, b);
     }
 
 
@@ -3599,7 +3611,7 @@ public class Matrices {
             Matrix<? extends UpdatableBitArray> result,
             Matrix<? extends BitArray> a,
             Matrix<? extends BitArray> b) {
-        Matrices.applyFunc(Arrays.AC1, Func.ABS_DIFF, result, a, b);
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.ABS_DIFF, result, a, b);
         // - actually this and other functions are performed by classes like ArraysDiffGetDataOp
         // via maximally efficient binary operations
     }
@@ -3628,7 +3640,7 @@ public class Matrices {
             Matrix<? extends UpdatableBitArray> result,
             Matrix<? extends BitArray> a,
             Matrix<? extends BitArray> b) {
-        Matrices.applyFunc(Arrays.AC1, Func.POSITIVE_DIFF, result, a, b);
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.POSITIVE_DIFF, result, a, b);
     }
 
     /**
@@ -3650,7 +3662,7 @@ public class Matrices {
      * @param source matrix <b>a</b>.
      */
     public static void bitNotToOther(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> source) {
-        Matrices.applyFunc(Arrays.AC1, Func.REVERSE, result, source);
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.REVERSE, result, source);
     }
 
     /**
@@ -3895,7 +3907,7 @@ public class Matrices {
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
     public static void copy(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src) {
-        copy(Arrays.AC1, dest, src);
+        copy(ArrayContext.DEFAULT_SINGLE_THREAD, dest, src);
     }
 
 

@@ -136,7 +136,7 @@ public class MatrixIO {
             writeBufferedImage(file, (new ColorImageFormatter.Simple()).toBufferedImage(image));
             return;
         }
-        final Matrix<PArray> matrix = Matrices.interleave(Arrays.AC1, image);
+        final Matrix<PArray> matrix = Matrices.interleave(null, image);
         writeBufferedImage(file, new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(matrix));
     }
 
@@ -146,7 +146,7 @@ public class MatrixIO {
             return ((ColorImageFormatter) new ColorImageFormatter.Simple()).toImage(bufferedImage);
         }
         final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleavedRGB().toMatrix(bufferedImage);
-        return Matrices.separate(Arrays.AC1, matrix);
+        return Matrices.separate(null, matrix);
     }
 
     /**
