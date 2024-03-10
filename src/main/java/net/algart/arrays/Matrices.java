@@ -1801,13 +1801,12 @@ public class Matrices {
             context = ArrayContext.DEFAULT_SINGLE_THREAD;
         }
         final List<Matrix<? extends UpdatablePArray>> list = new ArrayList<>(result);
-        if (list.isEmpty()) {
-            throw new IllegalArgumentException("Empty separated list");
-        }
         final UpdatablePArray[] arrays = arraysOfParallelMatrices(UpdatablePArray.class, list, true);
         checkDimensionEqualityWithInterleaving(interleaved, list);
-        try (var unpacker = InterleavingBandsUnpacker.getInstance(context, arrays, interleaved.array())) {
-            unpacker.process();
+        if (arrays.length > 0) {
+            try (var unpacker = InterleavingBandsUnpacker.getInstance(context, arrays, interleaved.array())) {
+                unpacker.process();
+            }
         }
     }
 
@@ -1830,13 +1829,15 @@ public class Matrices {
         Class<?> elementType = interleaved.elementType();
         final UpdatablePArray[] arrays = new UpdatablePArray[(int) numberOfMatrices];
         final List<Matrix<T>> result = new ArrayList<>();
-        for (int k = 0; k < numberOfMatrices; k++) {
-            final Matrix<UpdatablePArray> m = mm.newMatrix(UpdatablePArray.class, elementType, reducedDimensions);
-            arrays[k] = m.array();
-            result.add(InternalUtils.cast(m));
-        }
-        try (var unpacker = InterleavingBandsUnpacker.getInstance(context, arrays, interleaved.array())) {
-            unpacker.process();
+        if (numberOfMatrices > 0) {
+            for (int k = 0; k < numberOfMatrices; k++) {
+                final Matrix<UpdatablePArray> m = mm.newMatrix(UpdatablePArray.class, elementType, reducedDimensions);
+                arrays[k] = m.array();
+                result.add(InternalUtils.cast(m));
+            }
+            try (var unpacker = InterleavingBandsUnpacker.getInstance(context, arrays, interleaved.array())) {
+                unpacker.process();
+            }
         }
         return result;
     }
@@ -1855,6 +1856,7 @@ public class Matrices {
             throw new IllegalArgumentException("Empty separated list");
         }
         final PArray[] arrays = arraysOfParallelMatrices(PArray.class, list, true);
+        assert arrays.length > 0;
         checkDimensionEqualityWithInterleaving(result, separated);
         try (var packer = InterleavingBandsPacker.getInstance(context, arrays, result.array())) {
             packer.process();
@@ -4328,23 +4330,26 @@ public class Matrices {
             Matrix<? extends PArray> interleaved,
             List<? extends Matrix<? extends PArray>> list) {
         final long[] dimensions = interleaved.dimensions();
-        if (list.size() != numberOfChannels(dimensions, false)) {
+        final long numberOfMatrices = numberOfChannels(dimensions, false);
+        if (list.size() != numberOfMatrices) {
             throw new IllegalArgumentException("Number of elements in the passed list of separated matrix = "
                     + list.size() + " does not match to the first dimension of the interleaved matrix "
                     + interleaved);
         }
-        final long[] reducedDimensions = java.util.Arrays.copyOfRange(dimensions, 1, dimensions.length);
-        final Matrix<?> m0 = list.get(0);
-        if (!m0.dimEquals(reducedDimensions)) {
-            throw new SizeMismatchException("Dimensions mismatch: the interleaved matrix is " + interleaved +
-                    ", the separated matrices in the list are " + dimensionsToString(m0.dimensions()) +
-                    ", but their dimensions must be equal to the highest " + reducedDimensions.length +
-                    " of all " + dimensions.length + " dimensions of the interleaved matrix");
-        }
-        if (m0.elementType() != interleaved.elementType()) {
-            throw new IllegalArgumentException("Different element type: " +
-                    m0.elementType() + " in the separated matrices, " +
-                    interleaved.elementType() + " in the interleaved matrix");
+        if (numberOfMatrices > 0) {
+            final long[] reducedDimensions = java.util.Arrays.copyOfRange(dimensions, 1, dimensions.length);
+            final Matrix<?> m0 = list.get(0);
+            if (!m0.dimEquals(reducedDimensions)) {
+                throw new SizeMismatchException("Dimensions mismatch: the interleaved matrix is " + interleaved +
+                        ", the separated matrices in the list are " + dimensionsToString(m0.dimensions()) +
+                        ", but their dimensions must be equal to the highest " + reducedDimensions.length +
+                        " of all " + dimensions.length + " dimensions of the interleaved matrix");
+            }
+            if (m0.elementType() != interleaved.elementType()) {
+                throw new IllegalArgumentException("Different element type: " +
+                        m0.elementType() + " in the separated matrices, " +
+                        interleaved.elementType() + " in the interleaved matrix");
+            }
         }
     }
 
