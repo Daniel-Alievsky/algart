@@ -37,23 +37,23 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface MutablePArray extends UpdatablePArray, MutableArray {
-    public MutablePArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
+    MutablePArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
-    public MutablePArray setData(long arrayPos, Object srcArray);
+    MutablePArray setData(long arrayPos, Object srcArray);
 
-    public MutablePArray copy(Array src);
+    MutablePArray copy(Array src);
 
-    public MutablePArray swap(UpdatableArray another);
+    MutablePArray swap(UpdatableArray another);
 
-    public MutablePArray length(long newLength);
+    MutablePArray length(long newLength);
 
-    public MutablePArray ensureCapacity(long minCapacity);
+    MutablePArray ensureCapacity(long minCapacity);
 
-    public MutablePArray trim();
+    MutablePArray trim();
 
-    public MutablePArray append(Array appendedArray);
+    MutablePArray append(Array appendedArray);
 
-    public MutablePArray asCopyOnNextWrite();
+    MutablePArray asCopyOnNextWrite();
 
-    public MutablePArray shallowClone();
+    MutablePArray shallowClone();
 }

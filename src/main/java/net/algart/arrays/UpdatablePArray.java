@@ -39,7 +39,7 @@ package net.algart.arrays;
  */
 public interface UpdatablePArray extends PArray, UpdatableArray {
     /**
-     * Sets the element #<tt>index</tt> by convertion from <tt>double</tt>,
+     * Sets the element #<tt>index</tt> by conversion from <tt>double</tt>,
      * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
      * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
      * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),
@@ -53,7 +53,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
     void setDouble(long index, double value);
 
     /**
-     * Sets the element #<tt>index</tt> by convertion from <tt>long</tt>,
+     * Sets the element #<tt>index</tt> by conversion from <tt>long</tt>,
      * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
      * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
      * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),

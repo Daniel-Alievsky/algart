@@ -34,7 +34,7 @@ import java.util.*;
  * <li>different ways for converting objects to strings
  * in addition to standard <code>toString</code> method;
  *
- * <li>automatic convertion of "\n" character to correct
+ * <li>automatic conversion of "\n" character to correct
  * system-depended line separator;
  *
  * <li>buffering a lot of <code>println</code> calls.
