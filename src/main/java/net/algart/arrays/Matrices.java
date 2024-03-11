@@ -1814,6 +1814,38 @@ public class Matrices {
         return separate(context, interleaved, Integer.MAX_VALUE);
     }
 
+    /**
+     * Splits a single (<i>n</i>+1)-dimensional matrix
+     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>x<i>M</i><sub><i>n</i></sub>
+     * along dimension #0
+     * to <i>M</i><sub><i>n</i></sub> separate <i>n</i>-dimensional matrices
+     * <i>M</i><sub>1</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
+     * and returns them as a list.
+     * The element with index (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n</sub></i>)
+     * of the source matrix will be equal to the element with index
+     * (<i>i<sub>1</sub></i>,...,<i>i<sub>n</sub></i>)
+     * of the matrix <tt>list.get(<i>i<sub>0</sub></i>)</tt> in the returned list.
+     *
+     * <p>This method also checks, that the first dimension
+     * <i>M</i><sub>0</sub>=<tt>interleaved.dim(<i>0</i>)</tt> (that will be
+     * equal to the size of the returned list) is not greater than the passed limit
+     * and throws an exception if this limit is exceeded. Typically, this method is used for unpacking
+     * matrices where the first dimension cannot be too large &mdash; for example the number
+     * of color channels in RGBRGB... interleaving format &mdash; so it makes sense to limit
+     * this value, because too large first dimension (millions) usually means incorrect usage of this function.
+     * In any case, the number of returned matrices, greater than {@code Integer.MAX_VALUE}, usually leads to
+     * <tt>OutOfMemoryError</tt>.
+     *
+     * @param context     the context; allows to specify (in particular) the memory model for creating returned matrices;
+     *                    may be <tt>null</tt>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
+     * @param interleaved the source interleaved matrix.
+     * @param limit       maximal allowed number of returned matrices (the first dimension of the source matrix).
+     * @return a list of matrices: "channels" of the source one along the first dimension
+     * (if we suppose that the source matrix contains interleaved channels, like RGBRGB... for 3-channel RGB image).
+     * @throws NullPointerException     if <tt>interleaved</tt> argument is <tt>null</tt>.
+     * @throws IllegalStateException    if <tt>interleaved</tt> matrix is 1-dimensional.
+     * @throws IllegalArgumentException if <tt>limit &le; 0</tt> or if the number of returned matrices {@code >limit}.
+     */
     public static <T extends PArray> List<Matrix<T>> separate(
             ArrayContext context,
             Matrix<? extends T> interleaved,
@@ -1911,7 +1943,8 @@ public class Matrices {
      * (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>)
      * of the matrix <tt>list.get(<i>i<sub>n</sub></i>)</tt> in the returned list.
      *
-     * <p>This method also checks, that the last dimension <tt>merged.dim(<i>n</i>)</tt> (that will be
+     * <p>This method also checks, that the last dimension
+     * <i>M</i><sub><i>n</i></sub>=<tt>merged.dim(<i>n</i>)</tt> (that will be
      * equal to the size of the returned list) is not greater than the passed limit
      * and throws an exception if this limit is exceeded. Typically, this method is used for unpacking
      * matrices where the last dimension cannot be too large &mdash; for example the number
