@@ -29,6 +29,9 @@ import java.nio.LongBuffer;
 /**
  * <p>Operations with bit arrays packed into <tt>java.nio.LongBuffer</tt>.</p>
  *
+ * <p>AlgART bits arrays, created by {@link BufferMemoryModel} and {@link LargeMemoryModel},
+ * are based on operations provided by this class.</p>
+ *
  * <p>The maximal length of bit arrays supported by this class is <tt>2<sup>37</sup>-64</tt>.
  * All indexes and lengths passed to methods of this class should not exceed this value.
  * In other case, the results are unspecified. ("Unspecified" means that any elements
@@ -93,7 +96,7 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Returns the bit <tt>#index</tt> in the packed <tt>dest</tt> bit buffer.
+     * Returns the bit <tt>#index</tt> in the packed <tt>src</tt> bit buffer.
      * Equivalent to the following expression:<pre>
      * (src.get((int)(index &gt;&gt;&gt; 6)) &amp; (1L &lt;&lt; (index &amp; 63))) != 0L;
      * </pre>

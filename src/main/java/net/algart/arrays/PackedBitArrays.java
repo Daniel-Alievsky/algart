@@ -29,6 +29,9 @@ import java.util.zip.*;
 /**
  * <p>Operations with bit arrays packed into <tt>long[]</tt> Java arrays.</p>
  *
+ * <p>AlgART bits arrays, created by {@link SimpleMemoryModel},
+ * are based on operations provided by this class.</p>
+ *
  * <p>The maximal length of bit arrays supported by this class is <tt>2<sup>37</sup>-64</tt>.
  * All indexes and lengths passed to methods of this class must not exceed this value.
  * Moreover, all indexes and length, concerning usual (non-packed) Java array,
@@ -90,7 +93,7 @@ public class PackedBitArrays {
     }
 
     /**
-     * Returns the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array.
+     * Returns the bit <tt>#index</tt> in the packed <tt>src</tt> bit array.
      * Equivalent to the following expression:<pre>
      * (src[(int)(index &gt;&gt;&gt; 6)] &amp; (1L &lt;&lt; (index &amp; 63))) != 0L;
      * </pre>

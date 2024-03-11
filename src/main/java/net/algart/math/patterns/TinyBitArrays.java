@@ -48,7 +48,7 @@ class TinyBitArrays {
     }
 
     /**
-     * Returns the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array.
+     * Returns the bit <tt>#index</tt> in the packed <tt>src</tt> bit array.
      * Equivalent to the following expression:<pre>
      * (src[(int)(index &gt;&gt;&gt; 6)] &amp; (1L &lt;&lt; (index &amp; 63))) != 0L;
      * </pre>
