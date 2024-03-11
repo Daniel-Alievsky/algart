@@ -384,7 +384,10 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
     /**
      * Returns an unresizable AlgART array backed by the specified Java array,
      * excluding a case of <tt>boolean[]</tt> array.
-     * The result AlgART array contains all elements the passed Java array:
+     * For <tt>boolean</tt> elements ({@link BitArray}) please use the method
+     * {@link #asUpdatableBitArray(long[], long)}.
+     *
+     * <p>The result AlgART array contains all elements the passed Java array:
      * <tt>array[0], array[1], ..., array[array.length - 1]</tt>,
      * and changes in the returned array "write through" to <tt>array</tt> argument.
      * The length and capacity of the returned array are equal to <tt>array.length</tt>.
@@ -458,7 +461,8 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      * @param length         the length of the returned bit array.
      * @return an unresizable AlgART bit array backed by the specified Java array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if the passed <tt>array</tt> is too short to store
+     * @throws IllegalArgumentException if <tt>length&lt;0</tt> or
+     *                                  if the passed <tt>array</tt> is too short to store
      *                                  <tt>length</tt> bits (i.e. if <tt>array.length &lt; (length+63)/64).</tt>
      */
     public static UpdatableBitArray asUpdatableBitArray(long[] packedBitArray, long length) {

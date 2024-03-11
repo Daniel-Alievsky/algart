@@ -119,7 +119,7 @@ class DirectDataStorages {
         }
 
         public String toString() {
-            return "direct NIO bit storage: @" + Integer.toHexString(System.identityHashCode(bb));
+            return "direct NIO bit storage: @" + Integer.toHexString(System.identityHashCode(bb)) + " on " + bb;
         }
 
         int bytesPerBufferElementLog() {
@@ -284,7 +284,7 @@ class DirectDataStorages {
         }
 
         public String toString() {
-            return "direct NIO byte storage: @" + Integer.toHexString(System.identityHashCode(bb));
+            return "direct NIO byte storage: @" + Integer.toHexString(System.identityHashCode(bb)) + " on " + bb;
         }
 
         int bytesPerBufferElementLog() {
@@ -426,7 +426,7 @@ class DirectDataStorages {
         }
 
         public String toString() {
-            return "direct NIO short storage: @" + Integer.toHexString(System.identityHashCode(bb));
+            return "direct NIO short storage: @" + Integer.toHexString(System.identityHashCode(bb)) + " on " + bb;
         }
 
         int bytesPerBufferElementLog() {
@@ -561,7 +561,7 @@ class DirectDataStorages {
         }
 
         public String toString() {
-            return "direct NIO char storage: @" + Integer.toHexString(System.identityHashCode(bb));
+            return "direct NIO char storage: @" + Integer.toHexString(System.identityHashCode(bb)) + " on " + bb;
         }
 
         int bytesPerBufferElementLog() {
@@ -696,7 +696,7 @@ class DirectDataStorages {
         }
 
         public String toString() {
-            return "direct NIO int storage: @" + Integer.toHexString(System.identityHashCode(bb));
+            return "direct NIO int storage: @" + Integer.toHexString(System.identityHashCode(bb)) + " on " + bb;
         }
 
         int bytesPerBufferElementLog() {
@@ -831,7 +831,7 @@ class DirectDataStorages {
         }
 
         public String toString() {
-            return "direct NIO long storage: @" + Integer.toHexString(System.identityHashCode(bb));
+            return "direct NIO long storage: @" + Integer.toHexString(System.identityHashCode(bb)) + " on " + bb;
         }
 
         int bytesPerBufferElementLog() {
@@ -966,7 +966,7 @@ class DirectDataStorages {
         }
 
         public String toString() {
-            return "direct NIO float storage: @" + Integer.toHexString(System.identityHashCode(bb));
+            return "direct NIO float storage: @" + Integer.toHexString(System.identityHashCode(bb)) + " on " + bb;
         }
 
         int bytesPerBufferElementLog() {
@@ -1101,7 +1101,7 @@ class DirectDataStorages {
         }
 
         public String toString() {
-            return "direct NIO double storage: @" + Integer.toHexString(System.identityHashCode(bb));
+            return "direct NIO double storage: @" + Integer.toHexString(System.identityHashCode(bb)) + " on " + bb;
         }
 
         int bytesPerBufferElementLog() {

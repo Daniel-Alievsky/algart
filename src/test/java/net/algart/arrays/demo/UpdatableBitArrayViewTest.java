@@ -24,29 +24,49 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.arrays.BufferMemoryModel;
-import net.algart.arrays.SimpleMemoryModel;
-import net.algart.arrays.UpdatableBitArray;
-import net.algart.arrays.UpdatableIntArray;
+import net.algart.arrays.*;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 public class UpdatableBitArrayViewTest {
     public static void main(String[] args) {
-        long[] data = new long[10];
-        for (int k = 0; k < data.length; k++) {
-            data[k] = 278 * k;
-        }
-        ByteBuffer bb = ByteBuffer.allocateDirect(data.length * 8);
-        bb.asLongBuffer().put(data);
-        int length = data.length * 64 + 1;
-        UpdatableBitArray bbAsBits = BufferMemoryModel.asUpdatableBitArray(bb, length);
-        UpdatableBitArray arrayAsBits = SimpleMemoryModel.asUpdatableBitArray(data, length);
-        UpdatableIntArray bbAsInts = BufferMemoryModel.asUpdatableIntArray(bb);
-        long[] bits = new long[data.length];
-        bbAsBits.getBits(0, bits, 0, length);
-        if (!arrayAsBits.equals(bbAsBits)) {
-            throw new AssertionError();
+        Random rnd = new Random(123);
+        for (int test = 0; test < 16; test++) {
+            long[] data = IntStream.range(0, 10).mapToLong(k -> 278L * k).toArray();
+            ByteBuffer bb = ByteBuffer.allocateDirect(data.length * 8 + 1);
+            bb.order(rnd.nextBoolean() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN);
+            System.out.printf("%n%s%n", bb.order());
+            bb.asLongBuffer().put(data);
+            IntStream.range(0, bb.limit()).forEach(k -> System.out.printf("%02x ", bb.get(k)));
+            System.out.println();
+            int length = data.length * 64 - 13;
+            UpdatableBitArray bbAsBits = BufferMemoryModel.asUpdatableBitArray(bb, length);
+            UpdatableBitArray bbBits = Arrays.BMM.newUnresizableBitArray(length);
+            bbBits.setBits(0, data, 0, length);
+            UpdatableBitArray arrayAsBits = SimpleMemoryModel.asUpdatableBitArray(data, length);
+            System.out.println(bbAsBits);
+            System.out.println(bbBits);
+            System.out.println(arrayAsBits);
+
+            long[] bits = new long[data.length];
+            bbAsBits.getBits(0, bits, 0, length);
+            assert arrayAsBits.equals(bbAsBits);
+            for (int k = 0; k < length; k++) {
+                boolean b = PackedBitArrays.getBit(bits, k);
+                assert b == bbAsBits.getBit(k);
+                assert b == bbBits.getBit(k);
+                bbAsBits.setBit(k, k % 3 == 0);
+                bbBits.setBit(k, k % 3 == 0);
+                arrayAsBits.setBit(k, k % 3 == 0);
+            }
+            assert arrayAsBits.equals(bbAsBits);
+            assert arrayAsBits.equals(bbBits);
+            bb.rewind();
+            IntStream.range(0, bb.limit()).forEach(k -> System.out.printf("%02x ", bb.get(k)));
+            System.out.println();
         }
     }
 }

@@ -1125,6 +1125,12 @@ public class Arrays {
     public static final SimpleMemoryModel SMM = SimpleMemoryModel.INSTANCE;
 
     /**
+     * Contains {@link BufferMemoryModel#getInstance()}.
+     * It is just a more compact alternative for the expression "{@link BufferMemoryModel#getInstance()}".
+     */
+    public static final BufferMemoryModel BMM = BufferMemoryModel.INSTANCE;
+
+    /**
      * Unmodifiable list of all primitive types.
      * All they, as well as any object types, can be elements of AlgART arrays.
      */
