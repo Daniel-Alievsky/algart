@@ -264,6 +264,8 @@ public abstract class BufferedImageToMatrix {
                 return;
             }
             // Simplest algorithm: via BufferedImage.getGraphics
+            // Note: sometimes, due to some internal optimizations, this branch work even faster
+            // than the previous one. But usually the previous branch works in several times faster.
             assert resultJavaArray instanceof byte[];
             //TODO!! support in future ushort/int via getResultElementType
             //TODO!! and what if bandCount=3 and colorComponentsCount=4?

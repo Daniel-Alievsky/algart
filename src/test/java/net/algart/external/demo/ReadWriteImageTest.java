@@ -54,7 +54,7 @@ public class ReadWriteImageTest {
             toMatrix.setEnableAlpha(true);
             toBufferedImage.setAlwaysAddAlpha(false);
 
-            final BufferedImage bi = ImageIO.read(sourceFile.toFile());
+            final BufferedImage bi = MatrixIO.readBufferedImage(sourceFile);
             long t1 = System.nanoTime();
             final List<Matrix<UpdatablePArray>> image = MatrixIO.readImage(sourceFile);
             long t2 = System.nanoTime();
@@ -67,12 +67,13 @@ public class ReadWriteImageTest {
             final BufferedImage bufferedImage = toBufferedImage.toBufferedImage(matrix1);
             long t6 = System.nanoTime();
             MatrixIO.writeBufferedImage(targetFile2, bufferedImage);
+            System.out.println("Matrix: " + matrix1);
             if (!matrix1.equals(matrix2)) {
                 System.out.println("Different behaviour of BufferedImageToMatrix while using Graphics2D!");
-                System.out.println("    " + matrix1);
-                System.out.println("    " + matrix2);
-                MatrixIO.writeBufferedImage(Paths.get(targetFile2 + ".alt.png"),
-                        toBufferedImage.toBufferedImage(matrix2));
+                Path altFile = Paths.get(targetFile2 + ".alt.png");
+                System.out.println("        " + matrix2);
+                MatrixIO.writeBufferedImage(altFile, toBufferedImage.toBufferedImage(matrix2));
+                System.out.println("        saved in " + altFile);
             }
 
             System.out.printf("readImage: %.3f ms, %.3f MB/sec%n",
