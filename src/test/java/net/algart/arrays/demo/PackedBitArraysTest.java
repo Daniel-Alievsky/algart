@@ -362,10 +362,22 @@ public class PackedBitArraysTest {
                         pDestWork, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(
                         bDestWork1, 0, pDestWork, startOffset, len);
+                for (int k = 0; k < count; k++) {
+                    boolean bit = PackedBitArrays.getBit(pDestWork, destPos + k);
+                    if (bSrc[srcPos + k] != bit) {
+                        throw new AssertionError("The bug A in copyBits found in test #" + testCount + ": "
+                                + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + " (src=" + JArrays.toBinaryString(bSrc, "", 200)
+                                + ", dest=" + JArrays.toBinaryString(bDest, "", 200)
+                                + ", we have " + JArrays.toBinaryString(bDestWork1, "", 200)
+                                + ", dest[" + (destPos + k) + "]=" + bit
+                                + " instead of " + bSrc[srcPos + k] + ")");
+                    }
+                }
                 System.arraycopy(bSrc, srcPos, bDestWork2, destPos, count);
                 for (int k = 0; k < len; k++)
                     if (bDestWork1[k] != bDestWork2[k])
-                        throw new AssertionError("The bug in copyBits or unpackBits found in test #" + testCount
+                        throw new AssertionError("The bug B in copyBits or unpackBits found in test #" + testCount
                                 + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k
                                 + " (src=" + JArrays.toBinaryString(bSrc, "", 200)

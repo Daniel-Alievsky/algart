@@ -148,13 +148,15 @@ class TinyBitArrays {
                 if (cntFinish > 0) {
                     long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
                     synchronized (dest) {
-                        dest[dPos + cnt] = (src[sPos + cnt] & maskFinish) | (dest[dPos + cnt] & ~maskFinish);
+                        dest[dPos + cnt] =
+                                (src[sPos + cnt] & maskFinish) | (dest[dPos + cnt] & ~maskFinish);
                     }
                 }
                 System.arraycopy(src, sPos, dest, dPos, cnt);
                 if (cntStart > 0) {
                     synchronized (dest) {
-                        dest[dPosStart] = (src[sPosStart] & maskStart) | (dest[dPosStart] & ~maskStart);
+                        dest[dPosStart] =
+                                (src[sPosStart] & maskStart) | (dest[dPosStart] & ~maskStart);
                     }
                 }
             } else {

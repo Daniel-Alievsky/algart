@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="PackedBitArraysTestPer8" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.PackedBitArraysTestPer8" />
+  <configuration default="false" name="PackedBitArraysPer8Test" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.PackedBitArraysPer8Test" />
     <module name="algart" />
-    <option name="PROGRAM_PARAMETERS" value="10 30000 333" />
+    <option name="PROGRAM_PARAMETERS" value="1000 700000" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="net.algart.arrays.demo.*" />

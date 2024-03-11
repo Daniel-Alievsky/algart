@@ -73,7 +73,33 @@ import java.util.Objects;
  * @author Daniel Alievsky
  */
 public class PackedBitArraysPer8 {
-    private PackedBitArraysPer8() {}
+    private PackedBitArraysPer8() {
+    }
+
+    private static final byte[] REVERSE = {0x00, -0x80, 0x40, -0x40, 0x20, -0x60,
+            0x60, -0x20, 0x10, -0x70, 0x50, -0x30, 0x30, -0x50, 0x70, -0x10, 0x08,
+            -0x78, 0x48, -0x38, 0x28, -0x58, 0x68, -0x18, 0x18, -0x68, 0x58, -0x28,
+            0x38, -0x48, 0x78, -0x08, 0x04, -0x7c, 0x44, -0x3c, 0x24, -0x5c, 0x64,
+            -0x1c, 0x14, -0x6c, 0x54, -0x2c, 0x34, -0x4c, 0x74, -0x0c, 0x0c, -0x74,
+            0x4c, -0x34, 0x2c, -0x54, 0x6c, -0x14, 0x1c, -0x64, 0x5c, -0x24, 0x3c,
+            -0x44, 0x7c, -0x04, 0x02, -0x7e, 0x42, -0x3e, 0x22, -0x5e, 0x62, -0x1e,
+            0x12, -0x6e, 0x52, -0x2e, 0x32, -0x4e, 0x72, -0x0e, 0x0a, -0x76, 0x4a,
+            -0x36, 0x2a, -0x56, 0x6a, -0x16, 0x1a, -0x66, 0x5a, -0x26, 0x3a, -0x46,
+            0x7a, -0x06, 0x06, -0x7a, 0x46, -0x3a, 0x26, -0x5a, 0x66, -0x1a, 0x16,
+            -0x6a, 0x56, -0x2a, 0x36, -0x4a, 0x76, -0x0a, 0x0e, -0x72, 0x4e, -0x32,
+            0x2e, -0x52, 0x6e, -0x12, 0x1e, -0x62, 0x5e, -0x22, 0x3e, -0x42, 0x7e,
+            -0x02, 0x01, -0x7f, 0x41, -0x3f, 0x21, -0x5f, 0x61, -0x1f, 0x11, -0x6f,
+            0x51, -0x2f, 0x31, -0x4f, 0x71, -0x0f, 0x09, -0x77, 0x49, -0x37, 0x29,
+            -0x57, 0x69, -0x17, 0x19, -0x67, 0x59, -0x27, 0x39, -0x47, 0x79, -0x07,
+            0x05, -0x7b, 0x45, -0x3b, 0x25, -0x5b, 0x65, -0x1b, 0x15, -0x6b, 0x55,
+            -0x2b, 0x35, -0x4b, 0x75, -0x0b, 0x0d, -0x73, 0x4d, -0x33, 0x2d, -0x53,
+            0x6d, -0x13, 0x1d, -0x63, 0x5d, -0x23, 0x3d, -0x43, 0x7d, -0x03, 0x03,
+            -0x7d, 0x43, -0x3d, 0x23, -0x5d, 0x63, -0x1d, 0x13, -0x6d, 0x53, -0x2d,
+            0x33, -0x4d, 0x73, -0x0d, 0x0b, -0x75, 0x4b, -0x35, 0x2b, -0x55, 0x6b,
+            -0x15, 0x1b, -0x65, 0x5b, -0x25, 0x3b, -0x45, 0x7b, -0x05, 0x07, -0x79,
+            0x47, -0x39, 0x27, -0x59, 0x67, -0x19, 0x17, -0x69, 0x57, -0x29, 0x37,
+            -0x49, 0x77, -0x09, 0x0f, -0x71, 0x4f, -0x31, 0x2f, -0x51, 0x6f, -0x11,
+            0x1f, -0x61, 0x5f, -0x21, 0x3f, -0x41, 0x7f, -0x01};
 
     /**
      * Returns <tt>(unpackedLength + 7) &gt;&gt;&gt; 3</tt>: the minimal number of <tt>byte</tt> values
@@ -123,15 +149,16 @@ public class PackedBitArraysPer8 {
     public static void setBit(long[] dest, long index, boolean value) {
         synchronized (dest) {
             if (value)
-                dest[(int)(index >>> 3)] |= 1 << (index & 7);
+                dest[(int) (index >>> 3)] |= 1 << (index & 7);
             else
-                dest[(int)(index >>> 3)] &= ~(1 << (index & 7));
+                dest[(int) (index >>> 3)] &= ~(1 << (index & 7));
         }
     }
 
-
-
-  /*Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, copyBits)
+    // Note: in the following regexp, we must replace src[...] ==> src[...] & 0xFF,
+    // because we sometimes SHIFT this byte and, so, should work with low 8 bits;
+    // but we may stay dest[...] without "& 0xFF": we use only lowest 8 bits from this value.
+    /*Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, copyBits)
         <tt>long<\/tt> ==> <tt>byte</tt> ;;
         long\[\] ==> byte[] ;;
         >>>\s*6 ==> >>> 3 ;;
@@ -139,7 +166,8 @@ public class PackedBitArraysPer8 {
         64\b ==> 8 ;;
         long\s+(maskStart|maskFinish|v|sPrev|sNext)\b ==> int $1 ;;
         1L\b ==> 1 ;;
-        dest(\[[^\]]+\])\s+=\s+([^;]+); ==> dest$1 = (byte) ($2);
+        src(\[[^\]]+\]) ==> (src$1 & 0xFF) ;;
+        dest(\[[^\]]+\])\s+=(\s+)([^;]+); ==> dest$1 =$2(byte) ($3);
        !! Auto-generated: NOT EDIT !! */
     /**
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
@@ -197,13 +225,15 @@ public class PackedBitArraysPer8 {
                 if (cntFinish > 0) {
                     int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
                     synchronized (dest) {
-                        dest[dPos + cnt] = (byte) ((src[sPos + cnt] & maskFinish) | (dest[dPos + cnt] & ~maskFinish));
+                        dest[dPos + cnt] =
+                                (byte) (((src[sPos + cnt] & 0xFF) & maskFinish) | (dest[dPos + cnt] & ~maskFinish));
                     }
                 }
                 System.arraycopy(src, sPos, dest, dPos, cnt);
                 if (cntStart > 0) {
                     synchronized (dest) {
-                        dest[dPosStart] = (byte) ((src[sPosStart] & maskStart) | (dest[dPosStart] & ~maskStart));
+                        dest[dPosStart] =
+                                (byte) (((src[sPosStart] & 0xFF) & maskStart) | (dest[dPosStart] & ~maskStart));
                     }
                 }
             } else {
@@ -223,7 +253,7 @@ public class PackedBitArraysPer8 {
                     count -= cntStart;
                     dPos++;
                 }
-                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
+                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
                 int cnt = (int) (count >>> 3);
                 dPosMin = dPos;
                 sPos += cnt;
@@ -235,19 +265,19 @@ public class PackedBitArraysPer8 {
                     int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
                     int v;
                     if (sPosRem + cntFinish <= 8) { // cntFinish bits are in a single src element
-                        v = (sPrev = src[sPos]) >>> sPosRem;
+                        v = (sPrev = (src[sPos] & 0xFF)) >>> sPosRem;
                     } else {
-                        v = ((sPrev = src[sPos]) >>> sPosRem) | (src[sPos + 1] << sPosRem8);
+                        v = ((sPrev = (src[sPos] & 0xFF)) >>> sPosRem) | ((src[sPos + 1] & 0xFF) << sPosRem8);
                     }
                     synchronized (dest) {
                         dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
                     }
                 } else {
                     //Start_sPrev !! this comment is necessary for preprocessing by Repeater !!
-                    sPrev = src[sPos];
+                    sPrev = (src[sPos] & 0xFF);
                     // IndexOutOfBoundException is impossible here, because there is one of the following situations:
-                    // 1) cnt > 0, then src[sPos] is really necessary in the following loop;
-                    // 2) cnt == 0 and cntStart > 0, then src[sPos] will be necessary for making dest[dPosStart].
+                    // 1) cnt > 0, then (src[sPos] & 0xFF) is really necessary in the following loop;
+                    // 2) cnt == 0 and cntStart > 0, then (src[sPos] & 0xFF) will be necessary for making dest[dPosStart].
                     // All other situations are impossible here:
                     // 3) cntFinish > 0: it was processed above in "if (cntFinish > 0)..." branch;
                     // 4) cntStart == 0, cntFinish == 0 and cnt == 0, i.e. count == 0: it's impossible
@@ -257,17 +287,17 @@ public class PackedBitArraysPer8 {
                 for (; dPos > dPosMin; ) { // cnt times
                     --sPos;
                     --dPos;
-                    dest[dPos] = (byte) ((sPrev << sPosRem8) | ((sPrev = src[sPos]) >>> sPosRem));
+                    dest[dPos] = (byte) ((sPrev << sPosRem8) | ((sPrev = (src[sPos] & 0xFF)) >>> sPosRem));
                 }
                 if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
                     int v;
                     if (sPosRemStart + cntStart <= 8) { // cntStart bits are in a single src element
                         if (shift > 0)
-                            v = src[sPosStart] << shift;
+                            v = (src[sPosStart] & 0xFF) << shift;
                         else
-                            v = src[sPosStart] >>> -shift;
+                            v = (src[sPosStart] & 0xFF) >>> -shift;
                     } else {
-                        v = (src[sPosStart] >>> -shift) | (src[sPosStart + 1] << (8 + shift));
+                        v = ((src[sPosStart] & 0xFF) >>> -shift) | ((src[sPosStart + 1] & 0xFF) << (8 + shift));
                     }
                     synchronized (dest) {
                         dest[dPosStart] = (byte) ((v & maskStart) | (dest[dPosStart] & ~maskStart));
@@ -279,7 +309,7 @@ public class PackedBitArraysPer8 {
             if (sPosRem == dPosRem) {
                 if (cntStart > 0) {
                     synchronized (dest) {
-                        dest[dPos] = (byte) ((src[sPos] & maskStart) | (dest[dPos] & ~maskStart));
+                        dest[dPos] = (byte) (((src[sPos] & 0xFF) & maskStart) | (dest[dPos] & ~maskStart));
                     }
                     count -= cntStart;
                     dPos++;
@@ -293,7 +323,7 @@ public class PackedBitArraysPer8 {
                 if (cntFinish > 0) {
                     int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
                     synchronized (dest) {
-                        dest[dPos] = (byte) ((src[sPos] & maskFinish) | (dest[dPos] & ~maskFinish));
+                        dest[dPos] = (byte) (((src[sPos] & 0xFF) & maskFinish) | (dest[dPos] & ~maskFinish));
                     }
                 }
             } else {
@@ -303,12 +333,12 @@ public class PackedBitArraysPer8 {
                     int v;
                     if (sPosRem + cntStart <= 8) { // cntStart bits are in a single src element
                         if (shift > 0)
-                            v = (sNext = src[sPos]) << shift;
+                            v = (sNext = (src[sPos] & 0xFF)) << shift;
                         else
-                            v = (sNext = src[sPos]) >>> -shift;
+                            v = (sNext = (src[sPos] & 0xFF)) >>> -shift;
                         sPosRem += cntStart;
                     } else {
-                        v = (src[sPos] >>> -shift) | ((sNext = src[sPos + 1]) << (8 + shift));
+                        v = ((src[sPos] & 0xFF) >>> -shift) | ((sNext = (src[sPos + 1] & 0xFF)) << (8 + shift));
                         sPos++;
                         sPosRem = (sPosRem + cntStart) & 7;
                     }
@@ -323,15 +353,15 @@ public class PackedBitArraysPer8 {
                     dPos++;
                 } else {
                     if (count == 0) {
-                        return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
+                        return; // necessary check to avoid IndexOutOfBoundException while accessing (src[sPos] & 0xFF)
                     }
-                    sNext = src[sPos];
+                    sNext = (src[sPos] & 0xFF);
                 }
-                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
+                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
                 final int sPosRem8 = 8 - sPosRem;
                 for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; ) {
                     sPos++;
-                    dest[dPos] = (byte) ((sNext >>> sPosRem) | ((sNext = src[sPos]) << sPosRem8));
+                    dest[dPos] = (byte) ((sNext >>> sPosRem) | ((sNext = (src[sPos] & 0xFF)) << sPosRem8));
                     dPos++;
                 }
                 int cntFinish = (int) (count & 7);
@@ -341,7 +371,7 @@ public class PackedBitArraysPer8 {
                     if (sPosRem + cntFinish <= 8) { // cntFinish bits are in a single src element
                         v = sNext >>> sPosRem;
                     } else {
-                        v = (sNext >>> sPosRem) | (src[sPos + 1] << sPosRem8);
+                        v = (sNext >>> sPosRem) | ((src[sPos + 1] & 0xFF) << sPosRem8);
                     }
                     synchronized (dest) {
                         dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
@@ -384,14 +414,14 @@ public class PackedBitArraysPer8 {
         for (int k = (int) (destPos >>> 3), kMax = k + cnt; k < kMax; k++) {
             dest[k] = (byte) ((src[srcPos] ? 1 : 0)
 //[[Repeat() \([^\)]*\) ==> (src[srcPos + $INDEX(start=2)] ? 1 << $INDEX(start=2) : 0) ,, ...(6)]]
-                | (src[srcPos + 1] ? 1 << 1 : 0)
+                    | (src[srcPos + 1] ? 1 << 1 : 0)
 //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-                | (src[srcPos + 2] ? 1 << 2 : 0)
-                | (src[srcPos + 3] ? 1 << 3 : 0)
-                | (src[srcPos + 4] ? 1 << 4 : 0)
-                | (src[srcPos + 5] ? 1 << 5 : 0)
-                | (src[srcPos + 6] ? 1 << 6 : 0)
-                | (src[srcPos + 7] ? 1 << 7 : 0)
+                    | (src[srcPos + 2] ? 1 << 2 : 0)
+                    | (src[srcPos + 3] ? 1 << 3 : 0)
+                    | (src[srcPos + 4] ? 1 << 4 : 0)
+                    | (src[srcPos + 5] ? 1 << 5 : 0)
+                    | (src[srcPos + 6] ? 1 << 6 : 0)
+                    | (src[srcPos + 7] ? 1 << 7 : 0)
 //[[Repeat.AutoGeneratedEnd]]
             );
             srcPos += 8;
@@ -465,7 +495,7 @@ public class PackedBitArraysPer8 {
      * @param destPos position of the first written bit in the destination array.
      * @param count   the number of bits to be filled (must be &gt;=0).
      * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     public static void fillBits(byte[] dest, long destPos, long count, boolean value) {
@@ -509,8 +539,8 @@ public class PackedBitArraysPer8 {
      * @param src       the source packed bit array.
      * @param fromIndex the initial checked bit index in <tt>array</tt>, inclusive.
      * @param toIndex   the end checked bit index in <tt>array</tt>, exclusive.
-     * @return          the number of high bits (1) in the given fragment of the given packed bit array.
-     * @throws NullPointerException if the <tt>src</tt> argument is <tt>null</tt>.
+     * @return the number of high bits (1) in the given fragment of the given packed bit array.
+     * @throws NullPointerException      if the <tt>src</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
      *                                   if <tt>toIndex</tt> is greater than <tt>src.length*8</tt>,
      *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>
@@ -552,4 +582,48 @@ public class PackedBitArraysPer8 {
         return result;
     }
 
+    /**
+     * Equivalent to <tt>{@link #reverseBitOrder(byte[], int, int)
+     * reverseBitOrder}(bytes, 0, bytes.length)</tt>.
+     *
+     * @param bytes array to be processed.
+     * @throws NullPointerException if <tt>bytes</tt> is <tt>null</tt>.
+     */
+    public static void reverseBitOrder(byte[] bytes) {
+        Objects.requireNonNull(bytes, "Null bytes");
+        reverseBitOrder(bytes, 0, bytes.length);
+    }
+
+    /**
+     * Inverts bits order in all bytes in the specified array.
+     * <p>Equivalent to the following loop:</p>
+     * <pre>
+     *     for (int i = 0; i < count; i++) {
+     *         bytes[pos + i] = (byte) (Integer.reverse(bytes[pos + i] & 0xFF) >>> 24);
+     * </pre>
+     *
+     * <p>This method can be useful if you have an array of bits, packed into bytes in reverse order:
+     * (b>>7)&amp;1,
+     * (b>>6)&amp;1,
+     * (b>>5)&amp;1,
+     * (b>>4)&amp;1,
+     * (b>>3)&amp;1,
+     * (b>>2)&amp;1,
+     * (b>>1)&amp;1,
+     * b&amp;1
+     * (highest bits first). You should reverse the bit order in such an array
+     * before using other methods of this class.</p>
+     *
+     * @param bytes array to be processed.
+     * @throws NullPointerException      if <tt>bytes</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws IndexOutOfBoundsException if processing would cause access of data outside the array.
+     */
+    public static void reverseBitOrder(byte[] bytes, int pos, int count) {
+        Objects.requireNonNull(bytes, "Null bytes");
+        JArrays.rangeCheck(bytes.length, pos, count);
+        for (int i = pos, toIndex = pos + count; i < toIndex; i++) {
+            bytes[i] = REVERSE[bytes[i] & 0xFF];
+        }
+    }
 }
