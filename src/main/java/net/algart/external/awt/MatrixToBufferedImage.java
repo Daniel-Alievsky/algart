@@ -596,8 +596,10 @@ public abstract class MatrixToBufferedImage {
         @Override
         public String toString() {
             return "MonochromeToIndexed ("
-                    + "baseColor0=(" + JArrays.toString(baseColor0, Locale.US, "0x%X", ",", 100)
-                    + "(, baseColor255=(" + JArrays.toString(baseColor255, Locale.US, "0x%X", ",", 100)
+                    + "baseColor0=(" + JArrays.toString(
+                            baseColor0, Locale.US, "0x%X", ",", 100)
+                    + "(, baseColor255=(" + JArrays.toString(
+                            baseColor255, Locale.US, "0x%X", ",", 100)
                     + "))";
         }
 
