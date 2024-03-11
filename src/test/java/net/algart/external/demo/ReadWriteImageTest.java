@@ -49,8 +49,8 @@ public class ReadWriteImageTest {
 
         for (int test = 1; test <= 10; test++) {
             System.out.printf("%nTest #%d%n", test);
-            var toMatrix = new BufferedImageToMatrix.ToInterleavedBGR();
-            var toBufferedImage = new MatrixToBufferedImage.InterleavedBGRToInterleaved();
+            var toMatrix = new BufferedImageToMatrix.ToInterleavedRGB();
+            var toBufferedImage = new MatrixToBufferedImage.InterleavedRGBToInterleaved();
             toMatrix.setEnableAlpha(true);
             toBufferedImage.setAlwaysAddAlpha(false);
 
@@ -66,12 +66,14 @@ public class ReadWriteImageTest {
             long t5 = System.nanoTime();
             final BufferedImage bufferedImage = toBufferedImage.toBufferedImage(matrix1);
             long t6 = System.nanoTime();
+            MatrixIO.writeBufferedImage(targetFile2, bufferedImage);
             if (!matrix1.equals(matrix2)) {
                 System.out.println("Different behaviour of BufferedImageToMatrix while using Graphics2D!");
                 System.out.println("    " + matrix1);
                 System.out.println("    " + matrix2);
+                MatrixIO.writeBufferedImage(Paths.get(targetFile2 + ".alt.png"),
+                        toBufferedImage.toBufferedImage(matrix2));
             }
-            MatrixIO.writeBufferedImage(targetFile2, bufferedImage);
 
             System.out.printf("readImage: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t2 - t1) * 1e-9));
