@@ -106,6 +106,14 @@ class DirectDataStorages {
     static class DirectBitStorage extends DirectStorage implements DataBitStorage {
         private LongBuffer lb;
 
+        DirectBitStorage() {
+        }
+
+        DirectBitStorage(ByteBuffer byteBuffer) {
+            bb = byteBuffer;
+            lb = byteBuffer.asLongBuffer();
+        }
+
         DataStorage newCompatibleEmptyStorage(boolean unresizable) {
             return new DirectBitStorage();
         }

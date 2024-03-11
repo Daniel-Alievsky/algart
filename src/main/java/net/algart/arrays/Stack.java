@@ -70,7 +70,7 @@ public interface Stack {
      *
      * @return the number of elements in this stack.
      */
-    public long length();
+    long length();
 
     /**
      * Removes the element at the top of this stack and returns it,
@@ -98,7 +98,7 @@ public interface Stack {
      * @return the element at the top of this stack (it is removed from the stack by this method).
      * @throws java.util.EmptyStackException if this stack is empty.
      */
-    public Object popElement();
+    Object popElement();
 
     /**
      * Appends <tt>value</tt> element to the top of this stack.
@@ -129,5 +129,5 @@ public interface Stack {
      *                                   an instance of the class of stack elements.
      * @throws TooLargeArrayException if the resulting stack length is too large for this type of stacks.
      */
-    public void pushElement(Object value);
+    void pushElement(Object value);
 }

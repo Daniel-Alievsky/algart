@@ -28,6 +28,7 @@ import net.algart.arrays.BufferArraysImpl.*;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Objects;
 
 /**
  * <p>The memory model, based on <tt>ByteBuffer</tt> and other buffers from
@@ -178,8 +179,7 @@ public class BufferMemoryModel extends AbstractMemoryModel {
     }
 
     public boolean isElementTypeSupported(Class<?> elementType) {
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
+        Objects.requireNonNull(elementType, "Null elementType argument");
         return elementType.isPrimitive();
     }
 
@@ -203,8 +203,7 @@ public class BufferMemoryModel extends AbstractMemoryModel {
      * @throws NullPointerException if <tt>elementType</tt> is <tt>null</tt>.
      */
     public long maxSupportedLength(Class<?> elementType) {
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
+        Objects.requireNonNull(elementType, "Null elementType argument");
         if (elementType == boolean.class)
             return ((long)Integer.MAX_VALUE - 7) << 3;
         //[[Repeat() char         ==> byte,,short,,int,,long,,float,,double;;
@@ -313,10 +312,10 @@ public class BufferMemoryModel extends AbstractMemoryModel {
      * @throws IllegalArgumentException if <tt>bufferArray</tt> is not created by the buffer memory model.
      */
     public static ByteBuffer getByteBuffer(Array bufferArray) {
-        if (bufferArray == null)
-            throw new NullPointerException("Null bufferArray argument");
-        if (!(isBufferArray(bufferArray)))
+        Objects.requireNonNull(bufferArray, "Null bufferArray argument");
+        if (!(isBufferArray(bufferArray))) {
             throw new IllegalArgumentException("The passed argument is not a buffer array");
+        }
         ByteBuffer bb = ((DirectDataStorages.DirectStorage)((AbstractBufferArray)bufferArray).storage).bb;
         ByteOrder o = bb.order();
         return bufferArray.isImmutable() ? bb.asReadOnlyBuffer().order(o) : bb.duplicate().order(o);
@@ -333,10 +332,10 @@ public class BufferMemoryModel extends AbstractMemoryModel {
      * @throws IllegalArgumentException if <tt>bufferArray</tt> is not created by the buffer memory model.
      */
     public static long getBufferOffset(Array bufferArray) {
-        if (bufferArray == null)
-            throw new NullPointerException("Null bufferArray argument");
-        if (!(isBufferArray(bufferArray)))
+        Objects.requireNonNull(bufferArray, "Null bufferArray argument");
+        if (!(isBufferArray(bufferArray))) {
             throw new IllegalArgumentException("The passed argument is not a buffer array");
+        }
         return ((AbstractBufferArray)bufferArray).offset;
     }
 
@@ -364,12 +363,11 @@ public class BufferMemoryModel extends AbstractMemoryModel {
      * @throws IllegalArgumentException if <tt>elementType</tt> is <tt>boolean.class</tt> or non-primitive type.
      */
     public static UpdatableArray asUpdatableArray(ByteBuffer byteBuffer, Class<?> elementType) {
-        if (byteBuffer == null)
-            throw new NullPointerException("Null byteBuffer argument");
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
-        if (elementType == boolean.class)
+        Objects.requireNonNull(byteBuffer, "Null byteBuffer argument");
+        Objects.requireNonNull(elementType, "Null elementType argument");
+        if (elementType == boolean.class) {
             throw new IllegalArgumentException("asUpdatableArray cannot be called for boolean.class");
+        }
         ByteBuffer bb = byteBuffer.duplicate();
         bb.order(byteBuffer.order());
         bb.rewind(); // necessary for correct creation of non-byte buffers via asXxxBuffer
@@ -429,6 +427,26 @@ public class BufferMemoryModel extends AbstractMemoryModel {
             throw new IllegalArgumentException(
                 "Only non-boolean primitive element types are allowed in BufferMemoryModel (passed type: "
                     + elementType + ")");
+    }
+
+    public static UpdatableBitArray asUpdatableBitArray(ByteBuffer byteBuffer, long length) {
+        Objects.requireNonNull(byteBuffer, "Null byteBuffer");
+        if (length < 0) {
+            throw new IllegalArgumentException("Negative length");
+        }
+        final long packedLength = PackedBitArrays.packedLength(length);
+        ByteBuffer bb = byteBuffer.duplicate();
+        bb.order(byteBuffer.order());
+        bb.rewind(); // necessary for correct creation of non-byte buffers via asXxxBuffer
+        if (packedLength > bb.limit() >>> 3) {
+            throw new IllegalArgumentException("Too short byteBuffer long[" + byteBuffer.limit() +
+                    "]: it must contain at least " + packedLength + " long elements to store " + length + " bits");
+        }
+        DataStorage storage = new DirectDataStorages.DirectBitStorage(bb);
+        UpdatableBufferBitArray result = new UpdatableBufferBitArray(
+                storage, length, length, 0L, false);
+        BufferArraysImpl.forgetOnDeallocation(result);
+        return result;
     }
 
     /*Repeat() char ==> byte,,short,,int,,long,,float,,double;;
