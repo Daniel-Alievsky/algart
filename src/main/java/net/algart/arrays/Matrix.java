@@ -1609,7 +1609,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                               <tt>subMatr(...)</tt> or equivalent call.
      * @see #isSubMatrix()
      */
-    Matrix<T> subMatrixParent();
+    Matrix<T> subMatrixParent() throws NotSubMatrixException;
 
     /**
      * If this matrix is a {@link #subMatrix(long[], long[]) submatrix} of some <tt>parent</tt> matrix,
@@ -1624,7 +1624,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                               <tt>subMatr(...)</tt> or equivalent call.
      * @see #isSubMatrix()
      */
-    long[] subMatrixFrom();
+    long[] subMatrixFrom() throws NotSubMatrixException;
 
     /**
      * If this matrix is a {@link #subMatrix(long[], long[]) submatrix} of some <tt>parent</tt> matrix,
@@ -1639,7 +1639,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                               <tt>subMatr(...)</tt> or equivalent call.
      * @see #isSubMatrix()
      */
-    long[] subMatrixTo();
+    long[] subMatrixTo() throws NotSubMatrixException;
 
     /**
      * If this matrix is a {@link #subMatrix(long[], long[], Matrix.ContinuationMode) submatrix}
@@ -1660,7 +1660,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                               <tt>subMatr(...)</tt> or equivalent call.
      * @see #isSubMatrix()
      */
-    ContinuationMode subMatrixContinuationMode();
+    ContinuationMode subMatrixContinuationMode() throws NotSubMatrixException;
 
     /**
      * Returns a view ot this matrix, where the elements are reordered in some order "like"
@@ -1874,9 +1874,9 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws NotTiledMatrixException if this object is not created by <tt>tile(...)</tt> or equivalent call.
      * @see #isTiled()
      */
-    Matrix<T> tileParent();
+    Matrix<T> tileParent() throws NotTiledMatrixException;
 
-    long[] tileDimensions();
+    long[] tileDimensions() throws NotTiledMatrixException;
 
     boolean isTiled();
 
