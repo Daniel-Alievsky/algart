@@ -391,7 +391,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * @param fIm     the imaginary parts of the elements of the resulting matrix (Fourier spectrum).
      * @param h       the source real matrix (separable Hartley spectrum).
      * @throws NullPointerException  if one of <tt>fRe</tt>, <tt>fIm</tt>, <tt>h</tt> arguments is <tt>null</tt>.
-     * @throws SizeMismatchException if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #separableHartleyToFourier(ArrayContext, Matrix, Matrix, Matrix, Matrix)
      */
     public void separableHartleyToFourier(ArrayContext context,
@@ -447,7 +447,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * @param hIm     the imaginary parts of the elements of the source matrix (separable Hartley spectrum).
      * @throws NullPointerException  if one of <tt>fRe</tt>, <tt>fIm</tt>, <tt>hRe</tt>, <tt>hIm</tt>
      *                               arguments is <tt>null</tt>.
-     * @throws SizeMismatchException if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #separableHartleyToFourier(ArrayContext, Matrix, Matrix, Matrix)
      */
     public void separableHartleyToFourier(ArrayContext context,
@@ -508,7 +508,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * @param fRe     the real parts of the elements of the source matrix (Fourier spectrum).
      * @param fIm     the imaginary parts of the elements of the source matrix (Fourier spectrum).
      * @throws NullPointerException  if one of <tt>h</tt>, <tt>fRe</tt>, <tt>fIm</tt> arguments is <tt>null</tt>.
-     * @throws SizeMismatchException if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #fourierToSeparableHartley(ArrayContext, Matrix, Matrix, Matrix, Matrix)
      */
     public void fourierToSeparableHartley(ArrayContext context,
@@ -564,7 +564,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * @param fIm     the imaginary parts of the elements of the source matrix (Fourier spectrum).
      * @throws NullPointerException  if one of <tt>hRe</tt>, <tt>hIm</tt>, <tt>fRe</tt>, <tt>fIm</tt>
      *                               arguments is <tt>null</tt>.
-     * @throws SizeMismatchException if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #fourierToSeparableHartley(ArrayContext, Matrix, Matrix, Matrix)
      */
     public void fourierToSeparableHartley(ArrayContext context,
@@ -619,7 +619,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * @param p       the spectrum of the 1st matrix.
      * @param q       the spectrum of the 2nd matrix.
      * @throws NullPointerException  if one of <tt>c</tt>, <tt>p</tt>, <tt>q</tt> arguments is <tt>null</tt>.
-     * @throws SizeMismatchException if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix, Matrix, Matrix, Matrix)
      */
     public void spectrumOfConvolution(ArrayContext context,
@@ -678,7 +678,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * @param qIm     the imaginary parts of the elements of the spectrum of the 2nd matrix.
      * @throws NullPointerException  if one of <tt>cRe</tt>, <tt>cIm</tt>, <tt>pRe</tt>, <tt>pIm</tt>,
      *                               <tt>qRe</tt>, <tt>qIm</tt> arguments is <tt>null</tt>.
-     * @throws SizeMismatchException if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix)
      */
     public void spectrumOfConvolution(ArrayContext context,

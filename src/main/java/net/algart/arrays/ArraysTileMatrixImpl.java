@@ -37,11 +37,11 @@ class ArraysTileMatrixImpl {
     }
 
     interface TileMatrixArray {
-        public Matrix<? extends Array> baseMatrix();
+        Matrix<? extends Array> baseMatrix();
 
-        public long[] tileDimensions();
+        long[] tileDimensions();
 
-        public Indexer indexer();
+        Indexer indexer();
     }
 
     //[[Repeat() boolean(?!\s+isLazy) ==> char,,byte,,short,,int,,long,,float,,double,,E;;

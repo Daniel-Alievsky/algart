@@ -267,7 +267,7 @@ public class FastFourierTransform extends AbstractSpectralTransform implements S
      * @param qIm     the imaginary parts of the elements of the 2nd source matrix.
      * @throws NullPointerException  if one of <tt>cRe</tt>, <tt>cIm</tt>, <tt>pRe</tt>, <tt>pIm</tt>,
      *                               <tt>qRe</tt>, <tt>qIm</tt> arguments is <tt>null</tt>.
-     * @throws SizeMismatchException if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      */
     public void spectrumOfConvolution(ArrayContext context,
         Matrix<? extends UpdatablePNumberArray> cRe, Matrix<? extends UpdatablePNumberArray> cIm,

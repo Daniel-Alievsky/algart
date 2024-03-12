@@ -1062,8 +1062,8 @@ public interface Array {
      * or <tt>Optional.empty()</tt> in other case.
      * Equivalent to
      * <pre>
-     *     thisArray instanceof {@link DirectAccessible DirectAccessible} da &&
-     *              da.hasJavaArray() && da.javaArrayOffset() == 0 ?
+     *     thisArray instanceof {@link DirectAccessible DirectAccessible} da &amp;&amp;
+     *              da.hasJavaArray() &amp;&amp; da.javaArrayOffset() == 0 ?
      *          Optional.of(da.javaArray()) :
      *          Optional.empty();
      * </pre>

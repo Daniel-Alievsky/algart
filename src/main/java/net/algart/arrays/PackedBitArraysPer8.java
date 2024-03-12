@@ -30,7 +30,7 @@ import java.util.Objects;
  * <p>Operations with bit arrays packed into <tt>byte[]</tt> Java arrays.</p>
  *
  * <p>This is a reduced analog of {@link PackedBitArrays} class, using <tt>byte</tt> values
- * for packing bits instead of <tt>long</tt> values< AlgART bit arrays do not use this class,
+ * for packing bits instead of <tt>long</tt> values AlgART bit arrays do not use this class,
  * but it can be useful in external modules, where bits are packed into bytes.
  *
  * <p>The maximal length of bit arrays supported by this class is <tt>2<sup>34</sup>-8</tt>.
@@ -598,8 +598,8 @@ public class PackedBitArraysPer8 {
      * Inverts bits order in all bytes in the specified array.
      * <p>Equivalent to the following loop:</p>
      * <pre>
-     *     for (int i = 0; i < count; i++) {
-     *         bytes[pos + i] = (byte) (Integer.reverse(bytes[pos + i] & 0xFF) >>> 24);
+     *     for (int i = 0; i &lt; count; i++) {
+     *         bytes[pos + i] = (byte) (Integer.reverse(bytes[pos + i] &amp; 0xFF) >>> 24);
      * </pre>
      *
      * <p>This method can be useful if you have an array of bits, packed into bytes in reverse order:

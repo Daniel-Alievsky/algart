@@ -1722,7 +1722,7 @@ public class Matrices {
      * @return array of {@link Matrix#array() built-in AlgART arrays} of all passed matrices.
      * @throws NullPointerException  if <tt>arrayClass</tt> argument, the <tt>matrices</tt> list
      *                               or one of its elements is <tt>null</tt>.
-     * @throws SizeMismatchException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     * @throws SizeMismatchException if <tt>matrices.size()&gt;1</tt> and some of the passed matrices have
      *                               different dimensions.
      * @throws ClassCastException    if one of matrices contains built-in AlgART array that is not an instance
      *                               of the type <tt>arrayClass</tt>
@@ -1745,9 +1745,9 @@ public class Matrices {
      * @return array of {@link Matrix#array() built-in AlgART arrays} of all passed matrices.
      * @throws NullPointerException     if <tt>arrayClass</tt> argument, the <tt>matrices</tt> list
      *                                  or one of its elements is <tt>null</tt>.
-     * @throws SizeMismatchException    if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     * @throws SizeMismatchException    if <tt>matrices.size()&gt;1</tt> and some of the passed matrices have
      *                                  different dimensions.
-     * @throws IllegalArgumentException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     * @throws IllegalArgumentException if <tt>matrices.size()&gt;1</tt> and some of the passed matrices have
      *                                  different element type.
      * @throws ClassCastException       if one of matrices contains built-in AlgART array that is not an instance
      *                                  of the type <tt>arrayClass</tt>
@@ -1791,6 +1791,30 @@ public class Matrices {
         return result;
     }
 
+    /**
+     * Analog of <tt>{@link #separate(ArrayContext, Matrix)}</tt> method, that does not allocate memory,
+     * but stores the results into previously created list of matrices.
+     *
+     * <p>Note: if the source <tt>interleaved</tt> matrix has (<i>n</i>+1)-dimensions
+     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>,
+     * then the <tt>result</tt> list must contain <i>M</i><sub>0</sub> elements, and each of them must be
+     * <i>n</i>-dimensional matrix <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>.
+     *
+     * @param context     the context.
+     * @param result      the list of the result matrices.
+     * @param interleaved the source interleaved matrix.
+     * @throws NullPointerException     if <tt>interleaved</tt> argument, the <tt>results</tt> list or
+     *                                  one of its elements is <tt>null</tt>.
+     * @throws SizeMismatchException    if some of the result matrices have dimensions, that do not match the last
+     *                                  <i>n</i> dimensions
+     *                                  <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
+     *                                  of (<i>n</i>+1)-dimensional source <tt>interleaved</tt> matrix.
+     * @throws IllegalArgumentException if number of elements in the <tt>result</tt> list is not equal to
+     *                                  the first <tt>interleaved</tt> dimension <i>M</i><sub>0</sub>,
+     *                                  or if some of the result matrices have element type that is different from
+     *                                  the element type of the source <tt>interleaved</tt> matrix.
+     * @throws IllegalStateException    if <tt>interleaved</tt> matrix is 1-dimensional.
+     */
     public static void separate(
             ArrayContext context,
             List<? extends Matrix<? extends UpdatablePArray>> result,
@@ -1810,24 +1834,36 @@ public class Matrices {
         }
     }
 
+    /**
+     * Equivalent to <tt>{@link #separate(ArrayContext, Matrix, int)
+     * asLayers}(context, interleaved, Integer.MAX_VALUE)</tt> (no limitations).
+     *
+     * @param context     the context.
+     * @param interleaved the source interleaved matrix.
+     * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension.
+     * @throws NullPointerException  if <tt>interleaved</tt> argument is <tt>null</tt>.
+     * @throws IllegalStateException if <tt>interleaved</tt> matrix is 1-dimensional.
+     */
     public static <T extends PArray> List<Matrix<T>> separate(ArrayContext context, Matrix<? extends T> interleaved) {
         return separate(context, interleaved, Integer.MAX_VALUE);
     }
 
     /**
-     * Splits a single (<i>n</i>+1)-dimensional matrix
-     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>x<i>M</i><sub><i>n</i></sub>
+     * Splits a single (<i>n</i>+1)-dimensional <tt>interleaved</tt> matrix
+     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
      * along dimension #0
-     * to <i>M</i><sub><i>n</i></sub> separate <i>n</i>-dimensional matrices
-     * <i>M</i><sub>1</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
+     * to <i>M</i><sub>0</sub> separate <i>n</i>-dimensional matrices
+     * <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
      * and returns them as a list.
-     * The element with index (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n</sub></i>)
+     * The element with index (<i>i</i><sub>0</sub>,<i>i</i><sub>1</sub>,...,<i>i<sub>n</sub></i>)
      * of the source matrix will be equal to the element with index
-     * (<i>i<sub>1</sub></i>,...,<i>i<sub>n</sub></i>)
-     * of the matrix <tt>list.get(<i>i<sub>0</sub></i>)</tt> in the returned list.
+     * (<i>i</i><sub>1</sub>,...,<i>i<sub>n</sub></i>)
+     * of the matrix <tt>list.get(<i>i</i><sub>0</sub>)</tt> in the returned list.
+     *
+     * <p>In particular, if the first dimension <i>M</i><sub>0</sub>=0, the returned list will be empty.</p>
      *
      * <p>This method also checks, that the first dimension
-     * <i>M</i><sub>0</sub>=<tt>interleaved.dim(<i>0</i>)</tt> (that will be
+     * <i>M</i><sub>0</sub>=<tt>interleaved.dim(0)</tt> (that will be
      * equal to the size of the returned list) is not greater than the passed limit
      * and throws an exception if this limit is exceeded. Typically, this method is used for unpacking
      * matrices where the first dimension cannot be too large &mdash; for example the number
@@ -1836,15 +1872,18 @@ public class Matrices {
      * In any case, the number of returned matrices, greater than {@code Integer.MAX_VALUE}, usually leads to
      * <tt>OutOfMemoryError</tt>.
      *
-     * @param context     the context; allows to specify (in particular) the memory model for creating returned matrices;
+     * @param context     the context; allows to specify (in particular)
+     *                    the memory model for creating returned matrices;
      *                    may be <tt>null</tt>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param interleaved the source interleaved matrix.
      * @param limit       maximal allowed number of returned matrices (the first dimension of the source matrix).
-     * @return a list of matrices: "channels" of the source one along the first dimension
+     * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension
      * (if we suppose that the source matrix contains interleaved channels, like RGBRGB... for 3-channel RGB image).
      * @throws NullPointerException     if <tt>interleaved</tt> argument is <tt>null</tt>.
      * @throws IllegalStateException    if <tt>interleaved</tt> matrix is 1-dimensional.
      * @throws IllegalArgumentException if <tt>limit &le; 0</tt> or if the number of returned matrices {@code >limit}.
+     * @see #interleave(ArrayContext, List)
+     * @see #asLayers(Matrix, int)
      */
     public static <T extends PArray> List<Matrix<T>> separate(
             ArrayContext context,
@@ -1874,6 +1913,34 @@ public class Matrices {
         return result;
     }
 
+
+    /**
+     * Analog of <tt>{@link #interleave(ArrayContext, List)}</tt> method, that does not allocate memory,
+     * but stores the results into previously created <tt>result</tt> matrix.
+     *
+     * <p>Note: if the source <tt>separated</tt> matrices have <i>n</i>-dimensions
+     * <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
+     * (remember that they must have identical element types and dimensions),
+     * then the <tt>result</tt> list must be
+     * (<i>n</i>+1)-dimensional matrix <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>,
+     * where <i>M</i><sub>0</sub>=<tt>separated.size()</tt>.
+     *
+     * @param context   the context.
+     * @param result    the result matrix.
+     * @param separated list of the source matrices; must be non-empty.
+     * @throws NullPointerException     if <tt>result</tt> argument, the <tt>separated</tt> list or
+     *                                  one of its elements is <tt>null</tt>.
+     * @throws SizeMismatchException    if some of the source matrices have dimensions, that do not match the last
+     *                                  <i>n</i> dimensions
+     *                                  <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
+     *                                  of (<i>n</i>+1)-dimensional <tt>result</tt> matrix.
+     * @throws IllegalArgumentException if <tt>separated</tt> list is empty, or
+     *                                  if number of elements in the <tt>separated</tt> list is not equal to
+     *                                  the first <tt>result</tt> dimension <i>M</i><sub>0</sub>,
+     *                                  or if some of the source matrices have element type that is different from
+     *                                  the element type of the <tt>result</tt> matrix.
+     * @throws IllegalStateException    if <tt>result</tt> matrix is 1-dimensional.
+     */
     public static void interleave(
             ArrayContext context,
             Matrix<? extends UpdatablePArray> result,
@@ -1895,6 +1962,38 @@ public class Matrices {
         }
     }
 
+    /**
+     * Merges (interleaves) <i>K</i> <i>n</i>-dimensional matrices with identical element types and dimensions
+     * <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub> into
+     * a single (<i>n</i>+1)-dimensional matrix
+     * <i>K</i>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
+     * along the first dimension.
+     * The element with index (<i>i</i><sub>0</sub>,<i>i</i><sub>1</sub>,...,<i>i<sub>n</sub></i>)
+     * of the returned matrix will be equal to the element with index
+     * (<i>i</i><sub>1</sub>,...,<i>i<sub>n</sub></i>)
+     * of the matrix <tt>matrices.get(<i>i</i><sub>0</sub>)</tt>.
+     *
+     * <p>The <tt>separated</tt> list must not be empty.</p>
+     *
+     * <p>For example, if the source list contains 3 2-dimensional matrices, describing red, green and blue channels
+     * of RGB color image, then the result will be 3-dimensional matrix, where the lowest (first) dimension is 3
+     * (for 3 channels) and the pixels are packed into {@link Matrix#array() underlying array} into the sequence
+     * RGBRGB...</p>
+     *
+     * @param context   the context; allows to specify (in particular)
+     *                  the memory model for creating returned matrix;
+     *                  may be <tt>null</tt>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
+     * @param separated list of the source matrices; must be non-empty.
+     * @return result interleaved matrix.
+     * @throws NullPointerException     if <tt>separated</tt> list or one of its elements is <tt>null</tt>.
+     * @throws SizeMismatchException    if <tt>separated.size()&gt;1</tt> and some of the passed matrices have
+     *                                  different dimensions.
+     * @throws IllegalArgumentException if <tt>separated</tt> list is empty, or if
+     *                                  <tt>separated.size()&gt;1</tt> and some of the passed matrices have
+     *                                  different element type.
+     * @see #separate(ArrayContext, Matrix, int)
+     * @see #mergeLayers(MemoryModel, List)
+     */
     public static <T extends PArray> Matrix<T> interleave(
             ArrayContext context,
             List<? extends Matrix<? extends T>> separated) {
@@ -1934,14 +2033,16 @@ public class Matrices {
 
     /**
      * Splits a single (<i>n</i>+1)-dimensional matrix
-     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>x<i>M</i><sub><i>n</i></sub>
+     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
      * to <i>M</i><sub><i>n</i></sub> separate <i>n</i>-dimensional matrices
      * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i>&minus;1</sub>
      * and returns them as a list.
-     * The element with index (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n</sub></i>)
+     * The element with index (<i>i</i><sub>0</sub>,<i>i</i><sub>1</sub>,...,<i>i<sub>n</sub></i>)
      * of the source matrix will be equal to the element with index
-     * (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>)
+     * (<i>i</i><sub>0</sub>,<i>i</i><sub>1</sub>,...,<i>i</i><sub><i>n</i>&minus;1</sub>)
      * of the matrix <tt>list.get(<i>i<sub>n</sub></i>)</tt> in the returned list.
+     *
+     * <p>In particular, if the last dimension <i>M</i><sub><i>n</i></sub>=0, the returned list will be empty.</p>
      *
      * <p>This method also checks, that the last dimension
      * <i>M</i><sub><i>n</i></sub>=<tt>merged.dim(<i>n</i>)</tt> (that will be
@@ -1963,6 +2064,8 @@ public class Matrices {
      * @throws NullPointerException     if <tt>merged</tt> argument is <tt>null</tt>.
      * @throws IllegalStateException    if <tt>merged</tt> matrix is 1-dimensional.
      * @throws IllegalArgumentException if <tt>limit &le; 0</tt> or if the number of returned matrices {@code >limit}.
+     * @see #mergeLayers(MemoryModel, List)
+     * @see #separate(ArrayContext, Matrix, int)
      */
     public static <T extends Array> List<Matrix<T>> asLayers(Matrix<T> merged, int limit) {
         Objects.requireNonNull(merged, "Null merged matrix");
@@ -1981,28 +2084,35 @@ public class Matrices {
     }
 
     /**
-     * Merges <i>K</i> <i>n</i>-dimensional matrices with identical element types and dimensions
+     * Merges (concatenates) <i>K</i> <i>n</i>-dimensional matrices with identical element types and dimensions
      * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i>&minus;1</sub> into
      * a single (<i>n</i>+1)-dimensional matrix
      * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i>&minus;1</sub>x<i>K</i>
      * along the last dimension.
      * The element with index (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n</sub></i>)
      * of the returned matrix will be equal to the element with index
-     * (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>)
+     * (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i</i><sub><i>n</i>&minus;1</sub>)
      * of the matrix <tt>matrices.get(<i>i<sub>n</sub></i>)</tt>.
      *
+     * <p>The <tt>matrices</tt> list must not be empty.</p>
+     *
+     * <p>For example, if the source list contains 3 2-dimensional matrices, describing red, green and blue channels
+     * of RGB color image, then the result will be 3-dimensional matrix, where the highest (new) dimension is 3
+     * (for 3 channels) and the pixels are stored sequentially in "planes": RRR... (plane with z-index 0),
+     * then GGG... (plane with z-index 1), then BBB... (plane with z-index 2).</p>
+     *
      * @param memoryModel memory model for creating the result matrix.
-     * @param matrices    list of the source matrices.
+     * @param matrices    list of the source matrices; must be non-empty.
      * @return result merged matrix.
      * @throws NullPointerException     if <tt>arrayClass</tt> argument, the <tt>matrices</tt> list,
      *                                  one of its elements or memory model is <tt>null</tt>.
-     * @throws SizeMismatchException    if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     * @throws SizeMismatchException    if <tt>matrices.size()&gt;1</tt> and some of the passed matrices have
      *                                  different dimensions.
-     * @throws IllegalArgumentException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     * @throws IllegalArgumentException if <tt>matrices</tt> list is empty, or if
+     *                                  <tt>matrices.size()&gt;1</tt> and some of the passed matrices have
      *                                  different element type.
-     * @throws ClassCastException       if one of matrices contains built-in AlgART array that is not an instance
-     *                                  of the type <tt>arrayClass</tt>
-     *                                  (<tt>!arrayClass.isInstance(matrices[k].{@link Matrix#array() array()})</tt>).
+     * @see #asLayers(Matrix, int)
+     * @see #interleave(ArrayContext, List)
      */
     public static <T extends Array> Matrix<T> mergeLayers(
             MemoryModel memoryModel,
@@ -2036,9 +2146,9 @@ public class Matrices {
      *
      * @param matrices list of some matrices.
      * @throws NullPointerException     if the <tt>matrices</tt> list or one of its elements is <tt>null</tt>.
-     * @throws SizeMismatchException    if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     * @throws SizeMismatchException    if <tt>matrices.size()&gt;1</tt> and some of the passed matrices have
      *                                  different dimensions.
-     * @throws IllegalArgumentException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     * @throws IllegalArgumentException if <tt>matrices.size()&gt;1</tt> and some of the passed matrices have
      *                                  different element type.
      * @see #checkDimensionEquality(Matrix[])
      */
@@ -2079,7 +2189,7 @@ public class Matrices {
      *
      * @param matrices list of some matrices.
      * @throws NullPointerException  if the <tt>matrices</tt> list or one of its elements is <tt>null</tt>.
-     * @throws SizeMismatchException if <tt>matrices.size()&gt;1</tt> and some of passed matrices have
+     * @throws SizeMismatchException if <tt>matrices.size()&gt;1</tt> and some of the passed matrices have
      *                               different dimensions.
      * @see #checkDimensionEquality(Matrix[])
      */
@@ -2095,7 +2205,7 @@ public class Matrices {
      *
      * @param matrices list of some matrices.
      * @throws NullPointerException  if the <tt>matrices</tt> list or one of its elements is <tt>null</tt>.
-     * @throws SizeMismatchException if <tt>matrices.length&gt;1</tt> and some of passed matrices have
+     * @throws SizeMismatchException if <tt>matrices.length&gt;1</tt> and some of the passed matrices have
      *                               different dimensions.
      */
     public static void checkDimensionEquality(Matrix<?>... matrices) {
@@ -2709,7 +2819,7 @@ public class Matrices {
      *                                  one of passed matrices is <tt>null</tt>.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
             Func f, Class<? extends T> requiredType,
@@ -2734,7 +2844,7 @@ public class Matrices {
      *                                  one of passed matrices is <tt>null</tt>.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
             boolean truncateOverflows, Func f, Class<? extends T> requiredType,
@@ -2757,7 +2867,7 @@ public class Matrices {
      *                                  one of passed matrices is <tt>null</tt>.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
             Func f, Class<? extends T> requiredType,
@@ -2783,7 +2893,7 @@ public class Matrices {
      *                                  one of passed matrices is <tt>null</tt>.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
             boolean truncateOverflows, Func f, Class<? extends T> requiredType,
@@ -2807,7 +2917,7 @@ public class Matrices {
      *                                  one of passed matrices is <tt>null</tt>.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
             Func f, Class<? extends T> requiredType,
@@ -2835,7 +2945,7 @@ public class Matrices {
      *                                  one of passed matrices is <tt>null</tt>.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
             boolean truncateOverflows, Func f, Class<? extends T> requiredType,
@@ -2856,7 +2966,7 @@ public class Matrices {
      *                                  is <tt>null</tt> or if one of <tt>x</tt> elements is <tt>null</tt>.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)}.
-     * @throws SizeMismatchException    if <tt>x.size()&gt;1</tt> and some of passed matrices have
+     * @throws SizeMismatchException    if <tt>x.size()&gt;1</tt> and some of the passed matrices have
      *                                  different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
@@ -2891,7 +3001,7 @@ public class Matrices {
      *                                  and also in the same situations as
      *                                  {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      *                                  method.
-     * @throws SizeMismatchException    if <tt>x.size()&gt;1</tt> and some of passed matrices have
+     * @throws SizeMismatchException    if <tt>x.size()&gt;1</tt> and some of the passed matrices have
      *                                  different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
@@ -2963,7 +3073,7 @@ public class Matrices {
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
@@ -2989,7 +3099,7 @@ public class Matrices {
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
@@ -3013,7 +3123,7 @@ public class Matrices {
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
@@ -3040,7 +3150,7 @@ public class Matrices {
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
@@ -3065,7 +3175,7 @@ public class Matrices {
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
@@ -3094,7 +3204,7 @@ public class Matrices {
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
@@ -3121,7 +3231,7 @@ public class Matrices {
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
@@ -3152,7 +3262,7 @@ public class Matrices {
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
@@ -3177,7 +3287,7 @@ public class Matrices {
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
@@ -3209,7 +3319,7 @@ public class Matrices {
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
-     * @throws SizeMismatchException    if some of passed matrices have different dimensions.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
