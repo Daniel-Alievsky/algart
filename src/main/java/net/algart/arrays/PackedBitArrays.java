@@ -26,9 +26,9 @@ package net.algart.arrays;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.LongBuffer;
 import java.util.Objects;
-import java.util.zip.*;
+import java.util.zip.CRC32;
+import java.util.zip.Checksum;
 
 /**
  * <p>Operations with bit arrays packed into <tt>long[]</tt> Java arrays.</p>

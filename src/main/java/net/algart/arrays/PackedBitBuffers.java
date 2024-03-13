@@ -213,8 +213,8 @@ public class PackedBitBuffers {
         //  dest\[([^\]]+)\]\s*=\s*([^;]*) ==> dest.put($1, $2);;
         //  (src|dest)\[([^\]]+)\] ==> $1.get($2);;
         //  (synchronized\s*\()(\s*\w+\s*)\) ==> $1getLock($2));;
-        //  //Start_reverseOrder.*?//End_reverseOrder.*?(?:\r(?!\n)|\n|\r\n) ==>
-        //  if (reverseOrder);;
+        //  //Start_reverseOrder.*?//End_reverseOrder.*?(?:\r(?!\n)|\n|\r\n)\s+\{ ==>
+        //  if (reverseOrder) {;;
         //  //Start_nothingToDo.*?//End_nothingToDo.*?(\r(?!\n)|\n|\r\n) ==> $1;;
         //  //Start_sPrev.*?//End_sPrev.*?(\r(?!\n)|\n|\r\n) ==> sPrev = cnt == 0 ? 0 : src.get(sPos);
         // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
@@ -294,8 +294,8 @@ public class PackedBitBuffers {
                     }
                 } else {
                     sPrev = cnt == 0 ? 0 : src.get(sPos);
-                    // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
-                    // because the reverseOrder=true argument may be passed in this case
+        // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
+        // because the reverseOrder=true argument may be passed in this case
                 }
                 for (; dPos > dPosMin; ) { // cnt times
                     --sPos;
