@@ -90,7 +90,7 @@ public class CommonFinalizationTest {
             this.bb = bb;
         }
 
-        @SuppressWarnings("removal")
+        @SuppressWarnings({"removal", "deprecation"})
         protected void finalize() throws Throwable {
             long t = System.currentTimeMillis();
             while (System.currentTimeMillis() - t < 750) ; //emulation of long calculations
