@@ -169,6 +169,7 @@ public class PackedBitArraysPer8 {
         src(\[[^\]]+\]) ==> (src$1 & 0xFF) ;;
         dest(\[[^\]]+\])\s+=(\s+)([^;]+); ==> dest$1 =$2(byte) ($3);
        !! Auto-generated: NOT EDIT !! */
+
     /**
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.

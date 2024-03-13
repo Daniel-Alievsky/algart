@@ -24,6 +24,8 @@
 
 package net.algart.math.patterns;
 
+import java.util.Objects;
+
 /**
  * <p>A simple analog of <tt>net.algart.arrays.PackedBitArrays</tt> for internal use by this package.</p>
  *
@@ -92,6 +94,7 @@ class TinyBitArrays {
 
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/PackedBitArrays.java, copyBits)
        !! Auto-generated: NOT EDIT !! */
+
     /**
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
@@ -308,6 +311,7 @@ class TinyBitArrays {
 
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/PackedBitArrays.java, unpackBits)
        !! Auto-generated: NOT EDIT !! */
+
     /**
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> boolean array, starting from the element <tt>#destPos</tt>.
@@ -415,6 +419,7 @@ class TinyBitArrays {
 
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/PackedBitArrays.java, fillBits)
        !! Auto-generated: NOT EDIT !! */
+
     /**
      * Fills <tt>count</tt> bits in the packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
@@ -425,7 +430,7 @@ class TinyBitArrays {
      * @param destPos position of the first written bit in the destination array.
      * @param count   the number of bits to be filled (must be &gt;=0).
      * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     public static void fillBits(long[] dest, long destPos, long count, boolean value) {
@@ -466,6 +471,7 @@ class TinyBitArrays {
 
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/PackedBitArrays.java, andOrBits)
        !! Auto-generated: NOT EDIT !! */
+
     /**
      * Replaces <tt>count</tt> bits,
      * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
@@ -679,29 +685,32 @@ class TinyBitArrays {
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/PackedBitArrays.java, cardinality)
       \bbitCount\b ==> Long.bitCount
        !! Auto-generated: NOT EDIT !! */
+
     /**
      * Returns the number of high bits (1) in the given fragment of the given packed bit array.
      *
      * @param src       the source packed bit array.
      * @param fromIndex the initial checked bit index in <tt>array</tt>, inclusive.
      * @param toIndex   the end checked bit index in <tt>array</tt>, exclusive.
-     * @return          the number of high bits (1) in the given fragment of the given packed bit array.
-     * @throws NullPointerException if the <tt>src</tt> argument is <tt>null</tt>.
+     * @return the number of high bits (1) in the given fragment of the given packed bit array.
+     * @throws NullPointerException      if the <tt>src</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
      *                                   if <tt>toIndex</tt> is greater than <tt>src.length*64</tt>,
      *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>
      */
     public static long cardinality(long[] src, final long fromIndex, final long toIndex) {
 
-        if (src == null)
-            throw new NullPointerException("Null src argument in cardinality method");
-        if (fromIndex < 0)
+        Objects.requireNonNull(src, "Null src argument in cardinality method");
+        if (fromIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: initial index = " + fromIndex);
-        if (toIndex > ((long) src.length) << 6)
+        }
+        if (toIndex > ((long) src.length) << 6) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: end index = " + toIndex);
-        if (fromIndex > toIndex)
+        }
+        if (fromIndex > toIndex) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: initial index = " + fromIndex
-                + " > end index = " + toIndex);
+                    + " > end index = " + toIndex);
+        }
         long count = toIndex - fromIndex;
 
         int sPos = (int) (fromIndex >>> 6);

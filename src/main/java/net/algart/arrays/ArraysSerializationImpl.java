@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.*;
+import java.util.Objects;
 
 /**
  * <p>Implementations of {@link Arrays#copyArrayToBytes(byte[], PArray, ByteOrder)} and
@@ -39,10 +40,8 @@ import java.nio.*;
 class ArraysSerializationImpl {
 
     public static byte[] copyArrayToBytes(byte[] bytes, PArray array, ByteOrder byteOrder) {
-        if (array == null)
-            throw new NullPointerException("Null array");
-        if (byteOrder == null)
-            throw new NullPointerException("Null byteOrder");
+        Objects.requireNonNull(array, "Null array");
+        Objects.requireNonNull(byteOrder, "Null byteOrder");
         final long requiredLength = Arrays.sizeOfBytesForCopying(array);
         if (bytes == null) {
             bytes = new byte[(int) requiredLength];
@@ -207,12 +206,9 @@ class ArraysSerializationImpl {
     }
 
     public static void copyBytesToArray(UpdatablePArray array, byte[] bytes, ByteOrder byteOrder) {
-        if (array == null)
-            throw new NullPointerException("Null array");
-        if (bytes == null)
-            throw new NullPointerException("Null bytes Java array");
-        if (byteOrder == null)
-            throw new NullPointerException("Null byteOrder");
+        Objects.requireNonNull(array, "Null array");
+        Objects.requireNonNull(bytes, "Null bytes Java array");
+        Objects.requireNonNull(byteOrder, "Null byteOrder");
         final long requiredLength = Arrays.sizeOfBytesForCopying(array);
         if (bytes.length < requiredLength)
             throw new IndexOutOfBoundsException("byte[] array is too short to copy into all elements of "
@@ -379,12 +375,9 @@ class ArraysSerializationImpl {
     }
 
     public static void write(OutputStream outputStream, PArray array, ByteOrder byteOrder) throws IOException {
-        if (outputStream == null)
-            throw new NullPointerException("Null outputStream array");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (byteOrder == null)
-            throw new NullPointerException("Null byteOrder argument");
+        Objects.requireNonNull(outputStream, "Null outputStream array");
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(byteOrder, "Null byteOrder argument");
         final long n = array.length();
         if (array instanceof BitArray) {
             long[] bits = (long[]) DataBuffersImpl.LONG_BUFFERS.requestArray();
@@ -500,12 +493,9 @@ class ArraysSerializationImpl {
     }
 
     public static void read(InputStream inputStream, UpdatablePArray array, ByteOrder byteOrder) throws IOException {
-        if (inputStream == null)
-            throw new NullPointerException("Null inputStream array");
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (byteOrder == null)
-            throw new NullPointerException("Null byteOrder argument");
+        Objects.requireNonNull(inputStream, "Null inputStream array");
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(byteOrder, "Null byteOrder argument");
         final long n = array.length();
         DataInputStream dataInputStream = new DataInputStream(inputStream); // DataInputStream - for readFully feature
         if (array instanceof BitArray) {

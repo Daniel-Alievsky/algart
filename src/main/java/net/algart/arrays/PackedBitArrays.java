@@ -24,6 +24,10 @@
 
 package net.algart.arrays;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.LongBuffer;
+import java.util.Objects;
 import java.util.zip.*;
 
 /**
@@ -76,7 +80,8 @@ import java.util.zip.*;
  * @author Daniel Alievsky
  */
 public class PackedBitArrays {
-    private PackedBitArrays() {}
+    private PackedBitArrays() {
+    }
 
     /*Repeat.SectionStart primitives*/
 
@@ -135,6 +140,26 @@ public class PackedBitArrays {
     }
     /*Repeat.SectionEnd primitives*/
 
+    public static long[] toLongArray(byte[] byteArray) {
+        Objects.requireNonNull(byteArray, "Null byte[] array");
+        final long[] result = new long[(byteArray.length + 7) >>> 3];
+        final ByteBuffer bb = ByteBuffer.wrap(byteArray);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        bb.asLongBuffer().get(result);
+        return result;
+    }
+
+    public static long[] toLongArray(ByteBuffer byteBuffer) {
+        Objects.requireNonNull(byteBuffer, "Null ByteBuffer");
+        ByteBuffer bb = byteBuffer.duplicate();
+        final long[] result = new long[(bb.limit() + 7) >>> 3];
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        bb.rewind();
+        bb.asLongBuffer().get(result);
+        return result;
+
+    }
+
     /**
      * Returns a hash code based on the contents of the specified fragment of the given packed bit array.
      * If the passed array is <tt>null</tt> or <tt>fromIndex==toIndex</tt>, returns 0.
@@ -150,13 +175,13 @@ public class PackedBitArrays {
      * @param array     the packed bit array whose content-based hash code to compute.
      * @param fromIndex the initial index of the checked fragment, inclusive.
      * @param toIndex   the end index of the checked fragment, exclusive.
-     * @return          a content-based hash code for the specified fragment in <tt>array</tt>.
-     * @throws IllegalArgumentException if the <tt>array</tt> argument is not a Java array.
-     * @throws IndexOutOfBoundsException
-     *          if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
-     *          if <tt>toIndex</tt> is greater than <tt>array.length*64</tt> (0 if <tt>array==null</tt>),
-     *          or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>,
-     *          or if <tt>array==null</tt> and not <tt>fromIndex==toIndex==0</tt>
+     * @return a content-based hash code for the specified fragment in <tt>array</tt>.
+     * @throws IllegalArgumentException  if the <tt>array</tt> argument is not a Java array.
+     * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
+     *                                   if <tt>toIndex</tt> is greater than <tt>array.length*64</tt>
+     *                                   (0 if <tt>array==null</tt>),
+     *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>,
+     *                                   or if <tt>array==null</tt> and not <tt>fromIndex==toIndex==0</tt>
      * @see #bitEquals(long[], long, long[], long, long)
      * @see JArrays#arrayHashCode(Object, int, int)
      */
@@ -196,27 +221,28 @@ public class PackedBitArrays {
      * @param fromIndex the initial index of the checked fragment, inclusive.
      * @param toIndex   the end index of the checked fragment, exclusive.
      * @param hash      updated hash code.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException
-     *          if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
-     *          if <tt>toIndex</tt> is greater than <tt>array.length</tt> (0 if <tt>array==null</tt>),
-     *          or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>,
-     *          or if <tt>array==null</tt> and not <tt>fromIndex==toIndex==0</tt>
+     * @throws NullPointerException      if <tt>array</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
+     *                                   if <tt>toIndex</tt> is greater than <tt>array.length</tt>
+     *                                   (0 if <tt>array==null</tt>),
+     *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>,
+     *                                   or if <tt>array==null</tt> and not <tt>fromIndex==toIndex==0</tt>
      */
     public static void updateBitHashCode(long[] array, long fromIndex, long toIndex, Checksum hash) {
-        if (hash == null)
-            throw new NullPointerException("Null hash argument");
-        if (fromIndex < 0)
+        Objects.requireNonNull(hash, "Null hash argument");
+        if (fromIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: initial index = " + fromIndex);
-        if (fromIndex > toIndex)
+        }
+        if (fromIndex > toIndex) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: initial index = " + fromIndex
-                + " > end index = " + toIndex);
+                    + " > end index = " + toIndex);
+        }
         if (array == null) {
             if (toIndex > 0)
                 throw new ArrayIndexOutOfBoundsException("Bit array index out of range for null array: end index = "
-                    + toIndex);
+                        + toIndex);
         } else {
-            if (toIndex > ((long)array.length) << 6)
+            if (toIndex > ((long) array.length) << 6)
                 throw new ArrayIndexOutOfBoundsException("Bit array index out of range: end index = " + toIndex);
         }
         if (fromIndex == toIndex) { // in particular, if array == null
@@ -246,27 +272,33 @@ public class PackedBitArrays {
      * @param pos2   the initial index of the checked fragment in the second array.
      * @param length the number of compared elements.
      * @return <tt>true</tt> if the specified fragments of two arrays are equal.
-     * @throws IllegalArgumentException if the <tt>array1</tt> or <tt>array2</tt> argument is not a Java array.
-     * @throws  IndexOutOfBoundsException
-     *          if <tt>pos1</tt>, <tt>pos2</tt> or <tt>length</tt> are negative,
-     *          if <tt>pos1 + length</tt> is greater than <tt>array1.length*64</tt> (0 if <tt>array1==null</tt>),
-     *          or if <tt>pos2 + length</tt> is greater than <tt>array2.length*64</tt> (0 if <tt>array2==null</tt>).
+     * @throws IllegalArgumentException  if the <tt>array1</tt> or <tt>array2</tt> argument is not a Java array.
+     * @throws IndexOutOfBoundsException if <tt>pos1</tt>, <tt>pos2</tt> or <tt>length</tt> are negative,
+     *                                   if <tt>pos1 + length</tt> is greater than <tt>array1.length*64</tt>
+     *                                   (0 if <tt>array1==null</tt>),
+     *                                   or if <tt>pos2 + length</tt> is greater than <tt>array2.length*64</tt>
+     *                                   (0 if <tt>array2==null</tt>).
      */
     public static boolean bitEquals(long[] array1, long pos1, long[] array2, long pos2, long length) {
-        long length1 = array1 == null ? 0 : ((long)array1.length) << 6;
-        long length2 = array2 == null ? 0 : ((long)array2.length) << 6;
-        if (pos1 < 0)
+        long length1 = array1 == null ? 0 : ((long) array1.length) << 6;
+        long length2 = array2 == null ? 0 : ((long) array2.length) << 6;
+        if (pos1 < 0) {
             throw new ArrayIndexOutOfBoundsException("Negative bit array initial index: pos1 = " + pos1);
-        if (pos2 < 0)
+        }
+        if (pos2 < 0) {
             throw new ArrayIndexOutOfBoundsException("Negative bit array initial index: pos2 = " + pos2);
-        if (length < 0)
+        }
+        if (length < 0) {
             throw new ArrayIndexOutOfBoundsException("Negative number of compared elements: length = " + length);
-        if (pos1 + length > length1)
+        }
+        if (pos1 + length > length1) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: pos1 + length = "
-                + (pos1 + length));
-        if (pos2 + length > length2)
+                    + (pos1 + length));
+        }
+        if (pos2 + length > length2) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: pos2 + length = "
-                + (pos2 + length));
+                    + (pos2 + length));
+        }
         if (array1 == array2) {
             return array1 == null || pos1 == pos2;
         }
@@ -315,8 +347,7 @@ public class PackedBitArrays {
         } else {
             for (long pos1Max = pos1 + length; pos1 < pos1Max; pos1++, pos2++) {
                 if (((array1[(int) (pos1 >>> 6)] >>> (pos1 & 63)) & 1L) !=
-                    ((array2[(int) (pos2 >>> 6)] >>> (pos2 & 63)) & 1L))
-                {
+                        ((array2[(int) (pos2 >>> 6)] >>> (pos2 & 63)) & 1L)) {
                     return false;
                 }
             }
@@ -325,6 +356,7 @@ public class PackedBitArrays {
     }
 
     /*Repeat.SectionStart copyBits*/
+
     /**
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
@@ -571,79 +603,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] ? 1 : 0)
 //[[Repeat() \([^\)]*\) ==> (src[srcPos + $INDEX(start=2)] ? 1 << $INDEX(start=2) : 0) ,, ...(30)]]
-                | (src[srcPos + 1] ? 1 << 1 : 0)
+                    | (src[srcPos + 1] ? 1 << 1 : 0)
 //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-                | (src[srcPos + 2] ? 1 << 2 : 0)
-                | (src[srcPos + 3] ? 1 << 3 : 0)
-                | (src[srcPos + 4] ? 1 << 4 : 0)
-                | (src[srcPos + 5] ? 1 << 5 : 0)
-                | (src[srcPos + 6] ? 1 << 6 : 0)
-                | (src[srcPos + 7] ? 1 << 7 : 0)
-                | (src[srcPos + 8] ? 1 << 8 : 0)
-                | (src[srcPos + 9] ? 1 << 9 : 0)
-                | (src[srcPos + 10] ? 1 << 10 : 0)
-                | (src[srcPos + 11] ? 1 << 11 : 0)
-                | (src[srcPos + 12] ? 1 << 12 : 0)
-                | (src[srcPos + 13] ? 1 << 13 : 0)
-                | (src[srcPos + 14] ? 1 << 14 : 0)
-                | (src[srcPos + 15] ? 1 << 15 : 0)
-                | (src[srcPos + 16] ? 1 << 16 : 0)
-                | (src[srcPos + 17] ? 1 << 17 : 0)
-                | (src[srcPos + 18] ? 1 << 18 : 0)
-                | (src[srcPos + 19] ? 1 << 19 : 0)
-                | (src[srcPos + 20] ? 1 << 20 : 0)
-                | (src[srcPos + 21] ? 1 << 21 : 0)
-                | (src[srcPos + 22] ? 1 << 22 : 0)
-                | (src[srcPos + 23] ? 1 << 23 : 0)
-                | (src[srcPos + 24] ? 1 << 24 : 0)
-                | (src[srcPos + 25] ? 1 << 25 : 0)
-                | (src[srcPos + 26] ? 1 << 26 : 0)
-                | (src[srcPos + 27] ? 1 << 27 : 0)
-                | (src[srcPos + 28] ? 1 << 28 : 0)
-                | (src[srcPos + 29] ? 1 << 29 : 0)
-                | (src[srcPos + 30] ? 1 << 30 : 0)
-                | (src[srcPos + 31] ? 1 << 31 : 0)
+                    | (src[srcPos + 2] ? 1 << 2 : 0)
+                    | (src[srcPos + 3] ? 1 << 3 : 0)
+                    | (src[srcPos + 4] ? 1 << 4 : 0)
+                    | (src[srcPos + 5] ? 1 << 5 : 0)
+                    | (src[srcPos + 6] ? 1 << 6 : 0)
+                    | (src[srcPos + 7] ? 1 << 7 : 0)
+                    | (src[srcPos + 8] ? 1 << 8 : 0)
+                    | (src[srcPos + 9] ? 1 << 9 : 0)
+                    | (src[srcPos + 10] ? 1 << 10 : 0)
+                    | (src[srcPos + 11] ? 1 << 11 : 0)
+                    | (src[srcPos + 12] ? 1 << 12 : 0)
+                    | (src[srcPos + 13] ? 1 << 13 : 0)
+                    | (src[srcPos + 14] ? 1 << 14 : 0)
+                    | (src[srcPos + 15] ? 1 << 15 : 0)
+                    | (src[srcPos + 16] ? 1 << 16 : 0)
+                    | (src[srcPos + 17] ? 1 << 17 : 0)
+                    | (src[srcPos + 18] ? 1 << 18 : 0)
+                    | (src[srcPos + 19] ? 1 << 19 : 0)
+                    | (src[srcPos + 20] ? 1 << 20 : 0)
+                    | (src[srcPos + 21] ? 1 << 21 : 0)
+                    | (src[srcPos + 22] ? 1 << 22 : 0)
+                    | (src[srcPos + 23] ? 1 << 23 : 0)
+                    | (src[srcPos + 24] ? 1 << 24 : 0)
+                    | (src[srcPos + 25] ? 1 << 25 : 0)
+                    | (src[srcPos + 26] ? 1 << 26 : 0)
+                    | (src[srcPos + 27] ? 1 << 27 : 0)
+                    | (src[srcPos + 28] ? 1 << 28 : 0)
+                    | (src[srcPos + 29] ? 1 << 29 : 0)
+                    | (src[srcPos + 30] ? 1 << 30 : 0)
+                    | (src[srcPos + 31] ? 1 << 31 : 0)
 //[[Repeat.AutoGeneratedEnd]]
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] ? 1 : 0)
 //[[Repeat() \([^\)]*\) ==> (src[srcPos + $INDEX(start=2)] ? 1 << $INDEX(start=2) : 0) ,, ...(30)]]
-                | (src[srcPos + 1] ? 1 << 1 : 0)
+                    | (src[srcPos + 1] ? 1 << 1 : 0)
 //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-                | (src[srcPos + 2] ? 1 << 2 : 0)
-                | (src[srcPos + 3] ? 1 << 3 : 0)
-                | (src[srcPos + 4] ? 1 << 4 : 0)
-                | (src[srcPos + 5] ? 1 << 5 : 0)
-                | (src[srcPos + 6] ? 1 << 6 : 0)
-                | (src[srcPos + 7] ? 1 << 7 : 0)
-                | (src[srcPos + 8] ? 1 << 8 : 0)
-                | (src[srcPos + 9] ? 1 << 9 : 0)
-                | (src[srcPos + 10] ? 1 << 10 : 0)
-                | (src[srcPos + 11] ? 1 << 11 : 0)
-                | (src[srcPos + 12] ? 1 << 12 : 0)
-                | (src[srcPos + 13] ? 1 << 13 : 0)
-                | (src[srcPos + 14] ? 1 << 14 : 0)
-                | (src[srcPos + 15] ? 1 << 15 : 0)
-                | (src[srcPos + 16] ? 1 << 16 : 0)
-                | (src[srcPos + 17] ? 1 << 17 : 0)
-                | (src[srcPos + 18] ? 1 << 18 : 0)
-                | (src[srcPos + 19] ? 1 << 19 : 0)
-                | (src[srcPos + 20] ? 1 << 20 : 0)
-                | (src[srcPos + 21] ? 1 << 21 : 0)
-                | (src[srcPos + 22] ? 1 << 22 : 0)
-                | (src[srcPos + 23] ? 1 << 23 : 0)
-                | (src[srcPos + 24] ? 1 << 24 : 0)
-                | (src[srcPos + 25] ? 1 << 25 : 0)
-                | (src[srcPos + 26] ? 1 << 26 : 0)
-                | (src[srcPos + 27] ? 1 << 27 : 0)
-                | (src[srcPos + 28] ? 1 << 28 : 0)
-                | (src[srcPos + 29] ? 1 << 29 : 0)
-                | (src[srcPos + 30] ? 1 << 30 : 0)
-                | (src[srcPos + 31] ? 1 << 31 : 0)
+                    | (src[srcPos + 2] ? 1 << 2 : 0)
+                    | (src[srcPos + 3] ? 1 << 3 : 0)
+                    | (src[srcPos + 4] ? 1 << 4 : 0)
+                    | (src[srcPos + 5] ? 1 << 5 : 0)
+                    | (src[srcPos + 6] ? 1 << 6 : 0)
+                    | (src[srcPos + 7] ? 1 << 7 : 0)
+                    | (src[srcPos + 8] ? 1 << 8 : 0)
+                    | (src[srcPos + 9] ? 1 << 9 : 0)
+                    | (src[srcPos + 10] ? 1 << 10 : 0)
+                    | (src[srcPos + 11] ? 1 << 11 : 0)
+                    | (src[srcPos + 12] ? 1 << 12 : 0)
+                    | (src[srcPos + 13] ? 1 << 13 : 0)
+                    | (src[srcPos + 14] ? 1 << 14 : 0)
+                    | (src[srcPos + 15] ? 1 << 15 : 0)
+                    | (src[srcPos + 16] ? 1 << 16 : 0)
+                    | (src[srcPos + 17] ? 1 << 17 : 0)
+                    | (src[srcPos + 18] ? 1 << 18 : 0)
+                    | (src[srcPos + 19] ? 1 << 19 : 0)
+                    | (src[srcPos + 20] ? 1 << 20 : 0)
+                    | (src[srcPos + 21] ? 1 << 21 : 0)
+                    | (src[srcPos + 22] ? 1 << 22 : 0)
+                    | (src[srcPos + 23] ? 1 << 23 : 0)
+                    | (src[srcPos + 24] ? 1 << 24 : 0)
+                    | (src[srcPos + 25] ? 1 << 25 : 0)
+                    | (src[srcPos + 26] ? 1 << 26 : 0)
+                    | (src[srcPos + 27] ? 1 << 27 : 0)
+                    | (src[srcPos + 28] ? 1 << 28 : 0)
+                    | (src[srcPos + 29] ? 1 << 29 : 0)
+                    | (src[srcPos + 30] ? 1 << 30 : 0)
+                    | (src[srcPos + 31] ? 1 << 31 : 0)
 //[[Repeat.AutoGeneratedEnd]]
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -691,79 +723,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] ? 0 : 1)
 //[[Repeat() \([^\)]*\) ==> (src[srcPos + $INDEX(start=2)] ? 0 : 1 << $INDEX(start=2)) ,, ...(30)]]
-                | (src[srcPos + 1] ? 0 : 1 << 1)
+                    | (src[srcPos + 1] ? 0 : 1 << 1)
 //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-                | (src[srcPos + 2] ? 0 : 1 << 2)
-                | (src[srcPos + 3] ? 0 : 1 << 3)
-                | (src[srcPos + 4] ? 0 : 1 << 4)
-                | (src[srcPos + 5] ? 0 : 1 << 5)
-                | (src[srcPos + 6] ? 0 : 1 << 6)
-                | (src[srcPos + 7] ? 0 : 1 << 7)
-                | (src[srcPos + 8] ? 0 : 1 << 8)
-                | (src[srcPos + 9] ? 0 : 1 << 9)
-                | (src[srcPos + 10] ? 0 : 1 << 10)
-                | (src[srcPos + 11] ? 0 : 1 << 11)
-                | (src[srcPos + 12] ? 0 : 1 << 12)
-                | (src[srcPos + 13] ? 0 : 1 << 13)
-                | (src[srcPos + 14] ? 0 : 1 << 14)
-                | (src[srcPos + 15] ? 0 : 1 << 15)
-                | (src[srcPos + 16] ? 0 : 1 << 16)
-                | (src[srcPos + 17] ? 0 : 1 << 17)
-                | (src[srcPos + 18] ? 0 : 1 << 18)
-                | (src[srcPos + 19] ? 0 : 1 << 19)
-                | (src[srcPos + 20] ? 0 : 1 << 20)
-                | (src[srcPos + 21] ? 0 : 1 << 21)
-                | (src[srcPos + 22] ? 0 : 1 << 22)
-                | (src[srcPos + 23] ? 0 : 1 << 23)
-                | (src[srcPos + 24] ? 0 : 1 << 24)
-                | (src[srcPos + 25] ? 0 : 1 << 25)
-                | (src[srcPos + 26] ? 0 : 1 << 26)
-                | (src[srcPos + 27] ? 0 : 1 << 27)
-                | (src[srcPos + 28] ? 0 : 1 << 28)
-                | (src[srcPos + 29] ? 0 : 1 << 29)
-                | (src[srcPos + 30] ? 0 : 1 << 30)
-                | (src[srcPos + 31] ? 0 : 1 << 31)
+                    | (src[srcPos + 2] ? 0 : 1 << 2)
+                    | (src[srcPos + 3] ? 0 : 1 << 3)
+                    | (src[srcPos + 4] ? 0 : 1 << 4)
+                    | (src[srcPos + 5] ? 0 : 1 << 5)
+                    | (src[srcPos + 6] ? 0 : 1 << 6)
+                    | (src[srcPos + 7] ? 0 : 1 << 7)
+                    | (src[srcPos + 8] ? 0 : 1 << 8)
+                    | (src[srcPos + 9] ? 0 : 1 << 9)
+                    | (src[srcPos + 10] ? 0 : 1 << 10)
+                    | (src[srcPos + 11] ? 0 : 1 << 11)
+                    | (src[srcPos + 12] ? 0 : 1 << 12)
+                    | (src[srcPos + 13] ? 0 : 1 << 13)
+                    | (src[srcPos + 14] ? 0 : 1 << 14)
+                    | (src[srcPos + 15] ? 0 : 1 << 15)
+                    | (src[srcPos + 16] ? 0 : 1 << 16)
+                    | (src[srcPos + 17] ? 0 : 1 << 17)
+                    | (src[srcPos + 18] ? 0 : 1 << 18)
+                    | (src[srcPos + 19] ? 0 : 1 << 19)
+                    | (src[srcPos + 20] ? 0 : 1 << 20)
+                    | (src[srcPos + 21] ? 0 : 1 << 21)
+                    | (src[srcPos + 22] ? 0 : 1 << 22)
+                    | (src[srcPos + 23] ? 0 : 1 << 23)
+                    | (src[srcPos + 24] ? 0 : 1 << 24)
+                    | (src[srcPos + 25] ? 0 : 1 << 25)
+                    | (src[srcPos + 26] ? 0 : 1 << 26)
+                    | (src[srcPos + 27] ? 0 : 1 << 27)
+                    | (src[srcPos + 28] ? 0 : 1 << 28)
+                    | (src[srcPos + 29] ? 0 : 1 << 29)
+                    | (src[srcPos + 30] ? 0 : 1 << 30)
+                    | (src[srcPos + 31] ? 0 : 1 << 31)
 //[[Repeat.AutoGeneratedEnd]]
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] ? 0 : 1)
 //[[Repeat() \([^\)]*\) ==> (src[srcPos + $INDEX(start=2)] ? 0 : 1 << $INDEX(start=2)) ,, ...(30)]]
-                | (src[srcPos + 1] ? 0 : 1 << 1)
+                    | (src[srcPos + 1] ? 0 : 1 << 1)
 //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-                | (src[srcPos + 2] ? 0 : 1 << 2)
-                | (src[srcPos + 3] ? 0 : 1 << 3)
-                | (src[srcPos + 4] ? 0 : 1 << 4)
-                | (src[srcPos + 5] ? 0 : 1 << 5)
-                | (src[srcPos + 6] ? 0 : 1 << 6)
-                | (src[srcPos + 7] ? 0 : 1 << 7)
-                | (src[srcPos + 8] ? 0 : 1 << 8)
-                | (src[srcPos + 9] ? 0 : 1 << 9)
-                | (src[srcPos + 10] ? 0 : 1 << 10)
-                | (src[srcPos + 11] ? 0 : 1 << 11)
-                | (src[srcPos + 12] ? 0 : 1 << 12)
-                | (src[srcPos + 13] ? 0 : 1 << 13)
-                | (src[srcPos + 14] ? 0 : 1 << 14)
-                | (src[srcPos + 15] ? 0 : 1 << 15)
-                | (src[srcPos + 16] ? 0 : 1 << 16)
-                | (src[srcPos + 17] ? 0 : 1 << 17)
-                | (src[srcPos + 18] ? 0 : 1 << 18)
-                | (src[srcPos + 19] ? 0 : 1 << 19)
-                | (src[srcPos + 20] ? 0 : 1 << 20)
-                | (src[srcPos + 21] ? 0 : 1 << 21)
-                | (src[srcPos + 22] ? 0 : 1 << 22)
-                | (src[srcPos + 23] ? 0 : 1 << 23)
-                | (src[srcPos + 24] ? 0 : 1 << 24)
-                | (src[srcPos + 25] ? 0 : 1 << 25)
-                | (src[srcPos + 26] ? 0 : 1 << 26)
-                | (src[srcPos + 27] ? 0 : 1 << 27)
-                | (src[srcPos + 28] ? 0 : 1 << 28)
-                | (src[srcPos + 29] ? 0 : 1 << 29)
-                | (src[srcPos + 30] ? 0 : 1 << 30)
-                | (src[srcPos + 31] ? 0 : 1 << 31)
+                    | (src[srcPos + 2] ? 0 : 1 << 2)
+                    | (src[srcPos + 3] ? 0 : 1 << 3)
+                    | (src[srcPos + 4] ? 0 : 1 << 4)
+                    | (src[srcPos + 5] ? 0 : 1 << 5)
+                    | (src[srcPos + 6] ? 0 : 1 << 6)
+                    | (src[srcPos + 7] ? 0 : 1 << 7)
+                    | (src[srcPos + 8] ? 0 : 1 << 8)
+                    | (src[srcPos + 9] ? 0 : 1 << 9)
+                    | (src[srcPos + 10] ? 0 : 1 << 10)
+                    | (src[srcPos + 11] ? 0 : 1 << 11)
+                    | (src[srcPos + 12] ? 0 : 1 << 12)
+                    | (src[srcPos + 13] ? 0 : 1 << 13)
+                    | (src[srcPos + 14] ? 0 : 1 << 14)
+                    | (src[srcPos + 15] ? 0 : 1 << 15)
+                    | (src[srcPos + 16] ? 0 : 1 << 16)
+                    | (src[srcPos + 17] ? 0 : 1 << 17)
+                    | (src[srcPos + 18] ? 0 : 1 << 18)
+                    | (src[srcPos + 19] ? 0 : 1 << 19)
+                    | (src[srcPos + 20] ? 0 : 1 << 20)
+                    | (src[srcPos + 21] ? 0 : 1 << 21)
+                    | (src[srcPos + 22] ? 0 : 1 << 22)
+                    | (src[srcPos + 23] ? 0 : 1 << 23)
+                    | (src[srcPos + 24] ? 0 : 1 << 24)
+                    | (src[srcPos + 25] ? 0 : 1 << 25)
+                    | (src[srcPos + 26] ? 0 : 1 << 26)
+                    | (src[srcPos + 27] ? 0 : 1 << 27)
+                    | (src[srcPos + 28] ? 0 : 1 << 28)
+                    | (src[srcPos + 29] ? 0 : 1 << 29)
+                    | (src[srcPos + 30] ? 0 : 1 << 30)
+                    | (src[srcPos + 31] ? 0 : 1 << 31)
 //[[Repeat.AutoGeneratedEnd]]
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -783,6 +815,7 @@ public class PackedBitArrays {
                char                    ==> byte,,short,,int,,long,,float,,double;;
                (src\[[^]]*])(?!\<\/tt) ==> ($1 & 0xFF),,($1 & 0xFFFF),,$1,,...
      */
+
     /**
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
@@ -800,9 +833,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreater(
-        long[] dest, long destPos, char[] src, int srcPos, int count,
-        char threshold)
-    {
+            long[] dest, long destPos, char[] src, int srcPos, int count,
+            char threshold) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, packBits_method_impl)
         //  (src\[.*?]) ==> $1 > threshold !! Auto-generated: NOT EDIT !! ]]
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
@@ -823,79 +855,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] > threshold ? 1 : 0)
 
-                | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] > threshold ? 1 : 0)
 
-                | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -929,9 +961,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLess(
-        long[] dest, long destPos, char[] src, int srcPos, int count,
-        char threshold)
-    {
+            long[] dest, long destPos, char[] src, int srcPos, int count,
+            char threshold) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, packBits_method_impl)
         //  (src\[.*?]) ==> $1 < threshold !! Auto-generated: NOT EDIT !! ]]
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
@@ -952,79 +983,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] < threshold ? 1 : 0)
 
-                | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] < threshold ? 1 : 0)
 
-                | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -1058,9 +1089,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreaterOrEqual(
-        long[] dest, long destPos, char[] src, int srcPos, int count,
-        char threshold)
-    {
+            long[] dest, long destPos, char[] src, int srcPos, int count,
+            char threshold) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, packBits_method_impl)
         //  (src\[.*?]) ==> $1 >= threshold !! Auto-generated: NOT EDIT !! ]]
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
@@ -1081,79 +1111,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] >= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] >= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -1187,9 +1217,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLessOrEqual(
-        long[] dest, long destPos, char[] src, int srcPos, int count,
-        char threshold)
-    {
+            long[] dest, long destPos, char[] src, int srcPos, int count,
+            char threshold) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, packBits_method_impl)
         //  (src\[.*?]) ==> $1 <= threshold !! Auto-generated: NOT EDIT !! ]]
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
@@ -1210,79 +1239,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] <= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] <= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -1299,6 +1328,7 @@ public class PackedBitArrays {
         //[[Repeat.IncludeEnd]]
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
@@ -1316,9 +1346,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreater(
-        long[] dest, long destPos, byte[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, byte[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -1338,79 +1367,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = ((src[srcPos] & 0xFF) > threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFF) > threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFF) > threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFF) > threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFF) > threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFF) > threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFF) > threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFF) > threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFF) > threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFF) > threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFF) > threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFF) > threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFF) > threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFF) > threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFF) > threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFF) > threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFF) > threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFF) > threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFF) > threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFF) > threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFF) > threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFF) > threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFF) > threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFF) > threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFF) > threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFF) > threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFF) > threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFF) > threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFF) > threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFF) > threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFF) > threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFF) > threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFF) > threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFF) > threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFF) > threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFF) > threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFF) > threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFF) > threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFF) > threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFF) > threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFF) > threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFF) > threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFF) > threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFF) > threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFF) > threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFF) > threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFF) > threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFF) > threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFF) > threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFF) > threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFF) > threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFF) > threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFF) > threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFF) > threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFF) > threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFF) > threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFF) > threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFF) > threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFF) > threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFF) > threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFF) > threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFF) > threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFF) > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = ((src[srcPos] & 0xFF) > threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFF) > threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFF) > threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFF) > threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFF) > threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFF) > threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFF) > threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFF) > threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFF) > threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFF) > threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFF) > threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFF) > threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFF) > threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFF) > threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFF) > threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFF) > threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFF) > threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFF) > threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFF) > threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFF) > threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFF) > threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFF) > threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFF) > threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFF) > threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFF) > threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFF) > threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFF) > threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFF) > threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFF) > threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFF) > threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFF) > threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFF) > threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFF) > threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFF) > threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFF) > threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFF) > threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFF) > threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFF) > threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFF) > threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFF) > threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFF) > threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFF) > threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFF) > threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFF) > threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFF) > threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFF) > threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFF) > threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFF) > threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFF) > threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFF) > threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFF) > threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFF) > threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFF) > threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFF) > threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFF) > threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFF) > threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFF) > threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFF) > threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFF) > threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFF) > threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFF) > threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFF) > threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFF) > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -1444,9 +1473,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLess(
-        long[] dest, long destPos, byte[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, byte[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -1466,79 +1494,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = ((src[srcPos] & 0xFF) < threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFF) < threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFF) < threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFF) < threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFF) < threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFF) < threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFF) < threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFF) < threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFF) < threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFF) < threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFF) < threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFF) < threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFF) < threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFF) < threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFF) < threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFF) < threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFF) < threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFF) < threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFF) < threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFF) < threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFF) < threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFF) < threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFF) < threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFF) < threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFF) < threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFF) < threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFF) < threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFF) < threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFF) < threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFF) < threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFF) < threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFF) < threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFF) < threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFF) < threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFF) < threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFF) < threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFF) < threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFF) < threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFF) < threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFF) < threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFF) < threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFF) < threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFF) < threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFF) < threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFF) < threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFF) < threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFF) < threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFF) < threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFF) < threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFF) < threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFF) < threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFF) < threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFF) < threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFF) < threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFF) < threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFF) < threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFF) < threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFF) < threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFF) < threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFF) < threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFF) < threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFF) < threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFF) < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = ((src[srcPos] & 0xFF) < threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFF) < threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFF) < threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFF) < threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFF) < threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFF) < threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFF) < threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFF) < threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFF) < threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFF) < threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFF) < threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFF) < threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFF) < threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFF) < threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFF) < threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFF) < threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFF) < threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFF) < threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFF) < threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFF) < threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFF) < threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFF) < threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFF) < threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFF) < threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFF) < threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFF) < threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFF) < threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFF) < threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFF) < threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFF) < threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFF) < threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFF) < threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFF) < threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFF) < threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFF) < threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFF) < threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFF) < threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFF) < threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFF) < threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFF) < threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFF) < threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFF) < threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFF) < threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFF) < threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFF) < threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFF) < threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFF) < threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFF) < threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFF) < threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFF) < threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFF) < threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFF) < threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFF) < threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFF) < threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFF) < threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFF) < threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFF) < threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFF) < threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFF) < threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFF) < threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFF) < threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFF) < threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFF) < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -1572,9 +1600,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreaterOrEqual(
-        long[] dest, long destPos, byte[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, byte[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -1594,79 +1621,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = ((src[srcPos] & 0xFF) >= threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFF) >= threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFF) >= threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFF) >= threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFF) >= threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFF) >= threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFF) >= threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFF) >= threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFF) >= threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFF) >= threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFF) >= threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFF) >= threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFF) >= threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFF) >= threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFF) >= threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFF) >= threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFF) >= threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFF) >= threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFF) >= threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFF) >= threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFF) >= threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFF) >= threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFF) >= threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFF) >= threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFF) >= threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFF) >= threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFF) >= threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFF) >= threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFF) >= threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFF) >= threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFF) >= threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFF) >= threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFF) >= threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFF) >= threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFF) >= threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFF) >= threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFF) >= threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFF) >= threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFF) >= threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFF) >= threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFF) >= threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFF) >= threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFF) >= threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFF) >= threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFF) >= threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFF) >= threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFF) >= threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFF) >= threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFF) >= threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFF) >= threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFF) >= threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFF) >= threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFF) >= threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFF) >= threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFF) >= threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFF) >= threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFF) >= threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFF) >= threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFF) >= threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFF) >= threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFF) >= threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFF) >= threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFF) >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = ((src[srcPos] & 0xFF) >= threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFF) >= threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFF) >= threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFF) >= threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFF) >= threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFF) >= threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFF) >= threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFF) >= threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFF) >= threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFF) >= threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFF) >= threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFF) >= threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFF) >= threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFF) >= threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFF) >= threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFF) >= threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFF) >= threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFF) >= threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFF) >= threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFF) >= threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFF) >= threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFF) >= threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFF) >= threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFF) >= threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFF) >= threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFF) >= threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFF) >= threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFF) >= threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFF) >= threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFF) >= threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFF) >= threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFF) >= threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFF) >= threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFF) >= threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFF) >= threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFF) >= threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFF) >= threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFF) >= threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFF) >= threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFF) >= threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFF) >= threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFF) >= threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFF) >= threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFF) >= threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFF) >= threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFF) >= threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFF) >= threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFF) >= threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFF) >= threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFF) >= threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFF) >= threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFF) >= threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFF) >= threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFF) >= threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFF) >= threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFF) >= threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFF) >= threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFF) >= threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFF) >= threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFF) >= threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFF) >= threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFF) >= threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFF) >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -1700,9 +1727,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLessOrEqual(
-        long[] dest, long destPos, byte[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, byte[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -1722,79 +1748,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = ((src[srcPos] & 0xFF) <= threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFF) <= threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFF) <= threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFF) <= threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFF) <= threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFF) <= threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFF) <= threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFF) <= threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFF) <= threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFF) <= threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFF) <= threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFF) <= threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFF) <= threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFF) <= threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFF) <= threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFF) <= threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFF) <= threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFF) <= threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFF) <= threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFF) <= threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFF) <= threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFF) <= threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFF) <= threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFF) <= threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFF) <= threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFF) <= threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFF) <= threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFF) <= threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFF) <= threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFF) <= threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFF) <= threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFF) <= threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFF) <= threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFF) <= threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFF) <= threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFF) <= threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFF) <= threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFF) <= threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFF) <= threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFF) <= threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFF) <= threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFF) <= threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFF) <= threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFF) <= threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFF) <= threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFF) <= threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFF) <= threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFF) <= threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFF) <= threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFF) <= threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFF) <= threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFF) <= threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFF) <= threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFF) <= threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFF) <= threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFF) <= threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFF) <= threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFF) <= threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFF) <= threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFF) <= threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFF) <= threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFF) <= threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFF) <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = ((src[srcPos] & 0xFF) <= threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFF) <= threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFF) <= threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFF) <= threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFF) <= threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFF) <= threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFF) <= threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFF) <= threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFF) <= threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFF) <= threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFF) <= threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFF) <= threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFF) <= threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFF) <= threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFF) <= threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFF) <= threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFF) <= threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFF) <= threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFF) <= threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFF) <= threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFF) <= threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFF) <= threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFF) <= threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFF) <= threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFF) <= threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFF) <= threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFF) <= threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFF) <= threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFF) <= threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFF) <= threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFF) <= threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFF) <= threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFF) <= threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFF) <= threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFF) <= threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFF) <= threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFF) <= threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFF) <= threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFF) <= threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFF) <= threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFF) <= threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFF) <= threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFF) <= threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFF) <= threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFF) <= threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFF) <= threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFF) <= threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFF) <= threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFF) <= threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFF) <= threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFF) <= threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFF) <= threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFF) <= threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFF) <= threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFF) <= threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFF) <= threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFF) <= threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFF) <= threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFF) <= threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFF) <= threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFF) <= threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFF) <= threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFF) <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -1810,6 +1836,7 @@ public class PackedBitArrays {
         }
 
     }
+
 
     /**
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
@@ -1828,9 +1855,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreater(
-        long[] dest, long destPos, short[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, short[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -1850,79 +1876,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = ((src[srcPos] & 0xFFFF) > threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFFFF) > threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFFFF) > threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFFFF) > threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFFFF) > threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFFFF) > threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFFFF) > threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFFFF) > threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFFFF) > threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFFFF) > threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFFFF) > threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFFFF) > threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFFFF) > threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFFFF) > threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFFFF) > threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFFFF) > threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFFFF) > threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFFFF) > threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFFFF) > threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFFFF) > threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFFFF) > threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFFFF) > threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFFFF) > threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFFFF) > threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFFFF) > threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFFFF) > threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFFFF) > threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFFFF) > threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFFFF) > threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFFFF) > threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFFFF) > threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFFFF) > threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFFFF) > threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFFFF) > threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFFFF) > threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFFFF) > threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFFFF) > threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFFFF) > threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFFFF) > threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFFFF) > threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFFFF) > threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFFFF) > threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFFFF) > threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFFFF) > threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFFFF) > threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFFFF) > threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFFFF) > threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFFFF) > threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFFFF) > threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFFFF) > threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFFFF) > threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFFFF) > threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFFFF) > threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFFFF) > threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFFFF) > threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFFFF) > threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFFFF) > threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFFFF) > threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFFFF) > threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFFFF) > threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFFFF) > threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFFFF) > threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFFFF) > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = ((src[srcPos] & 0xFFFF) > threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFFFF) > threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFFFF) > threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFFFF) > threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFFFF) > threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFFFF) > threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFFFF) > threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFFFF) > threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFFFF) > threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFFFF) > threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFFFF) > threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFFFF) > threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFFFF) > threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFFFF) > threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFFFF) > threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFFFF) > threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFFFF) > threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFFFF) > threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFFFF) > threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFFFF) > threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFFFF) > threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFFFF) > threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFFFF) > threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFFFF) > threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFFFF) > threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFFFF) > threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFFFF) > threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFFFF) > threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFFFF) > threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFFFF) > threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFFFF) > threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFFFF) > threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFFFF) > threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFFFF) > threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFFFF) > threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFFFF) > threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFFFF) > threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFFFF) > threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFFFF) > threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFFFF) > threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFFFF) > threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFFFF) > threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFFFF) > threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFFFF) > threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFFFF) > threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFFFF) > threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFFFF) > threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFFFF) > threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFFFF) > threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFFFF) > threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFFFF) > threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFFFF) > threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFFFF) > threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFFFF) > threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFFFF) > threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFFFF) > threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFFFF) > threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFFFF) > threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFFFF) > threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFFFF) > threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFFFF) > threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFFFF) > threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFFFF) > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -1956,9 +1982,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLess(
-        long[] dest, long destPos, short[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, short[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -1978,79 +2003,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = ((src[srcPos] & 0xFFFF) < threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFFFF) < threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFFFF) < threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFFFF) < threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFFFF) < threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFFFF) < threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFFFF) < threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFFFF) < threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFFFF) < threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFFFF) < threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFFFF) < threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFFFF) < threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFFFF) < threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFFFF) < threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFFFF) < threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFFFF) < threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFFFF) < threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFFFF) < threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFFFF) < threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFFFF) < threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFFFF) < threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFFFF) < threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFFFF) < threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFFFF) < threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFFFF) < threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFFFF) < threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFFFF) < threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFFFF) < threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFFFF) < threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFFFF) < threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFFFF) < threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFFFF) < threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFFFF) < threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFFFF) < threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFFFF) < threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFFFF) < threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFFFF) < threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFFFF) < threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFFFF) < threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFFFF) < threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFFFF) < threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFFFF) < threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFFFF) < threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFFFF) < threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFFFF) < threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFFFF) < threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFFFF) < threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFFFF) < threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFFFF) < threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFFFF) < threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFFFF) < threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFFFF) < threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFFFF) < threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFFFF) < threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFFFF) < threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFFFF) < threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFFFF) < threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFFFF) < threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFFFF) < threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFFFF) < threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFFFF) < threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFFFF) < threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFFFF) < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = ((src[srcPos] & 0xFFFF) < threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFFFF) < threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFFFF) < threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFFFF) < threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFFFF) < threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFFFF) < threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFFFF) < threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFFFF) < threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFFFF) < threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFFFF) < threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFFFF) < threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFFFF) < threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFFFF) < threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFFFF) < threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFFFF) < threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFFFF) < threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFFFF) < threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFFFF) < threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFFFF) < threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFFFF) < threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFFFF) < threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFFFF) < threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFFFF) < threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFFFF) < threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFFFF) < threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFFFF) < threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFFFF) < threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFFFF) < threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFFFF) < threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFFFF) < threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFFFF) < threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFFFF) < threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFFFF) < threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFFFF) < threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFFFF) < threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFFFF) < threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFFFF) < threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFFFF) < threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFFFF) < threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFFFF) < threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFFFF) < threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFFFF) < threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFFFF) < threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFFFF) < threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFFFF) < threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFFFF) < threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFFFF) < threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFFFF) < threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFFFF) < threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFFFF) < threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFFFF) < threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFFFF) < threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFFFF) < threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFFFF) < threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFFFF) < threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFFFF) < threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFFFF) < threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFFFF) < threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFFFF) < threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFFFF) < threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFFFF) < threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFFFF) < threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFFFF) < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -2084,9 +2109,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreaterOrEqual(
-        long[] dest, long destPos, short[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, short[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -2106,79 +2130,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = ((src[srcPos] & 0xFFFF) >= threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFFFF) >= threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFFFF) >= threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFFFF) >= threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFFFF) >= threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFFFF) >= threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFFFF) >= threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFFFF) >= threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFFFF) >= threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFFFF) >= threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFFFF) >= threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFFFF) >= threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFFFF) >= threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFFFF) >= threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFFFF) >= threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFFFF) >= threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFFFF) >= threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFFFF) >= threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFFFF) >= threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFFFF) >= threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFFFF) >= threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFFFF) >= threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFFFF) >= threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFFFF) >= threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFFFF) >= threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFFFF) >= threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFFFF) >= threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFFFF) >= threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFFFF) >= threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFFFF) >= threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFFFF) >= threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFFFF) >= threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFFFF) >= threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFFFF) >= threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFFFF) >= threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFFFF) >= threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFFFF) >= threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFFFF) >= threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFFFF) >= threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFFFF) >= threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFFFF) >= threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFFFF) >= threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFFFF) >= threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFFFF) >= threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFFFF) >= threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFFFF) >= threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFFFF) >= threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFFFF) >= threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFFFF) >= threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFFFF) >= threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFFFF) >= threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFFFF) >= threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFFFF) >= threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFFFF) >= threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFFFF) >= threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFFFF) >= threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFFFF) >= threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFFFF) >= threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFFFF) >= threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFFFF) >= threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFFFF) >= threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFFFF) >= threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFFFF) >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = ((src[srcPos] & 0xFFFF) >= threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFFFF) >= threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFFFF) >= threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFFFF) >= threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFFFF) >= threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFFFF) >= threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFFFF) >= threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFFFF) >= threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFFFF) >= threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFFFF) >= threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFFFF) >= threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFFFF) >= threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFFFF) >= threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFFFF) >= threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFFFF) >= threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFFFF) >= threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFFFF) >= threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFFFF) >= threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFFFF) >= threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFFFF) >= threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFFFF) >= threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFFFF) >= threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFFFF) >= threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFFFF) >= threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFFFF) >= threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFFFF) >= threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFFFF) >= threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFFFF) >= threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFFFF) >= threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFFFF) >= threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFFFF) >= threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFFFF) >= threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFFFF) >= threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFFFF) >= threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFFFF) >= threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFFFF) >= threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFFFF) >= threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFFFF) >= threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFFFF) >= threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFFFF) >= threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFFFF) >= threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFFFF) >= threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFFFF) >= threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFFFF) >= threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFFFF) >= threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFFFF) >= threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFFFF) >= threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFFFF) >= threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFFFF) >= threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFFFF) >= threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFFFF) >= threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFFFF) >= threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFFFF) >= threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFFFF) >= threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFFFF) >= threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFFFF) >= threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFFFF) >= threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFFFF) >= threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFFFF) >= threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFFFF) >= threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFFFF) >= threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFFFF) >= threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFFFF) >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -2212,9 +2236,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLessOrEqual(
-        long[] dest, long destPos, short[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, short[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -2234,79 +2257,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = ((src[srcPos] & 0xFFFF) <= threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFFFF) <= threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFFFF) <= threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFFFF) <= threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFFFF) <= threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFFFF) <= threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFFFF) <= threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFFFF) <= threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFFFF) <= threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFFFF) <= threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFFFF) <= threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFFFF) <= threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFFFF) <= threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFFFF) <= threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFFFF) <= threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFFFF) <= threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFFFF) <= threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFFFF) <= threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFFFF) <= threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFFFF) <= threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFFFF) <= threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFFFF) <= threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFFFF) <= threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFFFF) <= threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFFFF) <= threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFFFF) <= threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFFFF) <= threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFFFF) <= threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFFFF) <= threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFFFF) <= threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFFFF) <= threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFFFF) <= threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFFFF) <= threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFFFF) <= threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFFFF) <= threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFFFF) <= threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFFFF) <= threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFFFF) <= threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFFFF) <= threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFFFF) <= threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFFFF) <= threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFFFF) <= threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFFFF) <= threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFFFF) <= threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFFFF) <= threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFFFF) <= threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFFFF) <= threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFFFF) <= threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFFFF) <= threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFFFF) <= threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFFFF) <= threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFFFF) <= threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFFFF) <= threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFFFF) <= threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFFFF) <= threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFFFF) <= threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFFFF) <= threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFFFF) <= threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFFFF) <= threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFFFF) <= threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFFFF) <= threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFFFF) <= threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFFFF) <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = ((src[srcPos] & 0xFFFF) <= threshold ? 1 : 0)
 
-                | ((src[srcPos + 1] & 0xFFFF) <= threshold ? 1 << 1 : 0)
+                    | ((src[srcPos + 1] & 0xFFFF) <= threshold ? 1 << 1 : 0)
 
-                | ((src[srcPos + 2] & 0xFFFF) <= threshold ? 1 << 2 : 0)
-                | ((src[srcPos + 3] & 0xFFFF) <= threshold ? 1 << 3 : 0)
-                | ((src[srcPos + 4] & 0xFFFF) <= threshold ? 1 << 4 : 0)
-                | ((src[srcPos + 5] & 0xFFFF) <= threshold ? 1 << 5 : 0)
-                | ((src[srcPos + 6] & 0xFFFF) <= threshold ? 1 << 6 : 0)
-                | ((src[srcPos + 7] & 0xFFFF) <= threshold ? 1 << 7 : 0)
-                | ((src[srcPos + 8] & 0xFFFF) <= threshold ? 1 << 8 : 0)
-                | ((src[srcPos + 9] & 0xFFFF) <= threshold ? 1 << 9 : 0)
-                | ((src[srcPos + 10] & 0xFFFF) <= threshold ? 1 << 10 : 0)
-                | ((src[srcPos + 11] & 0xFFFF) <= threshold ? 1 << 11 : 0)
-                | ((src[srcPos + 12] & 0xFFFF) <= threshold ? 1 << 12 : 0)
-                | ((src[srcPos + 13] & 0xFFFF) <= threshold ? 1 << 13 : 0)
-                | ((src[srcPos + 14] & 0xFFFF) <= threshold ? 1 << 14 : 0)
-                | ((src[srcPos + 15] & 0xFFFF) <= threshold ? 1 << 15 : 0)
-                | ((src[srcPos + 16] & 0xFFFF) <= threshold ? 1 << 16 : 0)
-                | ((src[srcPos + 17] & 0xFFFF) <= threshold ? 1 << 17 : 0)
-                | ((src[srcPos + 18] & 0xFFFF) <= threshold ? 1 << 18 : 0)
-                | ((src[srcPos + 19] & 0xFFFF) <= threshold ? 1 << 19 : 0)
-                | ((src[srcPos + 20] & 0xFFFF) <= threshold ? 1 << 20 : 0)
-                | ((src[srcPos + 21] & 0xFFFF) <= threshold ? 1 << 21 : 0)
-                | ((src[srcPos + 22] & 0xFFFF) <= threshold ? 1 << 22 : 0)
-                | ((src[srcPos + 23] & 0xFFFF) <= threshold ? 1 << 23 : 0)
-                | ((src[srcPos + 24] & 0xFFFF) <= threshold ? 1 << 24 : 0)
-                | ((src[srcPos + 25] & 0xFFFF) <= threshold ? 1 << 25 : 0)
-                | ((src[srcPos + 26] & 0xFFFF) <= threshold ? 1 << 26 : 0)
-                | ((src[srcPos + 27] & 0xFFFF) <= threshold ? 1 << 27 : 0)
-                | ((src[srcPos + 28] & 0xFFFF) <= threshold ? 1 << 28 : 0)
-                | ((src[srcPos + 29] & 0xFFFF) <= threshold ? 1 << 29 : 0)
-                | ((src[srcPos + 30] & 0xFFFF) <= threshold ? 1 << 30 : 0)
-                | ((src[srcPos + 31] & 0xFFFF) <= threshold ? 1 << 31 : 0)
+                    | ((src[srcPos + 2] & 0xFFFF) <= threshold ? 1 << 2 : 0)
+                    | ((src[srcPos + 3] & 0xFFFF) <= threshold ? 1 << 3 : 0)
+                    | ((src[srcPos + 4] & 0xFFFF) <= threshold ? 1 << 4 : 0)
+                    | ((src[srcPos + 5] & 0xFFFF) <= threshold ? 1 << 5 : 0)
+                    | ((src[srcPos + 6] & 0xFFFF) <= threshold ? 1 << 6 : 0)
+                    | ((src[srcPos + 7] & 0xFFFF) <= threshold ? 1 << 7 : 0)
+                    | ((src[srcPos + 8] & 0xFFFF) <= threshold ? 1 << 8 : 0)
+                    | ((src[srcPos + 9] & 0xFFFF) <= threshold ? 1 << 9 : 0)
+                    | ((src[srcPos + 10] & 0xFFFF) <= threshold ? 1 << 10 : 0)
+                    | ((src[srcPos + 11] & 0xFFFF) <= threshold ? 1 << 11 : 0)
+                    | ((src[srcPos + 12] & 0xFFFF) <= threshold ? 1 << 12 : 0)
+                    | ((src[srcPos + 13] & 0xFFFF) <= threshold ? 1 << 13 : 0)
+                    | ((src[srcPos + 14] & 0xFFFF) <= threshold ? 1 << 14 : 0)
+                    | ((src[srcPos + 15] & 0xFFFF) <= threshold ? 1 << 15 : 0)
+                    | ((src[srcPos + 16] & 0xFFFF) <= threshold ? 1 << 16 : 0)
+                    | ((src[srcPos + 17] & 0xFFFF) <= threshold ? 1 << 17 : 0)
+                    | ((src[srcPos + 18] & 0xFFFF) <= threshold ? 1 << 18 : 0)
+                    | ((src[srcPos + 19] & 0xFFFF) <= threshold ? 1 << 19 : 0)
+                    | ((src[srcPos + 20] & 0xFFFF) <= threshold ? 1 << 20 : 0)
+                    | ((src[srcPos + 21] & 0xFFFF) <= threshold ? 1 << 21 : 0)
+                    | ((src[srcPos + 22] & 0xFFFF) <= threshold ? 1 << 22 : 0)
+                    | ((src[srcPos + 23] & 0xFFFF) <= threshold ? 1 << 23 : 0)
+                    | ((src[srcPos + 24] & 0xFFFF) <= threshold ? 1 << 24 : 0)
+                    | ((src[srcPos + 25] & 0xFFFF) <= threshold ? 1 << 25 : 0)
+                    | ((src[srcPos + 26] & 0xFFFF) <= threshold ? 1 << 26 : 0)
+                    | ((src[srcPos + 27] & 0xFFFF) <= threshold ? 1 << 27 : 0)
+                    | ((src[srcPos + 28] & 0xFFFF) <= threshold ? 1 << 28 : 0)
+                    | ((src[srcPos + 29] & 0xFFFF) <= threshold ? 1 << 29 : 0)
+                    | ((src[srcPos + 30] & 0xFFFF) <= threshold ? 1 << 30 : 0)
+                    | ((src[srcPos + 31] & 0xFFFF) <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -2323,6 +2346,7 @@ public class PackedBitArrays {
 
     }
 
+
     /**
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
@@ -2340,9 +2364,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreater(
-        long[] dest, long destPos, int[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, int[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -2362,79 +2385,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] > threshold ? 1 : 0)
 
-                | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] > threshold ? 1 : 0)
 
-                | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -2468,9 +2491,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLess(
-        long[] dest, long destPos, int[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, int[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -2490,79 +2512,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] < threshold ? 1 : 0)
 
-                | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] < threshold ? 1 : 0)
 
-                | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -2596,9 +2618,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreaterOrEqual(
-        long[] dest, long destPos, int[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, int[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -2618,79 +2639,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] >= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] >= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -2724,9 +2745,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLessOrEqual(
-        long[] dest, long destPos, int[] src, int srcPos, int count,
-        int threshold)
-    {
+            long[] dest, long destPos, int[] src, int srcPos, int count,
+            int threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -2746,79 +2766,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] <= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] <= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -2834,6 +2854,7 @@ public class PackedBitArrays {
         }
 
     }
+
 
     /**
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
@@ -2852,9 +2873,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreater(
-        long[] dest, long destPos, long[] src, int srcPos, int count,
-        long threshold)
-    {
+            long[] dest, long destPos, long[] src, int srcPos, int count,
+            long threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -2874,79 +2894,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] > threshold ? 1 : 0)
 
-                | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] > threshold ? 1 : 0)
 
-                | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -2980,9 +3000,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLess(
-        long[] dest, long destPos, long[] src, int srcPos, int count,
-        long threshold)
-    {
+            long[] dest, long destPos, long[] src, int srcPos, int count,
+            long threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -3002,79 +3021,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] < threshold ? 1 : 0)
 
-                | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] < threshold ? 1 : 0)
 
-                | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -3108,9 +3127,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreaterOrEqual(
-        long[] dest, long destPos, long[] src, int srcPos, int count,
-        long threshold)
-    {
+            long[] dest, long destPos, long[] src, int srcPos, int count,
+            long threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -3130,79 +3148,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] >= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] >= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -3236,9 +3254,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLessOrEqual(
-        long[] dest, long destPos, long[] src, int srcPos, int count,
-        long threshold)
-    {
+            long[] dest, long destPos, long[] src, int srcPos, int count,
+            long threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -3258,79 +3275,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] <= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] <= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -3346,6 +3363,7 @@ public class PackedBitArrays {
         }
 
     }
+
 
     /**
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
@@ -3364,9 +3382,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreater(
-        long[] dest, long destPos, float[] src, int srcPos, int count,
-        float threshold)
-    {
+            long[] dest, long destPos, float[] src, int srcPos, int count,
+            float threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -3386,79 +3403,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] > threshold ? 1 : 0)
 
-                | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] > threshold ? 1 : 0)
 
-                | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -3492,9 +3509,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLess(
-        long[] dest, long destPos, float[] src, int srcPos, int count,
-        float threshold)
-    {
+            long[] dest, long destPos, float[] src, int srcPos, int count,
+            float threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -3514,79 +3530,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] < threshold ? 1 : 0)
 
-                | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] < threshold ? 1 : 0)
 
-                | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -3620,9 +3636,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreaterOrEqual(
-        long[] dest, long destPos, float[] src, int srcPos, int count,
-        float threshold)
-    {
+            long[] dest, long destPos, float[] src, int srcPos, int count,
+            float threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -3642,79 +3657,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] >= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] >= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -3748,9 +3763,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLessOrEqual(
-        long[] dest, long destPos, float[] src, int srcPos, int count,
-        float threshold)
-    {
+            long[] dest, long destPos, float[] src, int srcPos, int count,
+            float threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -3770,79 +3784,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] <= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] <= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -3858,6 +3872,7 @@ public class PackedBitArrays {
         }
 
     }
+
 
     /**
      * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
@@ -3876,9 +3891,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreater(
-        long[] dest, long destPos, double[] src, int srcPos, int count,
-        double threshold)
-    {
+            long[] dest, long destPos, double[] src, int srcPos, int count,
+            double threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -3898,79 +3912,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] > threshold ? 1 : 0)
 
-                | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] > threshold ? 1 : 0)
 
-                | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] > threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] > threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] > threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] > threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] > threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] > threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] > threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] > threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] > threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] > threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] > threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] > threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] > threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] > threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] > threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] > threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] > threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] > threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] > threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] > threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] > threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] > threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] > threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] > threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] > threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] > threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] > threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] > threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] > threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] > threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] > threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -4004,9 +4018,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLess(
-        long[] dest, long destPos, double[] src, int srcPos, int count,
-        double threshold)
-    {
+            long[] dest, long destPos, double[] src, int srcPos, int count,
+            double threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -4026,79 +4039,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] < threshold ? 1 : 0)
 
-                | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] < threshold ? 1 : 0)
 
-                | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] < threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] < threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] < threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] < threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] < threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] < threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] < threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] < threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] < threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] < threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] < threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] < threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] < threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] < threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] < threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] < threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] < threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] < threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] < threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] < threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] < threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] < threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] < threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] < threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] < threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] < threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] < threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] < threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] < threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] < threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] < threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -4132,9 +4145,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsGreaterOrEqual(
-        long[] dest, long destPos, double[] src, int srcPos, int count,
-        double threshold)
-    {
+            long[] dest, long destPos, double[] src, int srcPos, int count,
+            double threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -4154,79 +4166,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] >= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] >= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] >= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] >= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] >= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] >= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] >= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] >= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] >= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] >= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] >= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] >= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] >= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] >= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] >= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] >= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] >= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] >= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] >= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] >= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] >= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] >= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] >= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] >= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] >= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] >= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] >= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] >= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] >= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] >= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] >= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] >= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] >= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -4260,9 +4272,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsLessOrEqual(
-        long[] dest, long destPos, double[] src, int srcPos, int count,
-        double threshold)
-    {
+            long[] dest, long destPos, double[] src, int srcPos, int count,
+            double threshold) {
 
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
@@ -4282,79 +4293,79 @@ public class PackedBitArrays {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] <= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] <= threshold ? 1 : 0)
 
-                | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
+                    | (src[srcPos + 1] <= threshold ? 1 << 1 : 0)
 
-                | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
-                | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
-                | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
-                | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
-                | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
-                | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
-                | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
-                | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
-                | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
-                | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
-                | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
-                | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
-                | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
-                | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
-                | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
-                | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
-                | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
-                | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
-                | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
-                | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
-                | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
-                | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
-                | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
-                | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
-                | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
-                | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
-                | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
-                | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
-                | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
-                | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
+                    | (src[srcPos + 2] <= threshold ? 1 << 2 : 0)
+                    | (src[srcPos + 3] <= threshold ? 1 << 3 : 0)
+                    | (src[srcPos + 4] <= threshold ? 1 << 4 : 0)
+                    | (src[srcPos + 5] <= threshold ? 1 << 5 : 0)
+                    | (src[srcPos + 6] <= threshold ? 1 << 6 : 0)
+                    | (src[srcPos + 7] <= threshold ? 1 << 7 : 0)
+                    | (src[srcPos + 8] <= threshold ? 1 << 8 : 0)
+                    | (src[srcPos + 9] <= threshold ? 1 << 9 : 0)
+                    | (src[srcPos + 10] <= threshold ? 1 << 10 : 0)
+                    | (src[srcPos + 11] <= threshold ? 1 << 11 : 0)
+                    | (src[srcPos + 12] <= threshold ? 1 << 12 : 0)
+                    | (src[srcPos + 13] <= threshold ? 1 << 13 : 0)
+                    | (src[srcPos + 14] <= threshold ? 1 << 14 : 0)
+                    | (src[srcPos + 15] <= threshold ? 1 << 15 : 0)
+                    | (src[srcPos + 16] <= threshold ? 1 << 16 : 0)
+                    | (src[srcPos + 17] <= threshold ? 1 << 17 : 0)
+                    | (src[srcPos + 18] <= threshold ? 1 << 18 : 0)
+                    | (src[srcPos + 19] <= threshold ? 1 << 19 : 0)
+                    | (src[srcPos + 20] <= threshold ? 1 << 20 : 0)
+                    | (src[srcPos + 21] <= threshold ? 1 << 21 : 0)
+                    | (src[srcPos + 22] <= threshold ? 1 << 22 : 0)
+                    | (src[srcPos + 23] <= threshold ? 1 << 23 : 0)
+                    | (src[srcPos + 24] <= threshold ? 1 << 24 : 0)
+                    | (src[srcPos + 25] <= threshold ? 1 << 25 : 0)
+                    | (src[srcPos + 26] <= threshold ? 1 << 26 : 0)
+                    | (src[srcPos + 27] <= threshold ? 1 << 27 : 0)
+                    | (src[srcPos + 28] <= threshold ? 1 << 28 : 0)
+                    | (src[srcPos + 29] <= threshold ? 1 << 29 : 0)
+                    | (src[srcPos + 30] <= threshold ? 1 << 30 : 0)
+                    | (src[srcPos + 31] <= threshold ? 1 << 31 : 0)
 
-                ;
+                    ;
             srcPos += 32;
-            dest[k] = ((long)low & 0xFFFFFFFFL) | (((long)high) << 32);
+            dest[k] = ((long) low & 0xFFFFFFFFL) | (((long) high) << 32);
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -4373,6 +4384,7 @@ public class PackedBitArrays {
     /*Repeat.AutoGeneratedEnd*/
 
     /*Repeat.SectionStart unpackBits*/
+
     /**
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> boolean array, starting from the element <tt>#destPos</tt>.
@@ -4482,6 +4494,7 @@ public class PackedBitArrays {
 
     /*Repeat() boolean ==> char,,byte,,short,,int,,long,,float,,double,,Object
      */
+
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> boolean array, starting from the element <tt>#destPos</tt>.
@@ -4499,9 +4512,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
-        boolean[] dest, int destPos, long[] src, long srcPos, int count,
-        boolean bit0Value, boolean bit1Value)
-    {
+            boolean[] dest, int destPos, long[] src, long srcPos, int count,
+            boolean bit0Value, boolean bit1Value) {
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -4617,9 +4629,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
-        boolean[] dest, int destPos, long[] src, long srcPos, int count,
-        boolean bit1Value)
-    {
+            boolean[] dest, int destPos, long[] src, long srcPos, int count,
+            boolean bit1Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -4786,9 +4797,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
-        boolean[] dest, int destPos, long[] src, long srcPos, int count,
-        boolean bit0Value)
-    {
+            boolean[] dest, int destPos, long[] src, long srcPos, int count,
+            boolean bit0Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -4937,6 +4947,7 @@ public class PackedBitArrays {
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> char array, starting from the element <tt>#destPos</tt>.
@@ -4954,9 +4965,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
-        char[] dest, int destPos, long[] src, long srcPos, int count,
-        char bit0Value, char bit1Value)
-    {
+            char[] dest, int destPos, long[] src, long srcPos, int count,
+            char bit0Value, char bit1Value) {
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -5070,9 +5080,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
-        char[] dest, int destPos, long[] src, long srcPos, int count,
-        char bit1Value)
-    {
+            char[] dest, int destPos, long[] src, long srcPos, int count,
+            char bit1Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -5235,9 +5244,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
-        char[] dest, int destPos, long[] src, long srcPos, int count,
-        char bit0Value)
-    {
+            char[] dest, int destPos, long[] src, long srcPos, int count,
+            char bit0Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -5382,6 +5390,7 @@ public class PackedBitArrays {
         }
     }
 
+
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> byte array, starting from the element <tt>#destPos</tt>.
@@ -5399,9 +5408,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
-        byte[] dest, int destPos, long[] src, long srcPos, int count,
-        byte bit0Value, byte bit1Value)
-    {
+            byte[] dest, int destPos, long[] src, long srcPos, int count,
+            byte bit0Value, byte bit1Value) {
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -5515,9 +5523,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
-        byte[] dest, int destPos, long[] src, long srcPos, int count,
-        byte bit1Value)
-    {
+            byte[] dest, int destPos, long[] src, long srcPos, int count,
+            byte bit1Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -5680,9 +5687,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
-        byte[] dest, int destPos, long[] src, long srcPos, int count,
-        byte bit0Value)
-    {
+            byte[] dest, int destPos, long[] src, long srcPos, int count,
+            byte bit0Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -5827,6 +5833,7 @@ public class PackedBitArrays {
         }
     }
 
+
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> short array, starting from the element <tt>#destPos</tt>.
@@ -5844,9 +5851,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
-        short[] dest, int destPos, long[] src, long srcPos, int count,
-        short bit0Value, short bit1Value)
-    {
+            short[] dest, int destPos, long[] src, long srcPos, int count,
+            short bit0Value, short bit1Value) {
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -5960,9 +5966,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
-        short[] dest, int destPos, long[] src, long srcPos, int count,
-        short bit1Value)
-    {
+            short[] dest, int destPos, long[] src, long srcPos, int count,
+            short bit1Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -6125,9 +6130,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
-        short[] dest, int destPos, long[] src, long srcPos, int count,
-        short bit0Value)
-    {
+            short[] dest, int destPos, long[] src, long srcPos, int count,
+            short bit0Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -6272,6 +6276,7 @@ public class PackedBitArrays {
         }
     }
 
+
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> int array, starting from the element <tt>#destPos</tt>.
@@ -6289,9 +6294,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
-        int[] dest, int destPos, long[] src, long srcPos, int count,
-        int bit0Value, int bit1Value)
-    {
+            int[] dest, int destPos, long[] src, long srcPos, int count,
+            int bit0Value, int bit1Value) {
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -6405,9 +6409,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
-        int[] dest, int destPos, long[] src, long srcPos, int count,
-        int bit1Value)
-    {
+            int[] dest, int destPos, long[] src, long srcPos, int count,
+            int bit1Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -6570,9 +6573,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
-        int[] dest, int destPos, long[] src, long srcPos, int count,
-        int bit0Value)
-    {
+            int[] dest, int destPos, long[] src, long srcPos, int count,
+            int bit0Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -6717,6 +6719,7 @@ public class PackedBitArrays {
         }
     }
 
+
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> long array, starting from the element <tt>#destPos</tt>.
@@ -6734,9 +6737,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
-        long[] dest, int destPos, long[] src, long srcPos, int count,
-        long bit0Value, long bit1Value)
-    {
+            long[] dest, int destPos, long[] src, long srcPos, int count,
+            long bit0Value, long bit1Value) {
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -6850,9 +6852,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
-        long[] dest, int destPos, long[] src, long srcPos, int count,
-        long bit1Value)
-    {
+            long[] dest, int destPos, long[] src, long srcPos, int count,
+            long bit1Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -7015,9 +7016,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
-        long[] dest, int destPos, long[] src, long srcPos, int count,
-        long bit0Value)
-    {
+            long[] dest, int destPos, long[] src, long srcPos, int count,
+            long bit0Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -7162,6 +7162,7 @@ public class PackedBitArrays {
         }
     }
 
+
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> float array, starting from the element <tt>#destPos</tt>.
@@ -7179,9 +7180,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
-        float[] dest, int destPos, long[] src, long srcPos, int count,
-        float bit0Value, float bit1Value)
-    {
+            float[] dest, int destPos, long[] src, long srcPos, int count,
+            float bit0Value, float bit1Value) {
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -7295,9 +7295,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
-        float[] dest, int destPos, long[] src, long srcPos, int count,
-        float bit1Value)
-    {
+            float[] dest, int destPos, long[] src, long srcPos, int count,
+            float bit1Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -7460,9 +7459,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
-        float[] dest, int destPos, long[] src, long srcPos, int count,
-        float bit0Value)
-    {
+            float[] dest, int destPos, long[] src, long srcPos, int count,
+            float bit0Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -7607,6 +7605,7 @@ public class PackedBitArrays {
         }
     }
 
+
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> double array, starting from the element <tt>#destPos</tt>.
@@ -7624,9 +7623,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
-        double[] dest, int destPos, long[] src, long srcPos, int count,
-        double bit0Value, double bit1Value)
-    {
+            double[] dest, int destPos, long[] src, long srcPos, int count,
+            double bit0Value, double bit1Value) {
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -7740,9 +7738,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
-        double[] dest, int destPos, long[] src, long srcPos, int count,
-        double bit1Value)
-    {
+            double[] dest, int destPos, long[] src, long srcPos, int count,
+            double bit1Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -7905,9 +7902,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
-        double[] dest, int destPos, long[] src, long srcPos, int count,
-        double bit0Value)
-    {
+            double[] dest, int destPos, long[] src, long srcPos, int count,
+            double bit0Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -8052,6 +8048,7 @@ public class PackedBitArrays {
         }
     }
 
+
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> Object array, starting from the element <tt>#destPos</tt>.
@@ -8069,9 +8066,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
-        Object[] dest, int destPos, long[] src, long srcPos, int count,
-        Object bit0Value, Object bit1Value)
-    {
+            Object[] dest, int destPos, long[] src, long srcPos, int count,
+            Object bit0Value, Object bit1Value) {
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -8185,9 +8181,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
-        Object[] dest, int destPos, long[] src, long srcPos, int count,
-        Object bit1Value)
-    {
+            Object[] dest, int destPos, long[] src, long srcPos, int count,
+            Object bit1Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -8350,9 +8345,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
-        Object[] dest, int destPos, long[] src, long srcPos, int count,
-        Object bit0Value)
-    {
+            Object[] dest, int destPos, long[] src, long srcPos, int count,
+            Object bit0Value) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -8607,6 +8601,7 @@ public class PackedBitArrays {
     }
 
     /*Repeat.SectionStart fillBits*/
+
     /**
      * Fills <tt>count</tt> bits in the packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
      * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
@@ -8617,7 +8612,7 @@ public class PackedBitArrays {
      * @param destPos position of the first written bit in the destination array.
      * @param count   the number of bits to be filled (must be &gt;=0).
      * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     public static void fillBits(long[] dest, long destPos, long count, boolean value) {
@@ -8667,8 +8662,8 @@ public class PackedBitArrays {
      * @param array the checked bit array (bits are packed in <tt>long</tt> values).
      * @param pos   the initial index of the checked fragment in the array.
      * @param count the number of checked bits.
-     * @return      <tt>true</tt> if and only if all <tt>count</tt> bits, starting from the bit <tt>#pos</tt>,
-     *              are zero, or if <tt>count==0</tt>.
+     * @return <tt>true</tt> if and only if all <tt>count</tt> bits, starting from the bit <tt>#pos</tt>,
+     * are zero, or if <tt>count==0</tt>.
      * @throws NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if checking would cause access of data outside array bounds.
      */
@@ -8808,6 +8803,7 @@ public class PackedBitArrays {
     }
 
     /*Repeat.SectionStart andOrBits*/
+
     /**
      * Replaces <tt>count</tt> bits,
      * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
@@ -9370,8 +9366,8 @@ public class PackedBitArrays {
                 sPosRem -= cntStart;
             } else {
                 v = sPosRem == 0 ? // necessary check to avoid possible IndexOutOfBoundsException
-                    src[sPos - 1] >>> (64 - cntStart) :
-                    (src[sPos] << cntStart - sPosRem) | (src[sPos - 1] >>> (64 + sPosRem - cntStart));
+                        src[sPos - 1] >>> (64 - cntStart) :
+                        (src[sPos] << cntStart - sPosRem) | (src[sPos - 1] >>> (64 + sPosRem - cntStart));
                 sPos--;
                 sPosRem = (sPosRem - cntStart) & 63;
             }
@@ -9403,7 +9399,7 @@ public class PackedBitArrays {
             }
         } else {
             int sPosRem64 = 64 - sPosRem;
-            long sNext =  src[sPos];
+            long sNext = src[sPos];
             // count > 0, so either this loop or the next loop will really work: src[sPos] must exist
             for (int dPosMax = dPos + (int) (count >>> 6); dPos < dPosMax; dPos++) {
                 sPos--;
@@ -9436,9 +9432,9 @@ public class PackedBitArrays {
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of bit to be found.
-     * @return          the index of the first occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this bit does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return the index of the first occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
+     * or <tt>-1</tt> if this bit does not occur
+     * or if <tt>lowIndex&gt;=highIndex</tt>.
      * @throws NullPointerException      if <tt>array</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>lowIndex</tt> is negative or
      *                                   if <tt>highIndex</tt> is greater than <tt>src.length*64</tt>.
@@ -9446,10 +9442,12 @@ public class PackedBitArrays {
      */
     public static long indexOfBit(long[] src, long lowIndex, long highIndex, boolean value) {
         //[[Repeat.SectionStart indexOfBit_method_impl]]
-        if (lowIndex < 0)
+        if (lowIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: low index = " + lowIndex);
-        if (highIndex > ((long)src.length) << 6)
+        }
+        if (highIndex > ((long) src.length) << 6) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: high index = " + highIndex);
+        }
         if (lowIndex >= highIndex) {
             return -1;
         }
@@ -9514,9 +9512,9 @@ public class PackedBitArrays {
      *                  pass <tt>0</tt> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of bit to be found.
-     * @return          the index of the last occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this bit does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return the index of the last occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
+     * or <tt>-1</tt> if this bit does not occur
+     * or if <tt>lowIndex&gt;=highIndex</tt>.
      * @throws NullPointerException      if <tt>src</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>lowIndex</tt> is negative or
      *                                   if <tt>highIndex</tt> is greater than <tt>src.length*64</tt>.
@@ -9524,10 +9522,12 @@ public class PackedBitArrays {
      */
     public static long lastIndexOfBit(long[] src, long lowIndex, long highIndex, boolean value) {
         //[[Repeat.SectionStart lastIndexOfBit_method_impl]]
-        if (lowIndex < 0)
+        if (lowIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: low index = " + lowIndex);
-        if (highIndex > ((long) src.length) << 6)
+        }
+        if (highIndex > ((long) src.length) << 6) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: high index = " + highIndex);
+        }
         if (lowIndex >= highIndex) {
             return -1;
         }
@@ -9577,29 +9577,32 @@ public class PackedBitArrays {
     }
 
     /*Repeat.SectionStart cardinality*/
+
     /**
      * Returns the number of high bits (1) in the given fragment of the given packed bit array.
      *
      * @param src       the source packed bit array.
      * @param fromIndex the initial checked bit index in <tt>array</tt>, inclusive.
      * @param toIndex   the end checked bit index in <tt>array</tt>, exclusive.
-     * @return          the number of high bits (1) in the given fragment of the given packed bit array.
-     * @throws NullPointerException if the <tt>src</tt> argument is <tt>null</tt>.
+     * @return the number of high bits (1) in the given fragment of the given packed bit array.
+     * @throws NullPointerException      if the <tt>src</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
      *                                   if <tt>toIndex</tt> is greater than <tt>src.length*64</tt>,
      *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>
      */
     public static long cardinality(long[] src, final long fromIndex, final long toIndex) {
         //[[Repeat.SectionStart cardinality_method_impl]]
-        if (src == null)
-            throw new NullPointerException("Null src argument in cardinality method");
-        if (fromIndex < 0)
+        Objects.requireNonNull(src, "Null src argument in cardinality method");
+        if (fromIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: initial index = " + fromIndex);
-        if (toIndex > ((long) src.length) << 6)
+        }
+        if (toIndex > ((long) src.length) << 6) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: end index = " + toIndex);
-        if (fromIndex > toIndex)
+        }
+        if (fromIndex > toIndex) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: initial index = " + fromIndex
-                + " > end index = " + toIndex);
+                    + " > end index = " + toIndex);
+        }
         long count = toIndex - fromIndex;
 
         int sPos = (int) (fromIndex >>> 6);

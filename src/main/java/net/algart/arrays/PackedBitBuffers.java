@@ -25,6 +25,7 @@
 package net.algart.arrays;
 
 import java.nio.LongBuffer;
+import java.util.Objects;
 
 /**
  * <p>Operations with bit arrays packed into <tt>java.nio.LongBuffer</tt>.</p>
@@ -78,7 +79,8 @@ import java.nio.LongBuffer;
  * @author Daniel Alievsky
  */
 public class PackedBitBuffers {
-    private PackedBitBuffers() {}
+    private PackedBitBuffers() {
+    }
 
     /**
      * Returns <tt>buffer.hasArray()?buffer.array():buffer</tt>.
@@ -89,7 +91,7 @@ public class PackedBitBuffers {
      * method for the sampe Java <tt>long[]</tt> array.
      *
      * @param buffer the buffer.
-     * @return       this buffer if it is not backed by a Java array, the underlying Java array if it is backed by it.
+     * @return this buffer if it is not backed by a Java array, the underlying Java array if it is backed by it.
      */
     public static Object getLock(LongBuffer buffer) {
         return buffer.hasArray() ? buffer.array() : buffer;
@@ -103,9 +105,9 @@ public class PackedBitBuffers {
      *
      * @param src   the source buffer (bits are packed into <tt>long</tt> values).
      * @param index index of the returned bit.
-     * @return      the bit at the specified index.
+     * @return the bit at the specified index.
      * @throws IndexOutOfBoundsException if this method cause access of data outside buffer limits.
-     * @throws NullPointerException if <tt>src</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>src</tt> is <tt>null</tt>.
      */
     public static boolean getBit(LongBuffer src, long index) {
         return (src.get((int) (index >>> 6)) & (1L << (index & 63))) != 0L;
@@ -128,7 +130,7 @@ public class PackedBitBuffers {
      * @param index index of the written bit.
      * @param value new bit value.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      */
     public static void setBit(LongBuffer dest, long index, boolean value) {
         synchronized (getLock(dest)) {
@@ -159,14 +161,14 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first read bit in the source buffer.
      * @param count   the number of bits to be copied (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
-     * @throws NullPointerException if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      */
     public static void copyBits(LongBuffer dest, long destPos, LongBuffer src, long srcPos, long count) {
         if (src == dest && srcPos == destPos && src != null) {
             return;
         }
         copyBits(dest, destPos, src, srcPos, count,
-            src == dest && srcPos <= destPos && srcPos + count > destPos);
+                src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
 
     /**
@@ -197,12 +199,16 @@ public class PackedBitBuffers {
      * @param count        the number of bits to be copied (must be &gt;=0).
      * @param reverseOrder if <tt>true</tt>, the bits will be copied in the reverse order.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
-     * @throws NullPointerException if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @see #copyBits(LongBuffer, long, LongBuffer, long, long)
      */
-    public static void copyBits(LongBuffer dest, long destPos, LongBuffer src, long srcPos, long count,
-        boolean reverseOrder)
-    {
+    public static void copyBits(
+            LongBuffer dest,
+            long destPos,
+            LongBuffer src,
+            long srcPos,
+            long count,
+            boolean reverseOrder) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, copyBits_method_impl)
         //  dest\[([^\]]+)\]\s*=\s*([^;]*) ==> dest.put($1, $2);;
         //  (src|dest)\[([^\]]+)\] ==> $1.get($2);;
@@ -211,8 +217,8 @@ public class PackedBitBuffers {
         //  if (reverseOrder);;
         //  //Start_nothingToDo.*?//End_nothingToDo.*?(\r(?!\n)|\n|\r\n) ==> $1;;
         //  //Start_sPrev.*?//End_sPrev.*?(\r(?!\n)|\n|\r\n) ==> sPrev = cnt == 0 ? 0 : src.get(sPos);
-                    // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
-                    // because the reverseOrder=true argument may be passed in this case$1;;
+        // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
+        // because the reverseOrder=true argument may be passed in this case$1;;
         //  System\.arraycopy\((\w+,\s*\w+,\s*)(\w+,\s*\w+,\s*)(\w+)\) ==>
         //  JBuffers.copyLongBuffer($2$1$3, reverseOrder)   !! Auto-generated: NOT EDIT !! >>
         int sPos = (int) (srcPos >>> 6);
@@ -225,7 +231,7 @@ public class PackedBitBuffers {
             cntStart = (int) count;
             maskStart &= (1L << (dPosRem + cntStart)) - 1; // &= dPosRem+cntStart times 1 (from the left)
         }
-        if (reverseOrder)        {
+        if (reverseOrder) {
             // overlap possible
             if (sPosRem == dPosRem) {
 
@@ -407,7 +413,7 @@ public class PackedBitBuffers {
      * @param secondPos starting index of bit to exchange in the second <tt>LongBuffer</tt>.
      * @param count     the number of bits to be exchanged (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
-     * @throws NullPointerException if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      */
     public static void swapBits(LongBuffer first, long firstPos, LongBuffer second, long secondPos, long count) {
         for (long firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
@@ -418,16 +424,16 @@ public class PackedBitBuffers {
                     if (v1 != v2) {
                         if (v2)
                             first.put((int) (firstPos >>> 6),
-                                first.get((int) (firstPos >>> 6)) | 1L << (firstPos & 63));
+                                    first.get((int) (firstPos >>> 6)) | 1L << (firstPos & 63));
                         else
                             first.put((int) (firstPos >>> 6),
-                                first.get((int) (firstPos >>> 6)) & ~(1L << (firstPos & 63)));
+                                    first.get((int) (firstPos >>> 6)) & ~(1L << (firstPos & 63)));
                         if (v1)
                             second.put((int) (secondPos >>> 6),
-                                second.get((int) (secondPos >>> 6)) | 1L << (secondPos & 63));
+                                    second.get((int) (secondPos >>> 6)) | 1L << (secondPos & 63));
                         else
                             second.put((int) (secondPos >>> 6),
-                                second.get((int) (secondPos >>> 6)) & ~(1L << (secondPos & 63)));
+                                    second.get((int) (secondPos >>> 6)) & ~(1L << (secondPos & 63)));
                     }
                 }
             }
@@ -444,7 +450,7 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first read bit in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds or buffer limit.
-     * @throws NullPointerException if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      */
     public static void packBits(LongBuffer dest, long destPos, boolean[] src, int srcPos, int count) {
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
@@ -465,79 +471,79 @@ public class PackedBitBuffers {
         for (int k = (int) (destPos >>> 6), kMax = k + cnt; k < kMax; k++) {
             int low = (src[srcPos] ? 1 : 0)
 //[[Repeat() \([^\)]*\) ==> (src[srcPos + $INDEX(start=2)] ? 1 << $INDEX(start=2) : 0) ,, ...(30)]]
-                | (src[srcPos + 1] ? 1 << 1 : 0)
+                    | (src[srcPos + 1] ? 1 << 1 : 0)
 //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-                | (src[srcPos + 2] ? 1 << 2 : 0)
-                | (src[srcPos + 3] ? 1 << 3 : 0)
-                | (src[srcPos + 4] ? 1 << 4 : 0)
-                | (src[srcPos + 5] ? 1 << 5 : 0)
-                | (src[srcPos + 6] ? 1 << 6 : 0)
-                | (src[srcPos + 7] ? 1 << 7 : 0)
-                | (src[srcPos + 8] ? 1 << 8 : 0)
-                | (src[srcPos + 9] ? 1 << 9 : 0)
-                | (src[srcPos + 10] ? 1 << 10 : 0)
-                | (src[srcPos + 11] ? 1 << 11 : 0)
-                | (src[srcPos + 12] ? 1 << 12 : 0)
-                | (src[srcPos + 13] ? 1 << 13 : 0)
-                | (src[srcPos + 14] ? 1 << 14 : 0)
-                | (src[srcPos + 15] ? 1 << 15 : 0)
-                | (src[srcPos + 16] ? 1 << 16 : 0)
-                | (src[srcPos + 17] ? 1 << 17 : 0)
-                | (src[srcPos + 18] ? 1 << 18 : 0)
-                | (src[srcPos + 19] ? 1 << 19 : 0)
-                | (src[srcPos + 20] ? 1 << 20 : 0)
-                | (src[srcPos + 21] ? 1 << 21 : 0)
-                | (src[srcPos + 22] ? 1 << 22 : 0)
-                | (src[srcPos + 23] ? 1 << 23 : 0)
-                | (src[srcPos + 24] ? 1 << 24 : 0)
-                | (src[srcPos + 25] ? 1 << 25 : 0)
-                | (src[srcPos + 26] ? 1 << 26 : 0)
-                | (src[srcPos + 27] ? 1 << 27 : 0)
-                | (src[srcPos + 28] ? 1 << 28 : 0)
-                | (src[srcPos + 29] ? 1 << 29 : 0)
-                | (src[srcPos + 30] ? 1 << 30 : 0)
-                | (src[srcPos + 31] ? 1 << 31 : 0)
+                    | (src[srcPos + 2] ? 1 << 2 : 0)
+                    | (src[srcPos + 3] ? 1 << 3 : 0)
+                    | (src[srcPos + 4] ? 1 << 4 : 0)
+                    | (src[srcPos + 5] ? 1 << 5 : 0)
+                    | (src[srcPos + 6] ? 1 << 6 : 0)
+                    | (src[srcPos + 7] ? 1 << 7 : 0)
+                    | (src[srcPos + 8] ? 1 << 8 : 0)
+                    | (src[srcPos + 9] ? 1 << 9 : 0)
+                    | (src[srcPos + 10] ? 1 << 10 : 0)
+                    | (src[srcPos + 11] ? 1 << 11 : 0)
+                    | (src[srcPos + 12] ? 1 << 12 : 0)
+                    | (src[srcPos + 13] ? 1 << 13 : 0)
+                    | (src[srcPos + 14] ? 1 << 14 : 0)
+                    | (src[srcPos + 15] ? 1 << 15 : 0)
+                    | (src[srcPos + 16] ? 1 << 16 : 0)
+                    | (src[srcPos + 17] ? 1 << 17 : 0)
+                    | (src[srcPos + 18] ? 1 << 18 : 0)
+                    | (src[srcPos + 19] ? 1 << 19 : 0)
+                    | (src[srcPos + 20] ? 1 << 20 : 0)
+                    | (src[srcPos + 21] ? 1 << 21 : 0)
+                    | (src[srcPos + 22] ? 1 << 22 : 0)
+                    | (src[srcPos + 23] ? 1 << 23 : 0)
+                    | (src[srcPos + 24] ? 1 << 24 : 0)
+                    | (src[srcPos + 25] ? 1 << 25 : 0)
+                    | (src[srcPos + 26] ? 1 << 26 : 0)
+                    | (src[srcPos + 27] ? 1 << 27 : 0)
+                    | (src[srcPos + 28] ? 1 << 28 : 0)
+                    | (src[srcPos + 29] ? 1 << 29 : 0)
+                    | (src[srcPos + 30] ? 1 << 30 : 0)
+                    | (src[srcPos + 31] ? 1 << 31 : 0)
 //[[Repeat.AutoGeneratedEnd]]
-                ;
+                    ;
             srcPos += 32;
             int high = (src[srcPos] ? 1 : 0)
 //[[Repeat() \([^\)]*\) ==> (src[srcPos + $INDEX(start=2)] ? 1 << $INDEX(start=2) : 0) ,, ...(30)]]
-                | (src[srcPos + 1] ? 1 << 1 : 0)
+                    | (src[srcPos + 1] ? 1 << 1 : 0)
 //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-                | (src[srcPos + 2] ? 1 << 2 : 0)
-                | (src[srcPos + 3] ? 1 << 3 : 0)
-                | (src[srcPos + 4] ? 1 << 4 : 0)
-                | (src[srcPos + 5] ? 1 << 5 : 0)
-                | (src[srcPos + 6] ? 1 << 6 : 0)
-                | (src[srcPos + 7] ? 1 << 7 : 0)
-                | (src[srcPos + 8] ? 1 << 8 : 0)
-                | (src[srcPos + 9] ? 1 << 9 : 0)
-                | (src[srcPos + 10] ? 1 << 10 : 0)
-                | (src[srcPos + 11] ? 1 << 11 : 0)
-                | (src[srcPos + 12] ? 1 << 12 : 0)
-                | (src[srcPos + 13] ? 1 << 13 : 0)
-                | (src[srcPos + 14] ? 1 << 14 : 0)
-                | (src[srcPos + 15] ? 1 << 15 : 0)
-                | (src[srcPos + 16] ? 1 << 16 : 0)
-                | (src[srcPos + 17] ? 1 << 17 : 0)
-                | (src[srcPos + 18] ? 1 << 18 : 0)
-                | (src[srcPos + 19] ? 1 << 19 : 0)
-                | (src[srcPos + 20] ? 1 << 20 : 0)
-                | (src[srcPos + 21] ? 1 << 21 : 0)
-                | (src[srcPos + 22] ? 1 << 22 : 0)
-                | (src[srcPos + 23] ? 1 << 23 : 0)
-                | (src[srcPos + 24] ? 1 << 24 : 0)
-                | (src[srcPos + 25] ? 1 << 25 : 0)
-                | (src[srcPos + 26] ? 1 << 26 : 0)
-                | (src[srcPos + 27] ? 1 << 27 : 0)
-                | (src[srcPos + 28] ? 1 << 28 : 0)
-                | (src[srcPos + 29] ? 1 << 29 : 0)
-                | (src[srcPos + 30] ? 1 << 30 : 0)
-                | (src[srcPos + 31] ? 1 << 31 : 0)
+                    | (src[srcPos + 2] ? 1 << 2 : 0)
+                    | (src[srcPos + 3] ? 1 << 3 : 0)
+                    | (src[srcPos + 4] ? 1 << 4 : 0)
+                    | (src[srcPos + 5] ? 1 << 5 : 0)
+                    | (src[srcPos + 6] ? 1 << 6 : 0)
+                    | (src[srcPos + 7] ? 1 << 7 : 0)
+                    | (src[srcPos + 8] ? 1 << 8 : 0)
+                    | (src[srcPos + 9] ? 1 << 9 : 0)
+                    | (src[srcPos + 10] ? 1 << 10 : 0)
+                    | (src[srcPos + 11] ? 1 << 11 : 0)
+                    | (src[srcPos + 12] ? 1 << 12 : 0)
+                    | (src[srcPos + 13] ? 1 << 13 : 0)
+                    | (src[srcPos + 14] ? 1 << 14 : 0)
+                    | (src[srcPos + 15] ? 1 << 15 : 0)
+                    | (src[srcPos + 16] ? 1 << 16 : 0)
+                    | (src[srcPos + 17] ? 1 << 17 : 0)
+                    | (src[srcPos + 18] ? 1 << 18 : 0)
+                    | (src[srcPos + 19] ? 1 << 19 : 0)
+                    | (src[srcPos + 20] ? 1 << 20 : 0)
+                    | (src[srcPos + 21] ? 1 << 21 : 0)
+                    | (src[srcPos + 22] ? 1 << 22 : 0)
+                    | (src[srcPos + 23] ? 1 << 23 : 0)
+                    | (src[srcPos + 24] ? 1 << 24 : 0)
+                    | (src[srcPos + 25] ? 1 << 25 : 0)
+                    | (src[srcPos + 26] ? 1 << 26 : 0)
+                    | (src[srcPos + 27] ? 1 << 27 : 0)
+                    | (src[srcPos + 28] ? 1 << 28 : 0)
+                    | (src[srcPos + 29] ? 1 << 29 : 0)
+                    | (src[srcPos + 30] ? 1 << 30 : 0)
+                    | (src[srcPos + 31] ? 1 << 31 : 0)
 //[[Repeat.AutoGeneratedEnd]]
-                ;
+                    ;
             srcPos += 32;
-            dest.put(k, ((long)low & 0xFFFFFFFFL) | (((long)high) << 32));
+            dest.put(k, ((long) low & 0xFFFFFFFFL) | (((long) high) << 32));
             destPos += 64;
         }
         int countFinish = count & 63;
@@ -563,7 +569,7 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first read bit in the source buffer.
      * @param count   the number of bits to be unpacked (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds or buffer limit.
-     * @throws NullPointerException if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      */
     public static void unpackBits(boolean[] dest, int destPos, LongBuffer src, long srcPos, int count) {
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
@@ -670,7 +676,7 @@ public class PackedBitBuffers {
      * @param count   the number of bits to be filled (must be &gt;=0).
      * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
      * @throws IndexOutOfBoundsException if filling would cause access of data outside buffer limit.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      */
     public static void fillBits(LongBuffer dest, long destPos, long count, boolean value) {
         int dPos = (int) (destPos >>> 6);
@@ -1332,9 +1338,9 @@ public class PackedBitBuffers {
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of bit to be found.
-     * @return          the index of the first occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this bit does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return the index of the first occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
+     * or <tt>-1</tt> if this bit does not occur
+     * or if <tt>lowIndex&gt;=highIndex</tt>.
      * @throws NullPointerException      if <tt>buffer</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>lowIndex</tt> is negative or
      *                                   if <tt>highIndex</tt> is greater than <tt>src.limit()*64</tt>.
@@ -1345,10 +1351,12 @@ public class PackedBitBuffers {
         //  src\[([^\]]+)\] ==> src.get($1);;
         //  src\.length ==> src.limit();;
         //  (numberOfTrailingZeros\() ==> PackedBitArrays.$1   !! Auto-generated: NOT EDIT !! >>
-        if (lowIndex < 0)
+        if (lowIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: low index = " + lowIndex);
-        if (highIndex > ((long)src.limit()) << 6)
+        }
+        if (highIndex > ((long) src.limit()) << 6) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: high index = " + highIndex);
+        }
         if (lowIndex >= highIndex) {
             return -1;
         }
@@ -1413,9 +1421,9 @@ public class PackedBitBuffers {
      *                  pass <tt>0</tt> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of bit to be found.
-     * @return          the index of the last occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this bit does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return the index of the last occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
+     * or <tt>-1</tt> if this bit does not occur
+     * or if <tt>lowIndex&gt;=highIndex</tt>.
      * @throws NullPointerException      if <tt>src</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>lowIndex</tt> is negative or
      *                                   if <tt>highIndex</tt> is greater than <tt>src.length*64</tt>.
@@ -1425,10 +1433,12 @@ public class PackedBitBuffers {
         //  src\[([^\]]+)\] ==> src.get($1);;
         //  src\.length ==> src.limit();;
         //  (numberOfLeadingZeros\() ==> PackedBitArrays.$1   !! Auto-generated: NOT EDIT !! >>
-        if (lowIndex < 0)
+        if (lowIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: low index = " + lowIndex);
-        if (highIndex > ((long) src.limit()) << 6)
+        }
+        if (highIndex > ((long) src.limit()) << 6) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: high index = " + highIndex);
+        }
         if (lowIndex >= highIndex) {
             return -1;
         }
@@ -1483,27 +1493,28 @@ public class PackedBitBuffers {
      * @param src       the source packed bit buffer.
      * @param fromIndex the initial checked bit index in <tt>src</tt>, inclusive.
      * @param toIndex   the end checked bit index in <tt>src</tt>, exclusive.
-     * @return          the number of high bits (1) in the given fragment of the given packed bit buffer.
-     * @throws  NullPointerException if the <tt>src</tt> argument is <tt>null</tt>.
-     * @throws  IndexOutOfBoundsException
-     *          if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
-     *          if <tt>toIndex</tt> is greater than <tt>src.limit() * 64</tt>,
-     *          or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>
+     * @return the number of high bits (1) in the given fragment of the given packed bit buffer.
+     * @throws NullPointerException      if the <tt>src</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
+     *                                   if <tt>toIndex</tt> is greater than <tt>src.limit() * 64</tt>,
+     *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>
      */
     public static long cardinality(LongBuffer src, long fromIndex, long toIndex) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, cardinality_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1);;
         //  src\.length ==> src.limit();;
         //  bitCount\( ==> PackedBitArrays.bitCount(   !! Auto-generated: NOT EDIT !! >>
-        if (src == null)
-            throw new NullPointerException("Null src argument in cardinality method");
-        if (fromIndex < 0)
+        Objects.requireNonNull(src, "Null src argument in cardinality method");
+        if (fromIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: initial index = " + fromIndex);
-        if (toIndex > ((long) src.limit()) << 6)
+        }
+        if (toIndex > ((long) src.limit()) << 6) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: end index = " + toIndex);
-        if (fromIndex > toIndex)
+        }
+        if (fromIndex > toIndex) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: initial index = " + fromIndex
-                + " > end index = " + toIndex);
+                    + " > end index = " + toIndex);
+        }
         long count = toIndex - fromIndex;
 
         int sPos = (int) (fromIndex >>> 6);
