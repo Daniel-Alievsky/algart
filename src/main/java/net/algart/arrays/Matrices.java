@@ -1824,9 +1824,8 @@ public class Matrices {
         if (context == null) {
             context = ArrayContext.DEFAULT_SINGLE_THREAD;
         }
-        final List<Matrix<? extends UpdatablePArray>> list = new ArrayList<>(result);
-        final UpdatablePArray[] arrays = arraysOfParallelMatrices(UpdatablePArray.class, list, true);
-        checkDimensionEqualityWithInterleaving(interleaved, list);
+        final UpdatablePArray[] arrays = arraysOfParallelMatrices(UpdatablePArray.class, result, true);
+        checkDimensionEqualityWithInterleaving(interleaved, result);
         if (arrays.length > 0) {
             try (var unpacker = InterleavingBandsUnpacker.getInstance(context, arrays, interleaved.array())) {
                 unpacker.process();
@@ -1836,7 +1835,7 @@ public class Matrices {
 
     /**
      * Equivalent to <tt>{@link #separate(ArrayContext, Matrix, int)
-     * asLayers}(context, interleaved, Integer.MAX_VALUE)</tt> (no limitations).
+     * separate}(context, interleaved, Integer.MAX_VALUE)</tt> (no limitations).
      *
      * @param context     the context.
      * @param interleaved the source interleaved matrix.
@@ -1860,10 +1859,10 @@ public class Matrices {
      * (<i>i</i><sub>1</sub>,...,<i>i<sub>n</sub></i>)
      * of the matrix <tt>list.get(<i>i</i><sub>0</sub>)</tt> in the returned list.
      *
-     * <p>In particular, if the first dimension <i>M</i><sub>0</sub>=0, the returned list will be empty.</p>
+     * <p>If the first dimension <i>M</i><sub>0</sub>=0, the returned list will be empty.</p>
      *
      * <p>This method also checks, that the first dimension
-     * <i>M</i><sub>0</sub>=<tt>interleaved.dim(0)</tt> (that will be
+     * <i>M</i><sub>0</sub>=<tt>interleaved.dim(0)</tt> (which will be
      * equal to the size of the returned list) is not greater than the passed limit
      * and throws an exception if this limit is exceeded. Typically, this method is used for unpacking
      * matrices where the first dimension cannot be too large &mdash; for example the number
@@ -1878,7 +1877,7 @@ public class Matrices {
      * @param interleaved the source interleaved matrix.
      * @param limit       maximal allowed number of returned matrices (the first dimension of the source matrix).
      * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension
-     * (if we suppose that the source matrix contains interleaved channels, like RGBRGB... for 3-channel RGB image).
+     * (like the red, green, blue channels for 3-channel RGB image, stored in RGBRGB... format).
      * @throws NullPointerException     if <tt>interleaved</tt> argument is <tt>null</tt>.
      * @throws IllegalStateException    if <tt>interleaved</tt> matrix is 1-dimensional.
      * @throws IllegalArgumentException if <tt>limit &le; 0</tt> or if the number of returned matrices {@code >limit}.
@@ -1925,6 +1924,8 @@ public class Matrices {
      * (<i>n</i>+1)-dimensional matrix <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>,
      * where <i>M</i><sub>0</sub>=<tt>separated.size()</tt>.
      *
+     * <p>The <tt>separated</tt> list must not be empty (<i>M</i><sub>0</sub>&gt;0).</p>
+     *
      * @param context   the context.
      * @param result    the result matrix.
      * @param separated list of the source matrices; must be non-empty.
@@ -1964,8 +1965,8 @@ public class Matrices {
 
     /**
      * Merges (interleaves) <i>K</i> <i>n</i>-dimensional matrices with identical element types and dimensions
-     * <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub> into
-     * a single (<i>n</i>+1)-dimensional matrix
+     * <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>, passed in the <tt>separated</tt> list,
+     * into a single (<i>n</i>+1)-dimensional matrix
      * <i>K</i>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
      * along the first dimension.
      * The element with index (<i>i</i><sub>0</sub>,<i>i</i><sub>1</sub>,...,<i>i<sub>n</sub></i>)
@@ -1973,18 +1974,21 @@ public class Matrices {
      * (<i>i</i><sub>1</sub>,...,<i>i<sub>n</sub></i>)
      * of the matrix <tt>matrices.get(<i>i</i><sub>0</sub>)</tt>.
      *
-     * <p>The <tt>separated</tt> list must not be empty.</p>
+     * <p>The <tt>separated</tt> list must not be empty (<i>K</i>&gt;0).</p>
      *
-     * <p>For example, if the source list contains 3 2-dimensional matrices, describing red, green and blue channels
-     * of RGB color image, then the result will be 3-dimensional matrix, where the lowest (first) dimension is 3
-     * (for 3 channels) and the pixels are packed into {@link Matrix#array() underlying array} into the sequence
-     * RGBRGB...</p>
+     * <p>For example, if the source <tt>separated</tt> list contains 3 2-dimensional matrices,
+     * describing red, green and blue channels of RGB color image,
+     * then the result will be 3-dimensional matrix, where the lowest (first) dimension is 3
+     * (for 3 channels) and the pixels are packed into the {@link Matrix#array() underlying array}
+     * as a sequence RGBRGB...</p>
      *
      * @param context   the context; allows to specify (in particular)
      *                  the memory model for creating returned matrix;
      *                  may be <tt>null</tt>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
-     * @param separated list of the source matrices; must be non-empty.
-     * @return result interleaved matrix.
+     * @param separated list of the source matrices-"channels" (like the red, green, blue channels for 3-channel
+     *                  RGB image); must be non-empty.
+     * @return result matrix, where "channels" are interleaved along the first dimension
+     * (RGBRGB... sequence for 3-channel RGB image).
      * @throws NullPointerException     if <tt>separated</tt> list or one of its elements is <tt>null</tt>.
      * @throws SizeMismatchException    if <tt>separated.size()&gt;1</tt> and some of the passed matrices have
      *                                  different dimensions.
@@ -2042,7 +2046,7 @@ public class Matrices {
      * (<i>i</i><sub>0</sub>,<i>i</i><sub>1</sub>,...,<i>i</i><sub><i>n</i>&minus;1</sub>)
      * of the matrix <tt>list.get(<i>i<sub>n</sub></i>)</tt> in the returned list.
      *
-     * <p>In particular, if the last dimension <i>M</i><sub><i>n</i></sub>=0, the returned list will be empty.</p>
+     * <p>If the last dimension <i>M</i><sub><i>n</i></sub>=0, the returned list will be empty.</p>
      *
      * <p>This method also checks, that the last dimension
      * <i>M</i><sub><i>n</i></sub>=<tt>merged.dim(<i>n</i>)</tt> (that will be
@@ -2052,11 +2056,11 @@ public class Matrices {
      * of color channels or the number of frames in a movie &mdash; so it makes sense to limit
      * this value, because too large last dimension (millions) usually means incorrect usage of this function.
      * In any case, the number of returned matrices, greater than {@code Integer.MAX_VALUE}, usually leads to
-     * <tt>OutOfMemoryError</tt>.
+     * <tt>OutOfMemoryError</tt>.</p>
      *
-     * <p>Note that the matrices in the returned list are <i>views</i> of the corresponding ports
+     * <p>Note that the matrices in the returned list are <i>views</i> of the corresponding regions
      * of the source matrix: modification in the source matrix will affect the returned matrices,
-     * and vice versa.
+     * and vice versa.</p>
      *
      * @param merged the source merged matrix.
      * @param limit  maximal allowed number of returned matrices (the last dimension of the source matrix).
@@ -2085,8 +2089,9 @@ public class Matrices {
 
     /**
      * Merges (concatenates) <i>K</i> <i>n</i>-dimensional matrices with identical element types and dimensions
-     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i>&minus;1</sub> into
-     * a single (<i>n</i>+1)-dimensional matrix
+     * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i>&minus;1</sub>,
+     * passed in the <tt>matrices</tt> list,
+     * into a single (<i>n</i>+1)-dimensional matrix
      * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i>&minus;1</sub>x<i>K</i>
      * along the last dimension.
      * The element with index (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n</sub></i>)
@@ -2094,7 +2099,7 @@ public class Matrices {
      * (<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i</i><sub><i>n</i>&minus;1</sub>)
      * of the matrix <tt>matrices.get(<i>i<sub>n</sub></i>)</tt>.
      *
-     * <p>The <tt>matrices</tt> list must not be empty.</p>
+     * <p>The <tt>matrices</tt> list must not be empty (<i>K</i>&gt;0).</p>
      *
      * <p>For example, if the source list contains 3 2-dimensional matrices, describing red, green and blue channels
      * of RGB color image, then the result will be 3-dimensional matrix, where the highest (new) dimension is 3
@@ -4476,8 +4481,8 @@ public class Matrices {
         final long numberOfMatrices = numberOfChannels(dimensions, false);
         if (list.size() != numberOfMatrices) {
             throw new IllegalArgumentException("Number of elements in the passed list of separated matrix = "
-                    + list.size() + " does not match to the first dimension of the interleaved matrix "
-                    + interleaved);
+                    + list.size() + " does not match to the first dimension " + numberOfMatrices +
+                    " of the interleaved matrix " + interleaved);
         }
         if (numberOfMatrices > 0) {
             final long[] reducedDimensions = java.util.Arrays.copyOfRange(dimensions, 1, dimensions.length);

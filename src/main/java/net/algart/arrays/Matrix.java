@@ -1865,8 +1865,20 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> tile();
 
     /**
+     * Returns <tt>true</tt> if and only if this matrix is a {@link #tile(long...) tiled view}
+     * of some <tt>parent</tt> matrix, created by a call <tt>parent.tile(...)</tt> or an equivalent call.
+     * The {@link #tileParent()} method throws {@link NotSubMatrixException}
+     * if and only if this method returns <tt>false</tt>.
+     *
+     * @return whether this object is created by <tt>tile(...)</tt> or equivalent call.
+     * @see #tile(long...)
+     * @see #tile()
+     */
+    boolean isTiled();
+
+    /**
      * If this matrix is a {@link #tile(long...) tiled view} of some <tt>parent</tt> matrix,
-     * created by one of calls <tt>parent.tile(...)</tt>,
+     * created by a call <tt>parent.tile(...)</tt>,
      * returns a reference to the <tt>parent</tt> matrix instance.
      * If this matrix is not a tiled view, throws {@link NotTiledMatrixException}.
      *
@@ -1876,9 +1888,18 @@ public interface Matrix<T extends Array> extends Cloneable {
      */
     Matrix<T> tileParent() throws NotTiledMatrixException;
 
+    /**
+     * If this matrix is a {@link #tile(long...) tiled view} of some <tt>parent</tt> matrix,
+     * created by a call <tt>parent.tile(...)</tt>,
+     * creates and returns a new Java array containing the tile dimensions, used while creating this tiled view
+     * (argument of {@link #tile(long...)} method).
+     * If this matrix is not a tiled view, throws {@link NotTiledMatrixException}.
+     *
+     * @return sizes of each tile, if this instance is a tiled view of other matrix.
+     * @throws NotTiledMatrixException if this object is not created by <tt>tile(...)</tt> or equivalent call.
+     * @see #isTiled()
+     */
     long[] tileDimensions() throws NotTiledMatrixException;
-
-    boolean isTiled();
 
     /**
      * Equivalent to <tt>{@link Matrices#asLayers(Matrix) Matrices.asLayers}(thisMatrix)</tt>.
