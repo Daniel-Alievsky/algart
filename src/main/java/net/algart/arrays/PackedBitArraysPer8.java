@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Objects;
 
 /**
@@ -154,6 +156,82 @@ public class PackedBitArraysPer8 {
                 dest[(int) (index >>> 3)] &= ~(1 << (index & 7));
         }
     }
+
+    public static long[] toLongArray(byte[] byteArray) {
+        Objects.requireNonNull(byteArray, "Null byte[] array");
+        final long[] result = new long[(byteArray.length + 7) >>> 3];
+        final int numberOfWholeLongs = byteArray.length >>> 3;
+        final int alignedLength = numberOfWholeLongs << 3;
+        final ByteBuffer bb = ByteBuffer.wrap(byteArray);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        bb.limit(alignedLength);
+        bb.asLongBuffer().get(result, 0, numberOfWholeLongs);
+        if (byteArray.length > alignedLength) {
+            assert result.length == numberOfWholeLongs + 1;
+            long v = 0;
+            for (int k = alignedLength, shift = 0; k < byteArray.length; k++, shift += 8) {
+                v |= ((long) byteArray[k] & 0xFF) << shift;
+            }
+            result[numberOfWholeLongs] = v;
+        }
+        return result;
+    }
+
+    public static long[] toLongArray(ByteBuffer byteBuffer) {
+        Objects.requireNonNull(byteBuffer, "Null ByteBuffer");
+        ByteBuffer bb = byteBuffer.duplicate();
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        bb.rewind();
+        final int numberOfBytes = bb.limit();
+        final long[] result = new long[(numberOfBytes + 7) >>> 3];
+        final int numberOfWholeLongs = numberOfBytes >>> 3;
+        final int alignedLength = numberOfWholeLongs << 3;
+        bb.limit(alignedLength);
+        bb.asLongBuffer().get(result, 0, numberOfWholeLongs);
+        bb.limit(numberOfBytes);
+        if (numberOfBytes > alignedLength) {
+            assert result.length == numberOfWholeLongs + 1;
+            long v = 0;
+            for (int k = alignedLength, shift = 0; k < numberOfBytes; k++, shift += 8) {
+                v |= ((long) (bb.get(k) & 0xFF)) << shift;
+            }
+            result[numberOfWholeLongs] = v;
+        }
+        return result;
+    }
+
+    public static byte[] toByteArray(long[] packedBitArray, long packedBitArrayLength) {
+        Objects.requireNonNull(packedBitArray, "Null long[] array (packed bits)");
+        if (packedBitArrayLength < 0) {
+            throw new IllegalArgumentException("Negative length");
+        }
+        final long numberOfLongs = PackedBitArrays.packedLength(packedBitArrayLength);
+        if (numberOfLongs > packedBitArray.length) {
+            throw new IllegalArgumentException("Too short long[" + packedBitArray.length +
+                    "] array (packed bits): it must contain at least " + numberOfLongs +
+                    " long elements to store " + packedBitArrayLength + " bits");
+        }
+        final long numberOfBytes = packedLength(packedBitArrayLength);
+        if (numberOfBytes > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large number of bits " + packedBitArrayLength +
+                    " > 2^34-1: cannot pack such a large bit array in byte[] array");
+        }
+        final byte[] result = new byte[(int) numberOfBytes];
+        final int numberOfWholeLongs = result.length >>> 3;
+        final int alignedLength = numberOfWholeLongs << 3;
+        final ByteBuffer bb = ByteBuffer.wrap(result);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        bb.asLongBuffer().put(packedBitArray, 0, numberOfWholeLongs);
+        if (result.length > alignedLength) {
+            assert numberOfLongs == numberOfWholeLongs + 1;
+            long v = packedBitArray[numberOfWholeLongs];
+            for (int k = alignedLength, shift = 0; k < result.length; k++, shift += 8) {
+                result[k] = (byte) (v >>> shift);
+            }
+        }
+        return result;
+    }
+
 
     // Note: in the following regexp, we must replace src[...] ==> src[...] & 0xFF,
     // because we sometimes SHIFT this byte and, so, should work with low 8 bits;

@@ -24,8 +24,6 @@
 
 package net.algart.arrays;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.Objects;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
@@ -139,26 +137,6 @@ public class PackedBitArrays {
         }
     }
     /*Repeat.SectionEnd primitives*/
-
-    public static long[] toLongArray(byte[] byteArray) {
-        Objects.requireNonNull(byteArray, "Null byte[] array");
-        final long[] result = new long[(byteArray.length + 7) >>> 3];
-        final ByteBuffer bb = ByteBuffer.wrap(byteArray);
-        bb.order(ByteOrder.LITTLE_ENDIAN);
-        bb.asLongBuffer().get(result);
-        return result;
-    }
-
-    public static long[] toLongArray(ByteBuffer byteBuffer) {
-        Objects.requireNonNull(byteBuffer, "Null ByteBuffer");
-        ByteBuffer bb = byteBuffer.duplicate();
-        final long[] result = new long[(bb.limit() + 7) >>> 3];
-        bb.order(ByteOrder.LITTLE_ENDIAN);
-        bb.rewind();
-        bb.asLongBuffer().get(result);
-        return result;
-
-    }
 
     /**
      * Returns a hash code based on the contents of the specified fragment of the given packed bit array.
