@@ -46,34 +46,29 @@
 <!--algartHeader-->
 <div align=\"center\" style=\"margin:0 0 8px 0\">
 <noindex>
-<script type=\"text/javascript\">
-  // Google Analytics
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3ML7QX3E6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-8233371-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
+  gtag('config', 'G-F3ML7QX3E6');
 </script>
 </noindex>
-
-<!--#include virtual=\"/ad_top_utf8.php\"-->
 </div>
-<div style=\"margin:0\"><noindex><a target=\"_top\" href=\"http://algart.net/\"><i>AlgART Home</i></a></noindex></div>
+<div style=\"margin:0\"><a target=\"_top\" href=\"http://algart.net/\"><i>AlgART Home</i></a></div>
 <!--/algartHeader-->
 ]]></header>
+            <!--
             <bottom><![CDATA[
-<!--algartBottom-->
+< !- - algartBottom - ->
 <div align=\"center\" style=\"margin-top:32px;margin-bottom:8px\">
-<!--#include virtual=\"/ad_bottom_utf8.php\"-->
+< !- -#include virtual=\"/ad_bottom_utf8.php\"- ->
 </div>
-<!--/algartBottom-->
+< !- - /algartBottom - ->
 ]]></bottom>
+        -->
         </javadoc>
         <java classpath="../target/classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
             <arg value="../docs/api/"/>
