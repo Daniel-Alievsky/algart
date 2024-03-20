@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2024 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ * Copyright (c) 2007-2024 Daniel Alievsky, AlgART Laboratory (http://algart.net)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.matrices;
+package net.algart.arrays.demo;
 
 import net.algart.arrays.*;
 import net.algart.external.MatrixIO;
@@ -32,7 +32,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class SliceMergeMatricesTest {
+public class InterleaveSeparateMatricesTest {
     private static final boolean MULTIHREADING = false;
     private static final MemoryModel MEMORY_MODEL = SimpleMemoryModel.getInstance();
 
@@ -47,7 +47,7 @@ public class SliceMergeMatricesTest {
 
     public static void main(String[] args) throws IOException {
         if (args.length < 2) {
-            System.out.printf("Usage: %s some_image.png matrix_folder%n", SliceMergeMatricesTest.class);
+            System.out.printf("Usage: %s some_image.png matrix_folder%n", InterleaveSeparateMatricesTest.class);
             return;
         }
         final Path sourceFile = Paths.get(args[0]);

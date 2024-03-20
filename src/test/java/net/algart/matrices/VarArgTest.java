@@ -41,9 +41,9 @@ public class VarArgTest {
 
     public static void main(String[] args) {
         final ArrayList<String> stringList = new ArrayList<>();
-        dangerous(stringList, stringList);
+        List<String> dangerous = dangerous(stringList, stringList);
         Matrix<? extends PArray> m = Arrays.SMM.newMatrix(UpdatablePArray.class,  byte.class,10, 10);
-        several(m, m);
+        Matrix<?> several = several(m, m);
         Matrices.several(PArray.class, m, m);
         // Matrices.several declared as @SafeVarargs, but it is actually not necessary:
         // all is compiled successfully in JDK 1.8
