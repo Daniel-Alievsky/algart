@@ -1982,6 +1982,15 @@ public class Matrices {
      * (for 3 channels) and the pixels are packed into the {@link Matrix#array() underlying array}
      * as a sequence RGBRGB...</p>
      *
+     * <p>Note: the matrix, returned by this method, is created by the call
+     * <tt>memoryModel.{@link MemoryModel#newMatrix(Class, Class, long...) newMatrix}(...)</tt>,
+     * where <tt>memoryModel</tt> is <tt>context.getMemoryModel()</tt> or
+     * {@link SimpleMemoryModel} for <tt>null</tt> context.
+     * In the latter case ({@link SimpleMemoryModel}) this provides a guarantee, that
+     * the array in the returned matrix will be direct-accessible with zero offset
+     * ({@link Matrix#array() array()}.{@link Array#quick() quick()} is present)
+     * and that the length of built-in Java array will be equal to the matrix {@link Matrix#size() size}.</p>
+     *
      * @param context   the context; allows to specify (in particular)
      *                  the memory model for creating returned matrix;
      *                  may be <tt>null</tt>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.

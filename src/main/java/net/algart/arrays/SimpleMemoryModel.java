@@ -55,7 +55,8 @@ import java.util.Objects;
  * {@link DirectAccessible#hasJavaArray()} returns <tt>true</tt> for such arrays,
  * and {@link DirectAccessible#javaArrayOffset()} returns 0 for them.
  * Moreover, if this array is created as unresizable using
- * {@link #newUnresizableArray(Class, long)} method or one of its versions <tt>newUnresizableXxxArray</tt>,
+ * {@link #newUnresizableArray(Class, long)} method or some equivalent way,
+ * including <tt>newUnresizableXxxArray</tt> or <tt>newMatrix</tt> methods,
  * then you can be sure that its length (returned by {@link Array#length()} and
  * {@link DirectAccessible#javaArrayLength()} methods) is equal to the actual length
  * of the Java array, returned by {@link DirectAccessible#javaArray()} method.</p>

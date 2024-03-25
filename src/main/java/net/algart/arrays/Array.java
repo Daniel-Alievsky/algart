@@ -1076,7 +1076,8 @@ public interface Array {
      * <p>Please remember that we <b>do not guarantee</b> that the length of the returned Java array,
      * when it exists, will equal to the actual length of this array, returned by {@link #length()} method!
      * Usually it is not so for {@link MutableArray mutable arrays}.
-     * But if it was created using {@link SimpleMemoryModel#newUnresizableArray(Class, long)} method,
+     * But if it was created using {@link SimpleMemoryModel#newUnresizableArray(Class, long)} method
+     * or some equivalent way like {@link SimpleMemoryModel#newMatrix(Class, Class, long...)},
      * then you <b>have</b> this guarantee: the length of Java array <tt>quick().get()</tt>
      * will be equal to the result of {@link #length()} method.
      *
