@@ -4615,7 +4615,7 @@ public class Arrays {
     }
 
     /**
-     * Returns a Java array containing all of the elements in this AlgART array in proper sequence,
+     * Returns a Java array containing all the elements in this AlgART array in proper sequence,
      * if the length of this array is not too high (not greater than <tt>Integer.MAX_VALUE</tt>).
      * In other case, throws {@link TooLargeArrayException}.
      * The length of returned Java array will be equal to current
@@ -4654,9 +4654,10 @@ public class Arrays {
     public static Object toJavaArray(Array array) {
         Objects.requireNonNull(array, "Null array argument");
         long len = array.length();
-        if (len != (int) len)
+        if (len != (int) len) {
             throw new TooLargeArrayException("Cannot convert AlgART array to Java array, "
                 + "because it is too large: " + array);
+        }
         Object result = java.lang.reflect.Array.newInstance(array.elementType(), (int) len);
         array.getData(0, result);
         return result;

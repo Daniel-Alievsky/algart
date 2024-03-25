@@ -1086,6 +1086,16 @@ public interface Array {
      */
     Optional<Object> quick();
 
+    default Object ja() {
+        if (this instanceof DirectAccessible da && da.hasJavaArray() && da.javaArrayOffset() == 0) {
+            Object a = da.javaArray();
+            if (java.lang.reflect.Array.getLength(a) == length()) {
+                return a;
+            }
+        }
+        return Arrays.toJavaArray(this);
+    }
+
     /**
      * Equivalent to <tt>{@link Matrices#matrix(Array, long[]) matrix}(thisArray, dim)</tt>.
      *
@@ -1389,7 +1399,7 @@ public interface Array {
      *
      * @return the hash code of this array.
      */
-    public int hashCode();
+    int hashCode();
 
     /**
      * Indicates whether some other array is equal to this one.
