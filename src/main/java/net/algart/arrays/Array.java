@@ -1073,6 +1073,13 @@ public interface Array {
      * But if you are sure that your array is created by {@link SimpleMemoryModel} and is not a sub-array,
      * this method provides the simplest way to access the underlying Java array.
      *
+     * <p>Please remember that we <b>do not guarantee</b> that the length of the returned Java array,
+     * when it exists, will equal to the actual length of this array, returned by {@link #length()} method!
+     * Usually it is not so for {@link MutableArray mutable arrays}.
+     * But if it was created using {@link SimpleMemoryModel#newUnresizableArray(Class, long)} method,
+     * then you <b>have</b> this guarantee: the length of Java array <tt>quick().get()</tt>
+     * will be equal to the result of {@link #length()} method.
+     *
      * @return the underlying Java array "<tt>ja</tt>" that backs this AlgART array,
      * if it exists and if the element #0 of this array corresponds to its first element <tt>ja[0]</tt>.
      */

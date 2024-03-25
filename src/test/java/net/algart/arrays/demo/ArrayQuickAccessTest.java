@@ -37,7 +37,15 @@ public class ArrayQuickAccessTest {
         if (ja == null) {
             System.out.printf("%s%n    usual%n", array);
         } else {
-            System.out.printf("%s%n    direct-accessible: %s, offset %d%n", array, ja, offset);
+            if (((DirectAccessible) array).javaArrayLength() != array.length()) {
+                throw new AssertionError("Invalid javaArrayLength()");
+            }
+            int length = java.lang.reflect.Array.getLength(ja);
+            System.out.printf("%s%n    direct-accessible %s[%d] (%s), offset %d%n",
+                    array,
+                    ja.getClass().getComponentType().getSimpleName(), length,
+                    length == array.length() ? "the same length" : "DIFFERENT length",
+                    offset);
         }
         if (quick.isPresent() != (ja != null && offset == 0)) {
             throw new AssertionError("quick()/DirectAccessible state mismatch: " + quick);
@@ -59,6 +67,7 @@ public class ArrayQuickAccessTest {
         for (MemoryModel mm : List.of(Arrays.SMM, BufferMemoryModel.getInstance(), LargeMemoryModel.getInstance())) {
             check(mm.newUnresizableBitArray(1000));
             check(mm.newUnresizableFloatArray(1000));
+            check(mm.newEmptyCharArray(10000).length(1000));
             check(mm.newIntArray(1000));
             if (mm.isElementTypeSupported(Object.class)) {
                 check(mm.newObjectArray(String.class, 100));
