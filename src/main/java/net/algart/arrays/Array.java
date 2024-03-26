@@ -1086,6 +1086,13 @@ public interface Array {
      */
     Optional<Object> quick();
 
+    /**
+     * Returns either <tt>{@link #quick()}.get()</tt>, if this object is just a wrapper around a usual Java array,
+     * or <tt>{@link Arrays#toJavaArray(Array) Arrays.toJavaArray}(thisObject)</tt> in other case.
+     * More precisely,
+     * ...
+     * @return Java array, equivalent to this object.
+     */
     default Object ja() {
         if (this instanceof DirectAccessible da && da.hasJavaArray() && da.javaArrayOffset() == 0) {
             Object a = da.javaArray();

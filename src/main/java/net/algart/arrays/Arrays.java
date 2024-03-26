@@ -101,26 +101,26 @@ public class Arrays {
 
         private static MemoryModel getGlobalMemoryModel() {
             MemoryModel mm = InternalUtils.getClassInstance(
-                "net.algart.arrays.globalMemoryModel",
-                "SIMPLE",
-                MemoryModel.class,
-                LOGGER, "Simple memory model will be used",
-                "SIMPLE", SimpleMemoryModel.class.getName(),
-                "BUFFER", BufferMemoryModel.class.getName(),
-                "LARGE", LargeMemoryModel.class.getName());
+                    "net.algart.arrays.globalMemoryModel",
+                    "SIMPLE",
+                    MemoryModel.class,
+                    LOGGER, "Simple memory model will be used",
+                    "SIMPLE", SimpleMemoryModel.class.getName(),
+                    "BUFFER", BufferMemoryModel.class.getName(),
+                    "LARGE", LargeMemoryModel.class.getName());
             if (!(mm.areAllPrimitiveElementTypesSupported())) {
                 LOGGER.severe("Illegal global memory model " + mm.getClass().getName() + ": "
-                    + "it does not support all primitive element types");
+                        + "it does not support all primitive element types");
                 LOGGER.severe("Simple memory model will be used");
             }
             return mm;
         }
 
         private static final DiskSynchronizer GLOBAL_DISK_SYNCHRONIZER = InternalUtils.getClassInstance(
-            "net.algart.arrays.globalDiskSynchronizer",
-            DefaultDiskSynchronizerLocking.class.getName(),
-            DiskSynchronizer.class,
-            LOGGER, "Default (single-thread) disk synchronizer will be used");
+                "net.algart.arrays.globalDiskSynchronizer",
+                DefaultDiskSynchronizerLocking.class.getName(),
+                DiskSynchronizer.class,
+                LOGGER, "Default (single-thread) disk synchronizer will be used");
 
         /**
          * The maximal number of processors, that are allowed for simultaneous usage by AlgART libraries.
@@ -199,7 +199,7 @@ public class Arrays {
          * via (undocumented) system properties.
          */
         public static final int MIN_OPTIMIZATION_JAVA_MEMORY = Math.min(1073741824, // 1GB
-            InternalUtils.getIntProperty("net.algart.arrays.minOptimizationJavaMemory", 524288));
+                InternalUtils.getIntProperty("net.algart.arrays.minOptimizationJavaMemory", 524288));
 
         /**
          * <i>(Internal)</i>
@@ -210,7 +210,7 @@ public class Arrays {
          * <p>Please do not use this constant in your code: it may be deleted or renamed in future versions.
          */
         public static final boolean BLOCK_OPTIMIZATION_FOR_COORDINATE_TRANSFORMATION =
-            InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForCoordinateTransformation", true);
+                InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForCoordinateTransformation", true);
 
         /**
          * <i>(Internal)</i>
@@ -222,7 +222,7 @@ public class Arrays {
          * <p>Please do not use this constant in your code: it may be deleted or renamed in future versions.
          */
         public static final boolean BLOCK_OPTIMIZATION_FOR_RESIZING_WHOLE_MATRIX =
-            InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForResizingWholeMatrix", true);
+                InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForResizingWholeMatrix", true);
 
         /**
          * <i>(Internal)</i>
@@ -233,7 +233,7 @@ public class Arrays {
          * <p>Please do not use this constant in your code: it may be deleted or renamed in future versions.
          */
         public static final boolean BLOCK_OPTIMIZATION_FOR_RESIZING_TRANSFORMATION =
-            InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForResizingTransformation", true);
+                InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForResizingTransformation", true);
 
         /**
          * <i>(Internal)</i>
@@ -244,7 +244,7 @@ public class Arrays {
          * <p>Please do not use this constant in your code: it may be deleted or renamed in future versions.
          */
         public static final boolean BLOCK_OPTIMIZATION_FOR_AFFINE_TRANSFORMATION =
-            InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForAffineTransformation", true);
+                InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForAffineTransformation", true);
 
         /**
          * <i>(Internal)</i>
@@ -255,7 +255,7 @@ public class Arrays {
          * <p>Please do not use this constant in your code: it may be deleted or renamed in future versions.
          */
         public static final boolean BLOCK_OPTIMIZATION_FOR_PROJECTIVE_TRANSFORMATION =
-            InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForProjectiveTransformation", true);
+                InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForProjectiveTransformation", true);
 
         /**
          * <i>(Internal)</i>
@@ -374,7 +374,7 @@ public class Arrays {
          * while {@link #cpuCount()} usually controls the number of threads while multithreading optimization.
          *
          * @return the number of processor units among <tt>Runtime.getRuntime().availableProcessors()</tt>,
-         *         allowed for usage by AlgART libraries.
+         * allowed for usage by AlgART libraries.
          * @see #MAX_AVAILABLE_PROCESSORS
          */
         public static int availableProcessors() {
@@ -406,9 +406,9 @@ public class Arrays {
          * of this property, that can be customized in the application without restarting JVM.
          *
          * @return the supposed number of processors, specified by {@link #CPU_COUNT_PROPERTY_NAME} system property,
-         *         or <tt>0</tt> if there is no such property, or {@link #MAX_AVAILABLE_PROCESSORS}
-         *         if this property contains an integer greater than this limit. The value 0 means
-         *         a recommendation to use {@link #availableProcessors()}.
+         * or <tt>0</tt> if there is no such property, or {@link #MAX_AVAILABLE_PROCESSORS}
+         * if this property contains an integer greater than this limit. The value 0 means
+         * a recommendation to use {@link #availableProcessors()}.
          * @see #cpuCount()
          * @see DefaultThreadPoolFactory#recommendedNumberOfTasks()
          * @see DefaultThreadPoolFactory#recommendedNumberOfTasks(Array)
@@ -506,8 +506,8 @@ public class Arrays {
          */
         public static MemoryModel globalMemoryModel(Class<?> elementType) {
             return GLOBAL_MEMORY_MODEL.isElementTypeSupported(elementType) ?
-                GLOBAL_MEMORY_MODEL :
-                SimpleMemoryModel.getInstance();
+                    GLOBAL_MEMORY_MODEL :
+                    SimpleMemoryModel.getInstance();
         }
 
         /**
@@ -577,7 +577,7 @@ public class Arrays {
          * So, large values of this limit should probably not lead to unexpected <tt>OutOfMemoryError</tt>.
          *
          * @return the value of "net.algart.arrays.maxTempJavaMemoryForTiling" system property,
-         *         <tt>max(134217728,{@link #maxTempJavaMemory()})</tt> by default.
+         * <tt>max(134217728,{@link #maxTempJavaMemory()})</tt> by default.
          */
         public static long maxTempJavaMemoryForTiling() {
             return InternalUtils.MAX_TEMP_JAVA_MEMORY_FOR_TILING;
@@ -590,7 +590,7 @@ public class Arrays {
          * see {@link #maxTempJavaMemoryForTiling()}.
          *
          * @return minimum from {@link #maxTempJavaMemoryForTiling()} and 80% of the amount of memory, that can be
-         *         allocated in Java heap at this moment.
+         * allocated in Java heap at this moment.
          */
         public static long availableTempJavaMemoryForTiling() {
             Runtime rt = Runtime.getRuntime();
@@ -629,8 +629,8 @@ public class Arrays {
          * it will contain the default <tt>1048576</tt> value.
          *
          * @return the maximal size of memory block, in bytes, that should be processed in several threads
-         *         for optimization on multiprocessor or multi-core computers,
-         *         <tt>1048576</tt> by default.
+         * for optimization on multiprocessor or multi-core computers,
+         * <tt>1048576</tt> by default.
          */
         public static long maxMultithreadingMemory() {
             return InternalUtils.MAX_MULTITHREADING_MEMORY;
@@ -688,8 +688,8 @@ public class Arrays {
          *
          * @return <tt>true</tt> on 32-bit Java machines.
          * @see <a href="http://java.sun.com/docs/hotspot/HotSpotFAQ.html#64bit_detection">Frequently
-         *      Asked Questions About the Java HotSpot VM:
-         *      When writing Java code, how do I distinguish between 32 and 64-bit operation?</a>
+         * Asked Questions About the Java HotSpot VM:
+         * When writing Java code, how do I distinguish between 32 and 64-bit operation?</a>
          */
         public static boolean isJava32() {
             return InternalUtils.JAVA_32;
@@ -985,9 +985,9 @@ public class Arrays {
             try {
                 String s = System.getenv(envVarName);
                 return s == null ? defaultValue
-                    : s.equalsIgnoreCase("true") ? true
-                    : s.equalsIgnoreCase("false") ? false
-                    : defaultValue;
+                        : s.equalsIgnoreCase("true") ? true
+                        : s.equalsIgnoreCase("false") ? false
+                        : defaultValue;
             } catch (Exception ex) {
                 return defaultValue;
             }
@@ -1108,13 +1108,13 @@ public class Arrays {
 
         private static class DiskThreadPoolHolder {
             private static ExecutorService globalDiskThreadPool = Executors.newSingleThreadExecutor(
-                new ThreadFactory() {
-                    public Thread newThread(Runnable r) {
-                        Thread t = new Thread(r, "AlgART-disk-thread");
-                        t.setDaemon(true);
-                        return t;
-                    }
-                });
+                    new ThreadFactory() {
+                        public Thread newThread(Runnable r) {
+                            Thread t = new Thread(r, "AlgART-disk-thread");
+                            t.setDaemon(true);
+                            return t;
+                        }
+                    });
         }
     }
 
@@ -1135,15 +1135,15 @@ public class Arrays {
      * All they, as well as any object types, can be elements of AlgART arrays.
      */
     public static List<Class<?>> PRIMITIVE_TYPES =
-        Collections.unmodifiableList(java.util.Arrays.<Class<?>>asList(
-            boolean.class,
-            char.class,
-            byte.class,
-            short.class,
-            int.class,
-            long.class,
-            float.class,
-            double.class));
+            Collections.unmodifiableList(java.util.Arrays.<Class<?>>asList(
+                    boolean.class,
+                    char.class,
+                    byte.class,
+                    short.class,
+                    int.class,
+                    long.class,
+                    float.class,
+                    double.class));
 
 
     /*Repeat() bit(\s+array) ==> character$1,,<tt>byte</tt>$1,,<tt>short</tt>$1,,
@@ -1267,9 +1267,10 @@ public class Arrays {
         if (DoubleArray.class.isAssignableFrom(arrayType)) {
             return double.class;
         } else //[[Repeat.AutoGeneratedEnd]]
-                throw new IllegalArgumentException(
-                    "Only primitive array types BitArray, CharArray, ByteArray, ShortArray, IntArray, LongArray, "
-                        + "FloatArray, DoubleArray and their inheritors allowed here (passed type: " + arrayType + ")");
+                throw new IllegalArgumentException("Only primitive array types " +
+                        "BitArray, CharArray, ByteArray, ShortArray, IntArray, LongArray, " +
+                        "FloatArray, DoubleArray and their inheritors allowed here " +
+                        "(passed type: " + arrayType + ")");
     }
 
     /**
@@ -1358,7 +1359,7 @@ public class Arrays {
                 result = mutable ? MutableObjectArray.class : updatable ? UpdatableObjectArray.class : ObjectArray.class;
         if (!arraySupertype.isAssignableFrom(result))
             throw new ClassCastException("The passed array supertype " + arraySupertype.getName()
-                + " cannot contain required " + elementType.getCanonicalName() + " elements");
+                    + " cannot contain required " + elementType.getCanonicalName() + " elements");
         return InternalUtils.cast(result);
     }
 
@@ -1380,8 +1381,8 @@ public class Arrays {
      */
     public static boolean isBitType(Class<? extends Array> arrayType) {
         return arrayType == BitArray.class ||
-            arrayType == UpdatableBitArray.class ||
-            arrayType == MutableBitArray.class;
+                arrayType == UpdatableBitArray.class ||
+                arrayType == MutableBitArray.class;
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
@@ -1398,8 +1399,8 @@ public class Arrays {
      */
     public static boolean isCharType(Class<? extends Array> arrayType) {
         return arrayType == CharArray.class ||
-            arrayType == UpdatableCharArray.class ||
-            arrayType == MutableCharArray.class;
+                arrayType == UpdatableCharArray.class ||
+                arrayType == MutableCharArray.class;
     }
 
 
@@ -1416,8 +1417,8 @@ public class Arrays {
      */
     public static boolean isByteType(Class<? extends Array> arrayType) {
         return arrayType == ByteArray.class ||
-            arrayType == UpdatableByteArray.class ||
-            arrayType == MutableByteArray.class;
+                arrayType == UpdatableByteArray.class ||
+                arrayType == MutableByteArray.class;
     }
 
 
@@ -1434,8 +1435,8 @@ public class Arrays {
      */
     public static boolean isShortType(Class<? extends Array> arrayType) {
         return arrayType == ShortArray.class ||
-            arrayType == UpdatableShortArray.class ||
-            arrayType == MutableShortArray.class;
+                arrayType == UpdatableShortArray.class ||
+                arrayType == MutableShortArray.class;
     }
 
 
@@ -1452,8 +1453,8 @@ public class Arrays {
      */
     public static boolean isIntType(Class<? extends Array> arrayType) {
         return arrayType == IntArray.class ||
-            arrayType == UpdatableIntArray.class ||
-            arrayType == MutableIntArray.class;
+                arrayType == UpdatableIntArray.class ||
+                arrayType == MutableIntArray.class;
     }
 
 
@@ -1470,8 +1471,8 @@ public class Arrays {
      */
     public static boolean isLongType(Class<? extends Array> arrayType) {
         return arrayType == LongArray.class ||
-            arrayType == UpdatableLongArray.class ||
-            arrayType == MutableLongArray.class;
+                arrayType == UpdatableLongArray.class ||
+                arrayType == MutableLongArray.class;
     }
 
 
@@ -1488,8 +1489,8 @@ public class Arrays {
      */
     public static boolean isFloatType(Class<? extends Array> arrayType) {
         return arrayType == FloatArray.class ||
-            arrayType == UpdatableFloatArray.class ||
-            arrayType == MutableFloatArray.class;
+                arrayType == UpdatableFloatArray.class ||
+                arrayType == MutableFloatArray.class;
     }
 
 
@@ -1506,8 +1507,8 @@ public class Arrays {
      */
     public static boolean isDoubleType(Class<? extends Array> arrayType) {
         return arrayType == DoubleArray.class ||
-            arrayType == UpdatableDoubleArray.class ||
-            arrayType == MutableDoubleArray.class;
+                arrayType == UpdatableDoubleArray.class ||
+                arrayType == MutableDoubleArray.class;
     }
 
 
@@ -1524,8 +1525,8 @@ public class Arrays {
      */
     public static boolean isObjectType(Class<? extends Array> arrayType) {
         return arrayType == ObjectArray.class ||
-            arrayType == UpdatableObjectArray.class ||
-            arrayType == MutableObjectArray.class;
+                arrayType == UpdatableObjectArray.class ||
+                arrayType == MutableObjectArray.class;
     }
     /*Repeat.AutoGeneratedEnd*/
 
@@ -1832,8 +1833,8 @@ public class Arrays {
             return Long.MIN_VALUE;
         } else //[[Repeat.AutoGeneratedEnd]]
                 throw new IllegalArgumentException(
-                    "Only BitArray, CharArray, ByteArray, ShortArray, IntArray, LongArray and their inheritors "
-                        + "are allowed here (passed type: " + arrayType + ")");
+                        "Only BitArray, CharArray, ByteArray, ShortArray, IntArray, LongArray and their inheritors "
+                                + "are allowed here (passed type: " + arrayType + ")");
     }
 
     /**
@@ -1882,8 +1883,8 @@ public class Arrays {
             return Long.MAX_VALUE;
         } else //[[Repeat.AutoGeneratedEnd]]
                 throw new IllegalArgumentException(
-                    "Only BitArray, CharArray, ByteArray, ShortArray, IntArray, LongArray and their inheritors "
-                        + "are allowed here (passed type: " + arrayType + ")");
+                        "Only BitArray, CharArray, ByteArray, ShortArray, IntArray, LongArray and their inheritors "
+                                + "are allowed here (passed type: " + arrayType + ")");
     }
 
     /**
@@ -1900,7 +1901,7 @@ public class Arrays {
      * @param arrayType             the type of some AlgART array.
      * @param valueForFloatingPoint the value returned for floating-point or object array type.
      * @return the minimal possible value, that can be stored in such fixed-point primitive
-     *         arrays, or <tt>valueForFloatingPoint</tt> for other array types.
+     * arrays, or <tt>valueForFloatingPoint</tt> for other array types.
      * @throws NullPointerException     if the passed <tt>arrayType</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if the passed <tt>arrayType</tt> is not {@link BitArray}, {@link CharArray},
      *                                  {@link ByteArray}, {@link ShortArray}, {@link IntArray}, {@link LongArray},
@@ -1913,14 +1914,14 @@ public class Arrays {
         if (PFixedArray.class.isAssignableFrom(arrayType))
             return minPossibleIntegerValue(arrayType.asSubclass(PFixedArray.class));
         else if (DoubleArray.class.isAssignableFrom(arrayType) ||
-            FloatArray.class.isAssignableFrom(arrayType) ||
-            ObjectArray.class.isAssignableFrom(arrayType))
+                FloatArray.class.isAssignableFrom(arrayType) ||
+                ObjectArray.class.isAssignableFrom(arrayType))
             return valueForFloatingPoint;
         else
             throw new IllegalArgumentException(
-                "Only BitArray, CharArray, ByteArray, ShortArray, IntArray, LongArray, "
-                    + "FloatArray, DoubleArray, ObjectArray and their inheritors "
-                    + "are allowed here (passed type: " + arrayType + ")");
+                    "Only BitArray, CharArray, ByteArray, ShortArray, IntArray, LongArray, "
+                            + "FloatArray, DoubleArray, ObjectArray and their inheritors "
+                            + "are allowed here (passed type: " + arrayType + ")");
     }
 
     /**
@@ -1937,7 +1938,7 @@ public class Arrays {
      * @param arrayType             the type of some AlgART array.
      * @param valueForFloatingPoint the value returned for floating-point or object array type.
      * @return the maximal possible value, that can be stored in such fixed-point primitive
-     *         arrays, or <tt>valueForFloatingPoint</tt> for other array types.
+     * arrays, or <tt>valueForFloatingPoint</tt> for other array types.
      * @throws NullPointerException     if the passed <tt>arrayType</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if the passed <tt>arrayType</tt> is not {@link BitArray}, {@link CharArray},
      *                                  {@link ByteArray}, {@link ShortArray}, {@link IntArray}, {@link LongArray},
@@ -2311,7 +2312,7 @@ public class Arrays {
             return nDoubleCopies(n, element);
         } else
             throw new IllegalArgumentException(
-                "Only primitive types are allowed here (passed element type: " + elementType + ")");
+                    "Only primitive types are allowed here (passed element type: " + elementType + ")");
     }
 
     /**
@@ -2372,8 +2373,8 @@ public class Arrays {
             return nLongCopies(n, element);
         } else
             throw new IllegalArgumentException(
-                "Only boolean.class, char.class, byte.class, short.class, int.class and long.class "
-                    + "are allowed here (passed element type: " + elementType + ")");
+                    "Only boolean.class, char.class, byte.class, short.class, int.class and long.class "
+                            + "are allowed here (passed element type: " + elementType + ")");
     }
 
     /**
@@ -2416,7 +2417,7 @@ public class Arrays {
      *
      * @param array the checked AlgART array (may be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed array was created by one of <tt>n<i>Xxx</i>Copies</tt>
-     *         methods of this class.
+     * methods of this class.
      */
     public static boolean isNCopies(Array array) {
         return array instanceof CopiesArraysImpl.CopiesArray;
@@ -2476,11 +2477,10 @@ public class Arrays {
      *                                  requires some arguments.)
      */
     public static <T extends PArray> T asIndexFuncArray(
-        boolean truncateOverflows,
-        final Func f, Class<? extends T> requiredType, long length)
-    {
+            boolean truncateOverflows,
+            final Func f, Class<? extends T> requiredType, long length) {
         return ArraysFuncImpl.asCoordFuncMatrix(truncateOverflows,
-            f, requiredType, new long[]{length});
+                f, requiredType, new long[]{length});
     }
 
     /**
@@ -2498,8 +2498,7 @@ public class Arrays {
      * @throws SizeMismatchException    if <tt>x.length&gt;1</tt> and some of passed arrays have different lengths.
      */
     public static <T extends PArray> T asFuncArray(
-        Func f, Class<? extends T> requiredType, PArray... x)
-    {
+            Func f, Class<? extends T> requiredType, PArray... x) {
         return asFuncArray(true, f, requiredType, x);
     }
 
@@ -2637,9 +2636,11 @@ public class Arrays {
      * @throws SizeMismatchException    if <tt>x.length&gt;1</tt> and some of passed arrays have different lengths.
      * @see #asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)
      */
-    public static <T extends PArray> T asFuncArray(boolean truncateOverflows,
-                                                   final Func f, Class<? extends T> requiredType, PArray... x)
-    {
+    public static <T extends PArray> T asFuncArray(
+            boolean truncateOverflows,
+            final Func f,
+            Class<? extends T> requiredType,
+            PArray... x) {
         Objects.requireNonNull(x, "Null x");
         if (x.length == 0)
             throw new IllegalArgumentException("Empty x[] (array of AlgART arrays)");
@@ -2662,8 +2663,7 @@ public class Arrays {
      *                                  #asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)} method.
      */
     public static <T extends UpdatablePArray> T asUpdatableFuncArray(
-        final Func.Updatable f, Class<? extends T> requiredType, final UpdatablePArray... x)
-    {
+            final Func.Updatable f, Class<? extends T> requiredType, final UpdatablePArray... x) {
         return ArraysFuncImpl.asUpdatableFuncArray(true, f, requiredType, x);
     }
 
@@ -2755,9 +2755,8 @@ public class Arrays {
      * @see #asFuncArray(boolean, Func, Class, PArray...)
      */
     public static <T extends UpdatablePArray> T asUpdatableFuncArray(
-        final boolean truncateOverflows,
-        Func.Updatable f, Class<? extends T> requiredType, final UpdatablePArray... x)
-    {
+            final boolean truncateOverflows,
+            Func.Updatable f, Class<? extends T> requiredType, final UpdatablePArray... x) {
         return ArraysFuncImpl.asUpdatableFuncArray(truncateOverflows, f, requiredType, x);
     }
 
@@ -2807,9 +2806,12 @@ public class Arrays {
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
-    public static void applyFunc(ArrayContext context, boolean truncateOverflows, Func f,
-                                 UpdatablePArray result, PArray... x)
-    {
+    public static void applyFunc(
+            ArrayContext context,
+            boolean truncateOverflows,
+            Func f,
+            UpdatablePArray result,
+            PArray... x) {
         applyFunc(context, truncateOverflows, 0, true, f, result, x);
     }
 
@@ -2849,10 +2851,14 @@ public class Arrays {
      * @throws java.io.IOError          if the current thread is interrupted by the standard
      *                                  <tt>Thread.interrupt()</tt> call.
      */
-    public static void applyFunc(ArrayContext context, boolean truncateOverflows,
-                                 int numberOfTasks, boolean strictMode, Func f,
-                                 UpdatablePArray result, PArray... x)
-    {
+    public static void applyFunc(
+            ArrayContext context,
+            boolean truncateOverflows,
+            int numberOfTasks,
+            boolean strictMode,
+            Func f,
+            UpdatablePArray result,
+            PArray... x) {
         Objects.requireNonNull(result, "Null result argument");
         long len = result.length();
         for (int k = 0; k < x.length; k++) {
@@ -2861,8 +2867,8 @@ public class Arrays {
                 throw new SizeMismatchException("x[" + k + "].length() and result.length() mismatch");
         }
         PArray lazy = x.length == 0 ?
-            asIndexFuncArray(truncateOverflows, f, result.type(), result.length()) :
-            asFuncArray(truncateOverflows, f, result.type(), x);
+                asIndexFuncArray(truncateOverflows, f, result.type(), result.length()) :
+                asFuncArray(truncateOverflows, f, result.type(), x);
         copy(context, result, lazy, numberOfTasks, strictMode);
     }
 
@@ -3005,7 +3011,7 @@ public class Arrays {
      *
      * @param array the index-based functional array.
      * @return the dimensions of the matrix,
-     *         coordinates of which are used as arguments of the underlying function.
+     * coordinates of which are used as arguments of the underlying function.
      * @throws NullPointerException     if the argument is <tt>null</tt>.
      * @throws IllegalArgumentException if the passed array is not index-based functional, i.e.
      *                                  if {@link #isIndexFuncArray(Array)} returns <tt>false</tt> for it.
@@ -3362,9 +3368,12 @@ public class Arrays {
      *                                  (this technique may be not supported in some cases).
      * @see #copy(ArrayContext, UpdatableArray, Array)
      */
-    public static CopyStatus copy(ArrayContext context, UpdatableArray dest, Array src,
-                                  int numberOfTasks, boolean strictMode)
-    {
+    public static CopyStatus copy(
+            ArrayContext context,
+            UpdatableArray dest,
+            Array src,
+            int numberOfTasks,
+            boolean strictMode) {
         return ArraysOpImpl.copy(context, dest, src, numberOfTasks, strictMode, false);
     }
 
@@ -3565,8 +3574,7 @@ public class Arrays {
      *                              (this technique may be not supported in some cases).
      */
     public static long preciseSumOf(PFixedArray array, boolean checkOverflow)
-        throws ArithmeticException
-    {
+            throws ArithmeticException {
         return preciseSumOf(null, array, checkOverflow);
     }
 
@@ -3608,8 +3616,7 @@ public class Arrays {
      *                              or some partial sum cannot be represented by <tt>long</tt> value.
      */
     public static long preciseSumOf(ArrayContext context, PFixedArray array, boolean checkOverflow)
-        throws ArithmeticException
-    {
+            throws ArithmeticException {
         Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array)) {
             array = (PFixedArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
@@ -3762,7 +3769,7 @@ public class Arrays {
         if (histogram.length == 0)
             throw new IllegalArgumentException("Empty histogram argument (histogram.length=0)");
         ArraysOpImpl.HistogramCalculator histogramCalculator = new ArraysOpImpl.HistogramCalculator(
-            context, array, histogram, from, to);
+                context, array, histogram, from, to);
         histogramCalculator.process();
         return histogramCalculator.allInside;
     }
@@ -3782,8 +3789,7 @@ public class Arrays {
      *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void packBitsGreater(
-        UpdatableBitArray bits, PArray array, double threshold)
-    {
+            UpdatableBitArray bits, PArray array, double threshold) {
         packBitsGreater(null, bits, array, threshold);
     }
 
@@ -3813,20 +3819,18 @@ public class Arrays {
      * @see #packBitsLess(ArrayContext, UpdatableBitArray, PArray, double)
      */
     public static void packBitsGreater(
-        ArrayContext context, UpdatableBitArray bits, PArray array,
-        double threshold)
-    {
+            ArrayContext context, UpdatableBitArray bits, PArray array,
+            double threshold) {
         Objects.requireNonNull(bits, "Null bits argument");
         Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
-            && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
-            && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
-        {
+                && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
+                && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits))) {
             array = (PArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
             bits = (UpdatableBitArray) ((ArraysTileMatrixImpl.TileMatrixArray) bits).baseMatrix().array();
         }
         ArraysOpImpl.BitsGreaterPacker packer = new ArraysOpImpl.BitsGreaterPacker(context,
-            bits, array, threshold);
+                bits, array, threshold);
         packer.process();
     }
 
@@ -3843,8 +3847,7 @@ public class Arrays {
      *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void packBitsLess(
-        UpdatableBitArray bits, PArray array, double threshold)
-    {
+            UpdatableBitArray bits, PArray array, double threshold) {
         packBitsLess(null, bits, array, threshold);
     }
 
@@ -3874,20 +3877,18 @@ public class Arrays {
      * @see #packBitsGreater(ArrayContext, UpdatableBitArray, PArray, double)
      */
     public static void packBitsLess(
-        ArrayContext context, UpdatableBitArray bits, PArray array,
-        double threshold)
-    {
+            ArrayContext context, UpdatableBitArray bits, PArray array,
+            double threshold) {
         Objects.requireNonNull(bits, "Null bits argument");
         Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
-            && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
-            && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
-        {
+                && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
+                && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits))) {
             array = (PArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
             bits = (UpdatableBitArray) ((ArraysTileMatrixImpl.TileMatrixArray) bits).baseMatrix().array();
         }
         ArraysOpImpl.BitsLessPacker packer = new ArraysOpImpl.BitsLessPacker(context,
-            bits, array, threshold);
+                bits, array, threshold);
         packer.process();
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
@@ -3905,8 +3906,7 @@ public class Arrays {
      *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void packBitsGreaterOrEqual(
-        UpdatableBitArray bits, PArray array, double threshold)
-    {
+            UpdatableBitArray bits, PArray array, double threshold) {
         packBitsGreaterOrEqual(null, bits, array, threshold);
     }
 
@@ -3936,20 +3936,18 @@ public class Arrays {
      * @see #packBitsLessOrEqual(ArrayContext, UpdatableBitArray, PArray, double)
      */
     public static void packBitsGreaterOrEqual(
-        ArrayContext context, UpdatableBitArray bits, PArray array,
-        double threshold)
-    {
+            ArrayContext context, UpdatableBitArray bits, PArray array,
+            double threshold) {
         Objects.requireNonNull(bits, "Null bits argument");
         Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
-            && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
-            && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
-        {
+                && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
+                && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits))) {
             array = (PArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
             bits = (UpdatableBitArray) ((ArraysTileMatrixImpl.TileMatrixArray) bits).baseMatrix().array();
         }
         ArraysOpImpl.BitsGreaterOrEqualPacker packer = new ArraysOpImpl.BitsGreaterOrEqualPacker(context,
-            bits, array, threshold);
+                bits, array, threshold);
         packer.process();
     }
 
@@ -3966,8 +3964,7 @@ public class Arrays {
      *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void packBitsLessOrEqual(
-        UpdatableBitArray bits, PArray array, double threshold)
-    {
+            UpdatableBitArray bits, PArray array, double threshold) {
         packBitsLessOrEqual(null, bits, array, threshold);
     }
 
@@ -3997,20 +3994,18 @@ public class Arrays {
      * @see #packBitsGreaterOrEqual(ArrayContext, UpdatableBitArray, PArray, double)
      */
     public static void packBitsLessOrEqual(
-        ArrayContext context, UpdatableBitArray bits, PArray array,
-        double threshold)
-    {
+            ArrayContext context, UpdatableBitArray bits, PArray array,
+            double threshold) {
         Objects.requireNonNull(bits, "Null bits argument");
         Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
-            && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
-            && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
-        {
+                && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
+                && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits))) {
             array = (PArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
             bits = (UpdatableBitArray) ((ArraysTileMatrixImpl.TileMatrixArray) bits).baseMatrix().array();
         }
         ArraysOpImpl.BitsLessOrEqualPacker packer = new ArraysOpImpl.BitsLessOrEqualPacker(context,
-            bits, array, threshold);
+                bits, array, threshold);
         packer.process();
     }
     /*Repeat.AutoGeneratedEnd*/
@@ -4084,9 +4079,9 @@ public class Arrays {
      * @see #unpackUnitBits(ArrayContext, UpdatablePArray, BitArray, double)
      * @see #unpackZeroBits(ArrayContext, UpdatablePArray, BitArray, double)
      */
-    public static void unpackBits(ArrayContext context, UpdatablePArray array, BitArray bits,
-                                           double filler0, double filler1)
-    {
+    public static void unpackBits(
+            ArrayContext context, UpdatablePArray array, BitArray bits,
+            double filler0, double filler1) {
         // Obsolete (little slower) version:
         // Class<?> et = array.elementType();
         // if (et == byte.class || et == short.class || et == int.class || et == char.class) {
@@ -4098,8 +4093,7 @@ public class Arrays {
         Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
                 && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
-                && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
-        {
+                && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits))) {
             array = (UpdatablePArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
             bits = (BitArray) ((ArraysTileMatrixImpl.TileMatrixArray) bits).baseMatrix().array();
         }
@@ -4162,9 +4156,8 @@ public class Arrays {
         Objects.requireNonNull(bits, "Null bits argument");
         Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
-            && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
-            && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
-        {
+                && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
+                && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits))) {
             array = (UpdatablePArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
             bits = (BitArray) ((ArraysTileMatrixImpl.TileMatrixArray) bits).baseMatrix().array();
         }
@@ -4226,9 +4219,8 @@ public class Arrays {
         Objects.requireNonNull(bits, "Null bits argument");
         Objects.requireNonNull(array, "Null array argument");
         if (isTiled(array) && isTiled(bits)
-            && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
-            && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits)))
-        {
+                && java.util.Arrays.equals(tiledMatrixDimensions(array), tiledMatrixDimensions(bits))
+                && java.util.Arrays.equals(tileDimensions(array), tileDimensions(bits))) {
             array = (UpdatablePArray) ((ArraysTileMatrixImpl.TileMatrixArray) array).baseMatrix().array();
             bits = (BitArray) ((ArraysTileMatrixImpl.TileMatrixArray) bits).baseMatrix().array();
         }
@@ -4257,9 +4249,9 @@ public class Arrays {
      *
      * @param array          the source AlgART array.
      * @param newElementType required element type.
-     * @return               the array with the required element type, where every element is equal to
-     *                       the corresponding element of the source array, multiplied
-     *                       by the automatically chosen scale.
+     * @return the array with the required element type, where every element is equal to
+     * the corresponding element of the source array, multiplied
+     * by the automatically chosen scale.
      * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
      * @throws IllegalArgumentException if the required element type is not a primitive type.
      */
@@ -4426,7 +4418,7 @@ public class Arrays {
      * @param byteOrder the byte order for element types, greater than 1 byte;
      *                  it is not used in cases of {@link ByteArray} and {@link BitArray}.
      * @return Java array with resulting data;
-     *         if <tt>bytes</tt> argument is not <tt>null</tt>, a reference to this argument is returned.
+     * if <tt>bytes</tt> argument is not <tt>null</tt>, a reference to this argument is returned.
      * @throws NullPointerException      if <tt>array</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException    if the required Java array length is greater
      *                                   than <tt>Integer.MAX_VALUE</tt> elements.
@@ -4498,7 +4490,7 @@ public class Arrays {
      *
      * @param array the source AlgART array.
      * @return the minimal size of <tt>byte[]</tt> array, enough for calling
-     *         {@link #copyArrayToBytes(byte[], PArray, ByteOrder)} method.
+     * {@link #copyArrayToBytes(byte[], PArray, ByteOrder)} method.
      * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException if the result (required Java array length) is greater
      *                                than <tt>Integer.MAX_VALUE</tt> elements.
@@ -4508,7 +4500,7 @@ public class Arrays {
         final long requiredLength = array instanceof BitArray ? (array.length() + 7) >>> 3 : Arrays.sizeOf(array);
         if (requiredLength > Integer.MAX_VALUE)
             throw new TooLargeArrayException("Cannot calculate required number of bytes for "
-                + " copying AlgART array to byte[] array, because it is too large: " + array);
+                    + " copying AlgART array to byte[] array, because it is too large: " + array);
         return (int) requiredLength;
     }
 
@@ -4615,6 +4607,32 @@ public class Arrays {
     }
 
     /**
+     * Returns <tt>true</tt> if the specified array is actually a <i>wrapper</i> for
+     * standard Java array, like wrappers returned by {@link SimpleMemoryModel#asUpdatableArray(Object)} method.
+     * More precisely, this method returns <tt>true</tt>, if and only if all the following conditions are fulfilled:
+     * <ol>
+     *     <li><tt>array instanceof {@link DirectAccessible}</tt>; let <tt>da = (DirectAccessible) array</tt>;</li>
+     *     <li><tt>da.{@link DirectAccessible#hasJavaArray() hasJavaArray()}</tt>;</li>
+     *     <li><tt>da.{@link DirectAccessible#javaArrayOffset() javaArrayOffset()} == 0</tt>;</li>
+     *     <li><tt>array.{@link Array#length() length()} == n</tt>, where <tt>n</tt> is the length of Java array
+     *     <tt>da.{@link DirectAccessible#javaArray() javaArray()}</tt>:<br>
+     *     <tt>array.{@link Array#length() length()} == java.lang.reflect.Array.getLength(da.javaArray())</tt>.</li>
+     * </ol>
+     *
+     * @param array the source AlgART array.
+     * @return whether it is a wrapper for standard Java array: direct-accessible array with zero offset and
+     * with length, equal to the number of elements of the underlying Java array.
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     */
+    public static boolean isJavaArrayWrapper(Array array) {
+        Objects.requireNonNull(array, "Null array argument");
+        if (array instanceof DirectAccessible da && da.hasJavaArray() && da.javaArrayOffset() == 0) {
+            return java.lang.reflect.Array.getLength(da.javaArray()) == array.length();
+        }
+        return false;
+    }
+
+    /**
      * Returns a Java array containing all the elements in this AlgART array in proper sequence,
      * if the length of this array is not too high (not greater than <tt>Integer.MAX_VALUE</tt>).
      * In other case, throws {@link TooLargeArrayException}.
@@ -4656,7 +4674,7 @@ public class Arrays {
         long len = array.length();
         if (len != (int) len) {
             throw new TooLargeArrayException("Cannot convert AlgART array to Java array, "
-                + "because it is too large: " + array);
+                    + "because it is too large: " + array);
         }
         Object result = java.lang.reflect.Array.newInstance(array.elementType(), (int) len);
         array.getData(0, result);
@@ -4684,6 +4702,7 @@ public class Arrays {
     /*Repeat() char ==> byte,,short,,int,,long,,float,,double;;
                Char ==> Byte,,Short,,Int,,Long,,Float,,Double
      */
+
     /**
      * Equivalent to <tt>(char[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</tt>.
      *
@@ -4703,6 +4722,7 @@ public class Arrays {
         return (char[]) toJavaArray((Array) array);
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
      * Equivalent to <tt>(byte[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</tt>.
      *
@@ -4721,6 +4741,7 @@ public class Arrays {
     public static byte[] toJavaArray(ByteArray array) {
         return (byte[]) toJavaArray((Array) array);
     }
+
 
     /**
      * Equivalent to <tt>(short[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</tt>.
@@ -4741,6 +4762,7 @@ public class Arrays {
         return (short[]) toJavaArray((Array) array);
     }
 
+
     /**
      * Equivalent to <tt>(int[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</tt>.
      *
@@ -4759,6 +4781,7 @@ public class Arrays {
     public static int[] toJavaArray(IntArray array) {
         return (int[]) toJavaArray((Array) array);
     }
+
 
     /**
      * Equivalent to <tt>(long[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</tt>.
@@ -4779,6 +4802,7 @@ public class Arrays {
         return (long[]) toJavaArray((Array) array);
     }
 
+
     /**
      * Equivalent to <tt>(float[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</tt>.
      *
@@ -4797,6 +4821,7 @@ public class Arrays {
     public static float[] toJavaArray(FloatArray array) {
         return (float[]) toJavaArray((Array) array);
     }
+
 
     /**
      * Equivalent to <tt>(double[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</tt>.
@@ -5324,12 +5349,12 @@ public class Arrays {
      * @param maxAvailableGap the little free starting area (number of free bits)
      *                        in some <tt>long[]</tt> Java array, usually 128 or 256.
      * @return the offset (index of a bit) in this <tt>long[]</tt> array
-     *         inside <tt>0..maxAvailableGap-1</tt> range, providing the best speed
-     *         of accessing bits via
-     *         {@link BitArray#getBits(long, long[], long, long)
-     *         getBits(position, destArray, offset, someCount)} and
-     *         {@link UpdatableBitArray#setBits(long, long[], long, long)
-     *         setBits(position, srcArray, offset, someCount)} methods.
+     * inside <tt>0..maxAvailableGap-1</tt> range, providing the best speed
+     * of accessing bits via
+     * {@link BitArray#getBits(long, long[], long, long)
+     * getBits(position, destArray, offset, someCount)} and
+     * {@link UpdatableBitArray#setBits(long, long[], long, long)
+     * setBits(position, srcArray, offset, someCount)} methods.
      * @throws NullPointerException     if <tt>bitArray</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>maxAvailableGap</tt> argument is negative.
      */
@@ -5347,8 +5372,8 @@ public class Arrays {
         } else {
             if (qp < position || qp >= bitArray.length())
                 throw new AssertionError("Illegal nextQuickPosition implementation in " + bitArray
-                    + ": nextQuickPosition(" + position + ") = " + qp
-                    + (qp < position ? " < " + position : " >= array.length()"));
+                        + ": nextQuickPosition(" + position + ") = " + qp
+                        + (qp < position ? " < " + position : " >= array.length()"));
             // the copying will be quick if position=qp+offset+64*j: see comments to nextQuickPosition
             return (int) (position - qp) & (maxAvailableGap - 1);
         }
@@ -5393,7 +5418,7 @@ public class Arrays {
             throw new IndexOutOfBoundsException("Negative index (" + index + ") in insertBit method");
         if (index > len)
             throw new IndexOutOfBoundsException("Index (" + index + ") > length (" + len
-                + ") in insertBit method");
+                    + ") in insertBit method");
         lengthUnsigned(array, len + 1);
         array.copy(index + 1, index, len - index);
         array.setBit(index, value);
@@ -5429,7 +5454,7 @@ public class Arrays {
             throw new IndexOutOfBoundsException("Negative index (" + index + ") in insertChar method");
         if (index > len)
             throw new IndexOutOfBoundsException("Index (" + index + ") > length (" + len
-                + ") in insertChar method");
+                    + ") in insertChar method");
         lengthUnsigned(array, len + 1);
         array.copy(index + 1, index, len - index);
         array.setChar(index, value);
@@ -5465,7 +5490,7 @@ public class Arrays {
             throw new IndexOutOfBoundsException("Negative index (" + index + ") in insertInt method");
         if (index > len)
             throw new IndexOutOfBoundsException("Index (" + index + ") > length (" + len
-                + ") in insertInt method");
+                    + ") in insertInt method");
         lengthUnsigned(array, len + 1);
         array.copy(index + 1, index, len - index);
         array.setInt(index, value);
@@ -5501,7 +5526,7 @@ public class Arrays {
             throw new IndexOutOfBoundsException("Negative index (" + index + ") in insertLong method");
         if (index > len)
             throw new IndexOutOfBoundsException("Index (" + index + ") > length (" + len
-                + ") in insertLong method");
+                    + ") in insertLong method");
         lengthUnsigned(array, len + 1);
         array.copy(index + 1, index, len - index);
         array.setLong(index, value);
@@ -5537,7 +5562,7 @@ public class Arrays {
             throw new IndexOutOfBoundsException("Negative index (" + index + ") in insertDouble method");
         if (index > len)
             throw new IndexOutOfBoundsException("Index (" + index + ") > length (" + len
-                + ") in insertDouble method");
+                    + ") in insertDouble method");
         lengthUnsigned(array, len + 1);
         array.copy(index + 1, index, len - index);
         array.setDouble(index, value);
@@ -5573,7 +5598,7 @@ public class Arrays {
             throw new IndexOutOfBoundsException("Negative index (" + index + ") in insertObject method");
         if (index > len)
             throw new IndexOutOfBoundsException("Index (" + index + ") > length (" + len
-                + ") in insertObject method");
+                    + ") in insertObject method");
         lengthUnsigned(array, len + 1);
         array.copy(index + 1, index, len - index);
         array.set(index, value);
@@ -5611,7 +5636,7 @@ public class Arrays {
             throw new IndexOutOfBoundsException("Negative position (" + position + ") in insertEmptyRange method");
         if (count < 0)
             throw new IndexOutOfBoundsException("Negative number of elements (" + count
-                + ") in insertEmptyRange method");
+                    + ") in insertEmptyRange method");
         if (count > 0) {
             lengthUnsigned(array, len + count);
             array.copy(position + count, position, len - position);
@@ -5669,7 +5694,7 @@ public class Arrays {
             throw new IndexOutOfBoundsException("Negative number of elements (" + count + ") in removeRange method");
         if (position + count > len)
             throw new IndexOutOfBoundsException("High index (" + (position + count - 1) + ") > length (" + len
-                + ") in removeRange method");
+                    + ") in removeRange method");
         array.copy(position, position + count, len - (position + count));
         array.length(len - count);
     }
@@ -5830,7 +5855,7 @@ public class Arrays {
             eType = Double.class;
         if (!listElementType.isAssignableFrom(eType))
             throw new ClassCastException("The passed array element type cannot be stored in List<"
-                + listElementType + "> (" + array + ")");
+                    + listElementType + "> (" + array + ")");
         return new AlgARTArrayList<E>(array);
     }
 
@@ -5968,6 +5993,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.min(Math.min(a, b), c)</tt> &mdash; minimum from 3 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -5979,6 +6005,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.max(Math.max(a, b), c)</tt> &mdash; maximum from 3 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -5990,6 +6017,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.min(Math.min(a, b), Math.min(c, d))</tt> &mdash; minimum from 4 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6002,6 +6030,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.max(Math.max(a, b), Math.max(c, d))</tt> &mdash; maximum from 4 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6030,6 +6059,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.min(Math.min(a, b), c)</tt> &mdash; minimum from 3 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6041,6 +6071,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.max(Math.max(a, b), c)</tt> &mdash; maximum from 3 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6052,6 +6083,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.min(Math.min(a, b), Math.min(c, d))</tt> &mdash; minimum from 4 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6064,6 +6096,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.max(Math.max(a, b), Math.max(c, d))</tt> &mdash; maximum from 4 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6092,6 +6125,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.min(Math.min(a, b), c)</tt> &mdash; minimum from 3 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6103,6 +6137,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.max(Math.max(a, b), c)</tt> &mdash; maximum from 3 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6114,6 +6149,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.min(Math.min(a, b), Math.min(c, d))</tt> &mdash; minimum from 4 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6126,6 +6162,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.max(Math.max(a, b), Math.max(c, d))</tt> &mdash; maximum from 4 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6154,6 +6191,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.min(Math.min(a, b), c)</tt> &mdash; minimum from 3 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6165,6 +6203,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.max(Math.max(a, b), c)</tt> &mdash; maximum from 3 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6176,6 +6215,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.min(Math.min(a, b), Math.min(c, d))</tt> &mdash; minimum from 4 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6188,6 +6228,7 @@ public class Arrays {
 
     /**
      * Returns <tt>Math.max(Math.max(a, b), Math.max(c, d))</tt> &mdash; maximum from 4 values.
+     *
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
@@ -6232,6 +6273,7 @@ public class Arrays {
 
 
     /*Repeat.SectionStart longMul*/
+
     /**
      * Returns the product of passed multipliers from the index, specified in <tt>from</tt> argument (inclusive),
      * until the index, specified in <tt>to</tt> argument (exclusive), i&#46;e&#46;
@@ -6260,7 +6302,7 @@ public class Arrays {
     public static long longMul(long[] multipliers, int from, int to) {
         if (to > multipliers.length || from < 0) // simultaneously checks multipliers!=null
             throw new IndexOutOfBoundsException("Indexes out of bounds 0.." + multipliers.length
-                + ": from = " + from + ", to = " + to);
+                    + ": from = " + from + ", to = " + to);
         if (from > to)
             throw new IllegalArgumentException("Illegal indexes: from = " + from + " > to = " + to);
         if (from == to) {
@@ -6417,7 +6459,7 @@ public class Arrays {
      *                  and some element (retuned as the result) is cyclically subtracted
      *                  from all other elements, to provide the minimal value of the maximal element.
      * @return the value of the element of the original <tt>positions</tt> array,
-     *         which is the start of the shortest cyclic range arc.
+     * which is the start of the shortest cyclic range arc.
      * @throws NullPointerException     if <tt>positions</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>length&lt;=0</tt>,
      *                                  or if some of passed positions are not in <tt>0..length-1</tt> range.
@@ -6520,12 +6562,12 @@ public class Arrays {
      *
      * @param context some array context; may be <tt>null</tt>.
      * @return the thread pool factory, provided by this context, or the default thread pool factory
-     *         if the argument is <tt>null</tt>.
+     * if the argument is <tt>null</tt>.
      */
     public static ThreadPoolFactory getThreadPoolFactory(ArrayContext context) {
         return context == null ?
-            DefaultThreadPoolFactory.getDefaultThreadPoolFactory() :
-            context.getThreadPoolFactory();
+                DefaultThreadPoolFactory.getDefaultThreadPoolFactory() :
+                context.getThreadPoolFactory();
     }
 
     /**
@@ -6687,8 +6729,7 @@ public class Arrays {
      * @param exception      some exception of the specified class or unchecked exception.
      */
     public static <T extends Exception> void throwException(Class<? extends T> exceptionClass, Throwable exception)
-        throws T
-    {
+            throws T {
         if (exceptionClass.isInstance(exception)) {
             throw exceptionClass.cast(exception);
         }
@@ -6907,9 +6948,9 @@ public class Arrays {
          * of the copying method was <tt>false</tt>.
          *
          * @return <tt>true</tt> the array was copyied strictly, <tt>false</tt> if it was copyied
-         *         by {@link Arrays#copy(ArrayContext, UpdatableArray, Array, int, boolean)} or
-         *         {@link Matrices#copy(ArrayContext, Matrix, Matrix, int, boolean)} method
-         *         with <tt>strictMode=false</tt>.
+         * by {@link Arrays#copy(ArrayContext, UpdatableArray, Array, int, boolean)} or
+         * {@link Matrices#copy(ArrayContext, Matrix, Matrix, int, boolean)} method
+         * with <tt>strictMode=false</tt>.
          */
         public boolean strictMode() {
             return strictMode;
@@ -7378,9 +7419,10 @@ public class Arrays {
             this.blockSize = blockSize;
             this.threadPoolFactory = Arrays.getThreadPoolFactory(context);
             this.numberOfTasks = numberOfTasks > 0 ? numberOfTasks :
-                getClass() == Copier.class
-                    && !src.isLazy() ? 1 // source array is probably file or memory: no reasons for multithreading copying
-                    : Math.max(1, this.threadPoolFactory.recommendedNumberOfTasks(src));
+                    getClass() == Copier.class
+                            && !src.isLazy() ? 1
+                            // source array is probably file or memory: no reasons for multithreading copying
+                            : Math.max(1, this.threadPoolFactory.recommendedNumberOfTasks(src));
             assert this.numberOfTasks > 0;
             long m = numberOfRanges > 0 ? numberOfRanges : recommendedNumberOfRanges(src, true);
             assert m > 0 : "A bug in recommendedNumberOfRanges(Array): it returns non-positive value " + m;
@@ -7453,7 +7495,7 @@ public class Arrays {
             if (numberOfRanges <= 0)
                 throw new IllegalArgumentException("Zero or negative numberOfRanges=" + numberOfRanges);
             return numberOfRanges % numberOfTasks == 0 ? numberOfRanges :
-                numberOfRanges - numberOfRanges % numberOfTasks + numberOfTasks;
+                    numberOfRanges - numberOfRanges % numberOfTasks + numberOfTasks;
         }
 
         /**
@@ -7563,7 +7605,7 @@ public class Arrays {
                                     if (th instanceof ThreadForRanges) {
                                         // so, it's our thread, created by the custom ThreadFactory below
                                         th.setName("thread #" + (ti + 1) + "/" + numberOfTasks
-                                            + ", range # " + (ri + 1) + "/" + numberOfRanges + " (" + src + ")");
+                                                + ", range # " + (ri + 1) + "/" + numberOfRanges + " (" + src + ")");
                                     }
                                     try {
                                         processRange(rFrom, rTo, ti, ri);
@@ -7660,8 +7702,8 @@ public class Arrays {
                                         long ready = readyRanges.incrementAndGet();
                                         if (ready != rangeIndex + 1)
                                             throw new AssertionError("Invalid synchronization (" + ready
-                                                + " instead of " + (rangeIndex + 1) + " in "
-                                                + ParallelExecutor.this.getClass());
+                                                    + " instead of " + (rangeIndex + 1) + " in "
+                                                    + ParallelExecutor.this.getClass());
                                     }
                                     synchronizer.notifyAll();
                                 }
@@ -7780,7 +7822,7 @@ public class Arrays {
         public final long rangeFrom(long rangeIndex) {
             if (rangeIndex < 0 || rangeIndex >= numberOfRanges)
                 throw new IndexOutOfBoundsException("rangeIndex (" + rangeIndex
-                    + (rangeIndex < 0 ? ") < 0" : ") >= numberOfRanges (" + numberOfRanges + ")"));
+                        + (rangeIndex < 0 ? ") < 0" : ") >= numberOfRanges (" + numberOfRanges + ")"));
             if (rangeIndex == 0) {
                 return 0;
             }
@@ -7811,7 +7853,7 @@ public class Arrays {
         public final long rangeTo(long rangeIndex) {
             if (rangeIndex < 0 || rangeIndex >= numberOfRanges)
                 throw new IndexOutOfBoundsException("rangeIndex (" + rangeIndex
-                    + (rangeIndex < 0 ? ") < 0" : ") >= numberOfRanges (" + numberOfRanges + ")"));
+                        + (rangeIndex < 0 ? ") < 0" : ") >= numberOfRanges (" + numberOfRanges + ")"));
             if (rangeIndex == numberOfRanges - 1) {
                 return length;
             }
@@ -7944,8 +7986,8 @@ public class Arrays {
          *                   <tt>{@link #numberOfRanges}-1</tt> for the last region,
          *                   ending with the element <tt><nobr>#source_array.length()-1</nobr></tt>
          * @return the number of elements that should be skipped by
-         *         {@link #processRange(long fromIndex, long toIndex, int threadIndex, long rangeIndex)}
-         *         at the beginning of the processed block.
+         * {@link #processRange(long fromIndex, long toIndex, int threadIndex, long rangeIndex)}
+         * at the beginning of the processed block.
          */
         public long startGap(long rangeIndex) {
             return 0;
@@ -7968,8 +8010,8 @@ public class Arrays {
          *                   <tt>{@link #numberOfRanges}-1</tt> for the last region,
          *                   ending with the element <tt><nobr>#source_array.length()-1</nobr></tt>
          * @return the number of elements that should be skipped by
-         *         {@link #processRange(long fromIndex, long toIndex, int threadIndex, long rangeIndex)}
-         *         at the end of the processed block.
+         * {@link #processRange(long fromIndex, long toIndex, int threadIndex, long rangeIndex)}
+         * at the end of the processed block.
          */
         public long endGap(long rangeIndex) {
             return 0;
@@ -8140,8 +8182,8 @@ public class Arrays {
          */
         public String toString() {
             return "Parallel executor for " + numberOfTasks + " tasks and " + numberOfRanges
-                + " ranges per ~" + approximateRangeLength + " elements, block size " + blockSize
-                + ", source array " + src;
+                    + " ranges per ~" + approximateRangeLength + " elements, block size " + blockSize
+                    + ", source array " + src;
         }
 
         private boolean updateTime(boolean progressTime) {
@@ -8167,7 +8209,7 @@ public class Arrays {
          * The currently used synchronization algorithm: {@value}.
          */
         private static final ProcessSynchronizationAlgorithm PROCESS_SYNCHRONIZATION_ALGORITHM =
-            ProcessSynchronizationAlgorithm.NO_SYNCHRONIZATION;
+                ProcessSynchronizationAlgorithm.NO_SYNCHRONIZATION;
 
         /**
          * The algorithm of synchronizing preloading resources in {@link Arrays.ParallelExecutor#process} method.
@@ -8251,14 +8293,14 @@ public class Arrays {
          */
         public Copier(ArrayContext context, UpdatableArray dest, Array src, int numberOfTasks, long numberOfRanges) {
             super(context,
-                src.length() <= dest.length() ? dest.subArr(0, src.length()) : dest,
-                src.length() <= dest.length() ? src : src.subArr(0, dest.length()),
-                src instanceof BitArray ? 8 * 65536 : 2 * 65536,
-                numberOfTasks, numberOfRanges);
+                    src.length() <= dest.length() ? dest.subArr(0, src.length()) : dest,
+                    src.length() <= dest.length() ? src : src.subArr(0, dest.length()),
+                    src instanceof BitArray ? 8 * 65536 : 2 * 65536,
+                    numberOfTasks, numberOfRanges);
             if (!dest.elementType().isAssignableFrom(src.elementType()))
                 // this check is necessary in a case of empty arrays
                 throw new IllegalArgumentException("Element types mismatch ("
-                    + dest.elementType() + " and " + src.elementType() + ")");
+                        + dest.elementType() + " and " + src.elementType() + ")");
         }
 
         @Override
@@ -8332,7 +8374,7 @@ public class Arrays {
      *
      * @param array the source array.
      * @return the same result as {@link DirectAccessible#javaArrayOffset()} method,
-     *         but also for immutable arrays.
+     * but also for immutable arrays.
      */
     static int javaArrayOffsetInternal(Array array) {
         if (array instanceof AbstractArray)
@@ -8388,7 +8430,7 @@ public class Arrays {
      *
      * @param array the checked AlgART array (may be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed array a build-in array of some tiled AlgART matrix or
-     *         a submatrix of such a matrix.
+     * a submatrix of such a matrix.
      */
     static boolean isTiledOrSubMatrixOfTiled(Array array) {
         if (array instanceof ArraysSubMatrixImpl.SubMatrixArray) {
@@ -8445,8 +8487,8 @@ public class Arrays {
         boolean thisImmutable = array.isImmutable();
         for (int k = 0; k < result.length; k++) {
             result[k] = thisImmutable ?
-                underlyingArrays[k].asImmutable() :
-                underlyingArrays[k].shallowClone();
+                    underlyingArrays[k].asImmutable() :
+                    underlyingArrays[k].shallowClone();
         }
         return result;
     }
@@ -8482,7 +8524,7 @@ public class Arrays {
             return new DataBuffersImpl.ArrayDoubleBuffer((DoubleArray) array, mode, capacity, trusted);
         if (array instanceof ObjectArray<?>)
             return new DataBuffersImpl.ArrayObjectBuffer<Object>(
-                InternalUtils.<ObjectArray<Object>>cast(array), mode, capacity, trusted);
+                    InternalUtils.<ObjectArray<Object>>cast(array), mode, capacity, trusted);
         return new DataBuffersImpl.ArrayBuffer(array, mode, capacity, trusted);
         // - to be on the safe side, for possible "strange" inheritors
     }
@@ -8513,7 +8555,7 @@ public class Arrays {
 
     static int truncateLongToInt(long value) {
         return value == (int) value ? (int) value :
-            value > Integer.MAX_VALUE ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+                value > Integer.MAX_VALUE ? Integer.MAX_VALUE : Integer.MIN_VALUE;
     }
 
     static ObjectArray<?> nObjectCopies(long n, Object element, Class<?> nullType) {
@@ -8558,7 +8600,7 @@ public class Arrays {
             Objects.requireNonNull(array);
             if (array.length() > Integer.MAX_VALUE)
                 throw new TooLargeArrayException("Cannot view AlgART array as List, "
-                    + "because it is too large: " + array);
+                        + "because it is too large: " + array);
             this.array = array;
         }
 
@@ -8566,7 +8608,7 @@ public class Arrays {
             long len = array.length();
             if (len > Integer.MAX_VALUE)
                 throw new TooLargeArrayException("Cannot access List based on AlgART array, "
-                    + "because it is too large: " + array);
+                        + "because it is too large: " + array);
             return (int) len;
         }
 
@@ -8576,7 +8618,7 @@ public class Arrays {
             long len = array.length();
             if (len != (int) len)
                 throw new TooLargeArrayException("Cannot convert List based on AlgART array to Java array, "
-                    + "because it is too large: " + array);
+                        + "because it is too large: " + array);
             Object[] result;
             Class<?> et = array.elementType();
             if (et == boolean.class)
@@ -8620,7 +8662,7 @@ public class Arrays {
             long len = array.length();
             if (len != (int) len)
                 throw new TooLargeArrayException("Cannot run indexOf in List based on AlgART array, "
-                    + "because it is too large: " + array);
+                        + "because it is too large: " + array);
             if (o == null) {
                 for (int k = 0; k < (int) len; k++)
                     if (array.getElement(k) == null)
@@ -8645,7 +8687,7 @@ public class Arrays {
             Objects.requireNonNull(charArray, "Null charArray argument");
             if (charArray.length() > Integer.MAX_VALUE)
                 throw new TooLargeArrayException("Cannot view AlgART array as CharSequence, "
-                    + "because it is too large: " + charArray);
+                        + "because it is too large: " + charArray);
             this.charArray = charArray;
         }
 

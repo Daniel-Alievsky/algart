@@ -676,6 +676,7 @@ public class Patterns {
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/Arrays.java, longMul)
       public\s+static ==> static
          !! Auto-generated: NOT EDIT !! */
+
     /**
      * Returns the product of passed multipliers from the index, specified in <tt>from</tt> argument (inclusive),
      * until the index, specified in <tt>to</tt> argument (exclusive), i&#46;e&#46;
@@ -704,7 +705,7 @@ public class Patterns {
     static long longMul(long[] multipliers, int from, int to) {
         if (to > multipliers.length || from < 0) // simultaneously checks multipliers!=null
             throw new IndexOutOfBoundsException("Indexes out of bounds 0.." + multipliers.length
-                + ": from = " + from + ", to = " + to);
+                    + ": from = " + from + ", to = " + to);
         if (from > to)
             throw new IllegalArgumentException("Illegal indexes: from = " + from + " > to = " + to);
         if (from == to) {
