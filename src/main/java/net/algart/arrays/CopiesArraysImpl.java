@@ -1094,7 +1094,7 @@ class CopiesArraysImpl {
     }
 
     /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, copies_array)
-      value\s*==\s*\(float\)\s*value ==> value == ((int)value & 0xFF) ;;
+      value\s*==\s*\(float\)\s*value ==> value == ((int) value & 0xFF) ;;
       Float\.floatToIntBits\((.*?)\) ==> $1 ;;
       float\s+getFloat ==> int getByte ;;
       Float(?!ing) ==> Byte ;;
@@ -1318,11 +1318,11 @@ class CopiesArraysImpl {
         }//end_method
 
         public long indexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public long getLong(long index) {
@@ -1340,11 +1340,11 @@ class CopiesArraysImpl {
         }//end_method
 
         public long indexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public int getByte(long index) {
@@ -1447,7 +1447,7 @@ class CopiesArraysImpl {
     }
 
     /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, copies_array)
-      value\s*==\s*\(float\)value ==> value == ((int)value & 0xFFFF) ;;
+      value\s*==\s*\(float\)\s*value ==> value == ((int) value & 0xFFFF) ;;
       Float\.floatToIntBits\((.*?)\) ==> $1 ;;
       float\s+getFloat ==> int getShort ;;
       Float(?!ing) ==> Short ;;
@@ -1671,11 +1671,11 @@ class CopiesArraysImpl {
         }//end_method
 
         public long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (short) value ? indexOf(lowIndex, highIndex, (short) value) : -1;
+            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (short) value ? lastIndexOf(lowIndex, highIndex, (short) value) : -1;
+            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public long getLong(long index) {
@@ -1693,11 +1693,11 @@ class CopiesArraysImpl {
         }//end_method
 
         public long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (short) value ? indexOf(lowIndex, highIndex, (short) value) : -1;
+            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (short) value ? lastIndexOf(lowIndex, highIndex, (short) value) : -1;
+            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public int getShort(long index) {

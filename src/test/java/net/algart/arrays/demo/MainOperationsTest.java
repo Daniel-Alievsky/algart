@@ -245,6 +245,8 @@ public class MainOperationsTest implements Cloneable {
 
         thp = DefaultThreadPoolFactory.globalThreadPool();
 
+        System.out.printf("%d tests, length %d, block size %d, rand-seed %d%n",
+                numberOfTests, len, blockSize, startSeed);
         System.out.println("Main model: " + gmm);
         System.out.println("Alternative model: " + lmmStdIO);
         System.out.println("Maximal number of parallel tasks: "
