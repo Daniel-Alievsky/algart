@@ -110,6 +110,8 @@ public interface LongArray extends PIntegerArray {
 
     UpdatableLongArray updatableClone(MemoryModel memoryModel);
 
+    long[] ja();
+
     default Matrix<? extends LongArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }

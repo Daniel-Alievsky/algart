@@ -25,7 +25,6 @@
 package net.algart.arrays;
 
 import java.nio.ByteOrder;
-import java.util.Optional;
 
 /**
  * <p>AlgART array of any elements, read-only access.</p>
@@ -1058,50 +1057,48 @@ public interface Array {
     UpdatableArray updatableClone(MemoryModel memoryModel);
 
     /**
-     * Returns the Java array that backs this buffer, if it exists and the start offset in this array is 0,
-     * or <tt>Optional.empty()</tt> in other case.
-     * Equivalent to
+     * Returns the underlying Java array <tt>ja</tt>, if this AlgART array is its wrapper
+     * (see {@link Arrays#isJavaArrayWrapper(Array)}); otherwise returns
+     * <tt>{@link Arrays#toJavaArray(Array) Arrays.toJavaArray}(thisObject)</tt> in other case.
+     *
+     * <p>In other words, this method returns a Java-array, absolutely identical to this AlgART array &mdash;
+     * having identical length and elements, &mdash; and does this as quickly as possible
+     * (unlike {@link Arrays#toJavaArray(Array)}, which always copies the data).</p>
+     *
+     * <p>This method is equivalent to the following operators:</p>
      * <pre>
-     *     thisArray instanceof {@link DirectAccessible DirectAccessible} da &amp;&amp;
-     *              da.hasJavaArray() &amp;&amp; da.javaArrayOffset() == 0 ?
-     *          Optional.of(da.javaArray()) :
-     *          Optional.empty();
+     *     thisObject instanceof DirectAccessible da &amp;&amp;
+     *                 da.hasJavaArray() &amp;&amp;
+     *                 da.javaArrayOffset() == 0 &amp;&amp;
+     *                 java.lang.reflect.Array.getLength(da.javaArray()) == thisObject.{@link Array#length()
+     *                 length()} ?
+     *                 da.javaArray() :
+     *                 Arrays.toJavaArray(this);
      * </pre>
+     * <p>but works little faster if the first case, "<tt>da.javaArray()</tt>", is selected (this is a wrapper).</p>
      *
-     * <p>Note that usually you <b>should</b> prefer using {@link DirectAccessible} interface instead of this method,
-     * because that interface allows to quickly process sub-arrays with non-zero start offset.
+     * <p>There are overridden versions of this method in subinterfaces for specific element types:
+     * {@link BitArray#ja()}, {@link CharArray#ja()}},
+     * {@link ByteArray#ja()}}, {@link ShortArray#ja()}},
+     * {@link IntArray#ja()}}, {@link LongArray#ja()}},
+     * {@link FloatArray#ja()}}, {@link DoubleArray#ja()}},
+     * {@link ObjectArray#ja()}}.</p>
+     *
+     * <p>Usually you should only read and not try to modify the Java array, returned by this method:
+     * writing into the returned Java array may change the original AlgART array, but may also not change it.</p>
+     *
+     * <p>Note that usually you <b>should</b> prefer methods of {@link DirectAccessible} interface
+     * instead of this method, because that interface allows to quickly process sub-arrays
+     * with non-zero start offsets and mutable arrays, for which the length of underlying Java array (capacity)
+     * is usually greater than the actual AlgART array {@link #length() length}.
      * But if you are sure that your array is created by {@link SimpleMemoryModel} and is not a sub-array,
-     * this method provides the simplest way to access the underlying Java array.
+     * this method provides the simplest way to receive an identical Java array maximally quickly.
      *
-     * <p>Please remember that we <b>do not guarantee</b> that the length of the returned Java array,
-     * when it exists, will equal to the actual length of this array, returned by {@link #length()} method!
-     * Usually it is not so for {@link MutableArray mutable arrays}.
-     * But if it was created using {@link SimpleMemoryModel#newUnresizableArray(Class, long)} method
-     * or some equivalent way like {@link SimpleMemoryModel#newMatrix(Class, Class, long...)},
-     * then you <b>have</b> this guarantee: the length of Java array <tt>quick().get()</tt>
-     * will be equal to the result of {@link #length()} method.
-     *
-     * @return the underlying Java array "<tt>ja</tt>" that backs this AlgART array,
-     * if it exists and if the element #0 of this array corresponds to its first element <tt>ja[0]</tt>.
+     * @return Java array, equivalent to this AlgART array.
+     * @see DirectAccessible
+     * @see Arrays#isJavaArrayWrapper(Array)
      */
-    Optional<Object> quick();
-
-    /**
-     * Returns either <tt>{@link #quick()}.get()</tt>, if this object is just a wrapper around a usual Java array,
-     * or <tt>{@link Arrays#toJavaArray(Array) Arrays.toJavaArray}(thisObject)</tt> in other case.
-     * More precisely,
-     * ...
-     * @return Java array, equivalent to this object.
-     */
-    default Object ja() {
-        if (this instanceof DirectAccessible da && da.hasJavaArray() && da.javaArrayOffset() == 0) {
-            Object a = da.javaArray();
-            if (java.lang.reflect.Array.getLength(a) == length()) {
-                return a;
-            }
-        }
-        return Arrays.toJavaArray(this);
-    }
+    Object ja();
 
     /**
      * Equivalent to <tt>{@link Matrices#matrix(Array, long[]) matrix}(thisArray, dim)</tt>.

@@ -565,6 +565,10 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
         return (UpdatableDoubleArray) super.updatableClone(memoryModel);
     }
 
+    public double[] ja() {
+        return (double[]) super.ja();
+    }
+
     /**
      * This implementation calls
      * {@link #loadResources(ArrayContext, long, long) loadResources(context, 0, length())}.

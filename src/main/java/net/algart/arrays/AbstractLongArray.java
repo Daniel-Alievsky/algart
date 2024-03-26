@@ -567,6 +567,10 @@ public abstract class AbstractLongArray extends AbstractArray implements LongArr
         return (UpdatableLongArray) super.updatableClone(memoryModel);
     }
 
+    public long[] ja() {
+        return (long[]) super.ja();
+    }
+
     /**
      * This implementation calls
      * {@link #loadResources(ArrayContext, long, long) loadResources(context, 0, length())}.

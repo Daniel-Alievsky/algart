@@ -112,6 +112,8 @@ public interface ShortArray extends PIntegerArray {
 
     UpdatableShortArray updatableClone(MemoryModel memoryModel);
 
+    short[] ja();
+
     default Matrix<? extends ShortArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }

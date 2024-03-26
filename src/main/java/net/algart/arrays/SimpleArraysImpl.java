@@ -25,7 +25,6 @@
 package net.algart.arrays;
 
 import java.util.EmptyStackException;
-import java.util.Optional;
 
 /**
  * <p>Implementations of arrays for {@link SimpleMemoryModel}.
@@ -643,6 +642,10 @@ class SimpleArraysImpl {
             }
         }
 
+        public float[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable simple AlgART array float[" + length
                 + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
@@ -880,6 +883,9 @@ class SimpleArraysImpl {
             }
         }
 
+        public float[] ja() {
+            return Arrays.toJavaArray(this);
+        }
 
         public String toString() {
             return "immutable simple AlgART subarray float[" + length()
@@ -914,12 +920,14 @@ class SimpleArraysImpl {
             return 0;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            if (isCopyOnNextWrite()) {
-                reallocateStorage();
+        public float[] ja() {
+            if (length == this.floatArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.floatArray;
             }
-            return Optional.of(this.array);
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -1006,9 +1014,14 @@ class SimpleArraysImpl {
             return offset;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
+        public float[] ja() {
+            if (offset == 0 && length == this.floatArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.floatArray;
+            }
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -1923,7 +1936,7 @@ $1    };;
       JArrays\.lastIndexOfFloat ==> PackedBitArrays.lastIndexOfBit ;;
       JArrays\.fillBitArray ==> PackedBitArrays.fillBits ;;
       floatArray ==> bitArray ;;
-      float\[\](?!\s+toFloatArray|\)toArray) ==> long[] ;;
+      float\[\](?!\s+toFloatArray|\s+ja\(|\)toArray) ==> long[] ;;
       int\s+offset; ==> long offset; ;;
       int\s+initial ==> long initial ;;
       (javaArrayOffsetInternal\(\)\s*\{\s*)return\s+\w+; ==>
@@ -2197,6 +2210,10 @@ $1    };;
             }
         }
 
+        public boolean[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable simple AlgART array bit[" + length
                 + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
@@ -2435,6 +2452,9 @@ $1    };;
             }
         }
 
+        public boolean[] ja() {
+            return Arrays.toJavaArray(this);
+        }
 
         public String toString() {
             return "immutable simple AlgART subarray bit[" + length()
@@ -3682,6 +3702,10 @@ $1    };;
             }
         }
 
+        public char[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable simple AlgART array char[" + length
                 + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
@@ -3919,6 +3943,9 @@ $1    };;
             }
         }
 
+        public char[] ja() {
+            return Arrays.toJavaArray(this);
+        }
 
         public String toString() {
             return "immutable simple AlgART subarray char[" + length()
@@ -3953,12 +3980,14 @@ $1    };;
             return 0;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            if (isCopyOnNextWrite()) {
-                reallocateStorage();
+        public char[] ja() {
+            if (length == this.charArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.charArray;
             }
-            return Optional.of(this.array);
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -4045,9 +4074,14 @@ $1    };;
             return offset;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
+        public char[] ja() {
+            if (offset == 0 && length == this.charArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.charArray;
+            }
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -5172,6 +5206,10 @@ $1    };;
             }
         }
 
+        public byte[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable simple AlgART array byte[" + length
                 + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
@@ -5409,6 +5447,9 @@ $1    };;
             }
         }
 
+        public byte[] ja() {
+            return Arrays.toJavaArray(this);
+        }
 
         public String toString() {
             return "immutable simple AlgART subarray byte[" + length()
@@ -5443,12 +5484,14 @@ $1    };;
             return 0;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            if (isCopyOnNextWrite()) {
-                reallocateStorage();
+        public byte[] ja() {
+            if (length == this.byteArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.byteArray;
             }
-            return Optional.of(this.array);
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -5535,9 +5578,14 @@ $1    };;
             return offset;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
+        public byte[] ja() {
+            if (offset == 0 && length == this.byteArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.byteArray;
+            }
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -6642,6 +6690,10 @@ $1    };;
             }
         }
 
+        public short[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable simple AlgART array short[" + length
                 + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
@@ -6879,6 +6931,9 @@ $1    };;
             }
         }
 
+        public short[] ja() {
+            return Arrays.toJavaArray(this);
+        }
 
         public String toString() {
             return "immutable simple AlgART subarray short[" + length()
@@ -6913,12 +6968,14 @@ $1    };;
             return 0;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            if (isCopyOnNextWrite()) {
-                reallocateStorage();
+        public short[] ja() {
+            if (length == this.shortArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.shortArray;
             }
-            return Optional.of(this.array);
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -7005,9 +7062,14 @@ $1    };;
             return offset;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
+        public short[] ja() {
+            if (offset == 0 && length == this.shortArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.shortArray;
+            }
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -8104,6 +8166,10 @@ $1    };;
             }
         }
 
+        public int[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable simple AlgART array int[" + length
                 + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
@@ -8335,6 +8401,9 @@ $1    };;
             }
         }
 
+        public int[] ja() {
+            return Arrays.toJavaArray(this);
+        }
 
         public String toString() {
             return "immutable simple AlgART subarray int[" + length()
@@ -8369,12 +8438,14 @@ $1    };;
             return 0;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            if (isCopyOnNextWrite()) {
-                reallocateStorage();
+        public int[] ja() {
+            if (length == this.intArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.intArray;
             }
-            return Optional.of(this.array);
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -8461,9 +8532,14 @@ $1    };;
             return offset;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
+        public int[] ja() {
+            if (offset == 0 && length == this.intArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.intArray;
+            }
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -9540,6 +9616,10 @@ $1    };;
             }
         }
 
+        public long[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable simple AlgART array long[" + length
                 + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
@@ -9763,6 +9843,9 @@ $1    };;
             }
         }
 
+        public long[] ja() {
+            return Arrays.toJavaArray(this);
+        }
 
         public String toString() {
             return "immutable simple AlgART subarray long[" + length()
@@ -9797,12 +9880,14 @@ $1    };;
             return 0;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            if (isCopyOnNextWrite()) {
-                reallocateStorage();
+        public long[] ja() {
+            if (length == this.longArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.longArray;
             }
-            return Optional.of(this.array);
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -9889,9 +9974,14 @@ $1    };;
             return offset;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
+        public long[] ja() {
+            if (offset == 0 && length == this.longArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.longArray;
+            }
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -10953,6 +11043,10 @@ $1    };;
             }
         }
 
+        public double[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable simple AlgART array double[" + length
                 + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
@@ -11176,6 +11270,9 @@ $1    };;
             }
         }
 
+        public double[] ja() {
+            return Arrays.toJavaArray(this);
+        }
 
         public String toString() {
             return "immutable simple AlgART subarray double[" + length()
@@ -11210,12 +11307,14 @@ $1    };;
             return 0;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            if (isCopyOnNextWrite()) {
-                reallocateStorage();
+        public double[] ja() {
+            if (length == this.doubleArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.doubleArray;
             }
-            return Optional.of(this.array);
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -11302,9 +11401,14 @@ $1    };;
             return offset;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
+        public double[] ja() {
+            if (offset == 0 && length == this.doubleArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.doubleArray;
+            }
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -12179,6 +12283,7 @@ $1    };;
         final Class<?> elementType; ;;
       \@SuppressWarnings\(\"cast\"\) ==> @SuppressWarnings("rawtypes") ;;
       (static\s+class\s+Trusted) ==> @SuppressWarnings("rawtypes") $1 ;;
+      (public\s+Object\[\]\s+ja) ==> @SuppressWarnings("unchecked") $1 ;;
       (public\s+(?:final\s+)?)(\w*?)((?:Object)?Array\s+asCopyOnNextWrite\(\)\s*\{.*?[\r\n]\s*}) ==> $1$2$3
 
         public $2ObjectArray cast(Class elementType) {
@@ -12387,6 +12492,10 @@ $1    };;
             } else {
                 return (UpdatableObjectArray) super.updatableClone(memoryModel);
             }
+        }
+
+        @SuppressWarnings("unchecked") public Object[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public String toString() {
@@ -12598,6 +12707,9 @@ $1    };;
             }
         }
 
+        @SuppressWarnings("unchecked") public Object[] ja() {
+            return Arrays.toJavaArray(this);
+        }
 
         public String toString() {
             return "immutable simple AlgART subarray " + elementType.getName() + "[" + length()
@@ -12632,12 +12744,14 @@ $1    };;
             return 0;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            if (isCopyOnNextWrite()) {
-                reallocateStorage();
+        @SuppressWarnings("unchecked") public Object[] ja() {
+            if (length == this.objectArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.objectArray;
             }
-            return Optional.of(this.array);
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -12731,9 +12845,14 @@ $1    };;
             return offset;
         }
 
-        @Override
-        public Optional<Object> quick() {
-            return offset == 0 ? Optional.of(javaArray()) : Optional.empty();
+        @SuppressWarnings("unchecked") public Object[] ja() {
+            if (offset == 0 && length == this.objectArray.length) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.objectArray;
+            }
+            return Arrays.toJavaArray(this);
         }
 
         public Array subArray(long fromIndex, long toIndex) {

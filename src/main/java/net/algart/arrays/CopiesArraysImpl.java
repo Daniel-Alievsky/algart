@@ -27,7 +27,7 @@ package net.algart.arrays;
 import net.algart.math.functions.Func;
 
 import java.nio.ByteOrder;
-import java.util.Optional;
+import java.util.Objects;
 
 /**
  * <p>Implementations of <tt>Arrays.nXxxCopies</tt> arrays.
@@ -42,7 +42,7 @@ class CopiesArraysImpl {
     }
 
     /*Repeat.SectionStart copies_array*/
-    static class CopiesFloatArray implements FloatArray, CopiesArray, ArraysFuncImpl.FuncArray  {
+    static class CopiesFloatArray implements FloatArray, CopiesArray, ArraysFuncImpl.FuncArray {
         private final long length;
         private final float element;
         private final Func f;
@@ -89,33 +89,37 @@ class CopiesArraysImpl {
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw AbstractArray.rangeException(arrayPos + count - 1, length, getClass());
-            JArrays.fillFloatArray((float[])destArray, destArrayOffset, count, this.element);
+            }
+            JArrays.fillFloatArray((float[]) destArray, destArrayOffset, count, this.element);
         }
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            float[] dest = (float[])destArray;
-            if (arrayPos < 0 || arrayPos > length)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            float[] dest = (float[]) destArray;
+            if (arrayPos < 0 || arrayPos > length) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
+            }
             int count = dest.length;
-            if (count > length - arrayPos)
-                count = (int)(length - arrayPos);
+            if (count > length - arrayPos) {
+                count = (int) (length - arrayPos);
+            }
             JArrays.fillFloatArray(dest, 0, count, this.element);
         }
 
         public Object getElement(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element; // autoboxing
         }
 
@@ -128,29 +132,35 @@ class CopiesArraysImpl {
         }
 
         public Array subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
+            if (fromIndex < 0) {
                 throw AbstractArray.rangeException(fromIndex, length(), getClass());
-            if (toIndex > length())
+            }
+            if (toIndex > length()) {
                 throw AbstractArray.rangeException(toIndex - 1, length(), getClass());
-            if (fromIndex > toIndex)
+            }
+            if (fromIndex > toIndex) {
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            }
             return new CopiesFloatArray(toIndex - fromIndex, element);
         }
 
         public Array subArr(long position, long count) {
-            if (position < 0)
+            if (position < 0) {
                 throw AbstractArray.rangeException(position, length(), getClass());
-            if (count < 0)
+            }
+            if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length() - count)
+                        + ") in " + getClass());
+            }
+            if (position > length() - count) {
                 throw AbstractArray.rangeException(position + count - 1, length(), getClass());
+            }
             return new CopiesFloatArray(count, element);
         }
 
         public DataFloatBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataFloatBuffer)AbstractArray.defaultBuffer(this, mode, capacity);
+            return (DataFloatBuffer) AbstractArray.defaultBuffer(this, mode, capacity);
         }
 
         public DataFloatBuffer buffer(DataBuffer.AccessMode mode) {
@@ -159,15 +169,15 @@ class CopiesArraysImpl {
 
         public DataFloatBuffer buffer(long capacity) {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ,
-                capacity);
+                            DataBuffer.AccessMode.READ_WRITE :
+                            DataBuffer.AccessMode.READ,
+                    capacity);
         }
 
         public DataFloatBuffer buffer() {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ);
+                    DataBuffer.AccessMode.READ_WRITE :
+                    DataBuffer.AccessMode.READ);
         }
 
         public void checkUnallowedMutation() throws UnallowedMutationError {
@@ -218,19 +228,18 @@ class CopiesArraysImpl {
         }
 
         public MutableFloatArray mutableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (MutableFloatArray) memoryModel.newArray(this).copy(this);
         }
 
         public UpdatableFloatArray updatableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (UpdatableFloatArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
-        public Optional<Object> quick() {
-            return Optional.empty();
+        @Override
+        public float[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public long bitsPerElement() {
@@ -238,42 +247,46 @@ class CopiesArraysImpl {
         }
 
         public double getDouble(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (double)element;
-        }
+            }
+            return (double) element;
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (float)value ? indexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? indexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (float)value ? lastIndexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? lastIndexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public long getLong(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (long)element;
-        }
+            }
+            return (long) element;
+        }//end_method
 
         public int getInt(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (int)element;
-        }
+            }
+            return (int) element;
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (float)value ? indexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? indexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (float)value ? lastIndexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? lastIndexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public float getFloat(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element;
         }
 
@@ -332,21 +345,24 @@ class CopiesArraysImpl {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof FloatArray))
+            if (!(obj instanceof FloatArray)) {
                 return false;
-            Array a = (FloatArray)obj;
+            }
+            Array a = (FloatArray) obj;
             long n = length;
-            if (a.length() != n)
+            if (a.length() != n) {
                 return false;
-            if (n == 0 && a.length() == 0)
+            }
+            if (n == 0 && a.length() == 0) {
                 return true; // all empty float arrays are equal
+            }
             if (a instanceof CopiesFloatArray) {
-                float e = ((CopiesFloatArray)a).element;
+                float e = ((CopiesFloatArray) a).element;
                 return Float.floatToIntBits(e) == Float.floatToIntBits(element);
             }
             return AbstractArray.equals(this, a); // AbstractArray has a good equals implementation
         }
-    /*Repeat.SectionEnd copies_array*/
+        /*Repeat.SectionEnd copies_array*/
 
         public double minPossibleValue(double valueForFloatingPoint) {
             return valueForFloatingPoint;
@@ -358,13 +374,13 @@ class CopiesArraysImpl {
     }
 
     /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, copies_array)
-      value\s*==\s*\(float\)value ==> value == 0 || value == 1 ;;
-      ndexOf\((long.*?)\(float\)value\) ==> ndexOf($1value != 0) ;;
+      value\s*==\s*\(float\)\s*value ==> value == 0 || value == 1 ;;
+      ndexOf\((long.*?)\(float\)\s*value\) ==> ndexOf($1value != 0) ;;
       private\s+(final) ==> $1 ;;
       (?<!fill)FloatArray ==> BitArray ;;
       FloatBuffer ==> BitBuffer ;;
-      return\s+\(double\)element ==> return element ? 1.0 : 0.0 ;;
-      return\s+\((int|long)\)element ==> return element ? 1 : 0 ;;
+      return\s+\(double\)\s*element ==> return element ? 1.0 : 0.0 ;;
+      return\s+\((int|long)\)\s*element ==> return element ? 1 : 0 ;;
       element\s*!=\s*0 ==> element ;;
       element\s*==\s*0 ==> !element ;;
       Float\.floatToIntBits\((.*?)\) ==> $1 ;;
@@ -373,7 +389,7 @@ class CopiesArraysImpl {
       Float(?!ing) ==> Boolean ;;
       float ==> boolean
          !! Auto-generated: NOT EDIT !! */
-    static class CopiesBitArray implements BitArray, CopiesArray, ArraysFuncImpl.FuncArray  {
+    static class CopiesBitArray implements BitArray, CopiesArray, ArraysFuncImpl.FuncArray {
         final long length;
         final boolean element;
         final Func f;
@@ -420,33 +436,37 @@ class CopiesArraysImpl {
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw AbstractArray.rangeException(arrayPos + count - 1, length, getClass());
-            JArrays.fillBooleanArray((boolean[])destArray, destArrayOffset, count, this.element);
+            }
+            JArrays.fillBooleanArray((boolean[]) destArray, destArrayOffset, count, this.element);
         }
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            boolean[] dest = (boolean[])destArray;
-            if (arrayPos < 0 || arrayPos > length)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            boolean[] dest = (boolean[]) destArray;
+            if (arrayPos < 0 || arrayPos > length) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
+            }
             int count = dest.length;
-            if (count > length - arrayPos)
-                count = (int)(length - arrayPos);
+            if (count > length - arrayPos) {
+                count = (int) (length - arrayPos);
+            }
             JArrays.fillBooleanArray(dest, 0, count, this.element);
         }
 
         public Object getElement(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element; // autoboxing
         }
 
@@ -459,29 +479,35 @@ class CopiesArraysImpl {
         }
 
         public Array subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
+            if (fromIndex < 0) {
                 throw AbstractArray.rangeException(fromIndex, length(), getClass());
-            if (toIndex > length())
+            }
+            if (toIndex > length()) {
                 throw AbstractArray.rangeException(toIndex - 1, length(), getClass());
-            if (fromIndex > toIndex)
+            }
+            if (fromIndex > toIndex) {
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            }
             return new CopiesBitArray(toIndex - fromIndex, element);
         }
 
         public Array subArr(long position, long count) {
-            if (position < 0)
+            if (position < 0) {
                 throw AbstractArray.rangeException(position, length(), getClass());
-            if (count < 0)
+            }
+            if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length() - count)
+                        + ") in " + getClass());
+            }
+            if (position > length() - count) {
                 throw AbstractArray.rangeException(position + count - 1, length(), getClass());
+            }
             return new CopiesBitArray(count, element);
         }
 
         public DataBitBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataBitBuffer)AbstractArray.defaultBuffer(this, mode, capacity);
+            return (DataBitBuffer) AbstractArray.defaultBuffer(this, mode, capacity);
         }
 
         public DataBitBuffer buffer(DataBuffer.AccessMode mode) {
@@ -490,15 +516,15 @@ class CopiesArraysImpl {
 
         public DataBitBuffer buffer(long capacity) {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ,
-                capacity);
+                            DataBuffer.AccessMode.READ_WRITE :
+                            DataBuffer.AccessMode.READ,
+                    capacity);
         }
 
         public DataBitBuffer buffer() {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ);
+                    DataBuffer.AccessMode.READ_WRITE :
+                    DataBuffer.AccessMode.READ);
         }
 
         public void checkUnallowedMutation() throws UnallowedMutationError {
@@ -549,19 +575,18 @@ class CopiesArraysImpl {
         }
 
         public MutableBitArray mutableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (MutableBitArray) memoryModel.newArray(this).copy(this);
         }
 
         public UpdatableBitArray updatableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (UpdatableBitArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
-        public Optional<Object> quick() {
-            return Optional.empty();
+        @Override
+        public boolean[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public long bitsPerElement() {
@@ -569,10 +594,11 @@ class CopiesArraysImpl {
         }
 
         public double getDouble(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element ? 1.0 : 0.0;
-        }
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, double value) {
             return value == 0 || value == 1 ? indexOf(lowIndex, highIndex, value != 0) : -1;
@@ -583,16 +609,18 @@ class CopiesArraysImpl {
         }
 
         public long getLong(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element ? 1 : 0;
-        }
+        }//end_method
 
         public int getInt(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element ? 1 : 0;
-        }
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, long value) {
             return value == 0 || value == 1 ? indexOf(lowIndex, highIndex, value != 0) : -1;
@@ -603,8 +631,9 @@ class CopiesArraysImpl {
         }
 
         public boolean getBit(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element;
         }
 
@@ -663,21 +692,24 @@ class CopiesArraysImpl {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof BitArray))
+            if (!(obj instanceof BitArray)) {
                 return false;
-            Array a = (BitArray)obj;
+            }
+            Array a = (BitArray) obj;
             long n = length;
-            if (a.length() != n)
+            if (a.length() != n) {
                 return false;
-            if (n == 0 && a.length() == 0)
+            }
+            if (n == 0 && a.length() == 0) {
                 return true; // all empty boolean arrays are equal
+            }
             if (a instanceof CopiesBitArray) {
-                boolean e = ((CopiesBitArray)a).element;
+                boolean e = ((CopiesBitArray) a).element;
                 return e == element;
             }
             return AbstractArray.equals(this, a); // AbstractArray has a good equals implementation
         }
-    /*Repeat.IncludeEnd*/
+        /*Repeat.IncludeEnd*/
 
         public double minPossibleValue(double valueForFloatingPoint) {
             return minPossibleValue();
@@ -722,7 +754,7 @@ class CopiesArraysImpl {
       PER_FLOAT ==> PER_CHAR ;;
       value \"\s*\+\s*element ==> value (char)" + (int)element
          !! Auto-generated: NOT EDIT !! */
-    static class CopiesCharArray implements CharArray, CopiesArray, ArraysFuncImpl.FuncArray  {
+    static class CopiesCharArray implements CharArray, CopiesArray, ArraysFuncImpl.FuncArray {
         private final long length;
         private final char element;
         private final Func f;
@@ -769,33 +801,37 @@ class CopiesArraysImpl {
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw AbstractArray.rangeException(arrayPos + count - 1, length, getClass());
-            JArrays.fillCharArray((char[])destArray, destArrayOffset, count, this.element);
+            }
+            JArrays.fillCharArray((char[]) destArray, destArrayOffset, count, this.element);
         }
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            char[] dest = (char[])destArray;
-            if (arrayPos < 0 || arrayPos > length)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            char[] dest = (char[]) destArray;
+            if (arrayPos < 0 || arrayPos > length) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
+            }
             int count = dest.length;
-            if (count > length - arrayPos)
-                count = (int)(length - arrayPos);
+            if (count > length - arrayPos) {
+                count = (int) (length - arrayPos);
+            }
             JArrays.fillCharArray(dest, 0, count, this.element);
         }
 
         public Object getElement(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element; // autoboxing
         }
 
@@ -808,29 +844,35 @@ class CopiesArraysImpl {
         }
 
         public Array subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
+            if (fromIndex < 0) {
                 throw AbstractArray.rangeException(fromIndex, length(), getClass());
-            if (toIndex > length())
+            }
+            if (toIndex > length()) {
                 throw AbstractArray.rangeException(toIndex - 1, length(), getClass());
-            if (fromIndex > toIndex)
+            }
+            if (fromIndex > toIndex) {
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            }
             return new CopiesCharArray(toIndex - fromIndex, element);
         }
 
         public Array subArr(long position, long count) {
-            if (position < 0)
+            if (position < 0) {
                 throw AbstractArray.rangeException(position, length(), getClass());
-            if (count < 0)
+            }
+            if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length() - count)
+                        + ") in " + getClass());
+            }
+            if (position > length() - count) {
                 throw AbstractArray.rangeException(position + count - 1, length(), getClass());
+            }
             return new CopiesCharArray(count, element);
         }
 
         public DataCharBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataCharBuffer)AbstractArray.defaultBuffer(this, mode, capacity);
+            return (DataCharBuffer) AbstractArray.defaultBuffer(this, mode, capacity);
         }
 
         public DataCharBuffer buffer(DataBuffer.AccessMode mode) {
@@ -839,15 +881,15 @@ class CopiesArraysImpl {
 
         public DataCharBuffer buffer(long capacity) {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ,
-                capacity);
+                            DataBuffer.AccessMode.READ_WRITE :
+                            DataBuffer.AccessMode.READ,
+                    capacity);
         }
 
         public DataCharBuffer buffer() {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ);
+                    DataBuffer.AccessMode.READ_WRITE :
+                    DataBuffer.AccessMode.READ);
         }
 
         public void checkUnallowedMutation() throws UnallowedMutationError {
@@ -898,19 +940,18 @@ class CopiesArraysImpl {
         }
 
         public MutableCharArray mutableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (MutableCharArray) memoryModel.newArray(this).copy(this);
         }
 
         public UpdatableCharArray updatableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (UpdatableCharArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
-        public Optional<Object> quick() {
-            return Optional.empty();
+        @Override
+        public char[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public long bitsPerElement() {
@@ -918,42 +959,46 @@ class CopiesArraysImpl {
         }
 
         public double getDouble(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (double)element;
-        }
+            }
+            return (double) element;
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (char)value ? indexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? indexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (char)value ? lastIndexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? lastIndexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public long getLong(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (long)element;
-        }
+            }
+            return (long) element;
+        }//end_method
 
         public int getInt(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (int)element;
-        }
+            }
+            return (int) element;
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (char)value ? indexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? indexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (char)value ? lastIndexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? lastIndexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public char getChar(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element;
         }
 
@@ -1012,21 +1057,24 @@ class CopiesArraysImpl {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof CharArray))
+            if (!(obj instanceof CharArray)) {
                 return false;
-            Array a = (CharArray)obj;
+            }
+            Array a = (CharArray) obj;
             long n = length;
-            if (a.length() != n)
+            if (a.length() != n) {
                 return false;
-            if (n == 0 && a.length() == 0)
+            }
+            if (n == 0 && a.length() == 0) {
                 return true; // all empty char arrays are equal
+            }
             if (a instanceof CopiesCharArray) {
-                char e = ((CopiesCharArray)a).element;
+                char e = ((CopiesCharArray) a).element;
                 return e == element;
             }
             return AbstractArray.equals(this, a); // AbstractArray has a good equals implementation
         }
-    /*Repeat.IncludeEnd*/
+        /*Repeat.IncludeEnd*/
 
         public double minPossibleValue(double valueForFloatingPoint) {
             return minPossibleValue();
@@ -1046,19 +1094,19 @@ class CopiesArraysImpl {
     }
 
     /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, copies_array)
-      value\s*==\s*\(float\)value ==> value == ((int)value & 0xFF) ;;
+      value\s*==\s*\(float\)\s*value ==> value == ((int)value & 0xFF) ;;
       Float\.floatToIntBits\((.*?)\) ==> $1 ;;
       float\s+getFloat ==> int getByte ;;
       Float(?!ing) ==> Byte ;;
       float ==> byte ;;
       PER_FLOAT ==> PER_BYTE ;;
       (return\s+element)\s*; ==> $1 & 0xFF; ;;
-      (return\s+(?:\(long\)|\(double\)))element\s*; ==> $1(element & 0xFF); ;;
-      (return\s+\(int\))element\s*; ==> return element & 0xFF; ;;
+      (return\s+(?:\(long\)|\(double\)))\s*element\s*; ==> $1 (element & 0xFF); ;;
+      (return\s+\(int\))\s*element\s*; ==> return element & 0xFF; ;;
       value \"\s*\+\s*element ==> value " + element
                 + (element >= 0 ? "" : "=(byte)" + (element & 0xFF))
          !! Auto-generated: NOT EDIT !! */
-    static class CopiesByteArray implements ByteArray, CopiesArray, ArraysFuncImpl.FuncArray  {
+    static class CopiesByteArray implements ByteArray, CopiesArray, ArraysFuncImpl.FuncArray {
         private final long length;
         private final byte element;
         private final Func f;
@@ -1105,33 +1153,37 @@ class CopiesArraysImpl {
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw AbstractArray.rangeException(arrayPos + count - 1, length, getClass());
-            JArrays.fillByteArray((byte[])destArray, destArrayOffset, count, this.element);
+            }
+            JArrays.fillByteArray((byte[]) destArray, destArrayOffset, count, this.element);
         }
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            byte[] dest = (byte[])destArray;
-            if (arrayPos < 0 || arrayPos > length)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            byte[] dest = (byte[]) destArray;
+            if (arrayPos < 0 || arrayPos > length) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
+            }
             int count = dest.length;
-            if (count > length - arrayPos)
-                count = (int)(length - arrayPos);
+            if (count > length - arrayPos) {
+                count = (int) (length - arrayPos);
+            }
             JArrays.fillByteArray(dest, 0, count, this.element);
         }
 
         public Object getElement(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element & 0xFF; // autoboxing
         }
 
@@ -1144,29 +1196,35 @@ class CopiesArraysImpl {
         }
 
         public Array subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
+            if (fromIndex < 0) {
                 throw AbstractArray.rangeException(fromIndex, length(), getClass());
-            if (toIndex > length())
+            }
+            if (toIndex > length()) {
                 throw AbstractArray.rangeException(toIndex - 1, length(), getClass());
-            if (fromIndex > toIndex)
+            }
+            if (fromIndex > toIndex) {
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            }
             return new CopiesByteArray(toIndex - fromIndex, element);
         }
 
         public Array subArr(long position, long count) {
-            if (position < 0)
+            if (position < 0) {
                 throw AbstractArray.rangeException(position, length(), getClass());
-            if (count < 0)
+            }
+            if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length() - count)
+                        + ") in " + getClass());
+            }
+            if (position > length() - count) {
                 throw AbstractArray.rangeException(position + count - 1, length(), getClass());
+            }
             return new CopiesByteArray(count, element);
         }
 
         public DataByteBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataByteBuffer)AbstractArray.defaultBuffer(this, mode, capacity);
+            return (DataByteBuffer) AbstractArray.defaultBuffer(this, mode, capacity);
         }
 
         public DataByteBuffer buffer(DataBuffer.AccessMode mode) {
@@ -1175,15 +1233,15 @@ class CopiesArraysImpl {
 
         public DataByteBuffer buffer(long capacity) {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ,
-                capacity);
+                            DataBuffer.AccessMode.READ_WRITE :
+                            DataBuffer.AccessMode.READ,
+                    capacity);
         }
 
         public DataByteBuffer buffer() {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ);
+                    DataBuffer.AccessMode.READ_WRITE :
+                    DataBuffer.AccessMode.READ);
         }
 
         public void checkUnallowedMutation() throws UnallowedMutationError {
@@ -1234,19 +1292,18 @@ class CopiesArraysImpl {
         }
 
         public MutableByteArray mutableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (MutableByteArray) memoryModel.newArray(this).copy(this);
         }
 
         public UpdatableByteArray updatableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (UpdatableByteArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
-        public Optional<Object> quick() {
-            return Optional.empty();
+        @Override
+        public byte[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public long bitsPerElement() {
@@ -1254,42 +1311,46 @@ class CopiesArraysImpl {
         }
 
         public double getDouble(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (double)(element & 0xFF);
-        }
+            }
+            return (double) (element & 0xFF);
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public long getLong(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (long)(element & 0xFF);
-        }
+            }
+            return (long) (element & 0xFF);
+        }//end_method
 
         public int getInt(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element & 0xFF;
-        }
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public int getByte(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element & 0xFF;
         }
 
@@ -1349,21 +1410,24 @@ class CopiesArraysImpl {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof ByteArray))
+            if (!(obj instanceof ByteArray)) {
                 return false;
-            Array a = (ByteArray)obj;
+            }
+            Array a = (ByteArray) obj;
             long n = length;
-            if (a.length() != n)
+            if (a.length() != n) {
                 return false;
-            if (n == 0 && a.length() == 0)
+            }
+            if (n == 0 && a.length() == 0) {
                 return true; // all empty byte arrays are equal
+            }
             if (a instanceof CopiesByteArray) {
-                byte e = ((CopiesByteArray)a).element;
+                byte e = ((CopiesByteArray) a).element;
                 return e == element;
             }
             return AbstractArray.equals(this, a); // AbstractArray has a good equals implementation
         }
-    /*Repeat.IncludeEnd*/
+        /*Repeat.IncludeEnd*/
 
         public double minPossibleValue(double valueForFloatingPoint) {
             return minPossibleValue();
@@ -1390,12 +1454,12 @@ class CopiesArraysImpl {
       float ==> short ;;
       PER_FLOAT ==> PER_SHORT ;;
       (return\s+element)\s*; ==> $1 & 0xFFFF; ;;
-      (return\s+(?:\(long\)|\(double\)))element\s*; ==> $1(element & 0xFFFF); ;;
-      (return\s+\(int\))element\s*; ==> return element & 0xFFFF; ;;
+      (return\s+(?:\(long\)|\(double\))\s*)element\s*; ==> $1 (element & 0xFFFF); ;;
+      (return\s+\(int\))\s*element\s*; ==> return element & 0xFFFF; ;;
       value \"\s*\+\s*element ==> value " + element
                 + (element >= 0 ? "" : "=(short)" + (element & 0xFFFF))
          !! Auto-generated: NOT EDIT !! */
-    static class CopiesShortArray implements ShortArray, CopiesArray, ArraysFuncImpl.FuncArray  {
+    static class CopiesShortArray implements ShortArray, CopiesArray, ArraysFuncImpl.FuncArray {
         private final long length;
         private final short element;
         private final Func f;
@@ -1442,33 +1506,37 @@ class CopiesArraysImpl {
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw AbstractArray.rangeException(arrayPos + count - 1, length, getClass());
-            JArrays.fillShortArray((short[])destArray, destArrayOffset, count, this.element);
+            }
+            JArrays.fillShortArray((short[]) destArray, destArrayOffset, count, this.element);
         }
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            short[] dest = (short[])destArray;
-            if (arrayPos < 0 || arrayPos > length)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            short[] dest = (short[]) destArray;
+            if (arrayPos < 0 || arrayPos > length) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
+            }
             int count = dest.length;
-            if (count > length - arrayPos)
-                count = (int)(length - arrayPos);
+            if (count > length - arrayPos) {
+                count = (int) (length - arrayPos);
+            }
             JArrays.fillShortArray(dest, 0, count, this.element);
         }
 
         public Object getElement(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element & 0xFFFF; // autoboxing
         }
 
@@ -1481,29 +1549,35 @@ class CopiesArraysImpl {
         }
 
         public Array subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
+            if (fromIndex < 0) {
                 throw AbstractArray.rangeException(fromIndex, length(), getClass());
-            if (toIndex > length())
+            }
+            if (toIndex > length()) {
                 throw AbstractArray.rangeException(toIndex - 1, length(), getClass());
-            if (fromIndex > toIndex)
+            }
+            if (fromIndex > toIndex) {
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            }
             return new CopiesShortArray(toIndex - fromIndex, element);
         }
 
         public Array subArr(long position, long count) {
-            if (position < 0)
+            if (position < 0) {
                 throw AbstractArray.rangeException(position, length(), getClass());
-            if (count < 0)
+            }
+            if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length() - count)
+                        + ") in " + getClass());
+            }
+            if (position > length() - count) {
                 throw AbstractArray.rangeException(position + count - 1, length(), getClass());
+            }
             return new CopiesShortArray(count, element);
         }
 
         public DataShortBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataShortBuffer)AbstractArray.defaultBuffer(this, mode, capacity);
+            return (DataShortBuffer) AbstractArray.defaultBuffer(this, mode, capacity);
         }
 
         public DataShortBuffer buffer(DataBuffer.AccessMode mode) {
@@ -1512,15 +1586,15 @@ class CopiesArraysImpl {
 
         public DataShortBuffer buffer(long capacity) {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ,
-                capacity);
+                            DataBuffer.AccessMode.READ_WRITE :
+                            DataBuffer.AccessMode.READ,
+                    capacity);
         }
 
         public DataShortBuffer buffer() {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ);
+                    DataBuffer.AccessMode.READ_WRITE :
+                    DataBuffer.AccessMode.READ);
         }
 
         public void checkUnallowedMutation() throws UnallowedMutationError {
@@ -1571,19 +1645,18 @@ class CopiesArraysImpl {
         }
 
         public MutableShortArray mutableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (MutableShortArray) memoryModel.newArray(this).copy(this);
         }
 
         public UpdatableShortArray updatableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (UpdatableShortArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
-        public Optional<Object> quick() {
-            return Optional.empty();
+        @Override
+        public short[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public long bitsPerElement() {
@@ -1591,42 +1664,46 @@ class CopiesArraysImpl {
         }
 
         public double getDouble(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (double)(element & 0xFFFF);
-        }
+            }
+            return (double)  (element & 0xFFFF);
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == (short) value ? indexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == (short) value ? lastIndexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public long getLong(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (long)(element & 0xFFFF);
-        }
+            }
+            return (long)  (element & 0xFFFF);
+        }//end_method
 
         public int getInt(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element & 0xFFFF;
-        }
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == (short) value ? indexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == (short) value ? lastIndexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public int getShort(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element & 0xFFFF;
         }
 
@@ -1686,21 +1763,24 @@ class CopiesArraysImpl {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof ShortArray))
+            if (!(obj instanceof ShortArray)) {
                 return false;
-            Array a = (ShortArray)obj;
+            }
+            Array a = (ShortArray) obj;
             long n = length;
-            if (a.length() != n)
+            if (a.length() != n) {
                 return false;
-            if (n == 0 && a.length() == 0)
+            }
+            if (n == 0 && a.length() == 0) {
                 return true; // all empty short arrays are equal
+            }
             if (a instanceof CopiesShortArray) {
-                short e = ((CopiesShortArray)a).element;
+                short e = ((CopiesShortArray) a).element;
                 return e == element;
             }
             return AbstractArray.equals(this, a); // AbstractArray has a good equals implementation
         }
-    /*Repeat.IncludeEnd*/
+        /*Repeat.IncludeEnd*/
 
         public double minPossibleValue(double valueForFloatingPoint) {
             return minPossibleValue();
@@ -1721,13 +1801,13 @@ class CopiesArraysImpl {
 
     /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, copies_array)
       Float\.floatToIntBits\((.*?)\) ==> $1 ;;
-      (?:@Override\s+)?public\s+\w+\s+getInt(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
+      (?:@Override\s+)?public\s+\w+\s+getInt(.*?)}\s*\/\/end_method\s* ==> ;;
       \bFloat\b ==> Integer ;;
       Float(?!ing) ==> Int ;;
       PER_FLOAT ==> PER_INT ;;
       float ==> int
          !! Auto-generated: NOT EDIT !! */
-    static class CopiesIntArray implements IntArray, CopiesArray, ArraysFuncImpl.FuncArray  {
+    static class CopiesIntArray implements IntArray, CopiesArray, ArraysFuncImpl.FuncArray {
         private final long length;
         private final int element;
         private final Func f;
@@ -1774,33 +1854,37 @@ class CopiesArraysImpl {
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw AbstractArray.rangeException(arrayPos + count - 1, length, getClass());
-            JArrays.fillIntArray((int[])destArray, destArrayOffset, count, this.element);
+            }
+            JArrays.fillIntArray((int[]) destArray, destArrayOffset, count, this.element);
         }
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            int[] dest = (int[])destArray;
-            if (arrayPos < 0 || arrayPos > length)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            int[] dest = (int[]) destArray;
+            if (arrayPos < 0 || arrayPos > length) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
+            }
             int count = dest.length;
-            if (count > length - arrayPos)
-                count = (int)(length - arrayPos);
+            if (count > length - arrayPos) {
+                count = (int) (length - arrayPos);
+            }
             JArrays.fillIntArray(dest, 0, count, this.element);
         }
 
         public Object getElement(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element; // autoboxing
         }
 
@@ -1813,29 +1897,35 @@ class CopiesArraysImpl {
         }
 
         public Array subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
+            if (fromIndex < 0) {
                 throw AbstractArray.rangeException(fromIndex, length(), getClass());
-            if (toIndex > length())
+            }
+            if (toIndex > length()) {
                 throw AbstractArray.rangeException(toIndex - 1, length(), getClass());
-            if (fromIndex > toIndex)
+            }
+            if (fromIndex > toIndex) {
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            }
             return new CopiesIntArray(toIndex - fromIndex, element);
         }
 
         public Array subArr(long position, long count) {
-            if (position < 0)
+            if (position < 0) {
                 throw AbstractArray.rangeException(position, length(), getClass());
-            if (count < 0)
+            }
+            if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length() - count)
+                        + ") in " + getClass());
+            }
+            if (position > length() - count) {
                 throw AbstractArray.rangeException(position + count - 1, length(), getClass());
+            }
             return new CopiesIntArray(count, element);
         }
 
         public DataIntBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataIntBuffer)AbstractArray.defaultBuffer(this, mode, capacity);
+            return (DataIntBuffer) AbstractArray.defaultBuffer(this, mode, capacity);
         }
 
         public DataIntBuffer buffer(DataBuffer.AccessMode mode) {
@@ -1844,15 +1934,15 @@ class CopiesArraysImpl {
 
         public DataIntBuffer buffer(long capacity) {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ,
-                capacity);
+                            DataBuffer.AccessMode.READ_WRITE :
+                            DataBuffer.AccessMode.READ,
+                    capacity);
         }
 
         public DataIntBuffer buffer() {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ);
+                    DataBuffer.AccessMode.READ_WRITE :
+                    DataBuffer.AccessMode.READ);
         }
 
         public void checkUnallowedMutation() throws UnallowedMutationError {
@@ -1903,19 +1993,18 @@ class CopiesArraysImpl {
         }
 
         public MutableIntArray mutableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (MutableIntArray) memoryModel.newArray(this).copy(this);
         }
 
         public UpdatableIntArray updatableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (UpdatableIntArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
-        public Optional<Object> quick() {
-            return Optional.empty();
+        @Override
+        public int[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public long bitsPerElement() {
@@ -1923,36 +2012,39 @@ class CopiesArraysImpl {
         }
 
         public double getDouble(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (double)element;
-        }
+            }
+            return (double) element;
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (int)value ? indexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? indexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (int)value ? lastIndexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? lastIndexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public long getLong(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (long)element;
-        }
+            }
+            return (long) element;
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (int)value ? indexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? indexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (int)value ? lastIndexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? lastIndexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public int getInt(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element;
         }
 
@@ -2011,21 +2103,24 @@ class CopiesArraysImpl {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof IntArray))
+            if (!(obj instanceof IntArray)) {
                 return false;
-            Array a = (IntArray)obj;
+            }
+            Array a = (IntArray) obj;
             long n = length;
-            if (a.length() != n)
+            if (a.length() != n) {
                 return false;
-            if (n == 0 && a.length() == 0)
+            }
+            if (n == 0 && a.length() == 0) {
                 return true; // all empty int arrays are equal
+            }
             if (a instanceof CopiesIntArray) {
-                int e = ((CopiesIntArray)a).element;
+                int e = ((CopiesIntArray) a).element;
                 return e == element;
             }
             return AbstractArray.equals(this, a); // AbstractArray has a good equals implementation
         }
-    /*Repeat.IncludeEnd*/
+        /*Repeat.IncludeEnd*/
 
         public double minPossibleValue(double valueForFloatingPoint) {
             return minPossibleValue();
@@ -2046,7 +2141,7 @@ class CopiesArraysImpl {
 
     /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, copies_array)
       Float\.floatToIntBits\((.*?)\) ==> $1 ;;
-      (?:@Override\s+)?public\s+\w+\s+getLong(.*?)(?:\r|(?!\n)\n|\r\n)\s*}\s* ==> ;;
+      (?:@Override\s+)?public\s+\w+\s+getLong(.*?)}\s*\/\/end_method\s* ==> ;;
       (?:@Override\s+)?public\s+\w+\s+(lastI|i)ndexOf\(long\s+\w+,\s*long\s+\w+,\s*long(.*?)\n\s*}\s* ==> ;;
       return\s+\(int\)element ==> return Arrays.truncateLongToInt(element) ;;
       \bFloat\b ==> Long ;;
@@ -2054,7 +2149,7 @@ class CopiesArraysImpl {
       PER_FLOAT ==> PER_LONG ;;
       float ==> long
          !! Auto-generated: NOT EDIT !! */
-    static class CopiesLongArray implements LongArray, CopiesArray, ArraysFuncImpl.FuncArray  {
+    static class CopiesLongArray implements LongArray, CopiesArray, ArraysFuncImpl.FuncArray {
         private final long length;
         private final long element;
         private final Func f;
@@ -2101,33 +2196,37 @@ class CopiesArraysImpl {
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw AbstractArray.rangeException(arrayPos + count - 1, length, getClass());
-            JArrays.fillLongArray((long[])destArray, destArrayOffset, count, this.element);
+            }
+            JArrays.fillLongArray((long[]) destArray, destArrayOffset, count, this.element);
         }
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            long[] dest = (long[])destArray;
-            if (arrayPos < 0 || arrayPos > length)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            long[] dest = (long[]) destArray;
+            if (arrayPos < 0 || arrayPos > length) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
+            }
             int count = dest.length;
-            if (count > length - arrayPos)
-                count = (int)(length - arrayPos);
+            if (count > length - arrayPos) {
+                count = (int) (length - arrayPos);
+            }
             JArrays.fillLongArray(dest, 0, count, this.element);
         }
 
         public Object getElement(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element; // autoboxing
         }
 
@@ -2140,29 +2239,35 @@ class CopiesArraysImpl {
         }
 
         public Array subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
+            if (fromIndex < 0) {
                 throw AbstractArray.rangeException(fromIndex, length(), getClass());
-            if (toIndex > length())
+            }
+            if (toIndex > length()) {
                 throw AbstractArray.rangeException(toIndex - 1, length(), getClass());
-            if (fromIndex > toIndex)
+            }
+            if (fromIndex > toIndex) {
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            }
             return new CopiesLongArray(toIndex - fromIndex, element);
         }
 
         public Array subArr(long position, long count) {
-            if (position < 0)
+            if (position < 0) {
                 throw AbstractArray.rangeException(position, length(), getClass());
-            if (count < 0)
+            }
+            if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length() - count)
+                        + ") in " + getClass());
+            }
+            if (position > length() - count) {
                 throw AbstractArray.rangeException(position + count - 1, length(), getClass());
+            }
             return new CopiesLongArray(count, element);
         }
 
         public DataLongBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataLongBuffer)AbstractArray.defaultBuffer(this, mode, capacity);
+            return (DataLongBuffer) AbstractArray.defaultBuffer(this, mode, capacity);
         }
 
         public DataLongBuffer buffer(DataBuffer.AccessMode mode) {
@@ -2171,15 +2276,15 @@ class CopiesArraysImpl {
 
         public DataLongBuffer buffer(long capacity) {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ,
-                capacity);
+                            DataBuffer.AccessMode.READ_WRITE :
+                            DataBuffer.AccessMode.READ,
+                    capacity);
         }
 
         public DataLongBuffer buffer() {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ);
+                    DataBuffer.AccessMode.READ_WRITE :
+                    DataBuffer.AccessMode.READ);
         }
 
         public void checkUnallowedMutation() throws UnallowedMutationError {
@@ -2230,19 +2335,18 @@ class CopiesArraysImpl {
         }
 
         public MutableLongArray mutableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (MutableLongArray) memoryModel.newArray(this).copy(this);
         }
 
         public UpdatableLongArray updatableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (UpdatableLongArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
-        public Optional<Object> quick() {
-            return Optional.empty();
+        @Override
+        public long[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public long bitsPerElement() {
@@ -2250,28 +2354,31 @@ class CopiesArraysImpl {
         }
 
         public double getDouble(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (double)element;
-        }
+            }
+            return (double) element;
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (long)value ? indexOf(lowIndex, highIndex, (long)value) : -1;
+            return value == (long) value ? indexOf(lowIndex, highIndex, (long) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (long)value ? lastIndexOf(lowIndex, highIndex, (long)value) : -1;
+            return value == (long) value ? lastIndexOf(lowIndex, highIndex, (long) value) : -1;
         }
 
         public int getInt(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return Arrays.truncateLongToInt(element);
-        }
+            }
+            return (int) element;
+        }//end_method
 
         public long getLong(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element;
         }
 
@@ -2330,21 +2437,24 @@ class CopiesArraysImpl {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof LongArray))
+            if (!(obj instanceof LongArray)) {
                 return false;
-            Array a = (LongArray)obj;
+            }
+            Array a = (LongArray) obj;
             long n = length;
-            if (a.length() != n)
+            if (a.length() != n) {
                 return false;
-            if (n == 0 && a.length() == 0)
+            }
+            if (n == 0 && a.length() == 0) {
                 return true; // all empty long arrays are equal
+            }
             if (a instanceof CopiesLongArray) {
-                long e = ((CopiesLongArray)a).element;
+                long e = ((CopiesLongArray) a).element;
                 return e == element;
             }
             return AbstractArray.equals(this, a); // AbstractArray has a good equals implementation
         }
-    /*Repeat.IncludeEnd*/
+        /*Repeat.IncludeEnd*/
 
         public double minPossibleValue(double valueForFloatingPoint) {
             return minPossibleValue();
@@ -2365,13 +2475,13 @@ class CopiesArraysImpl {
 
     /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, copies_array)
       Float\.floatToIntBits ==> Float\.doubleToLongBits ;;
-      (?:@Override\s+)?public\s+\w+\s+getDouble(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
+      (?:@Override\s+)?public\s+\w+\s+getDouble(.*?)}\s*\/\/end_method\s* ==> ;;
       (?:@Override\s+)?public\s+\w+\s+(lastI|i)ndexOf\(long\s+\w+,\s*long\s+\w+,\s*double(.*?)\n\s*}\s* ==> ;;
       Float(?!ing) ==> Double ;;
       float ==> double ;;
       PER_FLOAT ==> PER_DOUBLE
          !! Auto-generated: NOT EDIT !! */
-    static class CopiesDoubleArray implements DoubleArray, CopiesArray, ArraysFuncImpl.FuncArray  {
+    static class CopiesDoubleArray implements DoubleArray, CopiesArray, ArraysFuncImpl.FuncArray {
         private final long length;
         private final double element;
         private final Func f;
@@ -2418,33 +2528,37 @@ class CopiesArraysImpl {
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw AbstractArray.rangeException(arrayPos + count - 1, length, getClass());
-            JArrays.fillDoubleArray((double[])destArray, destArrayOffset, count, this.element);
+            }
+            JArrays.fillDoubleArray((double[]) destArray, destArrayOffset, count, this.element);
         }
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            double[] dest = (double[])destArray;
-            if (arrayPos < 0 || arrayPos > length)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            double[] dest = (double[]) destArray;
+            if (arrayPos < 0 || arrayPos > length) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
+            }
             int count = dest.length;
-            if (count > length - arrayPos)
-                count = (int)(length - arrayPos);
+            if (count > length - arrayPos) {
+                count = (int) (length - arrayPos);
+            }
             JArrays.fillDoubleArray(dest, 0, count, this.element);
         }
 
         public Object getElement(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element; // autoboxing
         }
 
@@ -2457,29 +2571,35 @@ class CopiesArraysImpl {
         }
 
         public Array subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
+            if (fromIndex < 0) {
                 throw AbstractArray.rangeException(fromIndex, length(), getClass());
-            if (toIndex > length())
+            }
+            if (toIndex > length()) {
                 throw AbstractArray.rangeException(toIndex - 1, length(), getClass());
-            if (fromIndex > toIndex)
+            }
+            if (fromIndex > toIndex) {
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            }
             return new CopiesDoubleArray(toIndex - fromIndex, element);
         }
 
         public Array subArr(long position, long count) {
-            if (position < 0)
+            if (position < 0) {
                 throw AbstractArray.rangeException(position, length(), getClass());
-            if (count < 0)
+            }
+            if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length() - count)
+                        + ") in " + getClass());
+            }
+            if (position > length() - count) {
                 throw AbstractArray.rangeException(position + count - 1, length(), getClass());
+            }
             return new CopiesDoubleArray(count, element);
         }
 
         public DataDoubleBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataDoubleBuffer)AbstractArray.defaultBuffer(this, mode, capacity);
+            return (DataDoubleBuffer) AbstractArray.defaultBuffer(this, mode, capacity);
         }
 
         public DataDoubleBuffer buffer(DataBuffer.AccessMode mode) {
@@ -2488,15 +2608,15 @@ class CopiesArraysImpl {
 
         public DataDoubleBuffer buffer(long capacity) {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ,
-                capacity);
+                            DataBuffer.AccessMode.READ_WRITE :
+                            DataBuffer.AccessMode.READ,
+                    capacity);
         }
 
         public DataDoubleBuffer buffer() {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ);
+                    DataBuffer.AccessMode.READ_WRITE :
+                    DataBuffer.AccessMode.READ);
         }
 
         public void checkUnallowedMutation() throws UnallowedMutationError {
@@ -2547,19 +2667,18 @@ class CopiesArraysImpl {
         }
 
         public MutableDoubleArray mutableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (MutableDoubleArray) memoryModel.newArray(this).copy(this);
         }
 
         public UpdatableDoubleArray updatableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return (UpdatableDoubleArray) memoryModel.newUnresizableArray(this).copy(this);
         }
 
-        public Optional<Object> quick() {
-            return Optional.empty();
+        @Override
+        public double[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public long bitsPerElement() {
@@ -2567,28 +2686,31 @@ class CopiesArraysImpl {
         }
 
         public long getLong(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (long)element;
-        }
+            }
+            return (long) element;
+        }//end_method
 
         public int getInt(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
-            return (int)element;
-        }
+            }
+            return (int) element;
+        }//end_method
 
         public long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (double)value ? indexOf(lowIndex, highIndex, (double)value) : -1;
+            return value == (double) value ? indexOf(lowIndex, highIndex, (double) value) : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (double)value ? lastIndexOf(lowIndex, highIndex, (double)value) : -1;
+            return value == (double) value ? lastIndexOf(lowIndex, highIndex, (double) value) : -1;
         }
 
         public double getDouble(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element;
         }
 
@@ -2647,21 +2769,24 @@ class CopiesArraysImpl {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof DoubleArray))
+            if (!(obj instanceof DoubleArray)) {
                 return false;
-            Array a = (DoubleArray)obj;
+            }
+            Array a = (DoubleArray) obj;
             long n = length;
-            if (a.length() != n)
+            if (a.length() != n) {
                 return false;
-            if (n == 0 && a.length() == 0)
+            }
+            if (n == 0 && a.length() == 0) {
                 return true; // all empty double arrays are equal
+            }
             if (a instanceof CopiesDoubleArray) {
-                double e = ((CopiesDoubleArray)a).element;
+                double e = ((CopiesDoubleArray) a).element;
                 return Double.doubleToLongBits(e) == Double.doubleToLongBits(element);
             }
             return AbstractArray.equals(this, a); // AbstractArray has a good equals implementation
         }
-    /*Repeat.IncludeEnd*/
+        /*Repeat.IncludeEnd*/
 
         public double minPossibleValue(double valueForFloatingPoint) {
             return valueForFloatingPoint;
@@ -2707,27 +2832,29 @@ class CopiesArraysImpl {
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw AbstractArray.rangeException(arrayPos + count - 1, length, getClass());
-            JArrays.fillObjectArray((Object[])destArray, destArrayOffset, count, this.element);
+            }
+            JArrays.fillObjectArray((Object[]) destArray, destArrayOffset, count, this.element);
         }
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            Object[] dest = (Object[])destArray;
-            if (arrayPos < 0 || arrayPos > length)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            Object[] dest = (Object[]) destArray;
+            if (arrayPos < 0 || arrayPos > length) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
+            }
             int count = dest.length;
             if (count > length - arrayPos)
-                count = (int)(length - arrayPos);
+                count = (int) (length - arrayPos);
             JArrays.fillObjectArray(dest, 0, count, this.element);
         }
 
@@ -2736,24 +2863,30 @@ class CopiesArraysImpl {
         }
 
         public Array subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
+            if (fromIndex < 0) {
                 throw AbstractArray.rangeException(fromIndex, length(), getClass());
-            if (toIndex > length())
+            }
+            if (toIndex > length()) {
                 throw AbstractArray.rangeException(toIndex - 1, length(), getClass());
-            if (fromIndex > toIndex)
+            }
+            if (fromIndex > toIndex) {
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            }
             return new CopiesObjectArray<E>(toIndex - fromIndex, element);
         }
 
         public Array subArr(long position, long count) {
-            if (position < 0)
+            if (position < 0) {
                 throw AbstractArray.rangeException(position, length(), getClass());
-            if (count < 0)
+            }
+            if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length() - count)
+                        + ") in " + getClass());
+            }
+            if (position > length() - count) {
                 throw AbstractArray.rangeException(position + count - 1, length(), getClass());
+            }
             return new CopiesObjectArray<E>(count, element);
         }
 
@@ -2767,15 +2900,15 @@ class CopiesArraysImpl {
 
         public DataObjectBuffer<E> buffer(long capacity) {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ,
-                capacity);
+                            DataBuffer.AccessMode.READ_WRITE :
+                            DataBuffer.AccessMode.READ,
+                    capacity);
         }
 
         public DataObjectBuffer<E> buffer() {
             return buffer(this instanceof UpdatableArray ?
-                DataBuffer.AccessMode.READ_WRITE :
-                DataBuffer.AccessMode.READ);
+                    DataBuffer.AccessMode.READ_WRITE :
+                    DataBuffer.AccessMode.READ);
         }
 
         public void checkUnallowedMutation() throws UnallowedMutationError {
@@ -2826,19 +2959,18 @@ class CopiesArraysImpl {
         }
 
         public MutableObjectArray<E> mutableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return InternalUtils.cast(memoryModel.newArray(this).copy(this));
         }
 
         public UpdatableObjectArray<E> updatableClone(MemoryModel memoryModel) {
-            if (memoryModel == null)
-                throw new NullPointerException("Null memory model");
+            Objects.requireNonNull(memoryModel, "Null memory model");
             return InternalUtils.cast(memoryModel.newUnresizableArray(this).copy(this));
         }
 
-        public Optional<Object> quick() {
-            return Optional.empty();
+        @Override
+        public E[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public Object getElement(long index) {
@@ -2855,7 +2987,7 @@ class CopiesArraysImpl {
                 highIndex = length;
             }
             return lowIndex < highIndex && (value == null ?
-                element == null : value.equals(element)) ? lowIndex : -1;
+                    element == null : value.equals(element)) ? lowIndex : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, Object value) {
@@ -2866,7 +2998,7 @@ class CopiesArraysImpl {
                 highIndex = length;
             }
             return lowIndex < highIndex && (value == null ?
-                element == null : value.equals(element)) ? highIndex - 1 : -1;
+                    element == null : value.equals(element)) ? highIndex - 1 : -1;
         }
 
         public void loadResources(ArrayContext context) {
@@ -2898,14 +3030,14 @@ class CopiesArraysImpl {
         public boolean equals(Object obj) {
             if (!(obj instanceof ObjectArray<?>))
                 return false;
-            Array a = (ObjectArray<?>)obj;
+            Array a = (ObjectArray<?>) obj;
             long n = length;
             if (a.length() != n)
                 return false;
             if (n == 0 && a.length() == 0)
                 return true; // all empty Object arrays are equal
             if (a instanceof CopiesObjectArray<?>) {
-                Object e = ((CopiesObjectArray<?>)a).element;
+                Object e = ((CopiesObjectArray<?>) a).element;
                 return e == null ? element == null : e.equals(element);
             }
             return AbstractArray.equals(this, a); // AbstractArray has a good equals implementation

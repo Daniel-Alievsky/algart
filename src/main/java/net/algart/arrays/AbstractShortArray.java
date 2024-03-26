@@ -608,6 +608,10 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
         return (UpdatableShortArray) super.updatableClone(memoryModel);
     }
 
+    public short[] ja() {
+        return (short[]) super.ja();
+    }
+
     /**
      * This implementation calls
      * {@link #loadResources(ArrayContext, long, long) loadResources(context, 0, length())}.

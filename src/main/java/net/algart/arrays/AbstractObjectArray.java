@@ -464,6 +464,8 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
       \(\w+FloatArray\)\s*(super\.\w+Clone\(\w*?\)) ==> InternalUtils.cast($1) ;;
       FloatArray ==> ObjectArray<E> ;;
       Float(?!ing) ==> Object ;;
+      public\s+float\[\]\s*ja ==> @SuppressWarnings("unchecked") public E[] ja ;;
+      \(float\[\]\) ==> (E[]) ;;
       array\s+float\[\" ==> array " + elementType.getName() + "["   !! Auto-generated: NOT EDIT !! */
 
     /**
@@ -550,6 +552,10 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
     @Override
     public UpdatableObjectArray<E> updatableClone(MemoryModel memoryModel) {
         return InternalUtils.cast(super.updatableClone(memoryModel));
+    }
+
+    @SuppressWarnings("unchecked") public E[] ja() {
+        return (E[]) super.ja();
     }
 
     /**

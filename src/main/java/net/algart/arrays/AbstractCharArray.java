@@ -604,6 +604,10 @@ public abstract class AbstractCharArray extends AbstractArray implements CharArr
         return (UpdatableCharArray) super.updatableClone(memoryModel);
     }
 
+    public char[] ja() {
+        return (char[]) super.ja();
+    }
+
     /**
      * This implementation calls
      * {@link #loadResources(ArrayContext, long, long) loadResources(context, 0, length())}.

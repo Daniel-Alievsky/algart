@@ -661,6 +661,10 @@ public abstract class AbstractBitArray extends AbstractArray implements BitArray
         return (UpdatableBitArray) super.updatableClone(memoryModel);
     }
 
+    public boolean[] ja() {
+        return (boolean[]) super.ja();
+    }
+
     /**
      * This implementation calls
      * {@link #loadResources(ArrayContext, long, long) loadResources(context, 0, length())}.

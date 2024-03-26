@@ -4609,7 +4609,9 @@ public class Arrays {
     /**
      * Returns <tt>true</tt> if the specified array is actually a <i>wrapper</i> for
      * standard Java array, like wrappers returned by {@link SimpleMemoryModel#asUpdatableArray(Object)} method.
-     * More precisely, this method returns <tt>true</tt>, if and only if all the following conditions are fulfilled:
+     *
+     * <p>More precisely, this method returns <tt>true</tt>,
+     * if and only if all the following conditions are fulfilled:</p>
      * <ol>
      *     <li><tt>array instanceof {@link DirectAccessible}</tt>; let <tt>da = (DirectAccessible) array</tt>;</li>
      *     <li><tt>da.{@link DirectAccessible#hasJavaArray() hasJavaArray()}</tt>;</li>
@@ -4619,24 +4621,30 @@ public class Arrays {
      *     <tt>array.{@link Array#length() length()} == java.lang.reflect.Array.getLength(da.javaArray())</tt>.</li>
      * </ol>
      *
+     * <p>In this situation, the specified AlgART array is called <i>a wrapper</i>
+     * of the underlying Java array <tt>da.{@link DirectAccessible#javaArray() javaArray()}</tt>.</p>
+     *
      * @param array the source AlgART array.
      * @return whether it is a wrapper for standard Java array: direct-accessible array with zero offset and
      * with length, equal to the number of elements of the underlying Java array.
      * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @see Array#ja()
      */
     public static boolean isJavaArrayWrapper(Array array) {
         Objects.requireNonNull(array, "Null array argument");
-        if (array instanceof DirectAccessible da && da.hasJavaArray() && da.javaArrayOffset() == 0) {
-            return java.lang.reflect.Array.getLength(da.javaArray()) == array.length();
-        }
-        return false;
+        return array instanceof DirectAccessible da &&
+                da.hasJavaArray() &&
+                da.javaArrayOffset() == 0 &&
+                java.lang.reflect.Array.getLength(da.javaArray()) == array.length();
     }
 
     /**
      * Returns a Java array containing all the elements in this AlgART array in proper sequence,
      * if the length of this array is not too high (not greater than <tt>Integer.MAX_VALUE</tt>).
      * In other case, throws {@link TooLargeArrayException}.
-     * The length of returned Java array will be equal to current
+     *
+     * <p>The result is always a newly created Java array.
+     * Its length will be equal to current
      * <tt>array.{@link MutableArray#length() length()}</tt>, and array elements will be stored
      * in elements <tt>#0..#{@link MutableArray#length() length()}-1}</tt> of the returned array.
      *

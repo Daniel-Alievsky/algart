@@ -601,6 +601,10 @@ public abstract class AbstractIntArray extends AbstractArray implements IntArray
         return (UpdatableIntArray) super.updatableClone(memoryModel);
     }
 
+    public int[] ja() {
+        return (int[]) super.ja();
+    }
+
     /**
      * This implementation calls
      * {@link #loadResources(ArrayContext, long, long) loadResources(context, 0, length())}.

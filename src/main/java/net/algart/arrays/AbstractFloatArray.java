@@ -599,6 +599,10 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
         return (UpdatableFloatArray) super.updatableClone(memoryModel);
     }
 
+    public float[] ja() {
+        return (float[]) super.ja();
+    }
+
     /**
      * This implementation calls
      * {@link #loadResources(ArrayContext, long, long) loadResources(context, 0, length())}.

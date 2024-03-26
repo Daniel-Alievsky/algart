@@ -1987,9 +1987,8 @@ public class Matrices {
      * where <tt>memoryModel</tt> is <tt>context.getMemoryModel()</tt> or
      * {@link SimpleMemoryModel} for <tt>null</tt> context.
      * In the latter case ({@link SimpleMemoryModel}) this provides a guarantee, that
-     * the array in the returned matrix will be direct-accessible with zero offset
-     * ({@link Matrix#array() array()}.{@link Array#quick() quick()} is present)
-     * and that the length of built-in Java array will be equal to the matrix {@link Matrix#size() size}.</p>
+     * the array in the returned matrix will be direct-accessible wrapper: {@link Arrays#isJavaArrayWrapper(Array)}
+     * will return <tt>true</tt> for the {@link Matrix#array() built-in array}.</p>
      *
      * @param context   the context; allows to specify (in particular)
      *                  the memory model for creating returned matrix;

@@ -721,6 +721,10 @@ class BufferArraysImpl {
             return result;
         }
 
+        public float[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable AlgART array float[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -1226,6 +1230,10 @@ class BufferArraysImpl {
                 forgetOnDeallocation(result);
             }
             return result;
+        }
+
+        public char[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public String toString() {
@@ -1735,6 +1743,10 @@ class BufferArraysImpl {
             return result;
         }
 
+        public byte[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable AlgART array byte[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -2242,6 +2254,10 @@ class BufferArraysImpl {
             return result;
         }
 
+        public short[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable AlgART array short[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -2743,6 +2759,10 @@ class BufferArraysImpl {
             return result;
         }
 
+        public int[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable AlgART array int[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -3227,6 +3247,10 @@ class BufferArraysImpl {
             return result;
         }
 
+        public long[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public String toString() {
             return "immutable AlgART array long[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -3706,6 +3730,10 @@ class BufferArraysImpl {
                 forgetOnDeallocation(result);
             }
             return result;
+        }
+
+        public double[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public String toString() {
@@ -4195,6 +4223,10 @@ class BufferArraysImpl {
                 forgetOnDeallocation(result);
             }
             return result;
+        }
+
+        public boolean[] ja() {
+            return Arrays.toJavaArray(this);
         }
 
         public String toString() {

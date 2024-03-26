@@ -107,6 +107,8 @@ public interface FloatArray extends PFloatingArray {
 
     UpdatableFloatArray updatableClone(MemoryModel memoryModel);
 
+    float[] ja();
+
     default Matrix<? extends FloatArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }

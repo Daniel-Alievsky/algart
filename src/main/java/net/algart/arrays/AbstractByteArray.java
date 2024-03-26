@@ -608,6 +608,10 @@ public abstract class AbstractByteArray extends AbstractArray implements ByteArr
         return (UpdatableByteArray) super.updatableClone(memoryModel);
     }
 
+    public byte[] ja() {
+        return (byte[]) super.ja();
+    }
+
     /**
      * This implementation calls
      * {@link #loadResources(ArrayContext, long, long) loadResources(context, 0, length())}.

@@ -110,6 +110,8 @@ public interface CharArray extends PFixedArray {
 
     UpdatableCharArray updatableClone(MemoryModel memoryModel);
 
+    char[] ja();
+
     default Matrix<? extends CharArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }

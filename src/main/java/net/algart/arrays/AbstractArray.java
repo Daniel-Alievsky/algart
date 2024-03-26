@@ -24,11 +24,10 @@
 
 package net.algart.arrays;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.zip.CRC32;
-import java.util.Locale;
 import java.nio.ByteOrder;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.zip.CRC32;
 
 /**
  * <p>Implementation of basic functions of {@link MutableArray} interface.</p>
@@ -421,16 +420,27 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * This implementation returns <tt>Optional.empty()</tt>. Please override this method
-     * if you implement {@link DirectAccessible} interface.
+     * This implementation performs the following code:
+     * <pre>
+     *     return this instanceof DirectAccessible da &amp;&amp;
+     *                 da.hasJavaArray() &amp;&amp;
+     *                 da.javaArrayOffset() == 0 &amp;&amp;
+     *                 java.lang.reflect.Array.getLength(da.javaArray()) == this.length() ?
+     *                 da.javaArray() :
+     *                 Arrays.toJavaArray(this);
      * </pre>
      *
-     * @return the underlying Java array "<tt>ja</tt>" that backs this AlgART array,
-     * if it exists and if the element #0 of this array corresponds to its first element <tt>ja[0]</tt>.
+     * @return Java array, equivalent to this AlgART array.
      */
     @Override
-    public Optional<Object> quick() {
-        return  Optional.empty();
+    public Object ja() {
+        final Object a;
+        return this instanceof DirectAccessible da &&
+                da.hasJavaArray() &&
+                da.javaArrayOffset() == 0 &&
+                java.lang.reflect.Array.getLength(a = da.javaArray()) == length() ?
+                a :
+                Arrays.toJavaArray(this);
     }
 
     /**

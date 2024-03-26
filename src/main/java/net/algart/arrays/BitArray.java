@@ -117,6 +117,8 @@ public interface BitArray extends PFixedArray {
 
     UpdatableBitArray updatableClone(MemoryModel memoryModel);
 
+    boolean[] ja();
+
     default Matrix<? extends BitArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }

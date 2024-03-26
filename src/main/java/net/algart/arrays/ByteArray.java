@@ -112,6 +112,8 @@ public interface ByteArray extends PIntegerArray {
 
     UpdatableByteArray updatableClone(MemoryModel memoryModel);
 
+    byte[] ja();
+
     default Matrix<? extends ByteArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }

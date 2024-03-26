@@ -1137,6 +1137,10 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             return InternalUtils.cast(super.updatableClone(memoryModel));
         }
 
+        public E[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
         public <D> ObjectArray<D> cast(Class<D> elementType) {
             if (!elementType.isAssignableFrom(this.elementType))
                 throw new ClassCastException("Illegal desired element type " + elementType + " for " + this);

@@ -125,6 +125,7 @@ public interface ObjectArray<E> extends Array {
 
     /*Repeat(INCLUDE_FROM_FILE, FloatArray.java, resultTypes)
       Float(?!ing) ==> Object ;;
+      float\[\]\s*ja ==> E[] ja ;;
       float ==> Object ;;
       ObjectArray ==> ObjectArray<E> ;;
       DataObjectBuffer ==> DataObjectBuffer<E>
@@ -144,6 +145,8 @@ public interface ObjectArray<E> extends Array {
     MutableObjectArray<E> mutableClone(MemoryModel memoryModel);
 
     UpdatableObjectArray<E> updatableClone(MemoryModel memoryModel);
+
+    E[] ja();
 
     default Matrix<? extends ObjectArray<E>> matrix(long... dim) {
         return Matrices.matrix(this, dim);
