@@ -55,6 +55,9 @@ import java.util.Objects;
  * &#32;   array[k &gt;&gt;&gt; 3] &amp;= ~(1 &lt;&lt; (k &amp; 7));
  * </pre>
  *
+ * <p>You may use {@link #getBit(byte[], long)} and {@link #setBit(byte[], long, boolean)}, implementing
+ * the equivalent code.</p>
+ *
  * <p>If any method of this class modifies some portion of an element of a packed <tt>byte[]</tt> Java array,
  * i.e. modifies less than all 8 its bits, then all accesses to this <tt>byte</tt> element are performed
  * <b>inside a single synchronized block</b>, using the following instruction:</p>
@@ -160,14 +163,63 @@ public class PackedBitArraysPer8 {
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
      */
-    public static void setBit(long[] dest, long index, boolean value) {
+    public static void setBit(byte[] dest, long index, boolean value) {
         synchronized (dest) {
             if (value)
-                dest[(int) (index >>> 3)] |= 1 << (index & 7);
+                dest[(int) (index >>> 3)] |= (byte) (1 << ((int) index & 7));
             else
-                dest[(int) (index >>> 3)] &= ~(1 << (index & 7));
+                dest[(int) (index >>> 3)] &= (byte) ~(1 << ((int) index & 7));
         }
     }
+
+    /**
+     * Returns the bit <tt>#index</tt> in the packed <tt>src</tt> bit array
+     * for a case, when the bits are packed in each byte in the reverse order:
+     * highest bit first, lowest bit last.
+     * Equivalent to the following expression:<pre>
+     * (src[(int)(index &gt;&gt;&gt; 3)] &amp; (1 &lt;&lt; (7 - (index &amp; 7)))) != 0;
+     * </pre>
+     *
+     * @param src   the source array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
+     * @param index index of the returned bit.
+     * @return the bit at the specified index.
+     * @throws NullPointerException      if <tt>src</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
+     * @see #reverseBitsOrderInEachByte(byte[], int, int)
+     */
+    public static boolean getBitInReverseOrder(byte[] src, long index) {
+        return (src[(int) (index >>> 3)] & (1 << (7 - ((int) index & 7)))) != 0;
+    }
+
+    /**
+     * Sets the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array
+     * for a case, when the bits are packed in each byte in the reverse order:
+     * highest bit first, lowest bit last.
+     * Equivalent to the following operators:<pre>
+     * synchronized (dest) {
+     * &#32;   if (value)
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] |= 1 &lt;&lt; (7 - (index &amp; 7));
+     * &#32;   else
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] &amp;= ~(1 &lt;&lt; (7 - (index &amp; 7)));
+     * }
+     * </pre>
+     *
+     * @param dest  the destination array (bits are packed in <tt>long</tt> values).
+     * @param index index of the written bit.
+     * @param value new bit value.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
+     * @see #reverseBitsOrderInEachByte(byte[], int, int)
+     */
+    public static void setBitInReverseOrder(byte[] dest, long index, boolean value) {
+        synchronized (dest) {
+            if (value)
+                dest[(int) (index >>> 3)] |= (byte) (1 << (7 - ((int) index & 7)));
+            else
+                dest[(int) (index >>> 3)] &= (byte) ~(1 << (7 - ((int) index & 7)));
+        }
+    }
+
 
     /**
      * Packs byte array to <tt>long[]</tt>, so that the bits, stored in the result array according the rules
@@ -748,20 +800,22 @@ public class PackedBitArraysPer8 {
      * <p>Equivalent to the following loop:</p>
      * <pre>
      *     for (int i = 0; i &lt; count; i++) {
-     *         bytes[pos + i] = (byte) (Integer.reverse(bytes[pos + i] &amp; 0xFF) >>> 24);
+     *         bytes[pos + i] = (byte) ({@link Integer#reverse(int) 
+     *         Integer.reverse}(bytes[pos + i] &amp; 0xFF) >>> 24);
      * </pre>
      *
      * <p>This method can be useful if you have an array of bits, packed into bytes in reverse order:
-     * (b>>7)&amp;1,
-     * (b>>6)&amp;1,
-     * (b>>5)&amp;1,
-     * (b>>4)&amp;1,
-     * (b>>3)&amp;1,
-     * (b>>2)&amp;1,
-     * (b>>1)&amp;1,
-     * b&amp;1
-     * (highest bits first). You should reverse the bit order in such an array
-     * before using other methods of this class.</p>
+     * <tt>(b>>7)&amp;1</tt>,
+     * <tt>(b>>6)&amp;1</tt>,
+     * <tt>(b>>5)&amp;1</tt>,
+     * <tt>(b>>4)&amp;1</tt>,
+     * <tt>(b>>3)&amp;1</tt>,
+     * <tt>(b>>2)&amp;1</tt>,
+     * <tt>(b>>1)&amp;1</tt>,
+     * <tt>b&amp;1</tt>
+     * (highest bits first) for each byte <tt>b</tt>. You should reverse the bit order in such an array
+     * before using other methods of this class or, for simple cases, use the methods 
+     * {@link #getBitInReverseOrder(byte[], long)} and {@link #setBitInReverseOrder(byte[], long, boolean)}.</p>
      *
      * @param bytes array to be processed.
      * @throws NullPointerException      if <tt>bytes</tt> is <tt>null</tt>.

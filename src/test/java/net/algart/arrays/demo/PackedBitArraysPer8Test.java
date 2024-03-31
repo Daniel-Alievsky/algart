@@ -39,6 +39,7 @@ import java.util.Random;
  * @author Daniel Alievsky
  */
 public class PackedBitArraysPer8Test {
+
     public static void main(String[] args) {
         if (args.length < 2) {
             System.out.println("Usage: " + PackedBitArraysPer8Test.class.getName()

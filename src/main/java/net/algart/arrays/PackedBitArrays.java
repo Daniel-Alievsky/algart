@@ -58,6 +58,9 @@ import java.util.zip.Checksum;
  * &#32;   array[k &gt;&gt;&gt; 6] &amp;= ~(1L &lt;&lt; (k &amp; 63));
  * </pre>
  *
+ * <p>You may use {@link #getBit(long[], long)} and {@link #setBit(long[], long, boolean)}, implementing
+ * the equivalent code.</p>
+ *
  * <p>If any method of this class modifies some portion of an element of a packed <tt>long[]</tt> Java array,
  * i.e. modifies less than all 64 its bits, then all accesses to this <tt>long</tt> element are performed
  * <b>inside a single synchronized block</b>, using the following instruction:</p>
