@@ -103,6 +103,18 @@ public class PackedBitArraysPer8 {
             -0x49, 0x77, -0x09, 0x0f, -0x71, 0x4f, -0x31, 0x2f, -0x51, 0x6f, -0x11,
             0x1f, -0x61, 0x5f, -0x21, 0x3f, -0x41, 0x7f, -0x01};
 
+
+    /**
+     * Returns <tt>((long) array.length) << 3</tt>: the maximal number of bits that
+     * can be stored in the specified array.
+     * @param array <tt>byte[]</tt> array.
+     * @return      <tt>8 * (long) array.length</tt>
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     */
+    public static long unpackedLength(byte[] array) {
+        return ((long) array.length) << 3;
+    }
+
     /**
      * Returns <tt>(unpackedLength + 7) &gt;&gt;&gt; 3</tt>: the minimal number of <tt>byte</tt> values
      * allowing to store <tt>unpackedLength</tt> bits.

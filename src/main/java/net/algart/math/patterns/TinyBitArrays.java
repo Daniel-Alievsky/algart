@@ -38,6 +38,17 @@ class TinyBitArrays {
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/PackedBitArrays.java, primitives) !! Auto-generated: NOT EDIT !! */
 
     /**
+     * Returns <tt>((long) array.length) << 6</tt>: the maximal number of bits that
+     * can be stored in the specified array.
+     * @param array <tt>long[]</tt> array.
+     * @return      <tt>64 * (long) array.length</tt>
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     */
+    public static long unpackedLength(byte[] array) {
+        return ((long) array.length) << 6;
+    }
+
+    /**
      * Returns <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt>: the minimal number of <tt>long</tt> values
      * allowing to store <tt>unpackedLength</tt> bits.
      *
