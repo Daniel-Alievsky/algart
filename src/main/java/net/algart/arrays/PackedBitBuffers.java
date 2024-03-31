@@ -221,6 +221,8 @@ public class PackedBitBuffers {
         // because the reverseOrder=true argument may be passed in this case$1;;
         //  System\.arraycopy\((\w+,\s*\w+,\s*)(\w+,\s*\w+,\s*)(\w+)\) ==>
         //  JBuffers.copyLongBuffer($2$1$3, reverseOrder)   !! Auto-generated: NOT EDIT !! >>
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -416,6 +418,8 @@ public class PackedBitBuffers {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      */
     public static void swapBits(LongBuffer first, long firstPos, LongBuffer second, long secondPos, long count) {
+        Objects.requireNonNull(first, "Null first");
+        Objects.requireNonNull(second, "Null second");
         for (long firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             synchronized (getLock(first)) {
                 synchronized (getLock(second)) {
@@ -453,6 +457,8 @@ public class PackedBitBuffers {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      */
     public static void packBits(LongBuffer dest, long destPos, boolean[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -572,6 +578,8 @@ public class PackedBitBuffers {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      */
     public static void unpackBits(boolean[] dest, int destPos, LongBuffer src, long srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -679,6 +687,7 @@ public class PackedBitBuffers {
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      */
     public static void fillBits(LongBuffer dest, long destPos, long count, boolean value) {
+        Objects.requireNonNull(dest, "Null dest");
         int dPos = (int) (destPos >>> 6);
         int dPosRem = (int) (destPos & 63);
         int cntStart = (-dPosRem) & 63;
@@ -731,6 +740,8 @@ public class PackedBitBuffers {
     public static void notBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, notBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)   !! Auto-generated: NOT EDIT !! >>
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -833,6 +844,8 @@ public class PackedBitBuffers {
     public static void andBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, andBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)    !! Auto-generated: NOT EDIT !! >>
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -935,6 +948,8 @@ public class PackedBitBuffers {
     public static void orBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, orBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)   !! Auto-generated: NOT EDIT !! >>
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -1038,6 +1053,8 @@ public class PackedBitBuffers {
     public static void xorBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, xorBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)   !! Auto-generated: NOT EDIT !! >>
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -1140,6 +1157,8 @@ public class PackedBitBuffers {
     public static void andNotBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, andNotBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)   !! Auto-generated: NOT EDIT !! >>
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -1242,6 +1261,8 @@ public class PackedBitBuffers {
     public static void orNotBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, orNotBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)   !! Auto-generated: NOT EDIT !! >>
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -1351,6 +1372,7 @@ public class PackedBitBuffers {
         //  src\[([^\]]+)\] ==> src.get($1);;
         //  src\.length ==> src.limit();;
         //  (numberOfTrailingZeros\() ==> PackedBitArrays.$1   !! Auto-generated: NOT EDIT !! >>
+        Objects.requireNonNull(src, "Null src");
         if (lowIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: low index = " + lowIndex);
         }
@@ -1433,6 +1455,7 @@ public class PackedBitBuffers {
         //  src\[([^\]]+)\] ==> src.get($1);;
         //  src\.length ==> src.limit();;
         //  (numberOfLeadingZeros\() ==> PackedBitArrays.$1   !! Auto-generated: NOT EDIT !! >>
+        Objects.requireNonNull(src, "Null src");
         if (lowIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: low index = " + lowIndex);
         }

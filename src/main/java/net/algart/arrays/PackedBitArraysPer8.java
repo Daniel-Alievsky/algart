@@ -322,6 +322,8 @@ public class PackedBitArraysPer8 {
      */
     public static void copyBits(byte[] dest, long destPos, byte[] src, long srcPos, long count) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 3);
         int dPos = (int) (destPos >>> 3);
         int sPosRem = (int) (srcPos & 7);
@@ -526,6 +528,8 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBits(byte[] dest, long destPos, boolean[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 7) == 0 ? 0 : 8 - (int) (destPos & 7);
         if (countStart > count)
             countStart = count;
@@ -583,6 +587,8 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(boolean[] dest, int destPos, byte[] src, long srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
         if (countStart > count)
             countStart = count;
@@ -629,6 +635,7 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     public static void fillBits(byte[] dest, long destPos, long count, boolean value) {
+        Objects.requireNonNull(dest, "Null dest");
         int dPos = (int) (destPos >>> 3);
         int dPosRem = (int) (destPos & 7);
         int cntStart = (-dPosRem) & 7;
@@ -713,15 +720,15 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Equivalent to <tt>{@link #reverseBitOrder(byte[], int, int)
+     * Equivalent to <tt>{@link #reverseBitsOrderInEachByte(byte[], int, int)
      * reverseBitOrder}(bytes, 0, bytes.length)</tt>.
      *
      * @param bytes array to be processed.
      * @throws NullPointerException if <tt>bytes</tt> is <tt>null</tt>.
      */
-    public static void reverseBitOrder(byte[] bytes) {
+    public static void reverseBitsOrderInEachByte(byte[] bytes) {
         Objects.requireNonNull(bytes, "Null bytes");
-        reverseBitOrder(bytes, 0, bytes.length);
+        reverseBitsOrderInEachByte(bytes, 0, bytes.length);
     }
 
     /**
@@ -749,7 +756,7 @@ public class PackedBitArraysPer8 {
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if processing would cause access of data outside the array.
      */
-    public static void reverseBitOrder(byte[] bytes, int pos, int count) {
+    public static void reverseBitsOrderInEachByte(byte[] bytes, int pos, int count) {
         Objects.requireNonNull(bytes, "Null bytes");
         JArrays.rangeCheck(bytes.length, pos, count);
         for (int i = pos, toIndex = pos + count; i < toIndex; i++) {

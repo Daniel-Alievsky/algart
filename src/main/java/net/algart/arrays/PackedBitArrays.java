@@ -358,6 +358,8 @@ public class PackedBitArrays {
      */
     public static void copyBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart copyBits_method_impl]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -563,6 +565,8 @@ public class PackedBitArrays {
      */
     public static void packBits(long[] dest, long destPos, boolean[] src, int srcPos, int count) {
         //[[Repeat.SectionStart packBits_method_impl]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -685,6 +689,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsInverted(long[] dest, long destPos, boolean[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -819,6 +825,8 @@ public class PackedBitArrays {
             char threshold) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, packBits_method_impl)
         //  (src\[.*?]) ==> $1 > threshold !! Auto-generated: NOT EDIT !! ]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -949,6 +957,8 @@ public class PackedBitArrays {
             char threshold) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, packBits_method_impl)
         //  (src\[.*?]) ==> $1 < threshold !! Auto-generated: NOT EDIT !! ]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -1079,6 +1089,8 @@ public class PackedBitArrays {
             char threshold) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, packBits_method_impl)
         //  (src\[.*?]) ==> $1 >= threshold !! Auto-generated: NOT EDIT !! ]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -1209,6 +1221,8 @@ public class PackedBitArrays {
             char threshold) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, packBits_method_impl)
         //  (src\[.*?]) ==> $1 <= threshold !! Auto-generated: NOT EDIT !! ]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -1339,6 +1353,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, byte[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -1468,6 +1484,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, byte[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -1597,6 +1615,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, byte[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -1726,6 +1746,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, byte[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -1856,6 +1878,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, short[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -1985,6 +2009,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, short[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -2114,6 +2140,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, short[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -2243,6 +2271,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, short[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -2373,6 +2403,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, int[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -2502,6 +2534,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, int[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -2631,6 +2665,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, int[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -2760,6 +2796,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, int[] src, int srcPos, int count,
             int threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -2890,6 +2928,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, long[] src, int srcPos, int count,
             long threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -3019,6 +3059,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, long[] src, int srcPos, int count,
             long threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -3148,6 +3190,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, long[] src, int srcPos, int count,
             long threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -3277,6 +3321,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, long[] src, int srcPos, int count,
             long threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -3407,6 +3453,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, float[] src, int srcPos, int count,
             float threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -3536,6 +3584,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, float[] src, int srcPos, int count,
             float threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -3665,6 +3715,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, float[] src, int srcPos, int count,
             float threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -3794,6 +3846,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, float[] src, int srcPos, int count,
             float threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -3924,6 +3978,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, double[] src, int srcPos, int count,
             double threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -4053,6 +4109,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, double[] src, int srcPos, int count,
             double threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -4182,6 +4240,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, double[] src, int srcPos, int count,
             double threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -4311,6 +4371,8 @@ public class PackedBitArrays {
             long[] dest, long destPos, double[] src, int srcPos, int count,
             double threshold) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (destPos & 63) == 0 ? 0 : 64 - (int) (destPos & 63);
         if (countStart > count)
             countStart = count;
@@ -4436,6 +4498,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(boolean[] dest, int destPos, long[] src, long srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -4552,6 +4616,8 @@ public class PackedBitArrays {
     public static void unpackBits(
             boolean[] dest, int destPos, long[] src, long srcPos, int count,
             boolean bit0Value, boolean bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -4669,6 +4735,8 @@ public class PackedBitArrays {
     public static void unpackUnitBits(
             boolean[] dest, int destPos, long[] src, long srcPos, int count,
             boolean bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -4837,6 +4905,8 @@ public class PackedBitArrays {
     public static void unpackZeroBits(
             boolean[] dest, int destPos, long[] src, long srcPos, int count,
             boolean bit0Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -5005,6 +5075,8 @@ public class PackedBitArrays {
     public static void unpackBits(
             char[] dest, int destPos, long[] src, long srcPos, int count,
             char bit0Value, char bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -5120,6 +5192,8 @@ public class PackedBitArrays {
     public static void unpackUnitBits(
             char[] dest, int destPos, long[] src, long srcPos, int count,
             char bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -5284,6 +5358,8 @@ public class PackedBitArrays {
     public static void unpackZeroBits(
             char[] dest, int destPos, long[] src, long srcPos, int count,
             char bit0Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -5448,6 +5524,8 @@ public class PackedBitArrays {
     public static void unpackBits(
             byte[] dest, int destPos, long[] src, long srcPos, int count,
             byte bit0Value, byte bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -5563,6 +5641,8 @@ public class PackedBitArrays {
     public static void unpackUnitBits(
             byte[] dest, int destPos, long[] src, long srcPos, int count,
             byte bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -5727,6 +5807,8 @@ public class PackedBitArrays {
     public static void unpackZeroBits(
             byte[] dest, int destPos, long[] src, long srcPos, int count,
             byte bit0Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -5891,6 +5973,8 @@ public class PackedBitArrays {
     public static void unpackBits(
             short[] dest, int destPos, long[] src, long srcPos, int count,
             short bit0Value, short bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -6006,6 +6090,8 @@ public class PackedBitArrays {
     public static void unpackUnitBits(
             short[] dest, int destPos, long[] src, long srcPos, int count,
             short bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -6170,6 +6256,8 @@ public class PackedBitArrays {
     public static void unpackZeroBits(
             short[] dest, int destPos, long[] src, long srcPos, int count,
             short bit0Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -6334,6 +6422,8 @@ public class PackedBitArrays {
     public static void unpackBits(
             int[] dest, int destPos, long[] src, long srcPos, int count,
             int bit0Value, int bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -6449,6 +6539,8 @@ public class PackedBitArrays {
     public static void unpackUnitBits(
             int[] dest, int destPos, long[] src, long srcPos, int count,
             int bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -6613,6 +6705,8 @@ public class PackedBitArrays {
     public static void unpackZeroBits(
             int[] dest, int destPos, long[] src, long srcPos, int count,
             int bit0Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -6777,6 +6871,8 @@ public class PackedBitArrays {
     public static void unpackBits(
             long[] dest, int destPos, long[] src, long srcPos, int count,
             long bit0Value, long bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -6892,6 +6988,8 @@ public class PackedBitArrays {
     public static void unpackUnitBits(
             long[] dest, int destPos, long[] src, long srcPos, int count,
             long bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -7056,6 +7154,8 @@ public class PackedBitArrays {
     public static void unpackZeroBits(
             long[] dest, int destPos, long[] src, long srcPos, int count,
             long bit0Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -7220,6 +7320,8 @@ public class PackedBitArrays {
     public static void unpackBits(
             float[] dest, int destPos, long[] src, long srcPos, int count,
             float bit0Value, float bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -7335,6 +7437,8 @@ public class PackedBitArrays {
     public static void unpackUnitBits(
             float[] dest, int destPos, long[] src, long srcPos, int count,
             float bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -7499,6 +7603,8 @@ public class PackedBitArrays {
     public static void unpackZeroBits(
             float[] dest, int destPos, long[] src, long srcPos, int count,
             float bit0Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -7663,6 +7769,8 @@ public class PackedBitArrays {
     public static void unpackBits(
             double[] dest, int destPos, long[] src, long srcPos, int count,
             double bit0Value, double bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -7778,6 +7886,8 @@ public class PackedBitArrays {
     public static void unpackUnitBits(
             double[] dest, int destPos, long[] src, long srcPos, int count,
             double bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -7942,6 +8052,8 @@ public class PackedBitArrays {
     public static void unpackZeroBits(
             double[] dest, int destPos, long[] src, long srcPos, int count,
             double bit0Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -8106,6 +8218,8 @@ public class PackedBitArrays {
     public static void unpackBits(
             Object[] dest, int destPos, long[] src, long srcPos, int count,
             Object bit0Value, Object bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         if (bit0Value == bit1Value) {
             java.util.Arrays.fill(dest, destPos, destPos + count, bit0Value);
             return;
@@ -8221,6 +8335,8 @@ public class PackedBitArrays {
     public static void unpackUnitBits(
             Object[] dest, int destPos, long[] src, long srcPos, int count,
             Object bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -8385,6 +8501,8 @@ public class PackedBitArrays {
     public static void unpackZeroBits(
             Object[] dest, int destPos, long[] src, long srcPos, int count,
             Object bit0Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -8545,6 +8663,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void addBitsToInts(int[] dest, int destPos, long[] src, long srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -8654,6 +8774,7 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     public static void fillBits(long[] dest, long destPos, long count, boolean value) {
+        Objects.requireNonNull(dest, "Null dest");
         int dPos = (int) (destPos >>> 6);
         int dPosRem = (int) (destPos & 63);
         int cntStart = (-dPosRem) & 63;
@@ -8706,6 +8827,7 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if checking would cause access of data outside array bounds.
      */
     public static boolean areBitsZero(long[] array, long pos, long count) {
+        Objects.requireNonNull(array, "Null array");
         int sPos = (int) (pos >>> 6);
         int sPosRem = (int) (pos & 63);
         int cntStart = (-sPosRem) & 63;
@@ -8756,6 +8878,8 @@ public class PackedBitArrays {
      */
     public static void notBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart notBits_method_impl]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -8862,6 +8986,8 @@ public class PackedBitArrays {
      */
     public static void andBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart andBits_method_impl]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -8966,6 +9092,8 @@ public class PackedBitArrays {
      */
     public static void orBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart orBits_method_impl]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -9072,6 +9200,8 @@ public class PackedBitArrays {
      */
     public static void xorBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart xorBits_method_impl]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -9176,6 +9306,8 @@ public class PackedBitArrays {
      */
     public static void andNotBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart andNotBits_method_impl]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -9280,6 +9412,8 @@ public class PackedBitArrays {
      */
     public static void orNotBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart orNotBits_method_impl]]
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -9383,6 +9517,8 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     public static void reverseBitsOrder(long[] dest, long destPos, long[] src, long srcPos, long count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         if (count == 0) {
             return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
         }
@@ -9480,6 +9616,7 @@ public class PackedBitArrays {
      */
     public static long indexOfBit(long[] src, long lowIndex, long highIndex, boolean value) {
         //[[Repeat.SectionStart indexOfBit_method_impl]]
+        Objects.requireNonNull(src, "Null src");
         if (lowIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: low index = " + lowIndex);
         }
@@ -9560,6 +9697,7 @@ public class PackedBitArrays {
      */
     public static long lastIndexOfBit(long[] src, long lowIndex, long highIndex, boolean value) {
         //[[Repeat.SectionStart lastIndexOfBit_method_impl]]
+        Objects.requireNonNull(src, "Null src");
         if (lowIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: low index = " + lowIndex);
         }

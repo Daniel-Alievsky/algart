@@ -234,7 +234,7 @@ public class PackedBitArraysPer8Test {
                 System.arraycopy(pDest, 0, pDestWork, 0, pDest.length);
                 int destPos = rnd.nextInt(pDest.length + 1);
                 int count = rnd.nextInt(pDest.length + 1 - destPos);
-                PackedBitArraysPer8.reverseBitOrder(pDestWork, destPos, count);
+                PackedBitArraysPer8.reverseBitsOrderInEachByte(pDestWork, destPos, count);
                 for (int k = 0; k < count; k++) {
                     if (pDestWork[destPos + k] != (byte) (Integer.reverse(pDest[destPos + k] & 0xFF) >>> 24)) {
                         throw new AssertionError("The bug A in reverseBitOrder found in test #" + testCount + ": "
@@ -242,7 +242,7 @@ public class PackedBitArraysPer8Test {
                                 + ", error found at " + k);
                     }
                 }
-                PackedBitArraysPer8.reverseBitOrder(pDestWork, destPos, count);
+                PackedBitArraysPer8.reverseBitsOrderInEachByte(pDestWork, destPos, count);
                 if (!java.util.Arrays.equals(pDest, pDestWork)) {
                     throw new AssertionError("The bug B in reverseBitOrder found in test #" + testCount + ": "
                             + "destPos = " + destPos + ", count = " + count);

@@ -118,6 +118,8 @@ class TinyBitArrays {
      */
     public static void copyBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -325,6 +327,8 @@ class TinyBitArrays {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(boolean[] dest, int destPos, long[] src, long srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 63) == 0 ? 0 : 64 - (int) (srcPos & 63);
         if (countStart > count)
             countStart = count;
@@ -434,6 +438,7 @@ class TinyBitArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     public static void fillBits(long[] dest, long destPos, long count, boolean value) {
+        Objects.requireNonNull(dest, "Null dest");
         int dPos = (int) (destPos >>> 6);
         int dPosRem = (int) (destPos & 63);
         int cntStart = (-dPosRem) & 63;
@@ -492,6 +497,8 @@ class TinyBitArrays {
      */
     public static void andBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
@@ -596,6 +603,8 @@ class TinyBitArrays {
      */
     public static void orBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
 
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
         int dPos = (int) (destPos >>> 6);
         int sPosRem = (int) (srcPos & 63);
