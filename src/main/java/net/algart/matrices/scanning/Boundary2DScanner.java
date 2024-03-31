@@ -74,7 +74,7 @@ import java.util.Objects;
  *
  * <p><a name="completion"></a>We define the <i>completion</i> of the connected object as the sets of all points
  * lying at or inside its main boundary. In other words, the completion is the object, where all internal
- * "holes" are filled. If the connected object has no "holes", its completion is identical to it.</p>
+ * "holes" ("pores") are filled. If the connected object has no "holes", its completion is identical to it.</p>
  *
  * <p>Each segment with length 1.0 in any object boundary is a boundary of some pixel, belonging to the image <b>IM</b>.
  * These pixels can lie 1) inside the boundary, and then it is true for all segments of the boundary,
@@ -1305,11 +1305,11 @@ public abstract class Boundary2DScanner {
     final long dimX, dimY;
 
     Boundary2DScanner(Matrix<? extends BitArray> matrix) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
-        if (matrix.dimCount() != 2)
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        if (matrix.dimCount() != 2) {
             throw new IllegalArgumentException(Boundary2DScanner.class
                     + " can be used for 2-dimensional matrices only");
+        }
         this.matrix = matrix;
         this.array = matrix.array();
         this.arrayLength = this.array.length();
@@ -1341,16 +1341,14 @@ public abstract class Boundary2DScanner {
      * @param matrix           the matrix that will be scanned by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if one of arguments is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
      */
     public static Boundary2DScanner getSingleBoundaryScanner(
             Matrix<? extends BitArray> matrix,
             ConnectivityType connectivityType) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
-        if (connectivityType == null)
-            throw new NullPointerException("Null connectivityType argument");
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        Objects.requireNonNull(connectivityType, "Null connectivityType argument");
         switch (connectivityType) {
             case STRAIGHT_ONLY:
                 if (!isDirectBitArray(matrix.array())) {
@@ -1454,7 +1452,7 @@ public abstract class Boundary2DScanner {
      *                         will work incorrectly.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if one of arguments is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
@@ -1463,8 +1461,7 @@ public abstract class Boundary2DScanner {
             Matrix<? extends UpdatablePFixedArray> buffer1,
             Matrix<? extends UpdatablePFixedArray> buffer2,
             ConnectivityType connectivityType) {
-        if (connectivityType == null)
-            throw new NullPointerException("Null connectivityType argument");
+        Objects.requireNonNull(connectivityType, "Null connectivityType argument");
         switch (connectivityType) {
             case STRAIGHT_ONLY:
                 if (!isDirectBitArray(matrix.array())) {
@@ -1543,14 +1540,15 @@ public abstract class Boundary2DScanner {
      *
      * <p>This instance is convenient for scanning main boundaries in the matrix and, as a side effect,
      * for calculating completions of all objects.
-     * To do this, it's possible to use the following loop:
+     * To do this, you may call {@link #fillHoles(Matrix, Matrix, ConnectivityType)} method
+     * or use the equivalent loop:
      *
      * <pre>
      * {@link Boundary2DScanner} scanner = {@link
      * Boundary2DScanner#getMainBoundariesScanner(Matrix, Matrix, ConnectivityType)
      * getMainBoundariesScanner}(m, um, connectivityType);
      * while (scanner.{@link #nextBoundary()}) {
-     * &#32;   scanner.{@link #scanBoundary scanBoundary}(ac); // or some more useful actions
+     * &#32;   scanner.{@link #scanBoundary scanBoundary}(); // or some more useful actions
      * }
      * // now um contains the completions of all objects drawn in m
      * // (if um was initially zero-filled)
@@ -1560,7 +1558,7 @@ public abstract class Boundary2DScanner {
      * @param buffer           the buffer matrix for writing "brackets" and filling holes.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if one of arguments is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
@@ -1568,8 +1566,7 @@ public abstract class Boundary2DScanner {
             Matrix<? extends BitArray> matrix,
             Matrix<? extends UpdatablePFixedArray> buffer,
             ConnectivityType connectivityType) {
-        if (connectivityType == null)
-            throw new NullPointerException("Null connectivityType argument");
+        Objects.requireNonNull(connectivityType, "Null connectivityType argument");
         switch (connectivityType) {
             case STRAIGHT_ONLY:
                 if (!isDirectBitArray(matrix.array())) {
@@ -1585,6 +1582,38 @@ public abstract class Boundary2DScanner {
                 }
         }
         throw new AssertionError("Unsupported connectivity type: " + connectivityType);
+    }
+
+    /**
+     * Makes <a href="Boundary2DScanner.html#completion">completion</a> of the source binary matrix and returns it
+     * in the result matrix. In comparison with the source matrix, all "holes" ("pores") in the resulting matrix
+     * are filled.</p>
+     *
+     * <p>This method is equivalent to the following code:</p>
+     *  <pre>
+     * {@link Boundary2DScanner} scanner = {@link
+     * Boundary2DScanner#getMainBoundariesScanner(Matrix, Matrix, ConnectivityType)
+     * getMainBoundariesScanner}(source, result, connectivityType);
+     * while (scanner.{@link #nextBoundary()}) {
+     * &#32;   scanner.{@link #scanBoundary scanBoundary}(); // or some more useful actions
+     * }
+     * </pre>
+     * @param result            the completion: the matrix with filled holes.
+     * @param source            the source matrix.
+     * @param connectivityType the connectivity kind used while building completion.
+     * @throws NullPointerException     if one of argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
+     * @throws SizeMismatchException    if the passed matrices have different dimensions.
+     */
+    public static void fillHoles(
+            Matrix<? extends UpdatableBitArray> result,
+            Matrix<? extends BitArray> source,
+            ConnectivityType connectivityType) {
+        final Boundary2DScanner scanner = Boundary2DScanner.getMainBoundariesScanner(source, result, connectivityType);
+        Matrices.clear(result);
+        while (scanner.nextBoundary()) {
+            scanner.scanBoundary();
+        }
     }
 
     /*Repeat() SingleBoundaryScanner ==> AllBoundariesScanner,,MainBoundariesScanner;;
@@ -3636,16 +3665,16 @@ public abstract class Boundary2DScanner {
                 Matrix<? extends UpdatablePFixedArray> buffer1,
                 Matrix<? extends UpdatablePFixedArray> buffer2) {
             super(matrix);
-            if (buffer1 == null)
-                throw new NullPointerException("Null buffer1 argument");
-            if (buffer2 == null)
-                throw new NullPointerException("Null buffer2 argument");
-            if (!buffer1.dimEquals(matrix))
+            Objects.requireNonNull(buffer1, "Null buffer1 argument");
+            Objects.requireNonNull(buffer2, "Null buffer2 argument");
+            if (!buffer1.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer1 dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer1);
-            if (!buffer2.dimEquals(matrix))
+            }
+            if (!buffer2.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer2 dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer2);
+            }
             this.bufferAccessor1 = getAccessor(buffer1);
             this.bufferAccessor2 = getAccessor(buffer2);
             this.bufferAccessor = this.bufferAccessor1;
@@ -3700,16 +3729,16 @@ public abstract class Boundary2DScanner {
                 Matrix<? extends UpdatablePFixedArray> buffer1,
                 Matrix<? extends UpdatablePFixedArray> buffer2) {
             super(matrix);
-            if (buffer1 == null)
-                throw new NullPointerException("Null buffer1 argument");
-            if (buffer2 == null)
-                throw new NullPointerException("Null buffer2 argument");
-            if (!buffer1.dimEquals(matrix))
+            Objects.requireNonNull(buffer1, "Null buffer1 argument");
+            Objects.requireNonNull(buffer2, "Null buffer2 argument");
+            if (!buffer1.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer1 dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer1);
-            if (!buffer2.dimEquals(matrix))
+            }
+            if (!buffer2.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer2 dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer2);
+            }
             this.bufferAccessor1 = getAccessor(buffer1);
             this.bufferAccessor2 = getAccessor(buffer2);
             this.bufferAccessor = this.bufferAccessor1;
@@ -3763,16 +3792,16 @@ public abstract class Boundary2DScanner {
                 Matrix<? extends UpdatablePFixedArray> buffer1,
                 Matrix<? extends UpdatablePFixedArray> buffer2) {
             super(matrix);
-            if (buffer1 == null)
-                throw new NullPointerException("Null buffer1 argument");
-            if (buffer2 == null)
-                throw new NullPointerException("Null buffer2 argument");
-            if (!buffer1.dimEquals(matrix))
+            Objects.requireNonNull(buffer1, "Null buffer1 argument");
+            Objects.requireNonNull(buffer2, "Null buffer2 argument");
+            if (!buffer1.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer1 dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer1);
-            if (!buffer2.dimEquals(matrix))
+            }
+            if (!buffer2.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer2 dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer2);
+            }
             this.bufferAccessor1 = getAccessor(buffer1);
             this.bufferAccessor2 = getAccessor(buffer2);
             this.bufferAccessor = this.bufferAccessor1;
@@ -3826,16 +3855,16 @@ public abstract class Boundary2DScanner {
                 Matrix<? extends UpdatablePFixedArray> buffer1,
                 Matrix<? extends UpdatablePFixedArray> buffer2) {
             super(matrix);
-            if (buffer1 == null)
-                throw new NullPointerException("Null buffer1 argument");
-            if (buffer2 == null)
-                throw new NullPointerException("Null buffer2 argument");
-            if (!buffer1.dimEquals(matrix))
+            Objects.requireNonNull(buffer1, "Null buffer1 argument");
+            Objects.requireNonNull(buffer2, "Null buffer2 argument");
+            if (!buffer1.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer1 dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer1);
-            if (!buffer2.dimEquals(matrix))
+            }
+            if (!buffer2.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer2 dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer2);
+            }
             this.bufferAccessor1 = getAccessor(buffer1);
             this.bufferAccessor2 = getAccessor(buffer2);
             this.bufferAccessor = this.bufferAccessor1;
@@ -3895,11 +3924,11 @@ public abstract class Boundary2DScanner {
                 Matrix<? extends BitArray> matrix,
                 Matrix<? extends UpdatablePFixedArray> buffer) {
             super(matrix);
-            if (buffer == null)
-                throw new NullPointerException("Null buffer argument");
-            if (!buffer.dimEquals(matrix))
+            Objects.requireNonNull(buffer, "Null buffer argument");
+            if (!buffer.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer);
+            }
             this.bufferAccessor = getAccessor(buffer);
             this.bufferArray = buffer.array();
         }
@@ -3947,11 +3976,11 @@ public abstract class Boundary2DScanner {
                 Matrix<? extends BitArray> matrix,
                 Matrix<? extends UpdatablePFixedArray> buffer) {
             super(matrix);
-            if (buffer == null)
-                throw new NullPointerException("Null buffer argument");
-            if (!buffer.dimEquals(matrix))
+            Objects.requireNonNull(buffer, "Null buffer argument");
+            if (!buffer.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer);
+            }
             this.bufferAccessor = getAccessor(buffer);
             this.bufferArray = buffer.array();
         }
@@ -3998,11 +4027,11 @@ public abstract class Boundary2DScanner {
                 Matrix<? extends BitArray> matrix,
                 Matrix<? extends UpdatablePFixedArray> buffer) {
             super(matrix);
-            if (buffer == null)
-                throw new NullPointerException("Null buffer argument");
-            if (!buffer.dimEquals(matrix))
+            Objects.requireNonNull(buffer, "Null buffer argument");
+            if (!buffer.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer);
+            }
             this.bufferAccessor = getAccessor(buffer);
             this.bufferArray = buffer.array();
         }
@@ -4049,11 +4078,11 @@ public abstract class Boundary2DScanner {
                 Matrix<? extends BitArray> matrix,
                 Matrix<? extends UpdatablePFixedArray> buffer) {
             super(matrix);
-            if (buffer == null)
-                throw new NullPointerException("Null buffer argument");
-            if (!buffer.dimEquals(matrix))
+            Objects.requireNonNull(buffer, "Null buffer argument");
+            if (!buffer.dimEquals(matrix)) {
                 throw new SizeMismatchException("matrix and buffer dimensions mismatch: matrix is "
                         + matrix + ", buffer is " + buffer);
+            }
             this.bufferAccessor = getAccessor(buffer);
             this.bufferArray = buffer.array();
         }
