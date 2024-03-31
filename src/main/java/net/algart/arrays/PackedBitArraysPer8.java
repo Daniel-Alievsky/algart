@@ -178,7 +178,7 @@ public class PackedBitArraysPer8 {
      * for a case, when the bits are packed in each byte in the reverse order:
      * highest bit first, lowest bit last.
      * Equivalent to the following expression:<pre>
-     * (src[(int)(index &gt;&gt;&gt; 3)] &amp; (1 &lt;&lt; ((8 - (index &amp; 7)) & 7))) != 0;
+     * (src[(int)(index &gt;&gt;&gt; 3)] &amp; (1 &lt;&lt; (7 - (index &amp; 7)))) != 0;
      * </pre>
      *
      * @param src   the source array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
@@ -189,7 +189,7 @@ public class PackedBitArraysPer8 {
      * @see #reverseBitsOrderInEachByte(byte[], int, int)
      */
     public static boolean getBitInReverseOrder(byte[] src, long index) {
-        return (src[(int) (index >>> 3)] & (1 << ((8 - ((int) index & 7)) & 7))) != 0;
+        return (src[(int) (index >>> 3)] & (1 << (7 - ((int) index & 7)))) != 0;
     }
 
     /**
@@ -198,7 +198,7 @@ public class PackedBitArraysPer8 {
      * highest bit first, lowest bit last.
      * Equivalent to the following operators:<pre>
      * synchronized (dest) {
-     * &#32;   final int bitIndex = (8 - ((int) index &amp; 7)) &amp; 7;
+     * &#32;   final int bitIndex = 7 - ((int) index &amp; 7);
      * &#32;   if (value)
      * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] |= (1 &lt;&lt; bitIndex);
      * &#32;   else
@@ -215,13 +215,67 @@ public class PackedBitArraysPer8 {
      */
     public static void setBitInReverseOrder(byte[] dest, long index, boolean value) {
         synchronized (dest) {
-            final int bitIndex = (8 - ((int) index & 7)) & 7;
+            final int bitIndex = 7 - ((int) index & 7);
             if (value)
                 dest[(int) (index >>> 3)] |= (byte) (1 << bitIndex);
             else
                 dest[(int) (index >>> 3)] &= (byte) ~(1 << bitIndex);
         }
     }
+
+    public static long getBitsInReverseOrder(byte[] src, long srcPos, int count) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IndexOutOfBoundsException("Negative srcPos argument: " + srcPos);
+        }
+        final long srcPosDiv8 = srcPos >>> 3;
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot get more 64 bits in this method");
+        }
+        if (count == 0 || srcPosDiv8 >= src.length) {
+            return 0;
+        }
+        long result = 0;
+        int currentBitIndex = (int) (srcPos & 7);
+        int currentByteIndex = (int) srcPosDiv8;
+        while (count != 0) {
+            final int bitsLeft = 8 - currentBitIndex;
+            if (count >= bitsLeft) {
+                result <<= bitsLeft;
+                count -= bitsLeft;
+                final int cb = src[currentByteIndex];
+                if (currentBitIndex == 0) {
+                    // we can read in a whole byte, so we'll do that.
+                    result += cb & 0xFF;
+                } else {
+                    // otherwise, only read the appropriate number of bits off the back
+                    // side of the byte, in order to "finish" the current byte in the buffer.
+                    result += cb & (0xFF >> currentBitIndex);
+                    currentBitIndex = 0;
+                }
+                currentByteIndex++;
+            } else {
+                // We will be able to finish using the current byte.
+                // read the appropriate number of bits off the front side of the byte,
+                // then push them into the int.
+                result <<= count;
+                final int cb = src[currentByteIndex] & 0xFF;
+                int mask = (0xFF00 >> currentBitIndex) & 0xFF;
+                result += (cb & (0x00FF - mask)) >> (bitsLeft - count);
+                break;
+            }
+            if (currentByteIndex >= src.length) {
+                break;
+            }
+        }
+        return result;
+    }
+
+
 
 
     /**
