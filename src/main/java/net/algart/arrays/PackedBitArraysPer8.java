@@ -110,8 +110,9 @@ public class PackedBitArraysPer8 {
     /**
      * Returns <tt>((long) array.length) << 3</tt>: the maximal number of bits that
      * can be stored in the specified array.
+     *
      * @param array <tt>byte[]</tt> array.
-     * @return      <tt>8 * (long) array.length</tt>
+     * @return <tt>8 * (long) array.length</tt>
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public static long unpackedLength(byte[] array) {
@@ -177,7 +178,7 @@ public class PackedBitArraysPer8 {
      * for a case, when the bits are packed in each byte in the reverse order:
      * highest bit first, lowest bit last.
      * Equivalent to the following expression:<pre>
-     * (src[(int)(index &gt;&gt;&gt; 3)] &amp; (1 &lt;&lt; (7 - (index &amp; 7)))) != 0;
+     * (src[(int)(index &gt;&gt;&gt; 3)] &amp; (1 &lt;&lt; ((8 - (index &amp; 7)) & 7))) != 0;
      * </pre>
      *
      * @param src   the source array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
@@ -188,7 +189,7 @@ public class PackedBitArraysPer8 {
      * @see #reverseBitsOrderInEachByte(byte[], int, int)
      */
     public static boolean getBitInReverseOrder(byte[] src, long index) {
-        return (src[(int) (index >>> 3)] & (1 << (7 - ((int) index & 7)))) != 0;
+        return (src[(int) (index >>> 3)] & (1 << ((8 - ((int) index & 7)) & 7))) != 0;
     }
 
     /**
@@ -197,10 +198,11 @@ public class PackedBitArraysPer8 {
      * highest bit first, lowest bit last.
      * Equivalent to the following operators:<pre>
      * synchronized (dest) {
+     * &#32;   final int bitIndex = (8 - ((int) index &amp; 7)) &amp; 7;
      * &#32;   if (value)
-     * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] |= 1 &lt;&lt; (7 - (index &amp; 7));
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] |= (1 &lt;&lt; bitIndex);
      * &#32;   else
-     * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] &amp;= ~(1 &lt;&lt; (7 - (index &amp; 7)));
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] &amp;= ~(1 &lt;&lt; bitIndex);
      * }
      * </pre>
      *
@@ -213,10 +215,11 @@ public class PackedBitArraysPer8 {
      */
     public static void setBitInReverseOrder(byte[] dest, long index, boolean value) {
         synchronized (dest) {
+            final int bitIndex = (8 - ((int) index & 7)) & 7;
             if (value)
-                dest[(int) (index >>> 3)] |= (byte) (1 << (7 - ((int) index & 7)));
+                dest[(int) (index >>> 3)] |= (byte) (1 << bitIndex);
             else
-                dest[(int) (index >>> 3)] &= (byte) ~(1 << (7 - ((int) index & 7)));
+                dest[(int) (index >>> 3)] &= (byte) ~(1 << bitIndex);
         }
     }
 
@@ -800,7 +803,7 @@ public class PackedBitArraysPer8 {
      * <p>Equivalent to the following loop:</p>
      * <pre>
      *     for (int i = 0; i &lt; count; i++) {
-     *         bytes[pos + i] = (byte) ({@link Integer#reverse(int) 
+     *         bytes[pos + i] = (byte) ({@link Integer#reverse(int)
      *         Integer.reverse}(bytes[pos + i] &amp; 0xFF) >>> 24);
      * </pre>
      *
@@ -814,7 +817,7 @@ public class PackedBitArraysPer8 {
      * <tt>(b>>1)&amp;1</tt>,
      * <tt>b&amp;1</tt>
      * (highest bits first) for each byte <tt>b</tt>. You should reverse the bit order in such an array
-     * before using other methods of this class or, for simple cases, use the methods 
+     * before using other methods of this class or, for simple cases, use the methods
      * {@link #getBitInReverseOrder(byte[], long)} and {@link #setBitInReverseOrder(byte[], long, boolean)}.</p>
      *
      * @param bytes array to be processed.
