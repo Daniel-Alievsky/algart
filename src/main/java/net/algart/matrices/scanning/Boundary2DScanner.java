@@ -26,6 +26,8 @@ package net.algart.matrices.scanning;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
+
 /**
  * <p>2-dimensional object boundaries scanner: the class allowing to trace boundaries of objects,
  * "drawn" at some 2-dimensional bit matrix.</p>
@@ -205,7 +207,7 @@ import net.algart.arrays.*;
  * <li>{@link #getMainBoundariesScanner(Matrix matrix, Matrix buffer, ConnectivityType)},</li>
  * </ul>
  *
- * then you either must pass different buffer matrices in different threads,
+ * <p>then you either must pass different buffer matrices in different threads,
  * or manually synchronize all called methods.
  * In other case, the content of buffer matrices will be unspecified and behavior of the scanning algorithm
  * will be undefined.</p>
@@ -974,11 +976,11 @@ public abstract class Boundary2DScanner {
                 this.segmentCenterDX = newSide.centerX - oldSide.centerX;
                 this.segmentCenterDY = newSide.centerY - oldSide.centerY;
                 this.pixelVertexX = newSide == Side.X_MINUS || newSide == Side.X_PLUS ?
-                    newSide.centerX : oldSide.centerX;
+                        newSide.centerX : oldSide.centerX;
                 this.pixelVertexY = newSide == Side.Y_MINUS || newSide == Side.Y_PLUS ?
-                    newSide.centerY : oldSide.centerY;
+                        newSide.centerY : oldSide.centerY;
                 if ((StrictMath.abs(0.5 * (oldSide.dxAlong() + newSide.dxAlong()) - segmentCenterDX) > 0.001) ||
-                    (StrictMath.abs(0.5 * (oldSide.dyAlong() + newSide.dyAlong()) - segmentCenterDY) > 0.001)) {
+                        (StrictMath.abs(0.5 * (oldSide.dyAlong() + newSide.dyAlong()) - segmentCenterDY) > 0.001)) {
                     throw new AssertionError("Incorrect class initialization: "
                             + "dx/dyAlong do not match to centerX/Y in " + oldSide + " and " + newSide);
                 }
@@ -986,9 +988,9 @@ public abstract class Boundary2DScanner {
                 this.segmentCenterDX = 0.5 * pixelCenterDX;
                 this.segmentCenterDY = 0.5 * pixelCenterDY;
                 this.pixelVertexX = newSide == Side.X_MINUS || newSide == Side.X_PLUS ?
-                    newSide.centerX : -oldSide.centerX;
+                        newSide.centerX : -oldSide.centerX;
                 this.pixelVertexY = newSide == Side.Y_MINUS || newSide == Side.Y_PLUS ?
-                    newSide.centerY : -oldSide.centerY;
+                        newSide.centerY : -oldSide.centerY;
             }
             if (StrictMath.abs(StrictMath.abs(pixelVertexX) + StrictMath.abs(pixelVertexY) - 1.0) > 0.001) {
                 throw new AssertionError("Incorrect class initialization "
@@ -1093,7 +1095,7 @@ public abstract class Boundary2DScanner {
          * Works very quickly (this method just returns an internal field).
          *
          * @return <i>x</i>-coordinate of the vertex of the new (current) pixel,
-         *         lying between previous and current segments of the boundary.
+         * lying between previous and current segments of the boundary.
          */
         public double pixelVertexX() {
             return pixelVertexX;
@@ -1106,7 +1108,7 @@ public abstract class Boundary2DScanner {
          * Works very quickly (this method just returns an internal field).
          *
          * @return <i>y</i>-coordinate of the vertex of the new (current) pixel,
-         *         lying between previous and current segments of the boundary.
+         * lying between previous and current segments of the boundary.
          */
         public double pixelVertexY() {
             return pixelVertexY;
@@ -1121,7 +1123,7 @@ public abstract class Boundary2DScanner {
          * on the assumption that the left up corner of the new (current) pixel is at the origin of coordinates.
          *
          * @return 0.5 + <i>x</i>-coordinate of the vertex of the new (current) pixel,
-         *         lying between previous and current segments of the boundary.
+         * lying between previous and current segments of the boundary.
          */
         public int increasedPixelVertexX() {
             return increasedPixelVertexX;
@@ -1136,7 +1138,7 @@ public abstract class Boundary2DScanner {
          * on the assumption that the left up corner of the new (current) pixel is at the origin of coordinates.
          *
          * @return 0.5 + <i>y</i>-coordinate of the vertex of the new (current) pixel,
-         *         lying between previous and current segments of the boundary.
+         * lying between previous and current segments of the boundary.
          */
         public int increasedPixelVertexY() {
             return increasedPixelVertexY;
@@ -1248,8 +1250,8 @@ public abstract class Boundary2DScanner {
          */
         public String toString() {
             return "boundary scanning step from " + oldSide + " to " + newSide
-                + " by " + pixelCenterDX + "," + pixelCenterDY
-                + " (pixel vertex " + pixelVertexX + "," + pixelVertexY + ")";
+                    + " by " + pixelCenterDX + "," + pixelCenterDY
+                    + " (pixel vertex " + pixelVertexX + "," + pixelVertexY + ")";
         }
     }
 
@@ -1307,7 +1309,7 @@ public abstract class Boundary2DScanner {
             throw new NullPointerException("Null matrix argument");
         if (matrix.dimCount() != 2)
             throw new IllegalArgumentException(Boundary2DScanner.class
-                + " can be used for 2-dimensional matrices only");
+                    + " can be used for 2-dimensional matrices only");
         this.matrix = matrix;
         this.array = matrix.array();
         this.arrayLength = this.array.length();
@@ -1338,14 +1340,13 @@ public abstract class Boundary2DScanner {
      *
      * @param matrix           the matrix that will be scanned by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.
-     * @return                 new instance of this class.
+     * @return new instance of this class.
      * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
      */
     public static Boundary2DScanner getSingleBoundaryScanner(
-        Matrix<? extends BitArray> matrix,
-        ConnectivityType connectivityType)
-    {
+            Matrix<? extends BitArray> matrix,
+            ConnectivityType connectivityType) {
         if (matrix == null)
             throw new NullPointerException("Null matrix argument");
         if (connectivityType == null)
@@ -1452,19 +1453,19 @@ public abstract class Boundary2DScanner {
      *                         and <tt>buffer2</tt> arguments, but in this case the {@link #nestingLevel()} method
      *                         will work incorrectly.
      * @param connectivityType the connectivity kind used by the created instance.
-     * @return                 new instance of this class.
+     * @return new instance of this class.
      * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
-    public static Boundary2DScanner getAllBoundariesScanner(Matrix<? extends BitArray> matrix,
-        Matrix<? extends UpdatablePFixedArray> buffer1,
-        Matrix<? extends UpdatablePFixedArray> buffer2,
-        ConnectivityType connectivityType)
-    {
+    public static Boundary2DScanner getAllBoundariesScanner(
+            Matrix<? extends BitArray> matrix,
+            Matrix<? extends UpdatablePFixedArray> buffer1,
+            Matrix<? extends UpdatablePFixedArray> buffer2,
+            ConnectivityType connectivityType) {
         if (connectivityType == null)
             throw new NullPointerException("Null connectivityType argument");
-        switch(connectivityType) {
+        switch (connectivityType) {
             case STRAIGHT_ONLY:
                 if (!isDirectBitArray(matrix.array())) {
                     return new AllBoundaries2D4Scanner(matrix, buffer1, buffer2);
@@ -1558,18 +1559,18 @@ public abstract class Boundary2DScanner {
      * @param matrix           the matrix that will be scanned by the created instance.
      * @param buffer           the buffer matrix for writing "brackets" and filling holes.
      * @param connectivityType the connectivity kind used by the created instance.
-     * @return                 new instance of this class.
+     * @return new instance of this class.
      * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
-    public static Boundary2DScanner getMainBoundariesScanner(Matrix<? extends BitArray> matrix,
-        Matrix<? extends UpdatablePFixedArray> buffer,
-        ConnectivityType connectivityType)
-    {
+    public static Boundary2DScanner getMainBoundariesScanner(
+            Matrix<? extends BitArray> matrix,
+            Matrix<? extends UpdatablePFixedArray> buffer,
+            ConnectivityType connectivityType) {
         if (connectivityType == null)
             throw new NullPointerException("Null connectivityType argument");
-        switch(connectivityType) {
+        switch (connectivityType) {
             case STRAIGHT_ONLY:
                 if (!isDirectBitArray(matrix.array())) {
                     return new MainBoundaries2D4Scanner(matrix, buffer);
@@ -1587,8 +1588,8 @@ public abstract class Boundary2DScanner {
     }
 
     /*Repeat() SingleBoundaryScanner ==> AllBoundariesScanner,,MainBoundariesScanner;;
-               a single boundary ==> an all boundaries,,a main boundaries
-     */
+               a single boundary ==> an all boundaries,,a main boundaries */
+
     /**
      * Returns <tt>true</tt> if and only if this scanner is a single boundary scanner. More precisely,
      * it is <tt>true</tt> if and only if:
@@ -1602,6 +1603,7 @@ public abstract class Boundary2DScanner {
      */
     public abstract boolean isSingleBoundaryScanner();
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
      * Returns <tt>true</tt> if and only if this scanner is an all boundaries scanner. More precisely,
      * it is <tt>true</tt> if and only if:
@@ -1614,6 +1616,7 @@ public abstract class Boundary2DScanner {
      * @return whether this scanner is a an all boundaries scanner.
      */
     public abstract boolean isAllBoundariesScanner();
+
 
     /**
      * Returns <tt>true</tt> if and only if this scanner is a main boundaries scanner. More precisely,
@@ -1681,8 +1684,8 @@ public abstract class Boundary2DScanner {
      * throw <tt>IllegalStateException</tt>.
      *
      * @return <tt>true</tt> if and only if this instance was already positioned by
-     *                       {@link #nextBoundary() nextBoundary} or
-     *                       {@link #goTo goTo} method.
+     * {@link #nextBoundary() nextBoundary} or
+     * {@link #goTo goTo} method.
      */
     public abstract boolean isInitialized();
 
@@ -1696,7 +1699,7 @@ public abstract class Boundary2DScanner {
      * if and only if this method returns <tt>false</tt>.
      *
      * @return <tt>true</tt> if and only {@link #next()} or {@link #scanBoundary(ArrayContext)} methods
-     *         were successfully called after creating this instance.
+     * were successfully called after creating this instance.
      */
     public abstract boolean isMovedAlongBoundary();
 
@@ -1825,12 +1828,11 @@ public abstract class Boundary2DScanner {
      * <tt>{@link #goTo goTo}(scanner.{@link #x() x()}, scanner.{@link #y() y()}, scanner.{@link #side() side()})</tt>.
      *
      * @param scanner some other scanner.
-     * @throws NullPointerException  if <tt>scanner</tt> argument is <tt>null</tt>.
-     * @throws IllegalStateException if the specified <tt>scanner</tt> was not {@link #isInitialized() positioned yet}.
+     * @throws NullPointerException      if <tt>scanner</tt> argument is <tt>null</tt>.
+     * @throws IllegalStateException     if the specified <tt>scanner</tt> was not {@link #isInitialized() positioned yet}.
      * @throws IndexOutOfBoundsException in the same situations as {@link #goTo goTo} method
      *                                   (impossible if the currently scanned matrices of this and passed scanners
      *                                   have identical dimensions).
-     *
      */
     public final void goToSamePosition(Boundary2DScanner scanner) {
         goTo(scanner.x(), scanner.y(), scanner.side());
@@ -2135,10 +2137,10 @@ public abstract class Boundary2DScanner {
     }
 
     /**
-     * Equivalient of {@link #scanBoundary(ArrayContext) scanBoundary(null)}.
+     * Equivalent of {@link #scanBoundary(ArrayContext) scanBoundary(null)}.
      *
      * @return the length of scanned boundary (the number of visited pixel sides,
-     *         not the number of visited pixels!)
+     * not the number of visited pixels!)
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
     public final long scanBoundary() {
@@ -2168,8 +2170,8 @@ public abstract class Boundary2DScanner {
      * iteration per 1&nbsp;ns.</p>
      *
      * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
-     * @return        the length of scanned boundary (the number of visited pixel sides,
-     *                not the number of visited pixels!)
+     * @return the length of scanned boundary (the number of visited pixel sides,
+     * not the number of visited pixels!)
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
     public final long scanBoundary(ArrayContext context) {
@@ -2225,10 +2227,10 @@ public abstract class Boundary2DScanner {
      */
     public String toString() {
         return "2D scanner (" + (!isInitialized() ? "not initialized yet" :
-            "x = " + x() + ", y = " + y() + ", side = " + side()
-                + (!isMovedAlongBoundary() ? "" : ", last step: " + lastStep())
-                + (nestingLevel() == 0 ? "" : ", nesting level = " + nestingLevel()))
-            + (connectivityType() == ConnectivityType.STRAIGHT_ONLY ? "; 4" : "; 8") + "-connectivity)";
+                "x = " + x() + ", y = " + y() + ", side = " + side()
+                        + (!isMovedAlongBoundary() ? "" : ", last step: " + lastStep())
+                        + (nestingLevel() == 0 ? "" : ", nesting level = " + nestingLevel()))
+                + (connectivityType() == ConnectivityType.STRAIGHT_ONLY ? "; 4" : "; 8") + "-connectivity)";
     }
 
 
@@ -2311,14 +2313,15 @@ public abstract class Boundary2DScanner {
 
         @Override
         public void goTo(long x, long y, Side side) {
-            if (x < 0 || x >= dimX)
+            if (x < 0 || x >= dimX) {
                 throw new IndexOutOfBoundsException("Index x (" + x
-                    + (x < 0 ? ") < 0" : ") >= dim(0) (" + dimX + ")"));
-            if (y < 0 || y >= dimY)
+                        + (x < 0 ? ") < 0" : ") >= dim(0) (" + dimX + ")"));
+            }
+            if (y < 0 || y >= dimY) {
                 throw new IndexOutOfBoundsException("Index y (" + y
-                    + (y < 0 ? ") < 0" : ") >= dim(1) (" + dimY + ")"));
-            if (side == null)
-                throw new NullPointerException("Null side argument");
+                        + (y < 0 ? ") < 0" : ") >= dim(1) (" + dimY + ")"));
+            }
+            Objects.requireNonNull(side, "Null side argument");
             this.x = this.startX = x;
             this.y = this.startY = y;
             this.mover = this.startMover = movers[side.ordinal()];
@@ -2386,6 +2389,7 @@ public abstract class Boundary2DScanner {
             final Step shift;
             final boolean coordinatesChanged;
             final AbstractMover newMover;
+
             ShiftInfo(Step shift, AbstractMover newMover) {
                 this.shift = shift;
                 this.coordinatesChanged = !shift.samePixel;
@@ -2399,7 +2403,7 @@ public abstract class Boundary2DScanner {
 
             AbstractAccessor(PFixedArray array) {
                 this.array = array;
-                this.updatableArray = array instanceof UpdatablePFixedArray ? (UpdatablePFixedArray)array : null;
+                this.updatableArray = array instanceof UpdatablePFixedArray ? (UpdatablePFixedArray) array : null;
             }
 
             abstract boolean get();
@@ -2535,6 +2539,7 @@ public abstract class Boundary2DScanner {
             final void setHorizontalBracket(AbstractAccessor accessor) {
             }
         }
+
         abstract class AbstractMoverXP extends AbstractMover {
             final boolean atMatrixBound() {
                 return y == maxY;
@@ -2567,6 +2572,7 @@ public abstract class Boundary2DScanner {
     static abstract class SingleBoundary2DScanner extends AbstractBoundary2DScanner {
         private long index = 0;
         private long startIndex = 0;
+
         SingleBoundary2DScanner(Matrix<? extends BitArray> matrix) {
             super(matrix);
         }
@@ -2617,19 +2623,23 @@ public abstract class Boundary2DScanner {
         final AbstractMover getMoverXM() {
             return new MoverXM();
         }
+
         //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
         @Override
         final AbstractMover getMoverYM() {
             return new MoverYM();
         }
+
         @Override
         final AbstractMover getMoverXP() {
             return new MoverXP();
         }
+
         @Override
         final AbstractMover getMoverYP() {
             return new MoverYP();
         }
+
         //[[Repeat.AutoGeneratedEnd]]
 
         class Accessor extends AbstractAccessor {
@@ -2731,6 +2741,7 @@ public abstract class Boundary2DScanner {
                 index--;
             }
         }
+
         class MoverXP extends AbstractMoverXP {
             boolean straight() {
                 y++;
@@ -2861,7 +2872,7 @@ public abstract class Boundary2DScanner {
             buf.map(0);
             this.ja = buf.data();
             this.jaOfs = buf.from();
-            this.jaDisp = (int)(jaOfs >>> 6);
+            this.jaDisp = (int) (jaOfs >>> 6);
             this.jaMask = 1L << (jaOfs & 63);
         }
 
@@ -2889,7 +2900,7 @@ public abstract class Boundary2DScanner {
         public void goTo(long x, long y, Side side) {
             super.goTo(x, y, side);
             this.index = y * dimX + x;
-            this.jaDisp = (int)((jaOfs + index) >>> 6);
+            this.jaDisp = (int) ((jaOfs + index) >>> 6);
             this.jaMask = 1L << ((jaOfs + index) & 63);
         }
 
@@ -2907,13 +2918,13 @@ public abstract class Boundary2DScanner {
             if (this.ja != null) {
                 PFixedArray array = matrix.array();
                 if (array instanceof BitArray && SimpleMemoryModel.isSimpleArray(array)) {
-                    DataBitBuffer buf = ((BitArray)array).buffer(DataBuffer.AccessMode.READ, 16);
+                    DataBitBuffer buf = ((BitArray) array).buffer(DataBuffer.AccessMode.READ, 16);
                     if (buf.isDirect()) {
                         buf.map(0);
                         long[] mja = buf.data();
                         long mjaOfs = buf.from();
                         if (mja != null && mjaOfs == this.jaOfs) {
-                            return new DirectAccessor((BitArray)array);
+                            return new DirectAccessor((BitArray) array);
                         }
                     }
                 }
@@ -2926,19 +2937,23 @@ public abstract class Boundary2DScanner {
         final AbstractMover getMoverXM() {
             return (dimX & 63) == 0 ? new Direct64MoverXM() : new DirectMoverXM();
         }
+
         //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
         @Override
         final AbstractMover getMoverYM() {
             return (dimX & 63) == 0 ? new Direct64MoverYM() : new DirectMoverYM();
         }
+
         @Override
         final AbstractMover getMoverXP() {
             return (dimX & 63) == 0 ? new Direct64MoverXP() : new DirectMoverXP();
         }
+
         @Override
         final AbstractMover getMoverYP() {
             return (dimX & 63) == 0 ? new Direct64MoverYP() : new DirectMoverYP();
         }
+
         //[[Repeat.AutoGeneratedEnd]]
 
 
@@ -2970,6 +2985,7 @@ public abstract class Boundary2DScanner {
 
         class DirectAccessor extends AbstractAccessor {
             final long[] ja;
+
             DirectAccessor(BitArray array) {
                 super(array);
                 if (!SimpleMemoryModel.isSimpleArray(array))
@@ -3020,7 +3036,7 @@ public abstract class Boundary2DScanner {
             boolean straight() {
                 y--;
                 index -= dimX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
                 return (ja[jaDisp] & jaMask) != 0;
             }
@@ -3048,7 +3064,7 @@ public abstract class Boundary2DScanner {
                 y--;
                 x--;
                 index -= dimX + 1;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
                 return x >= 0 && (ja[jaDisp] & jaMask) != 0;
             }
@@ -3066,7 +3082,7 @@ public abstract class Boundary2DScanner {
             void straightBack() {
                 y++;
                 index += dimX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
             }
         }
@@ -3085,7 +3101,7 @@ public abstract class Boundary2DScanner {
             boolean rightAfterStraight() {
                 y--;
                 index -= dimX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
                 return y >= 0 && (ja[jaDisp] & jaMask) != 0;
             }
@@ -3093,7 +3109,7 @@ public abstract class Boundary2DScanner {
             void straightBackLeft() {
                 y++;
                 index += dimX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
             }
 
@@ -3101,7 +3117,7 @@ public abstract class Boundary2DScanner {
                 y--;
                 x++;
                 index -= maxX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
                 return y >= 0 && (ja[jaDisp] & jaMask) != 0;
             }
@@ -3109,7 +3125,7 @@ public abstract class Boundary2DScanner {
             boolean leftAfterDiag() {
                 y++;
                 index += dimX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
                 return (ja[jaDisp] & jaMask) != 0;
             }
@@ -3128,7 +3144,7 @@ public abstract class Boundary2DScanner {
             boolean straight() {
                 y++;
                 index += dimX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
                 return (ja[jaDisp] & jaMask) != 0;
             }
@@ -3156,7 +3172,7 @@ public abstract class Boundary2DScanner {
                 y++;
                 x++;
                 index += dimX + 1;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
                 return x < dimX && (ja[jaDisp] & jaMask) != 0;
             }
@@ -3174,7 +3190,7 @@ public abstract class Boundary2DScanner {
             void straightBack() {
                 y--;
                 index -= dimX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
             }
         }
@@ -3193,7 +3209,7 @@ public abstract class Boundary2DScanner {
             boolean rightAfterStraight() {
                 y++;
                 index += dimX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
                 return y < dimY && (ja[jaDisp] & jaMask) != 0;
             }
@@ -3201,7 +3217,7 @@ public abstract class Boundary2DScanner {
             void straightBackLeft() {
                 y--;
                 index -= dimX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
             }
 
@@ -3209,7 +3225,7 @@ public abstract class Boundary2DScanner {
                 y++;
                 x--;
                 index += maxX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
                 return y < dimY && (ja[jaDisp] & jaMask) != 0;
             }
@@ -3217,7 +3233,7 @@ public abstract class Boundary2DScanner {
             boolean leftAfterDiag() {
                 y--;
                 index -= dimX;
-                jaDisp = (int)((jaOfs + index) >>> 6);
+                jaDisp = (int) ((jaOfs + index) >>> 6);
                 jaMask = 1L << ((jaOfs + index) & 63);
                 return (ja[jaDisp] & jaMask) != 0;
             }
@@ -3233,7 +3249,8 @@ public abstract class Boundary2DScanner {
         }
 
         class Direct64MoverXM extends AbstractMoverXM {
-            final int jaStep = (int)(dimX >>> 6);
+            final int jaStep = (int) (dimX >>> 6);
+
             boolean straight() {
                 y--;
                 jaDisp -= jaStep;
@@ -3318,7 +3335,8 @@ public abstract class Boundary2DScanner {
         }
 
         class Direct64MoverYM extends AbstractMoverYM {
-            final int jaStep = (int)(dimX >>> 6);
+            final int jaStep = (int) (dimX >>> 6);
+
             boolean straight() {
                 x++;
                 index++;
@@ -3399,7 +3417,8 @@ public abstract class Boundary2DScanner {
         }
 
         class Direct64MoverXP extends AbstractMoverXP {
-            final int jaStep = (int)(dimX >>> 6);
+            final int jaStep = (int) (dimX >>> 6);
+
             boolean straight() {
                 y++;
                 jaDisp += jaStep;
@@ -3483,7 +3502,8 @@ public abstract class Boundary2DScanner {
         }
 
         class Direct64MoverYP extends AbstractMoverYP {
-            final int jaStep = (int)(dimX >>> 6);
+            final int jaStep = (int) (dimX >>> 6);
+
             boolean straight() {
                 x--;
                 index--;
@@ -3611,10 +3631,10 @@ public abstract class Boundary2DScanner {
         private final AbstractAccessor bufferAccessor1, bufferAccessor2;
         private AbstractAccessor bufferAccessor = null;
 
-        private AllBoundaries2D4Scanner(Matrix<? extends BitArray> matrix,
-            Matrix<? extends UpdatablePFixedArray> buffer1,
-            Matrix<? extends UpdatablePFixedArray> buffer2)
-        {
+        private AllBoundaries2D4Scanner(
+                Matrix<? extends BitArray> matrix,
+                Matrix<? extends UpdatablePFixedArray> buffer1,
+                Matrix<? extends UpdatablePFixedArray> buffer2) {
             super(matrix);
             if (buffer1 == null)
                 throw new NullPointerException("Null buffer1 argument");
@@ -3622,10 +3642,10 @@ public abstract class Boundary2DScanner {
                 throw new NullPointerException("Null buffer2 argument");
             if (!buffer1.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer1 dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer1);
+                        + matrix + ", buffer is " + buffer1);
             if (!buffer2.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer2 dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer2);
+                        + matrix + ", buffer is " + buffer2);
             this.bufferAccessor1 = getAccessor(buffer1);
             this.bufferAccessor2 = getAccessor(buffer2);
             this.bufferAccessor = this.bufferAccessor1;
@@ -3669,15 +3689,16 @@ public abstract class Boundary2DScanner {
             return "all boundaries " + super.toString();
         }
     }
+
     //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
     static class AllBoundaries2D8Scanner extends SingleBoundary2D8Scanner {
         private final AbstractAccessor bufferAccessor1, bufferAccessor2;
         private AbstractAccessor bufferAccessor = null;
 
-        private AllBoundaries2D8Scanner(Matrix<? extends BitArray> matrix,
-            Matrix<? extends UpdatablePFixedArray> buffer1,
-            Matrix<? extends UpdatablePFixedArray> buffer2)
-        {
+        private AllBoundaries2D8Scanner(
+                Matrix<? extends BitArray> matrix,
+                Matrix<? extends UpdatablePFixedArray> buffer1,
+                Matrix<? extends UpdatablePFixedArray> buffer2) {
             super(matrix);
             if (buffer1 == null)
                 throw new NullPointerException("Null buffer1 argument");
@@ -3685,10 +3706,10 @@ public abstract class Boundary2DScanner {
                 throw new NullPointerException("Null buffer2 argument");
             if (!buffer1.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer1 dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer1);
+                        + matrix + ", buffer is " + buffer1);
             if (!buffer2.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer2 dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer2);
+                        + matrix + ", buffer is " + buffer2);
             this.bufferAccessor1 = getAccessor(buffer1);
             this.bufferAccessor2 = getAccessor(buffer2);
             this.bufferAccessor = this.bufferAccessor1;
@@ -3732,14 +3753,15 @@ public abstract class Boundary2DScanner {
             return "all boundaries " + super.toString();
         }
     }
+
     static class DirectAllBoundaries2D4Scanner extends DirectSingleBoundary2D4Scanner {
         private final AbstractAccessor bufferAccessor1, bufferAccessor2;
         private AbstractAccessor bufferAccessor = null;
 
-        private DirectAllBoundaries2D4Scanner(Matrix<? extends BitArray> matrix,
-            Matrix<? extends UpdatablePFixedArray> buffer1,
-            Matrix<? extends UpdatablePFixedArray> buffer2)
-        {
+        private DirectAllBoundaries2D4Scanner(
+                Matrix<? extends BitArray> matrix,
+                Matrix<? extends UpdatablePFixedArray> buffer1,
+                Matrix<? extends UpdatablePFixedArray> buffer2) {
             super(matrix);
             if (buffer1 == null)
                 throw new NullPointerException("Null buffer1 argument");
@@ -3747,10 +3769,10 @@ public abstract class Boundary2DScanner {
                 throw new NullPointerException("Null buffer2 argument");
             if (!buffer1.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer1 dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer1);
+                        + matrix + ", buffer is " + buffer1);
             if (!buffer2.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer2 dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer2);
+                        + matrix + ", buffer is " + buffer2);
             this.bufferAccessor1 = getAccessor(buffer1);
             this.bufferAccessor2 = getAccessor(buffer2);
             this.bufferAccessor = this.bufferAccessor1;
@@ -3794,14 +3816,15 @@ public abstract class Boundary2DScanner {
             return "all boundaries " + super.toString();
         }
     }
+
     static class DirectAllBoundaries2D8Scanner extends DirectSingleBoundary2D8Scanner {
         private final AbstractAccessor bufferAccessor1, bufferAccessor2;
         private AbstractAccessor bufferAccessor = null;
 
-        private DirectAllBoundaries2D8Scanner(Matrix<? extends BitArray> matrix,
-            Matrix<? extends UpdatablePFixedArray> buffer1,
-            Matrix<? extends UpdatablePFixedArray> buffer2)
-        {
+        private DirectAllBoundaries2D8Scanner(
+                Matrix<? extends BitArray> matrix,
+                Matrix<? extends UpdatablePFixedArray> buffer1,
+                Matrix<? extends UpdatablePFixedArray> buffer2) {
             super(matrix);
             if (buffer1 == null)
                 throw new NullPointerException("Null buffer1 argument");
@@ -3809,10 +3832,10 @@ public abstract class Boundary2DScanner {
                 throw new NullPointerException("Null buffer2 argument");
             if (!buffer1.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer1 dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer1);
+                        + matrix + ", buffer is " + buffer1);
             if (!buffer2.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer2 dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer2);
+                        + matrix + ", buffer is " + buffer2);
             this.bufferAccessor1 = getAccessor(buffer1);
             this.bufferAccessor2 = getAccessor(buffer2);
             this.bufferAccessor = this.bufferAccessor1;
@@ -3856,6 +3879,7 @@ public abstract class Boundary2DScanner {
             return "all boundaries " + super.toString();
         }
     }
+
     //[[Repeat.AutoGeneratedEnd]]
 
     //[[Repeat() SingleBoundary2D4Scanner ==> SingleBoundary2D8Scanner,,
@@ -3867,15 +3891,15 @@ public abstract class Boundary2DScanner {
         private final AbstractAccessor bufferAccessor;
         private final UpdatablePFixedArray bufferArray;
 
-        private MainBoundaries2D4Scanner(Matrix<? extends BitArray> matrix,
-            Matrix<? extends UpdatablePFixedArray> buffer)
-        {
+        private MainBoundaries2D4Scanner(
+                Matrix<? extends BitArray> matrix,
+                Matrix<? extends UpdatablePFixedArray> buffer) {
             super(matrix);
             if (buffer == null)
                 throw new NullPointerException("Null buffer argument");
             if (!buffer.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer);
+                        + matrix + ", buffer is " + buffer);
             this.bufferAccessor = getAccessor(buffer);
             this.bufferArray = buffer.array();
         }
@@ -3913,20 +3937,21 @@ public abstract class Boundary2DScanner {
             return "main boundaries " + super.toString();
         }
     }
+
     //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
     static class MainBoundaries2D8Scanner extends SingleBoundary2D8Scanner {
         private final AbstractAccessor bufferAccessor;
         private final UpdatablePFixedArray bufferArray;
 
-        private MainBoundaries2D8Scanner(Matrix<? extends BitArray> matrix,
-            Matrix<? extends UpdatablePFixedArray> buffer)
-        {
+        private MainBoundaries2D8Scanner(
+                Matrix<? extends BitArray> matrix,
+                Matrix<? extends UpdatablePFixedArray> buffer) {
             super(matrix);
             if (buffer == null)
                 throw new NullPointerException("Null buffer argument");
             if (!buffer.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer);
+                        + matrix + ", buffer is " + buffer);
             this.bufferAccessor = getAccessor(buffer);
             this.bufferArray = buffer.array();
         }
@@ -3964,19 +3989,20 @@ public abstract class Boundary2DScanner {
             return "main boundaries " + super.toString();
         }
     }
+
     static class DirectMainBoundaries2D4Scanner extends DirectSingleBoundary2D4Scanner {
         private final AbstractAccessor bufferAccessor;
         private final UpdatablePFixedArray bufferArray;
 
-        private DirectMainBoundaries2D4Scanner(Matrix<? extends BitArray> matrix,
-            Matrix<? extends UpdatablePFixedArray> buffer)
-        {
+        private DirectMainBoundaries2D4Scanner(
+                Matrix<? extends BitArray> matrix,
+                Matrix<? extends UpdatablePFixedArray> buffer) {
             super(matrix);
             if (buffer == null)
                 throw new NullPointerException("Null buffer argument");
             if (!buffer.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer);
+                        + matrix + ", buffer is " + buffer);
             this.bufferAccessor = getAccessor(buffer);
             this.bufferArray = buffer.array();
         }
@@ -4014,19 +4040,20 @@ public abstract class Boundary2DScanner {
             return "main boundaries " + super.toString();
         }
     }
+
     static class DirectMainBoundaries2D8Scanner extends DirectSingleBoundary2D8Scanner {
         private final AbstractAccessor bufferAccessor;
         private final UpdatablePFixedArray bufferArray;
 
-        private DirectMainBoundaries2D8Scanner(Matrix<? extends BitArray> matrix,
-            Matrix<? extends UpdatablePFixedArray> buffer)
-        {
+        private DirectMainBoundaries2D8Scanner(
+                Matrix<? extends BitArray> matrix,
+                Matrix<? extends UpdatablePFixedArray> buffer) {
             super(matrix);
             if (buffer == null)
                 throw new NullPointerException("Null buffer argument");
             if (!buffer.dimEquals(matrix))
                 throw new SizeMismatchException("matrix and buffer dimensions mismatch: matrix is "
-                    + matrix + ", buffer is " + buffer);
+                        + matrix + ", buffer is " + buffer);
             this.bufferAccessor = getAccessor(buffer);
             this.bufferArray = buffer.array();
         }
@@ -4064,6 +4091,7 @@ public abstract class Boundary2DScanner {
             return "main boundaries " + super.toString();
         }
     }
+
     //[[Repeat.AutoGeneratedEnd]]
 
     static boolean nextSingleBoundary(AbstractBoundary2DScanner scanner) {
@@ -4108,12 +4136,12 @@ public abstract class Boundary2DScanner {
         }
     }
 
-    static AbstractBoundary2DScanner.AbstractAccessor nextAnyBoundary(AbstractBoundary2DScanner scanner,
-        AbstractBoundary2DScanner.AbstractAccessor bufferAccessor1,
-        AbstractBoundary2DScanner.AbstractAccessor bufferAccessor2)
-    {
+    static AbstractBoundary2DScanner.AbstractAccessor nextAnyBoundary(
+            AbstractBoundary2DScanner scanner,
+            AbstractBoundary2DScanner.AbstractAccessor bufferAccessor1,
+            AbstractBoundary2DScanner.AbstractAccessor bufferAccessor2) {
         boundariesLoop:
-        for (; ;) {
+        for (; ; ) {
             if (!nextSingleBoundary(scanner)) {
                 return null;
             }

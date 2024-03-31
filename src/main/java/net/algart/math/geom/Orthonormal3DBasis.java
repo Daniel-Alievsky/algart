@@ -1,0 +1,738 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2007-2018 Daniel Alievsky, AlgART Laboratory (http://algart.net)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package net.algart.math.geom;
+
+import java.util.Objects;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * <p>Right orthonormal basis in 3D space: 3 orthogonal unit vectors <b>i</b>, <b>j</b>, <b>k</b>.</p>
+ *
+ * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
+ * there are no ways to modify settings of the created instance.</p>
+ *
+ * @author Daniel Alievsky
+ */
+public final class Orthonormal3DBasis {
+    /**
+     * Two vectors are considered to be "almost collinear", if the sine of the angle between them
+     * is less or about {@link #COLLINEARITY_EPSILON}.
+     */
+    public static final double COLLINEARITY_EPSILON = 1e-7;
+    /**
+     * The square of {@link #COLLINEARITY_EPSILON}.
+     */
+    public static final double COLLINEARITY_EPSILON_SQR = COLLINEARITY_EPSILON * COLLINEARITY_EPSILON;
+
+    private static final int REVIVING_COUNT = 32;
+    // - must be not too big: every rotation can replace |r| to |r|^2, so 50-100 iteration can lead to overflow
+
+    /**
+     * Minimal allowed length of the vectors (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) and
+     * (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>), passed to creation methods
+     * {@link #getBasis(double, double, double, double, double, double, boolean)},
+     * {@link #getSomeBasis(double, double, double)}.
+     */
+    public static final double MIN_ALLOWED_LENGTH = 1e-100;
+
+    private static final AtomicInteger globalCallCount = new AtomicInteger();
+
+    /**
+     * Default basis: I=(1,0,0), J=(0,1,0), K=(0,0,1).
+     */
+    public static final Orthonormal3DBasis DEFAULT =
+            new Orthonormal3DBasis(1, 0, 0, 0, 1, 0, 0, 0, 1, 0);
+
+    private final double ix, iy, iz, jx, jy, jz, kx, ky, kz;
+    private final int counter;
+
+    private Orthonormal3DBasis(
+            double ix, double iy, double iz,
+            double jx, double jy, double jz,
+            double kx, double ky, double kz,
+            int counter) {
+        if ((globalCallCount.incrementAndGet() & 0x3FF) == 0) {
+            final double iSqr = ix * ix + iy * iy + iz * iz;
+            final double jSqr = jx * jx + jy * jy + jz * jz;
+            final double kSqr = kx * kx + ky * ky + kz * kz;
+            final double ij = ix * jx + iy * jy + iz * jz;
+            final double ik = ix * kx + iy * ky + iz * kz;
+            final double jk = jx * kx + jy * ky + jz * kz;
+//System.out.println("|I|=" + Math.sqrt(iSqr) + ", |J|=" + Math.sqrt(jSqr) + ", |K|=" + Math.sqrt(kSqr)
+//+ "; IJ=" + ij + ", IK=" + ik + ", JK=" + jk + " I=(" + ix + "," + iy + "," + iz
+//+ "),J=(" + jx + "," + jy + "," +jz
+//+ "),K=(" + kx + "," + ky + "," + kz + ")");
+            if (iSqr < 0.98 || iSqr > 1.02)
+                throw new AssertionError("Internal error! |I| == " + Math.sqrt(iSqr) + " != 1.0");
+            if (jSqr < 0.98 || jSqr > 1.02)
+                throw new AssertionError("Internal error! |J| == " + Math.sqrt(jSqr) + " != 1.0");
+            if (ij < -0.02 || ij > 0.02)
+                throw new AssertionError("Internal error! IJ == " + ij + " != 0.0");
+            if (kSqr < 0.9 || kSqr > 1.1)
+                throw new AssertionError("Internal error! |K| == " + Math.sqrt(kSqr) + " != 1.0");
+            if (ik < -0.1 || ik > 0.1)
+                throw new AssertionError("Internal error! IK == " + ik + " != 0.0");
+            if (jk < -0.1 || jk > 0.1)
+                throw new AssertionError("Internal error! JK == " + jk + " != 0.0");
+        }
+        this.ix = ix;
+        this.iy = iy;
+        this.iz = iz;
+        this.jx = jx;
+        this.jy = jy;
+        this.jz = jz;
+        this.kx = kx;
+        this.ky = ky;
+        this.kz = kz;
+        this.counter = counter;
+    }
+
+    private Orthonormal3DBasis(double ix, double iy, double iz, double jx, double jy, double jz, int counter) {
+        this(ix, iy, iz, jx, jy, jz,
+                iy * jz - iz * jy,
+                iz * jx - ix * jz,
+                ix * jy - iy * jx,
+                counter);
+        // vector K = [IJ]
+    }
+
+    /**
+     * Creates new basis, where <b>i</b> vector has components (<tt>ix</tt>/d, <tt>iy</tt>/d, <tt>iz</tt>/d),
+     * d=<tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>). Other vectors <b>j</b> and <b>k</b>
+     * will have some values, depending on the implementation.
+     *
+     * @param ix <i>x</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
+     * @param iy <i>y</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
+     * @param iz <i>z</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
+     * @return new right orthonormal basis with given direction of <b>i</b> vector.
+     * @throws IllegalArgumentException if the length <tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
+     *                                  of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) is zero or
+     *                                  too small (&lt; {@link #MIN_ALLOWED_LENGTH}).
+     */
+    public static Orthonormal3DBasis getSomeBasis(double ix, double iy, double iz) {
+        final double xAbs = ix >= 0.0 ? ix : -ix;
+        final double yAbs = iy >= 0.0 ? iy : -iy;
+        final double zAbs = iz >= 0.0 ? iz : -iz;
+        if (yAbs < zAbs) {
+            if (xAbs < yAbs) {
+                // So, normalized vector I=(ix,iy,iz)/sqrt(ix^2+iy^2+iz^2) is in sectors 45 degree
+                // around axes Y and Z, strongly not collinear with (1,0,0):
+                // CollinearityException in the following getInstance is impossible
+                return getBasis(ix, iy, iz, 1.0, 0.0, 0.0, true);
+            } else {
+                // and so on...
+                return getBasis(ix, iy, iz, 0.0, 1.0, 0.0, true);
+            }
+        } else {
+            if (xAbs < zAbs) {
+                return getBasis(ix, iy, iz, 1.0, 0.0, 0.0, true);
+            } else {
+                return getBasis(ix, iy, iz, 0.0, 0.0, 1.0, true);
+            }
+        }
+    }
+
+    /**
+     * Creates new basis, where <b>i</b> vector has components
+     * (<tt>ix</tt>/d<sub>1</sub>, <tt>iy</tt>/d<sub>1</sub>, <tt>iz</tt>/d<sub>1</sub>),
+     * d<sub>1</sub>=<tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>),
+     * <b>j</b> vector has components (<tt>jx</tt>/d<sub>2</sub>, <tt>jy</tt>/d<sub>2</sub>, <tt>jz</tt>/d<sub>2</sub>),
+     * d<sub>2</sub>=<tt>sqrt</tt>(jx<sup>2</sup>+jy<sup>2</sup>+jz<sup>2</sup>),
+     * <b>k</b> vector is chosen automatically to provide right orthonormal basis.
+     *
+     * <p>If the passed vectors (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) and (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>)
+     * are not orthogonal, the vector (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>) is automatically corrected,
+     * before all other calculations, to become orthogonal to <b>i</b>, and the plane <b>ij</b> is preserved
+     * while this correction.
+     *
+     * <p>If the passed vectors are collinear or almost collinear (with very little angle difference,
+     * about 10<sup>&minus;8</sup>..10<sup>&minus;6</sup> radians or something like this), then
+     * behaviour depends on the argument <tt>exceptionOnCollinearity</tt>. If it is <tt>true</tt>,
+     * the method throws {@link CollinearityException}. In other case, the method ignores the passed
+     * vector (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>) and returns some basis according the passed vector
+     * (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>), like {@link #getSomeBasis(double, double, double)} method.
+     *
+     * @param ix                      <i>x</i>-component of new <b>i</b> vector
+     *                                (maybe, multiplied by some <i>d</i><sub>1</sub> constant).
+     * @param iy                      <i>y</i>-component of new <b>i</b> vector
+     *                                (maybe, multiplied by some <i>d</i><sub>1</sub> constant).
+     * @param iz                      <i>z</i>-component of new <b>i</b> vector
+     *                                (maybe, multiplied by some <i>d</i><sub>1</sub> constant).
+     * @param jx                      <i>x</i>-component of new <b>j</b> vector
+     *                                (maybe, multiplied by some <i>d</i><sub>2</sub> constant).
+     * @param jy                      <i>y</i>-component of new <b>j</b> vector
+     *                                (maybe, multiplied by some <i>d</i><sub>2</sub> constant).
+     * @param jz                      <i>z</i>-component of new <b>j</b> vector
+     *                                (maybe, multiplied by some <i>d</i><sub>2</sub> constant).
+     * @param exceptionOnCollinearity whether exception is thrown for collinear vector pair.
+     * @return new right orthonormal basis with given direction of <b>i</b> vector
+     * and the direction of <b>j</b> vector, chosen according the arguments (see above).
+     * @throws IllegalArgumentException if the length <tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
+     *                                  of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) or
+     *                                  the length <tt>sqrt</tt>(jx<sup>2</sup>+jy<sup>2</sup>+jz<sup>2</sup>)
+     *                                  of the passed vector (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>)
+     *                                  is zero or too small (&lt; {@link #MIN_ALLOWED_LENGTH}).
+     * @throws CollinearityException    if the passed two vectors are almost collinear and
+     *                                  <tt>exceptionOnCollinearity==true</tt>.
+     */
+    public static Orthonormal3DBasis getBasis(
+            final double ix, final double iy, final double iz,
+            final double jx, final double jy, final double jz,
+            final boolean exceptionOnCollinearity)
+            throws CollinearityException {
+        final double lengthI = length(ix, iy, iz);
+        if (lengthI < MIN_ALLOWED_LENGTH) {
+            throw new IllegalArgumentException("Zero or too short I vector (" + ix + ", " + iy + ", " + iz + ")"
+                    + " (vectors with length <" + MIN_ALLOWED_LENGTH + " are not allowed)");
+        }
+        final double lengthJ = length(jx, jy, jz);
+        if (lengthJ < MIN_ALLOWED_LENGTH) {
+            throw new IllegalArgumentException("Zero or too short J vector (" + jx + ", " + jy + ", " + jz + ")"
+                    + " (vectors with length <" + MIN_ALLOWED_LENGTH + " are not allowed)");
+        }
+        double mult = 1.0 / lengthI;
+        final double newIx = ix * mult;
+        final double newIy = iy * mult;
+        final double newIz = iz * mult;
+        mult = 1.0 / lengthJ;
+        double newJx = jx * mult;
+        double newJy = jy * mult;
+        double newJz = jz * mult;
+        final double ij = newIx * newJx + newIy * newJy + newIz * newJz;
+        if (ij != 0.0) {
+            newJx -= newIx * ij;
+            newJy -= newIy * ij;
+            newJz -= newIz * ij; // correct if (ij)!=0: J = J-I(ij)
+            final double correctedLengthJ = length(newJx, newJy, newJz);
+            if (correctedLengthJ < COLLINEARITY_EPSILON) {
+                if (exceptionOnCollinearity) {
+                    throw new CollinearityException("Passed I vector (" + ix + ", " + iy + ", " + iz + ") and "
+                            + "J vector (" + jx + ", " + jy + ", " + jz + ") are collinear or almost collinear");
+                } else {
+                    return getSomeBasis(ix, iy, iz);
+                }
+            }
+            mult = 1.0 / correctedLengthJ;
+            newJx *= mult;
+            newJy *= mult;
+            newJz *= mult; // correct again
+        }
+        return new Orthonormal3DBasis(newIx, newIy, newIz, newJx, newJy, newJz, 0);
+    }
+
+    /**
+     * Analogue of {@link #getBasis(double, double, double, double, double, double, boolean)
+     * getBasis(ix, iy, iz, jx, jy, jz, true}}, but instead of throwing exceptions this method
+     * just returns <tt>null</tt>.
+     * <p>In other words, this method returns <tt>null</tt> when
+     * the length <tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
+     * of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) or
+     * the length <tt>sqrt</tt>(jx<sup>2</sup>+jy<sup>2</sup>+jz<sup>2</sup>)
+     * of the passed vector (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>)
+     * is zero or too small (&lt; {@link #MIN_ALLOWED_LENGTH}),
+     * and also this method returns <tt>null</tt> when
+     * the passed two vectors are almost collinear.
+     * In all other cases, this method is equivalent
+     * to {@link #getBasis(double, double, double, double, double, double, boolean)}.
+     * This method <i>never</i> throws any exceptions.
+     *
+     * @param ix <i>x</i>-component of new <b>i</b> vector
+     *           (maybe, multiplied by some <i>d</i><sub>1</sub> constant).
+     * @param iy <i>y</i>-component of new <b>i</b> vector
+     *           (maybe, multiplied by some <i>d</i><sub>1</sub> constant).
+     * @param iz <i>z</i>-component of new <b>i</b> vector
+     *           (maybe, multiplied by some <i>d</i><sub>1</sub> constant).
+     * @param jx <i>x</i>-component of new <b>j</b> vector
+     *           (maybe, multiplied by some <i>d</i><sub>2</sub> constant).
+     * @param jy <i>y</i>-component of new <b>j</b> vector
+     *           (maybe, multiplied by some <i>d</i><sub>2</sub> constant).
+     * @param jz <i>z</i>-component of new <b>j</b> vector
+     *           (maybe, multiplied by some <i>d</i><sub>2</sub> constant).
+     * @return new right orthonormal basis with given direction of <b>i</b> vector
+     * and the direction of <b>j</b> vector, chosen according the arguments
+     * (see {@link #getBasis(double, double, double, double, double, double, boolean)}).
+     */
+    public static Orthonormal3DBasis getBasisOrNull(
+            final double ix, final double iy, final double iz,
+            final double jx, final double jy, final double jz) {
+        final double lengthI = length(ix, iy, iz);
+        if (lengthI < MIN_ALLOWED_LENGTH) {
+            return null;
+        }
+        final double lengthJ = length(jx, jy, jz);
+        if (lengthJ < MIN_ALLOWED_LENGTH) {
+            return null;
+        }
+        double mult = 1.0 / lengthI;
+        final double newIx = ix * mult;
+        final double newIy = iy * mult;
+        final double newIz = iz * mult;
+        mult = 1.0 / lengthJ;
+        double newJx = jx * mult;
+        double newJy = jy * mult;
+        double newJz = jz * mult;
+        final double ij = newIx * newJx + newIy * newJy + newIz * newJz;
+        if (ij != 0.0) {
+            newJx -= newIx * ij;
+            newJy -= newIy * ij;
+            newJz -= newIz * ij; // correct if (ij)!=0: J = J-I(ij)
+            final double correctedLengthJ = length(newJx, newJy, newJz);
+            if (correctedLengthJ < COLLINEARITY_EPSILON) {
+                return null;
+            }
+            mult = 1.0 / correctedLengthJ;
+            newJx *= mult;
+            newJy *= mult;
+            newJz *= mult; // correct again
+        }
+        return new Orthonormal3DBasis(newIx, newIy, newIz, newJx, newJy, newJz, 0);
+    }
+
+
+    /**
+     * Creates a pseudorandom basis, which orientation is uniformly distributed in the space.
+     * The orientation is chosen with help of <tt>random.nextDouble()</tt> method.
+     *
+     * @param random random generator used to create the basis.
+     * @return new right orthonormal basis with random orientation.
+     */
+    public static Orthonormal3DBasis getRandomBasis(Random random) {
+        for (; ; ) {
+            final double ix = 2 * random.nextDouble() - 1.0;
+            final double iy = 2 * random.nextDouble() - 1.0;
+            final double iz = 2 * random.nextDouble() - 1.0;
+            final double distanceSqr = ix * ix + iy * iy + iz * iz;
+            if (distanceSqr >= 0.01 && distanceSqr < 1.0) {
+                // Note: the second check is necessary to provide uniform distribution in a sphere (not in a cube).
+                return getRandomBasis(random, ix, iy, iz);
+            }
+        }
+    }
+
+    /**
+     * Creates a pseudorandom basis, where <b>i</b> vector has components (<tt>ix</tt>/d, <tt>iy</tt>/d, <tt>iz</tt>/d),
+     * d=<tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>).
+     * Directions of vector pair <b>j</b>, <b>k</b> are uniformly distributed in the plane, perpendicular to
+     * <b>i</b> vector. These directions are chosen with help of <tt>random.nextDouble()</tt> method.
+     *
+     * @param ix     <i>x</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
+     * @param iy     <i>y</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
+     * @param iz     <i>z</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
+     * @param random random generator used to create the basis.
+     * @return new randomly oriented right orthonormal basis with given direction of <b>i</b> vector.
+     * @throws IllegalArgumentException if the length <tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
+     *                                  of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) is zero or
+     *                                  too small (&lt; {@link #MIN_ALLOWED_LENGTH}).
+     */
+    public static Orthonormal3DBasis getRandomBasis(Random random, double ix, double iy, double iz) {
+        return Orthonormal3DBasis.getSomeBasis(ix, iy, iz).rotateJK(2 * Math.PI * random.nextDouble());
+    }
+
+    /**
+     * Returns <i>x</i>-component of <b>i</b> vector.
+     *
+     * @return <i>x</i>-component of <b>i</b> vector.
+     */
+    public double ix() {
+        return ix;
+    }
+
+    /**
+     * Returns <i>y</i>-component of <b>i</b> vector.
+     *
+     * @return <i>y</i>-component of <b>i</b> vector.
+     */
+    public double iy() {
+        return iy;
+    }
+
+    /**
+     * Returns <i>z</i>-component of <b>i</b> vector.
+     *
+     * @return <i>z</i>-component of <b>i</b> vector.
+     */
+    public double iz() {
+        return iz;
+    }
+
+    /**
+     * Returns <i>x</i>-component of <b>j</b> vector.
+     *
+     * @return <i>x</i>-component of <b>j</b> vector.
+     */
+    public double jx() {
+        return jx;
+    }
+
+    /**
+     * Returns <i>y</i>-component of <b>j</b> vector.
+     *
+     * @return <i>y</i>-component of <b>j</b> vector.
+     */
+    public double jy() {
+        return jy;
+    }
+
+    /**
+     * Returns <i>z</i>-component of <b>j</b> vector.
+     *
+     * @return <i>z</i>-component of <b>j</b> vector.
+     */
+    public double jz() {
+        return jz;
+    }
+
+    /**
+     * Returns <i>x</i>-component of <b>k</b> vector.
+     *
+     * @return <i>x</i>-component of <b>k</b> vector.
+     */
+    public double kx() {
+        return kx;
+    }
+
+    /**
+     * Returns <i>y</i>-component of <b>j</b> vector.
+     *
+     * @return <i>y</i>-component of <b>j</b> vector.
+     */
+    public double ky() {
+        return ky;
+    }
+
+    /**
+     * Returns <i>z</i>-component of <b>j</b> vector.
+     *
+     * @return <i>z</i>-component of <b>j</b> vector.
+     */
+    public double kz() {
+        return kz;
+    }
+
+    /**
+     * Returns <code>i * {@link #ix()} + j * {@link #jx()} + k * {@link #kx()}</code>
+     *
+     * @param i projection of some vector <b>p</b> to the basis vector <b>i</b>.
+     * @param j projection of some vector <b>p</b> to the basis vector <b>j</b>.
+     * @param k projection of some vector <b>p</b> to the basis vector <b>k</b>.
+     * @return <i>x</i>-component of such <b>p</b> vector.
+     */
+    public double x(double i, double j, double k) {
+        return i * ix + j * jx + k * kx;
+    }
+
+    /**
+     * Returns <code>i * {@link #iy()} + j * {@link #jy()} + k * {@link #ky()}</code>
+     *
+     * @param i projection of some vector <b>p</b> to the basis vector <b>i</b>.
+     * @param j projection of some vector <b>p</b> to the basis vector <b>j</b>.
+     * @param k projection of some vector <b>p</b> to the basis vector <b>k</b>.
+     * @return <i>y</i>-component of such <b>p</b> vector.
+     */
+    public double y(double i, double j, double k) {
+        return i * iy + j * jy + k * ky;
+    }
+
+    /**
+     * Returns <code>i * {@link #iz()} + j * {@link #jz()} + k * {@link #kz()}</code>
+     *
+     * @param i projection of some vector <b>p</b> to the basis vector <b>i</b>.
+     * @param j projection of some vector <b>p</b> to the basis vector <b>j</b>.
+     * @param k projection of some vector <b>p</b> to the basis vector <b>k</b>.
+     * @return <i>z</i>-component of such <b>p</b> vector.
+     */
+    public double z(double i, double j, double k) {
+        return i * iz + j * jz + k * kz;
+    }
+
+    /**
+     * Returns new basis (<b>i'</b>, <b>j'</b>, <b>k'</b>), where
+     * <b>i'</b>=<b>j</b>, <b>j'</b>=<b>k</b>, <b>k'</b>=<b>i</b>.
+     *
+     * @return new basis (<b>j</b>, <b>k</b>, <b>i</b>).
+     */
+    public Orthonormal3DBasis jki() {
+        return new Orthonormal3DBasis(jx, jy, jz, kx, ky, kz, ix, iy, iz, counter);
+    }
+
+    /**
+     * Returns new basis (<b>i'</b>, <b>j'</b>, <b>k'</b>), where
+     * <b>i'</b>=<b>k</b>, <b>j'</b>=<b>i</b>, <b>k'</b>=<b>j</b>.
+     *
+     * @return new basis (<b>k</b>, <b>i</b>, <b>j</b>).
+     */
+    public Orthonormal3DBasis kij() {
+        return new Orthonormal3DBasis(kx, ky, kz, ix, iy, iz, jx, jy, jz, counter);
+    }
+
+    public Orthonormal3DBasis rotateJK(double angleInRadians) {
+        if (angleInRadians == 0.0) {
+            return this;
+        }
+        final double cos = Math.cos(angleInRadians);
+        final double sin = Math.sin(angleInRadians);
+        final double newJx = cos * jx + sin * kx,
+                newJy = cos * jy + sin * ky,
+                newJz = cos * jz + sin * kz;
+        return new Orthonormal3DBasis(ix, iy, iz, newJx, newJy, newJz, counter + 1).reviveIfNecessary();
+    }
+
+    public Orthonormal3DBasis rotateKI(double angleInRadians) {
+        if (angleInRadians == 0.0) {
+            return this;
+        }
+        final double cos = Math.cos(angleInRadians);
+        final double sin = Math.sin(angleInRadians);
+        final double newIx = -sin * kx + cos * ix,
+                newIy = -sin * ky + cos * iy,
+                newIz = -sin * kz + cos * iz;
+        return new Orthonormal3DBasis(newIx, newIy, newIz, jx, jy, jz, counter + 1).reviveIfNecessary();
+    }
+
+    public Orthonormal3DBasis rotateIJ(double angleInRadians) {
+        if (angleInRadians == 0.0) {
+            return this;
+        }
+        final double cos = Math.cos(angleInRadians);
+        final double sin = Math.sin(angleInRadians);
+        final double newIx = cos * ix + sin * jx,
+                newIy = cos * iy + sin * jy,
+                newIz = cos * iz + sin * jz,
+                newJx = -sin * ix + cos * jx,
+                newJy = -sin * iy + cos * jy,
+                newJz = -sin * iz + cos * jz;
+        return new Orthonormal3DBasis(newIx, newIy, newIz, newJx, newJy, newJz, counter + 1)
+                .reviveIfNecessary();
+    }
+
+    public Orthonormal3DBasis rotate(double angleXYInRadians, double angleYZInRadians, double angleZXInRadians) {
+        double ix = this.ix, iy = this.iy, iz = this.iz;
+        double jx = this.jx, jy = this.jy, jz = this.jz;
+        if (angleYZInRadians != 0.0) {
+            final double cos = Math.cos(angleYZInRadians);
+            final double sin = Math.sin(angleYZInRadians);
+            final double newIy = iz * sin + iy * cos;
+            final double newIz = iz * cos - iy * sin;
+            final double newJy = jz * sin + jy * cos;
+            final double newJz = jz * cos - jy * sin;
+            iy = newIy;
+            iz = newIz;
+            jy = newJy;
+            jz = newJz;
+        }
+        if (angleZXInRadians != 0.0) {
+            final double cos = Math.cos(angleZXInRadians);
+            final double sin = Math.sin(angleZXInRadians);
+            final double newIz = ix * sin + iz * cos;
+            final double newIx = ix * cos - iz * sin;
+            final double newJz = jx * sin + jz * cos;
+            final double newJx = jx * cos - jz * sin;
+            iz = newIz;
+            ix = newIx;
+            jz = newJz;
+            jx = newJx;
+        }
+        if (angleXYInRadians != 0.0) {
+            final double cos = Math.cos(angleXYInRadians);
+            final double sin = Math.sin(angleXYInRadians);
+            final double newIx = iy * sin + ix * cos;
+            final double newIy = iy * cos - ix * sin;
+            final double newJx = jy * sin + jx * cos;
+            final double newJy = jy * cos - jx * sin;
+            ix = newIx;
+            iy = newIy;
+            jx = newJx;
+            jy = newJy;
+        }
+        return new Orthonormal3DBasis(ix, iy, iz, jx, jy, jz, counter + 1).reviveIfNecessary();
+    }
+
+    public Orthonormal3DBasis rotate(double directionX, double directionY, double directionZ, double angle) {
+        final double cos = Math.cos(angle);
+        final double sin = Math.sin(angle);
+        double mult = 1.0 / Math.sqrt(directionX * directionX + directionY * directionY + directionZ * directionZ);
+        directionX *= mult;
+        directionY *= mult;
+        directionZ *= mult;
+
+        final double id = ix * directionX + iy * directionY + iz * directionZ;
+        final double idx = id * directionX, idy = id * directionY, idz = id * directionZ;
+        double ax = ix - idx;
+        double ay = iy - idy;
+        double az = iz - idz;
+        double aLength = Math.sqrt(ax * ax + ay * ay + az * az);
+        mult = 1.0 / aLength;
+        ax *= mult;
+        ay *= mult;
+        az *= mult;
+        double bx = directionY * az - directionZ * ay;
+        double by = directionZ * ax - directionX * az;
+        double bz = directionX * ay - directionY * ax;
+        // (a,b,g) is a basis, i = id*g + aLength*a
+        double newAx = cos * ax + sin * bx;
+        double newAy = cos * ay + sin * by;
+        double newAz = cos * az + sin * bz;
+        if ((mult = Math.abs(newAx * newAx + newAy * newAy + newAz * newAz - 1.0)) > 0.01)
+            throw new AssertionError("Internal error (|newA| = " + mult + " != 1) in rotate method");
+        final double newIx = idx + aLength * newAx;
+        final double newIy = idy + aLength * newAy;
+        final double newIz = idz + aLength * newAz;
+
+        final double jd = jx * directionX + jy * directionY + jz * directionZ;
+        final double jdx = jd * directionX, jdy = jd * directionY, jdz = jd * directionZ;
+        ax = jx - jdx;
+        ay = jy - jdy;
+        az = jz - jdz;
+        aLength = Math.sqrt(ax * ax + ay * ay + az * az);
+        mult = 1.0 / aLength;
+        ax *= mult;
+        ay *= mult;
+        az *= mult;
+        bx = directionY * az - directionZ * ay;
+        by = directionZ * ax - directionX * az;
+        bz = directionX * ay - directionY * ax;
+        // (a,b,g) is a basis, j = jd*g + aLength*a
+        newAx = cos * ax + sin * bx;
+        newAy = cos * ay + sin * by;
+        newAz = cos * az + sin * bz;
+        if ((mult = Math.abs(newAx * newAx + newAy * newAy + newAz * newAz - 1.0)) > 0.01)
+            throw new AssertionError("Internal error (|newA| = " + mult + " != 1) in rotate method");
+        final double newJx = jdx + aLength * newAx;
+        final double newJy = jdy + aLength * newAy;
+        final double newJz = jdz + aLength * newAz;
+
+        if ((mult = Math.abs(newIx * newIx + newIy * newIy + newIz * newIz - 1.0)) > 0.01)
+            throw new AssertionError("Internal error (|newI| = " + mult + " != 1) in rotate method");
+        if ((mult = Math.abs(newJx * newJx + newJy * newJy + newJz * newJz - 1.0)) > 0.01)
+            throw new AssertionError("Internal error (|newJ| = " + mult + " != 1) in rotate method");
+        if ((mult = Math.abs(newIx * newJx + newIy * newJy + newIz * newJz)) > 0.01)
+            throw new AssertionError("Internal error (newI * newJ = " + mult + " != 0) in rotate method");
+        return new Orthonormal3DBasis(newIx, newIy, newIz, newJx, newJy, newJz, counter + 1)
+                .reviveIfNecessary();
+    }
+
+    public Orthonormal3DBasis multiply(Orthonormal3DBasis other) {
+        Objects.requireNonNull(other, "Null other basis");
+        return new Orthonormal3DBasis(
+                // new I: ix*other.I+iy*other.J+iz*other.K
+                ix * other.ix + iy * other.jx + iz * other.kx,
+                ix * other.iy + iy * other.jy + iz * other.ky,
+                ix * other.iz + iy * other.jz + iz * other.kz,
+                // new J: jx*other.I+jy*other.J+jz*other.K
+                jx * other.ix + jy * other.jx + jz * other.kx,
+                jx * other.iy + jy * other.jy + jz * other.ky,
+                jx * other.iz + jy * other.jz + jz * other.kz,
+                counter + 1).reviveIfNecessary();
+    }
+
+    public Orthonormal3DBasis inverse() {
+        return new Orthonormal3DBasis(
+                ix, jx, kx,
+                iy, jy, ky,
+                iz, jz, kz,
+                counter + 1).reviveIfNecessary();
+    }
+
+    public double distanceSquare(Orthonormal3DBasis other) {
+        Objects.requireNonNull(other, "Null other basis");
+        return lengthSquare(other.ix - ix, other.iy - iy, other.iz - iz)
+                + lengthSquare(other.jx - jx, other.jy - jy, other.jz - jz)
+                + lengthSquare(other.kx - kx, other.ky - ky, other.kz - kz);
+    }
+
+    /**
+     * Returns a brief string description of this object.
+     *
+     * <p>The result of this method may depend on implementation.
+     *
+     * @return a brief string description of this object.
+     */
+    public String toString() {
+        return "I=(" + ix + "," + iy + "," + iz
+                + "),J=(" + jx + "," + jy + "," + jz
+                + "),K=(" + kx + "," + ky + "," + kz + ")";
+    }
+
+    /**
+     * Indicates whether some other object is an instance of this class, representing the same basis.
+     * The corresponding coordinates of vectors are compared as in <tt>Double.equals</tt> method,
+     * i.e. they are converted to <tt>long</tt> values by <tt>Double.doubleToLongBits</tt> method
+     * and the results are compared.
+     *
+     * @param o the object to be compared for equality with this instance.
+     * @return <tt>true</tt> if and only if the specified object is an instance of {@link Orthonormal3DBasis},
+     * representing the same right orthonormal basis as this object.
+     */
+    public boolean equals(Object o) {
+        if (!(o instanceof Orthonormal3DBasis)) {
+            return false;
+        }
+        final Orthonormal3DBasis that = (Orthonormal3DBasis) o;
+        return (Double.doubleToLongBits(that.ix) == Double.doubleToLongBits(ix)
+                && Double.doubleToLongBits(that.iy) == Double.doubleToLongBits(iy)
+                && Double.doubleToLongBits(that.iz) == Double.doubleToLongBits(iz)
+                && Double.doubleToLongBits(that.jx) == Double.doubleToLongBits(jx)
+                && Double.doubleToLongBits(that.jy) == Double.doubleToLongBits(jy)
+                && Double.doubleToLongBits(that.jz) == Double.doubleToLongBits(jz));
+    }
+
+    /**
+     * Returns the hash code of this object.
+     *
+     * @return the hash code of this object.
+     */
+    public int hashCode() {
+        int result = 0;
+        result = 37 * result + hashCode(ix);
+        result = 37 * result + hashCode(iy);
+        result = 37 * result + hashCode(iz);
+        result = 37 * result + hashCode(jx);
+        result = 37 * result + hashCode(jy);
+        result = 37 * result + hashCode(jz);
+        return result;
+    }
+
+    private Orthonormal3DBasis reviveIfNecessary() {
+        if (counter <= REVIVING_COUNT) {
+            return this;
+        }
+        return getBasis(ix, iy, iz, jx, jy, jz, false);
+    }
+
+    public static double lengthSquare(double x, double y, double z) {
+        return x * x + y * y + z * z;
+    }
+
+    private static double length(double x, double y, double z) {
+        return Math.sqrt(x * x + y * y + z * z);
+    }
+
+
+    private static int hashCode(double value) {
+        long l = Double.doubleToLongBits(value);
+        return (int) (l ^ (l >>> 32));
+    }
+}
