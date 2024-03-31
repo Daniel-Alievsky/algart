@@ -3778,7 +3778,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #packBitsGreater(ArrayContext, UpdatableBitArray, PArray, double)
-     * packBitsGreater(null, bits, array, threshold)}</tt>.
+     * packBitsGreater}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold)</tt>.
      *
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
@@ -3790,7 +3790,7 @@ public class Arrays {
      */
     public static void packBitsGreater(
             UpdatableBitArray bits, PArray array, double threshold) {
-        packBitsGreater(null, bits, array, threshold);
+        packBitsGreater(ArrayContext.DEFAULT_SINGLE_THREAD, bits, array, threshold);
     }
 
     /**
@@ -3836,7 +3836,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #packBitsLess(ArrayContext, UpdatableBitArray, PArray, double)
-     * packBitsLess(null, bits, array, threshold)}</tt>.
+     * packBitsLess}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold)</tt>.
      *
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
@@ -3848,7 +3848,7 @@ public class Arrays {
      */
     public static void packBitsLess(
             UpdatableBitArray bits, PArray array, double threshold) {
-        packBitsLess(null, bits, array, threshold);
+        packBitsLess(ArrayContext.DEFAULT_SINGLE_THREAD, bits, array, threshold);
     }
 
     /**
@@ -3895,7 +3895,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #packBitsGreaterOrEqual(ArrayContext, UpdatableBitArray, PArray, double)
-     * packBitsGreaterOrEqual(null, bits, array, threshold)}</tt>.
+     * packBitsGreaterOrEqual}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold)</tt>.
      *
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
@@ -3907,7 +3907,7 @@ public class Arrays {
      */
     public static void packBitsGreaterOrEqual(
             UpdatableBitArray bits, PArray array, double threshold) {
-        packBitsGreaterOrEqual(null, bits, array, threshold);
+        packBitsGreaterOrEqual(ArrayContext.DEFAULT_SINGLE_THREAD, bits, array, threshold);
     }
 
     /**
@@ -3953,7 +3953,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #packBitsLessOrEqual(ArrayContext, UpdatableBitArray, PArray, double)
-     * packBitsLessOrEqual(null, bits, array, threshold)}</tt>.
+     * packBitsLessOrEqual}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold)</tt>.
      *
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
@@ -3965,7 +3965,7 @@ public class Arrays {
      */
     public static void packBitsLessOrEqual(
             UpdatableBitArray bits, PArray array, double threshold) {
-        packBitsLessOrEqual(null, bits, array, threshold);
+        packBitsLessOrEqual(ArrayContext.DEFAULT_SINGLE_THREAD, bits, array, threshold);
     }
 
     /**
@@ -4012,7 +4012,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #unpackBits(ArrayContext, UpdatablePArray, BitArray, double, double)
-     * unpackBits(null, array, bits, filler0, filler1)}</tt>.
+     * unpackBits}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, array, bits, filler0, filler1)</tt>.
      *
      * @param array   some primitive array.
      * @param bits    the bit array that should be "unpacked" to <tt>array</tt>.
@@ -4024,7 +4024,7 @@ public class Arrays {
      *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void unpackBits(UpdatablePArray array, BitArray bits, double filler0, double filler1) {
-        unpackBits(null, array, bits, filler0, filler1);
+        unpackBits(ArrayContext.DEFAULT_SINGLE_THREAD, array, bits, filler0, filler1);
     }
 
     /**
@@ -4104,7 +4104,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #unpackUnitBits(ArrayContext, UpdatablePArray, BitArray, double)
-     * unpackUnitBits(null, array, bits, filler1)}</tt>.
+     * unpackUnitBits}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, array, bits, filler1)</tt>.
      *
      * @param array   some primitive array.
      * @param bits    the bit array, the unit elements of which should be "unpacked" to <tt>array</tt>.
@@ -4115,7 +4115,7 @@ public class Arrays {
      *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void unpackUnitBits(UpdatablePArray array, BitArray bits, double filler1) {
-        unpackUnitBits(null, array, bits, filler1);
+        unpackUnitBits(ArrayContext.DEFAULT_SINGLE_THREAD, array, bits, filler1);
     }
 
     /**
@@ -4167,7 +4167,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #unpackZeroBits(ArrayContext, UpdatablePArray, BitArray, double)
-     * unpackZeroBits(null, array, bits, filler0)}</tt>.
+     * unpackZeroBits}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, array, bits, filler0)</tt>.
      *
      * @param array   some primitive array.
      * @param bits    the bit array, the zero elements of which should be "unpacked" to <tt>array</tt>.
@@ -4178,7 +4178,7 @@ public class Arrays {
      *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void unpackZeroBits(UpdatablePArray array, BitArray bits, double filler0) {
-        unpackZeroBits(null, array, bits, filler0);
+        unpackZeroBits(ArrayContext.DEFAULT_SINGLE_THREAD, array, bits, filler0);
     }
 
     /**

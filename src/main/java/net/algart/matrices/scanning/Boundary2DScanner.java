@@ -1586,20 +1586,22 @@ public abstract class Boundary2DScanner {
 
     /**
      * Makes <a href="Boundary2DScanner.html#completion">completion</a> of the source binary matrix and returns it
-     * in the result matrix. In comparison with the source matrix, all "holes" ("pores") in the resulting matrix
+     * in the result matrix. Compared to the source matrix, all the "holes" ("pores") in the resulting matrix
      * are filled.</p>
      *
      * <p>This method is equivalent to the following code:</p>
-     *  <pre>
+     * <pre>
      * {@link Boundary2DScanner} scanner = {@link
      * Boundary2DScanner#getMainBoundariesScanner(Matrix, Matrix, ConnectivityType)
      * getMainBoundariesScanner}(source, result, connectivityType);
+     * {@link Matrices#clear Matrices.clear}(result); // initial zero-filling
      * while (scanner.{@link #nextBoundary()}) {
      * &#32;   scanner.{@link #scanBoundary scanBoundary}(); // or some more useful actions
      * }
      * </pre>
-     * @param result            the completion: the matrix with filled holes.
-     * @param source            the source matrix.
+     *
+     * @param result           the completion: the matrix with filled holes.
+     * @param source           the source matrix.
      * @param connectivityType the connectivity kind used while building completion.
      * @throws NullPointerException     if one of argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.

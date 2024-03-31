@@ -3823,6 +3823,56 @@ public class Matrices {
         Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.REVERSE, result, source);
     }
 
+    public static void packBitsGreater(
+            Matrix<? extends UpdatableBitArray> result,
+            Matrix<? extends PArray> intensities,
+            double threshold) {
+        Arrays.packBitsGreater(result.array(), intensities.array(), threshold);
+    }
+
+    public static void packBitsLess(
+            Matrix<? extends UpdatableBitArray> result,
+            Matrix<? extends PArray> intensities,
+            double threshold) {
+        Arrays.packBitsLess(result.array(), intensities.array(), threshold);
+    }
+
+    public static void packBitsGreaterOrEqual(
+            Matrix<? extends UpdatableBitArray> result,
+            Matrix<? extends PArray> intensities,
+            double threshold) {
+        Arrays.packBitsGreaterOrEqual(result.array(), intensities.array(), threshold);
+    }
+
+    public static void packBitsLessOrEqual(
+            Matrix<? extends UpdatableBitArray> result,
+            Matrix<? extends PArray> intensities,
+            double threshold) {
+        Arrays.packBitsLessOrEqual(result.array(), intensities.array(), threshold);
+    }
+
+    public static void unpackBits(
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends BitArray> bits,
+            double filler0,
+            double filler1) {
+        Arrays.unpackBits(result.array(), bits.array(), filler0, filler1);
+    }
+
+    public static void unpackUnitBits(
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends BitArray> bits,
+            double filler1) {
+        Arrays.unpackUnitBits(result.array(), bits.array(), filler1);
+    }
+
+    public static void unpackZeroBits(
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends BitArray> bits,
+            double filler0) {
+        Arrays.unpackZeroBits(result.array(), bits.array(), filler0);
+    }
+
     /**
      * Returns an immutable view of the passed AlgART matrix,
      * pseudo-cyclically shifted to the right for every coordinate.
