@@ -3785,8 +3785,6 @@ public class Arrays {
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void packBitsGreater(
             UpdatableBitArray bits, PArray array, double threshold) {
@@ -3814,8 +3812,6 @@ public class Arrays {
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      * @see #packBitsLess(ArrayContext, UpdatableBitArray, PArray, double)
      */
     public static void packBitsGreater(
@@ -3843,8 +3839,6 @@ public class Arrays {
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void packBitsLess(
             UpdatableBitArray bits, PArray array, double threshold) {
@@ -3872,8 +3866,6 @@ public class Arrays {
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      * @see #packBitsGreater(ArrayContext, UpdatableBitArray, PArray, double)
      */
     public static void packBitsLess(
@@ -3902,8 +3894,6 @@ public class Arrays {
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void packBitsGreaterOrEqual(
             UpdatableBitArray bits, PArray array, double threshold) {
@@ -3931,8 +3921,6 @@ public class Arrays {
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      * @see #packBitsLessOrEqual(ArrayContext, UpdatableBitArray, PArray, double)
      */
     public static void packBitsGreaterOrEqual(
@@ -3960,8 +3948,6 @@ public class Arrays {
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void packBitsLessOrEqual(
             UpdatableBitArray bits, PArray array, double threshold) {
@@ -3989,8 +3975,6 @@ public class Arrays {
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      * @see #packBitsGreaterOrEqual(ArrayContext, UpdatableBitArray, PArray, double)
      */
     public static void packBitsLessOrEqual(
@@ -4020,8 +4004,6 @@ public class Arrays {
      * @param filler1 the value that will be set in <tt>array</tt> for unit bits.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void unpackBits(UpdatablePArray array, BitArray bits, double filler0, double filler1) {
         unpackBits(ArrayContext.DEFAULT_SINGLE_THREAD, array, bits, filler0, filler1);
@@ -4074,8 +4056,6 @@ public class Arrays {
      * @param filler1 the value that will be set in <tt>array</tt> for unit bits.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      * @see #unpackUnitBits(ArrayContext, UpdatablePArray, BitArray, double)
      * @see #unpackZeroBits(ArrayContext, UpdatablePArray, BitArray, double)
      */
@@ -4111,8 +4091,6 @@ public class Arrays {
      * @param filler1 the value that will be set in <tt>array</tt> for unit bits.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void unpackUnitBits(UpdatablePArray array, BitArray bits, double filler1) {
         unpackUnitBits(ArrayContext.DEFAULT_SINGLE_THREAD, array, bits, filler1);
@@ -4147,8 +4125,6 @@ public class Arrays {
      * @param filler1 the value that will be set in <tt>array</tt> for unit bits.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      * @see #unpackBits(ArrayContext, UpdatablePArray, BitArray, double, double)
      * @see #unpackZeroBits(ArrayContext, UpdatablePArray, BitArray, double)
      */
@@ -4174,8 +4150,6 @@ public class Arrays {
      * @param filler0 the value that will be set in <tt>array</tt> for zero bits.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      */
     public static void unpackZeroBits(UpdatablePArray array, BitArray bits, double filler0) {
         unpackZeroBits(ArrayContext.DEFAULT_SINGLE_THREAD, array, bits, filler0);
@@ -4210,8 +4184,6 @@ public class Arrays {
      * @param filler0 the value that will be set in <tt>array</tt> for zero bits.
      * @throws NullPointerException  if <tt>array</tt> or <tt>bits</tt> argument is <tt>null</tt>.
      * @throws SizeMismatchException if <tt>array.length()!=bits.length()</tt>.
-     * @throws java.io.IOError       if the current thread is interrupted by the standard
-     *                               <tt>Thread.interrupt()</tt> call.
      * @see #unpackBits(ArrayContext, UpdatablePArray, BitArray, double, double)
      * @see #unpackUnitBits(ArrayContext, UpdatablePArray, BitArray, double)
      */
