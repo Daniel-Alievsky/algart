@@ -27,14 +27,14 @@ package net.algart.matrices.stitching;
 import net.algart.math.functions.Func;
 
 import java.util.List;
+import java.util.Objects;
 
 public final class CoordinateFreeStitchingMethod<P extends FramePosition> implements StitchingMethod<P> {
     private final Func combiningFunc;
     private final boolean standardBehaviorForSingleFrame;
 
     private CoordinateFreeStitchingMethod(Func combiningFunc, boolean standardBehaviorForSingleFrame) {
-        if (combiningFunc == null)
-            throw new NullPointerException("Null combiningFunc");
+        Objects.requireNonNull(combiningFunc, "Null combiningFunc");
         this.combiningFunc = combiningFunc;
         this.standardBehaviorForSingleFrame = standardBehaviorForSingleFrame;
     }
@@ -62,8 +62,7 @@ public final class CoordinateFreeStitchingMethod<P extends FramePosition> implem
     }
 
     public StitchingFunc getStitchingFunc(List<? extends Frame<P>> frames) {
-        if (frames == null)
-            throw new NullPointerException("Null frames argument");
+        Objects.requireNonNull(frames, "Null frames argument");
         return new StitchingFunc() {
             /*Repeat() ( double)\s*\[\]\s+values ==>
                        $1 v0,,$1 v0,$1 v1,,$1 v0,$1 v1,$1 v2,,$1 v0,$1 v1,$1 v2,$1 v3,,$1 v0,$1 v1,$1 v2,$1 v3,$1 v4,,

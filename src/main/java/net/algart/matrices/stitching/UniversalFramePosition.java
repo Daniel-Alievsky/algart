@@ -34,6 +34,8 @@ import net.algart.math.functions.CoordinateTransformationOperator;
 import net.algart.math.functions.Func;
 import net.algart.math.functions.LinearOperator;
 
+import java.util.Objects;
+
 public class UniversalFramePosition implements FramePosition {
     private final RectangularArea area;
     private final CoordinateTransformationOperator inverseTransform;
@@ -49,23 +51,22 @@ public class UniversalFramePosition implements FramePosition {
     public static UniversalFramePosition valueOf(RectangularArea area,
         CoordinateTransformationOperator inverseTransform)
     {
-        if (area == null)
-            throw new NullPointerException("Null area argument");
-        if (inverseTransform == null)
-            throw new NullPointerException("Null inverseTransform argument");
+        Objects.requireNonNull(area, "Null area argument");
+        Objects.requireNonNull(inverseTransform, "Null inverseTransform argument");
         return new UniversalFramePosition(area, inverseTransform);
     }
 
     public static RectangularArea estimateDestinationAreaByVertices(long[] sourceMatrixDimensions,
         LinearOperator inverseTransform)
     {
-        if (sourceMatrixDimensions == null)
-            throw new NullPointerException("Null sourceMatrixDimensions argument");
+        Objects.requireNonNull(sourceMatrixDimensions, "Null sourceMatrixDimensions argument");
         final int n = sourceMatrixDimensions.length;
-        if (n == 0)
+        if (n == 0) {
             throw new IllegalArgumentException("Empty sourceMatrixDimensions argument");
-        if (n > 63)
+        }
+        if (n > 63) {
             throw new IllegalArgumentException("Too large number of dimensions: " + n + " > 63");
+        }
         double[] minDestCoordinates = new double[n];
         double[] maxDestCoordinates = new double[n];
         JArrays.fillDoubleArray(minDestCoordinates, Double.POSITIVE_INFINITY);
@@ -120,10 +121,12 @@ public class UniversalFramePosition implements FramePosition {
     }
 
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (!(obj instanceof UniversalFramePosition))
+        }
+        if (!(obj instanceof UniversalFramePosition)) {
             return false;
+        }
         UniversalFramePosition ufp = (UniversalFramePosition)obj;
         return area.equals(ufp.area) && inverseTransform.equals(ufp.inverseTransform);
     }

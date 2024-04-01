@@ -29,6 +29,8 @@ import net.algart.math.functions.Func;
 import net.algart.math.patterns.Pattern;
 import net.algart.matrices.StreamingApertureProcessor;
 
+import java.util.Objects;
+
 /**
  * <p>Almost complete implementation of {@link RankMorphology} interface with an instantiation method
  * of some complete implementation.</p>
@@ -69,8 +71,7 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
 
     BasicRankMorphology(ArrayContext context, boolean interpolated, int[] bitLevels) {
         super(context);
-        if (bitLevels == null)
-            throw new NullPointerException("Null bitLevels argument");
+        Objects.requireNonNull(bitLevels, "Null bitLevels argument");
         this.bitLevels = bitLevels.clone();
         this.interpolated = interpolated;
         RankProcessors.getPercentiler(null, interpolated, this.bitLevels); // checking bitLevels

@@ -29,6 +29,8 @@ import net.algart.math.functions.Func;
 import net.algart.math.functions.LinearFunc;
 import net.algart.math.patterns.Pattern;
 
+import java.util.Objects;
+
 /**
  * <p>A skeletal implementation of the {@link RankMorphology} interface to minimize
  * the effort required to implement this interface.</p>
@@ -105,8 +107,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     public Matrix<? extends PArray> asPercentile(Matrix<? extends PArray> src,
         double percentileIndex, Pattern pattern)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(src, "Null src argument");
         return asPercentile(src, constantPercentileMatrix(src, percentileIndex), pattern);
     }
 
@@ -133,11 +134,11 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     public Matrix<? extends UpdatablePArray> percentile(
         Matrix<? extends PArray> src, Matrix<? extends PArray> percentileIndexes, Pattern pattern)
     {
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         Matrices.checkDimensionEquality(src, percentileIndexes);
-        if (pattern.dimCount() != src.dimCount())
+        if (pattern.dimCount() != src.dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         Matrix<? extends UpdatablePArray> dest = memoryModel().newMatrix(UpdatablePArray.class, src);
         percentile(dest, src, percentileIndexes, pattern);
         return dest;
@@ -160,8 +161,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     public Matrix<? extends UpdatablePArray> percentile(
         Matrix<? extends PArray> src, double percentileIndex, Pattern pattern)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(src, "Null src argument");
         return percentile(src, constantPercentileMatrix(src, percentileIndex), pattern);
     }
 
@@ -186,8 +186,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     public void percentile(Matrix<? extends UpdatablePArray> dest,
         Matrix<? extends PArray> src, double percentileIndex, Pattern pattern)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(src, "Null src argument");
         percentile(dest, src, constantPercentileMatrix(src, percentileIndex), pattern);
     }
 
@@ -229,11 +228,11 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     public <T extends PArray> Matrix<? extends T> rank(Class<? extends T> requiredType,
         Matrix<? extends PArray> baseMatrix, Matrix<? extends PArray> rankedMatrix, Pattern pattern)
     {
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         Matrices.checkDimensionEquality(baseMatrix, rankedMatrix);
-        if (pattern.dimCount() != baseMatrix.dimCount())
+        if (pattern.dimCount() != baseMatrix.dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         Class<?> elementType = Arrays.elementType(requiredType);
         Matrices.checkNewMatrixType(requiredType, elementType);
         Matrix<? extends UpdatablePArray> dest = memoryModel().newMatrix(UpdatablePArray.class,
@@ -278,8 +277,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         double toPercentileIndex,
         Pattern pattern, double filler)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(src, "Null src argument");
         return asMeanBetweenPercentiles(src,
             constantPercentileMatrix(src, fromPercentileIndex),
             constantPercentileMatrix(src, toPercentileIndex),
@@ -315,11 +313,11 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         Matrix<? extends PArray> toPercentileIndexes,
         Pattern pattern, double filler)
     {
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         Matrices.checkDimensionEquality(src, fromPercentileIndexes, toPercentileIndexes);
-        if (pattern.dimCount() != src.dimCount())
+        if (pattern.dimCount() != src.dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         Matrix<? extends UpdatablePArray> dest = memoryModel().newMatrix(UpdatablePArray.class, src);
         meanBetweenPercentiles(dest, src, fromPercentileIndexes, toPercentileIndexes, pattern, filler);
         return dest;
@@ -351,8 +349,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         double toPercentileIndex,
         Pattern pattern, double filler)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(src, "Null src argument");
         return meanBetweenPercentiles(src,
             constantPercentileMatrix(src, fromPercentileIndex),
             constantPercentileMatrix(src, toPercentileIndex),
@@ -391,8 +388,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         double toPercentileIndex,
         Pattern pattern, double filler)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(src, "Null src argument");
         meanBetweenPercentiles(dest, src,
             constantPercentileMatrix(src, fromPercentileIndex),
             constantPercentileMatrix(src, toPercentileIndex),
@@ -435,11 +431,11 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         Matrix<? extends PArray> maxValues,
         Pattern pattern, double filler)
     {
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         Matrices.checkDimensionEquality(src, minValues, maxValues);
-        if (pattern.dimCount() != src.dimCount())
+        if (pattern.dimCount() != src.dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         Matrix<? extends UpdatablePArray> dest = memoryModel().newMatrix(UpdatablePArray.class, src);
         meanBetweenValues(dest, src, minValues, maxValues, pattern, filler);
         return dest;
@@ -464,12 +460,11 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
     public Matrix<? extends PArray> asMean(Matrix<? extends PArray> src, Pattern pattern) {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
-        if (pattern.dimCount() != src.dimCount())
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
+        if (pattern.dimCount() != src.dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         Func processingFunc = LinearFunc.getInstance(
             PFloatingArray.class.isAssignableFrom(src.type()) ? 0.0 : 0.5,
             1.0 / pattern.pointCount());
@@ -494,10 +489,10 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
     public Matrix<? extends UpdatablePArray> mean(Matrix<? extends PArray> src, Pattern pattern) {
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
-        if (pattern.dimCount() != src.dimCount())
+        Objects.requireNonNull(pattern, "Null pattern argument");
+        if (pattern.dimCount() != src.dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         Matrix<? extends UpdatablePArray> dest = memoryModel().newMatrix(UpdatablePArray.class, src);
         mean(dest, src, pattern);
         return dest;
@@ -519,12 +514,11 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
     public void mean(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern) {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
-        if (pattern.dimCount() != src.dimCount())
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
+        if (pattern.dimCount() != src.dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         Func processingFunc = LinearFunc.getInstance(
             PFloatingArray.class.isAssignableFrom(src.type()) ? 0.0 : 0.5,
             1.0 / pattern.pointCount());
@@ -556,12 +550,11 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     public Matrix<? extends UpdatablePArray> functionOfSum(Matrix<? extends PArray> src,
         Pattern pattern, Func processingFunc)
     {
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
-        if (processingFunc == null)
-            throw new NullPointerException("Null processingFunc argument");
-        if (pattern.dimCount() != src.dimCount())
+        Objects.requireNonNull(pattern, "Null pattern argument");
+        Objects.requireNonNull(processingFunc, "Null processingFunc argument");
+        if (pattern.dimCount() != src.dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         Matrix<? extends UpdatablePArray> dest = memoryModel().newMatrix(UpdatablePArray.class, src);
         functionOfSum(dest, src, pattern, processingFunc);
         return dest;
@@ -602,8 +595,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         double percentileIndex2,
         Pattern pattern, Func processingFunc)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(src, "Null src argument");
         return asFunctionOfPercentilePair(src,
             constantPercentileMatrix(src, percentileIndex1),
             constantPercentileMatrix(src, percentileIndex2),
@@ -642,13 +634,12 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         Matrix<? extends PArray> percentileIndexes2,
         Pattern pattern, Func processingFunc)
     {
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
-        if (processingFunc == null)
-            throw new NullPointerException("Null processingFunc argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
+        Objects.requireNonNull(processingFunc, "Null processingFunc argument");
         Matrices.checkDimensionEquality(src, percentileIndexes1, percentileIndexes2);
-        if (pattern.dimCount() != src.dimCount())
+        if (pattern.dimCount() != src.dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         Matrix<? extends UpdatablePArray> dest = memoryModel().newMatrix(UpdatablePArray.class, src);
         functionOfPercentilePair(dest, src, percentileIndexes1, percentileIndexes2,
             pattern, processingFunc);
@@ -681,8 +672,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         double percentileIndex2,
         Pattern pattern, Func processingFunc)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
+        Objects.requireNonNull(src, "Null src argument");
         return functionOfPercentilePair(src,
             constantPercentileMatrix(src, percentileIndex1),
             constantPercentileMatrix(src, percentileIndex2),
@@ -722,10 +712,10 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         double percentileIndex2,
         Pattern pattern, Func processingFunc)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (pattern.dimCount() != src.dimCount())
+        Objects.requireNonNull(src, "Null src argument");
+        if (pattern.dimCount() != src.dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         functionOfPercentilePair(dest, src,
             constantPercentileMatrix(src, percentileIndex1),
             constantPercentileMatrix(src, percentileIndex2),

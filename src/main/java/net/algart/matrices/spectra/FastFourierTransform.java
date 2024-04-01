@@ -27,6 +27,8 @@ package net.algart.matrices.spectra;
 import net.algart.arrays.*;
 import net.algart.matrices.spectra.ComplexScalarSampleArray.*;
 
+import java.util.Objects;
+
 /**
  * <p><i>Fast Fourier transform</i> (FFT). This class implements traditional one- and multidimensional FFT algorithm
  * over an abstract {@link SampleArray} and 1-, 2- or multidimensional {@link Matrix AlgART numeric matrices}.
@@ -274,28 +276,27 @@ public class FastFourierTransform extends AbstractSpectralTransform implements S
         Matrix<? extends PNumberArray> pRe, Matrix<? extends PNumberArray> pIm,
         Matrix<? extends PNumberArray> qRe, Matrix<? extends PNumberArray> qIm)
     {
-        if (cRe == null)
-            throw new NullPointerException("Null cRe argument");
-        if (cIm == null)
-            throw new NullPointerException("Null cIm argument");
-        if (pRe == null)
-            throw new NullPointerException("Null pRe argument");
-        if (pIm == null)
-            throw new NullPointerException("Null pIm argument");
-        if (qRe == null)
-            throw new NullPointerException("Null qRe argument");
-        if (qIm == null)
-            throw new NullPointerException("Null qIm argument");
-        if (!cRe.dimEquals(cIm))
+        Objects.requireNonNull(cRe, "Null cRe argument");
+        Objects.requireNonNull(cIm, "Null cIm argument");
+        Objects.requireNonNull(pRe, "Null pRe argument");
+        Objects.requireNonNull(pIm, "Null pIm argument");
+        Objects.requireNonNull(qRe, "Null qRe argument");
+        Objects.requireNonNull(qIm, "Null qIm argument");
+        if (!cRe.dimEquals(cIm)) {
             throw new SizeMismatchException("cRe and cIm dimensions mismatch: cRe is " + cRe + ", cIm " + cIm);
-        if (!pRe.dimEquals(cRe))
+        }
+        if (!pRe.dimEquals(cRe)) {
             throw new SizeMismatchException("cRe and pRe dimensions mismatch: cRe is " + cRe + ", pRe " + pRe);
-        if (!pIm.dimEquals(cRe))
+        }
+        if (!pIm.dimEquals(cRe)) {
             throw new SizeMismatchException("cRe and pIm dimensions mismatch: cRe is " + cRe + ", pIm " + pIm);
-        if (!qRe.dimEquals(cRe))
+        }
+        if (!qRe.dimEquals(cRe)) {
             throw new SizeMismatchException("cRe and qRe dimensions mismatch: cRe is " + cRe + ", qRe " + qRe);
-        if (!qIm.dimEquals(cRe))
+        }
+        if (!qIm.dimEquals(cRe)) {
             throw new SizeMismatchException("cRe and qIm dimensions mismatch: cRe is " + cRe + ", qIm " + qIm);
+        }
         if (cRe.isTiled() && cIm.isTiled() && pRe.isTiled() && pIm.isTiled() && qRe.isTiled() && qIm.isTiled()) {
             long[] tileDimensions = cRe.tileDimensions();
             if (java.util.Arrays.equals(tileDimensions, cIm.tileDimensions())
