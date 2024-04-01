@@ -25,6 +25,7 @@
 package net.algart.math;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 /**
  * <p>Integer signed value with 128-bit precision: &minus;2<sup>128</sup>&lt;<i>x</i>&lt;2<sup>128</sup>.</p>
@@ -355,9 +356,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public MutableInt128 setTo(MutableInt128 other) {
-        if (other == null) {
-            throw new NullPointerException("Null other");
-        }
+        Objects.requireNonNull(other, "Null other");
         this.low64Bits = other.low64Bits;
         this.high64Bits = other.high64Bits;
         this.negative = other.negative;

@@ -38,7 +38,7 @@ class TinyBitArrays {
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/PackedBitArrays.java, primitives) !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Returns <tt>((long) array.length) << 6</tt>: the maximal number of bits that
+     * Returns <tt>((long) array.length) &lt;&lt; 6</tt>: the maximal number of bits that
      * can be stored in the specified array.
      * @param array <tt>long[]</tt> array.
      * @return      <tt>64 * (long) array.length</tt>

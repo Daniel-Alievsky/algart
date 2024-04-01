@@ -27,6 +27,7 @@ package net.algart.math;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.zip.*;
 
 /**
@@ -47,13 +48,14 @@ public class Point implements Comparable<Point> {
       long ==> double   !! Auto-generated: NOT EDIT !! */
     private static final Point originsCache[] = new Point[16];
     static {
-        for (int i = 1; i <= originsCache.length; i++)
+        for (int i = 1; i <= originsCache.length; i++) {
             originsCache[i - 1] = new Point(new double[i]) { // zero-filled by Java
                 @Override
                 public boolean isOrigin() {
                     return true;
                 }
             };
+        }
     }
 
     final double[] coordinates;
@@ -77,10 +79,10 @@ public class Point implements Comparable<Point> {
      * @throws IllegalArgumentException if the passed array is empty (no coordinates are passed).
      */
     public static Point valueOf(double ...coordinates) {
-        if (coordinates == null)
-            throw new NullPointerException("Null coordinates argument");
-        if (coordinates.length == 0)
+        Objects.requireNonNull(coordinates, "Null coordinates argument");
+        if (coordinates.length == 0) {
             throw new IllegalArgumentException("Empty coordinates array");
+        }
         if (coordinates.length <= originsCache.length) {
             boolean origin = true;
             for (double coord : coordinates) {
@@ -88,8 +90,9 @@ public class Point implements Comparable<Point> {
                     origin = false;
                 }
             }
-            if (origin)
+            if (origin) {
                 return originsCache[coordinates.length - 1];
+            }
         }
         return new Point(coordinates.clone());
     }
@@ -142,8 +145,9 @@ public class Point implements Comparable<Point> {
         if (filler == 0) {
             return origin(coordCount);
         }
-        if (coordCount <= 0)
+        if (coordCount <= 0) {
             throw new IllegalArgumentException("Negative or zero number of coordinates: " + coordCount);
+        }
         double[] coordinates = new double[coordCount];
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = filler;
@@ -160,8 +164,9 @@ public class Point implements Comparable<Point> {
      * @throws IllegalArgumentException if the passed number of dimensions is zero or negative.
      */
     public static Point origin(int coordCount) {
-        if (coordCount <= 0)
+        if (coordCount <= 0) {
             throw new IllegalArgumentException("Negative or zero number of coordinates: " + coordCount);
+        }
         if (coordCount <= originsCache.length) {
             return originsCache[coordCount - 1];
         } else {
@@ -179,8 +184,9 @@ public class Point implements Comparable<Point> {
      * @throws IllegalArgumentException if the passed number of dimensions is zero or negative.
      */
     public static Point minValue(int coordCount) {
-        if (coordCount <= 0)
+        if (coordCount <= 0) {
             throw new IllegalArgumentException("Negative or zero number of coordinates: " + coordCount);
+        }
         double[] coordinates = new double[coordCount];
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = Double.NEGATIVE_INFINITY;
@@ -198,8 +204,9 @@ public class Point implements Comparable<Point> {
      * @throws IllegalArgumentException if the passed number of dimensions is zero or negative.
      */
     public static Point maxValue(int coordCount) {
-        if (coordCount <= 0)
+        if (coordCount <= 0) {
             throw new IllegalArgumentException("Negative or zero number of coordinates: " + coordCount);
+        }
         double[] coordinates = new double[coordCount];
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = Double.POSITIVE_INFINITY;
@@ -219,11 +226,11 @@ public class Point implements Comparable<Point> {
      * @throws NullPointerException if the passed integer point is <tt>null</tt>.
      */
     public static Point valueOf(IPoint iPoint) {
-        if (iPoint == null)
-            throw new NullPointerException("Null iPoint argument");
+        Objects.requireNonNull(iPoint, "Null iPoint argument");
         double[] coordinates = new double[iPoint.coordCount()];
-        for (int k = 0; k < coordinates.length; k++)
+        for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = iPoint.coord(k);
+        }
         return new Point(coordinates);
     }
 
@@ -313,8 +320,9 @@ public class Point implements Comparable<Point> {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
      */
     public double y() {
-        if (coordinates.length < 2)
+        if (coordinates.length < 2) {
             throw new IllegalStateException("Cannot get y-coordinate of " + coordinates.length + "-dimensional point");
+        }
         return coordinates[1];
     }
 
@@ -327,8 +335,9 @@ public class Point implements Comparable<Point> {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
      */
     public double z() {
-        if (coordinates.length < 3)
+        if (coordinates.length < 3) {
             throw new IllegalStateException("Cannot get z-coordinate of " + coordinates.length + "-dimensional point");
+        }
         return coordinates[2];
     }
 
@@ -376,13 +385,13 @@ public class Point implements Comparable<Point> {
      *                                  of the given points are different.
      */
     public double distanceFrom(Collection<Point> points) {
-        if (points == null)
-            throw new NullPointerException("Null points argument");
+        Objects.requireNonNull(points, "Null points argument");
         double result = Double.POSITIVE_INFINITY;
         for (Point point : points) {
-            if (point.coordCount() != coordinates.length)
+            if (point.coordCount() != coordinates.length) {
                 throw new IllegalArgumentException("Dimensions count mismatch: some of the passed points has "
                     + point.coordCount() + " dimensions instead of " + coordinates.length);
+            }
             double d;
             if (coordinates.length == 1) {
                 d = StrictMath.abs(coordinates[0] - point.coordinates[0]);
@@ -417,11 +426,11 @@ public class Point implements Comparable<Point> {
      *                                  are different.
      */
     public Point add(Point point) {
-        if (point == null)
-            throw new NullPointerException("Null point argument");
-        if (point.coordCount() != coordinates.length)
+        Objects.requireNonNull(point, "Null point argument");
+        if (point.coordCount() != coordinates.length) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + point.coordCount() + " instead of " + coordinates.length);
+        }
         double[] coordinates = new double[this.coordinates.length];
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = this.coordinates[k] + point.coordinates[k];
@@ -441,11 +450,11 @@ public class Point implements Comparable<Point> {
      *                                  are different.
      */
     public Point subtract(Point point) {
-        if (point == null)
-            throw new NullPointerException("Null point argument");
-        if (point.coordCount() != coordinates.length)
+        Objects.requireNonNull(point, "Null point argument");
+        if (point.coordCount() != coordinates.length) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + point.coordCount() + " instead of " + coordinates.length);
+        }
         double[] coordinates = new double[this.coordinates.length];
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = this.coordinates[k] - point.coordinates[k];
@@ -465,11 +474,11 @@ public class Point implements Comparable<Point> {
      *                                  are different.
      */
     public Point min(Point point) {
-        if (point == null)
-            throw new NullPointerException("Null point argument");
-        if (point.coordCount() != coordinates.length)
+        Objects.requireNonNull(point, "Null point argument");
+        if (point.coordCount() != coordinates.length) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + point.coordCount() + " instead of " + coordinates.length);
+        }
         double[] coordinates = new double[this.coordinates.length];
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = Math.min(this.coordinates[k], point.coordinates[k]);
@@ -489,11 +498,11 @@ public class Point implements Comparable<Point> {
      *                                  are different.
      */
     public Point max(Point point) {
-        if (point == null)
-            throw new NullPointerException("Null point argument");
-        if (point.coordCount() != coordinates.length)
+        Objects.requireNonNull(point, "Null point argument");
+        if (point.coordCount() != coordinates.length) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + point.coordCount() + " instead of " + coordinates.length);
+        }
         double[] coordinates = new double[this.coordinates.length];
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = Math.max(this.coordinates[k], point.coordinates[k]);
@@ -573,11 +582,11 @@ public class Point implements Comparable<Point> {
      *                                  <tt>multipliers.length</tt>.
      */
     public Point scale(double... multipliers) {
-        if (multipliers == null)
-            throw new NullPointerException("Null multipliers argument");
-        if (multipliers.length != coordinates.length)
+        Objects.requireNonNull(multipliers, "Null multipliers argument");
+        if (multipliers.length != coordinates.length) {
             throw new IllegalArgumentException("Illegal number of multipliers: "
                 + multipliers.length + " instead of " + coordinates.length);
+        }
         double[] coordinates = new double[this.coordinates.length];
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = multipliers[k] == 0.0 ? 0 :
@@ -641,16 +650,16 @@ public class Point implements Comparable<Point> {
             throw new IllegalArgumentException("Too short result coordinates array: double["
                 + resultCoordinates.length +"]; " + coordinates.length + " elements required to store coordinates");
         }
-        if (multipliers == null)
-            throw new NullPointerException("Null multipliers argument");
-        if (multipliers.length != coordinates.length)
+        Objects.requireNonNull(multipliers, "Null multipliers argument");
+        if (multipliers.length != coordinates.length) {
             throw new IllegalArgumentException("Illegal number of multipliers: "
                 + multipliers.length + " instead of " + coordinates.length);
-        if (shift == null)
-            throw new NullPointerException("Null shift argument");
-        if (shift.coordCount() != coordinates.length)
+        }
+        Objects.requireNonNull(shift, "Null shift argument");
+        if (shift.coordCount() != coordinates.length) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + shift.coordCount() + " instead of " + coordinates.length);
+        }
         for (int k = 0; k < coordinates.length; k++) {
             resultCoordinates[k] = multipliers[k] == 0.0 ? shift.coord(k) :
                 multipliers[k] == 1.0 ? shift.coord(k) + this.coordinates[k] :
@@ -694,11 +703,11 @@ public class Point implements Comparable<Point> {
      *                                  are different.
      */
     public double scalarProduct(Point point) {
-        if (point == null)
-            throw new NullPointerException("Null point argument");
-        if (point.coordCount() != coordinates.length)
+        Objects.requireNonNull(point, "Null point argument");
+        if (point.coordCount() != coordinates.length) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + point.coordCount() + " instead of " + coordinates.length);
+        }
         double result = 0.0;
         for (int k = 0; k < coordinates.length; k++) {
             result += coordinates[k] * point.coordinates[k];
@@ -735,8 +744,9 @@ public class Point implements Comparable<Point> {
      */
     public Point projectionAlongAxis(int coordIndex) {
         coord(coordIndex); // check for illegal coordIndex
-        if (this.coordinates.length == 1)
+        if (this.coordinates.length == 1) {
             throw new IllegalStateException("Cannot perform projection of 1-dimensional figures");
+        }
         double[] coordinates = new double[this.coordinates.length - 1];
         System.arraycopy(this.coordinates, 0, coordinates, 0, coordIndex);
         System.arraycopy(this.coordinates, coordIndex + 1, coordinates, coordIndex, coordinates.length - coordIndex);
@@ -759,11 +769,13 @@ public class Point implements Comparable<Point> {
     boolean projectionAlongAxisEquals(int coordIndex, Point point) {
         // Right now I'm not sure that this method is really useful. Can be made "public" at any moment.
         coord(coordIndex); // check for illegal coordIndex
-        if (this.coordinates.length == 1)
+        if (this.coordinates.length == 1) {
             throw new IllegalStateException("Cannot perform projection of 1-dimensional figures");
-        if (this.coordinates.length != point.coordCount() + 1)
+        }
+        if (this.coordinates.length != point.coordCount() + 1) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + point.coordCount() + " is not equal to " + coordinates.length + "-1");
+        }
 
         for (int k = 0; k < coordIndex; k++) {
             if (this.coordinates[k] != point.coordinates[k]) {
@@ -844,13 +856,15 @@ public class Point implements Comparable<Point> {
      */
     public int compareTo(Point o, int firstCoordIndex) {
         int n = Math.max(coordinates.length, o.coordinates.length);
-        if (firstCoordIndex < 0)
+        if (firstCoordIndex < 0) {
             throw new IllegalArgumentException("Negative firstCoordIndex argument");
+        }
         firstCoordIndex = firstCoordIndex % n;
         for (int k = n - 1; k >= 0; k--) {
             int index = k + firstCoordIndex;
-            if (index >= n)
+            if (index >= n) {
                 index -= n;
+            }
             double thisCoord = index >= coordinates.length ? 0 : coordinates[index];
             double otherCoord = index >= o.coordinates.length ? 0 : o.coordinates[index];
             if (thisCoord > otherCoord) {

@@ -94,17 +94,18 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
      */
     protected AbstractUniformGridPattern(Point originOfGrid, double[] stepsOfGrid, boolean trivialUnionDecomposition) {
         super(originOfGrid.coordCount());
-        if (stepsOfGrid == null)
-            throw new NullPointerException("Null stepsOfGrid");
-        if (stepsOfGrid.length != originOfGrid.coordCount())
+        Objects.requireNonNull(stepsOfGrid, "Null stepsOfGrid");
+        if (stepsOfGrid.length != originOfGrid.coordCount()) {
             throw new IllegalArgumentException("The number of steps of the grid is not equal "
                 + "to the number of dimensions of the origin");
+        }
         this.trivialUnionDecomposition = trivialUnionDecomposition;
         this.originOfGrid = originOfGrid;
         this.stepsOfGrid = stepsOfGrid.clone();
         for (double step : this.stepsOfGrid) {
-            if (step <= 0.0)
+            if (step <= 0.0) {
                 throw new IllegalArgumentException("Zero or negative steps of the grid are not allowed");
+            }
         }
         this.zeroOriginOfGrid = this.originOfGrid.isOrigin();
         this.stepsVector = Point.valueOf(this.stepsOfGrid);
@@ -149,8 +150,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
     }
 
     public boolean stepsOfGridEqual(UniformGridPattern pattern) {
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         if (pattern.dimCount() != dimCount) {
             return false;
         }
@@ -565,11 +565,12 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                     if (DEBUG_MODE) {
                         if (np2.pointCount() <= 20000) { // avoid too much slowing down
                             probable = np2.simpleMinkowskiAdd(nc2.round()); // round() provides 1x1x... grid
-                            if (probable.pointCount() != probableCardinality)
+                            if (probable.pointCount() != probableCardinality) {
                                 throw new AssertionError("Internal error A in carcass method: probe matrix contains "
                                     + probableCardinality + " unit points instead of correct " + probable.pointCount()
                                     + ": n=" + n + ", p(unscaled)=" + pUnscaled + ", c=" + c
                                     + ", 2n(x)P(+)2n*c=" + probable);
+                            }
                         }
                     }
 
@@ -593,10 +594,11 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                                 correct = np2.simpleMinkowskiAdd(ncRound).simpleMinkowskiAdd(ncRound);
                                 // no ability for more thorough check
                             }
-                            if (correct.pointCount() != correctCardinality)
+                            if (correct.pointCount() != correctCardinality) {
                                 throw new AssertionError("Internal error B in carcass method: probe matrix contains "
                                     + correctCardinality + " unit points instead of correct " + correct.pointCount()
                                     + ": n=" + n + ", p(unscaled)=" + p + ", c=" + c + ", 4n(x)P=" + correct);
+                            }
                             np = np2;
                             np2 = correct;
                         }
@@ -673,11 +675,11 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
      * @throws IllegalArgumentException if the numbers of space dimensions of both patterns are different.
      */
     public Pattern minkowskiAdd(Pattern added) {
-        if (added == null)
-            throw new NullPointerException("Null added argument");
-        if (added.dimCount() != this.dimCount)
+        Objects.requireNonNull(added, "Null added argument");
+        if (added.dimCount() != this.dimCount) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + added.dimCount() + " instead of " + this.dimCount);
+        }
         long addedPointCount = added.pointCount();
         if (addedPointCount == 1) {
             return shift(added.coordMin());
@@ -720,8 +722,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         assert circumscribed instanceof UniformGridPattern;
 
         int[] dimensions = intGridDimensions((UniformGridPattern) circumscribed);
-        if (dimensions == null)
-            throw new TooManyPointsInPatternError("Too large pattern for Minkowski adding: "
+        Objects.requireNonNull(dimensions, "Too large pattern for Minkowski adding: "
                 + "some dimensions are 2^31 or greater");
 
         assert circumscribedOfThis.isOrdinary();
@@ -758,11 +759,11 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
      * @throws IllegalArgumentException if the numbers of space dimensions of both patterns are different.
      */
     public Pattern minkowskiSubtract(Pattern subtracted) {
-        if (subtracted == null)
-            throw new NullPointerException("Null subtracted argument");
-        if (subtracted.dimCount() != this.dimCount)
+        Objects.requireNonNull(subtracted, "Null subtracted argument");
+        if (subtracted.dimCount() != this.dimCount) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + subtracted.dimCount() + " instead of " + this.dimCount);
+        }
         long subtractedPointCount = subtracted.pointCount();
         if (subtractedPointCount == 1) {
             return shift(subtracted.coordMin().symmetric());
@@ -827,8 +828,9 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
      * @throws IllegalArgumentException if the argument is negative.
      */
     public List<Pattern> minkowskiDecomposition(int minimalPointCount) {
-        if (minimalPointCount < 0)
+        if (minimalPointCount < 0) {
             throw new IllegalArgumentException("Negative minimalPointCount");
+        }
         if (!isActuallyRectangular()) {
             return Collections.<Pattern>singletonList(this);
         }
@@ -922,8 +924,9 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
      * @throws IllegalArgumentException if the argument is negative.
      */
     public List<List<Pattern>> allUnionDecompositions(int minimalPointCount) {
-        if (minimalPointCount < 0)
+        if (minimalPointCount < 0) {
             throw new IllegalArgumentException("Negative minimalPointCount");
+        }
         if (trivialUnionDecomposition) {
             return Collections.singletonList(Collections.<Pattern>singletonList(this));
         }
@@ -989,8 +992,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
     }
 
     public static boolean isAllowedGridIndex(IPoint gridIndex) {
-        if (gridIndex == null)
-            throw new NullPointerException("Null grid index");
+        Objects.requireNonNull(gridIndex, "Null grid index");
         for (int k = 0, n = gridIndex.coordCount(); k < n; k++) {
             long coord = gridIndex.coord(k);
             if (coord < -Pattern.MAX_COORDINATE || coord > Pattern.MAX_COORDINATE) {
@@ -1001,8 +1003,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
     }
 
     public static boolean isAllowedGridIndexRange(IRange gridIndexRange) {
-        if (gridIndexRange == null)
-            throw new NullPointerException("Null grid index range");
+        Objects.requireNonNull(gridIndexRange, "Null grid index range");
         long min = gridIndexRange.min();
         long max = gridIndexRange.max();
         assert min <= max;
@@ -1035,15 +1036,15 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
     }
 
     static void checkGridIndex(IPoint gridIndex) throws TooLargePatternCoordinatesException {
-        if (!isAllowedGridIndex(gridIndex))
+        if (!isAllowedGridIndex(gridIndex)) {
             throw new TooLargePatternCoordinatesException("Some grid index " + gridIndex + " is out of "
                 + " out of -" + MAX_COORDINATE + ".." + MAX_COORDINATE
                 + " range and cannot be used for building a pattern");
+        }
     }
 
     static void checkGridIndexRange(IRange gridIndexRange) throws TooLargePatternCoordinatesException {
-        if (gridIndexRange == null)
-            throw new NullPointerException("Null grid index range");
+        Objects.requireNonNull(gridIndexRange, "Null grid index range");
         long min = gridIndexRange.min();
         long max = gridIndexRange.max();
         assert min <= max;
@@ -1051,18 +1052,21 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
     }
 
     static void checkGridIndexRange(long min, long max) throws TooLargePatternCoordinatesException {
-        if (min < -MAX_COORDINATE || max > MAX_COORDINATE)
+        if (min < -MAX_COORDINATE || max > MAX_COORDINATE) {
             throw new TooLargePatternCoordinatesException("Some grid index range " + min + ".." + max
                 + " is out of -" + MAX_COORDINATE + ".." + MAX_COORDINATE
                 + " range and cannot be used for building a pattern");
-        if (max - min > MAX_COORDINATE)
+        }
+        if (max - min > MAX_COORDINATE) {
             throw new TooLargePatternCoordinatesException("Some grid index range " + min + ".." + max
                 + " has a size larger than " + MAX_COORDINATE + " and cannot be used for building a pattern");
+        }
     }
 
     private AbstractUniformGridPattern simpleMinkowskiAdd(UniformGridPattern added) {
-        if (!stepsOfGridEqual(added))
+        if (!stepsOfGridEqual(added)) {
             throw new AssertionError("simpleMinkowskiAdd should be used with compatible grids only");
+        }
         Set<IPoint> resultIndexes = new HashSet<IPoint>();
         Set<IPoint> indexes = gridIndexes();
         Set<IPoint> addedIndexes = added.gridIndexes();
@@ -1168,12 +1172,15 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         int newLastDim, int newLastButOneDim)
     {
         int[] dim = matrix.dimensions();
-        if (dim.length < 2)
+        if (dim.length < 2) {
             throw new AssertionError("This method cannot process 1-dimensional matrices");
-        if (newLastDim < dim[dim.length - 1])
+        }
+        if (newLastDim < dim[dim.length - 1]) {
             throw new AssertionError("This method cannot reduce the matrix");
-        if (newLastButOneDim < dim[dim.length - 2])
+        }
+        if (newLastButOneDim < dim[dim.length - 2]) {
             throw new AssertionError("This method cannot reduce the matrix");
+        }
 
         long mult = 1;
         for (int k = 0; k < dim.length - 2; k++) {

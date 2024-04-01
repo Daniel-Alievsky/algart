@@ -131,16 +131,15 @@ public class IRectangularArea {
      * @throws IllegalArgumentException if the passed array is empty (no ranges are passed).
      */
     public static IRectangularArea valueOf(IRange... coordRanges) {
-        if (coordRanges == null)
-            throw new NullPointerException("Null coordRanges argument");
+        Objects.requireNonNull(coordRanges, "Null coordRanges argument");
         int n = coordRanges.length;
-        if (n == 0)
+        if (n == 0) {
             throw new IllegalArgumentException("Empty coordRanges array");
+        }
         coordRanges = coordRanges.clone();
         // cloning before checking guarantees correct check while multithreading
         for (int k = 0; k < n; k++) {
-            if (coordRanges[k] == null)
-                throw new NullPointerException("Null coordRanges[" + k + "]");
+            Objects.requireNonNull(coordRanges[k], "Null coordRanges[" + k + "]");
         }
         long[] min = new long[n];
         long[] max = new long[n];
@@ -236,8 +235,7 @@ public class IRectangularArea {
      *                                  do not match requirements of {@link #valueOf(IPoint, IPoint)} method.
      */
     public static IRectangularArea valueOf(RectangularArea area) {
-        if (area == null)
-            throw new NullPointerException("Null area argument");
+        Objects.requireNonNull(area, "Null area argument");
         return valueOf(IPoint.valueOf(area.min), IPoint.valueOf(area.max));
     }
 
@@ -260,8 +258,7 @@ public class IRectangularArea {
      *                                  do not match requirements of {@link #valueOf(IPoint, IPoint)} method.
      */
     public static IRectangularArea roundOf(RectangularArea area) {
-        if (area == null)
-            throw new NullPointerException("Null area argument");
+        Objects.requireNonNull(area, "Null area argument");
         return valueOf(IPoint.roundOf(area.min), IPoint.roundOf(area.max));
     }
 
@@ -411,8 +408,9 @@ public class IRectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
      */
     public long minY() {
-        if (min.coordinates.length < 2)
+        if (min.coordinates.length < 2) {
             throw new IllegalStateException("Cannot get y-coordinates of " + coordCount() + "-dimensional area");
+        }
         return min.coordinates[1];
     }
 
@@ -423,8 +421,9 @@ public class IRectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
      */
     public long maxY() {
-        if (min.coordinates.length < 2)
+        if (min.coordinates.length < 2) {
             throw new IllegalStateException("Cannot get y-coordinates of " + coordCount() + "-dimensional area");
+        }
         return max.coordinates[1];
     }
 
@@ -435,8 +434,9 @@ public class IRectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
      */
     public long sizeY() {
-        if (min.coordinates.length < 2)
+        if (min.coordinates.length < 2) {
             throw new IllegalStateException("Cannot get y-coordinates of " + coordCount() + "-dimensional area");
+        }
         return max.coordinates[1] - min.coordinates[1] + 1;
     }
 
@@ -447,8 +447,9 @@ public class IRectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
      */
     public long widthY() {
-        if (min.coordinates.length < 2)
+        if (min.coordinates.length < 2) {
             throw new IllegalStateException("Cannot get y-coordinates of " + coordCount() + "-dimensional area");
+        }
         return max.coordinates[1] - min.coordinates[1];
     }
 
@@ -459,8 +460,9 @@ public class IRectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
      */
     public long minZ() {
-        if (min.coordinates.length < 3)
+        if (min.coordinates.length < 3) {
             throw new IllegalStateException("Cannot get z-coordinates of " + coordCount() + "-dimensional area");
+        }
         return min.coordinates[2];
     }
 
@@ -471,8 +473,9 @@ public class IRectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
      */
     public long maxZ() {
-        if (min.coordinates.length < 3)
+        if (min.coordinates.length < 3) {
             throw new IllegalStateException("Cannot get z-coordinates of " + coordCount() + "-dimensional area");
+        }
         return max.coordinates[2];
     }
 
@@ -483,8 +486,9 @@ public class IRectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
      */
     public long sizeZ() {
-        if (min.coordinates.length < 3)
+        if (min.coordinates.length < 3) {
             throw new IllegalStateException("Cannot get z-coordinates of " + coordCount() + "-dimensional area");
+        }
         return max.coordinates[2] - min.coordinates[2] + 1;
     }
 
@@ -495,8 +499,9 @@ public class IRectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
      */
     public long widthZ() {
-        if (min.coordinates.length < 3)
+        if (min.coordinates.length < 3) {
             throw new IllegalStateException("Cannot get z-coordinates of " + coordCount() + "-dimensional area");
+        }
         return max.coordinates[2] - min.coordinates[2];
     }
 
@@ -583,12 +588,12 @@ public class IRectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public boolean contains(IPoint point) {
-        if (point == null)
-            throw new NullPointerException("Null point argument");
+        Objects.requireNonNull(point, "Null point argument");
         int n = min.coordinates.length;
-        if (point.coordinates.length != n)
+        if (point.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + point.coordinates.length + " instead of " + n);
+        }
         for (int k = 0; k < n; k++) {
             if (point.coordinates[k] < min.coordinates[k] || point.coordinates[k] > max.coordinates[k]) {
                 return false;
@@ -609,12 +614,8 @@ public class IRectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of one of areas.
      */
     public static boolean contains(Collection<IRectangularArea> areas, IPoint point) {
-        if (areas == null) {
-            throw new NullPointerException("Null areas argument");
-        }
-        if (point == null) {
-            throw new NullPointerException("Null point argument");
-        }
+        Objects.requireNonNull(areas, "Null areas argument");
+        Objects.requireNonNull(point, "Null point argument");
         for (IRectangularArea a : areas) {
             if (a.contains(point)) {
                 return true;
@@ -636,12 +637,12 @@ public class IRectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public boolean contains(IRectangularArea area) {
-        if (area == null)
-            throw new NullPointerException("Null area argument");
+        Objects.requireNonNull(area, "Null area argument");
         int n = min.coordinates.length;
-        if (area.min.coordinates.length != n)
+        if (area.min.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + area.min.coordinates.length + " instead of " + n);
+        }
         for (int k = 0; k < n; k++) {
             if (area.min.coordinates[k] < min.coordinates[k] || area.max.coordinates[k] > max.coordinates[k]) {
                 return false;
@@ -663,12 +664,8 @@ public class IRectangularArea {
      *                                  in the 1st argument.
      */
     public static boolean contains(Collection<IRectangularArea> areas, IRectangularArea area) {
-        if (areas == null) {
-            throw new NullPointerException("Null areas argument");
-        }
-        if (area == null) {
-            throw new NullPointerException("Null area argument");
-        }
+        Objects.requireNonNull(areas, "Null areas argument");
+        Objects.requireNonNull(area, "Null area argument");
         for (IRectangularArea a : areas) {
             if (a.contains(area)) {
                 return true;
@@ -691,12 +688,12 @@ public class IRectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public boolean intersects(IRectangularArea area) {
-        if (area == null)
-            throw new NullPointerException("Null area argument");
+        Objects.requireNonNull(area, "Null area argument");
         int n = min.coordinates.length;
-        if (area.min.coordinates.length != n)
+        if (area.min.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + area.min.coordinates.length + " instead of " + n);
+        }
         for (int k = 0; k < n; k++) {
             if (area.max.coordinates[k] < min.coordinates[k] || area.min.coordinates[k] > max.coordinates[k]) {
                 return false;
@@ -725,18 +722,17 @@ public class IRectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public IRectangularArea intersection(IRectangularArea area) {
-        if (area == null) {
-            throw new NullPointerException("Null area argument");
-        }
+        Objects.requireNonNull(area, "Null area argument");
         int n = min.coordinates.length;
-        if (area.min.coordinates.length != n)
+        if (area.min.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + area.min.coordinates.length + " instead of " + n);
+        }
         long[] newMin = new long[n];
         long[] newMax = new long[n];
         for (int k = 0; k < n; k++) {
-            newMin[k] = min.coordinates[k] >= area.min.coordinates[k] ? min.coordinates[k] : area.min.coordinates[k];
-            newMax[k] = max.coordinates[k] <= area.max.coordinates[k] ? max.coordinates[k] : area.max.coordinates[k];
+            newMin[k] = Math.max(min.coordinates[k], area.min.coordinates[k]);
+            newMax[k] = Math.min(max.coordinates[k], area.max.coordinates[k]);
             if (newMin[k] > newMax[k]) {
                 return null;
             }
@@ -767,9 +763,7 @@ public class IRectangularArea {
      *                                  have different {@link #coordCount()}.
      */
     public List<IRectangularArea> intersection(Collection<IRectangularArea> areas) {
-        if (areas == null) {
-            throw new NullPointerException("Null areas argument");
-        }
+        Objects.requireNonNull(areas, "Null areas argument");
         final List<IRectangularArea> result = new ArrayList<IRectangularArea>();
         for (IRectangularArea area : areas) {
             IRectangularArea intersection = intersection(area);
@@ -817,9 +811,7 @@ public class IRectangularArea {
      * @see #subtractCollection(java.util.Queue, java.util.Collection)
      */
     public Collection<IRectangularArea> difference(Collection<IRectangularArea> results, IRectangularArea area) {
-        if (results == null) {
-            throw new NullPointerException("Null results argument");
-        }
+        Objects.requireNonNull(results, "Null results argument");
         if (!intersects(area)) { // also checks number of dimensions
             results.add(this);
             return results;
@@ -885,10 +877,8 @@ public class IRectangularArea {
         Queue<IRectangularArea> fromWhatToSubtract,
         Collection<IRectangularArea> whatToSubtract)
     {
-        if (fromWhatToSubtract == null)
-            throw new NullPointerException("Null fromWhatToSubtract");
-        if (whatToSubtract == null)
-            throw new NullPointerException("Null whatToSubtract");
+        Objects.requireNonNull(fromWhatToSubtract, "Null fromWhatToSubtract");
+        Objects.requireNonNull(whatToSubtract, "Null whatToSubtract");
         for (IRectangularArea area : whatToSubtract) {
             for (int i = 0, n = fromWhatToSubtract.size(); i < n; i++) {
                 IRectangularArea minuend = fromWhatToSubtract.poll();
@@ -935,9 +925,7 @@ public class IRectangularArea {
      *                                  have different {@link #coordCount()}.
      */
     public Queue<IRectangularArea> subtract(Collection<IRectangularArea> whatToSubtract) {
-        if (whatToSubtract == null) {
-            throw new NullPointerException("Null whatToSubtract");
-        }
+        Objects.requireNonNull(whatToSubtract, "Null whatToSubtract");
         Queue<IRectangularArea> difference = new ArrayDeque<IRectangularArea>();
         difference.add(this);
         IRectangularArea.subtractCollection(difference, whatToSubtract);
@@ -1032,9 +1020,7 @@ public class IRectangularArea {
      * @throws IllegalArgumentException if <tt>{@link #coordCount() coordCount()}</tt> is not equal for all areas.
      */
     public static IRectangularArea minimalContainingArea(Collection<IRectangularArea> areas) {
-        if (areas == null) {
-            throw new NullPointerException("Null areas");
-        }
+        Objects.requireNonNull(areas, "Null areas");
         if (areas.isEmpty()) {
             return null;
         }
@@ -1094,8 +1080,7 @@ public class IRectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public long parallelDistance(IPoint point) {
-        if (point == null)
-            throw new NullPointerException("Null point argument");
+        Objects.requireNonNull(point, "Null point argument");
         return parallelDistance(point.coordinates);
     }
 
@@ -1111,12 +1096,12 @@ public class IRectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public long parallelDistance(long... coordinates) {
-        if (coordinates == null)
-            throw new NullPointerException("Null coordinates argument");
+        Objects.requireNonNull(coordinates, "Null coordinates argument");
         int n = this.min.coordinates.length;
-        if (coordinates.length != n)
+        if (coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + coordinates.length + " instead of " + n);
+        }
         long min = this.min.coordinates[0];
         long max = this.max.coordinates[0];
         long x = coordinates[0];
@@ -1146,8 +1131,9 @@ public class IRectangularArea {
      */
     public long parallelDistance(long x, long y) {
         int n = min.coordinates.length;
-        if (n != 2)
+        if (n != 2) {
             throw new IllegalArgumentException("Dimensions count mismatch: 2 instead of " + n);
+        }
         long min = this.min.coordinates[0];
         long max = this.max.coordinates[0];
         long maxD = min - x >= x - max ? min - x : x - max;
@@ -1174,8 +1160,9 @@ public class IRectangularArea {
      */
     public long parallelDistance(long x, long y, long z) {
         int n = min.coordinates.length;
-        if (n != 3)
+        if (n != 3) {
             throw new IllegalArgumentException("Dimensions count mismatch: 3 instead of " + n);
+        }
         long min = this.min.coordinates[0];
         long max = this.max.coordinates[0];
         long maxD = min - x >= x - max ? min - x : x - max;
@@ -1213,11 +1200,11 @@ public class IRectangularArea {
      * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
      */
     public IRectangularArea shift(IPoint vector) {
-        if (vector == null)
-            throw new NullPointerException("Null vector argument");
-        if (vector.coordinates.length != min.coordinates.length)
+        Objects.requireNonNull(vector, "Null vector argument");
+        if (vector.coordinates.length != min.coordinates.length) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                     + vector.coordinates.length + " instead of " + min.coordinates.length);
+        }
         if (vector.isOrigin()) {
             return this;
         }
@@ -1243,11 +1230,11 @@ public class IRectangularArea {
      * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
      */
     public IRectangularArea shiftBack(IPoint vector) {
-        if (vector == null)
-            throw new NullPointerException("Null vector argument");
-        if (vector.coordinates.length != min.coordinates.length)
+        Objects.requireNonNull(vector, "Null vector argument");
+        if (vector.coordinates.length != min.coordinates.length) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                     + vector.coordinates.length + " instead of " + min.coordinates.length);
+        }
         if (vector.isOrigin()) {
             return this;
         }
@@ -1272,12 +1259,11 @@ public class IRectangularArea {
      * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
      */
     public IRectangularArea dilate(IPoint expansion) {
-        if (expansion == null) {
-            throw new NullPointerException("Null expansion");
-        }
-        if (expansion.coordCount() != coordCount())
+        Objects.requireNonNull(expansion, "Null expansion");
+        if (expansion.coordCount() != coordCount()) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                     + expansion.coordCount() + " instead of " + coordCount());
+        }
         if (expansion.isOrigin()) {
             return this;
         }
@@ -1341,17 +1327,14 @@ public class IRectangularArea {
      * @throws ArithmeticException      in a case of <tt>long</tt> overflow.
      */
     public List<IRectangularArea> dilateStraightOnly(List<IRectangularArea> results, IPoint expansion) {
-        if (results == null) {
-            throw new NullPointerException("Null results");
-        }
-        if (expansion == null) {
-            throw new NullPointerException("Null expansion");
-        }
+        Objects.requireNonNull(results, "Null results");
+        Objects.requireNonNull(expansion, "Null expansion");
         results.add(this);
         final int coordCount = coordCount();
-        if (expansion.coordCount() != coordCount)
+        if (expansion.coordCount() != coordCount) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                     + expansion.coordCount() + " instead of " + coordCount);
+        }
         final long[] min = this.min.coordinates();
         final long[] max = this.max.coordinates();
         for (int k = 0; k < coordCount; k++) {
@@ -1430,9 +1413,7 @@ public class IRectangularArea {
             Collection<IRectangularArea> areas,
             IPoint expansion,
             boolean straightOnly) {
-        if (areas == null) {
-            throw new NullPointerException("Null areas");
-        }
+        Objects.requireNonNull(areas, "Null areas");
         final List<IRectangularArea> result = new ArrayList<IRectangularArea>();
         for (IRectangularArea area : areas) {
             if (straightOnly) {
@@ -1493,25 +1474,28 @@ public class IRectangularArea {
     }
 
     static IRectangularArea valueOf(IPoint min, IPoint max, boolean ise) {
-        if (min == null)
-            throw new NullPointerException("Null min vertex");
-        if (max == null)
-            throw new NullPointerException("Null max vertex");
+        Objects.requireNonNull(min, "Null min vertex");
+        Objects.requireNonNull(max, "Null max vertex");
         int n = min.coordinates.length;
-        if (n != max.coordinates.length)
+        if (n != max.coordinates.length) {
             throw new IllegalArgumentException("min.coordCount() = " + n
                 + " does not match max.coordCount() = " + max.coordinates.length);
+        }
         for (int k = 0; k < n; k++) {
-            if (min.coordinates[k] > max.coordinates[k])
+            if (min.coordinates[k] > max.coordinates[k]) {
                 throw IRange.invalidBoundsException("min.coord(" + k + ") > max.coord(" + k + ")"
                     + " (min = " + min + ", max = " + max + ")", ise);
-            if (max.coordinates[k] == Long.MAX_VALUE)
+            }
+            if (max.coordinates[k] == Long.MAX_VALUE) {
                 throw IRange.invalidBoundsException("max.coord(" + k + ") == Long.MAX_VALUE", ise);
-            if (min.coordinates[k] <= -Long.MAX_VALUE)
+            }
+            if (min.coordinates[k] <= -Long.MAX_VALUE) {
                 throw IRange.invalidBoundsException("min.coord(" + k + ") == Long.MAX_VALUE or Long.MIN_VALUE+1", ise);
-            if (max.coordinates[k] - min.coordinates[k] + 1L <= 0L)
+            }
+            if (max.coordinates[k] - min.coordinates[k] + 1L <= 0L) {
                 throw IRange.invalidBoundsException("max.coord(" + k + ") - min.coord(" + k + ")"
                     + " >= Long.MAX_VALUE (min = " + min + ", max = " + max + ")", ise);
+            }
         }
         return new IRectangularArea(min, max);
     }

@@ -47,13 +47,11 @@ public class Patterns {
 
     // TODO!! Note: this method always returns SimplePattern or UniformGridPattern.
     public static DirectPointSetPattern newPattern(Collection<Point> points) {
-        if (points == null)
-            throw new NullPointerException("Null points argument");
+        Objects.requireNonNull(points, "Null points argument");
         points = new ArrayList<Point>(points);
         boolean allInteger = true;
         for (Point p : points) {
-            if (p == null)
-                throw new NullPointerException("Null point in the set");
+            Objects.requireNonNull(p, "Null point in the set");
             allInteger &= p.isInteger() & AbstractUniformGridPattern.isAllowedGridIndex(p.toIntegerPoint());
         }
         if (allInteger) {
@@ -77,8 +75,7 @@ public class Patterns {
 
     // TODO!! Note: this method always returns SimplePattern or UniformGridPattern.
     public static DirectPointSetPattern newPattern(Point... points) {
-        if (points == null)
-            throw new NullPointerException("Null points argument");
+        Objects.requireNonNull(points, "Null points argument");
         return newPattern(Arrays.asList(points));
     }
 
@@ -87,10 +84,8 @@ public class Patterns {
         double[] stepsOfGrid,
         Collection<IPoint> gridIndexes)
     {
-        if (originOfGrid == null)
-            throw new NullPointerException("Null originOfGrid");
-        if (gridIndexes == null)
-            throw new NullPointerException("Null gridIndexes argument");
+        Objects.requireNonNull(originOfGrid, "Null originOfGrid");
+        Objects.requireNonNull(gridIndexes, "Null gridIndexes argument");
         return new BasicDirectPointSetUniformGridPattern(originOfGrid, stepsOfGrid, new HashSet<IPoint>(gridIndexes));
     }
 
@@ -128,8 +123,7 @@ public class Patterns {
      *                                  <tt>-Long.MAX_VALUE/2..Long.MAX_VALUE/2</tt>.
      */
     public static DirectPointSetUniformGridPattern newIntegerPattern(Collection<IPoint> points) {
-        if (points == null)
-            throw new NullPointerException("Null points argument");
+        Objects.requireNonNull(points, "Null points argument");
         HashSet<IPoint> gridIndexes = new HashSet<IPoint>(points);
         return new BasicDirectPointSetUniformGridPattern(
             gridIndexes.isEmpty() ? 1 : gridIndexes.iterator().next().coordCount(),
@@ -150,8 +144,7 @@ public class Patterns {
      *                                  <tt>-Long.MAX_VALUE/2..Long.MAX_VALUE/2</tt>.
      */
     public static DirectPointSetUniformGridPattern newIntegerPattern(IPoint... points) {
-        if (points == null)
-            throw new NullPointerException("Null points argument");
+        Objects.requireNonNull(points, "Null points argument");
         return newIntegerPattern(Arrays.asList(points));
     }
 
@@ -192,8 +185,7 @@ public class Patterns {
      * @throws TooManyPointsInPatternError if <tt>r</tt> is about <tt>Integer.MAX_VALUE</tt> or greater.
      */
     public static UniformGridPattern newSphereIntegerPattern(Point center, final double r) {
-        if (center == null)
-            throw new NullPointerException("Null center argument");
+        Objects.requireNonNull(center, "Null center argument");
         if (r < 0.0)
             throw new IllegalArgumentException("Negative sphere radius");
         double[] semiAxes = new double[center.coordCount()];
@@ -233,10 +225,8 @@ public class Patterns {
     }
 
     public static UniformGridPattern newEllipsoidIntegerPattern(Point center, double... semiAxes) {
-        if (center == null)
-            throw new NullPointerException("Null center argument");
-        if (semiAxes == null)
-            throw new NullPointerException("Null semiAxes argument");
+        Objects.requireNonNull(center, "Null center argument");
+        Objects.requireNonNull(semiAxes, "Null semiAxes argument");
         final int n = center.coordCount();
         if (semiAxes.length != n)
             throw new IllegalArgumentException("Number of semi-axes " + semiAxes.length
@@ -296,10 +286,8 @@ public class Patterns {
     }
 
     public static Pattern newSurface(Pattern projection, final Func surface) {
-        if (projection == null)
-            throw new NullPointerException("Null projection argument");
-        if (surface == null)
-            throw new NullPointerException("Null surface argument");
+        Objects.requireNonNull(projection, "Null projection argument");
+        Objects.requireNonNull(surface, "Null surface argument");
         final int dimCount = projection.dimCount();
         final Set<Point> projectionPoints = projection.points();
         Set<Point> resultPoints = new HashSet<Point>();
@@ -325,12 +313,9 @@ public class Patterns {
         double lastCoordinateOfOrigin,
         double lastCoordinateStep)
     {
-        if (projection == null)
-            throw new NullPointerException("Null projection argument");
-        if (minSurface == null)
-            throw new NullPointerException("Null minSurface argument");
-        if (maxSurface == null)
-            throw new NullPointerException("Null maxSurface argument");
+        Objects.requireNonNull(projection, "Null projection argument");
+        Objects.requireNonNull(minSurface, "Null minSurface argument");
+        Objects.requireNonNull(maxSurface, "Null maxSurface argument");
         if (lastCoordinateStep <= 0.0)
             throw new IllegalArgumentException("Zero or negative last step of the grid is not allowed");
         final int dimCount = projection.dimCount();
@@ -379,10 +364,8 @@ public class Patterns {
         double[] stepsOfGrid,
         IRange... gridIndexRanges)
     {
-        if (originOfGrid == null)
-            throw new NullPointerException("Null originOfGrid");
-        if (gridIndexRanges == null)
-            throw new NullPointerException("Null gridIndexRanges argument");
+        Objects.requireNonNull(originOfGrid, "Null originOfGrid");
+        Objects.requireNonNull(gridIndexRanges, "Null gridIndexRanges argument");
         if (gridIndexRanges.length == 0)
             throw new IllegalArgumentException("Empty gridIndexRanges array");
         return new BasicRectangularPattern(originOfGrid, stepsOfGrid, gridIndexRanges);
@@ -421,8 +404,7 @@ public class Patterns {
      * @throws IllegalArgumentException if <tt>ranges</tt> argument is empty (contains no elements).
      */
     public static RectangularPattern newRectangularIntegerPattern(IRange... ranges) {
-        if (ranges == null)
-            throw new NullPointerException("Null ranges argument");
+        Objects.requireNonNull(ranges, "Null ranges argument");
         if (ranges.length == 0)
             throw new IllegalArgumentException("Empty ranges array");
         return new BasicRectangularPattern(ranges);
@@ -526,8 +508,7 @@ public class Patterns {
     //TODO!! write about limited precision: the result can little differ from the precise sum,
     // if some of pattern are not integer patterns
     public static Pattern newMinkowskiSum(Collection<Pattern> patterns) {
-        if (patterns == null)
-            throw new NullPointerException("Null patterns argument");
+        Objects.requireNonNull(patterns, "Null patterns argument");
         if (patterns.isEmpty())
             throw new IllegalArgumentException("Empty patterns array");
         Pattern[] patternsArray = patterns.toArray(new Pattern[patterns.size()]);
@@ -535,8 +516,7 @@ public class Patterns {
         boolean allCompatibleRectangular = true;
         Pattern first = patternsArray[0];
         for (int k = 0; k < patternsArray.length; k++) {
-            if (patternsArray[k] == null)
-                throw new NullPointerException("Null pattern #" + k + " in the list");
+            Objects.requireNonNull(patternsArray[k], "Null pattern #" + k + " in the list");
             if (patternsArray[k].dimCount() != first.dimCount())
                 throw new IllegalArgumentException("Patterns dimensions mismatch: the first pattern has "
                     + first.dimCount() + " dimensions, but pattern #" + k + " has " + patternsArray[k].dimCount());
@@ -579,8 +559,7 @@ public class Patterns {
      * @throws IllegalArgumentException if <tt>n &lt;= 0</tt>.
      */
     public static Pattern newMinkowskiMultiplePattern(Pattern pattern, int n) {
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         if (n <= 0)
             throw new IllegalArgumentException("Negative or zero n argument");
         Pattern[] patterns = new Pattern[n];
@@ -625,15 +604,13 @@ public class Patterns {
      *                                  <tt>Long.MAX_VALUE</tt>.
      */
     public static Pattern newUnion(Pattern... patterns) {
-        if (patterns == null)
-            throw new NullPointerException("Null patterns argument");
+        Objects.requireNonNull(patterns, "Null patterns argument");
         return new Union(patterns.clone());
         // cloning guarantees correct behaviour while multithreading
     }
 
     public static Pattern newUnion(Collection<Pattern> patterns) {
-        if (patterns == null)
-            throw new NullPointerException("Null patterns argument");
+        Objects.requireNonNull(patterns, "Null patterns argument");
         return new Union(patterns.toArray(new Pattern[patterns.size()]));
         // cloning guarantees correct behaviour while multithreading
     }

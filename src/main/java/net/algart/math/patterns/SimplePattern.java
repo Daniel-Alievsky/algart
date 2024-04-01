@@ -73,8 +73,9 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
     public SimplePattern(Collection<Point> points) {
         super(getDimCountAndCheck(points));
         HashSet<Point> pointSet = new HashSet<Point>(points);
-        if (getDimCountAndCheck(pointSet) != dimCount)
+        if (getDimCountAndCheck(pointSet) != dimCount) {
             throw new IllegalArgumentException("Points dimensions were changed in a parallel thread");
+        }
         this.points = pointSet;
         fillCoordRangesWithCheck(this.points);
     }
@@ -114,11 +115,11 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
      */
     @Override
     public SimplePattern shift(Point shift) {
-        if (shift == null)
-            throw new NullPointerException("Null shift argument");
-        if (shift.coordCount() != dimCount)
+        Objects.requireNonNull(shift, "Null shift argument");
+        if (shift.coordCount() != dimCount) {
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
                 + " is not equal to the number of pattern coordinates " + dimCount);
+        }
         Set<Point> resultPoints = new HashSet<Point>(points.size());
         for (Point p : points) {
             resultPoints.add(p.add(shift));
@@ -151,11 +152,11 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
      */
     @Override
     public SimplePattern scale(double... multipliers) {
-        if (multipliers == null)
-            throw new NullPointerException("Null multipliers argument");
-        if (multipliers.length != dimCount)
+        Objects.requireNonNull(multipliers, "Null multipliers argument");
+        if (multipliers.length != dimCount) {
             throw new IllegalArgumentException("Illegal number of multipliers: "
                 + multipliers.length + " instead of " + dimCount);
+        }
         multipliers = multipliers.clone(); // to be on the safe side
         Set<Point> resultPoints = new HashSet<Point>(points.size());
         for (Point p : points) {
@@ -168,8 +169,9 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
     public SimplePattern projectionAlongAxis(int coordIndex) {
         checkCoordIndex(coordIndex);
         assert dimCount > 0;
-        if (dimCount == 1)
+        if (dimCount == 1) {
             throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
+        }
         Set<Point> resultPoints = new HashSet<Point>(points.size());
         for (Point p : points) {
             resultPoints.add(p.projectionAlongAxis(coordIndex));
@@ -256,23 +258,22 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
     }
 
     static int getDimCountAndCheck(Collection<Point> points) {
-        if (points == null)
-            throw new NullPointerException("Null points argument");
+        Objects.requireNonNull(points, "Null points argument");
         int n = points.size();
-        if (n == 0)
+        if (n == 0) {
             throw new IllegalArgumentException("Empty points set");
+        }
         Iterator<Point> iterator = points.iterator();
         Point p = iterator.next();
-        if (p == null)
-            throw new NullPointerException("Null point is the collection");
+        Objects.requireNonNull(p, "Null point is the collection");
         int result = p.coordCount();
         for (; iterator.hasNext(); ) {
             p = iterator.next();
-            if (p == null)
-                throw new NullPointerException("Null point is the collection");
-            if (p.coordCount() != result)
+            Objects.requireNonNull(p, "Null point is the collection");
+            if (p.coordCount() != result) {
                 throw new IllegalArgumentException("Points dimensions mismatch: the first point has "
                     + result + " coordinates, but some of points has " + p.coordCount());
+            }
             checkPoint(p);
         }
         return result;

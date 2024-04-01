@@ -217,17 +217,25 @@ public class PackedBitArraysPer8Test {
 
             System.out.println("Testing \"getBitsInReverseOrder\" method...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                for (int k = 0; k < len; k++) {
+                    boolean b = PackedBitArraysPer8.getBitsInReverseOrder(pSrc, k, 1) == 1;
+                    boolean bTest = PackedBitArraysPer8.getBitInReverseOrder(pSrc, k);
+                    if (b != bTest) {
+                        throw new AssertionError("The bug A in getBitsInReverseOrder found in test #" +
+                                testCount + ", error found at " + k);
+                    }
+                }
                 System.arraycopy(pSrc, 0, pDestWork, 0, pDest.length);
                 PackedBitArraysPer8.reverseBitsOrderInEachByte(pDestWork);
                 int srcPos = rnd.nextInt(len);
                 int count = rnd.nextInt(2);
-                long v = PackedBitArraysPer8.getBitsInReverseOrder(pSrc, srcPos, count);
-                long simple = getBitsSimple(pDestWork, srcPos, count);
-                if (v != simple) {
-                    throw new AssertionError("The bug getBitsInReverseOrder found in test #" + testCount +
-                            ": srcPos = " + srcPos + ", count = " + count
-                            + ", " + v + " instead of " + simple);
-                }
+//                long v = PackedBitArraysPer8.getBitsInReverseOrder(pSrc, srcPos, count);
+//                long simple = getBitsSimple(pDestWork, srcPos, count);
+//                if (v != simple) {
+//                    throw new AssertionError("The bug getBitsInReverseOrder found in test #" + testCount +
+//                            ": srcPos = " + srcPos + ", count = " + count
+//                            + ", " + v + " instead of " + simple);
+//                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 

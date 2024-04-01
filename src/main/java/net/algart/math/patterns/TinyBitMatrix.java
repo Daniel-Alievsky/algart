@@ -27,6 +27,7 @@ package net.algart.math.patterns;
 import net.algart.math.IPoint;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -81,8 +82,7 @@ class TinyBitMatrix {
       \(Matrix\b.*?\s(\w+)\) ==> (TinyBitMatrix $1)
        !! Auto-generated: NOT EDIT !! */
     public boolean dimEquals(TinyBitMatrix m) {
-        if (m == null)
-            throw new NullPointerException("Null matrix");
+        Objects.requireNonNull(m, "Null matrix");
         int dimCount = dimCount();
         if (m.dimCount() != dimCount) {
             return false;
@@ -102,8 +102,9 @@ class TinyBitMatrix {
        !! Auto-generated: NOT EDIT !! */
     public long pseudoCyclicIndex(long... coordinates) {
         int n = coordinates.length;
-        if (n == 0)
+        if (n == 0) {
             throw new IllegalArgumentException("Empty coordinates array");
+        }
         // 4D example:
         // index = (u*nz*ny*nx + z*ny*nz + y*nx + x) % N =
         //       = (u'*nz*ny*nx + z'*ny*nz + y'*nx + x') % N =

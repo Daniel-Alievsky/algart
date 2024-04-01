@@ -56,8 +56,9 @@ public abstract class AbstractPattern implements Pattern {
      * @throws IllegalArgumentException if <tt>dimCount&lt;=0</tt>.
      */
     protected AbstractPattern(int dimCount) {
-        if (dimCount <= 0)
+        if (dimCount <= 0) {
             throw new IllegalArgumentException("Negative or zero dimCount=" + dimCount);
+        }
         this.dimCount = dimCount;
         this.coordRanges = new Range[dimCount]; // null-filled
         this.minBound = new Pattern[dimCount]; // null-filled
@@ -391,11 +392,11 @@ public abstract class AbstractPattern implements Pattern {
      *                                     section "Coordinate restrictions".
      */
     public Pattern minkowskiAdd(Pattern added) {
-        if (added == null)
-            throw new NullPointerException("Null added argument");
-        if (added.dimCount() != this.dimCount)
+        Objects.requireNonNull(added, "Null added argument");
+        if (added.dimCount() != this.dimCount) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + added.dimCount() + " instead of " + this.dimCount);
+        }
         long addedPointCount = added.pointCount();
         if (addedPointCount == 1) {
             return shift(added.coordMin());
@@ -434,11 +435,11 @@ public abstract class AbstractPattern implements Pattern {
      *                                     section "Coordinate restrictions".
      */
     public Pattern minkowskiSubtract(Pattern subtracted) {
-        if (subtracted == null)
-            throw new NullPointerException("Null subtracted argument");
-        if (subtracted.dimCount() != this.dimCount)
+        Objects.requireNonNull(subtracted, "Null subtracted argument");
+        if (subtracted.dimCount() != this.dimCount) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + subtracted.dimCount() + " instead of " + this.dimCount);
+        }
         Set<Point> subtractedPoints = subtracted.points();
         Point minimal = null;
         double minimalDistance = Double.POSITIVE_INFINITY;
@@ -485,8 +486,9 @@ public abstract class AbstractPattern implements Pattern {
      * @throws IllegalArgumentException if the argument is negative.
      */
     public List<Pattern> minkowskiDecomposition(int minimalPointCount) {
-        if (minimalPointCount < 0)
+        if (minimalPointCount < 0) {
             throw new IllegalArgumentException("Negative minimalPointCount");
+        }
         return Collections.<Pattern>singletonList(this);
     }
 
@@ -528,8 +530,9 @@ public abstract class AbstractPattern implements Pattern {
      * @throws IllegalArgumentException if the argument is negative.
      */
     public List<List<Pattern>> allUnionDecompositions(int minimalPointCount) {
-        if (minimalPointCount < 0)
+        if (minimalPointCount < 0) {
             throw new IllegalArgumentException("Negative minimalPointCount");
+        }
         return Collections.singletonList(Collections.<Pattern>singletonList(this));
     }
 
@@ -545,8 +548,7 @@ public abstract class AbstractPattern implements Pattern {
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public static boolean isAllowedPoint(Point point) {
-        if (point == null)
-            throw new NullPointerException("Null point");
+        Objects.requireNonNull(point, "Null point");
         for (int k = 0, n = point.coordCount(); k < n; k++) {
             double coord = point.coord(k);
             if (coord < -Pattern.MAX_COORDINATE || coord > Pattern.MAX_COORDINATE) {
@@ -572,8 +574,7 @@ public abstract class AbstractPattern implements Pattern {
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public static boolean isAllowedCoordRange(Range range) {
-        if (range == null)
-            throw new NullPointerException("Null range");
+        Objects.requireNonNull(range, "Null range");
         double min = range.min();
         double max = range.max();
         assert min <= max;
@@ -589,31 +590,34 @@ public abstract class AbstractPattern implements Pattern {
      * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
      */
     protected final void checkCoordIndex(int coordIndex) {
-        if (coordIndex < 0 || coordIndex >= dimCount)
+        if (coordIndex < 0 || coordIndex >= dimCount) {
             throw new IndexOutOfBoundsException("Coordinate index "
                 + coordIndex + " is out of range 0.." + (dimCount - 1));
+        }
     }
 
     static void checkPoint(Point point) throws TooLargePatternCoordinatesException {
-        if (!isAllowedPoint(point))
+        if (!isAllowedPoint(point)) {
             throw new TooLargePatternCoordinatesException("Point " + point + " has one of coordinates "
                 + " out of -" + MAX_COORDINATE + ".." + MAX_COORDINATE
                 + " range and cannot be used for building a pattern");
+        }
     }
 
     static void checkCoordRange(Range range) throws TooLargePatternCoordinatesException {
-        if (range == null)
-            throw new NullPointerException("Null range");
+        Objects.requireNonNull(range, "Null range");
         double min = range.min();
         double max = range.max();
         assert min <= max;
-        if (min < -MAX_COORDINATE || max > MAX_COORDINATE)
+        if (min < -MAX_COORDINATE || max > MAX_COORDINATE) {
             throw new TooLargePatternCoordinatesException("Coordinate range " + range
                 + " is out of -" + MAX_COORDINATE + ".." + MAX_COORDINATE
                 + " range and cannot be used for building a pattern");
-        if (!Patterns.isAllowedDifference(min, max))
+        }
+        if (!Patterns.isAllowedDifference(min, max)) {
             throw new TooLargePatternCoordinatesException("Coordinate range " + range
                 + " has a size larger than " + MAX_COORDINATE + " and cannot be used for building a pattern");
+        }
     }
 
     final void fillCoordRangesWithCheck(Collection<Point> points) {

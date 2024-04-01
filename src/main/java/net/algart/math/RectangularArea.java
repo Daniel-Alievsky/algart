@@ -91,22 +91,24 @@ public class RectangularArea {
      *                                  or if one of these coordinates is <tt>Double.NaN</tt>.
      */
     public static RectangularArea valueOf(Point min, Point max) {
-        if (min == null)
-            throw new NullPointerException("Null min vertex");
-        if (max == null)
-            throw new NullPointerException("Null max vertex");
+        Objects.requireNonNull(min, "Null min vertex");
+        Objects.requireNonNull(max, "Null max vertex");
         int n = min.coordinates.length;
-        if (n != max.coordinates.length)
+        if (n != max.coordinates.length) {
             throw new IllegalArgumentException("min.coordCount() = " + n
                 + " does not match max.coordCount() = " + max.coordinates.length);
+        }
         for (int k = 0; k < n; k++) {
-            if (Double.isNaN(min.coordinates[k]))
+            if (Double.isNaN(min.coordinates[k])) {
                 throw new IllegalArgumentException("min.coord(" + k + ") is NaN");
-            if (Double.isNaN(max.coordinates[k]))
+            }
+            if (Double.isNaN(max.coordinates[k])) {
                 throw new IllegalArgumentException("max.coord(" + k + ") is NaN");
-            if (min.coordinates[k] > max.coordinates[k])
+            }
+            if (min.coordinates[k] > max.coordinates[k]) {
                 throw new IllegalArgumentException("min.coord(" + k + ") > max.coord(" + k + ")"
                     + " (min = " + min + ", max = " + max + ")");
+            }
         }
         return new RectangularArea(min, max);
     }
@@ -129,16 +131,15 @@ public class RectangularArea {
      * @throws IllegalArgumentException if the passed array is empty (no ranges are passed).
      */
     public static RectangularArea valueOf(Range... coordRanges) {
-        if (coordRanges == null)
-            throw new NullPointerException("Null coordRanges argument");
+        Objects.requireNonNull(coordRanges, "Null coordRanges argument");
         int n = coordRanges.length;
-        if (n == 0)
+        if (n == 0) {
             throw new IllegalArgumentException("Empty coordRanges array");
+        }
         coordRanges = coordRanges.clone();
         // cloning before checking guarantees correct check while multithreading
         for (int k = 0; k < n; k++) {
-            if (coordRanges[k] == null)
-                throw new NullPointerException("Null coordRanges[" + k + "]");
+            Objects.requireNonNull(coordRanges[k], "Null coordRanges[" + k + "]");
         }
         double[] min = new double[n];
         double[] max = new double[n];
@@ -236,8 +237,7 @@ public class RectangularArea {
      * @throws NullPointerException     if the passed area is <tt>null</tt>.
      */
     public static RectangularArea valueOf(IRectangularArea iArea) {
-        if (iArea == null)
-            throw new NullPointerException("Null iArea argument");
+        Objects.requireNonNull(iArea, "Null iArea argument");
         return new RectangularArea(Point.valueOf(iArea.min), Point.valueOf(iArea.max));
         // integer min and max, converted to real, are always acceptable for valueOf(Point min, Point max) method
     }
@@ -356,8 +356,9 @@ public class RectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
      */
     public double minY() {
-        if (min.coordinates.length < 2)
+        if (min.coordinates.length < 2) {
             throw new IllegalStateException("Cannot get y-coordinates of " + coordCount() + "-dimensional area");
+        }
         return min.coordinates[1];
     }
 
@@ -368,8 +369,9 @@ public class RectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
      */
     public double maxY() {
-        if (min.coordinates.length < 2)
+        if (min.coordinates.length < 2) {
             throw new IllegalStateException("Cannot get y-coordinates of " + coordCount() + "-dimensional area");
+        }
         return max.coordinates[1];
     }
 
@@ -380,8 +382,9 @@ public class RectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
      */
     public double sizeY() {
-        if (min.coordinates.length < 2)
+        if (min.coordinates.length < 2) {
             throw new IllegalStateException("Cannot get y-coordinates of " + coordCount() + "-dimensional area");
+        }
         return max.coordinates[1] - min.coordinates[1];
     }
 
@@ -392,8 +395,9 @@ public class RectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
      */
     public double minZ() {
-        if (min.coordinates.length < 3)
+        if (min.coordinates.length < 3) {
             throw new IllegalStateException("Cannot get z-coordinates of " + coordCount() + "-dimensional area");
+        }
         return min.coordinates[2];
     }
 
@@ -404,8 +408,9 @@ public class RectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
      */
     public double maxZ() {
-        if (min.coordinates.length < 3)
+        if (min.coordinates.length < 3) {
             throw new IllegalStateException("Cannot get z-coordinates of " + coordCount() + "-dimensional area");
+        }
         return max.coordinates[2];
     }
 
@@ -416,8 +421,9 @@ public class RectangularArea {
      * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
      */
     public double sizeZ() {
-        if (min.coordinates.length < 3)
+        if (min.coordinates.length < 3) {
             throw new IllegalStateException("Cannot get z-coordinates of " + coordCount() + "-dimensional area");
+        }
         return max.coordinates[2] - min.coordinates[2];
     }
 
@@ -489,12 +495,12 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public boolean contains(Point point) {
-        if (point == null)
-            throw new NullPointerException("Null point argument");
+        Objects.requireNonNull(point, "Null point argument");
         int n = min.coordinates.length;
-        if (point.coordinates.length != n)
+        if (point.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + point.coordinates.length + " instead of " + n);
+        }
         for (int k = 0; k < n; k++) {
             if (point.coordinates[k] < min.coordinates[k] || point.coordinates[k] > max.coordinates[k]) {
                 return false;
@@ -515,12 +521,8 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of one of areas.
      */
     public static boolean contains(Collection<RectangularArea> areas, Point point) {
-        if (areas == null) {
-            throw new NullPointerException("Null areas");
-        }
-        if (point == null) {
-            throw new NullPointerException("Null point");
-        }
+        Objects.requireNonNull(areas, "Null areas");
+        Objects.requireNonNull(point, "Null point");
         for (RectangularArea a : areas) {
             if (a.contains(point)) {
                 return true;
@@ -542,12 +544,12 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public boolean contains(RectangularArea area) {
-        if (area == null)
-            throw new NullPointerException("Null area argument");
+        Objects.requireNonNull(area, "Null area argument");
         int n = min.coordinates.length;
-        if (area.min.coordinates.length != n)
+        if (area.min.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + area.min.coordinates.length + " instead of " + n);
+        }
         for (int k = 0; k < n; k++) {
             if (area.min.coordinates[k] < min.coordinates[k] || area.max.coordinates[k] > max.coordinates[k]) {
                 return false;
@@ -569,12 +571,8 @@ public class RectangularArea {
      *                                  in the 1st argument.
      */
     public static boolean contains(Collection<RectangularArea> areas, RectangularArea area) {
-        if (areas == null) {
-            throw new NullPointerException("Null areas argument");
-        }
-        if (area == null) {
-            throw new NullPointerException("Null area argument");
-        }
+        Objects.requireNonNull(areas, "Null areas argument");
+        Objects.requireNonNull(area, "Null area argument");
         for (RectangularArea a : areas) {
             if (a.contains(area)) {
                 return true;
@@ -597,12 +595,12 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public boolean intersects(RectangularArea area) {
-        if (area == null)
-            throw new NullPointerException("Null area argument");
+        Objects.requireNonNull(area, "Null area argument");
         int n = min.coordinates.length;
-        if (area.min.coordinates.length != n)
+        if (area.min.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + area.min.coordinates.length + " instead of " + n);
+        }
         for (int k = 0; k < n; k++) {
             if (area.max.coordinates[k] < min.coordinates[k] || area.min.coordinates[k] > max.coordinates[k]) {
                 return false;
@@ -624,12 +622,12 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public boolean overlaps(RectangularArea area) {
-        if (area == null)
-            throw new NullPointerException("Null area argument");
+        Objects.requireNonNull(area, "Null area argument");
         int n = min.coordinates.length;
-        if (area.min.coordinates.length != n)
+        if (area.min.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + area.min.coordinates.length + " instead of " + n);
+        }
         for (int k = 0; k < n; k++) {
             if (area.max.coordinates[k] <= min.coordinates[k] || area.min.coordinates[k] >= max.coordinates[k]) {
                 return false;
@@ -666,18 +664,17 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public RectangularArea intersection(RectangularArea area) {
-        if (area == null) {
-            throw new NullPointerException("Null area argument");
-        }
+        Objects.requireNonNull(area, "Null area argument");
         int n = min.coordinates.length;
-        if (area.min.coordinates.length != n)
+        if (area.min.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + area.min.coordinates.length + " instead of " + n);
+        }
         double[] newMin = new double[n];
         double[] newMax = new double[n];
         for (int k = 0; k < n; k++) {
-            newMin[k] = min.coordinates[k] >= area.min.coordinates[k] ? min.coordinates[k] : area.min.coordinates[k];
-            newMax[k] = max.coordinates[k] <= area.max.coordinates[k] ? max.coordinates[k] : area.max.coordinates[k];
+            newMin[k] = Math.max(min.coordinates[k], area.min.coordinates[k]);
+            newMax[k] = Math.min(max.coordinates[k], area.max.coordinates[k]);
             if (newMin[k] > newMax[k]) {
                 return null;
             }
@@ -708,9 +705,7 @@ public class RectangularArea {
      *                                  have different {@link #coordCount()}.
      */
     public List<RectangularArea> intersection(Collection<RectangularArea> areas) {
-        if (areas == null) {
-            throw new NullPointerException("Null areas argument");
-        }
+        Objects.requireNonNull(areas, "Null areas argument");
         final List<RectangularArea> result = new ArrayList<RectangularArea>();
         for (RectangularArea area : areas) {
             RectangularArea intersection = intersection(area);
@@ -758,9 +753,7 @@ public class RectangularArea {
      * @see #subtractCollection(java.util.Queue, java.util.Collection)
      */
     public Collection<RectangularArea> difference(Collection<RectangularArea> results, RectangularArea area) {
-        if (results == null) {
-            throw new NullPointerException("Null results argument");
-        }
+        Objects.requireNonNull(results, "Null results argument");
         if (!intersects(area)) { // also checks number of dimensions
             results.add(this);
             return results;
@@ -826,10 +819,8 @@ public class RectangularArea {
         Queue<RectangularArea> fromWhatToSubtract,
         Collection<RectangularArea> whatToSubtract)
     {
-        if (fromWhatToSubtract == null)
-            throw new NullPointerException("Null fromWhatToSubtract");
-        if (whatToSubtract == null)
-            throw new NullPointerException("Null whatToSubtract");
+        Objects.requireNonNull(fromWhatToSubtract, "Null fromWhatToSubtract");
+        Objects.requireNonNull(whatToSubtract, "Null whatToSubtract");
         for (RectangularArea area : whatToSubtract) {
             for (int i = 0, n = fromWhatToSubtract.size(); i < n; i++) {
                 RectangularArea minuend = fromWhatToSubtract.poll();
@@ -876,9 +867,7 @@ public class RectangularArea {
      *                                  have different {@link #coordCount()}.
      */
     public Queue<RectangularArea> subtract(Collection<RectangularArea> whatToSubtract) {
-        if (whatToSubtract == null) {
-            throw new NullPointerException("Null whatToSubtract");
-        }
+        Objects.requireNonNull(whatToSubtract, "Null whatToSubtract");
         Queue<RectangularArea> difference = new ArrayDeque<RectangularArea>();
         difference.add(this);
         RectangularArea.subtractCollection(difference, whatToSubtract);
@@ -973,9 +962,7 @@ public class RectangularArea {
      * @throws IllegalArgumentException if <tt>{@link #coordCount() coordCount()}</tt> is not equal for all areas.
      */
     public static RectangularArea minimalContainingArea(Collection<RectangularArea> areas) {
-        if (areas == null) {
-            throw new NullPointerException("Null areas");
-        }
+        Objects.requireNonNull(areas, "Null areas");
         if (areas.isEmpty()) {
             return null;
         }
@@ -1035,8 +1022,7 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public double parallelDistance(Point point) {
-        if (point == null)
-            throw new NullPointerException("Null point argument");
+        Objects.requireNonNull(point, "Null point argument");
         return parallelDistance(point.coordinates);
     }
 
@@ -1052,12 +1038,12 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public double parallelDistance(double... coordinates) {
-        if (coordinates == null)
-            throw new NullPointerException("Null coordinates argument");
+        Objects.requireNonNull(coordinates, "Null coordinates argument");
         int n = this.min.coordinates.length;
-        if (coordinates.length != n)
+        if (coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + coordinates.length + " instead of " + n);
+        }
         double min = this.min.coordinates[0];
         double max = this.max.coordinates[0];
         double x = coordinates[0];
@@ -1087,8 +1073,9 @@ public class RectangularArea {
      */
     public double parallelDistance(double x, double y) {
         int n = min.coordinates.length;
-        if (n != 2)
+        if (n != 2) {
             throw new IllegalArgumentException("Dimensions count mismatch: 2 instead of " + n);
+        }
         double min = this.min.coordinates[0];
         double max = this.max.coordinates[0];
         double maxD = min - x >= x - max ? min - x : x - max;
@@ -1115,8 +1102,9 @@ public class RectangularArea {
      */
     public double parallelDistance(double x, double y, double z) {
         int n = min.coordinates.length;
-        if (n != 3)
+        if (n != 3) {
             throw new IllegalArgumentException("Dimensions count mismatch: 3 instead of " + n);
+        }
         double min = this.min.coordinates[0];
         double max = this.max.coordinates[0];
         double maxD = min - x >= x - max ? min - x : x - max;
@@ -1150,11 +1138,11 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public RectangularArea shift(Point vector) {
-        if (vector == null)
-            throw new NullPointerException("Null vector argument");
-        if (vector.coordinates.length != min.coordinates.length)
+        Objects.requireNonNull(vector, "Null vector argument");
+        if (vector.coordinates.length != min.coordinates.length) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                     + vector.coordinates.length + " instead of " + min.coordinates.length);
+        }
         if (vector.isOrigin()) {
             return this;
         }
@@ -1176,11 +1164,11 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public RectangularArea shiftBack(Point vector) {
-        if (vector == null)
-            throw new NullPointerException("Null vector argument");
-        if (vector.coordinates.length != min.coordinates.length)
+        Objects.requireNonNull(vector, "Null vector argument");
+        if (vector.coordinates.length != min.coordinates.length) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                     + vector.coordinates.length + " instead of " + min.coordinates.length);
+        }
         if (vector.isOrigin()) {
             return this;
         }
@@ -1204,12 +1192,11 @@ public class RectangularArea {
      *                                  {@link #valueOf(Point, Point)} method).
      */
     public RectangularArea dilate(Point expansion) {
-        if (expansion == null) {
-            throw new NullPointerException("Null expansion");
-        }
-        if (expansion.coordCount() != coordCount())
+        Objects.requireNonNull(expansion, "Null expansion");
+        if (expansion.coordCount() != coordCount()) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                     + expansion.coordCount() + " instead of " + coordCount());
+        }
         if (expansion.isOrigin()) {
             return this;
         }
@@ -1267,17 +1254,14 @@ public class RectangularArea {
      *                                  {@link #valueOf(Point, Point)} method).
      */
     public List<RectangularArea> dilateStraightOnly(List<RectangularArea> results, Point expansion) {
-        if (results == null) {
-            throw new NullPointerException("Null results");
-        }
-        if (expansion == null) {
-            throw new NullPointerException("Null expansion");
-        }
+        Objects.requireNonNull(results, "Null results");
+        Objects.requireNonNull(expansion, "Null expansion");
         results.add(this);
         final int coordCount = coordCount();
-        if (expansion.coordCount() != coordCount)
+        if (expansion.coordCount() != coordCount) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                     + expansion.coordCount() + " instead of " + coordCount);
+        }
         final double[] min = this.min.coordinates();
         final double[] max = this.max.coordinates();
         for (int k = 0; k < coordCount; k++) {
@@ -1354,9 +1338,7 @@ public class RectangularArea {
             Collection<RectangularArea> areas,
             Point expansion,
             boolean straightOnly) {
-        if (areas == null) {
-            throw new NullPointerException("Null areas");
-        }
+        Objects.requireNonNull(areas, "Null areas");
         final List<RectangularArea> result = new ArrayList<RectangularArea>();
         for (RectangularArea area : areas) {
             if (straightOnly) {

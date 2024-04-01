@@ -26,10 +26,7 @@ package net.algart.math.patterns;
 
 import net.algart.math.*;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>A skeletal implementation of the {@link WeightedPattern} interface to minimize
@@ -57,8 +54,7 @@ public abstract class AbstractWeightedPattern implements WeightedPattern {
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     protected AbstractWeightedPattern(Pattern parent) {
-        if (parent == null)
-            throw new NullPointerException("Null parent pattern");
+        Objects.requireNonNull(parent, "Null parent pattern");
         this.parent = parent;
     }
 

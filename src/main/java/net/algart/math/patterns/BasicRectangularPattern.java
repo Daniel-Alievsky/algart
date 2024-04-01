@@ -31,10 +31,7 @@ import net.algart.math.Point;
 
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 final class BasicRectangularPattern extends AbstractUniformGridPattern implements RectangularPattern {
     private final IRectangularArea gridIndexArea;
@@ -53,11 +50,11 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
 
     BasicRectangularPattern(Point originOfGrid, double[] stepsOfGrid, IRange[] gridIndexRanges) {
         super(originOfGrid, stepsOfGrid, true);
-        if (gridIndexRanges == null)
-            throw new NullPointerException("Null coordinate ranges argument");
-        if (gridIndexRanges.length != originOfGrid.coordCount())
+        Objects.requireNonNull(gridIndexRanges, "Null coordinate ranges argument");
+        if (gridIndexRanges.length != originOfGrid.coordCount()) {
             throw new IllegalArgumentException("The number of coordinate ranges is not equal "
                 + "to the number of dimensions of the origin");
+        }
         System.arraycopy(gridIndexRanges, 0, this.gridIndexRanges, 0, gridIndexRanges.length);
         long count = 1;
         double largeCount = 1.0;
@@ -79,9 +76,10 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
 
     @Override
     public Set<IPoint> gridIndexes() {
-        if (pointCount > Integer.MAX_VALUE)
+        if (pointCount > Integer.MAX_VALUE) {
             throw new TooManyPointsInPatternError("Too large number of points: "
                 + largePointCount + " > Integer.MAX_VALUE");
+        }
         Set<IPoint> resultIndexes = gridIndexesRef == null ? null : gridIndexesRef.get();
         if (resultIndexes == null) {
             resultIndexes = new HashSet<IPoint>((int) pointCount);
@@ -113,11 +111,11 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
 
     @Override
     public RectangularPattern shiftGridIndexes(IPoint shift) {
-        if (shift == null)
-            throw new NullPointerException("Null shift argument");
-        if (shift.coordCount() != dimCount)
+        Objects.requireNonNull(shift, "Null shift argument");
+        if (shift.coordCount() != dimCount) {
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
                 + " is not equal to the number of pattern coordinates " + dimCount);
+        }
         if (shift.isOrigin()) {
             return this;
         }
@@ -201,9 +199,10 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
 
     @Override
     public Set<Point> points() {
-        if (pointCount > Integer.MAX_VALUE)
+        if (pointCount > Integer.MAX_VALUE) {
             throw new TooManyPointsInPatternError("Too large number of points: "
                 + largePointCount + " > Integer.MAX_VALUE");
+        }
         Set<Point> resultIndexes = pointsRef == null ? null : pointsRef.get();
         if (resultIndexes == null) {
             resultIndexes = new HashSet<Point>((int) pointCount);
@@ -223,11 +222,11 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
 
     @Override
     public RectangularPattern shift(Point shift) {
-        if (shift == null)
-            throw new NullPointerException("Null shift argument");
-        if (shift.coordCount() != dimCount)
+        Objects.requireNonNull(shift, "Null shift argument");
+        if (shift.coordCount() != dimCount) {
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
                 + " is not equal to the number of pattern coordinates " + dimCount);
+        }
         if (shift.isOrigin()) {
             return this;
         }
@@ -246,11 +245,11 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
 
     @Override
     public RectangularPattern scale(double... multipliers) {
-        if (multipliers == null)
-            throw new NullPointerException("Null multipliers argument");
-        if (multipliers.length != dimCount)
+        Objects.requireNonNull(multipliers, "Null multipliers argument");
+        if (multipliers.length != dimCount) {
             throw new IllegalArgumentException("Illegal number of multipliers: "
                 + multipliers.length + " instead of " + dimCount);
+        }
         double[] positiveMultipliers = multipliers.clone();
         multipliers = multipliers.clone();
         IRange[] newRanges = gridIndexRanges;
@@ -290,8 +289,9 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
     public RectangularPattern projectionAlongAxis(int coordIndex) {
         checkCoordIndex(coordIndex);
         assert dimCount > 0;
-        if (dimCount == 1)
+        if (dimCount == 1) {
             throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
+        }
         IRange[] newRanges = new IRange[gridIndexRanges.length - 1];
         System.arraycopy(gridIndexRanges, 0, newRanges, 0, coordIndex);
         System.arraycopy(gridIndexRanges, coordIndex + 1, newRanges, coordIndex, newRanges.length - coordIndex);
@@ -375,8 +375,9 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
         }
         sb.append(")..(");
         for (int k = 0; k < dimCount; k++) {
-            if (k > 0)
+            if (k > 0) {
                 sb.append(",");
+            }
             sb.append(coordRange(k).max());
         }
         sb.append(") - on grid ").append(gridToString());

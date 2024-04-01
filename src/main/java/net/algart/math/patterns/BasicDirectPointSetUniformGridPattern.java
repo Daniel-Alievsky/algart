@@ -42,21 +42,21 @@ class BasicDirectPointSetUniformGridPattern
 
     BasicDirectPointSetUniformGridPattern(Point originOfGrid, double[] stepsOfGrid, Set<IPoint> gridIndexes) {
         super(originOfGrid, stepsOfGrid, false);
-        if (gridIndexes == null)
-            throw new NullPointerException("Null gridIndexes argument");
+        Objects.requireNonNull(gridIndexes, "Null gridIndexes argument");
         int n = gridIndexes.size();
-        if (n == 0)
+        if (n == 0) {
             throw new IllegalArgumentException("Empty points set");
+        }
         long[] minIndex = new long[dimCount];
         long[] maxIndex = new long[dimCount];
         Arrays.fill(minIndex, Long.MAX_VALUE);
         Arrays.fill(maxIndex, Long.MIN_VALUE);
         for (IPoint p : gridIndexes) {
-            if (p == null)
-                throw new NullPointerException("Null point is the collection");
-            if (p.coordCount() != originOfGrid.coordCount())
+            Objects.requireNonNull(p, "Null point is the collection");
+            if (p.coordCount() != originOfGrid.coordCount()) {
                 throw new IllegalArgumentException("Points dimensions mismatch: the origin of grid has "
                     + originOfGrid.coordCount() + " coordinates, but some of points has " + p.coordCount());
+            }
             checkGridIndex(p);
             checkPoint(p.scaleAndShift(stepsOfGrid, originOfGrid));
             for (int k = 0; k < dimCount; k++) {
@@ -129,11 +129,11 @@ class BasicDirectPointSetUniformGridPattern
 
     @Override
     public DirectPointSetUniformGridPattern shiftGridIndexes(IPoint shift) {
-        if (shift == null)
-            throw new NullPointerException("Null shift argument");
-        if (shift.coordCount() != dimCount)
+        Objects.requireNonNull(shift, "Null shift argument");
+        if (shift.coordCount() != dimCount) {
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
                 + " is not equal to the number of pattern coordinates " + dimCount);
+        }
         Set<IPoint> resultIndexes = new HashSet<IPoint>(gridIndexes.size());
         for (IPoint p : gridIndexes) {
             resultIndexes.add(p.add(shift));
@@ -153,11 +153,11 @@ class BasicDirectPointSetUniformGridPattern
 
     @Override
     public DirectPointSetUniformGridPattern shift(Point shift) {
-        if (shift == null)
-            throw new NullPointerException("Null shift argument");
-        if (shift.coordCount() != dimCount)
+        Objects.requireNonNull(shift, "Null shift argument");
+        if (shift.coordCount() != dimCount) {
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
                 + " is not equal to the number of pattern coordinates " + dimCount);
+        }
         if (shift.isOrigin()) {
             return this;
         }
@@ -176,11 +176,11 @@ class BasicDirectPointSetUniformGridPattern
 
     @Override
     public DirectPointSetUniformGridPattern scale(double... multipliers) {
-        if (multipliers == null)
-            throw new NullPointerException("Null multipliers argument");
-        if (multipliers.length != dimCount)
+        Objects.requireNonNull(multipliers, "Null multipliers argument");
+        if (multipliers.length != dimCount) {
             throw new IllegalArgumentException("Illegal number of multipliers: "
                 + multipliers.length + " instead of " + dimCount);
+        }
         multipliers = multipliers.clone();
         double[] positiveMultipliers = multipliers.clone();
         Set<IPoint> newIndexes = gridIndexes;
@@ -222,8 +222,9 @@ class BasicDirectPointSetUniformGridPattern
     public DirectPointSetUniformGridPattern projectionAlongAxis(int coordIndex) {
         checkCoordIndex(coordIndex);
         assert dimCount > 0;
-        if (dimCount == 1)
+        if (dimCount == 1) {
             throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
+        }
         Set<IPoint> resultIndexes = new HashSet<IPoint>(gridIndexes.size());
         for (IPoint p : gridIndexes) {
             resultIndexes.add(p.projectionAlongAxis(coordIndex));

@@ -24,6 +24,8 @@
 
 package net.algart.math;
 
+import java.util.Objects;
+
 /**
  * <p>Numeric inclusive real range:
  * a set of <tt>double</tt> numbers <tt>{@link #min() min()}&lt;=<i>x</i>&lt;={@link #max() max()}</tt>.
@@ -81,8 +83,7 @@ public final class Range {
      * @throws NullPointerException if the passed integer range is <tt>null</tt>.
      */
     public static Range valueOf(IRange iRange) {
-        if (iRange == null)
-            throw new NullPointerException("Null iRange argument");
+        Objects.requireNonNull(iRange, "Null iRange argument");
         return new Range(iRange.min, iRange.max);
     }
 

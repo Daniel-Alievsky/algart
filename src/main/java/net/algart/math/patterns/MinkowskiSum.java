@@ -141,8 +141,9 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
     public Pattern projectionAlongAxis(int coordIndex) {
         checkCoordIndex(coordIndex);
         assert dimCount > 0;
-        if (dimCount == 1)
+        if (dimCount == 1) {
             throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
+        }
         synchronized (projections) {
             if (projections[coordIndex] == null) {
                 Pattern[] newSummands = new Pattern[summands.length];
@@ -159,9 +160,10 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
 
     @Override
     public Pattern shift(Point shift) {
-        if (shift.coordCount() != dimCount)
+        if (shift.coordCount() != dimCount) {
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
                 + " is not equal to the number of pattern coordinates " + dimCount);
+        }
         if (shift.isOrigin()) {
             return this;
         }
@@ -174,11 +176,11 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
 
     @Override
     public Pattern scale(double... multipliers) {
-        if (multipliers == null)
-            throw new NullPointerException("Null multipliers argument");
-        if (multipliers.length != dimCount)
+        Objects.requireNonNull(multipliers, "Null multipliers argument");
+        if (multipliers.length != dimCount) {
             throw new IllegalArgumentException("Illegal number of multipliers: "
                 + multipliers.length + " instead of " + dimCount);
+        }
         Pattern[] newSummands = new Pattern[summands.length];
         for (int k = 0; k < newSummands.length; k++) {
             newSummands[k] = summands[k].scale(multipliers);
@@ -188,8 +190,7 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
 
     @Override
     public Pattern minkowskiAdd(Pattern added) {
-        if (added == null)
-            throw new NullPointerException("Null added argument");
+        Objects.requireNonNull(added, "Null added argument");
         Pattern[] newSummands = new Pattern[summands.length + 1];
         System.arraycopy(summands, 0, newSummands, 0, summands.length);
         newSummands[summands.length] = added;
@@ -242,19 +243,18 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
     }
 
     static int getDimCountAndCheck(Pattern[] patterns) {
-        if (patterns == null)
-            throw new NullPointerException("Null patterns argument");
-        if (patterns.length == 0)
+        Objects.requireNonNull(patterns, "Null patterns argument");
+        if (patterns.length == 0) {
             throw new IllegalArgumentException("Empty patterns array");
-        if (patterns[0] == null)
-            throw new NullPointerException("Null pattern is the array");
+        }
+        Objects.requireNonNull(patterns[0], "Null pattern is the array");
         int result = patterns[0].dimCount();
         for (int k = 1; k < patterns.length; k++) {
-            if (patterns[k] == null)
-                throw new NullPointerException("Null pattern #" + k + " is the array");
-            if (patterns[k].dimCount() != result)
+            Objects.requireNonNull(patterns[k], "Null pattern #" + k + " is the array");
+            if (patterns[k].dimCount() != result) {
                 throw new IllegalArgumentException("Patterns dimensions mismatch: the first pattern has "
                     + result + " dimensions, but pattern #" + k + " has " + patterns[k].dimCount());
+            }
         }
         return result;
     }
@@ -266,8 +266,9 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
         for (Pattern pattern : patterns) {
             if (pattern instanceof OnePointPattern) {
                 onePointSummand = onePointSummand == null ? pattern : onePointSummand.minkowskiAdd(pattern);
-                if (!(onePointSummand instanceof OnePointPattern))
+                if (!(onePointSummand instanceof OnePointPattern)) {
                     throw new AssertionError("Invalid OnePointPattern.minkowskiAdd implementation");
+                }
             } else if (pattern instanceof UniformGridPattern
                 && ((UniformGridPattern) pattern).isActuallyRectangular())
             {
@@ -277,8 +278,9 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
                 Point steps = Point.valueOf(ugPattern.stepsOfGrid());
                 UniformGridPattern previousSummand = rectangularSummands.get(steps);
                 pattern = previousSummand == null ? ugPattern : previousSummand.minkowskiAdd(ugPattern);
-                if (!(pattern instanceof BasicRectangularPattern))
+                if (!(pattern instanceof BasicRectangularPattern)) {
                     throw new AssertionError("Invalid RectangularUniformGridPattern.minkowskiAdd implementation");
+                }
                 rectangularSummands.put(steps, (BasicRectangularPattern) pattern);
             } else {
                 Integer previousNumber = numbersOfEquals.get(pattern);

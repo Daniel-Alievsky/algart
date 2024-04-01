@@ -24,6 +24,8 @@
 
 package net.algart.math;
 
+import java.util.Objects;
+
 /**
  * <p>Numeric inclusive integer range:
  * a set of <tt>long</tt> numbers <tt>{@link #min() min()}&lt;=<i>x</i>&lt;={@link #max() max()}</tt>.
@@ -100,8 +102,7 @@ public final class IRange {
      *                                  {@link #valueOf(long, long)} method.
      */
     public static IRange valueOf(Range range) {
-        if (range == null)
-            throw new NullPointerException("Null range argument");
+        Objects.requireNonNull(range, "Null range argument");
         return valueOf((long)range.min, (long)range.max);
     }
 
@@ -119,8 +120,7 @@ public final class IRange {
      *                                  {@link #valueOf(long, long)} method.
      */
     public static IRange roundOf(Range range) {
-        if (range == null)
-            throw new NullPointerException("Null range argument");
+        Objects.requireNonNull(range, "Null range argument");
         return valueOf(StrictMath.round(range.min), StrictMath.round(range.max));
     }
 
