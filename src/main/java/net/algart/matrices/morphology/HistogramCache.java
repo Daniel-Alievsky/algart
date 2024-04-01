@@ -26,13 +26,9 @@ package net.algart.matrices.morphology;
 
 import net.algart.arrays.Arrays;
 
-import java.util.Map;
-import java.util.LinkedHashMap;
-import java.util.Set;
-import java.util.Iterator;
-import java.lang.ref.WeakReference;
-import java.lang.ref.SoftReference;
 import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
+import java.util.*;
 
 class HistogramCache<T> {
     private final Map<Long, Reference<T>> histogramCache;
@@ -64,8 +60,7 @@ class HistogramCache<T> {
     }
 
     public synchronized void put(long position, T histogram) {
-        if (histogram == null)
-            throw new NullPointerException("Null histogram");
+        Objects.requireNonNull(histogram, "Null histogram");
         reap();
         Reference<T> ref = new SoftReference<T>(histogram);
         histogramCache.put(position, ref);

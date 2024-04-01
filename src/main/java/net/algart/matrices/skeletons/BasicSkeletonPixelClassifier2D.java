@@ -26,6 +26,8 @@ package net.algart.matrices.skeletons;
 
 import net.algart.arrays.JArrays;
 
+import java.util.Objects;
+
 /**
  * <p>Ready classifier of pixel of 2-dimensional {@link ThinningSkeleton thinning skeletons}.
  *
@@ -1019,32 +1021,36 @@ public class BasicSkeletonPixelClassifier2D extends ApertureBasedSkeletonPixelCl
     private final int[] classificationTableWithAttachedNodes = new int[256];
     private BasicSkeletonPixelClassifier2D(int[] classificationMap, int... additionalIllegalConfigurations) {
         super(2, SHIFTS_A);
-        if (classificationMap == null)
-            throw new NullPointerException("Null classificationMap argument");
-        if (classificationMap.length % 3 != 0)
+        Objects.requireNonNull(classificationMap, "Null classificationMap argument");
+        if (classificationMap.length % 3 != 0) {
             throw new IllegalArgumentException("Length of classificationMap does not divide by 3");
+        }
         JArrays.fillIntArray(this.classificationTableWithAttachingBranches, TYPE_ILLEGAL);
         JArrays.fillIntArray(this.classificationTableWithAttachedNodes, TYPE_ILLEGAL);
         for (int k = 0; k < classificationMap.length; k += 3) {
             int bitsA = classificationMap[k];
-            if (bitsA < 0 || bitsA > 255)
+            if (bitsA < 0 || bitsA > 255) {
                 throw new IllegalArgumentException("First element of a triplet "
                     + "in classificationMap (bit configuration code) is out of 0..255 range");
+            }
             int pixelTypeWithAttachingBranch = classificationMap[k + 1];
-            if (pixelTypeWithAttachingBranch > NEIGHBOUR_INDEX_MAX)
+            if (pixelTypeWithAttachingBranch > NEIGHBOUR_INDEX_MAX) {
                 throw new IllegalArgumentException("Second element of a triplet "
                     + "in classificationMap (pixel type or direction of attaching branch end) "
                     + "is greater than " + NEIGHBOUR_INDEX_MAX);
+            }
             int pixelTypeWithAttachedNode = classificationMap[k + 2];
-            if (pixelTypeWithAttachedNode > NEIGHBOUR_INDEX_MAX)
+            if (pixelTypeWithAttachedNode > NEIGHBOUR_INDEX_MAX) {
                 throw new IllegalArgumentException("Third element of a triplet "
                     + "in classificationMap (pixel type or direction of attached node) "
                     + "is greater than " + NEIGHBOUR_INDEX_MAX);
+            }
             if ((pixelTypeWithAttachingBranch < 0 || pixelTypeWithAttachedNode < 0)
-                && pixelTypeWithAttachedNode != pixelTypeWithAttachingBranch)
+                && pixelTypeWithAttachedNode != pixelTypeWithAttachingBranch) {
                 throw new IllegalArgumentException("Negative second and third elements of a triplet "
                     + "in classificationMap (pixel type or direction of attached node) are not equal: "
                     + pixelTypeWithAttachingBranch + " and " + pixelTypeWithAttachedNode);
+            }
             this.classificationTableWithAttachingBranches[bitsA] = pixelTypeWithAttachingBranch;
             this.classificationTableWithAttachedNodes[bitsA] = pixelTypeWithAttachedNode;
             for (int directionIndex = 1; directionIndex <= 3; directionIndex++) {
