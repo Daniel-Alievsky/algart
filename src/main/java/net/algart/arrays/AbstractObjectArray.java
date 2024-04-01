@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>Implementation of almost all basic functions of {@link ObjectArray} interface.
  * The only {@link ObjectArray#get(long)} method is not defined in this class;
@@ -108,21 +110,21 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
         boolean underlyingArraysAreParallel, Array... underlyingArrays)
     {
         super(initialCapacity, initialLength, underlyingArrays);
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
-        if (initialLength < 0)
+        Objects.requireNonNull(elementType, "Null elementType argument");
+        if (initialLength < 0) {
             throw new IllegalArgumentException("Negative initialLength argument");
-        if (initialCapacity < 0)
+        }
+        if (initialCapacity < 0) {
             throw new IllegalArgumentException("Negative initialCapacity argument");
-        if (initialLength > initialCapacity)
+        }
+        if (initialLength > initialCapacity) {
             throw new IllegalArgumentException("initialCapacity argument must not be less than initialLength");
-        if (underlyingArrays == null)
-            throw new NullPointerException("Null underlyingArrays argument");
+        }
+        Objects.requireNonNull(underlyingArrays, "Null underlyingArrays argument");
         this.underlyingArraysAreParallel = underlyingArraysAreParallel;
         long len = -1;
         for (int k = 0; k < underlyingArrays.length; k++) {
-            if (underlyingArrays[k] == null)
-                throw new NullPointerException("Null underlyingArrays[" + k + "] argument");
+            Objects.requireNonNull(underlyingArrays[k], "Null underlyingArrays[" + k + "] argument");
             if (underlyingArraysAreParallel) {
                 if (k == 0) {
                     len = underlyingArrays[k].length();
@@ -202,15 +204,17 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      */
     @Override
     public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
+        Objects.requireNonNull(destArray, "Null destArray argument");
         Object[] a = (Object[]) destArray;
-        if (count < 0)
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw rangeException(arrayPos);
-        if (arrayPos > length - count)
+        }
+        if (arrayPos > length - count) {
             throw rangeException(arrayPos + count - 1);
+        }
         for (long arrayPosMax = arrayPos + count; arrayPos < arrayPosMax; arrayPos++, destArrayOffset++) {
             a[destArrayOffset] = get(arrayPos);
         }
@@ -234,10 +238,10 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      */
     @Override
     public void getData(long arrayPos, Object destArray) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (arrayPos < 0 || arrayPos > length)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (arrayPos < 0 || arrayPos > length) {
             throw rangeException(arrayPos);
+        }
         int count = ((Object[]) destArray).length;
         if (count > length - arrayPos) {
             count = (int) (length - arrayPos);
@@ -259,8 +263,9 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
 
     public <D> ObjectArray<D> cast(Class<D> elementType) {
         Class<?> desiredType = InternalUtils.cast(elementType);
-        if (!desiredType.isAssignableFrom(this.elementType))
+        if (!desiredType.isAssignableFrom(this.elementType)) {
             throw new ClassCastException("Illegal desired element type " + elementType + " for " + this);
+        }
         return InternalUtils.cast(this);
     }
 
@@ -295,8 +300,9 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
             underlyingArraysAreParallel, underlyingArrays) {
             @Override
             public E get(long index) {
-                if (index < 0 || index >= length)
+                if (index < 0 || index >= length) {
                     throw rangeException(index);
+                }
                 return parent.get(offset + index);
             }
 
@@ -336,12 +342,15 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
 
             @Override
             public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-                if (count < 0)
+                if (count < 0) {
                     throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-                if (arrayPos < 0)
+                }
+                if (arrayPos < 0) {
                     throw rangeException(arrayPos);
-                if (arrayPos > length - count)
+                }
+                if (arrayPos > length - count) {
                     throw rangeException(arrayPos + count - 1);
+                }
                 parent.getData(offset + arrayPos, destArray, destArrayOffset, count);
             }
 

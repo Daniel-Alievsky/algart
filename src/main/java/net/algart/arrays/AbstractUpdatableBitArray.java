@@ -89,6 +89,8 @@ package net.algart.arrays;
             $2
      !! Auto-generated: NOT EDIT !! */
 
+import java.util.Objects;
+
 /**
  * <p>Implementation of almost all basic functions of {@link UpdatableBitArray} interface.
  * The only {@link BitArray#getBit(long)} and {@link UpdatableBitArray#setBit(long, boolean)} methods
@@ -182,15 +184,17 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
             underlyingArraysAreParallel, underlyingArrays) {
             @Override
             public boolean getBit(long index) {
-                if (index < 0 || index >= length)
+                if (index < 0 || index >= length) {
                     throw rangeException(index);
+                }
                 return parent.getBit(offset + index);
             }
 
             @Override
             public void setBit(long index, boolean value) {
-                if (index < 0 || index >= length)
+                if (index < 0 || index >= length) {
                     throw rangeException(index);
+                }
                 parent.setBit(offset + index, value);
             }
 
@@ -267,23 +271,29 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
             }
 
             public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-                if (count < 0)
+                if (count < 0) {
                     throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-                if (arrayPos < 0)
+                }
+                if (arrayPos < 0) {
                     throw rangeException(arrayPos);
-                if (arrayPos > length - count)
+                }
+                if (arrayPos > length - count) {
                     throw rangeException(arrayPos + count - 1);
+                }
                 parent.getData(offset + arrayPos, destArray, destArrayOffset, count);
             }
 
             @Override
             public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-                if (count < 0)
+                if (count < 0) {
                     throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-                if (arrayPos < 0)
+                }
+                if (arrayPos < 0) {
                     throw rangeException(arrayPos);
-                if (arrayPos > length - count)
+                }
+                if (arrayPos > length - count) {
                     throw rangeException(arrayPos + count - 1);
+                }
                 parent.setData(offset + arrayPos, srcArray, srcArrayOffset, count);
                 return this;
             }
@@ -566,15 +576,17 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      *                                   depending on implementation).
      */
     public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-        if (srcArray == null)
-            throw new NullPointerException("Null srcArray argument");
+        Objects.requireNonNull(srcArray, "Null srcArray argument");
         boolean[] a = (boolean[]) srcArray;
-        if (count < 0)
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw rangeException(arrayPos);
-        if (arrayPos > length - count)
+        }
+        if (arrayPos > length - count) {
             throw rangeException(arrayPos + count - 1);
+        }
         for (long arrayPosMax = arrayPos + count; arrayPos < arrayPosMax; arrayPos++, srcArrayOffset++) {
             setBit(arrayPos, a[srcArrayOffset]);
         }
@@ -599,10 +611,10 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      *                                   depending on implementation).
      */
     public UpdatableArray setData(long arrayPos, Object srcArray) {
-        if (srcArray == null)
-            throw new NullPointerException("Null srcArray argument");
-        if (arrayPos < 0 || arrayPos > length)
+        Objects.requireNonNull(srcArray, "Null srcArray argument");
+        if (arrayPos < 0 || arrayPos > length) {
             throw rangeException(arrayPos);
+        }
         int count = ((boolean[]) srcArray).length;
         if (count > length - arrayPos) {
             count = (int) (length - arrayPos);
@@ -631,9 +643,10 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
      */
     public void copy(long destIndex, long srcIndex, long count) {
-        if (count < 0)
+        if (count < 0) {
             throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
                 + ") in " + getClass());
+        }
         if (srcIndex <= destIndex && srcIndex + count > destIndex) {
             srcIndex += count;
             destIndex += count;
@@ -670,9 +683,10 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
      */
     public void swap(long firstIndex, long secondIndex, long count) {
-        if (count < 0)
+        if (count < 0) {
             throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
                 + ") in " + getClass());
+        }
         for (long k = 0; k < count; k++) {
             swap(firstIndex++, secondIndex++);
         }

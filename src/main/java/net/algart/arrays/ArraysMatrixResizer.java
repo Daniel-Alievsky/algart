@@ -26,6 +26,7 @@ package net.algart.arrays;
 
 import net.algart.math.functions.*;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 class ArraysMatrixResizer {
@@ -95,17 +96,17 @@ class ArraysMatrixResizer {
         Matrices.ResizingMethod resizingMethod,
         Matrix<? extends PArray> matrix, long[] newDim, double[] scales)
     {
-        if (resizingMethod == null)
-            throw new NullPointerException("Null resizingMethod argument");
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
+        Objects.requireNonNull(resizingMethod, "Null resizingMethod argument");
+        Objects.requireNonNull(matrix, "Null matrix argument");
         final int n = matrix.dimCount();
-        if (newDim.length != n)
+        if (newDim.length != n) {
             throw new IllegalArgumentException("Illegal number of newDim[] elements: "
                 + newDim.length + " instead of " + n);
-        if (scales != null && scales.length != n)
+        }
+        if (scales != null && scales.length != n) {
             throw new IllegalArgumentException("Illegal number of scales[] elements: "
                 + scales.length + " instead of " + n);
+        }
         if (matrix.size() == 0) {
             return Matrices.asCoordFuncMatrix(ConstantFunc.getInstance(0.0), matrix.type(PArray.class), newDim);
         }
@@ -171,16 +172,14 @@ class ArraysMatrixResizer {
         Matrix<? extends UpdatablePArray> result,
         Matrix<? extends PArray> src)
     {
-        if (resizingMethod == null)
-            throw new NullPointerException("Null resizingMethod argument");
-        if (result == null)
-            throw new NullPointerException("Null result matrix");
-        if (src == null)
-            throw new NullPointerException("Null source matrix");
+        Objects.requireNonNull(resizingMethod, "Null resizingMethod argument");
+        Objects.requireNonNull(result, "Null result matrix");
+        Objects.requireNonNull(src, "Null source matrix");
         final int n = src.dimCount();
-        if (result.dimCount() != n)
+        if (result.dimCount() != n) {
             throw new IllegalArgumentException("The source and result matrices have different number of dimensions: "
                 + "the source src is " + src + ", the result is " + result);
+        }
         AbstractArray.checkCopyArguments(result.array(), src.array()); // before checking result.size()
         if (result.size() == 0) {
             return true; // nothing to do
@@ -237,10 +236,10 @@ class ArraysMatrixResizer {
         // Note: this method does not check, whether sourceDimensions are too large!
         // Maybe this method is called for sizes of very large matrix, but further we shall
         // use the results for its little tiles
-        if (resizingMethod == null)
-            throw new NullPointerException("Null resizingMethod argument");
-        if (sourceDimensions.length != resultingDimensions.length)
+        Objects.requireNonNull(resizingMethod, "Null resizingMethod argument");
+        if (sourceDimensions.length != resultingDimensions.length) {
             throw new IllegalArgumentException("Different lengths of resultingDimensions and sourceDimensions");
+        }
         if (!(resizingMethod == Matrices.ResizingMethod.AVERAGING ||
             resizingMethod == Matrices.ResizingMethod.POLYLINEAR_AVERAGING ||
             resizingMethod == Matrices.ResizingMethod.SIMPLE ||
@@ -256,10 +255,12 @@ class ArraysMatrixResizer {
         for (int k = 0; k < scales.length; k++) {
             long newDim = resultingDimensions[k];
             long oldDim = sourceDimensions[k];
-            if (newDim < 0)
+            if (newDim < 0) {
                 throw new IllegalArgumentException("Negative resultingDimensions[" + k + "]");
-            if (oldDim < 0)
+            }
+            if (oldDim < 0) {
                 throw new IllegalArgumentException("Negative sourceDimensions[" + k + "]");
+            }
             if (newDim == 0 || oldDim == 0 || newDim > oldDim) {
                 return null;
             }

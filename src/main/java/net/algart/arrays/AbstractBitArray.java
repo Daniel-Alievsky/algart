@@ -853,14 +853,16 @@ public abstract class AbstractBitArray extends AbstractArray implements BitArray
      * @see PackedBitArrays
      */
     public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (count < 0)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw rangeException(arrayPos, length, getClass());
-        if (arrayPos > length - count)
+        }
+        if (arrayPos > length - count) {
             throw rangeException(arrayPos + count - 1, length, getClass());
+        }
         for (long arrayPosMax = arrayPos + count; arrayPos < arrayPosMax; arrayPos++, destArrayOffset++) {
             PackedBitArrays.setBit(destArray, destArrayOffset, getBit(arrayPos));
         }
