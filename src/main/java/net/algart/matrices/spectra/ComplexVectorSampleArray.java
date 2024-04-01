@@ -28,6 +28,8 @@ import net.algart.arrays.*;
 import net.algart.math.functions.Func;
 import net.algart.math.functions.LinearFunc;
 
+import java.util.Objects;
+
 /**
  * <p>Array of samples, where each sample is a vector of complex numbers with some fixed length,
  * represented by an array of pairs of <tt>double</tt> values,
@@ -70,26 +72,29 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         long vectorLength, long vectorStep, long length)
     // Besides more clarity, "length" argument allows processing a case vectorLength=vectorStep=0
     {
-        if (samplesRe == null)
-            throw new NullPointerException("Null samplesRe");
-        if (samplesIm == null)
-            throw new NullPointerException("Null samplesIm");
-        if (vectorLength < 0)
+        Objects.requireNonNull(samplesRe, "Null samplesRe");
+        Objects.requireNonNull(samplesIm, "Null samplesIm");
+        if (vectorLength < 0) {
             throw new IllegalArgumentException("Negative vectorLength = " + vectorLength);
-        if (vectorStep < vectorLength)
+        }
+        if (vectorStep < vectorLength) {
             throw new IllegalArgumentException("vectorStep = "+ vectorStep + " < vectorLength = " + vectorLength);
-        if (length < 0)
+        }
+        if (length < 0) {
             throw new IllegalArgumentException("Negative length = " + length);
+        }
         long m = samplesRe.length() - vectorLength;
-        if ((length > 0 && m < 0) || (vectorStep > 0 && (length - 1) > m / vectorStep))
+        if ((length > 0 && m < 0) || (vectorStep > 0 && (length - 1) > m / vectorStep)) {
             throw new IllegalArgumentException("samplesRe is too short: its length " + samplesRe.length()
                 + " < (length - 1) * vectorStep + vectorLength = "
                 + (length - 1) + " * " + vectorStep + " + " + vectorLength);
+        }
         m = samplesIm.length() - vectorLength;
-        if ((length > 0 && m < 0) || (vectorStep > 0 && (length - 1) > m / vectorStep))
+        if ((length > 0 && m < 0) || (vectorStep > 0 && (length - 1) > m / vectorStep)) {
             throw new IllegalArgumentException("samplesIm is too short: its length " + samplesIm.length()
                 + " < (length - 1) * vectorStep + vectorLength = "
                 + (length - 1) + " * " + vectorStep + " + " + vectorLength);
+        }
         this.samplesRe = samplesRe;
         this.samplesIm = samplesIm;
         this.vectorLength = vectorLength;
@@ -150,10 +155,8 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
         long vectorLength, long vectorStep, long length)
     {
-        if (samplesRe == null)
-            throw new NullPointerException("Null samplesRe");
-        if (samplesIm == null)
-            throw new NullPointerException("Null samplesIm");
+        Objects.requireNonNull(samplesRe, "Null samplesRe");
+        Objects.requireNonNull(samplesIm, "Null samplesIm");
         samplesRe = (UpdatablePNumberArray)samplesRe.asUnresizable(); // to be sure that its length will not be changed
         samplesIm = (UpdatablePNumberArray)samplesIm.asUnresizable(); // to be sure that its length will not be changed
         if (samplesRe instanceof DirectAccessible && ((DirectAccessible) samplesRe).hasJavaArray()
@@ -184,10 +187,11 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         if (vectorLength > Math.min(
             memoryModel.maxSupportedLength(samplesRe.elementType()),
             memoryModel.maxSupportedLength(samplesIm.elementType()))
-            / GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH)
+            / GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH) {
             throw new TooLargeArrayException("Too large samples for the given memory model " + memoryModel
                 + ": it cannot allocate " + GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH
                 + " samples (each sample is a vector of " + vectorLength + " numbers");
+        }
         return new CommonComplexVectorSampleArray(memoryModel, samplesRe, samplesIm, vectorLength, vectorStep, length);
     }
 
@@ -232,12 +236,11 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
     public abstract void multiplyByRealScalar(long index, double a);
 
     public String toString(String format, String separator, int maxStringLength) {
-        if (format == null)
-            throw new NullPointerException("Null format argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(format, "Null format argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (length == 0) {
             return "";
         }
@@ -285,9 +288,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public ComplexVectorSampleArray newCompatibleSamplesArray(long length) {
-            if (length > Long.MAX_VALUE / vectorLength)
+            if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
                     + length + " vectors of " + vectorLength + " numbers");
+            }
             return new CommonComplexVectorSampleArray(mm,
                 (UpdatablePNumberArray) mm.newUnresizableArray(samplesRe.elementType(), length * vectorLength),
                 (UpdatablePNumberArray) mm.newUnresizableArray(samplesIm.elementType(), length * vectorLength),
@@ -374,9 +378,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public ComplexVectorSampleArray newCompatibleSamplesArray(long length) {
-            if (length > Long.MAX_VALUE / vectorLength)
+            if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
                     + length + " vectors of " + vectorLength + " numbers");
+            }
             return new ComplexFloatVectorSampleArray(
                 (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesRe.elementType(), length * vectorLength),
                 (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesIm.elementType(), length * vectorLength),
@@ -581,9 +586,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public ComplexVectorSampleArray newCompatibleSamplesArray(long length) {
-            if (length > Long.MAX_VALUE / vectorLength)
+            if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
                     + length + " vectors of " + vectorLength + " numbers");
+            }
             return new ComplexDoubleVectorSampleArray(
                 (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesRe.elementType(), length * vectorLength),
                 (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesIm.elementType(), length * vectorLength),
@@ -803,9 +809,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public ComplexVectorSampleArray newCompatibleSamplesArray(long length) {
-            if (length > Long.MAX_VALUE / vectorLength)
+            if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
                     + length + " vectors of " + vectorLength + " numbers");
+            }
             return new DirectComplexFloatVectorSampleArray(
                 Arrays.SMM.newUnresizableFloatArray(length * vectorLength),
                 Arrays.SMM.newUnresizableFloatArray(length * vectorLength),
@@ -982,9 +989,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public ComplexVectorSampleArray newCompatibleSamplesArray(long length) {
-            if (length > Long.MAX_VALUE / vectorLength)
+            if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
                     + length + " vectors of " + vectorLength + " numbers");
+            }
             return new DirectComplexDoubleVectorSampleArray(
                 Arrays.SMM.newUnresizableDoubleArray(length * vectorLength),
                 Arrays.SMM.newUnresizableDoubleArray(length * vectorLength),

@@ -26,6 +26,8 @@ package net.algart.matrices.spectra;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
+
 /**
  * <p>Array of samples, where each sample is a real number, represented by a <tt>double</tt> value,
  * stored in an AlgART array {@link UpdatablePNumberArray}.</p>
@@ -67,8 +69,7 @@ public abstract class RealScalarSampleArray implements SampleArray {
      * @throws NullPointerException  if <tt>samples</tt> is <tt>null</tt>.
      */
     public static RealScalarSampleArray asSampleArray(UpdatablePNumberArray samples) {
-        if (samples == null)
-            throw new NullPointerException("Null samples");
+        Objects.requireNonNull(samples, "Null samples");
         samples = (UpdatablePNumberArray)samples.asUnresizable(); // to be sure that its length will not be changed
         if (samples instanceof DirectAccessible && ((DirectAccessible)samples).hasJavaArray())
         {
@@ -131,8 +132,7 @@ public abstract class RealScalarSampleArray implements SampleArray {
         private final UpdatablePNumberArray samples;
 
         CommonRealScalarSampleArray(UpdatablePNumberArray samples) {
-            if (samples == null)
-                throw new NullPointerException("Null samples");
+            Objects.requireNonNull(samples, "Null samples");
             this.samples = samples;
         }
 
@@ -203,12 +203,11 @@ public abstract class RealScalarSampleArray implements SampleArray {
         }
 
         public String toString(String format, String separator, int maxStringLength) {
-            if (format == null)
-                throw new NullPointerException("Null format argument");
-            if (separator == null)
-                throw new NullPointerException("Null separator argument");
-            if (maxStringLength <= 0)
+            Objects.requireNonNull(format, "Null format argument");
+            Objects.requireNonNull(separator, "Null separator argument");
+            if (maxStringLength <= 0) {
                 throw new IllegalArgumentException("maxStringLength argument must be positive");
+            }
             final long n = samples.length();
             if (n == 0) {
                 return "";
@@ -247,10 +246,12 @@ public abstract class RealScalarSampleArray implements SampleArray {
         }
 
         public RealScalarSampleArray newCompatibleSamplesArray(long length) {
-            if (length < 0)
+            if (length < 0) {
                 throw new IllegalArgumentException("Negative length");
-            if (length > Integer.MAX_VALUE)
+            }
+            if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
+            }
             int len = (int)length;
             return new DirectRealFloatSampleArray(new float[len], 0, len);
         }
@@ -318,12 +319,11 @@ public abstract class RealScalarSampleArray implements SampleArray {
         }
 
         public String toString(String format, String separator, int maxStringLength) {
-            if (format == null)
-                throw new NullPointerException("Null format argument");
-            if (separator == null)
-                throw new NullPointerException("Null separator argument");
-            if (maxStringLength <= 0)
+            Objects.requireNonNull(format, "Null format argument");
+            Objects.requireNonNull(separator, "Null separator argument");
+            if (maxStringLength <= 0) {
                 throw new IllegalArgumentException("maxStringLength argument must be positive");
+            }
             if (length == 0) {
                 return "";
             }
@@ -355,10 +355,12 @@ public abstract class RealScalarSampleArray implements SampleArray {
         }
 
         public RealScalarSampleArray newCompatibleSamplesArray(long length) {
-            if (length < 0)
+            if (length < 0) {
                 throw new IllegalArgumentException("Negative length");
-            if (length > Integer.MAX_VALUE)
+            }
+            if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
+            }
             int len = (int)length;
             return new DirectZeroOffsetsRealFloatSampleArray(new float[len], len);
         }
@@ -426,12 +428,11 @@ public abstract class RealScalarSampleArray implements SampleArray {
         }
 
         public String toString(String format, String separator, int maxStringLength) {
-            if (format == null)
-                throw new NullPointerException("Null format argument");
-            if (separator == null)
-                throw new NullPointerException("Null separator argument");
-            if (maxStringLength <= 0)
+            Objects.requireNonNull(format, "Null format argument");
+            Objects.requireNonNull(separator, "Null separator argument");
+            if (maxStringLength <= 0) {
                 throw new IllegalArgumentException("maxStringLength argument must be positive");
+            }
             if (length == 0) {
                 return "";
             }
@@ -466,10 +467,12 @@ public abstract class RealScalarSampleArray implements SampleArray {
         }
 
         public RealScalarSampleArray newCompatibleSamplesArray(long length) {
-            if (length < 0)
+            if (length < 0) {
                 throw new IllegalArgumentException("Negative length");
-            if (length > Integer.MAX_VALUE)
+            }
+            if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
+            }
             int len = (int)length;
             return new DirectRealDoubleSampleArray(new double[len], 0, len);
         }
@@ -537,12 +540,11 @@ public abstract class RealScalarSampleArray implements SampleArray {
         }
 
         public String toString(String format, String separator, int maxStringLength) {
-            if (format == null)
-                throw new NullPointerException("Null format argument");
-            if (separator == null)
-                throw new NullPointerException("Null separator argument");
-            if (maxStringLength <= 0)
+            Objects.requireNonNull(format, "Null format argument");
+            Objects.requireNonNull(separator, "Null separator argument");
+            if (maxStringLength <= 0) {
                 throw new IllegalArgumentException("maxStringLength argument must be positive");
+            }
             if (length == 0) {
                 return "";
             }
@@ -574,10 +576,12 @@ public abstract class RealScalarSampleArray implements SampleArray {
         }
 
         public RealScalarSampleArray newCompatibleSamplesArray(long length) {
-            if (length < 0)
+            if (length < 0) {
                 throw new IllegalArgumentException("Negative length");
-            if (length > Integer.MAX_VALUE)
+            }
+            if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
+            }
             int len = (int)length;
             return new DirectZeroOffsetsRealDoubleSampleArray(new double[len], len);
         }
@@ -645,12 +649,11 @@ public abstract class RealScalarSampleArray implements SampleArray {
         }
 
         public String toString(String format, String separator, int maxStringLength) {
-            if (format == null)
-                throw new NullPointerException("Null format argument");
-            if (separator == null)
-                throw new NullPointerException("Null separator argument");
-            if (maxStringLength <= 0)
+            Objects.requireNonNull(format, "Null format argument");
+            Objects.requireNonNull(separator, "Null separator argument");
+            if (maxStringLength <= 0) {
                 throw new IllegalArgumentException("maxStringLength argument must be positive");
+            }
             if (length == 0) {
                 return "";
             }

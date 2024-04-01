@@ -26,6 +26,8 @@ package net.algart.matrices.spectra;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
+
 /**
  * <p>Array of samples, where each sample is a complex number, represented by a pair of <tt>double</tt> values,
  * stored in two AlgART arrays {@link UpdatablePNumberArray}.</p>
@@ -75,14 +77,13 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
     public static ComplexScalarSampleArray asSampleArray(
         UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm)
     {
-        if (samplesRe == null)
-            throw new NullPointerException("Null samplesRe");
-        if (samplesIm == null)
-            throw new NullPointerException("Null samplesIm");
+        Objects.requireNonNull(samplesRe, "Null samplesRe");
+        Objects.requireNonNull(samplesIm, "Null samplesIm");
         samplesRe = (UpdatablePNumberArray)samplesRe.asUnresizable(); // to be sure that its length will not be changed
         samplesIm = (UpdatablePNumberArray)samplesIm.asUnresizable(); // to be sure that its length will not be changed
-        if (samplesRe.length() != samplesIm.length())
+        if (samplesRe.length() != samplesIm.length()) {
             throw new SizeMismatchException("Different lengths of samplesRe and samplesIm");
+        }
         if (samplesRe instanceof DirectAccessible && ((DirectAccessible)samplesRe).hasJavaArray()
             && samplesIm instanceof DirectAccessible && ((DirectAccessible)samplesIm).hasJavaArray())
         {
@@ -151,12 +152,11 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         private final UpdatablePNumberArray samplesRe, samplesIm;
 
         CommonComplexScalarSampleArray(UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm) {
-            if (samplesRe == null)
-                throw new NullPointerException("Null samplesRe");
-            if (samplesIm == null)
-                throw new NullPointerException("Null samplesIm");
-            if (samplesRe.length() != samplesIm.length())
+            Objects.requireNonNull(samplesRe, "Null samplesRe");
+            Objects.requireNonNull(samplesIm, "Null samplesIm");
+            if (samplesRe.length() != samplesIm.length()) {
                 throw new IllegalArgumentException("Different lengths of samplesRe and samplesIm");
+            }
             this.samplesRe = samplesRe;
             this.samplesIm = samplesIm;
         }
@@ -242,12 +242,11 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public String toString(String format, String separator, int maxStringLength) {
-            if (format == null)
-                throw new NullPointerException("Null format argument");
-            if (separator == null)
-                throw new NullPointerException("Null separator argument");
-            if (maxStringLength <= 0)
+            Objects.requireNonNull(format, "Null format argument");
+            Objects.requireNonNull(separator, "Null separator argument");
+            if (maxStringLength <= 0) {
                 throw new IllegalArgumentException("maxStringLength argument must be positive");
+            }
             final long n = samplesRe.length();
             if (n == 0) {
                 return "";
@@ -293,10 +292,12 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public ComplexScalarSampleArray newCompatibleSamplesArray(long length) {
-            if (length < 0)
+            if (length < 0) {
                 throw new IllegalArgumentException("Negative length");
-            if (length > Integer.MAX_VALUE)
+            }
+            if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
+            }
             int len = (int)length;
             return new DirectComplexFloatSampleArray(new float[len], 0, new float[len], 0, len);
         }
@@ -387,12 +388,11 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public String toString(String format, String separator, int maxStringLength) {
-            if (format == null)
-                throw new NullPointerException("Null format argument");
-            if (separator == null)
-                throw new NullPointerException("Null separator argument");
-            if (maxStringLength <= 0)
+            Objects.requireNonNull(format, "Null format argument");
+            Objects.requireNonNull(separator, "Null separator argument");
+            if (maxStringLength <= 0) {
                 throw new IllegalArgumentException("maxStringLength argument must be positive");
+            }
             if (length == 0) {
                 return "";
             }
@@ -428,10 +428,12 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public ComplexScalarSampleArray newCompatibleSamplesArray(long length) {
-            if (length < 0)
+            if (length < 0) {
                 throw new IllegalArgumentException("Negative length");
-            if (length > Integer.MAX_VALUE)
+            }
+            if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
+            }
             int len = (int)length;
             return new DirectZeroOffsetsComplexFloatSampleArray(new float[len], new float[len], len);
         }
@@ -514,12 +516,11 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public String toString(String format, String separator, int maxStringLength) {
-            if (format == null)
-                throw new NullPointerException("Null format argument");
-            if (separator == null)
-                throw new NullPointerException("Null separator argument");
-            if (maxStringLength <= 0)
+            Objects.requireNonNull(format, "Null format argument");
+            Objects.requireNonNull(separator, "Null separator argument");
+            if (maxStringLength <= 0) {
                 throw new IllegalArgumentException("maxStringLength argument must be positive");
+            }
             if (length == 0) {
                 return "";
             }
@@ -561,10 +562,12 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public ComplexScalarSampleArray newCompatibleSamplesArray(long length) {
-            if (length < 0)
+            if (length < 0) {
                 throw new IllegalArgumentException("Negative length");
-            if (length > Integer.MAX_VALUE)
+            }
+            if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
+            }
             int len = (int)length;
             return new DirectComplexDoubleSampleArray(new double[len], 0, new double[len], 0, len);
         }
@@ -655,12 +658,11 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public String toString(String format, String separator, int maxStringLength) {
-            if (format == null)
-                throw new NullPointerException("Null format argument");
-            if (separator == null)
-                throw new NullPointerException("Null separator argument");
-            if (maxStringLength <= 0)
+            Objects.requireNonNull(format, "Null format argument");
+            Objects.requireNonNull(separator, "Null separator argument");
+            if (maxStringLength <= 0) {
                 throw new IllegalArgumentException("maxStringLength argument must be positive");
+            }
             if (length == 0) {
                 return "";
             }
@@ -696,10 +698,12 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public ComplexScalarSampleArray newCompatibleSamplesArray(long length) {
-            if (length < 0)
+            if (length < 0) {
                 throw new IllegalArgumentException("Negative length");
-            if (length > Integer.MAX_VALUE)
+            }
+            if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
+            }
             int len = (int)length;
             return new DirectZeroOffsetsComplexDoubleSampleArray(new double[len], new double[len], len);
         }
@@ -782,12 +786,11 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public String toString(String format, String separator, int maxStringLength) {
-            if (format == null)
-                throw new NullPointerException("Null format argument");
-            if (separator == null)
-                throw new NullPointerException("Null separator argument");
-            if (maxStringLength <= 0)
+            Objects.requireNonNull(format, "Null format argument");
+            Objects.requireNonNull(separator, "Null separator argument");
+            if (maxStringLength <= 0) {
                 throw new IllegalArgumentException("maxStringLength argument must be positive");
+            }
             if (length == 0) {
                 return "";
             }

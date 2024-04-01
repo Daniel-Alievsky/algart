@@ -34,6 +34,7 @@ import net.algart.math.patterns.Pattern;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>The filter allowing to transform any {@link StreamingApertureProcessor streaming aperture procesor}
@@ -116,11 +117,11 @@ public class ContinuedStreamingApertureProcessor extends StreamingApertureProces
         Matrix.ContinuationMode continuationMode)
     {
         super(parent.context()); // be careful: context can be null!
-        if (continuationMode == null)
-            throw new NullPointerException("Null continuationMode derivator");
-        if (continuationMode == Matrix.ContinuationMode.NONE)
+        Objects.requireNonNull(continuationMode, "Null continuationMode derivator");
+        if (continuationMode == Matrix.ContinuationMode.NONE) {
             throw new IllegalArgumentException(getClass().getName() + " cannot be used with continuation mode \""
                 + continuationMode + "\"");
+        }
         this.parent = parent;
         this.continuationMode = continuationMode;
     }
@@ -193,8 +194,7 @@ public class ContinuedStreamingApertureProcessor extends StreamingApertureProces
         List<? extends Matrix<? extends PArray>> additionalMatrices,
         Pattern pattern)
     {
-        if (additionalMatrices == null)
-            throw new NullPointerException("Null additionalMatrices argument");
+        Objects.requireNonNull(additionalMatrices, "Null additionalMatrices argument");
         additionalMatrices = new ArrayList<Matrix<? extends PArray>>(additionalMatrices);
         // - to avoid changing by parallel threads
         checkArguments(src, src, additionalMatrices, pattern);
@@ -211,8 +211,7 @@ public class ContinuedStreamingApertureProcessor extends StreamingApertureProces
         List<? extends Matrix<? extends PArray>> additionalMatrices,
         Pattern pattern)
     {
-        if (additionalMatrices == null)
-            throw new NullPointerException("Null additionalMatrices argument");
+        Objects.requireNonNull(additionalMatrices, "Null additionalMatrices argument");
         additionalMatrices = new ArrayList<Matrix<? extends PArray>>(additionalMatrices);
         // - to avoid changing by parallel threads
         checkArguments(dest, src, additionalMatrices, pattern);

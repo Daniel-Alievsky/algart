@@ -28,6 +28,8 @@ import net.algart.arrays.*;
 import net.algart.math.functions.Func;
 import net.algart.math.functions.LinearFunc;
 
+import java.util.Objects;
+
 /**
  * <p>Array of samples, where each sample is a vector of real numbers with some fixed length,
  * represented by an array of <tt>double</tt> values,
@@ -67,19 +69,22 @@ public abstract class RealVectorSampleArray implements SampleArray {
 
     RealVectorSampleArray(UpdatablePNumberArray samples, long vectorLength, long vectorStep, long length) {
     // Besides more clarity, "length" argument allows processing a case vectorLength=vectorStep=0
-        if (samples == null)
-            throw new NullPointerException("Null samples");
-        if (vectorLength < 0)
+        Objects.requireNonNull(samples, "Null samples");
+        if (vectorLength < 0) {
             throw new IllegalArgumentException("Negative vectorLength = " + vectorLength);
-        if (vectorStep < vectorLength)
+        }
+        if (vectorStep < vectorLength) {
             throw new IllegalArgumentException("vectorStep = "+ vectorStep + " < vectorLength = " + vectorLength);
-        if (length < 0)
+        }
+        if (length < 0) {
             throw new IllegalArgumentException("Negative length = " + length);
+        }
         long m = samples.length() - vectorLength;
-        if ((length > 0 && m < 0) || (vectorStep > 0 && (length - 1) > m / vectorStep))
+        if ((length > 0 && m < 0) || (vectorStep > 0 && (length - 1) > m / vectorStep)) {
             throw new IllegalArgumentException("samples is too short: its length " + samples.length()
                 + " < (length - 1) * vectorStep + vectorLength = "
                 + (length - 1) + " * " + vectorStep + " + " + vectorLength);
+        }
         this.samples = samples;
         this.vectorLength = vectorLength;
         this.vectorStep = vectorStep;
@@ -134,8 +139,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
         UpdatablePNumberArray samples,
         long vectorLength, long vectorStep, long length)
     {
-        if (samples == null)
-            throw new NullPointerException("Null samples");
+        Objects.requireNonNull(samples, "Null samples");
         samples = (UpdatablePNumberArray)samples.asUnresizable(); // to be sure that its length will not be changed
         if (samples instanceof DirectAccessible && ((DirectAccessible)samples).hasJavaArray()
             && vectorLength <= Arrays.SMM.maxSupportedLength(samples.elementType())
@@ -160,10 +164,11 @@ public abstract class RealVectorSampleArray implements SampleArray {
             memoryModel = Arrays.SMM;
         }
         if (vectorLength > memoryModel.maxSupportedLength(samples.elementType())
-            / GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH)
+            / GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH) {
             throw new TooLargeArrayException("Too large samples for the given memory model " + memoryModel
                 + ": it cannot allocate " + GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH
                 + " samples (each sample is a vector of " + vectorLength + " numbers");
+        }
         return new CommonRealVectorSampleArray(memoryModel, samples, vectorLength, vectorStep, length);
     }
 
@@ -206,12 +211,11 @@ public abstract class RealVectorSampleArray implements SampleArray {
     public abstract void multiplyByRealScalar(long index, double a);
 
     public String toString(String format, String separator, int maxStringLength) {
-        if (format == null)
-            throw new NullPointerException("Null format argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(format, "Null format argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (length == 0) {
             return "";
         }
@@ -254,9 +258,10 @@ public abstract class RealVectorSampleArray implements SampleArray {
         }
 
         public RealVectorSampleArray newCompatibleSamplesArray(long length) {
-            if (length > Long.MAX_VALUE / vectorLength)
+            if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
                     + length + " vectors of " + vectorLength + " numbers");
+            }
             return new CommonRealVectorSampleArray(mm,
                 (UpdatablePNumberArray) mm.newUnresizableArray(samples.elementType(), length * vectorLength),
                 vectorLength, vectorLength, length);
@@ -326,9 +331,10 @@ public abstract class RealVectorSampleArray implements SampleArray {
         }
 
         public RealVectorSampleArray newCompatibleSamplesArray(long length) {
-            if (length > Long.MAX_VALUE / vectorLength)
+            if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
                     + length + " vectors of " + vectorLength + " numbers");
+            }
             return new RealFloatVectorSampleArray(
                 (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samples.elementType(), length * vectorLength),
                 vectorLength, vectorLength, length);
@@ -498,9 +504,10 @@ public abstract class RealVectorSampleArray implements SampleArray {
         }
 
         public RealVectorSampleArray newCompatibleSamplesArray(long length) {
-            if (length > Long.MAX_VALUE / vectorLength)
+            if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
                     + length + " vectors of " + vectorLength + " numbers");
+            }
             return new RealDoubleVectorSampleArray(
                 (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samples.elementType(), length * vectorLength),
                 vectorLength, vectorLength, length);
@@ -682,9 +689,10 @@ public abstract class RealVectorSampleArray implements SampleArray {
         }
 
         public DirectRealFloatVectorSampleArray newCompatibleSamplesArray(long length) {
-            if (length > Long.MAX_VALUE / vectorLength)
+            if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
                     + length + " vectors of " + vectorLength + " numbers");
+            }
             return new DirectRealFloatVectorSampleArray(
                 Arrays.SMM.newUnresizableFloatArray(length * vectorLength),
                 vectorLength, vectorLength, length);
@@ -799,9 +807,10 @@ public abstract class RealVectorSampleArray implements SampleArray {
         }
 
         public DirectRealDoubleVectorSampleArray newCompatibleSamplesArray(long length) {
-            if (length > Long.MAX_VALUE / vectorLength)
+            if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
                     + length + " vectors of " + vectorLength + " numbers");
+            }
             return new DirectRealDoubleVectorSampleArray(
                 Arrays.SMM.newUnresizableDoubleArray(length * vectorLength),
                 vectorLength, vectorLength, length);
