@@ -173,6 +173,56 @@ public class PackedBitArraysPer8 {
         }
     }
 
+    public static long getBits(byte[] src, long srcPos, int count) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IndexOutOfBoundsException("Negative srcPos argument: " + srcPos);
+        }
+        final long srcPosDiv8 = srcPos >>> 3;
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot get > 64 bits in getBits method");
+        }
+        if (count == 0 || srcPosDiv8 >= src.length) {
+            return 0;
+        }
+        long result = 0;
+        int sPosRem = (int) (srcPos & 7);
+        int sPos = (int) srcPosDiv8;
+        int shift = 0;
+        for (; ;) {
+            final int bitsLeft = 8 - sPosRem;
+            if (count >= bitsLeft) {
+                final long actualBits = (src[sPos] & 0xFFL) >>> sPosRem;
+                // sPosRem=5, bitsLeft=3:
+                //     (01234567)
+                //      abcdefgh
+                //      fgh00000
+                result |= actualBits << shift;
+                count -= bitsLeft;
+                shift += bitsLeft;
+                sPos++;
+                if (count == 0 || sPos >= src.length) {
+                    break;
+                }
+            } else {
+                final long actualBits = (src[sPos] & (0xFFL >>> (bitsLeft - count))) >>> sPosRem;
+                // sPosRem=5, bitsLeft=3, count=2:
+                //     (01234567)
+                //      abcdefgh
+                //      abcdefg0
+                //      fg000000
+                result |= actualBits << shift;
+                break;
+            }
+            sPosRem = 0;
+        }
+        return result;
+    }
+
     /**
      * Returns the bit <tt>#index</tt> in the packed <tt>src</tt> bit array
      * for a case, when the bits are packed in each byte in the reverse order:
@@ -232,14 +282,10 @@ public class PackedBitArraysPer8 {
         if (count < 0) {
             throw new IllegalArgumentException("Negative count argument: " + count);
         }
-        if (count > 64) {
-            throw new IllegalArgumentException("Too large count argument: " + count +
-                    "; we cannot get more 64 bits in this method");
-        }
         if (count == 0 || srcPosDiv8 >= src.length) {
             return 0;
         }
-        long result = 0;
+        int result = 0;
         int currentBitIndex = (int) (srcPos & 7);
         int currentByteIndex = (int) srcPosDiv8;
         while (count != 0) {
@@ -250,11 +296,11 @@ public class PackedBitArraysPer8 {
                 final int cb = src[currentByteIndex];
                 if (currentBitIndex == 0) {
                     // we can read in a whole byte, so we'll do that.
-                    result += cb & 0xFF;
+                    result += cb & 0xff;
                 } else {
                     // otherwise, only read the appropriate number of bits off the back
                     // side of the byte, in order to "finish" the current byte in the buffer.
-                    result += cb & (0xFF >> currentBitIndex);
+                    result += cb & (0xFF >> (8 - bitsLeft));
                     currentBitIndex = 0;
                 }
                 currentByteIndex++;
@@ -262,10 +308,9 @@ public class PackedBitArraysPer8 {
                 // We will be able to finish using the current byte.
                 // read the appropriate number of bits off the front side of the byte,
                 // then push them into the int.
-                result <<= count;
-                final int cb = src[currentByteIndex] & 0xFF;
-                int mask = (0xFF00 >> currentBitIndex) & 0xFF;
-                result += (cb & (0x00FF - mask)) >> (bitsLeft - count);
+                result = result << count;
+                final int cb = src[currentByteIndex] & 0xff;
+                result += (cb & (0x00FF - (((0xFF00 >> currentBitIndex) & 0xFF)))) >> (bitsLeft - count);
                 break;
             }
             if (currentByteIndex >= src.length) {
@@ -274,9 +319,6 @@ public class PackedBitArraysPer8 {
         }
         return result;
     }
-
-
-
 
     /**
      * Packs byte array to <tt>long[]</tt>, so that the bits, stored in the result array according the rules
