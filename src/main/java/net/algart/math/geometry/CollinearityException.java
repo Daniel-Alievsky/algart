@@ -1,4 +1,4 @@
-package net.algart.math.geom;
+package net.algart.math.geometry;
 
 /**
  * Thrown when two collinear (or amost collinear) vectors or segments are detected,

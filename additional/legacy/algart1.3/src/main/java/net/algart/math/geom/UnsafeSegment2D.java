@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.math.geom;
+package net.algart.math.geometry;
 
 /**
  * <p>"Unsafe" 2D segment</p>

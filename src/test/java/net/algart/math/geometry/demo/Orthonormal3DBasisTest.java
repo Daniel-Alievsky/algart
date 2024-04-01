@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-package net.algart.math.geom.demo;
+package net.algart.math.geometry.demo;
 
-import net.algart.math.geom.Orthonormal3DBasis;
+import net.algart.math.geometry.Orthonormal3DBasis;
 
 import java.util.Locale;
 import java.util.Random;

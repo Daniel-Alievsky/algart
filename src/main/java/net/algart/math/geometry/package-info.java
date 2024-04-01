@@ -23,9 +23,8 @@
  */
 
 /**
- <p>Some mathematical objects: ranges, multidimensional points, multidimensional rectangular areas,
- integers with 128-bit precision.</p>
+ <p>Some geometric objects and utilities.</p>
 
  @author Daniel Alievsky
  */
-package net.algart.math;
+package net.algart.math.geometry;

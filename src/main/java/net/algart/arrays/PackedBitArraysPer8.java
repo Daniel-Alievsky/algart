@@ -108,7 +108,7 @@ public class PackedBitArraysPer8 {
 
 
     /**
-     * Returns <tt>((long) array.length) << 3</tt>: the maximal number of bits that
+     * Returns <tt>((long) array.length) &lt;&lt; 3</tt>: the maximal number of bits that
      * can be stored in the specified array.
      *
      * @param array <tt>byte[]</tt> array.

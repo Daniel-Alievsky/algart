@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.math.geom;
+package net.algart.math.geometry;
 
 /**
  * <p>2D rotation by some angle: an immutable object representing some rotation angle &Delta;&phi;.

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.math.geom;
+package net.algart.math.geometry;
 
 import java.util.Objects;
 import java.util.Random;

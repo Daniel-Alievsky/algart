@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.math.geom;
+package net.algart.math.geometry;
 
 /**
  * <p>2D direction: an angle &phi; + corresponding unit vector (cos &phi;, sin &phi;) </p>

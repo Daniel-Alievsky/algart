@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.math.geom;
+package net.algart.math.geometry;
 
 /**
  * <p>Service class that quickly returns all integer points of Bresenham circles
