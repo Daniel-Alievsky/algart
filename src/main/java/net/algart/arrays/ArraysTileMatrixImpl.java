@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 class ArraysTileMatrixImpl {
 
     private static final boolean DEBUG_MODE = false; // enable comparison with translate() method in each data block
@@ -94,8 +96,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -107,8 +108,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -186,8 +186,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -199,8 +198,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -212,8 +210,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
@@ -226,8 +223,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public UpdatableBitArray setBits(long arrayPos, long[] srcArray, long srcArrayOffset, long count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -308,8 +304,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -386,8 +381,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -401,8 +395,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
@@ -481,8 +474,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -559,8 +551,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -574,8 +565,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
@@ -654,8 +644,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -732,8 +721,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -747,8 +735,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
@@ -827,8 +814,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -905,8 +891,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -920,8 +905,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
@@ -1000,8 +984,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -1078,8 +1061,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -1093,8 +1075,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
@@ -1173,8 +1154,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -1251,8 +1231,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -1266,8 +1245,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
@@ -1346,8 +1324,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -1424,8 +1401,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -1439,8 +1415,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
@@ -1519,8 +1494,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -1597,8 +1571,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -1612,8 +1585,7 @@ class ArraysTileMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
@@ -1861,8 +1833,7 @@ class ArraysTileMatrixImpl {
         }
 
         public static Indexer getInstance(Matrix<? extends Array> baseMatrix, long[] tileDim) {
-            if (tileDim == null)
-                throw new NullPointerException("Null tile dimensions Java array");
+            Objects.requireNonNull(tileDim, "Null tile dimensions Java array");
             int n = baseMatrix.dimCount();
             if (tileDim.length != n)
                 throw new IllegalArgumentException("Number of tile dimensions is not equal "

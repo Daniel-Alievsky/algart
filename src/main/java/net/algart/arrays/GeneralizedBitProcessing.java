@@ -27,6 +27,7 @@ package net.algart.arrays;
 import net.algart.math.functions.ConstantFunc;
 import net.algart.math.Range;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
@@ -359,10 +360,8 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
         SliceOperation sliceOperation, RoundingMode roundingMode, int numberOfTasks)
     {
         super(context);
-        if (sliceOperation == null)
-            throw new NullPointerException("Null sliceOperation argument");
-        if (roundingMode == null)
-            throw new NullPointerException("Null roundingMode argument");
+        Objects.requireNonNull(sliceOperation, "Null sliceOperation argument");
+        Objects.requireNonNull(roundingMode, "Null roundingMode argument");
         this.threadPoolFactory = Arrays.getThreadPoolFactory(context);
         this.numberOfTasks = numberOfTasks > 0 ? numberOfTasks :
             Math.max(1, this.threadPoolFactory.recommendedNumberOfTasks());
@@ -549,20 +548,20 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      *                                  or element types, or if <tt>numberOfSlices&lt;=0</tt>.
      */
     public void process(UpdatablePArray dest, PArray src, Range range, long numberOfSlices) {
-        if (dest == null)
-            throw new NullPointerException("Null dest argument");
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (range == null)
-            throw new NullPointerException("Null range argument");
-        if (src.elementType() != dest.elementType())
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(range, "Null range argument");
+        if (src.elementType() != dest.elementType()) {
             throw new IllegalArgumentException("Different element types of src and dest arrays ("
                 + src.elementType().getCanonicalName() + " and " + dest.elementType().getCanonicalName() + ")");
-        if (dest.length() != src.length())
+        }
+        if (dest.length() != src.length()) {
             throw new SizeMismatchException("Different lengths of src and dest arrays ("
                 + src.length() + " and " + dest.length() + ")");
-        if (numberOfSlices <= 0)
+        }
+        if (numberOfSlices <= 0) {
             throw new IllegalArgumentException("numberOfSlices must be positive");
+        }
         if (src instanceof PFixedArray) {
             numberOfSlices = Math.min(numberOfSlices, (long)(range.size() + 1.0));
         }
@@ -697,8 +696,9 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
         }
 
         public void run() {
-            if (lock == null || range == null || dest == null || src == null)
+            if (lock == null || range == null || dest == null || src == null) {
                 throw new AssertionError(this + " is not initialized correctly");
+            }
             for (long sliceIndex = threadIndex + 1; sliceIndex <= numberOfRanges; sliceIndex += numberOfThreads) {
                 // threadIndex+1 because processing the layer #0 is trivial and should be skipped
                 double value;
@@ -803,8 +803,9 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
                     //     dest, dest, castBits);
 
                     long ready = readyLayers.incrementAndGet();
-                    if (ready != sliceIndex)
+                    if (ready != sliceIndex) {
                         throw new AssertionError("Invalid synchronization in " + GeneralizedBitProcessing.class);
+                    }
                     condition.signalAll();
                 } finally {
                     lock.unlock();

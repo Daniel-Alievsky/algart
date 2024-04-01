@@ -25,6 +25,7 @@
 package net.algart.arrays;
 
 import java.util.EmptyStackException;
+import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
 import java.nio.ByteOrder;
 
@@ -201,8 +202,7 @@ class BufferArraysImpl {
         }
 
         public final void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -213,8 +213,7 @@ class BufferArraysImpl {
         }
 
         public final void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (arrayPos < 0 || arrayPos > length)
                 throw rangeException(arrayPos);
             int count = java.lang.reflect.Array.getLength(destArray);
@@ -228,8 +227,7 @@ class BufferArraysImpl {
             if (!(this instanceof BitArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
                     + "(unallowed getBits)");
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -256,8 +254,7 @@ class BufferArraysImpl {
             if (!(this instanceof UpdatableArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
                     + "(unallowed setData)");
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
@@ -274,8 +271,7 @@ class BufferArraysImpl {
             if (!(this instanceof UpdatableArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
                     + "(unallowed setData)");
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (arrayPos < 0 || arrayPos > length)
                 throw rangeException(arrayPos);
             int count = java.lang.reflect.Array.getLength(srcArray);
@@ -291,8 +287,7 @@ class BufferArraysImpl {
             if (!(this instanceof UpdatableBitArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
                     + "(unallowed setBits)");
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
