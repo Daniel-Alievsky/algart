@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>Selecting algorithms. This class provides an implementation for
  * <a target="_blank" href="https://en.wikipedia.org/wiki/Quickselect">QuickSelect</a> algorithm.</p>
@@ -190,12 +192,8 @@ public class ArraySelector {
             final long requiredIndex,
             ArrayComparator comparator,
             ArrayExchanger exchanger) {
-        if (comparator == null) {
-            throw new NullPointerException("Null comparator");
-        }
-        if (exchanger == null) {
-            throw new NullPointerException("Null exchanger");
-        }
+        Objects.requireNonNull(comparator, "Null comparator");
+        Objects.requireNonNull(exchanger, "Null exchanger");
         if (from < 0 || from >= to) {
             throw new IllegalArgumentException("Illegal from (" + from + ") or to (" + to
                     + ") arguments: must be 0 <= from < to");
@@ -402,9 +400,7 @@ public class ArraySelector {
             final int to,
             final int requiredIndex,
             byte[] array) {
-        if (array == null) {
-            throw new NullPointerException("Null array");
-        }
+        Objects.requireNonNull(array, "Null array");
         if (from < 0 || from >= to) {
             throw new IllegalArgumentException("Illegal from (" + from + ") or to (" + to
                     + ") arguments: must be 0 <= from < to");
@@ -679,9 +675,7 @@ public class ArraySelector {
             final int to,
             final int requiredIndex,
             char[] array) {
-        if (array == null) {
-            throw new NullPointerException("Null array");
-        }
+        Objects.requireNonNull(array, "Null array");
         if (from < 0 || from >= to) {
             throw new IllegalArgumentException("Illegal from (" + from + ") or to (" + to
                     + ") arguments: must be 0 <= from < to");
@@ -968,9 +962,7 @@ public class ArraySelector {
             final int to,
             final int requiredIndex,
             short[] array) {
-        if (array == null) {
-            throw new NullPointerException("Null array");
-        }
+        Objects.requireNonNull(array, "Null array");
         if (from < 0 || from >= to) {
             throw new IllegalArgumentException("Illegal from (" + from + ") or to (" + to
                     + ") arguments: must be 0 <= from < to");
@@ -1245,9 +1237,7 @@ public class ArraySelector {
             final int to,
             final int requiredIndex,
             int[] array) {
-        if (array == null) {
-            throw new NullPointerException("Null array");
-        }
+        Objects.requireNonNull(array, "Null array");
         if (from < 0 || from >= to) {
             throw new IllegalArgumentException("Illegal from (" + from + ") or to (" + to
                     + ") arguments: must be 0 <= from < to");
@@ -1522,9 +1512,7 @@ public class ArraySelector {
             final int to,
             final int requiredIndex,
             long[] array) {
-        if (array == null) {
-            throw new NullPointerException("Null array");
-        }
+        Objects.requireNonNull(array, "Null array");
         if (from < 0 || from >= to) {
             throw new IllegalArgumentException("Illegal from (" + from + ") or to (" + to
                     + ") arguments: must be 0 <= from < to");
@@ -1811,9 +1799,7 @@ public class ArraySelector {
             final int to,
             final int requiredIndex,
             float[] array) {
-        if (array == null) {
-            throw new NullPointerException("Null array");
-        }
+        Objects.requireNonNull(array, "Null array");
         if (from < 0 || from >= to) {
             throw new IllegalArgumentException("Illegal from (" + from + ") or to (" + to
                     + ") arguments: must be 0 <= from < to");
@@ -2100,9 +2086,7 @@ public class ArraySelector {
             final int to,
             final int requiredIndex,
             double[] array) {
-        if (array == null) {
-            throw new NullPointerException("Null array");
-        }
+        Objects.requireNonNull(array, "Null array");
         if (from < 0 || from >= to) {
             throw new IllegalArgumentException("Illegal from (" + from + ") or to (" + to
                     + ") arguments: must be 0 <= from < to");
@@ -2352,9 +2336,7 @@ public class ArraySelector {
         if (numberOfElements <= 0) {
             throw new IllegalArgumentException("Zero or negative number of elements = " + numberOfElements);
         }
-        if (percentileIndexes == null) {
-            throw new NullPointerException("Null percentile indexes");
-        }
+        Objects.requireNonNull(percentileIndexes, "Null percentile indexes");
         for (int k = 0; k < percentileIndexes.length; k++) {
             if (percentileIndexes[k] < 0 || percentileIndexes[k] >= numberOfElements) {
                 throw new IllegalArgumentException("Illegal percentile index #" + k + " = " + percentileIndexes[k]
@@ -2382,9 +2364,7 @@ public class ArraySelector {
      *                                  or if it is not sorted in increasing order.
      */
     public static void checkPercentileIndexes(int[] percentileIndexes, int numberOfElements) {
-        if (percentileIndexes == null) {
-            throw new NullPointerException("Null percentile indexes");
-        }
+        Objects.requireNonNull(percentileIndexes, "Null percentile indexes");
         for (int k = 0; k < percentileIndexes.length; k++) {
             if (percentileIndexes[k] < 0 || percentileIndexes[k] >= numberOfElements) {
                 throw new IllegalArgumentException("Illegal percentile index #" + k + " = " + percentileIndexes[k]
@@ -2410,9 +2390,7 @@ public class ArraySelector {
      *                                  or if it is not sorted in increasing order.
      */
     public static void checkPercentileLevels(double[] percentileLevels) {
-        if (percentileLevels == null) {
-            throw new NullPointerException("Null percentile levels");
-        }
+        Objects.requireNonNull(percentileLevels, "Null percentile levels");
         if (percentileLevels.length == 0) {
             throw new IllegalArgumentException("No percentile levels");
         }

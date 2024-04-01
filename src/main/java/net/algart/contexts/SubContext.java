@@ -26,6 +26,8 @@ package net.algart.contexts;
 
 import java.util.HashSet;
 import java.util.Arrays;
+import java.util.Objects;
+
 import net.algart.arrays.MemoryModel;
 import net.algart.arrays.SimpleMemoryModel;
 
@@ -79,8 +81,7 @@ public class SubContext extends AbstractContext implements Context {
      */
     protected SubContext(Context superContext) {
         super(false); // the constructor argument does not matter: we override both as and is methods
-        if (superContext == null)
-            throw new NullPointerException("Null superContext argument");
+        Objects.requireNonNull(superContext, "Null superContext argument");
         this.superContext = superContext;
         this.allowedClassesSet = null;
         this.memoryModel = null;
@@ -98,14 +99,13 @@ public class SubContext extends AbstractContext implements Context {
      */
     public SubContext(Context superContext, Class<?> ...allowedClasses) {
         super(false); // the constructor argument does not matter: we override both as and is methods
-        if (superContext == null)
-            throw new NullPointerException("Null superContext argument");
+        Objects.requireNonNull(superContext, "Null superContext argument");
         for (int k = 0; k < allowedClasses.length; k++) {
             Class<?> c = allowedClasses[k];
-            if (c == null)
-                throw new NullPointerException("Null allowedClasses[" + k + "] argument");
-            if (!Context.class.isAssignableFrom(c))
+            Objects.requireNonNull(c, "Null allowedClasses[" + k + "] argument");
+            if (!Context.class.isAssignableFrom(c)) {
                 throw new IllegalArgumentException("allowedClasses[" + k + "] does not inherit Context (" + c + ")");
+            }
         }
         this.superContext = superContext;
         this.allowedClassesSet = new HashSet<Class<?>>(Arrays.asList(allowedClasses));
@@ -125,10 +125,8 @@ public class SubContext extends AbstractContext implements Context {
      */
     public SubContext(Context superContext, MemoryModel memoryModel) {
         super(false); // the constructor argument does not matter: we override both as and is methods
-        if (superContext == null)
-            throw new NullPointerException("Null superContext argument");
-        if (memoryModel == null)
-            throw new NullPointerException("Null memoryModel argument");
+        Objects.requireNonNull(superContext, "Null superContext argument");
+        Objects.requireNonNull(memoryModel, "Null memoryModel argument");
         this.superContext = superContext;
         this.allowedClassesSet = null;
         this.memoryModel = memoryModel;
@@ -167,18 +165,20 @@ public class SubContext extends AbstractContext implements Context {
      * @throws UnsupportedContextException if this instance does not implement or extend the required type.
      */
     public final <T extends Context> T as(Class<T> contextClass) {
-        if (contextClass == null)
-            throw new NullPointerException("Null contextClass argument");
-        if (!Context.class.isAssignableFrom(contextClass))
+        Objects.requireNonNull(contextClass, "Null contextClass argument");
+        if (!Context.class.isAssignableFrom(contextClass)) {
             throw new IllegalArgumentException("The contextClass argument is not a context class ("
                 + contextClass.getName() + ")");
+        }
         if (contextClass.isAssignableFrom(getClass())) {
             return contextClass.cast(this);
         } else {
-            if (allowedClassesSet != null && !allowedClassesSet.contains(contextClass))
+            if (allowedClassesSet != null && !allowedClassesSet.contains(contextClass)) {
                 throw new UnsupportedContextException("Unallowed context class: " + contextClass.getName());
-            if (contextClass == ArrayMemoryContext.class && this.memoryModel != null)
+            }
+            if (contextClass == ArrayMemoryContext.class && this.memoryModel != null) {
                 return contextClass.cast(new MemorySubContext());
+            }
             return superContext.as(contextClass);
         }
     }
@@ -203,14 +203,18 @@ public class SubContext extends AbstractContext implements Context {
      * @return             <tt>true</tt> if this context class can be processed by {@link #as(Class)} method.
      */
     public final boolean is(Class<? extends Context> contextClass) {
-        if (contextClass == null || !Context.class.isAssignableFrom(contextClass))
+        if (contextClass == null || !Context.class.isAssignableFrom(contextClass)) {
             return false;
-        if (contextClass.isAssignableFrom(getClass()))
+        }
+        if (contextClass.isAssignableFrom(getClass())) {
             return true;
-        if (allowedClassesSet != null && !allowedClassesSet.contains(contextClass))
+        }
+        if (allowedClassesSet != null && !allowedClassesSet.contains(contextClass)) {
             return false;
-        if (contextClass == ArrayMemoryContext.class && this.memoryModel != null)
+        }
+        if (contextClass == ArrayMemoryContext.class && this.memoryModel != null) {
             return true;
+        }
         return superContext.is(contextClass);
     }
 
@@ -228,8 +232,7 @@ public class SubContext extends AbstractContext implements Context {
         }
 
         public MemoryModel getMemoryModel(String settings) {
-            if (settings == null)
-                throw new NullPointerException("Null settings argument");
+            Objects.requireNonNull(settings, "Null settings argument");
             return memoryModel;
         }
     }

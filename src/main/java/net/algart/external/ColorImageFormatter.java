@@ -32,6 +32,7 @@ import java.awt.image.*;
 import java.awt.image.DataBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 // Deprecated - should be replaced with new ...Converters
 interface ColorImageFormatter {
@@ -79,18 +80,17 @@ interface ColorImageFormatter {
             private boolean indexedResult = true;
 
             public MonochromeToAlphaCorrector(java.awt.Color baseColor) {
-                if (baseColor == null)
-                    throw new NullPointerException("Null base color");
+                Objects.requireNonNull(baseColor, "Null base color");
                 this.baseColor = new byte[] {
                     (byte) baseColor.getRed(), (byte) baseColor.getGreen(), (byte) baseColor.getBlue()
                 };
             }
 
             public MonochromeToAlphaCorrector(double[] baseColor) {
-                if (baseColor == null)
-                    throw new NullPointerException("Null base color");
-                if (baseColor.length < 3)
+                Objects.requireNonNull(baseColor, "Null base color");
+                if (baseColor.length < 3) {
                     throw new IllegalArgumentException("3 RGB base color components required");
+                }
                 this.baseColor = new byte[3];
                 for (int k = 0; k < 3; k++) {
                     double bc = baseColor[k];
@@ -159,34 +159,36 @@ interface ColorImageFormatter {
         }
 
         public Simple setCorrector(ColorBandsCorrector corrector) {
-            if (corrector == null)
-                throw new NullPointerException("Null corrector");
+            Objects.requireNonNull(corrector, "Null corrector");
             this.corrector = corrector;
             return this;
         }
 
         public BufferedImage toBufferedImage(List<? extends Matrix<? extends PArray>> image) {
-            if (image == null)
-                throw new NullPointerException("Null image");
+            Objects.requireNonNull(image, "Null image");
             image = new ArrayList<Matrix<? extends PArray>>(image);
             // cloning before checking guarantees correct check while multithreading
-            if (image.isEmpty())
+            if (image.isEmpty()) {
                 throw new IllegalArgumentException("Empty list of image bands");
-            if (image.get(0).size() > Integer.MAX_VALUE)
+            }
+            if (image.get(0).size() > Integer.MAX_VALUE) {
                 throw new TooLargeArrayException("The image is too large "
                     + "and cannot be converted to BufferedImage: it contains >Integer.MAX_VALUE pixels");
+            }
             int numberOfBands = image.size();
-            if (numberOfBands > 4)
+            if (numberOfBands > 4) {
                 throw new IllegalArgumentException("The image contains " + numberOfBands + ">4 bands "
                     + "and cannot be converted to BufferedImage: don't know what to do with extra bands");
+            }
             final int dimX = (int) image.get(0).dimX();
             final int dimY = (int) image.get(0).dimY();
             final int size = (int) image.get(0).size();
             byte[][] rgbAlpha = new byte[numberOfBands][];
             for (int k = 0; k < rgbAlpha.length; k++) {
                 Matrix<? extends PArray> m = image.get(k);
-                if (!m.dimEquals(image.get(0)))
+                if (!m.dimEquals(image.get(0))) {
                     throw new SizeMismatchException("Dimensions mismatch in the matrices of the image");
+                }
                 assert m.size() == size;
                 rgbAlpha[k] = new byte[size];
                 UpdatableByteArray dest = SimpleMemoryModel.asUpdatableByteArray(rgbAlpha[k]);
@@ -230,8 +232,9 @@ interface ColorImageFormatter {
             byte[][] palette = rgbAlpha.length == 1 ? corrector.getPalette() : null;
             DataBufferByte dataBuffer = new DataBufferByte(rgbAlpha, rgbAlpha[0].length);
             if (palette != null) {
-                if (palette.length < 3)
+                if (palette.length < 3) {
                     throw new AssertionError("getPalette() method must return palette with 3 or 4 bands");
+                }
     //            int[] paletteRGBA = new int[256]; // no difference with the following simpler code
     //            for (int k = 0; k < 256; k++) {
     //                paletteRGBA[k] = (palette[0][k] & 0xFF) << 16
@@ -263,8 +266,7 @@ interface ColorImageFormatter {
         }
 
         public List<Matrix<UpdatablePArray>> toImage(BufferedImage bufferedImage) {
-            if (bufferedImage == null)
-                throw new NullPointerException("Null buffered image");
+            Objects.requireNonNull(bufferedImage, "Null buffered image");
             int dimX = bufferedImage.getWidth();
             int dimY = bufferedImage.getHeight();
             ColorModel cm = bufferedImage.getColorModel();

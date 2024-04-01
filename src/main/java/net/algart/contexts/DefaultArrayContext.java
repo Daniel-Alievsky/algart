@@ -26,6 +26,8 @@ package net.algart.contexts;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
+
 /**
  * <p>A simple implementation of {@link ArrayContext} interface,
  * based on the {@link ArrayMemoryContext memory},
@@ -57,8 +59,7 @@ public class DefaultArrayContext extends AbstractArrayContext implements ArrayCo
      *                                     the requested 4 specified contexts.
      */
     public DefaultArrayContext(Context context) {
-        if (context == null)
-            throw new NullPointerException("Null context argument");
+        Objects.requireNonNull(context, "Null context argument");
         this.arrayMemoryContext = context.as(ArrayMemoryContext.class);
         this.arrayThreadPoolContext = context.as(ArrayThreadPoolContext.class);
         this.interruptionContext = context.as(InterruptionContext.class);
@@ -87,10 +88,8 @@ public class DefaultArrayContext extends AbstractArrayContext implements ArrayCo
      *                                     the requested 3 specified contexts.
      */
     public DefaultArrayContext(Context context, ThreadPoolFactory threadPoolFactory) {
-        if (context == null)
-            throw new NullPointerException("Null context argument");
-        if (threadPoolFactory == null)
-            throw new NullPointerException("Null threadPoolFactory argument");
+        Objects.requireNonNull(context, "Null context argument");
+        Objects.requireNonNull(threadPoolFactory, "Null threadPoolFactory argument");
         this.arrayMemoryContext = context.as(ArrayMemoryContext.class);
         this.arrayThreadPoolContext = null;
         this.interruptionContext = context.as(InterruptionContext.class);

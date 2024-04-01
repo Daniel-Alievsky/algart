@@ -26,6 +26,8 @@ package net.algart.contexts;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
+
 /**
  * <p>An adapter class containing the simplest ("empty") implementations of the following standard contexts:
  * {@link InterruptionContext}, {@link ArrayMemoryContext}, {@link ArrayThreadPoolContext},
@@ -163,8 +165,7 @@ public class DefaultContext extends AbstractContext
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public MemoryModel getMemoryModel(String settings) {
-        if (settings == null)
-            throw new NullPointerException("Null settings argument");
+        Objects.requireNonNull(settings, "Null settings argument");
         return getMemoryModel();
     }
 

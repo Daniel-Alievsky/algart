@@ -24,6 +24,8 @@
 
 package net.algart.contexts;
 
+import java.util.Objects;
+
 /**
  * <p>The class allowing to execute some action, interruptable via standard Java technique,
  * in terms of some {@link InterruptionContext}.
@@ -44,8 +46,7 @@ public abstract class InterruptableAction<T> {
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     protected InterruptableAction(InterruptionContext context) {
-        if (context == null)
-            throw new NullPointerException("Null context argument");
+        Objects.requireNonNull(context, "Null context argument");
         this.context = context;
     }
 

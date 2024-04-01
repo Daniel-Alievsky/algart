@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>The context of processing AlgART arrays. It is used by
  * {@link Arrays.ParallelExecutor} class,
@@ -460,30 +462,34 @@ public interface ArrayContext {
          *                                  greater than <tt>Long.MAX_VALUE</tt>.
          */
         public Event(Class<?> elementType, long[] readyCountPerTask, long[] lengthPerTask) {
-            if (readyCountPerTask == null)
-                throw new NullPointerException("Null readyCountPerTask argument");
-            if (lengthPerTask == null)
-                throw new NullPointerException("Null lengthPerTask argument");
-            if (lengthPerTask.length != readyCountPerTask.length)
+            Objects.requireNonNull(readyCountPerTask, "Null readyCountPerTask argument");
+            Objects.requireNonNull(lengthPerTask, "Null lengthPerTask argument");
+            if (lengthPerTask.length != readyCountPerTask.length) {
                 throw new IllegalArgumentException("lengthPerTask and readyCountPerTask have different lengths");
-            if (lengthPerTask.length == 0)
+            }
+            if (lengthPerTask.length == 0) {
                 throw new IllegalArgumentException("Zero number of tasks "
                     + "(lengthPerTask.length and readyCountPerTask.length)");
+            }
             long sumLength = 0, sumCount = 0;
             for (int k = 0; k < lengthPerTask.length; k++) {
                 long length = lengthPerTask[k];
                 long count = readyCountPerTask[k];
                 String perTask = lengthPerTask.length == 1 ? "" : "PerTask[" + k + "]";
-                if (length < 0)
+                if (length < 0) {
                     throw new IllegalArgumentException("Negative length" + perTask);
-                if (count < 0)
+                }
+                if (count < 0) {
                     throw new IllegalArgumentException("Negative readyCount" + perTask);
-                if (count > length)
+                }
+                if (count > length) {
                     throw new IllegalArgumentException("readyCount" +  perTask
                         + "=" + count + " is greater than length" + perTask + "=" + length);
+                }
                 sumLength += length;
-                if (sumLength < 0)
+                if (sumLength < 0) {
                     throw new IllegalArgumentException("Sum of all lengthPerTask is greater than Long.MAX_VALUE");
+                }
                 sumCount += count;
                 assert sumCount >= 0; // because every count <= length
             }

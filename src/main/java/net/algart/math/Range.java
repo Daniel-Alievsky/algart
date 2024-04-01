@@ -63,12 +63,15 @@ public final class Range {
      * @throws IllegalArgumentException if <tt>min &gt; max</tt> or one of the arguments is <tt>Double.NaN</tt>.
      */
     public static Range valueOf(double min, double max) {
-        if (Double.isNaN(min))
+        if (Double.isNaN(min)) {
             throw new IllegalArgumentException("min is NaN");
-        if (Double.isNaN(max))
+        }
+        if (Double.isNaN(max)) {
             throw new IllegalArgumentException("max is NaN");
-        if (min > max)
+        }
+        if (min > max) {
             throw new IllegalArgumentException("min > max (min = " + min + ", max = " + max + ")");
+        }
         return new Range(min, max);
     }
 

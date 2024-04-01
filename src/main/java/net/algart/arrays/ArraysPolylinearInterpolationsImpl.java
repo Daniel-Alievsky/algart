@@ -56,16 +56,18 @@ class ArraysPolylinearInterpolationsImpl {
         }
 
         public double get(double... x) {
-            if (x.length == 0)
+            if (x.length == 0) {
                 throw new IndexOutOfBoundsException("At least 1 argument required");
+            }
             return get(x, dim.length < x.length ? dim.length  : x.length, 0);
         }
 
         public double get(double x) {
             long ix = (long)x;
             double a = array.getDouble(ix);
-            if (ix == dimX - 1)
+            if (ix == dimX - 1) {
                 return a;
+            }
             double b = array.getDouble(ix + 1);
             return (a - b) * (ix - x) + a;
         }
@@ -77,8 +79,9 @@ class ArraysPolylinearInterpolationsImpl {
             double a = array.getDouble(ofs1);
             double b = ix == dimX - 1 ? a : array.getDouble(ofs1 + 1);
             double v1 = (a - b) * (ix - x) + a;
-            if (iy == dimY - 1)
+            if (iy == dimY - 1) {
                 return v1;
+            }
             double c = array.getDouble(ofs2);
             double d = ix == dimX - 1 ? c : array.getDouble(ofs2 + 1);
             double v2 = (c - d) * (ix - x) + c;
@@ -90,8 +93,9 @@ class ArraysPolylinearInterpolationsImpl {
                 long coord = (long)x[0];
                 long index =  layerIndex * dimX + coord;
                 double a = array.getDouble(index);
-                if (coord == dimX - 1)
+                if (coord == dimX - 1) {
                     return a;
+                }
                 double b = array.getDouble(index + 1);
                 return (a - b) * (coord - x[0]) + a;
             } else {
@@ -99,8 +103,9 @@ class ArraysPolylinearInterpolationsImpl {
                 long coord = (long)x[n];
                 long index =  layerIndex * dim[n] + coord;
                 double a = get(x, n, index);
-                if (coord == dim[n] - 1)
+                if (coord == dim[n] - 1) {
                     return a;
+                }
                 double b = get(x, n, index + 1);
                 return (a - b) * (coord - x[n]) + a;
             }
@@ -125,8 +130,9 @@ class ArraysPolylinearInterpolationsImpl {
         }
 
         public double get(double... x) {
-            if (x.length == 0)
+            if (x.length == 0) {
                 throw new IndexOutOfBoundsException("At least 1 argument required");
+            }
             return get(x, dim.length < x.length ? dim.length  : x.length, 0);
         }
 
@@ -134,8 +140,9 @@ class ArraysPolylinearInterpolationsImpl {
             long ix = (long)x;
             checkIndex0(ix);
             double a = array.getDouble(ix);
-            if (ix == dimX - 1)
+            if (ix == dimX - 1) {
                 return a;
+            }
             double b = array.getDouble(ix + 1);
             return (a - b) * (ix - x) + a;
         }
@@ -149,8 +156,9 @@ class ArraysPolylinearInterpolationsImpl {
             double a = array.getDouble(ofs1);
             double b = ix == dimX - 1 ? a : array.getDouble(ofs1 + 1);
             double v1 = (a - b) * (ix - x) + a;
-            if (iy == dimY - 1)
+            if (iy == dimY - 1) {
                 return v1;
+            }
             double c = array.getDouble(ofs2);
             double d = ix == dimX - 1 ? c : array.getDouble(ofs2 + 1);
             double v2 = (c - d) * (ix - x) + c;
@@ -163,8 +171,9 @@ class ArraysPolylinearInterpolationsImpl {
                 checkIndex0(coord);
                 long index =  layerIndex * dimX + coord;
                 double a = array.getDouble(index);
-                if (coord == dimX - 1)
+                if (coord == dimX - 1) {
                     return a;
+                }
                 double b = array.getDouble(index + 1);
                 return (a - b) * (coord - x[0]) + a;
             } else {
@@ -173,8 +182,9 @@ class ArraysPolylinearInterpolationsImpl {
                 checkIndex(n, coord);
                 long index =  layerIndex * dim[n] + coord;
                 double a = get(x, n, index);
-                if (coord == dim[n] - 1)
+                if (coord == dim[n] - 1) {
                     return a;
+                }
                 double b = get(x, n, index + 1);
                 return (a - b) * (coord - x[n]) + a;
             }
@@ -201,15 +211,17 @@ class ArraysPolylinearInterpolationsImpl {
         }
 
         public double get(double... x) {
-            if (x.length == 0)
+            if (x.length == 0) {
                 throw new IndexOutOfBoundsException("At least 1 argument required");
+            }
             return get(x, dim.length < x.length ? dim.length  : x.length, 0);
         }
 
         public double get(double x) {
             long ix = (long)x;
-            if (ix < 0 || ix >= dimX - 1)
+            if (ix < 0 || ix >= dimX - 1) {
                 return ix == dimX - 1 ? array.getDouble(ix) : outsideValue;
+            }
             double a = array.getDouble(ix);
             double b = array.getDouble(ix + 1);
             return (a - b) * (ix - x) + a;
@@ -220,18 +232,21 @@ class ArraysPolylinearInterpolationsImpl {
             long iy = (long)y;
             if (ix < 0 || ix >= dimX - 1 || iy < 0 || iy >= dimY - 1) {
                 if (ix == dimX - 1) {
-                    if (iy < 0 || iy >= dimY)
+                    if (iy < 0 || iy >= dimY) {
                         return outsideValue;
+                    }
                     long ofs1 = iy * dimX + ix, ofs2 = ofs1 + dimX;
-                    if (iy == dimY - 1)
+                    if (iy == dimY - 1) {
                         return array.getDouble(ofs1);
+                    }
                     double a = array.getDouble(ofs1);
                     double c = array.getDouble(ofs2);
                     return (a - c) * (iy - y) + a;
                 } else if (iy == dimY - 1) {
                     assert ix != dimX - 1;
-                    if (ix < 0 || ix >= dimX)
+                    if (ix < 0 || ix >= dimX) {
                         return outsideValue;
+                    }
                     long ofs1 = iy * dimX + ix;
                     double a = array.getDouble(ofs1);
                     double b = array.getDouble(ofs1 + 1);
@@ -253,8 +268,9 @@ class ArraysPolylinearInterpolationsImpl {
             if (xLength == 1) {
                 long coord = (long)x[0];
                 long index =  layerIndex * dimX + coord;
-                if (coord < 0 || coord >= dimX - 1)
+                if (coord < 0 || coord >= dimX - 1) {
                     return coord == dimX - 1 ? array.getDouble(index) : outsideValue;
+                }
                 double a = array.getDouble(index);
                 double b = array.getDouble(index + 1);
                 return (a - b) * (coord - x[0]) + a;
@@ -262,8 +278,9 @@ class ArraysPolylinearInterpolationsImpl {
                 int n = xLength - 1;
                 long coord = (long)x[n];
                 long index =  layerIndex * dim[n] + coord;
-                if (coord < 0 || coord >= dim[n] - 1)
+                if (coord < 0 || coord >= dim[n] - 1) {
                     return coord == dim[n] - 1 ? get(x, n, index) : outsideValue;
+                }
                 double a = get(x, n, index);
                 double b = get(x, n, index + 1);
                 return (a - b) * (coord - x[n]) + a;
@@ -300,8 +317,9 @@ class ArraysPolylinearInterpolationsImpl {
         public double get(double x) {
             int ix = (int)x;
             double a = arr[ofs + ix] & 0xFF;
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1] & 0xFF;
             return (a - b) * (ix - x) + a;
         }
@@ -313,8 +331,9 @@ class ArraysPolylinearInterpolationsImpl {
             double a = arr[ofs + ofs1] & 0xFF;
             double b = ix == idimX - 1 ? a : arr[ofs + ofs1 + 1] & 0xFF;
             double v1 = (a - b) * (ix - x) + a;
-            if (iy == idimY - 1)
+            if (iy == idimY - 1) {
                 return v1;
+            }
             double c = arr[ofs + ofs2] & 0xFF;
             double d = ix == idimX - 1 ? c : arr[ofs + ofs2 + 1] & 0xFF;
             double v2 = (c - d) * (ix - x) + c;
@@ -336,8 +355,9 @@ class ArraysPolylinearInterpolationsImpl {
             int ix = (int)x;
             checkIntIndex0(ix);
             double a = arr[ofs + ix] & 0xFF;
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1] & 0xFF;
             return (a - b) * (ix - x) + a;
         }
@@ -376,8 +396,9 @@ class ArraysPolylinearInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX - 1)
+            if (ix < 0 || ix >= idimX - 1) {
                 return ix == idimX - 1 ? arr[ofs + ix] & 0xFF : outsideValue;
+            }
             double a = arr[ofs + ix] & 0xFF;
             double b = arr[ofs + ix + 1] & 0xFF;
             return (a - b) * (ix - x) + a;
@@ -416,8 +437,9 @@ class ArraysPolylinearInterpolationsImpl {
         public double get(double x) {
             int ix = (int)x;
             double a = arr[ofs + ix];
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
         }
@@ -429,8 +451,9 @@ class ArraysPolylinearInterpolationsImpl {
             double a = arr[ofs + ofs1];
             double b = ix == idimX - 1 ? a : arr[ofs + ofs1 + 1];
             double v1 = (a - b) * (ix - x) + a;
-            if (iy == idimY - 1)
+            if (iy == idimY - 1) {
                 return v1;
+            }
             double c = arr[ofs + ofs2];
             double d = ix == idimX - 1 ? c : arr[ofs + ofs2 + 1];
             double v2 = (c - d) * (ix - x) + c;
@@ -452,8 +475,9 @@ class ArraysPolylinearInterpolationsImpl {
             int ix = (int)x;
             checkIntIndex0(ix);
             double a = arr[ofs + ix];
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
         }
@@ -492,8 +516,9 @@ class ArraysPolylinearInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX - 1)
+            if (ix < 0 || ix >= idimX - 1) {
                 return ix == idimX - 1 ? arr[ofs + ix] : outsideValue;
+            }
             double a = arr[ofs + ix];
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
@@ -532,8 +557,9 @@ class ArraysPolylinearInterpolationsImpl {
         public double get(double x) {
             int ix = (int)x;
             double a = arr[ofs + ix] & 0xFFFF;
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1] & 0xFFFF;
             return (a - b) * (ix - x) + a;
         }
@@ -545,8 +571,9 @@ class ArraysPolylinearInterpolationsImpl {
             double a = arr[ofs + ofs1] & 0xFFFF;
             double b = ix == idimX - 1 ? a : arr[ofs + ofs1 + 1] & 0xFFFF;
             double v1 = (a - b) * (ix - x) + a;
-            if (iy == idimY - 1)
+            if (iy == idimY - 1) {
                 return v1;
+            }
             double c = arr[ofs + ofs2] & 0xFFFF;
             double d = ix == idimX - 1 ? c : arr[ofs + ofs2 + 1] & 0xFFFF;
             double v2 = (c - d) * (ix - x) + c;
@@ -568,8 +595,9 @@ class ArraysPolylinearInterpolationsImpl {
             int ix = (int)x;
             checkIntIndex0(ix);
             double a = arr[ofs + ix] & 0xFFFF;
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1] & 0xFFFF;
             return (a - b) * (ix - x) + a;
         }
@@ -608,8 +636,9 @@ class ArraysPolylinearInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX - 1)
+            if (ix < 0 || ix >= idimX - 1) {
                 return ix == idimX - 1 ? arr[ofs + ix] & 0xFFFF : outsideValue;
+            }
             double a = arr[ofs + ix] & 0xFFFF;
             double b = arr[ofs + ix + 1] & 0xFFFF;
             return (a - b) * (ix - x) + a;
@@ -648,8 +677,9 @@ class ArraysPolylinearInterpolationsImpl {
         public double get(double x) {
             int ix = (int)x;
             double a = arr[ofs + ix];
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
         }
@@ -661,8 +691,9 @@ class ArraysPolylinearInterpolationsImpl {
             double a = arr[ofs + ofs1];
             double b = ix == idimX - 1 ? a : arr[ofs + ofs1 + 1];
             double v1 = (a - b) * (ix - x) + a;
-            if (iy == idimY - 1)
+            if (iy == idimY - 1) {
                 return v1;
+            }
             double c = arr[ofs + ofs2];
             double d = ix == idimX - 1 ? c : arr[ofs + ofs2 + 1];
             double v2 = (c - d) * (ix - x) + c;
@@ -684,8 +715,9 @@ class ArraysPolylinearInterpolationsImpl {
             int ix = (int)x;
             checkIntIndex0(ix);
             double a = arr[ofs + ix];
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
         }
@@ -724,8 +756,9 @@ class ArraysPolylinearInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX - 1)
+            if (ix < 0 || ix >= idimX - 1) {
                 return ix == idimX - 1 ? arr[ofs + ix] : outsideValue;
+            }
             double a = arr[ofs + ix];
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
@@ -764,8 +797,9 @@ class ArraysPolylinearInterpolationsImpl {
         public double get(double x) {
             int ix = (int)x;
             double a = arr[ofs + ix];
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
         }
@@ -777,8 +811,9 @@ class ArraysPolylinearInterpolationsImpl {
             double a = arr[ofs + ofs1];
             double b = ix == idimX - 1 ? a : arr[ofs + ofs1 + 1];
             double v1 = (a - b) * (ix - x) + a;
-            if (iy == idimY - 1)
+            if (iy == idimY - 1) {
                 return v1;
+            }
             double c = arr[ofs + ofs2];
             double d = ix == idimX - 1 ? c : arr[ofs + ofs2 + 1];
             double v2 = (c - d) * (ix - x) + c;
@@ -800,8 +835,9 @@ class ArraysPolylinearInterpolationsImpl {
             int ix = (int)x;
             checkIntIndex0(ix);
             double a = arr[ofs + ix];
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
         }
@@ -840,8 +876,9 @@ class ArraysPolylinearInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX - 1)
+            if (ix < 0 || ix >= idimX - 1) {
                 return ix == idimX - 1 ? arr[ofs + ix] : outsideValue;
+            }
             double a = arr[ofs + ix];
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
@@ -880,8 +917,9 @@ class ArraysPolylinearInterpolationsImpl {
         public double get(double x) {
             int ix = (int)x;
             double a = arr[ofs + ix];
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
         }
@@ -893,8 +931,9 @@ class ArraysPolylinearInterpolationsImpl {
             double a = arr[ofs + ofs1];
             double b = ix == idimX - 1 ? a : arr[ofs + ofs1 + 1];
             double v1 = (a - b) * (ix - x) + a;
-            if (iy == idimY - 1)
+            if (iy == idimY - 1) {
                 return v1;
+            }
             double c = arr[ofs + ofs2];
             double d = ix == idimX - 1 ? c : arr[ofs + ofs2 + 1];
             double v2 = (c - d) * (ix - x) + c;
@@ -916,8 +955,9 @@ class ArraysPolylinearInterpolationsImpl {
             int ix = (int)x;
             checkIntIndex0(ix);
             double a = arr[ofs + ix];
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
         }
@@ -956,8 +996,9 @@ class ArraysPolylinearInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX - 1)
+            if (ix < 0 || ix >= idimX - 1) {
                 return ix == idimX - 1 ? arr[ofs + ix] : outsideValue;
+            }
             double a = arr[ofs + ix];
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
@@ -996,8 +1037,9 @@ class ArraysPolylinearInterpolationsImpl {
         public double get(double x) {
             int ix = (int)x;
             double a = arr[ofs + ix];
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
         }
@@ -1009,8 +1051,9 @@ class ArraysPolylinearInterpolationsImpl {
             double a = arr[ofs + ofs1];
             double b = ix == idimX - 1 ? a : arr[ofs + ofs1 + 1];
             double v1 = (a - b) * (ix - x) + a;
-            if (iy == idimY - 1)
+            if (iy == idimY - 1) {
                 return v1;
+            }
             double c = arr[ofs + ofs2];
             double d = ix == idimX - 1 ? c : arr[ofs + ofs2 + 1];
             double v2 = (c - d) * (ix - x) + c;
@@ -1032,8 +1075,9 @@ class ArraysPolylinearInterpolationsImpl {
             int ix = (int)x;
             checkIntIndex0(ix);
             double a = arr[ofs + ix];
-            if (ix == idimX - 1)
+            if (ix == idimX - 1) {
                 return a;
+            }
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;
         }
@@ -1072,8 +1116,9 @@ class ArraysPolylinearInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX - 1)
+            if (ix < 0 || ix >= idimX - 1) {
                 return ix == idimX - 1 ? arr[ofs + ix] : outsideValue;
+            }
             double a = arr[ofs + ix];
             double b = arr[ofs + ix + 1];
             return (a - b) * (ix - x) + a;

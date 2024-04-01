@@ -384,10 +384,8 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * @throws NullPointerException if one of the passed arguments is <tt>null</tt>.
      */
     public DataFile getDataFile(File path, ByteOrder byteOrder) {
-        if (path == null)
-            throw new NullPointerException("Null path argument");
-        if (byteOrder == null)
-            throw new NullPointerException("Null byteOrder argument");
+        Objects.requireNonNull(path, "Null path argument");
+        Objects.requireNonNull(byteOrder, "Null byteOrder argument");
         return new MappableFile(path, byteOrder, lazyWriting);
     }
 
@@ -603,8 +601,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                     });
                 break;
             } catch (Exception ex) {
-                if (!(ex instanceof IOException))
+                if (!(ex instanceof IOException)) {
                     throw new AssertionError("Unexpected exception type: " + ex);
+                }
                 exception = (IOException)ex;
             }
             numberOfAttempts++;
@@ -664,13 +663,14 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                     }
                 });
             } catch (Throwable ex) {
-                if (ex instanceof Error)
+                if (ex instanceof Error) {
                     resultError = (Error)ex;
-                else if (ex instanceof Exception)
+                } else if (ex instanceof Exception) {
                     resultError = IOErrorJ5.getInstance(ex);
-                else
+                } else {
                     throw IOErrorJ5.getInstance(
                         new AssertionError("Invalid class of caught exception: " + ex.getClass()));
+                }
             }
             if (resultError == null || timeoutInMillis <= 0) {
                 break;
@@ -809,10 +809,8 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         // - synchronization necessary due to using it in unsafeUnmap
 
         MappableFile(File file, ByteOrder byteOrder, boolean lazyWriting) {
-            if (file == null)
-                throw new NullPointerException("Null file argument");
-            if (byteOrder == null)
-                throw new NullPointerException("Null byteOrder argument");
+            Objects.requireNonNull(file, "Null file argument");
+            Objects.requireNonNull(byteOrder, "Null byteOrder argument");
             this.file = file.getAbsoluteFile();
             this.fileIndex = CURRENT_FILE_INDEX.getAndIncrement();
             this.byteOrder = byteOrder;
@@ -1025,13 +1023,15 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         }
 
         static String byteBufferToString(ByteBuffer bb) {
-            if (bb == null)
+            if (bb == null) {
                 return "no buffer";
+            }
             StringBuilder sb = new StringBuilder("");
             int len = bb.limit();
             for (int k = 0; k < len; k++) {
-                if (k > 0)
+                if (k > 0) {
                     sb.append(",");
+                }
                 sb.append(InternalUtils.toHexString(bb.get(k)));
                 if (k == 4 && len > 10) {
                     k = len - 6;
@@ -1155,8 +1155,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             }
 
             public ByteBuffer data() {
-                if (mbb == null)
-                    throw new IllegalStateException("Cannot call data() method: "
+                Objects.requireNonNull(mbb, "Cannot call data() method: "
                         + "the buffer was already unmapped or disposed");
                 return mbb;
             }
@@ -1166,8 +1165,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             }
 
             public void load() {
-                if (mbb == null)
-                    throw new IllegalStateException("Cannot call load() method: "
+                Objects.requireNonNull(mbb, "Cannot call load() method: "
                         + "the buffer was already unmapped or disposed");
                 if (!preloaded || System.currentTimeMillis() - lastLoadTime > NEXT_RELOAD_MIN_DELAY) {
                     try {
@@ -1193,8 +1191,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             }
 
             public void flush(boolean forcePhysicalWriting) {
-                if (mbb == null)
-                    throw new IllegalStateException("Cannot call flush() method: "
+                Objects.requireNonNull(mbb, "Cannot call flush() method: "
                         + "the buffer was already unmapped or disposed");
                 if (forcePhysicalWriting || (!lazyWriting && !br.errorWhileForcing)) {
                     LargeMemoryModel.LOGGER.finer("MMMM flush: forcing " + this);
@@ -1204,8 +1201,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                         forcePhysicalWriting ? FORCE_TIMEOUT : WRITE_THROUGH_FORCE_TIMEOUT);
                     if (e != null) {
                         br.errorWhileForcing = true;
-                        if (forcePhysicalWriting)
-                           throw e;
+                        if (forcePhysicalWriting) {
+                            throw e;
+                        }
                     }
 //                    long t2 = System.nanoTime();
 //                    System.out.println(" done: " + mbb.limit() + " bytes, "
@@ -1215,8 +1213,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             }
 
             public void unmap(boolean forcePhysicalWriting) {
-                if (mbb == null)
-                    throw new IllegalStateException("Cannot call unmap() method: "
+                Objects.requireNonNull(mbb, "Cannot call unmap() method: "
                         + "the buffer was already unmapped or disposed");
                 if (CACHE_MAPPINGS) { // necessary to avoid null
                     br.unused = true;
@@ -1233,8 +1230,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             }
 
             public boolean dispose() {
-                if (mbb == null)
-                    throw new IllegalStateException("Cannot call dispose() method: "
+                Objects.requireNonNull(mbb, "Cannot call dispose() method: "
                         + "the buffer was already unmapped or disposed");
                 unmap(false);
                 return true;

@@ -112,11 +112,11 @@ public abstract class AbstractContext implements Context {
      * @see #is(Class)
      */
     public <T extends Context> T as(Class<T> contextClass) {
-        if (contextClass == null)
-            throw new NullPointerException("Null contextClass argument");
-        if (!Context.class.isAssignableFrom(contextClass))
+        Objects.requireNonNull(contextClass, "Null contextClass argument");
+        if (!Context.class.isAssignableFrom(contextClass)) {
             throw new IllegalArgumentException("The contextClass argument is not a context class ("
                 + contextClass.getName() + ")");
+        }
         if (contextClass.isAssignableFrom(getClass())) {
             return contextClass.cast(this);
         }
@@ -160,10 +160,12 @@ public abstract class AbstractContext implements Context {
      * @see #as(Class)
      */
     public boolean is(Class<? extends Context> contextClass) {
-        if (contextClass == null || !Context.class.isAssignableFrom(contextClass))
+        if (contextClass == null || !Context.class.isAssignableFrom(contextClass)) {
             return false;
-        if (contextClass.isAssignableFrom(getClass()))
+        }
+        if (contextClass.isAssignableFrom(getClass())) {
             return true;
+        }
         if (useServiceLoader) {
             return getContextViaServiceLoader(contextClass) != null;
         }
@@ -200,12 +202,10 @@ public abstract class AbstractContext implements Context {
                             // System.out.println("Error in 1.5 code: " + ex);
                         }
                     }
-                    if (iterator == null) {
-                        throw new InternalError("Cannot find service provider feature. "
+                    Objects.requireNonNull(iterator, "Cannot find service provider feature. "
                             + "Maybe, current JVM version is too early: "
                             + System.getProperty("java.version")
                             + " (JVM 1.4+ is required)");
-                    }
                     while (iterator.hasNext()) {
                         try {
                             Context context = (Context)iterator.next();

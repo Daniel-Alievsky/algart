@@ -326,8 +326,9 @@ public class Matrices {
          */
         protected Region(IRange[] coordRanges) {
             Objects.requireNonNull(coordRanges, "Null coordRanges argument");
-            if (coordRanges.length == 0)
+            if (coordRanges.length == 0) {
                 throw new IllegalArgumentException("Empty coordRanges array");
+            }
             for (int k = 0; k < coordRanges.length; k++) {
                 Objects.requireNonNull(coordRanges[k], "Null coordRanges[" + k + "]");
             }
@@ -741,8 +742,9 @@ public class Matrices {
          * @throws IllegalStateException if this region is <nobr>1-dimensional</nobr> (<tt>{@link #n()}==1</tt>).
          */
         public Region[] sectionAtLastCoordinate(final long sectionCoordinateValue) {
-            if (!checkSectionAtLastCoordinate(sectionCoordinateValue))
+            if (!checkSectionAtLastCoordinate(sectionCoordinateValue)) {
                 return EMPTY_REGIONS;
+            }
             final Region parent = this;
             return new Region[]{new Region((IRange[]) JArrays.copyOfRange(coordRanges, 0, n - 1)) {
                 @Override
@@ -779,8 +781,9 @@ public class Matrices {
          * @throws IllegalStateException if this region is <nobr>1-dimensional</nobr> (<tt>{@link #n()}==1</tt>).
          */
         protected final boolean checkSectionAtLastCoordinate(long sectionCoordinateValue) {
-            if (n == 1)
+            if (n == 1) {
                 throw new IllegalStateException("Cannot get a section for 1-dimensional region");
+            }
             return coordRanges[n - 1].contains(sectionCoordinateValue);
         }
 
@@ -853,8 +856,9 @@ public class Matrices {
 
         @Override
         public Region[] sectionAtLastCoordinate(long sectionCoordinateValue) {
-            if (!checkSectionAtLastCoordinate(sectionCoordinateValue))
+            if (!checkSectionAtLastCoordinate(sectionCoordinateValue)) {
                 return EMPTY_REGIONS;
+            }
             return new Region[]{new Hyperparallelepiped((IRange[]) JArrays.copyOfRange(coordRanges, 0, n - 1))};
         }
 
@@ -1026,9 +1030,10 @@ public class Matrices {
             super(coordRanges);
             Objects.requireNonNull(a, "Null A coefficients");
             Objects.requireNonNull(b, "Null b coefficients");
-            if (a.length != (long) n * (long) b.length)
+            if (a.length != (long) n * (long) b.length) {
                 throw new IllegalArgumentException("Illegal size of A matrix: a.length=" + a.length
                         + " must be equal to b.length*n=" + (long) n * (long) b.length);
+            }
             this.a = a.clone();
             this.b = b.clone();
         }
@@ -1054,8 +1059,9 @@ public class Matrices {
 
         @Override
         public Region[] sectionAtLastCoordinate(long sectionCoordinateValue) {
-            if (!checkSectionAtLastCoordinate(sectionCoordinateValue))
+            if (!checkSectionAtLastCoordinate(sectionCoordinateValue)) {
                 return EMPTY_REGIONS;
+            }
             // We have the following inequalities system (below m=this.n-1):
             //     a00*x0 + a01*x1 + a02*x2 + a03*x3 + ... + a0m*xm <= b0
             //     a10*x0 + a11*x1 + a12*x2 + a13*x3 + ... + a1m*xm <= b1
@@ -1210,8 +1216,9 @@ public class Matrices {
                     new double[(int) Math.min(Integer.MAX_VALUE, (long) vertices[0].length + 1)]);
             this.vertices = vertices.clone(); // this field must be assigned before the following exception
             boolean degenerated = !buildSimplexByVertices(vertices, this.a, this.b);
-            if (degenerated)
+            if (degenerated) {
                 throw new DegeneratedSimplexException("Degenerated simplex is not allowed: " + this);
+            }
             for (int k = 0; k < vertices.length; k++) {
                 this.vertices[k] = vertices[k].clone();
             }
@@ -1327,8 +1334,9 @@ public class Matrices {
 
         @Override
         public Region[] sectionAtLastCoordinate(long sectionY) {
-            if (!checkSectionAtLastCoordinate(sectionY))
+            if (!checkSectionAtLastCoordinate(sectionY)) {
                 return EMPTY_REGIONS;
+            }
             final int m = vx.length;
             double[] sectionX = new double[m];
             int horizontalCount = 0, sectionCount = 0;
@@ -1348,8 +1356,9 @@ public class Matrices {
                         if (i == m) {
                             i = 0;
                         }
-                        if (i == k)
+                        if (i == k) {
                             throw new AssertionError("Cannot find another vy, though vyPrev!=vy[k]");
+                        }
                         double vyNext = vy[i];
                         if (vyNext != sectionY) {
                             sectionX[sectionCount++] = vx[k];
@@ -1365,11 +1374,13 @@ public class Matrices {
                     horizontalCount++;
                 }
             }
-            if (sectionCount % 2 != 0)
+            if (sectionCount % 2 != 0) {
                 throw new AssertionError("Odd number " + sectionCount + " of intersections of " + this
                         + " and the horizontal y=" + sectionY);
-            if ((long) (sectionCount / 2) + (long) horizontalCount > Integer.MAX_VALUE)
+            }
+            if ((long) (sectionCount / 2) + (long) horizontalCount > Integer.MAX_VALUE) {
                 throw new OutOfMemoryError("Too large number of horizontal segments");
+            }
             java.util.Arrays.sort(sectionX, 0, sectionCount);
             Region[] result = new Region[sectionCount / 2 + horizontalCount];
             int resultCount = 0;
@@ -1546,15 +1557,17 @@ public class Matrices {
      */
     public static <T extends Array> Matrix<T> matrixAtSubArray(T array, long position, long... dim) {
         if (array != null && dim != null) {
-            if (position < 0 || position > array.length())
+            if (position < 0 || position > array.length()) {
                 throw new IndexOutOfBoundsException("Illegal position = " + position
                         + " (must be in range 0.." + array.length() + ")");
+            }
             dim = dim.clone();
             long correctLen = AbstractMatrix.checkDimensions(dim);
-            if (correctLen > array.length() - position)
+            if (correctLen > array.length() - position) {
                 throw new SizeMismatchException("Dimensions are too large for the given position and length:"
                         + " dim[0] * dim[1] * ... = " + correctLen + ", which is greater than the array length "
                         + array.length() + " + position " + position);
+            }
             array = InternalUtils.<T>cast(array.subArr(position, correctLen));
         }
         return new MatrixImpl<T>(array, dim);
@@ -1603,13 +1616,15 @@ public class Matrices {
     public static <T extends Array> void checkNewMatrixType(Class<T> arraySupertype, Class<?> elementType) {
         Objects.requireNonNull(arraySupertype, "Null arraySupertype argument");
         Arrays.checkElementTypeForNullAndVoid(elementType);
-        if (MutableArray.class.isAssignableFrom(arraySupertype))
+        if (MutableArray.class.isAssignableFrom(arraySupertype)) {
             throw new IllegalArgumentException("Illegal arraySupertype = " + arraySupertype
                     + ": it is MutableArray or its subtype, but a matrix cannot be based on a resizable array");
+        }
         Class<UpdatableArray> type = Arrays.type(UpdatableArray.class, elementType);
-        if (!arraySupertype.isAssignableFrom(type))
+        if (!arraySupertype.isAssignableFrom(type)) {
             throw new ClassCastException("The passed array supertype " + arraySupertype.getName()
                     + " is not a supertype for " + type.getName());
+        }
     }
 
     /**
@@ -1658,8 +1673,9 @@ public class Matrices {
      * created by {@link Matrix#tile()} method.
      */
     public static long[] defaultTileDimensions(int dimCount) {
-        if (dimCount <= 0)
+        if (dimCount <= 0) {
             throw new IllegalArgumentException("Zero or negative number of dimensions");
+        }
         long[] result = new long[dimCount];
         long defaultTileSide = InternalUtils.DEFAULT_MATRIX_TILE_SIDES[
                 Math.min(result.length, InternalUtils.DEFAULT_MATRIX_TILE_SIDES.length - 1)];
@@ -1701,9 +1717,10 @@ public class Matrices {
         matrices = matrices.clone();
         for (int k = 0; k < matrices.length; k++) {
             Objects.requireNonNull(matrices[k], "Null matrices[" + k + "] argument");
-            if (!arrayClass.isInstance(matrices[k].array()))
+            if (!arrayClass.isInstance(matrices[k].array())) {
                 throw new ClassCastException("Illegal type of matrices[" + k + "] argument (" + matrices[k]
                         + "; required array class is " + arrayClass.getName() + ")");
+            }
         }
         Matrix<? extends T>[] cast = InternalUtils.cast(matrices);
         return java.util.Arrays.asList(cast);
@@ -1767,9 +1784,10 @@ public class Matrices {
         T[] result = InternalUtils.cast(java.lang.reflect.Array.newInstance(arrayClass, matrices.size()));
         for (Matrix<?> m : matrices) {
             Objects.requireNonNull(m, "Null matrix #" + k);
-            if (!arrayClass.isInstance(m.array()))
+            if (!arrayClass.isInstance(m.array())) {
                 throw new ClassCastException("Illegal type of the matrix #" + k + " (" + m
                         + "; required array class is " + arrayClass.getName() + ")");
+            }
             if (m0 == null) {
                 m0 = m;
                 elementType = m.elementType();
@@ -2225,9 +2243,10 @@ public class Matrices {
         Objects.requireNonNull(matrices, "Null array of matrices");
         for (int k = 0; k < matrices.length; k++) {
             Objects.requireNonNull(matrices[k], "Null matrix #" + k);
-            if (k > 0 && !(matrices[k]).dimEquals(matrices[0]))
+            if (k > 0 && !(matrices[k]).dimEquals(matrices[0])) {
                 throw new SizeMismatchException("The matrix #" + k + " and the matrix #0 dimensions mismatch: "
                         + "the matrix #" + k + " is " + matrices[k] + ", the matrix #0 is " + matrices[0]);
+            }
         }
     }
 
@@ -2626,8 +2645,9 @@ public class Matrices {
      */
     public static Matrix<? extends PArray> getUnderlyingMatrix(Func f) {
         Objects.requireNonNull(f, "Null f argument");
-        if (!isInterpolationFunc(f))
+        if (!isInterpolationFunc(f)) {
             throw new IllegalArgumentException("The passed function is not a view of a matrix");
+        }
         return ((ArraysInterpolationsImpl.AbstractInterpolation) f).m;
     }
 
@@ -2648,10 +2668,12 @@ public class Matrices {
      */
     public static double getOutsideValue(Func f) {
         Objects.requireNonNull(f, "Null f argument");
-        if (!isInterpolationFunc(f))
+        if (!isInterpolationFunc(f)) {
             throw new IllegalArgumentException("The passed function is not a view of a matrix");
-        if (!isContinuedInterpolationFunc(f))
+        }
+        if (!isContinuedInterpolationFunc(f)) {
             throw new IllegalArgumentException("The passed interpolation function isn't continued outside the matrix");
+        }
         return ((ArraysInterpolationsImpl.AbstractInterpolation) f).outsideValue();
     }
 
@@ -2672,8 +2694,9 @@ public class Matrices {
      */
     public static InterpolationMethod getInterpolationMethod(Func f) {
         Objects.requireNonNull(f, "Null f argument");
-        if (!isInterpolationFunc(f))
+        if (!isInterpolationFunc(f)) {
             throw new IllegalArgumentException("The passed function is not a view of a matrix");
+        }
         return ((ArraysInterpolationsImpl.AbstractInterpolation) f).getInterpolationMethod();
     }
 
@@ -3022,7 +3045,9 @@ public class Matrices {
             List<? extends Matrix<? extends PArray>> x) {
         PArray[] arrays = arraysOfParallelMatrices(PArray.class, x);
         if (arrays.length == 0) // check this, not x.size(), which can be changed in a parallel thread
+        {
             throw new IllegalArgumentException("Empty x (list of AlgART matrices)");
+        }
         return x.get(0).matrix(Arrays.asFuncArray(truncateOverflows, f, requiredType, arrays));
     }
 
@@ -3343,9 +3368,10 @@ public class Matrices {
         PArray[] arrays = arraysOfParallelMatrices(PArray.class, x);
         int k = 0;
         for (Matrix<? extends PArray> m : x) {
-            if (!m.dimEquals(result))
+            if (!m.dimEquals(result)) {
                 throw new SizeMismatchException("x.get(" + k + ") and result matrix dimensions mismatch: "
                         + "matrix #" + k + " is " + m + ", result matrix is " + result);
+            }
             arrays[k++] = m.array();
         }
         Arrays.applyFunc(context, truncateOverflows, f, result.array(), arrays);
@@ -3484,13 +3510,12 @@ public class Matrices {
             ArrayContext context,
             Matrix<? extends UpdatablePArray> result,
             Matrix<? extends PArray> matrix) {
-        if (result == null)
-            throw new NullPointerException("Null result matrix");
-        if (matrix == null)
-            throw new NullPointerException("Null source matrix");
-        if (!matrix.dimEquals(result))
+        Objects.requireNonNull(result, "Null result matrix");
+        Objects.requireNonNull(matrix, "Null source matrix");
+        if (!matrix.dimEquals(result)) {
             throw new SizeMismatchException("Source and result matrix dimensions mismatch: "
                     + "source matrix is " + matrix + ", result matrix is " + result);
+        }
         Arrays.applyPrecision(context, result.array(), matrix.array());
     }
 
@@ -4039,10 +4064,8 @@ public class Matrices {
         // public static <T extends Array> Matrix<T> asShifted(
         //     Matrix<T> matrix, long ...shifts)
         // The reason is Matrix<UpdatableArray>: this method cannot return updatable matrices.
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
-        if (shifts == null)
-            throw new NullPointerException("Null shifts argument");
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        Objects.requireNonNull(shifts, "Null shifts argument");
         long shift = shifts.length == 0 ? 0 : shifts[shifts.length - 1];
         for (int k = shifts.length - 2; k >= 0; k--) {
             shift = shift * matrix.dim(k) + shifts[k];
@@ -4140,8 +4163,9 @@ public class Matrices {
             int numberOfTasks) {
         Objects.requireNonNull(dest, "Null dest argument");
         Objects.requireNonNull(src, "Null src argument");
-        if (!dest.dimEquals(src))
+        if (!dest.dimEquals(src)) {
             throw new SizeMismatchException("dest and src matrix dimensions mismatch: " + dest + " and " + src);
+        }
         return Arrays.copy(context, dest.array(), src.array(), numberOfTasks);
     }
 
@@ -4174,9 +4198,10 @@ public class Matrices {
             int numberOfTasks, boolean strictMode) {
         Objects.requireNonNull(dest, "Null dest argument");
         Objects.requireNonNull(src, "Null src argument");
-        if (!dest.dimEquals(src))
+        if (!dest.dimEquals(src)) {
             throw new SizeMismatchException("dest and src matrix dimensions mismatch: "
                     + dest + " and " + src);
+        }
         return Arrays.copy(context, dest.array(), src.array(), numberOfTasks, strictMode);
     }
 
@@ -4202,9 +4227,10 @@ public class Matrices {
             Matrix<? extends Array> src) {
         Objects.requireNonNull(dest, "Null dest argument");
         Objects.requireNonNull(src, "Null src argument");
-        if (!dest.dimEquals(src))
+        if (!dest.dimEquals(src)) {
             throw new SizeMismatchException("dest and src matrix dimensions mismatch: "
                     + dest + " and " + src);
+        }
         return Arrays.compareAndCopy(context, dest.array(), src.array());
     }
 
@@ -4688,18 +4714,22 @@ public class Matrices {
 
     private static IRange[] coordRangesOfVertices(double[][] vertices, int requiredDimCount) {
         Objects.requireNonNull(vertices, "Null vertices array");
-        if (vertices.length == 0)
+        if (vertices.length == 0) {
             throw new IllegalArgumentException("No vertices are specified");
+        }
         for (int k = 0; k < vertices.length; k++) {
             Objects.requireNonNull(vertices[k], "Null vertices[" + k + "]");
-            if (vertices[k].length == 0)
+            if (vertices[k].length == 0) {
                 throw new IllegalArgumentException("Empty vertices[" + k + "]: 0-dimensional points are not allowed");
-            if (requiredDimCount > 0 && vertices[k].length != requiredDimCount)
+            }
+            if (requiredDimCount > 0 && vertices[k].length != requiredDimCount) {
                 throw new IllegalArgumentException("The vertex #" + k + " is " + vertices[k].length
                         + "-dimensional, but only " + requiredDimCount + "-dimensional vertices are allowed");
-            if (vertices[k].length != vertices[0].length)
+            }
+            if (vertices[k].length != vertices[0].length) {
                 throw new IllegalArgumentException("Different number of dimensions in the vertex #" + k + " ("
                         + vertices[k].length + "-dimensional) and the vertex #0 (" + vertices[0].length + "-dimensional");
+            }
         }
         IRange[] result = new IRange[vertices[0].length];
         for (int j = 0; j < result.length; j++) {
@@ -4719,24 +4749,32 @@ public class Matrices {
 
     private static boolean buildSimplexByVertices(double[][] vertices, double[] a, double[] b) {
         Objects.requireNonNull(vertices, "Null vertices array");
-        if (vertices.length == 0)
+        if (vertices.length == 0) {
             throw new IllegalArgumentException("No vertices are specified");
+        }
         final int n = vertices[0].length; // number of dimensions
-        if (vertices.length != n + 1)
+        if (vertices.length != n + 1) {
             throw new IllegalArgumentException("Illegal number of vertices " + vertices.length + ": the "
                     + (n == 2 ? "triangle" : n == 3 ? "tetrahedron" : n + "-dimensional simplex")
                     + " must be defined by " + (n + 1) + " vertices");
+        }
         if ((long) vertices.length * (long) n != a.length) // possible in overflow case only
+        {
             throw new OutOfMemoryError("Too large A matrix");
+        }
         if (vertices.length != b.length) // possible in overflow case only
+        {
             throw new OutOfMemoryError("Too large b vector");
+        }
         boolean result = true;
         double[] minorMatrix = new double[n * n];
         for (int k = 0, aOfs = 0; k < vertices.length; k++, aOfs += n) {
             double[] vertex = vertices[k];
             if (vertex.length != n) // extra check for this class
+            {
                 throw new IllegalArgumentException("Different number of dimensions in the vertex #" + k + " ("
                         + vertex.length + "-dimensional) and the vertex #0 (" + n + "-dimensional");
+            }
             // Let's consider the hyperfacet opposite to the vertex #i.
             // The equation set for this hyperfacet is (m=n-1):
             //     |   x0   x1 ...   xm 1 |
@@ -4792,8 +4830,9 @@ public class Matrices {
 
     private static double determinant(int n, double... a) {
         assert a.length == n * n;
-        if (n <= 0)
+        if (n <= 0) {
             throw new IllegalArgumentException("Zero or negative matrix size");
+        }
         if (n == 1) {
             return a[0];
         }

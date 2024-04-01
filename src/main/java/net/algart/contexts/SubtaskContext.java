@@ -29,6 +29,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * <p>A wrapper around the parent context, allowing to describe a subtask of some long-working task.</p>
@@ -120,15 +121,17 @@ public class SubtaskContext implements Context {
      * @see #SubtaskContext(Context, long, long, long)
      */
     public SubtaskContext(Context parentContext, double fromPart, double toPart) {
-        if (parentContext == null)
-            throw new NullPointerException("Null parentContext argument");
-        if (fromPart < 0.0)
+        Objects.requireNonNull(parentContext, "Null parentContext argument");
+        if (fromPart < 0.0) {
             throw new IllegalArgumentException("Illegal fromPart=" + fromPart + " (must be in range 0.0..1.0)");
-        if (toPart > 1.0)
+        }
+        if (toPart > 1.0) {
             throw new IllegalArgumentException("Illegal toPart=" + toPart + " (must be in range 0.0..1.0)");
-        if (fromPart > toPart)
+        }
+        if (fromPart > toPart) {
             throw new IllegalArgumentException("Illegal fromPart=" + fromPart + " or toPart=" + toPart
                 + " (fromPart must not be greater than toPart)");
+        }
         this.parentContext = parentContext;
         this.fromPart = fromPart;
         this.toPart = toPart;
@@ -160,17 +163,20 @@ public class SubtaskContext implements Context {
      * @see #SubtaskContext(Context, double, double)
      */
     public SubtaskContext(Context parentContext, long from, long to, long total) {
-        if (parentContext == null)
-            throw new NullPointerException("Null parentContext argument");
-        if (total < 0)
+        Objects.requireNonNull(parentContext, "Null parentContext argument");
+        if (total < 0) {
             throw new IllegalArgumentException("Negative total=" + total);
-        if (from < 0)
+        }
+        if (from < 0) {
             throw new IllegalArgumentException("Illegal from=" + from + " (must be in range 0.." + total + ")");
-        if (to > total)
+        }
+        if (to > total) {
             throw new IllegalArgumentException("Illegal to=" + to + " (must be in range 0.." + total + ")");
-        if (from > to)
+        }
+        if (from > to) {
             throw new IllegalArgumentException("Illegal from=" + from + " or to=" + to
                 + " (\"from\" must not be greater than \"to\")");
+        }
         this.parentContext = parentContext;
         if (total == 0) {
             assert from == 0;
