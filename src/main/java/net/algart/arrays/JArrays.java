@@ -25,6 +25,7 @@
 package net.algart.arrays;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
@@ -118,9 +119,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public ByteArrayComparator(byte[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -152,9 +151,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public ByteArrayExchanger(byte[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -191,12 +188,8 @@ public class JArrays {
          * @throws NullPointerException if one of the arguments is <tt>null</tt>.
          */
         public ByteAndIndexArrayExchanger(byte[] array, int[] indexes) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
-            if (indexes == null) {
-                throw new NullPointerException("Null indexes");
-            }
+            Objects.requireNonNull(array, "Null array");
+            Objects.requireNonNull(indexes, "Null indexes");
             this.array = array;
             this.indexes = indexes;
         }
@@ -237,9 +230,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public CharArrayComparator(char[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -271,9 +262,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public CharArrayExchanger(char[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -310,12 +299,8 @@ public class JArrays {
          * @throws NullPointerException if one of the arguments is <tt>null</tt>.
          */
         public CharAndIndexArrayExchanger(char[] array, int[] indexes) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
-            if (indexes == null) {
-                throw new NullPointerException("Null indexes");
-            }
+            Objects.requireNonNull(array, "Null array");
+            Objects.requireNonNull(indexes, "Null indexes");
             this.array = array;
             this.indexes = indexes;
         }
@@ -359,9 +344,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public ShortArrayComparator(short[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -393,9 +376,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public ShortArrayExchanger(short[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -432,12 +413,8 @@ public class JArrays {
          * @throws NullPointerException if one of the arguments is <tt>null</tt>.
          */
         public ShortAndIndexArrayExchanger(short[] array, int[] indexes) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
-            if (indexes == null) {
-                throw new NullPointerException("Null indexes");
-            }
+            Objects.requireNonNull(array, "Null array");
+            Objects.requireNonNull(indexes, "Null indexes");
             this.array = array;
             this.indexes = indexes;
         }
@@ -478,9 +455,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public IntArrayComparator(int[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -512,9 +487,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public IntArrayExchanger(int[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -551,12 +524,8 @@ public class JArrays {
          * @throws NullPointerException if one of the arguments is <tt>null</tt>.
          */
         public IntAndIndexArrayExchanger(int[] array, int[] indexes) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
-            if (indexes == null) {
-                throw new NullPointerException("Null indexes");
-            }
+            Objects.requireNonNull(array, "Null array");
+            Objects.requireNonNull(indexes, "Null indexes");
             this.array = array;
             this.indexes = indexes;
         }
@@ -597,9 +566,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public LongArrayComparator(long[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -631,9 +598,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public LongArrayExchanger(long[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -670,12 +635,8 @@ public class JArrays {
          * @throws NullPointerException if one of the arguments is <tt>null</tt>.
          */
         public LongAndIndexArrayExchanger(long[] array, int[] indexes) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
-            if (indexes == null) {
-                throw new NullPointerException("Null indexes");
-            }
+            Objects.requireNonNull(array, "Null array");
+            Objects.requireNonNull(indexes, "Null indexes");
             this.array = array;
             this.indexes = indexes;
         }
@@ -719,9 +680,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public FloatArrayComparator(float[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -753,9 +712,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public FloatArrayExchanger(float[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -792,12 +749,8 @@ public class JArrays {
          * @throws NullPointerException if one of the arguments is <tt>null</tt>.
          */
         public FloatAndIndexArrayExchanger(float[] array, int[] indexes) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
-            if (indexes == null) {
-                throw new NullPointerException("Null indexes");
-            }
+            Objects.requireNonNull(array, "Null array");
+            Objects.requireNonNull(indexes, "Null indexes");
             this.array = array;
             this.indexes = indexes;
         }
@@ -841,9 +794,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public DoubleArrayComparator(double[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -875,9 +826,7 @@ public class JArrays {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public DoubleArrayExchanger(double[] array) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
+            Objects.requireNonNull(array, "Null array");
             this.array = array;
         }
 
@@ -914,12 +863,8 @@ public class JArrays {
          * @throws NullPointerException if one of the arguments is <tt>null</tt>.
          */
         public DoubleAndIndexArrayExchanger(double[] array, int[] indexes) {
-            if (array == null) {
-                throw new NullPointerException("Null array");
-            }
-            if (indexes == null) {
-                throw new NullPointerException("Null indexes");
-            }
+            Objects.requireNonNull(array, "Null array");
+            Objects.requireNonNull(indexes, "Null indexes");
             this.array = array;
             this.indexes = indexes;
         }
@@ -985,14 +930,15 @@ public class JArrays {
      *                                    or <tt>fromIndex &gt; array.length</tt>.
      */
     public static Object copyOfRange(Object array, int fromIndex, int toIndex) {
-        if (array == null)
-            throw new NullPointerException("Null array argument in copyOfRange method");
+        Objects.requireNonNull(array, "Null array argument in copyOfRange method");
         int length = java.lang.reflect.Array.getLength(array);
-        if (fromIndex > toIndex)
+        if (fromIndex > toIndex) {
             throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
                 + " > end index = " + toIndex);
-        if (fromIndex < 0 || fromIndex > length)
+        }
+        if (fromIndex < 0 || fromIndex > length) {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
+        }
         Object result = java.lang.reflect.Array.newInstance(array.getClass().getComponentType(), toIndex - fromIndex);
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, length) - fromIndex);
         return result;
@@ -1015,13 +961,14 @@ public class JArrays {
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
     public static boolean[] copyOfRange(boolean[] array, int fromIndex, int toIndex) {
-        if (array == null)
-            throw new NullPointerException("Null array argument in copyOfRange method");
-        if (fromIndex > toIndex)
+        Objects.requireNonNull(array, "Null array argument in copyOfRange method");
+        if (fromIndex > toIndex) {
             throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
                 + " > end index = " + toIndex);
-        if (fromIndex < 0 || fromIndex > array.length)
+        }
+        if (fromIndex < 0 || fromIndex > array.length) {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
+        }
         boolean[] result = new boolean[toIndex - fromIndex];
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
         return result;
@@ -1041,13 +988,14 @@ public class JArrays {
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
     public static byte[] copyOfRange(byte[] array, int fromIndex, int toIndex) {
-        if (array == null)
-            throw new NullPointerException("Null array argument in copyOfRange method");
-        if (fromIndex > toIndex)
+        Objects.requireNonNull(array, "Null array argument in copyOfRange method");
+        if (fromIndex > toIndex) {
             throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
                 + " > end index = " + toIndex);
-        if (fromIndex < 0 || fromIndex > array.length)
+        }
+        if (fromIndex < 0 || fromIndex > array.length) {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
+        }
         byte[] result = new byte[toIndex - fromIndex];
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
         return result;
@@ -1067,13 +1015,14 @@ public class JArrays {
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
     public static char[] copyOfRange(char[] array, int fromIndex, int toIndex) {
-        if (array == null)
-            throw new NullPointerException("Null array argument in copyOfRange method");
-        if (fromIndex > toIndex)
+        Objects.requireNonNull(array, "Null array argument in copyOfRange method");
+        if (fromIndex > toIndex) {
             throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
                 + " > end index = " + toIndex);
-        if (fromIndex < 0 || fromIndex > array.length)
+        }
+        if (fromIndex < 0 || fromIndex > array.length) {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
+        }
         char[] result = new char[toIndex - fromIndex];
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
         return result;
@@ -1093,13 +1042,14 @@ public class JArrays {
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
     public static short[] copyOfRange(short[] array, int fromIndex, int toIndex) {
-        if (array == null)
-            throw new NullPointerException("Null array argument in copyOfRange method");
-        if (fromIndex > toIndex)
+        Objects.requireNonNull(array, "Null array argument in copyOfRange method");
+        if (fromIndex > toIndex) {
             throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
                 + " > end index = " + toIndex);
-        if (fromIndex < 0 || fromIndex > array.length)
+        }
+        if (fromIndex < 0 || fromIndex > array.length) {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
+        }
         short[] result = new short[toIndex - fromIndex];
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
         return result;
@@ -1119,13 +1069,14 @@ public class JArrays {
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
     public static int[] copyOfRange(int[] array, int fromIndex, int toIndex) {
-        if (array == null)
-            throw new NullPointerException("Null array argument in copyOfRange method");
-        if (fromIndex > toIndex)
+        Objects.requireNonNull(array, "Null array argument in copyOfRange method");
+        if (fromIndex > toIndex) {
             throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
                 + " > end index = " + toIndex);
-        if (fromIndex < 0 || fromIndex > array.length)
+        }
+        if (fromIndex < 0 || fromIndex > array.length) {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
+        }
         int[] result = new int[toIndex - fromIndex];
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
         return result;
@@ -1145,13 +1096,14 @@ public class JArrays {
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
     public static long[] copyOfRange(long[] array, int fromIndex, int toIndex) {
-        if (array == null)
-            throw new NullPointerException("Null array argument in copyOfRange method");
-        if (fromIndex > toIndex)
+        Objects.requireNonNull(array, "Null array argument in copyOfRange method");
+        if (fromIndex > toIndex) {
             throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
                 + " > end index = " + toIndex);
-        if (fromIndex < 0 || fromIndex > array.length)
+        }
+        if (fromIndex < 0 || fromIndex > array.length) {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
+        }
         long[] result = new long[toIndex - fromIndex];
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
         return result;
@@ -1171,13 +1123,14 @@ public class JArrays {
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
     public static float[] copyOfRange(float[] array, int fromIndex, int toIndex) {
-        if (array == null)
-            throw new NullPointerException("Null array argument in copyOfRange method");
-        if (fromIndex > toIndex)
+        Objects.requireNonNull(array, "Null array argument in copyOfRange method");
+        if (fromIndex > toIndex) {
             throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
                 + " > end index = " + toIndex);
-        if (fromIndex < 0 || fromIndex > array.length)
+        }
+        if (fromIndex < 0 || fromIndex > array.length) {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
+        }
         float[] result = new float[toIndex - fromIndex];
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
         return result;
@@ -1197,13 +1150,14 @@ public class JArrays {
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
     public static double[] copyOfRange(double[] array, int fromIndex, int toIndex) {
-        if (array == null)
-            throw new NullPointerException("Null array argument in copyOfRange method");
-        if (fromIndex > toIndex)
+        Objects.requireNonNull(array, "Null array argument in copyOfRange method");
+        if (fromIndex > toIndex) {
             throw new IllegalArgumentException("Illegal indexes: initial index = " + fromIndex
                 + " > end index = " + toIndex);
-        if (fromIndex < 0 || fromIndex > array.length)
+        }
+        if (fromIndex < 0 || fromIndex > array.length) {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
+        }
         double[] result = new double[toIndex - fromIndex];
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
         return result;
@@ -1590,8 +1544,7 @@ public class JArrays {
      * @see #areElementsZero(Object, int, int)
      */
     public static void zeroFillArray(Object dest, int destPos, int count) {
-        if (dest == null)
-            throw new NullPointerException("Null dest argument");
+        Objects.requireNonNull(dest, "Null dest argument");
         if (dest instanceof boolean[]) {
             fillBooleanArray((boolean[])dest, destPos, count, false);
         } else if (dest instanceof char[]) {
@@ -1639,8 +1592,7 @@ public class JArrays {
      * @see #zeroFillArray(Object, int, int)
      */
     public static boolean areElementsZero(Object array, int pos, int count) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         int arrayLen = java.lang.reflect.Array.getLength(array);
         rangeCheck(arrayLen, pos, count);
         if (array instanceof boolean[]) {
@@ -1807,32 +1759,38 @@ public class JArrays {
      *                                   or if <tt>array==null</tt> and not <tt>fromIndex==toIndex==0</tt>.
      */
     public static void updateArrayHashCode(Object array, int fromIndex, int toIndex, Checksum hash) {
-        if (hash == null)
-            throw new NullPointerException("Null previousHash argument");
-        if (fromIndex < 0)
+        Objects.requireNonNull(hash, "Null previousHash argument");
+        if (fromIndex < 0) {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
-        if (fromIndex > toIndex)
+        }
+        if (fromIndex > toIndex) {
             throw new ArrayIndexOutOfBoundsException("Array index out of range: initial index = " + fromIndex
                 + " > end index = " + toIndex);
+        }
         if (array == null) {
-            if (toIndex > 0)
+            if (toIndex > 0) {
                 throw new ArrayIndexOutOfBoundsException(toIndex);
+            }
         }
         if (fromIndex == toIndex) // in particular, if array == null
+        {
             return;
+        }
         int countEven = (toIndex - fromIndex) & ~(HASH_BLOCK_LEN - 1);
         if (array instanceof byte[]) {
             byte[] a = (byte[])array;
-            if (toIndex > a.length)
+            if (toIndex > a.length) {
                 throw new ArrayIndexOutOfBoundsException(toIndex);
+            }
             hash.update(a, fromIndex, toIndex - fromIndex);
         } else
         //<<Repeat() boolean ==> char,,short,,int,,long,,float,,double,,Object;;
         //           (ELEM_SIZE\s*=)\s*1 ==> $1 2,,$1 2,,$1 4,,$1 8,,$1 4,,$1 8,,$1 4 >>
         if (array instanceof boolean[]) {
             boolean[] a = (boolean[])array;
-            if (toIndex > a.length)
+            if (toIndex > a.length) {
                 throw new ArrayIndexOutOfBoundsException(toIndex);
+            }
             final int ELEM_SIZE = 1;
             byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
             int kMax = fromIndex + countEven;
@@ -1845,8 +1803,9 @@ public class JArrays {
         } else//<<Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! >>
         if (array instanceof char[]) {
             char[] a = (char[])array;
-            if (toIndex > a.length)
+            if (toIndex > a.length) {
                 throw new ArrayIndexOutOfBoundsException(toIndex);
+            }
             final int ELEM_SIZE = 2;
             byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
             int kMax = fromIndex + countEven;
@@ -1859,8 +1818,9 @@ public class JArrays {
         } else
         if (array instanceof short[]) {
             short[] a = (short[])array;
-            if (toIndex > a.length)
+            if (toIndex > a.length) {
                 throw new ArrayIndexOutOfBoundsException(toIndex);
+            }
             final int ELEM_SIZE = 2;
             byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
             int kMax = fromIndex + countEven;
@@ -1873,8 +1833,9 @@ public class JArrays {
         } else
         if (array instanceof int[]) {
             int[] a = (int[])array;
-            if (toIndex > a.length)
+            if (toIndex > a.length) {
                 throw new ArrayIndexOutOfBoundsException(toIndex);
+            }
             final int ELEM_SIZE = 4;
             byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
             int kMax = fromIndex + countEven;
@@ -1887,8 +1848,9 @@ public class JArrays {
         } else
         if (array instanceof long[]) {
             long[] a = (long[])array;
-            if (toIndex > a.length)
+            if (toIndex > a.length) {
                 throw new ArrayIndexOutOfBoundsException(toIndex);
+            }
             final int ELEM_SIZE = 8;
             byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
             int kMax = fromIndex + countEven;
@@ -1901,8 +1863,9 @@ public class JArrays {
         } else
         if (array instanceof float[]) {
             float[] a = (float[])array;
-            if (toIndex > a.length)
+            if (toIndex > a.length) {
                 throw new ArrayIndexOutOfBoundsException(toIndex);
+            }
             final int ELEM_SIZE = 4;
             byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
             int kMax = fromIndex + countEven;
@@ -1915,8 +1878,9 @@ public class JArrays {
         } else
         if (array instanceof double[]) {
             double[] a = (double[])array;
-            if (toIndex > a.length)
+            if (toIndex > a.length) {
                 throw new ArrayIndexOutOfBoundsException(toIndex);
+            }
             final int ELEM_SIZE = 8;
             byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
             int kMax = fromIndex + countEven;
@@ -1929,8 +1893,9 @@ public class JArrays {
         } else
         if (array instanceof Object[]) {
             Object[] a = (Object[])array;
-            if (toIndex > a.length)
+            if (toIndex > a.length) {
                 throw new ArrayIndexOutOfBoundsException(toIndex);
+            }
             final int ELEM_SIZE = 4;
             byte[] bytes = new byte[ELEM_SIZE * HASH_BLOCK_LEN];
             int kMax = fromIndex + countEven;
@@ -1981,16 +1946,21 @@ public class JArrays {
     public static boolean arrayEquals(Object array1, int pos1, Object array2, int pos2, int length) {
         int length1 = array1 == null ? 0 : java.lang.reflect.Array.getLength(array1);
         int length2 = array2 == null ? 0 : java.lang.reflect.Array.getLength(array2);
-        if (length < 0)
+        if (length < 0) {
             throw new IllegalArgumentException("Negative number of compared elements: length = " + length);
-        if (pos1 < 0)
+        }
+        if (pos1 < 0) {
             throw new ArrayIndexOutOfBoundsException(pos1);
-        if (pos2 < 0)
+        }
+        if (pos2 < 0) {
             throw new ArrayIndexOutOfBoundsException(pos2);
-        if (pos1 + length > length1)
+        }
+        if (pos1 + length > length1) {
             throw new ArrayIndexOutOfBoundsException(pos1 + length);
-        if (pos2 + length > length2)
+        }
+        if (pos2 + length > length2) {
             throw new ArrayIndexOutOfBoundsException(pos2 + length);
+        }
         if (array1 == array2) {
             return array1 == null || pos1 == pos2;
         }
@@ -3995,8 +3965,9 @@ public class JArrays {
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 long v = (long)dest[destPos] - (long)src[srcPos];
-                if (v < 0)
+                if (v < 0) {
                     v = -v;
+                }
                 dest[destPos] = v > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)v;
             }
         } else {
@@ -4237,12 +4208,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(boolean[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4274,12 +4244,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(char[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4311,12 +4280,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(byte[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4348,12 +4316,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(short[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4385,12 +4352,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(int[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4422,12 +4388,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(long[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4459,12 +4424,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(float[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4496,12 +4460,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(double[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4533,12 +4496,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(Object[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4578,12 +4540,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(byte[] array, Locale locale, String format, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4619,12 +4580,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(short[] array, Locale locale, String format, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4660,12 +4620,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(int[] array, Locale locale, String format, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4701,12 +4660,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(long[] array, Locale locale, String format, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4742,12 +4700,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(float[] array, Locale locale, String format, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4783,12 +4740,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(double[] array, Locale locale, String format, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4831,12 +4787,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toBinaryString(boolean[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4868,12 +4823,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toHexString(char[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4905,12 +4859,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toHexString(byte[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4942,12 +4895,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toHexString(short[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -4979,12 +4931,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toHexString(int[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -5016,12 +4967,11 @@ public class JArrays {
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toHexString(long[] array, String separator, int maxStringLength) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (separator == null)
-            throw new NullPointerException("Null separator argument");
-        if (maxStringLength <= 0)
+        Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(separator, "Null separator argument");
+        if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
+        }
         if (array.length == 0) {
             return "";
         }
@@ -5038,28 +4988,36 @@ public class JArrays {
     /*Repeat.AutoGeneratedEnd*/
 
     static void rangeCheck(int arrayLen, int pos, int count) {
-        if (count < 0)
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of elements (" + count + ")");
-        if (pos < 0)
+        }
+        if (pos < 0) {
             throw new IndexOutOfBoundsException("Start position " + pos + " < 0");
-        if (pos > arrayLen - count)
+        }
+        if (pos > arrayLen - count) {
             throw new IndexOutOfBoundsException("End position " + (pos + count)
                 + " > array length ( " + arrayLen + ")");
+        }
     }
 
     static void rangeCheck(int arrayLen1, int pos1, int arrayLen2, int pos2, int count) {
-        if (count < 0)
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of elements (" + count + ")");
-        if (pos1 < 0)
+        }
+        if (pos1 < 0) {
             throw new IndexOutOfBoundsException("Start position " + pos1 + " < 0");
-        if (pos1 > arrayLen1 - count)
+        }
+        if (pos1 > arrayLen1 - count) {
             throw new IndexOutOfBoundsException("End position " + (pos1 + count)
                 + " > array length ( " + arrayLen1 + ")");
-        if (pos2 < 0)
+        }
+        if (pos2 < 0) {
             throw new IndexOutOfBoundsException("Start position " + pos2 + " < 0");
-        if (pos2 > arrayLen2 - count)
+        }
+        if (pos2 > arrayLen2 - count) {
             throw new IndexOutOfBoundsException("End position " + (pos2 + count)
                 + " > array length ( " + arrayLen2 + ")");
+        }
     }
 
     private static void getBytes(boolean[] array, int offset, int count, byte[] result) {

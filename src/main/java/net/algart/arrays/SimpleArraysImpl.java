@@ -25,6 +25,7 @@
 package net.algart.arrays;
 
 import java.util.EmptyStackException;
+import java.util.Objects;
 
 /**
  * <p>Implementations of arrays for {@link SimpleMemoryModel}.
@@ -54,8 +55,7 @@ class SimpleArraysImpl {
      * @see PackedBitArrays#copyBits(long[], long, long[], long, long)
      */
     static long[] cloneBitSubArray(long[] array, long fromIndex, long toIndex) {
-        if (array == null)
-            throw new NullPointerException("Null array argument in cloneBitSubArray method");
+        Objects.requireNonNull(array, "Null array argument in cloneBitSubArray method");
         if (fromIndex < 0)
             throw new ArrayIndexOutOfBoundsException("Array index out of range: initial index = " + fromIndex);
         if (toIndex > ((long)array.length) << 6)
@@ -140,8 +140,7 @@ class SimpleArraysImpl {
         }
 
         public final void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -158,8 +157,7 @@ class SimpleArraysImpl {
         }
 
         public final void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (arrayPos < 0 || arrayPos > length)
                 throw rangeException(arrayPos);
             int count = java.lang.reflect.Array.getLength(destArray);
@@ -177,8 +175,7 @@ class SimpleArraysImpl {
         public final void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
             if (!(this instanceof BitArray))
                 throw new InternalError("Internal error in SimpleMemoryModel implementation (unallowed getBits)");
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
+            Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
             if (arrayPos < 0)
@@ -204,8 +201,7 @@ class SimpleArraysImpl {
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             if (!(this instanceof UpdatableArray))
                 throw new InternalError("Internal error in SimpleMemoryModel implementation (unallowed setData)");
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
@@ -227,8 +223,7 @@ class SimpleArraysImpl {
         public UpdatableArray setData(long arrayPos, Object srcArray) {
             if (!(this instanceof UpdatableArray))
                 throw new InternalError("Internal error in SimpleMemoryModel implementation (unallowed setData)");
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (arrayPos < 0 || arrayPos > length)
                 throw rangeException(arrayPos);
             int count = java.lang.reflect.Array.getLength(srcArray);
@@ -265,8 +260,7 @@ class SimpleArraysImpl {
         public UpdatableBitArray setBits(long arrayPos, long[] srcArray, long srcArrayOffset, long count) {
             if (!(this instanceof UpdatableBitArray))
                 throw new InternalError("Internal error in SimpleMemoryModel implementation (unallowed setBits)");
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
             if (arrayPos < 0)
