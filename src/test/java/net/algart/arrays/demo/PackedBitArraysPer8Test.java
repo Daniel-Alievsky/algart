@@ -40,26 +40,26 @@ import java.util.Random;
  */
 public class PackedBitArraysPer8Test {
     private static long simpleBits(byte[] src, long srcPos, int count) {
-        long r = 0;
+        long result = 0;
         for (int k = 0; k < count; k++) {
             if (srcPos + k >= 8 * (long) src.length) {
                 break;
             }
             final long bit = PackedBitArraysPer8.getBit(src, srcPos + k) ? 1L : 0L;
-            r |= bit << k;
+            result |= bit << k;
         }
-        return r;
+        return result;
     }
 
     private static long simpleBitsInReverseOrder(byte[] src, long srcPos, int count) {
-        long r = 0;
+        long result = 0;
         for (int k = 0; k < count; k++) {
             if (srcPos + k < 8 * (long) src.length) {
                 final long bit = PackedBitArraysPer8.getBitInReverseOrder(src, srcPos + k) ? 1L : 0L;
-                r |= bit << (count - 1 - k);
+                result |= bit << (count - 1 - k);
             }
         }
-        return r;
+        return result;
     }
 
     public static void main(String[] args) {
@@ -444,26 +444,30 @@ public class PackedBitArraysPer8Test {
 
         // -- Constants --
 
-        /** Various bitmasks for the 0000xxxx side of a byte. */
-        private static final int[] BACK_MASK = { 0x00, // 00000000
-            0x01, // 00000001
-            0x03, // 00000011
-            0x07, // 00000111
-            0x0F, // 00001111
-            0x1F, // 00011111
-            0x3F, // 00111111
-            0x7F // 01111111
+        /**
+         * Various bitmasks for the 0000xxxx side of a byte.
+         */
+        private static final int[] BACK_MASK = {0x00, // 00000000
+                0x01, // 00000001
+                0x03, // 00000011
+                0x07, // 00000111
+                0x0F, // 00001111
+                0x1F, // 00011111
+                0x3F, // 00111111
+                0x7F // 01111111
         };
 
-        /** Various bitmasks for the xxxx0000 side of a byte. */
-        private static final int[] FRONT_MASK = { 0x0000, // 00000000
-            0x0080, // 10000000
-            0x00C0, // 11000000
-            0x00E0, // 11100000
-            0x00F0, // 11110000
-            0x00F8, // 11111000
-            0x00FC, // 11111100
-            0x00FE // 11111110
+        /**
+         * Various bitmasks for the xxxx0000 side of a byte.
+         */
+        private static final int[] FRONT_MASK = {0x0000, // 00000000
+                0x0080, // 10000000
+                0x00C0, // 11000000
+                0x00E0, // 11100000
+                0x00F0, // 11110000
+                0x00F8, // 11111000
+                0x00FC, // 11111100
+                0x00FE // 11111110
         };
 
         private final byte[] byteBuffer;
@@ -476,7 +480,9 @@ public class PackedBitArraysPer8Test {
 
         private boolean eofFlag;
 
-        /** Default constructor. */
+        /**
+         * Default constructor.
+         */
         public ScifioBitBuffer(final byte[] byteBuffer) {
             this.byteBuffer = byteBuffer;
             currentByte = 0;
@@ -544,7 +550,7 @@ public class PackedBitArraysPer8Test {
             while (bitsToRead != 0 && !eofFlag) {
                 if (currentBit < 0 || currentBit > 7) {
                     throw new IllegalStateException("byte=" + currentByte + ", bit = " +
-                        currentBit);
+                            currentBit);
                 }
 
                 // if we need to read from more than the current byte in the
@@ -557,8 +563,7 @@ public class PackedBitArraysPer8Test {
                     if (currentBit == 0) {
                         // we can read in a whole byte, so we'll do that.
                         toStore += cb & 0xff;
-                    }
-                    else {
+                    } else {
                         // otherwise, only read the appropriate number of bits off
                         // the back
                         // side of the byte, in order to "finish" the current byte
@@ -568,8 +573,7 @@ public class PackedBitArraysPer8Test {
                         currentBit = 0;
                     }
                     currentByte++;
-                }
-                else {
+                } else {
                     // We will be able to finish using the current byte.
                     // read the appropriate number of bits off the front side of the
                     // byte,
@@ -577,7 +581,7 @@ public class PackedBitArraysPer8Test {
                     toStore = toStore << bitsToRead;
                     final int cb = byteBuffer[currentByte] & 0xff;
                     toStore += (cb & (0x00FF - FRONT_MASK[currentBit])) >> (bitsLeft -
-                        bitsToRead);
+                            bitsToRead);
                     currentBit += bitsToRead;
                     bitsToRead = 0;
                 }

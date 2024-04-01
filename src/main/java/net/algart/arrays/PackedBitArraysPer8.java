@@ -173,6 +173,38 @@ public class PackedBitArraysPer8 {
         }
     }
 
+    /**
+     * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#srcPos</tt>,
+     * in the packed <tt>src</tt> bit array.
+     *
+     * <p>More precisely, the bit <tt>#(srcPos+k)</tt> will be returned in the bit <tt>#k</tt> of the returned
+     * <tt>long</tt> value <tt>R</tt>: the first bit <tt>#srcPos</tt> will be equal to <tt>R&amp;1</tt>,
+     * the following bit <tt>#(srcPos+1)</tt> will be equal to <tt>(R&gt;&gt;1)&amp;1</tt>, etc.
+     * If <tt>count=0</tt>, the result is 0.</p>
+     *
+     * <p>The same result can be calculated using the following loop:</p>
+     *
+     * <pre>
+     *      long result = 0;
+     *      for (int k = 0; k &lt; count; k++) {
+     *          final long bit = {@link #getBit(byte[], long) PackedBitArraysPer8.getBit}(src, srcPos + k) ? 1L : 0L;
+     *          result |= bit &lt;&lt; k;
+     *      }</pre>
+     *
+     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     *
+     * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
+     * after the end of the array (<tt>&ge;8*src.length</tt>); instead, all bits outside the array are considered zero.
+     * (But negative indexes are not allowed.)</p>
+     *
+     * @param src    the source array (bits are packed in <tt>byte</tt> values).
+     * @param srcPos position of the first bit read in the source array.
+     * @param count  the number of bits to be unpacked (must be &gt;=0 and &lt;64).
+     * @return the sequence of <tt>count</tt> bits.
+     * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
     public static long getBits(byte[] src, long srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
         if (srcPos < 0) {
@@ -193,7 +225,7 @@ public class PackedBitArraysPer8 {
         int sPosRem = (int) (srcPos & 7);
         int sPos = (int) srcPosDiv8;
         int shift = 0;
-        for (; ;) {
+        for (; ; ) {
             final int bitsLeft = 8 - sPosRem;
             if (count >= bitsLeft) {
                 final long actualBits = (src[sPos] & 0xFFL) >>> sPosRem;
@@ -230,6 +262,9 @@ public class PackedBitArraysPer8 {
      * Equivalent to the following expression:<pre>
      * (src[(int)(index &gt;&gt;&gt; 3)] &amp; (1 &lt;&lt; (7 - (index &amp; 7)))) != 0;
      * </pre>
+     *
+     * <p>This bit order is used, for example, in TIFF format when storing binary images or
+     * image with less than 8 bits per channel.</p>
      *
      * @param src   the source array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
      * @param index index of the returned bit.
@@ -273,7 +308,45 @@ public class PackedBitArraysPer8 {
         }
     }
 
-    // (TODO) this is TIFF-style bits
+    /**
+     * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#srcPos</tt>,
+     * in the packed <tt>src</tt> bit array for a case, when the bits are packed in each byte in the reverse order:
+     * highest bit first, lowest bit last.
+     *
+     * <p>More precisely, the bit <tt>#(srcPos+k)</tt>, that can be read by the call
+     * <tt>{@link #getBitInReverseOrder(byte[] src, long index)
+     * getBitInReverseOrder}(src, srcPos+k)</tt>,
+     * will be returned in the bit <tt>#(count-1-k)</tt> (in direct order) of the returned
+     * <tt>long</tt> value <tt>R</tt>, i.e. it is equal to <tt><tt>(R&gt;&gt;(count-1-k))&amp;1</tt></tt>.
+     * If <tt>count=0</tt>, the result is 0.</p>
+     *
+     * <p>The same result can be calculated using the following loop:</p>
+     *
+     * <pre>
+     *      long result = 0;
+     *      for (int k = 0; k < count; k++) {
+     *          final long bit = {@link #getBitInReverseOrder(byte[], long)
+     *              PackedBitArraysPer8.getBitInReverseOrder}(src, srcPos + k) ? 1L : 0L;
+     *          result |= bit << (count - 1 - k);
+     *      }</pre>
+     *
+     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     *
+     * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
+     * after the end of the array (<tt>&ge;8*src.length</tt>); instead, all bits outside the array are considered zero.
+     * (But negative indexes are not allowed.)</p>
+     *
+     * <p>This bit order is used, for example, in TIFF format when storing binary images or
+     * image with less than 8 bits per channel.</p>
+     *
+     * @param src    the source array (bits are packed in <tt>byte</tt> values).
+     * @param srcPos position of the first bit read in the source array.
+     * @param count  the number of bits to be unpacked (must be &gt;=0 and &lt;64).
+     * @return the sequence of <tt>count</tt> bits.
+     * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
     public static long getBitsInReverseOrder(byte[] src, long srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
         if (srcPos < 0) {
@@ -478,9 +551,9 @@ public class PackedBitArraysPer8 {
      * <tt>destPos..destPos+count-1</code>.
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>byte</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be copied (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
@@ -685,9 +758,9 @@ public class PackedBitArraysPer8 {
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (unpacked <tt>boolean</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
@@ -744,9 +817,9 @@ public class PackedBitArraysPer8 {
      * to <tt>dest</tt> boolean array, starting from the element <tt>#destPos</tt>.
      *
      * @param dest    the destination array (unpacked <tt>boolean</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>byte</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be unpacked (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
@@ -793,7 +866,7 @@ public class PackedBitArraysPer8 {
      * as in <tt>java.util.Arrays.fill</tt> methods.
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be filled (must be &gt;=0).
      * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.

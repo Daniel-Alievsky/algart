@@ -363,9 +363,9 @@ public class PackedBitArrays {
      * <tt>destPos..destPos+count-1</code>.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be copied (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
@@ -570,9 +570,9 @@ public class PackedBitArrays {
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (unpacked <tt>boolean</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
@@ -695,9 +695,9 @@ public class PackedBitArrays {
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (unpacked inverted <tt>boolean</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
@@ -825,9 +825,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>char</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
@@ -957,9 +957,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>char</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
@@ -1089,9 +1089,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>char</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
@@ -1221,9 +1221,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>char</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
@@ -1354,9 +1354,9 @@ public class PackedBitArrays {
      * <nobr>{@code (src[k] & 0xFF) > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>byte</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
@@ -1485,9 +1485,9 @@ public class PackedBitArrays {
      * <nobr>{@code (src[k] & 0xFF) < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>byte</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
@@ -1616,9 +1616,9 @@ public class PackedBitArrays {
      * <nobr>{@code (src[k] & 0xFF) >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>byte</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
@@ -1747,9 +1747,9 @@ public class PackedBitArrays {
      * <nobr>{@code (src[k] & 0xFF) <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>byte</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
@@ -1879,9 +1879,9 @@ public class PackedBitArrays {
      * <nobr>{@code (src[k] & 0xFFFF) > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>short</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
@@ -2010,9 +2010,9 @@ public class PackedBitArrays {
      * <nobr>{@code (src[k] & 0xFFFF) < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>short</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
@@ -2141,9 +2141,9 @@ public class PackedBitArrays {
      * <nobr>{@code (src[k] & 0xFFFF) >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>short</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
@@ -2272,9 +2272,9 @@ public class PackedBitArrays {
      * <nobr>{@code (src[k] & 0xFFFF) <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>short</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
@@ -2404,9 +2404,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>int</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
@@ -2535,9 +2535,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>int</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
@@ -2666,9 +2666,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>int</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
@@ -2797,9 +2797,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>int</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
@@ -2929,9 +2929,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
@@ -3060,9 +3060,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
@@ -3191,9 +3191,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
@@ -3322,9 +3322,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
@@ -3454,9 +3454,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>float</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
@@ -3585,9 +3585,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>float</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
@@ -3716,9 +3716,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>float</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
@@ -3847,9 +3847,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>float</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
@@ -3979,9 +3979,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>double</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
@@ -4110,9 +4110,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>double</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
@@ -4241,9 +4241,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>double</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
@@ -4372,9 +4372,9 @@ public class PackedBitArrays {
      * <nobr>{@code src[k] <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos   position of the first written bit in the destination array.
+     * @param destPos   position of the first bit written in the destination array.
      * @param src       the source array (unpacked <tt>double</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
@@ -4504,9 +4504,9 @@ public class PackedBitArrays {
      * to <tt>dest</tt> boolean array, starting from the element <tt>#destPos</tt>.
      *
      * @param dest    the destination array (unpacked <tt>boolean</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be unpacked (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
@@ -4620,7 +4620,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>boolean</tt> values).
      * @param destPos   position of the first written element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
@@ -4740,7 +4740,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>boolean</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -4910,7 +4910,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>boolean</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -5079,7 +5079,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>char</tt> values).
      * @param destPos   position of the first written element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
@@ -5197,7 +5197,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>char</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -5363,7 +5363,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>char</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -5528,7 +5528,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>byte</tt> values).
      * @param destPos   position of the first written element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
@@ -5646,7 +5646,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>byte</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -5812,7 +5812,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>byte</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -5977,7 +5977,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>short</tt> values).
      * @param destPos   position of the first written element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
@@ -6095,7 +6095,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>short</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -6261,7 +6261,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>short</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -6426,7 +6426,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>int</tt> values).
      * @param destPos   position of the first written element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
@@ -6544,7 +6544,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>int</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -6710,7 +6710,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>int</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -6875,7 +6875,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>long</tt> values).
      * @param destPos   position of the first written element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
@@ -6993,7 +6993,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>long</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -7159,7 +7159,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>long</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -7324,7 +7324,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>float</tt> values).
      * @param destPos   position of the first written element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
@@ -7442,7 +7442,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>float</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -7608,7 +7608,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>float</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -7773,7 +7773,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>double</tt> values).
      * @param destPos   position of the first written element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
@@ -7891,7 +7891,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>double</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -8057,7 +8057,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>double</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -8222,7 +8222,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>Object</tt> values).
      * @param destPos   position of the first written element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
@@ -8340,7 +8340,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>Object</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -8506,7 +8506,7 @@ public class PackedBitArrays {
      * @param dest      the destination array (unpacked <tt>Object</tt> values).
      * @param destPos   position of the first element in the destination array.
      * @param src       the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos    position of the first read bit in the source array.
+     * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -8669,7 +8669,7 @@ public class PackedBitArrays {
      * <tt>dest[destPos+k]+({@link #getBit getBit}(srcPos+k)?1:0)</tt>.
      *
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param dest    the destination array (unpacked <tt>int</tt> values).
      * @param destPos position of the first increased element in the destination array.
      * @param count   the number of bits to be added to <tt>dest</tt> elements (must be &gt;=0).
@@ -8781,7 +8781,7 @@ public class PackedBitArrays {
      * as in <tt>java.util.Arrays.fill</tt> methods.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be filled (must be &gt;=0).
      * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
@@ -8883,9 +8883,9 @@ public class PackedBitArrays {
      * in this case it just inverts the specified bits.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
@@ -8991,9 +8991,9 @@ public class PackedBitArrays {
      * in this case it does nothing (so there are no reasons for this call).
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
@@ -9097,9 +9097,9 @@ public class PackedBitArrays {
      * in this case it does nothing (so there are no reasons for this call).
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
@@ -9205,9 +9205,9 @@ public class PackedBitArrays {
      * in this case it clears all specified bits.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
@@ -9311,9 +9311,9 @@ public class PackedBitArrays {
      * in this case it clears all specified bits.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
@@ -9417,9 +9417,9 @@ public class PackedBitArrays {
      * in this case it sets all specified bits to 1.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
@@ -9523,9 +9523,9 @@ public class PackedBitArrays {
      * <p>This method does not work correctly if <tt>src&nbsp;==&nbsp;dest</tt>.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.

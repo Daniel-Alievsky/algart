@@ -159,9 +159,9 @@ public class PackedBitBuffers {
      * <tt>destPos..destPos+count-1</tt> of <tt>dest</tt>.
      *
      * @param dest    the destination <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination buffer.
+     * @param destPos position of the first bit written in the destination buffer.
      * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source buffer.
+     * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be copied (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -196,9 +196,9 @@ public class PackedBitBuffers {
      * method that chooses the suitable order automatically.
      *
      * @param dest         the destination <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param destPos      position of the first written bit in the destination buffer.
+     * @param destPos      position of the first bit written in the destination buffer.
      * @param src          the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param srcPos       position of the first read bit in the source buffer.
+     * @param srcPos       position of the first bit read in the source buffer.
      * @param count        the number of bits to be copied (must be &gt;=0).
      * @param reverseOrder if <tt>true</tt>, the bits will be copied in the reverse order.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
@@ -452,9 +452,9 @@ public class PackedBitBuffers {
      * to packed <tt>dest</tt> buffer, starting from the bit <tt>#destPos</tt>.
      *
      * @param dest    the destination <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination buffer.
+     * @param destPos position of the first bit written in the destination buffer.
      * @param src     the source array (unpacked <tt>boolean</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds or buffer limit.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -573,9 +573,9 @@ public class PackedBitBuffers {
      * to <tt>dest</tt> array, starting from the element <tt>#destPos</tt>.
      *
      * @param dest    the destination array (unpacked <tt>boolean</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source buffer.
+     * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be unpacked (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds or buffer limit.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -683,7 +683,7 @@ public class PackedBitBuffers {
      * as in <tt>java.util.Arrays.fill</tt> methods.
      *
      * @param dest    the destination <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination buffer.
+     * @param destPos position of the first bit written in the destination buffer.
      * @param count   the number of bits to be filled (must be &gt;=0).
      * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
      * @throws IndexOutOfBoundsException if filling would cause access of data outside buffer limit.
@@ -733,9 +733,9 @@ public class PackedBitBuffers {
      * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source buffer.
+     * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -837,9 +837,9 @@ public class PackedBitBuffers {
      * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source buffer.
+     * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -941,9 +941,9 @@ public class PackedBitBuffers {
      * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source buffer.
+     * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -1046,9 +1046,9 @@ public class PackedBitBuffers {
      * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source buffer.
+     * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -1150,9 +1150,9 @@ public class PackedBitBuffers {
      * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source buffer.
+     * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -1254,9 +1254,9 @@ public class PackedBitBuffers {
      * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source buffer.
+     * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.

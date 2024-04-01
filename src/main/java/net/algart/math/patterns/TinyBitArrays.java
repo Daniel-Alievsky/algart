@@ -120,9 +120,9 @@ class TinyBitArrays {
      * <tt>destPos..destPos+count-1</code>.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be copied (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
@@ -330,9 +330,9 @@ class TinyBitArrays {
      * to <tt>dest</tt> boolean array, starting from the element <tt>#destPos</tt>.
      *
      * @param dest    the destination array (unpacked <tt>boolean</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be unpacked (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
@@ -442,7 +442,7 @@ class TinyBitArrays {
      * as in <tt>java.util.Arrays.fill</tt> methods.
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be filled (must be &gt;=0).
      * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
@@ -499,9 +499,9 @@ class TinyBitArrays {
      * in this case it does nothing (so there are no reasons for this call).
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
@@ -605,9 +605,9 @@ class TinyBitArrays {
      * in this case it does nothing (so there are no reasons for this call).
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
-     * @param destPos position of the first written bit in the destination array.
+     * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>long</tt> values).
-     * @param srcPos  position of the first read bit in the source array.
+     * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
