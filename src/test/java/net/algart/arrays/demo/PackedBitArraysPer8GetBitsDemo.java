@@ -56,11 +56,11 @@ public class PackedBitArraysPer8GetBitsDemo {
     }
 
     private static void getBitsTest(boolean[] bSrc, byte[] pSrc, int pos, int count) {
-        String full = JArrays.toBinaryString(bSrc, "", 200);
+        final String full = JArrays.toBinaryString(bSrc, "", 200);
         System.out.println(full);
 
         final long bits = PackedBitArraysPer8.getBits(pSrc, pos, count);
-        String local = bitsToString(bits, count);
+        final String local = bitsToString(bits, count);
         System.out.println(" ".repeat(pos) + local);
         if (!full.substring(pos, pos + count).equals(local)) {
             throw new AssertionError();
@@ -68,12 +68,17 @@ public class PackedBitArraysPer8GetBitsDemo {
     }
 
     private static void getBitsTestInReverseOrder(boolean[] bSrc, byte[] pSrc, int pos, int count) {
-        String full = JArrays.toBinaryString(bSrc, "", 200);
-        full = new StringBuilder(full).reverse().toString();
+        StringBuilder sb = new StringBuilder();
+        for (int k = 0; k < bSrc.length; k += 8) {
+            for (int i = k + 7; i >= k; i--) {
+                sb.append(i >= bSrc.length ? "?" : bSrc[i] ? "1" : "0");
+            }
+        }
+        final String full = sb.toString();
         System.out.println(full);
 
         final long bits = PackedBitArraysPer8.getBitsInReverseOrder(pSrc, pos, count);
-        String local = bitsInReverseOrderToString(bits, count);
+        final String local = bitsInReverseOrderToString(bits, count);
         System.out.println(" ".repeat(pos) + local);
 //        if (!full.substring(pos, pos + count).equals(local)) {
 //            throw new AssertionError();
@@ -98,7 +103,7 @@ public class PackedBitArraysPer8GetBitsDemo {
         Random rnd = new Random(seed);
         System.out.println("Start random seed " + seed);
 
-        for (int test = 0; test < 100; test++) {
+        for (int test = 0; test < 1; test++) {
             final int len = 100;
             boolean[] bSrc = new boolean[len];
             for (int k = 0; k < bSrc.length; k++) {

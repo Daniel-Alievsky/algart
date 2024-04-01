@@ -285,7 +285,7 @@ public class PackedBitArraysPer8 {
         if (count == 0 || srcPosDiv8 >= src.length) {
             return 0;
         }
-        int result = 0;
+        long result = 0;
         int currentBitIndex = (int) (srcPos & 7);
         int currentByteIndex = (int) srcPosDiv8;
         while (count != 0) {
@@ -296,11 +296,11 @@ public class PackedBitArraysPer8 {
                 final int cb = src[currentByteIndex];
                 if (currentBitIndex == 0) {
                     // we can read in a whole byte, so we'll do that.
-                    result += cb & 0xff;
+                    result |= cb & 0xff;
                 } else {
                     // otherwise, only read the appropriate number of bits off the back
                     // side of the byte, in order to "finish" the current byte in the buffer.
-                    result += cb & (0xFF >> (8 - bitsLeft));
+                    result |= cb & (0xFF >> (8 - bitsLeft));
                     currentBitIndex = 0;
                 }
                 currentByteIndex++;
@@ -310,7 +310,7 @@ public class PackedBitArraysPer8 {
                 // then push them into the int.
                 result = result << count;
                 final int cb = src[currentByteIndex] & 0xff;
-                result += (cb & (0x00FF - (((0xFF00 >> currentBitIndex) & 0xFF)))) >> (bitsLeft - count);
+                result |= (cb & (0x00FF - (((0xFF00 >> currentBitIndex) & 0xFF)))) >> (bitsLeft - count);
                 break;
             }
             if (currentByteIndex >= src.length) {
