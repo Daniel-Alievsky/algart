@@ -26,6 +26,8 @@ package net.algart.matrices.scanning;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
+
 public abstract class Boundary2DProjectionMeasurer extends Boundary2DWrapper {
     final ContourLineType contourLineType;
     final double startAngleInRadians;
@@ -35,10 +37,10 @@ public abstract class Boundary2DProjectionMeasurer extends Boundary2DWrapper {
         ContourLineType contourLineType, double startAngleInRadians, int numberOfDirections)
     {
         super(parent);
-        if (contourLineType == null)
-            throw new NullPointerException("Null contourLineType");
-        if (numberOfDirections <= 0)
+        Objects.requireNonNull(contourLineType, "Null contourLineType");
+        if (numberOfDirections <= 0) {
             throw new IllegalArgumentException("Negative or zero number of directions");
+        }
         this.contourLineType = contourLineType;
         this.startAngleInRadians = startAngleInRadians;
         this.m = numberOfDirections;
@@ -47,8 +49,7 @@ public abstract class Boundary2DProjectionMeasurer extends Boundary2DWrapper {
     public static Boundary2DProjectionMeasurer getInstance(Boundary2DScanner parent,
         ContourLineType contourLineType, double startAngleInRadians, int numberOfDirections)
     {
-        if (parent == null)
-            throw new NullPointerException("Null parent argument");
+        Objects.requireNonNull(parent, "Null parent argument");
         return new DoubleVersion(parent, contourLineType, startAngleInRadians, numberOfDirections);
     }
 
@@ -145,8 +146,9 @@ public abstract class Boundary2DProjectionMeasurer extends Boundary2DWrapper {
     }
 
     public int indexOfMinCircumscribedRhombus(int stepBetweenDirections) {
-        if (stepBetweenDirections < 0)
+        if (stepBetweenDirections < 0) {
             throw new IllegalArgumentException("Negative stepBetweenDirections");
+        }
         double result = Double.POSITIVE_INFINITY;
         stepBetweenDirections %= m;
         int index = -1;
@@ -191,8 +193,9 @@ public abstract class Boundary2DProjectionMeasurer extends Boundary2DWrapper {
     }
 
     public double minCircumscribedRhombus(int stepBetweenDirections) {
-        if (stepBetweenDirections < 0)
+        if (stepBetweenDirections < 0) {
             throw new IllegalArgumentException("Negative stepBetweenDirections");
+        }
         double result = Double.POSITIVE_INFINITY;
         stepBetweenDirections %= m;
         for (int k = 0, i = stepBetweenDirections; k < m; k++, i++) {

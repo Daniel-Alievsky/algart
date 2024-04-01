@@ -25,6 +25,7 @@
 package net.algart.matrices.scanning;
 
 import java.util.EnumSet;
+import java.util.Objects;
 
 /**
  * <p>Wrapper of a boundary scanner, that measures some simple parameters of every scanned boundary.</p>
@@ -154,8 +155,7 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
         ContourLineType contourLineType, EnumSet<ObjectParameter> measuredParameters)
     {
         super(parent);
-        if (contourLineType == null)
-            throw new NullPointerException("Null contourLineType");
+        Objects.requireNonNull(contourLineType, "Null contourLineType");
         switch (contourLineType) {
             case STRICT_BOUNDARY:
                 this.contourStrictBoundary = true;
@@ -208,12 +208,9 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     public static Boundary2DSimpleMeasurer getInstance(Boundary2DScanner parent,
         ContourLineType contourLineType, EnumSet<ObjectParameter> measuredParameters)
     {
-        if (parent == null)
-            throw new NullPointerException("Null parent argument");
-        if (measuredParameters == null)
-            throw new NullPointerException("Null measuredParameters argument");
-        if (contourLineType == null)
-            throw new NullPointerException("Null contourLineType argument");
+        Objects.requireNonNull(parent, "Null parent argument");
+        Objects.requireNonNull(measuredParameters, "Null measuredParameters argument");
+        Objects.requireNonNull(contourLineType, "Null contourLineType argument");
         return new Boundary2DSimpleMeasurer(parent, contourLineType, measuredParameters);
     }
 

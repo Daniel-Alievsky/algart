@@ -26,6 +26,8 @@ package net.algart.matrices.scanning;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
+
 /**
  * <p>Connected objects scanner: the class performing scanning and clearing connected objects,
  * "drawn" on some n-dimensional updatable bit matrix.</p>
@@ -184,8 +186,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
          * @throws NullPointerException if the argument is <tt>null</tt>.
          */
         public MaskElementCounter(Matrix<? extends BitArray> mask) {
-            if (mask == null)
-                throw new NullPointerException("Null mask");
+            Objects.requireNonNull(mask, "Null mask");
             this.mask = mask;
             this.array = mask.array();
         }
@@ -273,16 +274,15 @@ public abstract class ConnectedObjectScanner implements Cloneable {
     private ConnectedObjectScanner(
             Matrix<? extends UpdatableBitArray> matrix,
             ConnectivityType connectivityType) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
-        if (connectivityType == null)
-            throw new NullPointerException("Null connectivityType argument");
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        Objects.requireNonNull(connectivityType, "Null connectivityType argument");
         this.dimensions = matrix.dimensions();
         this.dimCount = dimensions.length;
-        if (dimCount > Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS)
+        if (dimCount > Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS) {
             throw new IllegalArgumentException(ConnectedObjectScanner.class
                     + " cannot process a matrix with more than "
                     + Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS + " dimensions (" + matrix + ")");
+        }
         this.matrix = matrix;
         this.connectivityType = connectivityType;
         this.array = matrix.array();
@@ -614,11 +614,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @see #matrix()
      */
     public void matrix(Matrix<? extends UpdatableBitArray> matrix) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
-        if (!matrix.dimEquals(this.matrix))
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        if (!matrix.dimEquals(this.matrix)) {
             throw new SizeMismatchException("The passed matrix have different dimensions than the current one: "
                     + "the passed is " + matrix + ", the current is " + this.matrix);
+        }
         // - so, we don't need to clear this.workMemory field
         this.matrix = matrix;
         this.array = matrix.array();
@@ -676,9 +676,10 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @throws IndexOutOfBoundsException if some coordinates are out of the {@link #matrix() scanned matrix}.
      */
     public boolean nextUnitBit(long[] coordinates) {
-        if (coordinates.length != dimCount)
+        if (coordinates.length != dimCount) {
             throw new IllegalArgumentException("Number of passed coordinates " + coordinates.length
                     + " does not match the number of dimensions of " + matrix);
+        }
         long from = matrix.index(coordinates);
         long index = indexOfUnit(from);
         if (index == -1) {
@@ -748,9 +749,10 @@ public abstract class ConnectedObjectScanner implements Cloneable {
             ElementVisitor elementVisitor,
             long[] coordinates,
             boolean forceClearing) {
-        if (coordinates.length != dimCount)
+        if (coordinates.length != dimCount) {
             throw new IllegalArgumentException("Number of passed coordinates " + coordinates.length
                     + " does not match the number of dimensions of " + matrix);
+        }
         this.index = matrix.index(coordinates);
         if (!matrix.array().getBit(index)) {
             return 0;
@@ -880,9 +882,10 @@ public abstract class ConnectedObjectScanner implements Cloneable {
             Matrix<? extends BitArray> mask,
             long minNonClearedSize,
             long maxNonClearedSize) {
-        if (mask != null && !mask.dimEquals(matrix))
+        if (mask != null && !mask.dimEquals(matrix)) {
             throw new SizeMismatchException("Current matrix and mask dimensions mismatch: current matrix is "
                     + matrix + ", mask is " + mask);
+        }
         if (workMemory == null) {
             MemoryModel mm = context == null || Arrays.sizeOf(array) < Arrays.SystemSettings.maxTempJavaMemory() ?
                     SimpleMemoryModel.getInstance() : context.getMemoryModel();
@@ -912,8 +915,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
             if (size < minNonClearedSize || size > maxNonClearedSize) {
                 pixelCounter += this.clear(context, coordinates, true);
             }
-            if (context != null)
+            if (context != null) {
                 context.checkInterruptionAndUpdateProgress(boolean.class, matrix.index(coordinates), arrayLength);
+            }
         }
         return pixelCounter;
     }
@@ -942,11 +946,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @throws SizeMismatchException if <tt>objects</tt> and the scanned matrix have different dimensions.
      */
     public long clearAllConnected(final ArrayContext context, Matrix<? extends UpdatableBitArray> objects) {
-        if (objects == null)
-            throw new NullPointerException("Null secondary matrix");
-        if (!objects.dimEquals(matrix))
+        Objects.requireNonNull(objects, "Null secondary matrix");
+        if (!objects.dimEquals(matrix)) {
             throw new SizeMismatchException("Current and secondary matrix dimensions mismatch: current matrix is "
                     + matrix + ", secondary is " + objects);
+        }
         reset();
         final ConnectedObjectScanner secondaryScanner = clone();
         secondaryScanner.matrix(objects);
@@ -975,8 +979,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @param coordinates coordinates of currently scanned matrix element.
      */
     public final void updateProgress(ArrayContext context, long... coordinates) {
-        if (context != null)
+        if (context != null) {
             context.updateProgress(new ArrayContext.Event(boolean.class, matrix.index(coordinates), arrayLength));
+        }
     }
 
     /**
@@ -1117,8 +1122,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         if (array.getBit(index)) {
                             counter++;
                             n += blockSize; // adding the neighbour to the stack
-                            if (n < 0)
+                            if (n < 0) {
                                 throw new TooLargeArrayException("Necessary stack is larger than 2^63-1");
+                            }
                             nInt = (int) n;
                             if (largeStack == null) {
                                 if (n > stack.length) {
@@ -1153,8 +1159,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                                 largeStack.setLong(n - 1, 0); // necessary operator: future neighbourIndex
                             }
 
-                            if ((counter & 0xFFFF) == 2 && context != null)
+                            if ((counter & 0xFFFF) == 2 && context != null) {
                                 context.checkInterruption();
+                            }
                             if (elementVisitor != null) {
                                 elementVisitor.visit(coordinates, index);
                             }
@@ -1256,8 +1263,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         if (array.getBit(index)) {
                             counter++;
                             n += blockSize; // adding the neighbour to the stack
-                            if (n < 0)
+                            if (n < 0) {
                                 throw new TooLargeArrayException("Necessary stack is larger than 2^63-1");
+                            }
                             nInt = (int) n;
                             if (largeStack == null) {
                                 if (n > stack.length) {
@@ -1292,8 +1300,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                                 largeStack.setLong(n - 1, 0); // necessary operator: future neighbourIndex
                             }
 
-                            if ((counter & 0xFFFF) == 2 && context != null)
+                            if ((counter & 0xFFFF) == 2 && context != null) {
                                 context.checkInterruption();
+                            }
                             if (elementVisitor != null) {
                                 elementVisitor.visit(coordinates, index);
                             }
@@ -1389,8 +1398,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                     if (array.getBit(index)) {
                         counter++;
                         n += 2; // adding the neighbour to the stack
-                        if (n < 0)
+                        if (n < 0) {
                             throw new TooLargeArrayException("Necessary stack is larger than 2^63-1");
+                        }
                         nInt = (int) n;
                         if (largeStack == null) {
                             if (n > stack.length) {
@@ -1419,8 +1429,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                             largeStack.setLong(n - 1, 0); // necessary operator: future neighbourIndex
                         }
 
-                        if ((counter & 0xFFFF) == 2 && context != null)
+                        if ((counter & 0xFFFF) == 2 && context != null) {
                             context.checkInterruption();
+                        }
                         if (elementVisitor != null) {
                             elementVisitor.visit(null, index);
                         }
@@ -1498,8 +1509,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                     if (array.getBit(index)) {
                         counter++;
                         n += 2; // adding the neighbour to the stack
-                        if (n < 0)
+                        if (n < 0) {
                             throw new TooLargeArrayException("Necessary stack is larger than 2^63-1");
+                        }
                         nInt = (int) n;
                         if (largeStack == null) {
                             if (n > stack.length) {
@@ -1528,8 +1540,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                             largeStack.setLong(n - 1, 0); // necessary operator: future neighbourIndex
                         }
 
-                        if ((counter & 0xFFFF) == 2 && context != null)
+                        if ((counter & 0xFFFF) == 2 && context != null) {
                             context.checkInterruption();
+                        }
                         if (elementVisitor != null) {
                             elementVisitor.visit(null, index);
                         }
@@ -1611,8 +1624,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 while (n > 0) { // queue is not empty
                     // 1. Providing enough space in the queue for the worst case
                     if (n + queueSpaceForAperture > qSize) {
-                        if (qSize > Long.MAX_VALUE / 2)
+                        if (qSize > Long.MAX_VALUE / 2) {
                             throw new TooLargeArrayException("Necessary queue is larger than 2^63-1");
+                        }
                         long newSize = 2 * qSize; // must not be less than 2*qSize! (for the branch largeQueue!=null)
                         if (largeQueue == null) {
                             if (newSize > MAX_TEMP_JAVA_INTS) {
@@ -1661,8 +1675,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         intIndex = largeQueue.getInt(h + dimCount);
                     }
                     h += blockSize;
-                    if (h >= qSize)
+                    if (h >= qSize) {
                         h = 0;
+                    }
                     // but preserving hInt!
                     n -= blockSize;
 
@@ -1709,11 +1724,13 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                                     largeQueue.setLong(r + dimCount, index);
                                 }
                                 r += blockSize; // adding the neighbour to the queue
-                                if (r >= qSize)
+                                if (r >= qSize) {
                                     r = 0;
+                                }
                                 n += blockSize;
-                                if ((counter & 0xFFFF) == 2 && context != null)
+                                if ((counter & 0xFFFF) == 2 && context != null) {
                                     context.checkInterruption();
+                                }
                                 if (elementVisitor != null) {
                                     elementVisitor.visit(coordinates, index);
                                 }
@@ -1782,8 +1799,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 while (n > 0) { // queue is not empty
                     // 1. Providing enough space in the queue for the worst case
                     if (n + queueSpaceForAperture > qSize) {
-                        if (qSize > Long.MAX_VALUE / 2)
+                        if (qSize > Long.MAX_VALUE / 2) {
                             throw new TooLargeArrayException("Necessary queue is larger than 2^63-1");
+                        }
                         long newSize = 2 * qSize; // must not be less than 2*qSize! (for the branch largeQueue!=null)
                         if (largeQueue == null) {
                             if (newSize > MAX_TEMP_JAVA_LONGS) {
@@ -1832,8 +1850,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         longIndex = largeQueue.getLong(h + dimCount);
                     }
                     h += blockSize;
-                    if (h >= qSize)
+                    if (h >= qSize) {
                         h = 0;
+                    }
                     // but preserving hInt!
                     n -= blockSize;
 
@@ -1880,11 +1899,13 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                                     largeQueue.setLong(r + dimCount, index);
                                 }
                                 r += blockSize; // adding the neighbour to the queue
-                                if (r >= qSize)
+                                if (r >= qSize) {
                                     r = 0;
+                                }
                                 n += blockSize;
-                                if ((counter & 0xFFFF) == 2 && context != null)
+                                if ((counter & 0xFFFF) == 2 && context != null) {
                                     context.checkInterruption();
+                                }
                                 if (elementVisitor != null) {
                                     elementVisitor.visit(coordinates, index);
                                 }
@@ -1960,8 +1981,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 while (n > 0) { // queue is not empty
                     // 1. Providing enough space in the queue for the worst case
                     if (n + queueSpaceForAperture > qSize) {
-                        if (qSize > Long.MAX_VALUE / 2)
+                        if (qSize > Long.MAX_VALUE / 2) {
                             throw new TooLargeArrayException("Necessary queue is larger than 2^63-1");
+                        }
                         long newSize = 2 * qSize; // must not be less than 2*qSize! (for the branch largeQueue!=null)
                         if (largeQueue == null) {
                             if (newSize > MAX_TEMP_JAVA_INTS) {
@@ -2004,8 +2026,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                     // 2. Preloading queue element: index
                     int intIndex = largeQueue != null ? largeQueue.getInt(h) : queue[(int) h];
                     h++;
-                    if (h >= qSize)
+                    if (h >= qSize) {
                         h = 0;
+                    }
                     n--;
 
                     // 3. Loop by neighbours
@@ -2024,11 +2047,13 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                                 largeQueue.setLong(r, index);
                             }
                             r++; // adding the neighbour to the queue
-                            if (r >= qSize)
+                            if (r >= qSize) {
                                 r = 0;
+                            }
                             n++;
-                            if ((counter & 0xFFFF) == 2 && context != null)
+                            if ((counter & 0xFFFF) == 2 && context != null) {
                                 context.checkInterruption();
+                            }
                             if (elementVisitor != null) {
                                 elementVisitor.visit(null, index);
                             }
@@ -2086,8 +2111,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 while (n > 0) { // queue is not empty
                     // 1. Providing enough space in the queue for the worst case
                     if (n + queueSpaceForAperture > qSize) {
-                        if (qSize > Long.MAX_VALUE / 2)
+                        if (qSize > Long.MAX_VALUE / 2) {
                             throw new TooLargeArrayException("Necessary queue is larger than 2^63-1");
+                        }
                         long newSize = 2 * qSize; // must not be less than 2*qSize! (for the branch largeQueue!=null)
                         if (largeQueue == null) {
                             if (newSize > MAX_TEMP_JAVA_LONGS) {
@@ -2130,8 +2156,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                     // 2. Preloading queue element: index
                     long longIndex = largeQueue != null ? largeQueue.getLong(h) : queue[(int) h];
                     h++;
-                    if (h >= qSize)
+                    if (h >= qSize) {
                         h = 0;
+                    }
                     n--;
 
                     // 3. Loop by neighbours
@@ -2150,11 +2177,13 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                                 largeQueue.setLong(r, index);
                             }
                             r++; // adding the neighbour to the queue
-                            if (r >= qSize)
+                            if (r >= qSize) {
                                 r = 0;
+                            }
                             n++;
-                            if ((counter & 0xFFFF) == 2 && context != null)
+                            if ((counter & 0xFFFF) == 2 && context != null) {
                                 context.checkInterruption();
+                            }
                             if (elementVisitor != null) {
                                 elementVisitor.visit(null, index);
                             }
@@ -2188,8 +2217,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 Matrix<? extends UpdatableBitArray> matrix,
                 ConnectivityType connectivityType, boolean checked) {
             super(matrix, connectivityType);
-            if (this.apertureSize >= 32768)
+            if (this.apertureSize >= 32768) {
                 throw new AssertionError("Too large aperture: must never be greater than 32767 elements");
+            }
             this.checked = checked;
             this.coordinatesClone = checked ? new long[dimCount] : null;
             this.bufferHighBit = this.apertureSize < 128 ? 0x80 : 0x8000;
@@ -2296,8 +2326,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
             }
             long[] bits = ja == null ? new long[(int) PackedBitArrays.packedLength(dBuf.capacity())] : ja;
             for (long p = 0; p < arrayLength; p += dBuf.capacity()) {
-                if (context != null)
+                if (context != null) {
                     context.checkInterruption();
+                }
                 dBuf.map(p);
                 if (ja == null) {
                     array.getBits(p, bits, 0, dBuf.cnt());
@@ -2338,8 +2369,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         counter++;
                         System.arraycopy(coordinatesClone, 0, coordinates, 0, dimCount);
                         index = indexClone;
-                        if ((counter & 0xFFFF) == 2 && context != null)
+                        if ((counter & 0xFFFF) == 2 && context != null) {
                             context.checkInterruption();
+                        }
                         if (elementVisitor != null) {
                             elementVisitor.visit(coordinatesClone, indexClone);
                         }
@@ -2400,8 +2432,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         counter++;
                         System.arraycopy(coordinatesClone, 0, coordinates, 0, dimCount);
                         index = indexClone;
-                        if ((counter & 0xFFFF) == 2 && context != null)
+                        if ((counter & 0xFFFF) == 2 && context != null) {
                             context.checkInterruption();
+                        }
                         if (elementVisitor != null) {
                             elementVisitor.visit(coordinatesClone, indexClone);
                         }
@@ -2441,8 +2474,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                     if (bit) {
                         counter++;
                         index = indexClone;
-                        if ((counter & 0xFFFF) == 2 && context != null)
+                        if ((counter & 0xFFFF) == 2 && context != null) {
                             context.checkInterruption();
+                        }
                         if (elementVisitor != null) {
                             elementVisitor.visit(null, indexClone);
                         }
@@ -2488,8 +2522,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                     if (bit) {
                         counter++;
                         index = indexClone;
-                        if ((counter & 0xFFFF) == 2 && context != null)
+                        if ((counter & 0xFFFF) == 2 && context != null) {
                             context.checkInterruption();
+                        }
                         if (elementVisitor != null) {
                             elementVisitor.visit(null, indexClone);
                         }
@@ -2535,8 +2570,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         x = xClone;
                         y = yClone;
                         index = indexClone;
-                        if ((counter & 0xFFFF) == 2 && context != null)
+                        if ((counter & 0xFFFF) == 2 && context != null) {
                             context.checkInterruption();
+                        }
                         if (elementVisitor != null) {
                             coordinatesClone[0] = xClone;
                             coordinatesClone[1] = yClone;
@@ -2600,8 +2636,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         x = xClone;
                         y = yClone;
                         index = indexClone;
-                        if ((counter & 0xFFFF) == 2 && context != null)
+                        if ((counter & 0xFFFF) == 2 && context != null) {
                             context.checkInterruption();
+                        }
                         if (elementVisitor != null) {
                             coordinatesClone[0] = xClone;
                             coordinatesClone[1] = yClone;

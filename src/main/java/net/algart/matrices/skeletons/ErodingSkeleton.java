@@ -29,6 +29,8 @@ import net.algart.matrices.morphology.*;
 import net.algart.math.patterns.*;
 import net.algart.math.functions.*;
 
+import java.util.Objects;
+
 /**
  * <p>The simplest algorithm of multidimensional skeletonization of binary matrices, based on sequential
  * {@link Morphology#erosion(Matrix, Pattern) erosions} of the matrix by some small pattern.</p>
@@ -92,12 +94,9 @@ public class ErodingSkeleton extends AbstractIterativeArrayProcessor<Matrix<? ex
         Pattern erosionPattern, Pattern openingPattern)
     {
         super(context);
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
-        if (erosionPattern == null)
-            throw new NullPointerException("Null erosionPattern argument");
-        if (openingPattern == null)
-            throw new NullPointerException("Null openingPattern argument");
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        Objects.requireNonNull(erosionPattern, "Null erosionPattern argument");
+        Objects.requireNonNull(openingPattern, "Null openingPattern argument");
         this.erosionPattern = erosionPattern;
         this.openingPattern = openingPattern;
         final boolean differentPatterns = !erosionPattern.equals(openingPattern);

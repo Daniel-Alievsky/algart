@@ -35,6 +35,7 @@ import net.algart.math.functions.LinearOperator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Stitcher<P extends FramePosition> {
     private static final double[] EMPTY_DOUBLES = new double[0];
@@ -46,10 +47,10 @@ public class Stitcher<P extends FramePosition> {
     private final List<Frame<P>> frames;
 
     private Stitcher(int dimCount, StitchingMethod<P> stitchingMethod, List<? extends Frame<P>> frames) {
-        if (stitchingMethod == null)
-            throw new NullPointerException("Null stitchingMethod argument");
-        if (dimCount <= 0)
+        Objects.requireNonNull(stitchingMethod, "Null stitchingMethod argument");
+        if (dimCount <= 0) {
             throw new IllegalArgumentException("Zero or negative dimCount argument = " + dimCount);
+        }
         this.dimCount = dimCount;
         this.stitchingMethod = stitchingMethod;
         this.frames = new ArrayList<Frame<P>>(frames);
@@ -79,11 +80,11 @@ public class Stitcher<P extends FramePosition> {
     }
 
     public List<Frame<P>> actualFrames(RectangularArea area) {
-        if (area == null)
-            throw new NullPointerException("Null area argument");
-        if (area.coordCount() != dimCount)
+        Objects.requireNonNull(area, "Null area argument");
+        if (area.coordCount() != dimCount) {
             throw new IllegalArgumentException("Illegal number of dimensions in area argument: "
                 + area.coordCount() + " instead of " + dimCount);
+        }
         List<Frame<P>> result = new ArrayList<Frame<P>>();
         for (Frame<P> frame : frames) {
             if (frame.position().area().overlaps(area)) {
@@ -94,8 +95,7 @@ public class Stitcher<P extends FramePosition> {
     }
 
     public <T extends PArray> Matrix<T> asStitched(Class<? extends T> requiredType, RectangularArea area) {
-        if (requiredType == null)
-            throw new NullPointerException("Null requiredType argument");
+        Objects.requireNonNull(requiredType, "Null requiredType argument");
         List<Frame<P>> actualFrames = actualFrames(area);
         // area.coordCount() == dimCount() was checked by actualFrames
         boolean shiftPositions = shiftPositions(actualFrames);
@@ -176,20 +176,19 @@ public class Stitcher<P extends FramePosition> {
     public void stitch(ArrayContext context,  Matrix<? extends UpdatablePArray> result,
         Point offset, long... tileDimensions)
     {
-        if (result == null)
-            throw new NullPointerException("Null result argument");
-        if (offset == null)
-            throw new NullPointerException("Null offset argument");
-        if (tileDimensions == null)
-            throw new NullPointerException("Null tileDimensions argument");
+        Objects.requireNonNull(result, "Null result argument");
+        Objects.requireNonNull(offset, "Null offset argument");
+        Objects.requireNonNull(tileDimensions, "Null tileDimensions argument");
         final int n = offset.coordCount();
         final long[] dim = result.dimensions();
-        if (dim.length != n)
+        if (dim.length != n) {
             throw new IllegalArgumentException("Different offset.coordCount() = " + n
                 + " and result.dimCount() = " + dim.length);
-        if (tileDimensions.length != n)
+        }
+        if (tileDimensions.length != n) {
             throw new IllegalArgumentException("Different offset.coordCount() = " + n
                 + " and tileDimensions.length = " + tileDimensions.length);
+        }
         long[] tileDim = new long[n];
         for (int k = 0; k < n; k++) {
             tileDim[k] = tileDimensions[k] <= 0 ? dim[k] : tileDimensions[k];
@@ -317,18 +316,18 @@ public class Stitcher<P extends FramePosition> {
     }
 
     private static void checkFrameDimensions(int dimCount, List<? extends Frame<?>> frames) {
-        if (frames == null)
-            throw new NullPointerException("Null frames argument");
-        if (dimCount <= 0)
+        Objects.requireNonNull(frames, "Null frames argument");
+        if (dimCount <= 0) {
             throw new IllegalArgumentException("Zero or negative dimCount argument = " + dimCount);
+        }
         int n = 0;
         for (Frame<?> frame : frames) {
-            if (frame == null)
-                throw new NullPointerException("Null frame in the frames list");
-            if (frame.matrix().dimCount() != dimCount)
+            Objects.requireNonNull(frame, "Null frame in the frames list");
+            if (frame.matrix().dimCount() != dimCount) {
                 throw new IllegalArgumentException("frames.get(" + n + ") and frames.get(0) have "
                     + "different number of dimensions: frame #" + n + " is " + frame
                     + ", frame #0 is " + dimCount + "-dimensional");
+            }
             n++;
         }
         assert n == frames.size();

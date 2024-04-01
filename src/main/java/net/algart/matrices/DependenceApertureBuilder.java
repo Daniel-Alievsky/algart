@@ -32,6 +32,8 @@ import net.algart.math.IRange;
 import net.algart.math.IRectangularArea;
 import net.algart.math.patterns.Pattern;
 
+import java.util.Objects;
+
 /**
  * <p>Helper class for calculation of the rectangular dependence aperture of some matrix processing algorithms.</p>
  *
@@ -364,28 +366,31 @@ public enum DependenceApertureBuilder {
      *
      */
     public IRectangularArea getAperture(int dimCount, Pattern[] patterns, boolean[] inverted, short additionalSpace) {
-        if (patterns == null)
-            throw new NullPointerException("Null patterns argument");
-        if (inverted == null)
-            throw new NullPointerException("Null inverted argument");
-        if (dimCount <= 0)
+        Objects.requireNonNull(patterns, "Null patterns argument");
+        Objects.requireNonNull(inverted, "Null inverted argument");
+        if (dimCount <= 0) {
             throw new IllegalArgumentException("Zero or negative dimCount argument");
-        if (patterns.length == 0)
+        }
+        if (patterns.length == 0) {
             throw new IllegalArgumentException("Empty patterns argument");
-        if (inverted.length == 0)
+        }
+        if (inverted.length == 0) {
             throw new IllegalArgumentException("Empty inverted argument");
-        if (patterns.length != inverted.length)
+        }
+        if (patterns.length != inverted.length) {
             throw new IllegalArgumentException("Different lengths of patterns and inverted arguments");
-        if (additionalSpace < 0)
+        }
+        if (additionalSpace < 0) {
             throw new IllegalArgumentException("Negative additionalSpace argument");
+        }
         patterns = patterns.clone(); // after this moment, "patterns" cannot be changed by parallel threads
         inverted = inverted.clone(); // after this moment, "inverted" cannot be changed by parallel threads
         for (int i = 0; i < patterns.length; i++) {
-            if (patterns[i] == null)
-                throw new NullPointerException("Null pattern #" + i);
-            if (patterns[i].dimCount() < dimCount)
+            Objects.requireNonNull(patterns[i], "Null pattern #" + i);
+            if (patterns[i].dimCount() < dimCount) {
                 throw new IllegalArgumentException("Pattern #" + i
                     + " has insufficient dimensions (<" + dimCount + ")");
+            }
         }
         long[] allMin = new long[dimCount]; // zero-filled by Java
         long[] allMax = new long[dimCount]; // zero-filled by Java
@@ -446,36 +451,39 @@ public enum DependenceApertureBuilder {
      *                                   is greater than <nobr><tt>Long.MAX_VALUE</tt></nobr>.
      */
     public static long[] extendDimensions(long[] matrixDimensions, IRectangularArea aperture) {
-        if (matrixDimensions == null)
-            throw new NullPointerException("Null matrixDimensions");
-        if (aperture == null)
-            throw new NullPointerException("Null aperture");
-        if (matrixDimensions.length != aperture.coordCount())
+        Objects.requireNonNull(matrixDimensions, "Null matrixDimensions");
+        Objects.requireNonNull(aperture, "Null aperture");
+        if (matrixDimensions.length != aperture.coordCount()) {
             throw new IllegalArgumentException("Dimensions count mismatch: " + matrixDimensions.length
                 + " dimensions in array and " + aperture.coordCount() + "-dimensional aperture");
+        }
         for (int k = 0; k < matrixDimensions.length; k++) {
-            if (matrixDimensions[k] < 0)
+            if (matrixDimensions[k] < 0) {
                 throw new IllegalArgumentException("Negative matrixDimensions[" + k + "]");
+            }
         }
         long[] result = matrixDimensions.clone();
          // after this moment, "result" cannot be changed by parallel thread
         long len = Arrays.longMul(result);
-        if (len == Long.MIN_VALUE)
+        if (len == Long.MIN_VALUE) {
             throw new IndexOutOfBoundsException("Too large matrixDimensions: their product > Long.MAX_VALUE");
+        }
         if (len == 0) {
             return result;
         }
         for (int k = 0; k < result.length; k++) {
             result[k] += aperture.width(k);
-            if (result[k] < 0)
+            if (result[k] < 0) {
                 throw new IndexOutOfBoundsException("Too large matrix continuation: "
                     + "the dimension #" + k + " of the matrix, extended to the corresponding aperture "
                     + aperture + ", is greater than Long.MAX_VALUE");
+            }
         }
-        if (Arrays.longMul(result) == Long.MIN_VALUE)
+        if (Arrays.longMul(result) == Long.MIN_VALUE) {
             throw new IndexOutOfBoundsException("Too large matrix continuation: product of dimensions "
                 + "of the matrix, extended to the corresponding aperture "
                 + aperture + ", is greater than Long.MAX_VALUE");
+        }
         return result;
     }
 
@@ -515,15 +523,13 @@ public enum DependenceApertureBuilder {
     public static <T extends PArray> Matrix<T> extend(Matrix<T> matrix, IRectangularArea aperture,
         Matrix.ContinuationMode continuationMode)
     {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix");
-        if (aperture == null)
-            throw new NullPointerException("Null aperture");
-        if (continuationMode == null)
-            throw new NullPointerException("Null continuation mode");
-        if (matrix.dimCount() != aperture.coordCount())
+        Objects.requireNonNull(matrix, "Null matrix");
+        Objects.requireNonNull(aperture, "Null aperture");
+        Objects.requireNonNull(continuationMode, "Null continuation mode");
+        if (matrix.dimCount() != aperture.coordCount()) {
             throw new IllegalArgumentException("Dimensions count mismatch: " + matrix.dimCount()
                 + "-dimensional matrix and " + aperture.coordCount() + "-dimensional aperture");
+        }
         if (matrix.size() == 0) {
             return matrix;
         }
@@ -532,10 +538,11 @@ public enum DependenceApertureBuilder {
         for (int k = 0; k < from.length; k++) {
             from[k] = aperture.min(k);
             to[k] = matrix.dim(k) + aperture.max(k);
-            if (to[k] < 0 && aperture.max(k) >= 0)
+            if (to[k] < 0 && aperture.max(k) >= 0) {
                 throw new IndexOutOfBoundsException("Too large matrix continuation: "
                     + "the dimension #" + k + " of the matrix, extended to the corresponding aperture "
                     + aperture + ", is greater than Long.MAX_VALUE");
+            }
         }
         return matrix.subMatrix(from, to, continuationMode);
     }
@@ -563,13 +570,12 @@ public enum DependenceApertureBuilder {
      *                                   subMatrix} call.
      */
     public static <T extends PArray> Matrix<T> reduce(Matrix<T> matrix, IRectangularArea aperture) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix");
-        if (aperture == null)
-            throw new NullPointerException("Null aperture");
-        if (matrix.dimCount() != aperture.coordCount())
+        Objects.requireNonNull(matrix, "Null matrix");
+        Objects.requireNonNull(aperture, "Null aperture");
+        if (matrix.dimCount() != aperture.coordCount()) {
             throw new IllegalArgumentException("Dimensions count mismatch: " + matrix.dimCount()
                 + "-dimensional matrix and " + aperture.coordCount() + "-dimensional aperture");
+        }
         if (matrix.size() == 0) {
             return matrix;
         }
@@ -605,8 +611,10 @@ public enum DependenceApertureBuilder {
             return result;
         }
         if ((a < 0) != (result < 0)) // overflow: the sum has another sign than both summands
+        {
             throw new IndexOutOfBoundsException("Integer overflow while summing two long values " + a + " and " + b
                 + " (maybe, dimensions of some matrices or areas)");
+        }
         return result;
     }
 

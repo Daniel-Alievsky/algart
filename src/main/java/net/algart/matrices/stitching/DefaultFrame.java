@@ -26,19 +26,20 @@ package net.algart.matrices.stitching;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
+
 public class DefaultFrame<P extends FramePosition> implements Frame<P> {
 
     private final Matrix<? extends PArray> matrix;
     private final P position;
 
     protected DefaultFrame(Matrix<? extends PArray> matrix, P position) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
-        if (position == null)
-            throw new NullPointerException("Null position argument");
-        if (matrix.dimCount() != position.area().coordCount())
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        Objects.requireNonNull(position, "Null position argument");
+        if (matrix.dimCount() != position.area().coordCount()) {
             throw new IllegalArgumentException("Different number of dimensions in passed matrix and position: "
               + "position coordinates are " + position.area() + ", matrix is " + matrix);
+        }
         this.matrix = matrix;
         this.position = position;
     }

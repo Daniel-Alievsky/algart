@@ -29,6 +29,7 @@ import net.algart.math.Point;
 import net.algart.math.RectangularArea;
 
 import java.util.List;
+import java.util.Objects;
 
 public final class ShiftStitchingMethod<P extends FramePosition> implements StitchingMethod<P> {
     private final double defaultValue;
@@ -60,8 +61,7 @@ public final class ShiftStitchingMethod<P extends FramePosition> implements Stit
     }
 
     public StitchingFunc getStitchingFunc(List<? extends Frame<P>> frames) {
-        if (frames == null)
-            throw new NullPointerException("Null frames argument");
+        Objects.requireNonNull(frames, "Null frames argument");
         if (weighted) {
             return new ShiftWeighedStitchingFunc(frames);
         } else {

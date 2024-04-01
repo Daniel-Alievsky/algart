@@ -26,6 +26,8 @@ package net.algart.matrices.skeletons;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
+
 abstract class AbstractThinningSkeleton2D
     extends AbstractIterativeArrayProcessor<Matrix<? extends UpdatableBitArray>>
     implements ThinningSkeleton
@@ -42,8 +44,7 @@ abstract class AbstractThinningSkeleton2D
         boolean straightThinning, boolean diagonalThinning)
     {
         super(context);
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
+        Objects.requireNonNull(matrix, "Null matrix argument");
         this.mm = ErodingSkeleton.mm(memoryModel, matrix, 1);
         this.result = matrix;
         this.temp = mm.newMatrix(UpdatableBitArray.class, boolean.class, matrix.dimensions());
@@ -90,8 +91,9 @@ abstract class AbstractThinningSkeleton2D
     }
 
     public final boolean isThinningRequired(int directionIndex) {
-        if (directionIndex < 0 || directionIndex > 7)
+        if (directionIndex < 0 || directionIndex > 7) {
             throw new IllegalArgumentException("Illegal directionIndex = " + directionIndex + " (must be 0..7)");
+        }
         return directionIndex % 2 == 0 ? straightThinning : diagonalThinning;
     }
 

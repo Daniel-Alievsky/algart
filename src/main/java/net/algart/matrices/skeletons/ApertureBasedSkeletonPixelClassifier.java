@@ -31,6 +31,7 @@ import net.algart.math.functions.LinearFunc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>A skeletal implementation of the {@link SkeletonPixelClassifier} abstract class,
@@ -110,27 +111,30 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
      */
     protected ApertureBasedSkeletonPixelClassifier(int dimCount, long[][] neighbourOffsets) {
         super(dimCount);
-        if (neighbourOffsets == null)
-            throw new NullPointerException("Null neighbourOffsets array");
-        if (dimCount > 3)
+        Objects.requireNonNull(neighbourOffsets, "Null neighbourOffsets array");
+        if (dimCount > 3) {
             throw new IllegalArgumentException("This class " + getClass().getName() + " cannot process "
                 + dimCount + "-dimensional apertures (maximum 3-dimensional ones are allowed)");
-        if (this.numberOfNeighbours != neighbourOffsets.length)
+        }
+        if (this.numberOfNeighbours != neighbourOffsets.length) {
             throw new IllegalArgumentException("Number of passed neighbour offsets " + neighbourOffsets.length
                 + " does not match the number of neighbours in 3x3x... aperture " + this.numberOfNeighbours);
+        }
         if (this.numberOfNeighbours > 30) // bit #31 can be used for the central element of the aperture
+        {
             throw new AssertionError("This class " + getClass().getName()
                 + " cannot process more than 30 elements in the aperture (besides the central element)");
+        }
         // We cannot use full 63-bit precision here, because double values cannot precisely store all long values
         this.neighbourOffsets = new long[neighbourOffsets.length][dimCount];
         for (int k = 0; k < neighbourOffsets.length; k++) {
             long[] neighbourOffset = neighbourOffsets[k];
             // creating a copy: necessary if another thread is modifying the argument now
-            if (neighbourOffset == null)
-                throw new NullPointerException("Null neighbourOffsets[" + k + "]");
-            if (neighbourOffset.length != dimCount)
+            Objects.requireNonNull(neighbourOffset, "Null neighbourOffsets[" + k + "]");
+            if (neighbourOffset.length != dimCount) {
                 throw new IllegalArgumentException("Illegal neighbourOffsets[" + k + "].length = "
                     + neighbourOffset.length + ": does not match to the number of dimensions " + dimCount);
+            }
             System.arraycopy(neighbourOffset, 0, this.neighbourOffsets[k], 0, dimCount);
         }
         // now this.neighbourOffsets is a deep copy of the argument, which cannot be destroyed by another thread
@@ -139,14 +143,16 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
             int reverseIndex = -1;
             boolean allZero = true;
             for (int j = 0; j < dimCount; j++) {
-                if (Math.abs(this.neighbourOffsets[k][j]) > 1)
+                if (Math.abs(this.neighbourOffsets[k][j]) > 1) {
                     throw new IllegalArgumentException("Illegal neighbourOffsets: the offset #" + k
                         + " (" + JArrays.toString(this.neighbourOffsets[k], ",", 1000)
                         + " describes not a neighbour, because some of its components is not in -1..1 range");
+                }
                 allZero &= this.neighbourOffsets[k][j] == 0;
             }
-            if (allZero)
+            if (allZero) {
                 throw new IllegalArgumentException("Illegal neighbourOffsets: the offset #" + k + " is zero");
+            }
             for (int i = 0; i < this.neighbourOffsets.length; i++) {
                 if (i == k) {
                     continue;
@@ -155,9 +161,10 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
                 for (int j = 0; j < dimCount; j++) {
                     matchThis &= this.neighbourOffsets[i][j] == this.neighbourOffsets[k][j];
                 }
-                if (matchThis)
+                if (matchThis) {
                     throw new IllegalArgumentException("Illegal neighbourOffsets: the offsets #" + k
                         + " and # " + i + " are equal");
+                }
                 boolean matchNegative = true;
                 for (int j = 0; j < dimCount; j++) {
                     matchNegative &= this.neighbourOffsets[i][j] == -this.neighbourOffsets[k][j];
@@ -166,10 +173,11 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
                     reverseIndex = i; break;
                 }
             }
-            if (reverseIndex == -1)
+            if (reverseIndex == -1) {
                 throw new IllegalArgumentException("Illegal neighbourOffsets: the offset #" + k
                     + " (" + JArrays.toString(this.neighbourOffsets[k], ",", 1000)
                     + ") has no corresponding reverse offset (the same but with negative sign)");
+            }
             this.reverseNeighbourIndexes[k] = reverseIndex;
         }
         // We've checked 3^dimCount-1 offsets and all they are different non-zero vectors with -1..1 components,
@@ -178,14 +186,15 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
 
     @Override
     public void neighbourOffset(long[] coordinateIncrements, int neighbourIndex) {
-        if (coordinateIncrements == null)
-            throw new NullPointerException("Null list of coordinates");
-        if (coordinateIncrements.length != dimCount)
+        Objects.requireNonNull(coordinateIncrements, "Null list of coordinates");
+        if (coordinateIncrements.length != dimCount) {
             throw new IllegalArgumentException("Number of coordinates " + coordinateIncrements.length
                 + " is not equal to the number of matrix dimensions " + dimCount());
-        if (neighbourIndex < 0 || neighbourIndex >= numberOfNeighbours)
+        }
+        if (neighbourIndex < 0 || neighbourIndex >= numberOfNeighbours) {
             throw new IndexOutOfBoundsException("Illegal neighbourIndex = " + neighbourIndex
                 + ": must be in 0.." + (numberOfNeighbours - 1) + " range");
+        }
         System.arraycopy(neighbourOffsets[neighbourIndex], 0, coordinateIncrements, 0, dimCount);
     }
 
@@ -200,8 +209,7 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
         Matrix<? extends BitArray> skeleton,
         AttachmentInformation attachmentInformation)
     {
-        if (attachmentInformation == null)
-            throw new NullPointerException("Null attachmentInformation");
+        Objects.requireNonNull(attachmentInformation, "Null attachmentInformation");
         Matrix<? extends PIntegerArray> packed = asNeighbourhoodBitMaps(skeleton);
         switch (attachmentInformation) {
             case NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH:
@@ -243,8 +251,9 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
 
     @Override
     public void markNeighbouringNodesNotConnectedViaDegeneratedBranches(int[] pixelTypesOfAllNeighbours) {
-        if (pixelTypesOfAllNeighbours.length < numberOfNeighbours)
+        if (pixelTypesOfAllNeighbours.length < numberOfNeighbours) {
             throw new IllegalArgumentException("Too short pixelTypesOfAllNeighbours array");
+        }
         if (dimCount != 2) {
             return; // should be overridden for another number of dimensions
         }
@@ -308,11 +317,11 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
     public final Matrix<? extends PIntegerArray> asNeighbourhoodBitMaps(
         Matrix<? extends BitArray> skeleton)
     {
-        if (skeleton == null)
-            throw new NullPointerException("Null skeleton");
-        if (skeleton.dimCount() != dimCount)
+        Objects.requireNonNull(skeleton, "Null skeleton");
+        if (skeleton.dimCount() != dimCount) {
             throw new IllegalArgumentException("This object (" + this + ") can process "
                 + dimCount + "-dimensional matrices only");
+        }
 
         List<Matrix<? extends PArray>> shifted = new ArrayList<Matrix<? extends PArray>>();
         shifted.add(skeleton);

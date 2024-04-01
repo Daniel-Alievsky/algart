@@ -31,6 +31,7 @@ import net.algart.math.functions.CoordinateTransformationOperator;
 import net.algart.math.functions.LinearOperator;
 
 import java.util.List;
+import java.util.Objects;
 
 public final class UniversalStitchingMethod<P extends UniversalFramePosition> implements StitchingMethod<P> {
     private final double defaultValue;
@@ -62,8 +63,7 @@ public final class UniversalStitchingMethod<P extends UniversalFramePosition> im
     }
 
     public StitchingFunc getStitchingFunc(List<? extends Frame<P>> frames) {
-        if (frames == null)
-            throw new NullPointerException("Null frames argument");
+        Objects.requireNonNull(frames, "Null frames argument");
         boolean affine2D = true;
         for (Frame<P> frame : frames) {
             CoordinateTransformationOperator o = frame.position().inverseTransform();
