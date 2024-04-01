@@ -33,6 +33,7 @@ import net.algart.matrices.TiledApertureProcessorFactory;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static net.algart.matrices.DependenceApertureBuilder.*;
 
@@ -86,10 +87,8 @@ public class TiledMorphology implements Morphology {
     final int dimCount;
 
     TiledMorphology(Morphology parent, TiledApertureProcessorFactory tiler) {
-        if (parent == null)
-            throw new NullPointerException("Null parent morphology");
-        if (tiler == null)
-            throw new NullPointerException("Null tiler");
+        Objects.requireNonNull(parent, "Null parent morphology");
+        Objects.requireNonNull(tiler, "Null tiler");
         this.parent = parent;
         this.context = parent.context() == null ? ArrayContext.DEFAULT : parent.context();
         this.tiler = tiler.context(this.context);

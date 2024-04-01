@@ -35,6 +35,7 @@ import net.algart.math.patterns.UniformGridPattern;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 class Summator extends RankOperationProcessor {
     private final boolean optimizeGetData = OPTIMIZE_GET_DATA;
@@ -51,8 +52,7 @@ class Summator extends RankOperationProcessor {
 
     Summator(ArrayContext context, Func processingFunc) {
         super(context, RankPrecision.BITS_1.bitLevels); // bitLevels are not used by this class
-        if (processingFunc == null)
-            throw new NullPointerException("Null contrastingFunc");
+        Objects.requireNonNull(processingFunc, "Null contrastingFunc");
         this.processingFunc = processingFunc;
         if (processingFunc == Func.IDENTITY) {
             this.linearFunc = true;
@@ -89,8 +89,7 @@ class Summator extends RankOperationProcessor {
     public void process(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
         List<? extends Matrix<? extends PArray>> additionalMatrices, Pattern pattern)
     {
-        if (additionalMatrices == null)
-            throw new NullPointerException("Null additionalMatrices argument");
+        Objects.requireNonNull(additionalMatrices, "Null additionalMatrices argument");
         if (optimizeSegmentsAlongAxes
             && pattern instanceof UniformGridPattern
             && pattern instanceof QuickPointCountPattern
@@ -101,9 +100,10 @@ class Summator extends RankOperationProcessor {
             checkArguments(dest, src, additionalMatrices, pattern);
             final long pointCount = pattern.pointCount();
             if (pointCount > 1) {
-                if (pointCount > Integer.MAX_VALUE)
+                if (pointCount > Integer.MAX_VALUE) {
                     throw new TooManyPointsInPatternError("Too large number of points in the pattern: "
                         + pointCount + " > Integer.MAX_VALUE");
+                }
                 // There is an analogous requirement in the usual branch in RankOperationProcessor:
                 // we build a Java array of all pattern points, so it is impossible to process more
                 // than Integer.MAX_VALUE points.
@@ -155,8 +155,7 @@ class Summator extends RankOperationProcessor {
                         super.getData(arrayPos, destArray, destArrayOffset, count);
                         return;
                     }
-                    if (destArray == null)
-                        throw new NullPointerException("Null destArray argument");
+                    Objects.requireNonNull(destArray, "Null destArray argument");
                     checkRanges(length, arrayPos, count);
                     if (count == 0) {
                         return;
@@ -233,8 +232,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -331,8 +329,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -437,8 +434,7 @@ class Summator extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -503,8 +499,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -601,8 +596,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -707,8 +701,7 @@ class Summator extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -772,8 +765,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -870,8 +862,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -976,8 +967,7 @@ class Summator extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1050,8 +1040,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1134,8 +1123,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1208,8 +1196,7 @@ class Summator extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1273,8 +1260,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1357,8 +1343,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1431,8 +1416,7 @@ class Summator extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1499,8 +1483,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1604,8 +1587,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1710,8 +1692,7 @@ class Summator extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1775,8 +1756,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1880,8 +1860,7 @@ class Summator extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1986,8 +1965,7 @@ class Summator extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2255,9 +2233,10 @@ class Summator extends RankOperationProcessor {
                 }
                 //[[Repeat.AutoGeneratedEnd]]
 
-            } else
+            } else {
                 throw new AssertionError("Illegal source array type (" + src.getClass()
                     + "): it must implement one of primitive XxxArray interfaces");
+            }
 
             final int destTypeCode;
             final Object destBuffer;
@@ -2285,9 +2264,10 @@ class Summator extends RankOperationProcessor {
             } else if (dest instanceof DoubleArray) {
                 destTypeCode = DOUBLE_TYPE_CODE;
                 destBuffer = new double[len];
-            } else
+            } else {
                 throw new AssertionError("Illegal destination array type (" + dest.getClass()
                     + "): it must implement one of primitive XxxArray interfaces");
+            }
 
             for (long arrayPos = 0; ; ) {
                 switch (destTypeCode) {
@@ -2830,11 +2810,14 @@ class Summator extends RankOperationProcessor {
     }
 
     private static void checkRanges(long length, long arrayPos, int count) {
-        if (count < 0)
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw new IndexOutOfBoundsException("arrayPos = " + arrayPos + " < 0");
-        if (arrayPos > length - count)
+        }
+        if (arrayPos > length - count) {
             throw new IndexOutOfBoundsException("arrayPos+count = " + arrayPos + "+" + count + " > length=" + length);
+        }
     }
 }

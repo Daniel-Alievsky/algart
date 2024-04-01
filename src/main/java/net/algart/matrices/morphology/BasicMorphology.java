@@ -77,8 +77,9 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
 
     BasicMorphology(ArrayContext context, long maxTempJavaMemory) {
         super(context);
-        if (maxTempJavaMemory < 0)
+        if (maxTempJavaMemory < 0) {
             throw new IllegalArgumentException("Negative maxTempJavaMemory argument");
+        }
         this.maxTempJavaMemory = maxTempJavaMemory;
     }
 
@@ -127,12 +128,11 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         Matrix<? extends PArray> src, Pattern pattern,
         boolean isDilation)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
-        if (!dimensionsAllowed(src, pattern))
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
+        if (!dimensionsAllowed(src, pattern)) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         PArray array = src.array();
         final boolean additionalDimension = pattern.dimCount() == src.dimCount() + 1;
         double[] increments = !additionalDimension ? null : new double[(int) pattern.pointCount()];
@@ -167,15 +167,15 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern, boolean isDilation,
         boolean disableMemoryAllocation)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
-        if (!dimensionsAllowed(src, pattern))
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
+        if (!dimensionsAllowed(src, pattern)) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
-        if (dest != null && !dest.dimEquals(src))
+        }
+        if (dest != null && !dest.dimEquals(src)) {
             throw new SizeMismatchException("Destination and source matrix dimensions mismatch: "
                 + dest + " and " + src);
+        }
         Matrix<? extends UpdatablePArray> castDest = dest == null || dest.elementType() == src.elementType() ? dest :
             Matrices.asUpdatableFuncMatrix(true, Func.UPDATABLE_IDENTITY,
                 src.updatableType(UpdatablePArray.class), dest);
@@ -238,10 +238,8 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         Pattern pattern, boolean isDilation, boolean disableMemoryAllocation)
     {
 //        long t0 = System.nanoTime();
-        if (src == null)
-            throw new AssertionError("Null src argument");
-        if (pattern == null)
-            throw new AssertionError("Null pattern argument");
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         assert possibleDest == null || possibleDest.elementType() == src.elementType();
         PArray array = src.array();
         final long length = array.length();
@@ -470,8 +468,9 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
 
             pool.releaseArray(tempForAccumulator);
             pool.releaseArray(tempForMorph);
-            if (bufferLength == length)
+            if (bufferLength == length) {
                 pool.releaseArray(buffer);
+            }
 
             return possibleDest;
         }
@@ -483,9 +482,10 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         Matrix<? extends PArray> src, Pattern pattern, UpdatablePArray buffer, ArrayPool pool,
         boolean isDilation, int numberOfTasks)
     {
-        if (pattern.dimCount() != src.dimCount())
+        if (pattern.dimCount() != src.dimCount()) {
             throw new AssertionError("dilationOrErosionWithoutAllocation must not be called for "
                 + "patterns with additional dimension");
+        }
         // - This method is called only while procession the union decomposition branch, which is skipped in this case
         List<Pattern> md = pattern.minkowskiDecomposition(MIN_POINT_COUNT_TO_DECOMPOSE);
         int m = md.size();
@@ -511,9 +511,10 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         UpdatablePArray temp, UpdatablePArray buffer, ArrayPool pool,
         boolean isDilation, boolean accumulatorIsEmpty, int numberOfTasks)
     {
-        if (pattern.dimCount() != src.dimCount())
+        if (pattern.dimCount() != src.dimCount()) {
             throw new AssertionError("accumulateDilationOrErosionWithoutAllocation must not be called for "
                 + "patterns with additional dimension");
+        }
         // - This method is called only while procession the union decomposition branch, which is skipped in this case
         List<Pattern> md = pattern.minkowskiDecomposition(MIN_POINT_COUNT_TO_DECOMPOSE);
         int m = md.size();
@@ -570,8 +571,9 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         boolean isDilation, int numberOfTasks)
     {
         int minkSize = minkowskiDecomposition.size();
-        if (minkSize == 0)
+        if (minkSize == 0) {
             throw new AssertionError("This method must not be called for empty minkowskiDecomposition list");
+        }
         List<Pattern> goodPatterns = new ArrayList<Pattern>(minkowskiDecomposition);
         List<Pattern> complexPatterns = extractComplexPatterns(src.dimCount(), goodPatterns);
         int goodSize = goodPatterns.size();
@@ -633,15 +635,17 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
 //            System.out.println(" {" + JArrays.toString(ls, ",", 100) + "}");
 
         int m = leftwardShifts.length;
-        if (m == 0)
+        if (m == 0) {
             throw new AssertionError("This method must not be called for empty leftwardShifts array");
+        }
         subTask(0, 1, m).simpleDilationOrErosion(dest, src, leftwardShifts[leftwardShifts.length - 1],
             null, //TODO!!
             isMax);
         // - The correction shift, that usually cannot be performed "in place" by common algorithm
         // (because it is rightward), should be placed at the end of array by optimizeMinkowskiDecomposition method.
-        if (m == 1)
+        if (m == 1) {
             return;
+        }
         for (int k = 1; k < m; k++) {
             subTask(k, 1, m).simpleDilationOrErosionInPlace(
                 dest, buffer, leftwardShifts[k - 1], isMax, true, numberOfTasks);
@@ -718,19 +722,23 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
     {
         long length = array.length();
         for (int k = 1; k < leftwardShifts.length; k++) {
-            if (leftwardShifts[k] < 0 || leftwardShifts[k] >= length)
+            if (leftwardShifts[k] < 0 || leftwardShifts[k] >= length) {
                 throw new AssertionError("Illegal shift: not in 0.." + (length - 1) + " range");
-            if (shiftsAreSorted && (leftwardShifts[k] < leftwardShifts[k - 1]))
+            }
+            if (shiftsAreSorted && (leftwardShifts[k] < leftwardShifts[k - 1])) {
                 throw new AssertionError("Shifts are not sorted: " + JArrays.toString(leftwardShifts, ", ", 1000));
+            }
         }
-        if (leftwardShifts.length == 0 && leftwardShifts[0] == 0)
+        if (leftwardShifts.length == 0 && leftwardShifts[0] == 0) {
             return; // nothing to do
+        }
         long maxShift = Long.MIN_VALUE;
         for (long sh : leftwardShifts) {
             maxShift = Math.max(sh, maxShift);
         }
-        if (maxShift > buffer.length())
+        if (maxShift > buffer.length()) {
             throw new AssertionError("Buffer length is less than maximal shift " + maxShift + ": buffer is " + buffer);
+        }
         if (shiftsAreSorted) {
             assert maxShift == leftwardShifts[leftwardShifts.length - 1];
         }
@@ -778,9 +786,10 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
                 savingRangesFrom[m] = copier.rangeTo(m) - gap;
                 savingPosInBuffer[m + 1] = savingPosInBuffer[m] + gap;
             }
-            if (savingPosInBuffer[numberOfSavings] > buffer.length())
+            if (savingPosInBuffer[numberOfSavings] > buffer.length()) {
                 throw new AssertionError("Too short buffer for multithread saving: " + buffer.length()
                     + " < " + savingPosInBuffer[numberOfSavings]);
+            }
             // Proof that it is impossible.
             // We've chosen buffer enough to store min(numberOfRanges*maxShift,array.length()) elements,
             // for any shifts.
@@ -1097,10 +1106,8 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         List<Pattern> incrementFromPrevious = null;
 
         MinkowskiPair(Pattern main, Set<IPoint> shifts, List<Pattern> incrementToNext) {
-            if (main == null)
-                throw new AssertionError("Null main argument");
-            if (shifts == null)
-                throw new AssertionError("Null shifts argument");
+            Objects.requireNonNull(main, "Null main argument");
+            Objects.requireNonNull(shifts, "Null shifts argument");
             this.main = main;
             this.shifts = Patterns.newIntegerPattern(shifts);
             this.incrementToNext = incrementToNext;
@@ -1231,10 +1238,12 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
      *                                  or if <tt>totalTaskSize&lt;0.0</tt>.
      */
     private BasicMorphology subTask(double fromPart, double subTaskSize, double totalTaskSize) {
-        if (totalTaskSize < 0.0)
+        if (totalTaskSize < 0.0) {
             throw new IllegalArgumentException("Negative totalTaskSize");
-        if (subTaskSize < 0.0)
+        }
+        if (subTaskSize < 0.0) {
             throw new IllegalArgumentException("Negative subTaskSize");
+        }
         double from = fromPart / totalTaskSize;
         double to = (fromPart + subTaskSize) / totalTaskSize;
         if (to > 1.0 && to <= 1.001) {

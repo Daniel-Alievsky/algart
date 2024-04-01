@@ -28,6 +28,8 @@ import net.algart.arrays.*;
 import net.algart.math.functions.*;
 import net.algart.math.patterns.Pattern;
 
+import java.util.Objects;
+
 /**
  * <p>A skeletal implementation of the {@link Morphology} interface to minimize
  * the effort required to implement this interface.</p>
@@ -82,8 +84,7 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
     public Matrix<? extends UpdatablePArray> dilation(Matrix<? extends PArray> src, Pattern pattern,
         SubtractionMode subtractionMode)
     {
-        if (subtractionMode == null)
-            throw new NullPointerException("Null subtractionMode");
+        Objects.requireNonNull(subtractionMode, "Null subtractionMode");
         Matrix<? extends UpdatablePArray> dilation =
             (subtractionMode == SubtractionMode.NONE ? this : context(contextPart(0.0, 0.9))).dilation(src, pattern);
         subtractionMode.subtract(contextPart(0.9, 1.0), dilation, src);
@@ -93,8 +94,7 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
     public Matrix<? extends UpdatablePArray> erosion(Matrix<? extends PArray> src, Pattern pattern,
         SubtractionMode subtractionMode)
     {
-        if (subtractionMode == null)
-            throw new NullPointerException("Null subtractionMode");
+        Objects.requireNonNull(subtractionMode, "Null subtractionMode");
         Matrix<? extends UpdatablePArray> erosion =
             (subtractionMode == SubtractionMode.NONE ? this : context(contextPart(0.0, 0.9))).erosion(src, pattern);
         subtractionMode.subtract(contextPart(0.9, 1.0), erosion, src);
@@ -104,16 +104,14 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
     public void dilation(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern,
         boolean disableMemoryAllocation)
     {
-        if (dest == null)
-            throw new NullPointerException("Null dest argument");
+        Objects.requireNonNull(dest, "Null dest argument");
         dilationOrErosion(dest, src, pattern, true, disableMemoryAllocation);
     }
 
     public void erosion(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern,
         boolean disableMemoryAllocation)
     {
-        if (dest == null)
-            throw new NullPointerException("Null dest argument");
+        Objects.requireNonNull(dest, "Null dest argument");
         dilationOrErosion(dest, src, pattern, false, disableMemoryAllocation);
     }
 
@@ -128,16 +126,15 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
     public Matrix<? extends UpdatablePArray> dilationErosion(Matrix<? extends PArray> src,
         Pattern dilationPattern, Pattern erosionPattern, SubtractionMode subtractionMode)
     {
-        if (dilationPattern == null)
-            throw new NullPointerException("Null dilationPattern argument");
-        if (erosionPattern == null)
-            throw new NullPointerException("Null erosionPattern argument");
-        if (!dimensionsAllowed(src, dilationPattern))
+        Objects.requireNonNull(dilationPattern, "Null dilationPattern argument");
+        Objects.requireNonNull(erosionPattern, "Null erosionPattern argument");
+        if (!dimensionsAllowed(src, dilationPattern)) {
             throw new IllegalArgumentException("Number of dimensions of the dilation pattern and the matrix mismatch");
-        if (!dimensionsAllowed(src, erosionPattern))
+        }
+        if (!dimensionsAllowed(src, erosionPattern)) {
             throw new IllegalArgumentException("Number of dimensions of the erosion pattern and the matrix mismatch");
-        if (subtractionMode == null)
-            throw new NullPointerException("Null subtractionMode");
+        }
+        Objects.requireNonNull(subtractionMode, "Null subtractionMode");
         double w = subtractionMode == SubtractionMode.NONE ? 1.0 : 0.9;
         Matrix<? extends UpdatablePArray> actual = context(contextPart(0.0, 0.5 * w)).dilation(src, dilationPattern);
         actual = context(contextPart(0.5 * w, 1.0 * w)).erosion(actual, erosionPattern);
@@ -148,14 +145,14 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
     public Matrix<? extends UpdatablePArray> erosionDilation(Matrix<? extends PArray> src,
         Pattern erosionPattern, Pattern dilationPattern, SubtractionMode subtractionMode)
     {
-        if (erosionPattern == null)
-            throw new NullPointerException("Null erosionPattern argument");
-        if (dilationPattern == null)
-            throw new NullPointerException("Null dilationPattern argument");
-        if (!dimensionsAllowed(src, dilationPattern))
+        Objects.requireNonNull(erosionPattern, "Null erosionPattern argument");
+        Objects.requireNonNull(dilationPattern, "Null dilationPattern argument");
+        if (!dimensionsAllowed(src, dilationPattern)) {
             throw new IllegalArgumentException("Number of dimensions of the erosion pattern and the matrix mismatch");
-        if (!dimensionsAllowed(src, erosionPattern))
+        }
+        if (!dimensionsAllowed(src, erosionPattern)) {
             throw new IllegalArgumentException("Number of dimensions of the dilation pattern and the matrix mismatch");
+        }
         double w = subtractionMode == SubtractionMode.NONE ? 1.0 : 0.9;
         Matrix<? extends UpdatablePArray> actual = context(contextPart(0.0, 0.5 * w)).erosion(src, erosionPattern);
         actual = context(contextPart(0.5 * w, 1.0 * w)).dilation(actual, dilationPattern);
@@ -301,18 +298,18 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
         Matrix<? extends PArray> src,
         Pattern pattern, boolean isDilation, boolean disableMemoryAllocation)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
-        if (!dimensionsAllowed(src, pattern))
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
+        if (!dimensionsAllowed(src, pattern)) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
+        }
         if (dest == null) {
             dest = memoryModel().newMatrix(UpdatablePArray.class, src);
         } else {
-            if (!dest.dimEquals(src))
+            if (!dest.dimEquals(src)) {
                 throw new SizeMismatchException("Destination and source matrix dimensions mismatch: "
                     + dest + " and " + src);
+            }
             Matrix<? extends UpdatablePArray> castDest = dest.elementType() == src.elementType() ? dest :
                 Matrices.asUpdatableFuncMatrix(true, Func.UPDATABLE_IDENTITY,
                     src.updatableType(UpdatablePArray.class), dest);

@@ -27,6 +27,8 @@ package net.algart.matrices.morphology;
 import net.algart.arrays.*;
 import net.algart.math.patterns.Pattern;
 
+import java.util.Objects;
+
 class FixedPercentileRankMorphology extends BasicRankMorphology implements RankMorphology {
     private final double dilationLevel;
 
@@ -42,8 +44,7 @@ class FixedPercentileRankMorphology extends BasicRankMorphology implements RankM
     protected Matrix<? extends PArray> asDilationOrErosion(Matrix<? extends PArray> src, Pattern pattern,
         boolean isDilation)
     {
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         long patternSize = pattern.pointCount();
         assert patternSize >= 1;
         double percentileIndex = (isDilation ? dilationLevel : 1.0 - dilationLevel) * (patternSize - 1);
@@ -57,10 +58,8 @@ class FixedPercentileRankMorphology extends BasicRankMorphology implements RankM
         Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern, boolean isDilation,
         boolean disableMemoryAllocation)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         if (dest == null) {
             dest = memoryModel().newMatrix(UpdatablePArray.class, src);
         }

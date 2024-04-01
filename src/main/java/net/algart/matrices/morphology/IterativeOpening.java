@@ -30,6 +30,7 @@ import net.algart.math.patterns.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>Iterative opening of the matrix.</p>
@@ -144,13 +145,12 @@ public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? e
         Matrix<? extends PArray> matrix, Pattern[] patterns, boolean onlyGranulometry)
     {
         super(morphology.context());
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
-        if (patterns.length == 0)
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        if (patterns.length == 0) {
             throw new IllegalArgumentException("Empty patterns[] argument");
+        }
         for (int k = 0; k < patterns.length; k++) {
-            if (patterns[k] == null)
-                throw new NullPointerException("Null patterns[" + k + "]");
+            Objects.requireNonNull(patterns[k], "Null patterns[" + k + "]");
         }
         this.onlyGranulometry = onlyGranulometry;
         this.numberOfStoredOpenings = onlyGranulometry ? 0 : NUMBER_OF_STORED_OPENINGS;
@@ -211,8 +211,7 @@ public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? e
         Class<? extends UpdatablePArray> requiredType,
         Matrix<? extends PArray> matrix, Pattern... patterns)
     {
-        if (requiredType == null)
-            throw new NullPointerException("Null requiredType argument");
+        Objects.requireNonNull(requiredType, "Null requiredType argument");
         return new IterativeOpening(morphology, requiredType, matrix, patterns, false);
     }
 

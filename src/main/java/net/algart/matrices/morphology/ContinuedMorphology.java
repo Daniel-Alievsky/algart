@@ -28,6 +28,9 @@ import net.algart.arrays.*;
 import net.algart.math.IPoint;
 import net.algart.math.IRectangularArea;
 import net.algart.math.patterns.*;
+
+import java.util.Objects;
+
 import static net.algart.matrices.DependenceApertureBuilder.*;
 
 /**
@@ -89,13 +92,12 @@ public class ContinuedMorphology implements Morphology {
     final Matrix.ContinuationMode continuationMode;
 
     ContinuedMorphology(Morphology parent, Matrix.ContinuationMode continuationMode) {
-        if (parent == null)
-            throw new NullPointerException("Null parent morphology");
-        if (continuationMode == null)
-            throw new NullPointerException("Null continuationMode derivator");
-        if (continuationMode == Matrix.ContinuationMode.NONE)
+        Objects.requireNonNull(parent, "Null parent morphology");
+        Objects.requireNonNull(continuationMode, "Null continuationMode derivator");
+        if (continuationMode == Matrix.ContinuationMode.NONE) {
             throw new IllegalArgumentException(getClass().getName() + " cannot be used with continuation mode \""
                 + continuationMode + "\"");
+        }
         this.parent = parent;
         this.context = parent.context() == null ? ArrayContext.DEFAULT : parent.context();
         this.memoryModel = this.context.getMemoryModel();
@@ -330,10 +332,11 @@ public class ContinuedMorphology implements Morphology {
                 long[] size = m.dimensions();
                 for (int k = 0; k < size.length; k++) {
                     size[k] += aperture.size(k);
-                    if (size[k] < 0)
+                    if (size[k] < 0) {
                         throw new IndexOutOfBoundsException("Too large matrix continuation for morphology: "
                             + "the dimension #" + k + " of the matrix, extended to the corresponding aperture "
                             + aperture + ", is greater than Long.MAX_VALUE");
+                    }
                 }
                 return m.subMatr(new long[size.length], size, continuationMode);
                 // new long[...] - zero-filled by Java; no sense to replace with ZERO_CONSTANT here
@@ -342,10 +345,11 @@ public class ContinuedMorphology implements Morphology {
         long[] from = aperture.min().coordinates();
         long[] to = IPoint.valueOf(m.dimensions()).add(aperture.max()).coordinates();
         for (int k = 0; k < to.length; k++) {
-            if (to[k] < 0 && aperture.max(k) >= 0)
+            if (to[k] < 0 && aperture.max(k) >= 0) {
                 throw new IndexOutOfBoundsException("Too large matrix continuation for morphology: "
                     + "the dimension #" + k + " of the matrix, extended to the corresponding aperture "
                     + aperture + ", is greater than Long.MAX_VALUE");
+            }
         }
         return m.subMatrix(from, to, dest ? Matrix.ContinuationMode.ZERO_CONSTANT : continuationMode);
     }

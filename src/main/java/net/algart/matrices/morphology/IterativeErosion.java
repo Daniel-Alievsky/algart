@@ -30,6 +30,7 @@ import net.algart.math.patterns.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -118,15 +119,13 @@ public class IterativeErosion extends AbstractIterativeArrayProcessor<Matrix<? e
         Matrix<? extends PArray> matrix, Pattern... patterns)
     {
         super(morphology.context());
-        if (requiredType == null)
-            throw new NullPointerException("Null requiredType argument");
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
-        if (patterns.length == 0)
+        Objects.requireNonNull(requiredType, "Null requiredType argument");
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        if (patterns.length == 0) {
             throw new IllegalArgumentException("Empty patterns[] argument");
+        }
         for (int k = 0; k < patterns.length; k++) {
-            if (patterns[k] == null)
-                throw new NullPointerException("Null patterns[" + k + "]");
+            Objects.requireNonNull(patterns[k], "Null patterns[" + k + "]");
         }
         final Class<?> reType = Arrays.elementType(requiredType);
         final MemoryModel mmRes = mm(memoryModel, matrix, Arrays.sizeOf(reType) / Arrays.sizeOf(matrix.elementType()));
@@ -280,8 +279,9 @@ public class IterativeErosion extends AbstractIterativeArrayProcessor<Matrix<? e
                     }
                     if (System.currentTimeMillis() - tStart >
                         MAX_TESTING_TIME_PER_COORD_FOR_COMPLEXITY_ESTIMATION /
-                            NUMBER_OF_TESTS_FOR_COMPLEXITY_ESTIMATION)
+                            NUMBER_OF_TESTS_FOR_COMPLEXITY_ESTIMATION) {
                         break;
+                    }
                 }
                 maxIterCount = Math.max(maxIterCount, count);
                 if (count == MAX_NUMBER_OF_ITERATIONS_FOR_COMPLEXITY_ESTIMATION) {

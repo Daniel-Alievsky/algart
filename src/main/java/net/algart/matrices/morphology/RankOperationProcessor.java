@@ -32,6 +32,7 @@ import net.algart.matrices.StreamingApertureProcessor;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 
 abstract class RankOperationProcessor extends StreamingApertureProcessor {
     static final int BUFFER_BLOCK_SIZE = 65536;
@@ -52,17 +53,18 @@ abstract class RankOperationProcessor extends StreamingApertureProcessor {
 
     RankOperationProcessor(ArrayContext context, int[] bitLevels) {
         super(context);
-        if (bitLevels == null)
-            throw new NullPointerException("Null bitLevels argument");
-        if (bitLevels.length == 0)
+        Objects.requireNonNull(bitLevels, "Null bitLevels argument");
+        if (bitLevels.length == 0) {
             throw new IllegalArgumentException("Empty bitLevels argument");
+        }
         bitLevels = bitLevels.clone();
         // clone before checking to guarantee correct check while multithreading
         Histogram.newIntHistogram(0, bitLevels); // checking bitLevels
         this.numberOfAnalyzedBits = bitLevels[bitLevels.length - 1];
-        if (this.numberOfAnalyzedBits > CustomRankPrecision.MAX_NUMBER_OF_ANALYZED_BITS)
+        if (this.numberOfAnalyzedBits > CustomRankPrecision.MAX_NUMBER_OF_ANALYZED_BITS) {
             throw new IllegalArgumentException("Last bitLevel is greater than "
                 + CustomRankPrecision.MAX_NUMBER_OF_ANALYZED_BITS);
+        }
         this.bitLevels = JArrays.copyOfRange(bitLevels, 0, bitLevels.length - 1);
     }
 
@@ -79,8 +81,7 @@ abstract class RankOperationProcessor extends StreamingApertureProcessor {
         List<? extends Matrix<? extends PArray>> additionalMatrices,
         Pattern pattern)
     {
-        if (additionalMatrices == null)
-            throw new NullPointerException("Null additionalMatrices argument");
+        Objects.requireNonNull(additionalMatrices, "Null additionalMatrices argument");
         additionalMatrices = new ArrayList<Matrix<? extends PArray>>(additionalMatrices);
         // - to avoid changing by parallel threads
         checkArguments(src, src, additionalMatrices, pattern);
@@ -92,13 +93,15 @@ abstract class RankOperationProcessor extends StreamingApertureProcessor {
         }
         long size = srcArray.length();
         long[] shifts = BasicMorphology.toShifts(null, size, dimensions, pattern, false);
-        if (shifts.length == 0)
+        if (shifts.length == 0) {
             throw new AssertionError("Empty pattern: it is impossible");
+        }
         UniformGridPattern roundedPattern = pattern.round();
         long[] leftShifts = BasicMorphology.toShifts(null, size, dimensions, roundedPattern.lowerSurface(0), false);
         long[] rightShifts = BasicMorphology.toShifts(null, size, dimensions, roundedPattern.upperSurface(0), false);
-        if (leftShifts.length != rightShifts.length)
+        if (leftShifts.length != rightShifts.length) {
             throw new AssertionError("Unbalanced pattern.lowerSurface / pattern.upperSurface: different lengths");
+        }
         PArray processed = asProcessed(requiredType, srcArray, additionalArrays, dimensions,
             shifts, leftShifts, rightShifts);
         T result;
