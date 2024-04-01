@@ -24,6 +24,7 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -69,14 +70,16 @@ class ArraysComparisonWithThresholdGetBitsOp {
     }
 
     public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (count < 0)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw AbstractArray.rangeException(arrayPos, x0.length(), getClass());
-        if (arrayPos > x0.length() - count)
+        }
+        if (arrayPos > x0.length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x0.length(), getClass());
+        }
         for (; count > 0; ) {
             int len;
             boolean usePool = false;

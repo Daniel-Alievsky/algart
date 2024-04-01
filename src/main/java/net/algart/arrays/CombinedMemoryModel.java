@@ -402,7 +402,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             }
             Objects.requireNonNull(memoryModel, "Null memoryModel argument");
             if (!memoryModel.isElementTypeSupported(byte.class)) {
-                throw new NullPointerException("Illegal memoryModel argument: it must support byte elements");
+                throw new IllegalArgumentException("Illegal memoryModel argument: it must support byte elements");
             }
             this.elementType = elementType;
             this.workStorage = workStorageForOneElement;

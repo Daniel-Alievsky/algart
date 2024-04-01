@@ -31,6 +31,7 @@ import java.nio.ByteOrder;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>Full structural information about the {@link Matrix AlgART matrix}, consisting of elements
@@ -264,10 +265,10 @@ public abstract class MatrixInfo {
      * @throws IllegalArgumentException if the specified version is not supported by this class.
      */
     public static MatrixInfo valueOf(Matrix<? extends PArray> matrix, long dataOffset, String version) {
-        if (version == null)
-            throw new NullPointerException("Null version argument");
-        if (matrix.dimCount() > Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS)
+        Objects.requireNonNull(version, "Null version argument");
+        if (matrix.dimCount() > Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS) {
             throw new TooLargeArrayException("Too large number of matrix dimensions: " + matrix.dimCount());
+        }
         PArray array = matrix.array();
         assert array.isUnresizable(); // was checked in the matrix constructor
         long[] dimensions = matrix.dimensions();
@@ -375,8 +376,7 @@ public abstract class MatrixInfo {
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public static boolean isCorrectAdditionalPropertyName(String name) {
-        if (name == null)
-            throw new NullPointerException("Null name argument");
+        Objects.requireNonNull(name, "Null name argument");
         int len = name.length();
         if (len == 0) {
             return false;
@@ -560,13 +560,13 @@ public abstract class MatrixInfo {
      *                                       in this object.
      */
     public MatrixInfo cloneWithOtherVersion(String version) {
-        if (version == null)
-            throw new NullPointerException("Null version argument");
+        Objects.requireNonNull(version, "Null version argument");
         if (version.equals(VERSION_1_1)) {
             int size = additionalProperties().size();
-            if (size != 0)
+            if (size != 0) {
                 throw new UnsupportedOperationException("This instance contains " + size + " additional properties, "
                     + "but the specified version " + version + " does not support this feature");
+            }
             return new Version1_1(
                 elementType,
                 byteOrder,
@@ -658,9 +658,10 @@ public abstract class MatrixInfo {
         byte[] result = new byte[chars.length()];
         for (int k = 0; k < result.length; k++) {
             char ch = chars.charAt(k);
-            if (ch >= 256)
+            if (ch >= 256) {
                 throw new AssertionError("Cannot convert to bytes: some additional properties contain "
                     + "characters with codes higher than ASCII 255");
+            }
             result[k] = (byte) ch;
         }
         return result;
@@ -713,24 +714,25 @@ public abstract class MatrixInfo {
     public String toString() {
         StringBuilder result = new StringBuilder("AlgART matrix descriptor v");
         result.append(version).append(": ");
-        if (elementType == boolean.class)
+        if (elementType == boolean.class) {
             result.append("bit[");
-        else if (elementType == char.class)
+        } else if (elementType == char.class) {
             result.append("char[");
-        else if (elementType == byte.class)
+        } else if (elementType == byte.class) {
             result.append("byte[");
-        else if (elementType == short.class)
+        } else if (elementType == short.class) {
             result.append("short[");
-        else if (elementType == int.class)
+        } else if (elementType == int.class) {
             result.append("int[");
-        else if (elementType == long.class)
+        } else if (elementType == long.class) {
             result.append("long[");
-        else if (elementType == float.class)
+        } else if (elementType == float.class) {
             result.append("float[");
-        else if (elementType == double.class)
+        } else if (elementType == double.class) {
             result.append("double[");
-        else
+        } else {
             throw new AssertionError("Illegal element type");
+        }
         result.append(dimensions[0]);
         for (int n = 1; n < dimensions.length; n++) {
             result.append('x').append(dimensions[n]);
@@ -778,8 +780,9 @@ public abstract class MatrixInfo {
      * @return <tt>true</tt> if the specified object is a matrix information equal to this one.
      */
     public boolean equals(Object obj) {
-        if (!(obj instanceof MatrixInfo))
+        if (!(obj instanceof MatrixInfo)) {
             return false;
+        }
         MatrixInfo mi = (MatrixInfo) obj;
         return mi.elementType.equals(elementType)
             && mi.byteOrder == byteOrder
@@ -811,8 +814,9 @@ public abstract class MatrixInfo {
             } else {
                 throw new IllegalInfoSyntaxException("The char sequence does not contain valid start signature");
             }
-            if (chars.length() < FIXED_PART_LENGTH_1_1)
+            if (chars.length() < FIXED_PART_LENGTH_1_1) {
                 throw new IllegalInfoSyntaxException("The char sequence is too short");
+            }
             final Class<?> elementType;
             final long dataOffset;
             final long length;
@@ -820,36 +824,40 @@ public abstract class MatrixInfo {
             try {
                 dataOffset = Long.parseLong(chars.substring(32, 48), 16);
                 String tn = chars.substring(48, 56);
-                if (tn.equals("    bit["))
+                if (tn.equals("    bit[")) {
                     elementType = boolean.class;
-                else if (tn.equals("   char["))
+                } else if (tn.equals("   char[")) {
                     elementType = char.class;
-                else if (tn.equals("   byte["))
+                } else if (tn.equals("   byte[")) {
                     elementType = byte.class;
-                else if (tn.equals("  short["))
+                } else if (tn.equals("  short[")) {
                     elementType = short.class;
-                else if (tn.equals("    int["))
+                } else if (tn.equals("    int[")) {
                     elementType = int.class;
-                else if (tn.equals("   long["))
+                } else if (tn.equals("   long[")) {
                     elementType = long.class;
-                else if (tn.equals("  float["))
+                } else if (tn.equals("  float[")) {
                     elementType = float.class;
-                else if (tn.equals(" double["))
+                } else if (tn.equals(" double[")) {
                     elementType = double.class;
-                else
+                } else {
                     throw new IllegalInfoSyntaxException("The char sequence does not contain valid element type");
+                }
                 length = Long.parseLong(chars.substring(56, 72), 16);
-                if (!chars.substring(72, 75).equals("] ["))
+                if (!chars.substring(72, 75).equals("] [")) {
                     throw new IllegalInfoSyntaxException("The char sequence does not contain \"] [\" after the length");
+                }
                 int p = chars.indexOf("]~~~~", FIXED_PART_LENGTH_1_1);
-                if (p == -1)
+                if (p == -1) {
                     throw new IllegalInfoSyntaxException("The char sequence does not contain final \"]~~~~\" combination");
+                }
                 dimensions = new long[Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS];
                 int dimCount = 0;
                 for (int q = FIXED_PART_LENGTH_1_1; q < p; q += 17) {
-                    if (dimCount >= dimensions.length)
+                    if (dimCount >= dimensions.length) {
                         throw new IllegalInfoSyntaxException("The char sequence contains more than "
                             + Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS + " dimensions");
+                    }
                     String value = chars.substring(q, Math.min(p, q + 16));
                     dimensions[dimCount++] = Long.parseLong(value, 16);
                 }
@@ -876,8 +884,7 @@ public abstract class MatrixInfo {
 
         @Override
         public MatrixInfo cloneWithOtherByteOrder(ByteOrder byteOrder) {
-            if (byteOrder == null)
-                throw new NullPointerException("Null byteOrder");
+            Objects.requireNonNull(byteOrder, "Null byteOrder");
             return new Version1_1(
                 elementType,
                 byteOrder,
@@ -908,30 +915,32 @@ public abstract class MatrixInfo {
             assert sb.length() == 24;
             sb.append(" OFFSET=").append(InternalUtils.toHexString(this.dataOffset));
             assert sb.length() == 48;
-            if (elementType == boolean.class)
+            if (elementType == boolean.class) {
                 sb.append("    bit[");
-            else if (elementType == char.class)
+            } else if (elementType == char.class) {
                 sb.append("   char[");
-            else if (elementType == byte.class)
+            } else if (elementType == byte.class) {
                 sb.append("   byte[");
-            else if (elementType == short.class)
+            } else if (elementType == short.class) {
                 sb.append("  short[");
-            else if (elementType == int.class)
+            } else if (elementType == int.class) {
                 sb.append("    int[");
-            else if (elementType == long.class)
+            } else if (elementType == long.class) {
                 sb.append("   long[");
-            else if (elementType == float.class)
+            } else if (elementType == float.class) {
                 sb.append("  float[");
-            else if (elementType == double.class)
+            } else if (elementType == double.class) {
                 sb.append(" double[");
-            else
+            } else {
                 throw new AssertionError("Illegal element type");
+            }
             assert sb.length() == 56;
             sb.append(InternalUtils.toHexString(this.size)).append("] [");
             assert sb.length() == 75;
             sb.append(InternalUtils.toHexString(dimensions[0]));
-            for (int k = 1; k < dimensions.length; k++)
+            for (int k = 1; k < dimensions.length; k++) {
                 sb.append("x").append(InternalUtils.toHexString(dimensions[k]));
+            }
             sb.append("]~~~~");
             assert sb.length() <= MAX_SERIALIZED_MATRIX_INFO_LENGTH;
             return sb.toString();
@@ -948,15 +957,16 @@ public abstract class MatrixInfo {
             long dataOffset, Map<String, String> additionalProperties)
         {
             super(elementType, byteOrder, size, dimensions, dataOffset, VERSION_1_2);
-            if (additionalProperties == null)
-                throw new NullPointerException("Null additional properties");
-            if (additionalProperties.size() > MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO)
+            Objects.requireNonNull(additionalProperties, "Null additional properties");
+            if (additionalProperties.size() > MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO) {
                 throw new IllegalArgumentException("Too many additional properties: "
                     + additionalProperties.size() + ">" + MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO);
+            }
             for (Map.Entry<String, String> entry : additionalProperties.entrySet()) {
-                if (!isCorrectAdditionalPropertyName(entry.getKey()))
+                if (!isCorrectAdditionalPropertyName(entry.getKey())) {
                     throw new IllegalArgumentException("Illegal additional property name (empty "
                         + "or containing unallowed characters) \"" + entry.getKey() + "\"");
+                }
             }
             this.additionalProperties = additionalProperties;
         }
@@ -982,9 +992,10 @@ public abstract class MatrixInfo {
             Map<String, String> additional = new LinkedHashMap<String, String>();
             int q;
             for (int p = 0, lineIndex = 0, len = chars.length(); p < len; p = q, lineIndex++) {
-                if (lineIndex > MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO + 500)
+                if (lineIndex > MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO + 500) {
                     throw new IllegalInfoSyntaxException("More than " + (MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO + 500)
                         + " system and additional properties are found in the serialized form");
+                }
                 q = chars.indexOf("\n", p); // lines are separated by a single character '\n'
                 if (++q == 0) {
                     q = len;
@@ -997,9 +1008,10 @@ public abstract class MatrixInfo {
                     continue;  // a comment: "   # some comment";
                 }
                 int r = line.indexOf("=");
-                if (r == -1)
+                if (r == -1) {
                     throw new IllegalInfoSyntaxException("= character expected in the line #"
                         + lineIndex + ": \"" + line + "\"");
+                }
                 String name = line.substring(0, r).trim();
                 String value = line.substring(r + 1).trim();
                 try {
@@ -1050,17 +1062,20 @@ public abstract class MatrixInfo {
                         }
                         length = Long.parseLong(value);
                         if (length < 0) // necessary check to provide correct error message
+                        {
                             throw new IllegalInfoSyntaxException("Negative array length in the line #"
                                 + lineIndex + ": \"" + line + "\"");
+                        }
                     } else if (name.equals(DIMENSIONS_PROPERTY_NAME)) {
                         if (dimensions != null) {
                             continue; // ignore extra properties with this name to avoid possible syntax errors
                         }
                         String[] dimValues = value.split("x", Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS + 1);
-                        if (dimValues.length > Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS)
+                        if (dimValues.length > Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS) {
                             throw new IllegalInfoSyntaxException("Too many matrix dimensions in the line #"
                                 + lineIndex + ": \"" + line + "\" (maximal allowed number of dimensions is "
                                 + Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS + ")");
+                        }
                         dimensions = new long[dimValues.length];
                         for (int k = 0; k < dimValues.length; k++) {
                             dimensions[k] = Long.parseLong(dimValues[k]);
@@ -1070,14 +1085,16 @@ public abstract class MatrixInfo {
                             continue; // ignore extra properties with this name to avoid possible syntax errors
                         }
                         dataOffset = Long.parseLong(value);
-                        if (dataOffset < 0)
+                        if (dataOffset < 0) {
                             throw new IllegalInfoSyntaxException("Negative data offset in the line #"
                                 + lineIndex + ": \"" + line + "\"");
+                        }
                     } else {
-                        if (!isCorrectAdditionalPropertyName(name))
+                        if (!isCorrectAdditionalPropertyName(name)) {
                             throw new IllegalInfoSyntaxException("Illegal additional property name (empty "
                                 + "or containing unallowed characters) in the line #"
                                 + lineIndex + ": \"" + line + "\"");
+                        }
                         if (additional.containsKey(name)) {
                             continue; // ignore extra properties with this name
                         }
@@ -1102,16 +1119,15 @@ public abstract class MatrixInfo {
                     throw ex;
                 }
             }
-            if (elementType == null)
-                throw new IllegalInfoSyntaxException(ELEMENT_TYPE_PROPERTY_NAME + "=... property expected");
-            if (byteOrder == null)
-                throw new IllegalInfoSyntaxException(BYTE_ORDER_PROPERTY_NAME + "=... property expected");
-            if (length == -1)
+            Objects.requireNonNull(elementType, ELEMENT_TYPE_PROPERTY_NAME + "=... property expected");
+            Objects.requireNonNull(byteOrder, BYTE_ORDER_PROPERTY_NAME + "=... property expected");
+            if (length == -1) {
                 throw new IllegalInfoSyntaxException(SIZE_PROPERTY_NAME + "=... property expected");
-            if (dimensions == null)
-                throw new IllegalInfoSyntaxException(DIMENSIONS_PROPERTY_NAME + "=... property expected");
-            if (dataOffset == -1)
+            }
+            Objects.requireNonNull(dimensions, DIMENSIONS_PROPERTY_NAME + "=... property expected");
+            if (dataOffset == -1) {
                 throw new IllegalInfoSyntaxException(DATA_OFFSET_PROPERTY_NAME + "=... property expected");
+            }
             try {
                 AbstractMatrix.checkDimensions(dimensions, length);
             } catch (IllegalArgumentException ex) {
@@ -1129,8 +1145,7 @@ public abstract class MatrixInfo {
 
         @Override
         public MatrixInfo cloneWithOtherByteOrder(ByteOrder byteOrder) {
-            if (byteOrder == null)
-                throw new NullPointerException("Null byteOrder");
+            Objects.requireNonNull(byteOrder, "Null byteOrder");
             return new Version1_2(
                 elementType,
                 byteOrder,
@@ -1153,22 +1168,21 @@ public abstract class MatrixInfo {
 
         @Override
         public MatrixInfo cloneWithOtherAdditionalProperties(Map<String, String> additionalProperties) {
-            if (additionalProperties == null)
-                throw new NullPointerException("Null additionalProperties argument");
+            Objects.requireNonNull(additionalProperties, "Null additionalProperties argument");
             Map<String, String> additional = new LinkedHashMap<String, String>();
             for (Map.Entry<String, String> e : additionalProperties.entrySet()) {
                 Object key = e.getKey();
-                if (key == null)
-                    throw new NullPointerException("Null name of additional property");
-                if (!(key instanceof String))
+                Objects.requireNonNull(key, "Null name of additional property");
+                if (!(key instanceof String)) {
                     throw new ClassCastException("Illegal (not String) type of the name of additional property: "
                         + key.getClass());
+                }
                 Object value = e.getValue();
-                if (value == null)
-                    throw new NullPointerException("Null value of additional property");
-                if (!(value instanceof String))
+                Objects.requireNonNull(value, "Null value of additional property");
+                if (!(value instanceof String)) {
                     throw new ClassCastException("Illegal (not String) type of the value of additional property: "
                         + value.getClass());
+                }
                 additional.put((String) key, (String) value);
             }
             return new Version1_2(
@@ -1185,37 +1199,40 @@ public abstract class MatrixInfo {
             StringBuilder sb = new StringBuilder();
             sb.append(SIGNATURE_NAME_1_2).append('=').append(SIGNATURE_VALUE_1_2).append('\n');
             sb.append(ELEMENT_TYPE_PROPERTY_NAME).append('=');
-            if (elementType == boolean.class)
+            if (elementType == boolean.class) {
                 sb.append("bit");
-            else if (elementType == char.class)
+            } else if (elementType == char.class) {
                 sb.append("char");
-            else if (elementType == byte.class)
+            } else if (elementType == byte.class) {
                 sb.append("byte");
-            else if (elementType == short.class)
+            } else if (elementType == short.class) {
                 sb.append("short");
-            else if (elementType == int.class)
+            } else if (elementType == int.class) {
                 sb.append("int");
-            else if (elementType == long.class)
+            } else if (elementType == long.class) {
                 sb.append("long");
-            else if (elementType == float.class)
+            } else if (elementType == float.class) {
                 sb.append("float");
-            else if (elementType == double.class)
+            } else if (elementType == double.class) {
                 sb.append("double");
-            else
+            } else {
                 throw new AssertionError("Illegal element type");
+            }
             sb.append('\n');
             sb.append(BYTE_ORDER_PROPERTY_NAME).append('=').append(byteOrder == ByteOrder.BIG_ENDIAN ? "BE\n" : "LE\n");
             sb.append(SIZE_PROPERTY_NAME).append('=').append(size).append('\n');
             sb.append(DIMENSIONS_PROPERTY_NAME).append('=').append(dimensions[0]);
-            for (int k = 1; k < dimensions.length; k++)
+            for (int k = 1; k < dimensions.length; k++) {
                 sb.append("x").append(dimensions[k]);
+            }
             sb.append('\n');
             sb.append(DATA_OFFSET_PROPERTY_NAME).append('=').append(dataOffset).append('\n');
             for (Map.Entry<String, String> entry : additionalProperties.entrySet()) {
                 String name = entry.getKey();
-                if (!isCorrectAdditionalPropertyName(name))
+                if (!isCorrectAdditionalPropertyName(name)) {
                     throw new AssertionError("Violation of invariants of " + getClass()
                         + ": illegal property name \"" + name + "\"");
+                }
                 String encodedValue;
                 try {
                     encodedValue = URLEncoder.encode(entry.getValue(), "UTF-8");
