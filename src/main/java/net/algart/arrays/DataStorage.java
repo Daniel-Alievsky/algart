@@ -24,6 +24,7 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.HashSet;
 import java.nio.ByteOrder;
@@ -64,10 +65,10 @@ abstract class DataStorage {
     static final Double doubleZero = 0.0;
 
     static long maxSupportedLengthImpl(Class<?> elementType) {
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
-        if (elementType == boolean.class || elementType == byte.class)
+        Objects.requireNonNull(elementType, "Null elementType argument");
+        if (elementType == boolean.class || elementType == byte.class) {
             return Long.MAX_VALUE;
+        }
         //[[Repeat() char ==> short,,int,,long,,float,,double;;
         //           CHAR ==> SHORT,,INT,,LONG,,FLOAT,,DOUBLE]]
         if (elementType == char.class) {

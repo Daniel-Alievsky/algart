@@ -29,6 +29,7 @@ import net.algart.math.functions.LinearFunc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>Utilities useful for working with lists of {@link Matrix AlgART matrices},
@@ -80,8 +81,7 @@ public class ColorMatrices {
             Matrix<? extends PArray> g,
             Matrix<? extends PArray> b)
     {
-        if (resultType == null)
-            throw new NullPointerException("Null resultType");
+        Objects.requireNonNull(resultType, "Null resultType");
         if (r.type() == resultType && g.type() == resultType && g.type() == resultType) {
             final double increment = r.isFloatingPoint() ? 0.0 : 0.5;
             // - for integer matrices with the same type (most popular case) we prefer rounding (by adding 0.5)

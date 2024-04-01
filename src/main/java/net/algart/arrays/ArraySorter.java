@@ -220,10 +220,8 @@ public abstract class ArraySorter {
 
     //Possible default implementation:
     //{
-    //    if (indexes == null)
-    //        throw new NullPointerException("Null indexes argument");
-    //    if (comparator == null)
-    //        throw new NullPointerException("Null comparator argument");
+    //    Objects.requireNonNull(indexes, "Null indexes argument");
+    //    Objects.requireNonNull(comparator, "Null comparator argument");
     //    sort(from, to,
     //        new ArrayComparator() {
     //            public boolean less(long i, long j) {

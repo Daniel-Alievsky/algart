@@ -781,14 +781,16 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
      */
     public UpdatableBitArray setBits(long arrayPos, long[] srcArray, long srcArrayOffset, long count) {
-        if (srcArray == null)
-            throw new NullPointerException("Null srcArray argument");
-        if (count < 0)
+        Objects.requireNonNull(srcArray, "Null srcArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw rangeException(arrayPos, length, getClass());
-        if (arrayPos > length - count)
+        }
+        if (arrayPos > length - count) {
             throw rangeException(arrayPos + count - 1, length, getClass());
+        }
         for (long arrayPosMax = arrayPos + count; arrayPos < arrayPosMax; arrayPos++, srcArrayOffset++) {
             setBit(arrayPos, PackedBitArrays.getBit(srcArray, srcArrayOffset));
         }

@@ -86,7 +86,9 @@ class InternalUtils {
     static long longMulAndException(long a, long b) {
         long result = Arrays.longMul(a, b);
         if (result < 0) // Long.MIN_VALUE or just negative
+        {
             throw new TooLargeArrayException("Too large desired array length: " + (double) a * (double) b);
+        }
         return result;
     }
 
@@ -143,8 +145,9 @@ class InternalUtils {
      */
     public static int availableProcessors() {
         int n = Runtime.getRuntime().availableProcessors();
-        if (n < 1)
+        if (n < 1) {
             throw new InternalError("Illegal result of Runtime.getRuntime().availableProcessors()");
+        }
         return Math.min(n, MAX_AVAILABLE_PROCESSORS);
     }
 
@@ -303,9 +306,9 @@ class InternalUtils {
      * @return             the value of boolean property or default value in a case of any problems.
      */
     static boolean getBooleanProperty(String propertyName, boolean defaultValue) {
-        if (defaultValue)
+        if (defaultValue) {
             return getBooleanDefTrue(propertyName);
-        else {
+        } else {
             try {
                 return Boolean.getBoolean(propertyName);
             } catch (Exception ex) {
@@ -328,7 +331,9 @@ class InternalUtils {
         }
         int result = Integer.parseInt(s);
         if (((result << sh) >> sh) != result) // overflow
+        {
             throw new NumberFormatException("Too large 32-bit integer value");
+        }
         return result << sh;
     }
 
@@ -348,7 +353,9 @@ class InternalUtils {
         }
         long result = Long.parseLong(s);
         if (((result << sh) >> sh) != result) // overflow
+        {
             throw new NumberFormatException("Too large 64-bit long integer value");
+        }
         return result << sh;
     }
 
@@ -382,8 +389,9 @@ class InternalUtils {
         } catch (Exception ex) {
             className = null;
         }
-        if (className == null)
+        if (className == null) {
             className = defaultClassName;
+        }
         for (int attempt = 0; attempt < 2; attempt++) {
             for (int k = 0; k < aliases.length; k += 2) {
                 if (className.equals(aliases[k])) {
@@ -404,12 +412,14 @@ class InternalUtils {
                     Method method = clazz.getDeclaredMethod("getInstance");
                     inst = method.invoke(null);
                 }
-                if (inst == null)
-                    throw new NullPointerException("Illegal class " + className + ": it creates null instance");
+                if (inst == null) {
+                    throw new IllegalArgumentException("Illegal class " + className + ": it creates null instance");
+                }
                 return requiredClass.cast(inst);
             } catch (Exception ex1) {
-                if (className.equals(defaultClassName))
+                if (className.equals(defaultClassName)) {
                     throw new InternalError(ex1.toString());
+                }
                 logger.severe("Cannot create an instance of " + className + " class: " + ex1);
                 logger.severe(additionalMessage);
                 className = defaultClassName;
