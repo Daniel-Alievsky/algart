@@ -27,6 +27,8 @@ package net.algart.matrices.morphology;
 import net.algart.arrays.*;
 import net.algart.math.functions.Func;
 
+import java.util.Objects;
+
 class PercentilePairProcessor extends RankOperationProcessor {
     private static final boolean SIMPLE_PERCENTILE_PAIR = false; // not such quick and precise version
 
@@ -39,8 +41,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
 
     PercentilePairProcessor(ArrayContext context, Func processingFunc, boolean interpolated, int[] bitLevels) {
         super(context, bitLevels);
-        if (processingFunc == null)
-            throw new NullPointerException("Null contrastingFunc");
+        Objects.requireNonNull(processingFunc, "Null contrastingFunc");
         this.processingFunc = processingFunc;
         this.interpolated = interpolated;
     }
@@ -49,9 +50,10 @@ class PercentilePairProcessor extends RankOperationProcessor {
     PArray asProcessed(Class<? extends PArray> desiredType, PArray src, PArray[] additional,
         long[] dimensions, final long[] shifts, final long[] left, final long[] right)
     {
-        if (additional.length < 3)
+        if (additional.length < 3) {
             throw new IllegalArgumentException("Three additional matrices are required "
                 + "(processed matrix + percentile indexes)");
+        }
         if (SIMPLE_PERCENTILE_PAIR) {
             Percentiler percentiler = new Percentiler(context(), interpolated, bitLevels());
             PArray low = percentiler.asProcessed(DoubleArray.class, src, new PArray[] {additional[1]},
@@ -120,8 +122,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                         super.getData(arrayPos, destArray, destArrayOffset, count);
                         return;
                     }
-                    if (destArray == null)
-                        throw new NullPointerException("Null destArray argument");
+                    Objects.requireNonNull(destArray, "Null destArray argument");
                     checkRanges(length, arrayPos, count);
                     if (count == 0) {
                         return;
@@ -256,8 +257,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -478,8 +478,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -743,8 +742,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -855,8 +853,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -966,8 +963,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1073,8 +1069,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1191,8 +1186,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1413,8 +1407,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1678,8 +1671,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1790,8 +1782,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1901,8 +1892,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2008,8 +1998,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2125,8 +2114,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2347,8 +2335,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2612,8 +2599,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2724,8 +2710,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2835,8 +2820,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2942,8 +2926,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -3073,8 +3056,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3199,8 +3181,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3325,8 +3306,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -3447,8 +3427,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -3581,8 +3560,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3707,8 +3685,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3833,8 +3810,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -3955,8 +3931,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -4092,8 +4067,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -4210,8 +4184,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -4328,8 +4301,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -4444,8 +4416,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -4572,8 +4543,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -4690,8 +4660,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -4808,8 +4777,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -4924,8 +4892,7 @@ class PercentilePairProcessor extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -5019,17 +4986,21 @@ class PercentilePairProcessor extends RankOperationProcessor {
     }
 
     private static void checkRanges(long length, long arrayPos, int count) {
-        if (count < 0)
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw new IndexOutOfBoundsException("arrayPos = " + arrayPos + " < 0");
-        if (arrayPos > length - count)
+        }
+        if (arrayPos > length - count) {
             throw new IndexOutOfBoundsException("arrayPos+count = " + arrayPos + "+" + count + " > length=" + length);
+        }
     }
 
     private static void checkNaN(double rank) {
-        if (Double.isNaN(rank))
+        if (Double.isNaN(rank)) {
             throw new IllegalArgumentException("Illegal rank (NaN) in some elements "
                 + "of percentileIndexes1 or percentileIndexes2");
+        }
     }
 }

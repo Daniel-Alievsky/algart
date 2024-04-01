@@ -27,6 +27,8 @@ package net.algart.matrices.morphology;
 import net.algart.arrays.*;
 import net.algart.math.functions.Func;
 
+import java.util.Objects;
+
 class Ranker extends RankOperationProcessor {
     private static final boolean DEBUG_MODE = false; // thorough checking getInt / getDouble results
 
@@ -44,9 +46,10 @@ class Ranker extends RankOperationProcessor {
     PArray asProcessed(Class<? extends PArray> desiredType, PArray src, PArray[] additional,
         long[] dimensions, final long[] shifts, final long[] left, final long[] right)
     {
-        if (additional.length == 0)
+        if (additional.length == 0) {
             throw new IllegalArgumentException("One additional matrix is required "
                 + "(the matrix, which should be ranked in relation to this one)");
+        }
         assert left.length == right.length;
         final boolean direct = optimizeDirectArrays &&
             src instanceof DirectAccessible && ((DirectAccessible)src).hasJavaArray();
@@ -92,8 +95,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -179,8 +181,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -281,8 +282,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -385,8 +385,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -499,11 +498,12 @@ class Ranker extends RankOperationProcessor {
                                 double p1 = Histogram.preciseValue(hist, result);
                                 double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                     .currentValue(); // comparing with alternative, long[] histogram
-                                if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01)
+                                if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01) {
                                     throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                         + ", precise value is " + p1 + " or " + p2 + " instead of " + level
                                         + " (range = " + left + ".." + right + ", leftBar = " + leftBar + " = "
                                         + hist[left] + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                                }
                             }
                             return result;
                         }
@@ -513,8 +513,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -597,8 +596,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -706,11 +704,12 @@ class Ranker extends RankOperationProcessor {
                             double p1 = Histogram.preciseValue(hist, result);
                             double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                 .currentValue(); // comparing with alternative, long[] histogram
-                            if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01)
+                            if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01) {
                                 throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                     + ", precise value is " + p1 + " or " + p2 + " instead of " + level
                                     + " (range = " + left + ".." + right + ", leftBar = " + leftBar + " = "
                                     + hist[left] + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                            }
                         }
                         return result;
                     }
@@ -720,8 +719,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -811,8 +809,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -915,8 +912,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1029,11 +1025,12 @@ class Ranker extends RankOperationProcessor {
                                 double p1 = Histogram.preciseValue(hist, result);
                                 double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                     .currentValue(); // comparing with alternative, long[] histogram
-                                if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01)
+                                if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01) {
                                     throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                         + ", precise value is " + p1 + " or " + p2 + " instead of " + level
                                         + " (range = " + left + ".." + right + ", leftBar = " + leftBar + " = "
                                         + hist[left] + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                                }
                             }
                             return result;
                         }
@@ -1043,8 +1040,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1127,8 +1123,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1236,11 +1231,12 @@ class Ranker extends RankOperationProcessor {
                             double p1 = Histogram.preciseValue(hist, result);
                             double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                 .currentValue(); // comparing with alternative, long[] histogram
-                            if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01)
+                            if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01) {
                                 throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                     + ", precise value is " + p1 + " or " + p2 + " instead of " + level
                                     + " (range = " + left + ".." + right + ", leftBar = " + leftBar + " = "
                                     + hist[left] + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                            }
                         }
                         return result;
                     }
@@ -1250,8 +1246,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1340,8 +1335,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1444,8 +1438,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1558,11 +1551,12 @@ class Ranker extends RankOperationProcessor {
                                 double p1 = Histogram.preciseValue(hist, result);
                                 double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                     .currentValue(); // comparing with alternative, long[] histogram
-                                if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01)
+                                if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01) {
                                     throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                         + ", precise value is " + p1 + " or " + p2 + " instead of " + level
                                         + " (range = " + left + ".." + right + ", leftBar = " + leftBar + " = "
                                         + hist[left] + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                                }
                             }
                             return result;
                         }
@@ -1572,8 +1566,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1656,8 +1649,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1765,11 +1757,12 @@ class Ranker extends RankOperationProcessor {
                             double p1 = Histogram.preciseValue(hist, result);
                             double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                 .currentValue(); // comparing with alternative, long[] histogram
-                            if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01)
+                            if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01) {
                                 throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                     + ", precise value is " + p1 + " or " + p2 + " instead of " + level
                                     + " (range = " + left + ".." + right + ", leftBar = " + leftBar + " = "
                                     + hist[left] + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                            }
                         }
                         return result;
                     }
@@ -1779,8 +1772,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1887,8 +1879,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2025,11 +2016,12 @@ class Ranker extends RankOperationProcessor {
                                 double p1 = Histogram.preciseValue(hist, result);
                                 double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                     .currentValue(); // comparing with alternative, long[] histogram
-                                if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01)
+                                if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01) {
                                     throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                         + ", precise value is " + p1 + " or " + p2 + " instead of " + level
                                         + " (range = " + left + ".." + right + ", leftBar = " + leftBar + " = "
                                         + hist[left] + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                                }
                             }
                             return result;
                         }
@@ -2039,8 +2031,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2144,8 +2135,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2278,11 +2268,12 @@ class Ranker extends RankOperationProcessor {
                             double p1 = Histogram.preciseValue(hist, result);
                             double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                 .currentValue(); // comparing with alternative, long[] histogram
-                            if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01)
+                            if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01) {
                                 throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                     + ", precise value is " + p1 + " or " + p2 + " instead of " + level
                                     + " (range = " + left + ".." + right + ", leftBar = " + leftBar + " = "
                                     + hist[left] + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                            }
                         }
                         return result;
                     }
@@ -2292,8 +2283,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2405,8 +2395,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2543,11 +2532,12 @@ class Ranker extends RankOperationProcessor {
                                 double p1 = Histogram.preciseValue(hist, result);
                                 double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                     .currentValue(); // comparing with alternative, long[] histogram
-                                if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01)
+                                if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01) {
                                     throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                         + ", precise value is " + p1 + " or " + p2 + " instead of " + level
                                         + " (range = " + left + ".." + right + ", leftBar = " + leftBar + " = "
                                         + hist[left] + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                                }
                             }
                             return result;
                         }
@@ -2557,8 +2547,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2662,8 +2651,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2796,11 +2784,12 @@ class Ranker extends RankOperationProcessor {
                             double p1 = Histogram.preciseValue(hist, result);
                             double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                 .currentValue(); // comparing with alternative, long[] histogram
-                            if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01)
+                            if (Math.abs(p1 - level) > 0.01 || Math.abs(p2 - level) > 0.01) {
                                 throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                     + ", precise value is " + p1 + " or " + p2 + " instead of " + level
                                     + " (range = " + left + ".." + right + ", leftBar = " + leftBar + " = "
                                     + hist[left] + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                            }
                         }
                         return result;
                     }
@@ -2810,8 +2799,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2948,11 +2936,12 @@ class Ranker extends RankOperationProcessor {
                                 double p1 = Histogram.value(hist, result);
                                 double p2 = Histogram.newLongHistogram(hist).moveToRank(result)
                                     .currentValue(); // comparing with alternative, long[] histogram
-                                if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01)
+                                if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01) {
                                     throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                         + ", value is " + p1 + " or " + p2 + " instead of " + w
                                         + ", currentBar = " + currentBar + " = " + hist[level]
                                         + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                                }
                             }
                             return result;
                         }
@@ -2962,8 +2951,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3117,13 +3105,14 @@ class Ranker extends RankOperationProcessor {
                                 double p1 = Histogram.preciseValue(hist, result);
                                 double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                     .currentValue(); // comparing with alternative, long[] histogram
-                                if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01)
+                                if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01) {
                                     throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                         + ", precise value is " + p1 + " or " + p2 + " instead of " + w + " (range = "
                                         + left + ".." + right
                                         + ", leftBar = " + leftBar + " = " + hist[left]
                                         + ", currentBar = " + currentBar + " = " + hist[level]
                                         + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                                }
                             }
                             return result;
                         }
@@ -3133,8 +3122,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3258,11 +3246,12 @@ class Ranker extends RankOperationProcessor {
                             double p1 = Histogram.value(hist, result);
                             double p2 = Histogram.newLongHistogram(hist).moveToRank(result)
                                 .currentValue(); // comparing with alternative, long[] histogram
-                            if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01)
+                            if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01) {
                                 throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                     + ", value is " + p1 + " or " + p2 + " instead of " + w
                                     + ", currentBar = " + currentBar + " = " + hist[level]
                                     + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                            }
                         }
                         return result;
                     }
@@ -3272,8 +3261,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -3425,13 +3413,14 @@ class Ranker extends RankOperationProcessor {
                             double p1 = Histogram.preciseValue(hist, result);
                             double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                 .currentValue(); // comparing with alternative, long[] histogram
-                            if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01)
+                            if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01) {
                                 throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                     + ", precise value is " + p1 + " or " + p2 + " instead of " + w + " (range = "
                                     + left + ".." + right
                                     + ", leftBar = " + leftBar + " = " + hist[left]
                                     + ", currentBar = " + currentBar + " = " + hist[level]
                                     + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                            }
                         }
                         return result;
                     }
@@ -3441,8 +3430,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -3576,11 +3564,12 @@ class Ranker extends RankOperationProcessor {
                                 double p1 = Histogram.value(hist, result);
                                 double p2 = Histogram.newLongHistogram(hist).moveToRank(result)
                                     .currentValue(); // comparing with alternative, long[] histogram
-                                if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01)
+                                if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01) {
                                     throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                         + ", value is " + p1 + " or " + p2 + " instead of " + w
                                         + ", currentBar = " + currentBar + " = " + hist[level]
                                         + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                                }
                             }
                             return result;
                         }
@@ -3590,8 +3579,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3745,13 +3733,14 @@ class Ranker extends RankOperationProcessor {
                                 double p1 = Histogram.preciseValue(hist, result);
                                 double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                     .currentValue(); // comparing with alternative, long[] histogram
-                                if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01)
+                                if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01) {
                                     throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                         + ", precise value is " + p1 + " or " + p2 + " instead of " + w + " (range = "
                                         + left + ".." + right
                                         + ", leftBar = " + leftBar + " = " + hist[left]
                                         + ", currentBar = " + currentBar + " = " + hist[level]
                                         + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                                }
                             }
                             return result;
                         }
@@ -3761,8 +3750,7 @@ class Ranker extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3886,11 +3874,12 @@ class Ranker extends RankOperationProcessor {
                             double p1 = Histogram.value(hist, result);
                             double p2 = Histogram.newLongHistogram(hist).moveToRank(result)
                                 .currentValue(); // comparing with alternative, long[] histogram
-                            if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01)
+                            if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01) {
                                 throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                     + ", value is " + p1 + " or " + p2 + " instead of " + w
                                     + ", currentBar = " + currentBar + " = " + hist[level]
                                     + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                            }
                         }
                         return result;
                     }
@@ -3900,8 +3889,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -4053,13 +4041,14 @@ class Ranker extends RankOperationProcessor {
                             double p1 = Histogram.preciseValue(hist, result);
                             double p2 = Histogram.newLongHistogram(hist).moveToPreciseRank(result)
                                 .currentValue(); // comparing with alternative, long[] histogram
-                            if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01)
+                            if (Math.abs(p1 - w) > 0.01 || Math.abs(p2 - w) > 0.01) {
                                 throw new AssertionError("Bug: for found rank " + result + " at index " + index
                                     + ", precise value is " + p1 + " or " + p2 + " instead of " + w + " (range = "
                                     + left + ".." + right
                                     + ", leftBar = " + leftBar + " = " + hist[left]
                                     + ", currentBar = " + currentBar + " = " + hist[level]
                                     + ", histogram is " + JArrays.toString(hist, ",", 2048) + ")");
+                            }
                         }
                         return result;
                     }
@@ -4069,8 +4058,7 @@ class Ranker extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -4147,16 +4135,20 @@ class Ranker extends RankOperationProcessor {
     }
 
     private static void checkRanges(long length, long arrayPos, int count) {
-        if (count < 0)
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw new IndexOutOfBoundsException("arrayPos = " + arrayPos + " < 0");
-        if (arrayPos > length - count)
+        }
+        if (arrayPos > length - count) {
             throw new IndexOutOfBoundsException("arrayPos+count = " + arrayPos + "+" + count + " > length=" + length);
+        }
     }
 
     private static void checkNaN(double rank) {
-        if (Double.isNaN(rank))
+        if (Double.isNaN(rank)) {
             throw new IllegalArgumentException("Illegal value (NaN) in some ranked elements");
+        }
     }
 }

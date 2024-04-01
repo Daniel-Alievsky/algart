@@ -26,6 +26,7 @@ package net.algart.matrices.spectra;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -390,8 +391,9 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
     }
 
     private void checkSamples(SampleArray samples) {
-        if (areComplexSamplesRequired() && !samples.isComplex())
+        if (areComplexSamplesRequired() && !samples.isComplex()) {
             throw new UnsupportedOperationException("Fast Fourier transformation requires complex samples");
+        }
         if (!isLengthAllowed(samples.length())) {
             throw new IllegalArgumentException("The length of sample array " + samples.length()
                 + " is not allowed: " + unallowedLengthMessage());
@@ -402,19 +404,21 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
         Matrix<? extends UpdatablePNumberArray> matrixRe,
         Matrix<? extends UpdatablePNumberArray> matrixIm)
     {
-        if (matrixRe == null)
-            throw new NullPointerException("Null matrixRe argument");
-        if (areComplexSamplesRequired() && matrixIm == null)
+        Objects.requireNonNull(matrixRe, "Null matrixRe argument");
+        if (areComplexSamplesRequired() && matrixIm == null) {
             throw new UnsupportedOperationException("Null matrixRe argument, but "
                 + "Fast Fourier transformation requires complex samples");
-        if (matrixIm != null && !matrixRe.dimEquals(matrixIm))
+        }
+        if (matrixIm != null && !matrixRe.dimEquals(matrixIm)) {
             throw new SizeMismatchException("matrixRe and matrixIm dimensions mismatch: "
                 + "matrixRe is " + matrixRe + ", matrixIm " + matrixIm);
+        }
         long[] dimensions = matrixRe.dimensions();
         for (int k = 0; k < dimensions.length; k++) {
-            if (!isLengthAllowed(dimensions[k]))
+            if (!isLengthAllowed(dimensions[k])) {
                 throw new IllegalArgumentException("The matrix dimension #" + k + " = " + dimensions[k]
                     + " is not allowed: " + unallowedLengthMessage());
+            }
         }
     }
 
