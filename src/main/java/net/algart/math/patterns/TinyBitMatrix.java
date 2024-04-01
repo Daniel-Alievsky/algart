@@ -44,10 +44,12 @@ class TinyBitMatrix {
     private TinyBitMatrix(long[] array, int[] dimensions) {
         this.length = checkDimensions(dimensions);
         long packedLength = TinyBitArrays.packedLength(this.length);
-        if (packedLength > Integer.MAX_VALUE)
+        if (packedLength > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("Too large bit array: >=2^37 elements");
-        if (packedLength > array.length)
+        }
+        if (packedLength > array.length) {
             throw new IllegalArgumentException("Too large bit array: longer than the passed long[] array");
+        }
         this.dimensions = dimensions.clone();
         this.array = array;
     }
@@ -55,8 +57,9 @@ class TinyBitMatrix {
     TinyBitMatrix(int[] dimensions) {
         this.length = checkDimensions(dimensions);
         long packedLength = TinyBitArrays.packedLength(this.length);
-        if (packedLength > Integer.MAX_VALUE)
+        if (packedLength > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("Too large bit array: >=2^37 elements");
+        }
         this.dimensions = dimensions.clone();
         this.array = new long[(int) packedLength];
     }
@@ -154,8 +157,9 @@ class TinyBitMatrix {
     }
 
     public void putPattern(Pattern pattern) {
-        if (pattern.dimCount() != dimCount())
+        if (pattern.dimCount() != dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the bit matrix mismatch");
+        }
         for (IPoint ip : pattern.roundedPoints()) {
             TinyBitArrays.setBit(array, pseudoCyclicIndex(ip.coordinates()), true);
         }
@@ -174,12 +178,13 @@ class TinyBitMatrix {
     }
 
     public void simpleDilation(TinyBitMatrix src, Pattern pattern) {
-        if (src == null)
-            throw new NullPointerException("Null src bit matrix");
-        if (!dimEquals(src))
+        Objects.requireNonNull(src, "Null src bit matrix");
+        if (!dimEquals(src)) {
             throw new IllegalArgumentException("Bit matrix dimensions mismatch");
-        if (pattern.dimCount() != dimCount())
+        }
+        if (pattern.dimCount() != dimCount()) {
             throw new IllegalArgumentException("Number of dimensions mismatch of the pattern and the bit matrix");
+        }
         Set<IPoint> points = pattern.roundedPoints();
         boolean first = true;
         for (IPoint ip : points) {
@@ -227,20 +232,23 @@ class TinyBitMatrix {
     }
 
     private static long checkDimensions(int[] dim) throws IllegalArgumentException {
-        if (dim == null)
-            throw new NullPointerException("Null dimensions Java array");
-        if (dim.length == 0)
+        Objects.requireNonNull(dim, "Null dimensions Java array");
+        if (dim.length == 0) {
             throw new IllegalArgumentException("Empty dimensions Java array");
+        }
         for (int n = 0; n < dim.length; n++) {
-            if (dim[n] < 0)
+            if (dim[n] < 0) {
                 throw new IllegalArgumentException("Negative matrix dimension #" + n + ": " + dim[n]);
+            }
         }
         long[] lDim = new long[dim.length];
-        for (int k = 0; k < dim.length; k++)
+        for (int k = 0; k < dim.length; k++) {
             lDim[k] = dim[k];
+        }
         long len = Patterns.longMul(lDim);
-        if (len == Long.MIN_VALUE)
+        if (len == Long.MIN_VALUE) {
             throw new TooManyPointsInPatternError("Illegal dimensions: dim[0] * dim[1] * ... > Long.MAX_VALUE");
+        }
         return len;
     }
 }

@@ -24,6 +24,8 @@
 
 package net.algart.math.functions;
 
+import java.util.Objects;
+
 /**
  * <p>Aperture filtering operator in <i>n</i>-dimensional Euclidean space:
  * <nobr><i>g</i>(<b>x</b>) = <i>O</i>&nbsp;<i>f</i>(<b>x</b>) =
@@ -67,32 +69,36 @@ public final class ApertureFilterOperator implements Operator {
     private ApertureFilterOperator(Func apertureFunc,
         long[] apertureDim, double[] apertureFrom, double[] apertureSteps)
     {
-        if (apertureDim == null)
-            throw new NullPointerException("Null apertureDim argument");
-        if (apertureDim.length == 0)
+        Objects.requireNonNull(apertureDim, "Null apertureDim argument");
+        if (apertureDim.length == 0) {
             throw new IllegalArgumentException("Empty apertureDim array");
+        }
         long product = 1;
         for (int k = 0; k < apertureDim.length; k++) {
             long d = apertureDim[k];
-            if (d <= 0)
+            if (d <= 0) {
                 throw new IllegalArgumentException("Negative or zero aperture dimension #" + k + ": " + d);
+            }
             assert product <= Integer.MAX_VALUE;
-            if (d > Integer.MAX_VALUE || (product *= d) > Integer.MAX_VALUE)
+            if (d > Integer.MAX_VALUE || (product *= d) > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("Too large number of points in the aperture: "
                     + "apertureDim[0] * apertureDim[1] * ... > Integer.MAX_VALUE");
+            }
         }
         this.totalCount = (int)product;
         if (apertureFrom != null) {
-            if (apertureFrom.length != apertureDim.length)
+            if (apertureFrom.length != apertureDim.length) {
                 throw new IllegalArgumentException("apertureFrom.length (" + apertureFrom.length
                     + ") does not match apertureDim.length (" + apertureDim.length + ")");
+            }
         } else {
             apertureFrom = new double[apertureDim.length]; // zero-filled
         }
         if (apertureSteps != null) {
-            if (apertureSteps.length != apertureDim.length)
+            if (apertureSteps.length != apertureDim.length) {
                 throw new IllegalArgumentException("apertureSteps.length (" + apertureSteps.length
                     + ") does not match apertureDim.length (" + apertureDim.length + ")");
+            }
         } else {
             apertureSteps = new double[apertureDim.length];
             for (int k = 0; k < apertureDim.length; k++) {
@@ -106,8 +112,9 @@ public final class ApertureFilterOperator implements Operator {
         } else if (apertureFunc instanceof LinearFunc) {
             LinearFunc lf = (LinearFunc)apertureFunc;
             this.b = lf.b();
-            if (lf.n() > this.totalCount)
+            if (lf.n() > this.totalCount) {
                 throw new IllegalArgumentException("Insufficient number of aperture points for the aperture function");
+            }
             if (lf.n() == this.totalCount) { // in other case, we'll not perform optimization
                 this.a = lf.a(0);
                 this.isNonweightedSum = lf.isNonweighted();
@@ -182,12 +189,9 @@ public final class ApertureFilterOperator implements Operator {
     public static ApertureFilterOperator getInstance(Func apertureFunc, long[] apertureDim,
         double[] apertureFrom, double[] apertureSteps)
     {
-        if (apertureFrom == null)
-            throw new NullPointerException("Null apertureFrom argument");
-        if (apertureSteps == null)
-            throw new NullPointerException("Null apertureSteps argument");
-        if (apertureFunc == null)
-            throw new NullPointerException("Null apertureFunc argument");
+        Objects.requireNonNull(apertureFrom, "Null apertureFrom argument");
+        Objects.requireNonNull(apertureSteps, "Null apertureSteps argument");
+        Objects.requireNonNull(apertureFunc, "Null apertureFunc argument");
         return new ApertureFilterOperator(apertureFunc, apertureDim, apertureFrom, apertureSteps);
     }
 
@@ -217,8 +221,7 @@ public final class ApertureFilterOperator implements Operator {
      *                                  for passing to the <tt>apertureFunc</tt> function.
      */
     public static ApertureFilterOperator getInstance(Func apertureFunc, long... apertureDim) {
-        if (apertureFunc == null)
-            throw new NullPointerException("Null apertureFunc argument");
+        Objects.requireNonNull(apertureFunc, "Null apertureFunc argument");
         return new ApertureFilterOperator(apertureFunc, apertureDim, null, null);
     }
 
@@ -240,10 +243,8 @@ public final class ApertureFilterOperator implements Operator {
     public static ApertureFilterOperator getAveragingInstance(long[] apertureDim,
         double[] apertureFrom, double[] apertureSteps)
     {
-        if (apertureFrom == null)
-            throw new NullPointerException("Null apertureFrom argument");
-        if (apertureSteps == null)
-            throw new NullPointerException("Null apertureSteps argument");
+        Objects.requireNonNull(apertureFrom, "Null apertureFrom argument");
+        Objects.requireNonNull(apertureSteps, "Null apertureSteps argument");
         return new ApertureFilterOperator(null, apertureDim, apertureFrom, apertureSteps);
     }
 
@@ -281,11 +282,13 @@ public final class ApertureFilterOperator implements Operator {
         long totalCount = 1;
         for (int k = 0; k < apertureDim.length; k++) {
             long d = apertureDim[k];
-            if (d <= 0)
+            if (d <= 0) {
                 throw new IllegalArgumentException("Negative or zero aperture dimension #" + k + ": " + d);
+            }
             assert totalCount <= Integer.MAX_VALUE;
-            if (d > Integer.MAX_VALUE || (totalCount *= d) > Integer.MAX_VALUE)
+            if (d > Integer.MAX_VALUE || (totalCount *= d) > Integer.MAX_VALUE) {
                 return true;
+            }
         }
         return false;
     }

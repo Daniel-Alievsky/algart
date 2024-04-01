@@ -28,6 +28,7 @@ import net.algart.math.IPoint;
 import net.algart.math.IRange;
 import net.algart.math.Range;
 
+import java.util.Objects;
 import java.util.Set;
 
 class BasicWeightedPattern extends AbstractWeightedPattern implements WeightedPattern {
@@ -48,12 +49,14 @@ class BasicWeightedPattern extends AbstractWeightedPattern implements WeightedPa
     {
         super(parent);
         int n = dimCount();
-        if (n != weightCoordMin.coordCount())
+        if (n != weightCoordMin.coordCount()) {
             throw new IllegalArgumentException("Dimensions count mismatch: \"coordMin\" is "
                 + weightCoordMin.coordCount() + "-dimensional, the pattern is " + n + "-dimensional");
-        if (n != weightCoordMax.coordCount())
+        }
+        if (n != weightCoordMax.coordCount()) {
             throw new IllegalArgumentException("Dimensions count mismatch: \"coordMax\" is "
                 + weightCoordMax.coordCount() + "-dimensional, the pattern is " + n + "-dimensional");
+        }
         this.weightCoordMin = weightCoordMin;
         this.weightCoordMax = weightCoordMax;
         this.wcMin = weightCoordMin.coordinates();
@@ -63,22 +66,26 @@ class BasicWeightedPattern extends AbstractWeightedPattern implements WeightedPa
         for (int k = 0; k < n; k++) {
             IRange range = IRange.valueOf(weightCoordMin.coord(k), weightCoordMax.coord(k));
             ranges[k] = range;
-            if (range.size() >= Integer.MAX_VALUE || (count *= range.size()) >= Integer.MAX_VALUE)
+            if (range.size() >= Integer.MAX_VALUE || (count *= range.size()) >= Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("Too large desired weight matrix: more than 2^31-1 elements");
+            }
         }
         assert count >= 1;
-        if (weights.length != count)
+        if (weights.length != count) {
             throw new IllegalArgumentException("The length of weights array " + weights.length
                 + " does not match to the product " + count + " of dimensions of the desired weight matrix");
+        }
         this.weights = cloneWeights ? weights.clone() : weights;
         for (double w : this.weights) {
-            if (Double.isNaN(w))
+            if (Double.isNaN(w)) {
                 throw new IllegalArgumentException("Cannot create " + getClass().getName()
                     + ": NaN weight is not allowed");
+            }
         }
-        if (Double.isNaN(outsideWeight))
+        if (Double.isNaN(outsideWeight)) {
             throw new IllegalArgumentException("Cannot create " + getClass().getName()
                 + ": NaN outside weight is not allowed");
+        }
         this.outsideWeight = outsideWeight;
     }
 
@@ -90,11 +97,11 @@ class BasicWeightedPattern extends AbstractWeightedPattern implements WeightedPa
 
     @Override
     public WeightedPattern scale(double... multipliers) {
-        if (multipliers == null)
-            throw new NullPointerException("Null multipliers argument");
-        if (multipliers.length != dimCount())
+        Objects.requireNonNull(multipliers, "Null multipliers argument");
+        if (multipliers.length != dimCount()) {
             throw new IllegalArgumentException("Illegal number of multipliers: "
                 + multipliers.length + " instead of " + dimCount());
+        }
         int n = dimCount();
         Pattern newPattern = parent.scale(multipliers);
         IPoint newMin = weightCoordMin.roundedScale(multipliers);
@@ -102,9 +109,10 @@ class BasicWeightedPattern extends AbstractWeightedPattern implements WeightedPa
         long count = 1;
         for (int k = 0; k < n; k++) {
             IRange range = IRange.valueOf(newMin.coord(k), newMax.coord(k));
-            if (range.size() >= Integer.MAX_VALUE || (count *= range.size()) >= Integer.MAX_VALUE)
+            if (range.size() >= Integer.MAX_VALUE || (count *= range.size()) >= Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("Too large desired weight matrix after resizing: "
                     + "more than 2^31-1 elements");
+            }
         }
         double[] newWeights = new double[(int) count]; // zero-filled
         double newOutsideWeight = outsideWeight * newPattern.largePointCount() / this.largePointCount();

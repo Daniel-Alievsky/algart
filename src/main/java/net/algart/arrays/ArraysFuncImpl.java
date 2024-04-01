@@ -74,12 +74,11 @@ class ArraysFuncImpl {
         final boolean truncateOverflows,
         Func f, Class<? extends T> requiredType, long[] dim)
     {
-        if (f == null)
-            throw new NullPointerException("Null f argument");
-        if (requiredType == null)
-            throw new NullPointerException("Null requiredType argument");
-        if (UpdatableArray.class.isAssignableFrom(requiredType))
+        Objects.requireNonNull(f, "Null f argument");
+        Objects.requireNonNull(requiredType, "Null requiredType argument");
+        if (UpdatableArray.class.isAssignableFrom(requiredType)) {
             throw new IllegalArgumentException("requiredType, " + requiredType + ", must not be updatable");
+        }
         long len = MatrixImpl.checkDimensions(dim);
         if (f instanceof ConstantFunc) {
             return asConstantFuncArray(truncateOverflows, requiredType, f, len);
@@ -107,8 +106,9 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new CoordFuncBitArray(truncateOverflows, len, f, dim) {
                         public boolean getBit(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return this.f.get(index) != 0.0;
                         }
                     });
@@ -118,8 +118,9 @@ class ArraysFuncImpl {
                         final long dimX = dim[0];
 
                         public boolean getBit(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return this.f.get(index % dimX, index / dimX) != 0.0;
                         }
                     });
@@ -130,8 +131,9 @@ class ArraysFuncImpl {
                             dimXY = dimX * dim[1];
 
                         public boolean getBit(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return this.f.get(index % dimX, index % dimXY / dimX, index / dimXY) != 0.0;
                         }
                     });
@@ -139,8 +141,9 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new CoordFuncBitArray(truncateOverflows, len, f, dim) {
                         public boolean getBit(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             double[] coordinates = new double[dim.length];
                             coordinatesInDoubles(index, dim, coordinates);
                             return this.f.get(coordinates) != 0.0;
@@ -155,8 +158,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncCharArray(truncateOverflows, len, f, dim) {
                             public char getChar(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 int v = (int)this.f.get(index);
                                 return v < Character.MIN_VALUE ? Character.MIN_VALUE :
                                     v > Character.MAX_VALUE ? Character.MAX_VALUE :
@@ -169,8 +173,9 @@ class ArraysFuncImpl {
                             final long dimX = dim[0];
 
                             public char getChar(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 int v = (int)this.f.get(index % dimX, index / dimX);
                                 return v < Character.MIN_VALUE ? Character.MIN_VALUE :
                                     v > Character.MAX_VALUE ? Character.MAX_VALUE :
@@ -184,8 +189,9 @@ class ArraysFuncImpl {
                                 dimXY = dimX * dim[1];
 
                             public char getChar(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 int v = (int)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY);
                                 return v < Character.MIN_VALUE ? Character.MIN_VALUE :
                                     v > Character.MAX_VALUE ? Character.MAX_VALUE :
@@ -196,8 +202,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncCharArray(truncateOverflows, len, f, dim) {
                             public char getChar(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 double[] coordinates = new double[dim.length];
                                 coordinatesInDoubles(index, dim, coordinates);
                                 int v = (int)this.f.get(coordinates);
@@ -212,8 +219,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncCharArray(truncateOverflows, len, f, dim) {
                             public char getChar(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (char)(long)this.f.get(index);
                                 // note: for float array, (char)(long)v differs from (int)v for very large floats
                             }
@@ -224,8 +232,9 @@ class ArraysFuncImpl {
                             final long dimX = dim[0];
 
                             public char getChar(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (char)(long)this.f.get(index % dimX, index / dimX);
                                 // note: for float array, (char)(long)v differs from (int)v for very large floats
                             }
@@ -237,8 +246,9 @@ class ArraysFuncImpl {
                                 dimXY = dimX * dim[1];
 
                             public char getChar(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (char)(long)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY);
                                 // note: for float array, (char)(long)v differs from (int)v for very large floats
                             }
@@ -247,8 +257,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncCharArray(truncateOverflows, len, f, dim) {
                             public char getChar(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 double[] coordinates = new double[dim.length];
                                 coordinatesInDoubles(index, dim, coordinates);
                                 return (char)(long)this.f.get(coordinates);
@@ -270,8 +281,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncByteArray(truncateOverflows, len, f, dim) {
                             public int getByte(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 int v = (int)this.f.get(index);
                                 return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
                             }
@@ -282,8 +294,9 @@ class ArraysFuncImpl {
                             final long dimX = dim[0];
 
                             public int getByte(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 int v = (int)this.f.get(index % dimX, index / dimX);
                                 return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
                             }
@@ -295,8 +308,9 @@ class ArraysFuncImpl {
                                 dimXY = dimX * dim[1];
 
                             public int getByte(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 int v = (int)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY);
                                 return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
                             }
@@ -305,8 +319,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncByteArray(truncateOverflows, len, f, dim) {
                             public int getByte(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 double[] coordinates = new double[dim.length];
                                 coordinatesInDoubles(index, dim, coordinates);
                                 int v = (int)this.f.get(coordinates);
@@ -319,8 +334,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncByteArray(truncateOverflows, len, f, dim) {
                             public int getByte(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)(long)this.f.get(index) & 0xFF;
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -331,8 +347,9 @@ class ArraysFuncImpl {
                             final long dimX = dim[0];
 
                             public int getByte(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)(long)this.f.get(index % dimX, index / dimX) & 0xFF;
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -344,8 +361,9 @@ class ArraysFuncImpl {
                                 dimXY = dimX * dim[1];
 
                             public int getByte(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)(long)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY) & 0xFF;
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -369,8 +387,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncShortArray(truncateOverflows, len, f, dim) {
                             public int getShort(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 int v = (int)this.f.get(index);
                                 return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
                             }
@@ -381,8 +400,9 @@ class ArraysFuncImpl {
                             final long dimX = dim[0];
 
                             public int getShort(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 int v = (int)this.f.get(index % dimX, index / dimX);
                                 return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
                             }
@@ -394,8 +414,9 @@ class ArraysFuncImpl {
                                 dimXY = dimX * dim[1];
 
                             public int getShort(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 int v = (int)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY);
                                 return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
                             }
@@ -404,8 +425,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncShortArray(truncateOverflows, len, f, dim) {
                             public int getShort(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 double[] coordinates = new double[dim.length];
                                 coordinatesInDoubles(index, dim, coordinates);
                                 int v = (int)this.f.get(coordinates);
@@ -418,8 +440,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncShortArray(truncateOverflows, len, f, dim) {
                             public int getShort(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)(long)this.f.get(index) & 0xFFFF;
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -430,8 +453,9 @@ class ArraysFuncImpl {
                             final long dimX = dim[0];
 
                             public int getShort(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)(long)this.f.get(index % dimX, index / dimX) & 0xFFFF;
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -443,8 +467,9 @@ class ArraysFuncImpl {
                                 dimXY = dimX * dim[1];
 
                             public int getShort(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)(long)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY) & 0xFFFF;
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -468,8 +493,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncIntArray(truncateOverflows, len, f, dim) {
                             public int getInt(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)this.f.get(index);
                                 // Java automatically truncates float values to Integer.MIN_VALUE..MAX_VALUE here
                             }
@@ -480,8 +506,9 @@ class ArraysFuncImpl {
                             final long dimX = dim[0];
 
                             public int getInt(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)this.f.get(index % dimX, index / dimX);
                                 // Java automatically truncates float values to Integer.MIN_VALUE..MAX_VALUE here
                             }
@@ -493,8 +520,9 @@ class ArraysFuncImpl {
                                 dimXY = dimX * dim[1];
 
                             public int getInt(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY);
                                 // Java automatically truncates float values to Integer.MIN_VALUE..MAX_VALUE here
                             }
@@ -503,8 +531,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncIntArray(truncateOverflows, len, f, dim) {
                             public int getInt(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 double[] coordinates = new double[dim.length];
                                 coordinatesInDoubles(index, dim, coordinates);
                                 return (int)this.f.get(coordinates);
@@ -517,8 +546,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncIntArray(truncateOverflows, len, f, dim) {
                             public int getInt(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)(long)this.f.get(index);
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -529,8 +559,9 @@ class ArraysFuncImpl {
                             final long dimX = dim[0];
 
                             public int getInt(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)(long)this.f.get(index % dimX, index / dimX);
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -542,8 +573,9 @@ class ArraysFuncImpl {
                                 dimXY = dimX * dim[1];
 
                             public int getInt(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 return (int)(long)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY);
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -552,8 +584,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new CoordFuncIntArray(truncateOverflows, len, f, dim) {
                             public int getInt(long index) {
-                                if (index < 0 || index >= length)
+                                if (index < 0 || index >= length) {
                                     throw rangeException(index);
+                                }
                                 double[] coordinates = new double[dim.length];
                                 coordinatesInDoubles(index, dim, coordinates);
                                 return (int)(long)this.f.get(coordinates);
@@ -574,8 +607,9 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new CoordFuncLongArray(truncateOverflows, len, f, dim) {
                         public long getLong(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return (long)this.f.get(index);
                             // Java automatically truncates float values to Long.MIN_VALUE..MAX_VALUE here
                         }
@@ -586,8 +620,9 @@ class ArraysFuncImpl {
                         final long dimX = dim[0];
 
                         public long getLong(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return (long)this.f.get(index % dimX, index / dimX);
                             // Java automatically truncates float values to Long.MIN_VALUE..MAX_VALUE here
                         }
@@ -599,8 +634,9 @@ class ArraysFuncImpl {
                             dimXY = dimX * dim[1];
 
                         public long getLong(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return (long)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY);
                             // Java automatically truncates float values to Long.MIN_VALUE..MAX_VALUE here
                         }
@@ -609,8 +645,9 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new CoordFuncLongArray(truncateOverflows, len, f, dim) {
                         public long getLong(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             double[] coordinates = new double[dim.length];
                             coordinatesInDoubles(index, dim, coordinates);
                             return (long)this.f.get(coordinates);
@@ -626,8 +663,9 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new CoordFuncFloatArray(truncateOverflows, len, f, dim) {
                         public float getFloat(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return (float)this.f.get(index);
                             // Java automatically truncates float values to Float.MIN_VALUE..MAX_VALUE here
                         }
@@ -638,8 +676,9 @@ class ArraysFuncImpl {
                         final long dimX = dim[0];
 
                         public float getFloat(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return (float)this.f.get(index % dimX, index / dimX);
                             // Java automatically truncates float values to Float.MIN_VALUE..MAX_VALUE here
                         }
@@ -651,8 +690,9 @@ class ArraysFuncImpl {
                             dimXY = dimX * dim[1];
 
                         public float getFloat(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return (float)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY);
                             // Java automatically truncates float values to Float.MIN_VALUE..MAX_VALUE here
                         }
@@ -661,8 +701,9 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new CoordFuncFloatArray(truncateOverflows, len, f, dim) {
                         public float getFloat(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             double[] coordinates = new double[dim.length];
                             coordinatesInDoubles(index, dim, coordinates);
                             return (float)this.f.get(coordinates);
@@ -677,8 +718,9 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new CoordFuncDoubleArray(truncateOverflows, len, f, dim) {
                         public double getDouble(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return this.f.get(index);
                             // Java automatically truncates float values to Double.MIN_VALUE..MAX_VALUE here
                         }
@@ -689,8 +731,9 @@ class ArraysFuncImpl {
                         final long dimX = dim[0];
 
                         public double getDouble(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return this.f.get(index % dimX, index / dimX);
                             // Java automatically truncates float values to Double.MIN_VALUE..MAX_VALUE here
                         }
@@ -702,8 +745,9 @@ class ArraysFuncImpl {
                             dimXY = dimX * dim[1];
 
                         public double getDouble(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             return this.f.get(index % dimX, index % dimXY / dimX, index / dimXY);
                             // Java automatically truncates float values to Double.MIN_VALUE..MAX_VALUE here
                         }
@@ -712,8 +756,9 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new CoordFuncDoubleArray(truncateOverflows, len, f, dim) {
                         public double getDouble(long index) {
-                            if (index < 0 || index >= length)
+                            if (index < 0 || index >= length) {
                                 throw rangeException(index);
+                            }
                             double[] coordinates = new double[dim.length];
                             coordinatesInDoubles(index, dim, coordinates);
                             return this.f.get(coordinates);
@@ -731,18 +776,17 @@ class ArraysFuncImpl {
         final boolean truncateOverflows,
         Func f, Class<? extends T> requiredType, PArray[] x, long len)
     {
-        if (f == null)
-            throw new NullPointerException("Null f argument");
-        if (requiredType == null)
-            throw new NullPointerException("Null requiredType argument");
-        if (UpdatableArray.class.isAssignableFrom(requiredType))
+        Objects.requireNonNull(f, "Null f argument");
+        Objects.requireNonNull(requiredType, "Null requiredType argument");
+        if (UpdatableArray.class.isAssignableFrom(requiredType)) {
             throw new IllegalArgumentException("requiredType, " + requiredType + ", must not be updatable");
+        }
 
         for (int k = 0; k < x.length; k++) {
-            if (x[k] == null)
-                throw new NullPointerException("Null x[" + k + "] argument");
-            if (x[k].length() != len)
+            Objects.requireNonNull(x[k], "Null x[" + k + "] argument");
+            if (x[k].length() != len) {
                 throw new SizeMismatchException("x[" + k + "].length() and x[0].length() mismatch");
+            }
         }
         long[] tileDimensions = null; // will be non-null if all non-constant arrays are identically tiled
         long[] baseMatrixDimensions = null;
@@ -789,18 +833,21 @@ class ArraysFuncImpl {
 // - It was a bug! Not a problem to allocate 10000 or 100000 instances of table functions and to "eat" all Java memory
 // Byte tables are more safe: it requires little more that a pure Java object
         if (f == Func.IDENTITY || f == Func.UPDATABLE_IDENTITY) {
-            if (x.length < 1)
+            if (x.length < 1) {
                 throw new IllegalArgumentException("At least one array is necessary for the identity function");
-            if (!quickTableVersion || !(x[0] instanceof BitArray))
+            }
+            if (!quickTableVersion || !(x[0] instanceof BitArray)) {
                 return asIdentityFuncArray(truncateOverflows, requiredType, f, x[0]);
+            }
         }
         if (f instanceof ConstantFunc) {
             return asConstantFuncArray(truncateOverflows, requiredType, f, len);
         }
         if (f == Func.POSITIVE_DIFF) {
-            if (x.length < 2)
+            if (x.length < 2) {
                 throw new IllegalArgumentException("Insufficient number of arrays for "
                     + "the positive difference function");
+            }
             Class<?> eType = x[0].elementType();
             if (eType == x[1].elementType() && eType == Arrays.elementType(requiredType)
                 && (eType == boolean.class || (truncateOverflows
@@ -809,9 +856,10 @@ class ArraysFuncImpl {
             }
         }
         if (f == Func.ABS_DIFF) {
-            if (x.length < 2)
+            if (x.length < 2) {
                 throw new IllegalArgumentException("Insufficient number of arrays for "
                     + "the absolute difference function");
+            }
             Class<?> eType = x[0].elementType();
             if (eType != long.class && eType == x[1].elementType() && eType == Arrays.elementType(requiredType)) {
                 // long values cannot be processed correctly because overflow and loss of precision are possible
@@ -821,11 +869,13 @@ class ArraysFuncImpl {
         if (f instanceof LinearFunc) {
             LinearFunc lf = (LinearFunc)f;
             int n = lf.n();
-            if (x.length < n)
+            if (x.length < n) {
                 throw new IllegalArgumentException("Insufficient number of arrays for the linear function");
+            }
             double[] a = lf.a();
-            if (n != a.length)
+            if (n != a.length) {
                 throw new IllegalArgumentException("Illegal implementation of the linear function: n()!=a().length");
+            }
             double b = lf.b();
             Class<?> eType = x[0].elementType();
             if (n == 1 && b == 1.0 && a[0] == -1.0 // 1-x: Func.REVERSE
@@ -864,13 +914,16 @@ class ArraysFuncImpl {
             if (x.length == 0) {
                 return asConstantFuncArray(truncateOverflows, requiredType, f, len);
             } else if (x.length == 1) {
-                if (!quickTableVersion || !(x[0] instanceof BitArray))
+                if (!quickTableVersion || !(x[0] instanceof BitArray)) {
                     return asIdentityFuncArray(truncateOverflows, requiredType, f, x[0]);
+                }
             } else {
                 boolean sameType = true;
-                for (int k = 1; k < x.length; k++)
-                    if (x[k].elementType() != x[0].elementType())
+                for (int k = 1; k < x.length; k++) {
+                    if (x[k].elementType() != x[0].elementType()) {
                         sameType = false;
+                    }
+                }
                 if (sameType) {
                     x = addUnderlyingArraysWithSameMinMaxFunc(f, x);
                     PArray result = f == Func.MIN ?
@@ -961,8 +1014,9 @@ class ArraysFuncImpl {
                     new FuncBitArrayWithArguments(truncateOverflows, len, f, x) {
                         public boolean getBit(long index) {
                             double[] args = new double[this.x.length];
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             return this.f.get(args) != 0.0;
                         }
                     });
@@ -1047,8 +1101,9 @@ class ArraysFuncImpl {
                         new FuncCharArrayWithArguments(truncateOverflows, len, f, x) {
                             public char getChar(long index) {
                                 double[] args = new double[this.x.length];
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 int v = (int)this.f.get(args);
                                 return v < Character.MIN_VALUE ? Character.MIN_VALUE :
                                     v > Character.MAX_VALUE ? Character.MAX_VALUE :
@@ -1078,8 +1133,9 @@ class ArraysFuncImpl {
                         new FuncCharArrayWithArguments(truncateOverflows, len, f, x) {
                             public char getChar(long index) {
                                 double[] args = new double[this.x.length];
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 return (char)(long)this.f.get(args);
                                 // note: for float array, (char)(long)v differs from (int)v for very large floats
                             }
@@ -1167,8 +1223,9 @@ class ArraysFuncImpl {
                         new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
                             public int getByte(long index) {
                                 double[] args = new double[this.x.length];
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 int v = (int)this.f.get(args);
                                 return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
                             }
@@ -1197,8 +1254,9 @@ class ArraysFuncImpl {
                         new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
                             public int getByte(long index) {
                                 double[] args = new double[this.x.length];
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 return (int)(long)this.f.get(args) & 0xFF;
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -1281,8 +1339,9 @@ class ArraysFuncImpl {
                         new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
                             public int getShort(long index) {
                                 double[] args = new double[this.x.length];
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 int v = (int)this.f.get(args);
                                 return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
                             }
@@ -1311,8 +1370,9 @@ class ArraysFuncImpl {
                         new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
                             public int getShort(long index) {
                                 double[] args = new double[this.x.length];
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 return (int)(long)this.f.get(args) & 0xFFFF;
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -1395,8 +1455,9 @@ class ArraysFuncImpl {
                         new FuncIntArrayWithArguments(truncateOverflows, len, f, x) {
                             public int getInt(long index) {
                                 double[] args = new double[this.x.length];
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 return (int)this.f.get(args);
                                 // Java automatically truncates float values to Integer.MIN_VALUE..MAX_VALUE here
                             }
@@ -1424,8 +1485,9 @@ class ArraysFuncImpl {
                         new FuncIntArrayWithArguments(truncateOverflows, len, f, x) {
                             public int getInt(long index) {
                                 double[] args = new double[this.x.length];
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 return (int)(long)this.f.get(args);
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
@@ -1512,8 +1574,9 @@ class ArraysFuncImpl {
                     new FuncLongArrayWithArguments(truncateOverflows, len, f, x) {
                         public long getLong(long index) {
                             double[] args = new double[this.x.length];
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             return (long)this.f.get(args);
                             // Java automatically truncates float values to Long.MIN_VALUE..MAX_VALUE here
                         }
@@ -1595,8 +1658,9 @@ class ArraysFuncImpl {
                     new FuncFloatArrayWithArguments(truncateOverflows, len, f, x) {
                         public float getFloat(long index) {
                             double[] args = new double[this.x.length];
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             return (float)this.f.get(args);
                             // Java automatically truncates float values to Float.MIN_VALUE..MAX_VALUE here
                         }
@@ -1677,8 +1741,9 @@ class ArraysFuncImpl {
                     new FuncDoubleArrayWithArguments(truncateOverflows, len, f, x) {
                         public double getDouble(long index) {
                             double[] args = new double[this.x.length];
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             return this.f.get(args);
                             // Java automatically truncates float values to Double.MIN_VALUE..MAX_VALUE here
                         }
@@ -1694,34 +1759,34 @@ class ArraysFuncImpl {
         final boolean truncateOverflows,
         Func.Updatable f, Class<? extends T> requiredType, UpdatablePArray[] x)
     {
-        if (f == null)
-            throw new NullPointerException("Null f argument");
-        if (requiredType == null)
-            throw new NullPointerException("Null requiredType argument");
-        if (MutableArray.class.isAssignableFrom(requiredType))
+        Objects.requireNonNull(f, "Null f argument");
+        Objects.requireNonNull(requiredType, "Null requiredType argument");
+        if (MutableArray.class.isAssignableFrom(requiredType)) {
             throw new IllegalArgumentException("requiredType, " + requiredType + ", must not be resizable");
-        if (x.length == 0)
+        }
+        if (x.length == 0) {
             throw new IllegalArgumentException("Empty x[] (array of AlgART arrays)");
+        }
         final long len = x[0].length();
         for (int k = 0; k < x.length; k++) {
-            if (x[k] == null)
-                throw new NullPointerException("Null x[" + k + "] argument");
-            if (x[k].length() != len)
+            Objects.requireNonNull(x[k], "Null x[" + k + "] argument");
+            if (x[k].length() != len) {
                 throw new SizeMismatchException("x[" + k + "].length() and x[0].length() mismatch");
+            }
         }
         if (f == Func.UPDATABLE_IDENTITY) {
-            if (x.length < 1)
-                throw new IllegalArgumentException("At least one array is necessary for the identity function");
             return asUpdatableIdentityFunc(truncateOverflows, requiredType, f, x[0]);
         }
 
         if (f instanceof LinearFunc.Updatable) {
             LinearFunc.Updatable ulf = (LinearFunc.Updatable)f;
             int n = ulf.n();
-            if (x.length < n)
+            if (x.length < n) {
                 throw new IllegalArgumentException("Insufficient number of arrays for the updatable linear function");
-            if (n == 1)
+            }
+            if (n == 1) {
                 return asUpdatableLinearFunc(truncateOverflows, requiredType, ulf, x[0]);
+            }
         }
 
         final boolean[] truncateInSet = new boolean[x.length];
@@ -1765,14 +1830,16 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncBitArray(truncateOverflows, len, f, x) {
                         public boolean getBit(long index) {
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             return this.f.get(args) != 0.0;
                         }
 
                         public void setBit(long index, boolean value) {
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             this.f.set(args, value ? 1.0 : 0.0);
                             for (int k = 0; k < this.x.length; k++) {
                                 if (truncateInSet[k]) {
@@ -1816,8 +1883,9 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new UpdatableFuncCharArray(truncateOverflows, len, f, x) {
                             public char getChar(long index) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 int v = (int)this.f.get(args);
                                 return v < Character.MIN_VALUE ? Character.MIN_VALUE :
                                     v > Character.MAX_VALUE ? Character.MAX_VALUE :
@@ -1825,8 +1893,9 @@ class ArraysFuncImpl {
                             }
 
                             public void setChar(long index, char value) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 this.f.set(args, value);
                                 for (int k = 0; k < this.x.length; k++) {
                                     if (truncateInSet[k]) {
@@ -1863,22 +1932,25 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new UpdatableFuncCharArray(truncateOverflows, len, f, x) {
                             public char getChar(long index) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 return (char)(long)this.f.get(args);
                                 // note: for float array, (char)(long)v differs from (int)v for very large floats
                             }
 
                             public void setChar(long index, char value) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 this.f.set(args, value);
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     if (longPrecisionInSet[k]) {
                                         this.x[k].setLong(index, (long)args[k]);
                                     } else {
                                         this.x[k].setDouble(index, args[k]);
                                     }
+                                }
                             }
                         });
                 }
@@ -1913,15 +1985,17 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new UpdatableFuncByteArray(truncateOverflows, len, f, x) {
                             public int getByte(long index) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 int v = (int)this.f.get(args);
                                 return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
                             }
 
                             public void setByte(long index, byte value) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 this.f.set(args, value & 0xFF);
                                 for (int k = 0; k < this.x.length; k++) {
                                     if (truncateInSet[k]) {
@@ -1958,22 +2032,25 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new UpdatableFuncByteArray(truncateOverflows, len, f, x) {
                             public int getByte(long index) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 return (int)(long)this.f.get(args) & 0xFF;
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
 
                             public void setByte(long index, byte value) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 this.f.set(args, value & 0xFF);
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     if (longPrecisionInSet[k]) {
                                         this.x[k].setLong(index, (long)args[k]);
                                     } else {
                                         this.x[k].setDouble(index, args[k]);
                                     }
+                                }
                             }
                         });
                 }
@@ -2006,15 +2083,17 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new UpdatableFuncShortArray(truncateOverflows, len, f, x) {
                             public int getShort(long index) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 int v = (int)this.f.get(args);
                                 return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
                             }
 
                             public void setShort(long index, short value) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 this.f.set(args, value & 0xFFFF);
                                 for (int k = 0; k < this.x.length; k++) {
                                     if (truncateInSet[k]) {
@@ -2051,22 +2130,25 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new UpdatableFuncShortArray(truncateOverflows, len, f, x) {
                             public int getShort(long index) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 return (int)(long)this.f.get(args) & 0xFFFF;
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
 
                             public void setShort(long index, short value) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 this.f.set(args, value & 0xFFFF);
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     if (longPrecisionInSet[k]) {
                                         this.x[k].setLong(index, (long)args[k]);
                                     } else {
                                         this.x[k].setDouble(index, args[k]);
                                     }
+                                }
                             }
                         });
                 }
@@ -2100,15 +2182,17 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new UpdatableFuncIntArray(truncateOverflows, len, f, x) {
                             public int getInt(long index) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 return (int)this.f.get(args);
                                 // Java automatically truncates float values to Integer.MIN_VALUE..MAX_VALUE here
                             }
 
                             public void setInt(long index, int value) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 this.f.set(args, value);
                                 for (int k = 0; k < this.x.length; k++) {
                                     if (truncateInSet[k]) {
@@ -2145,22 +2229,25 @@ class ArraysFuncImpl {
                     return InternalUtils.<T>cast(
                         new UpdatableFuncIntArray(truncateOverflows, len, f, x) {
                             public int getInt(long index) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 return (int)(long)this.f.get(args);
                                 // note: for float array, (int)(long)v differs from (int)v for very large floats
                             }
 
                             public void setInt(long index, int value) {
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     args[k] = this.x[k].getDouble(index);
+                                }
                                 this.f.set(args, value);
-                                for (int k = 0; k < this.x.length; k++)
+                                for (int k = 0; k < this.x.length; k++) {
                                     if (longPrecisionInSet[k]) {
                                         this.x[k].setLong(index, (long)args[k]);
                                     } else {
                                         this.x[k].setDouble(index, args[k]);
                                     }
+                                }
                             }
                         });
                 }
@@ -2195,15 +2282,17 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncLongArray(truncateOverflows, len, f, x) {
                         public long getLong(long index) {
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             return (long)this.f.get(args);
                             // Java automatically truncates float values to Long.MIN_VALUE..MAX_VALUE here
                         }
 
                         public void setLong(long index, long value) {
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             this.f.set(args, value);
                             for (int k = 0; k < this.x.length; k++) {
                                 if (truncateInSet[k]) {
@@ -2252,15 +2341,17 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncFloatArray(truncateOverflows, len, f, x) {
                         public float getFloat(long index) {
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             return (float)this.f.get(args);
                             // Java automatically truncates float values to Float.MIN_VALUE..MAX_VALUE here
                         }
 
                         public void setFloat(long index, float value) {
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             this.f.set(args, value);
                             for (int k = 0; k < this.x.length; k++) {
                                 if (truncateInSet[k]) {
@@ -2306,15 +2397,17 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncDoubleArray(truncateOverflows, len, f, x) {
                         public double getDouble(long index) {
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             return this.f.get(args);
                             // Java automatically truncates double values to Double.MIN_VALUE..MAX_VALUE here
                         }
 
                         public void setDouble(long index, double value) {
-                            for (int k = 0; k < this.x.length; k++)
+                            for (int k = 0; k < this.x.length; k++) {
                                 args[k] = this.x[k].getDouble(index);
+                            }
                             this.f.set(args, value);
                             for (int k = 0; k < this.x.length; k++) {
                                 if (truncateInSet[k]) {
@@ -2337,8 +2430,9 @@ class ArraysFuncImpl {
     }
 
     private static <T extends PArray> PArray asMinFuncArray(Func f, final PArray... x) {
-        if (x.length == 0)
+        if (x.length == 0) {
             throw new IllegalArgumentException("Empty x array");
+        }
         if (x[0] instanceof BitArray) {
             final BitArray[] xClone = assertTypeAndCast(BitArray.class, x);
             return new FuncBitArrayWithArguments(false, x[0].length(), f, x) {
@@ -2381,8 +2475,9 @@ class ArraysFuncImpl {
                     int result = xClone[0].getByte(index);
                     for (int k = 1; k < xClone.length; k++) {
                         int v = xClone[k].getByte(index);
-                        if (v < result)
+                        if (v < result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2403,8 +2498,9 @@ class ArraysFuncImpl {
                     char result = xClone[0].getChar(index);
                     for (int k = 1; k < xClone.length; k++) {
                         char v = xClone[k].getChar(index);
-                        if (v < result)
+                        if (v < result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2424,8 +2520,9 @@ class ArraysFuncImpl {
                     int result = xClone[0].getShort(index);
                     for (int k = 1; k < xClone.length; k++) {
                         int v = xClone[k].getShort(index);
-                        if (v < result)
+                        if (v < result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2445,8 +2542,9 @@ class ArraysFuncImpl {
                     int result = xClone[0].getInt(index);
                     for (int k = 1; k < xClone.length; k++) {
                         int v = xClone[k].getInt(index);
-                        if (v < result)
+                        if (v < result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2466,8 +2564,9 @@ class ArraysFuncImpl {
                     long result = xClone[0].getLong(index);
                     for (int k = 1; k < xClone.length; k++) {
                         long v = xClone[k].getLong(index);
-                        if (v < result)
+                        if (v < result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2487,8 +2586,9 @@ class ArraysFuncImpl {
                     float result = xClone[0].getFloat(index);
                     for (int k = 1; k < xClone.length; k++) {
                         float v = xClone[k].getFloat(index);
-                        if (v < result)
+                        if (v < result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2508,8 +2608,9 @@ class ArraysFuncImpl {
                     double result = xClone[0].getDouble(index);
                     for (int k = 1; k < xClone.length; k++) {
                         double v = xClone[k].getDouble(index);
-                        if (v < result)
+                        if (v < result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2525,8 +2626,9 @@ class ArraysFuncImpl {
     }
 
     private static <T extends PArray> PArray asMaxFuncArray(Func f, final PArray... x) {
-        if (x.length == 0)
+        if (x.length == 0) {
             throw new IllegalArgumentException("Empty x array");
+        }
         if (x[0] instanceof BitArray) {
             final BitArray[] xClone = assertTypeAndCast(BitArray.class, x);
             return new FuncBitArrayWithArguments(false, x[0].length(), f, x) {
@@ -2569,8 +2671,9 @@ class ArraysFuncImpl {
                     int result = xClone[0].getByte(index);
                     for (int k = 1; k < xClone.length; k++) {
                         int v = xClone[k].getByte(index);
-                        if (v > result)
+                        if (v > result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2591,8 +2694,9 @@ class ArraysFuncImpl {
                     char result = xClone[0].getChar(index);
                     for (int k = 1; k < xClone.length; k++) {
                         char v = xClone[k].getChar(index);
-                        if (v > result)
+                        if (v > result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2612,8 +2716,9 @@ class ArraysFuncImpl {
                     int result = xClone[0].getShort(index);
                     for (int k = 1; k < xClone.length; k++) {
                         int v = xClone[k].getShort(index);
-                        if (v > result)
+                        if (v > result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2633,8 +2738,9 @@ class ArraysFuncImpl {
                     int result = xClone[0].getInt(index);
                     for (int k = 1; k < xClone.length; k++) {
                         int v = xClone[k].getInt(index);
-                        if (v > result)
+                        if (v > result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2654,8 +2760,9 @@ class ArraysFuncImpl {
                     long result = xClone[0].getLong(index);
                     for (int k = 1; k < xClone.length; k++) {
                         long v = xClone[k].getLong(index);
-                        if (v > result)
+                        if (v > result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2675,8 +2782,9 @@ class ArraysFuncImpl {
                     float result = xClone[0].getFloat(index);
                     for (int k = 1; k < xClone.length; k++) {
                         float v = xClone[k].getFloat(index);
-                        if (v > result)
+                        if (v > result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2696,8 +2804,9 @@ class ArraysFuncImpl {
                     double result = xClone[0].getDouble(index);
                     for (int k = 1; k < xClone.length; k++) {
                         double v = xClone[k].getDouble(index);
-                        if (v > result)
+                        if (v > result) {
                             result = v;
+                        }
                     }
                     return result;
                 }
@@ -2717,10 +2826,10 @@ class ArraysFuncImpl {
             Class<? extends T> requiredType,
             Func f, final PArray[] x, long len)
     {
-        if (requiredType == null)
-            throw new NullPointerException("Null requiredType argument");
-        if (UpdatableArray.class.isAssignableFrom(requiredType))
+        Objects.requireNonNull(requiredType, "Null requiredType argument");
+        if (UpdatableArray.class.isAssignableFrom(requiredType)) {
             throw new IllegalArgumentException("requiredType must not be updatable");
+        }
         final LinearFunc lf;
         if (f == Func.IDENTITY || f == Func.UPDATABLE_IDENTITY
             || (x.length == 1 && (f == Func.MIN || f == Func.MAX))) {
@@ -2737,10 +2846,10 @@ class ArraysFuncImpl {
 
         boolean allAZeroes = true; // in particular, when n==0
         for (int k = 0; k < n; k++) {
-            if (x[k] == null)
-                throw new NullPointerException("Null x[" + k + "] argument");
-            if (lf.a(k) != 0.0)
+            Objects.requireNonNull(x[k], "Null x[" + k + "] argument");
+            if (lf.a(k) != 0.0) {
                 allAZeroes = false;
+            }
         }
         if (n <= 1 || allAZeroes) {
 
@@ -3147,12 +3256,14 @@ class ArraysFuncImpl {
                         public boolean getBit(long index) {
                             double sum = 0.0;
                             if (a == null) {
-                                for (int k = 0; k < n; k++)
+                                for (int k = 0; k < n; k++) {
                                     sum += this.x[k].getDouble(index);
+                                }
                                 sum *= a0;
                             } else {
-                                for (int k = 0; k < n; k++)
+                                for (int k = 0; k < n; k++) {
                                     sum += a[k] * this.x[k].getDouble(index);
+                                }
                             }
                             return sum + b != 0.0;
                         }
@@ -3174,13 +3285,15 @@ class ArraysFuncImpl {
                                 int v;
                                 if (a == null) {
                                     double sum = 0.0;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += this.x[k].getDouble(index);
+                                    }
                                     v = (int)(sum * a0 + b);
                                 } else {
                                     double sum = b;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += a[k] * this.x[k].getDouble(index);
+                                    }
                                     v = (int)sum;
                                 }
                                 return v < Character.MIN_VALUE ? Character.MIN_VALUE :
@@ -3201,13 +3314,15 @@ class ArraysFuncImpl {
                             public char getChar(long index) {
                                 if (a == null) {
                                     double sum = 0.0;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += this.x[k].getDouble(index);
+                                    }
                                     return (char)(long)(sum * a0 + b);
                                 } else {
                                     double sum = b;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += a[k] * this.x[k].getDouble(index);
+                                    }
                                     return (char)(long)sum;
                                 }
                                 // note: for float array, (char)(long)v will differ from (int)v for very large floats
@@ -3234,13 +3349,15 @@ class ArraysFuncImpl {
                                 int v;
                                 if (a == null) {
                                     double sum = 0.0;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += this.x[k].getDouble(index);
+                                    }
                                     v = (int)(sum * a0 + b);
                                 } else {
                                     double sum = b;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += a[k] * this.x[k].getDouble(index);
+                                    }
                                     v = (int)sum;
                                 }
                                 return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
@@ -3259,13 +3376,15 @@ class ArraysFuncImpl {
                             public int getByte(long index) {
                                 if (a == null) {
                                     double sum = 0.0;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += this.x[k].getDouble(index);
+                                    }
                                     return (int)(long)(sum * a0 + b) & 0xFF;
                                 } else {
                                     double sum = b;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += a[k] * this.x[k].getDouble(index);
+                                    }
                                     return (int)(long)sum & 0xFF;
                                 }
                                 // note: for float array, (int)(long)v will differ from (int)v for very large floats
@@ -3289,13 +3408,15 @@ class ArraysFuncImpl {
                                 int v;
                                 if (a == null) {
                                     double sum = 0.0;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += this.x[k].getDouble(index);
+                                    }
                                     v = (int)(sum * a0 + b);
                                 } else {
                                     double sum = b;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += a[k] * this.x[k].getDouble(index);
+                                    }
                                     v = (int)sum;
                                 }
                                 return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
@@ -3314,13 +3435,15 @@ class ArraysFuncImpl {
                             public int getShort(long index) {
                                 if (a == null) {
                                     double sum = 0.0;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += this.x[k].getDouble(index);
+                                    }
                                     return (int)(long)(sum * a0 + b) & 0xFFFF;
                                 } else {
                                     double sum = b;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += a[k] * this.x[k].getDouble(index);
+                                    }
                                     return (int)(long)sum & 0xFFFF;
                                 }
                                 // note: for float array, (int)(long)v will differ from (int)v for very large floats
@@ -3343,13 +3466,15 @@ class ArraysFuncImpl {
                             public int getInt(long index) {
                                 if (a == null) {
                                     double sum = 0.0;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += this.x[k].getDouble(index);
+                                    }
                                     return (int)(sum * a0 + b);
                                 } else {
                                     double sum = b;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += a[k] * this.x[k].getDouble(index);
+                                    }
                                     return (int)sum;
                                 }
                                 // Java automatically truncates float values to Integer.MIN_VALUE..MAX_VALUE here
@@ -3368,13 +3493,15 @@ class ArraysFuncImpl {
                             public int getInt(long index) {
                                 if (a == null) {
                                     double sum = 0.0;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += this.x[k].getDouble(index);
+                                    }
                                     return (int)(long)(sum * a0 + b);
                                 } else {
                                     double sum = b;
-                                    for (int k = 0; k < n; k++)
+                                    for (int k = 0; k < n; k++) {
                                         sum += a[k] * this.x[k].getDouble(index);
+                                    }
                                     return (int)(long)sum;
                                 }
                                 // note: for float array, (int)(long)v will differ from (int)v for very large floats
@@ -3402,13 +3529,15 @@ class ArraysFuncImpl {
                         public long getLong(long index) {
                             if (a == null) {
                                 double sum = 0.0;
-                                for (int k = 0; k < n; k++)
+                                for (int k = 0; k < n; k++) {
                                     sum += this.x[k].getDouble(index);
+                                }
                                 return (long)(sum * a0 + b);
                             } else {
                                 double sum = b;
-                                for (int k = 0; k < n; k++)
+                                for (int k = 0; k < n; k++) {
                                     sum += a[k] * this.x[k].getDouble(index);
+                                }
                                 return (long)sum;
                             }
                             // Java automatically truncates float values to Long.MIN_VALUE..MAX_VALUE here
@@ -3430,13 +3559,15 @@ class ArraysFuncImpl {
                         public float getFloat(long index) {
                             if (a == null) {
                                 double sum = 0.0;
-                                for (int k = 0; k < n; k++)
+                                for (int k = 0; k < n; k++) {
                                     sum += this.x[k].getDouble(index);
+                                }
                                 return (float)(sum * a0 + b);
                             } else {
                                 double sum = b;
-                                for (int k = 0; k < n; k++)
+                                for (int k = 0; k < n; k++) {
                                     sum += a[k] * this.x[k].getDouble(index);
+                                }
                                 return (float)sum;
                             }
                             // Java automatically truncates float values to Float.MIN_VALUE..MAX_VALUE here
@@ -3457,13 +3588,15 @@ class ArraysFuncImpl {
                         public double getDouble(long index) {
                             if (a == null) {
                                 double sum = 0.0;
-                                for (int k = 0; k < n; k++)
+                                for (int k = 0; k < n; k++) {
                                     sum += this.x[k].getDouble(index);
+                                }
                                 return (sum * a0 + b);
                             } else {
                                 double sum = b;
-                                for (int k = 0; k < n; k++)
+                                for (int k = 0; k < n; k++) {
                                     sum += a[k] * this.x[k].getDouble(index);
+                                }
                                 return sum;
                             }
                             // Java automatically truncates float values to Double.MIN_VALUE..MAX_VALUE here
@@ -3485,10 +3618,8 @@ class ArraysFuncImpl {
         Class<? extends T> requiredType,
         Func.Updatable f, UpdatablePArray x)
     {
-        if (x == null)
-            throw new NullPointerException("Null x argument");
-        if (requiredType == null)
-            throw new NullPointerException("Null requiredType argument");
+        Objects.requireNonNull(x, "Null x argument");
+        Objects.requireNonNull(requiredType, "Null requiredType argument");
         final double b, a, aInv;
         if (f == Func.UPDATABLE_IDENTITY) {
             a = 1.0;
@@ -3499,8 +3630,9 @@ class ArraysFuncImpl {
             a = allA[0];
             b = ((LinearFunc)f).b();
             aInv = 1.0 / a;
-            if (allA.length != ((LinearFunc)f).n())
+            if (allA.length != ((LinearFunc)f).n()) {
                 throw new AssertionError("Illegal implementation of LinearFunc: n()!=a().length");
+            }
         } else {
             throw new AssertionError("asUpdatableLinearFunc is called for unsupported function " + f);
         }
@@ -4207,8 +4339,9 @@ class ArraysFuncImpl {
         boolean truncateOverflows,
         Func f, final PArray... x)
     {
-        if (x.length != 2)
+        if (x.length != 2) {
             throw new IllegalArgumentException("x.length must be 2");
+        }
         if (x[0] instanceof BitArray) {
             return new FuncBitArrayWithArguments(truncateOverflows, x[0].length(), f, x) {
                 final BitArray x0 = (BitArray)x[0],
@@ -4443,8 +4576,9 @@ class ArraysFuncImpl {
         boolean truncateOverflows,
         Func f, final PArray... x)
     {
-        if (x.length != 2)
+        if (x.length != 2) {
             throw new IllegalArgumentException("x.length must be 2");
+        }
         if (x[0] instanceof BitArray) {
             return new FuncBitArrayWithArguments(truncateOverflows, x[0].length(), f, x) {
                 final BitArray x0 = (BitArray)x[0],
@@ -4589,8 +4723,9 @@ class ArraysFuncImpl {
 
                     public int getInt(long index) {
                         long v = (long)x0.getInt(index) - (long)x1.getInt(index);
-                        if (v < 0)
+                        if (v < 0) {
                             v = -v;
+                        }
                         return v > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)v;
                     }
 
@@ -5462,8 +5597,9 @@ class ArraysFuncImpl {
         public BitArray asImmutable() {
             final BitArray parent = this;
             PArray[] ua = new PArray[x.length];
-            for (int k = 0; k < ua.length; k++)
+            for (int k = 0; k < ua.length; k++) {
                 ua[k] = x[k];
+            }
             BitArray result = // use BitArray here for more thorough control by the compiler
                 new FuncBitArrayWithArguments(truncateOverflows, length, f, ua) {
                     public boolean getBit(long index) {
@@ -5529,8 +5665,9 @@ class ArraysFuncImpl {
         public CharArray asImmutable() {
             final CharArray parent = this;
             PArray[] ua = new PArray[x.length];
-            for (int k = 0; k < ua.length; k++)
+            for (int k = 0; k < ua.length; k++) {
                 ua[k] = x[k];
+            }
             CharArray result = // use CharArray here for more thorough control by the compiler
                 new FuncCharArrayWithArguments(truncateOverflows, length, f, ua) {
                     public char getChar(long index) {
@@ -5595,8 +5732,9 @@ class ArraysFuncImpl {
         public ByteArray asImmutable() {
             final ByteArray parent = this;
             PArray[] ua = new PArray[x.length];
-            for (int k = 0; k < ua.length; k++)
+            for (int k = 0; k < ua.length; k++) {
                 ua[k] = x[k];
+            }
             ByteArray result = // use ByteArray here for more thorough control by the compiler
                 new FuncByteArrayWithArguments(truncateOverflows, length, f, ua) {
                     public int getByte(long index) {
@@ -5661,8 +5799,9 @@ class ArraysFuncImpl {
         public ShortArray asImmutable() {
             final ShortArray parent = this;
             PArray[] ua = new PArray[x.length];
-            for (int k = 0; k < ua.length; k++)
+            for (int k = 0; k < ua.length; k++) {
                 ua[k] = x[k];
+            }
             ShortArray result = // use ShortArray here for more thorough control by the compiler
                 new FuncShortArrayWithArguments(truncateOverflows, length, f, ua) {
                     public int getShort(long index) {
@@ -5727,8 +5866,9 @@ class ArraysFuncImpl {
         public IntArray asImmutable() {
             final IntArray parent = this;
             PArray[] ua = new PArray[x.length];
-            for (int k = 0; k < ua.length; k++)
+            for (int k = 0; k < ua.length; k++) {
                 ua[k] = x[k];
+            }
             IntArray result = // use IntArray here for more thorough control by the compiler
                 new FuncIntArrayWithArguments(truncateOverflows, length, f, ua) {
                     public int getInt(long index) {
@@ -5793,8 +5933,9 @@ class ArraysFuncImpl {
         public LongArray asImmutable() {
             final LongArray parent = this;
             PArray[] ua = new PArray[x.length];
-            for (int k = 0; k < ua.length; k++)
+            for (int k = 0; k < ua.length; k++) {
                 ua[k] = x[k];
+            }
             LongArray result = // use LongArray here for more thorough control by the compiler
                 new FuncLongArrayWithArguments(truncateOverflows, length, f, ua) {
                     public long getLong(long index) {
@@ -5859,8 +6000,9 @@ class ArraysFuncImpl {
         public FloatArray asImmutable() {
             final FloatArray parent = this;
             PArray[] ua = new PArray[x.length];
-            for (int k = 0; k < ua.length; k++)
+            for (int k = 0; k < ua.length; k++) {
                 ua[k] = x[k];
+            }
             FloatArray result = // use FloatArray here for more thorough control by the compiler
                 new FuncFloatArrayWithArguments(truncateOverflows, length, f, ua) {
                     public float getFloat(long index) {
@@ -5925,8 +6067,9 @@ class ArraysFuncImpl {
         public DoubleArray asImmutable() {
             final DoubleArray parent = this;
             PArray[] ua = new PArray[x.length];
-            for (int k = 0; k < ua.length; k++)
+            for (int k = 0; k < ua.length; k++) {
                 ua[k] = x[k];
+            }
             DoubleArray result = // use DoubleArray here for more thorough control by the compiler
                 new FuncDoubleArrayWithArguments(truncateOverflows, length, f, ua) {
                     public double getDouble(long index) {
@@ -5948,9 +6091,11 @@ class ArraysFuncImpl {
     //[[Repeat.AutoGeneratedEnd]]
 
     private static <T extends Array> T[] assertTypeAndCast(Class<T> requiredType, Array[] x) {
-        for (int k = 0; k < x.length; k++)
-            if (!requiredType.isInstance(x[k]))
+        for (int k = 0; k < x.length; k++) {
+            if (!requiredType.isInstance(x[k])) {
                 throw new AssertionError("x[" + k + "] is not an instance of " + requiredType);
+            }
+        }
         T[] result = InternalUtils.cast(java.lang.reflect.Array.newInstance(requiredType, x.length));
         System.arraycopy(x, 0, result, 0, x.length);
         return result;
@@ -5965,8 +6110,9 @@ class ArraysFuncImpl {
                 boolean sameType = true;
                 for (Array u : underlyings) {
                     assert u instanceof PArray;
-                    if (u.elementType() != a.elementType())
+                    if (u.elementType() != a.elementType()) {
                         sameType = false;
+                    }
                 }
                 if (sameType) {
                     expanded.addAll(java.util.Arrays.asList(underlyings));
@@ -5983,8 +6129,9 @@ class ArraysFuncImpl {
     }
 
     static void coordinatesInDoubles(long index, long[] dim, double[] result) {
-        if (index < 0)
+        if (index < 0) {
             throw new AssertionError("Negative index argument");
+        }
         if (result.length < dim.length) {
             throw new AssertionError("Too short result array: long[" + result.length
                 + "]; " + dim.length + " elements required to store coordinates");
@@ -5995,9 +6142,10 @@ class ArraysFuncImpl {
             result[k] = a - b * dim[k]; // here "*" is faster than "%"
             a = b;
         }
-        if (a >= dim[dim.length - 1])
+        if (a >= dim[dim.length - 1]) {
             throw new IndexOutOfBoundsException("Too large index argument: " + index
                 + " >= matrix size " + JArrays.toString(dim, "*", 10000));
+        }
         result[dim.length - 1] = a;
     }
 }

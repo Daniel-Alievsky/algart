@@ -24,6 +24,8 @@
 
 package net.algart.math.functions;
 
+import java.util.Objects;
+
 /**
  * <p>A function, transformed by  {@link ApertureFilterOperator}
  * in <i>n</i>-dimensional Euclidean space.
@@ -58,10 +60,8 @@ public class ApertureFilteredFunc implements Func {
      * @throws NullPointerException if one of the arguments is <tt>null</tt>.
      */
     public static ApertureFilteredFunc getInstance(Func parent, ApertureFilterOperator operator) {
-        if (parent == null)
-            throw new NullPointerException("Null parent function");
-        if (operator == null)
-            throw new NullPointerException("Null operator");
+        Objects.requireNonNull(parent, "Null parent function");
+        Objects.requireNonNull(operator, "Null operator");
         if (OPTIMIZE_LITTLE_DIMENSIONS) {
             if (operator.apertureDim.length == 1) {
                 final double step0 = operator.apertureSteps[0];

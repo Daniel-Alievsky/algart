@@ -28,6 +28,7 @@ import net.algart.math.Point;
 import net.algart.math.Range;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -86,11 +87,11 @@ final class OnePointPattern extends AbstractPattern implements DirectPointSetPat
 
     @Override
     public DirectPointSetPattern shift(Point shift) {
-        if (shift == null)
-            throw new NullPointerException("Null shift argument");
-        if (shift.coordCount() != dimCount)
+        Objects.requireNonNull(shift, "Null shift argument");
+        if (shift.coordCount() != dimCount) {
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
                 + " is not equal to the number of pattern coordinates " + dimCount);
+        }
         if (shift.isOrigin()) {
             return this;
         }
@@ -109,11 +110,11 @@ final class OnePointPattern extends AbstractPattern implements DirectPointSetPat
 
     @Override
     public DirectPointSetPattern scale(double... multipliers) {
-        if (multipliers == null)
-            throw new NullPointerException("Null multipliers argument");
-        if (multipliers.length != dimCount)
+        Objects.requireNonNull(multipliers, "Null multipliers argument");
+        if (multipliers.length != dimCount) {
             throw new IllegalArgumentException("Illegal number of multipliers: "
                 + multipliers.length + " instead of " + dimCount);
+        }
         boolean allUnit = true;
         for (double m : multipliers) {
             allUnit &= m == 1.0;
@@ -128,8 +129,9 @@ final class OnePointPattern extends AbstractPattern implements DirectPointSetPat
     public DirectPointSetPattern projectionAlongAxis(int coordIndex) {
         checkCoordIndex(coordIndex);
         assert dimCount > 0;
-        if (dimCount == 1)
+        if (dimCount == 1) {
             throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
+        }
         return new OnePointPattern(p.projectionAlongAxis(coordIndex));
     }
 
@@ -145,11 +147,11 @@ final class OnePointPattern extends AbstractPattern implements DirectPointSetPat
 
     @Override
     public Pattern minkowskiAdd(Pattern added) {
-        if (added == null)
-            throw new NullPointerException("Null added argument");
-        if (added.dimCount() != this.dimCount)
+        Objects.requireNonNull(added, "Null added argument");
+        if (added.dimCount() != this.dimCount) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
                 + added.dimCount() + " instead of " + this.dimCount);
+        }
         return added.shift(this.p);
     }
 

@@ -27,10 +27,7 @@ package net.algart.math.patterns;
 import net.algart.math.Point;
 import net.algart.math.Range;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Simple 2-points pattern.
@@ -42,8 +39,9 @@ final class TwoPointsPattern extends AbstractPattern implements DirectPointSetPa
 
     TwoPointsPattern(Point p1, Point p2) {
         super(SimplePattern.getDimCountAndCheck(Arrays.asList(p1, p2)));
-        if (p1.equals(p2))
+        if (p1.equals(p2)) {
             throw new AssertionError("Identical 2 points");
+        }
         this.p1 = p1;
         this.p2 = p2;
         fillCoordRangesWithCheck(Arrays.asList(this.p1, this.p2));
@@ -79,11 +77,11 @@ final class TwoPointsPattern extends AbstractPattern implements DirectPointSetPa
 
     @Override
     public DirectPointSetPattern shift(Point shift) {
-        if (shift == null)
-            throw new NullPointerException("Null shift argument");
-        if (shift.coordCount() != dimCount)
+        Objects.requireNonNull(shift, "Null shift argument");
+        if (shift.coordCount() != dimCount) {
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
                 + " is not equal to the number of pattern coordinates " + dimCount);
+        }
         if (shift.isOrigin()) {
             return this;
         }
@@ -92,11 +90,11 @@ final class TwoPointsPattern extends AbstractPattern implements DirectPointSetPa
 
     @Override
     public DirectPointSetPattern scale(double... multipliers) {
-        if (multipliers == null)
-            throw new NullPointerException("Null multipliers argument");
-        if (multipliers.length != dimCount)
+        Objects.requireNonNull(multipliers, "Null multipliers argument");
+        if (multipliers.length != dimCount) {
             throw new IllegalArgumentException("Illegal number of multipliers: "
                 + multipliers.length + " instead of " + dimCount);
+        }
         boolean allUnit = true;
         for (double m : multipliers) {
             allUnit &= m == 1.0;
@@ -122,8 +120,9 @@ final class TwoPointsPattern extends AbstractPattern implements DirectPointSetPa
     public DirectPointSetPattern projectionAlongAxis(int coordIndex) {
         checkCoordIndex(coordIndex);
         assert dimCount > 0;
-        if (dimCount == 1)
+        if (dimCount == 1) {
             throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
+        }
         return Patterns.newPattern(p1.projectionAlongAxis(coordIndex), p2.projectionAlongAxis(coordIndex));
         // possibly will return 1-point pattern if the projections are the same
     }

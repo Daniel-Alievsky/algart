@@ -27,6 +27,7 @@ package net.algart.math.functions;
 import net.algart.math.Range;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * <p>Linear function:
@@ -98,15 +99,16 @@ public abstract class LinearFunc implements Func {
     private final boolean nonweighted;
 
     private LinearFunc(double b, double[] a) {
-        if (a == null)
-            throw new NullPointerException("Null a argument");
+        Objects.requireNonNull(a, "Null a argument");
         this.b = b == -0.0 ? +0.0 : b; // replacing -0.0 with +0.0 for stable results
         this.n = a.length;
         this.a0 = a.length == 0 ? Double.NaN : a[0];
         boolean eq = true;
         for (int k = 1; k < a.length; k++) {
-            if (a[k] != a[0])
+            if (a[k] != a[0]) {
                 eq = false;
+                break;
+            }
         }
         this.nonweighted = eq;
         this.a = eq && a.length > 3 ? null : a.clone();

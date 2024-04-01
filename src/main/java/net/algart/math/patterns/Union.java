@@ -132,8 +132,9 @@ final class Union extends AbstractPattern implements Pattern {
     public Pattern projectionAlongAxis(int coordIndex) {
         checkCoordIndex(coordIndex);
         assert dimCount > 0;
-        if (dimCount == 1)
+        if (dimCount == 1) {
             throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
+        }
         synchronized (projections) {
             if (projections[coordIndex] == null) {
                 Pattern[] newSubsets = new Pattern[subsets.length];
@@ -150,9 +151,10 @@ final class Union extends AbstractPattern implements Pattern {
 
     @Override
     public Pattern shift(Point shift) {
-        if (shift.coordCount() != dimCount)
+        if (shift.coordCount() != dimCount) {
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
                 + " is not equal to the number of pattern coordinates " + dimCount);
+        }
         if (shift.isOrigin()) {
             return this;
         }
@@ -165,11 +167,11 @@ final class Union extends AbstractPattern implements Pattern {
 
     @Override
     public Pattern scale(double... multipliers) {
-        if (multipliers == null)
-            throw new NullPointerException("Null multipliers argument");
-        if (multipliers.length != dimCount)
+        Objects.requireNonNull(multipliers, "Null multipliers argument");
+        if (multipliers.length != dimCount) {
             throw new IllegalArgumentException("Illegal number of multipliers: "
                 + multipliers.length + " instead of " + dimCount);
+        }
         Pattern[] newSubsets = new Pattern[subsets.length];
         for (int k = 0; k < newSubsets.length; k++) {
             newSubsets[k] = subsets[k].scale(multipliers);
@@ -179,8 +181,9 @@ final class Union extends AbstractPattern implements Pattern {
 
     @Override
     public List<List<Pattern>> allUnionDecompositions(int minimalPointCount) {
-        if (minimalPointCount < 0)
+        if (minimalPointCount < 0) {
             throw new IllegalArgumentException("Negative minimalPointCount");
+        }
         List<Pattern> result = new ArrayList<Pattern>(subsets.length);
         for (Pattern subset : subsets) {
             result.addAll(subset.unionDecomposition(minimalPointCount));
