@@ -24,6 +24,7 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
 import net.algart.math.functions.Func;
 
@@ -163,14 +164,16 @@ class ArraysBitTableGetDataOp {
     }
 
     void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (count < 0)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw AbstractArray.rangeException(arrayPos, x0.length(), x0.getClass());
-        if (arrayPos > x0.length() - count)
+        }
+        if (arrayPos > x0.length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x0.length(), x0.getClass());
+        }
         for (; count > 0; ) {
             int len;
             if (dbuf != null) {
@@ -252,8 +255,9 @@ class ArraysBitTableGetDataOp {
                             throw new AssertionError("Illegal destElementTypeCode");
                     }
                 } finally {
-                    if (!unlocked)
+                    if (!unlocked) {
                         lock.unlock();
+                    }
                 }
                 destArrayOffset += len;
             } else {

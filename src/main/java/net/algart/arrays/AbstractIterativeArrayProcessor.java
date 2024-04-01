@@ -25,6 +25,7 @@
 package net.algart.arrays;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * <p>A skeletal implementation of the {@link IterativeArrayProcessor} interface.
@@ -142,14 +143,16 @@ public abstract class AbstractIterativeArrayProcessor<T>
                 totalCount = 0; // invoke reinitializing estimatedContext
             }
             result = result();
-            if (context != null)
+            if (context != null) {
                 context.checkInterruption();
+            }
             Array resultArray = resultArray(result);
             if (resultArray != null) {
                 long len = resultArray.length();
                 ArrayContext c = done ? context : subContext;
-                if (c != null)
+                if (c != null) {
                     c.updateProgress(new ArrayContext.Event(resultArray.elementType(), len, len));
+                }
             }
 //            System.out.print(count + "  ");
         }
@@ -187,16 +190,17 @@ public abstract class AbstractIterativeArrayProcessor<T>
     }
 
     public IterativeArrayProcessor<T> limitIterations(long maxNumberOfIterations) {
-        if (maxNumberOfIterations < 0)
+        if (maxNumberOfIterations < 0) {
             return this;
+        }
         return new LimitedIterations<T>(this, maxNumberOfIterations);
     }
 
     public IterativeArrayProcessor<T> chain(IterativeArrayProcessor<T> followingProcessor, double weight) {
-        if (followingProcessor == null)
-            throw new NullPointerException("Null followingProcessor argument");
-        if (weight < 0.0)
+        Objects.requireNonNull(followingProcessor, "Null followingProcessor argument");
+        if (weight < 0.0) {
             throw new IllegalArgumentException("Negative weight");
+        }
         return new Chain<T>(this, followingProcessor, weight);
     }
 
@@ -227,7 +231,9 @@ public abstract class AbstractIterativeArrayProcessor<T>
         public void performIteration(ArrayContext context) {
             proc.performIteration(context);
             if (numberOfIterations > 0) // for a case when a client calls this method after done()
+            {
                 numberOfIterations--;
+            }
         }
 
         @Override
@@ -289,8 +295,9 @@ public abstract class AbstractIterativeArrayProcessor<T>
             if (!proc1.done()) {
                 long n1 = proc1.estimatedNumberOfIterations();
                 long n2 = proc2.estimatedNumberOfIterations();
-                if (n1 <= 0 || n2 <= 0)
+                if (n1 <= 0 || n2 <= 0) {
                     return 0;
+                }
                 return n1 + Math.round(weight2 * n2);
             } else {
                 return proc2.estimatedNumberOfIterations();

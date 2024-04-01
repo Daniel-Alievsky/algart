@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>Summing histogram: an extension of {@link Histogram} class, allowing quick calculation of sums
  * of all elements of the sorted source array <b>A</b>[<i>k</i>] with indexes, lying in some range
@@ -524,8 +526,7 @@ public abstract class SummingHistogram extends Histogram {
     {
         if (histogramLength < 0)
             throw new IllegalArgumentException("Negative histogramLength");
-        if (bitLevelsOfPyramid == null)
-            throw new NullPointerException("Null bitLevelsOfPyramid argument");
+        Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         if (optimizeSimpleIntegral) {
             return bitLevelsOfPyramid.length == 0 ?
                 new SimplifiedSummingLong1LevelHistogram(new long[histogramLength], bitLevelsOfPyramid, true) :
@@ -602,10 +603,8 @@ public abstract class SummingHistogram extends Histogram {
     public static SummingHistogram newSummingLongHistogram(long[] histogram, boolean optimizeSimpleIntegral,
         int... bitLevelsOfPyramid)
     {
-        if (histogram == null)
-            throw new IllegalArgumentException("Null histogram argument");
-        if (bitLevelsOfPyramid == null)
-            throw new NullPointerException("Null bitLevelsOfPyramid argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
+        Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         if (optimizeSimpleIntegral) {
             return bitLevelsOfPyramid.length == 0 ?
                 new SimplifiedSummingLong1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
@@ -680,8 +679,7 @@ public abstract class SummingHistogram extends Histogram {
     {
         if (histogramLength < 0)
             throw new IllegalArgumentException("Negative histogramLength");
-        if (bitLevelsOfPyramid == null)
-            throw new NullPointerException("Null bitLevelsOfPyramid argument");
+        Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         if (optimizeSimpleIntegral) {
             return bitLevelsOfPyramid.length == 0 ?
                 new SimplifiedSummingInt1LevelHistogram(new int[histogramLength], bitLevelsOfPyramid, true) :
@@ -758,10 +756,8 @@ public abstract class SummingHistogram extends Histogram {
     public static SummingHistogram newSummingIntHistogram(int[] histogram, boolean optimizeSimpleIntegral,
         int... bitLevelsOfPyramid)
     {
-        if (histogram == null)
-            throw new IllegalArgumentException("Null histogram argument");
-        if (bitLevelsOfPyramid == null)
-            throw new NullPointerException("Null bitLevelsOfPyramid argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
+        Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         if (optimizeSimpleIntegral) {
             return bitLevelsOfPyramid.length == 0 ?
                 new SimplifiedSummingInt1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
@@ -1182,8 +1178,7 @@ public abstract class SummingHistogram extends Histogram {
      */
     public static double integralBetweenRanks(long[] histogram, double fromRank, double toRank) {
         //[[Repeat.SectionStart integralBetweenRanksImpl]]
-        if (histogram == null)
-            throw new NullPointerException("Null histogram argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
         if (Double.isNaN(fromRank))
             throw new IllegalArgumentException("Illegal fromRank argument (NaN)");
         if (Double.isNaN(toRank))
@@ -1261,8 +1256,7 @@ public abstract class SummingHistogram extends Histogram {
     public static double integralBetweenRanks(int[] histogram, double fromRank, double toRank) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, integralBetweenRanksImpl)
         //        \blong\b ==> int    !! Auto-generated: NOT EDIT !! ]]
-        if (histogram == null)
-            throw new NullPointerException("Null histogram argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
         if (Double.isNaN(fromRank))
             throw new IllegalArgumentException("Illegal fromRank argument (NaN)");
         if (Double.isNaN(toRank))
@@ -1407,8 +1401,7 @@ public abstract class SummingHistogram extends Histogram {
 
     //[[Repeat.SectionStart preciseIntegralBetweenRanksImpl]]
     private static double preciseIntegralBetweenRanksImpl(long[] histogram, double fromRank, double toRank) {
-        if (histogram == null)
-            throw new NullPointerException("Null histogram argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
         if (Double.isNaN(fromRank))
             throw new IllegalArgumentException("Illegal fromRank argument (NaN)");
         if (Double.isNaN(toRank))
@@ -1562,8 +1555,7 @@ public abstract class SummingHistogram extends Histogram {
     //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, preciseIntegralBetweenRanksImpl)
     //        \blong\b ==> int    !! Auto-generated: NOT EDIT !! ]]
     private static double preciseIntegralBetweenRanksImpl(int[] histogram, double fromRank, double toRank) {
-        if (histogram == null)
-            throw new NullPointerException("Null histogram argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
         if (Double.isNaN(fromRank))
             throw new IllegalArgumentException("Illegal fromRank argument (NaN)");
         if (Double.isNaN(toRank))
@@ -1807,8 +1799,7 @@ public abstract class SummingHistogram extends Histogram {
         CountOfValues countOfValues)
     {
         //[[Repeat.SectionStart integralBetweenValuesImpl]]
-        if (histogram == null)
-            throw new NullPointerException("Null histogram argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
         if (Double.isNaN(minValue))
             throw new IllegalArgumentException("Illegal minValue argument (NaN)");
         if (Double.isNaN(maxValue))
@@ -1900,8 +1891,7 @@ public abstract class SummingHistogram extends Histogram {
     {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, integralBetweenValuesImpl)
         //        \blong\b ==> int    !! Auto-generated: NOT EDIT !! ]]
-        if (histogram == null)
-            throw new NullPointerException("Null histogram argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
         if (Double.isNaN(minValue))
             throw new IllegalArgumentException("Illegal minValue argument (NaN)");
         if (Double.isNaN(maxValue))
@@ -2063,8 +2053,7 @@ public abstract class SummingHistogram extends Histogram {
         CountOfValues countOfValues)
     {
         //[[Repeat.SectionStart preciseIntegralBetweenValuesImpl]]
-        if (histogram == null)
-            throw new NullPointerException("Null histogram argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
         if (Double.isNaN(minValue))
             throw new IllegalArgumentException("Illegal minValue argument (NaN)");
         if (Double.isNaN(maxValue))
@@ -2296,8 +2285,7 @@ public abstract class SummingHistogram extends Histogram {
     {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, preciseIntegralBetweenValuesImpl)
         //        \blong\b ==> int  !! Auto-generated: NOT EDIT !! ]]
-        if (histogram == null)
-            throw new NullPointerException("Null histogram argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
         if (Double.isNaN(minValue))
             throw new IllegalArgumentException("Illegal minValue argument (NaN)");
         if (Double.isNaN(maxValue))
@@ -3752,8 +3740,7 @@ public abstract class SummingHistogram extends Histogram {
         } // NDV: removed from Histogram.java by preprocessor
 
         private static long[][] newMultilevelHistogram(long[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             long[][] result = new long[numberOfLevels][];
@@ -3762,8 +3749,7 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         private static long sumOfAndCheck(long[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }
@@ -4508,8 +4494,7 @@ public abstract class SummingHistogram extends Histogram {
         } // NDV: removed from Histogram.java by preprocessor
 
         private static long[][] newMultilevelHistogram(long[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             long[][] result = new long[numberOfLevels][];
@@ -4518,8 +4503,7 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         private static long sumOfAndCheck(long[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }
@@ -5787,8 +5771,7 @@ public abstract class SummingHistogram extends Histogram {
         } // NDV: removed from Histogram.java by preprocessor
 
         private static int[][] newMultilevelHistogram(int[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             int[][] result = new int[numberOfLevels][];
@@ -5797,8 +5780,7 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         private static int sumOfAndCheck(int[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }
@@ -6548,8 +6530,7 @@ public abstract class SummingHistogram extends Histogram {
         } // NDV: removed from Histogram.java by preprocessor
 
         private static int[][] newMultilevelHistogram(int[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             int[][] result = new int[numberOfLevels][];
@@ -6558,8 +6539,7 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         private static int sumOfAndCheck(int[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }
@@ -7634,8 +7614,7 @@ public abstract class SummingHistogram extends Histogram {
         } // NDV: removed from Histogram.java by preprocessor
 
         private static long[][] newMultilevelHistogram(long[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             long[][] result = new long[numberOfLevels][];
@@ -7644,8 +7623,7 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         private static long sumOfAndCheck(long[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }
@@ -8290,8 +8268,7 @@ public abstract class SummingHistogram extends Histogram {
         } // NDV: removed from Histogram.java by preprocessor
 
         private static long[][] newMultilevelHistogram(long[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             long[][] result = new long[numberOfLevels][];
@@ -8300,8 +8277,7 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         private static long sumOfAndCheck(long[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }
@@ -9380,8 +9356,7 @@ public abstract class SummingHistogram extends Histogram {
         } // NDV: removed from Histogram.java by preprocessor
 
         private static int[][] newMultilevelHistogram(int[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             int[][] result = new int[numberOfLevels][];
@@ -9390,8 +9365,7 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         private static int sumOfAndCheck(int[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }
@@ -10041,8 +10015,7 @@ public abstract class SummingHistogram extends Histogram {
         } // NDV: removed from Histogram.java by preprocessor
 
         private static int[][] newMultilevelHistogram(int[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             int[][] result = new int[numberOfLevels][];
@@ -10051,8 +10024,7 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         private static int sumOfAndCheck(int[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }

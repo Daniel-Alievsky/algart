@@ -48,12 +48,11 @@ public class ArrayPool {
     private final ReentrantLock lock = new ReentrantLock();
 
     private ArrayPool(MemoryModel memoryModel, Class<?> elementType, long arrayLength) {
-        if (memoryModel == null)
-            throw new NullPointerException("Null memoryModel argument");
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
-        if (arrayLength < 0)
+        Objects.requireNonNull(memoryModel, "Null memoryModel argument");
+        Objects.requireNonNull(elementType, "Null elementType argument");
+        if (arrayLength < 0) {
             throw new IllegalArgumentException("Negative arrayLength");
+        }
         this.memoryModel = memoryModel;
         this.elementType = elementType;
         this.arrayLength = arrayLength;
@@ -144,12 +143,15 @@ public class ArrayPool {
      *                                  do not match the arguments of {@link #getInstance getInstance} method.
      */
     public void releaseArray(UpdatableArray array) {
-        if (array == null)
+        if (array == null) {
             return;
-        if (array.elementType() != elementType)
+        }
+        if (array.elementType() != elementType) {
             throw new IllegalArgumentException("The type of array elements does not match this AlgART array pool");
-        if (array.length() != arrayLength)
+        }
+        if (array.length() != arrayLength) {
             throw new IllegalArgumentException("The array length does not match this AlgART array pool");
+        }
         lock.lock();
         try {
             Reference<UpdatableArray> ref = SimpleMemoryModel.isSimpleArray(array) ?

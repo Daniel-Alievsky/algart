@@ -26,6 +26,8 @@ package net.algart.arrays;
 
 import net.algart.math.functions.Func;
 
+import java.util.Objects;
+
 /**
  * <p>Implementation of {@link Array#getData(long, Object, int, int)} methods
  * in the custom implementations of functional arrays, created by
@@ -62,14 +64,16 @@ class ArraysAnyCoordFuncGetDataOp {
     }
 
     void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (count < 0)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw AbstractArray.rangeException(arrayPos, length, result.getClass());
-        if (arrayPos > length - count)
+        }
+        if (arrayPos > length - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, length, result.getClass());
+        }
         final int destArrayOffsetMax = destArrayOffset + count;
         double[] coordinates = new double[dim.length];
         switch (destElementTypeCode) {

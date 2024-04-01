@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>Histogram: an array of non-negative integer numbers <b>b</b>[<i>v</i>], 0&le;<i>v</i>&lt;<i>M</i>,
  * where every element <b>b</b>[<i>v</i>] represents the number of occurrence of the value <i>v</i>
@@ -422,8 +424,7 @@ public abstract class Histogram {
     public static Histogram newLongHistogram(int histogramLength, int... bitLevelsOfPyramid) {
         if (histogramLength < 0)
             throw new IllegalArgumentException("Negative histogramLength");
-        if (bitLevelsOfPyramid == null)
-            throw new NullPointerException("Null bitLevelsOfPyramid argument");
+        Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         return bitLevelsOfPyramid.length == 0 ?
             new Long1LevelHistogram(new long[histogramLength], bitLevelsOfPyramid, true) :
             new LongHistogram(new long[histogramLength], bitLevelsOfPyramid, true);
@@ -501,10 +502,8 @@ public abstract class Histogram {
      *                                  for some <i>k</i>.
      */
     public static Histogram newLongHistogram(long[] histogram, int... bitLevelsOfPyramid) {
-        if (histogram == null)
-            throw new IllegalArgumentException("Null histogram argument");
-        if (bitLevelsOfPyramid == null)
-            throw new NullPointerException("Null bitLevelsOfPyramid argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
+        Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         return bitLevelsOfPyramid.length == 0 ?
             new Long1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
             new LongHistogram(histogram.clone(), bitLevelsOfPyramid, false);
@@ -580,8 +579,7 @@ public abstract class Histogram {
     public static Histogram newIntHistogram(int histogramLength, int... bitLevelsOfPyramid) {
         if (histogramLength < 0)
             throw new IllegalArgumentException("Negative histogramLength");
-        if (bitLevelsOfPyramid == null)
-            throw new NullPointerException("Null bitLevelsOfPyramid argument");
+        Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         return bitLevelsOfPyramid.length == 0 ?
             new Int1LevelHistogram(new int[histogramLength], bitLevelsOfPyramid, true) :
             new IntHistogram(new int[histogramLength], bitLevelsOfPyramid, true);
@@ -658,10 +656,8 @@ public abstract class Histogram {
      *                                  for some <i>k</i>.
      */
     public static Histogram newIntHistogram(int[] histogram, int... bitLevelsOfPyramid) {
-        if (histogram == null)
-            throw new IllegalArgumentException("Null histogram argument");
-        if (bitLevelsOfPyramid == null)
-            throw new NullPointerException("Null bitLevelsOfPyramid argument");
+        Objects.requireNonNull(histogram, "Null histogram argument");
+        Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         return bitLevelsOfPyramid.length == 0 ?
             new Int1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
             new IntHistogram(histogram.clone(), bitLevelsOfPyramid, false);
@@ -3093,8 +3089,7 @@ public abstract class Histogram {
 
 
         private static long[][] newMultilevelHistogram(long[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             long[][] result = new long[numberOfLevels][];
@@ -3103,8 +3098,7 @@ public abstract class Histogram {
         }
 
         private static long sumOfAndCheck(long[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }
@@ -3676,8 +3670,7 @@ public abstract class Histogram {
 
 
         private static long[][] newMultilevelHistogram(long[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             long[][] result = new long[numberOfLevels][];
@@ -3686,8 +3679,7 @@ public abstract class Histogram {
         }
 
         private static long sumOfAndCheck(long[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }
@@ -4641,8 +4633,7 @@ public abstract class Histogram {
 
 
         private static int[][] newMultilevelHistogram(int[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             int[][] result = new int[numberOfLevels][];
@@ -4651,8 +4642,7 @@ public abstract class Histogram {
         }
 
         private static int sumOfAndCheck(int[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }
@@ -5227,8 +5217,7 @@ public abstract class Histogram {
 
 
         private static int[][] newMultilevelHistogram(int[] histogram, int numberOfLevels) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (numberOfLevels > 31)
                 throw new IllegalArgumentException("Number of levels must not be greater than 31");
             int[][] result = new int[numberOfLevels][];
@@ -5237,8 +5226,7 @@ public abstract class Histogram {
         }
 
         private static int sumOfAndCheck(int[] histogram, int from, int to) {
-            if (histogram == null)
-                throw new NullPointerException("Null histogram argument");
+            Objects.requireNonNull(histogram, "Null histogram argument");
             if (to > histogram.length) {
                 to = histogram.length;
             }
