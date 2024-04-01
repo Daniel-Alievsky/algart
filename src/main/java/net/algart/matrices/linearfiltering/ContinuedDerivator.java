@@ -28,6 +28,7 @@ import net.algart.arrays.*;
 import net.algart.math.IPoint;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ContinuedDerivator implements Derivator {
     private final Derivator parent;
@@ -35,13 +36,12 @@ public class ContinuedDerivator implements Derivator {
     private final Matrix.ContinuationMode continuationMode;
 
     private ContinuedDerivator(Derivator parent, Matrix.ContinuationMode continuationMode) {
-        if (parent == null)
-            throw new NullPointerException("Null parent derivator");
-        if (continuationMode == null)
-            throw new NullPointerException("Null continuationMode derivator");
-        if (continuationMode == Matrix.ContinuationMode.NONE)
+        Objects.requireNonNull(parent, "Null parent derivator");
+        Objects.requireNonNull(continuationMode, "Null continuationMode derivator");
+        if (continuationMode == Matrix.ContinuationMode.NONE) {
             throw new IllegalArgumentException(getClass().getName() + " cannot be used with continuation mode \""
                 + continuationMode + "\"");
+        }
         this.parent = parent;
         this.context = parent.context() == null ? ArrayContext.DEFAULT : parent.context();
         this.continuationMode = continuationMode;

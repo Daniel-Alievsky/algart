@@ -30,6 +30,8 @@ import net.algart.math.patterns.Pattern;
 import net.algart.math.patterns.WeightedPattern;
 import net.algart.matrices.DependenceApertureBuilder;
 
+import java.util.Objects;
+
 /**
  * <p>The filter allowing to transform any {@link Convolution} object to another instance of that interface,
  * which uses some non-trivial form of continuation outside the source matrix.</p>
@@ -86,13 +88,12 @@ public class ContinuedConvolution implements Convolution {
     private final Matrix.ContinuationMode continuationMode;
 
     private ContinuedConvolution(Convolution parent, Matrix.ContinuationMode continuationMode) {
-        if (parent == null)
-            throw new NullPointerException("Null parent convolution");
-        if (continuationMode == null)
-            throw new NullPointerException("Null continuationMode derivator");
-        if (continuationMode == Matrix.ContinuationMode.NONE)
+        Objects.requireNonNull(parent, "Null parent convolution");
+        Objects.requireNonNull(continuationMode, "Null continuationMode derivator");
+        if (continuationMode == Matrix.ContinuationMode.NONE) {
             throw new IllegalArgumentException(getClass().getName() + " cannot be used with continuation mode \""
                 + continuationMode + "\"");
+        }
         this.parent = parent;
         this.context = parent.context() == null ? ArrayContext.DEFAULT : parent.context();
         this.continuationMode = continuationMode;

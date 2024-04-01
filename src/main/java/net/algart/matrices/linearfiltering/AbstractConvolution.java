@@ -27,6 +27,8 @@ package net.algart.matrices.linearfiltering;
 import net.algart.arrays.*;
 import net.algart.math.patterns.WeightedPattern;
 
+import java.util.Objects;
+
 public abstract class AbstractConvolution extends AbstractArrayProcessorWithContextSwitching implements Convolution {
     protected final boolean incrementForUnsigned;
     protected final boolean incrementByHalfForInteger;
@@ -102,10 +104,8 @@ public abstract class AbstractConvolution extends AbstractArrayProcessorWithCont
     public <T extends PArray> Matrix<? extends T> convolution(Class<? extends T> requiredType,
         Matrix<? extends PArray> src, WeightedPattern pattern)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         Class<?> elementType = Arrays.elementType(requiredType);
         Matrices.checkNewMatrixType(requiredType, elementType);
         Matrix<? extends UpdatablePArray> dest = memoryModel().newMatrix(UpdatablePArray.class,
@@ -117,10 +117,8 @@ public abstract class AbstractConvolution extends AbstractArrayProcessorWithCont
     public void convolution(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
         WeightedPattern pattern)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         Matrices.copy(context(), dest, asConvolution(dest.type(PArray.class), src, pattern));
     }
 }

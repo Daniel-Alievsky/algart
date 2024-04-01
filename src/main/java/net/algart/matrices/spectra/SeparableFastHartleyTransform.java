@@ -26,6 +26,8 @@ package net.algart.matrices.spectra;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
+
 /**
  * <p><i>Fast Hartley transform</i> (FHT)
  * (in multidimensional case &mdash; the <i>separable</i> fast Hartley transform).
@@ -398,16 +400,15 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         Matrix<? extends UpdatablePNumberArray> fRe, Matrix<? extends UpdatablePNumberArray> fIm,
         Matrix<? extends PNumberArray> h)
     {
-        if (fRe == null)
-            throw new NullPointerException("Null fRe argument");
-        if (fIm == null)
-            throw new NullPointerException("Null fIm argument");
-        if (h == null)
-            throw new NullPointerException("Null h argument");
-        if (!fRe.dimEquals(fIm))
+        Objects.requireNonNull(fRe, "Null fRe argument");
+        Objects.requireNonNull(fIm, "Null fIm argument");
+        Objects.requireNonNull(h, "Null h argument");
+        if (!fRe.dimEquals(fIm)) {
             throw new SizeMismatchException("fRe and fIm dimensions mismatch: fRe is " + fRe + ", fIm " + fIm);
-        if (!h.dimEquals(fRe))
+        }
+        if (!h.dimEquals(fRe)) {
             throw new SizeMismatchException("h and fRe dimensions mismatch: h is " + h + ", fRe " + fRe);
+        }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         Conversions.separableHartleyToFourierRecoursive(context, maxTempJavaMemory(),
             fRe.array(), fIm.array(), h.array(), null,
@@ -454,20 +455,19 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         Matrix<? extends UpdatablePNumberArray> fRe, Matrix<? extends UpdatablePNumberArray> fIm,
         Matrix<? extends PNumberArray> hRe, Matrix<? extends PNumberArray> hIm)
     {
-        if (fRe == null)
-            throw new NullPointerException("Null fRe argument");
-        if (fIm == null)
-            throw new NullPointerException("Null fIm argument");
-        if (hRe == null)
-            throw new NullPointerException("Null hRe argument");
-        if (hIm == null)
-            throw new NullPointerException("Null hIm argument");
-        if (!fRe.dimEquals(fIm))
+        Objects.requireNonNull(fRe, "Null fRe argument");
+        Objects.requireNonNull(fIm, "Null fIm argument");
+        Objects.requireNonNull(hRe, "Null hRe argument");
+        Objects.requireNonNull(hIm, "Null hIm argument");
+        if (!fRe.dimEquals(fIm)) {
             throw new SizeMismatchException("fRe and fIm dimensions mismatch: fRe is " + fRe + ", fIm " + fIm);
-        if (!hRe.dimEquals(fRe))
+        }
+        if (!hRe.dimEquals(fRe)) {
             throw new SizeMismatchException("hRe and fRe dimensions mismatch: hRe is " + hRe + ", fRe " + fRe);
-        if (!hIm.dimEquals(fRe))
+        }
+        if (!hIm.dimEquals(fRe)) {
             throw new SizeMismatchException("hIm and fRe dimensions mismatch: hIm is " + hIm + ", fRe " + fRe);
+        }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         Conversions.separableHartleyToFourierRecoursive(context, maxTempJavaMemory(),
             fRe.array(), fIm.array(), hRe.array(), hIm.array(),
@@ -515,16 +515,15 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         Matrix<? extends UpdatablePNumberArray> h,
         Matrix<? extends PNumberArray> fRe, Matrix<? extends PNumberArray> fIm)
     {
-        if (h == null)
-            throw new NullPointerException("Null h argument");
-        if (fRe == null)
-            throw new NullPointerException("Null fRe argument");
-        if (fIm == null)
-            throw new NullPointerException("Null fIm argument");
-        if (!fRe.dimEquals(fIm))
+        Objects.requireNonNull(h, "Null h argument");
+        Objects.requireNonNull(fRe, "Null fRe argument");
+        Objects.requireNonNull(fIm, "Null fIm argument");
+        if (!fRe.dimEquals(fIm)) {
             throw new SizeMismatchException("fRe and fIm dimensions mismatch: fRe is " + fRe + ", fIm " + fIm);
-        if (!h.dimEquals(fRe))
+        }
+        if (!h.dimEquals(fRe)) {
             throw new SizeMismatchException("h and fRe dimensions mismatch: h is " + h + ", fRe " + fRe);
+        }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         Conversions.fourierToSeparableHartleyRecursive(context, maxTempJavaMemory(),
             h.array(), null, fRe.array(), fIm.array(),
@@ -571,20 +570,19 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         Matrix<? extends UpdatablePNumberArray> hRe, Matrix<? extends UpdatablePNumberArray> hIm,
         Matrix<? extends PNumberArray> fRe, Matrix<? extends PNumberArray> fIm)
     {
-        if (hRe == null)
-            throw new NullPointerException("Null hRe argument");
-        if (fRe == null)
-            throw new NullPointerException("Null fRe argument");
-        if (fIm == null)
-            throw new NullPointerException("Null fIm argument");
-        if (hIm == null)
-            throw new NullPointerException("Null hIm argument");
-        if (!fRe.dimEquals(fIm))
+        Objects.requireNonNull(hRe, "Null hRe argument");
+        Objects.requireNonNull(fRe, "Null fRe argument");
+        Objects.requireNonNull(fIm, "Null fIm argument");
+        Objects.requireNonNull(hIm, "Null hIm argument");
+        if (!fRe.dimEquals(fIm)) {
             throw new SizeMismatchException("fRe and fIm dimensions mismatch: fRe is " + fRe + ", fIm " + fIm);
-        if (!hRe.dimEquals(fRe))
+        }
+        if (!hRe.dimEquals(fRe)) {
             throw new SizeMismatchException("hRe and fRe dimensions mismatch: hRe is " + hRe + ", fRe " + fRe);
-        if (!hIm.dimEquals(fRe))
+        }
+        if (!hIm.dimEquals(fRe)) {
             throw new SizeMismatchException("hIm and fRe dimensions mismatch: hIm is " + hIm + ", fRe " + fRe);
+        }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         Conversions.fourierToSeparableHartleyRecursive(context, maxTempJavaMemory(),
             hRe.array(), hIm.array(), fRe.array(), fIm.array(),
@@ -627,16 +625,15 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         Matrix<? extends PNumberArray> p,
         Matrix<? extends PNumberArray> q)
     {
-        if (c == null)
-            throw new NullPointerException("Null c argument");
-        if (p == null)
-            throw new NullPointerException("Null p argument");
-        if (q == null)
-            throw new NullPointerException("Null q argument");
-        if (!p.dimEquals(c))
+        Objects.requireNonNull(c, "Null c argument");
+        Objects.requireNonNull(p, "Null p argument");
+        Objects.requireNonNull(q, "Null q argument");
+        if (!p.dimEquals(c)) {
             throw new SizeMismatchException("c and p dimensions mismatch: c is " + c + ", p " + p);
-        if (!q.dimEquals(c))
+        }
+        if (!q.dimEquals(c)) {
             throw new SizeMismatchException("c and q dimensions mismatch: c is " + c + ", q " + q);
+        }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         SpectraOfConvolution.separableHartleySpectrumOfConvolution(context, maxTempJavaMemory(),
             c.array(), null, p.array(), null, q.array(), null,
@@ -686,28 +683,27 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         Matrix<? extends PNumberArray> pRe, Matrix<? extends PNumberArray> pIm,
         Matrix<? extends PNumberArray> qRe, Matrix<? extends PNumberArray> qIm)
     {
-        if (cRe == null)
-            throw new NullPointerException("Null cRe argument");
-        if (cIm == null)
-            throw new NullPointerException("Null cIm argument");
-        if (pRe == null)
-            throw new NullPointerException("Null pRe argument");
-        if (pIm == null)
-            throw new NullPointerException("Null pIm argument");
-        if (qRe == null)
-            throw new NullPointerException("Null qRe argument");
-        if (qIm == null)
-            throw new NullPointerException("Null qIm argument");
-        if (!cRe.dimEquals(cIm))
+        Objects.requireNonNull(cRe, "Null cRe argument");
+        Objects.requireNonNull(cIm, "Null cIm argument");
+        Objects.requireNonNull(pRe, "Null pRe argument");
+        Objects.requireNonNull(pIm, "Null pIm argument");
+        Objects.requireNonNull(qRe, "Null qRe argument");
+        Objects.requireNonNull(qIm, "Null qIm argument");
+        if (!cRe.dimEquals(cIm)) {
             throw new SizeMismatchException("cRe and cIm dimensions mismatch: cRe is " + cRe + ", cIm " + cIm);
-        if (!pRe.dimEquals(cRe))
+        }
+        if (!pRe.dimEquals(cRe)) {
             throw new SizeMismatchException("cRe and pRe dimensions mismatch: cRe is " + cRe + ", pRe " + pRe);
-        if (!pIm.dimEquals(cRe))
+        }
+        if (!pIm.dimEquals(cRe)) {
             throw new SizeMismatchException("cRe and pIm dimensions mismatch: cRe is " + cRe + ", pIm " + pIm);
-        if (!qRe.dimEquals(cRe))
+        }
+        if (!qRe.dimEquals(cRe)) {
             throw new SizeMismatchException("cRe and qRe dimensions mismatch: cRe is " + cRe + ", qRe " + qRe);
-        if (!qIm.dimEquals(cRe))
+        }
+        if (!qIm.dimEquals(cRe)) {
             throw new SizeMismatchException("cRe and qIm dimensions mismatch: cRe is " + cRe + ", qIm " + qIm);
+        }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         SpectraOfConvolution.separableHartleySpectrumOfConvolution(context, maxTempJavaMemory(),
             cRe.array(), cIm.array(), pRe.array(), pIm.array(), qRe.array(), qIm.array(),

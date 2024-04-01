@@ -32,6 +32,7 @@ import net.algart.math.functions.PowerFunc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class AbstractDerivator extends AbstractArrayProcessorWithContextSwitching implements Derivator {
     protected final boolean decrementForUnsigned;
@@ -226,8 +227,9 @@ public abstract class AbstractDerivator extends AbstractArrayProcessorWithContex
         ArrayList<Matrix<? extends PArray>> list = new ArrayList<Matrix<? extends PArray>>(vectorComponents);
         Matrices.checkDimensionEquality(list);
         int n = list.size();
-        if (n == 0)
+        if (n == 0) {
             throw new IllegalArgumentException("Empty list of vector components");
+        }
         if (n == 1) {
             Matrix<? extends PArray> m = list.get(0);
             double d = decrement(m.elementType());
@@ -252,16 +254,15 @@ public abstract class AbstractDerivator extends AbstractArrayProcessorWithContex
     }
 
     protected static IPoint[] checkAndCloneDirections(int dimCount, IPoint... directions) {
-        if (directions == null)
-            throw new NullPointerException("Null directions argument");
+        Objects.requireNonNull(directions, "Null directions argument");
         directions = directions.clone(); // - to be sure that its content cannot be changed in a parallel thread
         int k = 0;
         for (IPoint dir : directions) {
-            if (dir == null)
-                throw new NullPointerException("Null direction #" + k);
-            if (dir.coordCount() != dimCount)
+            Objects.requireNonNull(dir, "Null direction #" + k);
+            if (dir.coordCount() != dimCount) {
                 throw new IllegalArgumentException("The direction #" + k + " = " + dir
                     + " has illegal number of dimensions: " + dimCount + "-dimensional vectors required");
+            }
             k++;
         }
         return directions;

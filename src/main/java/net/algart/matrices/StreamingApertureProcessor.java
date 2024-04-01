@@ -31,6 +31,7 @@ import net.algart.math.IPoint;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -606,8 +607,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
         Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
         List<? extends Matrix<? extends PArray>> additionalMatrices, Pattern pattern)
     {
-        if (additionalMatrices == null)
-            throw new NullPointerException("Null additionalMatrices argument");
+        Objects.requireNonNull(additionalMatrices, "Null additionalMatrices argument");
         additionalMatrices = new ArrayList<Matrix<? extends PArray>>(additionalMatrices);
         // - to avoid changing by parallel threads
         checkArguments(dest, src, additionalMatrices, pattern);
@@ -812,26 +812,24 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
         Matrix<? extends PArray> dest, Matrix<? extends PArray> src,
         List<? extends Matrix<? extends PArray>> additionalMatrices, final Pattern pattern)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (dest == null)
-            throw new NullPointerException("Null dest argument");
-        if (additionalMatrices == null)
-            throw new NullPointerException("Null additionalMatrices argument");
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
-        if (pattern.dimCount() != src.dimCount())
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(additionalMatrices, "Null additionalMatrices argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
+        if (pattern.dimCount() != src.dimCount()) {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the matrix mismatch");
-        if (!dest.dimEquals(src))
+        }
+        if (!dest.dimEquals(src)) {
             throw new SizeMismatchException("Destination and source matrix dimensions mismatch: "
                 + dest + " and " + src);
+        }
         for (int k = 0, n = additionalMatrices.size(); k < n; k++) {
             Matrix<? extends PArray> m = additionalMatrices.get(k);
-            if (m == null)
-                throw new NullPointerException("Null additional matrix #" + k);
-            if (!m.dimEquals(src))
+            Objects.requireNonNull(m, "Null additional matrix #" + k);
+            if (!m.dimEquals(src)) {
                 throw new SizeMismatchException("The additional matrix #" + k + " and the src matrix dimensions "
                     + "mismatch: the additional matrix #" + k + " is " + m + ", the src matrix is " + src);
+            }
         }
     }
 

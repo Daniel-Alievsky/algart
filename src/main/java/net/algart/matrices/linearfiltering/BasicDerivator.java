@@ -32,6 +32,7 @@ import net.algart.math.functions.MinFromTwoSelectedNumbersFunc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BasicDerivator extends AbstractDerivator implements Derivator {
     private BasicDerivator(ArrayContext context, boolean decrementForUnsigned) {
@@ -84,8 +85,7 @@ public class BasicDerivator extends AbstractDerivator implements Derivator {
     public Matrix<? extends BitArray> asMaskOfMaximums(Matrix<? extends PArray> src,
         SuppressionMode mode, Matrix<? extends PIntegerArray> directionIndexes, IPoint... directions)
     {
-        if (mode == null)
-            throw new NullPointerException("Null suppression mode argument");
+        Objects.requireNonNull(mode, "Null suppression mode argument");
         Matrix<? extends PArray> max = asMaximumFromShiftedForwardAndBackward(src, directionIndexes, directions);
         Matrix<? extends BitArray> zeroMatrix = Matrices.asCoordFuncMatrix(
             ConstantFunc.getInstance(0.0), BitArray.class, src.dimensions());
@@ -98,8 +98,7 @@ public class BasicDerivator extends AbstractDerivator implements Derivator {
     public Matrix<? extends PArray> asNonMaximumSuppression(Matrix<? extends PArray> src,
         SuppressionMode mode, double filler, Matrix<? extends PIntegerArray> directionIndexes, IPoint... directions)
     {
-        if (mode == null)
-            throw new NullPointerException("Null suppression mode argument");
+        Objects.requireNonNull(mode, "Null suppression mode argument");
         Matrix<? extends PArray> max = asMaximumFromShiftedForwardAndBackward(src, directionIndexes, directions);
         Matrix<? extends PArray> filledMatrix = Matrices.asCoordFuncMatrix(
             ConstantFunc.getInstance(filler), src.type(PArray.class), src.dimensions());
@@ -122,8 +121,7 @@ public class BasicDerivator extends AbstractDerivator implements Derivator {
     public Matrix<? extends BitArray> asMaskOfMinimums(Matrix<? extends PArray> src,
         SuppressionMode mode, Matrix<? extends PIntegerArray> directionIndexes, IPoint... directions)
     {
-        if (mode == null)
-            throw new NullPointerException("Null suppression mode argument");
+        Objects.requireNonNull(mode, "Null suppression mode argument");
         Matrix<? extends PArray> min = asMinimumFromShiftedForwardAndBackward(src, directionIndexes, directions);
         Matrix<? extends BitArray> zeroMatrix = Matrices.asCoordFuncMatrix(
             ConstantFunc.getInstance(0.0), BitArray.class, src.dimensions());
@@ -136,8 +134,7 @@ public class BasicDerivator extends AbstractDerivator implements Derivator {
     public Matrix<? extends PArray> asNonMinimumSuppression(Matrix<? extends PArray> src,
         SuppressionMode mode, double filler, Matrix<? extends PIntegerArray> directionIndexes, IPoint... directions)
     {
-        if (mode == null)
-            throw new NullPointerException("Null suppression mode argument");
+        Objects.requireNonNull(mode, "Null suppression mode argument");
         Matrix<? extends PArray> min = asMinimumFromShiftedForwardAndBackward(src, directionIndexes, directions);
         Matrix<? extends PArray> filledMatrix = Matrices.asCoordFuncMatrix(
             ConstantFunc.getInstance(filler), src.type(PArray.class), src.dimensions());

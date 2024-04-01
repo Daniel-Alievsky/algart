@@ -539,32 +539,37 @@ public final class TiledApertureProcessorFactory {
         Matrix.ContinuationMode continuationMode, long maxTempJavaMemory,
         long[] processingTileDim, long[] allocationTileDim, int numberOfTasks)
     {
-        if (continuationMode == null)
-            throw new NullPointerException("Null continuation mode");
-        if (processingTileDim == null)
-            throw new NullPointerException("Null processing tile dimensions Java array");
-        if (continuationMode == Matrix.ContinuationMode.NONE)
+        Objects.requireNonNull(continuationMode, "Null continuation mode");
+        Objects.requireNonNull(processingTileDim, "Null processing tile dimensions Java array");
+        if (continuationMode == Matrix.ContinuationMode.NONE) {
             throw new IllegalArgumentException(getClass() + " cannot be used with continuation mode \""
                 + continuationMode + "\"");
-        if (processingTileDim.length == 0)
+        }
+        if (processingTileDim.length == 0) {
             throw new IllegalArgumentException("Empty processing tile dimensions Java array");
-        if (allocationTileDim != null && allocationTileDim.length != processingTileDim.length)
+        }
+        if (allocationTileDim != null && allocationTileDim.length != processingTileDim.length) {
             throw new IllegalArgumentException("Different number of allocation and processing tile dimensions");
-        if (numberOfTasks < 0)
+        }
+        if (numberOfTasks < 0) {
             throw new IllegalArgumentException("Negative numberOfTasks=" + numberOfTasks);
+        }
         this.processingTileDim = processingTileDim.clone();
         this.allocationTileDim = allocationTileDim == null ? null : allocationTileDim.clone();
         this.dimCount = processingTileDim.length;
         for (int k = 0; k < dimCount; k++) {
-            if (this.processingTileDim[k] <= 0)
+            if (this.processingTileDim[k] <= 0) {
                 throw new IllegalArgumentException("Negative or zero processing tile dimension #"
                     + k + ": " + this.processingTileDim[k]);
-            if (this.allocationTileDim != null && this.allocationTileDim[k] <= 0)
+            }
+            if (this.allocationTileDim != null && this.allocationTileDim[k] <= 0) {
                 throw new IllegalArgumentException("Negative or zero allocation tile dimension #"
                     + k + ": " + this.allocationTileDim[k]);
+            }
         }
-        if (maxTempJavaMemory < 0)
+        if (maxTempJavaMemory < 0) {
             throw new IllegalArgumentException("Negative maxTempJavaMemory argument");
+        }
         this.context = context;
         this.maxTempJavaMemory = maxTempJavaMemory;
         this.continuationMode = continuationMode;
@@ -904,32 +909,29 @@ public final class TiledApertureProcessorFactory {
 
         private BasicTilingProcessor(ApertureProcessor<K> oneTileProcessor) {
             super(context);
-            if (oneTileProcessor == null)
-                throw new NullPointerException("Null one-tile processor");
+            Objects.requireNonNull(oneTileProcessor, "Null one-tile processor");
             this.oneTileProcessor = oneTileProcessor;
         }
 
         public void process(Map<K, Matrix<?>> dest, Map<K, Matrix<?>> src) {
-            if (src == null)
-                throw new NullPointerException("Null table of source matrices");
-            if (dest == null)
-                throw new NullPointerException("Null table of destination matrices");
+            Objects.requireNonNull(src, "Null table of source matrices");
+            Objects.requireNonNull(dest, "Null table of destination matrices");
             final Map<K, Matrix<? extends UpdatableArray>> destCopy =
                 new LinkedHashMap<K, Matrix<? extends UpdatableArray>>();
             for (Map.Entry<K, Matrix<?>> e : dest.entrySet()) {
                 K key = e.getKey();
                 Matrix<?> m = e.getValue();
-                if (m != null && !(m.array() instanceof UpdatableArray))
+                if (m != null && !(m.array() instanceof UpdatableArray)) {
                     throw new IllegalArgumentException("The destination matrix with key \"" + key
                         + "\" is not updatable and cannot be used for returning result");
+                }
                 destCopy.put(key, m == null ? null : m.cast(UpdatableArray.class));
             }
             final Map<K, Matrix<?>> srcCopy = new LinkedHashMap<K, Matrix<?>>();
             for (Map.Entry<K, Matrix<?>> e : src.entrySet()) {
                 K key = e.getKey();
                 Matrix<?> m = e.getValue();
-                if (m == null)
-                    throw new NullPointerException("Null source matrix with key \"" + key + "\"");
+                Objects.requireNonNull(m, "Null source matrix with key \"" + key + "\"");
                 srcCopy.put(key, m);
             }
             // - this cloning is useful if some parallel thread is changing these lists right now
@@ -1069,33 +1071,37 @@ public final class TiledApertureProcessorFactory {
                 if (m == null) {
                     continue;
                 }
-                if (m.dimCount() != dimCount)
+                if (m.dimCount() != dimCount) {
                     throw new IllegalArgumentException("The destination matrix with key \"" + key
                         + "\" has " + m.dimCount()
                         + " dimensions, but this processing tiler works with " + dimCount + " dimensions");
+                }
                 if (result == null) {
                     result = m.dimensions();
-                } else if (!m.dimEquals(result))
+                } else if (!m.dimEquals(result)) {
                     throw new SizeMismatchException("The destination matrix with key \"" + key
                         + "\" and the first matrix dimensions mismatch: "
                         + "the destination matrix with key \"" + key + "\" is " + m
                         + ", but the first matrix has dimensions " + JArrays.toString(result, "x", 1000));
+                }
             }
             for (Map.Entry<K, Matrix<?>> e : src.entrySet()) {
                 K key = e.getKey();
                 Matrix<? extends Array> m = e.getValue();
                 assert m != null;
-                if (m.dimCount() != dimCount)
+                if (m.dimCount() != dimCount) {
                     throw new IllegalArgumentException("The source matrix with key \"" + key
                         + "\" has " + m.dimCount()
                         + " dimensions, but this processing tiler works with " + dimCount + " dimensions");
+                }
                 if (result == null) {
                     result = m.dimensions();
-                } else if (!m.dimEquals(result))
+                } else if (!m.dimEquals(result)) {
                     throw new SizeMismatchException("The source matrix with key \"" + key
                         + "\" and the first matrix dimensions mismatch: "
                         + "the source matrix with key \"" + key + "\" is " + m
                         + ", but the first matrix has dimensions " + JArrays.toString(result, "x", 1000));
+                }
             }
             return result;
         }
@@ -1266,10 +1272,11 @@ public final class TiledApertureProcessorFactory {
                 return oneTileProcessor;
             }
             Object p = ((ArrayProcessorWithContextSwitching) oneTileProcessor).context(tileContext);
-            if (!(p instanceof ApertureProcessor<?>))
+            if (!(p instanceof ApertureProcessor<?>)) {
                 throw new AssertionError("Illegal implementation of one-tile processor, "
                     + oneTileProcessor.getClass() + ": it implements " + ApertureProcessor.class
                     + ", but after switching context the result does not implement it");
+            }
             return (ApertureProcessor<K>) p;
         }
 

@@ -31,6 +31,7 @@ import net.algart.math.patterns.WeightedPattern;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class BasicConvolution extends AbstractConvolution implements Convolution {
@@ -75,10 +76,8 @@ public class BasicConvolution extends AbstractConvolution implements Convolution
     public <T extends PArray> Matrix<T> asConvolution(Class<? extends T> requiredType,
         Matrix<? extends PArray> src, WeightedPattern pattern)
     {
-        if (src == null)
-            throw new NullPointerException("Null src argument");
-        if (pattern == null)
-            throw new NullPointerException("Null pattern argument");
+        Objects.requireNonNull(src, "Null src argument");
+        Objects.requireNonNull(pattern, "Null pattern argument");
         Set<IPoint> points = pattern.roundedPoints();
         List<Matrix<? extends PArray>> shifted = new ArrayList<Matrix<? extends PArray>>();
         double[] weights = new double[points.size()];

@@ -25,6 +25,9 @@
 package net.algart.matrices.skeletons;
 
 import net.algart.arrays.*;
+
+import java.util.Objects;
+
 import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
 
 /**
@@ -494,13 +497,12 @@ public final class SkeletonScanner implements ArrayProcessor {
         Matrix<? extends BitArray> skeleton,
         SkeletonPixelClassifier pixelClassifier, boolean rememberVisitedPixels)
     {
-        if (skeleton == null)
-            throw new NullPointerException("Null skeleton matrix");
-        if (pixelClassifier == null)
-            throw new NullPointerException("Null pixel classifier");
-        if (pixelClassifier.dimCount() != skeleton.dimCount())
+        Objects.requireNonNull(skeleton, "Null skeleton matrix");
+        Objects.requireNonNull(pixelClassifier, "Null pixel classifier");
+        if (pixelClassifier.dimCount() != skeleton.dimCount()) {
             throw new IllegalArgumentException("pixelClassifier has " + pixelClassifier.dimCount()
                 + " dimensions, but the skeleton matrix has " + skeleton.dimCount() + " dimensions");
+        }
         this.context = context;
         this.memoryModel = context == null ? SimpleMemoryModel.getInstance() : context.getMemoryModel();
         this.skeleton = skeleton;
@@ -840,8 +842,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     public Matrix<? extends PIntegerArray> asPixelTypes(
         SkeletonPixelClassifier.AttachmentInformation attachmentInformation)
     {
-        if (attachmentInformation == null)
-            throw new NullPointerException("Null attachmentInformation");
+        Objects.requireNonNull(attachmentInformation, "Null attachmentInformation");
         switch (attachmentInformation) {
             case NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH:
                 return this.pixelTypesOrAttachingBranches;
@@ -1355,9 +1356,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      * @see #currentIndexInArray()
      */
     public void goToIndexInArray(long newIndexInArray) {
-        if (newIndexInArray < 0 || newIndexInArray >= arrayLength)
+        if (newIndexInArray < 0 || newIndexInArray >= arrayLength) {
             throw new IndexOutOfBoundsException("Index in array " + newIndexInArray
                 + " is out of range 0.." + arrayLength);
+        }
         this.currentIndexInArray = newIndexInArray;
         this.previousBranchStepDirection = -1;
     }
@@ -1565,13 +1567,14 @@ public final class SkeletonScanner implements ArrayProcessor {
      *                               if <tt>!{@link #isNode() isNode()}</tt>.
      */
     public int adjacentBranches(int[] result) throws IllegalStateException {
-        if (result == null)
-            throw new NullPointerException("Null result argument");
-        if (result.length < numberOfNeighbours)
+        Objects.requireNonNull(result, "Null result argument");
+        if (result.length < numberOfNeighbours) {
             throw new IllegalArgumentException("Length of result array "
                 + " is less than the number of neighbours of every pixel " + numberOfNeighbours);
-        if (!isNode())
+        }
+        if (!isNode()) {
             throw new IllegalStateException("adjacentBranches() must be called at nodes only: " + this);
+        }
         for (int k = 0; k < numberOfNeighbours; k++) {
             // using result as a work memory
             result[k] = neighbourTypeOrAttachingBranch(k);
@@ -1667,10 +1670,11 @@ public final class SkeletonScanner implements ArrayProcessor {
      * @see #scanBranch(int, boolean, boolean)
      */
     public boolean firstStep(int neighbourIndex, boolean onlyToUnvisited) throws IllegalStateException {
-        if (!isNode())
+        if (!isNode()) {
             throw new IllegalStateException("Cannot perform first branch step with direction (" + neighbourIndex
                 + ") from a pixel of the type " + currentPixelTypeOrAttachingBranch()
                 + " - it must be a node or isolated pixel: " + this);
+        }
         if (onlyToUnvisited && neighbourVisitRemembered(neighbourIndex)) {
             return false;
         }
@@ -1815,9 +1819,10 @@ public final class SkeletonScanner implements ArrayProcessor {
                         }
                     }
                 }
-                if (neighbourCount != (pixelType == TYPE_FREE_BRANCH_END ? 1 : 2))
+                if (neighbourCount != (pixelType == TYPE_FREE_BRANCH_END ? 1 : 2)) {
                     throw new AssertionError("Illegal detection of "
                         + pixelType + ": there are no neighbours in " + this);
+                }
                 return -1;
             default:
                 throw new IllegalStateException("Cannot perform first branch step without direction from a pixel "
@@ -1887,9 +1892,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      */
     public boolean nextStep() throws IllegalStateException {
         checkInitialized();
-        if (this.previousBranchStepDirection == -1)
+        if (this.previousBranchStepDirection == -1) {
             throw new IllegalStateException("nextStep() must be called after "
                 + "successful firstStep/firstStepFromBranch or another nextStep() only");
+        }
         if (currentIndexInArray == startIndexInArray) {
             return false; // we've returned to the start position: it is possible for a loop of TYPE_USUAL_BRANCH
         }
@@ -2089,9 +2095,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      */
     public long[] previousCoordinates() {
         checkInitialized();
-        if (this.previousBranchStepDirection == -1)
+        if (this.previousBranchStepDirection == -1) {
             throw new IllegalStateException("previousCoordinates() must be called after "
                 + "successful firstStep/firstStepFromBranch or another nextStep() only");
+        }
         return skeleton.coordinates(previousIndexInArray(), null);
     }
 
@@ -2114,9 +2121,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      */
     public long previousIndexInArray() {
         checkInitialized();
-        if (this.previousBranchStepDirection == -1)
+        if (this.previousBranchStepDirection == -1) {
             throw new IllegalStateException("previousIndexInArray() must be called after "
                 + "successful firstStep/firstStepFromBranch or another nextStep() only");
+        }
         long index = currentIndexInArray - neighbourOffsetInArray(previousBranchStepDirection);
         if (index < 0) {
             index += arrayLength;
@@ -2221,9 +2229,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      */
     public void visitPreviousBranchPixel() {
         checkInitialized();
-        if (this.previousBranchStepDirection == -1)
+        if (this.previousBranchStepDirection == -1) {
             throw new IllegalStateException("visitPreviousBranchPixel() must be called after "
                 + "successful firstStep/firstStepFromBranch or another nextStep() only");
+        }
         if (visitedArray != null) {
             long index = currentIndexInArray - neighbourOffsetInArray(previousBranchStepDirection);
             if (index < 0) {
@@ -2293,22 +2302,24 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     private void checkInitialized() {
-        if (!isInitialized())
+        if (!isInitialized()) {
             throw new IllegalStateException("The skeleton scanner is not positioned yet");
+        }
     }
 
     private void checkCoordinates(long[] coordinates) {
-        if (coordinates == null)
-            throw new NullPointerException("Null list of coordinates");
-        if (coordinates.length != dimCount)
+        Objects.requireNonNull(coordinates, "Null list of coordinates");
+        if (coordinates.length != dimCount) {
             throw new IllegalArgumentException("Number of coordinates " + coordinates.length
                 + " is not equal to the number of matrix dimensions " + dimCount);
+        }
     }
 
     private void checkNeighbourIndex(int neighbourIndex) {
-        if (neighbourIndex < 0 || neighbourIndex >= numberOfNeighbours)
+        if (neighbourIndex < 0 || neighbourIndex >= numberOfNeighbours) {
             throw new IndexOutOfBoundsException("Illegal neighbourIndex = " + neighbourIndex
                 + ": must be in 0.." + (numberOfNeighbours - 1) + " range");
+        }
     }
 
     private void shiftAlongBranch(int neighbourIndex) {

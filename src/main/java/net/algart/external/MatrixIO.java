@@ -352,12 +352,8 @@ public class MatrixIO {
             SerializationMode serializationMode,
             ByteOrder byteOrder)
             throws IOException {
-        if (serializationMode == null) {
-            throw new NullPointerException("Null serialization mode");
-        }
-        if (byteOrder == null) {
-            throw new NullPointerException("Null byteOrder");
-        }
+        Objects.requireNonNull(serializationMode, "Null serialization mode");
+        Objects.requireNonNull(byteOrder, "Null byteOrder");
         MatrixInfo matrixInfo = LargeMemoryModel.getMatrixInfoForSavingInFile(matrix, 0);
         // - we shall use CONSTANT_PROPERTY_NAME here
         matrixInfo = matrixInfo.cloneWithOtherByteOrder(byteOrder);
@@ -401,9 +397,7 @@ public class MatrixIO {
             SerializationMode serializationMode,
             MemoryModel memoryModel)
             throws IOException {
-        if (serializationMode == null) {
-            throw new NullPointerException("Null serialization mode");
-        }
+        Objects.requireNonNull(serializationMode, "Null serialization mode");
         MemoryModel mm = memoryModel == null ? Arrays.SMM : memoryModel;
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         String serializedMatrixInfo = dataInputStream.readUTF();

@@ -33,6 +33,7 @@ import net.algart.matrices.TiledApertureProcessorFactory;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static net.algart.matrices.DependenceApertureBuilder.*;
 
@@ -86,10 +87,8 @@ public class TiledConvolution implements Convolution {
     private final int dimCount;
 
     TiledConvolution(Convolution parent, TiledApertureProcessorFactory tiler) {
-        if (parent == null)
-            throw new NullPointerException("Null parent convolution");
-        if (tiler == null)
-            throw new NullPointerException("Null tiler");
+        Objects.requireNonNull(parent, "Null parent convolution");
+        Objects.requireNonNull(tiler, "Null tiler");
         this.parent = parent;
         this.context = parent.context() == null ? ArrayContext.DEFAULT : parent.context();
         this.tiler = tiler.context(this.context);
