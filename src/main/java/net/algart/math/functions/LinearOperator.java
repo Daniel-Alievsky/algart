@@ -26,6 +26,8 @@ package net.algart.math.functions;
 
 import net.algart.math.Point;
 
+import java.util.Objects;
+
 /**
  * <p>Linear operator (affine transformation):
  * <nobr><i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>)</nobr>,
@@ -70,10 +72,8 @@ public final class LinearOperator extends ProjectiveOperator {
      * @throws IllegalArgumentException if <tt>b.length==0</tt> or <tt>a.length!=b.length<sup>2</sup></tt>.
      */
     public static LinearOperator getInstance(double[] a, double[] b) {
-        if (a == null)
-            throw new NullPointerException("Null A matrix");
-        if (b == null)
-            throw new NullPointerException("Null b vector");
+        Objects.requireNonNull(a, "Null A matrix");
+        Objects.requireNonNull(b, "Null b vector");
         return new LinearOperator(a.clone(), null, b.clone());
     }
 
@@ -99,10 +99,8 @@ public final class LinearOperator extends ProjectiveOperator {
      * @throws IllegalArgumentException if <tt>diagonal.length==0</tt> or <tt>diagonal.length!=b.length</tt>.
      */
     public static LinearOperator getDiagonalInstance(double[] diagonal, double[] b) {
-        if (diagonal == null)
-            throw new NullPointerException("Null diagonal array");
-        if (b == null)
-            throw new NullPointerException("Null b vector");
+        Objects.requireNonNull(diagonal, "Null diagonal array");
+        Objects.requireNonNull(b, "Null b vector");
         return new LinearOperator(null, diagonal.clone(), b.clone());
     }
 
@@ -118,8 +116,7 @@ public final class LinearOperator extends ProjectiveOperator {
      * @throws IllegalArgumentException if <tt>diagonal.length==0</tt>.
      */
     public static LinearOperator getDiagonalInstance(double ...diagonal) {
-        if (diagonal == null)
-            throw new NullPointerException("Null diagonal array");
+        Objects.requireNonNull(diagonal, "Null diagonal array");
         return new LinearOperator(null, diagonal.clone(), new double[diagonal.length]);
     }
 
@@ -135,8 +132,7 @@ public final class LinearOperator extends ProjectiveOperator {
      * @throws IllegalArgumentException if <tt>b.length==0</tt>.
      */
     public static LinearOperator getShiftInstance(double ...b) {
-        if (b == null)
-            throw new NullPointerException("Null b array");
+        Objects.requireNonNull(b, "Null b array");
         return new LinearOperator(null, null, b);
     }
 
@@ -228,10 +224,8 @@ public final class LinearOperator extends ProjectiveOperator {
      *                                  where <tt>n+1=p.length</tt>, or if <tt>(n+1)*(n+1)&gt;Integer.MAX_VALUE</tt>.
      */
     public static LinearOperator getInstanceByPoints(Point[] q, Point[] p) {
-        if (p == null)
-            throw new NullPointerException("Null p argument");
-        if (q == null)
-            throw new NullPointerException("Null q argument");
+        Objects.requireNonNull(p, "Null p argument");
+        Objects.requireNonNull(q, "Null q argument");
         if (p.length != q.length)
             throw new IllegalArgumentException("p and q point arrays lengths mismatch: p.length="
                 + p.length + ", q.length=" + q.length);
@@ -306,8 +300,7 @@ public final class LinearOperator extends ProjectiveOperator {
      * @throws IllegalArgumentException if <tt>operator.{@link #n() n()}!=this.{@link #n() n()}</tt>.
      */
     public LinearOperator superposition(LinearOperator operator) {
-        if (operator == null)
-            throw new NullPointerException("Null operator argument");
+        Objects.requireNonNull(operator, "Null operator argument");
         if (operator.n != n)
             throw new IllegalArgumentException("Passed and this operators dimensions mismatch: operator.n()="
                 + operator.n + ", this.n()=" + n);
@@ -355,8 +348,7 @@ public final class LinearOperator extends ProjectiveOperator {
      * @throws IllegalArgumentException if <tt>b.length!=this.{@link #n() n()}</tt>.
      */
     public LinearOperator changeB(double ...b) {
-        if (b == null)
-            throw new NullPointerException("Null b array");
+        Objects.requireNonNull(b, "Null b array");
         if (b.length != n)
             throw new IllegalArgumentException("Passed b and this.b vector lengths mismatch: b.length="
                 + b.length + ", this b.length=" + n);
@@ -411,10 +403,8 @@ public final class LinearOperator extends ProjectiveOperator {
      *                                  is not equal to the {@link #n() number of dimensions}.
      */
     public final void inverseMap(double[] srcPoint, double[] destPoint) {
-        if (srcPoint == null)
-            throw new NullPointerException("Null srcPoint");
-        if (destPoint == null)
-            throw new NullPointerException("Null destPoint");
+        Objects.requireNonNull(srcPoint, "Null srcPoint");
+        Objects.requireNonNull(destPoint, "Null destPoint");
         if (srcPoint.length != n)
             throw new IllegalArgumentException("Illegal length of srcPoint array: "
                 + srcPoint.length + " for " + this);
@@ -480,12 +470,9 @@ public final class LinearOperator extends ProjectiveOperator {
      *                                  or if <tt>a.length!=x.length<sup>2</sup></tt>.
      */
     public static void solveLinearEquationsSet(double[] x, double[] a, double[] y) {
-        if (x == null)
-            throw new NullPointerException("Null x");
-        if (y == null)
-            throw new NullPointerException("Null y");
-        if (a == null)
-            throw new NullPointerException("Null a");
+        Objects.requireNonNull(x, "Null x");
+        Objects.requireNonNull(y, "Null y");
+        Objects.requireNonNull(a, "Null a");
         final int n = x.length;
         if (y.length != n)
             throw new IllegalArgumentException("x and y vector lengths mismatch: x.length="

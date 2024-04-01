@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>Implementations of {@link DataBuffer data buffers} for AlgART arrays.</p>
  *
@@ -66,22 +68,22 @@ class DataBuffersImpl {
         //       damages the buffer data via the saved reference.
 
         ArrayBuffer(Array array, AccessMode mode, long capacity, boolean trusted) {
-            if (array == null)
-                throw new NullPointerException("Null array argument");
-            if (mode == null)
-                throw new NullPointerException("Null mode argument");
+            Objects.requireNonNull(array, "Null array argument");
+            Objects.requireNonNull(mode, "Null mode argument");
             long maxCap = SimpleMemoryModel.maxSupportedLengthImpl(array.elementType());
             if (array instanceof BitArray) {
                 maxCap -= BITS_GAP;
             }
-            if (capacity <= 0 || capacity > maxCap)
+            if (capacity <= 0 || capacity > maxCap) {
                 throw new IllegalArgumentException("Illegal capacity=" + capacity
                     + ": it must be in range 1.." + maxCap);
+            }
             if (capacity > array.length()) {
                 capacity = (int) array.length();
             }
-            if (!(array instanceof UpdatableArray) && mode != AccessMode.READ)
+            if (!(array instanceof UpdatableArray) && mode != AccessMode.READ) {
                 throw new IllegalArgumentException(mode + " is allowed for UpdatableArray only");
+            }
             this.array = array;
             this.mode = mode;
             this.capacity = capacity;
@@ -89,8 +91,9 @@ class DataBuffersImpl {
             if (array instanceof BitArray) {
                 long[] ja = null;
                 if (mode != AccessMode.PRIVATE) {
-                    if (trusted || (!array.isImmutable() && !array.isCopyOnNextWrite()))
+                    if (trusted || (!array.isImmutable() && !array.isCopyOnNextWrite())) {
                         ja = Arrays.longJavaArrayInternal((BitArray) array);
+                    }
                 }
                 this.isDirect = ja != null;
                 if (isDirect) {
@@ -115,8 +118,9 @@ class DataBuffersImpl {
                         ja = Arrays.javaArrayInternal(array);
                     } else {
                         if (array instanceof DirectAccessible && ((DirectAccessible) array).hasJavaArray()
-                            && !array.isCopyOnNextWrite())
+                            && !array.isCopyOnNextWrite()) {
                             ja = ((DirectAccessible) array).javaArray();
+                        }
                     }
                 }
                 this.isDirect = ja != null;
@@ -153,8 +157,9 @@ class DataBuffersImpl {
         }
 
         public Object data() {
-            if (disposed)
+            if (disposed) {
                 throw new IllegalStateException("The data buffer is disposed");
+            }
             return initialized ? data : null;
         }
 
@@ -179,16 +184,20 @@ class DataBuffersImpl {
         }
 
         public DataBuffer map(long position, long maxCount, boolean readData) {
-            if (disposed)
+            if (disposed) {
                 throw new IllegalStateException("The data buffer is disposed");
-            if (position < 0)
+            }
+            if (position < 0) {
                 throw new IndexOutOfBoundsException("Negative position argument");
-            if (maxCount < 0)
+            }
+            if (maxCount < 0) {
                 throw new IllegalArgumentException("Negative maxCount argument");
+            }
             long len = array.length();
-            if (position > len)
+            if (position > len) {
                 throw new IndexOutOfBoundsException("Illegal position argument (" + position
                     + "): it's greater than array length");
+            }
             allocateData();
             this.position = position;
             count = Math.min(maxCount, Math.min(capacity, len - position));
@@ -229,16 +238,20 @@ class DataBuffersImpl {
         }
 
         public DataBuffer force(long fromIndex, long toIndex) {
-            if (disposed)
+            if (disposed) {
                 throw new IllegalStateException("The data buffer is disposed");
-            if (mode == AccessMode.READ)
+            }
+            if (mode == AccessMode.READ) {
                 throw new IllegalStateException("Cannot force read-only data buffer");
-            if (fromIndex > toIndex)
+            }
+            if (fromIndex > toIndex) {
                 throw new IllegalArgumentException("Illegal force range: fromIndex = " + fromIndex
                     + " > toIndex = " + toIndex);
-            if (fromIndex < this.from || toIndex > this.to)
+            }
+            if (fromIndex < this.from || toIndex > this.to) {
                 throw new IllegalArgumentException("Illegal force range " + fromIndex + ".." + toIndex
                     + ": it must be inside the current actual array range " + this.from + ".." + this.to);
+            }
             if (mode != AccessMode.PRIVATE && count > 0) {
                 if (!isNCopies && !isDirect) {
                     if (array instanceof UpdatableBitArray) {
@@ -254,10 +267,12 @@ class DataBuffersImpl {
         }
 
         void dispose() {
-            if (disposed)
+            if (disposed) {
                 throw new IllegalStateException("The data buffer is already disposed");
-            if (caching && bufferPool != null)
+            }
+            if (caching && bufferPool != null) {
                 bufferPool.releaseArray(data);
+            }
             disposed = true;
         }
 
@@ -310,8 +325,9 @@ class DataBuffersImpl {
         }
 
         private void allocateData() {
-            if (data != null)
+            if (data != null) {
                 return;
+            }
             if (caching && bufferPool != null) {
 //              System.err.println("##Requesting buffer from " + bufferPool);
                 this.data = bufferPool.requestArray();

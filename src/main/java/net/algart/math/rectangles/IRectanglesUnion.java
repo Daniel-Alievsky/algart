@@ -627,9 +627,7 @@ public class IRectanglesUnion {
      * @throws IllegalArgumentException if <tt>whatToSubtract.coordCount() != 2</tt>.
      */
     public IRectanglesUnion subtractRectangle(IRectangularArea whatToSubtract) {
-        if (whatToSubtract == null) {
-            throw new NullPointerException("Null rectangle");
-        }
+        Objects.requireNonNull(whatToSubtract, "Null rectangle");
         if (whatToSubtract.coordCount() != 2) {
             throw new IllegalArgumentException("Only 2-dimensional rectangle can be subtracted");
         }
@@ -958,9 +956,7 @@ public class IRectanglesUnion {
     }
 
     public static double areaInBoundary(List<BoundaryLink> boundary) {
-        if (boundary == null) {
-            throw new NullPointerException("Null boundary");
-        }
+        Objects.requireNonNull(boundary, "Null boundary");
         double result = 0.0;
         for (BoundaryLink link : boundary) {
             if (link.isHorizontal()) {
@@ -971,9 +967,7 @@ public class IRectanglesUnion {
     }
 
     public static List<IPoint> boundaryVerticesPlusHalf(List<BoundaryLink> boundary) {
-        if (boundary == null) {
-            throw new NullPointerException("Null boundary");
-        }
+        Objects.requireNonNull(boundary, "Null boundary");
         final List<IPoint> result = new ArrayList<IPoint>();
         BoundaryLink last = null;
         for (BoundaryLink link : boundary) {
@@ -993,9 +987,7 @@ public class IRectanglesUnion {
     }
 
     public static List<IPoint> boundaryVerticesAtRectangles(List<BoundaryLink> boundary) {
-        if (boundary == null) {
-            throw new NullPointerException("Null boundary");
-        }
+        Objects.requireNonNull(boundary, "Null boundary");
         final List<IPoint> result = new ArrayList<IPoint>();
         final int n = boundary.size();
         if (n == 0) {
@@ -1551,13 +1543,9 @@ public class IRectanglesUnion {
     }
 
     private static List<Frame> checkAndConvertToFrames(Collection<IRectangularArea> rectangles) {
-        if (rectangles == null) {
-            throw new NullPointerException("Null rectangles argument");
-        }
+        Objects.requireNonNull(rectangles, "Null rectangles argument");
         for (IRectangularArea rectangle : rectangles) {
-            if (rectangle == null) {
-                throw new NullPointerException("Null rectangle in a collection");
-            }
+            Objects.requireNonNull(rectangle, "Null rectangle in a collection");
             if (rectangle.coordCount() != 2) {
                 throw new IllegalArgumentException("Only 2-dimensional rectangles can be joined");
             }

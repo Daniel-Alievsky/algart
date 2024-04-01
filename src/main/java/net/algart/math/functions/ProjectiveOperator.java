@@ -27,6 +27,7 @@ package net.algart.math.functions;
 import net.algart.math.Point;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Arrays;
 
@@ -109,18 +110,22 @@ public class ProjectiveOperator
 
     ProjectiveOperator(double[] a, double[] diagonal, double[] b, double[] c, double d) {
         assert b != null;
-        if (b.length == 0)
+        if (b.length == 0) {
             throw new IllegalArgumentException("Empty b vector (no coordinates)");
-        if (a != null && a.length != (long)b.length * (long)b.length)
+        }
+        if (a != null && a.length != (long)b.length * (long)b.length) {
             throw new IllegalArgumentException("Illegal size of A matrix: a.length=" + a.length
                 + " must be equal to b.length^2=" + (long)b.length * (long)b.length);
-        if (diagonal != null && diagonal.length != b.length)
+        }
+        if (diagonal != null && diagonal.length != b.length) {
             throw new IllegalArgumentException("b and diagonal vector lengths mismatch: diagonal.length="
                 + diagonal.length + ", b.length=" + b.length);
+        }
         if (c != null) {
-            if (c.length != b.length)
+            if (c.length != b.length) {
                 throw new IllegalArgumentException("b and c vector lengths mismatch: b.length="
                     + b.length + ", c.length=" + c.length);
+            }
         }
         this.n = b.length;
         if (a != null) {
@@ -210,18 +215,17 @@ public class ProjectiveOperator
      *                                  or <tt>a.length!=b.length<sup>2</sup></tt>.
      */
     public static ProjectiveOperator getInstance(double[] a, double[] b, double[] c, double d) {
-        if (a == null)
-            throw new NullPointerException("Null A matrix");
-        if (b == null)
-            throw new NullPointerException("Null b vector");
-        if (c == null)
-            throw new NullPointerException("Null c vector");
-        if (c.length != b.length)
+        Objects.requireNonNull(a, "Null A matrix");
+        Objects.requireNonNull(b, "Null b vector");
+        Objects.requireNonNull(c, "Null c vector");
+        if (c.length != b.length) {
             throw new IllegalArgumentException("b and c vector lengths mismatch: b.length="
             + b.length + ", c.length=" + c.length);
-        if (a.length != ((long)b.length) * ((long)b.length))
+        }
+        if (a.length != ((long)b.length) * ((long)b.length)) {
             throw new IllegalArgumentException("Illegal size of A matrix: a.length=" + a.length
                 + " must be equal to b.length^2=" + (b.length * b.length));
+        }
         // to be on the safe side, we check all this before following operations - we not wait for the constructor
         boolean zeroC = true;
         for (double v : c) {
@@ -304,28 +308,31 @@ public class ProjectiveOperator
      *                                  or if <tt>n*(n+2)*n*(n+2)&gt;Integer.MAX_VALUE</tt>.
      */
     public static ProjectiveOperator getInstanceByPoints(Point[] q, Point[] p) {
-        if (p == null)
-            throw new NullPointerException("Null p argument");
-        if (q == null)
-            throw new NullPointerException("Null q argument");
-        if (p.length != q.length)
+        Objects.requireNonNull(p, "Null p argument");
+        Objects.requireNonNull(q, "Null q argument");
+        if (p.length != q.length) {
             throw new IllegalArgumentException("p and q point arrays lengths mismatch: p.length=" +
                 p.length + ", q.length=" + q.length);
-        if (p.length == 0)
+        }
+        if (p.length == 0) {
             throw new IllegalArgumentException("Empty p and q arrays");
+        }
         final int n = p.length - 2;
         long numberOfUnknowns = (long)n * (long)(n + 2); // number of unknowns
-        if (numberOfUnknowns > Integer.MAX_VALUE || numberOfUnknowns * numberOfUnknowns > Integer.MAX_VALUE)
+        if (numberOfUnknowns > Integer.MAX_VALUE || numberOfUnknowns * numberOfUnknowns > Integer.MAX_VALUE) {
             throw new OutOfMemoryError("Too large necessary matrix (more than Integer.MAX_VALUE elements)");
+        }
         for (int k = 0; k < p.length; k++) {
-            if (p[k].coordCount() != n)
+            if (p[k].coordCount() != n) {
                 throw new IllegalArgumentException("n+2 n-dimensional points are necessary to "
                     + "find the projective operator, but we have " + (n + 2) + " points, "
                     + "and the source point #" + k + " is " + p[k].coordCount() + "-dimensional");
-            if (q[k].coordCount() != n)
+            }
+            if (q[k].coordCount() != n) {
                 throw new IllegalArgumentException("n+2 n-dimensional points are necessary to "
                     + "find the projective operator, but we have " + (n + 2)  + " points, "
                     + "and the destination point #" + k + " is " + q[k].coordCount() + "-dimensional");
+            }
         }
         // px0*a00 + py0*a01 + pz0*a02 + ... + bx        - qx0*px0*cx - qx0*py0*cy - qx0*pz0*cz* - ... = qx0 (*d=1)
         // px1*a00 + py1*a01 + pz1*a02 + ... + bx        - qx1*px1*cx - qx1*py1*cy - qx1*pz1*cz* - ... = qx1
@@ -397,8 +404,9 @@ public class ProjectiveOperator
         if (a != null) {
             return a.clone();
         }
-        if ((long)n * (long)n > Integer.MAX_VALUE)
+        if ((long)n * (long)n > Integer.MAX_VALUE) {
             throw new OutOfMemoryError("Too large matrix A (more than Integer.MAX_VALUE elements)");
+        }
         double[] result = new double[n * n];
         for (int i = 0, disp = 0; i < n; i++, disp += n + 1) {
             result[disp] = diagonal == null ? 1.0 : diagonal[i];
@@ -498,8 +506,9 @@ public class ProjectiveOperator
      */
     public final boolean isShift() {
         boolean result = a == null && diagonal == null && c == null;
-        if (result && !(this instanceof LinearOperator))
+        if (result && !(this instanceof LinearOperator)) {
             throw new AssertionError("Shift operator must be an instance of " + LinearOperator.class);
+        }
         return result;
     }
 
@@ -557,8 +566,9 @@ public class ProjectiveOperator
             if (diagonal != null) {
                 sA.append("diag[");
                 for (int k = 0; k < diagonal.length; k++) {
-                    if (k > 0)
+                    if (k > 0) {
                         sA.append(",");
+                    }
                     sA.append(LinearFunc.goodFormat(diagonal[k]));
                 }
                 sA.append("]");
@@ -568,15 +578,17 @@ public class ProjectiveOperator
         }
         StringBuilder sB = new StringBuilder();
         for (int k = 0; k < n; k++) {
-            if (k > 0)
+            if (k > 0) {
                 sB.append(",");
+            }
             sB.append(LinearFunc.goodFormat(b[k]));
         }
         StringBuilder sC = new StringBuilder();
         if (c != null) { // to be on the safe side: null is impossible in the current implementation
             for (int k = 0; k < c.length; k++) {
-                if (k > 0)
+                if (k > 0) {
                     sC.append(",");
+                }
                 sC.append(LinearFunc.goodFormat(c[k]));
             }
         }
@@ -596,57 +608,68 @@ public class ProjectiveOperator
     }
 
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (!(obj instanceof ProjectiveOperator))
+        }
+        if (!(obj instanceof ProjectiveOperator)) {
             return false;
+        }
         ProjectiveOperator po = (ProjectiveOperator)obj;
-        if (n != po.n)
+        if (n != po.n) {
             return false;
-        if (d != po.d)
+        }
+        if (d != po.d) {
             return false;
-        if ((a != null) != (po.a != null))
+        }
+        if ((a != null) != (po.a != null)) {
             return false;
+        }
         if (a != null) {
             for (int k = 0; k < a.length; k++) {
-                if (a[k] != po.a[k])
+                if (a[k] != po.a[k]) {
                     return false;
+                }
             }
         }
-        if ((diagonal != null) != (po.diagonal != null))
+        if ((diagonal != null) != (po.diagonal != null)) {
             return false;
+        }
         if (diagonal != null) {
             for (int k = 0; k < diagonal.length; k++) {
-                if (diagonal[k] != po.diagonal[k])
+                if (diagonal[k] != po.diagonal[k]) {
                     return false;
+                }
             }
         }
         for (int k = 0; k < b.length; k++) {
-            if (b[k] != po.b[k])
+            if (b[k] != po.b[k]) {
                 return false;
+            }
         }
-        if ((c != null) != (po.c != null))
+        if ((c != null) != (po.c != null)) {
             return false;
+        }
         if (c != null) {
             for (int k = 0; k < c.length; k++) {
-                if (c[k] != po.c[k])
+                if (c[k] != po.c[k]) {
                     return false;
+                }
             }
         }
         return true;
     }
 
     void calculateAxPlusB(double[] destPoint, double[] srcPoint) {
-        if (destPoint == null)
-            throw new NullPointerException("Null destPoint");
-        if (srcPoint == null)
-            throw new NullPointerException("Null srcPoint");
-        if (destPoint.length != n)
+        Objects.requireNonNull(destPoint, "Null destPoint");
+        Objects.requireNonNull(srcPoint, "Null srcPoint");
+        if (destPoint.length != n) {
             throw new IllegalArgumentException("Illegal length of destPoint array: "
                 + destPoint.length + " for " + this);
-        if (srcPoint.length != n)
+        }
+        if (srcPoint.length != n) {
             throw new IllegalArgumentException("Illegal length of srcPoint array: "
                 + srcPoint.length + " for " + this);
+        }
         if (a != null) {
             System.arraycopy(b, 0, destPoint, 0, destPoint.length);
             for (int i = 0, disp = 0; i < n; i++) {
@@ -721,10 +744,12 @@ public class ProjectiveOperator
                         + java.util.Arrays.asList(r) + " instead of " + java.util.Arrays.asList(q));
                 }
                 CoordinateTransformationOperator o2 = getOperator();
-                if (!o.equals(o2))
+                if (!o.equals(o2)) {
                     throw new AssertionError("Error in equals");
-                if (o2.hashCode() != o.hashCode())
+                }
+                if (o2.hashCode() != o.hashCode()) {
                     throw new AssertionError("Error in hashCode");
+                }
             }
             long t2 = System.nanoTime();
             System.out.printf(Locale.US,

@@ -34,6 +34,8 @@ package net.algart.arrays;
   private\s+(long\s+(?:index|lastIndex)) ==> public $1
      !! Auto-generated: NOT EDIT !! */
 
+import java.util.Objects;
+
 /**
  * <p>Implementation of almost all basic functions of {@link IntArray} interface.
  * The only {@link IntArray#getInt(long)} method is not defined in this class;
@@ -116,19 +118,20 @@ public abstract class AbstractIntArray extends AbstractArray implements IntArray
         boolean underlyingArraysAreParallel, Array... underlyingArrays)
     {
         super(initialCapacity, initialLength, underlyingArrays);
-        if (initialLength < 0)
+        if (initialLength < 0) {
             throw new IllegalArgumentException("Negative initialLength argument");
-        if (initialCapacity < 0)
+        }
+        if (initialCapacity < 0) {
             throw new IllegalArgumentException("Negative initialCapacity argument");
-        if (initialLength > initialCapacity)
+        }
+        if (initialLength > initialCapacity) {
             throw new IllegalArgumentException("initialCapacity argument must not be less than initialLength");
-        if (underlyingArrays == null)
-            throw new NullPointerException("Null underlyingArrays argument");
+        }
+        Objects.requireNonNull(underlyingArrays, "Null underlyingArrays argument");
         this.underlyingArraysAreParallel = underlyingArraysAreParallel;
         long len = -1;
         for (int k = 0; k < underlyingArrays.length; k++) {
-            if (underlyingArrays[k] == null)
-                throw new NullPointerException("Null underlyingArrays[" + k + "] argument");
+            Objects.requireNonNull(underlyingArrays[k], "Null underlyingArrays[" + k + "] argument");
             if (underlyingArraysAreParallel) {
                 if (k == 0) {
                     len = underlyingArrays[k].length();
@@ -203,15 +206,17 @@ public abstract class AbstractIntArray extends AbstractArray implements IntArray
      */
     @Override
     public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
+        Objects.requireNonNull(destArray, "Null destArray argument");
         int[] a = (int[]) destArray;
-        if (count < 0)
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw rangeException(arrayPos);
-        if (arrayPos > length - count)
+        }
+        if (arrayPos > length - count) {
             throw rangeException(arrayPos + count - 1);
+        }
         for (long arrayPosMax = arrayPos + count; arrayPos < arrayPosMax; arrayPos++, destArrayOffset++) {
             a[destArrayOffset] = getInt(arrayPos);
         }
@@ -235,10 +240,10 @@ public abstract class AbstractIntArray extends AbstractArray implements IntArray
      */
     @Override
     public void getData(long arrayPos, Object destArray) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (arrayPos < 0 || arrayPos > length)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (arrayPos < 0 || arrayPos > length) {
             throw rangeException(arrayPos);
+        }
         int count = ((int[]) destArray).length;
         if (count > length - arrayPos) {
             count = (int) (length - arrayPos);
@@ -290,8 +295,9 @@ public abstract class AbstractIntArray extends AbstractArray implements IntArray
         return new AbstractIntArray(toIndex - fromIndex, underlyingArraysAreParallel, underlyingArrays) {
             @Override
             public int getInt(long index) {
-                if (index < 0 || index >= length)
+                if (index < 0 || index >= length) {
                     throw rangeException(index);
+                }
                 return parent.getInt(offset + index);
             }
 
@@ -331,12 +337,15 @@ public abstract class AbstractIntArray extends AbstractArray implements IntArray
 
             @Override
             public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-                if (count < 0)
+                if (count < 0) {
                     throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-                if (arrayPos < 0)
+                }
+                if (arrayPos < 0) {
                     throw rangeException(arrayPos);
-                if (arrayPos > length - count)
+                }
+                if (arrayPos > length - count) {
                     throw rangeException(arrayPos + count - 1);
+                }
                 parent.getData(offset + arrayPos, destArray, destArrayOffset, count);
             }
 

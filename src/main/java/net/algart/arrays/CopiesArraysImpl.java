@@ -729,14 +729,16 @@ class CopiesArraysImpl {
 
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw AbstractArray.rangeException(arrayPos + count - 1, length, getClass());
+            }
             PackedBitArrays.fillBits(destArray, destArrayOffset, count, this.element);
         }
 
@@ -2853,8 +2855,9 @@ class CopiesArraysImpl {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
             }
             int count = dest.length;
-            if (count > length - arrayPos)
+            if (count > length - arrayPos) {
                 count = (int) (length - arrayPos);
+            }
             JArrays.fillObjectArray(dest, 0, count, this.element);
         }
 
@@ -2974,8 +2977,9 @@ class CopiesArraysImpl {
         }
 
         public Object getElement(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
+            }
             return element;
         }
 
@@ -3028,14 +3032,17 @@ class CopiesArraysImpl {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof ObjectArray<?>))
+            if (!(obj instanceof ObjectArray<?>)) {
                 return false;
+            }
             Array a = (ObjectArray<?>) obj;
             long n = length;
-            if (a.length() != n)
+            if (a.length() != n) {
                 return false;
-            if (n == 0 && a.length() == 0)
+            }
+            if (n == 0 && a.length() == 0) {
                 return true; // all empty Object arrays are equal
+            }
             if (a instanceof CopiesObjectArray<?>) {
                 Object e = ((CopiesObjectArray<?>) a).element;
                 return e == null ? element == null : e.equals(element);
@@ -3051,8 +3058,9 @@ class CopiesArraysImpl {
 
         public <D> ObjectArray<D> cast(Class<D> elementType) {
             Class<?> desiredType = InternalUtils.cast(elementType);
-            if (!desiredType.isAssignableFrom(this.elementType()))
+            if (!desiredType.isAssignableFrom(this.elementType())) {
                 throw new ClassCastException("Illegal desired element type " + elementType + " for " + this);
+            }
             return InternalUtils.cast(this);
         }
     }

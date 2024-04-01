@@ -24,6 +24,8 @@
 
 package net.algart.math.functions;
 
+import java.util.Objects;
+
 /**
  * <p>A function, the arguments of which are transformed by some
  * {@link CoordinateTransformationOperator coordinate transformation operator}
@@ -55,10 +57,8 @@ public class CoordinateTransformedFunc implements Func {
     final CoordinateTransformationOperator operator;
 
     private CoordinateTransformedFunc(Func parent, CoordinateTransformationOperator operator) {
-        if (parent == null)
-            throw new NullPointerException("Null parent function");
-        if (operator == null)
-            throw new NullPointerException("Null operator");
+        Objects.requireNonNull(parent, "Null parent function");
+        Objects.requireNonNull(operator, "Null operator");
         this.parent = parent;
         this.operator = operator;
     }
