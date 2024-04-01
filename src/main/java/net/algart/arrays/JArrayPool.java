@@ -46,10 +46,10 @@ public final class JArrayPool {
     private final ReentrantLock lock = new ReentrantLock();
 
     private JArrayPool(Class<?> elementType, int arrayLength) {
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
-        if (arrayLength < 0)
+        Objects.requireNonNull(elementType, "Null elementType argument");
+        if (arrayLength < 0) {
             throw new IllegalArgumentException("Negative arrayLength");
+        }
         this.elementType = elementType;
         this.arrayLength = arrayLength;
     }
@@ -129,14 +129,18 @@ public final class JArrayPool {
      *                                  do not match the arguments of {@link #getInstance} method.
      */
     public void releaseArray(Object array) {
-        if (array == null)
+        if (array == null) {
             return;
-        if (!array.getClass().isArray())
+        }
+        if (!array.getClass().isArray()) {
             throw new IllegalArgumentException("The array argument is not a Java array");
-        if (array.getClass().getComponentType() != elementType)
+        }
+        if (array.getClass().getComponentType() != elementType) {
             throw new IllegalArgumentException("The type of array elements does not match this Java array pool");
-        if (java.lang.reflect.Array.getLength(array) != arrayLength)
+        }
+        if (java.lang.reflect.Array.getLength(array) != arrayLength) {
             throw new IllegalArgumentException("The array length does not match this Java array pool");
+        }
         lock.lock();
         try {
             freeArrays.add(new SoftReference<Object>(array));

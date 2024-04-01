@@ -26,6 +26,7 @@ package net.algart.arrays;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -226,9 +227,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public int recommendedNumberOfTasks(Array sourceArray) {
-        if (sourceArray == null) {
-            throw new NullPointerException("Null sourceArray argument");
-        }
+        Objects.requireNonNull(sourceArray, "Null sourceArray argument");
         if (numberOfTasks != 0) {
             return recommendedNumberOfTasks();
         }
@@ -285,9 +284,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * @throws NullPointerException if <tt>sourceArray</tt> argument is <tt>null</tt>.
      */
     public ExecutorService getThreadPool(Array sourceArray, ThreadFactory threadFactory) {
-        if (sourceArray == null) {
-            throw new NullPointerException("Null sourceArray argument");
-        }
+        Objects.requireNonNull(sourceArray, "Null sourceArray argument");
         if (persistentThreadPool != null) {
             return persistentThreadPool;
         } else {

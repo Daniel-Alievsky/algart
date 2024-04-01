@@ -26,6 +26,7 @@ package net.algart.arrays;
 
 import java.util.EmptyStackException;
 import java.nio.ByteBuffer;
+import java.util.Objects;
 
 /**
  * <p>The memory model allowing to create <i>combined arrays</i>:
@@ -390,19 +391,19 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             ByteBuffer workStorageForOneElement,
             MemoryModel memoryModel)
         {
-            if (elementType == null)
-                throw new NullPointerException("Null elementType");
-            if (elementType == void.class)
+            Objects.requireNonNull(elementType, "Null elementType");
+            if (elementType == void.class) {
                 throw new IllegalArgumentException("Illegal elementType: it cannot be void.class");
-            if (workStorageForOneElement == null)
-                throw new NullPointerException("Null workStorageForOneElement argument");
-            if (workStorageForOneElement.isReadOnly())
+            }
+            Objects.requireNonNull(workStorageForOneElement, "Null workStorageForOneElement argument");
+            if (workStorageForOneElement.isReadOnly()) {
                 throw new IllegalArgumentException("Illegal workStorageForOneElement argument: "
                     + "it must not be read-only");
-            if (memoryModel == null)
-                throw new NullPointerException("Null memoryModel argument");
-            if (!memoryModel.isElementTypeSupported(byte.class))
+            }
+            Objects.requireNonNull(memoryModel, "Null memoryModel argument");
+            if (!memoryModel.isElementTypeSupported(byte.class)) {
                 throw new NullPointerException("Illegal memoryModel argument: it must support byte elements");
+            }
             this.elementType = elementType;
             this.workStorage = workStorageForOneElement;
             this.elementSize = workStorageForOneElement.limit();
@@ -444,10 +445,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public final UpdatableArray[] allocateStorage(long length, boolean unresizable) {
-            if (unresizable)
+            if (unresizable) {
                 return new UpdatableByteArray[] {mm.newUnresizableByteArray(length * elementSize)};
-            else
+            } else {
                 return new MutableByteArray[] {mm.newByteArray(length * elementSize)};
+            }
         }
 
         public final int numbersOfElementsPerOneCombinedElement(int indexOfArrayInStorage) {
@@ -505,8 +507,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     private final Combiner<E> combiner;
 
     private CombinedMemoryModel(Combiner<E> combiner) {
-        if (combiner == null)
-            throw new NullPointerException("Null combiner argument");
+        Objects.requireNonNull(combiner, "Null combiner argument");
         this.combiner = combiner;
     }
 
@@ -563,16 +564,19 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      */
     public MutableArray newEmptyArray(Class<?> elementType, long initialCapacity) {
         Arrays.checkElementTypeForNullAndVoid(elementType);
-        if (initialCapacity < 0)
+        if (initialCapacity < 0) {
             throw new IllegalArgumentException("Negative initial capacity");
-        if (!Object.class.isAssignableFrom(elementType))
+        }
+        if (!Object.class.isAssignableFrom(elementType)) {
             throw new UnsupportedElementTypeException(
                 "Primitive element types are not allowed (passed type: " + elementType + ")");
+        }
         Class<E> eType = InternalUtils.cast(elementType);
-        if (combiner instanceof CombinerInPlace<?>)
+        if (combiner instanceof CombinerInPlace<?>) {
             return new MutableCombinedInPlaceArray<E>(eType, initialCapacity, 0, (CombinerInPlace<E>)combiner);
-        else
+        } else {
             return new MutableCombinedArray<E>(eType, initialCapacity, 0, combiner);
+        }
     }
 
     public MutableArray newArray(Class<?> elementType, long initialLength) {
@@ -581,16 +585,19 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
 
     public UpdatableArray newUnresizableArray(Class<?> elementType, long length) {
         Arrays.checkElementTypeForNullAndVoid(elementType);
-        if (length < 0)
+        if (length < 0) {
             throw new IllegalArgumentException("Negative array length");
-        if (!Object.class.isAssignableFrom(elementType))
+        }
+        if (!Object.class.isAssignableFrom(elementType)) {
             throw new UnsupportedElementTypeException(
                 "Primitive element types are not allowed (passed type: " + elementType + ")");
+        }
         Class<E> eType = InternalUtils.cast(elementType);
-        if (combiner instanceof CombinerInPlace<?>)
+        if (combiner instanceof CombinerInPlace<?>) {
             return new UpdatableCombinedInPlaceArray<E>(eType, length, length, (CombinerInPlace<E>)combiner);
-        else
+        } else {
             return new UpdatableCombinedArray<E>(eType, length, length, combiner);
+        }
     }
 
     /**
@@ -600,8 +607,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * @return            <tt>true</tt> if this memory model supports this element type.
      */
     public boolean isElementTypeSupported(Class<?> elementType) {
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
+        Objects.requireNonNull(elementType, "Null elementType argument");
         return Object.class.isAssignableFrom(elementType);
     }
 
@@ -625,8 +631,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * @throws NullPointerException if <tt>elementType</tt> is <tt>null</tt>.
      */
     public long maxSupportedLength(Class<?> elementType) {
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
+        Objects.requireNonNull(elementType, "Null elementType argument");
         return Long.MAX_VALUE;
     }
 
@@ -671,10 +676,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         for (int k = 0; k < storageClone.length; k++) {
             storageClone[k] = storageClone[k].asImmutable();
         }
-        if (combiner instanceof CombinerInPlace<?>)
+        if (combiner instanceof CombinerInPlace<?>) {
             return new CombinedInPlaceArray<E>(elementType, storageClone, (CombinerInPlace<E>)combiner);
-        else
+        } else {
             return new CombinedArray<E>(elementType, storageClone, combiner);
+        }
     }
 
     /**
@@ -711,10 +717,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         for (int k = 0; k < storageClone.length; k++) {
             storageClone[k] = storageClone[k].asUnresizable().shallowClone();
         }
-        if (combiner instanceof CombinerInPlace<?>)
+        if (combiner instanceof CombinerInPlace<?>) {
             return new UpdatableCombinedInPlaceArray<E>(elementType, storageClone, (CombinerInPlace<E>)combiner);
-        else
+        } else {
             return new UpdatableCombinedArray<E>(elementType, storageClone, combiner);
+        }
     }
 
     /**
@@ -757,10 +764,10 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * @see Array#shallowClone()
      */
     public static Array[] getStorage(Array combinedArray) {
-        if (combinedArray == null)
-            throw new NullPointerException("Null combinedArray argument");
-        if (!(combinedArray instanceof CombinedArray<?>))
+        Objects.requireNonNull(combinedArray, "Null combinedArray argument");
+        if (!(combinedArray instanceof CombinedArray<?>)) {
             throw new IllegalArgumentException("The passed argument is not a combined array");
+        }
         CombinedArray<?> cv = (CombinedArray<?>) combinedArray;
         Array[] result = cv.storage.clone();
         for (int k = 0; k < result.length; k++) {
@@ -809,10 +816,10 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *                                  (created by this memory model).
      */
     public static String[] getStorageToStrings(Array combinedArray) {
-        if (combinedArray == null)
-            throw new NullPointerException("Null combinedArray argument");
-        if (!(combinedArray instanceof CombinedArray<?>))
+        Objects.requireNonNull(combinedArray, "Null combinedArray argument");
+        if (!(combinedArray instanceof CombinedArray<?>)) {
             throw new IllegalArgumentException("The passed argument is not a combined array");
+        }
         CombinedArray<?> cv = (CombinedArray<?>)combinedArray;
         String[] result = new String[cv.storage.length];
         for (int k = 0; k < result.length; k++) {
@@ -831,41 +838,42 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
 
         CombinedArray(Class<E> elementType, Array[] storage, Combiner<E> combiner) {
             super(Integer.MAX_VALUE, 0);
-            if (storage == null)
-                throw new NullPointerException("Null storage argument");
-            if (combiner == null)
-                throw new NullPointerException("Null combiner argument");
+            Objects.requireNonNull(storage, "Null storage argument");
+            Objects.requireNonNull(combiner, "Null combiner argument");
             this.combiner = combiner;
             this.elementType = elementType;
             this.allNumbersAre1 = checkStorageAndNumbersOfElements(storage, combiner);
             this.storage = storage;
             this.numbersOfElements = new int[storage.length];
-            for (int k = 0; k < storage.length; k++)
+            for (int k = 0; k < storage.length; k++) {
                 this.numbersOfElements[k] = combiner.numbersOfElementsPerOneCombinedElement(k);
+            }
             this.length = storage[0].length() / numbersOfElements[0];
             recalculateCapacity();
         }
 
         CombinedArray(Class<E> elementType, long initialCapacity, long initialLength, Combiner<E> combiner) {
             super(initialCapacity, initialLength);
-            if (combiner == null)
-                throw new NullPointerException("Null combiner argument");
+            Objects.requireNonNull(combiner, "Null combiner argument");
             this.combiner = combiner;
             this.elementType = elementType;
             boolean unresizableRequired = this.isUnresizable();
             UpdatableArray[] stor = combiner.allocateStorage(initialLength, unresizableRequired);
             this.allNumbersAre1 = checkStorageAndNumbersOfElements(stor, combiner);
             this.numbersOfElements = new int[stor.length];
-            for (int k = 0; k < stor.length; k++)
-                this.numbersOfElements[k] = combiner.numbersOfElementsPerOneCombinedElement(k);
             for (int k = 0; k < stor.length; k++) {
-                if (!unresizableRequired && !(stor[k] instanceof MutableArray))
+                this.numbersOfElements[k] = combiner.numbersOfElementsPerOneCombinedElement(k);
+            }
+            for (int k = 0; k < stor.length; k++) {
+                if (!unresizableRequired && !(stor[k] instanceof MutableArray)) {
                     throw new IllegalArgumentException("Storage array #" + k + " does not implement MutableArray, "
                         + "though the resizable one is required while calling Combiner.allocateStorage method");
+                }
                 long correctLength = InternalUtils.longMulAndException(initialLength, numbersOfElements[k]);
-                if (stor[k].length() != correctLength)
+                if (stor[k].length() != correctLength) {
                     throw new IllegalArgumentException("Incorrect length of storage array #" + k
                         + ": length = " + storage[k].length() + ", but the correct one is " + correctLength);
+                }
             }
             this.capacity = initialCapacity;
             if (!unresizableRequired) {
@@ -874,8 +882,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
                         initialCapacity, numbersOfElements[k]));
                 }
             } else {
-                if (initialCapacity != initialLength)
+                if (initialCapacity != initialLength) {
                     throw new AssertionError("Unequal length and capacity while creating unresizable array!");
+                }
             }
             if (unresizableRequired) {
                 this.storage = stor;
@@ -894,25 +903,26 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         private static boolean checkStorageAndNumbersOfElements(Array[] storage, Combiner<?> combiner) {
-            if (storage == null)
-                throw new NullPointerException("Null Array[] storage");
-            if (storage.length == 0)
+            Objects.requireNonNull(storage, "Null Array[] storage");
+            if (storage.length == 0) {
                 throw new IllegalArgumentException("Storage must contain at least 1 array");
+            }
             boolean result = true;
             long length0 = 157;
             int ne0 = 28;
             for (int k = 0; k < storage.length; k++) {
-                if (storage[k] == null)
-                    throw new NullPointerException("Null storage[" + k + "] array");
+                Objects.requireNonNull(storage[k], "Null storage[" + k + "] array");
                 int ne = combiner.numbersOfElementsPerOneCombinedElement(k);
-                if (ne <= 0)
+                if (ne <= 0) {
                     throw new IllegalArgumentException("combiner.numbersOfElementsPerOneCombinedElement("
                         + k + ") = " + ne + " <= 0");
+                }
                 result &= ne == 1;
-                if (storage[k].length() % ne != 0)
+                if (storage[k].length() % ne != 0) {
                     throw new IllegalArgumentException("Incorrect length of storage array #" + k
                         + ": length = " + storage[k].length() + " and is not divided by "
                         + "combiner.numbersOfElementsPerOneCombinedElement(" + k + ") = " + ne);
+                }
                 long length = storage[k].length() / ne;
                 if (k == 0) {
                     length0 = length; ne0 = ne;
@@ -991,14 +1001,16 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             E[] dest = InternalUtils.cast(destArray);
             if (combiner instanceof BufferedCombiner<?>) {
                 ((BufferedCombiner<E>)combiner).get(arrayPos, dest, destArrayOffset, count, storage);
@@ -1008,13 +1020,14 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public void getData(long arrayPos, Object destArray) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (arrayPos < 0 || arrayPos > length)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (arrayPos < 0 || arrayPos > length) {
                 throw rangeException(arrayPos);
+            }
             int count = java.lang.reflect.Array.getLength(destArray);
-            if (count > length - arrayPos)
+            if (count > length - arrayPos) {
                 count = (int)(length - arrayPos);
+            }
             E[] dest = InternalUtils.cast(destArray);
             if (combiner instanceof BufferedCombiner<?>) {
                 ((BufferedCombiner<E>)combiner).get(arrayPos, dest, 0, count, storage);
@@ -1066,8 +1079,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public final ObjectArray<E> asImmutable() {
-            if (isImmutable())
+            if (isImmutable()) {
                 return this;
+            }
             Array[] stor = new Array[storage.length];
             for (int k = 0; k < storage.length; k++) {
                 stor[k] = storage[k].asImmutable();
@@ -1080,8 +1094,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public final ObjectArray<E> asTrustedImmutable() {
-            if (isImmutable())
+            if (isImmutable()) {
                 return this;
+            }
             Array[] stor = new Array[storage.length];
             for (int k = 0; k < storage.length; k++) {
                 stor[k] = storage[k].asTrustedImmutable();
@@ -1104,8 +1119,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public Array asCopyOnNextWrite() {
-            if (isImmutable())
+            if (isImmutable()) {
                 return this;
+            }
             Array[] stor = new Array[storage.length];
             for (int k = 0; k < storage.length; k++) {
                 stor[k] = storage[k].asCopyOnNextWrite();
@@ -1142,8 +1158,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public <D> ObjectArray<D> cast(Class<D> elementType) {
-            if (!elementType.isAssignableFrom(this.elementType))
+            if (!elementType.isAssignableFrom(this.elementType)) {
                 throw new ClassCastException("Illegal desired element type " + elementType + " for " + this);
+            }
             return InternalUtils.cast(this);
         }
 
@@ -1182,8 +1199,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             if (obj instanceof CombinedArray<?> && ((CombinedArray<?>)obj).combiner == this.combiner) {
                 for (int k = 0; k < storage.length; k++) {
                     CombinedArray<?> a = (CombinedArray<?>)obj;
-                    if (!storage[k].equals(a.storage[k]))
+                    if (!storage[k].equals(a.storage[k])) {
                         return false;
+                    }
                 }
                 return true;
             }
@@ -1209,8 +1227,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public final void setElement(long index, Object value) {
-            if (value != null && !elementType.isAssignableFrom(value.getClass()))
+            if (value != null && !elementType.isAssignableFrom(value.getClass())) {
                 throw new ClassCastException("Invalid type of setElement argument");
+            }
             combiner.set(index, InternalUtils.<E>cast(value), (UpdatableArray[])storage);
         }
 
@@ -1219,14 +1238,16 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (count < 0)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             E[] src = InternalUtils.cast(srcArray);
             if (combiner instanceof BufferedCombiner<?>) {
                 ((BufferedCombiner<E>)combiner).set(arrayPos, src, srcArrayOffset, count, (UpdatableArray[])storage);
@@ -1237,13 +1258,14 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public UpdatableArray setData(long arrayPos, Object srcArray) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (arrayPos < 0 || arrayPos > length)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (arrayPos < 0 || arrayPos > length) {
                 throw rangeException(arrayPos);
+            }
             int count = java.lang.reflect.Array.getLength(srcArray);
-            if (count > length - arrayPos)
+            if (count > length - arrayPos) {
                 count = (int)(length - arrayPos);
+            }
             E[] src = InternalUtils.cast(srcArray);
             if (combiner instanceof BufferedCombiner<?>) {
                 ((BufferedCombiner<E>)combiner).set(arrayPos, src, 0, count, (UpdatableArray[])storage);
@@ -1256,17 +1278,20 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         private void setDataInternal(long arrayPos, E[] src, int srcArrayOffset, int count) {
             UpdatableArray[] stor = (UpdatableArray[])storage;
             for (int k = srcArrayOffset, kMax = srcArrayOffset + count; k < kMax; k++, arrayPos++) {
-                if (src[k] != null && !elementType.isAssignableFrom(src[k].getClass()))
+                if (src[k] != null && !elementType.isAssignableFrom(src[k].getClass())) {
                     throw new ClassCastException("Invalid type of setElement argument");
+                }
                 combiner.set(arrayPos, src[k], stor);
             }
         }
 
         public final void copy(long destIndex, long srcIndex) {
-            if (srcIndex < 0 || srcIndex >= length)
+            if (srcIndex < 0 || srcIndex >= length) {
                 throw rangeException(srcIndex);
-            if (destIndex < 0 || destIndex >= length)
+            }
+            if (destIndex < 0 || destIndex >= length) {
                 throw rangeException(destIndex);
+            }
             UpdatableArray[] stor = (UpdatableArray[])storage;
             if (allNumbersAre1) {
                 for (UpdatableArray s : stor) {
@@ -1281,17 +1306,22 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
-            if (count < 0)
+            if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
                     + ") in " + getClass());
-            if (srcIndex < 0)
+            }
+            if (srcIndex < 0) {
                 throw rangeException(srcIndex);
-            if (srcIndex > length - count)
+            }
+            if (srcIndex > length - count) {
                 throw rangeException(srcIndex + count - 1);
-            if (destIndex < 0)
+            }
+            if (destIndex < 0) {
                 throw rangeException(destIndex);
-            if (destIndex > length - count)
+            }
+            if (destIndex > length - count) {
                 throw rangeException(destIndex + count - 1);
+            }
             UpdatableArray[] stor = (UpdatableArray[])storage;
             if (allNumbersAre1) {
                 for (UpdatableArray s : stor) {
@@ -1306,10 +1336,12 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public final void swap(long firstIndex, long secondIndex) {
-            if (firstIndex < 0 || firstIndex >= length)
+            if (firstIndex < 0 || firstIndex >= length) {
                 throw rangeException(firstIndex);
-            if (secondIndex < 0 || secondIndex >= length)
+            }
+            if (secondIndex < 0 || secondIndex >= length) {
                 throw rangeException(secondIndex);
+            }
             UpdatableArray[] stor = (UpdatableArray[])storage;
             if (allNumbersAre1) {
                 for (int k = 0; k < storage.length; k++) {
@@ -1324,17 +1356,22 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public final void swap(long firstIndex, long secondIndex, long count) {
-            if (count < 0)
+            if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
                     + ") in " + getClass());
-            if (firstIndex < 0)
+            }
+            if (firstIndex < 0) {
                 throw rangeException(firstIndex);
-            if (firstIndex > length - count)
+            }
+            if (firstIndex > length - count) {
                 throw rangeException(firstIndex + count - 1);
-            if (secondIndex < 0)
+            }
+            if (secondIndex < 0) {
                 throw rangeException(secondIndex);
-            if (secondIndex > length - count)
+            }
+            if (secondIndex > length - count) {
                 throw rangeException(secondIndex + count - 1);
+            }
             UpdatableArray[] stor = (UpdatableArray[])storage;
             if (allNumbersAre1) {
                 for (int k = 0; k < storage.length; k++) {
@@ -1495,8 +1532,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
 
         public final E pop() {
             long index = length() - 1;
-            if (index < 0)
+            if (index < 0) {
                 throw new EmptyStackException();
+            }
             E result = get(index);
             length(index);
             return result;
@@ -1504,8 +1542,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
 
         public final void pushElement(Object value) {
             long index = length();
-            if (index == Long.MAX_VALUE)
+            if (index == Long.MAX_VALUE) {
                 throw new TooLargeArrayException("Too large desired array length (>Long.MAX_VALUE)");
+            }
             length(index + 1);
             setElement(index, value);
         }
@@ -1794,12 +1833,10 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     }
 
     private static Array[] shallowCloneArrays(Array[] src) {
-        if (src == null)
-            throw new NullPointerException("Cannot make shallow clones of arrays: null Array[] src");
+        Objects.requireNonNull(src, "Cannot make shallow clones of arrays: null Array[] src");
         Array[] result = src.clone(); // preserves the type of src elements
         for (int k = 0; k < result.length; k++) {
-            if (src[k] == null)
-                throw new NullPointerException("Cannot make shallow clones of arrays: array #" + k + " is null");
+            Objects.requireNonNull(src[k], "Cannot make shallow clones of arrays: array #" + k + " is null");
             result[k] = src[k].shallowClone();
         }
         return result;

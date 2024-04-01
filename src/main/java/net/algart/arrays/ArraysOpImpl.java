@@ -25,6 +25,7 @@
 package net.algart.arrays;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * <p>Implementations of some {@link Arrays} methods.</p>
@@ -56,8 +57,10 @@ class ArraysOpImpl {
                 numberOfTasks, 0);
             if (!dest.elementType().isAssignableFrom(src.elementType()))
                 // this check is necessary in a case of empty arrays
+            {
                 throw new IllegalArgumentException("Element types mismatch ("
                     + dest.elementType() + " and " + src.elementType() + ")");
+            }
             this.arrayPool =
                 dest instanceof BitArray ? BIT_ARRAYS :
                 dest instanceof CharArray ? CHAR_ARRAYS :
@@ -85,8 +88,9 @@ class ArraysOpImpl {
                     subDest.copy(subBuf);
                 }
             } finally {
-                if (arrayPool != null)
+                if (arrayPool != null) {
                     arrayPool.releaseArray(buf);
+                }
             }
         }
     }
@@ -112,29 +116,35 @@ class ArraysOpImpl {
             } else if (src instanceof BitArray) {
                 // usually very quick algorithm, excepting very long constant bit arrays
                 boolean v0 = ((BitArray)src).getBit(0);
-                if (v0)
+                if (v0) {
                     indexOfMax = 0;
-                else
+                } else {
                     indexOfMin = 0;
+                }
                 DataBuffer buf = Arrays.bufferInternal(src, DataBuffer.AccessMode.READ, blockSize, true);
                 Loop:for (buf.map(0); buf.hasData(); buf.mapNext()) {
                     long[] ja = (long[])buf.data();
                     for (long kMin = buf.fromIndex(), kMax = buf.toIndex(), k = kMin; k < kMax; k++) {
                         boolean v = PackedBitArrays.getBit(ja, k);
                         if (v != v0) {
-                            if (v)
+                            if (v) {
                                 indexOfMax = buf.position() + (k - kMin);
-                            else
+                            } else {
                                 indexOfMin = buf.position() + (k - kMin);
+                            }
                             break Loop;
                         }
                     }
                 }
                 assert indexOfMin != -1 || indexOfMax != -1;
                 if (indexOfMin == -1) // no zero bits: so, the first 1 is both minimum and maximum
+                {
                     indexOfMin = 0;
+                }
                 if (indexOfMax == -1) // no unit bits: so, the first 0 is both minimum and maximum
+                {
                     indexOfMax = 0;
+                }
                 finish();
             } else {
                 super.process();
@@ -366,56 +376,63 @@ class ArraysOpImpl {
             } else if (src instanceof ByteArray) {
                 byte[] ja = (byte[])buf.data();
                 int sum = 0;
-                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                     sum += ja[k] & 0xFF;
+                }
                 synchronized(this) {
                     result += sum;
                 }
             } else if (src instanceof CharArray) {
                 char[] ja = (char[])buf.data();
                 int sum = 0;
-                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                     sum += ja[k];
+                }
                 synchronized(this) {
                     result += sum;
                 }
             } else if (src instanceof ShortArray) {
                 short[] ja = (short[])buf.data();
                 int sum = 0;
-                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                     sum += ja[k] & 0xFFFF;
+                }
                 synchronized(this) {
                     result += sum;
                 }
             } else if (src instanceof IntArray) {
                 int[] ja = (int[])buf.data();
                 long sum = 0;
-                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                     sum += ja[k];
+                }
                 synchronized(this) {
                     result += sum;
                 }
             } else if (src instanceof LongArray) {
                 long[] ja = (long[])buf.data();
                 double sum = 0.0;
-                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                     sum += ja[k];
+                }
                 synchronized(this) {
                     result += sum;
                 }
             } else if (src instanceof FloatArray) {
                 float[] ja = (float[])buf.data();
                 double sum = 0.0;
-                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                     sum += ja[k];
+                }
                 synchronized(this) {
                     result += sum;
                 }
             } else if (src instanceof DoubleArray) {
                 double[] ja = (double[])buf.data();
                 double sum = 0.0;
-                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                     sum += ja[k];
+                }
                 synchronized(this) {
                     result += sum;
                 }
@@ -469,41 +486,49 @@ class ArraysOpImpl {
             } else if (src instanceof ByteArray) {
                 byte[] ja = (byte[])buf.data();
                 int sum = 0;
-                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                     sum += ja[k] & 0xFF;
+                }
                 synchronized(this) {
                     result += sum;
-                    if (checkOverflow && result < 0)
+                    if (checkOverflow && result < 0) {
                         throw new ArithmeticException("Overflow while sum calculation");
+                    }
                 }
             } else if (src instanceof CharArray) {
                 char[] ja = (char[])buf.data();
                 int sum = 0;
-                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                     sum += ja[k];
+                }
                 synchronized(this) {
                     result += sum;
-                    if (checkOverflow && result < 0)
+                    if (checkOverflow && result < 0) {
                         throw new ArithmeticException("Overflow while sum calculation");
+                    }
                 }
             } else if (src instanceof ShortArray) {
                 short[] ja = (short[])buf.data();
                 int sum = 0;
-                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                     sum += ja[k] & 0xFFFF;
+                }
                 synchronized(this) {
                     result += sum;
-                    if (checkOverflow && result < 0)
+                    if (checkOverflow && result < 0) {
                         throw new ArithmeticException("Overflow while sum calculation");
+                    }
                 }
             } else if (src instanceof IntArray) {
                 int[] ja = (int[])buf.data();
                 long sum = 0;
-                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                     sum += ja[k];
+                }
                 synchronized(this) {
-                    if (checkOverflow && (sum > 0 ? result > 0 && result + sum <= 0 : result < 0 && result + sum >= 0))
+                    if (checkOverflow && (sum > 0 ? result > 0 && result + sum <= 0 : result < 0 && result + sum >= 0)) {
                         throw new ArithmeticException("Overflow while sum calculation");
+                    }
                     result += sum;
                 }
             } else if (src instanceof LongArray) {
@@ -511,17 +536,20 @@ class ArraysOpImpl {
                 long sum = 0;
                 if (checkOverflow) {
                     for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
-                        if (ja[k] > 0 ? sum > 0 && sum + ja[k] <= 0 : sum < 0 && sum + ja[k] >= 0)
+                        if (ja[k] > 0 ? sum > 0 && sum + ja[k] <= 0 : sum < 0 && sum + ja[k] >= 0) {
                             throw new ArithmeticException("Overflow while sum calculation");
+                        }
                         sum += ja[k];
                     }
                 } else {
-                    for (int k = buf.from(), kMax = buf.to(); k < kMax; k++)
+                    for (int k = buf.from(), kMax = buf.to(); k < kMax; k++) {
                         sum += ja[k];
+                    }
                 }
                 synchronized(this) {
-                    if (checkOverflow && (sum > 0 ? result > 0 && result + sum <= 0 : result < 0 && result + sum >= 0))
+                    if (checkOverflow && (sum > 0 ? result > 0 && result + sum <= 0 : result < 0 && result + sum >= 0)) {
                         throw new ArithmeticException("Overflow while sum calculation");
+                    }
                     result += sum;
                 }
             } else {
@@ -551,8 +579,9 @@ class ArraysOpImpl {
 
         public HistogramCalculator(ArrayContext context, PArray src, long[] histogram, double from, double to) {
             super(context, null, src, AbstractArray.largeBufferCapacity(src), 0, 0);
-            if (histogram.length == 0)
+            if (histogram.length == 0) {
                 throw new AssertionError("Empty histogram");
+            }
             this.buffers = new DataBuffer[this.numberOfTasks];
             this.histogram = histogram;
             this.histograms = new long[this.numberOfTasks][histogram.length]; // zero-filled
@@ -778,8 +807,9 @@ class ArraysOpImpl {
                 throw new AssertionError("Unallowed type of passed array: " + src.getClass());
             }
             synchronized(this) {
-                if (outside)
+                if (outside) {
                     allInside = false;
+                }
                 // synchronization also guarantees that the main thread will see correct data in finish()
             }
         }
@@ -830,8 +860,7 @@ class ArraysOpImpl {
 
         public BitsGreaterPacker(ArrayContext context, UpdatableBitArray bits, PArray array, double threshold) {
             super(context, bits, array, Math.min(AbstractArray.largeBufferCapacity(array), 32768), 0, 0);
-            if (bits == null)
-                throw new NullPointerException("Null bits argument");
+            Objects.requireNonNull(bits, "Null bits argument");
             this.bits = bits;
             this.threshold = threshold;
             this.srcBuffers = new DataBuffer[this.numberOfTasks];
@@ -966,8 +995,7 @@ class ArraysOpImpl {
 
         public BitsLessPacker(ArrayContext context, UpdatableBitArray bits, PArray array, double threshold) {
             super(context, bits, array, Math.min(AbstractArray.largeBufferCapacity(array), 32768), 0, 0);
-            if (bits == null)
-                throw new NullPointerException("Null bits argument");
+            Objects.requireNonNull(bits, "Null bits argument");
             this.bits = bits;
             this.threshold = threshold;
             this.srcBuffers = new DataBuffer[this.numberOfTasks];
@@ -1108,8 +1136,7 @@ class ArraysOpImpl {
 
         public BitsGreaterOrEqualPacker(ArrayContext context, UpdatableBitArray bits, PArray array, double threshold) {
             super(context, bits, array, Math.min(AbstractArray.largeBufferCapacity(array), 32768), 0, 0);
-            if (bits == null)
-                throw new NullPointerException("Null bits argument");
+            Objects.requireNonNull(bits, "Null bits argument");
             this.bits = bits;
             this.threshold = threshold;
             this.srcBuffers = new DataBuffer[this.numberOfTasks];
@@ -1236,8 +1263,7 @@ class ArraysOpImpl {
 
         public BitsLessOrEqualPacker(ArrayContext context, UpdatableBitArray bits, PArray array, double threshold) {
             super(context, bits, array, Math.min(AbstractArray.largeBufferCapacity(array), 32768), 0, 0);
-            if (bits == null)
-                throw new NullPointerException("Null bits argument");
+            Objects.requireNonNull(bits, "Null bits argument");
             this.bits = bits;
             this.threshold = threshold;
             this.srcBuffers = new DataBuffer[this.numberOfTasks];
@@ -1364,8 +1390,7 @@ class ArraysOpImpl {
 
         public UnitBitsUnpacker(ArrayContext context, UpdatablePArray array, BitArray bits, double filler) {
             super(context, array, bits, Math.min(AbstractArray.largeBufferCapacity(array), 32768), 0, 0);
-            if (bits == null)
-                throw new NullPointerException("Null array argument");
+            Objects.requireNonNull(bits, "Null array argument");
             this.filler = filler;
             this.srcBuffers = new DataBitBuffer[this.numberOfTasks];
             this.destBuffers = new DataBuffer[this.numberOfTasks];
@@ -1449,8 +1474,7 @@ class ArraysOpImpl {
 
         public ZeroBitsUnpacker(ArrayContext context, UpdatablePArray array, BitArray bits, double filler) {
             super(context, array, bits, Math.min(AbstractArray.largeBufferCapacity(array), 32768), 0, 0);
-            if (bits == null)
-                throw new NullPointerException("Null array argument");
+            Objects.requireNonNull(bits, "Null array argument");
             this.filler = filler;
             this.srcBuffers = new DataBitBuffer[this.numberOfTasks];
             this.destBuffers = new DataBuffer[this.numberOfTasks];
@@ -1535,8 +1559,7 @@ class ArraysOpImpl {
                 ArrayContext context, UpdatablePArray array, BitArray bits,
                 double filler0, double filler1) {
             super(context, array, bits, Math.min(AbstractArray.largeBufferCapacity(array), 32768), 0, 0);
-            if (bits == null)
-                throw new NullPointerException("Null array argument");
+            Objects.requireNonNull(bits, "Null array argument");
             this.filler0 = filler0;
             this.filler1 = filler1;
             this.srcBuffers = new DataBitBuffer[this.numberOfTasks];
@@ -1618,8 +1641,7 @@ class ArraysOpImpl {
     }
 
     static ArrayComparator defaultComparator(final UpdatableArray array, boolean reverse) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (array instanceof UpdatableBitArray) {
             final UpdatableBitArray a = (UpdatableBitArray)array;
             if (!reverse) {
@@ -2020,8 +2042,9 @@ class ArraysOpImpl {
             new Arrays.ComparingCopyStatus(copier.usedAlgorithm, strictMode, changed) :
             new Arrays.CopyStatus(copier.usedAlgorithm, strictMode);
         if (srcCopy != null && strictMode) {
-            if (!srcCopy.equals(dest.subArr(0, srcCopy.length())))
+            if (!srcCopy.equals(dest.subArr(0, srcCopy.length()))) {
                 throw new AssertionError("Error while copying " + src + " to " + dest);
+            }
         }
         if (Arrays.CONFIG_LOGGABLE && Arrays.SystemSettings.profilingMode()) {
             long t2 = System.nanoTime();
@@ -2054,84 +2077,95 @@ class ArraysOpImpl {
     }
 
     static Array asConcatenation(Array... arrays) {
-        if (arrays == null)
-            throw new NullPointerException("Null arrays argument");
-        if (arrays.length == 0)
+        Objects.requireNonNull(arrays, "Null arrays argument");
+        if (arrays.length == 0) {
             throw new IllegalArgumentException("Empty arrays[] (array of AlgART arrays)");
+        }
         Class<?> elementType = arrays[0].elementType();
         for (int k = 0; k < arrays.length; k++) {
-            if (!arrays[k].isUnresizable())
+            if (!arrays[k].isUnresizable()) {
                 throw new IllegalArgumentException("asConcatenation method cannot be applied to resizable arrays: "
                     + "please use UpdatableArray.asUnresizable() method before constructing a concatenation");
-            if (k > 0 && arrays[k].elementType() != elementType)
+            }
+            if (k > 0 && arrays[k].elementType() != elementType) {
                 throw new IllegalArgumentException("asConcatenation method cannot be applied to arrays "
                     + "with different element type: arrays[" + k + "] is " + arrays[k]
                     + ", but arrays[0] is " + arrays[0]);
+            }
         }
         //[[Repeat() boolean ==> char,,byte,,short,,int,,long,,float,,double;;
         //           Bit     ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double]]
         if (elementType == boolean.class) {
             BitArray[] a = new BitArray[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 a[k] = (BitArray) arrays[k];
+            }
             return new ConcatenatedBitArray(a);
         } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
         if (elementType == char.class) {
             CharArray[] a = new CharArray[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 a[k] = (CharArray) arrays[k];
+            }
             return new ConcatenatedCharArray(a);
         } else
         if (elementType == byte.class) {
             ByteArray[] a = new ByteArray[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 a[k] = (ByteArray) arrays[k];
+            }
             return new ConcatenatedByteArray(a);
         } else
         if (elementType == short.class) {
             ShortArray[] a = new ShortArray[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 a[k] = (ShortArray) arrays[k];
+            }
             return new ConcatenatedShortArray(a);
         } else
         if (elementType == int.class) {
             IntArray[] a = new IntArray[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 a[k] = (IntArray) arrays[k];
+            }
             return new ConcatenatedIntArray(a);
         } else
         if (elementType == long.class) {
             LongArray[] a = new LongArray[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 a[k] = (LongArray) arrays[k];
+            }
             return new ConcatenatedLongArray(a);
         } else
         if (elementType == float.class) {
             FloatArray[] a = new FloatArray[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 a[k] = (FloatArray) arrays[k];
+            }
             return new ConcatenatedFloatArray(a);
         } else
         if (elementType == double.class) {
             DoubleArray[] a = new DoubleArray[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 a[k] = (DoubleArray) arrays[k];
+            }
             return new ConcatenatedDoubleArray(a);
         } else //[[Repeat.AutoGeneratedEnd]]
         {
             ObjectArray<Object>[] a = InternalUtils.cast(new ObjectArray<?>[arrays.length]);
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 a[k] = ((ObjectArray<?>) arrays[k]).cast(Object.class);
+            }
             return new ConcatenatedObjectArray<Object>(a);
         }
     }
 
     static Array asShifted(Array array, long shift) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
-        if (!array.isUnresizable())
+        Objects.requireNonNull(array, "Null array argument");
+        if (!array.isUnresizable()) {
             throw new IllegalArgumentException("asShifted method cannot be applied to resizable array: "
                 + "please use UpdatableArray.asUnresizable() method before constructing a shifted array");
+        }
         // if shift == 0 or Arrays.isNCopies(array), we still process this case
         // (to be on the safe side; in old versions, it was necessary to provide correct
         // memory model for newCompatibleXxxArray methods)
@@ -2142,8 +2176,9 @@ class ArraysOpImpl {
                 shift += len;
             }
         }
-        if (len > 0)
+        if (len > 0) {
             assert 0 <= shift && shift < len;
+        }
         //[[Repeat() Bit ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double]]
         if (array instanceof BitArray) {
             return new ShiftedBitArray((BitArray) array, shift);
@@ -2172,8 +2207,9 @@ class ArraysOpImpl {
         if (array instanceof ObjectArray<?>) {
             ObjectArray<?> a = (ObjectArray<?>)array;
             return new ShiftedObjectArray<Object>(a.cast(Object.class), shift);
-        } else
+        } else {
             throw new AssertionError("The array does not implement necessary interfaces: " + array.getClass());
+        }
     }
 
     interface ConcatenatedArray {
@@ -2186,8 +2222,9 @@ class ArraysOpImpl {
             long len = array.length();
             assert len >= 0 : "illegal length() implementation in " + array;
             sum += len;
-            if (sum < 0)
+            if (sum < 0) {
                 throw new TooLargeArrayException("The length of concatenation of arrays is greater than 2^63-1");
+            }
         }
         return sum;
     }
@@ -2204,8 +2241,9 @@ class ArraysOpImpl {
     private static int searchInConcatenatedArray(long[] startPositions, long index) {
         int result = java.util.Arrays.binarySearch(startPositions, index);
         if (result >= 0) {
-            while (result < startPositions.length - 1 && startPositions[result + 1] == index)
+            while (result < startPositions.length - 1 && startPositions[result + 1] == index) {
                 result++; // we must skip possible empty arrays
+            }
         } else {
             // -result-1 is the first index in startPositions greater than the index
             result = -result - 2; // so, the required array is before it
@@ -2238,8 +2276,9 @@ class ArraysOpImpl {
 
         @Override
         public boolean getBit(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             int k = searchInConcatenatedArray(startPositions, index);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + index + " (" + this + ")";
@@ -2248,14 +2287,16 @@ class ArraysOpImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             int k = searchInConcatenatedArray(startPositions, arrayPos);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + arrayPos + " (" + this + ")";
@@ -2277,14 +2318,16 @@ class ArraysOpImpl {
 
         @Override
         public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             int k = searchInConcatenatedArray(startPositions, arrayPos);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + arrayPos + " (" + this + ")";
@@ -2307,8 +2350,9 @@ class ArraysOpImpl {
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
             checkSubArrayArguments(fromIndex, toIndex);
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             int k1 = searchInConcatenatedArray(startPositions, fromIndex);
             assert k1 >= 0 && k1 < startPositions.length :
                 "illegal underlying array index " + k1 + " for position " + fromIndex + " (" + this + ")";
@@ -2327,8 +2371,9 @@ class ArraysOpImpl {
                 a[0] = p1 == 0 ? arrays[k1] :
                     InternalUtils.<BitArray>cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray
-                for (int k = k1 + 1; k < k2; k++)
+                for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
+                }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
                     InternalUtils.<BitArray>cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedBitArray(a);
@@ -2337,10 +2382,12 @@ class ArraysOpImpl {
 
         @Override
         public long nextQuickPosition(long position) {
-            if (position >= length)
+            if (position >= length) {
                 return -1;
-            if (position < 0)
+            }
+            if (position < 0) {
                 position = 0;
+            }
             int k = searchInConcatenatedArray(startPositions, position);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + position + " (" + this + ")";
@@ -2348,8 +2395,9 @@ class ArraysOpImpl {
             assert p >= 0;
             long qp = arrays[k].nextQuickPosition(p);
             while (qp == -1) { // try the next arrays
-                if (k == startPositions.length - 1)
+                if (k == startPositions.length - 1) {
                     return -1;
+                }
                 k++;
                 p = 0;
                 position = startPositions[k];
@@ -2366,8 +2414,9 @@ class ArraysOpImpl {
 
         public String toString() {
             long[] lengths = new long[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 lengths[k] = arrays[k].length();
+            }
             return "immutable AlgART array bit[" + length + "]"
                 + " built by concatenation of " + arrays.length + " arrays ("
                 + JArrays.toString(lengths, ", ", 200) + " bits)";
@@ -2391,8 +2440,9 @@ class ArraysOpImpl {
 
         @Override
         public char getChar(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             int k = searchInConcatenatedArray(startPositions, index);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + index + " (" + this + ")";
@@ -2401,14 +2451,16 @@ class ArraysOpImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             int k = searchInConcatenatedArray(startPositions, arrayPos);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + arrayPos + " (" + this + ")";
@@ -2432,8 +2484,9 @@ class ArraysOpImpl {
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
             checkSubArrayArguments(fromIndex, toIndex);
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             int k1 = searchInConcatenatedArray(startPositions, fromIndex);
             assert k1 >= 0 && k1 < startPositions.length :
                 "illegal underlying array index " + k1 + " for position " + fromIndex + " (" + this + ")";
@@ -2452,8 +2505,9 @@ class ArraysOpImpl {
                 a[0] = p1 == 0 ? arrays[k1] :
                     InternalUtils.<CharArray>cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
-                for (int k = k1 + 1; k < k2; k++)
+                for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
+                }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
                     InternalUtils.<CharArray>cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedCharArray(a);
@@ -2467,8 +2521,9 @@ class ArraysOpImpl {
 
         public String toString() {
             long[] lengths = new long[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 lengths[k] = arrays[k].length();
+            }
             return "immutable AlgART array char[" + length + "]"
                 + " built by concatenation of " + arrays.length + " arrays ("
                 + JArrays.toString(lengths, ", ", 200) + " chars)";
@@ -2491,8 +2546,9 @@ class ArraysOpImpl {
 
         @Override
         public int getByte(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             int k = searchInConcatenatedArray(startPositions, index);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + index + " (" + this + ")";
@@ -2501,14 +2557,16 @@ class ArraysOpImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             int k = searchInConcatenatedArray(startPositions, arrayPos);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + arrayPos + " (" + this + ")";
@@ -2532,8 +2590,9 @@ class ArraysOpImpl {
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
             checkSubArrayArguments(fromIndex, toIndex);
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             int k1 = searchInConcatenatedArray(startPositions, fromIndex);
             assert k1 >= 0 && k1 < startPositions.length :
                 "illegal underlying array index " + k1 + " for position " + fromIndex + " (" + this + ")";
@@ -2552,8 +2611,9 @@ class ArraysOpImpl {
                 a[0] = p1 == 0 ? arrays[k1] :
                     InternalUtils.<ByteArray>cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
-                for (int k = k1 + 1; k < k2; k++)
+                for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
+                }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
                     InternalUtils.<ByteArray>cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedByteArray(a);
@@ -2567,8 +2627,9 @@ class ArraysOpImpl {
 
         public String toString() {
             long[] lengths = new long[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 lengths[k] = arrays[k].length();
+            }
             return "immutable AlgART array byte[" + length + "]"
                 + " built by concatenation of " + arrays.length + " arrays ("
                 + JArrays.toString(lengths, ", ", 200) + " bytes)";
@@ -2591,8 +2652,9 @@ class ArraysOpImpl {
 
         @Override
         public int getShort(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             int k = searchInConcatenatedArray(startPositions, index);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + index + " (" + this + ")";
@@ -2601,14 +2663,16 @@ class ArraysOpImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             int k = searchInConcatenatedArray(startPositions, arrayPos);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + arrayPos + " (" + this + ")";
@@ -2632,8 +2696,9 @@ class ArraysOpImpl {
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
             checkSubArrayArguments(fromIndex, toIndex);
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             int k1 = searchInConcatenatedArray(startPositions, fromIndex);
             assert k1 >= 0 && k1 < startPositions.length :
                 "illegal underlying array index " + k1 + " for position " + fromIndex + " (" + this + ")";
@@ -2652,8 +2717,9 @@ class ArraysOpImpl {
                 a[0] = p1 == 0 ? arrays[k1] :
                     InternalUtils.<ShortArray>cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
-                for (int k = k1 + 1; k < k2; k++)
+                for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
+                }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
                     InternalUtils.<ShortArray>cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedShortArray(a);
@@ -2667,8 +2733,9 @@ class ArraysOpImpl {
 
         public String toString() {
             long[] lengths = new long[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 lengths[k] = arrays[k].length();
+            }
             return "immutable AlgART array short[" + length + "]"
                 + " built by concatenation of " + arrays.length + " arrays ("
                 + JArrays.toString(lengths, ", ", 200) + " shorts)";
@@ -2691,8 +2758,9 @@ class ArraysOpImpl {
 
         @Override
         public int getInt(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             int k = searchInConcatenatedArray(startPositions, index);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + index + " (" + this + ")";
@@ -2701,14 +2769,16 @@ class ArraysOpImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             int k = searchInConcatenatedArray(startPositions, arrayPos);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + arrayPos + " (" + this + ")";
@@ -2732,8 +2802,9 @@ class ArraysOpImpl {
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
             checkSubArrayArguments(fromIndex, toIndex);
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             int k1 = searchInConcatenatedArray(startPositions, fromIndex);
             assert k1 >= 0 && k1 < startPositions.length :
                 "illegal underlying array index " + k1 + " for position " + fromIndex + " (" + this + ")";
@@ -2752,8 +2823,9 @@ class ArraysOpImpl {
                 a[0] = p1 == 0 ? arrays[k1] :
                     InternalUtils.<IntArray>cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
-                for (int k = k1 + 1; k < k2; k++)
+                for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
+                }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
                     InternalUtils.<IntArray>cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedIntArray(a);
@@ -2767,8 +2839,9 @@ class ArraysOpImpl {
 
         public String toString() {
             long[] lengths = new long[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 lengths[k] = arrays[k].length();
+            }
             return "immutable AlgART array int[" + length + "]"
                 + " built by concatenation of " + arrays.length + " arrays ("
                 + JArrays.toString(lengths, ", ", 200) + " ints)";
@@ -2791,8 +2864,9 @@ class ArraysOpImpl {
 
         @Override
         public long getLong(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             int k = searchInConcatenatedArray(startPositions, index);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + index + " (" + this + ")";
@@ -2801,14 +2875,16 @@ class ArraysOpImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             int k = searchInConcatenatedArray(startPositions, arrayPos);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + arrayPos + " (" + this + ")";
@@ -2832,8 +2908,9 @@ class ArraysOpImpl {
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
             checkSubArrayArguments(fromIndex, toIndex);
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             int k1 = searchInConcatenatedArray(startPositions, fromIndex);
             assert k1 >= 0 && k1 < startPositions.length :
                 "illegal underlying array index " + k1 + " for position " + fromIndex + " (" + this + ")";
@@ -2852,8 +2929,9 @@ class ArraysOpImpl {
                 a[0] = p1 == 0 ? arrays[k1] :
                     InternalUtils.<LongArray>cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
-                for (int k = k1 + 1; k < k2; k++)
+                for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
+                }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
                     InternalUtils.<LongArray>cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedLongArray(a);
@@ -2867,8 +2945,9 @@ class ArraysOpImpl {
 
         public String toString() {
             long[] lengths = new long[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 lengths[k] = arrays[k].length();
+            }
             return "immutable AlgART array long[" + length + "]"
                 + " built by concatenation of " + arrays.length + " arrays ("
                 + JArrays.toString(lengths, ", ", 200) + " longs)";
@@ -2891,8 +2970,9 @@ class ArraysOpImpl {
 
         @Override
         public float getFloat(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             int k = searchInConcatenatedArray(startPositions, index);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + index + " (" + this + ")";
@@ -2901,14 +2981,16 @@ class ArraysOpImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             int k = searchInConcatenatedArray(startPositions, arrayPos);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + arrayPos + " (" + this + ")";
@@ -2932,8 +3014,9 @@ class ArraysOpImpl {
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
             checkSubArrayArguments(fromIndex, toIndex);
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             int k1 = searchInConcatenatedArray(startPositions, fromIndex);
             assert k1 >= 0 && k1 < startPositions.length :
                 "illegal underlying array index " + k1 + " for position " + fromIndex + " (" + this + ")";
@@ -2952,8 +3035,9 @@ class ArraysOpImpl {
                 a[0] = p1 == 0 ? arrays[k1] :
                     InternalUtils.<FloatArray>cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
-                for (int k = k1 + 1; k < k2; k++)
+                for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
+                }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
                     InternalUtils.<FloatArray>cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedFloatArray(a);
@@ -2967,8 +3051,9 @@ class ArraysOpImpl {
 
         public String toString() {
             long[] lengths = new long[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 lengths[k] = arrays[k].length();
+            }
             return "immutable AlgART array float[" + length + "]"
                 + " built by concatenation of " + arrays.length + " arrays ("
                 + JArrays.toString(lengths, ", ", 200) + " floats)";
@@ -2991,8 +3076,9 @@ class ArraysOpImpl {
 
         @Override
         public double getDouble(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             int k = searchInConcatenatedArray(startPositions, index);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + index + " (" + this + ")";
@@ -3001,14 +3087,16 @@ class ArraysOpImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             int k = searchInConcatenatedArray(startPositions, arrayPos);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + arrayPos + " (" + this + ")";
@@ -3032,8 +3120,9 @@ class ArraysOpImpl {
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
             checkSubArrayArguments(fromIndex, toIndex);
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             int k1 = searchInConcatenatedArray(startPositions, fromIndex);
             assert k1 >= 0 && k1 < startPositions.length :
                 "illegal underlying array index " + k1 + " for position " + fromIndex + " (" + this + ")";
@@ -3052,8 +3141,9 @@ class ArraysOpImpl {
                 a[0] = p1 == 0 ? arrays[k1] :
                     InternalUtils.<DoubleArray>cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
-                for (int k = k1 + 1; k < k2; k++)
+                for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
+                }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
                     InternalUtils.<DoubleArray>cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedDoubleArray(a);
@@ -3067,8 +3157,9 @@ class ArraysOpImpl {
 
         public String toString() {
             long[] lengths = new long[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 lengths[k] = arrays[k].length();
+            }
             return "immutable AlgART array double[" + length + "]"
                 + " built by concatenation of " + arrays.length + " arrays ("
                 + JArrays.toString(lengths, ", ", 200) + " doubles)";
@@ -3091,8 +3182,9 @@ class ArraysOpImpl {
 
         @Override
         public E get(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             int k = searchInConcatenatedArray(startPositions, index);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + index + " (" + this + ")";
@@ -3101,14 +3193,16 @@ class ArraysOpImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             int k = searchInConcatenatedArray(startPositions, arrayPos);
             assert k >= 0 && k < startPositions.length :
                 "illegal underlying array index " + k + " for position " + arrayPos + " (" + this + ")";
@@ -3132,8 +3226,9 @@ class ArraysOpImpl {
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
             checkSubArrayArguments(fromIndex, toIndex);
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             int k1 = searchInConcatenatedArray(startPositions, fromIndex);
             assert k1 >= 0 && k1 < startPositions.length :
                 "illegal underlying array index " + k1 + " for position " + fromIndex + " (" + this + ")";
@@ -3152,8 +3247,9 @@ class ArraysOpImpl {
                 a[0] = p1 == 0 ? arrays[k1] :
                     InternalUtils.<ObjectArray<E>>cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
-                for (int k = k1 + 1; k < k2; k++)
+                for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
+                }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
                     InternalUtils.<ObjectArray<E>>cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedObjectArray<E>(a);
@@ -3167,8 +3263,9 @@ class ArraysOpImpl {
 
         public String toString() {
             long[] lengths = new long[arrays.length];
-            for (int k = 0; k < arrays.length; k++)
+            for (int k = 0; k < arrays.length; k++) {
                 lengths[k] = arrays[k].length();
+            }
             return "immutable AlgART array " + elementType().getName() + "[" + length + "]"
                 + " built by concatenation of " + arrays.length + " arrays ("
                 + JArrays.toString(lengths, ", ", 200) + " Es)";
@@ -3202,8 +3299,9 @@ class ArraysOpImpl {
             super(a.length(), false, a);
             if (length > 0) {
                 shift %= length;
-                if (shift < 0)
+                if (shift < 0) {
                     shift += length;
+                }
                 assert 0 <= shift && shift < length;
             }
             this.a = a;
@@ -3214,8 +3312,9 @@ class ArraysOpImpl {
         public boolean getBit(long index) {
             if (index >= 0 && index < length) { // else do nothing: a.getBit will throw exception
                 index -= shift;
-                if (index < 0)
+                if (index < 0) {
                     index += length;
+                }
             }
             return a.getBit(index);
         }
@@ -3270,16 +3369,19 @@ class ArraysOpImpl {
 
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             checkSubArrayArguments(fromIndex, toIndex);
             // now we are sure that fromIndex < toIndex
             long from = fromIndex - shift;
-            if (from < 0)
+            if (from < 0) {
                 from += length;
+            }
             long toMinus1 = toIndex - 1 - shift;
-            if (toMinus1 < 0)
+            if (toMinus1 < 0) {
                 toMinus1 += length;
+            }
             assert from < length;
             assert toMinus1 < length;
             if (from <= toMinus1) {
@@ -3291,20 +3393,26 @@ class ArraysOpImpl {
 
         @Override
         public long nextQuickPosition(long position) {
-            if (position >= length)
+            if (position >= length) {
                 return -1;
-            if (position < 0)
+            }
+            if (position < 0) {
                 position = 0;
+            }
             long p = position - shift;
             if (p < 0) {
                 if (shift == 0 || shift > length / 2) // shift to the left
+                {
                     p += length;
-                else // shift to the right
+                } else // shift to the right
+                {
                     p = (p & 255) % length; // better behavior for a case from=0
+                }
             }
             long qp = a.nextQuickPosition(p);
-            if (qp == -1)
+            if (qp == -1) {
                 return -1;
+            }
             assert qp >= p : "illegal nextQuickPosition implementation in " + a;
             long result = position + (qp - p);
             return result >= length ? -1 : result;
@@ -3332,8 +3440,9 @@ class ArraysOpImpl {
             super(a.length(), false, a);
             if (length > 0) {
                 shift %= length;
-                if (shift < 0)
+                if (shift < 0) {
                     shift += length;
+                }
                 assert 0 <= shift && shift < length;
             }
             this.a = a;
@@ -3344,8 +3453,9 @@ class ArraysOpImpl {
         public char getChar(long index) {
             if (index >= 0 && index < length) { // else do nothing: a.getChar will throw exception
                 index -= shift;
-                if (index < 0)
+                if (index < 0) {
                     index += length;
+                }
             }
             return a.getChar(index);
         }
@@ -3377,16 +3487,19 @@ class ArraysOpImpl {
 
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             checkSubArrayArguments(fromIndex, toIndex);
             // now we are sure that fromIndex < toIndex
             long from = fromIndex - shift;
-            if (from < 0)
+            if (from < 0) {
                 from += length;
+            }
             long toMinus1 = toIndex - 1 - shift;
-            if (toMinus1 < 0)
+            if (toMinus1 < 0) {
                 toMinus1 += length;
+            }
             assert from < length;
             assert toMinus1 < length;
             if (from <= toMinus1) {
@@ -3418,8 +3531,9 @@ class ArraysOpImpl {
             super(a.length(), false, a);
             if (length > 0) {
                 shift %= length;
-                if (shift < 0)
+                if (shift < 0) {
                     shift += length;
+                }
                 assert 0 <= shift && shift < length;
             }
             this.a = a;
@@ -3430,8 +3544,9 @@ class ArraysOpImpl {
         public int getByte(long index) {
             if (index >= 0 && index < length) { // else do nothing: a.getByte will throw exception
                 index -= shift;
-                if (index < 0)
+                if (index < 0) {
                     index += length;
+                }
             }
             return a.getByte(index);
         }
@@ -3463,16 +3578,19 @@ class ArraysOpImpl {
 
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             checkSubArrayArguments(fromIndex, toIndex);
             // now we are sure that fromIndex < toIndex
             long from = fromIndex - shift;
-            if (from < 0)
+            if (from < 0) {
                 from += length;
+            }
             long toMinus1 = toIndex - 1 - shift;
-            if (toMinus1 < 0)
+            if (toMinus1 < 0) {
                 toMinus1 += length;
+            }
             assert from < length;
             assert toMinus1 < length;
             if (from <= toMinus1) {
@@ -3504,8 +3622,9 @@ class ArraysOpImpl {
             super(a.length(), false, a);
             if (length > 0) {
                 shift %= length;
-                if (shift < 0)
+                if (shift < 0) {
                     shift += length;
+                }
                 assert 0 <= shift && shift < length;
             }
             this.a = a;
@@ -3516,8 +3635,9 @@ class ArraysOpImpl {
         public int getShort(long index) {
             if (index >= 0 && index < length) { // else do nothing: a.getShort will throw exception
                 index -= shift;
-                if (index < 0)
+                if (index < 0) {
                     index += length;
+                }
             }
             return a.getShort(index);
         }
@@ -3549,16 +3669,19 @@ class ArraysOpImpl {
 
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             checkSubArrayArguments(fromIndex, toIndex);
             // now we are sure that fromIndex < toIndex
             long from = fromIndex - shift;
-            if (from < 0)
+            if (from < 0) {
                 from += length;
+            }
             long toMinus1 = toIndex - 1 - shift;
-            if (toMinus1 < 0)
+            if (toMinus1 < 0) {
                 toMinus1 += length;
+            }
             assert from < length;
             assert toMinus1 < length;
             if (from <= toMinus1) {
@@ -3590,8 +3713,9 @@ class ArraysOpImpl {
             super(a.length(), false, a);
             if (length > 0) {
                 shift %= length;
-                if (shift < 0)
+                if (shift < 0) {
                     shift += length;
+                }
                 assert 0 <= shift && shift < length;
             }
             this.a = a;
@@ -3602,8 +3726,9 @@ class ArraysOpImpl {
         public int getInt(long index) {
             if (index >= 0 && index < length) { // else do nothing: a.getInt will throw exception
                 index -= shift;
-                if (index < 0)
+                if (index < 0) {
                     index += length;
+                }
             }
             return a.getInt(index);
         }
@@ -3635,16 +3760,19 @@ class ArraysOpImpl {
 
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             checkSubArrayArguments(fromIndex, toIndex);
             // now we are sure that fromIndex < toIndex
             long from = fromIndex - shift;
-            if (from < 0)
+            if (from < 0) {
                 from += length;
+            }
             long toMinus1 = toIndex - 1 - shift;
-            if (toMinus1 < 0)
+            if (toMinus1 < 0) {
                 toMinus1 += length;
+            }
             assert from < length;
             assert toMinus1 < length;
             if (from <= toMinus1) {
@@ -3676,8 +3804,9 @@ class ArraysOpImpl {
             super(a.length(), false, a);
             if (length > 0) {
                 shift %= length;
-                if (shift < 0)
+                if (shift < 0) {
                     shift += length;
+                }
                 assert 0 <= shift && shift < length;
             }
             this.a = a;
@@ -3688,8 +3817,9 @@ class ArraysOpImpl {
         public long getLong(long index) {
             if (index >= 0 && index < length) { // else do nothing: a.getLong will throw exception
                 index -= shift;
-                if (index < 0)
+                if (index < 0) {
                     index += length;
+                }
             }
             return a.getLong(index);
         }
@@ -3721,16 +3851,19 @@ class ArraysOpImpl {
 
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             checkSubArrayArguments(fromIndex, toIndex);
             // now we are sure that fromIndex < toIndex
             long from = fromIndex - shift;
-            if (from < 0)
+            if (from < 0) {
                 from += length;
+            }
             long toMinus1 = toIndex - 1 - shift;
-            if (toMinus1 < 0)
+            if (toMinus1 < 0) {
                 toMinus1 += length;
+            }
             assert from < length;
             assert toMinus1 < length;
             if (from <= toMinus1) {
@@ -3762,8 +3895,9 @@ class ArraysOpImpl {
             super(a.length(), false, a);
             if (length > 0) {
                 shift %= length;
-                if (shift < 0)
+                if (shift < 0) {
                     shift += length;
+                }
                 assert 0 <= shift && shift < length;
             }
             this.a = a;
@@ -3774,8 +3908,9 @@ class ArraysOpImpl {
         public float getFloat(long index) {
             if (index >= 0 && index < length) { // else do nothing: a.getFloat will throw exception
                 index -= shift;
-                if (index < 0)
+                if (index < 0) {
                     index += length;
+                }
             }
             return a.getFloat(index);
         }
@@ -3807,16 +3942,19 @@ class ArraysOpImpl {
 
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             checkSubArrayArguments(fromIndex, toIndex);
             // now we are sure that fromIndex < toIndex
             long from = fromIndex - shift;
-            if (from < 0)
+            if (from < 0) {
                 from += length;
+            }
             long toMinus1 = toIndex - 1 - shift;
-            if (toMinus1 < 0)
+            if (toMinus1 < 0) {
                 toMinus1 += length;
+            }
             assert from < length;
             assert toMinus1 < length;
             if (from <= toMinus1) {
@@ -3848,8 +3986,9 @@ class ArraysOpImpl {
             super(a.length(), false, a);
             if (length > 0) {
                 shift %= length;
-                if (shift < 0)
+                if (shift < 0) {
                     shift += length;
+                }
                 assert 0 <= shift && shift < length;
             }
             this.a = a;
@@ -3860,8 +3999,9 @@ class ArraysOpImpl {
         public double getDouble(long index) {
             if (index >= 0 && index < length) { // else do nothing: a.getDouble will throw exception
                 index -= shift;
-                if (index < 0)
+                if (index < 0) {
                     index += length;
+                }
             }
             return a.getDouble(index);
         }
@@ -3893,16 +4033,19 @@ class ArraysOpImpl {
 
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             checkSubArrayArguments(fromIndex, toIndex);
             // now we are sure that fromIndex < toIndex
             long from = fromIndex - shift;
-            if (from < 0)
+            if (from < 0) {
                 from += length;
+            }
             long toMinus1 = toIndex - 1 - shift;
-            if (toMinus1 < 0)
+            if (toMinus1 < 0) {
                 toMinus1 += length;
+            }
             assert from < length;
             assert toMinus1 < length;
             if (from <= toMinus1) {
@@ -3934,8 +4077,9 @@ class ArraysOpImpl {
             super(a.elementType(), a.length(), false, a);
             if (length > 0) {
                 shift %= length;
-                if (shift < 0)
+                if (shift < 0) {
                     shift += length;
+                }
                 assert 0 <= shift && shift < length;
             }
             this.a = a;
@@ -3946,8 +4090,9 @@ class ArraysOpImpl {
         public E get(long index) {
             if (index >= 0 && index < length) { // else do nothing: a.get will throw exception
                 index -= shift;
-                if (index < 0)
+                if (index < 0) {
                     index += length;
+                }
             }
             return a.get(index);
         }
@@ -3979,16 +4124,19 @@ class ArraysOpImpl {
 
         @Override
         public Array subArray(final long fromIndex, final long toIndex) {
-            if (fromIndex == toIndex)
+            if (fromIndex == toIndex) {
                 return super.subArray(fromIndex, toIndex);
+            }
             checkSubArrayArguments(fromIndex, toIndex);
             // now we are sure that fromIndex < toIndex
             long from = fromIndex - shift;
-            if (from < 0)
+            if (from < 0) {
                 from += length;
+            }
             long toMinus1 = toIndex - 1 - shift;
-            if (toMinus1 < 0)
+            if (toMinus1 < 0) {
                 toMinus1 += length;
+            }
             assert from < length;
             assert toMinus1 < length;
             if (from <= toMinus1) {
