@@ -26,6 +26,8 @@ package net.algart.arrays;
 
 import net.algart.arrays.BufferArraysImpl.AbstractBufferArray;
 
+import java.util.Objects;
+
 /**
  * <p>Implementation of {@link Array#getData(long, Object, int, int)} methods
  * in the custom implementations of functional arrays for min(x0,x1,...) and max(x0,x1,...) functions.
@@ -55,14 +57,17 @@ class ArraysMinMaxGetDataOp {
     private final ArrayMinMaxOp ammo;
     private final boolean isMin;
     ArraysMinMaxGetDataOp(PArray result, PArray[] x, ArrayMinMaxOp ammo, boolean isMin) {
-        if (x.length == 0)
+        if (x.length == 0) {
             throw new AssertionError("Empty x[] argument");
+        }
         this.length = result.length();
         for (PArray xk : x) {
-            if (xk.elementType() != result.elementType())
+            if (xk.elementType() != result.elementType()) {
                 throw new AssertionError("Different x[] / result element types");
-            if (xk.length() != this.length)
+            }
+            if (xk.length() != this.length) {
                 throw new AssertionError("Different x[] / result lengths");
+            }
         }
         this.x = x; // this class is used only with x clones
         this.result = result;
@@ -104,14 +109,16 @@ class ArraysMinMaxGetDataOp {
     }
 
     void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (count < 0)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw AbstractArray.rangeException(arrayPos, x[0].length(), x[0].getClass());
-        if (arrayPos > x[0].length() - count)
+        }
+        if (arrayPos > x[0].length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x[0].length(), x[0].getClass());
+        }
         for (; count > 0; ) {
             int len;
             if (isBit) {
@@ -190,17 +197,20 @@ class ArraysMinMaxGetDataOp {
     }
 
     public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
-        if (!isBit)
+        if (!isBit) {
             throw new AssertionError("Illegal usage of " + getClass().getName() + ".getBits");
+        }
         // Necessary, because this method modifies this.quickPositions
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (count < 0)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw AbstractArray.rangeException(arrayPos, x[0].length(), getClass());
-        if (arrayPos > x[0].length() - count)
+        }
+        if (arrayPos > x[0].length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x[0].length(), getClass());
+        }
         final BitArray x0 = (BitArray)x[0];
         for (; count > 0; ) {
             final int len = (int)Math.min(count, ArraysFuncImpl.BIT_BUFFER_LENGTH);
@@ -238,13 +248,16 @@ class ArraysMinMaxGetDataOp {
                     boolean firstArray = true;
                     int lastSh = -1;
                     for (int sh = 0; sh < 64; sh++) { // we'll process array in order of increasing shift
-                        if ((goodPositionsMap & (1L << sh)) == 0)
+                        if ((goodPositionsMap & (1L << sh)) == 0) {
                             continue; // - no arrays with such position
-                        if (lastSh != -1)
+                        }
+                        if (lastSh != -1) {
                             PackedBitArrays.copyBits(destLongBuf, sh, destLongBuf, lastSh, len);
+                        }
                         for (int k = 0; k < x.length; k++) {
-                            if (quickPositions[k] == -1 || ((int)(arrayPos - quickPositions[k]) & 63) != sh)
+                            if (quickPositions[k] == -1 || ((int)(arrayPos - quickPositions[k]) & 63) != sh) {
                                 continue; // - this array does not correspond to this shift
+                            }
                             if (firstArray) {
                                 ((BitArray)x[k]).getBits(arrayPos, destLongBuf, sh, len); // - aligned copying
                                 firstArray = false;
@@ -298,9 +311,10 @@ class ArraysMinMaxGetDataOp {
                 ArraysFuncImpl.BIT_BUFFERS.releaseArray(longBuf);
                 ArraysFuncImpl.BIT_BUFFERS.releaseArray(destLongBuf);
             }
-            if (processedArraysCount != x.length)
+            if (processedArraysCount != x.length) {
                 throw new AssertionError("Not all or too many arrays are processed: "
                     + processedArraysCount + " instead of " + x.length);
+            }
             destArrayOffset += len;
             arrayPos += len;
             count -= len;
@@ -363,15 +377,17 @@ class ArraysMinMaxGetDataOp {
                 // x[k] may depend on the destArray in any lazy way
                 dangerousDestOverlapPossible = true;
             }
-            if (jaOrDStorOffsets != null)
+            if (jaOrDStorOffsets != null) {
                 jaOrDStorOffsets[k] = ofs;
+            }
         }
-        if (dangerousDestOverlapPossible)
+        if (dangerousDestOverlapPossible) {
             return DANGEROUS;
-        else if (inPlaceOp)
+        } else if (inPlaceOp) {
             return SAFE_IN_PLACE_TO_ARRAY_0_WITH_SAME_OFFSET;
-        else
+        } else {
             return SAFE;
+        }
     }
 
     private void processBits(int xIndex, long arrayPos, long[] dest, long destOffset, int len,

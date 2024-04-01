@@ -26,6 +26,8 @@ package net.algart.arrays;
 
 import net.algart.math.functions.Func;
 
+import java.util.Objects;
+
 /**
  * <p>Implementations of {@link Matrices} methods returning trivial interpolations of the matrix.</p>
  *
@@ -40,8 +42,7 @@ class ArraysInterpolationsImpl {
         final int idimX, idimY, idimZ;
 
         AbstractInterpolation(Matrix<? extends PArray> m) {
-            if (m == null)
-                throw new NullPointerException("Null m argument");
+            Objects.requireNonNull(m, "Null m argument");
             this.m = m;
             this.array = m.array();
             this.dim = m.dimensions();
@@ -54,45 +55,52 @@ class ArraysInterpolationsImpl {
         }
 
         void checkIndex(int coordIndex, long index) {
-            if (index < 0 || index >= m.dim(coordIndex))
+            if (index < 0 || index >= m.dim(coordIndex)) {
                 throw new IndexOutOfBoundsException("Coordinate #" + coordIndex + " (" + index
                     + (index < 0 ? ") < 0" : ") >= dim(" + coordIndex + ") = " + m.dim(coordIndex)));
+            }
         }
 
         void checkIndex0(long index) {
-            if (index < 0 || index >= dimX)
+            if (index < 0 || index >= dimX) {
                 throw new IndexOutOfBoundsException("X-coordinate (" + index
                     + (index < 0 ? ") < 0" : ") >= dim(0) = " + dimX));
+            }
         }
 
         void checkIndex1(long index) {
-            if (index < 0 || index >= dimY)
+            if (index < 0 || index >= dimY) {
                 throw new IndexOutOfBoundsException("Y-coordinate (" + index
                     + (index < 0 ? ") < 0" : ") >= dim(1) = " + dimY));
+            }
         }
 
         void checkIndex2(long index) {
-            if (index < 0 || index >= dimZ)
+            if (index < 0 || index >= dimZ) {
                 throw new IndexOutOfBoundsException("Z-coordinate (" + index
                     + (index < 0 ? ") < 0" : ") >= dim(2) = " + dimZ));
+            }
         }
 
         void checkIntIndex0(int index) {
-            if (index < 0 || index >= idimX)
+            if (index < 0 || index >= idimX) {
                 throw new IndexOutOfBoundsException("X-coordinate (" + index
                     + (index < 0 ? ") < 0" : ") >= dim(0) = " + idimX));
+            }
         }
 
         void checkIntIndex1(int index) {
-            if (index < 0 || index >= idimY)
+            if (index < 0 || index >= idimY) {
                 throw new IndexOutOfBoundsException("Y-coordinate (" + index
                     + (index < 0 ? ") < 0" : ") >= dim(1) = " + idimY));
+            }
         }
 
         void checkIntIndex2(int index) {
-            if (index < 0 || index >= idimZ)
+            if (index < 0 || index >= idimZ) {
                 throw new IndexOutOfBoundsException("Z-coordinate (" + index
                     + (index < 0 ? ") < 0" : ") >= dim(2) = " + idimZ));
+            }
         }
 
         public final double get() {
@@ -116,8 +124,9 @@ class ArraysInterpolationsImpl {
         }
 
         public double get(double... x) {
-            if (x.length == 0)
+            if (x.length == 0) {
                 throw new IndexOutOfBoundsException("At least 1 argument required");
+            }
             int n = dim.length < x.length ? dim.length - 1 : x.length - 1;
             long index = (long)x[n];
             while (--n >= 0) {
@@ -172,8 +181,9 @@ class ArraysInterpolationsImpl {
         }
 
         public double get(double... x) {
-            if (x.length == 0)
+            if (x.length == 0) {
                 throw new IndexOutOfBoundsException("At least 1 argument required");
+            }
             int n = dim.length < x.length ? dim.length - 1 : x.length - 1;
             long index = (long)x[n];
             checkIndex(n, index);
@@ -241,16 +251,19 @@ class ArraysInterpolationsImpl {
         }
 
         public double get(double... x) {
-            if (x.length == 0)
+            if (x.length == 0) {
                 throw new IndexOutOfBoundsException("At least 1 argument required");
+            }
             int n = dim.length < x.length ? dim.length - 1 : x.length - 1;
             long index = (long)x[n];
-            if (index < 0 || index >= dim[n])
+            if (index < 0 || index >= dim[n]) {
                 return outsideValue;
+            }
             while (--n >= 0) {
                 long coord = (long)x[n];
-                if (coord < 0 || coord >= dim[n])
+                if (coord < 0 || coord >= dim[n]) {
                     return outsideValue;
+                }
                 index = dim[n] * index + coord;
             }
             return array.getDouble(index);
@@ -258,47 +271,57 @@ class ArraysInterpolationsImpl {
 
         public double get(double x) {
             long ix = (long)x;
-            if (ix < 0 || ix >= dimX)
+            if (ix < 0 || ix >= dimX) {
                 return outsideValue;
+            }
             return array.getDouble(ix);
         }
 
         public double get(double x, double y) {
             long ix = (long)x;
-            if (ix < 0 || ix >= dimX)
+            if (ix < 0 || ix >= dimX) {
                 return outsideValue;
+            }
             long iy = (long)y;
-            if (iy < 0 || iy >= dimY)
+            if (iy < 0 || iy >= dimY) {
                 return outsideValue;
+            }
             return array.getDouble(iy * dimX + ix);
         }
 
         public double get(double x, double y, double z) {
             long ix = (long)x;
-            if (ix < 0 || ix >= dimX)
+            if (ix < 0 || ix >= dimX) {
                 return outsideValue;
+            }
             long iy = (long)y;
-            if (iy < 0 || iy >= dimY)
+            if (iy < 0 || iy >= dimY) {
                 return outsideValue;
+            }
             long iz = (long)z;
-            if (iz < 0 || iz >= dimZ)
+            if (iz < 0 || iz >= dimZ) {
                 return outsideValue;
+            }
             return array.getDouble((iz * dimY + iy) * dimX + ix);
         }
 
         public double get(double x, double y, double z, double t) {
             long ix = (long)x;
-            if (ix < 0 || ix >= dimX)
+            if (ix < 0 || ix >= dimX) {
                 return outsideValue;
+            }
             long iy = (long)y;
-            if (iy < 0 || iy >= dimY)
+            if (iy < 0 || iy >= dimY) {
                 return outsideValue;
+            }
             long iz = (long)z;
-            if (iz < 0 || iz >= dimZ)
+            if (iz < 0 || iz >= dimZ) {
                 return outsideValue;
+            }
             long it = (long)t;
-            if (it < 0 || it >= m.dim(3))
+            if (it < 0 || it >= m.dim(3)) {
                 return outsideValue;
+            }
             return array.getDouble(((it * dimZ + iz) * dimY + iy) * dimX + ix);
         }
 
@@ -395,31 +418,37 @@ class ArraysInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             return arr[ofs + ix] & 0xFF;
         }
 
         public double get(double x, double y) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             return array.getDouble(iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             int iz = (int)z;
-            if (iz < 0 || iz >= idimZ)
+            if (iz < 0 || iz >= idimZ) {
                 return outsideValue;
+            }
             return arr[ofs + (iz * idimY + iy) * idimX + ix] & 0xFF;
         }
     }
@@ -500,31 +529,37 @@ class ArraysInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             return arr[ofs + ix];
         }
 
         public double get(double x, double y) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             return array.getDouble(iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             int iz = (int)z;
-            if (iz < 0 || iz >= idimZ)
+            if (iz < 0 || iz >= idimZ) {
                 return outsideValue;
+            }
             return arr[ofs + (iz * idimY + iy) * idimX + ix];
         }
     }
@@ -605,31 +640,37 @@ class ArraysInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             return arr[ofs + ix] & 0xFFFF;
         }
 
         public double get(double x, double y) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             return array.getDouble(iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             int iz = (int)z;
-            if (iz < 0 || iz >= idimZ)
+            if (iz < 0 || iz >= idimZ) {
                 return outsideValue;
+            }
             return arr[ofs + (iz * idimY + iy) * idimX + ix] & 0xFFFF;
         }
     }
@@ -710,31 +751,37 @@ class ArraysInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             return arr[ofs + ix];
         }
 
         public double get(double x, double y) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             return array.getDouble(iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             int iz = (int)z;
-            if (iz < 0 || iz >= idimZ)
+            if (iz < 0 || iz >= idimZ) {
                 return outsideValue;
+            }
             return arr[ofs + (iz * idimY + iy) * idimX + ix];
         }
     }
@@ -815,31 +862,37 @@ class ArraysInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             return arr[ofs + ix];
         }
 
         public double get(double x, double y) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             return array.getDouble(iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             int iz = (int)z;
-            if (iz < 0 || iz >= idimZ)
+            if (iz < 0 || iz >= idimZ) {
                 return outsideValue;
+            }
             return arr[ofs + (iz * idimY + iy) * idimX + ix];
         }
     }
@@ -920,31 +973,37 @@ class ArraysInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             return arr[ofs + ix];
         }
 
         public double get(double x, double y) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             return array.getDouble(iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             int iz = (int)z;
-            if (iz < 0 || iz >= idimZ)
+            if (iz < 0 || iz >= idimZ) {
                 return outsideValue;
+            }
             return arr[ofs + (iz * idimY + iy) * idimX + ix];
         }
     }
@@ -1025,31 +1084,37 @@ class ArraysInterpolationsImpl {
 
         public double get(double x) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             return arr[ofs + ix];
         }
 
         public double get(double x, double y) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             return array.getDouble(iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
             int ix = (int)x;
-            if (ix < 0 || ix >= idimX)
+            if (ix < 0 || ix >= idimX) {
                 return outsideValue;
+            }
             int iy = (int)y;
-            if (iy < 0 || iy >= idimY)
+            if (iy < 0 || iy >= idimY) {
                 return outsideValue;
+            }
             int iz = (int)z;
-            if (iz < 0 || iz >= idimZ)
+            if (iz < 0 || iz >= idimZ) {
                 return outsideValue;
+            }
             return arr[ofs + (iz * idimY + iy) * idimX + ix];
         }
     }

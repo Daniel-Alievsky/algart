@@ -27,6 +27,8 @@ package net.algart.arrays;
 import net.algart.math.functions.*;
 import net.algart.math.IRange;
 
+import java.util.Objects;
+
 /**
  * <p>Buffering of {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} method.
  *
@@ -46,8 +48,7 @@ class ArraysBufferedCopier {
         ArrayContext context, UpdatableArray dest, Array src, int numberOfTasks,
         boolean compare)
     {
-        if (dest == null)
-            throw new NullPointerException("Null dest argument");
+        Objects.requireNonNull(dest, "Null dest argument");
         AbstractArray.checkCopyArguments(dest, src);
         // - these checks should be performed here, before any attempts to optimize copying
         this.context = context;
@@ -159,10 +160,12 @@ class ArraysBufferedCopier {
             this.strictMode = strictMode;
             this.dim = Arrays.getIndexDimensions(src);
             this.n = dim.length;
-            if (this.n < 1)
+            if (this.n < 1) {
                 throw new AssertionError("Invalid implementation of some classes: number of dimensions is " + this.n);
-            if (Arrays.longMul(this.dim) < 0)
+            }
+            if (Arrays.longMul(this.dim) < 0) {
                 throw new AssertionError("Invalid implementation of some classes: illegal product of dimensions");
+            }
             this.truncationMode = Arrays.getTruncationMode(src);
             Func f = Arrays.getFunc(src);
             final CoordinateTransformedFunc fTransformed;
@@ -186,13 +189,16 @@ class ArraysBufferedCopier {
                 && fTransformed != null // the source matrix is a transformed parent function
                 && Matrices.isInterpolationFunc(fTransformed.parent())) // the parent function is an interpolation
             {
-                if (!(src instanceof PArray))
+                if (!(src instanceof PArray)) {
                     throw new AssertionError("isIndexFuncArray returns true for non-primitive array " + src);
-                if (src.elementType() != dest.elementType())
+                }
+                if (src.elementType() != dest.elementType()) {
                     throw new AssertionError("checkCopyArguments does not detect different element types");
-                if (!(dest instanceof UpdatablePArray))
+                }
+                if (!(dest instanceof UpdatablePArray)) {
                     throw new AssertionError("AlgART array " + dest.elementType() + "[] does not implement "
                         + UpdatablePArray.class);
+                }
                 this.mSrc = Matrices.matrix((PArray) src, dim);
                 this.mDest = Matrices.matrix((UpdatablePArray) dest, dim);
                 this.o = fTransformed.operator();
@@ -233,15 +239,16 @@ class ArraysBufferedCopier {
                 this.tiledMatrices = Arrays.isTiledOrSubMatrixOfTiled(dest)
                     || Arrays.isTiledOrSubMatrixOfTiled(mParent.array());
                 this.dimParent = this.mParent.dimensions();
-                if (dimParent.length != n)
+                if (dimParent.length != n) {
                     throw new AssertionError("Invalid implementation of some classes: space dimension was changed");
+                }
                 if (this.o instanceof LinearOperator) {
-                    if (this.diagonal == null)
-                        throw new AssertionError("Invalid implementation of some classes: "
+                    Objects.requireNonNull(this.diagonal, "Invalid implementation of some classes: "
                             + " null ProjectiveOperator.diagonal()");
-                    if (this.diagonal.length != n || this.po.n() != n)
+                    if (this.diagonal.length != n || this.po.n() != n) {
                         throw new AssertionError("Invalid implementation of some classes: illegal space dimension "
                             + "for the operator " + po);
+                    }
                 }
                 Object helperInfo = resizingTransformation && src instanceof ArraysFuncImpl.OptimizationHelperInfo ?
                     ((ArraysFuncImpl.OptimizationHelperInfo) src).getOptimizationHelperInfo() :
@@ -556,9 +563,10 @@ class ArraysBufferedCopier {
                 // due to little gaps at the matrix bounds
                 parFrom = Math.max(parFrom, 0);
                 parTo = Math.min(parTo, dimParent[n - 1]);
-                if (parTo - parFrom > parentPlaneCount)
+                if (parTo - parFrom > parentPlaneCount) {
                     throw new AssertionError("Error while estimation in parentLayerToSrcDim: "
                         + srcFrom + ".." + srcTo + " <-- " + parFrom + ".." + parTo);
+                }
                 dimLayer[n - 1] = parTo - parFrom;
                 dimLazy[n - 1] = srcTo - srcFrom;
                 Matrix<? extends UpdatablePArray> layer = Matrices.matrix(
@@ -776,7 +784,9 @@ class ArraysBufferedCopier {
                     compare);
             }
             if (srcTileSize <= 1) // necessary to provide conditions maxSide > 1 and maxSide/2 >= 1
+            {
                 throw new AssertionError("The constant MIN_OPTIMIZATION_RESULT_TILE_VOLUME must be >=1");
+            }
 //            System.out.println("Splitting: " + toS(srcFrom) + ".." + toS(srcTo) + " --> "
 //                + toS(parentFrom) + ".." + toS(parentTo) + " by " + po);
             int splittingCoord = n - 1;
@@ -809,8 +819,10 @@ class ArraysBufferedCopier {
             for (int k = 0; k < n; k++) {
                 long side = parentTo[k] - parentFrom[k];
                 if (side < 0 || side > parentTileSide) // <0 means overflow
+                {
                     throw new AssertionError("Error while estimation of the parent tile side: "
                         + toS(parentFrom) + ".." + toS(parentTo));
+                }
             }
             long[] parentTileDim = new long[n];
             long[] lazyDim = new long[n];
@@ -820,9 +832,10 @@ class ArraysBufferedCopier {
                 lazyDim[k] = srcTo[k] - srcFrom[k];
             }
             long trimmedParentTileSize = Arrays.longMul(parentTileDim);
-            if (trimmedParentTileSize > buf.length())
+            if (trimmedParentTileSize > buf.length()) {
                 throw new AssertionError("Error while estimation of necessary buffer size: "
                     + buf.length() + " instead of necessary " + trimmedParentTileSize);
+            }
             Matrix<? extends UpdatablePArray> parentTileBuf = Matrices.matrix(
                 buf.subArr(0, trimmedParentTileSize), parentTileDim);
             copy(ac == null ? null : ac.part(0.0, 0.3),
@@ -837,9 +850,10 @@ class ArraysBufferedCopier {
                 double[] parentCoordinates = new double[n];
                 correctedOperator.map(parentCoordinates, new double[n]); // little additional check: mapping origin
                 for (int k = 0; k < n; k++) {
-                    if (parentCoordinates[k] < -1.0 || parentCoordinates[k] > dimParent[k] + 1)
+                    if (parentCoordinates[k] < -1.0 || parentCoordinates[k] > dimParent[k] + 1) {
                         throw new AssertionError("Error while correcting linear operator: the origin of "
                             + "coordinates is transformed to a point" + toS(parentCoordinates) + " outside the tile");
+                    }
                 }
             }
             Func result = correctedOperator.apply(parentTileInterpolation);
@@ -956,8 +970,9 @@ class ArraysBufferedCopier {
                 dimSrc -= lastASide;
             }
             dimSrc -= 1e-3; // previous calculations could be not precise
-            if (dimSrc <= 0.0)
+            if (dimSrc <= 0.0) {
                 return 0;
+            }
             return (long) dimSrc;
         }
 
@@ -1027,8 +1042,9 @@ class ArraysBufferedCopier {
                 d = Math.max(d, maxParentCoordinates[k] - minParentCoordinates[k]);
             }
             // d x d x ... is the hypercube d, circumscribed around O(c)
-            if (Double.isNaN(d) || d <= 0.0)
+            if (Double.isNaN(d) || d <= 0.0) {
                 return 0;
+            }
             // for compression, the parent matrix is compressed not greater than in minSide times by any coordinates
             double dimSrc = dimParent / d;
             // so, dimSrc x dimSrc x ... is transformed to a hypercube not greater than dimParent x dimParent x ...
@@ -1036,10 +1052,12 @@ class ArraysBufferedCopier {
                 dimSrc -= fFiltered.operator().maxApertureSize();
             }
             dimSrc -= 0.001; // previous calculations could be not precise
-            if (dimSrc <= 0.0)
+            if (dimSrc <= 0.0) {
                 return 0;
-            if (dimSrc >= dimParent)
+            }
+            if (dimSrc >= dimParent) {
                 return (long) dimSrc;
+            }
             if (Math.pow(dimSrc / dimParent, n) <=
                 1.0 / Arrays.SystemSettings.MIN_NON_OPTIMIZED_COMPRESSION_FOR_TILING)
             {
@@ -1209,16 +1227,18 @@ class ArraysBufferedCopier {
                 }
             }
             this.n = this.dim.length;
-            if (this.n < 1)
+            if (this.n < 1) {
                 throw new AssertionError("Invalid implementation of some classes: number of dimensions is " + this.n);
+            }
             this.lastDim = this.dim[n - 1];
             this.lastTileDim = this.tileDim[n - 1];
             this.layerDim = this.dim.clone();
             this.layerDim[n - 1] = Math.min(this.lastDim, this.lastTileDim);
             this.layerSize = Arrays.longMul(this.layerDim);
-            if (this.layerSize < 0)
+            if (this.layerSize < 0) {
                 throw new AssertionError("Invalid implementation of some classes: "
                     + "illegal product of layer dimensions");
+            }
         }
 
         @Override

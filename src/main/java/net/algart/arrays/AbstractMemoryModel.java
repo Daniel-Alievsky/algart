@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>A skeletal implementation of the {@link MemoryModel} interface to minimize
  * the effort required to implement this interface.</p>
@@ -49,14 +51,12 @@ public abstract class AbstractMemoryModel implements MemoryModel {
     public abstract UpdatableArray newUnresizableArray(Class<?> elementType, long length);
 
     public MutableArray newArray(Array array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return newArray(array.elementType(), array.length());
     }
 
     public UpdatableArray newUnresizableArray(Array array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return newUnresizableArray(array.elementType(), array.length());
     }
 
@@ -285,17 +285,18 @@ public abstract class AbstractMemoryModel implements MemoryModel {
      *                                         for this memory model.
      */
     public <T extends UpdatableArray> Matrix<T> newMatrix(Class<T> arraySupertype, Class<?> elementType, long ...dim) {
-        if (arraySupertype == null)
-            throw new NullPointerException("Null arraySupertype argument");
+        Objects.requireNonNull(arraySupertype, "Null arraySupertype argument");
         Arrays.checkElementTypeForNullAndVoid(elementType);
-        if (MutableArray.class.isAssignableFrom(arraySupertype))
+        if (MutableArray.class.isAssignableFrom(arraySupertype)) {
             throw new IllegalArgumentException("Illegal arraySupertype = " + arraySupertype
                 + ": it is MutableArray or its subtype, but a matrix cannot be based on a resizable array");
+        }
         Class<UpdatableArray> type = Arrays.type(UpdatableArray.class, elementType);
-        if (!arraySupertype.isAssignableFrom(type))
+        if (!arraySupertype.isAssignableFrom(type)) {
             throw new ClassCastException("The passed array supertype " + arraySupertype.getName()
                 + " is not a supertype for " + type.getName()
                 + " and, so, cannot contain required " + elementType.getCanonicalName() + " elements");
+        }
         long len = AbstractMatrix.checkDimensions(dim);
         // this check before cloning dim array is not absolutely safe,
         // but it will be repeated inside MatrixImpl constructor
@@ -344,8 +345,7 @@ public abstract class AbstractMemoryModel implements MemoryModel {
     }
 
     public <T extends UpdatableArray> Matrix<T> newMatrix(Class<T> arraySupertype, Matrix<?> matrix) {
-        if (matrix == null)
-            throw new NullPointerException("Null matrix argument");
+        Objects.requireNonNull(matrix, "Null matrix argument");
         return newMatrix(arraySupertype, matrix.elementType(), matrix.dimensions());
     }
 
@@ -417,118 +417,102 @@ public abstract class AbstractMemoryModel implements MemoryModel {
     }
 
     public UpdatableArray valueOf(Object array, int offset, int count) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         Class<?> elementType = array.getClass().getComponentType();
-        if (elementType == null)
+        if (elementType == null) {
             throw new IllegalArgumentException("The passed argument is not a Java array");
+        }
         return newUnresizableArray(elementType, count).setData(0, array, offset, count);
     }
 
     public UpdatableArray valueOf(Object array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         Class<?> elementType = array.getClass().getComponentType();
-        if (elementType == null)
+        if (elementType == null) {
             throw new IllegalArgumentException("The passed argument is not a Java array");
+        }
         return newUnresizableArray(elementType, java.lang.reflect.Array.getLength(array)).setData(0, array);
     }
     /*Repeat() boolean ==> char,,byte,,short,,int,,long,,float,,double;;
                Bit     ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double
      */
     public UpdatableBitArray valueOf(boolean[] array, int offset, int count) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableBitArray)newUnresizableBitArray(count).setData(0, array, offset, count);
     }
 
     public UpdatableBitArray valueOf(boolean[] array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableBitArray)newUnresizableBitArray(array.length).setData(0, array);
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
     public UpdatableCharArray valueOf(char[] array, int offset, int count) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableCharArray)newUnresizableCharArray(count).setData(0, array, offset, count);
     }
 
     public UpdatableCharArray valueOf(char[] array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableCharArray)newUnresizableCharArray(array.length).setData(0, array);
     }
 
     public UpdatableByteArray valueOf(byte[] array, int offset, int count) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableByteArray)newUnresizableByteArray(count).setData(0, array, offset, count);
     }
 
     public UpdatableByteArray valueOf(byte[] array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableByteArray)newUnresizableByteArray(array.length).setData(0, array);
     }
 
     public UpdatableShortArray valueOf(short[] array, int offset, int count) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableShortArray)newUnresizableShortArray(count).setData(0, array, offset, count);
     }
 
     public UpdatableShortArray valueOf(short[] array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableShortArray)newUnresizableShortArray(array.length).setData(0, array);
     }
 
     public UpdatableIntArray valueOf(int[] array, int offset, int count) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableIntArray)newUnresizableIntArray(count).setData(0, array, offset, count);
     }
 
     public UpdatableIntArray valueOf(int[] array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableIntArray)newUnresizableIntArray(array.length).setData(0, array);
     }
 
     public UpdatableLongArray valueOf(long[] array, int offset, int count) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableLongArray)newUnresizableLongArray(count).setData(0, array, offset, count);
     }
 
     public UpdatableLongArray valueOf(long[] array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableLongArray)newUnresizableLongArray(array.length).setData(0, array);
     }
 
     public UpdatableFloatArray valueOf(float[] array, int offset, int count) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableFloatArray)newUnresizableFloatArray(count).setData(0, array, offset, count);
     }
 
     public UpdatableFloatArray valueOf(float[] array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableFloatArray)newUnresizableFloatArray(array.length).setData(0, array);
     }
 
     public UpdatableDoubleArray valueOf(double[] array, int offset, int count) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableDoubleArray)newUnresizableDoubleArray(count).setData(0, array, offset, count);
     }
 
     public UpdatableDoubleArray valueOf(double[] array) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         return (UpdatableDoubleArray)newUnresizableDoubleArray(array.length).setData(0, array);
     }
     /*Repeat.AutoGeneratedEnd*/
