@@ -26,10 +26,7 @@ package net.algart.arrays;
 
 import java.lang.reflect.InvocationTargetException;
 import java.nio.*;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
@@ -135,14 +132,16 @@ class MappedDataStorages {
                         failedCount++;
                     }
                 }
-                if (failedCount == 0)
+                if (failedCount == 0) {
                     break;
+                }
                 int successfulCount = all.size() - failedCount;
                 warningEvenInHook(failedCount + " storage files were not deleted in the attempt #" + attemptCount
                     + (successfulCount > 0 ? " (but " + successfulCount + " were deleted)" : "")
                     + "; we shall sleep for " + LargeMemoryModel.DELETION_SLEEP_DELAY + " ms and try again");
-                if (all.size() == lastNumberOfFiles)
+                if (all.size() == lastNumberOfFiles) {
                     break;
+                }
                 lastNumberOfFiles = all.size();
                 // so, we shall repeat iterations, that cannot delete nothing, 2 times as a maximum
                 try {
@@ -159,8 +158,9 @@ class MappedDataStorages {
     }
 
     private static boolean deleteWithSeveralAttempts(DataFileModel<?> dfm, DataFile df, int timeoutInMillis) {
-        if (timeoutInMillis < 0)
+        if (timeoutInMillis < 0) {
             throw new IllegalArgumentException("Negative timeout");
+        }
         // We should not use System.currentTimeMillis() below, but need to count calls of Thread.sleep:
         // the system time, theoretically, can be changed during this loop
         for (; ; timeoutInMillis -= LargeMemoryModel.DELETION_SLEEP_DELAY) {
@@ -203,8 +203,7 @@ class MappedDataStorages {
             boolean temporary, boolean readOnly, boolean unresizable,
             Class<?> arrayElementClass, PArray lazyFillingPattern)
         {
-            if (dataFileModel == null)
-                throw new NullPointerException("Null dataFileModel argument");
+            Objects.requireNonNull(dataFileModel, "Null dataFileModel argument");
             int numberOfBanks = dataFileModel.recommendedNumberOfBanks();
             int bankSizeInBytes = dataFileModel.recommendedBankSize(unresizable);
             checkBankArguments(numberOfBanks, bankSizeInBytes);
@@ -222,9 +221,10 @@ class MappedDataStorages {
             this.arrayElementClass = arrayElementClass;
             this.lazyFillingPattern = lazyFillingPattern == null ? null : lazyFillingPattern.asImmutable();
             // asImmutable is necessary, in particular, to provide the fixed length in this.lazyFillingPattern
-            if (lazyFillingPattern != null && arrayElementClass != lazyFillingPattern.elementType())
+            if (lazyFillingPattern != null && arrayElementClass != lazyFillingPattern.elementType()) {
                 throw new AssertionError("Illegal arrayElementClass argument: " + arrayElementClass
                     + " (must be equal to the element type of the pattern array)");
+            }
             this.bankSizeInElements = arrayElementClass == boolean.class ? ((long)bankSizeInBytes) << 3 :
                 arrayElementClass == char.class ? bankSizeInBytes >> DataStorage.BYTES_PER_CHAR_LOG :
                 arrayElementClass == byte.class ? bankSizeInBytes :
@@ -234,8 +234,9 @@ class MappedDataStorages {
                 arrayElementClass == float.class ? bankSizeInBytes >> DataStorage.BYTES_PER_FLOAT_LOG :
                 arrayElementClass == double.class ? bankSizeInBytes >> DataStorage.BYTES_PER_DOUBLE_LOG :
                 -1;
-            if (bankSizeInElements == -1)
+            if (bankSizeInElements == -1) {
                 throw new AssertionError("Illegal arrayElementClass argument: " + arrayElementClass);
+            }
             this.bankSizeInElementsLog = 63 - Long.numberOfLeadingZeros(bankSizeInElements);
             assert this.bankSizeInElements == 1L << this.bankSizeInElementsLog;
         }
@@ -246,8 +247,7 @@ class MappedDataStorages {
             boolean readOnly,
             Class<?> arrayElementClass)
         {
-            if (dataFile == null)
-                throw new NullPointerException("Null dataFile argument");
+            Objects.requireNonNull(dataFile, "Null dataFile argument");
             return new MappingSettings<P>(dataFileModel, dataFile, dataFileStartOffset, dataFileEndOffset,
                 false, readOnly, true, arrayElementClass, null);
         }
@@ -256,8 +256,7 @@ class MappedDataStorages {
             DataFileModel<P> dataFileModel,
             Class<?> arrayElementClass, boolean unresizable, PArray lazyFillingPattern)
         {
-            if (dataFileModel == null)
-                throw new NullPointerException("Null dataFileModel argument");
+            Objects.requireNonNull(dataFileModel, "Null dataFileModel argument");
             return new MappingSettings<P>(dataFileModel, null,
                 Math.max(0, dataFileModel.recommendedPrefixSize()), Long.MAX_VALUE,
                 true, false, unresizable, arrayElementClass, lazyFillingPattern);
@@ -274,12 +273,15 @@ class MappedDataStorages {
         }
 
         static void checkBankArguments(int numberOfBanks, int bankSizeInBytes) {
-            if (numberOfBanks < 2)
+            if (numberOfBanks < 2) {
                 throw new IllegalArgumentException("Number of banks should be 2 or greater");
-            if (bankSizeInBytes < 256)
+            }
+            if (bankSizeInBytes < 256) {
                 throw new IllegalArgumentException("Bank size should be 256 or greater");
-            if ((bankSizeInBytes & (bankSizeInBytes - 1)) != 0)
+            }
+            if ((bankSizeInBytes & (bankSizeInBytes - 1)) != 0) {
                 throw new IllegalArgumentException("Bank size should be 2^k");
+            }
             // bankSizeInBytes is positive and 2^k, so, bankSizeInBytes<=2^30
         }
 
@@ -488,32 +490,35 @@ class MappedDataStorages {
 
         MappedStorage(MappingSettings<?> ms) {
             assert ms.temporary == (ms.existingDataFile == null) : "ms.temporary != (ms.existingDataFile == null)";
-            if (ms.temporary)
+            if (ms.temporary) {
                 assert !ms.readOnly : "ms.readOnly cannot be true for temporary files";
+            }
             this.ms = ms;
             this.indexHighBits = ~(ms.bankSizeInElements - 1);
             this.bh = new DataFile.BufferHolder[ms.numberOfBanks];
-            if (this instanceof MappedBitStorage)
+            if (this instanceof MappedBitStorage) {
                 this.specBufs = new LongBuffer[ms.numberOfBanks];
-            else if (this instanceof MappedByteStorage)
+            } else if (this instanceof MappedByteStorage) {
                 this.specBufs = new ByteBuffer[ms.numberOfBanks];
-            else if (this instanceof MappedCharStorage)
+            } else if (this instanceof MappedCharStorage) {
                 this.specBufs = new CharBuffer[ms.numberOfBanks];
-            else if (this instanceof MappedShortStorage)
+            } else if (this instanceof MappedShortStorage) {
                 this.specBufs = new ShortBuffer[ms.numberOfBanks];
-            else if (this instanceof MappedIntStorage)
+            } else if (this instanceof MappedIntStorage) {
                 this.specBufs = new IntBuffer[ms.numberOfBanks];
-            else if (this instanceof MappedLongStorage)
+            } else if (this instanceof MappedLongStorage) {
                 this.specBufs = new LongBuffer[ms.numberOfBanks];
-            else if (this instanceof MappedFloatStorage)
+            } else if (this instanceof MappedFloatStorage) {
                 this.specBufs = new FloatBuffer[ms.numberOfBanks];
-            else if (this instanceof MappedDoubleStorage)
+            } else if (this instanceof MappedDoubleStorage) {
                 this.specBufs = new DoubleBuffer[ms.numberOfBanks];
-            else
+            } else {
                 throw new AssertionError("Illegal inheritor " + this.getClass());
+            }
             this.bankPos = new long[ms.numberOfBanks];
-            for (int k = 0; k < this.bankPos.length; k++)
+            for (int k = 0; k < this.bankPos.length; k++) {
                 this.bankPos[k] = -1; // unmatched positions
+            }
             this.bankIndexes = new int[ms.numberOfBanks];
             final ReentrantLock lock = this.lock;
             lock.lock();
@@ -521,9 +526,10 @@ class MappedDataStorages {
             synchronized(allNonFinalizedMappedStorages) {
                 // atomic creating and deleting temporary files
                 try {
-                    if (shutdownInProgress)
+                    if (shutdownInProgress) {
                         throw IOErrorJ5.getInstance(new IllegalStateException(
                             "Cannot allocate new AlgART array: shutdown is in progress"));
+                    }
                     if (!ms.temporary) {
                         this.dataFileForDeletion = this.dataFile = ms.existingDataFile;
                         this.unresizable = true;
@@ -566,8 +572,9 @@ class MappedDataStorages {
         public void setAutoDeleted(boolean value) {
             DataFile df = this.dataFile;
             this.autoDeleted = value;
-            if (df != null)
+            if (df != null) {
                 ms.dataFileModel.setTemporary(df, value);
+            }
         }
 
         public DataFileModel<?> getDataFileModel() {
@@ -946,7 +953,9 @@ class MappedDataStorages {
         //[[Repeat.SectionStart mapped_getData_method_impl]]
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: getDataFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -1003,7 +1012,9 @@ class MappedDataStorages {
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: setDataInFirstBank access the specBuf,
             // that can become null at any moment
@@ -1058,7 +1069,9 @@ class MappedDataStorages {
 
         void fillData(long pos, long count, Object fillerWrapper) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             lock.lock();
             // synchronization is necessary always: fillDataInFirstBank access the specBuf,
@@ -1093,11 +1106,15 @@ class MappedDataStorages {
 
         boolean copy(DataStorage src, long srcPos, long destPos, long count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return true;
-            if (src == this && srcPos == destPos)
+            }
+            if (src == this && srcPos == destPos) {
                 return true;
-            if (!(src instanceof MappedStorage))
+            }
+            if (!(src instanceof MappedStorage)) {
                 return false;
+            }
             MappedStorage stor = (MappedStorage)src;
             boolean useSecondBank = src == this;
             // it is better to avoid extra mappings when possible
@@ -1153,10 +1170,11 @@ class MappedDataStorages {
                                 srcPos -= destLen;
                                 destPos -= destLen;
                                 count -= destLen;
-                                if (srcLen == destLen)
+                                if (srcLen == destLen) {
                                     srcOfs = stor.translateIndex(srcPos - 1);
-                                else
+                                } else {
                                     srcOfs -= destLen;
+                                }
                                 destOfs = translateIndex(destPos - 1, true, count >= destBlock);
                                 assert destOfs == destBlock - 1;
                             }
@@ -1188,8 +1206,9 @@ class MappedDataStorages {
                                 srcOfs = stor.translateIndex(srcPos);
                                 assert srcOfs == 0;
                                 destOfs += srcLen;
-                                if (useSecondBank)
+                                if (useSecondBank) {
                                     translateIndex(destPos, true);
+                                }
                                 // - previous translateIndex could destroy the second bank;
                                 // this call should not lead to any mappings
                             }
@@ -1203,10 +1222,11 @@ class MappedDataStorages {
                                 srcPos += destLen;
                                 destPos += destLen;
                                 count -= destLen;
-                                if (srcLen == destLen)
+                                if (srcLen == destLen) {
                                     srcOfs = stor.translateIndex(srcPos);
-                                else
+                                } else {
                                     srcOfs += destLen;
+                                }
                                 destOfs = translateIndex(destPos, useSecondBank, count >= destBlock);
                                 assert destOfs == 0;
                             }
@@ -1222,11 +1242,15 @@ class MappedDataStorages {
 
         boolean swap(DataStorage another, long anotherPos, long thisPos, long count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return true;
-            if (another == this && anotherPos == thisPos)
+            }
+            if (another == this && anotherPos == thisPos) {
                 return true;
-            if (!(another instanceof MappedStorage))
+            }
+            if (!(another instanceof MappedStorage)) {
                 return false;
+            }
             MappedStorage stor = (MappedStorage)another;
             boolean useSecondBank = another == this;
             // it is better to avoid extra mappings when possible
@@ -1275,10 +1299,11 @@ class MappedDataStorages {
                             anotherPos += thisLen;
                             thisPos += thisLen;
                             count -= thisLen;
-                            if (anotherLen == thisLen)
+                            if (anotherLen == thisLen) {
                                 anotherOfs = stor.translateIndex(anotherPos);
-                            else
+                            } else {
                                 anotherOfs += thisLen;
+                            }
                             thisOfs = translateIndex(thisPos, useSecondBank);
                             assert thisOfs == 0;
                         }
@@ -1296,7 +1321,9 @@ class MappedDataStorages {
         //  getData ==> minData    !! Auto-generated: NOT EDIT !! ]]
         void minData(long pos, Object destArray, int destArrayOffset, int count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: minDataFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -1352,7 +1379,9 @@ class MappedDataStorages {
         //  getData ==> maxData    !! Auto-generated: NOT EDIT !! ]]
         void maxData(long pos, Object destArray, int destArrayOffset, int count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: maxDataFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -1409,7 +1438,9 @@ class MappedDataStorages {
         //  Object\s+destArray ==> int[] destArray   !! Auto-generated: NOT EDIT !! ]]
         void addData(long pos, int[] destArray, int destArrayOffset, int count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: addDataFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -1468,7 +1499,9 @@ class MappedDataStorages {
         //  Object\s+destArray ==> double[] destArray   !! Auto-generated: NOT EDIT !! ]]
         void addData(long pos, double[] destArray, int destArrayOffset, int count, double mult) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: addDataFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -1526,7 +1559,9 @@ class MappedDataStorages {
         //  (,\s*len|,\s*bse\))(?=\);) ==> $1, truncateOverflows   !! Auto-generated: NOT EDIT !! ]]
         void subtractData(long pos, Object destArray, int destArrayOffset, int count, boolean truncateOverflows) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: subtractDataFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -1584,7 +1619,9 @@ class MappedDataStorages {
         //  (,\s*len|,\s*bse\))(?=\);) ==> $1, truncateOverflows   !! Auto-generated: NOT EDIT !! ]]
         void absDiffData(long pos, Object destArray, int destArrayOffset, int count, boolean truncateOverflows) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: absDiffDataFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -1643,27 +1680,32 @@ class MappedDataStorages {
             } finally {
                 lockForGc.unlock();
             }
-            if (finerLoggable)
+            if (finerLoggable) {
                 LargeMemoryModel.LOGGER.finer("++++ Array " + Integer.toHexString(System.identityHashCode(a))
                     + " is attached to " + this + ": " + arrayCounter + " arrays, " + mappingCounter + " mappings"
                     + " (" + finalizationTasksInfo() + ") [" + a + "]");
+            }
         }
 
         @Override
         void forgetArray(int arrayIdentityHashCode) {
             decreaseArrayOrMappingCounter(CounterKind.ARRAY_COUNTER);
-            if (finerLoggable)
+            if (finerLoggable) {
                 LargeMemoryModel.LOGGER.finer("---- Array " + Integer.toHexString(arrayIdentityHashCode)
                     + " is deattached from " + this + ": " + arrayCounter + " arrays, " + mappingCounter + " mappings"
                     + " (" + finalizationTasksInfo() + ")");
+            }
         }
 
         @Override
         void actualizeLazyFilling(ArrayContext context, long fromIndex, long toIndex) {
             if (fromIndex == toIndex) // necessary check: fromIndex can refer to the end of the file
+            {
                 return;
-            if (!ms.temporary)
+            }
+            if (!ms.temporary) {
                 return; // so, we can access lazyFillMapOfBanks below
+            }
             final ReentrantLock lock = this.lock;
             final long bankFromIndex = fromIndex >> ms.bankSizeInElementsLog;
             final long bankToIndex = ((toIndex - 1) >>> ms.bankSizeInElementsLog) + 1;
@@ -1681,8 +1723,9 @@ class MappedDataStorages {
                     if (lazyFillMapOfBanks.getBit(k)) {
                         translateIndex(k << ms.bankSizeInElementsLog);
                         // This access guarantees that all elements in this bank will be initialized.
-                        if (lazyFillMapOfBanks.getBit(k))
+                        if (lazyFillMapOfBanks.getBit(k)) {
                             throw new AssertionError("The lazyFillMapOfBanks[" + k + "] bit was not cleared!");
+                        }
                         filled = true;
                     }
                 } finally {
@@ -1729,7 +1772,9 @@ class MappedDataStorages {
         @Override
         void loadResources(long fromIndex, long toIndex) {
             if (fromIndex == toIndex) // necessary check: fromIndex can refer to the end of the file
+            {
                 return;
+            }
             assert fromIndex < toIndex;
             lock.lock(); // there are no sense to preload data of the same file from several threads simultaneously
             try {
@@ -1822,7 +1867,9 @@ class MappedDataStorages {
             if (DefaultDataFileModel.UNSAFE_UNMAP_ON_EXIT) {
                 int counter = mappingInUseCounter.incrementAndGet();
                 if (counter < 0) // overflow
+                {
                     mappingInUseCounterOverflow = true;
+                }
             }
         }
 
@@ -1864,7 +1911,9 @@ class MappedDataStorages {
                 // deletedWhileShutdown is a volatile field: all other threads will see the reason correctly
                 this.dataFile = null; // dataFile is a volatile field: block any access this storage
                 if (df == null) // the storage is already disposed
+                {
                     return;
+                }
                 dfp = ms.dataFileModel.getPath(df);
                 if (autoDeleted) {
                     if (df instanceof DefaultDataFileModel.MappableFile
@@ -1885,14 +1934,15 @@ class MappedDataStorages {
                                 try {
                                     long t1 = System.nanoTime();
                                     unmapped = mdf.unsafeUnmapAll();
-                                    if (unmapped)
+                                    if (unmapped) {
                                         configEvenInHook(
                                             caller + " has unmapped (unsafe operation) all regions in " + df + " ("
                                                 + String.format(Locale.US, "%.3f", (System.nanoTime() - t1) * 1e-6) +
                                                 " ms)");
-                                    else
+                                    } else {
                                         warningEvenInHook(caller + " cannot unmap array storage file " + df
                                             + " (some arrays are not released yet)");
+                                    }
                                 } catch (Exception ex) {
                                     if (caller == DisposeCaller.SHUTDOWN_HOOK) {
                                         severeEvenInHook(
@@ -1908,8 +1958,9 @@ class MappedDataStorages {
                                 }
                             }
                         }
-                        if (caller == DisposeCaller.SHUTDOWN_HOOK && !unmapped)
+                        if (caller == DisposeCaller.SHUTDOWN_HOOK && !unmapped) {
                             timeout = 0; // if not using unsafe clean, timeout can extremely slow down JVM exit here
+                        }
                     }
 
                     try {
@@ -1934,8 +1985,9 @@ class MappedDataStorages {
                 lock.unlock();
             }
             // - the next operator will not be performed in a case of exception while releasing or file deletion
-            if (caller == DisposeCaller.SHUTDOWN_HOOK && dfp != null)
+            if (caller == DisposeCaller.SHUTDOWN_HOOK && dfp != null) {
                 ms.finalizationNotify(dfp, true);
+            }
         }
 
         abstract void setSpecificBuffer(int bank);
@@ -1976,19 +2028,22 @@ class MappedDataStorages {
             int count, boolean truncateOverflows);
 
         final boolean isBankLazyAndNotFilledYet(long index) {
-            if (!(DO_LAZY_INIT && ms.temporary))
+            if (!(DO_LAZY_INIT && ms.temporary)) {
                 return false;
+            }
             index &= indexHighBits;
             final long mappingPosition = ms.dataFileStartOffset
                 + (this instanceof MappedBitStorage ?
                 index >>> 3 :
                 index << bytesPerBufferElementLog());
-            if (mappingPosition >= lazyFillPosInBytes)
+            if (mappingPosition >= lazyFillPosInBytes) {
                 return true;
+            }
             final long bankIndex = singleMapping ? 0 : index >> ms.bankSizeInElementsLog;
             // if ms.temporary, then always lazyFillMapOfBanks != null
-            if (bankIndex < lazyFillMapOfBanks.length() && lazyFillMapOfBanks.getBit(bankIndex))
+            if (bankIndex < lazyFillMapOfBanks.length() && lazyFillMapOfBanks.getBit(bankIndex)) {
                 return true;
+            }
             return false;
         }
 
@@ -2034,7 +2089,7 @@ class MappedDataStorages {
                 } finally {
                     lock.unlock();
                 }
-                if (LargeMemoryModel.LOGGER.isLoggable(Level.FINE))
+                if (LargeMemoryModel.LOGGER.isLoggable(Level.FINE)) {
                     LargeMemoryModel.LOGGER.fine("Single mapping mode is set for data file " + dataFile
                         + " (its length " + dataFileLength
                         + " or the specified end offset " + ms.dataFileEndOffset
@@ -2042,6 +2097,7 @@ class MappedDataStorages {
                         + ms.dataFileModel.recommendedSingleMappingLimit()
                         + (ms.dataFileStartOffset == 0 ? "" : " after start offset " + ms.dataFileStartOffset)
                         + ")");
+                }
             }
         }
 
@@ -2053,32 +2109,37 @@ class MappedDataStorages {
             assert offset >= 0;
             assert length >= 0;
             assert lock.isHeldByCurrentThread() : "changeCapacity is called from non-synchronized code";
-            if (this.unresizable)
+            if (this.unresizable) {
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
                     + "(unallowed changeCapacity)");
+            }
             final long requiredElements = offset + newCapacity;
-            if (requiredElements < 0)
+            if (requiredElements < 0) {
                 throw new TooLargeArrayException("Too large desired capacity: "
                     + ((double)offset + (double)newCapacity) + " > 2^63-1");
+            }
             if (!(this instanceof MappedBitStorage) &&
-                requiredElements > (Long.MAX_VALUE >> bytesPerBufferElementLog()))
+                requiredElements > (Long.MAX_VALUE >> bytesPerBufferElementLog())) {
                 throw new TooLargeArrayException("Too large desired capacity: "
                     + requiredElements + " > 2^" + (63 - bytesPerBufferElementLog()) + "-1");
+            }
             long requiredBytes = this instanceof MappedBitStorage ?
                 (requiredElements + 7) >>> 3 : // requiredElements + 7 can be negative here!
                 requiredElements << bytesPerBufferElementLog();
             final long maxBytes = Long.MAX_VALUE - ms.dataFileStartOffset - ms.bankSizeInBytes + 1;
             // -2^31 < maxBytes < 2^63, 0 <= requiredBytes < 2^63
-            if (requiredBytes > maxBytes)
+            if (requiredBytes > maxBytes) {
                 throw new TooLargeArrayException("Too large desired capacity in bytes: "
                     + ms.dataFileStartOffset + " + " + requiredBytes + " > "
                     + (Long.MAX_VALUE - ms.bankSizeInBytes + 1));
+            }
             // now Long.MAX_VALUE - ms.dataFileStartOffset >= maxBytes >= requiredBytes >= 0,
             // so, ms.dataFileStartOffset + requiredBytes is a correct long value
-            if (unresizable)
+            if (unresizable) {
                 requiredBytes = (requiredBytes + 31) & ~31;
-            else
+            } else {
                 requiredBytes = (requiredBytes + ms.bankSizeInBytes - 1) & ~(ms.bankSizeInBytes - 1);
+            }
             final long newFileLength = ms.dataFileStartOffset + requiredBytes;
             final long oldFileLength = this.dataFileLength;
             boolean autoResizing = ms.dataFileModel.autoResizingOnMapping();
@@ -2086,11 +2147,12 @@ class MappedDataStorages {
                 checkIsDataFileDisposedOrShutdownInProgress();
                 flushResources(0, Long.MAX_VALUE, false); // to be on the safe side
                 dataFile.open(false);
-                if (!autoResizing)
+                if (!autoResizing) {
                     dataFile.length(newFileLength);
+                }
                 this.dataFileLength = newFileLength;
             }
-            if (newFileLength > oldFileLength ? finerLoggable : finestLoggable)
+            if (newFileLength > oldFileLength ? finerLoggable : finestLoggable) {
                 LargeMemoryModel.LOGGER.log(newFileLength > oldFileLength ? Level.FINER : Level.FINEST,
                     "Data file " + dataFile
                     + (newFileLength <= oldFileLength ?
@@ -2106,6 +2168,7 @@ class MappedDataStorages {
                     + oldFileLength + "=0x" + Long.toHexString(oldFileLength) + " to "
                     + newFileLength + "=0x" + Long.toHexString(newFileLength) + " bytes")
                     + " (desired capacity is " + newCapacity + ")");
+            }
             this.unresizable = unresizable;
             setSingleMappingModeIfNecessary();
         }
@@ -2121,8 +2184,9 @@ class MappedDataStorages {
             final int bank = loadIntoSecondBank ? 1 : 0;
 
             long t1 = 0;
-            if (finerLoggable)
+            if (finerLoggable) {
                 t1 = System.nanoTime();
+            }
             checkIsDataFileDisposedOrShutdownInProgress();
             dataFile.open(ms.readOnly);
             final long mappingPosition = ms.dataFileStartOffset
@@ -2229,8 +2293,9 @@ class MappedDataStorages {
             if (thisBankMustBeFilled) {
 //                System.err.println("Filling " + position);
                 actualizeLazyFillingBank(bh[bank].data(), position);
-                if (lazyFillBit)
+                if (lazyFillBit) {
                     lazyFillMapOfBanks.clearBit(thisBankIndex);
+                }
             }
             lazyFillPosInBytes = Math.max(lazyFillPosInBytes, mappingPosition + ms.bankSizeInBytes);
 
@@ -2258,8 +2323,9 @@ class MappedDataStorages {
             }
             AssertionError ae = logAndCheckBanks(position, loadIntoSecondBank,
                 LogAllBanksCallPlace.loadBank, fromCache ? Level.FINEST : Level.FINER);
-            if (ae != null)
+            if (ae != null) {
                 throw ae;
+            }
             scheduleFinalizationForMapping(bh[bank]);
             // the following call is necessary when bh[bank].mappingObject() is null, as in StandardIODataFileModel
             scheduleFinalizationForAllStorage();
@@ -2272,8 +2338,9 @@ class MappedDataStorages {
             DataFile.BufferHolder tempBh = bh[bank];
             if (tempBh != null) {
                 long t1 = 0;
-                if (finerLoggable)
+                if (finerLoggable) {
                     t1 = System.nanoTime();
+                }
                 if (mode == ReleaseMode.DATA_MUST_STAY_ALIVE) {
                     tempBh.unmap(forcePhysicalWriting);
                 } else {
@@ -2402,12 +2469,14 @@ class MappedDataStorages {
                 }
                 sb.append(InternalUtils.LF + "The reason:");
                 StackTraceElement[] se = Thread.currentThread().getStackTrace();
-                for (int k = 2; k < se.length; k++)
+                for (int k = 2; k < se.length; k++) {
                     sb.append(InternalUtils.LF + "    " + se[k]);
-                if (result == null)
+                }
+                if (result == null) {
                     LargeMemoryModel.LOGGER.log(level, sb.toString());
-                else
+                } else {
                     LargeMemoryModel.LOGGER.log(level, sb.toString(), result);
+                }
             }
             return result;
         }
@@ -2453,8 +2522,9 @@ class MappedDataStorages {
             DataFile df = this.dataFile;
             if (df != null) { // can be null, if dispose() was called
                 df.close();
-                if (finerLoggable)
+                if (finerLoggable) {
                     LargeMemoryModel.LOGGER.finer("Data file " + df + " is closed");
+                }
             }
         }
 
@@ -2464,8 +2534,10 @@ class MappedDataStorages {
                     "AlgART array @<" + this + "> is inaccessible: system shutdown in progress"));
             }
             if (dataFile == null) // for a case when the file was disposed via dispose() method
+            {
                 throw IOErrorJ5.getInstance(new IllegalStateException(
                     "AlgART array @<" + this + "> is inaccessible: the storage was already disposed and deleted"));
+            }
         }
 
         private static enum CounterKind {ARRAY_COUNTER, MAPPING_COUNTER}
@@ -2477,16 +2549,21 @@ class MappedDataStorages {
             boolean needToForgetStorage = false;
             lockForGc.lock();
             try {
-                if (counterKind == CounterKind.ARRAY_COUNTER)
+                if (counterKind == CounterKind.ARRAY_COUNTER) {
                     arrayCounter--;
-                if (arrayCounter < 0)
+                }
+                if (arrayCounter < 0) {
                     throw new AssertionError("Negative number of attached arrays!");
-                if (counterKind == CounterKind.MAPPING_COUNTER)
+                }
+                if (counterKind == CounterKind.MAPPING_COUNTER) {
                     mappingCounter--;
-                if (mappingCounter < 0)
+                }
+                if (mappingCounter < 0) {
                     throw new AssertionError("Negative number of mappings!");
-                if (counterKind == CounterKind.ARRAY_COUNTER && arrayCounter == 0 && mappingCounter > 0)
+                }
+                if (counterKind == CounterKind.ARRAY_COUNTER && arrayCounter == 0 && mappingCounter > 0) {
                     needToClearBanks = true;
+                }
                 if (arrayCounter == 0 && mappingCounter == 0) {
                     df = this.dataFileForDeletion;
                     dfp = this.dataFilePath;
@@ -2495,12 +2572,13 @@ class MappedDataStorages {
                     needToDeleteFile = autoDeleted && df != null;
                     needToForgetStorage = true;
                 }
-                if (finerLoggable)
+                if (finerLoggable) {
                     LargeMemoryModel.LOGGER.finer("~~-- Decreasing "
                         + (counterKind == CounterKind.ARRAY_COUNTER ? "array" : "mapping")
                         + " counter: " + arrayCounter + " arrays, " + mappingCounter + " mappings"
                         + " (" + finalizationTasksInfo() + ")"
                         + (needToDeleteFile ? "; file " + df + " should be deleted" : ""));
+                }
             } finally {
                 lockForGc.unlock();
             }
@@ -2569,8 +2647,9 @@ class MappedDataStorages {
             if (needToForgetStorage) {
                 // - the next operator will not be performed in a case of exception while releasing or file deletion
                 allNonFinalizedMappedStorages.remove(this);
-                if (dfp != null)
+                if (dfp != null) {
                     ms.finalizationNotify(dfp, false);
+                }
             }
         }
     }
@@ -2602,8 +2681,9 @@ class MappedDataStorages {
             // Without synchronization, we may use lb0 only if it is identical to
             // volatile validSingleSpecBufForThisThread: that reference cannot
             // refer to partially initialized buffer.
-            if (sync)
+            if (sync) {
                 lock.lock();
+            }
             try {
                 long i;
                 if (sync) {
@@ -2620,8 +2700,9 @@ class MappedDataStorages {
                 int ii = (int)(i >>> 6), bit = ((int)i) & 63;
                 return (lb0.get(ii) & (1L << bit)) != 0L;
             } finally {
-                if (sync)
+                if (sync) {
                     lock.unlock();
+                }
             }
         }
 
@@ -2633,8 +2714,9 @@ class MappedDataStorages {
             // Without synchronization, we may use lb1 only if it is identical to
             // volatile validSingleSpecBufForThisThread: that reference cannot
             // refer to partially initialized buffer.
-            if (sync)
+            if (sync) {
                 lock.lock();
+            }
             try {
                 long i;
                 if (sync) {
@@ -2650,14 +2732,16 @@ class MappedDataStorages {
                 }
                 int ii = (int)(i >>> 6), bit = ((int)i) & 63;
                 synchronized(lb1) {
-                    if (value)
+                    if (value) {
                         lb1.put(ii, lb1.get(ii) | 1L << bit);
-                    else
+                    } else {
                         lb1.put(ii, lb1.get(ii) & ~(1L << bit));
+                    }
                 }
             } finally {
-                if (sync)
+                if (sync) {
                     lock.unlock();
+                }
             }
         }
 
@@ -2687,8 +2771,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = PackedBitBuffers.indexOfBit(buf, ofs, ofs + len, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + lowIndex - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -2711,8 +2796,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = PackedBitBuffers.indexOfBit(buf, 0, len, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + lowIndex;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -2747,8 +2833,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = PackedBitBuffers.lastIndexOfBit(buf, ofs - len + 1, ofs + 1, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + highIndex - 1 - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -2771,8 +2858,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = PackedBitBuffers.lastIndexOfBit(buf, bse - len, bse, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + highIndex - bse;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -2784,7 +2872,9 @@ class MappedDataStorages {
         //[[Repeat.SectionStart mapped_getBits_method_impl]]
         public void getBits(long pos, long[] destArray, long destArrayOffset, long count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: getBitsFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -2842,7 +2932,9 @@ class MappedDataStorages {
 
         public void setBits(long pos, long[] srcArray, long srcArrayOffset, long count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: setBitsInFirstBank access the specBuf,
             // that can become null at any moment
@@ -2901,7 +2993,9 @@ class MappedDataStorages {
         //  getBits ==> andBits    !! Auto-generated: NOT EDIT !! ]]
         public void andBits(long pos, long[] destArray, long destArrayOffset, long count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: andBitsFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -2958,7 +3052,9 @@ class MappedDataStorages {
         //  getBits ==> orBits    !! Auto-generated: NOT EDIT !! ]]
         public void orBits(long pos, long[] destArray, long destArrayOffset, long count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: orBitsFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -3015,7 +3111,9 @@ class MappedDataStorages {
         //  getBits ==> xorBits    !! Auto-generated: NOT EDIT !! ]]
         public void xorBits(long pos, long[] destArray, long destArrayOffset, long count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: xorBitsFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -3072,7 +3170,9 @@ class MappedDataStorages {
         //  getBits ==> andNotBits    !! Auto-generated: NOT EDIT !! ]]
         public void andNotBits(long pos, long[] destArray, long destArrayOffset, long count) {
             if (count == 0) // necessary check: our swapping algorithm does not work with zero-length file
+            {
                 return;
+            }
             final ReentrantLock lock = this.lock;
             // synchronization is necessary always: andNotBitsFromFirstBank access the specBuf,
             // that can become null at any moment
@@ -3150,15 +3250,17 @@ class MappedDataStorages {
                     boolean v1 = (l1 & (1L << bit1)) != 0L;
                     boolean v2 = (l2 & (1L << bit2)) != 0L;
                     if (v1 != v2) {
-                        if (v2)
+                        if (v2) {
                             lb[0].put(ii1, l1 | 1L << bit1);
-                        else
+                        } else {
                             lb[0].put(ii1, l1 & ~(1L << bit1));
+                        }
                         l2 = lb[1].get(ii2); // for swapping 2 bits in the same long
-                        if (v1)
+                        if (v1) {
                             lb[1].put(ii2, l2 | 1L << bit2);
-                        else
+                        } else {
                             lb[1].put(ii2, l2 & ~(1L << bit2));
+                        }
                     }
                 }
             } finally {
@@ -3443,8 +3545,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.indexOfByte(buf, ofs, ofs + len, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + lowIndex - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -3467,8 +3570,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.indexOfByte(buf, 0, len, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + lowIndex;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -3504,8 +3608,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.lastIndexOfByte(buf, ofs - len + 1, ofs + 1, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + highIndex - 1 - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -3528,8 +3633,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.lastIndexOfByte(buf, bse - len, bse, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + highIndex - bse;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -3819,8 +3925,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.indexOfChar(buf, ofs, ofs + len, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + lowIndex - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -3843,8 +3950,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.indexOfChar(buf, 0, len, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + lowIndex;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -3880,8 +3988,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.lastIndexOfChar(buf, ofs - len + 1, ofs + 1, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + highIndex - 1 - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -3904,8 +4013,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.lastIndexOfChar(buf, bse - len, bse, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + highIndex - bse;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -4195,8 +4305,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.indexOfShort(buf, ofs, ofs + len, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + lowIndex - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -4219,8 +4330,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.indexOfShort(buf, 0, len, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + lowIndex;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -4256,8 +4368,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.lastIndexOfShort(buf, ofs - len + 1, ofs + 1, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + highIndex - 1 - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -4280,8 +4393,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.lastIndexOfShort(buf, bse - len, bse, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + highIndex - bse;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -4571,8 +4685,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.indexOfInt(buf, ofs, ofs + len, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + lowIndex - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -4595,8 +4710,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.indexOfInt(buf, 0, len, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + lowIndex;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -4632,8 +4748,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.lastIndexOfInt(buf, ofs - len + 1, ofs + 1, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + highIndex - 1 - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -4656,8 +4773,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.lastIndexOfInt(buf, bse - len, bse, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + highIndex - bse;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -4947,8 +5065,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.indexOfLong(buf, ofs, ofs + len, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + lowIndex - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -4971,8 +5090,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.indexOfLong(buf, 0, len, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + lowIndex;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -5008,8 +5128,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.lastIndexOfLong(buf, ofs - len + 1, ofs + 1, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + highIndex - 1 - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -5032,8 +5153,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.lastIndexOfLong(buf, bse - len, bse, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + highIndex - bse;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -5323,8 +5445,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.indexOfFloat(buf, ofs, ofs + len, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + lowIndex - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -5347,8 +5470,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.indexOfFloat(buf, 0, len, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + lowIndex;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -5384,8 +5508,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.lastIndexOfFloat(buf, ofs - len + 1, ofs + 1, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + highIndex - 1 - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -5408,8 +5533,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.lastIndexOfFloat(buf, bse - len, bse, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + highIndex - bse;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -5699,8 +5825,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.indexOfDouble(buf, ofs, ofs + len, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + lowIndex - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -5723,8 +5850,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.indexOfDouble(buf, 0, len, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + lowIndex;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }
@@ -5760,8 +5888,9 @@ class MappedDataStorages {
                         lock.unlock();
                     }
                     long result = JBuffers.lastIndexOfDouble(buf, ofs - len + 1, ofs + 1, value);
-                    if (result != -1)
+                    if (result != -1) {
                         return result + highIndex - 1 - ofs;
+                    }
                 } finally {
                     decrementMappingInUseCounter();
                 }
@@ -5784,8 +5913,9 @@ class MappedDataStorages {
                             lock.unlock();
                         }
                         long result = JBuffers.lastIndexOfDouble(buf, bse - len, bse, value);
-                        if (result != -1)
+                        if (result != -1) {
                             return result + highIndex - bse;
+                        }
                     } finally {
                         decrementMappingInUseCounter();
                     }

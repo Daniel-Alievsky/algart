@@ -29,6 +29,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -170,22 +171,23 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
 
     private ExternalProcessor(ArrayContext context, String tempDirectory, String additionalPrefix) {
         this.context = context;
-        if (tempDirectory == null)
-            throw new NullPointerException("Null tempDirectory argument");
-        if (additionalPrefix == null)
-            throw new NullPointerException("Null additionalPrefix argument");
+        Objects.requireNonNull(tempDirectory, "Null tempDirectory argument");
+        Objects.requireNonNull(additionalPrefix, "Null additionalPrefix argument");
         File tempDir = new File(tempDirectory);
         if (tempDirectory.equals(getDefaultTempDirectory())) {
             if (!tempDir.mkdir()) {
                 if (!tempDir.isDirectory()) // i.e. if doesn't really exist
+                {
                     throw IOErrorJ5.getInstance(new IOException("Cannot create temporary directory " + tempDir));
+                }
                 // Important note: we must attempt to create tempDir BEFORE checking its existence;
                 // in other case, using this class from parallel threads can lead to attempt to create
                 // this directory twice and, so, to illegal messages about "errors" while creation
             }
-        } else if (!tempDir.exists())
+        } else if (!tempDir.exists()) {
             throw IOErrorJ5.getInstance(new IOException("The specified temporary directory "
                 + tempDir + " does not exist"));
+        }
         try {
             this.workDirectory = createTempDirectory(
                 tempDir, WORK_DIRECTORY_PREFIX + additionalPrefix).getAbsoluteFile();
@@ -358,8 +360,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * @see #cleanup()
      */
     public static boolean cleanup(String tempDirectory) {
-        if (tempDirectory == null)
-            throw new NullPointerException("Null tempDirectory argument");
+        Objects.requireNonNull(tempDirectory, "Null tempDirectory argument");
         final File tempDir = new File(tempDirectory);
         if (!tempDir.exists()) {
             return true;
@@ -507,8 +508,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      */
     public static String getDefaultTempDirectory() {
         String systemTempDirectory = System.getProperty("java.io.tmpdir");
-        if (systemTempDirectory == null)
-            throw new AssertionError("Strange JVM problem: java.io.tmpdir system property is not set");
+        Objects.requireNonNull(systemTempDirectory, "Strange JVM problem: java.io.tmpdir system property is not set");
         return new File(systemTempDirectory, TEMP_SUBDIRECTORY_DEFAULT_NAME).getPath();
     }
 
@@ -536,10 +536,8 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * @see #getExistingPathFromPropertyOrEnv(String, String, File)
      */
     public static String getPropertyOrEnv(String propertyKey, String envVarName) {
-        if (propertyKey == null)
-            throw new NullPointerException("Null propertyKey");
-        if (envVarName == null)
-            throw new NullPointerException("Null envVarName");
+        Objects.requireNonNull(propertyKey, "Null propertyKey");
+        Objects.requireNonNull(envVarName, "Null envVarName");
         String result = System.getProperty(propertyKey);
         if (result == null) {
             result = System.getenv(envVarName);
@@ -596,23 +594,22 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
     {
         // We do not actually use getPropertyOrEnv here for the only goal:
         // to form better message in a case of FileNotFoundException
-        if (propertyKey == null)
-            throw new NullPointerException("Null propertyKey");
-        if (envVarName == null)
-            throw new NullPointerException("Null envVarName");
+        Objects.requireNonNull(propertyKey, "Null propertyKey");
+        Objects.requireNonNull(envVarName, "Null envVarName");
         String s = System.getProperty(propertyKey);
         boolean propertyExist = s != null;
         if (s == null) {
             s = System.getenv(envVarName);
         }
         File result = s != null ? new File(s) : defaultPath;
-        if (result != null && !result.exists())
+        if (result != null && !result.exists()) {
             throw new FileNotFoundException((s == null ?
                 "Default file / directory " + defaultPath :
                 "File or directory, specified by "
                     + (propertyExist ? "system property " + propertyKey : "environment variable " + envVarName)
                     + ",")
                 + " does not exists (" + result + ")");
+        }
         return result;
     }
 
@@ -644,8 +641,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
         throws FileNotFoundException
     {
         File result = getExistingPathFromPropertyOrEnv(propertyKey, envVarName, null);
-        if (result == null)
-            throw new FileNotFoundException("Some existing file or directory must be specified in "
+        Objects.requireNonNull(result, "Some existing file or directory must be specified in "
                 + "system property " + propertyKey + " or environment variable " + envVarName);
         return result;
     }
@@ -674,8 +670,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      */
     public static File getCurrentJREHome() {
         String s = System.getProperty("java.home");
-        if (s == null)
-            throw new InternalError("Null java.home system property");
+        Objects.requireNonNull(s, "Null java.home system property");
         return new File(s);
     }
 
@@ -799,17 +794,18 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      */
     public static File getJavaExecutable(File jreHome) throws FileNotFoundException {
         // Finding according http://docs.oracle.com/javase/1.5.0/docs/tooldocs/solaris/jdkfiles.html
-        if (jreHome == null)
-            throw new NullPointerException("Null jreHome argument");
-        if (!jreHome.exists())
+        Objects.requireNonNull(jreHome, "Null jreHome argument");
+        if (!jreHome.exists()) {
             throw new FileNotFoundException("JRE home directory " + jreHome + " does not exist");
+        }
         File javaBin = new File(jreHome, "bin");
         File javaFile = new File(javaBin, "java"); // Unix
         if (!javaFile.exists()) {
             javaFile = new File(javaBin, "java.exe"); // Windows
         }
-        if (!javaFile.exists())
+        if (!javaFile.exists()) {
             throw new FileNotFoundException("Cannot find java utility at " + javaFile);
+        }
         return javaFile;
     }
 
@@ -964,10 +960,8 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * @throws IOException          if a new subdirectory cannot be created.
      */
     public static File createTempDirectory(File parentDirectory, String prefix) throws IOException {
-        if (prefix == null)
-            throw new NullPointerException("Null prefix argument");
-        if (parentDirectory == null)
-            throw new NullPointerException("Null parentDirectory argument");
+        Objects.requireNonNull(prefix, "Null prefix argument");
+        Objects.requireNonNull(parentDirectory, "Null parentDirectory argument");
         synchronized (TEMP_DIR_LOCK) {
             for (int k = 0; k < TEMP_DIR_NUMBER_OF_ATTEMPTS; k++) {
                 File f = generateDir(parentDirectory, prefix);
@@ -1179,11 +1173,11 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      *                               by <tt>processBuilder.start()</tt> call.
      */
     public void execute(final ProcessBuilder processBuilder) throws IOException {
-        if (processBuilder == null)
-            throw new NullPointerException("Null processBuilder argument");
+        Objects.requireNonNull(processBuilder, "Null processBuilder argument");
         synchronized (lock) {
-            if (isClosed())
+            if (isClosed()) {
                 throw new IllegalStateException("This object is already closed");
+            }
             LOGGER.config("EP starting: " + processBuilder.command());
             final Process process = processBuilder.start();
             final BufferedWriter outputWriter = outputStream == null ? null :
@@ -1354,10 +1348,11 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
                 }
             }
             LOGGER.config("EP execution finished (" + workDirectory + "); " + readersMessage);
-            if (exitCode != 0)
+            if (exitCode != 0) {
                 throw new ExternalProcessException(exitCode, errorMessage.toString(),
                     "Some problem occurred while calling external process: exit code " + exitCode
                         + String.format("%n") + errorMessage);
+            }
         }
     }
 
