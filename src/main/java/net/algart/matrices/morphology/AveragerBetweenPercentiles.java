@@ -26,6 +26,8 @@ package net.algart.matrices.morphology;
 
 import net.algart.arrays.*;
 
+import java.util.Objects;
+
 class AveragerBetweenPercentiles extends RankOperationProcessor {
     private static final boolean DEBUG_MODE = false; // thorough checking getData
 
@@ -45,8 +47,9 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
     PArray asProcessed(Class<? extends PArray> desiredType, PArray src, PArray[] additional,
         long[] dimensions, final long[] shifts, final long[] left, final long[] right)
     {
-        if (additional.length < 2)
+        if (additional.length < 2) {
             throw new IllegalArgumentException("Two additional matrices are required (percentile indexes)");
+        }
         assert shifts.length > 0;
         assert left.length == right.length;
         final boolean direct = optimizeDirectArrays &&
@@ -124,8 +127,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                         super.getData(arrayPos, destArray, destArrayOffset, count);
                         return;
                     }
-                    if (destArray == null)
-                        throw new NullPointerException("Null destArray argument");
+                    Objects.requireNonNull(destArray, "Null destArray argument");
                     checkRanges(length, arrayPos, count);
                     if (count == 0) {
                         return;
@@ -279,8 +281,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -431,16 +432,18 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                             i2 += (pIndex2 - currentIRank2) * (currentIValue2 + 0.5 * delta);
                                         }
                                         double i = i2 - i1;
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i);
+                                        }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                                hist, pIndex1, pIndex2)) > 0.01)
+                                                hist, pIndex1, pIndex2)) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i
                                                     + " instead of " + SummingHistogram.integralBetweenRanks(
                                                     hist, pIndex1, pIndex2) + ", histogram is "
                                                     + JArrays.toString(hist, ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -525,8 +528,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -568,18 +570,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToRank(pIndex1);
                                         hist2.moveToRank(pIndex2);
                                         double i = hist1.currentIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                                hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                                hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                     + " instead of " + SummingHistogram.integralBetweenRanks(
                                                     hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -647,8 +651,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -690,15 +693,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToPreciseRank(pIndex1);
                                         hist2.moveToPreciseRank(pIndex2);
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                                 + ", simple integral = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2);
-                                            if (Math.abs(diff) > 0.01)
+                                            if (Math.abs(diff) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentPreciseIntegral() + " - "
@@ -708,6 +712,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                     hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                     + diff + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -774,8 +779,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -816,18 +820,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToRank(pIndex1);
                                     hist2.moveToRank(pIndex2);
                                     double i = hist1.currentIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                            hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                            hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                 + " instead of " + SummingHistogram.integralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -891,8 +897,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -933,15 +938,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToPreciseRank(pIndex1);
                                     hist2.moveToPreciseRank(pIndex2);
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                             + ", simple integral = "
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                             hist1.bars(), pIndex1, pIndex2);
-                                        if (Math.abs(diff) > 0.01)
+                                        if (Math.abs(diff) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentPreciseIntegral() + " - "
@@ -951,6 +957,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                 hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                 + diff + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -1025,8 +1032,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1177,16 +1183,18 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                             i2 += (pIndex2 - currentIRank2) * (currentIValue2 + 0.5 * delta);
                                         }
                                         double i = i2 - i1;
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i);
+                                        }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                                hist, pIndex1, pIndex2)) > 0.01)
+                                                hist, pIndex1, pIndex2)) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i
                                                     + " instead of " + SummingHistogram.integralBetweenRanks(
                                                     hist, pIndex1, pIndex2) + ", histogram is "
                                                     + JArrays.toString(hist, ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -1271,8 +1279,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1314,18 +1321,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToRank(pIndex1);
                                         hist2.moveToRank(pIndex2);
                                         double i = hist1.currentIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                                hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                                hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                     + " instead of " + SummingHistogram.integralBetweenRanks(
                                                     hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -1393,8 +1402,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1436,15 +1444,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToPreciseRank(pIndex1);
                                         hist2.moveToPreciseRank(pIndex2);
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                                 + ", simple integral = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2);
-                                            if (Math.abs(diff) > 0.01)
+                                            if (Math.abs(diff) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentPreciseIntegral() + " - "
@@ -1454,6 +1463,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                     hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                     + diff + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -1520,8 +1530,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1562,18 +1571,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToRank(pIndex1);
                                     hist2.moveToRank(pIndex2);
                                     double i = hist1.currentIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                            hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                            hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                 + " instead of " + SummingHistogram.integralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -1637,8 +1648,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -1679,15 +1689,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToPreciseRank(pIndex1);
                                     hist2.moveToPreciseRank(pIndex2);
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                             + ", simple integral = "
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                             hist1.bars(), pIndex1, pIndex2);
-                                        if (Math.abs(diff) > 0.01)
+                                        if (Math.abs(diff) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentPreciseIntegral() + " - "
@@ -1697,6 +1708,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                 hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                 + diff + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -1770,8 +1782,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -1922,16 +1933,18 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                             i2 += (pIndex2 - currentIRank2) * (currentIValue2 + 0.5 * delta);
                                         }
                                         double i = i2 - i1;
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i);
+                                        }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                                hist, pIndex1, pIndex2)) > 0.01)
+                                                hist, pIndex1, pIndex2)) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i
                                                     + " instead of " + SummingHistogram.integralBetweenRanks(
                                                     hist, pIndex1, pIndex2) + ", histogram is "
                                                     + JArrays.toString(hist, ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -2016,8 +2029,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2059,18 +2071,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToRank(pIndex1);
                                         hist2.moveToRank(pIndex2);
                                         double i = hist1.currentIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                                hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                                hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                     + " instead of " + SummingHistogram.integralBetweenRanks(
                                                     hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -2138,8 +2152,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2181,15 +2194,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToPreciseRank(pIndex1);
                                         hist2.moveToPreciseRank(pIndex2);
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                                 + ", simple integral = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2);
-                                            if (Math.abs(diff) > 0.01)
+                                            if (Math.abs(diff) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentPreciseIntegral() + " - "
@@ -2199,6 +2213,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                     hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                     + diff + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -2265,8 +2280,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2307,18 +2321,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToRank(pIndex1);
                                     hist2.moveToRank(pIndex2);
                                     double i = hist1.currentIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                            hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                            hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                 + " instead of " + SummingHistogram.integralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -2382,8 +2398,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2424,15 +2439,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToPreciseRank(pIndex1);
                                     hist2.moveToPreciseRank(pIndex2);
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                             + ", simple integral = "
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                             hist1.bars(), pIndex1, pIndex2);
-                                        if (Math.abs(diff) > 0.01)
+                                        if (Math.abs(diff) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentPreciseIntegral() + " - "
@@ -2442,6 +2458,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                 hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                 + diff + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -2529,8 +2546,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2576,18 +2592,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToRank(pIndex1);
                                         hist2.moveToRank(pIndex2);
                                         double i = hist1.currentIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                                hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                                hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                     + " instead of " + SummingHistogram.integralBetweenRanks(
                                                     hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -2665,8 +2683,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -2712,15 +2729,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToPreciseRank(pIndex1);
                                         hist2.moveToPreciseRank(pIndex2);
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                                 + ", simple integral = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2);
-                                            if (Math.abs(diff) > 0.01)
+                                            if (Math.abs(diff) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentPreciseIntegral() + " - "
@@ -2730,6 +2748,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                     hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                     + diff + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -2807,8 +2826,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2853,18 +2871,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToRank(pIndex1);
                                     hist2.moveToRank(pIndex2);
                                     double i = hist1.currentIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                            hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                            hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                 + " instead of " + SummingHistogram.integralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -2939,8 +2959,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -2985,15 +3004,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToPreciseRank(pIndex1);
                                     hist2.moveToPreciseRank(pIndex2);
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                             + ", simple integral = "
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                             hist1.bars(), pIndex1, pIndex2);
-                                        if (Math.abs(diff) > 0.01)
+                                        if (Math.abs(diff) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentPreciseIntegral() + " - "
@@ -3003,6 +3023,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                 hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                 + diff + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -3089,8 +3110,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3136,18 +3156,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToRank(pIndex1);
                                         hist2.moveToRank(pIndex2);
                                         double i = hist1.currentIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                                hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                                hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                     + " instead of " + SummingHistogram.integralBetweenRanks(
                                                     hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -3225,8 +3247,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3272,15 +3293,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToPreciseRank(pIndex1);
                                         hist2.moveToPreciseRank(pIndex2);
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                                 + ", simple integral = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2);
-                                            if (Math.abs(diff) > 0.01)
+                                            if (Math.abs(diff) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentPreciseIntegral() + " - "
@@ -3290,6 +3312,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                     hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                     + diff + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -3367,8 +3390,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -3413,18 +3435,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToRank(pIndex1);
                                     hist2.moveToRank(pIndex2);
                                     double i = hist1.currentIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                            hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                            hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                 + " instead of " + SummingHistogram.integralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -3499,8 +3523,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -3545,15 +3568,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToPreciseRank(pIndex1);
                                     hist2.moveToPreciseRank(pIndex2);
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                             + ", simple integral = "
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                             hist1.bars(), pIndex1, pIndex2);
-                                        if (Math.abs(diff) > 0.01)
+                                        if (Math.abs(diff) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentPreciseIntegral() + " - "
@@ -3563,6 +3587,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                 hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                 + diff + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -3652,8 +3677,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3697,18 +3721,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToRank(pIndex1);
                                         hist2.moveToRank(pIndex2);
                                         double i = hist1.currentIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                                hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                                hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                     + " instead of " + SummingHistogram.integralBetweenRanks(
                                                     hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -3780,8 +3806,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -3825,15 +3850,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToPreciseRank(pIndex1);
                                         hist2.moveToPreciseRank(pIndex2);
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                                 + ", simple integral = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2);
-                                            if (Math.abs(diff) > 0.01)
+                                            if (Math.abs(diff) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentPreciseIntegral() + " - "
@@ -3843,6 +3869,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                     hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                     + diff + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -3914,8 +3941,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -3958,18 +3984,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToRank(pIndex1);
                                     hist2.moveToRank(pIndex2);
                                     double i = hist1.currentIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                            hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                            hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                 + " instead of " + SummingHistogram.integralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -4040,8 +4068,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -4084,15 +4111,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToPreciseRank(pIndex1);
                                     hist2.moveToPreciseRank(pIndex2);
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                             + ", simple integral = "
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                             hist1.bars(), pIndex1, pIndex2);
-                                        if (Math.abs(diff) > 0.01)
+                                        if (Math.abs(diff) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentPreciseIntegral() + " - "
@@ -4102,6 +4130,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                 hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                 + diff + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -4184,8 +4213,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -4229,18 +4257,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToRank(pIndex1);
                                         hist2.moveToRank(pIndex2);
                                         double i = hist1.currentIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                                hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                                hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                     + " instead of " + SummingHistogram.integralBetweenRanks(
                                                     hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -4312,8 +4342,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                 super.getData(arrayPos, destArray, destArrayOffset, count);
                                 return;
                             }
-                            if (destArray == null)
-                                throw new NullPointerException("Null destArray argument");
+                            Objects.requireNonNull(destArray, "Null destArray argument");
                             checkRanges(length, arrayPos, count);
                             if (count == 0) {
                                 return;
@@ -4357,15 +4386,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         hist1.moveToPreciseRank(pIndex1);
                                         hist2.moveToPreciseRank(pIndex2);
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
-                                        if (i < 0.0)
+                                        if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
                                                 hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                                 + ", simple integral = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                        }
                                         if (DEBUG_MODE) {
                                             double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2);
-                                            if (Math.abs(diff) > 0.01)
+                                            if (Math.abs(diff) > 0.01) {
                                                 throw new AssertionError("Bug: at index " + arrayPos
                                                     + ", integral = " + i + " = "
                                                     + hist2.currentPreciseIntegral() + " - "
@@ -4375,6 +4405,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                     hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                     + diff + ", histogram is "
                                                     + JArrays.toString(hist1.bars(), ",", 2048));
+                                            }
                                         }
                                         w = (i / n) * multiplierInv;
                                     }
@@ -4446,8 +4477,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -4490,18 +4520,20 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToRank(pIndex1);
                                     hist2.moveToRank(pIndex2);
                                     double i = hist1.currentIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
-                                            hist1.bars(), pIndex1, pIndex2)) > 0.01)
+                                            hist1.bars(), pIndex1, pIndex2)) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentIntegral() + " - " + hist1.currentIntegral()
                                                 + " instead of " + SummingHistogram.integralBetweenRanks(
                                                 hist1.bars(), pIndex1, pIndex2) + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -4572,8 +4604,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                             super.getData(arrayPos, destArray, destArrayOffset, count);
                             return;
                         }
-                        if (destArray == null)
-                            throw new NullPointerException("Null destArray argument");
+                        Objects.requireNonNull(destArray, "Null destArray argument");
                         checkRanges(length, arrayPos, count);
                         if (count == 0) {
                             return;
@@ -4616,15 +4647,16 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     hist1.moveToPreciseRank(pIndex1);
                                     hist2.moveToPreciseRank(pIndex2);
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
-                                    if (i < 0.0)
+                                    if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
                                             hist2.currentPreciseIntegral() + " - " + hist1.currentPreciseIntegral()
                                             + ", simple integral = "
                                             + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                    }
                                     if (DEBUG_MODE) {
                                         double diff = i - SummingHistogram.preciseIntegralBetweenRanks(
                                             hist1.bars(), pIndex1, pIndex2);
-                                        if (Math.abs(diff) > 0.01)
+                                        if (Math.abs(diff) > 0.01) {
                                             throw new AssertionError("Bug: at index " + arrayPos
                                                 + ", integral = " + i + " = "
                                                 + hist2.currentPreciseIntegral() + " - "
@@ -4634,6 +4666,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                                 hist1.bars(), pIndex1, pIndex2) + ", difference = "
                                                 + diff + ", histogram is "
                                                 + JArrays.toString(hist1.bars(), ",", 2048));
+                                        }
                                     }
                                     w = (i / n) * multiplierInv;
                                 }
@@ -4681,17 +4714,21 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
     }
 
     private static void checkRanges(long length, long arrayPos, int count) {
-        if (count < 0)
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw new IndexOutOfBoundsException("arrayPos = " + arrayPos + " < 0");
-        if (arrayPos > length - count)
+        }
+        if (arrayPos > length - count) {
             throw new IndexOutOfBoundsException("arrayPos+count = " + arrayPos + "+" + count + " > length=" + length);
+        }
     }
 
     private static void checkNaN(double rank) {
-        if (Double.isNaN(rank))
+        if (Double.isNaN(rank)) {
             throw new IllegalArgumentException("Illegal rank (NaN) in some elements "
                 + "of fromPercentileIndexes or toPercentileIndexes");
+        }
     }
 }
