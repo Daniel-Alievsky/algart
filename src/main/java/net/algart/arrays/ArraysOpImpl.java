@@ -1817,8 +1817,7 @@ class ArraysOpImpl {
 
 /*  // OBSOLETE ONE-THREAD ALGORITHM
     static Range rangeOf(PArray array, Arrays.MinMaxInfo info) {
-        if (array == null)
-            throw new NullPointerException("Null array argument");
+        Objects.requireNonNull(array, "Null array argument");
         if (info == null)
             info = new Arrays.MinMaxInfo();
         if (array.length() == 0) {

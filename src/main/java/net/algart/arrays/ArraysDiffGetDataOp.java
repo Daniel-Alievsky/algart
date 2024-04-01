@@ -26,6 +26,8 @@ package net.algart.arrays;
 
 import net.algart.arrays.BufferArraysImpl.AbstractBufferArray;
 
+import java.util.Objects;
+
 /**
  * <p>Implementation of {@link Array#getData(long, Object, int, int)} methods
  * in the custom implementations of functional arrays for x0-x1 and |x0-x1| functions.
@@ -57,10 +59,12 @@ class ArraysDiffGetDataOp {
         this.length = result.length();
         this.x = new PArray[] {x0, x1};
         for (PArray xk : this.x) {
-            if (xk.elementType() != result.elementType())
+            if (xk.elementType() != result.elementType()) {
                 throw new AssertionError("Different x[] / result element types");
-            if (xk.length() != this.length)
+            }
+            if (xk.length() != this.length) {
                 throw new AssertionError("Different x[] / result lengths");
+            }
         }
         this.result = result;
         this.isBit = this.x[0] instanceof BitArray;
@@ -103,14 +107,16 @@ class ArraysDiffGetDataOp {
     }
 
     void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (count < 0)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw AbstractArray.rangeException(arrayPos, x[0].length(), x[0].getClass());
-        if (arrayPos > x[0].length() - count)
+        }
+        if (arrayPos > x[0].length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x[0].length(), x[0].getClass());
+        }
         for (; count > 0; ) {
             int len;
             if (isBit) {
@@ -192,16 +198,19 @@ class ArraysDiffGetDataOp {
     }
 
     public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
-        if (!isBit)
+        if (!isBit) {
             throw new AssertionError("Illegal usage of " + getClass().getName() + ".getBits");
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (count < 0)
+        }
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw AbstractArray.rangeException(arrayPos, x[0].length(), getClass());
-        if (arrayPos > x[0].length() - count)
+        }
+        if (arrayPos > x[0].length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x[0].length(), getClass());
+        }
         for (; count > 0; ) {
             final int len = (int)Math.min(count, ArraysFuncImpl.BIT_BUFFER_LENGTH);
             long analyzeResult = ArraysMinMaxGetDataOp.analyzeSourceArrays(
@@ -273,7 +282,9 @@ class ArraysDiffGetDataOp {
         } else if (isAbsDiff && x[xIndex] instanceof CopiesArraysImpl.CopiesBitArray) {
             // this "thick" is often used for performing NOT operation via asFuncArray
             if (((CopiesArraysImpl.CopiesBitArray)x[xIndex]).element) // if false, then nothing to do
+            {
                 PackedBitArrays.notBits(dest, destOffset, dest, destOffset, len);
+            }
         } else {
             ((BitArray)x[xIndex]).getBits(arrayPos, longBuf, gap, len);
             if (isAbsDiff) {

@@ -27,6 +27,8 @@ package net.algart.arrays;
 import net.algart.arrays.BufferArraysImpl.AbstractBufferArray;
 import net.algart.math.functions.LinearFunc;
 
+import java.util.Objects;
+
 /**
  * <p>Implementation of {@link Array#getData(long, Object, int, int)} methods
  * in the custom implementations of functional arrays for linear functions.
@@ -67,27 +69,30 @@ class ArraysLinearGetDataOp {
     private final boolean intBufferForSum;
 
     ArraysLinearGetDataOp(boolean truncateOverflows, PArray[] x, LinearFunc lf, int destElementTypeCode) {
-        if (lf == null)
-            throw new AssertionError("Null lf argument");
-        if (lf.n() == 0)
+        Objects.requireNonNull(lf, "Null lf argument");
+        if (lf.n() == 0) {
             throw new AssertionError("No coefficients in the passed function " + lf);
+        }
         this.truncateOverflows = truncateOverflows;
         this.x = new PArray[lf.n()];
         System.arraycopy(x, 0, this.x, 0, this.x.length);
         this.length = this.x[0].length();
         for (PArray xk : this.x) {
-            if (xk.length() != this.length)
+            if (xk.length() != this.length) {
                 throw new AssertionError("Different x[] lengths");
+            }
         }
         this.a0 =lf.a(0);
         this.a = lf.a();
-        if (this.a.length != lf.n())
+        if (this.a.length != lf.n()) {
             throw new AssertionError("Illegal implementation of LinearFunc: n()!=a().length");
+        }
         this.isNonweightedSum = a.length > 1 && a0 != 0.0 && lf.isNonweighted();
         double bTemp = lf.b();
         if (this.isNonweightedSum) {
-            for (int k = 0; k < a.length; k++)
+            for (int k = 0; k < a.length; k++) {
                 this.a[k] = 1.0; // don't damage source a[]!
+            }
             bTemp /= a0;
         }
         this.b = bTemp;
@@ -156,14 +161,16 @@ class ArraysLinearGetDataOp {
     }
 
     void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (count < 0)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw AbstractArray.rangeException(arrayPos, x[0].length(), x[0].getClass());
-        if (arrayPos > x[0].length() - count)
+        }
+        if (arrayPos > x[0].length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x[0].length(), x[0].getClass());
+        }
         for (; count > 0; ) {
             int len = Math.min(count, LINEAR_BUFFER_LENGTH);
             int[] intBuf = null;
@@ -203,26 +210,34 @@ class ArraysLinearGetDataOp {
                                     if (isNonweightedSum) {
                                         if (intBuf != null) {
                                             if (k == 0) {
-                                                for (int j = 0; j < len; j++)
+                                                for (int j = 0; j < len; j++) {
                                                     intBuf[j] = src[j] ? 1 : 0;
+                                                }
                                             } else {
-                                                for (int j = 0; j < len; j++)
-                                                    if (src[j])
+                                                for (int j = 0; j < len; j++) {
+                                                    if (src[j]) {
                                                         intBuf[j]++;
+                                                    }
+                                                }
                                             }
                                         } else {
-                                            for (int j = 0; j < len; j++)
-                                                if (src[j])
+                                            for (int j = 0; j < len; j++) {
+                                                if (src[j]) {
                                                     doubleBuf[j]++;
+                                                }
+                                            }
                                         }
                                     } else {
                                         if (k == 0) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = src[j] ? a[0] + b : b;
+                                            }
                                         } else {
-                                            for (int j = 0; j < len; j++)
-                                                if (src[j])
+                                            for (int j = 0; j < len; j++) {
+                                                if (src[j]) {
                                                     doubleBuf[j] += a[k];
+                                                }
+                                            }
                                         }
                                     }
                                 } finally {
@@ -273,26 +288,31 @@ class ArraysLinearGetDataOp {
                                         if (intBuf != null) {
                                             //Start_intBuf !! this comment is necessary for preprocessing by Repeater !!
                                             if (k == 0) {
-                                                for (int j = 0; j < len; j++)
+                                                for (int j = 0; j < len; j++) {
                                                     intBuf[j] = src[j];
+                                                }
                                             } else {
                                                 JArrays.addCharArray(intBuf, 0, src, 0, len);
                                             }
                                             //End_intBuf !! this comment is necessary for preprocessing by Repeater !!
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] += src[j];
+                                            }
                                         }
                                     } else if (k == 0) {
                                         if (isCast) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = src[j];
+                                            }
                                         } else if (a0 == 1.0) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = src[j] + b;
+                                            }
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = a0 * src[j] + b;
+                                            }
                                         }
                                     } else {
                                         JArrays.addCharArray(doubleBuf, 0, src, 0, len, a[k]);
@@ -340,26 +360,31 @@ class ArraysLinearGetDataOp {
                                         if (intBuf != null) {
                                             //Start_intBuf !! this comment is necessary for preprocessing by Repeater !!
                                             if (k == 0) {
-                                                for (int j = 0; j < len; j++)
+                                                for (int j = 0; j < len; j++) {
                                                     intBuf[j] = (src[j] & 0xFF);
+                                                }
                                             } else {
                                                 JArrays.addByteArray(intBuf, 0, src, 0, len);
                                             }
                                             //End_intBuf !! this comment is necessary for preprocessing by Repeater !!
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] += (src[j] & 0xFF);
+                                            }
                                         }
                                     } else if (k == 0) {
                                         if (isCast) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = (src[j] & 0xFF);
+                                            }
                                         } else if (a0 == 1.0) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = (src[j] & 0xFF) + b;
+                                            }
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = a0 * (src[j] & 0xFF) + b;
+                                            }
                                         }
                                     } else {
                                         JArrays.addByteArray(doubleBuf, 0, src, 0, len, a[k]);
@@ -406,26 +431,31 @@ class ArraysLinearGetDataOp {
                                         if (intBuf != null) {
                                             //Start_intBuf !! this comment is necessary for preprocessing by Repeater !!
                                             if (k == 0) {
-                                                for (int j = 0; j < len; j++)
+                                                for (int j = 0; j < len; j++) {
                                                     intBuf[j] = (src[j] & 0xFFFF);
+                                                }
                                             } else {
                                                 JArrays.addShortArray(intBuf, 0, src, 0, len);
                                             }
                                             //End_intBuf !! this comment is necessary for preprocessing by Repeater !!
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] += (src[j] & 0xFFFF);
+                                            }
                                         }
                                     } else if (k == 0) {
                                         if (isCast) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = (src[j] & 0xFFFF);
+                                            }
                                         } else if (a0 == 1.0) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = (src[j] & 0xFFFF) + b;
+                                            }
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = a0 * (src[j] & 0xFFFF) + b;
+                                            }
                                         }
                                     } else {
                                         JArrays.addShortArray(doubleBuf, 0, src, 0, len, a[k]);
@@ -468,19 +498,23 @@ class ArraysLinearGetDataOp {
                                         if (intBuf != null) {
                                             throw new AssertionError("Illegal intBuf usage");
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] += src[j];
+                                            }
                                         }
                                     } else if (k == 0) {
                                         if (isCast) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = src[j];
+                                            }
                                         } else if (a0 == 1.0) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = src[j] + b;
+                                            }
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = a0 * src[j] + b;
+                                            }
                                         }
                                     } else {
                                         JArrays.addIntArray(doubleBuf, 0, src, 0, len, a[k]);
@@ -523,19 +557,23 @@ class ArraysLinearGetDataOp {
                                         if (intBuf != null) {
                                             throw new AssertionError("Illegal intBuf usage");
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] += src[j];
+                                            }
                                         }
                                     } else if (k == 0) {
                                         if (isCast) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = src[j];
+                                            }
                                         } else if (a0 == 1.0) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = src[j] + b;
+                                            }
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = a0 * src[j] + b;
+                                            }
                                         }
                                     } else {
                                         JArrays.addLongArray(doubleBuf, 0, src, 0, len, a[k]);
@@ -578,19 +616,23 @@ class ArraysLinearGetDataOp {
                                         if (intBuf != null) {
                                             throw new AssertionError("Illegal intBuf usage");
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] += src[j];
+                                            }
                                         }
                                     } else if (k == 0) {
                                         if (isCast) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = src[j];
+                                            }
                                         } else if (a0 == 1.0) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = src[j] + b;
+                                            }
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = a0 * src[j] + b;
+                                            }
                                         }
                                     } else {
                                         JArrays.addFloatArray(doubleBuf, 0, src, 0, len, a[k]);
@@ -633,19 +675,23 @@ class ArraysLinearGetDataOp {
                                         if (intBuf != null) {
                                             throw new AssertionError("Illegal intBuf usage");
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] += src[j];
+                                            }
                                         }
                                     } else if (k == 0) {
                                         if (isCast) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = src[j];
+                                            }
                                         } else if (a0 == 1.0) {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = src[j] + b;
+                                            }
                                         } else {
-                                            for (int j = 0; j < len; j++)
+                                            for (int j = 0; j < len; j++) {
                                                 doubleBuf[j] = a0 * src[j] + b;
+                                            }
                                         }
                                     } else {
                                         JArrays.addDoubleArray(doubleBuf, 0, src, 0, len, a[k]);
