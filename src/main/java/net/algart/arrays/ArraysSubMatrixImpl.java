@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>Implementation of {@link Matrix#subMatrix} methods.</p>
  *
@@ -85,8 +87,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -120,22 +123,25 @@ class ArraysSubMatrixImpl {
 
         @Override
         public boolean getBit(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getBit(index);
         }
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -145,14 +151,16 @@ class ArraysSubMatrixImpl {
                 super.getBits(arrayPos, destArray, destArrayOffset, count);
                 return;
             }
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1, length, getClass());
+            }
             indexer.getBits(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -211,8 +219,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -241,16 +250,18 @@ class ArraysSubMatrixImpl {
 
         @Override
         public boolean getBit(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getBit(index);
         }
 
         @Override
         public void setBit(long index, boolean value) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             if (index != OUTSIDE_INDEX) {
                 baseArray.setBit(index, value);
@@ -259,14 +270,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -276,27 +289,31 @@ class ArraysSubMatrixImpl {
                 super.getBits(arrayPos, destArray, destArrayOffset, count);
                 return;
             }
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1, length, getClass());
+            }
             indexer.getBits(arrayPos, destArray, destArrayOffset, count);
         }
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (count < 0)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
@@ -306,14 +323,16 @@ class ArraysSubMatrixImpl {
             if (!indexer.bitsBlocksImplemented()) {
                 return super.setBits(arrayPos, srcArray, srcArrayOffset, count);
             }
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (count < 0)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos, length, getClass());
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1, length, getClass());
+            }
             indexer.setBits(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
@@ -387,8 +406,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -422,22 +442,25 @@ class ArraysSubMatrixImpl {
 
         @Override
         public char getChar(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getChar(index);
         }
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -494,8 +517,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -524,16 +548,18 @@ class ArraysSubMatrixImpl {
 
         @Override
         public char getChar(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getChar(index);
         }
 
         @Override
         public void setChar(long index, char value) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             if (index != OUTSIDE_INDEX) {
                 baseArray.setChar(index, value);
@@ -542,14 +568,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -557,14 +585,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (count < 0)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
@@ -636,8 +666,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -671,22 +702,25 @@ class ArraysSubMatrixImpl {
 
         @Override
         public int getByte(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue & 0xFF : baseArray.getByte(index);
         }
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -743,8 +777,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -773,16 +808,18 @@ class ArraysSubMatrixImpl {
 
         @Override
         public int getByte(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue & 0xFF : baseArray.getByte(index);
         }
 
         @Override
         public void setByte(long index, byte value) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             if (index != OUTSIDE_INDEX) {
                 baseArray.setByte(index, value);
@@ -791,14 +828,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -806,14 +845,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (count < 0)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
@@ -885,8 +926,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -920,22 +962,25 @@ class ArraysSubMatrixImpl {
 
         @Override
         public int getShort(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue & 0xFFFF : baseArray.getShort(index);
         }
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -992,8 +1037,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -1022,16 +1068,18 @@ class ArraysSubMatrixImpl {
 
         @Override
         public int getShort(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue & 0xFFFF : baseArray.getShort(index);
         }
 
         @Override
         public void setShort(long index, short value) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             if (index != OUTSIDE_INDEX) {
                 baseArray.setShort(index, value);
@@ -1040,14 +1088,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -1055,14 +1105,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (count < 0)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
@@ -1134,8 +1186,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -1169,22 +1222,25 @@ class ArraysSubMatrixImpl {
 
         @Override
         public int getInt(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getInt(index);
         }
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -1241,8 +1297,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -1271,16 +1328,18 @@ class ArraysSubMatrixImpl {
 
         @Override
         public int getInt(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getInt(index);
         }
 
         @Override
         public void setInt(long index, int value) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             if (index != OUTSIDE_INDEX) {
                 baseArray.setInt(index, value);
@@ -1289,14 +1348,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -1304,14 +1365,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (count < 0)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
@@ -1383,8 +1446,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -1418,22 +1482,25 @@ class ArraysSubMatrixImpl {
 
         @Override
         public long getLong(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getLong(index);
         }
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -1490,8 +1557,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -1520,16 +1588,18 @@ class ArraysSubMatrixImpl {
 
         @Override
         public long getLong(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getLong(index);
         }
 
         @Override
         public void setLong(long index, long value) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             if (index != OUTSIDE_INDEX) {
                 baseArray.setLong(index, value);
@@ -1538,14 +1608,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -1553,14 +1625,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (count < 0)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
@@ -1632,8 +1706,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -1667,22 +1742,25 @@ class ArraysSubMatrixImpl {
 
         @Override
         public float getFloat(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getFloat(index);
         }
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -1739,8 +1817,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -1769,16 +1848,18 @@ class ArraysSubMatrixImpl {
 
         @Override
         public float getFloat(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getFloat(index);
         }
 
         @Override
         public void setFloat(long index, float value) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             if (index != OUTSIDE_INDEX) {
                 baseArray.setFloat(index, value);
@@ -1787,14 +1868,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -1802,14 +1885,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (count < 0)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
@@ -1881,8 +1966,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -1916,22 +2002,25 @@ class ArraysSubMatrixImpl {
 
         @Override
         public double getDouble(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getDouble(index);
         }
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -1988,8 +2077,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -2018,16 +2108,18 @@ class ArraysSubMatrixImpl {
 
         @Override
         public double getDouble(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.getDouble(index);
         }
 
         @Override
         public void setDouble(long index, double value) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             if (index != OUTSIDE_INDEX) {
                 baseArray.setDouble(index, value);
@@ -2036,14 +2128,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -2051,14 +2145,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (count < 0)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
@@ -2131,8 +2227,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -2166,22 +2263,25 @@ class ArraysSubMatrixImpl {
 
         @Override
         public E get(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.get(index);
         }
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -2239,8 +2339,9 @@ class ArraysSubMatrixImpl {
                     mode == Matrix.ContinuationMode.PSEUDO_CYCLIC);
             } else if (mode == Matrix.ContinuationMode.MIRROR_CYCLIC) {
                 this.indexer = new ArraysSubMatrixMirrorCyclicIndexer(baseMatrix, position, dimensions);
-            } else
+            } else {
                 throw new AssertionError("Unsupported continuation mode: " + mode);
+            }
         }
 
         public Matrix<? extends Array> baseMatrix() {
@@ -2269,16 +2370,18 @@ class ArraysSubMatrixImpl {
 
         @Override
         public E get(long index) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             return index == OUTSIDE_INDEX ? outsideValue : baseArray.get(index);
         }
 
         @Override
         public void set(long index, E value) {
-            if (index < 0 || index >= length)
+            if (index < 0 || index >= length) {
                 throw rangeException(index);
+            }
             index = indexer.translate(index);
             if (index != OUTSIDE_INDEX) {
                 baseArray.set(index, value);
@@ -2287,14 +2390,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-            if (destArray == null)
-                throw new NullPointerException("Null destArray argument");
-            if (count < 0)
+            Objects.requireNonNull(destArray, "Null destArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.getData(arrayPos, destArray, destArrayOffset, count);
         }
 
@@ -2302,14 +2407,16 @@ class ArraysSubMatrixImpl {
 
         @Override
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            if (srcArray == null)
-                throw new NullPointerException("Null srcArray argument");
-            if (count < 0)
+            Objects.requireNonNull(srcArray, "Null srcArray argument");
+            if (count < 0) {
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-            if (arrayPos < 0)
+            }
+            if (arrayPos < 0) {
                 throw rangeException(arrayPos);
-            if (arrayPos > length - count)
+            }
+            if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
+            }
             indexer.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
@@ -2357,46 +2464,50 @@ class ArraysSubMatrixImpl {
         Matrix.ContinuationMode continuationMode)
         throws IllegalArgumentException, IndexOutOfBoundsException
     {
-        if (baseMatrix == null)
-            throw new NullPointerException("Null baseMatrix");
-        if (position == null)
-            throw new NullPointerException("Null position[] Java baseArray");
-        if (dimensions == null)
-            throw new NullPointerException("Null dimensions[] Java baseArray");
-        if (position.length != baseMatrix.dimCount())
+        Objects.requireNonNull(baseMatrix, "Null baseMatrix");
+        Objects.requireNonNull(position, "Null position[] Java baseArray");
+        Objects.requireNonNull(dimensions, "Null dimensions[] Java baseArray");
+        if (position.length != baseMatrix.dimCount()) {
             throw new IllegalArgumentException("Illegal number of position[] elements: "
                 + position.length + " instead of " + baseMatrix.dimCount());
+        }
         assert continuationMode != null;
-        if (dimensions.length != position.length)
+        if (dimensions.length != position.length) {
             throw new IllegalArgumentException("Illegal number of dimensions[] elements: "
                 + dimensions.length + " instead of " + baseMatrix.dimCount());
+        }
         for (int k = 0; k < position.length; k++) {
-            if (dimensions[k] < 0)
+            if (dimensions[k] < 0) {
                 throw new IndexOutOfBoundsException("Negative submatrix dimension: dimensions["
                     + k + "] = " + dimensions[k]);
+            }
             long d = baseMatrix.dim(k);
             if (continuationMode == Matrix.ContinuationMode.NONE || (d == 0 && !continuationMode.isConstant())) {
-                if (position[k] < 0)
+                if (position[k] < 0) {
                     throw new IndexOutOfBoundsException("Negative position[" + k + "] = " + position[k]
                         + (continuationMode != Matrix.ContinuationMode.NONE ?
                         ", and this matrix dimension is zero - it is not allowed for " + continuationMode : "")
                         + " (start submatrix coordinate in " + baseMatrix + ")");
-                if (position[k] > d - dimensions[k])
+                }
+                if (position[k] > d - dimensions[k]) {
                     throw new IndexOutOfBoundsException("Too large position[" + k + "] + dimensions[" + k
                         + "] = " + position[k] + " + " + dimensions[k] + " > " + d
                         + (continuationMode != Matrix.ContinuationMode.NONE ?
                         ", and this matrix dimension is zero - it is not allowed for " + continuationMode : "")
                         + " (start submatrix coordinate + dimension in " + baseMatrix + ")");
+                }
             } else {
-                if (position[k] > Long.MAX_VALUE - dimensions[k])
+                if (position[k] > Long.MAX_VALUE - dimensions[k]) {
                     throw new IndexOutOfBoundsException("Too large position[" + k + "] + dimensions[" + k
                         + "] = " + position[k] + " + " + dimensions[k] + " > Long.MAX_VALUE");
+                }
             }
         }
         long len = Arrays.longMul(dimensions);
-        if (len == Long.MIN_VALUE)
+        if (len == Long.MIN_VALUE) {
             throw new IndexOutOfBoundsException("Too large submatrix dimensions "
                 + "dim[0] * dim[1] * ... = " + JArrays.toString(dimensions, " * ", 100) + " > Long.MAX_VALUE");
+        }
         return len;
     }
 

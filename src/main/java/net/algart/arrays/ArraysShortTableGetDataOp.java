@@ -32,6 +32,7 @@ package net.algart.arrays;
   (data\[\w+\]\s*&\s*)0xFF ==> $10xFFFF ;;
   256 ==> 65536
      !! Auto-generated: NOT EDIT !! */
+import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
 import net.algart.math.functions.Func;
 
@@ -159,14 +160,16 @@ class ArraysShortTableGetDataOp {
     }
 
     void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (count < 0)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw AbstractArray.rangeException(arrayPos, x0.length(), x0.getClass());
-        if (arrayPos > x0.length() - count)
+        }
+        if (arrayPos > x0.length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x0.length(), x0.getClass());
+        }
         for (; count > 0; ) {
             int len;
             boolean usePool = false;
@@ -259,8 +262,9 @@ class ArraysShortTableGetDataOp {
                         throw new AssertionError("Illegal destElementTypeCode");
                 }
             } finally {
-                if (usePool)
+                if (usePool) {
                     ArraysFuncImpl.SHORT_BUFFERS.releaseArray(data);
+                }
             }
             arrayPos += len;
             count -= len;

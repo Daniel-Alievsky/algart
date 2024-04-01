@@ -27,11 +27,7 @@ package net.algart.arrays;
 import java.io.IOException;
 import java.io.File;
 import java.nio.ByteOrder;
-import java.util.Comparator;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.TreeSet;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * <p>A skeletal implementation of the {@link DataFileModel} interface to minimize
@@ -202,12 +198,12 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * @throws NullPointerException if the passed data file is <tt>null</tt>.
      */
     public boolean delete(DataFile dataFile) {
-        if (dataFile == null)
-            throw new NullPointerException("Null dataFile argument");
+        Objects.requireNonNull(dataFile, "Null dataFile argument");
         File f = getPath(dataFile);
         synchronized(allTemporaryFiles) {
-            if (!f.exists())
+            if (!f.exists()) {
                 return false;
+            }
 //          The following code allows to get more informative IOError in a case when the file cannot be deleted;
 //          but it may sometimes lead to problem in Java 1.7.0-ea-b10.
 //          dataFile.open(false);
@@ -216,8 +212,9 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
 //          } finally {
 //              dataFile.close();
 //          }
-            if (!f.delete())
+            if (!f.delete()) {
                 throw IOErrorJ5.getInstance(new IOException("Cannot delete file " + f));
+            }
             allTemporaryFiles.remove(dataFile);
             return true;
         }
@@ -245,13 +242,13 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
     }
 
     public void setTemporary(DataFile dataFile, boolean value) {
-        if (dataFile == null)
-            throw new NullPointerException("Null dataFile argument");
+        Objects.requireNonNull(dataFile, "Null dataFile argument");
         if (isAutoDeletionRequested()) {
-            if (value)
+            if (value) {
                 allTemporaryFiles.add(dataFile);
-            else
+            } else {
                 allTemporaryFiles.remove(dataFile);
+            }
         }
     }
 

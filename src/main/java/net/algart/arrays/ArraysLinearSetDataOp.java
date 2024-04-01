@@ -26,6 +26,8 @@ package net.algart.arrays;
 
 import net.algart.math.functions.LinearFunc;
 
+import java.util.Objects;
+
 /**
  * <p>Implementation of {@link UpdatableArray#setData(long, Object, int, int)} methods
  * in the custom implementations of functional arrays for linear functions.
@@ -53,10 +55,10 @@ class ArraysLinearSetDataOp {
     ArraysLinearSetDataOp(boolean truncateOverflows, UpdatablePArray x, LinearFunc.Updatable lf,
         int destElementTypeCode)
     {
-        if (lf == null)
-            throw new AssertionError("Null lf argument");
-        if (lf.n() == 0)
+        Objects.requireNonNull(lf, "Null lf argument");
+        if (lf.n() == 0) {
             throw new AssertionError("No coefficients in the passed function " + lf);
+        }
         this.truncateOverflows = truncateOverflows;
         this.x = x;
         this.length = x.length();
@@ -98,14 +100,16 @@ class ArraysLinearSetDataOp {
     }
 
     void setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-        if (srcArray == null)
-            throw new NullPointerException("Null srcArray argument");
-        if (count < 0)
+        Objects.requireNonNull(srcArray, "Null srcArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw AbstractArray.rangeException(arrayPos, length, x.getClass());
-        if (arrayPos > length - count)
+        }
+        if (arrayPos > length - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, length, x.getClass());
+        }
         for (; count > 0; ) {
             int len = Math.min(count, ArraysLinearGetDataOp.LINEAR_BUFFER_LENGTH);
             boolean optimizeJArray = ja != null;
