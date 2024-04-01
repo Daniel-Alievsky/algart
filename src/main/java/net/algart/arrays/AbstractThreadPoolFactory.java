@@ -24,6 +24,7 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.ExecutionException;
@@ -49,8 +50,7 @@ public abstract class AbstractThreadPoolFactory implements ThreadPoolFactory {
     }
 
     public void performTasks(Array sourceArray, ThreadFactory threadFactory, Runnable[] tasks) {
-        if (sourceArray == null)
-            throw new NullPointerException("Null sourceArray argument");
+        Objects.requireNonNull(sourceArray, "Null sourceArray argument");
         performTasksImpl(sourceArray, threadFactory, tasks, 0, Integer.MAX_VALUE);
     }
 
@@ -63,13 +63,14 @@ public abstract class AbstractThreadPoolFactory implements ThreadPoolFactory {
     }
 
     private void performTasksImpl(Array sourceArray, ThreadFactory threadFactory, Runnable[] tasks, int from, int to) {
-        if (tasks == null)
-            throw new NullPointerException("Null tasks argument");
-        if (from > to)
+        Objects.requireNonNull(tasks, "Null tasks argument");
+        if (from > to) {
             throw new IllegalArgumentException("Illegal task indexes: initial index = " + from
                 + " > end index = " + to);
-        if (from < 0 || from > tasks.length)
+        }
+        if (from < 0 || from > tasks.length) {
             throw new ArrayIndexOutOfBoundsException(from);
+        }
         if (to > tasks.length) {
             to = tasks.length;
         }

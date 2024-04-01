@@ -33,6 +33,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 /**
@@ -301,10 +302,8 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      * @throws NullPointerException if one of the passed arguments is <tt>null</tt>.
      */
     public DataFile getDataFile(File path, ByteOrder byteOrder) {
-        if (path == null)
-            throw new NullPointerException("Null path argument");
-        if (byteOrder == null)
-            throw new NullPointerException("Null byteOrder argument");
+        Objects.requireNonNull(path, "Null path argument");
+        Objects.requireNonNull(byteOrder, "Null byteOrder argument");
         return new StandardIOFile(path, byteOrder, cacheReading, directBuffers);
     }
 
@@ -415,8 +414,9 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
     public static void readAllBuffer(FileChannel fileChannel, long position, ByteBuffer dest)
         throws IOException
     {
-        if (position < 0)
+        if (position < 0) {
             throw new IllegalArgumentException("Negative position");
+        }
         long savePosition = fileChannel.position();
         try {
             fileChannel.position(position);
@@ -427,9 +427,10 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                     throw new EOFException("Cannot read " + n + " bytes from the file at the position " + position);
                 }
                 int res = fileChannel.read(dup);
-                if (res < 0)
+                if (res < 0) {
                     throw new EOFException("Cannot read " + n + " bytes from the file at the position " + position
                         + ": file is exhausted");
+                }
                 ofs += res;
             }
         } finally {
@@ -463,8 +464,9 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
     public static void writeAllBuffer(FileChannel fileChannel, long position, ByteBuffer src)
         throws IOException
     {
-        if (position < 0)
+        if (position < 0) {
             throw new IllegalArgumentException("Negative position");
+        }
 //        System.out.print("Writing... " + position + "..+" + src.limit());
 //        long t1 = System.nanoTime();
         long savePosition = fileChannel.position();
@@ -477,9 +479,10 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                     throw new EOFException("Cannot write " + n + " bytes to the file at the position " + position);
                 }
                 int res = fileChannel.write(dup);
-                if (res < 0)
+                if (res < 0) {
                     throw new EOFException("Cannot write " + n + " bytes to the file at the position " + position
                         + ": the disk if probably full");
+                }
                 ofs += res;
             }
         } finally {
@@ -547,8 +550,9 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
             try {
                 super.close();
             } finally {
-                if (!cacheReading)
+                if (!cacheReading) {
                     unusedBuffersPool.clear(); // allow garbage collection for the pool
+                }
             }
         }
 
@@ -646,8 +650,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
             }
 
             public ByteBuffer data() {
-                if (bb == null)
-                    throw new IllegalStateException("Cannot call data() method: "
+                Objects.requireNonNull(bb, "Cannot call data() method: "
                         + "the buffer was already unmapped or disposed");
                 return bb;
             }
@@ -657,15 +660,13 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
             }
 
             public void load() {
-                if (bb == null)
-                    throw new IllegalStateException("Cannot call load() method: "
+                Objects.requireNonNull(bb, "Cannot call load() method: "
                         + "the buffer was already unmapped or disposed");
                 // nothing to do more
             }
 
             public void flush(boolean forcePhysicalWriting) {
-                if (bb == null)
-                    throw new IllegalStateException("Cannot call flush() method: "
+                Objects.requireNonNull(bb, "Cannot call flush() method: "
                         + "the buffer was already unmapped or disposed");
                 if (!readOnly) {
                     try {
@@ -686,8 +687,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
             }
 
             public void unmap(boolean forcePhysicalWriting) {
-                if (bb == null)
-                    throw new IllegalStateException("Cannot call unmap() method: "
+                Objects.requireNonNull(bb, "Cannot call unmap() method: "
                         + "the buffer was already unmapped or disposed");
                 try {
                     flush(forcePhysicalWriting);
@@ -701,8 +701,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
             }
 
             public boolean dispose() {
-                if (bb == null)
-                    throw new IllegalStateException("Cannot call dispose() method: "
+                Objects.requireNonNull(bb, "Cannot call dispose() method: "
                         + "the buffer was already unmapped or disposed");
                 bb = null;
                 fc = null; // allowing garbage collection for FileChannel

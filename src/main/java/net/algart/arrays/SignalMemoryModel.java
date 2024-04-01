@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>The degenerate memory model that does not allow to create any AlgART arrays.
  * Any attempt to create an array by methods of this class leads to
@@ -61,22 +63,25 @@ public class SignalMemoryModel extends AbstractMemoryModel {
 
     public MutableArray newEmptyArray(Class<?> elementType, long initialCapacity) {
         Arrays.checkElementTypeForNullAndVoid(elementType);
-        if (initialCapacity < 0)
+        if (initialCapacity < 0) {
             throw new IllegalArgumentException("Negative initial capacity");
+        }
         throw new UnsupportedElementTypeException("SignalMemoryModel cannot create any AlgART arrays");
     }
 
     public MutableArray newArray(Class<?> elementType, long initialLength) {
         Arrays.checkElementTypeForNullAndVoid(elementType);
-        if (initialLength < 0)
+        if (initialLength < 0) {
             throw new IllegalArgumentException("Negative initial length");
+        }
         throw new UnsupportedElementTypeException("SignalMemoryModel cannot create any AlgART arrays");
     }
 
     public UpdatableArray newUnresizableArray(Class<?> elementType, long length) {
         Arrays.checkElementTypeForNullAndVoid(elementType);
-        if (length < 0)
+        if (length < 0) {
             throw new IllegalArgumentException("Negative array length");
+        }
         throw new UnsupportedElementTypeException("SignalMemoryModel cannot create any AlgART arrays");
     }
 
@@ -88,8 +93,7 @@ public class SignalMemoryModel extends AbstractMemoryModel {
      * @throws NullPointerException if <tt>elementType</tt> is <tt>null</tt>.
      */
     public boolean isElementTypeSupported(Class<?> elementType) {
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
+        Objects.requireNonNull(elementType, "Null elementType argument");
         return false;
     }
 
@@ -119,8 +123,7 @@ public class SignalMemoryModel extends AbstractMemoryModel {
      * @throws NullPointerException if <tt>elementType</tt> is <tt>null</tt>.
      */
     public long maxSupportedLength(Class<?> elementType) {
-        if (elementType == null)
-            throw new NullPointerException("Null elementType argument");
+        Objects.requireNonNull(elementType, "Null elementType argument");
         return -1;
     }
 

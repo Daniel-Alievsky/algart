@@ -26,6 +26,8 @@ package net.algart.arrays;
 
 import net.algart.math.functions.Func;
 
+import java.util.Objects;
+
 /**
  * <p>Implementation of {@link Array#getData(long, Object, int, int)} methods
  * in the custom implementations of functional arrays, created by
@@ -66,8 +68,9 @@ class ArraysAnyFuncGetDataOp {
         this.x = x.clone();
         this.length = this.x[0].length();
         for (PArray xk : this.x) {
-            if (xk.length() != this.length)
+            if (xk.length() != this.length) {
                 throw new AssertionError("Different x[] lengths");
+            }
         }
         this.f = f;
         this.ja = new Object[this.x.length];
@@ -115,14 +118,16 @@ class ArraysAnyFuncGetDataOp {
     }
 
     void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
-        if (destArray == null)
-            throw new NullPointerException("Null destArray argument");
-        if (count < 0)
+        Objects.requireNonNull(destArray, "Null destArray argument");
+        if (count < 0) {
             throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
-        if (arrayPos < 0)
+        }
+        if (arrayPos < 0) {
             throw AbstractArray.rangeException(arrayPos, x[0].length(), x[0].getClass());
-        if (arrayPos > x[0].length() - count)
+        }
+        if (arrayPos > x[0].length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x[0].length(), x[0].getClass());
+        }
         for (; count > 0; ) {
             int len = Math.min(count, ANY_FUNC_BUFFER_LENGTH);
             double[] args = (double[])argsPool.requestArray();
@@ -146,8 +151,9 @@ class ArraysAnyFuncGetDataOp {
                             boolean[] src = (boolean[])BOOLEAN_BUFFERS.requestArray();
                             try {
                                 x[k].getData(arrayPos, src, 0, len);
-                                for (int j = 0; j < len; j++)
+                                for (int j = 0; j < len; j++) {
                                     doubleBuf[j] = src[j] ? 1.0 : 0.0;
+                                }
                             } finally {
                                 BOOLEAN_BUFFERS.releaseArray(src);
                             }
@@ -168,8 +174,9 @@ class ArraysAnyFuncGetDataOp {
                                 char[] src = (char[])CHAR_BUFFERS.requestArray();
                                 try {
                                     x[k].getData(arrayPos, src, 0, len);
-                                    for (int j = 0; j < len; j++)
+                                    for (int j = 0; j < len; j++) {
                                         doubleBuf[j] = src[j];
+                                    }
                                 } finally {
                                     CHAR_BUFFERS.releaseArray(src);
                                 }
@@ -188,8 +195,9 @@ class ArraysAnyFuncGetDataOp {
                                 byte[] src = (byte[])BYTE_BUFFERS.requestArray();
                                 try {
                                     x[k].getData(arrayPos, src, 0, len);
-                                    for (int j = 0; j < len; j++)
+                                    for (int j = 0; j < len; j++) {
                                         doubleBuf[j] = (src[j] & 0xFF);
+                                    }
                                 } finally {
                                     BYTE_BUFFERS.releaseArray(src);
                                 }
@@ -207,8 +215,9 @@ class ArraysAnyFuncGetDataOp {
                                 short[] src = (short[])SHORT_BUFFERS.requestArray();
                                 try {
                                     x[k].getData(arrayPos, src, 0, len);
-                                    for (int j = 0; j < len; j++)
+                                    for (int j = 0; j < len; j++) {
                                         doubleBuf[j] = (src[j] & 0xFFFF);
+                                    }
                                 } finally {
                                     SHORT_BUFFERS.releaseArray(src);
                                 }
@@ -226,8 +235,9 @@ class ArraysAnyFuncGetDataOp {
                                 int[] src = (int[])INT_BUFFERS.requestArray();
                                 try {
                                     x[k].getData(arrayPos, src, 0, len);
-                                    for (int j = 0; j < len; j++)
+                                    for (int j = 0; j < len; j++) {
                                         doubleBuf[j] = src[j];
+                                    }
                                 } finally {
                                     INT_BUFFERS.releaseArray(src);
                                 }
@@ -245,8 +255,9 @@ class ArraysAnyFuncGetDataOp {
                                 long[] src = (long[])LONG_BUFFERS.requestArray();
                                 try {
                                     x[k].getData(arrayPos, src, 0, len);
-                                    for (int j = 0; j < len; j++)
+                                    for (int j = 0; j < len; j++) {
                                         doubleBuf[j] = src[j];
+                                    }
                                 } finally {
                                     LONG_BUFFERS.releaseArray(src);
                                 }
@@ -264,8 +275,9 @@ class ArraysAnyFuncGetDataOp {
                                 float[] src = (float[])FLOAT_BUFFERS.requestArray();
                                 try {
                                     x[k].getData(arrayPos, src, 0, len);
-                                    for (int j = 0; j < len; j++)
+                                    for (int j = 0; j < len; j++) {
                                         doubleBuf[j] = src[j];
+                                    }
                                 } finally {
                                     FLOAT_BUFFERS.releaseArray(src);
                                 }
@@ -287,8 +299,9 @@ class ArraysAnyFuncGetDataOp {
                     case ArraysFuncImpl.BIT_TYPE_CODE: {
                         boolean[] dest = (boolean[])destArray;
                         for (int j = 0; j < len; j++, destArrayOffset++) {
-                            for (int k = 0; k < args.length; k++)
+                            for (int k = 0; k < args.length; k++) {
                                 args[k] = doubleBufs[k][j];
+                            }
                             double v = f.get(args);
                             dest[destArrayOffset] = v != 0.0;
                         }
@@ -297,8 +310,9 @@ class ArraysAnyFuncGetDataOp {
                     case ArraysFuncImpl.CHAR_TYPE_CODE: {
                         char[] dest = (char[])destArray;
                         for (int j = 0; j < len; j++, destArrayOffset++) {
-                            for (int k = 0; k < args.length; k++)
+                            for (int k = 0; k < args.length; k++) {
                                 args[k] = doubleBufs[k][j];
+                            }
                             double v = f.get(args);
                             if (truncateOverflows) {
                                 dest[destArrayOffset] =
@@ -317,8 +331,9 @@ class ArraysAnyFuncGetDataOp {
                     case ArraysFuncImpl.BYTE_TYPE_CODE: {
                         byte[] dest = (byte[])destArray;
                         for (int j = 0; j < len; j++, destArrayOffset++) {
-                            for (int k = 0; k < args.length; k++)
+                            for (int k = 0; k < args.length; k++) {
                                 args[k] = doubleBufs[k][j];
+                            }
                             double v = f.get(args);
                             if (truncateOverflows) {
                                 dest[destArrayOffset] = v < 0 ? (byte)0 : v > 0xFF ? (byte)0xFF : (byte)v;
@@ -332,8 +347,9 @@ class ArraysAnyFuncGetDataOp {
                     case ArraysFuncImpl.SHORT_TYPE_CODE: {
                         short[] dest = (short[])destArray;
                         for (int j = 0; j < len; j++, destArrayOffset++) {
-                            for (int k = 0; k < args.length; k++)
+                            for (int k = 0; k < args.length; k++) {
                                 args[k] = doubleBufs[k][j];
+                            }
                             double v = f.get(args);
                             if (truncateOverflows) {
                                 dest[destArrayOffset] = v < 0 ? (short)0 : v > 0xFFFF ? (short)0xFFFF : (short)v;
@@ -347,8 +363,9 @@ class ArraysAnyFuncGetDataOp {
                     case ArraysFuncImpl.INT_TYPE_CODE: {
                         int[] dest = (int[])destArray;
                         for (int j = 0; j < len; j++, destArrayOffset++) {
-                            for (int k = 0; k < args.length; k++)
+                            for (int k = 0; k < args.length; k++) {
                                 args[k] = doubleBufs[k][j];
+                            }
                             double v = f.get(args);
                             if (truncateOverflows) {
                                 dest[destArrayOffset] = (int)v;
@@ -378,8 +395,9 @@ class ArraysAnyFuncGetDataOp {
                             }
                         } else {
                             for (int j = 0; j < len; j++, destArrayOffset++) {
-                                for (int k = 0; k < args.length; k++)
+                                for (int k = 0; k < args.length; k++) {
                                     args[k] = doubleBufs[k][j];
+                                }
                                 dest[destArrayOffset] = (long)f.get(args);
                             }
                         }
@@ -403,8 +421,9 @@ class ArraysAnyFuncGetDataOp {
                             }
                         } else {
                             for (int j = 0; j < len; j++, destArrayOffset++) {
-                                for (int k = 0; k < args.length; k++)
+                                for (int k = 0; k < args.length; k++) {
                                     args[k] = doubleBufs[k][j];
+                                }
                                 dest[destArrayOffset] = (float)f.get(args);
                             }
                         }
@@ -427,8 +446,9 @@ class ArraysAnyFuncGetDataOp {
                             }
                         } else {
                             for (int j = 0; j < len; j++, destArrayOffset++) {
-                                for (int k = 0; k < args.length; k++)
+                                for (int k = 0; k < args.length; k++) {
                                     args[k] = doubleBufs[k][j];
+                                }
                                 dest[destArrayOffset] = f.get(args);
                             }
                         }
