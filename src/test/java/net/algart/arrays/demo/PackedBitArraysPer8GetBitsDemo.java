@@ -55,34 +55,44 @@ public class PackedBitArraysPer8GetBitsDemo {
         return sb.toString();
     }
 
-    private static void getBitsTest(boolean[] bSrc, byte[] pSrc, int pos, int count) {
-        final String full = JArrays.toBinaryString(bSrc, "", 200);
+    private static void getBitsTest(byte[] pSrc, int pos, int count, int len) {
+        boolean[] booleans = new boolean[len];
+        PackedBitArraysPer8.unpackBits(booleans, 0, pSrc, 0, len);
+        final String full = JArrays.toBinaryString(booleans, "", 200);
         System.out.println(full);
 
         final long bits = PackedBitArraysPer8.getBits(pSrc, pos, count);
         final String local = bitsToString(bits, count);
         System.out.println(" ".repeat(pos) + local);
         if (!full.substring(pos, pos + count).equals(local)) {
-            throw new AssertionError();
+            throw new AssertionError("Bug in getBits");
         }
     }
 
-    private static void getBitsTestInReverseOrder(boolean[] bSrc, byte[] pSrc, int pos, int count) {
-        StringBuilder sb = new StringBuilder();
-        for (int k = 0; k < bSrc.length; k += 8) {
-            for (int i = k + 7; i >= k; i--) {
-                sb.append(i >= bSrc.length ? "?" : bSrc[i] ? "1" : "0");
-            }
-        }
-        final String full = sb.toString();
+    private static void getBitsTestInReverseOrder(byte[] pSrc, int pos, int count, int len) {
+        byte[] reverse = pSrc.clone();
+        PackedBitArraysPer8.reverseBitsOrderInEachByte(reverse);
+        boolean[] booleans = new boolean[len];
+        PackedBitArraysPer8.unpackBits(booleans, 0, reverse, 0, len);
+        final String full = JArrays.toBinaryString(booleans, "", 200);
         System.out.println(full);
+
+        // Other way to show bits:
+        StringBuilder sb = new StringBuilder();
+        for (int k = 0; k < len; k++) {
+            boolean b = PackedBitArraysPer8.getBitInReverseOrder(pSrc, k);
+            sb.append(b ? "1" : "0");
+        }
+        if (!sb.toString().equals(full)) {
+            throw new AssertionError("Bug in getBitInReverseOrder (single bit)");
+        }
 
         final long bits = PackedBitArraysPer8.getBitsInReverseOrder(pSrc, pos, count);
         final String local = bitsInReverseOrderToString(bits, count);
         System.out.println(" ".repeat(pos) + local);
-//        if (!full.substring(pos, pos + count).equals(local)) {
-//            throw new AssertionError();
-//        }
+        if (!full.substring(pos, pos + count).equals(local)) {
+            throw new AssertionError("Bug in getBitsInReverseOrder");
+        }
     }
 
     public static void main(String[] args) {
@@ -103,7 +113,8 @@ public class PackedBitArraysPer8GetBitsDemo {
         Random rnd = new Random(seed);
         System.out.println("Start random seed " + seed);
 
-        for (int test = 0; test < 1; test++) {
+        for (int test = 1; test <= 50; test++) {
+            System.out.printf("Test #%d%n", test);
             final int len = 100;
             boolean[] bSrc = new boolean[len];
             for (int k = 0; k < bSrc.length; k++) {
@@ -113,8 +124,8 @@ public class PackedBitArraysPer8GetBitsDemo {
             final byte[] pSrc = new byte[packedLen];
             PackedBitArraysPer8.packBits(pSrc, 0, bSrc, 0, len);
 
-            getBitsTest(bSrc, pSrc, pos, count);
-            getBitsTestInReverseOrder(bSrc, pSrc, pos, count);
+            getBitsTest(pSrc, pos, count, len);
+            getBitsTestInReverseOrder(pSrc, pos, count, len);
         }
     }
 }

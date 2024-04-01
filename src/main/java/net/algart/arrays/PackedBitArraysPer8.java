@@ -273,6 +273,7 @@ public class PackedBitArraysPer8 {
         }
     }
 
+    // (TODO) this is TIFF-style bits
     public static long getBitsInReverseOrder(byte[] src, long srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
         if (srcPos < 0) {
@@ -314,6 +315,7 @@ public class PackedBitArraysPer8 {
                 break;
             }
             if (currentByteIndex >= src.length) {
+                result <<= count;
                 break;
             }
         }
