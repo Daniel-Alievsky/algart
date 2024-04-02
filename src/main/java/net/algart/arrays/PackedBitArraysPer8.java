@@ -360,34 +360,34 @@ public class PackedBitArraysPer8 {
             return 0;
         }
         long result = 0;
-        int currentBitIndex = (int) (srcPos & 7);
-        int currentByteIndex = (int) srcPosDiv8;
+        int sPosRem = (int) (srcPos & 7);
+        int sPos = (int) srcPosDiv8;
         while (count != 0) {
-            final int bitsLeft = 8 - currentBitIndex;
+            final int bitsLeft = 8 - sPosRem;
             if (count >= bitsLeft) {
                 result <<= bitsLeft;
                 count -= bitsLeft;
-                final int cb = src[currentByteIndex];
-                if (currentBitIndex == 0) {
+                final int cb = src[sPos];
+                if (sPosRem == 0) {
                     // we can read in a whole byte, so we'll do that.
                     result |= cb & 0xff;
                 } else {
                     // otherwise, only read the appropriate number of bits off the back
                     // side of the byte, in order to "finish" the current byte in the buffer.
                     result |= cb & (0xFF >> (8 - bitsLeft));
-                    currentBitIndex = 0;
+                    sPosRem = 0;
                 }
-                currentByteIndex++;
+                sPos++;
             } else {
                 // We will be able to finish using the current byte.
                 // read the appropriate number of bits off the front side of the byte,
                 // then push them into the int.
                 result = result << count;
-                final int cb = src[currentByteIndex] & 0xff;
-                result |= (cb & (0x00FF - (((0xFF00 >> currentBitIndex) & 0xFF)))) >> (bitsLeft - count);
+                final int cb = src[sPos] & 0xff;
+                result |= (cb & (0x00FF - (((0xFF00 >> sPosRem) & 0xFF)))) >> (bitsLeft - count);
                 break;
             }
-            if (currentByteIndex >= src.length) {
+            if (sPos >= src.length) {
                 result <<= count;
                 break;
             }

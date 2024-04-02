@@ -4860,8 +4860,7 @@ public class Arrays {
      * <p>This method is equivalent to the following code:</p>
      *
      * <pre>
-     *      int len = array.{@link Array#length32() length32()};
-     *      byte[] result = new byte[len];
+     *      byte[] result = new byte[array.{@link Array#length32() length32()}];
      *      if (!(array instanceof ByteArray)) {
      *          array = {@link #asFuncArray(Func, Class, PArray...)
      *          Arrays.asFuncArray}(Func.IDENTITY, ByteArray.class, array);
@@ -4905,8 +4904,7 @@ public class Arrays {
      * <p>This method is equivalent to the following code:</p>
      *
      * <pre>
-     *      int len = array.{@link Array#length32() length32()};
-     *      short[] result = new short[len];
+     *      short[] result = new short[array.{@link Array#length32() length32()}];
      *      if (!(array instanceof ShortArray)) {
      *          array = {@link #asFuncArray(Func, Class, PArray...)
      *          Arrays.asFuncArray}(Func.IDENTITY, ShortArray.class, array);
@@ -4950,8 +4948,7 @@ public class Arrays {
      * <p>This method is equivalent to the following code:</p>
      *
      * <pre>
-     *      int len = array.{@link Array#length32() length32()};
-     *      int[] result = new int[len];
+     *      int[] result = new int[array.{@link Array#length32() length32()}];
      *      if (!(array instanceof IntArray)) {
      *          array = {@link #asFuncArray(Func, Class, PArray...)
      *          Arrays.asFuncArray}(Func.IDENTITY, IntArray.class, array);
@@ -4995,8 +4992,7 @@ public class Arrays {
      * <p>This method is equivalent to the following code:</p>
      *
      * <pre>
-     *      int len = array.{@link Array#length32() length32()};
-     *      long[] result = new long[len];
+     *      long[] result = new long[array.{@link Array#length32() length32()}];
      *      if (!(array instanceof LongArray)) {
      *          array = {@link #asFuncArray(Func, Class, PArray...)
      *          Arrays.asFuncArray}(Func.IDENTITY, LongArray.class, array);
@@ -5040,8 +5036,7 @@ public class Arrays {
      * <p>This method is equivalent to the following code:</p>
      *
      * <pre>
-     *      int len = array.{@link Array#length32() length32()};
-     *      float[] result = new float[len];
+     *      float[] result = new float[array.{@link Array#length32() length32()}];
      *      if (!(array instanceof FloatArray)) {
      *          array = {@link #asFuncArray(Func, Class, PArray...)
      *          Arrays.asFuncArray}(Func.IDENTITY, FloatArray.class, array);
@@ -5085,8 +5080,7 @@ public class Arrays {
      * <p>This method is equivalent to the following code:</p>
      *
      * <pre>
-     *      int len = array.{@link Array#length32() length32()};
-     *      double[] result = new double[len];
+     *      double[] result = new double[array.{@link Array#length32() length32()}];
      *      if (!(array instanceof DoubleArray)) {
      *          array = {@link #asFuncArray(Func, Class, PArray...)
      *          Arrays.asFuncArray}(Func.IDENTITY, DoubleArray.class, array);
