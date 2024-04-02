@@ -614,6 +614,15 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return a instanceof DirectAccessible && ((DirectAccessible) a).hasJavaArray();
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public Matrix<T> clone() {
+        final Matrix<UpdatableArray> result = Arrays.SMM.newMatrix(UpdatableArray.class, this);
+        Matrices.copy(null, result, this);
+        // - maximally fast multithreading copying
+        return InternalUtils.cast(result);
+    }
+
     public void flushResources(ArrayContext context) {
         array().flushResources(context);
     }
@@ -642,15 +651,6 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
             return false;
         }
         return dimEquals(m) && m.array().equals(array());
-    }
-
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
-    @Override
-    public Matrix<T> clone() {
-        final Matrix<UpdatableArray> result = Arrays.SMM.newMatrix(UpdatableArray.class, this);
-        Matrices.copy(null, result, this);
-        // - maximally fast multithreading copying
-        return InternalUtils.cast(result);
     }
 
     static long normalizeMirrorCoord(long coord, long dim) {

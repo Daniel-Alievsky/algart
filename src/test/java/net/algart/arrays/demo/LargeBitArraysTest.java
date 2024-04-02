@@ -29,9 +29,10 @@ import net.algart.arrays.BufferMemoryModel;
 
 public class LargeBitArraysTest {
     public static void main(String[] args) {
-        BitArray bits = BufferMemoryModel.getInstance().newBitArray(106535321600L);
+        BitArray bits = BufferMemoryModel.getInstance().newBitArray(1L << 33);
         // - there was a bug here before AlgART 1.2.20:
         // DirectDataStorages.newByteBuffer didn't check overflow for ByteBuffer
         bits.updatableClone(BufferMemoryModel.getInstance());
+        // System.out.println("Length 32-bit: " + bits.length32()); // - TooLargeArrayException
     }
 }

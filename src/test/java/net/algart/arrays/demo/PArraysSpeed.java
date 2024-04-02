@@ -38,20 +38,23 @@ public class PArraysSpeed {
     private static final MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();
 
     private static long getLongTest(long[] array, long index) {
-        if (index < 0 || index > array.length)
+        if (index < 0 || index > array.length) {
             throw new IllegalArgumentException("Illegal index");
+        }
         return array[(int) index];
     }
 
     private static int getIntTest(int[] array, long index) {
-        if (index < 0 || index > array.length)
+        if (index < 0 || index > array.length) {
             throw new IllegalArgumentException("Illegal index");
+        }
         return array[(int) index];
     }
 
     private static int getBooleanTest(boolean[] array, int index) {
-        if (index < 0 || index > array.length)
+        if (index < 0 || index > array.length) {
             throw new IllegalArgumentException("Illegal index");
+        }
         return array[index] ? 1 : 0;
     }
 
@@ -87,12 +90,14 @@ public class PArraysSpeed {
 
     private static int mySum(PArray a) {
         // this method improves HotSpot inlining
-        if (a instanceof LongArray)
+        if (a instanceof LongArray) {
             return mySumLong((LongArray) a);
-        if (a instanceof IntArray)
+        }
+        if (a instanceof IntArray) {
             return mySumInt((IntArray) a);
-        else
+        } else {
             return mySumBit((BitArray) a);
+        }
     }
 
     private static int mySumBuffered(PArray a) {
@@ -169,8 +174,9 @@ public class PArraysSpeed {
             int result = 0;
             boolean[] a = (boolean[]) array;
             for (int k = (int) offset, kMax = k + (int) count; k < kMax; k++) {
-                if (a[k])
+                if (a[k]) {
                     result++;
+                }
             }
             return result;
         }
@@ -243,17 +249,18 @@ public class PArraysSpeed {
         }
 
         public void run() {
-            long t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19;
+            long t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21;
             UpdatablePFixedArray a1 = ma1, a2 = ma2, a3 = ma3;
             PArray aConcat = (PArray) Arrays.asConcatenation(a1.asUnresizable(), a2.asUnresizable());
             Object sourceArray = null;
             if (useHeap && n == (int) n) {
-                if (elementType == boolean.class)
+                if (elementType == boolean.class) {
                     sourceArray = new boolean[(int) n];
-                else if (elementType == int.class)
+                } else if (elementType == int.class) {
                     sourceArray = new int[(int) n];
-                else
+                } else {
                     sourceArray = new long[(int) n];
+                }
             }
             this.loopLen = (double) n * (double) numberOfPasses;
             for (int m = 0; m < 6; m++) {
@@ -280,12 +287,13 @@ public class PArraysSpeed {
                         loopLen = (double) n * (double) numberOfPasses;
                         sourceArray = null;
                         if (useHeap && n == (int) n) {
-                            if (elementType == boolean.class)
+                            if (elementType == boolean.class) {
                                 sourceArray = new boolean[(int) n];
-                            else if (elementType == int.class)
+                            } else if (elementType == int.class) {
                                 sourceArray = new int[(int) n];
-                            else
+                            } else {
                                 sourceArray = new long[(int) n];
+                            }
                         }
                         aConcat = (PArray) Arrays.asConcatenation(a1, a2);
                         aConcat = (PArray) aConcat.subArray(aConcat.length() / 4, 3 * aConcat.length() / 4);
@@ -299,20 +307,24 @@ public class PArraysSpeed {
                 PArray a1sh = (PArray) Arrays.asShifted(a1.asUnresizable(), -17 * 3 + 4 + m * 17);
                 t1 = System.nanoTime();
                 int sum1 = 0;
-                for (int q = 0; q < numberOfPasses; q++)
+                for (int q = 0; q < numberOfPasses; q++) {
                     sum1 += mySum(a1);
+                }
                 t2 = System.nanoTime();
                 int sum2 = 0;
-                for (int q = 0; q < numberOfPasses; q++)
+                for (int q = 0; q < numberOfPasses; q++) {
                     sum2 += mySum(a2);
+                }
                 t3 = System.nanoTime();
                 double sum3 = 0;
-                for (int q = 0; q < numberOfPasses; q++)
+                for (int q = 0; q < numberOfPasses; q++) {
                     sum3 += Arrays.sumOf(a3);
+                }
                 t4 = System.nanoTime();
                 int sum11 = 0;
-                for (int q = 0; q < numberOfPasses; q++)
+                for (int q = 0; q < numberOfPasses; q++) {
                     sum11 += Arrays.preciseSumOf(a1);
+                }
                 t5 = System.nanoTime();
                 int sum21 = 0;
                 for (int q = 0; q < numberOfPasses; q++) {
@@ -320,8 +332,9 @@ public class PArraysSpeed {
                 }
                 t6 = System.nanoTime();
                 int sum31 = 0;
-                for (int q = 0; q < numberOfPasses; q++)
+                for (int q = 0; q < numberOfPasses; q++) {
                     sum31 += mySumUnevenlyBuffered(a3);
+                }
                 t7 = System.nanoTime();
                 int sum22 = 0;
                 for (int q = 0; q < numberOfPasses; q++) {
@@ -329,8 +342,9 @@ public class PArraysSpeed {
                 }
                 t8 = System.nanoTime();
                 int sum32 = 0;
-                for (int q = 0; q < numberOfPasses; q++)
+                for (int q = 0; q < numberOfPasses; q++) {
                     sum32 += mySumBlock(a3);
+                }
                 t9 = System.nanoTime();
                 int sumC1 = 0;
                 for (int q = 0; q < numberOfPasses; q++) {
@@ -359,9 +373,10 @@ public class PArraysSpeed {
                     && a1 instanceof IntArray)
                 {
                     ja1Direct = (int[]) ((DirectAccessible) a1).javaArray();
-                    for (int q = 0; q < numberOfPasses; q++)
+                    for (int q = 0; q < numberOfPasses; q++) {
                         sum14 += mySumOfArray(ja1Direct, ((DirectAccessible) a1).javaArrayOffset(),
                             n, false);
+                    }
                 } else if (BufferMemoryModel.isBufferArray(a1)) {
                     bb1Direct = BufferMemoryModel.getByteBuffer(a1);
                     Buffer buffer = bb1Direct.asIntBuffer();
@@ -369,9 +384,10 @@ public class PArraysSpeed {
                         // don't use ?: operator here to avoid a bug in Java 1.5 compiler
                         buffer = bb1Direct.asLongBuffer();
                     }
-                    for (int q = 0; q < numberOfPasses; q++)
+                    for (int q = 0; q < numberOfPasses; q++) {
                         sum14 += mySumOfBuffer(buffer, BufferMemoryModel.getBufferOffset(a1), n,
                             a1 instanceof BitArray);
+                    }
                 } else {
                     sum14 = sum1;
                 }
@@ -379,13 +395,15 @@ public class PArraysSpeed {
                 int sum15 = 0;
                 Object ja1Converted = null;
                 try {
-                    if (useHeap)
+                    if (useHeap) {
                         ja1Converted = Arrays.toJavaArray(a1);
+                    }
                 } catch (TooLargeArrayException ex) {
                 }
                 if (ja1Converted != null) {
-                    for (int q = 0; q < numberOfPasses; q++)
+                    for (int q = 0; q < numberOfPasses; q++) {
                         sum15 += mySumOfArray(ja1Converted, 0, (int) n, false);
+                    }
                 } else {
                     sum15 = sum1;
                 }
@@ -393,7 +411,7 @@ public class PArraysSpeed {
                 int sum16 = 0;
 
                 if (ja1Converted != null) {
-                    for (int q = 0; q < numberOfPasses; q++)
+                    for (int q = 0; q < numberOfPasses; q++) {
                         if (elementType == boolean.class) {
                             boolean[] jba = (boolean[]) ja1Converted;
                             for (int k = 0; k < n; k++) {
@@ -410,42 +428,48 @@ public class PArraysSpeed {
                                 sum16 += getLongTest(jia, k);
                             }
                         }
+                    }
                 } else {
                     sum16 = sum1;
                 }
                 t16 = System.nanoTime();
-                if (threads.length > 1)
+                if (threads.length > 1) {
                     a1 = a1.updatableClone(mm);
+                }
                 int someValue = m;
                 if (ja1Direct != null) {
                     ja1Direct = (int[]) ((DirectAccessible) a1).javaArray();
                     a1 = SimpleMemoryModel.asUpdatableIntArray(ja1Direct).subArr(
                         ((DirectAccessible) a1).javaArrayOffset(), n);
-                    for (int q = 0; q < numberOfPasses; q++)
+                    for (int q = 0; q < numberOfPasses; q++) {
                         for (int k = ((DirectAccessible) a1).javaArrayOffset(),
                                  kMax = ((DirectAccessible) a1).javaArrayOffset() + (int) n;
                              k < kMax; k++)
                         {
                             ja1Direct[k] = someValue;
                         }
+                    }
                 } else {
                     for (int q = 0; q < numberOfPasses; q++) {
-                        if (elementType == boolean.class)
+                        if (elementType == boolean.class) {
                             ((UpdatableBitArray) a1).fill((someValue & 1) != 0);
-                        else if (elementType == int.class)
+                        } else if (elementType == int.class) {
                             ((UpdatableIntArray) a1).fill(someValue);
-                        else
+                        } else {
                             a1.fill(someValue);
+                        }
                     }
                 }
                 t17 = System.nanoTime();
-                if (threads.length > 1)
+                if (threads.length > 1) {
                     a2 = a2.updatableClone(mm);
+                }
                 for (int q = 0; q < numberOfPasses; q++) {
-                    if (elementType == boolean.class)
+                    if (elementType == boolean.class) {
                         myFill(a2, someValue & 1);
-                    else
+                    } else {
                         myFill(a2, someValue);
+                    }
                 }
                 t18 = System.nanoTime();
                 if (sourceArray != null) {
@@ -475,21 +499,28 @@ public class PArraysSpeed {
                         }
                     }
                 } else {
-                    if (threads.length > 1)
+                    if (threads.length > 1) {
                         a3 = a3.updatableClone(mm);
+                    }
                     for (int q = 0; q < numberOfPasses; q++) {
-                        if (elementType == boolean.class)
+                        if (elementType == boolean.class) {
                             ((UpdatableBitArray) a3).fill((someValue & 1) != 0);
-                        else
+                        } else {
                             ((UpdatableIntArray) a3).fill(someValue);
+                        }
                     }
                 }
                 t19 = System.nanoTime();
+                int[] intJavaArray = Arrays.toIntJavaArray(a1);
+                t20 = System.nanoTime();
+                float[] floatJavaArray = Arrays.toFloatJavaArray(a1);
+                t21 = System.nanoTime();
                 synchronized (threads) {
                     String gBD = elementType == boolean.class ? "getBits(): " : "getData(): ";
                     long shift = Arrays.getShift(a1sh);
-                    if (shift > a1sh.length() / 2)
+                    if (shift > a1sh.length() / 2) {
                         shift -= a1sh.length();
+                    }
                     String sh = String.format(Locale.US, "%-4s", shift + ",");
                     System.out.println("Sub-iteration #" + m + " in " + Thread.currentThread());
                     System.out.println("Sum of 1st array:                      " + sum1 + time(t1, t2));
@@ -508,33 +539,40 @@ public class PArraysSpeed {
                         + sum12 + time(t11, t12));
                     System.out.println("Sum of 1st array >> " + sh + " " + gBD + "   "
                         + sum13 + time(t12, t13));
-                    if (ja1Direct != null)
+                    if (ja1Direct != null) {
                         System.out.println("Sum of 1st array via DirectAccessible: "
                             + sum14 + time(t13, t14));
-                    else if (bb1Direct != null)
+                    } else if (bb1Direct != null) {
                         System.out.println("Sum of 1st array via getByteBuffer:    "
                             + sum14 + time(t13, t14));
-                    if (ja1Converted != null)
+                    }
+                    if (ja1Converted != null) {
                         System.out.println("Sum of 1st array via toJavaArray():    "
                             + sum15 + time(t14, t15));
+                    }
                     if (ja1Converted != null) {
                         System.out.println("Sum of 1st array via getIntTest:       "
                             + sum16 + time(t15, t16));
                     }
                     if (sum1 != sum2 || sum1 != sum11 || sum1 != sum12 || sum1 != sum13)
                         // sum3 may differ from sum1 for large arrays!
+                    {
                         throw new AssertionError("Bug 1 in int/bit array implementation! m = " + m
                             + ": " + sum1 + ", " + sum2 + ", " + sum3 + ", " + sum11
                             + ", " + sum12 + ", " + sum13);
-                    if (sumC1 != sumC2)
+                    }
+                    if (sumC1 != sumC2) {
                         throw new AssertionError("Bug 2 in int/bit array implementation! m = " + m
                             + ": " + sumC1 + ", " + sumC2);
-                    if (sum1 != sum14 || sum1 != sum15 || sum1 != sum16)
+                    }
+                    if (sum1 != sum14 || sum1 != sum15 || sum1 != sum16) {
                         throw new AssertionError("Bug 3 in int/bit array implementation! m = " + m
                             + ": " + sum1 + ", " + sum14 + ", " + sum15 + ", " + sum16);
-                    if (sum21 != sum2 || sum31 != sum1 || sum22 != sum2 || sum32 != sum1)
+                    }
+                    if (sum21 != sum2 || sum31 != sum1 || sum22 != sum2 || sum32 != sum1) {
                         throw new AssertionError("Bug 4 in block access to array implementation! m = " + m
                             + ": " + sum1 + ", " + sum21 + ", " + sum31 + ", " + sum22 + ", " + sum32);
+                    }
                     System.out.println("Filling 1st array by " + someValue + " via "
                         + (ja1Direct != null ?
                         "DirectAccessible" :
@@ -548,6 +586,10 @@ public class PArraysSpeed {
                         System.out.println("Filling 3nd array by " + someValue + " via "
                             + "fill method    " + time(t18, t19));
                     }
+                    System.out.println("toIntJavaArray:                       " + time(t19, t20)
+                            + " - " + intJavaArray[0]);
+                    System.out.println("toFloatJavaArray:                     " + time(t20, t21)
+                            + " - " + floatJavaArray[0]);
                     System.out.println();
                 }
             }
@@ -581,8 +623,9 @@ public class PArraysSpeed {
                 + " [numberOfThreads [numberOfIterations]]");
             return;
         }
-        if (!useHeap)
+        if (!useHeap) {
             System.out.println("Java arrays will not be used in this test");
+        }
         final Class<?> elementType;
         if (args[startArgIndex].equalsIgnoreCase("bit")) {
             elementType = boolean.class;
@@ -590,8 +633,9 @@ public class PArraysSpeed {
             elementType = int.class;
         } else if (args[startArgIndex].equalsIgnoreCase("long")) {
             elementType = long.class;
-        } else
+        } else {
             throw new IllegalArgumentException("Unsupported element class " + args[startArgIndex]);
+        }
 
         DemoUtils.freeResourcesBeforeFilling = false; // to correctly test whether unmap() or dispose() is called
 

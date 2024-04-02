@@ -4622,7 +4622,7 @@ public class Arrays {
      *
      * <p>The returned Java array will be "safe" in that no references to it are
      * maintained by this array.
-     * (In other words, this method must always allocate a new Java array).
+     * (In other words, this method must always allocate a new Java array.)
      * The caller is thus free to modify the returned array.
      *
      * <p>The type of returned array is always one of the following:<ul>
@@ -4644,9 +4644,10 @@ public class Arrays {
      * of any memory model instance, which actually copies data into newly allocated array.
      *
      * @param array the source AlgART array.
-     * @return Java array containing all of the elements in this array.
+     * @return Java array containing all the elements in this array.
      * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @see Array#ja()
      * @see Array#getData(long, Object)
      */
     public static Object toJavaArray(Array array) {
@@ -4669,7 +4670,7 @@ public class Arrays {
      * of any memory model instance, which actually copies data into newly allocated array.
      *
      * @param array the source AlgART array.
-     * @return Java array containing all of the elements in this array.
+     * @return Java array containing all the elements in this array.
      * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
      * @see #toJavaArray(Array)
@@ -4692,7 +4693,7 @@ public class Arrays {
      * of any memory model instance, which actually copies data into newly allocated array.
      *
      * @param array the source AlgART array.
-     * @return Java array containing all of the elements in this array.
+     * @return Java array containing all the elements in this array.
      * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
      * @see #toJavaArray(Array)
@@ -4712,7 +4713,7 @@ public class Arrays {
      * of any memory model instance, which actually copies data into newly allocated array.
      *
      * @param array the source AlgART array.
-     * @return Java array containing all of the elements in this array.
+     * @return Java array containing all the elements in this array.
      * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
      * @see #toJavaArray(Array)
@@ -4732,7 +4733,7 @@ public class Arrays {
      * of any memory model instance, which actually copies data into newly allocated array.
      *
      * @param array the source AlgART array.
-     * @return Java array containing all of the elements in this array.
+     * @return Java array containing all the elements in this array.
      * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
      * @see #toJavaArray(Array)
@@ -4752,7 +4753,7 @@ public class Arrays {
      * of any memory model instance, which actually copies data into newly allocated array.
      *
      * @param array the source AlgART array.
-     * @return Java array containing all of the elements in this array.
+     * @return Java array containing all the elements in this array.
      * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
      * @see #toJavaArray(Array)
@@ -4772,7 +4773,7 @@ public class Arrays {
      * of any memory model instance, which actually copies data into newly allocated array.
      *
      * @param array the source AlgART array.
-     * @return Java array containing all of the elements in this array.
+     * @return Java array containing all the elements in this array.
      * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
      * @see #toJavaArray(Array)
@@ -4792,7 +4793,7 @@ public class Arrays {
      * of any memory model instance, which actually copies data into newly allocated array.
      *
      * @param array the source AlgART array.
-     * @return Java array containing all of the elements in this array.
+     * @return Java array containing all the elements in this array.
      * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
      * @see #toJavaArray(Array)
@@ -4812,7 +4813,7 @@ public class Arrays {
      * of any memory model instance, which actually copies data into newly allocated array.
      *
      * @param array the source AlgART array.
-     * @return Java array containing all of the elements in this array.
+     * @return Java array containing all the elements in this array.
      * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
      * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
      * @see #toJavaArray(Array)
@@ -4841,6 +4842,279 @@ public class Arrays {
     public static <E> E[] toJavaArray(ObjectArray<E> array) {
         return InternalUtils.cast(toJavaArray((Array) array));
     }
+
+    /*Repeat() byte ==> short,,int,,long,,float,,double;;
+               Byte ==> Short,,Int,,Long,,Float,,Double */
+
+    /**
+     * Returns a newly created Java <tt>byte[]</tt> array containing all the elements in this AlgART array,
+     * cast to <tt>byte</tt> type if necessary.
+     * If the length of this array is too high (greater than <tt>Integer.MAX_VALUE</tt>),
+     * throws {@link TooLargeArrayException}.
+     *
+     * <p>The returned Java array will be "safe" in that no references to it are
+     * maintained by this array.
+     * (In other words, this method must always allocate a new Java array.)
+     * The caller is thus free to modify the returned array.
+     *
+     * <p>This method is equivalent to the following code:</p>
+     *
+     * <pre>
+     *      int len = array.{@link Array#length32() length32()};
+     *      byte[] result = new byte[len];
+     *      if (!(array instanceof ByteArray)) {
+     *          array = {@link #asFuncArray(Func, Class, PArray...)
+     *          Arrays.asFuncArray}(Func.IDENTITY, ByteArray.class, array);
+     *      }
+     *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
+     *
+     * @param array the source AlgART array.
+     * @return Java array containing all the elements in this array, cast to <tt>byte</tt> type.
+     * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @see #toJavaArray(ByteArray)
+     * @see Array#ja()
+     */
+    public static byte[] toByteJavaArray(PArray array) {
+        Objects.requireNonNull(array, "Null array argument");
+        long len = array.length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to Java byte[] array, "
+                    + "because it is too large: " + array);
+        }
+        byte[] result = new byte[(int) len];
+        if (!(array instanceof ByteArray)) {
+            array = Arrays.asFuncArray(Func.IDENTITY, ByteArray.class, array);
+        }
+        array.getData(0, result);
+        // - no sense to use multithreading here: it may even be anti-optimization
+        return result;
+    }/*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
+    /**
+     * Returns a newly created Java <tt>short[]</tt> array containing all the elements in this AlgART array,
+     * cast to <tt>short</tt> type if necessary.
+     * If the length of this array is too high (greater than <tt>Integer.MAX_VALUE</tt>),
+     * throws {@link TooLargeArrayException}.
+     *
+     * <p>The returned Java array will be "safe" in that no references to it are
+     * maintained by this array.
+     * (In other words, this method must always allocate a new Java array.)
+     * The caller is thus free to modify the returned array.
+     *
+     * <p>This method is equivalent to the following code:</p>
+     *
+     * <pre>
+     *      int len = array.{@link Array#length32() length32()};
+     *      short[] result = new short[len];
+     *      if (!(array instanceof ShortArray)) {
+     *          array = {@link #asFuncArray(Func, Class, PArray...)
+     *          Arrays.asFuncArray}(Func.IDENTITY, ShortArray.class, array);
+     *      }
+     *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
+     *
+     * @param array the source AlgART array.
+     * @return Java array containing all the elements in this array, cast to <tt>short</tt> type.
+     * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @see #toJavaArray(ShortArray)
+     * @see Array#ja()
+     */
+    public static short[] toShortJavaArray(PArray array) {
+        Objects.requireNonNull(array, "Null array argument");
+        long len = array.length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to Java short[] array, "
+                    + "because it is too large: " + array);
+        }
+        short[] result = new short[(int) len];
+        if (!(array instanceof ShortArray)) {
+            array = Arrays.asFuncArray(Func.IDENTITY, ShortArray.class, array);
+        }
+        array.getData(0, result);
+        // - no sense to use multithreading here: it may even be anti-optimization
+        return result;
+    }
+
+    /**
+     * Returns a newly created Java <tt>int[]</tt> array containing all the elements in this AlgART array,
+     * cast to <tt>int</tt> type if necessary.
+     * If the length of this array is too high (greater than <tt>Integer.MAX_VALUE</tt>),
+     * throws {@link TooLargeArrayException}.
+     *
+     * <p>The returned Java array will be "safe" in that no references to it are
+     * maintained by this array.
+     * (In other words, this method must always allocate a new Java array.)
+     * The caller is thus free to modify the returned array.
+     *
+     * <p>This method is equivalent to the following code:</p>
+     *
+     * <pre>
+     *      int len = array.{@link Array#length32() length32()};
+     *      int[] result = new int[len];
+     *      if (!(array instanceof IntArray)) {
+     *          array = {@link #asFuncArray(Func, Class, PArray...)
+     *          Arrays.asFuncArray}(Func.IDENTITY, IntArray.class, array);
+     *      }
+     *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
+     *
+     * @param array the source AlgART array.
+     * @return Java array containing all the elements in this array, cast to <tt>int</tt> type.
+     * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @see #toJavaArray(IntArray)
+     * @see Array#ja()
+     */
+    public static int[] toIntJavaArray(PArray array) {
+        Objects.requireNonNull(array, "Null array argument");
+        long len = array.length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to Java int[] array, "
+                    + "because it is too large: " + array);
+        }
+        int[] result = new int[(int) len];
+        if (!(array instanceof IntArray)) {
+            array = Arrays.asFuncArray(Func.IDENTITY, IntArray.class, array);
+        }
+        array.getData(0, result);
+        // - no sense to use multithreading here: it may even be anti-optimization
+        return result;
+    }
+
+    /**
+     * Returns a newly created Java <tt>long[]</tt> array containing all the elements in this AlgART array,
+     * cast to <tt>long</tt> type if necessary.
+     * If the length of this array is too high (greater than <tt>Integer.MAX_VALUE</tt>),
+     * throws {@link TooLargeArrayException}.
+     *
+     * <p>The returned Java array will be "safe" in that no references to it are
+     * maintained by this array.
+     * (In other words, this method must always allocate a new Java array.)
+     * The caller is thus free to modify the returned array.
+     *
+     * <p>This method is equivalent to the following code:</p>
+     *
+     * <pre>
+     *      int len = array.{@link Array#length32() length32()};
+     *      long[] result = new long[len];
+     *      if (!(array instanceof LongArray)) {
+     *          array = {@link #asFuncArray(Func, Class, PArray...)
+     *          Arrays.asFuncArray}(Func.IDENTITY, LongArray.class, array);
+     *      }
+     *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
+     *
+     * @param array the source AlgART array.
+     * @return Java array containing all the elements in this array, cast to <tt>long</tt> type.
+     * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @see #toJavaArray(LongArray)
+     * @see Array#ja()
+     */
+    public static long[] toLongJavaArray(PArray array) {
+        Objects.requireNonNull(array, "Null array argument");
+        long len = array.length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to Java long[] array, "
+                    + "because it is too large: " + array);
+        }
+        long[] result = new long[(int) len];
+        if (!(array instanceof LongArray)) {
+            array = Arrays.asFuncArray(Func.IDENTITY, LongArray.class, array);
+        }
+        array.getData(0, result);
+        // - no sense to use multithreading here: it may even be anti-optimization
+        return result;
+    }
+
+    /**
+     * Returns a newly created Java <tt>float[]</tt> array containing all the elements in this AlgART array,
+     * cast to <tt>float</tt> type if necessary.
+     * If the length of this array is too high (greater than <tt>Integer.MAX_VALUE</tt>),
+     * throws {@link TooLargeArrayException}.
+     *
+     * <p>The returned Java array will be "safe" in that no references to it are
+     * maintained by this array.
+     * (In other words, this method must always allocate a new Java array.)
+     * The caller is thus free to modify the returned array.
+     *
+     * <p>This method is equivalent to the following code:</p>
+     *
+     * <pre>
+     *      int len = array.{@link Array#length32() length32()};
+     *      float[] result = new float[len];
+     *      if (!(array instanceof FloatArray)) {
+     *          array = {@link #asFuncArray(Func, Class, PArray...)
+     *          Arrays.asFuncArray}(Func.IDENTITY, FloatArray.class, array);
+     *      }
+     *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
+     *
+     * @param array the source AlgART array.
+     * @return Java array containing all the elements in this array, cast to <tt>float</tt> type.
+     * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @see #toJavaArray(FloatArray)
+     * @see Array#ja()
+     */
+    public static float[] toFloatJavaArray(PArray array) {
+        Objects.requireNonNull(array, "Null array argument");
+        long len = array.length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to Java float[] array, "
+                    + "because it is too large: " + array);
+        }
+        float[] result = new float[(int) len];
+        if (!(array instanceof FloatArray)) {
+            array = Arrays.asFuncArray(Func.IDENTITY, FloatArray.class, array);
+        }
+        array.getData(0, result);
+        // - no sense to use multithreading here: it may even be anti-optimization
+        return result;
+    }
+
+    /**
+     * Returns a newly created Java <tt>double[]</tt> array containing all the elements in this AlgART array,
+     * cast to <tt>double</tt> type if necessary.
+     * If the length of this array is too high (greater than <tt>Integer.MAX_VALUE</tt>),
+     * throws {@link TooLargeArrayException}.
+     *
+     * <p>The returned Java array will be "safe" in that no references to it are
+     * maintained by this array.
+     * (In other words, this method must always allocate a new Java array.)
+     * The caller is thus free to modify the returned array.
+     *
+     * <p>This method is equivalent to the following code:</p>
+     *
+     * <pre>
+     *      int len = array.{@link Array#length32() length32()};
+     *      double[] result = new double[len];
+     *      if (!(array instanceof DoubleArray)) {
+     *          array = {@link #asFuncArray(Func, Class, PArray...)
+     *          Arrays.asFuncArray}(Func.IDENTITY, DoubleArray.class, array);
+     *      }
+     *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
+     *
+     * @param array the source AlgART array.
+     * @return Java array containing all the elements in this array, cast to <tt>double</tt> type.
+     * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @see #toJavaArray(DoubleArray)
+     * @see Array#ja()
+     */
+    public static double[] toDoubleJavaArray(PArray array) {
+        Objects.requireNonNull(array, "Null array argument");
+        long len = array.length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to Java double[] array, "
+                    + "because it is too large: " + array);
+        }
+        double[] result = new double[(int) len];
+        if (!(array instanceof DoubleArray)) {
+            array = Arrays.asFuncArray(Func.IDENTITY, DoubleArray.class, array);
+        }
+        array.getData(0, result);
+        // - no sense to use multithreading here: it may even be anti-optimization
+        return result;
+    }/*Repeat.AutoGeneratedEnd*/
 
     /**
      * Returns a string containing all characters in this character array (in the same

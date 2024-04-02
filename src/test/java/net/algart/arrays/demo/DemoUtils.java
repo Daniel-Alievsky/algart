@@ -149,21 +149,7 @@ class DemoUtils {
 
     static UpdatableArray createTestArray(String elementTypeName, long len, boolean unresizable, boolean fill) {
         MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();
-        Class<?> clazz = elementTypeName.equals("boolean") ? boolean.class
-            : elementTypeName.equals("char") ? char.class
-            : elementTypeName.equals("byte") ? byte.class
-            : elementTypeName.equals("short") ? short.class
-            : elementTypeName.equals("int") ? int.class
-            : elementTypeName.equals("long") ? long.class
-            : elementTypeName.equals("float") ? float.class
-            : elementTypeName.equals("double") ? double.class
-            : elementTypeName.equals("String") ? String.class
-            : elementTypeName.equals("CombinedMulti") ||
-            elementTypeName.equals("CombinedSingle") ||
-            elementTypeName.equals("CombinedPacked") ? CombinedArraysDemo.Circle.class
-            : null;
-        if (clazz == null)
-            throw new IllegalArgumentException("Unknown element type: " + elementTypeName);
+        Class<?> clazz = elementType(elementTypeName);
         UpdatableArray a;
         MutableArray ma = null;
         if (elementTypeName.startsWith("Combined")) {
@@ -232,6 +218,25 @@ class DemoUtils {
             }
         }
         return a;
+    }
+
+    static Class<?> elementType(String elementTypeName) {
+        Class<?> clazz = elementTypeName.equals("boolean") ? boolean.class
+            : elementTypeName.equals("char") ? char.class
+            : elementTypeName.equals("byte") ? byte.class
+            : elementTypeName.equals("short") ? short.class
+            : elementTypeName.equals("int") ? int.class
+            : elementTypeName.equals("long") ? long.class
+            : elementTypeName.equals("float") ? float.class
+            : elementTypeName.equals("double") ? double.class
+            : elementTypeName.equals("String") ? String.class
+            : elementTypeName.equals("CombinedMulti") ||
+            elementTypeName.equals("CombinedSingle") ||
+            elementTypeName.equals("CombinedPacked") ? CombinedArraysDemo.Circle.class
+            : null;
+        if (clazz == null)
+            throw new IllegalArgumentException("Unknown element type: " + elementTypeName);
+        return clazz;
     }
 
     static void changeTestArray(UpdatableArray a, long index, int value) {

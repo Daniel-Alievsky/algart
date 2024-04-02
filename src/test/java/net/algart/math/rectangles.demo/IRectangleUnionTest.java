@@ -25,7 +25,6 @@
 package net.algart.math.rectangles.demo;
 
 import net.algart.arrays.Arrays;
-import net.algart.arrays.ExternalProcessor;
 import net.algart.arrays.Matrix;
 import net.algart.arrays.UpdatablePArray;
 import net.algart.external.MatrixIO;
@@ -43,6 +42,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.List;
 
@@ -353,7 +353,7 @@ public class IRectangleUnionTest {
 
     private static String[] parseConfigurationFile(File rectanglesFile) throws IOException {
         final List<String> result = new ArrayList<String>();
-        for (String s : ExternalProcessor.readUTF8(rectanglesFile).split("[\\r\\n]+")) {
+        for (String s : Files.readString(rectanglesFile.toPath()).split("[\\r\\n]+")) {
             final int p = s.indexOf("//");
             if (p != -1) {
                 s = s.substring(0, p);

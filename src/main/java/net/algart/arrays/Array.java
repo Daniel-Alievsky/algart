@@ -154,11 +154,32 @@ public interface Array {
      *
      * <p>There is a guarantee that this method works very quickly
      * (usually it just returns a value of some private field).
-     * The result of this method is never negative.
+     * The result of this method is never negative.</p>
      *
      * @return the length: number of elements in this array.
      */
     long length();
+
+    /**
+     * Returns the length as 32-bit <tt>int</tt> value.
+     * If the {@link #length() actual length} is greater than <tt>Integer.MAX_VALUE</tt>,
+     * throws <tt>TooLargeArrayException</tt>.
+     *
+     * <p>This method is convenient to allocate memory for a regular Java array
+     * if you want to ensure that this AlgART array can be completely copied into such an array.</p>
+     *
+     * @return the length: number of elements in this array, if it is less than 2<sup>31</sup>.
+     */
+    default int length32() throws TooLargeArrayException {
+        long r = length();
+        if (r < 0) {
+            throw new AssertionError("Negative result " + r + " of length() method");
+        }
+        if (r > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large array (>= 2^31 elements): " + this);
+        }
+        return (int) r;
+    }
 
     /**
      * Equivalent to the call <tt>{@link #length() length}() == 0</tt>.

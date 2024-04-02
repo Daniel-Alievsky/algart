@@ -194,14 +194,14 @@ public class MatrixIO {
             boolean allowReferencesToStandardLargeFiles) throws IOException {
         Objects.requireNonNull(folder, "Null folder");
         Objects.requireNonNull(image, "Null image");
-        File f = folder.toFile();
         image = new ArrayList<Matrix<? extends PArray>>(image);
         // cloning before checking guarantees correct check while multithreading
         if (image.isEmpty()) {
             throw new IllegalArgumentException("Empty list of image bands");
         }
-        f.mkdir();
-        ExternalProcessor.writeUTF8(new File(f, "version"), "1.0");
+        Files.createDirectory(folder);
+        File f = folder.toFile();
+        Files.writeString(new File(f, "version").toPath(), "1.0");
         int index = 0;
         for (Matrix<? extends PArray> m : image) {
             DataFileModel<?> dataFileModel;
@@ -215,8 +215,10 @@ public class MatrixIO {
                 MatrixInfo mi = LargeMemoryModel.getMatrixInfoForSavingInFile(m, 0);
                 PArray raw = LargeMemoryModel.getRawArrayForSavingInFile(m);
                 assert raw != null : "Null raw array for LargeMemoryModel";
-                ExternalProcessor.writeUTF8(infFile, mi.toChars());
-                ExternalProcessor.writeUTF8(refFile, lmm.getDataFilePath(raw).toString());
+                String text1 = mi.toChars();
+                Files.writeString(infFile.toPath(), text1);
+                String text = lmm.getDataFilePath(raw).toString();
+                Files.writeString(refFile.toPath(), text);
                 raw.flushResources(null, true);
             } else {
                 File infFile = new File(f, index + ".inf");
@@ -227,7 +229,8 @@ public class MatrixIO {
                 LargeMemoryModel.setTemporary(clone.array(), false);
                 clone = clone.structureLike(m);
                 MatrixInfo mi = LargeMemoryModel.getMatrixInfoForSavingInFile(clone, 0);
-                ExternalProcessor.writeUTF8(infFile, mi.toChars());
+                String text = mi.toChars();
+                Files.writeString(infFile.toPath(), text);
                 clone.array().copy(m.array());
                 clone.array().freeResources(null, true);
                 // - close file to allow possible deletion
@@ -285,11 +288,11 @@ public class MatrixIO {
                 // so, we do not allow reading empty band lists
             }
             if (refFile.exists()) {
-                rawFile = new File(ExternalProcessor.readUTF8(refFile).trim());
+                rawFile = new File(Files.readString(refFile.toPath()).trim());
             }
             LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(new StandardIODataFileModel());
             try {
-                MatrixInfo matrixInfo = MatrixInfo.valueOf(ExternalProcessor.readUTF8(infFile));
+                MatrixInfo matrixInfo = MatrixInfo.valueOf(Files.readString(infFile.toPath()));
                 result.add(mm.asMatrix(rawFile, matrixInfo));
             } catch (IllegalInfoSyntaxException e) {
                 throw new IOException("Invalid meta-information file " + infFile + ": " + e.getMessage());
@@ -314,7 +317,7 @@ public class MatrixIO {
         }
         final PArray array = LargeMemoryModel.getRawArrayForSavingInFile(matrix);
         MatrixInfo mi = LargeMemoryModel.getMatrixInfoForSavingInFile(matrix, 0);
-        ExternalProcessor.writeUTF8(new File(f, "version"), "1.0");
+        Files.writeString(new File(f, "version").toPath(), "1.0");
         File matrixFile = new File(f, matrix.dimCount() == 1 ? "vector" : "matrix");
         File indexFile = new File(f, "index");
         final LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(
@@ -322,7 +325,8 @@ public class MatrixIO {
         final UpdatablePArray dest = (UpdatablePArray) mm.newUnresizableArray(matrix.elementType(), array.length());
         LargeMemoryModel.setTemporary(dest, false);
         mi = mi.cloneWithOtherByteOrder(dest.byteOrder());
-        ExternalProcessor.writeUTF8(indexFile, mi.toChars());
+        String text = mi.toChars();
+        Files.writeString(indexFile.toPath(), text);
         Arrays.copy(null, dest, array, 1, false);
         dest.freeResources(null);
         // - actually saves possible cached data to the file
@@ -335,7 +339,7 @@ public class MatrixIO {
         File f = folder.toFile();
         File indexFile = new File(f, "index");
         try {
-            MatrixInfo mi = MatrixInfo.valueOf(ExternalProcessor.readUTF8(indexFile));
+            MatrixInfo mi = MatrixInfo.valueOf(Files.readString(indexFile.toPath()));
             LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(new StandardIODataFileModel());
             File matrixFile = new File(f, mi.dimCount() == 1 ? "vector" : "matrix");
             return mm.asMatrix(matrixFile, mi);

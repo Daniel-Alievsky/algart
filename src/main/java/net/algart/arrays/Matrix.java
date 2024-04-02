@@ -1941,6 +1941,25 @@ public interface Matrix<T extends Array> extends Cloneable {
     boolean isDirectAccessible();
 
     /**
+     * Returns an exact clone of this  matrix, created in {@link SimpleMemoryModel}.
+     *
+     * <p>For primitive element types, equivalent to
+     * <tt>{@link Matrices#clone(Matrix) Matrices.clone}(thisInstance)</tt>,
+     * but the generic type of the result is not {@link UpdatableArray updatable}.
+     * For any types, equivalent to the following operators:
+     * <pre>
+     *     final Matrix<UpdatableArray> result = Arrays.SMM.{@link MemoryModel#newMatrix(Class, Matrix)
+     *     newMatrix}(UpdatableArray.class, thisInstance);
+     *     {@link Matrices#copy(ArrayContext, Matrix, Matrix)
+     *     Matrices.copy}(null, result, thisInstance); // - maximally fast multithreading copying
+     *     (return result)
+     * </pre>
+     *
+     * @return exact clone of the passed matrix.
+     */
+    Matrix<T> clone();
+
+    /**
      * Equivalent to <tt>{@link #array()}.{@link Array#flushResources(ArrayContext) flushResources(context)}</tt>.
      *
      * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
@@ -1990,23 +2009,4 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return <tt>true</tt> if the specified object is a matrix equal to this one.
      */
     boolean equals(Object obj);
-
-    /**
-     * Returns an exact clone of this  matrix, created in {@link SimpleMemoryModel}.
-     *
-     * <p>For primitive element types, equivalent to
-     * <tt>{@link Matrices#clone(Matrix) Matrices.clone}(thisInstance)</tt>,
-     * but the generic type of the result is not {@link UpdatableArray updatable}.
-     * For any types, equivalent to the following operators:
-     * <pre>
-     *     final Matrix<UpdatableArray> result = Arrays.SMM.{@link MemoryModel#newMatrix(Class, Matrix)
-     *     newMatrix}(UpdatableArray.class, thisInstance);
-     *     {@link Matrices#copy(ArrayContext, Matrix, Matrix)
-     *     Matrices.copy}(null, result, thisInstance); // - maximally fast multithreading copying
-     *     (return result)
-     * </pre>
-     *
-     * @return exact clone of the passed matrix.
-     */
-    Matrix<T> clone();
 }
