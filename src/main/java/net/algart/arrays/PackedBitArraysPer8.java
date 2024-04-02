@@ -245,6 +245,7 @@ public class PackedBitArraysPer8 {
                 // sPosRem=5, bitsLeft=3, count=2:
                 //     (01234567)
                 //      abcdefgh
+                //      11111110    0xFFL >>> (bitsLeft - count)
                 //      abcdefg0
                 //      fg000000
                 result |= actualBits << shift;
@@ -365,32 +366,30 @@ public class PackedBitArraysPer8 {
         while (count != 0) {
             final int bitsLeft = 8 - sPosRem;
             if (count >= bitsLeft) {
-                result <<= bitsLeft;
+               final long actualBits = (long) src[sPos] & (0xFFL >>> sPosRem);
+                // sPosRem=5, bitsLeft=3:
+                //     (76543210)
+                //      abcdefgh
+                //      00000fgh
+                result = (result << bitsLeft) | actualBits;
                 count -= bitsLeft;
-                final int cb = src[sPos];
-                if (sPosRem == 0) {
-                    // we can read in a whole byte, so we'll do that.
-                    result |= cb & 0xff;
-                } else {
-                    // otherwise, only read the appropriate number of bits off the back
-                    // side of the byte, in order to "finish" the current byte in the buffer.
-                    result |= cb & (0xFF >> (8 - bitsLeft));
-                    sPosRem = 0;
-                }
                 sPos++;
             } else {
-                // We will be able to finish using the current byte.
-                // read the appropriate number of bits off the front side of the byte,
-                // then push them into the int.
-                result = result << count;
-                final int cb = src[sPos] & 0xff;
-                result |= (cb & (0x00FF - (((0xFF00 >> sPosRem) & 0xFF)))) >> (bitsLeft - count);
+                final long actualBits = (long) src[sPos] & ~(0xFF00 >>> sPosRem) & 0xFF;
+                // sPosRem=5, bitsLeft=3, count=2:
+                //     (76543210)
+                //      abcdefgh
+                //      11111000    0xFF00 >>> sPosRem
+                //      00000111    ~(0xFF00 >>> sPosRem)
+                //      00000fgh
+                result = (result << count) | (actualBits >> (bitsLeft - count));
+                //      000000fg
                 break;
             }
             if (sPos >= src.length) {
-                result <<= count;
-                break;
+                return result << count;
             }
+            sPosRem = 0;
         }
         return result;
     }
