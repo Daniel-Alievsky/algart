@@ -40,9 +40,14 @@
  and of <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/nio/package-summary.html">Java NIO buffers</a>,
  but also provide a lot of new features.</p>
 
- <p>The basic AlgART array interface is {@link net.algart.arrays.Array}:
+ <p>The basic AlgART array interface is <b>{@link net.algart.arrays.Array}</b>:
  read-only one-dimensional array with any element type.
  There are a lot of its subinterfaces with additional functionality and restrictions.</p>
+
+ <p>The basic interface fo representing AlgART multi-dimensional matrix is <b>{@link net.algart.arrays.Matrix}</b>.</p>
+
+ <p>The classes <b>{@link net.algart.arrays.Arrays}</b> and <b>{@link net.algart.arrays.Matrices}</b>
+ offer a wide collection of useful functions for processing AlgART arrays and matrices.</p>
 
  <h4>Contents</h4>
  <ul>
@@ -1058,19 +1063,9 @@
  See {@link net.algart.arrays.StandardIODataFileModel#defaultDirectBuffers()} method and
  {@link net.algart.arrays.StandardIODataFileModel#StandardIODataFileModel(java.io.File, long, boolean, boolean)}
  constructor for more details.</dd>
-
- <dt><b><tt>{@value net.algart.arrays.ExternalProcessor#JRE_PATH_PROPERTY_NAME}</tt></b></dt>
- <dd>Used for finding some custom JRE by
- {@link net.algart.arrays.ExternalProcessor#getCustomJREHome()} method.</dd>
-
- <dt><b><tt>{@value net.algart.arrays.ExternalProcessor#JVM_OPTIONS_PROPERTY_NAME}</tt></b></dt>
- <dd>Used to get a list of custom JVM options by
- {@link net.algart.arrays.ExternalProcessor#getCustomJVMOptions()} method.</dd>
  </dl>
 
  <p>All these properties, excepting "<tt>net.algart.arrays.CPUCount</tt>",
- <tt>{@value net.algart.arrays.ExternalProcessor#JRE_PATH_PROPERTY_NAME}</tt>
- and <tt>{@value net.algart.arrays.ExternalProcessor#JVM_OPTIONS_PROPERTY_NAME}</tt>,
  are loaded while initialization of the corresponding classes.
  So, any changes of them will be applied only at the next start of the Java application.</p>
 
@@ -1118,7 +1113,6 @@
  <ul>
  <li><tt>Logger.getLogger("{@link net.algart.arrays.Arrays net.algart.arrays.Arrays}")</tt></li>
  <li><tt>Logger.getLogger("{@link net.algart.arrays.LargeMemoryModel net.algart.arrays.LargeMemoryModel}")</tt></li>
- <li><tt>Logger.getLogger("{@link net.algart.arrays.ExternalProcessor net.algart.arrays.ExternalProcessor}")</tt></li>
  </ul>
 
  <p>We don't specify what situations are logged with levels <tt>FINE</tt> or lower.
@@ -1211,36 +1205,6 @@
         Arrays.addShutdownTask(Runnable, TaskExecutionOrder)}.
         </li>
         <li>Maybe, in some other situations.
-        </li>
-        </ul>
-    </li>
-    </ul>
- </li>
-
- <li><tt>Logger.getLogger("{@link net.algart.arrays.ExternalProcessor net.algart.arrays.ExternalProcessor}")</tt>
- is used in following situations.
-    <ul>
-    <li>The level <tt>WARNING</tt>:
-        <ul>
-        <li>In {@link net.algart.arrays.ExternalProcessor#cleanup(String)}
-        and {@link net.algart.arrays.ExternalProcessor#close()} methods
-        to inform about possible minor problems, occurred while removing "garbage" temporary files
-        and directories (for example, when these methods cannot delete or check a temporary resource
-        due to some unknown reasons).
-        </li>
-        </ul>
-    </li>
-    <li>The level <tt>CONFIG</tt>:
-        <ul>
-        <li>In {@link net.algart.arrays.ExternalProcessor#cleanup(String)}
-        and {@link net.algart.arrays.ExternalProcessor#close()} methods
-        to inform about successfully removed "garbage" temporary directories
-        or about other normal situations, that can occur while removing them
-        (for example, when some directory cannot be removed, because is now used by another application).
-        </li>
-        <li>In {@link net.algart.arrays.ExternalProcessor#execute(ProcessBuilder)}
-        method to inform about every call of an external process and about the list of all arguments
-        of the called program.
         </li>
         </ul>
     </li>

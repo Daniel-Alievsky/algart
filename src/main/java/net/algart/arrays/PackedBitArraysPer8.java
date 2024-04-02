@@ -324,10 +324,10 @@ public class PackedBitArraysPer8 {
      *
      * <pre>
      *      long result = 0;
-     *      for (int k = 0; k < count; k++) {
+     *      for (int k = 0; k &lt; count; k++) {
      *          final long bit = {@link #getBitInReverseOrder(byte[], long)
      *              PackedBitArraysPer8.getBitInReverseOrder}(src, srcPos + k) ? 1L : 0L;
-     *          result |= bit << (count - 1 - k);
+     *          result |= bit &lt;&lt; (count - 1 - k);
      *      }</pre>
      *
      * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
