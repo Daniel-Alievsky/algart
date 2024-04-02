@@ -40,9 +40,10 @@
  and of <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/nio/package-summary.html">Java NIO buffers</a>,
  but also provide a lot of new features.</p>
 
- <p>The basic AlgART array interface is <b>{@link net.algart.arrays.Array}</b>:
- read-only one-dimensional array with any element type.
- There are a lot of its subinterfaces with additional functionality and restrictions.</p>
+ <p>The basic AlgART array interfaces are <b>{@link net.algart.arrays.Array}</b>,
+ <b>{@link net.algart.arrays.UpdatableArray}</b>, <b>{@link net.algart.arrays.MutableArray}</b>:
+ one-dimensional arrays with any element type.
+ There are many subinterfaces with additional functionality and restrictions.</p>
 
  <p>The basic interface fo representing AlgART multi-dimensional matrix is <b>{@link net.algart.arrays.Matrix}</b>.</p>
 
