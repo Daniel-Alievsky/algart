@@ -44,10 +44,6 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return array().elementType();
     }
 
-    public long size() {
-        return array().length();
-    }
-
     public Class<? extends Array> type() {
         return array().type();
     }

@@ -610,7 +610,21 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return the total number of matrix elements.
      */
-    long size();
+    default long size() {
+        return array().length();
+    }
+
+    /**
+     * Returns the total number of matrix elements as 32-bit <tt>int</tt> value.
+     * Equivalent to <tt>{@link #array()}.{@link Array#length32() length32()}</tt>.
+     *
+     * @return the total number of matrix elements, if it is less than 2<sup>31</sup>.
+     * @throws TooLargeArrayException if the total number of matrix elements is greater than
+     *                                <tt>Integer.MAX_VALUE</tt>=2<sup>31</sup>&minus;1.
+     */
+    default int size32() {
+        return array().length32();
+    }
 
     /**
      * Returns <tt>{@link #array()}.{@link Array#type() type()}</tt>.

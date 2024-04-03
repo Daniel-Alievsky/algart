@@ -169,6 +169,8 @@ public interface Array {
      * if you want to ensure that this AlgART array can be completely copied into such an array.</p>
      *
      * @return the length: number of elements in this array, if it is less than 2<sup>31</sup>.
+     * @throws TooLargeArrayException if the actual length is greater than
+     *                                <tt>Integer.MAX_VALUE</tt>=2<sup>31</sup>&minus;1.
      */
     default int length32() throws TooLargeArrayException {
         long r = length();

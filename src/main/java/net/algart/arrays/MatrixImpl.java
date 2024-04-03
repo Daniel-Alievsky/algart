@@ -49,6 +49,10 @@ class MatrixImpl<T extends Array> extends AbstractMatrix<T> implements Matrix<T>
         return this.array.length();
     }
 
+    public int size32() {
+        return this.array.length32();
+    }
+
     public long[] dimensions() {
         return this.dimensions.clone();
     }
