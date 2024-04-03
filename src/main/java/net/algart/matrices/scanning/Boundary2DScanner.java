@@ -1586,6 +1586,36 @@ public abstract class Boundary2DScanner {
 
     /**
      * Makes <a href="Boundary2DScanner.html#completion">completion</a> of the source binary matrix and returns it
+     * in the newly created matrix. Equivalent to the following code:</p>
+     * <pre>
+     *      Matrix<UpdatableBitArray> result = memoryModel.{@link MemoryModel#newBitMatrix(long...)
+     *      newBitMatrix}(source.dimensions());
+     *      {@link #fillHoles(Matrix, Matrix, ConnectivityType) fillHoles}(result, source, connectivityType);
+     * </pre>
+     *
+     * @param memoryModel      the memory model, used for creating the result matrix.
+     * @param source           the source bit matrix.
+     * @param connectivityType the connectivity kind used while building completion.
+     * @throws NullPointerException     if one of argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
+     */
+    public static Matrix<UpdatableBitArray> fillHoles(
+            MemoryModel memoryModel,
+            Matrix<? extends BitArray> source,
+            ConnectivityType connectivityType) {
+        Objects.requireNonNull(memoryModel, "Null memoryModel");
+        Objects.requireNonNull(source, "Null source bit matrix");
+        Objects.requireNonNull(connectivityType, "Null connectivityType argument");
+        Matrix<UpdatableBitArray> result = memoryModel.newBitMatrix(source.dimensions());
+        final Boundary2DScanner scanner = Boundary2DScanner.getMainBoundariesScanner(source, result, connectivityType);
+        while (scanner.nextBoundary()) {
+            scanner.scanBoundary();
+        }
+        return result;
+    }
+
+    /**
+     * Makes <a href="Boundary2DScanner.html#completion">completion</a> of the source binary matrix and returns it
      * in the result matrix. Compared to the source matrix, all the "holes" ("pores") in the resulting matrix
      * are filled.</p>
      *
@@ -1600,8 +1630,8 @@ public abstract class Boundary2DScanner {
      * }
      * </pre>
      *
-     * @param result           the completion: the matrix with filled holes.
-     * @param source           the source matrix.
+     * @param result           the completion: the bit matrix with filled holes.
+     * @param source           the source bit matrix.
      * @param connectivityType the connectivity kind used while building completion.
      * @throws NullPointerException     if one of argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
@@ -1611,6 +1641,9 @@ public abstract class Boundary2DScanner {
             Matrix<? extends UpdatableBitArray> result,
             Matrix<? extends BitArray> source,
             ConnectivityType connectivityType) {
+        Objects.requireNonNull(result, "Null result bit matrix");
+        Objects.requireNonNull(source, "Null source bit matrix");
+        Objects.requireNonNull(connectivityType, "Null connectivityType argument");
         final Boundary2DScanner scanner = Boundary2DScanner.getMainBoundariesScanner(source, result, connectivityType);
         Matrices.clear(result);
         while (scanner.nextBoundary()) {

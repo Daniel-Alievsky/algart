@@ -109,7 +109,7 @@ public class Patterns {
      * <p>The coordinates of all points must be in range <tt>-Long.MAX_VALUE/2..Long.MAX_VALUE/2</tt>,
      * excepting the only case when the number of points is 1.
      *
-     * <p>The returned pattern will be "safe" in that no references to the passed set are maintained by it.
+     * <p>The returned pattern will be "safe" in the sense that no references to the passed set are maintained by it.
      * In other words, this method always allocates new set (probably <tt>HashSet</tt>) and copies
      * the passed set into it.
      *
@@ -393,7 +393,7 @@ public class Patterns {
      * The <tt>equals</tt> method returns <tt>true</tt> if and only if the passed object is also rectangular
      * pattern, consisting of the same points and created by this or equivalent method from this package.
      *
-     * <p>The returned pattern will be "safe" in that no references to the passed array are maintained by it.
+     * <p>The returned pattern will be "safe" in the sense that no references to the passed array are maintained by it.
      * In other words, this method always allocates new array for storing ranges and copies
      * the passed ranges into it.
      *
@@ -485,7 +485,7 @@ public class Patterns {
      * is another: it just returns {@link #newRectangularIntegerPattern new rectangular pattern}
      * equal to the Minkowski sum of all passed patterns.
      *
-     * <p>The returned pattern will be "safe" in that no references to the passed array are maintained by it.
+     * <p>The returned pattern will be "safe" in the sense that no references to the passed array are maintained by it.
      * In other words, this method always allocates new array for storing summands and copies
      * the passed summands into it.
      *
@@ -589,7 +589,7 @@ public class Patterns {
      * The <tt>equals</tt> method returns <tt>true</tt> if and only if the passed object is also union
      * of patterns, consisting of the same summands and created by this or equivalent method from this package.
      *
-     * <p>The returned pattern will be "safe" in that no references to the passed array are maintained by it.
+     * <p>The returned pattern will be "safe" in the sense that no references to the passed array are maintained by it.
      * In other words, this method always allocates new array for storing summands and copies
      * the passed summands into it.
      *

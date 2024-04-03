@@ -1105,8 +1105,11 @@ public interface Array {
      * {@link FloatArray#ja()}}, {@link DoubleArray#ja()}},
      * {@link ObjectArray#ja()}}.</p>
      *
-     * <p>Usually you should only read and not try to modify the Java array, returned by this method:
-     * writing into the returned Java array may change the original AlgART array, but may also not change it.</p>
+     * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
+     * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
+     * and the result of such modification is unpredictable: this may change the original AlgART array,
+     * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
+     * this helps to avoid difficult bugs.</p>
      *
      * <p>Note that usually you <b>should</b> prefer methods of {@link DirectAccessible} interface
      * instead of this method, because that interface allows to quickly process sub-arrays
@@ -1118,6 +1121,12 @@ public interface Array {
      * @return Java array, equivalent to this AlgART array.
      * @see DirectAccessible
      * @see Arrays#isJavaArrayWrapper(Array)
+     * @see PArray#jaByte()
+     * @see PArray#jaShort()
+     * @see PArray#jaInt()
+     * @see PArray#jaLong()
+     * @see PArray#jaFloat()
+     * @see PArray#jaDouble()
      */
     Object ja();
 

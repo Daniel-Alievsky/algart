@@ -1258,7 +1258,7 @@ public interface MemoryModel {
      * the specified Java array:
      * <tt>array[offset], array[offset + 1], ..., array[offset + count - 1]</tt>.
      *
-     * <p>The returned AlgART array will be "safe" in that no references to the passed Java array
+     * <p>The returned AlgART array will be "safe" in the sense that no references to the passed Java array
      * are maintained by it.
      * In other words, this method must always allocate a new AlgART array.
      *
@@ -1282,7 +1282,7 @@ public interface MemoryModel {
      * Allocates an unresizable AlgART array containing all elements of the specified Java array:
      * <tt>array[0], array[1], ..., array[array.length - 1]</tt>.
      *
-     * <p>The returned AlgART array will be "safe" in that no references to the passed Java array
+     * <p>The returned AlgART array will be "safe" in the sense that no references to the passed Java array
      * are maintained by it.
      * In other words, this method must always allocate a new array.
      *
