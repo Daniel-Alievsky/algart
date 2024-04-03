@@ -25,11 +25,13 @@
 package net.algart.arrays;
 
 import java.lang.ref.SoftReference;
+import java.util.Objects;
 
 /*Repeat(INCLUDE_FROM_FILE, FloatJArrayHolder.java, all)
   Float ==> Boolean;;
   float ==> boolean
      !! Auto-generated: NOT EDIT !! */
+
 /**
  * A simple class allowing to reuse Java <tt>boolean[]</tt> array many times.
  * It can be useful, when the algorithm usually allocates  <tt>boolean[]</tt> array with the same size
@@ -47,15 +49,30 @@ public final class BooleanJArrayHolder {
     private final Object lock = new Object();
 
     /**
+     * Equivalent to <tt>{@link #quickNew(long) quickNew}(matrix.{@link Matrix#size() size()})</tt>.
+     *
+     * @param matrix some AlgART matrix.
+     * @return newly created <tt>"new boolean[newArrayLength]"</tt>
+     * or previously allocated array, if it exists and has identical length.
+     * @throws NullPointerException   if the argument is <tt>null</tt>.
+     * @throws TooLargeArrayException if <tt>matrix.size() &gt; Integer.MAX_VALUE</tt>.
+     */
+    public boolean[] quickNew(Matrix<?> matrix) {
+        Objects.requireNonNull(matrix, "Null matrix argument");
+        return quickNew(matrix.size());
+
+    }
+
+    /**
      * Equivalent of {@link #quickNew(int)} method, but in addition it checks that
      * <tt>newArrayLength</tt> is actually 32-bit value (<tt>newArrayLength==(int)newArrayLength</tt>)
      * and, if not, throws {@link TooLargeArrayException}.
      *
      * @param newArrayLength required array length.
      * @return newly created <tt>"new boolean[newArrayLength]"</tt>
-     *         or previously allocated array, if it exists and has identical length.
+     * or previously allocated array, if it exists and has identical length.
      * @throws IllegalArgumentException if <tt>newArrayLength &lt; 0</tt>.
-     * @throws TooLargeArrayException if <tt>newArrayLength &gt; Integer.MAX_VALUE</tt>.
+     * @throws TooLargeArrayException   if <tt>newArrayLength &gt; Integer.MAX_VALUE</tt>.
      */
     public boolean[] quickNew(long newArrayLength) {
         if (newArrayLength < 0) {
@@ -80,7 +97,7 @@ public final class BooleanJArrayHolder {
      *
      * @param newArrayLength required array length.
      * @return newly created <tt>"new boolean[newArrayLength]"</tt>
-     *         or previously allocated array, if it exists and has identical length.
+     * or previously allocated array, if it exists and has identical length.
      * @throws IllegalArgumentException if <tt>newArrayLength &lt; 0</tt>
      */
     public boolean[] quickNew(int newArrayLength) {
