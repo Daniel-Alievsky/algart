@@ -118,4 +118,9 @@ public interface ShortArray extends PIntegerArray {
         return Matrices.matrix(this, dim);
     }
     /*Repeat.IncludeEnd*/
+
+    @Override
+    default short[] jaShort() {
+        return ja();
+    }
 }

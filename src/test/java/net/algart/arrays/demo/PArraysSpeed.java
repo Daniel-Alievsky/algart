@@ -433,9 +433,7 @@ public class PArraysSpeed {
                     sum16 = sum1;
                 }
                 t16 = System.nanoTime();
-                if (threads.length > 1) {
-                    a1 = a1.updatableClone(mm);
-                }
+                a1 = a1.updatableClone(mm);
                 int someValue = m;
                 if (ja1Direct != null) {
                     ja1Direct = (int[]) ((DirectAccessible) a1).javaArray();
@@ -511,9 +509,9 @@ public class PArraysSpeed {
                     }
                 }
                 t19 = System.nanoTime();
-                int[] intJavaArray = Arrays.toIntJavaArray(a1);
+                int[] intJavaArray = a1.jaInt();
                 t20 = System.nanoTime();
-                float[] floatJavaArray = Arrays.toFloatJavaArray(a1);
+                float[] floatJavaArray = a1.jaFloat();
                 t21 = System.nanoTime();
                 synchronized (threads) {
                     String gBD = elementType == boolean.class ? "getBits(): " : "getData(): ";
@@ -586,9 +584,9 @@ public class PArraysSpeed {
                         System.out.println("Filling 3nd array by " + someValue + " via "
                             + "fill method    " + time(t18, t19));
                     }
-                    System.out.println("toIntJavaArray:                       " + time(t19, t20)
+                    System.out.println("jaInt():                              " + time(t19, t20)
                             + " - " + intJavaArray[0]);
-                    System.out.println("toFloatJavaArray:                     " + time(t20, t21)
+                    System.out.println("jaFloat():                            " + time(t20, t21)
                             + " - " + floatJavaArray[0]);
                     System.out.println();
                 }

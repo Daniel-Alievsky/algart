@@ -115,4 +115,9 @@ public interface DoubleArray extends PFloatingArray {
         return Matrices.matrix(this, dim);
     }
     /*Repeat.IncludeEnd*/
+
+    @Override
+    default double[] jaDouble() {
+        return ja();
+    }
 }

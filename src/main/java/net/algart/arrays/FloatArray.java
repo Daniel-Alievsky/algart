@@ -114,4 +114,9 @@ public interface FloatArray extends PFloatingArray {
     }
     /*Repeat.SectionEnd resultTypes*/
 /*Repeat.SectionEnd all*/
+
+    @Override
+    default float[] jaFloat() {
+        return ja();
+    }
 }

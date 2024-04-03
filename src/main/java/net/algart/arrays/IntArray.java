@@ -116,4 +116,9 @@ public interface IntArray extends PIntegerArray {
         return Matrices.matrix(this, dim);
     }
     /*Repeat.IncludeEnd*/
+
+    @Override
+    default int[] jaInt() {
+        return ja();
+    }
 }

@@ -116,4 +116,9 @@ public interface LongArray extends PIntegerArray {
         return Matrices.matrix(this, dim);
     }
     /*Repeat.IncludeEnd*/
+
+    @Override
+    default long[] jaLong() {
+        return ja();
+    }
 }

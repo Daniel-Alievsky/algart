@@ -118,4 +118,9 @@ public interface ByteArray extends PIntegerArray {
         return Matrices.matrix(this, dim);
     }
     /*Repeat.IncludeEnd*/
+
+    @Override
+    default byte[] jaByte() {
+        return ja();
+    }
 }
