@@ -3716,6 +3716,66 @@ public class Matrices {
     }
 
     /**
+     * Addition: equivalent to
+     * <tt>{@link #addToOther(Matrix, Matrix, Matrix) addToOther}(result, result, other)</tt>.
+     *
+     * @param result matrix <b>a</b>, will be replaced with elementwise sum <b>a + b</b>.
+     * @param other  matrix <b>b</b>.
+     */
+    public static void add(
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> other) {
+        addToOther(result, result, other);
+    }
+
+    /**
+     * Addition: equivalent to
+     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, {@link Func#X_PLUS_Y
+     * Func.X_PLUS_Y}, result, a, b)</tt>.
+     *
+     * @param result elementwise sum <b>a + b</b>.
+     * @param a      matrix <b>a</b>.
+     * @param b      matrix <b>b</b>.
+     */
+    public static void addToOther(
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> a,
+            Matrix<? extends PArray> b) {
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.X_PLUS_Y, result, a, b);
+    }
+
+    /**
+     * Subtraction: equivalent to
+     * <tt>{@link #subtractToOther(Matrix, Matrix, Matrix) subtractToOther}(result, result, other)</tt>.
+     *
+     * @param result matrix <b>a</b>, will be replaced with elementwise difference <b>a &minus; b</b>.
+     * @param other  matrix <b>b</b>.
+     */
+    public static void subtract(
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> other) {
+        subtractToOther(result, result, other);
+    }
+
+    /**
+     * Subtraction: equivalent to
+     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, {@link Func#X_MINUS_Y
+     * Func.X_MINUS_Y}, result, a, b)</tt>.
+     *
+     * @param result elementwise difference <b>a &minus; b</b>.
+     * @param a      matrix <b>a</b>.
+     * @param b      matrix <b>b</b>.
+     */
+    public static void subtractToOther(
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> a,
+            Matrix<? extends PArray> b) {
+        Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.X_MINUS_Y, result, a, b);
+    }
+
+    /**
      * Binary OR: equivalent to
      * <tt>{@link #bitOrToOther(Matrix, Matrix, Matrix) bitOrToOther}(result, result, other)</tt>.
      *
@@ -3847,6 +3907,7 @@ public class Matrices {
     public static void bitNotToOther(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> source) {
         Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.REVERSE, result, source);
     }
+
 
     /*Repeat() packBitsGreater ==> packBitsLess,,packBitsGreaterOrEqual,,packBitsLessOrEqual */
 

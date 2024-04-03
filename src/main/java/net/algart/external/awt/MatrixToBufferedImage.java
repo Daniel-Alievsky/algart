@@ -177,8 +177,8 @@ public abstract class MatrixToBufferedImage {
         long bandCount = interleavedMatrix.dimCount() == 2 ? 1 : interleavedMatrix.dim(0);
         PArray array = interleavedMatrix.array();
         if (bytesRequired() && array.elementType() != byte.class) {
-            if (array instanceof IntArray && unsignedInt32) {
-                int[] ints = Arrays.toJavaArray((IntArray) array);
+            if (array instanceof IntArray ia && unsignedInt32) {
+                int[] ints = ia.ja();
                 byte[] bytes = new byte[ints.length];
                 for (int k = 0; k < bytes.length; k++) {
                     bytes[k] = (byte) (ints[k] >>> 24);
