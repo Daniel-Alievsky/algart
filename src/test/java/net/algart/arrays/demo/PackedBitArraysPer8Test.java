@@ -39,6 +39,8 @@ import java.util.Random;
  * @author Daniel Alievsky
  */
 public class PackedBitArraysPer8Test {
+    private static final float FLOAT_BIT_0 = -1f, FLOAT_BIT_1 = 157f;
+
     private static long simpleBits(byte[] src, long srcPos, int count) {
         long result = 0;
         for (int k = 0; k < count; k++) {
@@ -98,8 +100,13 @@ public class PackedBitArraysPer8Test {
             for (int k = 0; k < bDest.length; k++) {
                 bDest[k] = rnd.nextDouble() <= density;
             }
+            float[] fDest = new float[len];
+            for (int k = 0; k < bDest.length; k++) {
+                fDest[k] = rnd.nextFloat();
+            }
             boolean[] bDestWork1 = bDest.clone();
             boolean[] bDestWork2 = bDest.clone();
+            float[] fDestWork = fDest.clone();
             int cardCorrect = 0;
             for (int k = 0; k < len; k++) {
                 if (!bSrc[k]) {
@@ -358,6 +365,25 @@ public class PackedBitArraysPer8Test {
                 for (int k = 0; k < len; k++)
                     if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in copyBits or unpackBits found in test #" + testCount
+                                + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + ", error found at " + k);
+                    }
+                PackedBitArraysTest.showProgress(testCount);
+            }
+
+            System.out.println("Testing \"unpackBits\" to float[]...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(fDest, 0, fDestWork, 0, fDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                PackedBitArraysPer8.unpackBits(fDestWork, destPos, pSrc, srcPos, count,
+                        FLOAT_BIT_0, FLOAT_BIT_1);
+                System.arraycopy(bSrc, srcPos, bDestWork1, destPos, count);
+                for (int k = 0; k < len; k++)
+                    if (fDestWork[k] != (k < destPos || k >= destPos + count ? fDest[k] :
+                            bDestWork1[k] ? FLOAT_BIT_1 : FLOAT_BIT_0)) {
+                        throw new AssertionError("The bug in unpackBits to float[] found in test #" + testCount
                                 + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
                     }
