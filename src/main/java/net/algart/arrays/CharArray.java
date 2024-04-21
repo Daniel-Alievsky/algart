@@ -29,6 +29,7 @@ package net.algart.arrays;
   Float(?!ing) ==> Char ;;
   float ==> char
      !! Auto-generated: NOT EDIT !! */
+
 /**
  * <p>AlgART array of <tt>char</tt> values, read-only access.</p>
  *
@@ -45,7 +46,7 @@ public interface CharArray extends PFixedArray {
      * Returns the element #<tt>index</tt>.
      *
      * @param index index of element to get.
-     * @return      the element at the specified position in this array.
+     * @return the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
     char getChar(long index);
@@ -66,9 +67,9 @@ public interface CharArray extends PFixedArray {
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the first occurrence of this value in this array
-     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *                  or <tt>-1</tt> if this value does not occur in this range.
+     * @return the index of the first occurrence of this value in this array
+     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
+     * or <tt>-1</tt> if this value does not occur in this range.
      */
     long indexOf(long lowIndex, long highIndex, char value);
 
@@ -88,9 +89,9 @@ public interface CharArray extends PFixedArray {
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the last occurrence of this value in this array
-     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *                  or <tt>-1</tt> if this value does not occur in this range.
+     * @return the index of the last occurrence of this value in this array
+     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
+     * or <tt>-1</tt> if this value does not occur in this range.
      */
     long lastIndexOf(long lowIndex, long highIndex, char value);
 
@@ -116,4 +117,16 @@ public interface CharArray extends PFixedArray {
         return Matrices.matrix(this, dim);
     }
     /*Repeat.IncludeEnd*/
+
+    /**
+     * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableCharArray(char[])
+     * SimpleMemoryModel.asUpdatableCharArray}(array)</tt>.
+     *
+     * @param array the source Java array.
+     * @return an unresizable AlgART array backed by the specified Java array.
+     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     */
+    static UpdatableCharArray as(char[] array) {
+        return SimpleMemoryModel.asUpdatableCharArray(array);
+    }
 }

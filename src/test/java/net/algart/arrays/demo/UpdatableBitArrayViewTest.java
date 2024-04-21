@@ -46,7 +46,7 @@ public class UpdatableBitArrayViewTest {
             UpdatableBitArray bbAsBits = BufferMemoryModel.asUpdatableBitArray(bb, length);
             UpdatableBitArray bbBits = Arrays.BMM.newUnresizableBitArray(length);
             bbBits.setBits(0, data, 0, length);
-            UpdatableBitArray arrayAsBits = SimpleMemoryModel.asUpdatableBitArray(data, length);
+            UpdatableBitArray arrayAsBits = BitArray.as(data, length);
             System.out.println(bbAsBits);
             System.out.println(bbBits);
             System.out.println(arrayAsBits);

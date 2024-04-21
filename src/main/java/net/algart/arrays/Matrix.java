@@ -2023,4 +2023,23 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @return <tt>true</tt> if the specified object is a matrix equal to this one.
      */
     boolean equals(Object obj);
+
+    /**
+     * Equivalent to <tt>{@link SimpleMemoryModel#asMatrix(Object, long...)}
+     * SimpleMemoryModel.asMatrix}(array, dim)</tt>.
+
+     * @param array the source Java array.
+     * @param dim   the matrix dimensions.
+     * @return a matrix backed by the specified Java array with the specified dimensions.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>dim</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>array</tt> argument is not an array,
+     *                                  or <tt>boolean[]</tt> array, or array of objects,
+     *                                  or if the number of dimensions is 0 (empty <tt>dim</tt> Java array),
+     *                                  or if some of the dimensions are negative.
+     * @throws SizeMismatchException    if the product of all dimensions is not equal to the array length.
+     * @throws TooLargeArrayException   if the product of all dimensions is greater than <tt>Long.MAX_VALUE</tt>.
+     */
+    static Matrix<UpdatablePArray> as(Object array, long... dim) {
+        return SimpleMemoryModel.asMatrix(array, dim);
+    }
 }

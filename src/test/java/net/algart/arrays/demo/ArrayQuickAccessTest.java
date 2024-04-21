@@ -181,7 +181,7 @@ public class ArrayQuickAccessTest {
 
         @Override
         public DoubleArray asImmutable() {
-            return SimpleMemoryModel.asUpdatableDoubleArray(ja).asImmutable();
+            return DoubleArray.as(ja).asImmutable();
         }
     }
 

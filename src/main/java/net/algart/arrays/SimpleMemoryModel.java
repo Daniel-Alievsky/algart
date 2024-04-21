@@ -447,6 +447,8 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      * Analog of {@link #asUpdatableArray(Object)} with the only difference, that this method
      * does not work with Java array of objects.
      *
+     * <p>This method has a brief alias: {@link PArray#as(Object)}.</p>
+     *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
@@ -465,6 +467,8 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      * according the packing rules, describing in {@link PackedBitArrays} class.
      * Changes in the returned array "write through" to <tt>array</tt> argument.
      * The length and capacity of the returned array are equal to the specified <tt>length</tt> argument.
+     *
+     * <p>This method has a brief alias: {@link BitArray#as(long[], long)}.</p>
      *
      * @param packedBitArray the source <tt>long[]</tt>> array.
      * @param length         the length of the returned bit array.
@@ -494,6 +498,8 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
     /**
      * Equivalent to <tt>(UpdatableCharArray){@link #asUpdatableArray(Object) asUpdatableArray}((Object)array)</tt>.
      *
+     * <p>This method has a brief alias: {@link CharArray#as(char[])}.</p>
+     *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
@@ -505,6 +511,8 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
 
     /**
      * Equivalent to <tt>(UpdatableByteArray){@link #asUpdatableArray(Object) asUpdatableArray}((Object)array)</tt>.
+     *
+     * <p>This method has a brief alias: {@link ByteArray#as(byte[])}.</p>
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
@@ -518,6 +526,8 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
     /**
      * Equivalent to <tt>(UpdatableShortArray){@link #asUpdatableArray(Object) asUpdatableArray}((Object)array)</tt>.
      *
+     * <p>This method has a brief alias: {@link ShortArray#as(short[])}.</p>
+     *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
@@ -529,6 +539,8 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
 
     /**
      * Equivalent to <tt>(UpdatableIntArray){@link #asUpdatableArray(Object) asUpdatableArray}((Object)array)</tt>.
+     *
+     * <p>This method has a brief alias: {@link IntArray#as(int[])}.</p>
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
@@ -542,6 +554,8 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
     /**
      * Equivalent to <tt>(UpdatableLongArray){@link #asUpdatableArray(Object) asUpdatableArray}((Object)array)</tt>.
      *
+     * <p>This method has a brief alias: {@link LongArray#as(long[])}.</p>
+     *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
@@ -554,6 +568,8 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
     /**
      * Equivalent to <tt>(UpdatableFloatArray){@link #asUpdatableArray(Object) asUpdatableArray}((Object)array)</tt>.
      *
+     * <p>This method has a brief alias: {@link FloatArray#as(float[])}.</p>
+     *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
@@ -565,6 +581,8 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
 
     /**
      * Equivalent to <tt>(UpdatableDoubleArray){@link #asUpdatableArray(Object) asUpdatableArray}((Object)array)</tt>.
+     *
+     * <p>This method has a brief alias: {@link DoubleArray#as(double[])}.</p>
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
@@ -594,6 +612,8 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      * <p>Note that this method <b>cannot be used</b> with <tt>Object[]</tt> array. If you still need to
      * return a matrix of objects, you may use <tt>Matrices.matrix</tt> method together with
      * {@link #asUpdatableArray(Object)}.
+     *
+     * <p>This method has a brief alias: {@link Matrix#as(Object, long...)}.</p>
      *
      * @param array the source Java array.
      * @param dim   the matrix dimensions.

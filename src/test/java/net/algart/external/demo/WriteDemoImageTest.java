@@ -61,7 +61,7 @@ public class WriteDemoImageTest {
         final int dimX = Integer.parseInt(args[3]);
         final int dimY = Integer.parseInt(args[4]);
         Object array = makeSamples(elementType, channels, dimX, dimY);
-        List<Matrix<UpdatablePArray>> image = SimpleMemoryModel.asMatrix(array, dimX, dimY, channels).asLayers();
+        List<Matrix<UpdatablePArray>> image = Matrix.as(array, dimX, dimY, channels).asLayers();
 
         System.out.println("Writing " + targetFile + "...");
         final Matrix<PArray> matrix = Matrices.interleave(null, image);

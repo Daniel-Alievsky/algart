@@ -6,7 +6,7 @@
 
     <groupId>net.algart</groupId>
     <artifactId>algart</artifactId>
-    <version>1.4.3</version>
+    <version>1.4.4</version>
 
     <name>AlgART Java Libraries</name>
     <description>Open-source Java libraries, supporting generalized smart arrays and matrices with elements

@@ -31,6 +31,7 @@ package net.algart.arrays;
   Float(?!ing) ==> Byte ;;
   float ==> byte
      !! Auto-generated: NOT EDIT !! */
+
 /**
  * <p>AlgART array of <tt>byte</tt> values, read-only access.</p>
  *
@@ -47,7 +48,7 @@ public interface ByteArray extends PIntegerArray {
      * Returns the unsigned byte #<tt>index</tt>.
      *
      * @param index index of element to get.
-     * @return      the unsigned byte at the specified position in this array.
+     * @return the unsigned byte at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
     int getByte(long index);
@@ -68,9 +69,9 @@ public interface ByteArray extends PIntegerArray {
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the first occurrence of this value in this array
-     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *                  or <tt>-1</tt> if this value does not occur in this range.
+     * @return the index of the first occurrence of this value in this array
+     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
+     * or <tt>-1</tt> if this value does not occur in this range.
      */
     long indexOf(long lowIndex, long highIndex, byte value);
 
@@ -90,9 +91,9 @@ public interface ByteArray extends PIntegerArray {
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the last occurrence of this value in this array
-     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *                  or <tt>-1</tt> if this value does not occur in this range.
+     * @return the index of the last occurrence of this value in this array
+     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
+     * or <tt>-1</tt> if this value does not occur in this range.
      */
     long lastIndexOf(long lowIndex, long highIndex, byte value);
 
@@ -122,5 +123,17 @@ public interface ByteArray extends PIntegerArray {
     @Override
     default byte[] jaByte() {
         return ja();
+    }
+
+    /**
+     * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableByteArray(byte[])
+     * SimpleMemoryModel.asUpdatableByteArray}(array)</tt>.
+     *
+     * @param array the source Java array.
+     * @return an unresizable AlgART array backed by the specified Java array.
+     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     */
+    static UpdatableByteArray as(byte[] array) {
+        return SimpleMemoryModel.asUpdatableByteArray(array);
     }
 }

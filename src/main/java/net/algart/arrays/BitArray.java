@@ -36,6 +36,7 @@ package net.algart.arrays;
   Float(?!ing) ==> Boolean ;;
   float ==> boolean
      !! Auto-generated: NOT EDIT !! */
+
 /**
  * <p>AlgART array of <tt>boolean</tt> values, read-only access.</p>
  *
@@ -52,7 +53,7 @@ public interface BitArray extends PFixedArray {
      * Returns the element #<tt>index</tt>.
      *
      * @param index index of element to get.
-     * @return      the element at the specified position in this array.
+     * @return the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
     boolean getBit(long index);
@@ -73,9 +74,9 @@ public interface BitArray extends PFixedArray {
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the first occurrence of this value in this array
-     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *                  or <tt>-1</tt> if this value does not occur in this range.
+     * @return the index of the first occurrence of this value in this array
+     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
+     * or <tt>-1</tt> if this value does not occur in this range.
      */
     long indexOf(long lowIndex, long highIndex, boolean value);
 
@@ -95,9 +96,9 @@ public interface BitArray extends PFixedArray {
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the last occurrence of this value in this array
-     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *                  or <tt>-1</tt> if this value does not occur in this range.
+     * @return the index of the last occurrence of this value in this array
+     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
+     * or <tt>-1</tt> if this value does not occur in this range.
      */
     long lastIndexOf(long lowIndex, long highIndex, boolean value);
 
@@ -212,8 +213,24 @@ public interface BitArray extends PFixedArray {
      * <p>For negative <tt>position</tt> argument this method returns the same result as for <tt>position=0</tt>.
      *
      * @param position some index inside this bit array.
-     * @return         the minimal "quick" (usually "aligned") position starting from this index.
+     * @return the minimal "quick" (usually "aligned") position starting from this index.
      * @see Arrays#goodStartOffsetInArrayOfLongs(BitArray, long, int)
      */
     long nextQuickPosition(long position);
+
+    /**
+     * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableBitArray(long[], long)
+     * SimpleMemoryModel.asUpdatableBitArray}(packedBitArray, length)</tt>.
+     *
+     * @param packedBitArray the source <tt>long[]</tt>> array.
+     * @param length         the length of the returned bit array.
+     * @return an unresizable AlgART bit array backed by the specified Java array.
+     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>length&lt;0</tt> or
+     *                                  if the passed <tt>array</tt> is too short to store
+     *                                  <tt>length</tt> bits (i.e. if <tt>array.length &lt; (length+63)/64).</tt>
+     */
+    static UpdatableBitArray as(long[] packedBitArray, long length) {
+        return SimpleMemoryModel.asUpdatableBitArray(packedBitArray, length);
+    }
 }
