@@ -95,6 +95,15 @@ public class Arrays {
         private SystemSettings() {
         }
 
+        private static final String VERSION = "1.4.4.1";
+        private static final int[] PARSED_VERSION;
+        static {
+            PARSED_VERSION = java.util.Arrays.stream(VERSION.split("\\.")).mapToInt(Integer::parseInt).toArray();
+            if (PARSED_VERSION.length > 4) {
+                throw new ExceptionInInitializerError("Too many elements (>4) in AlgART version: " + VERSION);
+            }
+        }
+
         private static final MemoryModel GLOBAL_MEMORY_MODEL = getGlobalMemoryModel();
 
         private static final double MAX_FREE_HEAP_SPACE_USAGE_FOR_TILING = 0.8; // 80%
@@ -351,6 +360,27 @@ public class Arrays {
          * <p>Please do not use this constant in your code: it may be deleted or renamed in future versions.
          */
         public static final int MIN_OPTIMIZATION_RESULT_TILE_VOLUME = 100;
+
+        /**
+         * Returns the current version of this AlgART libraries.
+         * Version format: "<major>.<medium>.<minor>[.<patch>]", for example: "3.1.0".
+         *
+         * @return AlgART version as a string.
+         */
+        public static String version() {
+            return VERSION;
+        }
+
+        /**
+         * Returns the current version as an array <tt>v[4]</tt> of 4 integer values:
+         * v[0] is the major version, v[1] is the medium version number,
+         * v[2] is the minor version number, v[3] is the patch number or zero if the patch is not specified.
+         *
+         * @return AlgART version as <tt>int[]</tt> array.
+         */
+        public static int[] parsedVersion() {
+            return java.util.Arrays.copyOf(PARSED_VERSION, 4);
+        }
 
         /**
          * The number of processor units, that are allowed for simultaneous usage by AlgART libraries:
