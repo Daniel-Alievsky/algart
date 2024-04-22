@@ -250,7 +250,7 @@ public class Repeater implements Cloneable {
             }
         }
         String commandsTail = commands.substring(c1);
-        String[] lists = commandsTail.trim().length() == 0 ? new String[0] : commandsTail.split(";;");
+        String[] lists = commandsTail.trim().isEmpty() ? new String[0] : commandsTail.split(";;");
         regexps = new String[lists.length];
         replacements = new String[lists.length][];
         for (int k = 0; k < lists.length; k++) {
@@ -258,7 +258,7 @@ public class Repeater implements Cloneable {
             if (r == -1)
                 throw new SyntaxException(": ==> expected at line " + countLines());
             regexps[k] = trimComments(lists[k].substring(0, r));
-            if (regexps[k].length() == 0)
+            if (regexps[k].isEmpty())
                 throw new SyntaxException(": empty regexp before ==> at line " + countLines());
             r += "==>".length();
             String[] rep = (lists[k].substring(r) + " ").split(",,"); // +" " necessary to correctly process ",,;;"
@@ -438,7 +438,7 @@ public class Repeater implements Cloneable {
                             try {
                                 for (String indexParamOriginal : indexParams) {
                                     String indexParam = indexParamOriginal.trim().toLowerCase();
-                                    if (indexParam.length() == 0)
+                                    if (indexParam.isEmpty())
                                         continue; // possible when the list is empty
                                     if (indexParam.startsWith("start=")) {
                                         start = Integer.parseInt(indexParam.substring("start=".length()).trim());
