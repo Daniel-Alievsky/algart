@@ -1,3 +1,4 @@
+
 /*
  * The MIT License (MIT)
  *
@@ -411,8 +412,7 @@ class SimpleArraysImpl {
 
     /*Repeat.SectionStart impl*/
     @SuppressWarnings("cast")
-    static class JAFloatArray
-            extends AbstractJAArray implements FloatArray {
+    static class JAFloatArray extends AbstractJAArray implements FloatArray {
         float[] floatArray;
 
         JAFloatArray(long initialCapacity, long initialLength) {
@@ -489,11 +489,11 @@ class SimpleArraysImpl {
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (float)value ? indexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? indexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (float)value ? lastIndexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? lastIndexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public final long getLong(long index) {
@@ -532,7 +532,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.indexOfFloat(this.floatArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.indexOfFloat(this.floatArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, float value) {
@@ -545,7 +545,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.lastIndexOfFloat(this.floatArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.lastIndexOfFloat(this.floatArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -648,8 +648,7 @@ class SimpleArraysImpl {
     }
 
     @SuppressWarnings("cast")
-    static class JAFloatSubArray
-            extends AbstractJAArray implements FloatArray {
+    static class JAFloatSubArray extends AbstractJAArray implements FloatArray {
         float[] floatArray;
         int offset;
 
@@ -3367,8 +3366,7 @@ class SimpleArraysImpl {
         }
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
-    static class JACharArray
-            extends AbstractJAArray implements CharArray {
+    static class JACharArray extends AbstractJAArray implements CharArray {
         char[] charArray;
 
         JACharArray(long initialCapacity, long initialLength) {
@@ -3445,11 +3443,11 @@ class SimpleArraysImpl {
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (char)value ? indexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? indexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (char)value ? lastIndexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? lastIndexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public final long getLong(long index) {
@@ -3488,7 +3486,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.indexOfChar(this.charArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.indexOfChar(this.charArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, char value) {
@@ -3501,7 +3499,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.lastIndexOfChar(this.charArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.lastIndexOfChar(this.charArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -3604,8 +3602,7 @@ class SimpleArraysImpl {
     }
 
     @SuppressWarnings("cast")
-    static class JACharSubArray
-            extends AbstractJAArray implements CharArray {
+    static class JACharSubArray extends AbstractJAArray implements CharArray {
         char[] charArray;
         int offset;
 
@@ -4868,8 +4865,7 @@ class SimpleArraysImpl {
       (return\s+(?:\(\w+\s*\))?)(this\.byteArray\[(?:offset\s*\+\s*)?\(int\)\s*index\])\s*; ==> $1($2 & 0xFF);
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
-    static class JAByteArray
-            extends AbstractJAArray implements ByteArray {
+    static class JAByteArray extends AbstractJAArray implements ByteArray {
         byte[] byteArray;
 
         JAByteArray(long initialCapacity, long initialLength) {
@@ -4946,11 +4942,11 @@ class SimpleArraysImpl {
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long getLong(long index) {
@@ -4989,7 +4985,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.indexOfByte(this.byteArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.indexOfByte(this.byteArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, byte value) {
@@ -5002,7 +4998,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.lastIndexOfByte(this.byteArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.lastIndexOfByte(this.byteArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -5105,8 +5101,7 @@ class SimpleArraysImpl {
     }
 
     @SuppressWarnings("cast")
-    static class JAByteSubArray
-            extends AbstractJAArray implements ByteArray {
+    static class JAByteSubArray extends AbstractJAArray implements ByteArray {
         byte[] byteArray;
         int offset;
 
@@ -6349,8 +6344,7 @@ class SimpleArraysImpl {
       (return\s+(?:\(\w+\s*\))?)(this\.shortArray\[(?:offset\s*\+\s*)?\(int\)\s*index\])\s*; ==> $1($2 & 0xFFFF);
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
-    static class JAShortArray
-            extends AbstractJAArray implements ShortArray {
+    static class JAShortArray extends AbstractJAArray implements ShortArray {
         short[] shortArray;
 
         JAShortArray(long initialCapacity, long initialLength) {
@@ -6427,11 +6421,11 @@ class SimpleArraysImpl {
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public final long getLong(long index) {
@@ -6470,7 +6464,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.indexOfShort(this.shortArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.indexOfShort(this.shortArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, short value) {
@@ -6483,7 +6477,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.lastIndexOfShort(this.shortArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.lastIndexOfShort(this.shortArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -6586,8 +6580,7 @@ class SimpleArraysImpl {
     }
 
     @SuppressWarnings("cast")
-    static class JAShortSubArray
-            extends AbstractJAArray implements ShortArray {
+    static class JAShortSubArray extends AbstractJAArray implements ShortArray {
         short[] shortArray;
         int offset;
 
@@ -7828,8 +7821,7 @@ class SimpleArraysImpl {
       PER_FLOAT ==> PER_INT
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
-    static class JAIntArray
-            extends AbstractJAArray implements IntArray {
+    static class JAIntArray extends AbstractJAArray implements IntArray {
         int[] intArray;
 
         JAIntArray(long initialCapacity, long initialLength) {
@@ -7906,11 +7898,11 @@ class SimpleArraysImpl {
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (int)value ? indexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? indexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (int)value ? lastIndexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? lastIndexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public final long getLong(long index) {
@@ -7943,7 +7935,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.indexOfInt(this.intArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.indexOfInt(this.intArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, int value) {
@@ -7956,7 +7948,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.lastIndexOfInt(this.intArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.lastIndexOfInt(this.intArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -8059,8 +8051,7 @@ class SimpleArraysImpl {
     }
 
     @SuppressWarnings("cast")
-    static class JAIntSubArray
-            extends AbstractJAArray implements IntArray {
+    static class JAIntSubArray extends AbstractJAArray implements IntArray {
         int[] intArray;
         int offset;
 
@@ -9283,8 +9274,7 @@ class SimpleArraysImpl {
       PER_FLOAT ==> PER_LONG
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
-    static class JALongArray
-            extends AbstractJAArray implements LongArray {
+    static class JALongArray extends AbstractJAArray implements LongArray {
         long[] longArray;
 
         JALongArray(long initialCapacity, long initialLength) {
@@ -9361,11 +9351,11 @@ class SimpleArraysImpl {
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (long)value ? indexOf(lowIndex, highIndex, (long)value) : -1;
+            return value == (long) value ? indexOf(lowIndex, highIndex, (long) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (long)value ? lastIndexOf(lowIndex, highIndex, (long)value) : -1;
+            return value == (long) value ? lastIndexOf(lowIndex, highIndex, (long) value) : -1;
         }
 
         public final int getInt(long index) {
@@ -9390,7 +9380,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.indexOfLong(this.longArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.indexOfLong(this.longArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
@@ -9403,7 +9393,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.lastIndexOfLong(this.longArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.lastIndexOfLong(this.longArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -9506,8 +9496,7 @@ class SimpleArraysImpl {
     }
 
     @SuppressWarnings("cast")
-    static class JALongSubArray
-            extends AbstractJAArray implements LongArray {
+    static class JALongSubArray extends AbstractJAArray implements LongArray {
         long[] longArray;
         int offset;
 
@@ -10707,8 +10696,7 @@ class SimpleArraysImpl {
       PER_FLOAT ==> PER_DOUBLE
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
-    static class JADoubleArray
-            extends AbstractJAArray implements DoubleArray {
+    static class JADoubleArray extends AbstractJAArray implements DoubleArray {
         double[] doubleArray;
 
         JADoubleArray(long initialCapacity, long initialLength) {
@@ -10814,7 +10802,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.indexOfDouble(this.doubleArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.indexOfDouble(this.doubleArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
@@ -10827,7 +10815,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.lastIndexOfDouble(this.doubleArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.lastIndexOfDouble(this.doubleArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -10930,8 +10918,7 @@ class SimpleArraysImpl {
     }
 
     @SuppressWarnings("cast")
-    static class JADoubleSubArray
-            extends AbstractJAArray implements DoubleArray {
+    static class JADoubleSubArray extends AbstractJAArray implements DoubleArray {
         double[] doubleArray;
         int offset;
 
@@ -12167,8 +12154,7 @@ class SimpleArraysImpl {
 
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("rawtypes")
-    static class JAObjectArray
-            extends AbstractJAArray implements ObjectArray {
+    static class JAObjectArray extends AbstractJAArray implements ObjectArray {
         Object[] objectArray;
         final Class<?> elementType;
 
@@ -12255,7 +12241,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.indexOfObject(this.objectArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.indexOfObject(this.objectArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, Object value) {
@@ -12268,7 +12254,7 @@ class SimpleArraysImpl {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
-            return JArrays.lastIndexOfObject(this.objectArray, (int)lowIndex, (int)highIndex, value);
+            return JArrays.lastIndexOfObject(this.objectArray, (int) lowIndex, (int) highIndex, value);
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -12378,8 +12364,7 @@ class SimpleArraysImpl {
     }
 
     @SuppressWarnings("rawtypes")
-    static class JAObjectSubArray
-            extends AbstractJAArray implements ObjectArray {
+    static class JAObjectSubArray extends AbstractJAArray implements ObjectArray {
         Object[] objectArray;
         final Class<?> elementType;
         int offset;
