@@ -417,7 +417,7 @@ class SimpleArraysImpl {
 
         JAFloatArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
-            this.floatArray = (float[])super.array;
+            this.floatArray = (float[]) super.array;
         }
 
         JAFloatArray(float[] initialArray, int initialCapacity, int initialLength) {
@@ -431,7 +431,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.floatArray = (float[])super.array;
+            this.floatArray = (float[]) super.array;
         }
 
         final long longJavaArrayOffsetInternal() {
@@ -3371,7 +3371,7 @@ class SimpleArraysImpl {
 
         JACharArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
-            this.charArray = (char[])super.array;
+            this.charArray = (char[]) super.array;
         }
 
         JACharArray(char[] initialArray, int initialCapacity, int initialLength) {
@@ -3385,7 +3385,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.charArray = (char[])super.array;
+            this.charArray = (char[]) super.array;
         }
 
         final long longJavaArrayOffsetInternal() {
@@ -4870,7 +4870,7 @@ class SimpleArraysImpl {
 
         JAByteArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
-            this.byteArray = (byte[])super.array;
+            this.byteArray = (byte[]) super.array;
         }
 
         JAByteArray(byte[] initialArray, int initialCapacity, int initialLength) {
@@ -4884,7 +4884,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.byteArray = (byte[])super.array;
+            this.byteArray = (byte[]) super.array;
         }
 
         final long longJavaArrayOffsetInternal() {
@@ -6349,7 +6349,7 @@ class SimpleArraysImpl {
 
         JAShortArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
-            this.shortArray = (short[])super.array;
+            this.shortArray = (short[]) super.array;
         }
 
         JAShortArray(short[] initialArray, int initialCapacity, int initialLength) {
@@ -6363,7 +6363,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.shortArray = (short[])super.array;
+            this.shortArray = (short[]) super.array;
         }
 
         final long longJavaArrayOffsetInternal() {
@@ -7826,7 +7826,7 @@ class SimpleArraysImpl {
 
         JAIntArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
-            this.intArray = (int[])super.array;
+            this.intArray = (int[]) super.array;
         }
 
         JAIntArray(int[] initialArray, int initialCapacity, int initialLength) {
@@ -7840,7 +7840,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.intArray = (int[])super.array;
+            this.intArray = (int[]) super.array;
         }
 
         final long longJavaArrayOffsetInternal() {
@@ -9279,7 +9279,7 @@ class SimpleArraysImpl {
 
         JALongArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
-            this.longArray = (long[])super.array;
+            this.longArray = (long[]) super.array;
         }
 
         JALongArray(long[] initialArray, int initialCapacity, int initialLength) {
@@ -9293,7 +9293,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.longArray = (long[])super.array;
+            this.longArray = (long[]) super.array;
         }
 
         final long longJavaArrayOffsetInternal() {
@@ -10701,7 +10701,7 @@ class SimpleArraysImpl {
 
         JADoubleArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
-            this.doubleArray = (double[])super.array;
+            this.doubleArray = (double[]) super.array;
         }
 
         JADoubleArray(double[] initialArray, int initialCapacity, int initialLength) {
@@ -10715,7 +10715,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.doubleArray = (double[])super.array;
+            this.doubleArray = (double[]) super.array;
         }
 
         final long longJavaArrayOffsetInternal() {
@@ -12162,7 +12162,7 @@ class SimpleArraysImpl {
             super(initialCapacity, initialLength);
             this.elementType = elementType;
             this.array = allocateArray(initialCapacity);
-            this.objectArray = (Object[])super.array;
+            this.objectArray = (Object[]) super.array;
         }
 
         JAObjectArray(Object[] initialArray, int initialCapacity, int initialLength) {
@@ -12178,7 +12178,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.objectArray = (Object[])super.array;
+            this.objectArray = (Object[]) super.array;
         }
 
         final long longJavaArrayOffsetInternal() {
