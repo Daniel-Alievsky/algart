@@ -1877,1473 +1877,6 @@ class SimpleArraysImpl {
     }
     /*Repeat.SectionEnd impl*/
 
-    @SuppressWarnings("cast")
-    static class JABitArray
-            extends AbstractJAArray implements BitArray {
-        long[] bitArray;
-
-        JABitArray(long initialCapacity, long initialLength) {
-            super(initialCapacity, initialLength);
-            this.bitArray = (long[])super.array;
-        }
-
-        JABitArray(long[] initialArray, long initialCapacity, long initialLength) {
-            super(initialArray, initialCapacity, initialLength);
-            this.bitArray = initialArray;
-        }
-
-        JABitArray(long[] initialArray, long initialCapacityAndLength) {
-            super(initialArray, initialCapacityAndLength);
-            this.bitArray = initialArray;
-        }
-
-        final void afterStorageFieldCorrection() {
-            this.bitArray = (long[])super.array;
-        }
-
-        final long longJavaArrayOffsetInternal() {
-            return 0;
-        }
-
-        final int javaArrayOffsetInternal() {
-            throw new AssertionError("Internal error in package implementation: "
-                + "unallowed accessing javaArrayOffsetInternal() for bit array");
-        }
-
-        public final Class<?> elementType() {
-            return boolean.class;
-        }
-
-        public Class<? extends BitArray> type() {
-            return BitArray.class;
-        }
-
-        public Class<? extends UpdatableBitArray> updatableType() {
-            return UpdatableBitArray.class;
-        }
-
-        public Class<? extends MutableBitArray> mutableType() {
-            return MutableBitArray.class;
-        }
-
-        public final Object getElement(long index) {
-            return Boolean.valueOf(getBit(index));
-        }
-
-        public final long bitsPerElement() {
-            return Arrays.BITS_PER_BIT;
-        }
-
-        public final double minPossibleValue(double valueForFloatingPoint) {
-            return minPossibleValue(); //min
-        }
-
-        public final double maxPossibleValue(double valueForFloatingPoint) {
-            return maxPossibleValue(); //max
-        }
-
-        public final long minPossibleValue() {
-            return 0;
-        }
-
-        public final long maxPossibleValue() {
-            return 1;
-        }
-
-        public final double getDouble(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L ? 1 : 0;
-        }
-
-        public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == 0 || value == 1 ? indexOf(lowIndex, highIndex, value != 0) : -1;
-        }
-
-        public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == 0 || value == 1 ? lastIndexOf(lowIndex, highIndex, value != 0) : -1;
-        }
-
-        public final long getLong(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L ? 1 : 0;
-        }
-
-        public final int getInt(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L ? 1 : 0;
-        }
-
-        public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == 0 || value == 1 ? indexOf(lowIndex, highIndex, value != 0) : -1;
-        }
-
-        public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == 0 || value == 1 ? lastIndexOf(lowIndex, highIndex, value != 0) : -1;
-        }
-
-        public final boolean getBit(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L;
-        }
-
-        public final long indexOf(long lowIndex, long highIndex, boolean value) {
-            if (lowIndex < 0) {
-                lowIndex = 0;
-            }
-            if (highIndex > length) {
-                highIndex = length;
-            }
-            if (lowIndex >= highIndex) {
-                return -1;
-            } // after these checks we are sure that overflow is impossible below
-            return PackedBitArrays.indexOfBit(this.bitArray, lowIndex, highIndex, value);
-        }
-
-        public final long lastIndexOf(long lowIndex, long highIndex, boolean value) {
-            if (lowIndex < 0) {
-                lowIndex = 0;
-            }
-            if (highIndex > length) {
-                highIndex = length;
-            }
-            if (lowIndex >= highIndex) {
-                return -1;
-            } // after these checks we are sure that overflow is impossible below
-            return PackedBitArrays.lastIndexOfBit(this.bitArray, lowIndex, highIndex, value);
-        }
-
-        public Array subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
-                throw rangeException(fromIndex);
-            if (toIndex > length)
-                throw rangeException(toIndex - 1);
-            if (fromIndex > toIndex)
-                throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
-            if (fromIndex == 0) {
-                return new JABitArray(bitArray, (toIndex - fromIndex));
-            } else {
-                return new JABitSubArray(bitArray, (toIndex - fromIndex), fromIndex);
-            }
-        }
-
-        public Array subArr(long position, long count) {
-            if (position < 0)
-                throw rangeException(position);
-            if (count < 0)
-                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length - count)
-                throw rangeException(position + count - 1);
-            if (position == 0) {
-                return new JABitArray(bitArray, count);
-            } else {
-                return new JABitSubArray(bitArray, count, position);
-            }
-        }
-
-        public DataBitBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataBitBuffer)super.buffer(mode, capacity);
-        }
-
-        public DataBitBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataBitBuffer)super.buffer(mode);
-        }
-
-        public DataBitBuffer buffer(long capacity) {
-            return (DataBitBuffer)super.buffer(capacity);
-        }
-
-        public DataBitBuffer buffer() {
-            return (DataBitBuffer)super.buffer();
-        }
-
-        public boolean isUnresizable() {
-            return true;
-        }
-
-        public BitArray asImmutable() {
-            return this;
-        }
-
-        public boolean isImmutable() {
-            return true;
-        }
-
-        public BitArray asTrustedImmutable() {
-            return this;
-        }
-
-        public void checkUnallowedMutation() throws UnallowedMutationError {
-        }
-
-        public Array asCopyOnNextWrite() {
-            return this;
-        }
-
-        public final MutableBitArray mutableClone(MemoryModel memoryModel) {
-            if (memoryModel == SimpleMemoryModel.INSTANCE) {
-                return new MutableJABitArray(cloneBitSubArray(
-                        bitArray, 0,  length),  length).setNewStatus();
-            } else {
-                return (MutableBitArray) super.mutableClone(memoryModel);
-            }
-        }
-
-        public final UpdatableBitArray updatableClone(MemoryModel memoryModel) {
-            if (memoryModel == SimpleMemoryModel.INSTANCE) {
-                return new UpdatableJABitArray(cloneBitSubArray(
-                    bitArray, 0, length), length).setNewStatus();
-            } else {
-                return (UpdatableBitArray) super.updatableClone(memoryModel);
-            }
-        }
-
-        public boolean[] ja() {
-            return Arrays.toJavaArray(this);
-        }
-
-        public String toString() {
-            return "immutable simple AlgART array bit[" + length
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
-        }
-    }
-
-    @SuppressWarnings("cast")
-    static class JABitSubArray extends AbstractJAArray implements BitArray {
-        long[] bitArray;
-        long offset;
-
-        JABitSubArray(long[] initialArray, long initialCapacity, long initialLength, long initialOffset) {
-            super(initialArray, initialCapacity, initialLength);
-            this.bitArray = initialArray;
-            this.offset = initialOffset;
-        }
-
-        JABitSubArray(long[] initialArray, long initialCapacityAndLength, long initialOffset) {
-            super(initialArray, initialCapacityAndLength);
-            this.bitArray = initialArray;
-            this.offset = initialOffset;
-        }
-
-        final void afterStorageFieldCorrection() {
-            this.bitArray = (long[])super.array;
-            this.offset = 0;
-        }
-
-        final long longJavaArrayOffsetInternal() {
-            return offset;
-        }
-
-        final int javaArrayOffsetInternal() {
-            throw new AssertionError("Internal error in package implementation: "
-                + "unallowed accessing javaArrayOffsetInternal() for bit array");
-        }
-
-        public final Class<?> elementType() {
-            return boolean.class;
-        }
-
-        public Class<? extends BitArray> type() {
-            return BitArray.class;
-        }
-
-        public Class<? extends UpdatableBitArray> updatableType() {
-            return UpdatableBitArray.class;
-        }
-
-        public Class<? extends MutableBitArray> mutableType() {
-            return MutableBitArray.class;
-        }
-
-        public final Object getElement(long index) {
-            return Boolean.valueOf(getBit(index));
-        }
-
-        public final long bitsPerElement() {
-            return Arrays.BITS_PER_BIT;
-        }
-
-        public double minPossibleValue(double valueForFloatingPoint) {
-            return minPossibleValue(); //min
-        }
-
-        public double maxPossibleValue(double valueForFloatingPoint) {
-            return maxPossibleValue(); //max
-        }
-
-        public long minPossibleValue() {
-            return 0;
-        }
-
-        public long maxPossibleValue() {
-            return 1;
-        }
-
-        public final double getDouble(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L ? 1 : 0;
-        }
-
-        public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == 0 || value == 1 ? indexOf(lowIndex, highIndex, value != 0) : -1;
-        }
-
-        public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == 0 || value == 1 ? lastIndexOf(lowIndex, highIndex, value != 0) : -1;
-        }
-
-        public final long getLong(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L ? 1 : 0;
-        }
-
-        public final int getInt(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L ? 1 : 0;
-        }
-
-        public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == 0 || value == 1 ? indexOf(lowIndex, highIndex, value != 0) : -1;
-        }
-
-        public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == 0 || value == 1 ? lastIndexOf(lowIndex, highIndex, value != 0) : -1;
-        }
-
-        public final boolean getBit(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L;
-        }
-
-        public long indexOf(long lowIndex, long highIndex, boolean value) {
-            if (lowIndex < 0) {
-                lowIndex = 0;
-            }
-            if (highIndex > length) {
-                highIndex = length;
-            }
-            if (lowIndex >= highIndex) {
-                return -1;
-            } // after these checks we are sure that overflow is impossible below
-            long i = PackedBitArrays.indexOfBit(this.bitArray,
-                offset + lowIndex, offset + highIndex, value);
-            return i == -1 ? -1 : i - offset;
-        }
-
-        public long lastIndexOf(long lowIndex, long highIndex, boolean value) {
-            if (lowIndex < 0) {
-                lowIndex = 0;
-            }
-            if (highIndex > length) {
-                highIndex = length;
-            }
-            if (lowIndex >= highIndex) {
-                return -1;
-            } // after these checks we are sure that overflow is impossible below
-            long i = PackedBitArrays.lastIndexOfBit(this.bitArray,
-                offset + lowIndex, offset + highIndex, value);
-            return i == -1 ? -1 : i - offset;
-        }
-
-        public Array subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
-                throw rangeException(fromIndex);
-            if (toIndex > length)
-                throw rangeException(toIndex - 1);
-            if (fromIndex > toIndex)
-                throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
-            if (offset + fromIndex == 0) {
-                return new JABitArray(bitArray, (toIndex - fromIndex));
-            } else {
-                return new JABitSubArray(bitArray, (toIndex - fromIndex), offset + fromIndex);
-            }
-        }
-
-        public Array subArr(long position, long count) {
-            if (position < 0)
-                throw rangeException(position);
-            if (count < 0)
-                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length - count)
-                throw rangeException(position + count - 1);
-            if (offset + position == 0) {
-                return new JABitArray(bitArray, count);
-            } else {
-                return new JABitSubArray(bitArray, count, offset + position);
-            }
-        }
-
-        public DataBitBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataBitBuffer)super.buffer(mode, capacity);
-        }
-
-        public DataBitBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataBitBuffer)super.buffer(mode);
-        }
-
-        public DataBitBuffer buffer(long capacity) {
-            return (DataBitBuffer)super.buffer(capacity);
-        }
-
-        public DataBitBuffer buffer() {
-            return (DataBitBuffer)super.buffer();
-        }
-
-        public boolean isUnresizable() {
-            return true;
-        }
-
-        public BitArray asImmutable() {
-            return this;
-        }
-
-        public boolean isImmutable() {
-            return true;
-        }
-
-        public BitArray asTrustedImmutable() {
-            return this;
-        }
-
-        public void checkUnallowedMutation() throws UnallowedMutationError {
-        }
-
-        public Array asCopyOnNextWrite() {
-            return this;
-        }
-
-        public final MutableBitArray mutableClone(MemoryModel memoryModel) {
-            if (memoryModel == SimpleMemoryModel.INSTANCE) {
-                return new MutableJABitArray(cloneBitSubArray(
-                    bitArray, offset, offset + length), length).setNewStatus();
-            } else {
-                return (MutableBitArray) super.mutableClone(memoryModel);
-            }
-        }
-
-        public final UpdatableBitArray updatableClone(MemoryModel memoryModel) {
-            if (memoryModel == SimpleMemoryModel.INSTANCE) {
-                return new UpdatableJABitArray(cloneBitSubArray(
-                    bitArray, offset, offset + length), length).setNewStatus();
-            } else {
-                return (UpdatableBitArray) super.updatableClone(memoryModel);
-            }
-        }
-
-        public boolean[] ja() {
-            return Arrays.toJavaArray(this);
-        }
-
-        public String toString() {
-            return "immutable simple AlgART subarray bit[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isNew() ? ", new" : ", view");
-        }
-    }
-
-
-
-    @SuppressWarnings("cast")
-    static class UpdatableJABitArray
-        extends JABitArray implements UpdatableBitArray
-    {
-        UpdatableJABitArray(long initialCapacity, long initialLength) {
-            super(initialCapacity, initialLength);
-        }
-
-        UpdatableJABitArray(long[] initialArray, long initialCapacity, long initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
-        }
-
-        UpdatableJABitArray(long[] initialArray, long initialCapacityAndLength) {
-            super(initialArray, initialCapacityAndLength);
-        }
-
-        public final void setElement(long index, Object value) {
-            setBit(index, ((Boolean)value).booleanValue());
-        }
-
-        public final void copy(long destIndex, long srcIndex) {
-            if (destIndex < 0 || destIndex >= length)
-                throw rangeException(destIndex);
-            if (srcIndex < 0 || srcIndex >= length)
-                throw rangeException(srcIndex);
-            synchronized (this.bitArray) {
-                if ((this.bitArray[(int)((srcIndex) >>> 6)] & (1L << ((int)(srcIndex) & 63))) != 0L)
-                    this.bitArray[(int)((destIndex) >>> 6)] |= 1L << ((int)(destIndex) & 63);
-                else
-                    this.bitArray[(int)((destIndex) >>> 6)] &= ~(1L << ((int)(destIndex) & 63));
-                }
-        }
-
-        public final void copy(long destIndex, long srcIndex, long count) {
-            if (count < 0)
-                throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
-            if (srcIndex < 0)
-                throw rangeException(srcIndex);
-            if (srcIndex > length - count)
-                throw rangeException(srcIndex + count - 1);
-            if (destIndex < 0)
-                throw rangeException(destIndex);
-            if (destIndex > length - count)
-                throw rangeException(destIndex + count - 1);
-            PackedBitArrays.copyBits(this.bitArray, destIndex, this.bitArray, srcIndex, count);
-        }
-
-        public final void swap(long firstIndex, long secondIndex) {
-            if (firstIndex < 0 || firstIndex >= length)
-                throw rangeException(firstIndex);
-            if (secondIndex < 0 || secondIndex >= length)
-                throw rangeException(secondIndex);
-            long i = firstIndex, j = secondIndex;
-            boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
-            synchronized (this.bitArray) {
-                if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                else
-                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-                }
-            synchronized (this.bitArray) {
-                if (temp)
-                    this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
-                else
-                    this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
-                }
-        }
-
-        public final void swap(long firstIndex, long secondIndex, long count) {
-            if (count < 0)
-                throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
-            if (firstIndex < 0)
-                throw rangeException(firstIndex);
-            if (firstIndex > length - count)
-                throw rangeException(firstIndex + count - 1);
-            if (secondIndex < 0)
-                throw rangeException(secondIndex);
-            if (secondIndex > length - count)
-                throw rangeException(secondIndex + count - 1);
-            long i = firstIndex, j = secondIndex;
-            for (long iMax = i + count; i < iMax; i++, j++) {
-                boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
-                synchronized (this.bitArray) {
-                    if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                        this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                    else
-                        this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-                    }
-                synchronized (this.bitArray) {
-                    if (temp)
-                        this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
-                    else
-                        this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
-                    }
-            }
-        }
-
-        public UpdatableArray copy(Array src) {
-            if (src instanceof JABitSubArray) {
-                JABitSubArray a = (JABitSubArray)src;
-                long count = (a.length < length ? a.length : length);
-                if (count == 1) {
-                    synchronized (bitArray) {
-                        if ((a.bitArray[(int)((a.offset) >>> 6)] & (1L << ((int)(a.offset) & 63))) != 0L)
-                            bitArray[(int)((0) >>> 6)] |= 1L << ((int)(0) & 63);
-                        else
-                            bitArray[(int)((0) >>> 6)] &= ~(1L << ((int)(0) & 63));
-                        }
-                    return this;
-                } else if (count > 0) {
-                    PackedBitArrays.copyBits(bitArray, 0, a.bitArray, a.offset, count);
-                    return this;
-                }
-            } else if (src instanceof JABitArray) {
-                JABitArray a = (JABitArray)src;
-                long count = (a.length < length ? a.length : length);
-                if (count > 0) {
-                    PackedBitArrays.copyBits(bitArray, 0, a.bitArray, 0, count);
-                }
-                return this;
-            }
-            if (src instanceof CopiesArraysImpl.CopiesBitArray) {
-                CopiesArraysImpl.CopiesBitArray a = (CopiesArraysImpl.CopiesBitArray)src;
-                long count = a.length < length ? a.length : length;
-                PackedBitArrays.fillBits(bitArray, this.longJavaArrayOffsetInternal(), count, a.element);
-            } else {
-                defaultCopy(this, src);
-            }
-            return this;
-        }
-
-        public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJABitSubArray) {
-                UpdatableJABitSubArray a = (UpdatableJABitSubArray)another;
-                long count = (a.length < length ? a.length : length);
-                if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
-                    long j = a.offset;
-                    for (long i = 0; i < count; i++, j++) {
-                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
-                        synchronized (this.bitArray) {
-                            if ((a.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                            else
-                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-                            }
-                        synchronized (a.bitArray) {
-                            if (temp)
-                                a.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
-                            else
-                                a.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
-                            }
-                    }
-                    return this;
-                }
-            } else if (another instanceof UpdatableJABitArray) {
-                UpdatableJABitArray a = (UpdatableJABitArray)another;
-                long count = (a.length < length ? a.length : length);
-                if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
-                    for (long i = 0; i < count; i++) {
-                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
-                        synchronized (this.bitArray) {
-                            if ((a.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L)
-                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                            else
-                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-                            }
-                        synchronized (a.bitArray) {
-                            if (temp)
-                                a.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                            else
-                                a.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-                            }
-                    }
-                    return this;
-                }
-            }
-            defaultSwap(this, another);
-            return this;
-        }
-
-        public final void setDouble(long index, double value) {
-            setBit(index, value != 0);
-        }
-
-        public final void setLong(long index, long value) {
-            setBit(index, value != 0);
-        }
-
-        public final void setInt(long index, int value) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            synchronized (this.bitArray) {
-                if (value != 0)
-                    this.bitArray[(int)((index) >>> 6)] |= 1L << ((int)(index) & 63);
-                else
-                    this.bitArray[(int)((index) >>> 6)] &= ~(1L << ((int)(index) & 63));
-                }
-        }
-
-        public final void setBit(long index, boolean value) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            synchronized (this.bitArray) {
-                if (value)
-                    this.bitArray[(int)((index) >>> 6)] |= 1L << ((int)(index) & 63);
-                else
-                    this.bitArray[(int)((index) >>> 6)] &= ~(1L << ((int)(index) & 63));
-                }
-        }
-
-        public final void setBit(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            synchronized (this.bitArray) {
-                this.bitArray[(int)((index) >>> 6)] |= 1L << ((index) & 63);
-            }
-        }
-
-        public final void clearBit(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            synchronized (this.bitArray) {
-                this.bitArray[(int)((index) >>> 6)] &= ~(1L << ((index) & 63));
-            }
-        }
-
-        public UpdatableBitArray fill(double value) {
-            return fill(0, length, value);
-        }
-
-        public UpdatableBitArray  fill(long position, long count, double value) {
-            return fill(position, count, value != 0);
-        }
-
-        public UpdatableBitArray  fill(long value) {
-            return fill(0, length, value);
-        }
-
-        public UpdatableBitArray  fill(long position, long count, long value) {
-            return fill(position, count, value != 0);
-        }
-
-        public UpdatableBitArray  fill(boolean value) {
-            return fill(0, length, value);
-        }
-
-        public UpdatableBitArray  fill(long position, long count, boolean value) {
-            if (position < 0)
-                throw rangeException(position);
-            if (count < 0)
-                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length - count)
-                throw rangeException(position + count - 1);
-            PackedBitArrays.fillBits(this.bitArray, position, count, value);
-            return this;
-        }
-
-        public UpdatableBitArray subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
-                throw rangeException(fromIndex);
-            if (toIndex > length)
-                throw rangeException(toIndex - 1);
-            if (fromIndex > toIndex)
-                throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
-            if (fromIndex == 0) {
-                return new UpdatableJABitArray(bitArray, (toIndex - fromIndex));
-            } else {
-                return new UpdatableJABitSubArray(bitArray, (toIndex - fromIndex), fromIndex);
-            }
-        }
-
-        public UpdatableBitArray subArr(long position, long count) {
-            if (position < 0)
-                throw rangeException(position);
-            if (count < 0)
-                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length - count)
-                throw rangeException(position + count - 1);
-            if (position == 0) {
-                return new UpdatableJABitArray(bitArray, count);
-            } else {
-                return new UpdatableJABitSubArray(bitArray, count, position);
-            }
-        }
-
-        // must be overridden in UpdatableBitArray,
-        // which is built by preprocessor without "trusted" superclass
-        public final BitArray asImmutable() {
-            return new JABitArray(bitArray, capacity(), length());
-        }
-
-        // must be  in UpdatableBitArray,
-        // which is built by preprocessor without "trusted" superclass
-        public final boolean isImmutable() {
-            return false;
-        }
-
-        public final BitArray asTrustedImmutable() {
-            return new JABitArray(bitArray, capacity(), length());
-            // Never set high bit here, because only subarrays can be copy-on-next write
-        }
-
-        public void checkUnallowedMutation() throws UnallowedMutationError {
-        }
-
-        public UpdatableArray asCopyOnNextWrite() {
-            UpdatableJABitSubArray result = new UpdatableJABitSubArray(bitArray,
-                capacity(), length(), 0);
-            result.capacity |= HIGH_BIT;
-            return result;
-        }
-
-        public UpdatableBitArray asUnresizable() {
-            return this;
-        }
-
-        public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
-        }
-
-        public String toString() {
-            return "unresizable simple AlgART array bit[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
-        }
-    }
-
-    @SuppressWarnings("cast")
-    static class UpdatableJABitSubArray
-            extends JABitSubArray implements UpdatableBitArray {
-        UpdatableJABitSubArray(long[] initialArray, long initialCapacity, long initialLength, long initialOffset) {
-            super(initialArray, initialCapacity, initialLength, initialOffset);
-        }
-
-        UpdatableJABitSubArray(long[] initialArray, long initialCapacityAndLength, long initialOffset) {
-            super(initialArray, initialCapacityAndLength, initialOffset);
-        }
-
-        public final void setElement(long index, Object value) {
-            setBit(index, ((Boolean)value).booleanValue());
-        }
-
-        public final void copy(long destIndex, long srcIndex) {
-            if (srcIndex < 0 || srcIndex >= length)
-                throw rangeException(srcIndex);
-            if (destIndex < 0 || destIndex >= length)
-                throw rangeException(destIndex);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            synchronized (this.bitArray) {
-                if ((this.bitArray[(int)((offset + srcIndex) >>> 6)] & (1L << ((int)(offset + srcIndex) & 63))) != 0L)
-                    this.bitArray[(int)((offset + destIndex) >>> 6)] |= 1L << ((int)(offset + destIndex) & 63);
-                else
-                    this.bitArray[(int)((offset + destIndex) >>> 6)] &= ~(1L << ((int)(offset + destIndex) & 63));
-                }
-        }
-
-        public final void copy(long destIndex, long srcIndex, long count) {
-            if (count < 0)
-                throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
-            if (srcIndex < 0)
-                throw rangeException(srcIndex);
-            if (srcIndex > length - count)
-                throw rangeException(srcIndex + count - 1);
-            if (destIndex < 0)
-                throw rangeException(destIndex);
-            if (destIndex > length - count)
-                throw rangeException(destIndex + count - 1);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            PackedBitArrays.copyBits(this.bitArray, offset + destIndex, this.bitArray, offset + srcIndex, count);
-        }
-
-        public final void swap(long firstIndex, long secondIndex) {
-            if (firstIndex < 0 || firstIndex >= length)
-                throw rangeException(firstIndex);
-            if (secondIndex < 0 || secondIndex >= length)
-                throw rangeException(secondIndex);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            long i = offset + firstIndex, j = offset + secondIndex;
-            boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
-            synchronized (this.bitArray) {
-                if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                else
-                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-                }
-            synchronized (this.bitArray) {
-                if (temp)
-                    this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
-                else
-                    this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
-                }
-        }
-
-        public final void swap(long firstIndex, long secondIndex, long count) {
-            if (count < 0)
-                throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
-            if (firstIndex < 0)
-                throw rangeException(firstIndex);
-            if (firstIndex > length - count)
-                throw rangeException(firstIndex + count - 1);
-            if (secondIndex < 0)
-                throw rangeException(secondIndex);
-            if (secondIndex > length - count)
-                throw rangeException(secondIndex + count - 1);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            long i = offset + firstIndex, j = offset + secondIndex;
-            for (long iMax = i + count; i < iMax; i++, j++) {
-                boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
-                synchronized (this.bitArray) {
-                    if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                        this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                    else
-                        this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-                    }
-                synchronized (this.bitArray) {
-                    if (temp)
-                        this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
-                    else
-                        this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
-                    }
-            }
-        }
-
-        public UpdatableArray copy(Array src) {
-            if (src instanceof JABitSubArray) {
-                JABitSubArray a = (JABitSubArray)src;
-                long count = (a.length < length ? a.length : length);
-                if (count == 1) {
-                    if (this.capacity < 0) // copy-on-next-write
-                        reallocateStorage();
-                    synchronized (bitArray) {
-                        if ((a.bitArray[(int)((a.offset) >>> 6)] & (1L << ((int)(a.offset) & 63))) != 0L)
-                            bitArray[(int)((offset) >>> 6)] |= 1L << ((int)(offset) & 63);
-                        else
-                            bitArray[(int)((offset) >>> 6)] &= ~(1L << ((int)(offset) & 63));
-                        }
-                    return this;
-                } else if (count > 0) {
-                    if (this.capacity < 0) // copy-on-next-write
-                        reallocateStorage();
-                    PackedBitArrays.copyBits(bitArray, offset, a.bitArray, a.offset, count);
-                    return this;
-                }
-            } else if (src instanceof JABitArray) {
-                JABitArray a = (JABitArray)src;
-                long count = (a.length < length ? a.length : length);
-                if (count == 1) {
-                    if (this.capacity < 0) // copy-on-next-write
-                        reallocateStorage();
-                    synchronized (bitArray) {
-                        if ((a.bitArray[(int)((0) >>> 6)] & (1L << ((int)(0) & 63))) != 0L)
-                            bitArray[(int)((offset) >>> 6)] |= 1L << ((int)(offset) & 63);
-                        else
-                            bitArray[(int)((offset) >>> 6)] &= ~(1L << ((int)(offset) & 63));
-                        }
-                    return this;
-                } else if (count > 0) {
-                    if (this.capacity < 0) // copy-on-next-write
-                        reallocateStorage();
-                    PackedBitArrays.copyBits(bitArray, offset, a.bitArray, 0, count);
-                    return this;
-                }
-            }
-            if (src instanceof CopiesArraysImpl.CopiesBitArray) {
-                CopiesArraysImpl.CopiesBitArray a = (CopiesArraysImpl.CopiesBitArray)src;
-                long count = a.length < length ? a.length : length;
-                PackedBitArrays.fillBits(bitArray, this.longJavaArrayOffsetInternal(), count, a.element);
-            } else {
-                defaultCopy(this, src);
-            }
-            return this;
-        }
-
-        public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJABitSubArray) {
-                UpdatableJABitSubArray a = (UpdatableJABitSubArray)another;
-                long count = (a.length < length ? a.length : length);
-                if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
-                    if (this.capacity < 0) // copy-on-next-write
-                        reallocateStorage();
-                    long i = offset;
-                    long j = a.offset;
-                    for (long iMax = i + count; i < iMax; i++, j++) {
-                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
-                        synchronized (this.bitArray) {
-                            if ((a.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                            else
-                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-                            }
-                        synchronized (a.bitArray) {
-                            if (temp)
-                                a.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
-                            else
-                                a.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
-                            }
-                    }
-                    return this;
-                }
-            } else if (another instanceof UpdatableJABitArray) {
-                UpdatableJABitArray a = (UpdatableJABitArray)another;
-                long count = (a.length < length ? a.length : length);
-                if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
-                    if (this.capacity < 0) // copy-on-next-write
-                        reallocateStorage();
-                    long i = offset;
-                    for (long j = 0; j < count; i++, j++) {
-                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
-                        synchronized (this.bitArray) {
-                            if ((a.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                            else
-                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-                            }
-                        synchronized (a.bitArray) {
-                            if (temp)
-                                a.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
-                            else
-                                a.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
-                            }
-                    }
-                    return this;
-                }
-            }
-            defaultSwap(this, another);
-            return this;
-        }
-
-        public final void setDouble(long index, double value) {
-            setBit(index, value != 0);
-        }
-
-        public final void setLong(long index, long value) {
-            setBit(index, value != 0);
-        }
-
-        public final void setInt(long index, int value) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            synchronized (this.bitArray) {
-                if (value != 0)
-                    this.bitArray[(int)((offset + index) >>> 6)] |= 1L << ((int)(offset + index) & 63);
-                else
-                    this.bitArray[(int)((offset + index) >>> 6)] &= ~(1L << ((int)(offset + index) & 63));
-                }
-        }
-
-        public final void setBit(long index, boolean value) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            synchronized (this.bitArray) {
-                if (value)
-                    this.bitArray[(int)((offset + index) >>> 6)] |= 1L << ((int)(offset + index) & 63);
-                else
-                    this.bitArray[(int)((offset + index) >>> 6)] &= ~(1L << ((int)(offset + index) & 63));
-                }
-        }
-
-        public final void setBit(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            synchronized (this.bitArray) {
-                this.bitArray[(int)((offset + index) >>> 6)] |= 1L << ((offset + index) & 63);
-            }
-        }
-
-        public final void clearBit(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            synchronized (this.bitArray) {
-                this.bitArray[(int)((offset + index) >>> 6)] &= ~(1L << ((offset + index) & 63));
-            }
-        }
-
-        public UpdatableBitArray fill(double value) {
-            return fill(0, length, value);
-        }
-
-        public UpdatableBitArray fill(long position, long count, double value) {
-            return fill(position, count, value != 0);
-        }
-
-        public UpdatableBitArray fill(long value) {
-            return fill(0, length, value);
-        }
-
-        public UpdatableBitArray fill(long position, long count, long value) {
-            return fill(position, count, value != 0);
-        }
-
-        public UpdatableBitArray fill(boolean value) {
-            return fill(0, length, value);
-        }
-
-        public UpdatableBitArray fill(long position, long count, boolean value) {
-            if (position < 0)
-                throw rangeException(position);
-            if (count < 0)
-                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length - count)
-                throw rangeException(position + count - 1);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            PackedBitArrays.fillBits(this.bitArray, offset + position, count, value);
-            return this;
-        }
-
-        public UpdatableBitArray subArray(long fromIndex, long toIndex) {
-            if (fromIndex < 0)
-                throw rangeException(fromIndex);
-            if (toIndex > length)
-                throw rangeException(toIndex - 1);
-            if (fromIndex > toIndex)
-                throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
-            if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJABitArray(bitArray, (toIndex - fromIndex));
-            } else {
-                UpdatableJABitSubArray result = new UpdatableJABitSubArray(bitArray,
-                    (toIndex - fromIndex), offset + fromIndex);
-                if (this.capacity < 0) // copy-on-next-write
-                    result.capacity |= HIGH_BIT;
-                return result;
-            }
-        }
-
-        public UpdatableBitArray subArr(long position, long count) {
-            if (position < 0)
-                throw rangeException(position);
-            if (count < 0)
-                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
-            if (position > length - count)
-                throw rangeException(position + count - 1);
-            if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJABitArray(bitArray, count);
-            } else {
-                UpdatableJABitSubArray result = new UpdatableJABitSubArray(bitArray,
-                    count, offset + position);
-                if (this.capacity < 0) // copy-on-next-write
-                    result.capacity |= HIGH_BIT;
-                return result;
-            }
-        }
-
-        // must be overridden in UpdatableBitSubArray,
-        // which is built by preprocessor without "trusted" superclass
-        public final BitArray asImmutable() {
-            return new JABitSubArray(bitArray, capacity(), length(), offset);
-        }
-
-        // must be overridden in UpdatableBitSubArray,
-        // which is built by preprocessor without "trusted" superclass
-        public final boolean isImmutable() {
-            return false;
-        }
-
-        public final BitArray asTrustedImmutable() {
-            JABitSubArray result = new JABitSubArray(bitArray,
-                capacity(), length(), offset);
-            if (this.capacity < 0) // copy-on-next-write
-                result.capacity |= HIGH_BIT;
-            return result;
-        }
-
-        public void checkUnallowedMutation() throws UnallowedMutationError {
-        }
-
-        public UpdatableArray asCopyOnNextWrite() {
-            if (isCopyOnNextWrite())
-                return this;
-            UpdatableJABitSubArray result = new UpdatableJABitSubArray(bitArray,
-                capacity(), length(), offset);
-            result.capacity |= HIGH_BIT;
-            return result;
-        }
-
-        public UpdatableBitArray asUnresizable() {
-            return this;
-        }
-
-        public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
-        }
-
-        public String toString() {
-            return "unresizable simple AlgART subarray bit[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
-        }
-    }
-
-    @SuppressWarnings("cast")
-    static final class MutableJABitArray
-        extends UpdatableJABitArray implements MutableBitArray
-    {
-        MutableJABitArray(long initialCapacity, long initialLength) {
-            super(initialCapacity, initialLength);
-        }
-
-        MutableJABitArray(long[] initialArray, long initialCapacity, long initialLength) {
-            super(initialArray, initialCapacity, initialLength);
-        }
-
-        MutableJABitArray(long[] initialArray, long initialCapacityAndLength) {
-            super(initialArray, initialCapacityAndLength);
-        }
-
-        final void clearElements(long fromIndex, long toIndex) {
-            defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nBitCopies(toIndex - fromIndex, false), true);
-        }
-
-        public MutableBitArray length(long newLength) {
-            if (length < 0)
-                throw new IllegalArgumentException("Negative desired array length");
-            lengthImpl(newLength);
-            return this;
-        }
-
-        public MutableBitArray ensureCapacity(long minCapacity) {
-            if (minCapacity < 0)
-                throw new IllegalArgumentException("Negative desired array minimal capacity");
-            ensureCapacityImpl(minCapacity);
-            return this;
-        }
-
-        public MutableBitArray trim() {
-            trimImpl();
-            return this;
-        }
-
-        public MutableBitArray append(Array appendedArray) {
-            appendImpl(appendedArray);
-            return this;
-        }
-
-        public final Object popElement() {
-            return Boolean.valueOf(popBit());
-        }
-
-        public final void pushElement(Object value) {
-            pushBit(((Boolean)value).booleanValue());
-        }
-
-        public final boolean popBit() {
-            long i = length - 1;
-            if (i < 0)
-                throw new EmptyStackException();
-            boolean result = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
-            this.length = i;
-            synchronized (this.bitArray) {
-                if (false)
-                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                else
-                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-                }
-            return result;
-        }
-
-        public final void pushBit(boolean value) {
-            long i = length;
-            if (i >= capacity()) {
-                // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
-            }
-            this.length = i + 1;
-            synchronized (this.bitArray) {
-                if (value)
-                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                else
-                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-                }
-        }
-
-        public final MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            super.setData(arrayPos, srcArray, srcArrayOffset, count);
-            return this;
-        }
-
-        public final MutableBitArray setData(long arrayPos, Object srcArray) {
-            super.setData(arrayPos, srcArray);
-            return this;
-        }
-
-        public final MutableBitArray copy(Array src) {
-            super.copy(src);
-            return this;
-        }
-
-        public final MutableBitArray swap(UpdatableArray another) {
-            super.swap(another);
-            return this;
-        }
-
-        public MutableBitArray asCopyOnNextWrite() {
-            MutableJABitSubArray result = new MutableJABitSubArray(bitArray,
-                capacity(), length(), 0);
-            result.capacity |= HIGH_BIT;
-            return result;
-        }
-
-        public boolean isUnresizable() {
-            return false;
-        }
-
-        public final UpdatableBitArray asUnresizable() {
-            return new UpdatableJABitArray(bitArray, capacity(), length());
-        }
-
-        public MutableBitArray shallowClone() {
-            return (MutableBitArray)standardObjectClone();
-        }
-
-        public final String toString() {
-            return "mutable simple AlgART array bit[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
-        }
-    }
-
-    @SuppressWarnings("cast")
-    static final class MutableJABitSubArray
-        extends UpdatableJABitSubArray implements MutableBitArray
-        // This class is used only for check "capacity < 0" for copy-on-next-write mode
-    {
-        MutableJABitSubArray(long[] initialArray, long initialCapacity, long initialLength, long initialOffset) {
-            super(initialArray, initialCapacity, initialLength, initialOffset);
-        }
-
-        MutableJABitSubArray(long[] initialArray, long initialCapacityAndLength, long initialOffset) {
-            super(initialArray, initialCapacityAndLength, initialOffset);
-        }
-
-        final void clearElements(long fromIndex, long toIndex) {
-            defaultCopy(this.subArray(fromIndex, toIndex),
-                    Arrays.nBitCopies(toIndex - fromIndex, false), true);
-        }
-
-        public MutableBitArray length(long newLength) {
-            if (length < 0)
-                throw new IllegalArgumentException("Negative desired array length");
-            lengthImpl(newLength);
-            return this;
-        }
-
-        public MutableBitArray ensureCapacity(long minCapacity) {
-            if (minCapacity < 0)
-                throw new IllegalArgumentException("Negative desired array minimal capacity");
-            ensureCapacityImpl(minCapacity);
-            return this;
-        }
-
-        public MutableBitArray trim() {
-            trimImpl();
-            return this;
-        }
-
-        public MutableBitArray append(Array appendedArray) {
-            appendImpl(appendedArray);
-            return this;
-        }
-
-        public final Object popElement() {
-            return Boolean.valueOf(popBit());
-        }
-
-        public final void pushElement(Object value) {
-            pushBit(((Boolean)value).booleanValue());
-        }
-
-        public final boolean popBit() {
-            long i = length - 1;
-            if (i < 0)
-                throw new EmptyStackException();
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            boolean result = (this.bitArray[(int)((offset + i) >>> 6)] & (1L << ((int)(offset + i) & 63))) != 0L;
-            this.length = i;
-            synchronized (this.bitArray) {
-                if (false)
-                    this.bitArray[(int)((offset + i) >>> 6)] |= 1L << ((int)(offset + i) & 63);
-                else
-                    this.bitArray[(int)((offset + i) >>> 6)] &= ~(1L << ((int)(offset + i) & 63));
-                }
-            return result;
-        }
-
-        public final void pushBit(boolean value) {
-            long i = length;
-            if (i >= capacity()) {
-                // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
-            }
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            this.length = i + 1;
-            synchronized (this.bitArray) {
-                if (value)
-                    this.bitArray[(int)((offset + i) >>> 6)] |= 1L << ((int)(offset + i) & 63);
-                else
-                    this.bitArray[(int)((offset + i) >>> 6)] &= ~(1L << ((int)(offset + i) & 63));
-                }
-        }
-
-        public final MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
-            super.setData(arrayPos, srcArray, srcArrayOffset, count);
-            return this;
-        }
-
-        public final MutableBitArray setData(long arrayPos, Object srcArray) {
-            super.setData(arrayPos, srcArray);
-            return this;
-        }
-
-        public final MutableBitArray copy(Array src) {
-            super.copy(src);
-            return this;
-        }
-
-        public final MutableBitArray swap(UpdatableArray another) {
-            super.swap(another);
-            return this;
-        }
-
-        public MutableBitArray asCopyOnNextWrite() {
-            if (isCopyOnNextWrite())
-                return this;
-            MutableJABitSubArray result = new MutableJABitSubArray(bitArray,
-                capacity(), length(), offset);
-            result.capacity |= HIGH_BIT;
-            return result;
-        }
-
-        public boolean isUnresizable() {
-            return false;
-        }
-
-        public final UpdatableBitArray asUnresizable() {
-            UpdatableJABitSubArray result = new UpdatableJABitSubArray(bitArray,
-                capacity(), length(), offset);
-            if (this.capacity < 0) // copy-on-next-write
-                result.capacity |= HIGH_BIT;
-            return result;
-        }
-
-        public MutableBitArray shallowClone() {
-            return (MutableBitArray)standardObjectClone();
-        }
-
-        public final String toString() {
-            return "mutable simple AlgART subarray bit[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
-        }
-    }
-
     /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, impl)
       (return\s+)-157777 ==> $10;;
       (return\s+)157778  ==> $10xFFFF;;
@@ -13520,4 +12053,1471 @@ class SimpleArraysImpl {
         }
     }
     /*Repeat.IncludeEnd*/
+
+    @SuppressWarnings("cast")
+    static class JABitArray
+            extends AbstractJAArray implements BitArray {
+        long[] bitArray;
+
+        JABitArray(long initialCapacity, long initialLength) {
+            super(initialCapacity, initialLength);
+            this.bitArray = (long[])super.array;
+        }
+
+        JABitArray(long[] initialArray, long initialCapacity, long initialLength) {
+            super(initialArray, initialCapacity, initialLength);
+            this.bitArray = initialArray;
+        }
+
+        JABitArray(long[] initialArray, long initialCapacityAndLength) {
+            super(initialArray, initialCapacityAndLength);
+            this.bitArray = initialArray;
+        }
+
+        final void afterStorageFieldCorrection() {
+            this.bitArray = (long[])super.array;
+        }
+
+        final long longJavaArrayOffsetInternal() {
+            return 0;
+        }
+
+        final int javaArrayOffsetInternal() {
+            throw new AssertionError("Internal error in package implementation: "
+                    + "unallowed accessing javaArrayOffsetInternal() for bit array");
+        }
+
+        public final Class<?> elementType() {
+            return boolean.class;
+        }
+
+        public Class<? extends BitArray> type() {
+            return BitArray.class;
+        }
+
+        public Class<? extends UpdatableBitArray> updatableType() {
+            return UpdatableBitArray.class;
+        }
+
+        public Class<? extends MutableBitArray> mutableType() {
+            return MutableBitArray.class;
+        }
+
+        public final Object getElement(long index) {
+            return Boolean.valueOf(getBit(index));
+        }
+
+        public final long bitsPerElement() {
+            return Arrays.BITS_PER_BIT;
+        }
+
+        public final double minPossibleValue(double valueForFloatingPoint) {
+            return minPossibleValue(); //min
+        }
+
+        public final double maxPossibleValue(double valueForFloatingPoint) {
+            return maxPossibleValue(); //max
+        }
+
+        public final long minPossibleValue() {
+            return 0;
+        }
+
+        public final long maxPossibleValue() {
+            return 1;
+        }
+
+        public final double getDouble(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L ? 1 : 0;
+        }
+
+        public final long indexOf(long lowIndex, long highIndex, double value) {
+            return value == 0 || value == 1 ? indexOf(lowIndex, highIndex, value != 0) : -1;
+        }
+
+        public final long lastIndexOf(long lowIndex, long highIndex, double value) {
+            return value == 0 || value == 1 ? lastIndexOf(lowIndex, highIndex, value != 0) : -1;
+        }
+
+        public final long getLong(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L ? 1 : 0;
+        }
+
+        public final int getInt(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L ? 1 : 0;
+        }
+
+        public final long indexOf(long lowIndex, long highIndex, long value) {
+            return value == 0 || value == 1 ? indexOf(lowIndex, highIndex, value != 0) : -1;
+        }
+
+        public final long lastIndexOf(long lowIndex, long highIndex, long value) {
+            return value == 0 || value == 1 ? lastIndexOf(lowIndex, highIndex, value != 0) : -1;
+        }
+
+        public final boolean getBit(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L;
+        }
+
+        public final long indexOf(long lowIndex, long highIndex, boolean value) {
+            if (lowIndex < 0) {
+                lowIndex = 0;
+            }
+            if (highIndex > length) {
+                highIndex = length;
+            }
+            if (lowIndex >= highIndex) {
+                return -1;
+            } // after these checks we are sure that overflow is impossible below
+            return PackedBitArrays.indexOfBit(this.bitArray, lowIndex, highIndex, value);
+        }
+
+        public final long lastIndexOf(long lowIndex, long highIndex, boolean value) {
+            if (lowIndex < 0) {
+                lowIndex = 0;
+            }
+            if (highIndex > length) {
+                highIndex = length;
+            }
+            if (lowIndex >= highIndex) {
+                return -1;
+            } // after these checks we are sure that overflow is impossible below
+            return PackedBitArrays.lastIndexOfBit(this.bitArray, lowIndex, highIndex, value);
+        }
+
+        public Array subArray(long fromIndex, long toIndex) {
+            if (fromIndex < 0)
+                throw rangeException(fromIndex);
+            if (toIndex > length)
+                throw rangeException(toIndex - 1);
+            if (fromIndex > toIndex)
+                throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            if (fromIndex == 0) {
+                return new JABitArray(bitArray, (toIndex - fromIndex));
+            } else {
+                return new JABitSubArray(bitArray, (toIndex - fromIndex), fromIndex);
+            }
+        }
+
+        public Array subArr(long position, long count) {
+            if (position < 0)
+                throw rangeException(position);
+            if (count < 0)
+                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
+                        + ") in " + getClass());
+            if (position > length - count)
+                throw rangeException(position + count - 1);
+            if (position == 0) {
+                return new JABitArray(bitArray, count);
+            } else {
+                return new JABitSubArray(bitArray, count, position);
+            }
+        }
+
+        public DataBitBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
+            return (DataBitBuffer)super.buffer(mode, capacity);
+        }
+
+        public DataBitBuffer buffer(DataBuffer.AccessMode mode) {
+            return (DataBitBuffer)super.buffer(mode);
+        }
+
+        public DataBitBuffer buffer(long capacity) {
+            return (DataBitBuffer)super.buffer(capacity);
+        }
+
+        public DataBitBuffer buffer() {
+            return (DataBitBuffer)super.buffer();
+        }
+
+        public boolean isUnresizable() {
+            return true;
+        }
+
+        public BitArray asImmutable() {
+            return this;
+        }
+
+        public boolean isImmutable() {
+            return true;
+        }
+
+        public BitArray asTrustedImmutable() {
+            return this;
+        }
+
+        public void checkUnallowedMutation() throws UnallowedMutationError {
+        }
+
+        public Array asCopyOnNextWrite() {
+            return this;
+        }
+
+        public final MutableBitArray mutableClone(MemoryModel memoryModel) {
+            if (memoryModel == SimpleMemoryModel.INSTANCE) {
+                return new MutableJABitArray(cloneBitSubArray(
+                        bitArray, 0,  length),  length).setNewStatus();
+            } else {
+                return (MutableBitArray) super.mutableClone(memoryModel);
+            }
+        }
+
+        public final UpdatableBitArray updatableClone(MemoryModel memoryModel) {
+            if (memoryModel == SimpleMemoryModel.INSTANCE) {
+                return new UpdatableJABitArray(cloneBitSubArray(
+                        bitArray, 0, length), length).setNewStatus();
+            } else {
+                return (UpdatableBitArray) super.updatableClone(memoryModel);
+            }
+        }
+
+        public boolean[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
+        public String toString() {
+            return "immutable simple AlgART array bit[" + length
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
+        }
+    }
+
+    @SuppressWarnings("cast")
+    static class JABitSubArray extends AbstractJAArray implements BitArray {
+        long[] bitArray;
+        long offset;
+
+        JABitSubArray(long[] initialArray, long initialCapacity, long initialLength, long initialOffset) {
+            super(initialArray, initialCapacity, initialLength);
+            this.bitArray = initialArray;
+            this.offset = initialOffset;
+        }
+
+        JABitSubArray(long[] initialArray, long initialCapacityAndLength, long initialOffset) {
+            super(initialArray, initialCapacityAndLength);
+            this.bitArray = initialArray;
+            this.offset = initialOffset;
+        }
+
+        final void afterStorageFieldCorrection() {
+            this.bitArray = (long[])super.array;
+            this.offset = 0;
+        }
+
+        final long longJavaArrayOffsetInternal() {
+            return offset;
+        }
+
+        final int javaArrayOffsetInternal() {
+            throw new AssertionError("Internal error in package implementation: "
+                    + "unallowed accessing javaArrayOffsetInternal() for bit array");
+        }
+
+        public final Class<?> elementType() {
+            return boolean.class;
+        }
+
+        public Class<? extends BitArray> type() {
+            return BitArray.class;
+        }
+
+        public Class<? extends UpdatableBitArray> updatableType() {
+            return UpdatableBitArray.class;
+        }
+
+        public Class<? extends MutableBitArray> mutableType() {
+            return MutableBitArray.class;
+        }
+
+        public final Object getElement(long index) {
+            return Boolean.valueOf(getBit(index));
+        }
+
+        public final long bitsPerElement() {
+            return Arrays.BITS_PER_BIT;
+        }
+
+        public double minPossibleValue(double valueForFloatingPoint) {
+            return minPossibleValue(); //min
+        }
+
+        public double maxPossibleValue(double valueForFloatingPoint) {
+            return maxPossibleValue(); //max
+        }
+
+        public long minPossibleValue() {
+            return 0;
+        }
+
+        public long maxPossibleValue() {
+            return 1;
+        }
+
+        public final double getDouble(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L ? 1 : 0;
+        }
+
+        public final long indexOf(long lowIndex, long highIndex, double value) {
+            return value == 0 || value == 1 ? indexOf(lowIndex, highIndex, value != 0) : -1;
+        }
+
+        public final long lastIndexOf(long lowIndex, long highIndex, double value) {
+            return value == 0 || value == 1 ? lastIndexOf(lowIndex, highIndex, value != 0) : -1;
+        }
+
+        public final long getLong(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L ? 1 : 0;
+        }
+
+        public final int getInt(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L ? 1 : 0;
+        }
+
+        public final long indexOf(long lowIndex, long highIndex, long value) {
+            return value == 0 || value == 1 ? indexOf(lowIndex, highIndex, value != 0) : -1;
+        }
+
+        public final long lastIndexOf(long lowIndex, long highIndex, long value) {
+            return value == 0 || value == 1 ? lastIndexOf(lowIndex, highIndex, value != 0) : -1;
+        }
+
+        public final boolean getBit(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L;
+        }
+
+        public long indexOf(long lowIndex, long highIndex, boolean value) {
+            if (lowIndex < 0) {
+                lowIndex = 0;
+            }
+            if (highIndex > length) {
+                highIndex = length;
+            }
+            if (lowIndex >= highIndex) {
+                return -1;
+            } // after these checks we are sure that overflow is impossible below
+            long i = PackedBitArrays.indexOfBit(this.bitArray,
+                    offset + lowIndex, offset + highIndex, value);
+            return i == -1 ? -1 : i - offset;
+        }
+
+        public long lastIndexOf(long lowIndex, long highIndex, boolean value) {
+            if (lowIndex < 0) {
+                lowIndex = 0;
+            }
+            if (highIndex > length) {
+                highIndex = length;
+            }
+            if (lowIndex >= highIndex) {
+                return -1;
+            } // after these checks we are sure that overflow is impossible below
+            long i = PackedBitArrays.lastIndexOfBit(this.bitArray,
+                    offset + lowIndex, offset + highIndex, value);
+            return i == -1 ? -1 : i - offset;
+        }
+
+        public Array subArray(long fromIndex, long toIndex) {
+            if (fromIndex < 0)
+                throw rangeException(fromIndex);
+            if (toIndex > length)
+                throw rangeException(toIndex - 1);
+            if (fromIndex > toIndex)
+                throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            if (offset + fromIndex == 0) {
+                return new JABitArray(bitArray, (toIndex - fromIndex));
+            } else {
+                return new JABitSubArray(bitArray, (toIndex - fromIndex), offset + fromIndex);
+            }
+        }
+
+        public Array subArr(long position, long count) {
+            if (position < 0)
+                throw rangeException(position);
+            if (count < 0)
+                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
+                        + ") in " + getClass());
+            if (position > length - count)
+                throw rangeException(position + count - 1);
+            if (offset + position == 0) {
+                return new JABitArray(bitArray, count);
+            } else {
+                return new JABitSubArray(bitArray, count, offset + position);
+            }
+        }
+
+        public DataBitBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
+            return (DataBitBuffer)super.buffer(mode, capacity);
+        }
+
+        public DataBitBuffer buffer(DataBuffer.AccessMode mode) {
+            return (DataBitBuffer)super.buffer(mode);
+        }
+
+        public DataBitBuffer buffer(long capacity) {
+            return (DataBitBuffer)super.buffer(capacity);
+        }
+
+        public DataBitBuffer buffer() {
+            return (DataBitBuffer)super.buffer();
+        }
+
+        public boolean isUnresizable() {
+            return true;
+        }
+
+        public BitArray asImmutable() {
+            return this;
+        }
+
+        public boolean isImmutable() {
+            return true;
+        }
+
+        public BitArray asTrustedImmutable() {
+            return this;
+        }
+
+        public void checkUnallowedMutation() throws UnallowedMutationError {
+        }
+
+        public Array asCopyOnNextWrite() {
+            return this;
+        }
+
+        public final MutableBitArray mutableClone(MemoryModel memoryModel) {
+            if (memoryModel == SimpleMemoryModel.INSTANCE) {
+                return new MutableJABitArray(cloneBitSubArray(
+                        bitArray, offset, offset + length), length).setNewStatus();
+            } else {
+                return (MutableBitArray) super.mutableClone(memoryModel);
+            }
+        }
+
+        public final UpdatableBitArray updatableClone(MemoryModel memoryModel) {
+            if (memoryModel == SimpleMemoryModel.INSTANCE) {
+                return new UpdatableJABitArray(cloneBitSubArray(
+                        bitArray, offset, offset + length), length).setNewStatus();
+            } else {
+                return (UpdatableBitArray) super.updatableClone(memoryModel);
+            }
+        }
+
+        public boolean[] ja() {
+            return Arrays.toJavaArray(this);
+        }
+
+        public String toString() {
+            return "immutable simple AlgART subarray bit[" + length()
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isNew() ? ", new" : ", view");
+        }
+    }
+
+
+
+    @SuppressWarnings("cast")
+    static class UpdatableJABitArray
+            extends JABitArray implements UpdatableBitArray
+    {
+        UpdatableJABitArray(long initialCapacity, long initialLength) {
+            super(initialCapacity, initialLength);
+        }
+
+        UpdatableJABitArray(long[] initialArray, long initialCapacity, long initialLength) {
+            super(initialArray, initialCapacity,  initialLength);
+        }
+
+        UpdatableJABitArray(long[] initialArray, long initialCapacityAndLength) {
+            super(initialArray, initialCapacityAndLength);
+        }
+
+        public final void setElement(long index, Object value) {
+            setBit(index, ((Boolean)value).booleanValue());
+        }
+
+        public final void copy(long destIndex, long srcIndex) {
+            if (destIndex < 0 || destIndex >= length)
+                throw rangeException(destIndex);
+            if (srcIndex < 0 || srcIndex >= length)
+                throw rangeException(srcIndex);
+            synchronized (this.bitArray) {
+                if ((this.bitArray[(int)((srcIndex) >>> 6)] & (1L << ((int)(srcIndex) & 63))) != 0L)
+                    this.bitArray[(int)((destIndex) >>> 6)] |= 1L << ((int)(destIndex) & 63);
+                else
+                    this.bitArray[(int)((destIndex) >>> 6)] &= ~(1L << ((int)(destIndex) & 63));
+            }
+        }
+
+        public final void copy(long destIndex, long srcIndex, long count) {
+            if (count < 0)
+                throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
+                        + ") in " + getClass());
+            if (srcIndex < 0)
+                throw rangeException(srcIndex);
+            if (srcIndex > length - count)
+                throw rangeException(srcIndex + count - 1);
+            if (destIndex < 0)
+                throw rangeException(destIndex);
+            if (destIndex > length - count)
+                throw rangeException(destIndex + count - 1);
+            PackedBitArrays.copyBits(this.bitArray, destIndex, this.bitArray, srcIndex, count);
+        }
+
+        public final void swap(long firstIndex, long secondIndex) {
+            if (firstIndex < 0 || firstIndex >= length)
+                throw rangeException(firstIndex);
+            if (secondIndex < 0 || secondIndex >= length)
+                throw rangeException(secondIndex);
+            long i = firstIndex, j = secondIndex;
+            boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+            synchronized (this.bitArray) {
+                if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
+                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                else
+                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+            }
+            synchronized (this.bitArray) {
+                if (temp)
+                    this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                else
+                    this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+            }
+        }
+
+        public final void swap(long firstIndex, long secondIndex, long count) {
+            if (count < 0)
+                throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
+                        + ") in " + getClass());
+            if (firstIndex < 0)
+                throw rangeException(firstIndex);
+            if (firstIndex > length - count)
+                throw rangeException(firstIndex + count - 1);
+            if (secondIndex < 0)
+                throw rangeException(secondIndex);
+            if (secondIndex > length - count)
+                throw rangeException(secondIndex + count - 1);
+            long i = firstIndex, j = secondIndex;
+            for (long iMax = i + count; i < iMax; i++, j++) {
+                boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                synchronized (this.bitArray) {
+                    if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
+                        this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                    else
+                        this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                }
+                synchronized (this.bitArray) {
+                    if (temp)
+                        this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                    else
+                        this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                }
+            }
+        }
+
+        public UpdatableArray copy(Array src) {
+            if (src instanceof JABitSubArray) {
+                JABitSubArray a = (JABitSubArray)src;
+                long count = (a.length < length ? a.length : length);
+                if (count == 1) {
+                    synchronized (bitArray) {
+                        if ((a.bitArray[(int)((a.offset) >>> 6)] & (1L << ((int)(a.offset) & 63))) != 0L)
+                            bitArray[(int)((0) >>> 6)] |= 1L << ((int)(0) & 63);
+                        else
+                            bitArray[(int)((0) >>> 6)] &= ~(1L << ((int)(0) & 63));
+                    }
+                    return this;
+                } else if (count > 0) {
+                    PackedBitArrays.copyBits(bitArray, 0, a.bitArray, a.offset, count);
+                    return this;
+                }
+            } else if (src instanceof JABitArray) {
+                JABitArray a = (JABitArray)src;
+                long count = (a.length < length ? a.length : length);
+                if (count > 0) {
+                    PackedBitArrays.copyBits(bitArray, 0, a.bitArray, 0, count);
+                }
+                return this;
+            }
+            if (src instanceof CopiesArraysImpl.CopiesBitArray) {
+                CopiesArraysImpl.CopiesBitArray a = (CopiesArraysImpl.CopiesBitArray)src;
+                long count = a.length < length ? a.length : length;
+                PackedBitArrays.fillBits(bitArray, this.longJavaArrayOffsetInternal(), count, a.element);
+            } else {
+                defaultCopy(this, src);
+            }
+            return this;
+        }
+
+        public UpdatableArray swap(UpdatableArray another) {
+            if (another instanceof UpdatableJABitSubArray) {
+                UpdatableJABitSubArray a = (UpdatableJABitSubArray)another;
+                long count = (a.length < length ? a.length : length);
+                if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
+                    long j = a.offset;
+                    for (long i = 0; i < count; i++, j++) {
+                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                        synchronized (this.bitArray) {
+                            if ((a.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
+                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                            else
+                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                        }
+                        synchronized (a.bitArray) {
+                            if (temp)
+                                a.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                            else
+                                a.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                        }
+                    }
+                    return this;
+                }
+            } else if (another instanceof UpdatableJABitArray) {
+                UpdatableJABitArray a = (UpdatableJABitArray)another;
+                long count = (a.length < length ? a.length : length);
+                if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
+                    for (long i = 0; i < count; i++) {
+                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                        synchronized (this.bitArray) {
+                            if ((a.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L)
+                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                            else
+                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                        }
+                        synchronized (a.bitArray) {
+                            if (temp)
+                                a.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                            else
+                                a.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                        }
+                    }
+                    return this;
+                }
+            }
+            defaultSwap(this, another);
+            return this;
+        }
+
+        public final void setDouble(long index, double value) {
+            setBit(index, value != 0);
+        }
+
+        public final void setLong(long index, long value) {
+            setBit(index, value != 0);
+        }
+
+        public final void setInt(long index, int value) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            synchronized (this.bitArray) {
+                if (value != 0)
+                    this.bitArray[(int)((index) >>> 6)] |= 1L << ((int)(index) & 63);
+                else
+                    this.bitArray[(int)((index) >>> 6)] &= ~(1L << ((int)(index) & 63));
+            }
+        }
+
+        public final void setBit(long index, boolean value) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            synchronized (this.bitArray) {
+                if (value)
+                    this.bitArray[(int)((index) >>> 6)] |= 1L << ((int)(index) & 63);
+                else
+                    this.bitArray[(int)((index) >>> 6)] &= ~(1L << ((int)(index) & 63));
+            }
+        }
+
+        public final void setBit(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            synchronized (this.bitArray) {
+                this.bitArray[(int)((index) >>> 6)] |= 1L << ((index) & 63);
+            }
+        }
+
+        public final void clearBit(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            synchronized (this.bitArray) {
+                this.bitArray[(int)((index) >>> 6)] &= ~(1L << ((index) & 63));
+            }
+        }
+
+        public UpdatableBitArray fill(double value) {
+            return fill(0, length, value);
+        }
+
+        public UpdatableBitArray  fill(long position, long count, double value) {
+            return fill(position, count, value != 0);
+        }
+
+        public UpdatableBitArray  fill(long value) {
+            return fill(0, length, value);
+        }
+
+        public UpdatableBitArray  fill(long position, long count, long value) {
+            return fill(position, count, value != 0);
+        }
+
+        public UpdatableBitArray  fill(boolean value) {
+            return fill(0, length, value);
+        }
+
+        public UpdatableBitArray  fill(long position, long count, boolean value) {
+            if (position < 0)
+                throw rangeException(position);
+            if (count < 0)
+                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
+                        + ") in " + getClass());
+            if (position > length - count)
+                throw rangeException(position + count - 1);
+            PackedBitArrays.fillBits(this.bitArray, position, count, value);
+            return this;
+        }
+
+        public UpdatableBitArray subArray(long fromIndex, long toIndex) {
+            if (fromIndex < 0)
+                throw rangeException(fromIndex);
+            if (toIndex > length)
+                throw rangeException(toIndex - 1);
+            if (fromIndex > toIndex)
+                throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            if (fromIndex == 0) {
+                return new UpdatableJABitArray(bitArray, (toIndex - fromIndex));
+            } else {
+                return new UpdatableJABitSubArray(bitArray, (toIndex - fromIndex), fromIndex);
+            }
+        }
+
+        public UpdatableBitArray subArr(long position, long count) {
+            if (position < 0)
+                throw rangeException(position);
+            if (count < 0)
+                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
+                        + ") in " + getClass());
+            if (position > length - count)
+                throw rangeException(position + count - 1);
+            if (position == 0) {
+                return new UpdatableJABitArray(bitArray, count);
+            } else {
+                return new UpdatableJABitSubArray(bitArray, count, position);
+            }
+        }
+
+        // must be overridden in UpdatableBitArray,
+        // which is built by preprocessor without "trusted" superclass
+        public final BitArray asImmutable() {
+            return new JABitArray(bitArray, capacity(), length());
+        }
+
+        // must be  in UpdatableBitArray,
+        // which is built by preprocessor without "trusted" superclass
+        public final boolean isImmutable() {
+            return false;
+        }
+
+        public final BitArray asTrustedImmutable() {
+            return new JABitArray(bitArray, capacity(), length());
+            // Never set high bit here, because only subarrays can be copy-on-next write
+        }
+
+        public void checkUnallowedMutation() throws UnallowedMutationError {
+        }
+
+        public UpdatableArray asCopyOnNextWrite() {
+            UpdatableJABitSubArray result = new UpdatableJABitSubArray(bitArray,
+                    capacity(), length(), 0);
+            result.capacity |= HIGH_BIT;
+            return result;
+        }
+
+        public UpdatableBitArray asUnresizable() {
+            return this;
+        }
+
+        public UpdatableArray shallowClone() {
+            return (UpdatableArray)standardObjectClone();
+        }
+
+        public String toString() {
+            return "unresizable simple AlgART array bit[" + length()
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
+        }
+    }
+
+    @SuppressWarnings("cast")
+    static class UpdatableJABitSubArray
+            extends JABitSubArray implements UpdatableBitArray {
+        UpdatableJABitSubArray(long[] initialArray, long initialCapacity, long initialLength, long initialOffset) {
+            super(initialArray, initialCapacity, initialLength, initialOffset);
+        }
+
+        UpdatableJABitSubArray(long[] initialArray, long initialCapacityAndLength, long initialOffset) {
+            super(initialArray, initialCapacityAndLength, initialOffset);
+        }
+
+        public final void setElement(long index, Object value) {
+            setBit(index, ((Boolean)value).booleanValue());
+        }
+
+        public final void copy(long destIndex, long srcIndex) {
+            if (srcIndex < 0 || srcIndex >= length)
+                throw rangeException(srcIndex);
+            if (destIndex < 0 || destIndex >= length)
+                throw rangeException(destIndex);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            synchronized (this.bitArray) {
+                if ((this.bitArray[(int)((offset + srcIndex) >>> 6)] & (1L << ((int)(offset + srcIndex) & 63))) != 0L)
+                    this.bitArray[(int)((offset + destIndex) >>> 6)] |= 1L << ((int)(offset + destIndex) & 63);
+                else
+                    this.bitArray[(int)((offset + destIndex) >>> 6)] &= ~(1L << ((int)(offset + destIndex) & 63));
+            }
+        }
+
+        public final void copy(long destIndex, long srcIndex, long count) {
+            if (count < 0)
+                throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
+                        + ") in " + getClass());
+            if (srcIndex < 0)
+                throw rangeException(srcIndex);
+            if (srcIndex > length - count)
+                throw rangeException(srcIndex + count - 1);
+            if (destIndex < 0)
+                throw rangeException(destIndex);
+            if (destIndex > length - count)
+                throw rangeException(destIndex + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            PackedBitArrays.copyBits(this.bitArray, offset + destIndex, this.bitArray, offset + srcIndex, count);
+        }
+
+        public final void swap(long firstIndex, long secondIndex) {
+            if (firstIndex < 0 || firstIndex >= length)
+                throw rangeException(firstIndex);
+            if (secondIndex < 0 || secondIndex >= length)
+                throw rangeException(secondIndex);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            long i = offset + firstIndex, j = offset + secondIndex;
+            boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+            synchronized (this.bitArray) {
+                if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
+                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                else
+                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+            }
+            synchronized (this.bitArray) {
+                if (temp)
+                    this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                else
+                    this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+            }
+        }
+
+        public final void swap(long firstIndex, long secondIndex, long count) {
+            if (count < 0)
+                throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
+                        + ") in " + getClass());
+            if (firstIndex < 0)
+                throw rangeException(firstIndex);
+            if (firstIndex > length - count)
+                throw rangeException(firstIndex + count - 1);
+            if (secondIndex < 0)
+                throw rangeException(secondIndex);
+            if (secondIndex > length - count)
+                throw rangeException(secondIndex + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            long i = offset + firstIndex, j = offset + secondIndex;
+            for (long iMax = i + count; i < iMax; i++, j++) {
+                boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                synchronized (this.bitArray) {
+                    if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
+                        this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                    else
+                        this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                }
+                synchronized (this.bitArray) {
+                    if (temp)
+                        this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                    else
+                        this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                }
+            }
+        }
+
+        public UpdatableArray copy(Array src) {
+            if (src instanceof JABitSubArray) {
+                JABitSubArray a = (JABitSubArray)src;
+                long count = (a.length < length ? a.length : length);
+                if (count == 1) {
+                    if (this.capacity < 0) // copy-on-next-write
+                        reallocateStorage();
+                    synchronized (bitArray) {
+                        if ((a.bitArray[(int)((a.offset) >>> 6)] & (1L << ((int)(a.offset) & 63))) != 0L)
+                            bitArray[(int)((offset) >>> 6)] |= 1L << ((int)(offset) & 63);
+                        else
+                            bitArray[(int)((offset) >>> 6)] &= ~(1L << ((int)(offset) & 63));
+                    }
+                    return this;
+                } else if (count > 0) {
+                    if (this.capacity < 0) // copy-on-next-write
+                        reallocateStorage();
+                    PackedBitArrays.copyBits(bitArray, offset, a.bitArray, a.offset, count);
+                    return this;
+                }
+            } else if (src instanceof JABitArray) {
+                JABitArray a = (JABitArray)src;
+                long count = (a.length < length ? a.length : length);
+                if (count == 1) {
+                    if (this.capacity < 0) // copy-on-next-write
+                        reallocateStorage();
+                    synchronized (bitArray) {
+                        if ((a.bitArray[(int)((0) >>> 6)] & (1L << ((int)(0) & 63))) != 0L)
+                            bitArray[(int)((offset) >>> 6)] |= 1L << ((int)(offset) & 63);
+                        else
+                            bitArray[(int)((offset) >>> 6)] &= ~(1L << ((int)(offset) & 63));
+                    }
+                    return this;
+                } else if (count > 0) {
+                    if (this.capacity < 0) // copy-on-next-write
+                        reallocateStorage();
+                    PackedBitArrays.copyBits(bitArray, offset, a.bitArray, 0, count);
+                    return this;
+                }
+            }
+            if (src instanceof CopiesArraysImpl.CopiesBitArray) {
+                CopiesArraysImpl.CopiesBitArray a = (CopiesArraysImpl.CopiesBitArray)src;
+                long count = a.length < length ? a.length : length;
+                PackedBitArrays.fillBits(bitArray, this.longJavaArrayOffsetInternal(), count, a.element);
+            } else {
+                defaultCopy(this, src);
+            }
+            return this;
+        }
+
+        public UpdatableArray swap(UpdatableArray another) {
+            if (another instanceof UpdatableJABitSubArray) {
+                UpdatableJABitSubArray a = (UpdatableJABitSubArray)another;
+                long count = (a.length < length ? a.length : length);
+                if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
+                    if (this.capacity < 0) // copy-on-next-write
+                        reallocateStorage();
+                    long i = offset;
+                    long j = a.offset;
+                    for (long iMax = i + count; i < iMax; i++, j++) {
+                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                        synchronized (this.bitArray) {
+                            if ((a.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
+                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                            else
+                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                        }
+                        synchronized (a.bitArray) {
+                            if (temp)
+                                a.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                            else
+                                a.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                        }
+                    }
+                    return this;
+                }
+            } else if (another instanceof UpdatableJABitArray) {
+                UpdatableJABitArray a = (UpdatableJABitArray)another;
+                long count = (a.length < length ? a.length : length);
+                if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
+                    if (this.capacity < 0) // copy-on-next-write
+                        reallocateStorage();
+                    long i = offset;
+                    for (long j = 0; j < count; i++, j++) {
+                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                        synchronized (this.bitArray) {
+                            if ((a.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
+                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                            else
+                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                        }
+                        synchronized (a.bitArray) {
+                            if (temp)
+                                a.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                            else
+                                a.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                        }
+                    }
+                    return this;
+                }
+            }
+            defaultSwap(this, another);
+            return this;
+        }
+
+        public final void setDouble(long index, double value) {
+            setBit(index, value != 0);
+        }
+
+        public final void setLong(long index, long value) {
+            setBit(index, value != 0);
+        }
+
+        public final void setInt(long index, int value) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            synchronized (this.bitArray) {
+                if (value != 0)
+                    this.bitArray[(int)((offset + index) >>> 6)] |= 1L << ((int)(offset + index) & 63);
+                else
+                    this.bitArray[(int)((offset + index) >>> 6)] &= ~(1L << ((int)(offset + index) & 63));
+            }
+        }
+
+        public final void setBit(long index, boolean value) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            synchronized (this.bitArray) {
+                if (value)
+                    this.bitArray[(int)((offset + index) >>> 6)] |= 1L << ((int)(offset + index) & 63);
+                else
+                    this.bitArray[(int)((offset + index) >>> 6)] &= ~(1L << ((int)(offset + index) & 63));
+            }
+        }
+
+        public final void setBit(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            synchronized (this.bitArray) {
+                this.bitArray[(int)((offset + index) >>> 6)] |= 1L << ((offset + index) & 63);
+            }
+        }
+
+        public final void clearBit(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            synchronized (this.bitArray) {
+                this.bitArray[(int)((offset + index) >>> 6)] &= ~(1L << ((offset + index) & 63));
+            }
+        }
+
+        public UpdatableBitArray fill(double value) {
+            return fill(0, length, value);
+        }
+
+        public UpdatableBitArray fill(long position, long count, double value) {
+            return fill(position, count, value != 0);
+        }
+
+        public UpdatableBitArray fill(long value) {
+            return fill(0, length, value);
+        }
+
+        public UpdatableBitArray fill(long position, long count, long value) {
+            return fill(position, count, value != 0);
+        }
+
+        public UpdatableBitArray fill(boolean value) {
+            return fill(0, length, value);
+        }
+
+        public UpdatableBitArray fill(long position, long count, boolean value) {
+            if (position < 0)
+                throw rangeException(position);
+            if (count < 0)
+                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
+                        + ") in " + getClass());
+            if (position > length - count)
+                throw rangeException(position + count - 1);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            PackedBitArrays.fillBits(this.bitArray, offset + position, count, value);
+            return this;
+        }
+
+        public UpdatableBitArray subArray(long fromIndex, long toIndex) {
+            if (fromIndex < 0)
+                throw rangeException(fromIndex);
+            if (toIndex > length)
+                throw rangeException(toIndex - 1);
+            if (fromIndex > toIndex)
+                throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
+                        + " > toIndex = " + toIndex + ") in " + getClass());
+            if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
+                return new UpdatableJABitArray(bitArray, (toIndex - fromIndex));
+            } else {
+                UpdatableJABitSubArray result = new UpdatableJABitSubArray(bitArray,
+                        (toIndex - fromIndex), offset + fromIndex);
+                if (this.capacity < 0) // copy-on-next-write
+                    result.capacity |= HIGH_BIT;
+                return result;
+            }
+        }
+
+        public UpdatableBitArray subArr(long position, long count) {
+            if (position < 0)
+                throw rangeException(position);
+            if (count < 0)
+                throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
+                        + ") in " + getClass());
+            if (position > length - count)
+                throw rangeException(position + count - 1);
+            if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
+                return new UpdatableJABitArray(bitArray, count);
+            } else {
+                UpdatableJABitSubArray result = new UpdatableJABitSubArray(bitArray,
+                        count, offset + position);
+                if (this.capacity < 0) // copy-on-next-write
+                    result.capacity |= HIGH_BIT;
+                return result;
+            }
+        }
+
+        // must be overridden in UpdatableBitSubArray,
+        // which is built by preprocessor without "trusted" superclass
+        public final BitArray asImmutable() {
+            return new JABitSubArray(bitArray, capacity(), length(), offset);
+        }
+
+        // must be overridden in UpdatableBitSubArray,
+        // which is built by preprocessor without "trusted" superclass
+        public final boolean isImmutable() {
+            return false;
+        }
+
+        public final BitArray asTrustedImmutable() {
+            JABitSubArray result = new JABitSubArray(bitArray,
+                    capacity(), length(), offset);
+            if (this.capacity < 0) // copy-on-next-write
+                result.capacity |= HIGH_BIT;
+            return result;
+        }
+
+        public void checkUnallowedMutation() throws UnallowedMutationError {
+        }
+
+        public UpdatableArray asCopyOnNextWrite() {
+            if (isCopyOnNextWrite())
+                return this;
+            UpdatableJABitSubArray result = new UpdatableJABitSubArray(bitArray,
+                    capacity(), length(), offset);
+            result.capacity |= HIGH_BIT;
+            return result;
+        }
+
+        public UpdatableBitArray asUnresizable() {
+            return this;
+        }
+
+        public UpdatableArray shallowClone() {
+            return (UpdatableArray)standardObjectClone();
+        }
+
+        public String toString() {
+            return "unresizable simple AlgART subarray bit[" + length()
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
+        }
+    }
+
+    @SuppressWarnings("cast")
+    static final class MutableJABitArray
+            extends UpdatableJABitArray implements MutableBitArray
+    {
+        MutableJABitArray(long initialCapacity, long initialLength) {
+            super(initialCapacity, initialLength);
+        }
+
+        MutableJABitArray(long[] initialArray, long initialCapacity, long initialLength) {
+            super(initialArray, initialCapacity, initialLength);
+        }
+
+        MutableJABitArray(long[] initialArray, long initialCapacityAndLength) {
+            super(initialArray, initialCapacityAndLength);
+        }
+
+        final void clearElements(long fromIndex, long toIndex) {
+            defaultCopy(this.subArray(fromIndex, toIndex),
+                    Arrays.nBitCopies(toIndex - fromIndex, false), true);
+        }
+
+        public MutableBitArray length(long newLength) {
+            if (length < 0)
+                throw new IllegalArgumentException("Negative desired array length");
+            lengthImpl(newLength);
+            return this;
+        }
+
+        public MutableBitArray ensureCapacity(long minCapacity) {
+            if (minCapacity < 0)
+                throw new IllegalArgumentException("Negative desired array minimal capacity");
+            ensureCapacityImpl(minCapacity);
+            return this;
+        }
+
+        public MutableBitArray trim() {
+            trimImpl();
+            return this;
+        }
+
+        public MutableBitArray append(Array appendedArray) {
+            appendImpl(appendedArray);
+            return this;
+        }
+
+        public final Object popElement() {
+            return Boolean.valueOf(popBit());
+        }
+
+        public final void pushElement(Object value) {
+            pushBit(((Boolean)value).booleanValue());
+        }
+
+        public final boolean popBit() {
+            long i = length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            boolean result = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+            this.length = i;
+            synchronized (this.bitArray) {
+                if (false)
+                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                else
+                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+            }
+            return result;
+        }
+
+        public final void pushBit(boolean value) {
+            long i = length;
+            if (i >= capacity()) {
+                // we are sure that i cannot be Long.MAX_VALUE, because i is int value
+                ensureCapacityImpl((long)i + 1);
+            }
+            this.length = i + 1;
+            synchronized (this.bitArray) {
+                if (value)
+                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                else
+                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+            }
+        }
+
+        public final MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+            super.setData(arrayPos, srcArray, srcArrayOffset, count);
+            return this;
+        }
+
+        public final MutableBitArray setData(long arrayPos, Object srcArray) {
+            super.setData(arrayPos, srcArray);
+            return this;
+        }
+
+        public final MutableBitArray copy(Array src) {
+            super.copy(src);
+            return this;
+        }
+
+        public final MutableBitArray swap(UpdatableArray another) {
+            super.swap(another);
+            return this;
+        }
+
+        public MutableBitArray asCopyOnNextWrite() {
+            MutableJABitSubArray result = new MutableJABitSubArray(bitArray,
+                    capacity(), length(), 0);
+            result.capacity |= HIGH_BIT;
+            return result;
+        }
+
+        public boolean isUnresizable() {
+            return false;
+        }
+
+        public final UpdatableBitArray asUnresizable() {
+            return new UpdatableJABitArray(bitArray, capacity(), length());
+        }
+
+        public MutableBitArray shallowClone() {
+            return (MutableBitArray)standardObjectClone();
+        }
+
+        public final String toString() {
+            return "mutable simple AlgART array bit[" + length()
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
+        }
+    }
+
+    @SuppressWarnings("cast")
+    static final class MutableJABitSubArray
+            extends UpdatableJABitSubArray implements MutableBitArray
+            // This class is used only for check "capacity < 0" for copy-on-next-write mode
+    {
+        MutableJABitSubArray(long[] initialArray, long initialCapacity, long initialLength, long initialOffset) {
+            super(initialArray, initialCapacity, initialLength, initialOffset);
+        }
+
+        MutableJABitSubArray(long[] initialArray, long initialCapacityAndLength, long initialOffset) {
+            super(initialArray, initialCapacityAndLength, initialOffset);
+        }
+
+        final void clearElements(long fromIndex, long toIndex) {
+            defaultCopy(this.subArray(fromIndex, toIndex),
+                    Arrays.nBitCopies(toIndex - fromIndex, false), true);
+        }
+
+        public MutableBitArray length(long newLength) {
+            if (length < 0)
+                throw new IllegalArgumentException("Negative desired array length");
+            lengthImpl(newLength);
+            return this;
+        }
+
+        public MutableBitArray ensureCapacity(long minCapacity) {
+            if (minCapacity < 0)
+                throw new IllegalArgumentException("Negative desired array minimal capacity");
+            ensureCapacityImpl(minCapacity);
+            return this;
+        }
+
+        public MutableBitArray trim() {
+            trimImpl();
+            return this;
+        }
+
+        public MutableBitArray append(Array appendedArray) {
+            appendImpl(appendedArray);
+            return this;
+        }
+
+        public final Object popElement() {
+            return Boolean.valueOf(popBit());
+        }
+
+        public final void pushElement(Object value) {
+            pushBit(((Boolean)value).booleanValue());
+        }
+
+        public final boolean popBit() {
+            long i = length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            boolean result = (this.bitArray[(int)((offset + i) >>> 6)] & (1L << ((int)(offset + i) & 63))) != 0L;
+            this.length = i;
+            synchronized (this.bitArray) {
+                if (false)
+                    this.bitArray[(int)((offset + i) >>> 6)] |= 1L << ((int)(offset + i) & 63);
+                else
+                    this.bitArray[(int)((offset + i) >>> 6)] &= ~(1L << ((int)(offset + i) & 63));
+            }
+            return result;
+        }
+
+        public final void pushBit(boolean value) {
+            long i = length;
+            if (i >= capacity()) {
+                // we are sure that i cannot be Long.MAX_VALUE, because i is int value
+                ensureCapacityImpl((long)i + 1);
+            }
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i + 1;
+            synchronized (this.bitArray) {
+                if (value)
+                    this.bitArray[(int)((offset + i) >>> 6)] |= 1L << ((int)(offset + i) & 63);
+                else
+                    this.bitArray[(int)((offset + i) >>> 6)] &= ~(1L << ((int)(offset + i) & 63));
+            }
+        }
+
+        public final MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+            super.setData(arrayPos, srcArray, srcArrayOffset, count);
+            return this;
+        }
+
+        public final MutableBitArray setData(long arrayPos, Object srcArray) {
+            super.setData(arrayPos, srcArray);
+            return this;
+        }
+
+        public final MutableBitArray copy(Array src) {
+            super.copy(src);
+            return this;
+        }
+
+        public final MutableBitArray swap(UpdatableArray another) {
+            super.swap(another);
+            return this;
+        }
+
+        public MutableBitArray asCopyOnNextWrite() {
+            if (isCopyOnNextWrite())
+                return this;
+            MutableJABitSubArray result = new MutableJABitSubArray(bitArray,
+                    capacity(), length(), offset);
+            result.capacity |= HIGH_BIT;
+            return result;
+        }
+
+        public boolean isUnresizable() {
+            return false;
+        }
+
+        public final UpdatableBitArray asUnresizable() {
+            UpdatableJABitSubArray result = new UpdatableJABitSubArray(bitArray,
+                    capacity(), length(), offset);
+            if (this.capacity < 0) // copy-on-next-write
+                result.capacity |= HIGH_BIT;
+            return result;
+        }
+
+        public MutableBitArray shallowClone() {
+            return (MutableBitArray)standardObjectClone();
+        }
+
+        public final String toString() {
+            return "mutable simple AlgART subarray bit[" + length()
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
+        }
+    }
 }
