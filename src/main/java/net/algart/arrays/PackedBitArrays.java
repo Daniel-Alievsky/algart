@@ -89,8 +89,9 @@ public class PackedBitArrays {
     /**
      * Returns <tt>((long) array.length) &lt;&lt; 6</tt>: the maximal number of bits that
      * can be stored in the specified array.
+     *
      * @param array <tt>long[]</tt> array.
-     * @return      <tt>64 * (long) array.length</tt>
+     * @return <tt>64 * (long) array.length</tt>
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public static long unpackedLength(byte[] array) {
@@ -8872,6 +8873,8 @@ public class PackedBitArrays {
         return true;
     }
 
+    /*Repeat.SectionStart logicalOperations*/
+
     /**
      * Replaces <tt>count</tt> bits,
      * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
@@ -8977,8 +8980,6 @@ public class PackedBitArrays {
         }
         //[[Repeat.SectionEnd notBits_method_impl]]
     }
-
-    /*Repeat.SectionStart andOrBits*/
 
     /**
      * Replaces <tt>count</tt> bits,
@@ -9192,7 +9193,6 @@ public class PackedBitArrays {
         }
         //[[Repeat.SectionEnd orBits_method_impl]]
     }
-    /*Repeat.SectionEnd andOrBits*/
 
     /**
      * Replaces <tt>count</tt> bits,
@@ -9512,6 +9512,7 @@ public class PackedBitArrays {
         }
         //[[Repeat.SectionEnd orNotBits_method_impl]]
     }
+    /*Repeat.SectionEnd logicalOperations*/
 
     /**
      * Reverse order of <tt>count</tt> bits,

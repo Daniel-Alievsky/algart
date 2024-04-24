@@ -40,8 +40,9 @@ class TinyBitArrays {
     /**
      * Returns <tt>((long) array.length) &lt;&lt; 6</tt>: the maximal number of bits that
      * can be stored in the specified array.
+     *
      * @param array <tt>long[]</tt> array.
-     * @return      <tt>64 * (long) array.length</tt>
+     * @return <tt>64 * (long) array.length</tt>
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public static long unpackedLength(byte[] array) {
@@ -485,8 +486,114 @@ class TinyBitArrays {
     }
     /*Repeat.IncludeEnd*/
 
-    /*Repeat(INCLUDE_FROM_FILE, ../../arrays/PackedBitArrays.java, andOrBits)
+    /*Repeat(INCLUDE_FROM_FILE, ../../arrays/PackedBitArrays.java, logicalOperations)
        !! Auto-generated: NOT EDIT !! */
+
+    /**
+     * Replaces <tt>count</tt> bits,
+     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical NOT of corresponding <tt>count</tt> bits,
+     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     *
+     * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
+     * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
+     * in this case it just inverts the specified bits.
+     *
+     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param srcPos  position of the first bit read in the source array.
+     * @param count   the number of bits to be replaced (must be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
+     */
+    public static void notBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
+
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int sPos = (int) (srcPos >>> 6);
+        int dPos = (int) (destPos >>> 6);
+        int sPosRem = (int) (srcPos & 63);
+        int dPosRem = (int) (destPos & 63);
+        int cntStart = (-dPosRem) & 63;
+        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (1L << (dPosRem + cntStart)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        if (sPosRem == dPosRem) {
+            if (cntStart > 0) {
+                synchronized (dest) {
+                    dest[dPos] = (~src[sPos] & maskStart) | (dest[dPos] & ~maskStart);
+                }
+                count -= cntStart;
+                dPos++;
+                sPos++;
+            }
+            for (int dPosMax = dPos + (int) (count >>> 6); dPos < dPosMax; dPos++, sPos++) {
+                dest[dPos] = ~src[sPos];
+            }
+            int cntFinish = (int) (count & 63);
+            if (cntFinish > 0) {
+                long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                synchronized (dest) {
+                    dest[dPos] = (~src[sPos] & maskFinish) | (dest[dPos] & ~maskFinish);
+                }
+            }
+        } else {
+            final int shift = dPosRem - sPosRem;
+            long sNext;
+            if (cntStart > 0) {
+                long v;
+                if (sPosRem + cntStart <= 64) { // cntStart bits are in a single src element
+                    if (shift > 0)
+                        v = (sNext = src[sPos]) << shift;
+                    else
+                        v = (sNext = src[sPos]) >>> -shift;
+                    sPosRem += cntStart;
+                } else {
+                    v = (src[sPos] >>> -shift) | ((sNext = src[sPos + 1]) << (64 + shift));
+                    sPos++;
+                    sPosRem = (sPosRem + cntStart) & 63;
+                }
+                // let's suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                synchronized (dest) {
+                    dest[dPos] = (~v & maskStart) | (dest[dPos] & ~maskStart);
+                }
+                count -= cntStart;
+                if (count == 0) {
+                    return; // little optimization
+                }
+                dPos++;
+            } else {
+                if (count == 0) {
+                    return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
+                }
+                sNext = src[sPos];
+            }
+            // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
+            final int sPosRem64 = 64 - sPosRem;
+            for (int dPosMax = dPos + (int) (count >>> 6); dPos < dPosMax; ) {
+                sPos++;
+                dest[dPos] = ~((sNext >>> sPosRem) | ((sNext = src[sPos]) << sPosRem64));
+                dPos++;
+            }
+            int cntFinish = (int) (count & 63);
+            if (cntFinish > 0) {
+                long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                long v;
+                if (sPosRem + cntFinish <= 64) { // cntFinish bits are in a single src element
+                    v = sNext >>> sPosRem;
+                } else {
+                    v = (sNext >>> sPosRem) | (src[sPos + 1] << sPosRem64);
+                }
+                synchronized (dest) {
+                    dest[dPos] = (~v & maskFinish) | (dest[dPos] & ~maskFinish);
+                }
+            }
+        }
+
+    }
 
     /**
      * Replaces <tt>count</tt> bits,
@@ -695,6 +802,325 @@ class TinyBitArrays {
                 }
                 synchronized (dest) {
                     dest[dPos] |= v & maskFinish;
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Replaces <tt>count</tt> bits,
+     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical XOR of them and corresponding <tt>count</tt> bits,
+     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     *
+     * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
+     * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
+     * in this case it clears all specified bits.
+     *
+     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param srcPos  position of the first bit read in the source array.
+     * @param count   the number of bits to be replaced (must be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
+     */
+    public static void xorBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
+
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int sPos = (int) (srcPos >>> 6);
+        int dPos = (int) (destPos >>> 6);
+        int sPosRem = (int) (srcPos & 63);
+        int dPosRem = (int) (destPos & 63);
+        int cntStart = (-dPosRem) & 63;
+        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (1L << (dPosRem + cntStart)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        if (sPosRem == dPosRem) {
+            if (cntStart > 0) {
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] ^ src[sPos]) & maskStart) | (dest[dPos] & ~maskStart);
+                }
+                count -= cntStart;
+                dPos++;
+                sPos++;
+            }
+            for (int dPosMax = dPos + (int) (count >>> 6); dPos < dPosMax; dPos++, sPos++) {
+                dest[dPos] ^= src[sPos];
+            }
+            int cntFinish = (int) (count & 63);
+            if (cntFinish > 0) {
+                long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] ^ src[sPos]) & maskFinish) | (dest[dPos] & ~maskFinish);
+                }
+            }
+        } else {
+            final int shift = dPosRem - sPosRem;
+            long sNext;
+            if (cntStart > 0) {
+                long v;
+                if (sPosRem + cntStart <= 64) { // cntStart bits are in a single src element
+                    if (shift > 0)
+                        v = (sNext = src[sPos]) << shift;
+                    else
+                        v = (sNext = src[sPos]) >>> -shift;
+                    sPosRem += cntStart;
+                } else {
+                    v = (src[sPos] >>> -shift) | ((sNext = src[sPos + 1]) << (64 + shift));
+                    sPos++;
+                    sPosRem = (sPosRem + cntStart) & 63;
+                }
+                // let's suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] ^ v) & maskStart) | (dest[dPos] & ~maskStart);
+                }
+                count -= cntStart;
+                if (count == 0) {
+                    return; // little optimization
+                }
+                dPos++;
+            } else {
+                if (count == 0) {
+                    return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
+                }
+                sNext = src[sPos];
+            }
+            // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
+            final int sPosRem64 = 64 - sPosRem;
+            for (int dPosMax = dPos + (int) (count >>> 6); dPos < dPosMax; ) {
+                sPos++;
+                dest[dPos] ^= (sNext >>> sPosRem) | ((sNext = src[sPos]) << sPosRem64);
+                dPos++;
+            }
+            int cntFinish = (int) (count & 63);
+            if (cntFinish > 0) {
+                long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                long v;
+                if (sPosRem + cntFinish <= 64) { // cntFinish bits are in a single src element
+                    v = sNext >>> sPosRem;
+                } else {
+                    v = (sNext >>> sPosRem) | (src[sPos + 1] << sPosRem64);
+                }
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] ^ v) & maskFinish) | (dest[dPos] & ~maskFinish);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Replaces <tt>count</tt> bits,
+     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical AND of them and <i>inverted</i> corresponding <tt>count</tt> bits,
+     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     *
+     * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
+     * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
+     * in this case it clears all specified bits.
+     *
+     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param srcPos  position of the first bit read in the source array.
+     * @param count   the number of bits to be replaced (must be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
+     */
+    public static void andNotBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
+
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int sPos = (int) (srcPos >>> 6);
+        int dPos = (int) (destPos >>> 6);
+        int sPosRem = (int) (srcPos & 63);
+        int dPosRem = (int) (destPos & 63);
+        int cntStart = (-dPosRem) & 63;
+        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (1L << (dPosRem + cntStart)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        if (sPosRem == dPosRem) {
+            if (cntStart > 0) {
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] & ~src[sPos]) & maskStart) | (dest[dPos] & ~maskStart);
+                }
+                count -= cntStart;
+                dPos++;
+                sPos++;
+            }
+            for (int dPosMax = dPos + (int) (count >>> 6); dPos < dPosMax; dPos++, sPos++) {
+                dest[dPos] &= ~src[sPos];
+            }
+            int cntFinish = (int) (count & 63);
+            if (cntFinish > 0) {
+                long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] & ~src[sPos]) & maskFinish) | (dest[dPos] & ~maskFinish);
+                }
+            }
+        } else {
+            final int shift = dPosRem - sPosRem;
+            long sNext;
+            if (cntStart > 0) {
+                long v;
+                if (sPosRem + cntStart <= 64) { // cntStart bits are in a single src element
+                    if (shift > 0)
+                        v = (sNext = src[sPos]) << shift;
+                    else
+                        v = (sNext = src[sPos]) >>> -shift;
+                    sPosRem += cntStart;
+                } else {
+                    v = (src[sPos] >>> -shift) | ((sNext = src[sPos + 1]) << (64 + shift));
+                    sPos++;
+                    sPosRem = (sPosRem + cntStart) & 63;
+                }
+                // let's suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] & ~v) & maskStart) | (dest[dPos] & ~maskStart);
+                }
+                count -= cntStart;
+                if (count == 0) {
+                    return; // little optimization
+                }
+                dPos++;
+            } else {
+                if (count == 0) {
+                    return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
+                }
+                sNext = src[sPos];
+            }
+            // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
+            final int sPosRem64 = 64 - sPosRem;
+            for (int dPosMax = dPos + (int) (count >>> 6); dPos < dPosMax; ) {
+                sPos++;
+                dest[dPos] &= ~((sNext >>> sPosRem) | ((sNext = src[sPos]) << sPosRem64));
+                dPos++;
+            }
+            int cntFinish = (int) (count & 63);
+            if (cntFinish > 0) {
+                long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                long v;
+                if (sPosRem + cntFinish <= 64) { // cntFinish bits are in a single src element
+                    v = sNext >>> sPosRem;
+                } else {
+                    v = (sNext >>> sPosRem) | (src[sPos + 1] << sPosRem64);
+                }
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] & ~v) & maskFinish) | (dest[dPos] & ~maskFinish);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Replaces <tt>count</tt> bits,
+     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical OR of them and <i>inverted</i> corresponding <tt>count</tt> bits,
+     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     *
+     * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
+     * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
+     * in this case it sets all specified bits to 1.
+     *
+     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param srcPos  position of the first bit read in the source array.
+     * @param count   the number of bits to be replaced (must be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
+     */
+    public static void orNotBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
+
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int sPos = (int) (srcPos >>> 6);
+        int dPos = (int) (destPos >>> 6);
+        int sPosRem = (int) (srcPos & 63);
+        int dPosRem = (int) (destPos & 63);
+        int cntStart = (-dPosRem) & 63;
+        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (1L << (dPosRem + cntStart)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+//      System.out.println((sPosRem == dPosRem ? "AORGOOD " : "AORBAD  ") + sPosRem + "," + dPosRem);
+        if (sPosRem == dPosRem) {
+            if (cntStart > 0) {
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] | ~src[sPos]) & maskStart) | (dest[dPos] & ~maskStart);
+                }
+                count -= cntStart;
+                dPos++;
+                sPos++;
+            }
+            for (int dPosMax = dPos + (int) (count >>> 6); dPos < dPosMax; dPos++, sPos++) {
+                dest[dPos] |= ~src[sPos];
+            }
+            int cntFinish = (int) (count & 63);
+            if (cntFinish > 0) {
+                long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] | ~src[sPos]) & maskFinish) | (dest[dPos] & ~maskFinish);
+                }
+            }
+        } else {
+            final int shift = dPosRem - sPosRem;
+            long sNext;
+            if (cntStart > 0) {
+                long v;
+                if (sPosRem + cntStart <= 64) { // cntStart bits are in a single src element
+                    if (shift > 0)
+                        v = (sNext = src[sPos]) << shift;
+                    else
+                        v = (sNext = src[sPos]) >>> -shift;
+                    sPosRem += cntStart;
+                } else {
+                    v = (src[sPos] >>> -shift) | ((sNext = src[sPos + 1]) << (64 + shift));
+                    sPos++;
+                    sPosRem = (sPosRem + cntStart) & 63;
+                }
+                // let's suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] | ~v) & maskStart) | (dest[dPos] & ~maskStart);
+                }
+                count -= cntStart;
+                if (count == 0) {
+                    return; // little optimization
+                }
+                dPos++;
+            } else {
+                if (count == 0) {
+                    return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
+                }
+                sNext = src[sPos];
+            }
+            // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
+            final int sPosRem64 = 64 - sPosRem;
+            for (int dPosMax = dPos + (int) (count >>> 6); dPos < dPosMax; ) {
+                sPos++;
+                dest[dPos] |= ~((sNext >>> sPosRem) | ((sNext = src[sPos]) << sPosRem64));
+                dPos++;
+            }
+            int cntFinish = (int) (count & 63);
+            if (cntFinish > 0) {
+                long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                long v;
+                if (sPosRem + cntFinish <= 64) { // cntFinish bits are in a single src element
+                    v = sNext >>> sPosRem;
+                } else {
+                    v = (sNext >>> sPosRem) | (src[sPos + 1] << sPosRem64);
+                }
+                synchronized (dest) {
+                    dest[dPos] = ((dest[dPos] | ~v) & maskFinish) | (dest[dPos] & ~maskFinish);
                 }
             }
         }
