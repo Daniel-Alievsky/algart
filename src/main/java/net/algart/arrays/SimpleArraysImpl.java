@@ -412,8 +412,7 @@ class SimpleArraysImpl {
     /*Repeat.SectionStart impl*/
     @SuppressWarnings("cast")
     static class JAFloatArray
-        extends AbstractJAArray implements FloatArray
-    {
+            extends AbstractJAArray implements FloatArray {
         float[] floatArray;
 
         JAFloatArray(long initialCapacity, long initialLength) {
@@ -588,7 +587,7 @@ class SimpleArraysImpl {
         }
 
         public DataFloatBuffer buffer(long capacity) {
-            return (DataFloatBuffer)super.buffer(capacity);
+            return (DataFloatBuffer) super.buffer(capacity);
         }
 
         public DataFloatBuffer buffer() {
@@ -650,8 +649,7 @@ class SimpleArraysImpl {
 
     @SuppressWarnings("cast")
     static class JAFloatSubArray
-        extends AbstractJAArray implements FloatArray
-    {
+            extends AbstractJAArray implements FloatArray {
         float[] floatArray;
         int offset;
 
@@ -1634,8 +1632,7 @@ class SimpleArraysImpl {
 
     @SuppressWarnings("cast")
     static final class MutableJAFloatArray
-        extends UpdatableJAFloatArray implements MutableFloatArray
-    {
+            extends UpdatableJAFloatArray implements MutableFloatArray {
         MutableJAFloatArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
@@ -1881,106 +1878,9 @@ class SimpleArraysImpl {
     }
     /*Repeat.SectionEnd impl*/
 
-    /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, impl)
-      (\w+\s+)*class\s+TrustedJAFloat(?:Sub)?Array.*?}//EndOfClass.*?(?:\r(?!\n)|\n|\r\n) ==> ;;
-      Trusted(\w+Array) ==> $1 ;;
-      FloatArray ==> BitArray ;;
-      FloatSubArray ==> BitSubArray ;;
-      FloatBuffer ==> BitBuffer ;;
-      nFloatCopies ==> nBitCopies ;;
-      \(int\)\s*(?!index|srcIndex|destIndex|firstIndex|secondIndex|getBit|(\w+\.)?floatArray) ==> ;;
-      ([ \t]*)(\w+\.)?floatArray\[offset\s*\+\s*\(int\)\s*([^\]]*?)\]\s*=\s*([^;]*); ==> $1synchronized ($2bitArray) {
-$1    if ($4)
-$1        $2bitArray[(int)((offset + $3) >>> 6)] |= 1L << ((int)(offset + $3) & 63);
-$1    else
-$1        $2bitArray[(int)((offset + $3) >>> 6)] &= ~(1L << ((int)(offset + $3) & 63));
-$1    };;
-      ([ \t]*)(\w+\.)?floatArray\[(?:\(int\)\s*)?([^\]]*?)\]\s*=\s*([^;]*); ==> $1synchronized ($2bitArray) {
-$1    if ($4)
-$1        $2bitArray[(int)(($3) >>> 6)] |= 1L << ((int)($3) & 63);
-$1    else
-$1        $2bitArray[(int)(($3) >>> 6)] &= ~(1L << ((int)($3) & 63));
-$1    };;
-      (?:\(int\)\s*|\(long\)\s*|\(double\)\s*)(\w+\.)?floatArray\[offset\s*\+\s*\(int\)\s*([^\]]*?)\] ==>
-      ($1bitArray[(int)((offset + $2) >>> 6)] & (1L << ((int)(offset + $2) & 63))) != 0L ? 1 : 0;;
-      (?:\(int\)\s*|\(long\)\s*|\(double\)\s*)(\w+\.)?floatArray\[\(int\)\s*([^\]]*?)\] ==>
-      ($1bitArray[(int)(($2) >>> 6)] & (1L << ((int)($2) & 63))) != 0L ? 1 : 0 ;;
-      (\w+\.)?floatArray\[offset\s*\+\s*\(int\)\s*([^\]]*?)\] ==>
-      ($1bitArray[(int)((offset + $2) >>> 6)] & (1L << ((int)(offset + $2) & 63))) != 0L ;;
-      (\w+\.)?floatArray\[\(int\)\s*([^\]]*?)\] ==>
-      ($1bitArray[(int)(($2) >>> 6)] & (1L << ((int)($2) & 63))) != 0L ;;
-      (\w+\.)?floatArray\[([^\]]*?)\] ==>
-      ($1bitArray[(int)(($2) >>> 6)] & (1L << ((int)($2) & 63))) != 0L ;;
-      (setInt\([^\)]*\)\s*\{[^\}]*)if\s+\((\S*)value\) ==> $1if (value != 0) ;;
-      \(int\)\s*(?=srcIndex|destIndex|firstIndex|secondIndex) ==> ;;
-      \bint\s+(i|j|iMax|count)(\s+=\s+) ==> long $1$2 ;;
-      System\.arraycopy\((\w+\.)?floatArray,\s*([^,]+),\s*(\w+\.)?floatArray,\s*([^,]+),\s*(\w+)\) ==>
-      PackedBitArrays.copyBits($3bitArray, $4, $1bitArray, $2, $5) ;;
-      (defaultCopy\(this,\s*src\);) ==> if (src instanceof CopiesArraysImpl.CopiesBitArray) {
-                CopiesArraysImpl.CopiesBitArray a = (CopiesArraysImpl.CopiesBitArray)src;
-                long count = a.length < length ? a.length : length;
-                PackedBitArrays.fillBits(bitArray, this.longJavaArrayOffsetInternal(), count, a.element);
-            } else {
-                $1
-            } ;;
-      value\s*==\s*\(float\)\s*value ==> value == 0 || value == 1 ;;
-      (ndexOf\(\w+,\s*\w+,\s*)\(float\)\s*value\) ==> $1value != 0) ;;
-      JArrays\.copyOfRange ==> cloneBitSubArray ;;
-      JArrays\.indexOfFloat ==> PackedBitArrays.indexOfBit ;;
-      JArrays\.lastIndexOfFloat ==> PackedBitArrays.lastIndexOfBit ;;
-      JArrays\.fillBitArray ==> PackedBitArrays.fillBits ;;
-      floatArray ==> bitArray ;;
-      float\[\](?!\s+toFloatArray|\s+ja\(|\)\s*toArray) ==> long[] ;;
-      int\s+offset; ==> long offset; ;;
-      int\s+initial ==> long initial ;;
-      (javaArrayOffsetInternal\(\)\s*\{\s*)return\s+\w+; ==>
-      $1throw new AssertionError("Internal error in package implementation: "
-                + "unallowed accessing javaArrayOffsetInternal() for bit array"); ;;
-      array\s+float\[ ==> array bit[ ;;
-      return\s+\(double\)\s*getFloat\(index\) ==> return getBit(index) ? 1.0 : 0.0 ;;
-      return\s+\(long\)\s*getFloat\(index\) ==> return getBit(index) ? 1 : 0 ;;
-      setFloat\(index\,\s*\(float\)\s*value\) ==> setBit(index, value != 0) ;;
-      (fill\(\w+,\s*\w+,\s*)\(float\)\s*value\) ==> $1value != 0);;
-      (return\s+)-157777 ==> $10;;
-      (return\s+)157778  ==> $11;;
-      (return\s+)(valueForFloatingPoint)(?=;\s*\/\/min) ==> $1minPossibleValue();;
-      (return\s+)(valueForFloatingPoint)(?=;\s*\/\/max) ==> $1maxPossibleValue();;
-      (\s+setFloat\([^\)]*\)\s*\{.*?)(\boffset\s*\+\s*index\b|\bindex\b)(\)\s*>>>.*?(?:\r(?!\n)|\n|\r\n)\s*\}\s*}) ==>
-      $1$2$3
-
-        public final void setBit(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            synchronized (this.bitArray) {
-                this.bitArray[(int)(($2) >>> 6)] |= 1L << (($2) & 63);
-            }
-        }
-
-        public final void clearBit(long index) {
-            if (index < 0 || index >= length)
-                throw rangeException(index);
-            if (this.capacity < 0) // copy-on-next-write
-                reallocateStorage();
-            synchronized (this.bitArray) {
-                this.bitArray[(int)(($2) >>> 6)] &= ~(1L << (($2) & 63));
-            }
-        } ;;
-      \(float\)\s*0 ==> false ;;
-      getFloat ==> getBit ;;
-      setFloat ==> setBit ;;
-      popFloat ==> popBit ;;
-      pushFloat ==> pushBit ;;
-      PER_FLOAT ==> PER_BIT ;;
-      Float(?!ing) ==> Boolean ;;
-      float ==> boolean ;;
-      (booleanArray\[[^\]]+\]\s*=\s*)0 ==> $1false
-         !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
     static class JABitArray
-        extends AbstractJAArray implements BitArray
-    {
+            extends AbstractJAArray implements BitArray {
         long[] bitArray;
 
         JABitArray(long initialCapacity, long initialLength) {
@@ -2189,7 +2089,7 @@ $1    };;
         public final MutableBitArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJABitArray(cloneBitSubArray(
-                    bitArray, 0, length), length).setNewStatus();
+                        bitArray, 0,  length),  length).setNewStatus();
             } else {
                 return (MutableBitArray) super.mutableClone(memoryModel);
             }
@@ -2217,9 +2117,7 @@ $1    };;
     }
 
     @SuppressWarnings("cast")
-    static class JABitSubArray
-        extends AbstractJAArray implements BitArray
-    {
+    static class JABitSubArray extends AbstractJAArray implements BitArray {
         long[] bitArray;
         long offset;
 
@@ -2799,8 +2697,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static class UpdatableJABitSubArray
-        extends JABitSubArray implements UpdatableBitArray
-    {
+            extends JABitSubArray implements UpdatableBitArray {
         UpdatableJABitSubArray(long[] initialArray, long initialCapacity, long initialLength, long initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
         }
@@ -3325,7 +3222,7 @@ $1    };;
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nBitCopies(toIndex - fromIndex, false), true);
+                    Arrays.nBitCopies(toIndex - fromIndex, false), true);
         }
 
         public MutableBitArray length(long newLength) {
@@ -3447,7 +3344,6 @@ $1    };;
                 + (isNew() ? ", new" : ", view");
         }
     }
-    /*Repeat.IncludeEnd*/
 
     /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, impl)
       (return\s+)-157777 ==> $10;;
@@ -3472,8 +3368,7 @@ $1    };;
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
     static class JACharArray
-        extends AbstractJAArray implements CharArray
-    {
+            extends AbstractJAArray implements CharArray {
         char[] charArray;
 
         JACharArray(long initialCapacity, long initialLength) {
@@ -3648,7 +3543,7 @@ $1    };;
         }
 
         public DataCharBuffer buffer(long capacity) {
-            return (DataCharBuffer)super.buffer(capacity);
+            return (DataCharBuffer) super.buffer(capacity);
         }
 
         public DataCharBuffer buffer() {
@@ -3710,8 +3605,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static class JACharSubArray
-        extends AbstractJAArray implements CharArray
-    {
+            extends AbstractJAArray implements CharArray {
         char[] charArray;
         int offset;
 
@@ -4694,8 +4588,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static final class MutableJACharArray
-        extends UpdatableJACharArray implements MutableCharArray
-    {
+            extends UpdatableJACharArray implements MutableCharArray {
         MutableJACharArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
@@ -4972,12 +4865,11 @@ $1    };;
       Float(?!ing) ==> Byte ;;
       float ==> byte ;;
       PER_FLOAT ==> PER_BYTE ;;
-      (return\s+(?:\(\w+\))?)(this\.byteArray\[(?:offset\s*\+\s*)?\(int\)index\])\s*; ==> $1($2 & 0xFF);
+      (return\s+(?:\(\w+\s*\))?)(this\.byteArray\[(?:offset\s*\+\s*)?\(int\)\s*index\])\s*; ==> $1($2 & 0xFF);
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
     static class JAByteArray
-        extends AbstractJAArray implements ByteArray
-    {
+            extends AbstractJAArray implements ByteArray {
         byte[] byteArray;
 
         JAByteArray(long initialCapacity, long initialLength) {
@@ -5152,7 +5044,7 @@ $1    };;
         }
 
         public DataByteBuffer buffer(long capacity) {
-            return (DataByteBuffer)super.buffer(capacity);
+            return (DataByteBuffer) super.buffer(capacity);
         }
 
         public DataByteBuffer buffer() {
@@ -5214,8 +5106,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static class JAByteSubArray
-        extends AbstractJAArray implements ByteArray
-    {
+            extends AbstractJAArray implements ByteArray {
         byte[] byteArray;
         int offset;
 
@@ -6198,8 +6089,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static final class MutableJAByteArray
-        extends UpdatableJAByteArray implements MutableByteArray
-    {
+            extends UpdatableJAByteArray implements MutableByteArray {
         MutableJAByteArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
@@ -6450,18 +6340,17 @@ $1    };;
       (return\s+)157778  ==> $10xFFFF;;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/min) ==> $1minPossibleValue();;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/max) ==> $1maxPossibleValue();;
-      value\s*==\s*\(float\)\s*value ==> value == ((int)value & 0xFFFF) ;;
+      value\s*==\s*\(float\)\s*value ==> value == ((int) value & 0xFFFF) ;;
       float\s+getFloat ==> int getShort ;;
       Float.valueOf\( ==> Short.valueOf((short) ;;
       Float(?!ing) ==> Short ;;
       float ==> short ;;
       PER_FLOAT ==> PER_SHORT ;;
-      (return\s+(?:\(\w+\))?)(this\.shortArray\[(?:offset\s*\+\s*)?\(int\)index\])\s*; ==> $1($2 & 0xFFFF);
+      (return\s+(?:\(\w+\s*\))?)(this\.shortArray\[(?:offset\s*\+\s*)?\(int\)\s*index\])\s*; ==> $1($2 & 0xFFFF);
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
     static class JAShortArray
-        extends AbstractJAArray implements ShortArray
-    {
+            extends AbstractJAArray implements ShortArray {
         short[] shortArray;
 
         JAShortArray(long initialCapacity, long initialLength) {
@@ -6538,11 +6427,11 @@ $1    };;
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
         }
 
         public final long getLong(long index) {
@@ -6558,11 +6447,11 @@ $1    };;
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
         }
 
         public final int getShort(long index) {
@@ -6636,7 +6525,7 @@ $1    };;
         }
 
         public DataShortBuffer buffer(long capacity) {
-            return (DataShortBuffer)super.buffer(capacity);
+            return (DataShortBuffer) super.buffer(capacity);
         }
 
         public DataShortBuffer buffer() {
@@ -6698,8 +6587,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static class JAShortSubArray
-        extends AbstractJAArray implements ShortArray
-    {
+            extends AbstractJAArray implements ShortArray {
         short[] shortArray;
         int offset;
 
@@ -6775,11 +6663,11 @@ $1    };;
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
         }
 
         public final long getLong(long index) {
@@ -6795,11 +6683,11 @@ $1    };;
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
         }
 
         public final int getShort(long index) {
@@ -7682,8 +7570,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static final class MutableJAShortArray
-        extends UpdatableJAShortArray implements MutableShortArray
-    {
+            extends UpdatableJAShortArray implements MutableShortArray {
         MutableJAShortArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
@@ -7942,8 +7829,7 @@ $1    };;
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
     static class JAIntArray
-        extends AbstractJAArray implements IntArray
-    {
+            extends AbstractJAArray implements IntArray {
         int[] intArray;
 
         JAIntArray(long initialCapacity, long initialLength) {
@@ -8112,7 +7998,7 @@ $1    };;
         }
 
         public DataIntBuffer buffer(long capacity) {
-            return (DataIntBuffer)super.buffer(capacity);
+            return (DataIntBuffer) super.buffer(capacity);
         }
 
         public DataIntBuffer buffer() {
@@ -8174,8 +8060,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static class JAIntSubArray
-        extends AbstractJAArray implements IntArray
-    {
+            extends AbstractJAArray implements IntArray {
         int[] intArray;
         int offset;
 
@@ -9138,8 +9023,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static final class MutableJAIntArray
-        extends UpdatableJAIntArray implements MutableIntArray
-    {
+            extends UpdatableJAIntArray implements MutableIntArray {
         MutableJAIntArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
@@ -9400,8 +9284,7 @@ $1    };;
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
     static class JALongArray
-        extends AbstractJAArray implements LongArray
-    {
+            extends AbstractJAArray implements LongArray {
         long[] longArray;
 
         JALongArray(long initialCapacity, long initialLength) {
@@ -9562,7 +9445,7 @@ $1    };;
         }
 
         public DataLongBuffer buffer(long capacity) {
-            return (DataLongBuffer)super.buffer(capacity);
+            return (DataLongBuffer) super.buffer(capacity);
         }
 
         public DataLongBuffer buffer() {
@@ -9624,8 +9507,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static class JALongSubArray
-        extends AbstractJAArray implements LongArray
-    {
+            extends AbstractJAArray implements LongArray {
         long[] longArray;
         int offset;
 
@@ -10570,8 +10452,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static final class MutableJALongArray
-        extends UpdatableJALongArray implements MutableLongArray
-    {
+            extends UpdatableJALongArray implements MutableLongArray {
         MutableJALongArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
@@ -10827,8 +10708,7 @@ $1    };;
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
     static class JADoubleArray
-        extends AbstractJAArray implements DoubleArray
-    {
+            extends AbstractJAArray implements DoubleArray {
         double[] doubleArray;
 
         JADoubleArray(long initialCapacity, long initialLength) {
@@ -10989,7 +10869,7 @@ $1    };;
         }
 
         public DataDoubleBuffer buffer(long capacity) {
-            return (DataDoubleBuffer)super.buffer(capacity);
+            return (DataDoubleBuffer) super.buffer(capacity);
         }
 
         public DataDoubleBuffer buffer() {
@@ -11051,8 +10931,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static class JADoubleSubArray
-        extends AbstractJAArray implements DoubleArray
-    {
+            extends AbstractJAArray implements DoubleArray {
         double[] doubleArray;
         int offset;
 
@@ -11997,8 +11876,7 @@ $1    };;
 
     @SuppressWarnings("cast")
     static final class MutableJADoubleArray
-        extends UpdatableJADoubleArray implements MutableDoubleArray
-    {
+            extends UpdatableJADoubleArray implements MutableDoubleArray {
         MutableJADoubleArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
@@ -12290,8 +12168,7 @@ $1    };;
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("rawtypes")
     static class JAObjectArray
-        extends AbstractJAArray implements ObjectArray
-    {
+            extends AbstractJAArray implements ObjectArray {
         Object[] objectArray;
         final Class<?> elementType;
 
@@ -12433,7 +12310,7 @@ $1    };;
         }
 
         public DataObjectBuffer buffer(long capacity) {
-            return (DataObjectBuffer)super.buffer(capacity);
+            return (DataObjectBuffer) super.buffer(capacity);
         }
 
         public DataObjectBuffer buffer() {
@@ -12502,8 +12379,7 @@ $1    };;
 
     @SuppressWarnings("rawtypes")
     static class JAObjectSubArray
-        extends AbstractJAArray implements ObjectArray
-    {
+            extends AbstractJAArray implements ObjectArray {
         Object[] objectArray;
         final Class<?> elementType;
         int offset;
@@ -13416,8 +13292,7 @@ $1    };;
 
     @SuppressWarnings("rawtypes")
     static final class MutableJAObjectArray
-        extends UpdatableJAObjectArray implements MutableObjectArray
-    {
+            extends UpdatableJAObjectArray implements MutableObjectArray {
         MutableJAObjectArray(Class<?> elementType, long initialCapacity, long initialLength) {
             super(elementType, initialCapacity, initialLength);
         }
