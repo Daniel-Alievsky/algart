@@ -1888,31 +1888,31 @@ class SimpleArraysImpl {
       FloatSubArray ==> BitSubArray ;;
       FloatBuffer ==> BitBuffer ;;
       nFloatCopies ==> nBitCopies ;;
-      \(int\)(?!index|srcIndex|destIndex|firstIndex|secondIndex|getBit|(\w+\.)?floatArray) ==> ;;
-      ([ \t]*)(\w+\.)?floatArray\[offset\s*\+\s*\(int\)([^\]]*?)\]\s*=\s*([^;]*); ==> $1synchronized ($2bitArray) {
+      \(int\)\s*(?!index|srcIndex|destIndex|firstIndex|secondIndex|getBit|(\w+\.)?floatArray) ==> ;;
+      ([ \t]*)(\w+\.)?floatArray\[offset\s*\+\s*\(int\)\s*([^\]]*?)\]\s*=\s*([^;]*); ==> $1synchronized ($2bitArray) {
 $1    if ($4)
 $1        $2bitArray[(int)((offset + $3) >>> 6)] |= 1L << ((int)(offset + $3) & 63);
 $1    else
 $1        $2bitArray[(int)((offset + $3) >>> 6)] &= ~(1L << ((int)(offset + $3) & 63));
 $1    };;
-      ([ \t]*)(\w+\.)?floatArray\[(?:\(int\))?([^\]]*?)\]\s*=\s*([^;]*); ==> $1synchronized ($2bitArray) {
+      ([ \t]*)(\w+\.)?floatArray\[(?:\(int\)\s*)?([^\]]*?)\]\s*=\s*([^;]*); ==> $1synchronized ($2bitArray) {
 $1    if ($4)
 $1        $2bitArray[(int)(($3) >>> 6)] |= 1L << ((int)($3) & 63);
 $1    else
 $1        $2bitArray[(int)(($3) >>> 6)] &= ~(1L << ((int)($3) & 63));
 $1    };;
-      (?:\(int\)|\(long\)|\(double\))(\w+\.)?floatArray\[offset\s*\+\s*\(int\)([^\]]*?)\] ==>
+      (?:\(int\)\s*|\(long\)\s*|\(double\)\s*)(\w+\.)?floatArray\[offset\s*\+\s*\(int\)\s*([^\]]*?)\] ==>
       ($1bitArray[(int)((offset + $2) >>> 6)] & (1L << ((int)(offset + $2) & 63))) != 0L ? 1 : 0;;
-      (?:\(int\)|\(long\)|\(double\))(\w+\.)?floatArray\[\(int\)([^\]]*?)\] ==>
+      (?:\(int\)\s*|\(long\)\s*|\(double\)\s*)(\w+\.)?floatArray\[\(int\)\s*([^\]]*?)\] ==>
       ($1bitArray[(int)(($2) >>> 6)] & (1L << ((int)($2) & 63))) != 0L ? 1 : 0 ;;
-      (\w+\.)?floatArray\[offset\s*\+\s*\(int\)([^\]]*?)\] ==>
+      (\w+\.)?floatArray\[offset\s*\+\s*\(int\)\s*([^\]]*?)\] ==>
       ($1bitArray[(int)((offset + $2) >>> 6)] & (1L << ((int)(offset + $2) & 63))) != 0L ;;
-      (\w+\.)?floatArray\[\(int\)([^\]]*?)\] ==>
+      (\w+\.)?floatArray\[\(int\)\s*([^\]]*?)\] ==>
       ($1bitArray[(int)(($2) >>> 6)] & (1L << ((int)($2) & 63))) != 0L ;;
       (\w+\.)?floatArray\[([^\]]*?)\] ==>
       ($1bitArray[(int)(($2) >>> 6)] & (1L << ((int)($2) & 63))) != 0L ;;
       (setInt\([^\)]*\)\s*\{[^\}]*)if\s+\((\S*)value\) ==> $1if (value != 0) ;;
-      \(int\)(?=srcIndex|destIndex|firstIndex|secondIndex) ==> ;;
+      \(int\)\s*(?=srcIndex|destIndex|firstIndex|secondIndex) ==> ;;
       \bint\s+(i|j|iMax|count)(\s+=\s+) ==> long $1$2 ;;
       System\.arraycopy\((\w+\.)?floatArray,\s*([^,]+),\s*(\w+\.)?floatArray,\s*([^,]+),\s*(\w+)\) ==>
       PackedBitArrays.copyBits($3bitArray, $4, $1bitArray, $2, $5) ;;
@@ -1923,24 +1923,24 @@ $1    };;
             } else {
                 $1
             } ;;
-      value\s*==\s*\(float\)value ==> value == 0 || value == 1 ;;
-      (ndexOf\(\w+,\s*\w+,\s*)\(float\)value\) ==> $1value != 0) ;;
+      value\s*==\s*\(float\)\s*value ==> value == 0 || value == 1 ;;
+      (ndexOf\(\w+,\s*\w+,\s*)\(float\)\s*value\) ==> $1value != 0) ;;
       JArrays\.copyOfRange ==> cloneBitSubArray ;;
       JArrays\.indexOfFloat ==> PackedBitArrays.indexOfBit ;;
       JArrays\.lastIndexOfFloat ==> PackedBitArrays.lastIndexOfBit ;;
       JArrays\.fillBitArray ==> PackedBitArrays.fillBits ;;
       floatArray ==> bitArray ;;
-      float\[\](?!\s+toFloatArray|\s+ja\(|\)toArray) ==> long[] ;;
+      float\[\](?!\s+toFloatArray|\s+ja\(|\)\s*toArray) ==> long[] ;;
       int\s+offset; ==> long offset; ;;
       int\s+initial ==> long initial ;;
       (javaArrayOffsetInternal\(\)\s*\{\s*)return\s+\w+; ==>
       $1throw new AssertionError("Internal error in package implementation: "
                 + "unallowed accessing javaArrayOffsetInternal() for bit array"); ;;
       array\s+float\[ ==> array bit[ ;;
-      return\s+\(double\)getFloat\(index\) ==> return getBit(index) ? 1.0 : 0.0 ;;
-      return\s+\(long\)getFloat\(index\) ==> return getBit(index) ? 1 : 0 ;;
-      setFloat\(index\,\s*\(float\)value\) ==> setBit(index, value != 0) ;;
-      (fill\(\w+,\s*\w+,\s*)\(float\)value\) ==> $1value != 0);;
+      return\s+\(double\)\s*getFloat\(index\) ==> return getBit(index) ? 1.0 : 0.0 ;;
+      return\s+\(long\)\s*getFloat\(index\) ==> return getBit(index) ? 1 : 0 ;;
+      setFloat\(index\,\s*\(float\)\s*value\) ==> setBit(index, value != 0) ;;
+      (fill\(\w+,\s*\w+,\s*)\(float\)\s*value\) ==> $1value != 0);;
       (return\s+)-157777 ==> $10;;
       (return\s+)157778  ==> $11;;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/min) ==> $1minPossibleValue();;
@@ -1967,7 +1967,7 @@ $1    };;
                 this.bitArray[(int)(($2) >>> 6)] &= ~(1L << (($2) & 63));
             }
         } ;;
-      \(float\)0 ==> false ;;
+      \(float\)\s*0 ==> false ;;
       getFloat ==> getBit ;;
       setFloat ==> setBit ;;
       popFloat ==> popBit ;;
@@ -2189,7 +2189,7 @@ $1    };;
         public final MutableBitArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJABitArray(cloneBitSubArray(
-                    bitArray, 0,  length),  length).setNewStatus();
+                    bitArray, 0, length), length).setNewStatus();
             } else {
                 return (MutableBitArray) super.mutableClone(memoryModel);
             }
@@ -2198,7 +2198,7 @@ $1    };;
         public final UpdatableBitArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJABitArray(cloneBitSubArray(
-                    bitArray, 0,  length),  length).setNewStatus();
+                    bitArray, 0, length), length).setNewStatus();
             } else {
                 return (UpdatableBitArray) super.updatableClone(memoryModel);
             }
@@ -2431,7 +2431,7 @@ $1    };;
         public final MutableBitArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJABitArray(cloneBitSubArray(
-                    bitArray, offset, offset +  length),  length).setNewStatus();
+                    bitArray, offset, offset + length), length).setNewStatus();
             } else {
                 return (MutableBitArray) super.mutableClone(memoryModel);
             }
@@ -2440,7 +2440,7 @@ $1    };;
         public final UpdatableBitArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJABitArray(cloneBitSubArray(
-                    bitArray, offset, offset +  length),  length).setNewStatus();
+                    bitArray, offset, offset + length), length).setNewStatus();
             } else {
                 return (UpdatableBitArray) super.updatableClone(memoryModel);
             }
@@ -4966,7 +4966,7 @@ $1    };;
       (return\s+)157778  ==> $10xFF;;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/min) ==> $1minPossibleValue();;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/max) ==> $1maxPossibleValue();;
-      value\s*==\s*\(float\)value ==> value == ((int)value & 0xFF) ;;
+      value\s*==\s*\(float\)\s*value ==> value == ((int)value & 0xFF) ;;
       float\s+getFloat ==> int getByte ;;
       Float.valueOf\( ==> Byte.valueOf((byte) ;;
       Float(?!ing) ==> Byte ;;
@@ -6450,7 +6450,7 @@ $1    };;
       (return\s+)157778  ==> $10xFFFF;;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/min) ==> $1minPossibleValue();;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/max) ==> $1maxPossibleValue();;
-      value\s*==\s*\(float\)value ==> value == ((int)value & 0xFFFF) ;;
+      value\s*==\s*\(float\)\s*value ==> value == ((int)value & 0xFFFF) ;;
       float\s+getFloat ==> int getShort ;;
       Float.valueOf\( ==> Short.valueOf((short) ;;
       Float(?!ing) ==> Short ;;
@@ -9393,7 +9393,7 @@ $1    };;
       public(\s+\w+)+\s+(g|s)etLong(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       public(\s+\w+)+\s+\w+ndexOf\(long\s+\w+,\s*long\s+\w+,\s*long(.*?)\n\s*}\s* ==> ;;
       public(\s+\w+)+\s+fill\((?:long\s+\w+,\s*long\s+\w+,\s*)?long\s+value(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
-      \(int\)(\w+\.)?floatArray\[([^\]]*)\] ==> Arrays.truncateLongToInt($1longArray[$2]) ;;
+      \(int\)\s*(\w+\.)?floatArray\[([^\]]*)\] ==> Arrays.truncateLongToInt($1longArray[$2]) ;;
       Float(?!ing) ==> Long ;;
       float ==> long ;;
       PER_FLOAT ==> PER_LONG
@@ -12261,7 +12261,7 @@ $1    };;
       public(\s+\w+)+\s+fill\((long\s+\w+,\s*long\s+\w+,\s*)?(long|double)\s+va(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       public(\s+\w+)+\s+(min|max)Value\((.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       (JArrays\.copyOfRange) ==> (Object[])$1 ;;
-      \(float\)0 ==> null ;;
+      \(float\)\s*0 ==> null ;;
       getFloat ==> getElement ;;
       setFloat ==> setElement ;;
       popFloat ==> popElement ;;
