@@ -458,7 +458,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return getFloat(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Float.valueOf(getFloat(index));
         }
 
         public final long bitsPerElement() {
@@ -693,7 +695,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return getFloat(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Float.valueOf(getFloat(index));
         }
 
         public final long bitsPerElement() {
@@ -1672,7 +1676,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return popFloat();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Float.valueOf(popFloat());
         }
 
         public final void pushElement(Object value) {
@@ -1790,7 +1796,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return popFloat();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Float.valueOf(popFloat());
         }
 
         public final void pushElement(Object value) {
@@ -1946,7 +1954,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return getChar(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Character.valueOf(getChar(index));
         }
 
         public final long bitsPerElement() {
@@ -2181,7 +2191,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return getChar(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Character.valueOf(getChar(index));
         }
 
         public final long bitsPerElement() {
@@ -3160,7 +3172,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return popChar();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Character.valueOf(popChar());
         }
 
         public final void pushElement(Object value) {
@@ -3173,7 +3187,8 @@ class SimpleArraysImpl {
                 throw new EmptyStackException();
             char result = this.charArray[i];
             this.length = i;
-            this.charArray[i] = (char)0;
+            this.charArray[i] = (char) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -3287,7 +3302,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return popChar();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Character.valueOf(popChar());
         }
 
         public final void pushElement(Object value) {
@@ -3302,7 +3319,8 @@ class SimpleArraysImpl {
                 reallocateStorage();
             char result = this.charArray[offset + i];
             this.length = i;
-            this.charArray[offset + i] = (char)0;
+            this.charArray[offset + i] = (char) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -3390,7 +3408,7 @@ class SimpleArraysImpl {
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/max) ==> $1maxPossibleValue();;
       value\s*==\s*\(float\)\s*value ==> value == ((int)value & 0xFF) ;;
       float\s+getFloat ==> int getByte ;;
-      Float.valueOf\( ==> Byte.valueOf((byte) ;;
+      Float.valueOf\((\w+) ==> Byte.valueOf((byte) $1 ;;
       Float(?!ing) ==> Byte ;;
       float ==> byte ;;
       PER_FLOAT ==> PER_BYTE ;;
@@ -3444,7 +3462,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return (byte) getByte(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Byte.valueOf((byte) getByte(index));
         }
 
         public final long bitsPerElement() {
@@ -3679,7 +3699,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return (byte) getByte(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Byte.valueOf((byte) getByte(index));
         }
 
         public final long bitsPerElement() {
@@ -4658,7 +4680,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return (byte) popByte();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Byte.valueOf((byte) popByte());
         }
 
         public final void pushElement(Object value) {
@@ -4671,7 +4695,8 @@ class SimpleArraysImpl {
                 throw new EmptyStackException();
             byte result = this.byteArray[i];
             this.length = i;
-            this.byteArray[i] = (byte)0;
+            this.byteArray[i] = (byte) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -4775,7 +4800,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return (byte) popByte();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Byte.valueOf((byte) popByte());
         }
 
         public final void pushElement(Object value) {
@@ -4790,7 +4817,8 @@ class SimpleArraysImpl {
                 reallocateStorage();
             byte result = this.byteArray[offset + i];
             this.length = i;
-            this.byteArray[offset + i] = (byte)0;
+            this.byteArray[offset + i] = (byte) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -4868,7 +4896,7 @@ class SimpleArraysImpl {
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/max) ==> $1maxPossibleValue();;
       value\s*==\s*\(float\)\s*value ==> value == ((int) value & 0xFFFF) ;;
       float\s+getFloat ==> int getShort ;;
-      Float.valueOf\( ==> Short.valueOf((short) ;;
+      Float.valueOf\((\w+) ==> Short.valueOf((short) $1 ;;
       Float(?!ing) ==> Short ;;
       float ==> short ;;
       PER_FLOAT ==> PER_SHORT ;;
@@ -4922,7 +4950,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return (short) getShort(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Short.valueOf((short) getShort(index));
         }
 
         public final long bitsPerElement() {
@@ -5157,7 +5187,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return (short) getShort(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Short.valueOf((short) getShort(index));
         }
 
         public final long bitsPerElement() {
@@ -6136,7 +6168,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return (short) popShort();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Short.valueOf((short) popShort());
         }
 
         public final void pushElement(Object value) {
@@ -6149,7 +6183,8 @@ class SimpleArraysImpl {
                 throw new EmptyStackException();
             short result = this.shortArray[i];
             this.length = i;
-            this.shortArray[i] = (short)0;
+            this.shortArray[i] = (short) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -6253,7 +6288,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return (short) popShort();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Short.valueOf((short) popShort());
         }
 
         public final void pushElement(Object value) {
@@ -6268,7 +6305,8 @@ class SimpleArraysImpl {
                 reallocateStorage();
             short result = this.shortArray[offset + i];
             this.length = i;
-            this.shortArray[offset + i] = (short)0;
+            this.shortArray[offset + i] = (short) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -6398,7 +6436,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return getInt(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Integer.valueOf(getInt(index));
         }
 
         public final long bitsPerElement() {
@@ -6627,7 +6667,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return getInt(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Integer.valueOf(getInt(index));
         }
 
         public final long bitsPerElement() {
@@ -7586,7 +7628,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return popInt();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Integer.valueOf(popInt());
         }
 
         public final void pushElement(Object value) {
@@ -7599,7 +7643,8 @@ class SimpleArraysImpl {
                 throw new EmptyStackException();
             int result = this.intArray[i];
             this.length = i;
-            this.intArray[i] = (int)0;
+            this.intArray[i] = (int) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -7703,7 +7748,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return popInt();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Integer.valueOf(popInt());
         }
 
         public final void pushElement(Object value) {
@@ -7718,7 +7765,8 @@ class SimpleArraysImpl {
                 reallocateStorage();
             int result = this.intArray[offset + i];
             this.length = i;
-            this.intArray[offset + i] = (int)0;
+            this.intArray[offset + i] = (int) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -7850,7 +7898,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return getLong(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Long.valueOf(getLong(index));
         }
 
         public final long bitsPerElement() {
@@ -8071,7 +8121,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return getLong(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Long.valueOf(getLong(index));
         }
 
         public final long bitsPerElement() {
@@ -9012,7 +9064,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return popLong();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Long.valueOf(popLong());
         }
 
         public final void pushElement(Object value) {
@@ -9025,7 +9079,8 @@ class SimpleArraysImpl {
                 throw new EmptyStackException();
             long result = this.longArray[i];
             this.length = i;
-            this.longArray[i] = (long)0;
+            this.longArray[i] = (long) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -9129,7 +9184,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return popLong();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Long.valueOf(popLong());
         }
 
         public final void pushElement(Object value) {
@@ -9144,7 +9201,8 @@ class SimpleArraysImpl {
                 reallocateStorage();
             long result = this.longArray[offset + i];
             this.length = i;
-            this.longArray[offset + i] = (long)0;
+            this.longArray[offset + i] = (long) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -9271,7 +9329,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return getDouble(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Double.valueOf(getDouble(index));
         }
 
         public final long bitsPerElement() {
@@ -9492,7 +9552,9 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return getDouble(index);
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Double.valueOf(getDouble(index));
         }
 
         public final long bitsPerElement() {
@@ -10433,7 +10495,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return popDouble();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Double.valueOf(popDouble());
         }
 
         public final void pushElement(Object value) {
@@ -10446,7 +10510,8 @@ class SimpleArraysImpl {
                 throw new EmptyStackException();
             double result = this.doubleArray[i];
             this.length = i;
-            this.doubleArray[i] = (double)0;
+            this.doubleArray[i] = (double) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -10550,7 +10615,9 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return popDouble();
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
+            return Double.valueOf(popDouble());
         }
 
         public final void pushElement(Object value) {
@@ -10565,7 +10632,8 @@ class SimpleArraysImpl {
                 reallocateStorage();
             double result = this.doubleArray[offset + i];
             this.length = i;
-            this.doubleArray[offset + i] = (double)0;
+            this.doubleArray[offset + i] = (double) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -11852,6 +11920,7 @@ class SimpleArraysImpl {
             Object result = this.objectArray[i];
             this.length = i;
             this.objectArray[i] = null;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -11970,6 +12039,7 @@ class SimpleArraysImpl {
             Object result = this.objectArray[offset + i];
             this.length = i;
             this.objectArray[offset + i] = null;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
