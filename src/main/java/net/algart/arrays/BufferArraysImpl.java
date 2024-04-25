@@ -541,8 +541,9 @@ class BufferArraysImpl {
         }
 
         public final Object getElement(long index) {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Float.valueOf(getFloat(index));
-            // manual boxing is necessary for preprocessing byte and short arrays
         }
 
         public final long bitsPerElement() {
@@ -933,16 +934,17 @@ class BufferArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Float.valueOf(popFloat());
-            // manual boxing necessary for preprocessing byte and short arrays
         }
 
-        public final void pushElement(Object value) {
-            pushFloat(((Float) value).floatValue());
+        public void pushElement(Object value) {
+            pushFloat((Float) value);
         }
 
-        public final float popFloat() {
+        public float popFloat() {
             if (length == 0)
                 throw new EmptyStackException();
             this.length--; // must be changed BEFORE reallocateStorage()
@@ -952,7 +954,7 @@ class BufferArraysImpl {
             return storage.getFloat(offset + length);
         }
 
-        public final void pushFloat(float value) {
+        public void pushFloat(float value) {
             long newLength = length + 1;
             if (newLength < 0) { // overflow
                 assert newLength == Long.MIN_VALUE;
@@ -968,22 +970,22 @@ class BufferArraysImpl {
             storage.setFloat(offset + length - 1, value);
         }
 
-        public final MutableFloatArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableFloatArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableFloatArray setData(long arrayPos, Object srcArray) {
+        public MutableFloatArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableFloatArray copy(Array src) {
+        public MutableFloatArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableFloatArray swap(UpdatableArray another) {
+        public MutableFloatArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -1001,7 +1003,7 @@ class BufferArraysImpl {
             return false;
         }
 
-        public final UpdatableFloatArray asUnresizable() {
+        public UpdatableFloatArray asUnresizable() {
             UpdatableBufferFloatArray result = new UpdatableBufferFloatArray(storage, capacity, length, offset,
                 underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
@@ -1012,7 +1014,7 @@ class BufferArraysImpl {
             return (MutableBufferFloatArray) super.shallowClone();
         }
 
-        public final String toString() {
+        public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array float[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -1052,8 +1054,9 @@ class BufferArraysImpl {
         }
 
         public final Object getElement(long index) {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Character.valueOf(getChar(index));
-            // manual boxing is necessary for preprocessing byte and short arrays
         }
 
         public final long bitsPerElement() {
@@ -1444,16 +1447,17 @@ class BufferArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Character.valueOf(popChar());
-            // manual boxing necessary for preprocessing byte and short arrays
         }
 
-        public final void pushElement(Object value) {
-            pushChar(((Character) value).charValue());
+        public void pushElement(Object value) {
+            pushChar((Character) value);
         }
 
-        public final char popChar() {
+        public char popChar() {
             if (length == 0)
                 throw new EmptyStackException();
             this.length--; // must be changed BEFORE reallocateStorage()
@@ -1463,7 +1467,7 @@ class BufferArraysImpl {
             return storage.getChar(offset + length);
         }
 
-        public final void pushChar(char value) {
+        public void pushChar(char value) {
             long newLength = length + 1;
             if (newLength < 0) { // overflow
                 assert newLength == Long.MIN_VALUE;
@@ -1479,22 +1483,22 @@ class BufferArraysImpl {
             storage.setChar(offset + length - 1, value);
         }
 
-        public final MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableCharArray setData(long arrayPos, Object srcArray) {
+        public MutableCharArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableCharArray copy(Array src) {
+        public MutableCharArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableCharArray swap(UpdatableArray another) {
+        public MutableCharArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -1512,7 +1516,7 @@ class BufferArraysImpl {
             return false;
         }
 
-        public final UpdatableCharArray asUnresizable() {
+        public UpdatableCharArray asUnresizable() {
             UpdatableBufferCharArray result = new UpdatableBufferCharArray(storage, capacity, length, offset,
                 underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
@@ -1523,7 +1527,7 @@ class BufferArraysImpl {
             return (MutableBufferCharArray) super.shallowClone();
         }
 
-        public final String toString() {
+        public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array char[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -1563,8 +1567,9 @@ class BufferArraysImpl {
         }
 
         public final Object getElement(long index) {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Byte.valueOf((byte)getByte(index));
-            // manual boxing is necessary for preprocessing byte and short arrays
         }
 
         public final long bitsPerElement() {
@@ -1955,16 +1960,17 @@ class BufferArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Byte.valueOf(popByte());
-            // manual boxing necessary for preprocessing byte and short arrays
         }
 
-        public final void pushElement(Object value) {
-            pushByte(((Byte) value).byteValue());
+        public void pushElement(Object value) {
+            pushByte((Byte) value);
         }
 
-        public final byte popByte() {
+        public byte popByte() {
             if (length == 0)
                 throw new EmptyStackException();
             this.length--; // must be changed BEFORE reallocateStorage()
@@ -1974,7 +1980,7 @@ class BufferArraysImpl {
             return storage.getByte(offset + length);
         }
 
-        public final void pushByte(byte value) {
+        public void pushByte(byte value) {
             long newLength = length + 1;
             if (newLength < 0) { // overflow
                 assert newLength == Long.MIN_VALUE;
@@ -1990,22 +1996,22 @@ class BufferArraysImpl {
             storage.setByte(offset + length - 1, value);
         }
 
-        public final MutableByteArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableByteArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableByteArray setData(long arrayPos, Object srcArray) {
+        public MutableByteArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableByteArray copy(Array src) {
+        public MutableByteArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableByteArray swap(UpdatableArray another) {
+        public MutableByteArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -2023,7 +2029,7 @@ class BufferArraysImpl {
             return false;
         }
 
-        public final UpdatableByteArray asUnresizable() {
+        public UpdatableByteArray asUnresizable() {
             UpdatableBufferByteArray result = new UpdatableBufferByteArray(storage, capacity, length, offset,
                 underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
@@ -2034,7 +2040,7 @@ class BufferArraysImpl {
             return (MutableBufferByteArray) super.shallowClone();
         }
 
-        public final String toString() {
+        public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array byte[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -2074,8 +2080,9 @@ class BufferArraysImpl {
         }
 
         public final Object getElement(long index) {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Short.valueOf((short)getShort(index));
-            // manual boxing is necessary for preprocessing byte and short arrays
         }
 
         public final long bitsPerElement() {
@@ -2466,16 +2473,17 @@ class BufferArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Short.valueOf(popShort());
-            // manual boxing necessary for preprocessing byte and short arrays
         }
 
-        public final void pushElement(Object value) {
-            pushShort(((Short) value).shortValue());
+        public void pushElement(Object value) {
+            pushShort((Short) value);
         }
 
-        public final short popShort() {
+        public short popShort() {
             if (length == 0)
                 throw new EmptyStackException();
             this.length--; // must be changed BEFORE reallocateStorage()
@@ -2485,7 +2493,7 @@ class BufferArraysImpl {
             return storage.getShort(offset + length);
         }
 
-        public final void pushShort(short value) {
+        public void pushShort(short value) {
             long newLength = length + 1;
             if (newLength < 0) { // overflow
                 assert newLength == Long.MIN_VALUE;
@@ -2501,22 +2509,22 @@ class BufferArraysImpl {
             storage.setShort(offset + length - 1, value);
         }
 
-        public final MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableShortArray setData(long arrayPos, Object srcArray) {
+        public MutableShortArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableShortArray copy(Array src) {
+        public MutableShortArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableShortArray swap(UpdatableArray another) {
+        public MutableShortArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -2534,7 +2542,7 @@ class BufferArraysImpl {
             return false;
         }
 
-        public final UpdatableShortArray asUnresizable() {
+        public UpdatableShortArray asUnresizable() {
             UpdatableBufferShortArray result = new UpdatableBufferShortArray(storage, capacity, length, offset,
                 underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
@@ -2545,7 +2553,7 @@ class BufferArraysImpl {
             return (MutableBufferShortArray) super.shallowClone();
         }
 
-        public final String toString() {
+        public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array short[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -2585,8 +2593,9 @@ class BufferArraysImpl {
         }
 
         public final Object getElement(long index) {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Integer.valueOf(getInt(index));
-            // manual boxing is necessary for preprocessing byte and short arrays
         }
 
         public final long bitsPerElement() {
@@ -2962,16 +2971,17 @@ class BufferArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Integer.valueOf(popInt());
-            // manual boxing necessary for preprocessing byte and short arrays
         }
 
-        public final void pushElement(Object value) {
-            pushInt(((Integer) value).intValue());
+        public void pushElement(Object value) {
+            pushInt((Integer) value);
         }
 
-        public final int popInt() {
+        public int popInt() {
             if (length == 0)
                 throw new EmptyStackException();
             this.length--; // must be changed BEFORE reallocateStorage()
@@ -2981,7 +2991,7 @@ class BufferArraysImpl {
             return storage.getInt(offset + length);
         }
 
-        public final void pushInt(int value) {
+        public void pushInt(int value) {
             long newLength = length + 1;
             if (newLength < 0) { // overflow
                 assert newLength == Long.MIN_VALUE;
@@ -2997,22 +3007,22 @@ class BufferArraysImpl {
             storage.setInt(offset + length - 1, value);
         }
 
-        public final MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableIntArray setData(long arrayPos, Object srcArray) {
+        public MutableIntArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableIntArray copy(Array src) {
+        public MutableIntArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableIntArray swap(UpdatableArray another) {
+        public MutableIntArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -3030,7 +3040,7 @@ class BufferArraysImpl {
             return false;
         }
 
-        public final UpdatableIntArray asUnresizable() {
+        public UpdatableIntArray asUnresizable() {
             UpdatableBufferIntArray result = new UpdatableBufferIntArray(storage, capacity, length, offset,
                 underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
@@ -3041,7 +3051,7 @@ class BufferArraysImpl {
             return (MutableBufferIntArray) super.shallowClone();
         }
 
-        public final String toString() {
+        public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array int[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -3081,8 +3091,9 @@ class BufferArraysImpl {
         }
 
         public final Object getElement(long index) {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Long.valueOf(getLong(index));
-            // manual boxing is necessary for preprocessing byte and short arrays
         }
 
         public final long bitsPerElement() {
@@ -3447,16 +3458,17 @@ class BufferArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Long.valueOf(popLong());
-            // manual boxing necessary for preprocessing byte and short arrays
         }
 
-        public final void pushElement(Object value) {
-            pushLong(((Long) value).longValue());
+        public void pushElement(Object value) {
+            pushLong((Long) value);
         }
 
-        public final long popLong() {
+        public long popLong() {
             if (length == 0)
                 throw new EmptyStackException();
             this.length--; // must be changed BEFORE reallocateStorage()
@@ -3466,7 +3478,7 @@ class BufferArraysImpl {
             return storage.getLong(offset + length);
         }
 
-        public final void pushLong(long value) {
+        public void pushLong(long value) {
             long newLength = length + 1;
             if (newLength < 0) { // overflow
                 assert newLength == Long.MIN_VALUE;
@@ -3482,22 +3494,22 @@ class BufferArraysImpl {
             storage.setLong(offset + length - 1, value);
         }
 
-        public final MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableLongArray setData(long arrayPos, Object srcArray) {
+        public MutableLongArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableLongArray copy(Array src) {
+        public MutableLongArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableLongArray swap(UpdatableArray another) {
+        public MutableLongArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -3515,7 +3527,7 @@ class BufferArraysImpl {
             return false;
         }
 
-        public final UpdatableLongArray asUnresizable() {
+        public UpdatableLongArray asUnresizable() {
             UpdatableBufferLongArray result = new UpdatableBufferLongArray(storage, capacity, length, offset,
                 underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
@@ -3526,7 +3538,7 @@ class BufferArraysImpl {
             return (MutableBufferLongArray) super.shallowClone();
         }
 
-        public final String toString() {
+        public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array long[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -3566,8 +3578,9 @@ class BufferArraysImpl {
         }
 
         public final Object getElement(long index) {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Double.valueOf(getDouble(index));
-            // manual boxing is necessary for preprocessing byte and short arrays
         }
 
         public final long bitsPerElement() {
@@ -3932,16 +3945,17 @@ class BufferArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
+            // boxing necessary for regexps in Repeater
+            //noinspection UnnecessaryBoxing
             return Double.valueOf(popDouble());
-            // manual boxing necessary for preprocessing byte and short arrays
         }
 
-        public final void pushElement(Object value) {
-            pushDouble(((Double) value).doubleValue());
+        public void pushElement(Object value) {
+            pushDouble((Double) value);
         }
 
-        public final double popDouble() {
+        public double popDouble() {
             if (length == 0)
                 throw new EmptyStackException();
             this.length--; // must be changed BEFORE reallocateStorage()
@@ -3951,7 +3965,7 @@ class BufferArraysImpl {
             return storage.getDouble(offset + length);
         }
 
-        public final void pushDouble(double value) {
+        public void pushDouble(double value) {
             long newLength = length + 1;
             if (newLength < 0) { // overflow
                 assert newLength == Long.MIN_VALUE;
@@ -3967,22 +3981,22 @@ class BufferArraysImpl {
             storage.setDouble(offset + length - 1, value);
         }
 
-        public final MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableDoubleArray setData(long arrayPos, Object srcArray) {
+        public MutableDoubleArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableDoubleArray copy(Array src) {
+        public MutableDoubleArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableDoubleArray swap(UpdatableArray another) {
+        public MutableDoubleArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -4000,7 +4014,7 @@ class BufferArraysImpl {
             return false;
         }
 
-        public final UpdatableDoubleArray asUnresizable() {
+        public UpdatableDoubleArray asUnresizable() {
             UpdatableBufferDoubleArray result = new UpdatableBufferDoubleArray(storage, capacity, length, offset,
                 underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
@@ -4011,7 +4025,7 @@ class BufferArraysImpl {
             return (MutableBufferDoubleArray) super.shallowClone();
         }
 
-        public final String toString() {
+        public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array double[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
@@ -4449,15 +4463,15 @@ class BufferArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             return popBit();
         }
 
-        public final void pushElement(Object value) {
-            pushBit(((Boolean)value).booleanValue());
+        public void pushElement(Object value) {
+            pushBit((Boolean) value);
         }
 
-        public final boolean popBit() {
+        public boolean popBit() {
             if (length == 0)
                 throw new EmptyStackException();
             boolean result = getBit(length - 1);
@@ -4468,7 +4482,7 @@ class BufferArraysImpl {
             return result;
         }
 
-        public final void pushBit(boolean value) {
+        public void pushBit(boolean value) {
             long newLength = length + 1;
             if (newLength < 0) { // overflow
                 assert newLength == Long.MIN_VALUE;
@@ -4484,22 +4498,22 @@ class BufferArraysImpl {
             setBit(newLength - 1, value);
         }
 
-        public final MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableBitArray setData(long arrayPos, Object srcArray) {
+        public MutableBitArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableBitArray copy(Array src) {
+        public MutableBitArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableBitArray swap(UpdatableArray another) {
+        public MutableBitArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -4517,7 +4531,7 @@ class BufferArraysImpl {
             return false;
         }
 
-        public final UpdatableBitArray asUnresizable() {
+        public UpdatableBitArray asUnresizable() {
             UpdatableBufferBitArray result = new UpdatableBufferBitArray(storage, capacity, length, offset,
                 underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
@@ -4528,7 +4542,7 @@ class BufferArraysImpl {
             return (MutableBufferBitArray)super.shallowClone();
         }
 
-        public final String toString() {
+        public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array bit[" + length() + "], @<"
                 + storage + ">, capacity " + capacity()
