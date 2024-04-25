@@ -665,7 +665,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.floatArray = (float[])super.array;
+            this.floatArray = (float[]) super.array;
             this.offset = 0;
         }
 
@@ -720,41 +720,41 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)this.floatArray[offset + (int)index];
+            return (double) this.floatArray[offset + (int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (float)value ? indexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? indexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (float)value ? lastIndexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? lastIndexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)this.floatArray[offset + (int)index];
+            return (long) this.floatArray[offset + (int) index];
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (int)this.floatArray[offset + (int)index];
+            return (int) this.floatArray[offset + (int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (float)value ? indexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? indexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (float)value ? lastIndexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? lastIndexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public final float getFloat(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.floatArray[offset + (int)index];
+            return this.floatArray[offset + (int) index];
         }
 
         public long indexOf(long lowIndex, long highIndex, float value) {
@@ -768,7 +768,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.indexOfFloat(this.floatArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -783,7 +783,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.lastIndexOfFloat(this.floatArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -794,11 +794,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0) {
-                return new JAFloatArray(floatArray, (int)(toIndex - fromIndex));
+                return new JAFloatArray(floatArray, (int) (toIndex - fromIndex));
             } else {
-                return new JAFloatSubArray(floatArray, (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                return new JAFloatSubArray(floatArray, (int) (toIndex - fromIndex), offset + (int) fromIndex);
             }
         }
 
@@ -807,30 +807,30 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0) {
-                return new JAFloatArray(floatArray, (int)count);
+                return new JAFloatArray(floatArray, (int) count);
             } else {
-                return new JAFloatSubArray(floatArray, (int)count, offset + (int)position);
+                return new JAFloatSubArray(floatArray, (int) count, offset + (int) position);
             }
         }
 
         public DataFloatBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataFloatBuffer)super.buffer(mode, capacity);
+            return (DataFloatBuffer) super.buffer(mode, capacity);
         }
 
         public DataFloatBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataFloatBuffer)super.buffer(mode);
+            return (DataFloatBuffer) super.buffer(mode);
         }
 
         public DataFloatBuffer buffer(long capacity) {
-            return (DataFloatBuffer)super.buffer(capacity);
+            return (DataFloatBuffer) super.buffer(capacity);
         }
 
         public DataFloatBuffer buffer() {
-            return (DataFloatBuffer)super.buffer();
+            return (DataFloatBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -859,7 +859,7 @@ class SimpleArraysImpl {
         public final MutableFloatArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJAFloatArray(JArrays.copyOfRange(
-                    floatArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        floatArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableFloatArray) super.mutableClone(memoryModel);
             }
@@ -868,7 +868,7 @@ class SimpleArraysImpl {
         public final UpdatableFloatArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJAFloatArray(JArrays.copyOfRange(
-                    floatArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        floatArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableFloatArray) super.updatableClone(memoryModel);
             }
@@ -880,15 +880,14 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART subarray float[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static class TrustedJAFloatArray
-        extends JAFloatArray implements DirectAccessible
-    {
+            extends JAFloatArray implements DirectAccessible {
         private int startHashCode = -1;
 
         TrustedJAFloatArray(long initialCapacity, long initialLength) {
@@ -896,7 +895,7 @@ class SimpleArraysImpl {
         }
 
         TrustedJAFloatArray(float[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
@@ -928,11 +927,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new TrustedJAFloatArray(floatArray, (int)(toIndex - fromIndex));
+                return new TrustedJAFloatArray(floatArray, (int) (toIndex - fromIndex));
             } else {
-                return new TrustedJAFloatSubArray(floatArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new TrustedJAFloatSubArray(floatArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -941,18 +940,18 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new TrustedJAFloatArray(floatArray, (int)count);
+                return new TrustedJAFloatArray(floatArray, (int) count);
             } else {
-                return new TrustedJAFloatSubArray(floatArray, (int)count, (int)position);
+                return new TrustedJAFloatSubArray(floatArray, (int) count, (int) position);
             }
         }
 
         public FloatArray asImmutable() {
-            return new JAFloatArray(floatArray, (int)capacity(), (int)length());
+            return new JAFloatArray(floatArray, (int) capacity(), (int) length());
         }
 
         public boolean isImmutable() {
@@ -962,40 +961,42 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             TrustedJAFloatSubArray result = new TrustedJAFloatSubArray(floatArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART array float[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
     static class TrustedJAFloatSubArray
-        extends JAFloatSubArray implements DirectAccessible
-    {
+            extends JAFloatSubArray implements DirectAccessible {
         private int startHashCode = -1;
 
-        TrustedJAFloatSubArray(float[] initialArray, int initialCapacity, int initialLength,
-            int initialOffset)
-        {
+        TrustedJAFloatSubArray(
+                float[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
 
-        TrustedJAFloatSubArray(float[] initialArray, int initialCapacityAndLength,
-            int initialOffset)
-        {
+        TrustedJAFloatSubArray(
+                float[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
@@ -1022,12 +1023,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJAFloatArray(floatArray, (int)(toIndex - fromIndex));
+                return new TrustedJAFloatArray(floatArray, (int) (toIndex - fromIndex));
             } else {
                 TrustedJAFloatSubArray result = new TrustedJAFloatSubArray(floatArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -1039,14 +1040,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJAFloatArray(floatArray, (int)count);
+                return new TrustedJAFloatArray(floatArray, (int) count);
             } else {
                 TrustedJAFloatSubArray result = new TrustedJAFloatSubArray(floatArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -1054,7 +1055,7 @@ class SimpleArraysImpl {
         }
 
         public FloatArray asImmutable() {
-            return new JAFloatSubArray(floatArray, (int)capacity(), (int)length(), offset);
+            return new JAFloatSubArray(floatArray, (int) capacity(), (int) length(), offset);
         }
 
         public boolean isImmutable() {
@@ -1064,24 +1065,24 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             if (isCopyOnNextWrite())
                 return this;
             TrustedJAFloatSubArray result = new TrustedJAFloatSubArray(floatArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART subarray float[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
@@ -1184,8 +1185,8 @@ class SimpleArraysImpl {
 
         public UpdatableArray swap(UpdatableArray another) {
             if (another instanceof UpdatableJAFloatSubArray) {
-                UpdatableJAFloatSubArray a = (UpdatableJAFloatSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJAFloatSubArray a = (UpdatableJAFloatSubArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -1196,8 +1197,8 @@ class SimpleArraysImpl {
                     return this;
                 }
             } else if (another instanceof UpdatableJAFloatArray) {
-                UpdatableJAFloatArray a = (UpdatableJAFloatArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJAFloatArray a = (UpdatableJAFloatArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         float temp = this.floatArray[i];
@@ -1212,54 +1213,54 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setFloat(index, (float)value);
+            setFloat(index, (float) value);
         }
 
         public final void setLong(long index, long value) {
-            setFloat(index, (float)value);
+            setFloat(index, (float) value);
         }
 
         public final void setInt(long index, int value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.floatArray[(int)index] = (float)value;
+            this.floatArray[(int) index] = (float) value;
         }
 
         public final void setFloat(long index, float value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.floatArray[(int)index] = value;
+            this.floatArray[(int) index] = value;
         }
 
         public UpdatableFloatArray fill(double value) {
             return fill(0, length, value);
         }
 
-        public UpdatableFloatArray  fill(long position, long count, double value) {
-            return fill(position, count, (float)value);
+        public UpdatableFloatArray fill(long position, long count, double value) {
+            return fill(position, count, (float) value);
         }
 
-        public UpdatableFloatArray  fill(long value) {
+        public UpdatableFloatArray fill(long value) {
             return fill(0, length, value);
         }
 
-        public UpdatableFloatArray  fill(long position, long count, long value) {
-            return fill(position, count, (float)value);
+        public UpdatableFloatArray fill(long position, long count, long value) {
+            return fill(position, count, (float) value);
         }
 
-        public UpdatableFloatArray  fill(float value) {
+        public UpdatableFloatArray fill(float value) {
             return fill(0, length, value);
         }
 
-        public UpdatableFloatArray  fill(long position, long count, float value) {
+        public UpdatableFloatArray fill(long position, long count, float value) {
             if (position < 0)
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
-            JArrays.fillFloatArray(this.floatArray, (int)position, (int)count, value);
+            JArrays.fillFloatArray(this.floatArray, (int) position, (int) count, value);
             return this;
         }
 
@@ -1270,11 +1271,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new UpdatableJAFloatArray(floatArray, (int)(toIndex - fromIndex));
+                return new UpdatableJAFloatArray(floatArray, (int) (toIndex - fromIndex));
             } else {
-                return new UpdatableJAFloatSubArray(floatArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new UpdatableJAFloatSubArray(floatArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -1283,20 +1284,20 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new UpdatableJAFloatArray(floatArray, (int)count);
+                return new UpdatableJAFloatArray(floatArray, (int) count);
             } else {
-                return new UpdatableJAFloatSubArray(floatArray, (int)count, (int)position);
+                return new UpdatableJAFloatSubArray(floatArray, (int) count, (int) position);
             }
         }
 
         // must be overridden in UpdatableBitArray,
         // which is built by preprocessor without "trusted" superclass
         public final FloatArray asImmutable() {
-            return new JAFloatArray(floatArray, (int)capacity(), (int)length());
+            return new JAFloatArray(floatArray, (int) capacity(), (int) length());
         }
 
         // must be  in UpdatableBitArray,
@@ -1306,7 +1307,7 @@ class SimpleArraysImpl {
         }
 
         public final FloatArray asTrustedImmutable() {
-            return new TrustedJAFloatArray(floatArray, (int)capacity(), (int)length());
+            return new TrustedJAFloatArray(floatArray, (int) capacity(), (int) length());
             // Never set high bit here, because only subarrays can be copy-on-next write
         }
 
@@ -1315,7 +1316,7 @@ class SimpleArraysImpl {
 
         public UpdatableArray asCopyOnNextWrite() {
             UpdatableJAFloatSubArray result = new UpdatableJAFloatSubArray(floatArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -1325,26 +1326,32 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART array float[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static class UpdatableJAFloatSubArray
-        extends TrustedJAFloatSubArray implements UpdatableFloatArray
-    {
-        UpdatableJAFloatSubArray(float[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
+            extends TrustedJAFloatSubArray implements UpdatableFloatArray {
+        UpdatableJAFloatSubArray(
+                float[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
         }
 
-        UpdatableJAFloatSubArray(float[] initialArray, int initialCapacityAndLength, int initialOffset) {
+        UpdatableJAFloatSubArray(
+                float[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
@@ -2152,7 +2159,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.charArray = (char[])super.array;
+            this.charArray = (char[]) super.array;
             this.offset = 0;
         }
 
@@ -2207,41 +2214,41 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)this.charArray[offset + (int)index];
+            return (double) this.charArray[offset + (int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (char)value ? indexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? indexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (char)value ? lastIndexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? lastIndexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)this.charArray[offset + (int)index];
+            return (long) this.charArray[offset + (int) index];
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (int)this.charArray[offset + (int)index];
+            return (int) this.charArray[offset + (int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (char)value ? indexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? indexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (char)value ? lastIndexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? lastIndexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public final char getChar(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.charArray[offset + (int)index];
+            return this.charArray[offset + (int) index];
         }
 
         public long indexOf(long lowIndex, long highIndex, char value) {
@@ -2255,7 +2262,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.indexOfChar(this.charArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -2270,7 +2277,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.lastIndexOfChar(this.charArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -2281,11 +2288,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0) {
-                return new JACharArray(charArray, (int)(toIndex - fromIndex));
+                return new JACharArray(charArray, (int) (toIndex - fromIndex));
             } else {
-                return new JACharSubArray(charArray, (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                return new JACharSubArray(charArray, (int) (toIndex - fromIndex), offset + (int) fromIndex);
             }
         }
 
@@ -2294,30 +2301,30 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0) {
-                return new JACharArray(charArray, (int)count);
+                return new JACharArray(charArray, (int) count);
             } else {
-                return new JACharSubArray(charArray, (int)count, offset + (int)position);
+                return new JACharSubArray(charArray, (int) count, offset + (int) position);
             }
         }
 
         public DataCharBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataCharBuffer)super.buffer(mode, capacity);
+            return (DataCharBuffer) super.buffer(mode, capacity);
         }
 
         public DataCharBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataCharBuffer)super.buffer(mode);
+            return (DataCharBuffer) super.buffer(mode);
         }
 
         public DataCharBuffer buffer(long capacity) {
-            return (DataCharBuffer)super.buffer(capacity);
+            return (DataCharBuffer) super.buffer(capacity);
         }
 
         public DataCharBuffer buffer() {
-            return (DataCharBuffer)super.buffer();
+            return (DataCharBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -2346,7 +2353,7 @@ class SimpleArraysImpl {
         public final MutableCharArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJACharArray(JArrays.copyOfRange(
-                    charArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        charArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableCharArray) super.mutableClone(memoryModel);
             }
@@ -2355,7 +2362,7 @@ class SimpleArraysImpl {
         public final UpdatableCharArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJACharArray(JArrays.copyOfRange(
-                    charArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        charArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableCharArray) super.updatableClone(memoryModel);
             }
@@ -2367,15 +2374,14 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART subarray char[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static class TrustedJACharArray
-        extends JACharArray implements DirectAccessible
-    {
+            extends JACharArray implements DirectAccessible {
         private int startHashCode = -1;
 
         TrustedJACharArray(long initialCapacity, long initialLength) {
@@ -2383,7 +2389,7 @@ class SimpleArraysImpl {
         }
 
         TrustedJACharArray(char[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
@@ -2415,11 +2421,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new TrustedJACharArray(charArray, (int)(toIndex - fromIndex));
+                return new TrustedJACharArray(charArray, (int) (toIndex - fromIndex));
             } else {
-                return new TrustedJACharSubArray(charArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new TrustedJACharSubArray(charArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -2428,18 +2434,18 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new TrustedJACharArray(charArray, (int)count);
+                return new TrustedJACharArray(charArray, (int) count);
             } else {
-                return new TrustedJACharSubArray(charArray, (int)count, (int)position);
+                return new TrustedJACharSubArray(charArray, (int) count, (int) position);
             }
         }
 
         public CharArray asImmutable() {
-            return new JACharArray(charArray, (int)capacity(), (int)length());
+            return new JACharArray(charArray, (int) capacity(), (int) length());
         }
 
         public boolean isImmutable() {
@@ -2449,40 +2455,42 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             TrustedJACharSubArray result = new TrustedJACharSubArray(charArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART array char[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
     static class TrustedJACharSubArray
-        extends JACharSubArray implements DirectAccessible
-    {
+            extends JACharSubArray implements DirectAccessible {
         private int startHashCode = -1;
 
-        TrustedJACharSubArray(char[] initialArray, int initialCapacity, int initialLength,
-            int initialOffset)
-        {
+        TrustedJACharSubArray(
+                char[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
 
-        TrustedJACharSubArray(char[] initialArray, int initialCapacityAndLength,
-            int initialOffset)
-        {
+        TrustedJACharSubArray(
+                char[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
@@ -2509,12 +2517,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJACharArray(charArray, (int)(toIndex - fromIndex));
+                return new TrustedJACharArray(charArray, (int) (toIndex - fromIndex));
             } else {
                 TrustedJACharSubArray result = new TrustedJACharSubArray(charArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -2526,14 +2534,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJACharArray(charArray, (int)count);
+                return new TrustedJACharArray(charArray, (int) count);
             } else {
                 TrustedJACharSubArray result = new TrustedJACharSubArray(charArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -2541,7 +2549,7 @@ class SimpleArraysImpl {
         }
 
         public CharArray asImmutable() {
-            return new JACharSubArray(charArray, (int)capacity(), (int)length(), offset);
+            return new JACharSubArray(charArray, (int) capacity(), (int) length(), offset);
         }
 
         public boolean isImmutable() {
@@ -2551,24 +2559,24 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             if (isCopyOnNextWrite())
                 return this;
             TrustedJACharSubArray result = new TrustedJACharSubArray(charArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART subarray char[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
@@ -2671,8 +2679,8 @@ class SimpleArraysImpl {
 
         public UpdatableArray swap(UpdatableArray another) {
             if (another instanceof UpdatableJACharSubArray) {
-                UpdatableJACharSubArray a = (UpdatableJACharSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJACharSubArray a = (UpdatableJACharSubArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -2683,8 +2691,8 @@ class SimpleArraysImpl {
                     return this;
                 }
             } else if (another instanceof UpdatableJACharArray) {
-                UpdatableJACharArray a = (UpdatableJACharArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJACharArray a = (UpdatableJACharArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         char temp = this.charArray[i];
@@ -2699,54 +2707,54 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setChar(index, (char)value);
+            setChar(index, (char) value);
         }
 
         public final void setLong(long index, long value) {
-            setChar(index, (char)value);
+            setChar(index, (char) value);
         }
 
         public final void setInt(long index, int value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.charArray[(int)index] = (char)value;
+            this.charArray[(int) index] = (char) value;
         }
 
         public final void setChar(long index, char value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.charArray[(int)index] = value;
+            this.charArray[(int) index] = value;
         }
 
         public UpdatableCharArray fill(double value) {
             return fill(0, length, value);
         }
 
-        public UpdatableCharArray  fill(long position, long count, double value) {
-            return fill(position, count, (char)value);
+        public UpdatableCharArray fill(long position, long count, double value) {
+            return fill(position, count, (char) value);
         }
 
-        public UpdatableCharArray  fill(long value) {
+        public UpdatableCharArray fill(long value) {
             return fill(0, length, value);
         }
 
-        public UpdatableCharArray  fill(long position, long count, long value) {
-            return fill(position, count, (char)value);
+        public UpdatableCharArray fill(long position, long count, long value) {
+            return fill(position, count, (char) value);
         }
 
-        public UpdatableCharArray  fill(char value) {
+        public UpdatableCharArray fill(char value) {
             return fill(0, length, value);
         }
 
-        public UpdatableCharArray  fill(long position, long count, char value) {
+        public UpdatableCharArray fill(long position, long count, char value) {
             if (position < 0)
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
-            JArrays.fillCharArray(this.charArray, (int)position, (int)count, value);
+            JArrays.fillCharArray(this.charArray, (int) position, (int) count, value);
             return this;
         }
 
@@ -2757,11 +2765,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new UpdatableJACharArray(charArray, (int)(toIndex - fromIndex));
+                return new UpdatableJACharArray(charArray, (int) (toIndex - fromIndex));
             } else {
-                return new UpdatableJACharSubArray(charArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new UpdatableJACharSubArray(charArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -2770,20 +2778,20 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new UpdatableJACharArray(charArray, (int)count);
+                return new UpdatableJACharArray(charArray, (int) count);
             } else {
-                return new UpdatableJACharSubArray(charArray, (int)count, (int)position);
+                return new UpdatableJACharSubArray(charArray, (int) count, (int) position);
             }
         }
 
         // must be overridden in UpdatableBitArray,
         // which is built by preprocessor without "trusted" superclass
         public final CharArray asImmutable() {
-            return new JACharArray(charArray, (int)capacity(), (int)length());
+            return new JACharArray(charArray, (int) capacity(), (int) length());
         }
 
         // must be  in UpdatableBitArray,
@@ -2793,7 +2801,7 @@ class SimpleArraysImpl {
         }
 
         public final CharArray asTrustedImmutable() {
-            return new TrustedJACharArray(charArray, (int)capacity(), (int)length());
+            return new TrustedJACharArray(charArray, (int) capacity(), (int) length());
             // Never set high bit here, because only subarrays can be copy-on-next write
         }
 
@@ -2802,7 +2810,7 @@ class SimpleArraysImpl {
 
         public UpdatableArray asCopyOnNextWrite() {
             UpdatableJACharSubArray result = new UpdatableJACharSubArray(charArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -2812,26 +2820,32 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART array char[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static class UpdatableJACharSubArray
-        extends TrustedJACharSubArray implements UpdatableCharArray
-    {
-        UpdatableJACharSubArray(char[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
+            extends TrustedJACharSubArray implements UpdatableCharArray {
+        UpdatableJACharSubArray(
+                char[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
         }
 
-        UpdatableJACharSubArray(char[] initialArray, int initialCapacityAndLength, int initialOffset) {
+        UpdatableJACharSubArray(
+                char[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
@@ -3651,7 +3665,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.byteArray = (byte[])super.array;
+            this.byteArray = (byte[]) super.array;
             this.offset = 0;
         }
 
@@ -3706,41 +3720,41 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)(this.byteArray[offset + (int)index] & 0xFF);
+            return (double) (this.byteArray[offset + (int) index] & 0xFF);
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)(this.byteArray[offset + (int)index] & 0xFF);
+            return (long) (this.byteArray[offset + (int) index] & 0xFF);
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (int)(this.byteArray[offset + (int)index] & 0xFF);
+            return (int) (this.byteArray[offset + (int) index] & 0xFF);
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final int getByte(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.byteArray[offset + (int)index] & 0xFF);
+            return (this.byteArray[offset + (int) index] & 0xFF);
         }
 
         public long indexOf(long lowIndex, long highIndex, byte value) {
@@ -3754,7 +3768,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.indexOfByte(this.byteArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -3769,7 +3783,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.lastIndexOfByte(this.byteArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -3780,11 +3794,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0) {
-                return new JAByteArray(byteArray, (int)(toIndex - fromIndex));
+                return new JAByteArray(byteArray, (int) (toIndex - fromIndex));
             } else {
-                return new JAByteSubArray(byteArray, (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                return new JAByteSubArray(byteArray, (int) (toIndex - fromIndex), offset + (int) fromIndex);
             }
         }
 
@@ -3793,30 +3807,30 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0) {
-                return new JAByteArray(byteArray, (int)count);
+                return new JAByteArray(byteArray, (int) count);
             } else {
-                return new JAByteSubArray(byteArray, (int)count, offset + (int)position);
+                return new JAByteSubArray(byteArray, (int) count, offset + (int) position);
             }
         }
 
         public DataByteBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataByteBuffer)super.buffer(mode, capacity);
+            return (DataByteBuffer) super.buffer(mode, capacity);
         }
 
         public DataByteBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataByteBuffer)super.buffer(mode);
+            return (DataByteBuffer) super.buffer(mode);
         }
 
         public DataByteBuffer buffer(long capacity) {
-            return (DataByteBuffer)super.buffer(capacity);
+            return (DataByteBuffer) super.buffer(capacity);
         }
 
         public DataByteBuffer buffer() {
-            return (DataByteBuffer)super.buffer();
+            return (DataByteBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -3845,7 +3859,7 @@ class SimpleArraysImpl {
         public final MutableByteArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJAByteArray(JArrays.copyOfRange(
-                    byteArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        byteArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableByteArray) super.mutableClone(memoryModel);
             }
@@ -3854,7 +3868,7 @@ class SimpleArraysImpl {
         public final UpdatableByteArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJAByteArray(JArrays.copyOfRange(
-                    byteArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        byteArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableByteArray) super.updatableClone(memoryModel);
             }
@@ -3866,15 +3880,14 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART subarray byte[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static class TrustedJAByteArray
-        extends JAByteArray implements DirectAccessible
-    {
+            extends JAByteArray implements DirectAccessible {
         private int startHashCode = -1;
 
         TrustedJAByteArray(long initialCapacity, long initialLength) {
@@ -3882,7 +3895,7 @@ class SimpleArraysImpl {
         }
 
         TrustedJAByteArray(byte[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
@@ -3914,11 +3927,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new TrustedJAByteArray(byteArray, (int)(toIndex - fromIndex));
+                return new TrustedJAByteArray(byteArray, (int) (toIndex - fromIndex));
             } else {
-                return new TrustedJAByteSubArray(byteArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new TrustedJAByteSubArray(byteArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -3927,18 +3940,18 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new TrustedJAByteArray(byteArray, (int)count);
+                return new TrustedJAByteArray(byteArray, (int) count);
             } else {
-                return new TrustedJAByteSubArray(byteArray, (int)count, (int)position);
+                return new TrustedJAByteSubArray(byteArray, (int) count, (int) position);
             }
         }
 
         public ByteArray asImmutable() {
-            return new JAByteArray(byteArray, (int)capacity(), (int)length());
+            return new JAByteArray(byteArray, (int) capacity(), (int) length());
         }
 
         public boolean isImmutable() {
@@ -3948,40 +3961,42 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             TrustedJAByteSubArray result = new TrustedJAByteSubArray(byteArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART array byte[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
     static class TrustedJAByteSubArray
-        extends JAByteSubArray implements DirectAccessible
-    {
+            extends JAByteSubArray implements DirectAccessible {
         private int startHashCode = -1;
 
-        TrustedJAByteSubArray(byte[] initialArray, int initialCapacity, int initialLength,
-            int initialOffset)
-        {
+        TrustedJAByteSubArray(
+                byte[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
 
-        TrustedJAByteSubArray(byte[] initialArray, int initialCapacityAndLength,
-            int initialOffset)
-        {
+        TrustedJAByteSubArray(
+                byte[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
@@ -4008,12 +4023,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJAByteArray(byteArray, (int)(toIndex - fromIndex));
+                return new TrustedJAByteArray(byteArray, (int) (toIndex - fromIndex));
             } else {
                 TrustedJAByteSubArray result = new TrustedJAByteSubArray(byteArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -4025,14 +4040,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJAByteArray(byteArray, (int)count);
+                return new TrustedJAByteArray(byteArray, (int) count);
             } else {
                 TrustedJAByteSubArray result = new TrustedJAByteSubArray(byteArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -4040,7 +4055,7 @@ class SimpleArraysImpl {
         }
 
         public ByteArray asImmutable() {
-            return new JAByteSubArray(byteArray, (int)capacity(), (int)length(), offset);
+            return new JAByteSubArray(byteArray, (int) capacity(), (int) length(), offset);
         }
 
         public boolean isImmutable() {
@@ -4050,24 +4065,24 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             if (isCopyOnNextWrite())
                 return this;
             TrustedJAByteSubArray result = new TrustedJAByteSubArray(byteArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART subarray byte[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
@@ -4170,8 +4185,8 @@ class SimpleArraysImpl {
 
         public UpdatableArray swap(UpdatableArray another) {
             if (another instanceof UpdatableJAByteSubArray) {
-                UpdatableJAByteSubArray a = (UpdatableJAByteSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJAByteSubArray a = (UpdatableJAByteSubArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -4182,8 +4197,8 @@ class SimpleArraysImpl {
                     return this;
                 }
             } else if (another instanceof UpdatableJAByteArray) {
-                UpdatableJAByteArray a = (UpdatableJAByteArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJAByteArray a = (UpdatableJAByteArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         byte temp = this.byteArray[i];
@@ -4198,54 +4213,54 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setByte(index, (byte)value);
+            setByte(index, (byte) value);
         }
 
         public final void setLong(long index, long value) {
-            setByte(index, (byte)value);
+            setByte(index, (byte) value);
         }
 
         public final void setInt(long index, int value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.byteArray[(int)index] = (byte)value;
+            this.byteArray[(int) index] = (byte) value;
         }
 
         public final void setByte(long index, byte value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.byteArray[(int)index] = value;
+            this.byteArray[(int) index] = value;
         }
 
         public UpdatableByteArray fill(double value) {
             return fill(0, length, value);
         }
 
-        public UpdatableByteArray  fill(long position, long count, double value) {
-            return fill(position, count, (byte)value);
+        public UpdatableByteArray fill(long position, long count, double value) {
+            return fill(position, count, (byte) value);
         }
 
-        public UpdatableByteArray  fill(long value) {
+        public UpdatableByteArray fill(long value) {
             return fill(0, length, value);
         }
 
-        public UpdatableByteArray  fill(long position, long count, long value) {
-            return fill(position, count, (byte)value);
+        public UpdatableByteArray fill(long position, long count, long value) {
+            return fill(position, count, (byte) value);
         }
 
-        public UpdatableByteArray  fill(byte value) {
+        public UpdatableByteArray fill(byte value) {
             return fill(0, length, value);
         }
 
-        public UpdatableByteArray  fill(long position, long count, byte value) {
+        public UpdatableByteArray fill(long position, long count, byte value) {
             if (position < 0)
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
-            JArrays.fillByteArray(this.byteArray, (int)position, (int)count, value);
+            JArrays.fillByteArray(this.byteArray, (int) position, (int) count, value);
             return this;
         }
 
@@ -4256,11 +4271,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new UpdatableJAByteArray(byteArray, (int)(toIndex - fromIndex));
+                return new UpdatableJAByteArray(byteArray, (int) (toIndex - fromIndex));
             } else {
-                return new UpdatableJAByteSubArray(byteArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new UpdatableJAByteSubArray(byteArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -4269,20 +4284,20 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new UpdatableJAByteArray(byteArray, (int)count);
+                return new UpdatableJAByteArray(byteArray, (int) count);
             } else {
-                return new UpdatableJAByteSubArray(byteArray, (int)count, (int)position);
+                return new UpdatableJAByteSubArray(byteArray, (int) count, (int) position);
             }
         }
 
         // must be overridden in UpdatableBitArray,
         // which is built by preprocessor without "trusted" superclass
         public final ByteArray asImmutable() {
-            return new JAByteArray(byteArray, (int)capacity(), (int)length());
+            return new JAByteArray(byteArray, (int) capacity(), (int) length());
         }
 
         // must be  in UpdatableBitArray,
@@ -4292,7 +4307,7 @@ class SimpleArraysImpl {
         }
 
         public final ByteArray asTrustedImmutable() {
-            return new TrustedJAByteArray(byteArray, (int)capacity(), (int)length());
+            return new TrustedJAByteArray(byteArray, (int) capacity(), (int) length());
             // Never set high bit here, because only subarrays can be copy-on-next write
         }
 
@@ -4301,7 +4316,7 @@ class SimpleArraysImpl {
 
         public UpdatableArray asCopyOnNextWrite() {
             UpdatableJAByteSubArray result = new UpdatableJAByteSubArray(byteArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -4311,26 +4326,32 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART array byte[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static class UpdatableJAByteSubArray
-        extends TrustedJAByteSubArray implements UpdatableByteArray
-    {
-        UpdatableJAByteSubArray(byte[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
+            extends TrustedJAByteSubArray implements UpdatableByteArray {
+        UpdatableJAByteSubArray(
+                byte[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
         }
 
-        UpdatableJAByteSubArray(byte[] initialArray, int initialCapacityAndLength, int initialOffset) {
+        UpdatableJAByteSubArray(
+                byte[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
@@ -5130,7 +5151,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.shortArray = (short[])super.array;
+            this.shortArray = (short[]) super.array;
             this.offset = 0;
         }
 
@@ -5185,41 +5206,41 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)(this.shortArray[offset + (int)index] & 0xFFFF);
+            return (double) (this.shortArray[offset + (int) index] & 0xFFFF);
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)(this.shortArray[offset + (int)index] & 0xFFFF);
+            return (long) (this.shortArray[offset + (int) index] & 0xFFFF);
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (int)(this.shortArray[offset + (int)index] & 0xFFFF);
+            return (int) (this.shortArray[offset + (int) index] & 0xFFFF);
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public final int getShort(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.shortArray[offset + (int)index] & 0xFFFF);
+            return (this.shortArray[offset + (int) index] & 0xFFFF);
         }
 
         public long indexOf(long lowIndex, long highIndex, short value) {
@@ -5233,7 +5254,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.indexOfShort(this.shortArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -5248,7 +5269,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.lastIndexOfShort(this.shortArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -5259,11 +5280,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0) {
-                return new JAShortArray(shortArray, (int)(toIndex - fromIndex));
+                return new JAShortArray(shortArray, (int) (toIndex - fromIndex));
             } else {
-                return new JAShortSubArray(shortArray, (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                return new JAShortSubArray(shortArray, (int) (toIndex - fromIndex), offset + (int) fromIndex);
             }
         }
 
@@ -5272,30 +5293,30 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0) {
-                return new JAShortArray(shortArray, (int)count);
+                return new JAShortArray(shortArray, (int) count);
             } else {
-                return new JAShortSubArray(shortArray, (int)count, offset + (int)position);
+                return new JAShortSubArray(shortArray, (int) count, offset + (int) position);
             }
         }
 
         public DataShortBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataShortBuffer)super.buffer(mode, capacity);
+            return (DataShortBuffer) super.buffer(mode, capacity);
         }
 
         public DataShortBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataShortBuffer)super.buffer(mode);
+            return (DataShortBuffer) super.buffer(mode);
         }
 
         public DataShortBuffer buffer(long capacity) {
-            return (DataShortBuffer)super.buffer(capacity);
+            return (DataShortBuffer) super.buffer(capacity);
         }
 
         public DataShortBuffer buffer() {
-            return (DataShortBuffer)super.buffer();
+            return (DataShortBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -5324,7 +5345,7 @@ class SimpleArraysImpl {
         public final MutableShortArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJAShortArray(JArrays.copyOfRange(
-                    shortArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        shortArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableShortArray) super.mutableClone(memoryModel);
             }
@@ -5333,7 +5354,7 @@ class SimpleArraysImpl {
         public final UpdatableShortArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJAShortArray(JArrays.copyOfRange(
-                    shortArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        shortArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableShortArray) super.updatableClone(memoryModel);
             }
@@ -5345,15 +5366,14 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART subarray short[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static class TrustedJAShortArray
-        extends JAShortArray implements DirectAccessible
-    {
+            extends JAShortArray implements DirectAccessible {
         private int startHashCode = -1;
 
         TrustedJAShortArray(long initialCapacity, long initialLength) {
@@ -5361,7 +5381,7 @@ class SimpleArraysImpl {
         }
 
         TrustedJAShortArray(short[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
@@ -5393,11 +5413,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new TrustedJAShortArray(shortArray, (int)(toIndex - fromIndex));
+                return new TrustedJAShortArray(shortArray, (int) (toIndex - fromIndex));
             } else {
-                return new TrustedJAShortSubArray(shortArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new TrustedJAShortSubArray(shortArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -5406,18 +5426,18 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new TrustedJAShortArray(shortArray, (int)count);
+                return new TrustedJAShortArray(shortArray, (int) count);
             } else {
-                return new TrustedJAShortSubArray(shortArray, (int)count, (int)position);
+                return new TrustedJAShortSubArray(shortArray, (int) count, (int) position);
             }
         }
 
         public ShortArray asImmutable() {
-            return new JAShortArray(shortArray, (int)capacity(), (int)length());
+            return new JAShortArray(shortArray, (int) capacity(), (int) length());
         }
 
         public boolean isImmutable() {
@@ -5427,40 +5447,42 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             TrustedJAShortSubArray result = new TrustedJAShortSubArray(shortArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART array short[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
     static class TrustedJAShortSubArray
-        extends JAShortSubArray implements DirectAccessible
-    {
+            extends JAShortSubArray implements DirectAccessible {
         private int startHashCode = -1;
 
-        TrustedJAShortSubArray(short[] initialArray, int initialCapacity, int initialLength,
-            int initialOffset)
-        {
+        TrustedJAShortSubArray(
+                short[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
 
-        TrustedJAShortSubArray(short[] initialArray, int initialCapacityAndLength,
-            int initialOffset)
-        {
+        TrustedJAShortSubArray(
+                short[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
@@ -5487,12 +5509,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJAShortArray(shortArray, (int)(toIndex - fromIndex));
+                return new TrustedJAShortArray(shortArray, (int) (toIndex - fromIndex));
             } else {
                 TrustedJAShortSubArray result = new TrustedJAShortSubArray(shortArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -5504,14 +5526,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJAShortArray(shortArray, (int)count);
+                return new TrustedJAShortArray(shortArray, (int) count);
             } else {
                 TrustedJAShortSubArray result = new TrustedJAShortSubArray(shortArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -5519,7 +5541,7 @@ class SimpleArraysImpl {
         }
 
         public ShortArray asImmutable() {
-            return new JAShortSubArray(shortArray, (int)capacity(), (int)length(), offset);
+            return new JAShortSubArray(shortArray, (int) capacity(), (int) length(), offset);
         }
 
         public boolean isImmutable() {
@@ -5529,24 +5551,24 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             if (isCopyOnNextWrite())
                 return this;
             TrustedJAShortSubArray result = new TrustedJAShortSubArray(shortArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART subarray short[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
@@ -5649,8 +5671,8 @@ class SimpleArraysImpl {
 
         public UpdatableArray swap(UpdatableArray another) {
             if (another instanceof UpdatableJAShortSubArray) {
-                UpdatableJAShortSubArray a = (UpdatableJAShortSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJAShortSubArray a = (UpdatableJAShortSubArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -5661,8 +5683,8 @@ class SimpleArraysImpl {
                     return this;
                 }
             } else if (another instanceof UpdatableJAShortArray) {
-                UpdatableJAShortArray a = (UpdatableJAShortArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJAShortArray a = (UpdatableJAShortArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         short temp = this.shortArray[i];
@@ -5677,54 +5699,54 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setShort(index, (short)value);
+            setShort(index, (short) value);
         }
 
         public final void setLong(long index, long value) {
-            setShort(index, (short)value);
+            setShort(index, (short) value);
         }
 
         public final void setInt(long index, int value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.shortArray[(int)index] = (short)value;
+            this.shortArray[(int) index] = (short) value;
         }
 
         public final void setShort(long index, short value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.shortArray[(int)index] = value;
+            this.shortArray[(int) index] = value;
         }
 
         public UpdatableShortArray fill(double value) {
             return fill(0, length, value);
         }
 
-        public UpdatableShortArray  fill(long position, long count, double value) {
-            return fill(position, count, (short)value);
+        public UpdatableShortArray fill(long position, long count, double value) {
+            return fill(position, count, (short) value);
         }
 
-        public UpdatableShortArray  fill(long value) {
+        public UpdatableShortArray fill(long value) {
             return fill(0, length, value);
         }
 
-        public UpdatableShortArray  fill(long position, long count, long value) {
-            return fill(position, count, (short)value);
+        public UpdatableShortArray fill(long position, long count, long value) {
+            return fill(position, count, (short) value);
         }
 
-        public UpdatableShortArray  fill(short value) {
+        public UpdatableShortArray fill(short value) {
             return fill(0, length, value);
         }
 
-        public UpdatableShortArray  fill(long position, long count, short value) {
+        public UpdatableShortArray fill(long position, long count, short value) {
             if (position < 0)
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
-            JArrays.fillShortArray(this.shortArray, (int)position, (int)count, value);
+            JArrays.fillShortArray(this.shortArray, (int) position, (int) count, value);
             return this;
         }
 
@@ -5735,11 +5757,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new UpdatableJAShortArray(shortArray, (int)(toIndex - fromIndex));
+                return new UpdatableJAShortArray(shortArray, (int) (toIndex - fromIndex));
             } else {
-                return new UpdatableJAShortSubArray(shortArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new UpdatableJAShortSubArray(shortArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -5748,20 +5770,20 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new UpdatableJAShortArray(shortArray, (int)count);
+                return new UpdatableJAShortArray(shortArray, (int) count);
             } else {
-                return new UpdatableJAShortSubArray(shortArray, (int)count, (int)position);
+                return new UpdatableJAShortSubArray(shortArray, (int) count, (int) position);
             }
         }
 
         // must be overridden in UpdatableBitArray,
         // which is built by preprocessor without "trusted" superclass
         public final ShortArray asImmutable() {
-            return new JAShortArray(shortArray, (int)capacity(), (int)length());
+            return new JAShortArray(shortArray, (int) capacity(), (int) length());
         }
 
         // must be  in UpdatableBitArray,
@@ -5771,7 +5793,7 @@ class SimpleArraysImpl {
         }
 
         public final ShortArray asTrustedImmutable() {
-            return new TrustedJAShortArray(shortArray, (int)capacity(), (int)length());
+            return new TrustedJAShortArray(shortArray, (int) capacity(), (int) length());
             // Never set high bit here, because only subarrays can be copy-on-next write
         }
 
@@ -5780,7 +5802,7 @@ class SimpleArraysImpl {
 
         public UpdatableArray asCopyOnNextWrite() {
             UpdatableJAShortSubArray result = new UpdatableJAShortSubArray(shortArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -5790,26 +5812,32 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART array short[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static class UpdatableJAShortSubArray
-        extends TrustedJAShortSubArray implements UpdatableShortArray
-    {
-        UpdatableJAShortSubArray(short[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
+            extends TrustedJAShortSubArray implements UpdatableShortArray {
+        UpdatableJAShortSubArray(
+                short[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
         }
 
-        UpdatableJAShortSubArray(short[] initialArray, int initialCapacityAndLength, int initialOffset) {
+        UpdatableJAShortSubArray(
+                short[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
@@ -6601,7 +6629,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.intArray = (int[])super.array;
+            this.intArray = (int[]) super.array;
             this.offset = 0;
         }
 
@@ -6656,35 +6684,35 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)this.intArray[offset + (int)index];
+            return (double) this.intArray[offset + (int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (int)value ? indexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? indexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (int)value ? lastIndexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? lastIndexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)this.intArray[offset + (int)index];
+            return (long) this.intArray[offset + (int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (int)value ? indexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? indexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (int)value ? lastIndexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? lastIndexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.intArray[offset + (int)index];
+            return this.intArray[offset + (int) index];
         }
 
         public long indexOf(long lowIndex, long highIndex, int value) {
@@ -6698,7 +6726,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.indexOfInt(this.intArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -6713,7 +6741,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.lastIndexOfInt(this.intArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -6724,11 +6752,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0) {
-                return new JAIntArray(intArray, (int)(toIndex - fromIndex));
+                return new JAIntArray(intArray, (int) (toIndex - fromIndex));
             } else {
-                return new JAIntSubArray(intArray, (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                return new JAIntSubArray(intArray, (int) (toIndex - fromIndex), offset + (int) fromIndex);
             }
         }
 
@@ -6737,30 +6765,30 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0) {
-                return new JAIntArray(intArray, (int)count);
+                return new JAIntArray(intArray, (int) count);
             } else {
-                return new JAIntSubArray(intArray, (int)count, offset + (int)position);
+                return new JAIntSubArray(intArray, (int) count, offset + (int) position);
             }
         }
 
         public DataIntBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataIntBuffer)super.buffer(mode, capacity);
+            return (DataIntBuffer) super.buffer(mode, capacity);
         }
 
         public DataIntBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataIntBuffer)super.buffer(mode);
+            return (DataIntBuffer) super.buffer(mode);
         }
 
         public DataIntBuffer buffer(long capacity) {
-            return (DataIntBuffer)super.buffer(capacity);
+            return (DataIntBuffer) super.buffer(capacity);
         }
 
         public DataIntBuffer buffer() {
-            return (DataIntBuffer)super.buffer();
+            return (DataIntBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -6789,7 +6817,7 @@ class SimpleArraysImpl {
         public final MutableIntArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJAIntArray(JArrays.copyOfRange(
-                    intArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        intArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableIntArray) super.mutableClone(memoryModel);
             }
@@ -6798,7 +6826,7 @@ class SimpleArraysImpl {
         public final UpdatableIntArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJAIntArray(JArrays.copyOfRange(
-                    intArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        intArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableIntArray) super.updatableClone(memoryModel);
             }
@@ -6810,15 +6838,14 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART subarray int[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static class TrustedJAIntArray
-        extends JAIntArray implements DirectAccessible
-    {
+            extends JAIntArray implements DirectAccessible {
         private int startHashCode = -1;
 
         TrustedJAIntArray(long initialCapacity, long initialLength) {
@@ -6826,7 +6853,7 @@ class SimpleArraysImpl {
         }
 
         TrustedJAIntArray(int[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
@@ -6858,11 +6885,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new TrustedJAIntArray(intArray, (int)(toIndex - fromIndex));
+                return new TrustedJAIntArray(intArray, (int) (toIndex - fromIndex));
             } else {
-                return new TrustedJAIntSubArray(intArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new TrustedJAIntSubArray(intArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -6871,18 +6898,18 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new TrustedJAIntArray(intArray, (int)count);
+                return new TrustedJAIntArray(intArray, (int) count);
             } else {
-                return new TrustedJAIntSubArray(intArray, (int)count, (int)position);
+                return new TrustedJAIntSubArray(intArray, (int) count, (int) position);
             }
         }
 
         public IntArray asImmutable() {
-            return new JAIntArray(intArray, (int)capacity(), (int)length());
+            return new JAIntArray(intArray, (int) capacity(), (int) length());
         }
 
         public boolean isImmutable() {
@@ -6892,40 +6919,42 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             TrustedJAIntSubArray result = new TrustedJAIntSubArray(intArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART array int[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
     static class TrustedJAIntSubArray
-        extends JAIntSubArray implements DirectAccessible
-    {
+            extends JAIntSubArray implements DirectAccessible {
         private int startHashCode = -1;
 
-        TrustedJAIntSubArray(int[] initialArray, int initialCapacity, int initialLength,
-            int initialOffset)
-        {
+        TrustedJAIntSubArray(
+                int[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
 
-        TrustedJAIntSubArray(int[] initialArray, int initialCapacityAndLength,
-            int initialOffset)
-        {
+        TrustedJAIntSubArray(
+                int[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
@@ -6952,12 +6981,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJAIntArray(intArray, (int)(toIndex - fromIndex));
+                return new TrustedJAIntArray(intArray, (int) (toIndex - fromIndex));
             } else {
                 TrustedJAIntSubArray result = new TrustedJAIntSubArray(intArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -6969,14 +6998,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJAIntArray(intArray, (int)count);
+                return new TrustedJAIntArray(intArray, (int) count);
             } else {
                 TrustedJAIntSubArray result = new TrustedJAIntSubArray(intArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -6984,7 +7013,7 @@ class SimpleArraysImpl {
         }
 
         public IntArray asImmutable() {
-            return new JAIntSubArray(intArray, (int)capacity(), (int)length(), offset);
+            return new JAIntSubArray(intArray, (int) capacity(), (int) length(), offset);
         }
 
         public boolean isImmutable() {
@@ -6994,24 +7023,24 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             if (isCopyOnNextWrite())
                 return this;
             TrustedJAIntSubArray result = new TrustedJAIntSubArray(intArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART subarray int[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
@@ -7114,8 +7143,8 @@ class SimpleArraysImpl {
 
         public UpdatableArray swap(UpdatableArray another) {
             if (another instanceof UpdatableJAIntSubArray) {
-                UpdatableJAIntSubArray a = (UpdatableJAIntSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJAIntSubArray a = (UpdatableJAIntSubArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -7126,8 +7155,8 @@ class SimpleArraysImpl {
                     return this;
                 }
             } else if (another instanceof UpdatableJAIntArray) {
-                UpdatableJAIntArray a = (UpdatableJAIntArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJAIntArray a = (UpdatableJAIntArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         int temp = this.intArray[i];
@@ -7142,48 +7171,48 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setInt(index, (int)value);
+            setInt(index, (int) value);
         }
 
         public final void setLong(long index, long value) {
-            setInt(index, (int)value);
+            setInt(index, (int) value);
         }
 
         public final void setInt(long index, int value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.intArray[(int)index] = value;
+            this.intArray[(int) index] = value;
         }
 
         public UpdatableIntArray fill(double value) {
             return fill(0, length, value);
         }
 
-        public UpdatableIntArray  fill(long position, long count, double value) {
-            return fill(position, count, (int)value);
+        public UpdatableIntArray fill(long position, long count, double value) {
+            return fill(position, count, (int) value);
         }
 
-        public UpdatableIntArray  fill(long value) {
+        public UpdatableIntArray fill(long value) {
             return fill(0, length, value);
         }
 
-        public UpdatableIntArray  fill(long position, long count, long value) {
-            return fill(position, count, (int)value);
+        public UpdatableIntArray fill(long position, long count, long value) {
+            return fill(position, count, (int) value);
         }
 
-        public UpdatableIntArray  fill(int value) {
+        public UpdatableIntArray fill(int value) {
             return fill(0, length, value);
         }
 
-        public UpdatableIntArray  fill(long position, long count, int value) {
+        public UpdatableIntArray fill(long position, long count, int value) {
             if (position < 0)
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
-            JArrays.fillIntArray(this.intArray, (int)position, (int)count, value);
+            JArrays.fillIntArray(this.intArray, (int) position, (int) count, value);
             return this;
         }
 
@@ -7194,11 +7223,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new UpdatableJAIntArray(intArray, (int)(toIndex - fromIndex));
+                return new UpdatableJAIntArray(intArray, (int) (toIndex - fromIndex));
             } else {
-                return new UpdatableJAIntSubArray(intArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new UpdatableJAIntSubArray(intArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -7207,20 +7236,20 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new UpdatableJAIntArray(intArray, (int)count);
+                return new UpdatableJAIntArray(intArray, (int) count);
             } else {
-                return new UpdatableJAIntSubArray(intArray, (int)count, (int)position);
+                return new UpdatableJAIntSubArray(intArray, (int) count, (int) position);
             }
         }
 
         // must be overridden in UpdatableBitArray,
         // which is built by preprocessor without "trusted" superclass
         public final IntArray asImmutable() {
-            return new JAIntArray(intArray, (int)capacity(), (int)length());
+            return new JAIntArray(intArray, (int) capacity(), (int) length());
         }
 
         // must be  in UpdatableBitArray,
@@ -7230,7 +7259,7 @@ class SimpleArraysImpl {
         }
 
         public final IntArray asTrustedImmutable() {
-            return new TrustedJAIntArray(intArray, (int)capacity(), (int)length());
+            return new TrustedJAIntArray(intArray, (int) capacity(), (int) length());
             // Never set high bit here, because only subarrays can be copy-on-next write
         }
 
@@ -7239,7 +7268,7 @@ class SimpleArraysImpl {
 
         public UpdatableArray asCopyOnNextWrite() {
             UpdatableJAIntSubArray result = new UpdatableJAIntSubArray(intArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -7249,26 +7278,32 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART array int[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static class UpdatableJAIntSubArray
-        extends TrustedJAIntSubArray implements UpdatableIntArray
-    {
-        UpdatableJAIntSubArray(int[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
+            extends TrustedJAIntSubArray implements UpdatableIntArray {
+        UpdatableJAIntSubArray(
+                int[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
         }
 
-        UpdatableJAIntSubArray(int[] initialArray, int initialCapacityAndLength, int initialOffset) {
+        UpdatableJAIntSubArray(
+                int[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
@@ -8046,7 +8081,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.longArray = (long[])super.array;
+            this.longArray = (long[]) super.array;
             this.offset = 0;
         }
 
@@ -8101,27 +8136,27 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)this.longArray[offset + (int)index];
+            return (double) this.longArray[offset + (int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == (long)value ? indexOf(lowIndex, highIndex, (long)value) : -1;
+            return value == (long) value ? indexOf(lowIndex, highIndex, (long) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == (long)value ? lastIndexOf(lowIndex, highIndex, (long)value) : -1;
+            return value == (long) value ? lastIndexOf(lowIndex, highIndex, (long) value) : -1;
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return Arrays.truncateLongToInt(this.longArray[offset + (int)index]);
+            return Arrays.truncateLongToInt(this.longArray[offset + (int) index]);
         }
 
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.longArray[offset + (int)index];
+            return this.longArray[offset + (int) index];
         }
 
         public long indexOf(long lowIndex, long highIndex, long value) {
@@ -8135,7 +8170,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.indexOfLong(this.longArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -8150,7 +8185,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.lastIndexOfLong(this.longArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -8161,11 +8196,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0) {
-                return new JALongArray(longArray, (int)(toIndex - fromIndex));
+                return new JALongArray(longArray, (int) (toIndex - fromIndex));
             } else {
-                return new JALongSubArray(longArray, (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                return new JALongSubArray(longArray, (int) (toIndex - fromIndex), offset + (int) fromIndex);
             }
         }
 
@@ -8174,30 +8209,30 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0) {
-                return new JALongArray(longArray, (int)count);
+                return new JALongArray(longArray, (int) count);
             } else {
-                return new JALongSubArray(longArray, (int)count, offset + (int)position);
+                return new JALongSubArray(longArray, (int) count, offset + (int) position);
             }
         }
 
         public DataLongBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataLongBuffer)super.buffer(mode, capacity);
+            return (DataLongBuffer) super.buffer(mode, capacity);
         }
 
         public DataLongBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataLongBuffer)super.buffer(mode);
+            return (DataLongBuffer) super.buffer(mode);
         }
 
         public DataLongBuffer buffer(long capacity) {
-            return (DataLongBuffer)super.buffer(capacity);
+            return (DataLongBuffer) super.buffer(capacity);
         }
 
         public DataLongBuffer buffer() {
-            return (DataLongBuffer)super.buffer();
+            return (DataLongBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -8226,7 +8261,7 @@ class SimpleArraysImpl {
         public final MutableLongArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJALongArray(JArrays.copyOfRange(
-                    longArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        longArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableLongArray) super.mutableClone(memoryModel);
             }
@@ -8235,7 +8270,7 @@ class SimpleArraysImpl {
         public final UpdatableLongArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJALongArray(JArrays.copyOfRange(
-                    longArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        longArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableLongArray) super.updatableClone(memoryModel);
             }
@@ -8247,15 +8282,14 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART subarray long[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static class TrustedJALongArray
-        extends JALongArray implements DirectAccessible
-    {
+            extends JALongArray implements DirectAccessible {
         private int startHashCode = -1;
 
         TrustedJALongArray(long initialCapacity, long initialLength) {
@@ -8263,7 +8297,7 @@ class SimpleArraysImpl {
         }
 
         TrustedJALongArray(long[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
@@ -8295,11 +8329,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new TrustedJALongArray(longArray, (int)(toIndex - fromIndex));
+                return new TrustedJALongArray(longArray, (int) (toIndex - fromIndex));
             } else {
-                return new TrustedJALongSubArray(longArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new TrustedJALongSubArray(longArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -8308,18 +8342,18 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new TrustedJALongArray(longArray, (int)count);
+                return new TrustedJALongArray(longArray, (int) count);
             } else {
-                return new TrustedJALongSubArray(longArray, (int)count, (int)position);
+                return new TrustedJALongSubArray(longArray, (int) count, (int) position);
             }
         }
 
         public LongArray asImmutable() {
-            return new JALongArray(longArray, (int)capacity(), (int)length());
+            return new JALongArray(longArray, (int) capacity(), (int) length());
         }
 
         public boolean isImmutable() {
@@ -8329,40 +8363,42 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             TrustedJALongSubArray result = new TrustedJALongSubArray(longArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART array long[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
     static class TrustedJALongSubArray
-        extends JALongSubArray implements DirectAccessible
-    {
+            extends JALongSubArray implements DirectAccessible {
         private int startHashCode = -1;
 
-        TrustedJALongSubArray(long[] initialArray, int initialCapacity, int initialLength,
-            int initialOffset)
-        {
+        TrustedJALongSubArray(
+                long[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
 
-        TrustedJALongSubArray(long[] initialArray, int initialCapacityAndLength,
-            int initialOffset)
-        {
+        TrustedJALongSubArray(
+                long[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
@@ -8389,12 +8425,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJALongArray(longArray, (int)(toIndex - fromIndex));
+                return new TrustedJALongArray(longArray, (int) (toIndex - fromIndex));
             } else {
                 TrustedJALongSubArray result = new TrustedJALongSubArray(longArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -8406,14 +8442,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJALongArray(longArray, (int)count);
+                return new TrustedJALongArray(longArray, (int) count);
             } else {
                 TrustedJALongSubArray result = new TrustedJALongSubArray(longArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -8421,7 +8457,7 @@ class SimpleArraysImpl {
         }
 
         public LongArray asImmutable() {
-            return new JALongSubArray(longArray, (int)capacity(), (int)length(), offset);
+            return new JALongSubArray(longArray, (int) capacity(), (int) length(), offset);
         }
 
         public boolean isImmutable() {
@@ -8431,24 +8467,24 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             if (isCopyOnNextWrite())
                 return this;
             TrustedJALongSubArray result = new TrustedJALongSubArray(longArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART subarray long[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
@@ -8551,8 +8587,8 @@ class SimpleArraysImpl {
 
         public UpdatableArray swap(UpdatableArray another) {
             if (another instanceof UpdatableJALongSubArray) {
-                UpdatableJALongSubArray a = (UpdatableJALongSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJALongSubArray a = (UpdatableJALongSubArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -8563,8 +8599,8 @@ class SimpleArraysImpl {
                     return this;
                 }
             } else if (another instanceof UpdatableJALongArray) {
-                UpdatableJALongArray a = (UpdatableJALongArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJALongArray a = (UpdatableJALongArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         long temp = this.longArray[i];
@@ -8579,42 +8615,42 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setLong(index, (long)value);
+            setLong(index, (long) value);
         }
 
         public final void setInt(long index, int value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.longArray[(int)index] = (long)value;
+            this.longArray[(int) index] = (long) value;
         }
 
         public final void setLong(long index, long value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.longArray[(int)index] = value;
+            this.longArray[(int) index] = value;
         }
 
         public UpdatableLongArray fill(double value) {
             return fill(0, length, value);
         }
 
-        public UpdatableLongArray  fill(long position, long count, double value) {
-            return fill(position, count, (long)value);
+        public UpdatableLongArray fill(long position, long count, double value) {
+            return fill(position, count, (long) value);
         }
 
-        public UpdatableLongArray  fill(long value) {
+        public UpdatableLongArray fill(long value) {
             return fill(0, length, value);
         }
 
-        public UpdatableLongArray  fill(long position, long count, long value) {
+        public UpdatableLongArray fill(long position, long count, long value) {
             if (position < 0)
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
-            JArrays.fillLongArray(this.longArray, (int)position, (int)count, value);
+            JArrays.fillLongArray(this.longArray, (int) position, (int) count, value);
             return this;
         }
 
@@ -8625,11 +8661,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new UpdatableJALongArray(longArray, (int)(toIndex - fromIndex));
+                return new UpdatableJALongArray(longArray, (int) (toIndex - fromIndex));
             } else {
-                return new UpdatableJALongSubArray(longArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new UpdatableJALongSubArray(longArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -8638,20 +8674,20 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new UpdatableJALongArray(longArray, (int)count);
+                return new UpdatableJALongArray(longArray, (int) count);
             } else {
-                return new UpdatableJALongSubArray(longArray, (int)count, (int)position);
+                return new UpdatableJALongSubArray(longArray, (int) count, (int) position);
             }
         }
 
         // must be overridden in UpdatableBitArray,
         // which is built by preprocessor without "trusted" superclass
         public final LongArray asImmutable() {
-            return new JALongArray(longArray, (int)capacity(), (int)length());
+            return new JALongArray(longArray, (int) capacity(), (int) length());
         }
 
         // must be  in UpdatableBitArray,
@@ -8661,7 +8697,7 @@ class SimpleArraysImpl {
         }
 
         public final LongArray asTrustedImmutable() {
-            return new TrustedJALongArray(longArray, (int)capacity(), (int)length());
+            return new TrustedJALongArray(longArray, (int) capacity(), (int) length());
             // Never set high bit here, because only subarrays can be copy-on-next write
         }
 
@@ -8670,7 +8706,7 @@ class SimpleArraysImpl {
 
         public UpdatableArray asCopyOnNextWrite() {
             UpdatableJALongSubArray result = new UpdatableJALongSubArray(longArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -8680,26 +8716,32 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART array long[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static class UpdatableJALongSubArray
-        extends TrustedJALongSubArray implements UpdatableLongArray
-    {
-        UpdatableJALongSubArray(long[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
+            extends TrustedJALongSubArray implements UpdatableLongArray {
+        UpdatableJALongSubArray(
+                long[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
         }
 
-        UpdatableJALongSubArray(long[] initialArray, int initialCapacityAndLength, int initialOffset) {
+        UpdatableJALongSubArray(
+                long[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
@@ -9468,7 +9510,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.doubleArray = (double[])super.array;
+            this.doubleArray = (double[]) super.array;
             this.offset = 0;
         }
 
@@ -9523,27 +9565,27 @@ class SimpleArraysImpl {
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)this.doubleArray[offset + (int)index];
+            return (long) this.doubleArray[offset + (int) index];
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (int)this.doubleArray[offset + (int)index];
+            return (int) this.doubleArray[offset + (int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (double)value ? indexOf(lowIndex, highIndex, (double)value) : -1;
+            return value == (double) value ? indexOf(lowIndex, highIndex, (double) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (double)value ? lastIndexOf(lowIndex, highIndex, (double)value) : -1;
+            return value == (double) value ? lastIndexOf(lowIndex, highIndex, (double) value) : -1;
         }
 
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.doubleArray[offset + (int)index];
+            return this.doubleArray[offset + (int) index];
         }
 
         public long indexOf(long lowIndex, long highIndex, double value) {
@@ -9557,7 +9599,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.indexOfDouble(this.doubleArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -9572,7 +9614,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.lastIndexOfDouble(this.doubleArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -9583,11 +9625,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0) {
-                return new JADoubleArray(doubleArray, (int)(toIndex - fromIndex));
+                return new JADoubleArray(doubleArray, (int) (toIndex - fromIndex));
             } else {
-                return new JADoubleSubArray(doubleArray, (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                return new JADoubleSubArray(doubleArray, (int) (toIndex - fromIndex), offset + (int) fromIndex);
             }
         }
 
@@ -9596,30 +9638,30 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0) {
-                return new JADoubleArray(doubleArray, (int)count);
+                return new JADoubleArray(doubleArray, (int) count);
             } else {
-                return new JADoubleSubArray(doubleArray, (int)count, offset + (int)position);
+                return new JADoubleSubArray(doubleArray, (int) count, offset + (int) position);
             }
         }
 
         public DataDoubleBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataDoubleBuffer)super.buffer(mode, capacity);
+            return (DataDoubleBuffer) super.buffer(mode, capacity);
         }
 
         public DataDoubleBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataDoubleBuffer)super.buffer(mode);
+            return (DataDoubleBuffer) super.buffer(mode);
         }
 
         public DataDoubleBuffer buffer(long capacity) {
-            return (DataDoubleBuffer)super.buffer(capacity);
+            return (DataDoubleBuffer) super.buffer(capacity);
         }
 
         public DataDoubleBuffer buffer() {
-            return (DataDoubleBuffer)super.buffer();
+            return (DataDoubleBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -9648,7 +9690,7 @@ class SimpleArraysImpl {
         public final MutableDoubleArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJADoubleArray(JArrays.copyOfRange(
-                    doubleArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        doubleArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableDoubleArray) super.mutableClone(memoryModel);
             }
@@ -9657,7 +9699,7 @@ class SimpleArraysImpl {
         public final UpdatableDoubleArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJADoubleArray(JArrays.copyOfRange(
-                    doubleArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        doubleArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableDoubleArray) super.updatableClone(memoryModel);
             }
@@ -9669,15 +9711,14 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART subarray double[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static class TrustedJADoubleArray
-        extends JADoubleArray implements DirectAccessible
-    {
+            extends JADoubleArray implements DirectAccessible {
         private int startHashCode = -1;
 
         TrustedJADoubleArray(long initialCapacity, long initialLength) {
@@ -9685,7 +9726,7 @@ class SimpleArraysImpl {
         }
 
         TrustedJADoubleArray(double[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
@@ -9717,11 +9758,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new TrustedJADoubleArray(doubleArray, (int)(toIndex - fromIndex));
+                return new TrustedJADoubleArray(doubleArray, (int) (toIndex - fromIndex));
             } else {
-                return new TrustedJADoubleSubArray(doubleArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new TrustedJADoubleSubArray(doubleArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -9730,18 +9771,18 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new TrustedJADoubleArray(doubleArray, (int)count);
+                return new TrustedJADoubleArray(doubleArray, (int) count);
             } else {
-                return new TrustedJADoubleSubArray(doubleArray, (int)count, (int)position);
+                return new TrustedJADoubleSubArray(doubleArray, (int) count, (int) position);
             }
         }
 
         public DoubleArray asImmutable() {
-            return new JADoubleArray(doubleArray, (int)capacity(), (int)length());
+            return new JADoubleArray(doubleArray, (int) capacity(), (int) length());
         }
 
         public boolean isImmutable() {
@@ -9751,40 +9792,42 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             TrustedJADoubleSubArray result = new TrustedJADoubleSubArray(doubleArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART array double[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
     static class TrustedJADoubleSubArray
-        extends JADoubleSubArray implements DirectAccessible
-    {
+            extends JADoubleSubArray implements DirectAccessible {
         private int startHashCode = -1;
 
-        TrustedJADoubleSubArray(double[] initialArray, int initialCapacity, int initialLength,
-            int initialOffset)
-        {
+        TrustedJADoubleSubArray(
+                double[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
 
-        TrustedJADoubleSubArray(double[] initialArray, int initialCapacityAndLength,
-            int initialOffset)
-        {
+        TrustedJADoubleSubArray(
+                double[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
@@ -9811,12 +9854,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJADoubleArray(doubleArray, (int)(toIndex - fromIndex));
+                return new TrustedJADoubleArray(doubleArray, (int) (toIndex - fromIndex));
             } else {
                 TrustedJADoubleSubArray result = new TrustedJADoubleSubArray(doubleArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -9828,14 +9871,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJADoubleArray(doubleArray, (int)count);
+                return new TrustedJADoubleArray(doubleArray, (int) count);
             } else {
                 TrustedJADoubleSubArray result = new TrustedJADoubleSubArray(doubleArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -9843,7 +9886,7 @@ class SimpleArraysImpl {
         }
 
         public DoubleArray asImmutable() {
-            return new JADoubleSubArray(doubleArray, (int)capacity(), (int)length(), offset);
+            return new JADoubleSubArray(doubleArray, (int) capacity(), (int) length(), offset);
         }
 
         public boolean isImmutable() {
@@ -9853,24 +9896,24 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             if (isCopyOnNextWrite())
                 return this;
             TrustedJADoubleSubArray result = new TrustedJADoubleSubArray(doubleArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
 
         public String toString() {
             return "trusted immutable simple AlgART subarray double[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
@@ -9973,8 +10016,8 @@ class SimpleArraysImpl {
 
         public UpdatableArray swap(UpdatableArray another) {
             if (another instanceof UpdatableJADoubleSubArray) {
-                UpdatableJADoubleSubArray a = (UpdatableJADoubleSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJADoubleSubArray a = (UpdatableJADoubleSubArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -9985,8 +10028,8 @@ class SimpleArraysImpl {
                     return this;
                 }
             } else if (another instanceof UpdatableJADoubleArray) {
-                UpdatableJADoubleArray a = (UpdatableJADoubleArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJADoubleArray a = (UpdatableJADoubleArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         double temp = this.doubleArray[i];
@@ -10001,42 +10044,42 @@ class SimpleArraysImpl {
         }
 
         public final void setLong(long index, long value) {
-            setDouble(index, (double)value);
+            setDouble(index, (double) value);
         }
 
         public final void setInt(long index, int value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.doubleArray[(int)index] = (double)value;
+            this.doubleArray[(int) index] = (double) value;
         }
 
         public final void setDouble(long index, double value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.doubleArray[(int)index] = value;
+            this.doubleArray[(int) index] = value;
         }
 
-        public UpdatableDoubleArray  fill(long value) {
+        public UpdatableDoubleArray fill(long value) {
             return fill(0, length, value);
         }
 
-        public UpdatableDoubleArray  fill(long position, long count, long value) {
-            return fill(position, count, (double)value);
+        public UpdatableDoubleArray fill(long position, long count, long value) {
+            return fill(position, count, (double) value);
         }
 
-        public UpdatableDoubleArray  fill(double value) {
+        public UpdatableDoubleArray fill(double value) {
             return fill(0, length, value);
         }
 
-        public UpdatableDoubleArray  fill(long position, long count, double value) {
+        public UpdatableDoubleArray fill(long position, long count, double value) {
             if (position < 0)
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
-            JArrays.fillDoubleArray(this.doubleArray, (int)position, (int)count, value);
+            JArrays.fillDoubleArray(this.doubleArray, (int) position, (int) count, value);
             return this;
         }
 
@@ -10047,11 +10090,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new UpdatableJADoubleArray(doubleArray, (int)(toIndex - fromIndex));
+                return new UpdatableJADoubleArray(doubleArray, (int) (toIndex - fromIndex));
             } else {
-                return new UpdatableJADoubleSubArray(doubleArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new UpdatableJADoubleSubArray(doubleArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -10060,20 +10103,20 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new UpdatableJADoubleArray(doubleArray, (int)count);
+                return new UpdatableJADoubleArray(doubleArray, (int) count);
             } else {
-                return new UpdatableJADoubleSubArray(doubleArray, (int)count, (int)position);
+                return new UpdatableJADoubleSubArray(doubleArray, (int) count, (int) position);
             }
         }
 
         // must be overridden in UpdatableBitArray,
         // which is built by preprocessor without "trusted" superclass
         public final DoubleArray asImmutable() {
-            return new JADoubleArray(doubleArray, (int)capacity(), (int)length());
+            return new JADoubleArray(doubleArray, (int) capacity(), (int) length());
         }
 
         // must be  in UpdatableBitArray,
@@ -10083,7 +10126,7 @@ class SimpleArraysImpl {
         }
 
         public final DoubleArray asTrustedImmutable() {
-            return new TrustedJADoubleArray(doubleArray, (int)capacity(), (int)length());
+            return new TrustedJADoubleArray(doubleArray, (int) capacity(), (int) length());
             // Never set high bit here, because only subarrays can be copy-on-next write
         }
 
@@ -10092,7 +10135,7 @@ class SimpleArraysImpl {
 
         public UpdatableArray asCopyOnNextWrite() {
             UpdatableJADoubleSubArray result = new UpdatableJADoubleSubArray(doubleArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -10102,26 +10145,32 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART array double[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static class UpdatableJADoubleSubArray
-        extends TrustedJADoubleSubArray implements UpdatableDoubleArray
-    {
-        UpdatableJADoubleSubArray(double[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
+            extends TrustedJADoubleSubArray implements UpdatableDoubleArray {
+        UpdatableJADoubleSubArray(
+                double[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
         }
 
-        UpdatableJADoubleSubArray(double[] initialArray, int initialCapacityAndLength, int initialOffset) {
+        UpdatableJADoubleSubArray(
+                double[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
@@ -10917,7 +10966,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.objectArray = (Object[])super.array;
+            this.objectArray = (Object[]) super.array;
             this.offset = 0;
         }
 
@@ -10968,7 +11017,7 @@ class SimpleArraysImpl {
         public final Object getElement(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.objectArray[offset + (int)index];
+            return this.objectArray[offset + (int) index];
         }
 
         public long indexOf(long lowIndex, long highIndex, Object value) {
@@ -10982,7 +11031,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.indexOfObject(this.objectArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -10997,7 +11046,7 @@ class SimpleArraysImpl {
                 return -1;
             } // after these checks we are sure that overflow is impossible below
             long i = JArrays.lastIndexOfObject(this.objectArray,
-                offset + (int)lowIndex, offset + (int)highIndex, value);
+                    offset + (int) lowIndex, offset + (int) highIndex, value);
             return i == -1 ? -1 : i - offset;
         }
 
@@ -11008,11 +11057,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0) {
-                return new JAObjectArray(objectArray, (int)(toIndex - fromIndex));
+                return new JAObjectArray(objectArray, (int) (toIndex - fromIndex));
             } else {
-                return new JAObjectSubArray(objectArray, (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                return new JAObjectSubArray(objectArray, (int) (toIndex - fromIndex), offset + (int) fromIndex);
             }
         }
 
@@ -11021,30 +11070,30 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0) {
-                return new JAObjectArray(objectArray, (int)count);
+                return new JAObjectArray(objectArray, (int) count);
             } else {
-                return new JAObjectSubArray(objectArray, (int)count, offset + (int)position);
+                return new JAObjectSubArray(objectArray, (int) count, offset + (int) position);
             }
         }
 
         public DataObjectBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataObjectBuffer)super.buffer(mode, capacity);
+            return (DataObjectBuffer) super.buffer(mode, capacity);
         }
 
         public DataObjectBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataObjectBuffer)super.buffer(mode);
+            return (DataObjectBuffer) super.buffer(mode);
         }
 
         public DataObjectBuffer buffer(long capacity) {
-            return (DataObjectBuffer)super.buffer(capacity);
+            return (DataObjectBuffer) super.buffer(capacity);
         }
 
         public DataObjectBuffer buffer() {
-            return (DataObjectBuffer)super.buffer();
+            return (DataObjectBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -11080,7 +11129,7 @@ class SimpleArraysImpl {
         public final MutableObjectArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJAObjectArray((Object[])JArrays.copyOfRange(
-                    objectArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        objectArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableObjectArray) super.mutableClone(memoryModel);
             }
@@ -11089,7 +11138,7 @@ class SimpleArraysImpl {
         public final UpdatableObjectArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJAObjectArray((Object[])JArrays.copyOfRange(
-                    objectArray, offset, offset + (int) length), (int) length).setNewStatus();
+                        objectArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableObjectArray) super.updatableClone(memoryModel);
             }
@@ -11101,15 +11150,14 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART subarray " + elementType.getName() + "[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("rawtypes") static class TrustedJAObjectArray
-        extends JAObjectArray implements DirectAccessible
-    {
+            extends JAObjectArray implements DirectAccessible {
         private int startHashCode = -1;
 
         TrustedJAObjectArray(Class<?> elementType, long initialCapacity, long initialLength) {
@@ -11117,7 +11165,7 @@ class SimpleArraysImpl {
         }
 
         TrustedJAObjectArray(Object[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
@@ -11149,11 +11197,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new TrustedJAObjectArray(objectArray, (int)(toIndex - fromIndex));
+                return new TrustedJAObjectArray(objectArray, (int) (toIndex - fromIndex));
             } else {
-                return new TrustedJAObjectSubArray(objectArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new TrustedJAObjectSubArray(objectArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -11162,18 +11210,18 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new TrustedJAObjectArray(objectArray, (int)count);
+                return new TrustedJAObjectArray(objectArray, (int) count);
             } else {
-                return new TrustedJAObjectSubArray(objectArray, (int)count, (int)position);
+                return new TrustedJAObjectSubArray(objectArray, (int) count, (int) position);
             }
         }
 
         public ObjectArray asImmutable() {
-            return new JAObjectArray(objectArray, (int)capacity(), (int)length());
+            return new JAObjectArray(objectArray, (int) capacity(), (int) length());
         }
 
         public boolean isImmutable() {
@@ -11183,12 +11231,12 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             TrustedJAObjectSubArray result = new TrustedJAObjectSubArray(objectArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -11202,28 +11250,30 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "trusted immutable simple AlgART array " + elementType.getName() + "[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
     @SuppressWarnings("rawtypes") static class TrustedJAObjectSubArray
-        extends JAObjectSubArray implements DirectAccessible
-    {
+            extends JAObjectSubArray implements DirectAccessible {
         private int startHashCode = -1;
 
-        TrustedJAObjectSubArray(Object[] initialArray, int initialCapacity, int initialLength,
-            int initialOffset)
-        {
+        TrustedJAObjectSubArray(
+                Object[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
         }
 
-        TrustedJAObjectSubArray(Object[] initialArray, int initialCapacityAndLength,
-            int initialOffset)
-        {
+        TrustedJAObjectSubArray(
+                Object[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
             if (!(this instanceof UpdatableArray))
                 startHashCode = hashCode();
@@ -11250,12 +11300,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJAObjectArray(objectArray, (int)(toIndex - fromIndex));
+                return new TrustedJAObjectArray(objectArray, (int) (toIndex - fromIndex));
             } else {
                 TrustedJAObjectSubArray result = new TrustedJAObjectSubArray(objectArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -11267,14 +11317,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new TrustedJAObjectArray(objectArray, (int)count);
+                return new TrustedJAObjectArray(objectArray, (int) count);
             } else {
                 TrustedJAObjectSubArray result = new TrustedJAObjectSubArray(objectArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -11282,7 +11332,7 @@ class SimpleArraysImpl {
         }
 
         public ObjectArray asImmutable() {
-            return new JAObjectSubArray(objectArray, (int)capacity(), (int)length(), offset);
+            return new JAObjectSubArray(objectArray, (int) capacity(), (int) length(), offset);
         }
 
         public boolean isImmutable() {
@@ -11292,14 +11342,14 @@ class SimpleArraysImpl {
         public void checkUnallowedMutation() throws UnallowedMutationError {
             if (hashCode() != startHashCode)
                 throw new UnallowedMutationError("Unallowed mutations of trusted immutable array "
-                    + "are detected by checkUnallowedMutation() method [" + this + "]");
+                        + "are detected by checkUnallowedMutation() method [" + this + "]");
         }
 
         public Array asCopyOnNextWrite() {
             if (isCopyOnNextWrite())
                 return this;
             TrustedJAObjectSubArray result = new TrustedJAObjectSubArray(objectArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -11313,10 +11363,10 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "trusted immutable simple AlgART subarray " + elementType.getName() + "[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
@@ -11415,8 +11465,8 @@ class SimpleArraysImpl {
 
         public UpdatableArray swap(UpdatableArray another) {
             if (another instanceof UpdatableJAObjectSubArray) {
-                UpdatableJAObjectSubArray a = (UpdatableJAObjectSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJAObjectSubArray a = (UpdatableJAObjectSubArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -11427,8 +11477,8 @@ class SimpleArraysImpl {
                     return this;
                 }
             } else if (another instanceof UpdatableJAObjectArray) {
-                UpdatableJAObjectArray a = (UpdatableJAObjectArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+                UpdatableJAObjectArray a = (UpdatableJAObjectArray) another;
+                int count = (int) (a.length < length ? a.length : length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         Object temp = this.objectArray[i];
@@ -11445,22 +11495,22 @@ class SimpleArraysImpl {
         public final void setElement(long index, Object value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            this.objectArray[(int)index] = value;
+            this.objectArray[(int) index] = value;
         }
 
-        public UpdatableObjectArray  fill(Object value) {
+        public UpdatableObjectArray fill(Object value) {
             return fill(0, length, value);
         }
 
-        public UpdatableObjectArray  fill(long position, long count, Object value) {
+        public UpdatableObjectArray fill(long position, long count, Object value) {
             if (position < 0)
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
-            JArrays.fillObjectArray(this.objectArray, (int)position, (int)count, value);
+            JArrays.fillObjectArray(this.objectArray, (int) position, (int) count, value);
             return this;
         }
 
@@ -11471,11 +11521,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new UpdatableJAObjectArray(objectArray, (int)(toIndex - fromIndex));
+                return new UpdatableJAObjectArray(objectArray, (int) (toIndex - fromIndex));
             } else {
-                return new UpdatableJAObjectSubArray(objectArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new UpdatableJAObjectSubArray(objectArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -11484,20 +11534,20 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new UpdatableJAObjectArray(objectArray, (int)count);
+                return new UpdatableJAObjectArray(objectArray, (int) count);
             } else {
-                return new UpdatableJAObjectSubArray(objectArray, (int)count, (int)position);
+                return new UpdatableJAObjectSubArray(objectArray, (int) count, (int) position);
             }
         }
 
         // must be overridden in UpdatableBitArray,
         // which is built by preprocessor without "trusted" superclass
         public final ObjectArray asImmutable() {
-            return new JAObjectArray(objectArray, (int)capacity(), (int)length());
+            return new JAObjectArray(objectArray, (int) capacity(), (int) length());
         }
 
         // must be  in UpdatableBitArray,
@@ -11507,7 +11557,7 @@ class SimpleArraysImpl {
         }
 
         public final ObjectArray asTrustedImmutable() {
-            return new TrustedJAObjectArray(objectArray, (int)capacity(), (int)length());
+            return new TrustedJAObjectArray(objectArray, (int) capacity(), (int) length());
             // Never set high bit here, because only subarrays can be copy-on-next write
         }
 
@@ -11516,7 +11566,7 @@ class SimpleArraysImpl {
 
         public UpdatableArray asCopyOnNextWrite() {
             UpdatableJAObjectSubArray result = new UpdatableJAObjectSubArray(objectArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -11533,26 +11583,32 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART array " + elementType.getName() + "[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("rawtypes")
     static class UpdatableJAObjectSubArray
-        extends TrustedJAObjectSubArray implements UpdatableObjectArray
-    {
-        UpdatableJAObjectSubArray(Object[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
+            extends TrustedJAObjectSubArray implements UpdatableObjectArray {
+        UpdatableJAObjectSubArray(
+                Object[] initialArray,
+                int initialCapacity,
+                int initialLength,
+                int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
         }
 
-        UpdatableJAObjectSubArray(Object[] initialArray, int initialCapacityAndLength, int initialOffset) {
+        UpdatableJAObjectSubArray(
+                Object[] initialArray,
+                int initialCapacityAndLength,
+                int initialOffset) {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
