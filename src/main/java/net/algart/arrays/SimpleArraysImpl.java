@@ -1686,6 +1686,30 @@ class SimpleArraysImpl {
             pushFloat((Float) value);
         }
 
+        public double popDouble() {
+            return (double) popFloat();
+        }
+
+        public void pushDouble(double value) {
+            pushFloat((float) value);
+        }
+
+        public long popLong() {
+            return (long) popFloat();
+        }
+
+        public void pushLong(long value) {
+            pushFloat((float) value);
+        }
+
+        public int popInt() {
+            return (int) popFloat();
+        }
+
+        public void pushInt(int value) {
+            pushFloat((float) value);
+        }
+
         public float popFloat() {
             int i = (int) length - 1;
             if (i < 0)
@@ -1804,6 +1828,30 @@ class SimpleArraysImpl {
 
         public void pushElement(Object value) {
             pushFloat((Float) value);
+        }
+
+        public double popDouble() {
+            return (double) popFloat();
+        }
+
+        public void pushDouble(double value) {
+            pushFloat((float) value);
+        }
+
+        public long popLong() {
+            return (long) popFloat();
+        }
+
+        public void pushLong(long value) {
+            pushFloat((float) value);
+        }
+
+        public int popInt() {
+            return (int) popFloat();
+        }
+
+        public void pushInt(int value) {
+            pushFloat((float) value);
         }
 
         public float popFloat() {
@@ -3181,6 +3229,30 @@ class SimpleArraysImpl {
             pushChar((Character) value);
         }
 
+        public double popDouble() {
+            return (double) popChar();
+        }
+
+        public void pushDouble(double value) {
+            pushChar((char) value);
+        }
+
+        public long popLong() {
+            return (long) popChar();
+        }
+
+        public void pushLong(long value) {
+            pushChar((char) value);
+        }
+
+        public int popInt() {
+            return (int) popChar();
+        }
+
+        public void pushInt(int value) {
+            pushChar((char) value);
+        }
+
         public char popChar() {
             int i = (int) length - 1;
             if (i < 0)
@@ -3311,6 +3383,30 @@ class SimpleArraysImpl {
             pushChar((Character) value);
         }
 
+        public double popDouble() {
+            return (double) popChar();
+        }
+
+        public void pushDouble(double value) {
+            pushChar((char) value);
+        }
+
+        public long popLong() {
+            return (long) popChar();
+        }
+
+        public void pushLong(long value) {
+            pushChar((char) value);
+        }
+
+        public int popInt() {
+            return (int) popChar();
+        }
+
+        public void pushInt(int value) {
+            pushChar((char) value);
+        }
+
         public char popChar() {
             int i = (int) length - 1;
             if (i < 0)
@@ -3412,6 +3508,7 @@ class SimpleArraysImpl {
       Float(?!ing) ==> Byte ;;
       float ==> byte ;;
       PER_FLOAT ==> PER_BYTE ;;
+      \((double|long|int)\)\s*popByte\(\) ==> ($1) (popByte() & 0xFF) ;;
       (return\s+(?:\(\w+\)\s*)?)(this\.byteArray\[(?:offset\s*\+\s*)?\(int\)\s*index\])\s*; ==> $1($2 & 0xFF);
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
@@ -4688,6 +4785,30 @@ class SimpleArraysImpl {
             pushByte((Byte) value);
         }
 
+        public double popDouble() {
+            return (double) (popByte() & 0xFF);
+        }
+
+        public void pushDouble(double value) {
+            pushByte((byte) value);
+        }
+
+        public long popLong() {
+            return (long) (popByte() & 0xFF);
+        }
+
+        public void pushLong(long value) {
+            pushByte((byte) value);
+        }
+
+        public int popInt() {
+            return (int) (popByte() & 0xFF);
+        }
+
+        public void pushInt(int value) {
+            pushByte((byte) value);
+        }
+
         public byte popByte() {
             int i = (int) length - 1;
             if (i < 0)
@@ -4808,6 +4929,30 @@ class SimpleArraysImpl {
             pushByte((Byte) value);
         }
 
+        public double popDouble() {
+            return (double) (popByte() & 0xFF);
+        }
+
+        public void pushDouble(double value) {
+            pushByte((byte) value);
+        }
+
+        public long popLong() {
+            return (long) (popByte() & 0xFF);
+        }
+
+        public void pushLong(long value) {
+            pushByte((byte) value);
+        }
+
+        public int popInt() {
+            return (int) (popByte() & 0xFF);
+        }
+
+        public void pushInt(int value) {
+            pushByte((byte) value);
+        }
+
         public byte popByte() {
             int i = (int) length - 1;
             if (i < 0)
@@ -4899,6 +5044,7 @@ class SimpleArraysImpl {
       Float(?!ing) ==> Short ;;
       float ==> short ;;
       PER_FLOAT ==> PER_SHORT ;;
+      \((double|long|int)\)\s*popShort\(\) ==> ($1) (popShort() & 0xFFFF) ;;
       (return\s+(?:\(\w+\)\s*)?)(this\.shortArray\[(?:offset\s*\+\s*)?\(int\)\s*index\])\s*; ==> $1($2 & 0xFFFF);
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
@@ -6175,6 +6321,30 @@ class SimpleArraysImpl {
             pushShort((Short) value);
         }
 
+        public double popDouble() {
+            return (double) (popShort() & 0xFFFF);
+        }
+
+        public void pushDouble(double value) {
+            pushShort((short) value);
+        }
+
+        public long popLong() {
+            return (long) (popShort() & 0xFFFF);
+        }
+
+        public void pushLong(long value) {
+            pushShort((short) value);
+        }
+
+        public int popInt() {
+            return (int) (popShort() & 0xFFFF);
+        }
+
+        public void pushInt(int value) {
+            pushShort((short) value);
+        }
+
         public short popShort() {
             int i = (int) length - 1;
             if (i < 0)
@@ -6295,6 +6465,30 @@ class SimpleArraysImpl {
             pushShort((Short) value);
         }
 
+        public double popDouble() {
+            return (double) (popShort() & 0xFFFF);
+        }
+
+        public void pushDouble(double value) {
+            pushShort((short) value);
+        }
+
+        public long popLong() {
+            return (long) (popShort() & 0xFFFF);
+        }
+
+        public void pushLong(long value) {
+            pushShort((short) value);
+        }
+
+        public int popInt() {
+            return (int) (popShort() & 0xFFFF);
+        }
+
+        public void pushInt(int value) {
+            pushShort((short) value);
+        }
+
         public short popShort() {
             int i = (int) length - 1;
             if (i < 0)
@@ -6380,7 +6574,7 @@ class SimpleArraysImpl {
       (return\s+)157778  ==> $1Integer.MAX_VALUE;;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/min) ==> $1minPossibleValue();;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/max) ==> $1maxPossibleValue();;
-      public(\s+\w+)+\s+(g|s)etInt(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
+      public(\s+\w+)+\s+(get|set|pop|push)Int(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       \bFloat\b ==> Integer ;;
       Float(?!ing) ==> Int ;;
       float ==> int ;;
@@ -7634,6 +7828,22 @@ class SimpleArraysImpl {
             pushInt((Integer) value);
         }
 
+        public double popDouble() {
+            return (double) popInt();
+        }
+
+        public void pushDouble(double value) {
+            pushInt((int) value);
+        }
+
+        public long popLong() {
+            return (long) popInt();
+        }
+
+        public void pushLong(long value) {
+            pushInt((int) value);
+        }
+
         public int popInt() {
             int i = (int) length - 1;
             if (i < 0)
@@ -7754,6 +7964,22 @@ class SimpleArraysImpl {
             pushInt((Integer) value);
         }
 
+        public double popDouble() {
+            return (double) popInt();
+        }
+
+        public void pushDouble(double value) {
+            pushInt((int) value);
+        }
+
+        public long popLong() {
+            return (long) popInt();
+        }
+
+        public void pushLong(long value) {
+            pushInt((int) value);
+        }
+
         public int popInt() {
             int i = (int) length - 1;
             if (i < 0)
@@ -7839,7 +8065,7 @@ class SimpleArraysImpl {
       (return\s+)157778  ==> $1Long.MAX_VALUE;;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/min) ==> $1minPossibleValue();;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/max) ==> $1maxPossibleValue();;
-      public(\s+\w+)+\s+(g|s)etLong(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
+      public(\s+\w+)+\s+(get|set|pop|push)Long(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       public(\s+\w+)+\s+\w+ndexOf\(long\s+\w+,\s*long\s+\w+,\s*long(.*?)\n\s*}\s* ==> ;;
       public(\s+\w+)+\s+fill\((?:long\s+\w+,\s*long\s+\w+,\s*)?long\s+value(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       \(int\)\s*(\w+\.)?floatArray\[([^\]]*)\] ==> Arrays.truncateLongToInt($1longArray[$2]) ;;
@@ -9069,6 +9295,22 @@ class SimpleArraysImpl {
             pushLong((Long) value);
         }
 
+        public double popDouble() {
+            return (double) popLong();
+        }
+
+        public void pushDouble(double value) {
+            pushLong((long) value);
+        }
+
+        public int popInt() {
+            return (int) popLong();
+        }
+
+        public void pushInt(int value) {
+            pushLong((long) value);
+        }
+
         public long popLong() {
             int i = (int) length - 1;
             if (i < 0)
@@ -9189,6 +9431,22 @@ class SimpleArraysImpl {
             pushLong((Long) value);
         }
 
+        public double popDouble() {
+            return (double) popLong();
+        }
+
+        public void pushDouble(double value) {
+            pushLong((long) value);
+        }
+
+        public int popInt() {
+            return (int) popLong();
+        }
+
+        public void pushInt(int value) {
+            pushLong((long) value);
+        }
+
         public long popLong() {
             int i = (int) length - 1;
             if (i < 0)
@@ -9270,7 +9528,7 @@ class SimpleArraysImpl {
     /*Repeat.IncludeEnd*/
 
     /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, impl)
-      public(\s+\w+)+\s+(g|s)etDouble(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
+      public(\s+\w+)+\s+(get|set|pop|push)Double(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       public(\s+\w+)+\s+\w+ndexOf\(long\s+\w+,\s*long\s+\w+,\s*double(.*?)\n\s*}\s* ==> ;;
       public(\s+\w+)+\s+fill\((?:long\s+\w+,\s*long\s+\w+,\s*)?double\s+value(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       Float(?!ing) ==> Double ;;
@@ -10499,6 +10757,22 @@ class SimpleArraysImpl {
             pushDouble((Double) value);
         }
 
+        public long popLong() {
+            return (long) popDouble();
+        }
+
+        public void pushLong(long value) {
+            pushDouble((double) value);
+        }
+
+        public int popInt() {
+            return (int) popDouble();
+        }
+
+        public void pushInt(int value) {
+            pushDouble((double) value);
+        }
+
         public double popDouble() {
             int i = (int) length - 1;
             if (i < 0)
@@ -10617,6 +10891,22 @@ class SimpleArraysImpl {
 
         public void pushElement(Object value) {
             pushDouble((Double) value);
+        }
+
+        public long popLong() {
+            return (long) popDouble();
+        }
+
+        public void pushLong(long value) {
+            pushDouble((double) value);
+        }
+
+        public int popInt() {
+            return (int) popDouble();
+        }
+
+        public void pushInt(int value) {
+            pushDouble((double) value);
         }
 
         public double popDouble() {
@@ -13350,6 +13640,30 @@ class SimpleArraysImpl {
             pushBit((Boolean) value);
         }
 
+        public double popDouble() {
+            return popBit() ? 1.0 : 0.0;
+        }
+
+        public void pushDouble(double value) {
+            pushBit(value != 0.0);
+        }
+
+        public long popLong() {
+            return popBit() ? 1L : 0L;
+        }
+
+        public void pushLong(long value) {
+            pushBit(value != 0);
+        }
+
+        public int popInt() {
+            return popBit() ? 1 : 0;
+        }
+
+        public void pushInt(int value) {
+            pushBit(value != 0);
+        }
+
         public boolean popBit() {
             long i = length - 1;
             if (i < 0)
@@ -13470,6 +13784,30 @@ class SimpleArraysImpl {
 
         public void pushElement(Object value) {
             pushBit((Boolean) value);
+        }
+
+        public double popDouble() {
+            return popBit() ? 1.0 : 0.0;
+        }
+
+        public void pushDouble(double value) {
+            pushBit(value != 0.0);
+        }
+
+        public long popLong() {
+            return popBit() ? 1L : 0L;
+        }
+
+        public void pushLong(long value) {
+            pushBit(value != 0);
+        }
+
+        public int popInt() {
+            return popBit() ? 1 : 0;
+        }
+
+        public void pushInt(int value) {
+            pushBit(value != 0);
         }
 
         public boolean popBit() {
