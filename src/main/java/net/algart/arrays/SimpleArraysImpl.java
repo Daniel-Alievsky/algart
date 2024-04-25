@@ -12124,7 +12124,7 @@ class SimpleArraysImpl {
 
         JABitArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
-            this.bitArray = (long[])super.array;
+            this.bitArray = (long[]) super.array;
         }
 
         JABitArray(long[] initialArray, long initialCapacity, long initialLength) {
@@ -12138,7 +12138,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.bitArray = (long[])super.array;
+            this.bitArray = (long[]) super.array;
         }
 
         final long longJavaArrayOffsetInternal() {
@@ -12193,7 +12193,7 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L ? 1 : 0;
+            return (this.bitArray[(int) ((index) >>> 6)] & (1L << ((int) (index) & 63))) != 0L ? 1 : 0;
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
@@ -12207,13 +12207,13 @@ class SimpleArraysImpl {
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L ? 1 : 0;
+            return (this.bitArray[(int) ((index) >>> 6)] & (1L << ((int) (index) & 63))) != 0L ? 1 : 0;
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L ? 1 : 0;
+            return (this.bitArray[(int) ((index) >>> 6)] & (1L << ((int) (index) & 63))) != 0L ? 1 : 0;
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
@@ -12227,7 +12227,7 @@ class SimpleArraysImpl {
         public final boolean getBit(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.bitArray[(int)((index) >>> 6)] & (1L << ((int)(index) & 63))) != 0L;
+            return (this.bitArray[(int) ((index) >>> 6)] & (1L << ((int) (index) & 63))) != 0L;
         }
 
         public final long indexOf(long lowIndex, long highIndex, boolean value) {
@@ -12287,19 +12287,19 @@ class SimpleArraysImpl {
         }
 
         public DataBitBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataBitBuffer)super.buffer(mode, capacity);
+            return (DataBitBuffer) super.buffer(mode, capacity);
         }
 
         public DataBitBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataBitBuffer)super.buffer(mode);
+            return (DataBitBuffer) super.buffer(mode);
         }
 
         public DataBitBuffer buffer(long capacity) {
-            return (DataBitBuffer)super.buffer(capacity);
+            return (DataBitBuffer) super.buffer(capacity);
         }
 
         public DataBitBuffer buffer() {
-            return (DataBitBuffer)super.buffer();
+            return (DataBitBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -12328,7 +12328,7 @@ class SimpleArraysImpl {
         public final MutableBitArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJABitArray(cloneBitSubArray(
-                        bitArray, 0,  length),  length).setNewStatus();
+                        bitArray, 0, length), length).setNewStatus();
             } else {
                 return (MutableBitArray) super.mutableClone(memoryModel);
             }
@@ -12373,7 +12373,7 @@ class SimpleArraysImpl {
         }
 
         final void afterStorageFieldCorrection() {
-            this.bitArray = (long[])super.array;
+            this.bitArray = (long[]) super.array;
             this.offset = 0;
         }
 
@@ -12429,7 +12429,7 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L ? 1 : 0;
+            return (this.bitArray[(int) ((offset + index) >>> 6)] & (1L << ((int) (offset + index) & 63))) != 0L ? 1 : 0;
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
@@ -12443,13 +12443,13 @@ class SimpleArraysImpl {
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L ? 1 : 0;
+            return (this.bitArray[(int) ((offset + index) >>> 6)] & (1L << ((int) (offset + index) & 63))) != 0L ? 1 : 0;
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L ? 1 : 0;
+            return (this.bitArray[(int) ((offset + index) >>> 6)] & (1L << ((int) (offset + index) & 63))) != 0L ? 1 : 0;
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
@@ -12463,7 +12463,7 @@ class SimpleArraysImpl {
         public final boolean getBit(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.bitArray[(int)((offset + index) >>> 6)] & (1L << ((int)(offset + index) & 63))) != 0L;
+            return (this.bitArray[(int) ((offset + index) >>> 6)] & (1L << ((int) (offset + index) & 63))) != 0L;
         }
 
         public long indexOf(long lowIndex, long highIndex, boolean value) {
@@ -12527,19 +12527,19 @@ class SimpleArraysImpl {
         }
 
         public DataBitBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataBitBuffer)super.buffer(mode, capacity);
+            return (DataBitBuffer) super.buffer(mode, capacity);
         }
 
         public DataBitBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataBitBuffer)super.buffer(mode);
+            return (DataBitBuffer) super.buffer(mode);
         }
 
         public DataBitBuffer buffer(long capacity) {
-            return (DataBitBuffer)super.buffer(capacity);
+            return (DataBitBuffer) super.buffer(capacity);
         }
 
         public DataBitBuffer buffer() {
-            return (DataBitBuffer)super.buffer();
+            return (DataBitBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -12596,17 +12596,15 @@ class SimpleArraysImpl {
     }
 
 
-
     @SuppressWarnings("cast")
     static class UpdatableJABitArray
-            extends JABitArray implements UpdatableBitArray
-    {
+            extends JABitArray implements UpdatableBitArray {
         UpdatableJABitArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
 
         UpdatableJABitArray(long[] initialArray, long initialCapacity, long initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
         }
 
         UpdatableJABitArray(long[] initialArray, long initialCapacityAndLength) {
@@ -12623,10 +12621,10 @@ class SimpleArraysImpl {
             if (srcIndex < 0 || srcIndex >= length)
                 throw rangeException(srcIndex);
             synchronized (this.bitArray) {
-                if ((this.bitArray[(int)((srcIndex) >>> 6)] & (1L << ((int)(srcIndex) & 63))) != 0L)
-                    this.bitArray[(int)((destIndex) >>> 6)] |= 1L << ((int)(destIndex) & 63);
+                if ((this.bitArray[(int) ((srcIndex) >>> 6)] & (1L << ((int) (srcIndex) & 63))) != 0L)
+                    this.bitArray[(int) ((destIndex) >>> 6)] |= 1L << ((int) (destIndex) & 63);
                 else
-                    this.bitArray[(int)((destIndex) >>> 6)] &= ~(1L << ((int)(destIndex) & 63));
+                    this.bitArray[(int) ((destIndex) >>> 6)] &= ~(1L << ((int) (destIndex) & 63));
             }
         }
 
@@ -12651,18 +12649,18 @@ class SimpleArraysImpl {
             if (secondIndex < 0 || secondIndex >= length)
                 throw rangeException(secondIndex);
             long i = firstIndex, j = secondIndex;
-            boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+            boolean temp = (this.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L;
             synchronized (this.bitArray) {
-                if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                if ((this.bitArray[(int) ((j) >>> 6)] & (1L << ((int) (j) & 63))) != 0L)
+                    this.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
                 else
-                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                    this.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
             }
             synchronized (this.bitArray) {
                 if (temp)
-                    this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                    this.bitArray[(int) ((j) >>> 6)] |= 1L << ((int) (j) & 63);
                 else
-                    this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                    this.bitArray[(int) ((j) >>> 6)] &= ~(1L << ((int) (j) & 63));
             }
         }
 
@@ -12680,18 +12678,18 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex + count - 1);
             long i = firstIndex, j = secondIndex;
             for (long iMax = i + count; i < iMax; i++, j++) {
-                boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                boolean temp = (this.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L;
                 synchronized (this.bitArray) {
-                    if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                        this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                    if ((this.bitArray[(int) ((j) >>> 6)] & (1L << ((int) (j) & 63))) != 0L)
+                        this.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
                     else
-                        this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                        this.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
                 }
                 synchronized (this.bitArray) {
                     if (temp)
-                        this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                        this.bitArray[(int) ((j) >>> 6)] |= 1L << ((int) (j) & 63);
                     else
-                        this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                        this.bitArray[(int) ((j) >>> 6)] &= ~(1L << ((int) (j) & 63));
                 }
             }
         }
@@ -12701,10 +12699,10 @@ class SimpleArraysImpl {
                 long count = (Math.min(a.length, length));
                 if (count == 1) {
                     synchronized (bitArray) {
-                        if ((a.bitArray[(int)((a.offset) >>> 6)] & (1L << ((int)(a.offset) & 63))) != 0L)
-                            bitArray[(int)((0) >>> 6)] |= 1L << ((int)(0) & 63);
+                        if ((a.bitArray[(int) ((a.offset) >>> 6)] & (1L << ((int) (a.offset) & 63))) != 0L)
+                            bitArray[(int) ((0) >>> 6)] |= 1L << ((int) (0) & 63);
                         else
-                            bitArray[(int)((0) >>> 6)] &= ~(1L << ((int)(0) & 63));
+                            bitArray[(int) ((0) >>> 6)] &= ~(1L << ((int) (0) & 63));
                     }
                     return this;
                 } else if (count > 0) {
@@ -12733,18 +12731,18 @@ class SimpleArraysImpl {
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     long j = a.offset;
                     for (long i = 0; i < count; i++, j++) {
-                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                        boolean temp = (this.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L;
                         synchronized (this.bitArray) {
-                            if ((a.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                            if ((a.bitArray[(int) ((j) >>> 6)] & (1L << ((int) (j) & 63))) != 0L)
+                                this.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
                             else
-                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                                this.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
                         }
                         synchronized (a.bitArray) {
                             if (temp)
-                                a.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                                a.bitArray[(int) ((j) >>> 6)] |= 1L << ((int) (j) & 63);
                             else
-                                a.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                                a.bitArray[(int) ((j) >>> 6)] &= ~(1L << ((int) (j) & 63));
                         }
                     }
                     return this;
@@ -12753,18 +12751,18 @@ class SimpleArraysImpl {
                 long count = Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (long i = 0; i < count; i++) {
-                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                        boolean temp = (this.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L;
                         synchronized (this.bitArray) {
-                            if ((a.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L)
-                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                            if ((a.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L)
+                                this.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
                             else
-                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                                this.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
                         }
                         synchronized (a.bitArray) {
                             if (temp)
-                                a.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                                a.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
                             else
-                                a.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                                a.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
                         }
                     }
                     return this;
@@ -12787,9 +12785,9 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             synchronized (this.bitArray) {
                 if (value != 0)
-                    this.bitArray[(int)((index) >>> 6)] |= 1L << ((int)(index) & 63);
+                    this.bitArray[(int) ((index) >>> 6)] |= 1L << ((int) (index) & 63);
                 else
-                    this.bitArray[(int)((index) >>> 6)] &= ~(1L << ((int)(index) & 63));
+                    this.bitArray[(int) ((index) >>> 6)] &= ~(1L << ((int) (index) & 63));
             }
         }
 
@@ -12798,9 +12796,9 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             synchronized (this.bitArray) {
                 if (value)
-                    this.bitArray[(int)((index) >>> 6)] |= 1L << ((int)(index) & 63);
+                    this.bitArray[(int) ((index) >>> 6)] |= 1L << ((int) (index) & 63);
                 else
-                    this.bitArray[(int)((index) >>> 6)] &= ~(1L << ((int)(index) & 63));
+                    this.bitArray[(int) ((index) >>> 6)] &= ~(1L << ((int) (index) & 63));
             }
         }
 
@@ -12810,7 +12808,7 @@ class SimpleArraysImpl {
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
             synchronized (this.bitArray) {
-                this.bitArray[(int)((index) >>> 6)] |= 1L << ((index) & 63);
+                this.bitArray[(int) ((index) >>> 6)] |= 1L << ((index) & 63);
             }
         }
 
@@ -12820,7 +12818,7 @@ class SimpleArraysImpl {
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
             synchronized (this.bitArray) {
-                this.bitArray[(int)((index) >>> 6)] &= ~(1L << ((index) & 63));
+                this.bitArray[(int) ((index) >>> 6)] &= ~(1L << ((index) & 63));
             }
         }
 
@@ -12828,23 +12826,23 @@ class SimpleArraysImpl {
             return fill(0, length, value);
         }
 
-        public UpdatableBitArray  fill(long position, long count, double value) {
+        public UpdatableBitArray fill(long position, long count, double value) {
             return fill(position, count, value != 0);
         }
 
-        public UpdatableBitArray  fill(long value) {
+        public UpdatableBitArray fill(long value) {
             return fill(0, length, value);
         }
 
-        public UpdatableBitArray  fill(long position, long count, long value) {
+        public UpdatableBitArray fill(long position, long count, long value) {
             return fill(position, count, value != 0);
         }
 
-        public UpdatableBitArray  fill(boolean value) {
+        public UpdatableBitArray fill(boolean value) {
             return fill(0, length, value);
         }
 
-        public UpdatableBitArray  fill(long position, long count, boolean value) {
+        public UpdatableBitArray fill(long position, long count, boolean value) {
             if (position < 0)
                 throw rangeException(position);
             if (count < 0)
@@ -12918,7 +12916,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
@@ -12952,10 +12950,10 @@ class SimpleArraysImpl {
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
             synchronized (this.bitArray) {
-                if ((this.bitArray[(int)((offset + srcIndex) >>> 6)] & (1L << ((int)(offset + srcIndex) & 63))) != 0L)
-                    this.bitArray[(int)((offset + destIndex) >>> 6)] |= 1L << ((int)(offset + destIndex) & 63);
+                if ((this.bitArray[(int) ((offset + srcIndex) >>> 6)] & (1L << ((int) (offset + srcIndex) & 63))) != 0L)
+                    this.bitArray[(int) ((offset + destIndex) >>> 6)] |= 1L << ((int) (offset + destIndex) & 63);
                 else
-                    this.bitArray[(int)((offset + destIndex) >>> 6)] &= ~(1L << ((int)(offset + destIndex) & 63));
+                    this.bitArray[(int) ((offset + destIndex) >>> 6)] &= ~(1L << ((int) (offset + destIndex) & 63));
             }
         }
 
@@ -12984,18 +12982,18 @@ class SimpleArraysImpl {
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
             long i = offset + firstIndex, j = offset + secondIndex;
-            boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+            boolean temp = (this.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L;
             synchronized (this.bitArray) {
-                if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                if ((this.bitArray[(int) ((j) >>> 6)] & (1L << ((int) (j) & 63))) != 0L)
+                    this.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
                 else
-                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                    this.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
             }
             synchronized (this.bitArray) {
                 if (temp)
-                    this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                    this.bitArray[(int) ((j) >>> 6)] |= 1L << ((int) (j) & 63);
                 else
-                    this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                    this.bitArray[(int) ((j) >>> 6)] &= ~(1L << ((int) (j) & 63));
             }
         }
 
@@ -13015,18 +13013,18 @@ class SimpleArraysImpl {
                 reallocateStorage();
             long i = offset + firstIndex, j = offset + secondIndex;
             for (long iMax = i + count; i < iMax; i++, j++) {
-                boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                boolean temp = (this.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L;
                 synchronized (this.bitArray) {
-                    if ((this.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                        this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                    if ((this.bitArray[(int) ((j) >>> 6)] & (1L << ((int) (j) & 63))) != 0L)
+                        this.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
                     else
-                        this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                        this.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
                 }
                 synchronized (this.bitArray) {
                     if (temp)
-                        this.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                        this.bitArray[(int) ((j) >>> 6)] |= 1L << ((int) (j) & 63);
                     else
-                        this.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                        this.bitArray[(int) ((j) >>> 6)] &= ~(1L << ((int) (j) & 63));
                 }
             }
         }
@@ -13038,10 +13036,10 @@ class SimpleArraysImpl {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
                     synchronized (bitArray) {
-                        if ((a.bitArray[(int)((a.offset) >>> 6)] & (1L << ((int)(a.offset) & 63))) != 0L)
-                            bitArray[(int)((offset) >>> 6)] |= 1L << ((int)(offset) & 63);
+                        if ((a.bitArray[(int) ((a.offset) >>> 6)] & (1L << ((int) (a.offset) & 63))) != 0L)
+                            bitArray[(int) ((offset) >>> 6)] |= 1L << ((int) (offset) & 63);
                         else
-                            bitArray[(int)((offset) >>> 6)] &= ~(1L << ((int)(offset) & 63));
+                            bitArray[(int) ((offset) >>> 6)] &= ~(1L << ((int) (offset) & 63));
                     }
                     return this;
                 } else if (count > 0) {
@@ -13056,10 +13054,10 @@ class SimpleArraysImpl {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
                     synchronized (bitArray) {
-                        if ((a.bitArray[(int)((0) >>> 6)] & (1L << ((int)(0) & 63))) != 0L)
-                            bitArray[(int)((offset) >>> 6)] |= 1L << ((int)(offset) & 63);
+                        if ((a.bitArray[(int) ((0) >>> 6)] & (1L << ((int) (0) & 63))) != 0L)
+                            bitArray[(int) ((offset) >>> 6)] |= 1L << ((int) (offset) & 63);
                         else
-                            bitArray[(int)((offset) >>> 6)] &= ~(1L << ((int)(offset) & 63));
+                            bitArray[(int) ((offset) >>> 6)] &= ~(1L << ((int) (offset) & 63));
                     }
                     return this;
                 } else if (count > 0) {
@@ -13087,18 +13085,18 @@ class SimpleArraysImpl {
                     long i = offset;
                     long j = a.offset;
                     for (long iMax = i + count; i < iMax; i++, j++) {
-                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                        boolean temp = (this.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L;
                         synchronized (this.bitArray) {
-                            if ((a.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                            if ((a.bitArray[(int) ((j) >>> 6)] & (1L << ((int) (j) & 63))) != 0L)
+                                this.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
                             else
-                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                                this.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
                         }
                         synchronized (a.bitArray) {
                             if (temp)
-                                a.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                                a.bitArray[(int) ((j) >>> 6)] |= 1L << ((int) (j) & 63);
                             else
-                                a.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                                a.bitArray[(int) ((j) >>> 6)] &= ~(1L << ((int) (j) & 63));
                         }
                     }
                     return this;
@@ -13110,18 +13108,18 @@ class SimpleArraysImpl {
                         reallocateStorage();
                     long i = offset;
                     for (long j = 0; j < count; i++, j++) {
-                        boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+                        boolean temp = (this.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L;
                         synchronized (this.bitArray) {
-                            if ((a.bitArray[(int)((j) >>> 6)] & (1L << ((int)(j) & 63))) != 0L)
-                                this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                            if ((a.bitArray[(int) ((j) >>> 6)] & (1L << ((int) (j) & 63))) != 0L)
+                                this.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
                             else
-                                this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                                this.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
                         }
                         synchronized (a.bitArray) {
                             if (temp)
-                                a.bitArray[(int)((j) >>> 6)] |= 1L << ((int)(j) & 63);
+                                a.bitArray[(int) ((j) >>> 6)] |= 1L << ((int) (j) & 63);
                             else
-                                a.bitArray[(int)((j) >>> 6)] &= ~(1L << ((int)(j) & 63));
+                                a.bitArray[(int) ((j) >>> 6)] &= ~(1L << ((int) (j) & 63));
                         }
                     }
                     return this;
@@ -13146,9 +13144,9 @@ class SimpleArraysImpl {
                 reallocateStorage();
             synchronized (this.bitArray) {
                 if (value != 0)
-                    this.bitArray[(int)((offset + index) >>> 6)] |= 1L << ((int)(offset + index) & 63);
+                    this.bitArray[(int) ((offset + index) >>> 6)] |= 1L << ((int) (offset + index) & 63);
                 else
-                    this.bitArray[(int)((offset + index) >>> 6)] &= ~(1L << ((int)(offset + index) & 63));
+                    this.bitArray[(int) ((offset + index) >>> 6)] &= ~(1L << ((int) (offset + index) & 63));
             }
         }
 
@@ -13159,9 +13157,9 @@ class SimpleArraysImpl {
                 reallocateStorage();
             synchronized (this.bitArray) {
                 if (value)
-                    this.bitArray[(int)((offset + index) >>> 6)] |= 1L << ((int)(offset + index) & 63);
+                    this.bitArray[(int) ((offset + index) >>> 6)] |= 1L << ((int) (offset + index) & 63);
                 else
-                    this.bitArray[(int)((offset + index) >>> 6)] &= ~(1L << ((int)(offset + index) & 63));
+                    this.bitArray[(int) ((offset + index) >>> 6)] &= ~(1L << ((int) (offset + index) & 63));
             }
         }
 
@@ -13171,7 +13169,7 @@ class SimpleArraysImpl {
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
             synchronized (this.bitArray) {
-                this.bitArray[(int)((offset + index) >>> 6)] |= 1L << ((offset + index) & 63);
+                this.bitArray[(int) ((offset + index) >>> 6)] |= 1L << ((offset + index) & 63);
             }
         }
 
@@ -13181,7 +13179,7 @@ class SimpleArraysImpl {
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
             synchronized (this.bitArray) {
-                this.bitArray[(int)((offset + index) >>> 6)] &= ~(1L << ((offset + index) & 63));
+                this.bitArray[(int) ((offset + index) >>> 6)] &= ~(1L << ((offset + index) & 63));
             }
         }
 
@@ -13294,7 +13292,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
@@ -13308,8 +13306,7 @@ class SimpleArraysImpl {
 
     @SuppressWarnings("cast")
     static final class MutableJABitArray
-            extends UpdatableJABitArray implements MutableBitArray
-    {
+            extends UpdatableJABitArray implements MutableBitArray {
         MutableJABitArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
@@ -13363,7 +13360,7 @@ class SimpleArraysImpl {
             long i = length - 1;
             if (i < 0)
                 throw new EmptyStackException();
-            boolean result = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
+            boolean result = (this.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L;
             this.length = i;
             // - no sense to spend time for setting freed bit to zero
             return result;
@@ -13373,14 +13370,14 @@ class SimpleArraysImpl {
             long i = length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             this.length = i + 1;
             synchronized (this.bitArray) {
                 if (value)
-                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
+                    this.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
                 else
-                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
+                    this.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
             }
         }
 
@@ -13420,7 +13417,7 @@ class SimpleArraysImpl {
         }
 
         public MutableBitArray shallowClone() {
-            return (MutableBitArray)standardObjectClone();
+            return (MutableBitArray) standardObjectClone();
         }
 
         public final String toString() {
@@ -13487,7 +13484,7 @@ class SimpleArraysImpl {
                 throw new EmptyStackException();
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            boolean result = (this.bitArray[(int)((offset + i) >>> 6)] & (1L << ((int)(offset + i) & 63))) != 0L;
+            boolean result = (this.bitArray[(int) ((offset + i) >>> 6)] & (1L << ((int) (offset + i) & 63))) != 0L;
             this.length = i;
             // - no sense to spend time for setting freed bit to zero
             return result;
@@ -13497,16 +13494,16 @@ class SimpleArraysImpl {
             long i = length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
             this.length = i + 1;
             synchronized (this.bitArray) {
                 if (value)
-                    this.bitArray[(int)((offset + i) >>> 6)] |= 1L << ((int)(offset + i) & 63);
+                    this.bitArray[(int) ((offset + i) >>> 6)] |= 1L << ((int) (offset + i) & 63);
                 else
-                    this.bitArray[(int)((offset + i) >>> 6)] &= ~(1L << ((int)(offset + i) & 63));
+                    this.bitArray[(int) ((offset + i) >>> 6)] &= ~(1L << ((int) (offset + i) & 63));
             }
         }
 
@@ -13552,7 +13549,7 @@ class SimpleArraysImpl {
         }
 
         public MutableBitArray shallowClone() {
-            return (MutableBitArray)standardObjectClone();
+            return (MutableBitArray) standardObjectClone();
         }
 
         public final String toString() {
