@@ -359,9 +359,8 @@ class SimpleArraysImpl {
         }
 
         final void appendImpl(Array appendedArray) {
-            if (appendedArray instanceof AbstractJAArray
+            if (appendedArray instanceof AbstractJAArray a
                 && appendedArray.elementType() == this.elementType()) {
-                AbstractJAArray a = (AbstractJAArray)appendedArray;
                 long currentLength = length;
                 long appendedLength = a.length;
                 Object vArray = a.array; // important if appendedArray == this
@@ -1161,9 +1160,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JAFloatSubArray) {
-                JAFloatSubArray a = (JAFloatSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JAFloatSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     floatArray[0] = a.floatArray[a.offset];
                     return this;
@@ -1171,9 +1169,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.floatArray, a.offset, floatArray, 0, count);
                     return this;
                 }
-            } else if (src instanceof JAFloatArray) {
-                JAFloatArray a = (JAFloatArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JAFloatArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count > 0) {
                     System.arraycopy(a.floatArray, 0, floatArray, 0, count);
                 }
@@ -1184,9 +1181,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJAFloatSubArray) {
-                UpdatableJAFloatSubArray a = (UpdatableJAFloatSubArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            if (another instanceof UpdatableJAFloatSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -1196,9 +1192,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJAFloatArray) {
-                UpdatableJAFloatArray a = (UpdatableJAFloatArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJAFloatArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         float temp = this.floatArray[i];
@@ -1423,9 +1418,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JAFloatSubArray) {
-                JAFloatSubArray a = (JAFloatSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JAFloatSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -1437,9 +1431,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.floatArray, a.offset, floatArray, offset, count);
                     return this;
                 }
-            } else if (src instanceof JAFloatArray) {
-                JAFloatArray a = (JAFloatArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JAFloatArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -1457,9 +1450,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJAFloatSubArray) {
-                UpdatableJAFloatSubArray a = (UpdatableJAFloatSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            if (another instanceof UpdatableJAFloatSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -1472,9 +1464,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJAFloatArray) {
-                UpdatableJAFloatArray a = (UpdatableJAFloatArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJAFloatArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -2655,9 +2646,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JACharSubArray) {
-                JACharSubArray a = (JACharSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JACharSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     charArray[0] = a.charArray[a.offset];
                     return this;
@@ -2665,9 +2655,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.charArray, a.offset, charArray, 0, count);
                     return this;
                 }
-            } else if (src instanceof JACharArray) {
-                JACharArray a = (JACharArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JACharArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count > 0) {
                     System.arraycopy(a.charArray, 0, charArray, 0, count);
                 }
@@ -2678,9 +2667,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJACharSubArray) {
-                UpdatableJACharSubArray a = (UpdatableJACharSubArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            if (another instanceof UpdatableJACharSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -2690,9 +2678,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJACharArray) {
-                UpdatableJACharArray a = (UpdatableJACharArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJACharArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         char temp = this.charArray[i];
@@ -2917,9 +2904,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JACharSubArray) {
-                JACharSubArray a = (JACharSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JACharSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -2931,9 +2917,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.charArray, a.offset, charArray, offset, count);
                     return this;
                 }
-            } else if (src instanceof JACharArray) {
-                JACharArray a = (JACharArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JACharArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -2951,9 +2936,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJACharSubArray) {
-                UpdatableJACharSubArray a = (UpdatableJACharSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            if (another instanceof UpdatableJACharSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -2966,9 +2950,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJACharArray) {
-                UpdatableJACharArray a = (UpdatableJACharArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJACharArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -4161,9 +4144,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JAByteSubArray) {
-                JAByteSubArray a = (JAByteSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JAByteSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     byteArray[0] = a.byteArray[a.offset];
                     return this;
@@ -4171,9 +4153,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.byteArray, a.offset, byteArray, 0, count);
                     return this;
                 }
-            } else if (src instanceof JAByteArray) {
-                JAByteArray a = (JAByteArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JAByteArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count > 0) {
                     System.arraycopy(a.byteArray, 0, byteArray, 0, count);
                 }
@@ -4184,9 +4165,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJAByteSubArray) {
-                UpdatableJAByteSubArray a = (UpdatableJAByteSubArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            if (another instanceof UpdatableJAByteSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -4196,9 +4176,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJAByteArray) {
-                UpdatableJAByteArray a = (UpdatableJAByteArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJAByteArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         byte temp = this.byteArray[i];
@@ -4423,9 +4402,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JAByteSubArray) {
-                JAByteSubArray a = (JAByteSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JAByteSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -4437,9 +4415,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.byteArray, a.offset, byteArray, offset, count);
                     return this;
                 }
-            } else if (src instanceof JAByteArray) {
-                JAByteArray a = (JAByteArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JAByteArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -4457,9 +4434,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJAByteSubArray) {
-                UpdatableJAByteSubArray a = (UpdatableJAByteSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            if (another instanceof UpdatableJAByteSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -4472,9 +4448,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJAByteArray) {
-                UpdatableJAByteArray a = (UpdatableJAByteArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJAByteArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -5647,9 +5622,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JAShortSubArray) {
-                JAShortSubArray a = (JAShortSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JAShortSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     shortArray[0] = a.shortArray[a.offset];
                     return this;
@@ -5657,9 +5631,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.shortArray, a.offset, shortArray, 0, count);
                     return this;
                 }
-            } else if (src instanceof JAShortArray) {
-                JAShortArray a = (JAShortArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JAShortArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count > 0) {
                     System.arraycopy(a.shortArray, 0, shortArray, 0, count);
                 }
@@ -5670,9 +5643,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJAShortSubArray) {
-                UpdatableJAShortSubArray a = (UpdatableJAShortSubArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            if (another instanceof UpdatableJAShortSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -5682,9 +5654,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJAShortArray) {
-                UpdatableJAShortArray a = (UpdatableJAShortArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJAShortArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         short temp = this.shortArray[i];
@@ -5909,9 +5880,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JAShortSubArray) {
-                JAShortSubArray a = (JAShortSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JAShortSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -5923,9 +5893,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.shortArray, a.offset, shortArray, offset, count);
                     return this;
                 }
-            } else if (src instanceof JAShortArray) {
-                JAShortArray a = (JAShortArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JAShortArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -5943,9 +5912,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJAShortSubArray) {
-                UpdatableJAShortSubArray a = (UpdatableJAShortSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            if (another instanceof UpdatableJAShortSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -5958,9 +5926,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJAShortArray) {
-                UpdatableJAShortArray a = (UpdatableJAShortArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJAShortArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -7119,9 +7086,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JAIntSubArray) {
-                JAIntSubArray a = (JAIntSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JAIntSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     intArray[0] = a.intArray[a.offset];
                     return this;
@@ -7129,9 +7095,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.intArray, a.offset, intArray, 0, count);
                     return this;
                 }
-            } else if (src instanceof JAIntArray) {
-                JAIntArray a = (JAIntArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JAIntArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count > 0) {
                     System.arraycopy(a.intArray, 0, intArray, 0, count);
                 }
@@ -7142,9 +7107,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJAIntSubArray) {
-                UpdatableJAIntSubArray a = (UpdatableJAIntSubArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            if (another instanceof UpdatableJAIntSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -7154,9 +7118,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJAIntArray) {
-                UpdatableJAIntArray a = (UpdatableJAIntArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJAIntArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         int temp = this.intArray[i];
@@ -7375,9 +7338,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JAIntSubArray) {
-                JAIntSubArray a = (JAIntSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JAIntSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -7389,9 +7351,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.intArray, a.offset, intArray, offset, count);
                     return this;
                 }
-            } else if (src instanceof JAIntArray) {
-                JAIntArray a = (JAIntArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JAIntArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -7409,9 +7370,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJAIntSubArray) {
-                UpdatableJAIntSubArray a = (UpdatableJAIntSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            if (another instanceof UpdatableJAIntSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -7424,9 +7384,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJAIntArray) {
-                UpdatableJAIntArray a = (UpdatableJAIntArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJAIntArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -8563,9 +8522,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JALongSubArray) {
-                JALongSubArray a = (JALongSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JALongSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     longArray[0] = a.longArray[a.offset];
                     return this;
@@ -8573,9 +8531,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.longArray, a.offset, longArray, 0, count);
                     return this;
                 }
-            } else if (src instanceof JALongArray) {
-                JALongArray a = (JALongArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JALongArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count > 0) {
                     System.arraycopy(a.longArray, 0, longArray, 0, count);
                 }
@@ -8586,9 +8543,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJALongSubArray) {
-                UpdatableJALongSubArray a = (UpdatableJALongSubArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            if (another instanceof UpdatableJALongSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -8598,9 +8554,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJALongArray) {
-                UpdatableJALongArray a = (UpdatableJALongArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJALongArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         long temp = this.longArray[i];
@@ -8813,9 +8768,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JALongSubArray) {
-                JALongSubArray a = (JALongSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JALongSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -8827,9 +8781,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.longArray, a.offset, longArray, offset, count);
                     return this;
                 }
-            } else if (src instanceof JALongArray) {
-                JALongArray a = (JALongArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JALongArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -8847,9 +8800,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJALongSubArray) {
-                UpdatableJALongSubArray a = (UpdatableJALongSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            if (another instanceof UpdatableJALongSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -8862,9 +8814,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJALongArray) {
-                UpdatableJALongArray a = (UpdatableJALongArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJALongArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -9992,9 +9943,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JADoubleSubArray) {
-                JADoubleSubArray a = (JADoubleSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JADoubleSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     doubleArray[0] = a.doubleArray[a.offset];
                     return this;
@@ -10002,9 +9952,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.doubleArray, a.offset, doubleArray, 0, count);
                     return this;
                 }
-            } else if (src instanceof JADoubleArray) {
-                JADoubleArray a = (JADoubleArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JADoubleArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count > 0) {
                     System.arraycopy(a.doubleArray, 0, doubleArray, 0, count);
                 }
@@ -10015,9 +9964,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJADoubleSubArray) {
-                UpdatableJADoubleSubArray a = (UpdatableJADoubleSubArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            if (another instanceof UpdatableJADoubleSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -10027,9 +9975,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJADoubleArray) {
-                UpdatableJADoubleArray a = (UpdatableJADoubleArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJADoubleArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         double temp = this.doubleArray[i];
@@ -10242,9 +10189,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JADoubleSubArray) {
-                JADoubleSubArray a = (JADoubleSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JADoubleSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -10256,9 +10202,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.doubleArray, a.offset, doubleArray, offset, count);
                     return this;
                 }
-            } else if (src instanceof JADoubleArray) {
-                JADoubleArray a = (JADoubleArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JADoubleArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -10276,9 +10221,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJADoubleSubArray) {
-                UpdatableJADoubleSubArray a = (UpdatableJADoubleSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            if (another instanceof UpdatableJADoubleSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -10291,9 +10235,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJADoubleArray) {
-                UpdatableJADoubleArray a = (UpdatableJADoubleArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJADoubleArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -11441,9 +11384,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JAObjectSubArray) {
-                JAObjectSubArray a = (JAObjectSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JAObjectSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     objectArray[0] = a.objectArray[a.offset];
                     return this;
@@ -11451,9 +11393,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.objectArray, a.offset, objectArray, 0, count);
                     return this;
                 }
-            } else if (src instanceof JAObjectArray) {
-                JAObjectArray a = (JAObjectArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JAObjectArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count > 0) {
                     System.arraycopy(a.objectArray, 0, objectArray, 0, count);
                 }
@@ -11464,9 +11405,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJAObjectSubArray) {
-                UpdatableJAObjectSubArray a = (UpdatableJAObjectSubArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            if (another instanceof UpdatableJAObjectSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     int j = a.offset;
                     for (int i = 0; i < count; i++, j++) {
@@ -11476,9 +11416,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJAObjectArray) {
-                UpdatableJAObjectArray a = (UpdatableJAObjectArray) another;
-                int count = (int) (a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJAObjectArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (int i = 0; i < count; i++) {
                         Object temp = this.objectArray[i];
@@ -11676,9 +11615,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JAObjectSubArray) {
-                JAObjectSubArray a = (JAObjectSubArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            if (src instanceof JAObjectSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -11690,9 +11628,8 @@ class SimpleArraysImpl {
                     System.arraycopy(a.objectArray, a.offset, objectArray, offset, count);
                     return this;
                 }
-            } else if (src instanceof JAObjectArray) {
-                JAObjectArray a = (JAObjectArray)src;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (src instanceof JAObjectArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -11710,9 +11647,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJAObjectSubArray) {
-                UpdatableJAObjectSubArray a = (UpdatableJAObjectSubArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            if (another instanceof UpdatableJAObjectSubArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -11725,9 +11661,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJAObjectArray) {
-                UpdatableJAObjectArray a = (UpdatableJAObjectArray)another;
-                int count = (int)(a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJAObjectArray a) {
+                int count = (int) Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -12690,9 +12625,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JABitSubArray) {
-                JABitSubArray a = (JABitSubArray)src;
-                long count = (a.length < length ? a.length : length);
+            if (src instanceof JABitSubArray a) {
+                long count = (Math.min(a.length, length));
                 if (count == 1) {
                     synchronized (bitArray) {
                         if ((a.bitArray[(int)((a.offset) >>> 6)] & (1L << ((int)(a.offset) & 63))) != 0L)
@@ -12705,17 +12639,15 @@ class SimpleArraysImpl {
                     PackedBitArrays.copyBits(bitArray, 0, a.bitArray, a.offset, count);
                     return this;
                 }
-            } else if (src instanceof JABitArray) {
-                JABitArray a = (JABitArray)src;
-                long count = (a.length < length ? a.length : length);
+            } else if (src instanceof JABitArray a) {
+                long count = Math.min(a.length, length);
                 if (count > 0) {
                     PackedBitArrays.copyBits(bitArray, 0, a.bitArray, 0, count);
                 }
                 return this;
             }
-            if (src instanceof CopiesArraysImpl.CopiesBitArray) {
-                CopiesArraysImpl.CopiesBitArray a = (CopiesArraysImpl.CopiesBitArray)src;
-                long count = a.length < length ? a.length : length;
+            if (src instanceof CopiesArraysImpl.CopiesBitArray a) {
+                long count = Math.min(a.length, length);
                 PackedBitArrays.fillBits(bitArray, this.longJavaArrayOffsetInternal(), count, a.element);
             } else {
                 defaultCopy(this, src);
@@ -12724,9 +12656,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJABitSubArray) {
-                UpdatableJABitSubArray a = (UpdatableJABitSubArray)another;
-                long count = (a.length < length ? a.length : length);
+            if (another instanceof UpdatableJABitSubArray a) {
+                long count = Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     long j = a.offset;
                     for (long i = 0; i < count; i++, j++) {
@@ -12746,9 +12677,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJABitArray) {
-                UpdatableJABitArray a = (UpdatableJABitArray)another;
-                long count = (a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJABitArray a) {
+                long count = Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     for (long i = 0; i < count; i++) {
                         boolean temp = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
@@ -13030,9 +12960,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof JABitSubArray) {
-                JABitSubArray a = (JABitSubArray)src;
-                long count = (a.length < length ? a.length : length);
+            if (src instanceof JABitSubArray a) {
+                long count = Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -13049,9 +12978,8 @@ class SimpleArraysImpl {
                     PackedBitArrays.copyBits(bitArray, offset, a.bitArray, a.offset, count);
                     return this;
                 }
-            } else if (src instanceof JABitArray) {
-                JABitArray a = (JABitArray)src;
-                long count = (a.length < length ? a.length : length);
+            } else if (src instanceof JABitArray a) {
+                long count = Math.min(a.length, length);
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -13069,9 +12997,8 @@ class SimpleArraysImpl {
                     return this;
                 }
             }
-            if (src instanceof CopiesArraysImpl.CopiesBitArray) {
-                CopiesArraysImpl.CopiesBitArray a = (CopiesArraysImpl.CopiesBitArray)src;
-                long count = a.length < length ? a.length : length;
+            if (src instanceof CopiesArraysImpl.CopiesBitArray a) {
+                long count = Math.min(a.length, length);
                 PackedBitArrays.fillBits(bitArray, this.longJavaArrayOffsetInternal(), count, a.element);
             } else {
                 defaultCopy(this, src);
@@ -13080,9 +13007,8 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableJABitSubArray) {
-                UpdatableJABitSubArray a = (UpdatableJABitSubArray)another;
-                long count = (a.length < length ? a.length : length);
+            if (another instanceof UpdatableJABitSubArray a) {
+                long count = Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
@@ -13105,9 +13031,8 @@ class SimpleArraysImpl {
                     }
                     return this;
                 }
-            } else if (another instanceof UpdatableJABitArray) {
-                UpdatableJABitArray a = (UpdatableJABitArray)another;
-                long count = (a.length < length ? a.length : length);
+            } else if (another instanceof UpdatableJABitArray a) {
+                long count = Math.min(a.length, length);
                 if (count < MIN_COUNT_FOR_USING_DEFAULT_SWAP) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
