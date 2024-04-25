@@ -1091,14 +1091,13 @@ class SimpleArraysImpl {
 
     @SuppressWarnings("cast")
     static class UpdatableJAFloatArray
-        extends TrustedJAFloatArray implements UpdatableFloatArray
-    {
+            extends TrustedJAFloatArray implements UpdatableFloatArray {
         UpdatableJAFloatArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
 
         UpdatableJAFloatArray(float[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
         }
 
         UpdatableJAFloatArray(float[] initialArray, int initialCapacityAndLength) {
@@ -1114,13 +1113,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (srcIndex < 0 || srcIndex >= length)
                 throw rangeException(srcIndex);
-            this.floatArray[(int)destIndex] = this.floatArray[(int)srcIndex];
+            this.floatArray[(int) destIndex] = this.floatArray[(int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -1129,7 +1128,7 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (destIndex > length - count)
                 throw rangeException(destIndex + count - 1);
-            System.arraycopy(this.floatArray, (int)srcIndex, this.floatArray, (int)destIndex, (int)count);
+            System.arraycopy(this.floatArray, (int) srcIndex, this.floatArray, (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -1137,7 +1136,7 @@ class SimpleArraysImpl {
                 throw rangeException(firstIndex);
             if (secondIndex < 0 || secondIndex >= length)
                 throw rangeException(secondIndex);
-            int i = (int)firstIndex, j = (int)secondIndex;
+            int i = (int) firstIndex, j = (int) secondIndex;
             float temp = this.floatArray[i];
             this.floatArray[i] = this.floatArray[j];
             this.floatArray[j] = temp;
@@ -1146,7 +1145,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -1155,8 +1154,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (secondIndex > length - count)
                 throw rangeException(secondIndex + count - 1);
-            int i = (int)firstIndex, j = (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = (int) firstIndex, j = (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 float temp = this.floatArray[i];
                 this.floatArray[i] = this.floatArray[j];
                 this.floatArray[j] = temp;
@@ -1365,13 +1364,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.floatArray[offset + (int)destIndex] = this.floatArray[offset + (int)srcIndex];
+            this.floatArray[offset + (int) destIndex] = this.floatArray[offset + (int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -1382,8 +1381,8 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            System.arraycopy(this.floatArray, offset + (int)srcIndex,
-                this.floatArray, offset + (int)destIndex, (int)count);
+            System.arraycopy(this.floatArray, offset + (int) srcIndex,
+                    this.floatArray, offset + (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -1393,7 +1392,7 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
             float temp = this.floatArray[i];
             this.floatArray[i] = this.floatArray[j];
             this.floatArray[j] = temp;
@@ -1402,7 +1401,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -1413,8 +1412,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 float temp = this.floatArray[i];
                 this.floatArray[i] = this.floatArray[j];
                 this.floatArray[j] = temp;
@@ -1487,11 +1486,11 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setFloat(index, (float)value);
+            setFloat(index, (float) value);
         }
 
         public final void setLong(long index, long value) {
-            setFloat(index, (float)value);
+            setFloat(index, (float) value);
         }
 
         public final void setInt(long index, int value) {
@@ -1499,7 +1498,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.floatArray[offset + (int)index] = (float)value;
+            this.floatArray[offset + (int) index] = (float) value;
         }
 
         public final void setFloat(long index, float value) {
@@ -1507,7 +1506,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.floatArray[offset + (int)index] = value;
+            this.floatArray[offset + (int) index] = value;
         }
 
         public UpdatableFloatArray fill(double value) {
@@ -1515,7 +1514,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableFloatArray fill(long position, long count, double value) {
-            return fill(position, count, (float)value);
+            return fill(position, count, (float) value);
         }
 
         public UpdatableFloatArray fill(long value) {
@@ -1523,7 +1522,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableFloatArray fill(long position, long count, long value) {
-            return fill(position, count, (float)value);
+            return fill(position, count, (float) value);
         }
 
         public UpdatableFloatArray fill(float value) {
@@ -1535,12 +1534,12 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            JArrays.fillFloatArray(this.floatArray, offset + (int)position, (int)count, value);
+            JArrays.fillFloatArray(this.floatArray, offset + (int) position, (int) count, value);
             return this;
         }
 
@@ -1551,12 +1550,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJAFloatArray(floatArray, (int)(toIndex - fromIndex));
+                return new UpdatableJAFloatArray(floatArray, (int) (toIndex - fromIndex));
             } else {
                 UpdatableJAFloatSubArray result = new UpdatableJAFloatSubArray(floatArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -1568,14 +1567,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJAFloatArray(floatArray, (int)count);
+                return new UpdatableJAFloatArray(floatArray, (int) count);
             } else {
                 UpdatableJAFloatSubArray result = new UpdatableJAFloatSubArray(floatArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -1585,7 +1584,7 @@ class SimpleArraysImpl {
         // must be overridden in UpdatableBitSubArray,
         // which is built by preprocessor without "trusted" superclass
         public final FloatArray asImmutable() {
-            return new JAFloatSubArray(floatArray, (int)capacity(), (int)length(), offset);
+            return new JAFloatSubArray(floatArray, (int) capacity(), (int) length(), offset);
         }
 
         // must be overridden in UpdatableBitSubArray,
@@ -1596,7 +1595,7 @@ class SimpleArraysImpl {
 
         public final FloatArray asTrustedImmutable() {
             TrustedJAFloatSubArray result = new TrustedJAFloatSubArray(floatArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
@@ -1609,7 +1608,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             UpdatableJAFloatSubArray result = new UpdatableJAFloatSubArray(floatArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -1619,15 +1618,15 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART subarray float[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -2587,14 +2586,13 @@ class SimpleArraysImpl {
 
     @SuppressWarnings("cast")
     static class UpdatableJACharArray
-        extends TrustedJACharArray implements UpdatableCharArray
-    {
+            extends TrustedJACharArray implements UpdatableCharArray {
         UpdatableJACharArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
 
         UpdatableJACharArray(char[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
         }
 
         UpdatableJACharArray(char[] initialArray, int initialCapacityAndLength) {
@@ -2610,13 +2608,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (srcIndex < 0 || srcIndex >= length)
                 throw rangeException(srcIndex);
-            this.charArray[(int)destIndex] = this.charArray[(int)srcIndex];
+            this.charArray[(int) destIndex] = this.charArray[(int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -2625,7 +2623,7 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (destIndex > length - count)
                 throw rangeException(destIndex + count - 1);
-            System.arraycopy(this.charArray, (int)srcIndex, this.charArray, (int)destIndex, (int)count);
+            System.arraycopy(this.charArray, (int) srcIndex, this.charArray, (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -2633,7 +2631,7 @@ class SimpleArraysImpl {
                 throw rangeException(firstIndex);
             if (secondIndex < 0 || secondIndex >= length)
                 throw rangeException(secondIndex);
-            int i = (int)firstIndex, j = (int)secondIndex;
+            int i = (int) firstIndex, j = (int) secondIndex;
             char temp = this.charArray[i];
             this.charArray[i] = this.charArray[j];
             this.charArray[j] = temp;
@@ -2642,7 +2640,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -2651,8 +2649,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (secondIndex > length - count)
                 throw rangeException(secondIndex + count - 1);
-            int i = (int)firstIndex, j = (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = (int) firstIndex, j = (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 char temp = this.charArray[i];
                 this.charArray[i] = this.charArray[j];
                 this.charArray[j] = temp;
@@ -2861,13 +2859,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.charArray[offset + (int)destIndex] = this.charArray[offset + (int)srcIndex];
+            this.charArray[offset + (int) destIndex] = this.charArray[offset + (int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -2878,8 +2876,8 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            System.arraycopy(this.charArray, offset + (int)srcIndex,
-                this.charArray, offset + (int)destIndex, (int)count);
+            System.arraycopy(this.charArray, offset + (int) srcIndex,
+                    this.charArray, offset + (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -2889,7 +2887,7 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
             char temp = this.charArray[i];
             this.charArray[i] = this.charArray[j];
             this.charArray[j] = temp;
@@ -2898,7 +2896,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -2909,8 +2907,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 char temp = this.charArray[i];
                 this.charArray[i] = this.charArray[j];
                 this.charArray[j] = temp;
@@ -2983,11 +2981,11 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setChar(index, (char)value);
+            setChar(index, (char) value);
         }
 
         public final void setLong(long index, long value) {
-            setChar(index, (char)value);
+            setChar(index, (char) value);
         }
 
         public final void setInt(long index, int value) {
@@ -2995,7 +2993,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.charArray[offset + (int)index] = (char)value;
+            this.charArray[offset + (int) index] = (char) value;
         }
 
         public final void setChar(long index, char value) {
@@ -3003,7 +3001,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.charArray[offset + (int)index] = value;
+            this.charArray[offset + (int) index] = value;
         }
 
         public UpdatableCharArray fill(double value) {
@@ -3011,7 +3009,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableCharArray fill(long position, long count, double value) {
-            return fill(position, count, (char)value);
+            return fill(position, count, (char) value);
         }
 
         public UpdatableCharArray fill(long value) {
@@ -3019,7 +3017,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableCharArray fill(long position, long count, long value) {
-            return fill(position, count, (char)value);
+            return fill(position, count, (char) value);
         }
 
         public UpdatableCharArray fill(char value) {
@@ -3031,12 +3029,12 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            JArrays.fillCharArray(this.charArray, offset + (int)position, (int)count, value);
+            JArrays.fillCharArray(this.charArray, offset + (int) position, (int) count, value);
             return this;
         }
 
@@ -3047,12 +3045,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJACharArray(charArray, (int)(toIndex - fromIndex));
+                return new UpdatableJACharArray(charArray, (int) (toIndex - fromIndex));
             } else {
                 UpdatableJACharSubArray result = new UpdatableJACharSubArray(charArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -3064,14 +3062,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJACharArray(charArray, (int)count);
+                return new UpdatableJACharArray(charArray, (int) count);
             } else {
                 UpdatableJACharSubArray result = new UpdatableJACharSubArray(charArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -3081,7 +3079,7 @@ class SimpleArraysImpl {
         // must be overridden in UpdatableBitSubArray,
         // which is built by preprocessor without "trusted" superclass
         public final CharArray asImmutable() {
-            return new JACharSubArray(charArray, (int)capacity(), (int)length(), offset);
+            return new JACharSubArray(charArray, (int) capacity(), (int) length(), offset);
         }
 
         // must be overridden in UpdatableBitSubArray,
@@ -3092,7 +3090,7 @@ class SimpleArraysImpl {
 
         public final CharArray asTrustedImmutable() {
             TrustedJACharSubArray result = new TrustedJACharSubArray(charArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
@@ -3105,7 +3103,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             UpdatableJACharSubArray result = new UpdatableJACharSubArray(charArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -3115,15 +3113,15 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART subarray char[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -4095,14 +4093,13 @@ class SimpleArraysImpl {
 
     @SuppressWarnings("cast")
     static class UpdatableJAByteArray
-        extends TrustedJAByteArray implements UpdatableByteArray
-    {
+            extends TrustedJAByteArray implements UpdatableByteArray {
         UpdatableJAByteArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
 
         UpdatableJAByteArray(byte[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
         }
 
         UpdatableJAByteArray(byte[] initialArray, int initialCapacityAndLength) {
@@ -4118,13 +4115,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (srcIndex < 0 || srcIndex >= length)
                 throw rangeException(srcIndex);
-            this.byteArray[(int)destIndex] = this.byteArray[(int)srcIndex];
+            this.byteArray[(int) destIndex] = this.byteArray[(int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -4133,7 +4130,7 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (destIndex > length - count)
                 throw rangeException(destIndex + count - 1);
-            System.arraycopy(this.byteArray, (int)srcIndex, this.byteArray, (int)destIndex, (int)count);
+            System.arraycopy(this.byteArray, (int) srcIndex, this.byteArray, (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -4141,7 +4138,7 @@ class SimpleArraysImpl {
                 throw rangeException(firstIndex);
             if (secondIndex < 0 || secondIndex >= length)
                 throw rangeException(secondIndex);
-            int i = (int)firstIndex, j = (int)secondIndex;
+            int i = (int) firstIndex, j = (int) secondIndex;
             byte temp = this.byteArray[i];
             this.byteArray[i] = this.byteArray[j];
             this.byteArray[j] = temp;
@@ -4150,7 +4147,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -4159,8 +4156,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (secondIndex > length - count)
                 throw rangeException(secondIndex + count - 1);
-            int i = (int)firstIndex, j = (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = (int) firstIndex, j = (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 byte temp = this.byteArray[i];
                 this.byteArray[i] = this.byteArray[j];
                 this.byteArray[j] = temp;
@@ -4369,13 +4366,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.byteArray[offset + (int)destIndex] = this.byteArray[offset + (int)srcIndex];
+            this.byteArray[offset + (int) destIndex] = this.byteArray[offset + (int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -4386,8 +4383,8 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            System.arraycopy(this.byteArray, offset + (int)srcIndex,
-                this.byteArray, offset + (int)destIndex, (int)count);
+            System.arraycopy(this.byteArray, offset + (int) srcIndex,
+                    this.byteArray, offset + (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -4397,7 +4394,7 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
             byte temp = this.byteArray[i];
             this.byteArray[i] = this.byteArray[j];
             this.byteArray[j] = temp;
@@ -4406,7 +4403,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -4417,8 +4414,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 byte temp = this.byteArray[i];
                 this.byteArray[i] = this.byteArray[j];
                 this.byteArray[j] = temp;
@@ -4491,11 +4488,11 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setByte(index, (byte)value);
+            setByte(index, (byte) value);
         }
 
         public final void setLong(long index, long value) {
-            setByte(index, (byte)value);
+            setByte(index, (byte) value);
         }
 
         public final void setInt(long index, int value) {
@@ -4503,7 +4500,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.byteArray[offset + (int)index] = (byte)value;
+            this.byteArray[offset + (int) index] = (byte) value;
         }
 
         public final void setByte(long index, byte value) {
@@ -4511,7 +4508,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.byteArray[offset + (int)index] = value;
+            this.byteArray[offset + (int) index] = value;
         }
 
         public UpdatableByteArray fill(double value) {
@@ -4519,7 +4516,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableByteArray fill(long position, long count, double value) {
-            return fill(position, count, (byte)value);
+            return fill(position, count, (byte) value);
         }
 
         public UpdatableByteArray fill(long value) {
@@ -4527,7 +4524,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableByteArray fill(long position, long count, long value) {
-            return fill(position, count, (byte)value);
+            return fill(position, count, (byte) value);
         }
 
         public UpdatableByteArray fill(byte value) {
@@ -4539,12 +4536,12 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            JArrays.fillByteArray(this.byteArray, offset + (int)position, (int)count, value);
+            JArrays.fillByteArray(this.byteArray, offset + (int) position, (int) count, value);
             return this;
         }
 
@@ -4555,12 +4552,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJAByteArray(byteArray, (int)(toIndex - fromIndex));
+                return new UpdatableJAByteArray(byteArray, (int) (toIndex - fromIndex));
             } else {
                 UpdatableJAByteSubArray result = new UpdatableJAByteSubArray(byteArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -4572,14 +4569,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJAByteArray(byteArray, (int)count);
+                return new UpdatableJAByteArray(byteArray, (int) count);
             } else {
                 UpdatableJAByteSubArray result = new UpdatableJAByteSubArray(byteArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -4589,7 +4586,7 @@ class SimpleArraysImpl {
         // must be overridden in UpdatableBitSubArray,
         // which is built by preprocessor without "trusted" superclass
         public final ByteArray asImmutable() {
-            return new JAByteSubArray(byteArray, (int)capacity(), (int)length(), offset);
+            return new JAByteSubArray(byteArray, (int) capacity(), (int) length(), offset);
         }
 
         // must be overridden in UpdatableBitSubArray,
@@ -4600,7 +4597,7 @@ class SimpleArraysImpl {
 
         public final ByteArray asTrustedImmutable() {
             TrustedJAByteSubArray result = new TrustedJAByteSubArray(byteArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
@@ -4613,7 +4610,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             UpdatableJAByteSubArray result = new UpdatableJAByteSubArray(byteArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -4623,15 +4620,15 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART subarray byte[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -5583,14 +5580,13 @@ class SimpleArraysImpl {
 
     @SuppressWarnings("cast")
     static class UpdatableJAShortArray
-        extends TrustedJAShortArray implements UpdatableShortArray
-    {
+            extends TrustedJAShortArray implements UpdatableShortArray {
         UpdatableJAShortArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
 
         UpdatableJAShortArray(short[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
         }
 
         UpdatableJAShortArray(short[] initialArray, int initialCapacityAndLength) {
@@ -5606,13 +5602,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (srcIndex < 0 || srcIndex >= length)
                 throw rangeException(srcIndex);
-            this.shortArray[(int)destIndex] = this.shortArray[(int)srcIndex];
+            this.shortArray[(int) destIndex] = this.shortArray[(int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -5621,7 +5617,7 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (destIndex > length - count)
                 throw rangeException(destIndex + count - 1);
-            System.arraycopy(this.shortArray, (int)srcIndex, this.shortArray, (int)destIndex, (int)count);
+            System.arraycopy(this.shortArray, (int) srcIndex, this.shortArray, (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -5629,7 +5625,7 @@ class SimpleArraysImpl {
                 throw rangeException(firstIndex);
             if (secondIndex < 0 || secondIndex >= length)
                 throw rangeException(secondIndex);
-            int i = (int)firstIndex, j = (int)secondIndex;
+            int i = (int) firstIndex, j = (int) secondIndex;
             short temp = this.shortArray[i];
             this.shortArray[i] = this.shortArray[j];
             this.shortArray[j] = temp;
@@ -5638,7 +5634,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -5647,8 +5643,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (secondIndex > length - count)
                 throw rangeException(secondIndex + count - 1);
-            int i = (int)firstIndex, j = (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = (int) firstIndex, j = (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 short temp = this.shortArray[i];
                 this.shortArray[i] = this.shortArray[j];
                 this.shortArray[j] = temp;
@@ -5857,13 +5853,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.shortArray[offset + (int)destIndex] = this.shortArray[offset + (int)srcIndex];
+            this.shortArray[offset + (int) destIndex] = this.shortArray[offset + (int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -5874,8 +5870,8 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            System.arraycopy(this.shortArray, offset + (int)srcIndex,
-                this.shortArray, offset + (int)destIndex, (int)count);
+            System.arraycopy(this.shortArray, offset + (int) srcIndex,
+                    this.shortArray, offset + (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -5885,7 +5881,7 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
             short temp = this.shortArray[i];
             this.shortArray[i] = this.shortArray[j];
             this.shortArray[j] = temp;
@@ -5894,7 +5890,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -5905,8 +5901,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 short temp = this.shortArray[i];
                 this.shortArray[i] = this.shortArray[j];
                 this.shortArray[j] = temp;
@@ -5979,11 +5975,11 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setShort(index, (short)value);
+            setShort(index, (short) value);
         }
 
         public final void setLong(long index, long value) {
-            setShort(index, (short)value);
+            setShort(index, (short) value);
         }
 
         public final void setInt(long index, int value) {
@@ -5991,7 +5987,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.shortArray[offset + (int)index] = (short)value;
+            this.shortArray[offset + (int) index] = (short) value;
         }
 
         public final void setShort(long index, short value) {
@@ -5999,7 +5995,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.shortArray[offset + (int)index] = value;
+            this.shortArray[offset + (int) index] = value;
         }
 
         public UpdatableShortArray fill(double value) {
@@ -6007,7 +6003,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableShortArray fill(long position, long count, double value) {
-            return fill(position, count, (short)value);
+            return fill(position, count, (short) value);
         }
 
         public UpdatableShortArray fill(long value) {
@@ -6015,7 +6011,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableShortArray fill(long position, long count, long value) {
-            return fill(position, count, (short)value);
+            return fill(position, count, (short) value);
         }
 
         public UpdatableShortArray fill(short value) {
@@ -6027,12 +6023,12 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            JArrays.fillShortArray(this.shortArray, offset + (int)position, (int)count, value);
+            JArrays.fillShortArray(this.shortArray, offset + (int) position, (int) count, value);
             return this;
         }
 
@@ -6043,12 +6039,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJAShortArray(shortArray, (int)(toIndex - fromIndex));
+                return new UpdatableJAShortArray(shortArray, (int) (toIndex - fromIndex));
             } else {
                 UpdatableJAShortSubArray result = new UpdatableJAShortSubArray(shortArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -6060,14 +6056,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJAShortArray(shortArray, (int)count);
+                return new UpdatableJAShortArray(shortArray, (int) count);
             } else {
                 UpdatableJAShortSubArray result = new UpdatableJAShortSubArray(shortArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -6077,7 +6073,7 @@ class SimpleArraysImpl {
         // must be overridden in UpdatableBitSubArray,
         // which is built by preprocessor without "trusted" superclass
         public final ShortArray asImmutable() {
-            return new JAShortSubArray(shortArray, (int)capacity(), (int)length(), offset);
+            return new JAShortSubArray(shortArray, (int) capacity(), (int) length(), offset);
         }
 
         // must be overridden in UpdatableBitSubArray,
@@ -6088,7 +6084,7 @@ class SimpleArraysImpl {
 
         public final ShortArray asTrustedImmutable() {
             TrustedJAShortSubArray result = new TrustedJAShortSubArray(shortArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
@@ -6101,7 +6097,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             UpdatableJAShortSubArray result = new UpdatableJAShortSubArray(shortArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -6111,15 +6107,15 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART subarray short[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -7057,14 +7053,13 @@ class SimpleArraysImpl {
 
     @SuppressWarnings("cast")
     static class UpdatableJAIntArray
-        extends TrustedJAIntArray implements UpdatableIntArray
-    {
+            extends TrustedJAIntArray implements UpdatableIntArray {
         UpdatableJAIntArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
 
         UpdatableJAIntArray(int[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
         }
 
         UpdatableJAIntArray(int[] initialArray, int initialCapacityAndLength) {
@@ -7080,13 +7075,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (srcIndex < 0 || srcIndex >= length)
                 throw rangeException(srcIndex);
-            this.intArray[(int)destIndex] = this.intArray[(int)srcIndex];
+            this.intArray[(int) destIndex] = this.intArray[(int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -7095,7 +7090,7 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (destIndex > length - count)
                 throw rangeException(destIndex + count - 1);
-            System.arraycopy(this.intArray, (int)srcIndex, this.intArray, (int)destIndex, (int)count);
+            System.arraycopy(this.intArray, (int) srcIndex, this.intArray, (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -7103,7 +7098,7 @@ class SimpleArraysImpl {
                 throw rangeException(firstIndex);
             if (secondIndex < 0 || secondIndex >= length)
                 throw rangeException(secondIndex);
-            int i = (int)firstIndex, j = (int)secondIndex;
+            int i = (int) firstIndex, j = (int) secondIndex;
             int temp = this.intArray[i];
             this.intArray[i] = this.intArray[j];
             this.intArray[j] = temp;
@@ -7112,7 +7107,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -7121,8 +7116,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (secondIndex > length - count)
                 throw rangeException(secondIndex + count - 1);
-            int i = (int)firstIndex, j = (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = (int) firstIndex, j = (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 int temp = this.intArray[i];
                 this.intArray[i] = this.intArray[j];
                 this.intArray[j] = temp;
@@ -7325,13 +7320,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.intArray[offset + (int)destIndex] = this.intArray[offset + (int)srcIndex];
+            this.intArray[offset + (int) destIndex] = this.intArray[offset + (int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -7342,8 +7337,8 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            System.arraycopy(this.intArray, offset + (int)srcIndex,
-                this.intArray, offset + (int)destIndex, (int)count);
+            System.arraycopy(this.intArray, offset + (int) srcIndex,
+                    this.intArray, offset + (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -7353,7 +7348,7 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
             int temp = this.intArray[i];
             this.intArray[i] = this.intArray[j];
             this.intArray[j] = temp;
@@ -7362,7 +7357,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -7373,8 +7368,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 int temp = this.intArray[i];
                 this.intArray[i] = this.intArray[j];
                 this.intArray[j] = temp;
@@ -7447,11 +7442,11 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setInt(index, (int)value);
+            setInt(index, (int) value);
         }
 
         public final void setLong(long index, long value) {
-            setInt(index, (int)value);
+            setInt(index, (int) value);
         }
 
         public final void setInt(long index, int value) {
@@ -7459,7 +7454,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.intArray[offset + (int)index] = value;
+            this.intArray[offset + (int) index] = value;
         }
 
         public UpdatableIntArray fill(double value) {
@@ -7467,7 +7462,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableIntArray fill(long position, long count, double value) {
-            return fill(position, count, (int)value);
+            return fill(position, count, (int) value);
         }
 
         public UpdatableIntArray fill(long value) {
@@ -7475,7 +7470,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableIntArray fill(long position, long count, long value) {
-            return fill(position, count, (int)value);
+            return fill(position, count, (int) value);
         }
 
         public UpdatableIntArray fill(int value) {
@@ -7487,12 +7482,12 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            JArrays.fillIntArray(this.intArray, offset + (int)position, (int)count, value);
+            JArrays.fillIntArray(this.intArray, offset + (int) position, (int) count, value);
             return this;
         }
 
@@ -7503,12 +7498,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJAIntArray(intArray, (int)(toIndex - fromIndex));
+                return new UpdatableJAIntArray(intArray, (int) (toIndex - fromIndex));
             } else {
                 UpdatableJAIntSubArray result = new UpdatableJAIntSubArray(intArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -7520,14 +7515,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJAIntArray(intArray, (int)count);
+                return new UpdatableJAIntArray(intArray, (int) count);
             } else {
                 UpdatableJAIntSubArray result = new UpdatableJAIntSubArray(intArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -7537,7 +7532,7 @@ class SimpleArraysImpl {
         // must be overridden in UpdatableBitSubArray,
         // which is built by preprocessor without "trusted" superclass
         public final IntArray asImmutable() {
-            return new JAIntSubArray(intArray, (int)capacity(), (int)length(), offset);
+            return new JAIntSubArray(intArray, (int) capacity(), (int) length(), offset);
         }
 
         // must be overridden in UpdatableBitSubArray,
@@ -7548,7 +7543,7 @@ class SimpleArraysImpl {
 
         public final IntArray asTrustedImmutable() {
             TrustedJAIntSubArray result = new TrustedJAIntSubArray(intArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
@@ -7561,7 +7556,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             UpdatableJAIntSubArray result = new UpdatableJAIntSubArray(intArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -7571,15 +7566,15 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART subarray int[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -8503,14 +8498,13 @@ class SimpleArraysImpl {
 
     @SuppressWarnings("cast")
     static class UpdatableJALongArray
-        extends TrustedJALongArray implements UpdatableLongArray
-    {
+            extends TrustedJALongArray implements UpdatableLongArray {
         UpdatableJALongArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
 
         UpdatableJALongArray(long[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
         }
 
         UpdatableJALongArray(long[] initialArray, int initialCapacityAndLength) {
@@ -8526,13 +8520,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (srcIndex < 0 || srcIndex >= length)
                 throw rangeException(srcIndex);
-            this.longArray[(int)destIndex] = this.longArray[(int)srcIndex];
+            this.longArray[(int) destIndex] = this.longArray[(int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -8541,7 +8535,7 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (destIndex > length - count)
                 throw rangeException(destIndex + count - 1);
-            System.arraycopy(this.longArray, (int)srcIndex, this.longArray, (int)destIndex, (int)count);
+            System.arraycopy(this.longArray, (int) srcIndex, this.longArray, (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -8549,7 +8543,7 @@ class SimpleArraysImpl {
                 throw rangeException(firstIndex);
             if (secondIndex < 0 || secondIndex >= length)
                 throw rangeException(secondIndex);
-            int i = (int)firstIndex, j = (int)secondIndex;
+            int i = (int) firstIndex, j = (int) secondIndex;
             long temp = this.longArray[i];
             this.longArray[i] = this.longArray[j];
             this.longArray[j] = temp;
@@ -8558,7 +8552,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -8567,8 +8561,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (secondIndex > length - count)
                 throw rangeException(secondIndex + count - 1);
-            int i = (int)firstIndex, j = (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = (int) firstIndex, j = (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 long temp = this.longArray[i];
                 this.longArray[i] = this.longArray[j];
                 this.longArray[j] = temp;
@@ -8765,13 +8759,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.longArray[offset + (int)destIndex] = this.longArray[offset + (int)srcIndex];
+            this.longArray[offset + (int) destIndex] = this.longArray[offset + (int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -8782,8 +8776,8 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            System.arraycopy(this.longArray, offset + (int)srcIndex,
-                this.longArray, offset + (int)destIndex, (int)count);
+            System.arraycopy(this.longArray, offset + (int) srcIndex,
+                    this.longArray, offset + (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -8793,7 +8787,7 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
             long temp = this.longArray[i];
             this.longArray[i] = this.longArray[j];
             this.longArray[j] = temp;
@@ -8802,7 +8796,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -8813,8 +8807,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 long temp = this.longArray[i];
                 this.longArray[i] = this.longArray[j];
                 this.longArray[j] = temp;
@@ -8887,7 +8881,7 @@ class SimpleArraysImpl {
         }
 
         public final void setDouble(long index, double value) {
-            setLong(index, (long)value);
+            setLong(index, (long) value);
         }
 
         public final void setInt(long index, int value) {
@@ -8895,7 +8889,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.longArray[offset + (int)index] = (long)value;
+            this.longArray[offset + (int) index] = (long) value;
         }
 
         public final void setLong(long index, long value) {
@@ -8903,7 +8897,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.longArray[offset + (int)index] = value;
+            this.longArray[offset + (int) index] = value;
         }
 
         public UpdatableLongArray fill(double value) {
@@ -8911,7 +8905,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableLongArray fill(long position, long count, double value) {
-            return fill(position, count, (long)value);
+            return fill(position, count, (long) value);
         }
 
         public UpdatableLongArray fill(long value) {
@@ -8923,12 +8917,12 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            JArrays.fillLongArray(this.longArray, offset + (int)position, (int)count, value);
+            JArrays.fillLongArray(this.longArray, offset + (int) position, (int) count, value);
             return this;
         }
 
@@ -8939,12 +8933,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJALongArray(longArray, (int)(toIndex - fromIndex));
+                return new UpdatableJALongArray(longArray, (int) (toIndex - fromIndex));
             } else {
                 UpdatableJALongSubArray result = new UpdatableJALongSubArray(longArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -8956,14 +8950,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJALongArray(longArray, (int)count);
+                return new UpdatableJALongArray(longArray, (int) count);
             } else {
                 UpdatableJALongSubArray result = new UpdatableJALongSubArray(longArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -8973,7 +8967,7 @@ class SimpleArraysImpl {
         // must be overridden in UpdatableBitSubArray,
         // which is built by preprocessor without "trusted" superclass
         public final LongArray asImmutable() {
-            return new JALongSubArray(longArray, (int)capacity(), (int)length(), offset);
+            return new JALongSubArray(longArray, (int) capacity(), (int) length(), offset);
         }
 
         // must be overridden in UpdatableBitSubArray,
@@ -8984,7 +8978,7 @@ class SimpleArraysImpl {
 
         public final LongArray asTrustedImmutable() {
             TrustedJALongSubArray result = new TrustedJALongSubArray(longArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
@@ -8997,7 +8991,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             UpdatableJALongSubArray result = new UpdatableJALongSubArray(longArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -9007,15 +9001,15 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART subarray long[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -9934,14 +9928,13 @@ class SimpleArraysImpl {
 
     @SuppressWarnings("cast")
     static class UpdatableJADoubleArray
-        extends TrustedJADoubleArray implements UpdatableDoubleArray
-    {
+            extends TrustedJADoubleArray implements UpdatableDoubleArray {
         UpdatableJADoubleArray(long initialCapacity, long initialLength) {
             super(initialCapacity, initialLength);
         }
 
         UpdatableJADoubleArray(double[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
         }
 
         UpdatableJADoubleArray(double[] initialArray, int initialCapacityAndLength) {
@@ -9957,13 +9950,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (srcIndex < 0 || srcIndex >= length)
                 throw rangeException(srcIndex);
-            this.doubleArray[(int)destIndex] = this.doubleArray[(int)srcIndex];
+            this.doubleArray[(int) destIndex] = this.doubleArray[(int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -9972,7 +9965,7 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (destIndex > length - count)
                 throw rangeException(destIndex + count - 1);
-            System.arraycopy(this.doubleArray, (int)srcIndex, this.doubleArray, (int)destIndex, (int)count);
+            System.arraycopy(this.doubleArray, (int) srcIndex, this.doubleArray, (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -9980,7 +9973,7 @@ class SimpleArraysImpl {
                 throw rangeException(firstIndex);
             if (secondIndex < 0 || secondIndex >= length)
                 throw rangeException(secondIndex);
-            int i = (int)firstIndex, j = (int)secondIndex;
+            int i = (int) firstIndex, j = (int) secondIndex;
             double temp = this.doubleArray[i];
             this.doubleArray[i] = this.doubleArray[j];
             this.doubleArray[j] = temp;
@@ -9989,7 +9982,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -9998,8 +9991,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (secondIndex > length - count)
                 throw rangeException(secondIndex + count - 1);
-            int i = (int)firstIndex, j = (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = (int) firstIndex, j = (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 double temp = this.doubleArray[i];
                 this.doubleArray[i] = this.doubleArray[j];
                 this.doubleArray[j] = temp;
@@ -10196,13 +10189,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.doubleArray[offset + (int)destIndex] = this.doubleArray[offset + (int)srcIndex];
+            this.doubleArray[offset + (int) destIndex] = this.doubleArray[offset + (int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -10213,8 +10206,8 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            System.arraycopy(this.doubleArray, offset + (int)srcIndex,
-                this.doubleArray, offset + (int)destIndex, (int)count);
+            System.arraycopy(this.doubleArray, offset + (int) srcIndex,
+                    this.doubleArray, offset + (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -10224,7 +10217,7 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
             double temp = this.doubleArray[i];
             this.doubleArray[i] = this.doubleArray[j];
             this.doubleArray[j] = temp;
@@ -10233,7 +10226,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -10244,8 +10237,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 double temp = this.doubleArray[i];
                 this.doubleArray[i] = this.doubleArray[j];
                 this.doubleArray[j] = temp;
@@ -10318,7 +10311,7 @@ class SimpleArraysImpl {
         }
 
         public final void setLong(long index, long value) {
-            setDouble(index, (double)value);
+            setDouble(index, (double) value);
         }
 
         public final void setInt(long index, int value) {
@@ -10326,7 +10319,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.doubleArray[offset + (int)index] = (double)value;
+            this.doubleArray[offset + (int) index] = (double) value;
         }
 
         public final void setDouble(long index, double value) {
@@ -10334,7 +10327,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.doubleArray[offset + (int)index] = value;
+            this.doubleArray[offset + (int) index] = value;
         }
 
         public UpdatableDoubleArray fill(long value) {
@@ -10342,7 +10335,7 @@ class SimpleArraysImpl {
         }
 
         public UpdatableDoubleArray fill(long position, long count, long value) {
-            return fill(position, count, (double)value);
+            return fill(position, count, (double) value);
         }
 
         public UpdatableDoubleArray fill(double value) {
@@ -10354,12 +10347,12 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            JArrays.fillDoubleArray(this.doubleArray, offset + (int)position, (int)count, value);
+            JArrays.fillDoubleArray(this.doubleArray, offset + (int) position, (int) count, value);
             return this;
         }
 
@@ -10370,12 +10363,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJADoubleArray(doubleArray, (int)(toIndex - fromIndex));
+                return new UpdatableJADoubleArray(doubleArray, (int) (toIndex - fromIndex));
             } else {
                 UpdatableJADoubleSubArray result = new UpdatableJADoubleSubArray(doubleArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -10387,14 +10380,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJADoubleArray(doubleArray, (int)count);
+                return new UpdatableJADoubleArray(doubleArray, (int) count);
             } else {
                 UpdatableJADoubleSubArray result = new UpdatableJADoubleSubArray(doubleArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -10404,7 +10397,7 @@ class SimpleArraysImpl {
         // must be overridden in UpdatableBitSubArray,
         // which is built by preprocessor without "trusted" superclass
         public final DoubleArray asImmutable() {
-            return new JADoubleSubArray(doubleArray, (int)capacity(), (int)length(), offset);
+            return new JADoubleSubArray(doubleArray, (int) capacity(), (int) length(), offset);
         }
 
         // must be overridden in UpdatableBitSubArray,
@@ -10415,7 +10408,7 @@ class SimpleArraysImpl {
 
         public final DoubleArray asTrustedImmutable() {
             TrustedJADoubleSubArray result = new TrustedJADoubleSubArray(doubleArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
@@ -10428,7 +10421,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             UpdatableJADoubleSubArray result = new UpdatableJADoubleSubArray(doubleArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -10438,15 +10431,15 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART subarray double[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -11385,14 +11378,13 @@ class SimpleArraysImpl {
 
     @SuppressWarnings("rawtypes")
     static class UpdatableJAObjectArray
-        extends TrustedJAObjectArray implements UpdatableObjectArray
-    {
+            extends TrustedJAObjectArray implements UpdatableObjectArray {
         UpdatableJAObjectArray(Class<?> elementType, long initialCapacity, long initialLength) {
             super(elementType, initialCapacity, initialLength);
         }
 
         UpdatableJAObjectArray(Object[] initialArray, int initialCapacity, int initialLength) {
-            super(initialArray, initialCapacity,  initialLength);
+            super(initialArray, initialCapacity, initialLength);
         }
 
         UpdatableJAObjectArray(Object[] initialArray, int initialCapacityAndLength) {
@@ -11404,13 +11396,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (srcIndex < 0 || srcIndex >= length)
                 throw rangeException(srcIndex);
-            this.objectArray[(int)destIndex] = this.objectArray[(int)srcIndex];
+            this.objectArray[(int) destIndex] = this.objectArray[(int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -11419,7 +11411,7 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (destIndex > length - count)
                 throw rangeException(destIndex + count - 1);
-            System.arraycopy(this.objectArray, (int)srcIndex, this.objectArray, (int)destIndex, (int)count);
+            System.arraycopy(this.objectArray, (int) srcIndex, this.objectArray, (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -11427,7 +11419,7 @@ class SimpleArraysImpl {
                 throw rangeException(firstIndex);
             if (secondIndex < 0 || secondIndex >= length)
                 throw rangeException(secondIndex);
-            int i = (int)firstIndex, j = (int)secondIndex;
+            int i = (int) firstIndex, j = (int) secondIndex;
             Object temp = this.objectArray[i];
             this.objectArray[i] = this.objectArray[j];
             this.objectArray[j] = temp;
@@ -11436,7 +11428,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -11445,8 +11437,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (secondIndex > length - count)
                 throw rangeException(secondIndex + count - 1);
-            int i = (int)firstIndex, j = (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = (int) firstIndex, j = (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 Object temp = this.objectArray[i];
                 this.objectArray[i] = this.objectArray[j];
                 this.objectArray[j] = temp;
@@ -11628,13 +11620,13 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.objectArray[offset + (int)destIndex] = this.objectArray[offset + (int)srcIndex];
+            this.objectArray[offset + (int) destIndex] = this.objectArray[offset + (int) srcIndex];
         }
 
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -11645,8 +11637,8 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            System.arraycopy(this.objectArray, offset + (int)srcIndex,
-                this.objectArray, offset + (int)destIndex, (int)count);
+            System.arraycopy(this.objectArray, offset + (int) srcIndex,
+                    this.objectArray, offset + (int) destIndex, (int) count);
         }
 
         public final void swap(long firstIndex, long secondIndex) {
@@ -11656,7 +11648,7 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
             Object temp = this.objectArray[i];
             this.objectArray[i] = this.objectArray[j];
             this.objectArray[j] = temp;
@@ -11665,7 +11657,7 @@ class SimpleArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -11676,8 +11668,8 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            int i = offset + (int)firstIndex, j = offset + (int)secondIndex;
-            for (int iMax = i + (int)count; i < iMax; i++, j++) {
+            int i = offset + (int) firstIndex, j = offset + (int) secondIndex;
+            for (int iMax = i + (int) count; i < iMax; i++, j++) {
                 Object temp = this.objectArray[i];
                 this.objectArray[i] = this.objectArray[j];
                 this.objectArray[j] = temp;
@@ -11754,7 +11746,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            this.objectArray[offset + (int)index] = value;
+            this.objectArray[offset + (int) index] = value;
         }
 
         public UpdatableObjectArray fill(Object value) {
@@ -11766,12 +11758,12 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
-            JArrays.fillObjectArray(this.objectArray, offset + (int)position, (int)count, value);
+            JArrays.fillObjectArray(this.objectArray, offset + (int) position, (int) count, value);
             return this;
         }
 
@@ -11782,12 +11774,12 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (offset + fromIndex == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJAObjectArray(objectArray, (int)(toIndex - fromIndex));
+                return new UpdatableJAObjectArray(objectArray, (int) (toIndex - fromIndex));
             } else {
                 UpdatableJAObjectSubArray result = new UpdatableJAObjectSubArray(objectArray,
-                    (int)(toIndex - fromIndex), offset + (int)fromIndex);
+                        (int) (toIndex - fromIndex), offset + (int) fromIndex);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -11799,14 +11791,14 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (offset + position == 0 && this.capacity >= 0) { // not copy-on-next-write
-                return new UpdatableJAObjectArray(objectArray, (int)count);
+                return new UpdatableJAObjectArray(objectArray, (int) count);
             } else {
                 UpdatableJAObjectSubArray result = new UpdatableJAObjectSubArray(objectArray,
-                    (int)count, offset + (int)position);
+                        (int) count, offset + (int) position);
                 if (this.capacity < 0) // copy-on-next-write
                     result.capacity |= HIGH_BIT;
                 return result;
@@ -11816,7 +11808,7 @@ class SimpleArraysImpl {
         // must be overridden in UpdatableBitSubArray,
         // which is built by preprocessor without "trusted" superclass
         public final ObjectArray asImmutable() {
-            return new JAObjectSubArray(objectArray, (int)capacity(), (int)length(), offset);
+            return new JAObjectSubArray(objectArray, (int) capacity(), (int) length(), offset);
         }
 
         // must be overridden in UpdatableBitSubArray,
@@ -11827,7 +11819,7 @@ class SimpleArraysImpl {
 
         public final ObjectArray asTrustedImmutable() {
             TrustedJAObjectSubArray result = new TrustedJAObjectSubArray(objectArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
@@ -11840,7 +11832,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             UpdatableJAObjectSubArray result = new UpdatableJAObjectSubArray(objectArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -11857,15 +11849,15 @@ class SimpleArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableArray)standardObjectClone();
+            return (UpdatableArray) standardObjectClone();
         }
 
         public String toString() {
             return "unresizable simple AlgART subarray " + elementType.getName() + "[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
