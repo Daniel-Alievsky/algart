@@ -47,9 +47,9 @@ class SimpleArraysImpl {
      * @param array     the source packed bits array.
      * @param fromIndex the initial bit index in <tt>array</tt>, inclusive.
      * @param toIndex   the end bit index in <tt>array</tt>, exclusive.
-     * @return          the specified packed subarray.
-     * @throws  NullPointerException if the <tt>array</tt> argument is <tt>null</tt>.
-     * @throws  IndexOutOfBoundsException
+     * @return the specified packed subarray.
+     * @throws NullPointerException if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException
      *          if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
      *          if <tt>toIndex</tt> is greater than <tt>array.length * 64</tt>,
      *          or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>
@@ -59,12 +59,12 @@ class SimpleArraysImpl {
         Objects.requireNonNull(array, "Null array argument in cloneBitSubArray method");
         if (fromIndex < 0)
             throw new ArrayIndexOutOfBoundsException("Array index out of range: initial index = " + fromIndex);
-        if (toIndex > ((long)array.length) << 6)
+        if (toIndex > ((long) array.length) << 6)
             throw new ArrayIndexOutOfBoundsException("Array index out of range: end index = " + toIndex);
         if (fromIndex > toIndex)
             throw new ArrayIndexOutOfBoundsException("Array index out of range: initial index = " + fromIndex
-                + " > end index = " + toIndex);
-        long[] result = new long[(int)(((toIndex - fromIndex) + 63) >>> 6)];
+                    + " > end index = " + toIndex);
+        long[] result = new long[(int) (((toIndex - fromIndex) + 63) >>> 6)];
         PackedBitArrays.copyBits(result, 0, array, fromIndex, toIndex - fromIndex);
         return result;
     }
@@ -89,7 +89,7 @@ class SimpleArraysImpl {
             }
             if (!(this instanceof UpdatableArray))
                 throw new AssertionError("Internal error in SimpleMemoryModel implementation "
-                    + "(unallowed constructor call)");
+                        + "(unallowed constructor call)");
             this.setNewStatus();
         }
 
@@ -106,7 +106,7 @@ class SimpleArraysImpl {
         final Object allocateArray(long capacity) {
             if (capacity < 0)
                 throw new AssertionError("Negative capacity in package-private method "
-                    + getClass().getName() + ".allocateArray(long)");
+                        + getClass().getName() + ".allocateArray(long)");
             long arrayLength = capacity;
             if (this instanceof BitArray) {
                 arrayLength = PackedBitArrays.packedLength(capacity);
@@ -115,9 +115,9 @@ class SimpleArraysImpl {
                 throw new TooLargeArrayException("Too large desired array capacity for SimpleMemoryModel: "
                         + capacity + " = 0x" + Long.toHexString(capacity) + " (" + this + ")");
             if (this instanceof BitArray)
-                return new long[(int)arrayLength];
+                return new long[(int) arrayLength];
             else
-                return java.lang.reflect.Array.newInstance(elementType(), (int)arrayLength);
+                return java.lang.reflect.Array.newInstance(elementType(), (int) arrayLength);
         }
 
         // longJavaArrayOffsetInternal() should be declared in AbstractJAArray for correct implementation of its method
@@ -128,11 +128,11 @@ class SimpleArraysImpl {
                 throw new InternalError("Internal error in SimpleMemoryModel implementation (unallowed reallocation)");
             Object newArray = allocateArray(this.length);
             if (this instanceof BitArray) {
-                PackedBitArrays.copyBits((long[])newArray, 0,
-                    (long[])this.array, this.longJavaArrayOffsetInternal(), this.length);
+                PackedBitArrays.copyBits((long[]) newArray, 0,
+                        (long[]) this.array, this.longJavaArrayOffsetInternal(), this.length);
             } else {
                 System.arraycopy(this.array, this.javaArrayOffsetInternal(),
-                    newArray, 0, (int)this.length);
+                        newArray, 0, (int) this.length);
             }
             this.array = newArray;
             this.capacity &= Long.MAX_VALUE; // clearing copy-on-next-write-flag
@@ -149,11 +149,11 @@ class SimpleArraysImpl {
             if (arrayPos > length - count)
                 throw rangeException(arrayPos + count - 1);
             if (this instanceof BitArray) {
-                PackedBitArrays.unpackBits((boolean[])destArray, destArrayOffset,
-                    (long[])this.array, this.longJavaArrayOffsetInternal() + arrayPos, count);
+                PackedBitArrays.unpackBits((boolean[]) destArray, destArrayOffset,
+                        (long[]) this.array, this.longJavaArrayOffsetInternal() + arrayPos, count);
             } else {
-                System.arraycopy(this.array, this.javaArrayOffsetInternal() + (int)arrayPos,
-                    destArray, destArrayOffset, count);
+                System.arraycopy(this.array, this.javaArrayOffsetInternal() + (int) arrayPos,
+                        destArray, destArrayOffset, count);
             }
         }
 
@@ -163,13 +163,13 @@ class SimpleArraysImpl {
                 throw rangeException(arrayPos);
             int count = java.lang.reflect.Array.getLength(destArray);
             if (count > length - arrayPos)
-                count = (int)(length - arrayPos);
+                count = (int) (length - arrayPos);
             if (this instanceof BitArray) {
-                PackedBitArrays.unpackBits((boolean[])destArray, 0,
-                    (long[])this.array, this.longJavaArrayOffsetInternal() + arrayPos, count);
+                PackedBitArrays.unpackBits((boolean[]) destArray, 0,
+                        (long[]) this.array, this.longJavaArrayOffsetInternal() + arrayPos, count);
             } else {
-                System.arraycopy(this.array, this.javaArrayOffsetInternal() + (int)arrayPos,
-                    destArray, 0, count);
+                System.arraycopy(this.array, this.javaArrayOffsetInternal() + (int) arrayPos,
+                        destArray, 0, count);
             }
         }
 
@@ -184,7 +184,7 @@ class SimpleArraysImpl {
             if (arrayPos > length - count)
                 throw rangeException(arrayPos + count - 1);
             PackedBitArrays.copyBits(destArray, destArrayOffset,
-                (long[])this.array, this.longJavaArrayOffsetInternal() + arrayPos, count);
+                    (long[]) this.array, this.longJavaArrayOffsetInternal() + arrayPos, count);
         }
 
         public long nextQuickPosition(long from) {
@@ -212,13 +212,13 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 reallocateStorage();
             if (this instanceof BitArray) {
-                PackedBitArrays.packBits((long[])this.array, this.longJavaArrayOffsetInternal() + arrayPos,
-                    (boolean[])srcArray, srcArrayOffset, count);
+                PackedBitArrays.packBits((long[]) this.array, this.longJavaArrayOffsetInternal() + arrayPos,
+                        (boolean[]) srcArray, srcArrayOffset, count);
             } else {
                 System.arraycopy(srcArray, srcArrayOffset,
-                    this.array, this.javaArrayOffsetInternal() + (int)arrayPos, count);
+                        this.array, this.javaArrayOffsetInternal() + (int) arrayPos, count);
             }
-            return (UpdatableArray)this;
+            return (UpdatableArray) this;
         }
 
         public UpdatableArray setData(long arrayPos, Object srcArray) {
@@ -229,17 +229,17 @@ class SimpleArraysImpl {
                 throw rangeException(arrayPos);
             int count = java.lang.reflect.Array.getLength(srcArray);
             if (count > length - arrayPos)
-                count = (int)(length - arrayPos);
+                count = (int) (length - arrayPos);
             if (isCopyOnNextWrite())
                 reallocateStorage();
             if (this instanceof BitArray) {
-                PackedBitArrays.packBits((long[])this.array, this.longJavaArrayOffsetInternal() + arrayPos,
-                    (boolean[])srcArray, 0, count);
+                PackedBitArrays.packBits((long[]) this.array, this.longJavaArrayOffsetInternal() + arrayPos,
+                        (boolean[]) srcArray, 0, count);
             } else {
                 System.arraycopy(srcArray, 0,
-                    this.array, this.javaArrayOffsetInternal() + (int)arrayPos, count);
+                        this.array, this.javaArrayOffsetInternal() + (int) arrayPos, count);
             }
-            return (UpdatableArray)this;
+            return (UpdatableArray) this;
         }
 
         public Object get(long index) {
@@ -247,15 +247,15 @@ class SimpleArraysImpl {
         }
 
         public void set(long index, Object value) {
-            ((UpdatableArray)this).setElement(index, value);
+            ((UpdatableArray) this).setElement(index, value);
         }
 
         public Object pop() {
-            return ((MutableArray)this).popElement();
+            return ((MutableArray) this).popElement();
         }
 
         public void push(Object value) {
-            ((MutableArray)this).pushElement(value);
+            ((MutableArray) this).pushElement(value);
         }
 
         public UpdatableBitArray setBits(long arrayPos, long[] srcArray, long srcArrayOffset, long count) {
@@ -270,9 +270,9 @@ class SimpleArraysImpl {
                 throw rangeException(arrayPos + count - 1);
             if (isCopyOnNextWrite())
                 reallocateStorage();
-            PackedBitArrays.copyBits((long[])this.array,
-                this.longJavaArrayOffsetInternal() + arrayPos, srcArray, srcArrayOffset, count);
-            return (UpdatableBitArray)this;
+            PackedBitArrays.copyBits((long[]) this.array,
+                    this.longJavaArrayOffsetInternal() + arrayPos, srcArray, srcArrayOffset, count);
+            return (UpdatableBitArray) this;
         }
 
         public void setNonNew() {
@@ -299,27 +299,27 @@ class SimpleArraysImpl {
         }
 
         public final int javaArrayLength() {
-            return (int)length;
+            return (int) length;
         }
 
         final void ensureCapacityImpl(long minCapacity) {
             long currentCapacity = capacity();
             if (minCapacity > currentCapacity) {
                 long newCapacity = Math.min(SimpleMemoryModel.maxSupportedLengthImpl(elementType()),
-                    currentCapacity < 10000 ? currentCapacity * 3 :
-                    currentCapacity < 500000 ? currentCapacity * 2 :
-                    (currentCapacity * 3) / 2 + 1);
+                        currentCapacity < 10000 ? currentCapacity * 3
+                                : currentCapacity < 500000 ? currentCapacity * 2
+                                : (currentCapacity * 3) / 2 + 1);
                 if (newCapacity < minCapacity) {
                     // in particular, if the required newCapacity > maxSupportedLengthImpl
                     newCapacity = minCapacity;
                 }
                 Object newArray = allocateArray(newCapacity);
                 if (this instanceof BitArray) {
-                    PackedBitArrays.copyBits((long[])newArray, 0, (long[])this.array, this.longJavaArrayOffsetInternal(),
-                        this.length);
+                    PackedBitArrays.copyBits((long[]) newArray, 0, (long[]) this.array, this.longJavaArrayOffsetInternal(),
+                            this.length);
                 } else {
                     System.arraycopy(this.array, this.javaArrayOffsetInternal(),
-                        newArray, 0, (int)this.length);
+                            newArray, 0, (int) this.length);
                 }
                 this.array = newArray;
                 this.capacity = newCapacity; // copy-on-next-write-flag is automatically cleared
@@ -346,11 +346,11 @@ class SimpleArraysImpl {
             if (this.length < capacity()) {
                 Object newArray = allocateArray(this.length);
                 if (this instanceof BitArray) {
-                    PackedBitArrays.copyBits((long[])newArray, 0,
-                        (long[])this.array, this.longJavaArrayOffsetInternal(), this.length);
+                    PackedBitArrays.copyBits((long[]) newArray, 0,
+                            (long[]) this.array, this.longJavaArrayOffsetInternal(), this.length);
                 } else {
                     System.arraycopy(this.array, this.javaArrayOffsetInternal(),
-                        newArray, 0, (int)this.length);
+                            newArray, 0, (int) this.length);
                 }
                 this.array = newArray;
                 this.capacity = this.length; // copy-on-next-write-flag is automatically cleared
@@ -360,23 +360,23 @@ class SimpleArraysImpl {
 
         final void appendImpl(Array appendedArray) {
             if (appendedArray instanceof AbstractJAArray a
-                && appendedArray.elementType() == this.elementType()) {
+                    && appendedArray.elementType() == this.elementType()) {
                 long currentLength = length;
                 long appendedLength = a.length;
                 Object vArray = a.array; // important if appendedArray == this
                 long vArrayOffset = a.longJavaArrayOffsetInternal(); // important if appendedArray == this
                 if (appendedLength > 0) {
-                    Arrays.lengthUnsigned((MutableArray)this, currentLength + appendedLength);
+                    Arrays.lengthUnsigned((MutableArray) this, currentLength + appendedLength);
                     if (this instanceof BitArray) {
-                        PackedBitArrays.copyBits((long[])array, longJavaArrayOffsetInternal() + currentLength,
-                            (long[])vArray, vArrayOffset, appendedLength);
+                        PackedBitArrays.copyBits((long[]) array, longJavaArrayOffsetInternal() + currentLength,
+                                (long[]) vArray, vArrayOffset, appendedLength);
                     } else {
-                        System.arraycopy(vArray, (int)vArrayOffset,
-                            array, javaArrayOffsetInternal() + (int)currentLength, (int)appendedLength);
+                        System.arraycopy(vArray, (int) vArrayOffset,
+                                array, javaArrayOffsetInternal() + (int) currentLength, (int) appendedLength);
                     }
                 }
             } else {
-                defaultAppend((MutableArray)this, appendedArray);
+                defaultAppend((MutableArray) this, appendedArray);
             }
         }
 
@@ -388,13 +388,15 @@ class SimpleArraysImpl {
          * Should fill elements of internal storage from <tt>fromIndex</tt> to <tt>toIndex-1</tt> by zero.
          * Should not check indexes: they may be greater than <tt>length()</tt>.
          */
-        void clearElements(long fromIndex, long toIndex) {}
+        void clearElements(long fromIndex, long toIndex) {
+        }
 
         /*
          * Called after correction of the pointer to the internal storage.
          * May correct some fields depending on the internal storage.
          */
-        void afterStorageFieldCorrection() {}
+        void afterStorageFieldCorrection() {
+        }
 
         /**
          * This method should be used for read-only goals!
