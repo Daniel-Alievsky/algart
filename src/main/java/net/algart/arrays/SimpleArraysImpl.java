@@ -1645,7 +1645,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nFloatCopies(toIndex - fromIndex, (float) 0), true);
         }
@@ -1674,17 +1674,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Float.valueOf(popFloat());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushFloat((Float) value);
         }
 
-        public final float popFloat() {
+        public float popFloat() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -1695,7 +1695,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushFloat(float value) {
+        public void pushFloat(float value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -1705,22 +1705,22 @@ class SimpleArraysImpl {
             this.floatArray[i] = value;
         }
 
-        public final MutableFloatArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableFloatArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableFloatArray setData(long arrayPos, Object srcArray) {
+        public MutableFloatArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableFloatArray copy(Array src) {
+        public MutableFloatArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableFloatArray swap(UpdatableArray another) {
+        public MutableFloatArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -1736,7 +1736,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableFloatArray asUnresizable() {
+        public UpdatableFloatArray asUnresizable() {
             return new UpdatableJAFloatArray(floatArray, (int) capacity(), (int) length());
         }
 
@@ -1744,7 +1744,7 @@ class SimpleArraysImpl {
             return (MutableFloatArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART array float[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
                     + ", capacity " + capacity()
@@ -1765,7 +1765,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nFloatCopies(toIndex - fromIndex, (float) 0), true);
         }
@@ -1794,17 +1794,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Float.valueOf(popFloat());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushFloat((Float) value);
         }
 
-        public final float popFloat() {
+        public float popFloat() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -1817,7 +1817,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushFloat(float value) {
+        public void pushFloat(float value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -1829,22 +1829,22 @@ class SimpleArraysImpl {
             this.floatArray[offset + i] = value;
         }
 
-        public final MutableFloatArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableFloatArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableFloatArray setData(long arrayPos, Object srcArray) {
+        public MutableFloatArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableFloatArray copy(Array src) {
+        public MutableFloatArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableFloatArray swap(UpdatableArray another) {
+        public MutableFloatArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -1862,7 +1862,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableFloatArray asUnresizable() {
+        public UpdatableFloatArray asUnresizable() {
             UpdatableJAFloatSubArray result = new UpdatableJAFloatSubArray(floatArray,
                     (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
@@ -1874,7 +1874,7 @@ class SimpleArraysImpl {
             return (MutableFloatArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART subarray float[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
                     + ", capacity " + capacity() + ", start offset = " + offset
@@ -3140,7 +3140,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nCharCopies(toIndex - fromIndex, (char) 0), true);
         }
@@ -3169,17 +3169,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Character.valueOf(popChar());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushChar((Character) value);
         }
 
-        public final char popChar() {
+        public char popChar() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -3190,7 +3190,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushChar(char value) {
+        public void pushChar(char value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -3210,22 +3210,22 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableCharArray setData(long arrayPos, Object srcArray) {
+        public MutableCharArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableCharArray copy(Array src) {
+        public MutableCharArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableCharArray swap(UpdatableArray another) {
+        public MutableCharArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -3241,7 +3241,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableCharArray asUnresizable() {
+        public UpdatableCharArray asUnresizable() {
             return new UpdatableJACharArray(charArray, (int) capacity(), (int) length());
         }
 
@@ -3249,7 +3249,7 @@ class SimpleArraysImpl {
             return (MutableCharArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART array char[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
                     + ", capacity " + capacity()
@@ -3270,7 +3270,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nCharCopies(toIndex - fromIndex, (char) 0), true);
         }
@@ -3299,17 +3299,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Character.valueOf(popChar());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushChar((Character) value);
         }
 
-        public final char popChar() {
+        public char popChar() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -3322,7 +3322,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushChar(char value) {
+        public void pushChar(char value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -3344,22 +3344,22 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableCharArray setData(long arrayPos, Object srcArray) {
+        public MutableCharArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableCharArray copy(Array src) {
+        public MutableCharArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableCharArray swap(UpdatableArray another) {
+        public MutableCharArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -3377,7 +3377,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableCharArray asUnresizable() {
+        public UpdatableCharArray asUnresizable() {
             UpdatableJACharSubArray result = new UpdatableJACharSubArray(charArray,
                     (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
@@ -3389,7 +3389,7 @@ class SimpleArraysImpl {
             return (MutableCharArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART subarray char[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
                     + ", capacity " + capacity() + ", start offset = " + offset
@@ -4647,7 +4647,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nByteCopies(toIndex - fromIndex, (byte) 0), true);
         }
@@ -4676,17 +4676,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Byte.valueOf((byte) popByte());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushByte((Byte) value);
         }
 
-        public final byte popByte() {
+        public byte popByte() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -4697,7 +4697,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushByte(byte value) {
+        public void pushByte(byte value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -4707,22 +4707,22 @@ class SimpleArraysImpl {
             this.byteArray[i] = value;
         }
 
-        public final MutableByteArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableByteArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableByteArray setData(long arrayPos, Object srcArray) {
+        public MutableByteArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableByteArray copy(Array src) {
+        public MutableByteArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableByteArray swap(UpdatableArray another) {
+        public MutableByteArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -4738,7 +4738,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableByteArray asUnresizable() {
+        public UpdatableByteArray asUnresizable() {
             return new UpdatableJAByteArray(byteArray, (int) capacity(), (int) length());
         }
 
@@ -4746,7 +4746,7 @@ class SimpleArraysImpl {
             return (MutableByteArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART array byte[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
                     + ", capacity " + capacity()
@@ -4767,7 +4767,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nByteCopies(toIndex - fromIndex, (byte) 0), true);
         }
@@ -4796,17 +4796,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Byte.valueOf((byte) popByte());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushByte((Byte) value);
         }
 
-        public final byte popByte() {
+        public byte popByte() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -4819,7 +4819,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushByte(byte value) {
+        public void pushByte(byte value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -4831,22 +4831,22 @@ class SimpleArraysImpl {
             this.byteArray[offset + i] = value;
         }
 
-        public final MutableByteArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableByteArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableByteArray setData(long arrayPos, Object srcArray) {
+        public MutableByteArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableByteArray copy(Array src) {
+        public MutableByteArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableByteArray swap(UpdatableArray another) {
+        public MutableByteArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -4864,7 +4864,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableByteArray asUnresizable() {
+        public UpdatableByteArray asUnresizable() {
             UpdatableJAByteSubArray result = new UpdatableJAByteSubArray(byteArray,
                     (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
@@ -4876,7 +4876,7 @@ class SimpleArraysImpl {
             return (MutableByteArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART subarray byte[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
                     + ", capacity " + capacity() + ", start offset = " + offset
@@ -6134,7 +6134,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nShortCopies(toIndex - fromIndex, (short) 0), true);
         }
@@ -6163,17 +6163,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Short.valueOf((short) popShort());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushShort((Short) value);
         }
 
-        public final short popShort() {
+        public short popShort() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -6184,7 +6184,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushShort(short value) {
+        public void pushShort(short value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -6194,22 +6194,22 @@ class SimpleArraysImpl {
             this.shortArray[i] = value;
         }
 
-        public final MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableShortArray setData(long arrayPos, Object srcArray) {
+        public MutableShortArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableShortArray copy(Array src) {
+        public MutableShortArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableShortArray swap(UpdatableArray another) {
+        public MutableShortArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -6225,7 +6225,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableShortArray asUnresizable() {
+        public UpdatableShortArray asUnresizable() {
             return new UpdatableJAShortArray(shortArray, (int) capacity(), (int) length());
         }
 
@@ -6233,7 +6233,7 @@ class SimpleArraysImpl {
             return (MutableShortArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART array short[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
                     + ", capacity " + capacity()
@@ -6254,7 +6254,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nShortCopies(toIndex - fromIndex, (short) 0), true);
         }
@@ -6283,17 +6283,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Short.valueOf((short) popShort());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushShort((Short) value);
         }
 
-        public final short popShort() {
+        public short popShort() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -6306,7 +6306,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushShort(short value) {
+        public void pushShort(short value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -6318,22 +6318,22 @@ class SimpleArraysImpl {
             this.shortArray[offset + i] = value;
         }
 
-        public final MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableShortArray setData(long arrayPos, Object srcArray) {
+        public MutableShortArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableShortArray copy(Array src) {
+        public MutableShortArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableShortArray swap(UpdatableArray another) {
+        public MutableShortArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -6351,7 +6351,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableShortArray asUnresizable() {
+        public UpdatableShortArray asUnresizable() {
             UpdatableJAShortSubArray result = new UpdatableJAShortSubArray(shortArray,
                     (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
@@ -6363,7 +6363,7 @@ class SimpleArraysImpl {
             return (MutableShortArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART subarray short[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
                     + ", capacity " + capacity() + ", start offset = " + offset
@@ -7593,7 +7593,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nIntCopies(toIndex - fromIndex, (int) 0), true);
         }
@@ -7622,17 +7622,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Integer.valueOf(popInt());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushInt((Integer) value);
         }
 
-        public final int popInt() {
+        public int popInt() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -7643,7 +7643,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushInt(int value) {
+        public void pushInt(int value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -7653,22 +7653,22 @@ class SimpleArraysImpl {
             this.intArray[i] = value;
         }
 
-        public final MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableIntArray setData(long arrayPos, Object srcArray) {
+        public MutableIntArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableIntArray copy(Array src) {
+        public MutableIntArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableIntArray swap(UpdatableArray another) {
+        public MutableIntArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -7684,7 +7684,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableIntArray asUnresizable() {
+        public UpdatableIntArray asUnresizable() {
             return new UpdatableJAIntArray(intArray, (int) capacity(), (int) length());
         }
 
@@ -7692,7 +7692,7 @@ class SimpleArraysImpl {
             return (MutableIntArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART array int[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
                     + ", capacity " + capacity()
@@ -7713,7 +7713,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nIntCopies(toIndex - fromIndex, (int) 0), true);
         }
@@ -7742,17 +7742,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Integer.valueOf(popInt());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushInt((Integer) value);
         }
 
-        public final int popInt() {
+        public int popInt() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -7765,7 +7765,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushInt(int value) {
+        public void pushInt(int value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -7777,22 +7777,22 @@ class SimpleArraysImpl {
             this.intArray[offset + i] = value;
         }
 
-        public final MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableIntArray setData(long arrayPos, Object srcArray) {
+        public MutableIntArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableIntArray copy(Array src) {
+        public MutableIntArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableIntArray swap(UpdatableArray another) {
+        public MutableIntArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -7810,7 +7810,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableIntArray asUnresizable() {
+        public UpdatableIntArray asUnresizable() {
             UpdatableJAIntSubArray result = new UpdatableJAIntSubArray(intArray,
                     (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
@@ -7822,7 +7822,7 @@ class SimpleArraysImpl {
             return (MutableIntArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART subarray int[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
                     + ", capacity " + capacity() + ", start offset = " + offset
@@ -9028,7 +9028,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nLongCopies(toIndex - fromIndex, (long) 0), true);
         }
@@ -9057,17 +9057,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Long.valueOf(popLong());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushLong((Long) value);
         }
 
-        public final long popLong() {
+        public long popLong() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -9078,7 +9078,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushLong(long value) {
+        public void pushLong(long value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -9088,22 +9088,22 @@ class SimpleArraysImpl {
             this.longArray[i] = value;
         }
 
-        public final MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableLongArray setData(long arrayPos, Object srcArray) {
+        public MutableLongArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableLongArray copy(Array src) {
+        public MutableLongArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableLongArray swap(UpdatableArray another) {
+        public MutableLongArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -9119,7 +9119,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableLongArray asUnresizable() {
+        public UpdatableLongArray asUnresizable() {
             return new UpdatableJALongArray(longArray, (int) capacity(), (int) length());
         }
 
@@ -9127,7 +9127,7 @@ class SimpleArraysImpl {
             return (MutableLongArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART array long[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
                     + ", capacity " + capacity()
@@ -9148,7 +9148,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nLongCopies(toIndex - fromIndex, (long) 0), true);
         }
@@ -9177,17 +9177,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Long.valueOf(popLong());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushLong((Long) value);
         }
 
-        public final long popLong() {
+        public long popLong() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -9200,7 +9200,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushLong(long value) {
+        public void pushLong(long value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -9212,22 +9212,22 @@ class SimpleArraysImpl {
             this.longArray[offset + i] = value;
         }
 
-        public final MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableLongArray setData(long arrayPos, Object srcArray) {
+        public MutableLongArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableLongArray copy(Array src) {
+        public MutableLongArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableLongArray swap(UpdatableArray another) {
+        public MutableLongArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -9245,7 +9245,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableLongArray asUnresizable() {
+        public UpdatableLongArray asUnresizable() {
             UpdatableJALongSubArray result = new UpdatableJALongSubArray(longArray,
                     (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
@@ -9257,7 +9257,7 @@ class SimpleArraysImpl {
             return (MutableLongArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART subarray long[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
                     + ", capacity " + capacity() + ", start offset = " + offset
@@ -10458,7 +10458,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nDoubleCopies(toIndex - fromIndex, (double) 0), true);
         }
@@ -10487,17 +10487,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Double.valueOf(popDouble());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushDouble((Double) value);
         }
 
-        public final double popDouble() {
+        public double popDouble() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -10508,7 +10508,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushDouble(double value) {
+        public void pushDouble(double value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -10518,22 +10518,22 @@ class SimpleArraysImpl {
             this.doubleArray[i] = value;
         }
 
-        public final MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableDoubleArray setData(long arrayPos, Object srcArray) {
+        public MutableDoubleArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableDoubleArray copy(Array src) {
+        public MutableDoubleArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableDoubleArray swap(UpdatableArray another) {
+        public MutableDoubleArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -10549,7 +10549,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableDoubleArray asUnresizable() {
+        public UpdatableDoubleArray asUnresizable() {
             return new UpdatableJADoubleArray(doubleArray, (int) capacity(), (int) length());
         }
 
@@ -10557,7 +10557,7 @@ class SimpleArraysImpl {
             return (MutableDoubleArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART array double[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
                     + ", capacity " + capacity()
@@ -10578,7 +10578,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nDoubleCopies(toIndex - fromIndex, (double) 0), true);
         }
@@ -10607,17 +10607,17 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
             return Double.valueOf(popDouble());
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushDouble((Double) value);
         }
 
-        public final double popDouble() {
+        public double popDouble() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -10630,7 +10630,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushDouble(double value) {
+        public void pushDouble(double value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -10642,22 +10642,22 @@ class SimpleArraysImpl {
             this.doubleArray[offset + i] = value;
         }
 
-        public final MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableDoubleArray setData(long arrayPos, Object srcArray) {
+        public MutableDoubleArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableDoubleArray copy(Array src) {
+        public MutableDoubleArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableDoubleArray swap(UpdatableArray another) {
+        public MutableDoubleArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -10675,7 +10675,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableDoubleArray asUnresizable() {
+        public UpdatableDoubleArray asUnresizable() {
             UpdatableJADoubleSubArray result = new UpdatableJADoubleSubArray(doubleArray,
                     (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
@@ -10687,7 +10687,7 @@ class SimpleArraysImpl {
             return (MutableDoubleArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART subarray double[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
                     + ", capacity " + capacity() + ", start offset = " + offset
@@ -11876,7 +11876,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nObjectCopies(toIndex - fromIndex, null), true);
         }
@@ -11905,7 +11905,7 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -11916,7 +11916,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -11926,22 +11926,22 @@ class SimpleArraysImpl {
             this.objectArray[i] = value;
         }
 
-        public final MutableObjectArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableObjectArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableObjectArray setData(long arrayPos, Object srcArray) {
+        public MutableObjectArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableObjectArray copy(Array src) {
+        public MutableObjectArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableObjectArray swap(UpdatableArray another) {
+        public MutableObjectArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -11964,7 +11964,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableObjectArray asUnresizable() {
+        public UpdatableObjectArray asUnresizable() {
             return new UpdatableJAObjectArray(objectArray, (int) capacity(), (int) length());
         }
 
@@ -11972,7 +11972,7 @@ class SimpleArraysImpl {
             return (MutableObjectArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART array " + elementType.getName() + "[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
                     + ", capacity " + capacity()
@@ -11993,7 +11993,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nObjectCopies(toIndex - fromIndex, null), true);
         }
@@ -12022,7 +12022,7 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -12035,7 +12035,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -12047,22 +12047,22 @@ class SimpleArraysImpl {
             this.objectArray[offset + i] = value;
         }
 
-        public final MutableObjectArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableObjectArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableObjectArray setData(long arrayPos, Object srcArray) {
+        public MutableObjectArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableObjectArray copy(Array src) {
+        public MutableObjectArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableObjectArray swap(UpdatableArray another) {
+        public MutableObjectArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -12087,7 +12087,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableObjectArray asUnresizable() {
+        public UpdatableObjectArray asUnresizable() {
             UpdatableJAObjectSubArray result = new UpdatableJAObjectSubArray(objectArray,
                     (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
@@ -12099,7 +12099,7 @@ class SimpleArraysImpl {
             return (MutableObjectArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART subarray " + elementType.getName() + "[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
                     + ", capacity " + capacity() + ", start offset = " + offset
@@ -13311,7 +13311,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nBitCopies(toIndex - fromIndex, false), true);
         }
@@ -13340,15 +13340,15 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             return popBit();
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushBit((Boolean) value);
         }
 
-        public final boolean popBit() {
+        public boolean popBit() {
             long i = length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -13358,7 +13358,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushBit(boolean value) {
+        public void pushBit(boolean value) {
             long i = length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -13373,22 +13373,22 @@ class SimpleArraysImpl {
             }
         }
 
-        public final MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableBitArray setData(long arrayPos, Object srcArray) {
+        public MutableBitArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableBitArray copy(Array src) {
+        public MutableBitArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableBitArray swap(UpdatableArray another) {
+        public MutableBitArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -13404,7 +13404,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableBitArray asUnresizable() {
+        public UpdatableBitArray asUnresizable() {
             return new UpdatableJABitArray(bitArray, capacity(), length());
         }
 
@@ -13412,7 +13412,7 @@ class SimpleArraysImpl {
             return (MutableBitArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART array bit[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
                     + ", capacity " + capacity()
@@ -13433,7 +13433,7 @@ class SimpleArraysImpl {
             super(initialArray, initialCapacityAndLength, initialOffset);
         }
 
-        final void clearElements(long fromIndex, long toIndex) {
+        void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
                     Arrays.nBitCopies(toIndex - fromIndex, false), true);
         }
@@ -13462,15 +13462,15 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public final Object popElement() {
+        public Object popElement() {
             return popBit();
         }
 
-        public final void pushElement(Object value) {
+        public void pushElement(Object value) {
             pushBit((Boolean) value);
         }
 
-        public final boolean popBit() {
+        public boolean popBit() {
             long i = length - 1;
             if (i < 0)
                 throw new EmptyStackException();
@@ -13482,7 +13482,7 @@ class SimpleArraysImpl {
             return result;
         }
 
-        public final void pushBit(boolean value) {
+        public void pushBit(boolean value) {
             long i = length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
@@ -13499,22 +13499,22 @@ class SimpleArraysImpl {
             }
         }
 
-        public final MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableBitArray setData(long arrayPos, Object srcArray) {
+        public MutableBitArray setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableBitArray copy(Array src) {
+        public MutableBitArray copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableBitArray swap(UpdatableArray another) {
+        public MutableBitArray swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
@@ -13532,7 +13532,7 @@ class SimpleArraysImpl {
             return false;
         }
 
-        public final UpdatableBitArray asUnresizable() {
+        public UpdatableBitArray asUnresizable() {
             UpdatableJABitSubArray result = new UpdatableJABitSubArray(bitArray,
                     capacity(), length(), offset);
             if (this.capacity < 0) // copy-on-next-write
@@ -13544,7 +13544,7 @@ class SimpleArraysImpl {
             return (MutableBitArray) standardObjectClone();
         }
 
-        public final String toString() {
+        public String toString() {
             return "mutable simple AlgART subarray bit[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
                     + ", capacity " + capacity() + ", start offset = " + offset
