@@ -1647,7 +1647,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nFloatCopies(toIndex - fromIndex, (float)0), true);
+                    Arrays.nFloatCopies(toIndex - fromIndex, (float) 0), true);
         }
 
         public MutableFloatArray length(long newLength) {
@@ -1685,7 +1685,7 @@ class SimpleArraysImpl {
         }
 
         public final float popFloat() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             float result = this.floatArray[i];
@@ -1696,10 +1696,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushFloat(float value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             this.length = i + 1;
             this.floatArray[i] = value;
@@ -1727,7 +1727,7 @@ class SimpleArraysImpl {
 
         public MutableFloatArray asCopyOnNextWrite() {
             MutableJAFloatSubArray result = new MutableJAFloatSubArray(floatArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -1737,25 +1737,25 @@ class SimpleArraysImpl {
         }
 
         public final UpdatableFloatArray asUnresizable() {
-            return new UpdatableJAFloatArray(floatArray, (int)capacity(), (int)length());
+            return new UpdatableJAFloatArray(floatArray, (int) capacity(), (int) length());
         }
 
         public MutableFloatArray shallowClone() {
-            return (MutableFloatArray)standardObjectClone();
+            return (MutableFloatArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART array float[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static final class MutableJAFloatSubArray
-        extends UpdatableJAFloatSubArray implements MutableFloatArray
-        // This class is used only for check "capacity < 0" for copy-on-next-write mode
+            extends UpdatableJAFloatSubArray implements MutableFloatArray
+            // This class is used only for check "capacity < 0" for copy-on-next-write mode
     {
         MutableJAFloatSubArray(float[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
@@ -1767,7 +1767,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nFloatCopies(toIndex - fromIndex, (float)0), true);
+                    Arrays.nFloatCopies(toIndex - fromIndex, (float) 0), true);
         }
 
         public MutableFloatArray length(long newLength) {
@@ -1805,7 +1805,7 @@ class SimpleArraysImpl {
         }
 
         public final float popFloat() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             if (this.capacity < 0) // copy-on-next-write
@@ -1818,10 +1818,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushFloat(float value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
@@ -1853,7 +1853,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableJAFloatSubArray result = new MutableJAFloatSubArray(floatArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -1864,22 +1864,22 @@ class SimpleArraysImpl {
 
         public final UpdatableFloatArray asUnresizable() {
             UpdatableJAFloatSubArray result = new UpdatableJAFloatSubArray(floatArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
         }
 
         public MutableFloatArray shallowClone() {
-            return (MutableFloatArray)standardObjectClone();
+            return (MutableFloatArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART subarray float[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
     /*Repeat.SectionEnd impl*/
@@ -3142,7 +3142,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nCharCopies(toIndex - fromIndex, (char)0), true);
+                    Arrays.nCharCopies(toIndex - fromIndex, (char) 0), true);
         }
 
         public MutableCharArray length(long newLength) {
@@ -3180,7 +3180,7 @@ class SimpleArraysImpl {
         }
 
         public final char popChar() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             char result = this.charArray[i];
@@ -3191,10 +3191,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushChar(char value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             this.length = i + 1;
             this.charArray[i] = value;
@@ -3232,7 +3232,7 @@ class SimpleArraysImpl {
 
         public MutableCharArray asCopyOnNextWrite() {
             MutableJACharSubArray result = new MutableJACharSubArray(charArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -3242,25 +3242,25 @@ class SimpleArraysImpl {
         }
 
         public final UpdatableCharArray asUnresizable() {
-            return new UpdatableJACharArray(charArray, (int)capacity(), (int)length());
+            return new UpdatableJACharArray(charArray, (int) capacity(), (int) length());
         }
 
         public MutableCharArray shallowClone() {
-            return (MutableCharArray)standardObjectClone();
+            return (MutableCharArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART array char[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static final class MutableJACharSubArray
-        extends UpdatableJACharSubArray implements MutableCharArray
-        // This class is used only for check "capacity < 0" for copy-on-next-write mode
+            extends UpdatableJACharSubArray implements MutableCharArray
+            // This class is used only for check "capacity < 0" for copy-on-next-write mode
     {
         MutableJACharSubArray(char[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
@@ -3272,7 +3272,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nCharCopies(toIndex - fromIndex, (char)0), true);
+                    Arrays.nCharCopies(toIndex - fromIndex, (char) 0), true);
         }
 
         public MutableCharArray length(long newLength) {
@@ -3310,7 +3310,7 @@ class SimpleArraysImpl {
         }
 
         public final char popChar() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             if (this.capacity < 0) // copy-on-next-write
@@ -3323,10 +3323,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushChar(char value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
@@ -3368,7 +3368,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableJACharSubArray result = new MutableJACharSubArray(charArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -3379,22 +3379,22 @@ class SimpleArraysImpl {
 
         public final UpdatableCharArray asUnresizable() {
             UpdatableJACharSubArray result = new UpdatableJACharSubArray(charArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
         }
 
         public MutableCharArray shallowClone() {
-            return (MutableCharArray)standardObjectClone();
+            return (MutableCharArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART subarray char[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
     /*Repeat.IncludeEnd*/
@@ -4649,7 +4649,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nByteCopies(toIndex - fromIndex, (byte)0), true);
+                    Arrays.nByteCopies(toIndex - fromIndex, (byte) 0), true);
         }
 
         public MutableByteArray length(long newLength) {
@@ -4687,7 +4687,7 @@ class SimpleArraysImpl {
         }
 
         public final byte popByte() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             byte result = this.byteArray[i];
@@ -4698,10 +4698,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushByte(byte value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             this.length = i + 1;
             this.byteArray[i] = value;
@@ -4729,7 +4729,7 @@ class SimpleArraysImpl {
 
         public MutableByteArray asCopyOnNextWrite() {
             MutableJAByteSubArray result = new MutableJAByteSubArray(byteArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -4739,25 +4739,25 @@ class SimpleArraysImpl {
         }
 
         public final UpdatableByteArray asUnresizable() {
-            return new UpdatableJAByteArray(byteArray, (int)capacity(), (int)length());
+            return new UpdatableJAByteArray(byteArray, (int) capacity(), (int) length());
         }
 
         public MutableByteArray shallowClone() {
-            return (MutableByteArray)standardObjectClone();
+            return (MutableByteArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART array byte[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static final class MutableJAByteSubArray
-        extends UpdatableJAByteSubArray implements MutableByteArray
-        // This class is used only for check "capacity < 0" for copy-on-next-write mode
+            extends UpdatableJAByteSubArray implements MutableByteArray
+            // This class is used only for check "capacity < 0" for copy-on-next-write mode
     {
         MutableJAByteSubArray(byte[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
@@ -4769,7 +4769,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nByteCopies(toIndex - fromIndex, (byte)0), true);
+                    Arrays.nByteCopies(toIndex - fromIndex, (byte) 0), true);
         }
 
         public MutableByteArray length(long newLength) {
@@ -4807,7 +4807,7 @@ class SimpleArraysImpl {
         }
 
         public final byte popByte() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             if (this.capacity < 0) // copy-on-next-write
@@ -4820,10 +4820,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushByte(byte value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
@@ -4855,7 +4855,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableJAByteSubArray result = new MutableJAByteSubArray(byteArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -4866,22 +4866,22 @@ class SimpleArraysImpl {
 
         public final UpdatableByteArray asUnresizable() {
             UpdatableJAByteSubArray result = new UpdatableJAByteSubArray(byteArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
         }
 
         public MutableByteArray shallowClone() {
-            return (MutableByteArray)standardObjectClone();
+            return (MutableByteArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART subarray byte[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
     /*Repeat.IncludeEnd*/
@@ -6136,7 +6136,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nShortCopies(toIndex - fromIndex, (short)0), true);
+                    Arrays.nShortCopies(toIndex - fromIndex, (short) 0), true);
         }
 
         public MutableShortArray length(long newLength) {
@@ -6174,7 +6174,7 @@ class SimpleArraysImpl {
         }
 
         public final short popShort() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             short result = this.shortArray[i];
@@ -6185,10 +6185,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushShort(short value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             this.length = i + 1;
             this.shortArray[i] = value;
@@ -6216,7 +6216,7 @@ class SimpleArraysImpl {
 
         public MutableShortArray asCopyOnNextWrite() {
             MutableJAShortSubArray result = new MutableJAShortSubArray(shortArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -6226,25 +6226,25 @@ class SimpleArraysImpl {
         }
 
         public final UpdatableShortArray asUnresizable() {
-            return new UpdatableJAShortArray(shortArray, (int)capacity(), (int)length());
+            return new UpdatableJAShortArray(shortArray, (int) capacity(), (int) length());
         }
 
         public MutableShortArray shallowClone() {
-            return (MutableShortArray)standardObjectClone();
+            return (MutableShortArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART array short[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static final class MutableJAShortSubArray
-        extends UpdatableJAShortSubArray implements MutableShortArray
-        // This class is used only for check "capacity < 0" for copy-on-next-write mode
+            extends UpdatableJAShortSubArray implements MutableShortArray
+            // This class is used only for check "capacity < 0" for copy-on-next-write mode
     {
         MutableJAShortSubArray(short[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
@@ -6256,7 +6256,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nShortCopies(toIndex - fromIndex, (short)0), true);
+                    Arrays.nShortCopies(toIndex - fromIndex, (short) 0), true);
         }
 
         public MutableShortArray length(long newLength) {
@@ -6294,7 +6294,7 @@ class SimpleArraysImpl {
         }
 
         public final short popShort() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             if (this.capacity < 0) // copy-on-next-write
@@ -6307,10 +6307,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushShort(short value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
@@ -6342,7 +6342,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableJAShortSubArray result = new MutableJAShortSubArray(shortArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -6353,22 +6353,22 @@ class SimpleArraysImpl {
 
         public final UpdatableShortArray asUnresizable() {
             UpdatableJAShortSubArray result = new UpdatableJAShortSubArray(shortArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
         }
 
         public MutableShortArray shallowClone() {
-            return (MutableShortArray)standardObjectClone();
+            return (MutableShortArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART subarray short[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
     /*Repeat.IncludeEnd*/
@@ -7595,7 +7595,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nIntCopies(toIndex - fromIndex, (int)0), true);
+                    Arrays.nIntCopies(toIndex - fromIndex, (int) 0), true);
         }
 
         public MutableIntArray length(long newLength) {
@@ -7633,7 +7633,7 @@ class SimpleArraysImpl {
         }
 
         public final int popInt() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             int result = this.intArray[i];
@@ -7644,10 +7644,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushInt(int value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             this.length = i + 1;
             this.intArray[i] = value;
@@ -7675,7 +7675,7 @@ class SimpleArraysImpl {
 
         public MutableIntArray asCopyOnNextWrite() {
             MutableJAIntSubArray result = new MutableJAIntSubArray(intArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -7685,25 +7685,25 @@ class SimpleArraysImpl {
         }
 
         public final UpdatableIntArray asUnresizable() {
-            return new UpdatableJAIntArray(intArray, (int)capacity(), (int)length());
+            return new UpdatableJAIntArray(intArray, (int) capacity(), (int) length());
         }
 
         public MutableIntArray shallowClone() {
-            return (MutableIntArray)standardObjectClone();
+            return (MutableIntArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART array int[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static final class MutableJAIntSubArray
-        extends UpdatableJAIntSubArray implements MutableIntArray
-        // This class is used only for check "capacity < 0" for copy-on-next-write mode
+            extends UpdatableJAIntSubArray implements MutableIntArray
+            // This class is used only for check "capacity < 0" for copy-on-next-write mode
     {
         MutableJAIntSubArray(int[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
@@ -7715,7 +7715,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nIntCopies(toIndex - fromIndex, (int)0), true);
+                    Arrays.nIntCopies(toIndex - fromIndex, (int) 0), true);
         }
 
         public MutableIntArray length(long newLength) {
@@ -7753,7 +7753,7 @@ class SimpleArraysImpl {
         }
 
         public final int popInt() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             if (this.capacity < 0) // copy-on-next-write
@@ -7766,10 +7766,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushInt(int value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
@@ -7801,7 +7801,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableJAIntSubArray result = new MutableJAIntSubArray(intArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -7812,22 +7812,22 @@ class SimpleArraysImpl {
 
         public final UpdatableIntArray asUnresizable() {
             UpdatableJAIntSubArray result = new UpdatableJAIntSubArray(intArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
         }
 
         public MutableIntArray shallowClone() {
-            return (MutableIntArray)standardObjectClone();
+            return (MutableIntArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART subarray int[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
     /*Repeat.IncludeEnd*/
@@ -9030,7 +9030,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nLongCopies(toIndex - fromIndex, (long)0), true);
+                    Arrays.nLongCopies(toIndex - fromIndex, (long) 0), true);
         }
 
         public MutableLongArray length(long newLength) {
@@ -9068,7 +9068,7 @@ class SimpleArraysImpl {
         }
 
         public final long popLong() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             long result = this.longArray[i];
@@ -9079,10 +9079,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushLong(long value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             this.length = i + 1;
             this.longArray[i] = value;
@@ -9110,7 +9110,7 @@ class SimpleArraysImpl {
 
         public MutableLongArray asCopyOnNextWrite() {
             MutableJALongSubArray result = new MutableJALongSubArray(longArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -9120,25 +9120,25 @@ class SimpleArraysImpl {
         }
 
         public final UpdatableLongArray asUnresizable() {
-            return new UpdatableJALongArray(longArray, (int)capacity(), (int)length());
+            return new UpdatableJALongArray(longArray, (int) capacity(), (int) length());
         }
 
         public MutableLongArray shallowClone() {
-            return (MutableLongArray)standardObjectClone();
+            return (MutableLongArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART array long[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static final class MutableJALongSubArray
-        extends UpdatableJALongSubArray implements MutableLongArray
-        // This class is used only for check "capacity < 0" for copy-on-next-write mode
+            extends UpdatableJALongSubArray implements MutableLongArray
+            // This class is used only for check "capacity < 0" for copy-on-next-write mode
     {
         MutableJALongSubArray(long[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
@@ -9150,7 +9150,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nLongCopies(toIndex - fromIndex, (long)0), true);
+                    Arrays.nLongCopies(toIndex - fromIndex, (long) 0), true);
         }
 
         public MutableLongArray length(long newLength) {
@@ -9188,7 +9188,7 @@ class SimpleArraysImpl {
         }
 
         public final long popLong() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             if (this.capacity < 0) // copy-on-next-write
@@ -9201,10 +9201,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushLong(long value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
@@ -9236,7 +9236,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableJALongSubArray result = new MutableJALongSubArray(longArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -9247,22 +9247,22 @@ class SimpleArraysImpl {
 
         public final UpdatableLongArray asUnresizable() {
             UpdatableJALongSubArray result = new UpdatableJALongSubArray(longArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
         }
 
         public MutableLongArray shallowClone() {
-            return (MutableLongArray)standardObjectClone();
+            return (MutableLongArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART subarray long[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
     /*Repeat.IncludeEnd*/
@@ -10460,7 +10460,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nDoubleCopies(toIndex - fromIndex, (double)0), true);
+                    Arrays.nDoubleCopies(toIndex - fromIndex, (double) 0), true);
         }
 
         public MutableDoubleArray length(long newLength) {
@@ -10498,7 +10498,7 @@ class SimpleArraysImpl {
         }
 
         public final double popDouble() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             double result = this.doubleArray[i];
@@ -10509,10 +10509,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushDouble(double value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             this.length = i + 1;
             this.doubleArray[i] = value;
@@ -10540,7 +10540,7 @@ class SimpleArraysImpl {
 
         public MutableDoubleArray asCopyOnNextWrite() {
             MutableJADoubleSubArray result = new MutableJADoubleSubArray(doubleArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -10550,25 +10550,25 @@ class SimpleArraysImpl {
         }
 
         public final UpdatableDoubleArray asUnresizable() {
-            return new UpdatableJADoubleArray(doubleArray, (int)capacity(), (int)length());
+            return new UpdatableJADoubleArray(doubleArray, (int) capacity(), (int) length());
         }
 
         public MutableDoubleArray shallowClone() {
-            return (MutableDoubleArray)standardObjectClone();
+            return (MutableDoubleArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART array double[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("cast")
     static final class MutableJADoubleSubArray
-        extends UpdatableJADoubleSubArray implements MutableDoubleArray
-        // This class is used only for check "capacity < 0" for copy-on-next-write mode
+            extends UpdatableJADoubleSubArray implements MutableDoubleArray
+            // This class is used only for check "capacity < 0" for copy-on-next-write mode
     {
         MutableJADoubleSubArray(double[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
@@ -10580,7 +10580,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nDoubleCopies(toIndex - fromIndex, (double)0), true);
+                    Arrays.nDoubleCopies(toIndex - fromIndex, (double) 0), true);
         }
 
         public MutableDoubleArray length(long newLength) {
@@ -10618,7 +10618,7 @@ class SimpleArraysImpl {
         }
 
         public final double popDouble() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             if (this.capacity < 0) // copy-on-next-write
@@ -10631,10 +10631,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushDouble(double value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
@@ -10666,7 +10666,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableJADoubleSubArray result = new MutableJADoubleSubArray(doubleArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -10677,22 +10677,22 @@ class SimpleArraysImpl {
 
         public final UpdatableDoubleArray asUnresizable() {
             UpdatableJADoubleSubArray result = new UpdatableJADoubleSubArray(doubleArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
         }
 
         public MutableDoubleArray shallowClone() {
-            return (MutableDoubleArray)standardObjectClone();
+            return (MutableDoubleArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART subarray double[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
     /*Repeat.IncludeEnd*/
@@ -11878,7 +11878,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nObjectCopies(toIndex - fromIndex, null), true);
+                    Arrays.nObjectCopies(toIndex - fromIndex, null), true);
         }
 
         public MutableObjectArray length(long newLength) {
@@ -11906,7 +11906,7 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             Object result = this.objectArray[i];
@@ -11917,10 +11917,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushElement(Object value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             this.length = i + 1;
             this.objectArray[i] = value;
@@ -11948,7 +11948,7 @@ class SimpleArraysImpl {
 
         public MutableObjectArray asCopyOnNextWrite() {
             MutableJAObjectSubArray result = new MutableJAObjectSubArray(objectArray,
-                (int)capacity(), (int)length(), 0);
+                    (int) capacity(), (int) length(), 0);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -11965,25 +11965,25 @@ class SimpleArraysImpl {
         }
 
         public final UpdatableObjectArray asUnresizable() {
-            return new UpdatableJAObjectArray(objectArray, (int)capacity(), (int)length());
+            return new UpdatableJAObjectArray(objectArray, (int) capacity(), (int) length());
         }
 
         public MutableObjectArray shallowClone() {
-            return (MutableObjectArray)standardObjectClone();
+            return (MutableObjectArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART array " + elementType.getName() + "[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     @SuppressWarnings("rawtypes")
     static final class MutableJAObjectSubArray
-        extends UpdatableJAObjectSubArray implements MutableObjectArray
-        // This class is used only for check "capacity < 0" for copy-on-next-write mode
+            extends UpdatableJAObjectSubArray implements MutableObjectArray
+            // This class is used only for check "capacity < 0" for copy-on-next-write mode
     {
         MutableJAObjectSubArray(Object[] initialArray, int initialCapacity, int initialLength, int initialOffset) {
             super(initialArray, initialCapacity, initialLength, initialOffset);
@@ -11995,7 +11995,7 @@ class SimpleArraysImpl {
 
         final void clearElements(long fromIndex, long toIndex) {
             defaultCopy(this.subArray(fromIndex, toIndex),
-                Arrays.nObjectCopies(toIndex - fromIndex, null), true);
+                    Arrays.nObjectCopies(toIndex - fromIndex, null), true);
         }
 
         public MutableObjectArray length(long newLength) {
@@ -12023,7 +12023,7 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            int i = (int)length - 1;
+            int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
             if (this.capacity < 0) // copy-on-next-write
@@ -12036,10 +12036,10 @@ class SimpleArraysImpl {
         }
 
         public final void pushElement(Object value) {
-            int i = (int)length;
+            int i = (int) length;
             if (i >= capacity()) {
                 // we are sure that i cannot be Long.MAX_VALUE, because i is int value
-                ensureCapacityImpl((long)i + 1);
+                ensureCapacityImpl((long) i + 1);
             }
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
@@ -12071,7 +12071,7 @@ class SimpleArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableJAObjectSubArray result = new MutableJAObjectSubArray(objectArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             result.capacity |= HIGH_BIT;
             return result;
         }
@@ -12089,22 +12089,22 @@ class SimpleArraysImpl {
 
         public final UpdatableObjectArray asUnresizable() {
             UpdatableJAObjectSubArray result = new UpdatableJAObjectSubArray(objectArray,
-                (int)capacity(), (int)length(), offset);
+                    (int) capacity(), (int) length(), offset);
             if (this.capacity < 0) // copy-on-next-write
                 result.capacity |= HIGH_BIT;
             return result;
         }
 
         public MutableObjectArray shallowClone() {
-            return (MutableObjectArray)standardObjectClone();
+            return (MutableObjectArray) standardObjectClone();
         }
 
         public final String toString() {
             return "mutable simple AlgART subarray " + elementType.getName() + "[" + length()
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
-                + ", capacity " + capacity() + ", start offset = " + offset
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
+                    + ", capacity " + capacity() + ", start offset = " + offset
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
     /*Repeat.IncludeEnd*/
