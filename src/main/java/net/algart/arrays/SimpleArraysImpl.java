@@ -499,27 +499,27 @@ class SimpleArraysImpl {
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)this.floatArray[(int)index];
+            return (long) this.floatArray[(int) index];
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (int)this.floatArray[(int)index];
+            return (int) this.floatArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (float)value ? indexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? indexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (float)value ? lastIndexOf(lowIndex, highIndex, (float)value) : -1;
+            return value == (float) value ? lastIndexOf(lowIndex, highIndex, (float) value) : -1;
         }
 
         public final float getFloat(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.floatArray[(int)index];
+            return this.floatArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, float value) {
@@ -555,11 +555,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new JAFloatArray(floatArray, (int)(toIndex - fromIndex));
+                return new JAFloatArray(floatArray, (int) (toIndex - fromIndex));
             } else {
-                return new JAFloatSubArray(floatArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new JAFloatSubArray(floatArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -568,22 +568,22 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new JAFloatArray(floatArray, (int)count);
+                return new JAFloatArray(floatArray, (int) count);
             } else {
-                return new JAFloatSubArray(floatArray, (int)count, (int)position);
+                return new JAFloatSubArray(floatArray, (int) count, (int) position);
             }
         }
 
         public DataFloatBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataFloatBuffer)super.buffer(mode, capacity);
+            return (DataFloatBuffer) super.buffer(mode, capacity);
         }
 
         public DataFloatBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataFloatBuffer)super.buffer(mode);
+            return (DataFloatBuffer) super.buffer(mode);
         }
 
         public DataFloatBuffer buffer(long capacity) {
@@ -591,7 +591,7 @@ class SimpleArraysImpl {
         }
 
         public DataFloatBuffer buffer() {
-            return (DataFloatBuffer)super.buffer();
+            return (DataFloatBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -620,7 +620,7 @@ class SimpleArraysImpl {
         public final MutableFloatArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJAFloatArray(JArrays.copyOfRange(
-                    floatArray, 0, (int) length), (int) length).setNewStatus();
+                        floatArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableFloatArray) super.mutableClone(memoryModel);
             }
@@ -629,7 +629,7 @@ class SimpleArraysImpl {
         public final UpdatableFloatArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJAFloatArray(JArrays.copyOfRange(
-                    floatArray, 0, (int) length), (int) length).setNewStatus();
+                        floatArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableFloatArray) super.updatableClone(memoryModel);
             }
@@ -641,9 +641,9 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART array float[" + length
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(floatArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -1986,27 +1986,27 @@ class SimpleArraysImpl {
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)this.charArray[(int)index];
+            return (long) this.charArray[(int) index];
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (int)this.charArray[(int)index];
+            return (int) this.charArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (char)value ? indexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? indexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (char)value ? lastIndexOf(lowIndex, highIndex, (char)value) : -1;
+            return value == (char) value ? lastIndexOf(lowIndex, highIndex, (char) value) : -1;
         }
 
         public final char getChar(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.charArray[(int)index];
+            return this.charArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, char value) {
@@ -2042,11 +2042,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new JACharArray(charArray, (int)(toIndex - fromIndex));
+                return new JACharArray(charArray, (int) (toIndex - fromIndex));
             } else {
-                return new JACharSubArray(charArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new JACharSubArray(charArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -2055,22 +2055,22 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new JACharArray(charArray, (int)count);
+                return new JACharArray(charArray, (int) count);
             } else {
-                return new JACharSubArray(charArray, (int)count, (int)position);
+                return new JACharSubArray(charArray, (int) count, (int) position);
             }
         }
 
         public DataCharBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataCharBuffer)super.buffer(mode, capacity);
+            return (DataCharBuffer) super.buffer(mode, capacity);
         }
 
         public DataCharBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataCharBuffer)super.buffer(mode);
+            return (DataCharBuffer) super.buffer(mode);
         }
 
         public DataCharBuffer buffer(long capacity) {
@@ -2078,7 +2078,7 @@ class SimpleArraysImpl {
         }
 
         public DataCharBuffer buffer() {
-            return (DataCharBuffer)super.buffer();
+            return (DataCharBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -2107,7 +2107,7 @@ class SimpleArraysImpl {
         public final MutableCharArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJACharArray(JArrays.copyOfRange(
-                    charArray, 0, (int) length), (int) length).setNewStatus();
+                        charArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableCharArray) super.mutableClone(memoryModel);
             }
@@ -2116,7 +2116,7 @@ class SimpleArraysImpl {
         public final UpdatableCharArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJACharArray(JArrays.copyOfRange(
-                    charArray, 0, (int) length), (int) length).setNewStatus();
+                        charArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableCharArray) super.updatableClone(memoryModel);
             }
@@ -2128,9 +2128,9 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART array char[" + length
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(charArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -3485,27 +3485,27 @@ class SimpleArraysImpl {
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)(this.byteArray[(int)index] & 0xFF);
+            return (long) (this.byteArray[(int) index] & 0xFF);
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (int)(this.byteArray[(int)index] & 0xFF);
+            return (int) (this.byteArray[(int) index] & 0xFF);
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte)value) : -1;
+            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final int getByte(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.byteArray[(int)index] & 0xFF);
+            return (this.byteArray[(int) index] & 0xFF);
         }
 
         public final long indexOf(long lowIndex, long highIndex, byte value) {
@@ -3541,11 +3541,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new JAByteArray(byteArray, (int)(toIndex - fromIndex));
+                return new JAByteArray(byteArray, (int) (toIndex - fromIndex));
             } else {
-                return new JAByteSubArray(byteArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new JAByteSubArray(byteArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -3554,22 +3554,22 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new JAByteArray(byteArray, (int)count);
+                return new JAByteArray(byteArray, (int) count);
             } else {
-                return new JAByteSubArray(byteArray, (int)count, (int)position);
+                return new JAByteSubArray(byteArray, (int) count, (int) position);
             }
         }
 
         public DataByteBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataByteBuffer)super.buffer(mode, capacity);
+            return (DataByteBuffer) super.buffer(mode, capacity);
         }
 
         public DataByteBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataByteBuffer)super.buffer(mode);
+            return (DataByteBuffer) super.buffer(mode);
         }
 
         public DataByteBuffer buffer(long capacity) {
@@ -3577,7 +3577,7 @@ class SimpleArraysImpl {
         }
 
         public DataByteBuffer buffer() {
-            return (DataByteBuffer)super.buffer();
+            return (DataByteBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -3606,7 +3606,7 @@ class SimpleArraysImpl {
         public final MutableByteArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJAByteArray(JArrays.copyOfRange(
-                    byteArray, 0, (int) length), (int) length).setNewStatus();
+                        byteArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableByteArray) super.mutableClone(memoryModel);
             }
@@ -3615,7 +3615,7 @@ class SimpleArraysImpl {
         public final UpdatableByteArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJAByteArray(JArrays.copyOfRange(
-                    byteArray, 0, (int) length), (int) length).setNewStatus();
+                        byteArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableByteArray) super.updatableClone(memoryModel);
             }
@@ -3627,9 +3627,9 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART array byte[" + length
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(byteArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -4964,27 +4964,27 @@ class SimpleArraysImpl {
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)(this.shortArray[(int)index] & 0xFFFF);
+            return (long) (this.shortArray[(int) index] & 0xFFFF);
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (int)(this.shortArray[(int)index] & 0xFFFF);
+            return (int) (this.shortArray[(int) index] & 0xFFFF);
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? indexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short)value) : -1;
+            return value == ((int) value & 0xFFFF) ? lastIndexOf(lowIndex, highIndex, (short) value) : -1;
         }
 
         public final int getShort(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.shortArray[(int)index] & 0xFFFF);
+            return (this.shortArray[(int) index] & 0xFFFF);
         }
 
         public final long indexOf(long lowIndex, long highIndex, short value) {
@@ -5020,11 +5020,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new JAShortArray(shortArray, (int)(toIndex - fromIndex));
+                return new JAShortArray(shortArray, (int) (toIndex - fromIndex));
             } else {
-                return new JAShortSubArray(shortArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new JAShortSubArray(shortArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -5033,22 +5033,22 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new JAShortArray(shortArray, (int)count);
+                return new JAShortArray(shortArray, (int) count);
             } else {
-                return new JAShortSubArray(shortArray, (int)count, (int)position);
+                return new JAShortSubArray(shortArray, (int) count, (int) position);
             }
         }
 
         public DataShortBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataShortBuffer)super.buffer(mode, capacity);
+            return (DataShortBuffer) super.buffer(mode, capacity);
         }
 
         public DataShortBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataShortBuffer)super.buffer(mode);
+            return (DataShortBuffer) super.buffer(mode);
         }
 
         public DataShortBuffer buffer(long capacity) {
@@ -5056,7 +5056,7 @@ class SimpleArraysImpl {
         }
 
         public DataShortBuffer buffer() {
-            return (DataShortBuffer)super.buffer();
+            return (DataShortBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -5085,7 +5085,7 @@ class SimpleArraysImpl {
         public final MutableShortArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJAShortArray(JArrays.copyOfRange(
-                    shortArray, 0, (int) length), (int) length).setNewStatus();
+                        shortArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableShortArray) super.mutableClone(memoryModel);
             }
@@ -5094,7 +5094,7 @@ class SimpleArraysImpl {
         public final UpdatableShortArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJAShortArray(JArrays.copyOfRange(
-                    shortArray, 0, (int) length), (int) length).setNewStatus();
+                        shortArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableShortArray) super.updatableClone(memoryModel);
             }
@@ -5106,9 +5106,9 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART array short[" + length
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(shortArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -6441,21 +6441,21 @@ class SimpleArraysImpl {
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)this.intArray[(int)index];
+            return (long) this.intArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (int)value ? indexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? indexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (int)value ? lastIndexOf(lowIndex, highIndex, (int)value) : -1;
+            return value == (int) value ? lastIndexOf(lowIndex, highIndex, (int) value) : -1;
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.intArray[(int)index];
+            return this.intArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, int value) {
@@ -6491,11 +6491,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new JAIntArray(intArray, (int)(toIndex - fromIndex));
+                return new JAIntArray(intArray, (int) (toIndex - fromIndex));
             } else {
-                return new JAIntSubArray(intArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new JAIntSubArray(intArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -6504,22 +6504,22 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new JAIntArray(intArray, (int)count);
+                return new JAIntArray(intArray, (int) count);
             } else {
-                return new JAIntSubArray(intArray, (int)count, (int)position);
+                return new JAIntSubArray(intArray, (int) count, (int) position);
             }
         }
 
         public DataIntBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataIntBuffer)super.buffer(mode, capacity);
+            return (DataIntBuffer) super.buffer(mode, capacity);
         }
 
         public DataIntBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataIntBuffer)super.buffer(mode);
+            return (DataIntBuffer) super.buffer(mode);
         }
 
         public DataIntBuffer buffer(long capacity) {
@@ -6527,7 +6527,7 @@ class SimpleArraysImpl {
         }
 
         public DataIntBuffer buffer() {
-            return (DataIntBuffer)super.buffer();
+            return (DataIntBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -6556,7 +6556,7 @@ class SimpleArraysImpl {
         public final MutableIntArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJAIntArray(JArrays.copyOfRange(
-                    intArray, 0, (int) length), (int) length).setNewStatus();
+                        intArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableIntArray) super.mutableClone(memoryModel);
             }
@@ -6565,7 +6565,7 @@ class SimpleArraysImpl {
         public final UpdatableIntArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJAIntArray(JArrays.copyOfRange(
-                    intArray, 0, (int) length), (int) length).setNewStatus();
+                        intArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableIntArray) super.updatableClone(memoryModel);
             }
@@ -6577,9 +6577,9 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART array int[" + length
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(intArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -7894,13 +7894,13 @@ class SimpleArraysImpl {
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return Arrays.truncateLongToInt(this.longArray[(int)index]);
+            return Arrays.truncateLongToInt(this.longArray[(int) index]);
         }
 
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.longArray[(int)index];
+            return this.longArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
@@ -7936,11 +7936,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new JALongArray(longArray, (int)(toIndex - fromIndex));
+                return new JALongArray(longArray, (int) (toIndex - fromIndex));
             } else {
-                return new JALongSubArray(longArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new JALongSubArray(longArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -7949,22 +7949,22 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new JALongArray(longArray, (int)count);
+                return new JALongArray(longArray, (int) count);
             } else {
-                return new JALongSubArray(longArray, (int)count, (int)position);
+                return new JALongSubArray(longArray, (int) count, (int) position);
             }
         }
 
         public DataLongBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataLongBuffer)super.buffer(mode, capacity);
+            return (DataLongBuffer) super.buffer(mode, capacity);
         }
 
         public DataLongBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataLongBuffer)super.buffer(mode);
+            return (DataLongBuffer) super.buffer(mode);
         }
 
         public DataLongBuffer buffer(long capacity) {
@@ -7972,7 +7972,7 @@ class SimpleArraysImpl {
         }
 
         public DataLongBuffer buffer() {
-            return (DataLongBuffer)super.buffer();
+            return (DataLongBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -8001,7 +8001,7 @@ class SimpleArraysImpl {
         public final MutableLongArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJALongArray(JArrays.copyOfRange(
-                    longArray, 0, (int) length), (int) length).setNewStatus();
+                        longArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableLongArray) super.mutableClone(memoryModel);
             }
@@ -8010,7 +8010,7 @@ class SimpleArraysImpl {
         public final UpdatableLongArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJALongArray(JArrays.copyOfRange(
-                    longArray, 0, (int) length), (int) length).setNewStatus();
+                        longArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableLongArray) super.updatableClone(memoryModel);
             }
@@ -8022,9 +8022,9 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART array long[" + length
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(longArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -9302,27 +9302,27 @@ class SimpleArraysImpl {
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (long)this.doubleArray[(int)index];
+            return (long) this.doubleArray[(int) index];
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (int)this.doubleArray[(int)index];
+            return (int) this.doubleArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == (double)value ? indexOf(lowIndex, highIndex, (double)value) : -1;
+            return value == (double) value ? indexOf(lowIndex, highIndex, (double) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == (double)value ? lastIndexOf(lowIndex, highIndex, (double)value) : -1;
+            return value == (double) value ? lastIndexOf(lowIndex, highIndex, (double) value) : -1;
         }
 
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.doubleArray[(int)index];
+            return this.doubleArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
@@ -9358,11 +9358,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new JADoubleArray(doubleArray, (int)(toIndex - fromIndex));
+                return new JADoubleArray(doubleArray, (int) (toIndex - fromIndex));
             } else {
-                return new JADoubleSubArray(doubleArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new JADoubleSubArray(doubleArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -9371,22 +9371,22 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new JADoubleArray(doubleArray, (int)count);
+                return new JADoubleArray(doubleArray, (int) count);
             } else {
-                return new JADoubleSubArray(doubleArray, (int)count, (int)position);
+                return new JADoubleSubArray(doubleArray, (int) count, (int) position);
             }
         }
 
         public DataDoubleBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataDoubleBuffer)super.buffer(mode, capacity);
+            return (DataDoubleBuffer) super.buffer(mode, capacity);
         }
 
         public DataDoubleBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataDoubleBuffer)super.buffer(mode);
+            return (DataDoubleBuffer) super.buffer(mode);
         }
 
         public DataDoubleBuffer buffer(long capacity) {
@@ -9394,7 +9394,7 @@ class SimpleArraysImpl {
         }
 
         public DataDoubleBuffer buffer() {
-            return (DataDoubleBuffer)super.buffer();
+            return (DataDoubleBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -9423,7 +9423,7 @@ class SimpleArraysImpl {
         public final MutableDoubleArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJADoubleArray(JArrays.copyOfRange(
-                    doubleArray, 0, (int) length), (int) length).setNewStatus();
+                        doubleArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableDoubleArray) super.mutableClone(memoryModel);
             }
@@ -9432,7 +9432,7 @@ class SimpleArraysImpl {
         public final UpdatableDoubleArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJADoubleArray(JArrays.copyOfRange(
-                    doubleArray, 0, (int) length), (int) length).setNewStatus();
+                        doubleArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableDoubleArray) super.updatableClone(memoryModel);
             }
@@ -9444,9 +9444,9 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART array double[" + length
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(doubleArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
@@ -10761,7 +10761,7 @@ class SimpleArraysImpl {
         public final Object getElement(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return this.objectArray[(int)index];
+            return this.objectArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, Object value) {
@@ -10797,11 +10797,11 @@ class SimpleArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             if (fromIndex == 0) {
-                return new JAObjectArray(objectArray, (int)(toIndex - fromIndex));
+                return new JAObjectArray(objectArray, (int) (toIndex - fromIndex));
             } else {
-                return new JAObjectSubArray(objectArray, (int)(toIndex - fromIndex), (int)fromIndex);
+                return new JAObjectSubArray(objectArray, (int) (toIndex - fromIndex), (int) fromIndex);
             }
         }
 
@@ -10810,22 +10810,22 @@ class SimpleArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (position == 0) {
-                return new JAObjectArray(objectArray, (int)count);
+                return new JAObjectArray(objectArray, (int) count);
             } else {
-                return new JAObjectSubArray(objectArray, (int)count, (int)position);
+                return new JAObjectSubArray(objectArray, (int) count, (int) position);
             }
         }
 
         public DataObjectBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataObjectBuffer)super.buffer(mode, capacity);
+            return (DataObjectBuffer) super.buffer(mode, capacity);
         }
 
         public DataObjectBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataObjectBuffer)super.buffer(mode);
+            return (DataObjectBuffer) super.buffer(mode);
         }
 
         public DataObjectBuffer buffer(long capacity) {
@@ -10833,7 +10833,7 @@ class SimpleArraysImpl {
         }
 
         public DataObjectBuffer buffer() {
-            return (DataObjectBuffer)super.buffer();
+            return (DataObjectBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -10869,7 +10869,7 @@ class SimpleArraysImpl {
         public final MutableObjectArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new MutableJAObjectArray((Object[])JArrays.copyOfRange(
-                    objectArray, 0, (int) length), (int) length).setNewStatus();
+                        objectArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableObjectArray) super.mutableClone(memoryModel);
             }
@@ -10878,7 +10878,7 @@ class SimpleArraysImpl {
         public final UpdatableObjectArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
                 return new UpdatableJAObjectArray((Object[])JArrays.copyOfRange(
-                    objectArray, 0, (int) length), (int) length).setNewStatus();
+                        objectArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableObjectArray) super.updatableClone(memoryModel);
             }
@@ -10890,9 +10890,9 @@ class SimpleArraysImpl {
 
         public String toString() {
             return "immutable simple AlgART array " + elementType.getName() + "[" + length
-                + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
-                + ", capacity " + capacity()
-                + (isNew() ? ", new" : ", view");
+                    + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(objectArray))
+                    + ", capacity " + capacity()
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
