@@ -485,7 +485,7 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)this.floatArray[(int)index];
+            return (double) this.floatArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
@@ -1972,7 +1972,7 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)this.charArray[(int)index];
+            return (double) this.charArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
@@ -3395,7 +3395,7 @@ class SimpleArraysImpl {
       Float(?!ing) ==> Byte ;;
       float ==> byte ;;
       PER_FLOAT ==> PER_BYTE ;;
-      (return\s+(?:\(\w+\s*\))?)(this\.byteArray\[(?:offset\s*\+\s*)?\(int\)\s*index\])\s*; ==> $1($2 & 0xFF);
+      (return\s+(?:\(\w+\)\s*)?)(this\.byteArray\[(?:offset\s*\+\s*)?\(int\)\s*index\])\s*; ==> $1($2 & 0xFF);
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
     static class JAByteArray extends AbstractJAArray implements ByteArray {
@@ -3471,7 +3471,7 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)(this.byteArray[(int)index] & 0xFF);
+            return (double) (this.byteArray[(int) index] & 0xFF);
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
@@ -4874,7 +4874,7 @@ class SimpleArraysImpl {
       Float(?!ing) ==> Short ;;
       float ==> short ;;
       PER_FLOAT ==> PER_SHORT ;;
-      (return\s+(?:\(\w+\s*\))?)(this\.shortArray\[(?:offset\s*\+\s*)?\(int\)\s*index\])\s*; ==> $1($2 & 0xFFFF);
+      (return\s+(?:\(\w+\)\s*)?)(this\.shortArray\[(?:offset\s*\+\s*)?\(int\)\s*index\])\s*; ==> $1($2 & 0xFFFF);
          !! Auto-generated: NOT EDIT !! */
     @SuppressWarnings("cast")
     static class JAShortArray extends AbstractJAArray implements ShortArray {
@@ -4950,7 +4950,7 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)(this.shortArray[(int)index] & 0xFFFF);
+            return (double) (this.shortArray[(int) index] & 0xFFFF);
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
@@ -6427,7 +6427,7 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)this.intArray[(int)index];
+            return (double) this.intArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
@@ -7880,7 +7880,7 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (double)this.longArray[(int)index];
+            return (double) this.longArray[(int) index];
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
