@@ -1902,7 +1902,7 @@ class SimpleArraysImpl {
             int count = value.length();
             if (count > 0) {
                 Arrays.lengthUnsigned(this, index + count);
-                value.getChars(0, count, this.charArray, javaArrayOffset() + (int)index);
+                value.getChars(0, count, this.charArray, javaArrayOffset() + (int) index);
             }
             return this;
         }
@@ -3207,7 +3207,7 @@ class SimpleArraysImpl {
             int count = value.length();
             if (count > 0) {
                 Arrays.lengthUnsigned(this, index + count);
-                value.getChars(0, count, this.charArray, javaArrayOffset() + (int)index);
+                value.getChars(0, count, this.charArray, javaArrayOffset() + (int) index);
             }
             return this;
         }
@@ -3341,7 +3341,7 @@ class SimpleArraysImpl {
             int count = value.length();
             if (count > 0) {
                 Arrays.lengthUnsigned(this, index + count);
-                value.getChars(0, count, this.charArray, javaArrayOffset() + (int)index);
+                value.getChars(0, count, this.charArray, javaArrayOffset() + (int) index);
             }
             return this;
         }
