@@ -458,7 +458,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Float.valueOf(getFloat(index));
+            return getFloat(index);
         }
 
         public final long bitsPerElement() {
@@ -693,7 +693,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Float.valueOf(getFloat(index));
+            return getFloat(index);
         }
 
         public final long bitsPerElement() {
@@ -1102,7 +1102,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setFloat(index, ((Float)value).floatValue());
+            setFloat(index, (Float) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -1351,7 +1351,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setFloat(index, ((Float)value).floatValue());
+            setFloat(index, (Float) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -1672,11 +1672,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Float.valueOf(popFloat());
+            return popFloat();
         }
 
         public final void pushElement(Object value) {
-            pushFloat(((Float)value).floatValue());
+            pushFloat((Float) value);
         }
 
         public final float popFloat() {
@@ -1685,7 +1685,8 @@ class SimpleArraysImpl {
                 throw new EmptyStackException();
             float result = this.floatArray[i];
             this.length = i;
-            this.floatArray[i] = (float)0;
+            this.floatArray[i] = (float) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -1789,11 +1790,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Float.valueOf(popFloat());
+            return popFloat();
         }
 
         public final void pushElement(Object value) {
-            pushFloat(((Float)value).floatValue());
+            pushFloat((Float) value);
         }
 
         public final float popFloat() {
@@ -1804,7 +1805,8 @@ class SimpleArraysImpl {
                 reallocateStorage();
             float result = this.floatArray[offset + i];
             this.length = i;
-            this.floatArray[offset + i] = (float)0;
+            this.floatArray[offset + i] = (float) 0;
+            // - not necessary for primitive types, but necessary in MutableObjectArray
             return result;
         }
 
@@ -1944,7 +1946,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Character.valueOf(getChar(index));
+            return getChar(index);
         }
 
         public final long bitsPerElement() {
@@ -2179,7 +2181,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Character.valueOf(getChar(index));
+            return getChar(index);
         }
 
         public final long bitsPerElement() {
@@ -2588,7 +2590,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setChar(index, ((Character)value).charValue());
+            setChar(index, (Character) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -2837,7 +2839,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setChar(index, ((Character)value).charValue());
+            setChar(index, (Character) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -3158,11 +3160,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Character.valueOf(popChar());
+            return popChar();
         }
 
         public final void pushElement(Object value) {
-            pushChar(((Character)value).charValue());
+            pushChar((Character) value);
         }
 
         public final char popChar() {
@@ -3285,11 +3287,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Character.valueOf(popChar());
+            return popChar();
         }
 
         public final void pushElement(Object value) {
-            pushChar(((Character)value).charValue());
+            pushChar((Character) value);
         }
 
         public final char popChar() {
@@ -3442,7 +3444,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Byte.valueOf((byte)getByte(index));
+            return (byte) getByte(index);
         }
 
         public final long bitsPerElement() {
@@ -3677,7 +3679,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Byte.valueOf((byte)getByte(index));
+            return (byte) getByte(index);
         }
 
         public final long bitsPerElement() {
@@ -4086,7 +4088,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setByte(index, ((Byte)value).byteValue());
+            setByte(index, (Byte) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -4335,7 +4337,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setByte(index, ((Byte)value).byteValue());
+            setByte(index, (Byte) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -4656,11 +4658,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Byte.valueOf((byte)popByte());
+            return (byte) popByte();
         }
 
         public final void pushElement(Object value) {
-            pushByte(((Byte)value).byteValue());
+            pushByte((Byte) value);
         }
 
         public final byte popByte() {
@@ -4773,11 +4775,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Byte.valueOf((byte)popByte());
+            return (byte) popByte();
         }
 
         public final void pushElement(Object value) {
-            pushByte(((Byte)value).byteValue());
+            pushByte((Byte) value);
         }
 
         public final byte popByte() {
@@ -4920,7 +4922,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Short.valueOf((short)getShort(index));
+            return (short) getShort(index);
         }
 
         public final long bitsPerElement() {
@@ -5155,7 +5157,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Short.valueOf((short)getShort(index));
+            return (short) getShort(index);
         }
 
         public final long bitsPerElement() {
@@ -5564,7 +5566,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setShort(index, ((Short)value).shortValue());
+            setShort(index, (Short) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -5813,7 +5815,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setShort(index, ((Short)value).shortValue());
+            setShort(index, (Short) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -6134,11 +6136,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Short.valueOf((short)popShort());
+            return (short) popShort();
         }
 
         public final void pushElement(Object value) {
-            pushShort(((Short)value).shortValue());
+            pushShort((Short) value);
         }
 
         public final short popShort() {
@@ -6251,11 +6253,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Short.valueOf((short)popShort());
+            return (short) popShort();
         }
 
         public final void pushElement(Object value) {
-            pushShort(((Short)value).shortValue());
+            pushShort((Short) value);
         }
 
         public final short popShort() {
@@ -6396,7 +6398,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Integer.valueOf(getInt(index));
+            return getInt(index);
         }
 
         public final long bitsPerElement() {
@@ -6625,7 +6627,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Integer.valueOf(getInt(index));
+            return getInt(index);
         }
 
         public final long bitsPerElement() {
@@ -7028,7 +7030,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setInt(index, ((Integer)value).intValue());
+            setInt(index, (Integer) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -7271,7 +7273,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setInt(index, ((Integer)value).intValue());
+            setInt(index, (Integer) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -7584,11 +7586,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Integer.valueOf(popInt());
+            return popInt();
         }
 
         public final void pushElement(Object value) {
-            pushInt(((Integer)value).intValue());
+            pushInt((Integer) value);
         }
 
         public final int popInt() {
@@ -7701,11 +7703,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Integer.valueOf(popInt());
+            return popInt();
         }
 
         public final void pushElement(Object value) {
-            pushInt(((Integer)value).intValue());
+            pushInt((Integer) value);
         }
 
         public final int popInt() {
@@ -7848,7 +7850,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Long.valueOf(getLong(index));
+            return getLong(index);
         }
 
         public final long bitsPerElement() {
@@ -8069,7 +8071,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Long.valueOf(getLong(index));
+            return getLong(index);
         }
 
         public final long bitsPerElement() {
@@ -8464,7 +8466,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setLong(index, ((Long)value).longValue());
+            setLong(index, (Long) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -8701,7 +8703,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setLong(index, ((Long)value).longValue());
+            setLong(index, (Long) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -9010,11 +9012,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Long.valueOf(popLong());
+            return popLong();
         }
 
         public final void pushElement(Object value) {
-            pushLong(((Long)value).longValue());
+            pushLong((Long) value);
         }
 
         public final long popLong() {
@@ -9127,11 +9129,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Long.valueOf(popLong());
+            return popLong();
         }
 
         public final void pushElement(Object value) {
-            pushLong(((Long)value).longValue());
+            pushLong((Long) value);
         }
 
         public final long popLong() {
@@ -9269,7 +9271,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Double.valueOf(getDouble(index));
+            return getDouble(index);
         }
 
         public final long bitsPerElement() {
@@ -9490,7 +9492,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Double.valueOf(getDouble(index));
+            return getDouble(index);
         }
 
         public final long bitsPerElement() {
@@ -9885,7 +9887,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setDouble(index, ((Double)value).doubleValue());
+            setDouble(index, (Double) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -10122,7 +10124,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setDouble(index, ((Double)value).doubleValue());
+            setDouble(index, (Double) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -10431,11 +10433,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Double.valueOf(popDouble());
+            return popDouble();
         }
 
         public final void pushElement(Object value) {
-            pushDouble(((Double)value).doubleValue());
+            pushDouble((Double) value);
         }
 
         public final double popDouble() {
@@ -10548,11 +10550,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Double.valueOf(popDouble());
+            return popDouble();
         }
 
         public final void pushElement(Object value) {
-            pushDouble(((Double)value).doubleValue());
+            pushDouble((Double) value);
         }
 
         public final double popDouble() {
@@ -12095,7 +12097,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Boolean.valueOf(getBit(index));
+            return getBit(index);
         }
 
         public final long bitsPerElement() {
@@ -12331,7 +12333,7 @@ class SimpleArraysImpl {
         }
 
         public final Object getElement(long index) {
-            return Boolean.valueOf(getBit(index));
+            return getBit(index);
         }
 
         public final long bitsPerElement() {
@@ -12542,7 +12544,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setBit(index, ((Boolean)value).booleanValue());
+            setBit(index, (Boolean) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -12869,7 +12871,7 @@ class SimpleArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setBit(index, ((Boolean)value).booleanValue());
+            setBit(index, (Boolean) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -13280,11 +13282,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Boolean.valueOf(popBit());
+            return popBit();
         }
 
         public final void pushElement(Object value) {
-            pushBit(((Boolean)value).booleanValue());
+            pushBit((Boolean) value);
         }
 
         public final boolean popBit() {
@@ -13293,12 +13295,7 @@ class SimpleArraysImpl {
                 throw new EmptyStackException();
             boolean result = (this.bitArray[(int)((i) >>> 6)] & (1L << ((int)(i) & 63))) != 0L;
             this.length = i;
-            synchronized (this.bitArray) {
-                if (false)
-                    this.bitArray[(int)((i) >>> 6)] |= 1L << ((int)(i) & 63);
-                else
-                    this.bitArray[(int)((i) >>> 6)] &= ~(1L << ((int)(i) & 63));
-            }
+            // - no sense to spend time for setting freed bit to zero
             return result;
         }
 
@@ -13407,11 +13404,11 @@ class SimpleArraysImpl {
         }
 
         public final Object popElement() {
-            return Boolean.valueOf(popBit());
+            return popBit();
         }
 
         public final void pushElement(Object value) {
-            pushBit(((Boolean)value).booleanValue());
+            pushBit((Boolean) value);
         }
 
         public final boolean popBit() {
@@ -13422,12 +13419,7 @@ class SimpleArraysImpl {
                 reallocateStorage();
             boolean result = (this.bitArray[(int)((offset + i) >>> 6)] & (1L << ((int)(offset + i) & 63))) != 0L;
             this.length = i;
-            synchronized (this.bitArray) {
-                if (false)
-                    this.bitArray[(int)((offset + i) >>> 6)] |= 1L << ((int)(offset + i) & 63);
-                else
-                    this.bitArray[(int)((offset + i) >>> 6)] &= ~(1L << ((int)(offset + i) & 63));
-            }
+            // - no sense to spend time for setting freed bit to zero
             return result;
         }
 
