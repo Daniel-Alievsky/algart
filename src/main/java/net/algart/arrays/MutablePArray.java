@@ -41,11 +41,7 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
 
     void pushDouble(double value);
 
-    long popLong();
-
     void pushLong(long value);
-
-    int popInt();
 
     void pushInt(int value);
 

@@ -39,6 +39,10 @@ package net.algart.arrays;
 public interface MutablePFixedArray
     extends UpdatablePFixedArray, MutablePArray
 {
+    long popLong();
+
+    int popInt();
+
     MutablePFixedArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
     MutablePFixedArray setData(long arrayPos, Object srcArray);
