@@ -503,15 +503,16 @@ class BufferArraysImpl {
           $1$2,,$1((int) value & 0xFF),,$1((int) value & 0xFFFF),,$1$2,,$1$2,,$1$2 ;;
       (float\s+getFloat) ==> $1,,int getByte,,int getShort,,$1,,$1,,$1;;
       float              ==> char,,byte,,short,,int,,long,,double;;
-      Float\.valueOf\((?=getFloat) ==> Character.valueOf(,,Byte.valueOf((byte),,Short.valueOf((short),,
-          Integer.valueOf(,,Long.valueOf(,,Double.valueOf(;;
+      Float\.valueOf\((get) ==> Character.valueOf($1,,Byte.valueOf((byte) $1,,Short.valueOf((short) $1,,
+          Integer.valueOf($1,,Long.valueOf($1,,Double.valueOf($1;;
       \bFloat\b          ==> Character,,Byte,,Short,,Integer,,Long,,Double;;
       Float(?!ing)       ==> Char,,Byte,,Short,,Int,,Long,,Double;;
       FLOAT              ==> CHAR,,BYTE,,SHORT,,INT,,LONG,,DOUBLE;;
       \((double|long|int)\)\s*(popByte\(\)|popShort\(\)) ==>
           ($1) $2,,($1) ($2 & 0xFF),,($1) ($2 & 0xFFFF),,($1) $2,,... ;;
       (return\s+(?:\(\w+\)\s?)?)(storage\.get(?:Byte|Short)\((?:offset\s*\+\s*)?index\))\s*; ==>
-          $1$2;,,return ($2 & 0xFF);,,return ($2 & 0xFFFF);,,$1$2;,,$1$2;,,$1$2; */
+          $1$2;,,return ($2 & 0xFF);,,return ($2 & 0xFFFF);,,$1$2;,,$1$2;,,$1$2;
+    */
     static class BufferFloatArray extends AbstractBufferArray implements FloatArray {
         BufferFloatArray(
                 DataStorage storage, long initialCapacity, long initialLength,
@@ -1620,7 +1621,7 @@ class BufferArraysImpl {
         public final Object getElement(long index) {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
-            return Byte.valueOf((byte)getByte(index));
+            return Byte.valueOf((byte) getByte(index));
         }
 
         public final long bitsPerElement() {
@@ -2158,7 +2159,7 @@ class BufferArraysImpl {
         public final Object getElement(long index) {
             // boxing necessary for regexps in Repeater
             //noinspection UnnecessaryBoxing
-            return Short.valueOf((short)getShort(index));
+            return Short.valueOf((short) getShort(index));
         }
 
         public final long bitsPerElement() {
