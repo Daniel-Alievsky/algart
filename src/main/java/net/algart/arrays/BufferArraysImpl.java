@@ -747,7 +747,7 @@ class BufferArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setFloat(index, ((Float) value).floatValue());
+            setFloat(index, (Float) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -1284,7 +1284,7 @@ class BufferArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setChar(index, ((Character) value).charValue());
+            setChar(index, (Character) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -1821,7 +1821,7 @@ class BufferArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setByte(index, ((Byte) value).byteValue());
+            setByte(index, (Byte) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -2358,7 +2358,7 @@ class BufferArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setShort(index, ((Short) value).shortValue());
+            setShort(index, (Short) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -2889,7 +2889,7 @@ class BufferArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setInt(index, ((Integer) value).intValue());
+            setInt(index, (Integer) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -3395,7 +3395,7 @@ class BufferArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setLong(index, ((Long) value).longValue());
+            setLong(index, (Long) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -3898,7 +3898,7 @@ class BufferArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setDouble(index, ((Double) value).doubleValue());
+            setDouble(index, (Double) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
@@ -4408,7 +4408,7 @@ class BufferArraysImpl {
         }
 
         public final void setElement(long index, Object value) {
-            setBit(index, ((Boolean)value).booleanValue());
+            setBit(index, (Boolean) value);
         }
 
         public final void copy(long destIndex, long srcIndex) {
