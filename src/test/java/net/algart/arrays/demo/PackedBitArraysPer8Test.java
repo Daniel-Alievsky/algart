@@ -165,6 +165,18 @@ public class PackedBitArraysPer8Test {
                                 + ", error found at " + k);
                     }
                 }
+                System.arraycopy(pDest, 0, pDestWork, 0, pDest.length);
+                for (int k = 0; k < count; k++) {
+                    PackedBitArraysPer8.setBitNoSync(pDestWork, destPos + k, bSrc[srcPos + k]);
+                }
+                for (int k = 0; k < count; k++) {
+                    if (bSrc[srcPos + k] != PackedBitArraysPer8.getBit(pDestWork, destPos + k)) {
+                        throw new AssertionError("The bug C in setBitNoSync found in test #" +
+                                testCount + ": "
+                                + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 

@@ -72,7 +72,7 @@ import java.util.Objects;
  * }
  * </pre>
  *
- * <p>(See an example in comments to {@link #setBit} method.)
+ * <p>unless otherwise specified in the method comments. (See an example in comments to {@link #setBit} method.)
  * If all 8 bits of the element are written, or if the bits are read only, then no synchronization is performed.
  * Such behavior allows to simultaneously work with non-overlapping fragments of a packed bit array
  * from several threads (different fragments for different threads), as if it would be a usual Java array.</p>
@@ -80,6 +80,7 @@ import java.util.Objects;
  * <p>This class cannot be instantiated.</p>
  *
  * @author Daniel Alievsky
+ * @see PackedBitArrays
  */
 public class PackedBitArraysPer8 {
     private PackedBitArraysPer8() {
@@ -175,6 +176,32 @@ public class PackedBitArraysPer8 {
             else
                 dest[(int) (index >>> 3)] &= (byte) ~(1 << ((int) index & 7));
         }
+    }
+
+    /**
+     * Sets the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array <i>without synchronization</i>.
+     * May be used instead of {@link #setBit(long[], long, boolean)}, if you are not planning to call
+     * this method from different threads for the same <tt>dest</tt> array.
+     * Equivalent to the following operators:<pre>
+     * synchronized (dest) {
+     * &#32;   if (value)
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] |= 1 &lt;&lt; (index &amp; 7);
+     * &#32;   else
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] &amp;= ~(1 &lt;&lt; (index &amp; 7));
+     * }
+     * </pre>
+     *
+     * @param dest  the destination array (bits are packed in <tt>long</tt> values).
+     * @param index index of the written bit.
+     * @param value new bit value.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
+     */
+    public static void setBitNoSync(byte[] dest, long index, boolean value) {
+        if (value)
+            dest[(int) (index >>> 3)] |= (byte) (1 << ((int) index & 7));
+        else
+            dest[(int) (index >>> 3)] &= (byte) ~(1 << ((int) index & 7));
     }
 
     /**

@@ -71,7 +71,7 @@ import java.util.zip.Checksum;
  * }
  * </pre>
  *
- * <p>(See an example in comments to {@link #setBit} method.)
+ * <p>unless otherwise specified in the method comments. (See an example in comments to {@link #setBit} method.)
  * If all 64 bits of the element are written, or if the bits are read only, then no synchronization is performed.
  * Such behavior allows to simultaneously work with non-overlapping fragments of a packed bit array
  * from several threads (different fragments for different threads), as if it would be a usual Java array.</p>
@@ -79,6 +79,8 @@ import java.util.zip.Checksum;
  * <p>This class cannot be instantiated.</p>
  *
  * @author Daniel Alievsky
+ * @see PackedBitArraysPer8
+ * @see PackedBitBuffers
  */
 public class PackedBitArrays {
     private PackedBitArrays() {
@@ -152,6 +154,31 @@ public class PackedBitArrays {
         }
     }
     /*Repeat.SectionEnd primitives*/
+
+    /**
+     * Sets the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array <i>without synchronization</i>.
+     * May be used instead of {@link #setBit(long[], long, boolean)}, if you are not planning to call
+     * this method from different threads for the same <tt>dest</tt> array.
+     * Equivalent to the following operators:<pre>
+     * &#32;   if (value)
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 6)] |= 1L &lt;&lt; (index &amp; 63);
+     * &#32;   else
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 6)] &amp;= ~(1L &lt;&lt; (index &amp; 63));
+     * }
+     * </pre>
+     *
+     * @param dest  the destination array (bits are packed in <tt>long</tt> values).
+     * @param index index of the written bit.
+     * @param value new bit value.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
+     */
+    public static void setBitNoSync(long[] dest, long index, boolean value) {
+        if (value)
+            dest[(int) (index >>> 6)] |= 1L << (index & 63);
+        else
+            dest[(int) (index >>> 6)] &= ~(1L << (index & 63));
+    }
 
     /**
      * Returns a hash code based on the contents of the specified fragment of the given packed bit array.

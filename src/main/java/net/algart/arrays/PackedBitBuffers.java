@@ -69,7 +69,7 @@ import java.util.Objects;
  * }
  * </pre>
  *
- * <p>(See an example in comments to {@link #setBit} method.)
+ * <p>unless otherwise specified in the method comments. (See an example in comments to {@link #setBit} method.)
  * If all 64 bits of the element are written, or if the bits are read only, then no synchronization is performed.
  * Such behavior allows to simultaneously work with non-overlapping fragments of a packed bit array
  * from several threads (different fragments for different threads), as if it would be a usual Java array.
@@ -80,6 +80,7 @@ import java.util.Objects;
  * <p>This class cannot be instantiated.</p>
  *
  * @author Daniel Alievsky
+ * @see PackedBitArrays
  */
 public class PackedBitBuffers {
     private PackedBitBuffers() {
@@ -144,6 +145,32 @@ public class PackedBitBuffers {
         }
     }
 
+    /**
+     * Sets the bit <tt>#index</tt> in the packed <tt>dest</tt> bit buffer <i>without synchronization</i>.
+     * May be used instead of {@link #setBit(LongBuffer, long, boolean)}, if you are not planning to call
+     * this method from different threads for the same <tt>dest</tt> array.
+     * Equivalent to the following operators:<pre>
+     * &#32;   if (value)
+     * &#32;       dest.put((int)(index &gt;&gt;&gt; 6),
+     * &#32;           dest.get((int)(index &gt;&gt;&gt; 6)) | 1L &lt;&lt; (index &amp; 63));
+     * &#32;   else
+     * &#32;       dest.put((int)(index &gt;&gt;&gt; 6),
+     * &#32;           dest.get((int)(index &gt;&gt;&gt; 6)) &amp; ~(1L &lt;&lt; (index &amp; 63)));
+     * }
+     * </pre>
+     *
+     * @param dest  the destination buffer (bits are packed into <tt>long</tt> values).
+     * @param index index of the written bit.
+     * @param value new bit value.
+     * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     */
+    public static void setBitNoSync(LongBuffer dest, long index, boolean value) {
+        if (value)
+            dest.put((int) (index >>> 6), dest.get((int) (index >>> 6)) | 1L << (index & 63));
+        else
+            dest.put((int) (index >>> 6), dest.get((int) (index >>> 6)) & ~(1L << (index & 63)));
+    }
 
     /**
      * Copies <tt>count</tt> bits, packed into <tt>src</tt> buffer, starting from the bit <tt>#srcPos</tt>,

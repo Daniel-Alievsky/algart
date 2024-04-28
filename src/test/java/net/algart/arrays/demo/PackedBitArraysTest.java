@@ -138,6 +138,43 @@ public class PackedBitArraysTest {
             System.out.println("Number of high source bits is " + card);
             System.out.println();
 
+            System.out.println("Testing \"setBit/getBit\" methods...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork, 0, pDest.length);
+                for (int k = 0; k < len; k++) {
+                    if (bSrc[k] != PackedBitArrays.getBit(pSrc, k)) {
+                        throw new AssertionError("The bug A in getBit found in test #" + testCount
+                                + ", error found at " + k);
+                    }
+                }
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                for (int k = 0; k < count; k++) {
+                    PackedBitArrays.setBit(pDestWork, destPos + k, bSrc[srcPos + k]);
+                }
+                for (int k = 0; k < count; k++) {
+                    if (bSrc[srcPos + k] != PackedBitArrays.getBit(pDestWork, destPos + k)) {
+                        throw new AssertionError("The bug B in setBit found in test #" + testCount + ": "
+                                + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + ", error found at " + k);
+                    }
+                }
+                System.arraycopy(pDest, 0, pDestWork, 0, pDest.length);
+                for (int k = 0; k < count; k++) {
+                    PackedBitArrays.setBitNoSync(pDestWork, destPos + k, bSrc[srcPos + k]);
+                }
+                for (int k = 0; k < count; k++) {
+                    if (bSrc[srcPos + k] != PackedBitArrays.getBit(pDestWork, destPos + k)) {
+                        throw new AssertionError("The bug C in setBitNoSync found in test #" +
+                                testCount + ": "
+                                + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + ", error found at " + k);
+                    }
+                }
+                showProgress(testCount);
+            }
+
             if (startOffset == 0) {
                 System.out.println("Testing \"packBits\" method...");
                 for (int testCount = 0; testCount < numberOfTests; testCount++) {
