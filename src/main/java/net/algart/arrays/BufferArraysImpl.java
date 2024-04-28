@@ -116,9 +116,8 @@ class BufferArraysImpl {
         private final ReentrantLock lock = new ReentrantLock();
 
         AbstractBufferArray(
-            DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(initialCapacity, initialLength);
             this.offset = initialOffset;
             this.storage = storage;
@@ -133,9 +132,8 @@ class BufferArraysImpl {
         }
 
         AbstractBufferArray(
-            DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(initialCapacity, initialLength);
             this.offset = initialOffset;
             this.storage = storage;
@@ -178,13 +176,13 @@ class BufferArraysImpl {
         final void reallocateStorage() {
             if (this.isImmutable() || !(this instanceof UpdatableArray))
                 throw new AssertionError("Internal error in Buffer/LargeMemoryModel implementation "
-                    + "(unallowed reallocation)");
+                        + "(unallowed reallocation)");
             boolean unresizable = isUnresizable();
             DataStorage newStorage = storage.newCompatibleEmptyStorage(unresizable);
             newStorage.allocate(length, unresizable);
             if (!newStorage.copy(this.storage, this.offset, 0, length))
                 throw new AssertionError("Cannot reallocateStorage(): newCompatibleEmptyStorage "
-                    + "cannot be copied from this storage");
+                        + "cannot be copied from this storage");
             // It is very important here to copy the storage BEFORE switching!
             // In other case, the following situation will be possible:
             // the old storage have no attached arrays, but someone (we here,
@@ -226,7 +224,7 @@ class BufferArraysImpl {
         public final void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
             if (!(this instanceof BitArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
-                    + "(unallowed getBits)");
+                        + "(unallowed getBits)");
             Objects.requireNonNull(destArray, "Null destArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of loaded elements (" + count + ")");
@@ -253,7 +251,7 @@ class BufferArraysImpl {
         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             if (!(this instanceof UpdatableArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
-                    + "(unallowed setData)");
+                        + "(unallowed setData)");
             Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
@@ -270,7 +268,7 @@ class BufferArraysImpl {
         public UpdatableArray setData(long arrayPos, Object srcArray) {
             if (!(this instanceof UpdatableArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
-                    + "(unallowed setData)");
+                        + "(unallowed setData)");
             Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (arrayPos < 0 || arrayPos > length)
                 throw rangeException(arrayPos);
@@ -286,7 +284,7 @@ class BufferArraysImpl {
         public UpdatableBitArray setBits(long arrayPos, long[] srcArray, long srcArrayOffset, long count) {
             if (!(this instanceof UpdatableBitArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
-                    + "(unallowed setBits)");
+                        + "(unallowed setBits)");
             Objects.requireNonNull(srcArray, "Null srcArray argument");
             if (count < 0)
                 throw new IllegalArgumentException("Negative number of stored elements (" + count + ")");
@@ -303,10 +301,10 @@ class BufferArraysImpl {
         public final void copy(long destIndex, long srcIndex, long count) {
             if (!(this instanceof UpdatableArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
-                    + "(unallowed copy)");
+                        + "(unallowed copy)");
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (srcIndex < 0)
                 throw rangeException(srcIndex);
             if (srcIndex > length - count)
@@ -323,7 +321,7 @@ class BufferArraysImpl {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (firstIndex < 0)
                 throw rangeException(firstIndex);
             if (firstIndex > length - count)
@@ -361,7 +359,7 @@ class BufferArraysImpl {
         public UpdatableArray copy(Array src) {
             if (!(this instanceof UpdatableArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
-                    + "(unallowed copy)");
+                        + "(unallowed copy)");
             if (src instanceof AbstractBufferArray) {
                 AbstractBufferArray a = (AbstractBufferArray) src;
                 long count = a.length < length ? a.length : length;
@@ -381,7 +379,7 @@ class BufferArraysImpl {
         public UpdatableArray swap(UpdatableArray another) {
             if (!(this instanceof UpdatableArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
-                    + "(unallowed swap)");
+                        + "(unallowed swap)");
             defaultSwap((UpdatableArray) this, another);
             return (UpdatableArray) this;
         }
@@ -400,9 +398,9 @@ class BufferArraysImpl {
                     // storage.changeCapacity will increase the file length by bankSize() blocks
                 } else {
                     newCapacity = Math.min(DataStorage.maxSupportedLengthImpl(elementType()),
-                        currentCapacity < 10000 ? currentCapacity * 3 :
-                            currentCapacity < 500000 ? currentCapacity * 2 :
-                                (currentCapacity * 3) / 2 + 1);
+                            currentCapacity < 10000 ? currentCapacity * 3 :
+                                    currentCapacity < 500000 ? currentCapacity * 2 :
+                                            (currentCapacity * 3) / 2 + 1);
                 }
                 // Overflow is possible above!
                 // But in this case newCapacity will be negative and
@@ -866,7 +864,7 @@ class BufferArraysImpl {
 
         public final FloatArray asImmutable() {
             return new BufferFloatArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
         }
 
         public final boolean isImmutable() {
@@ -878,7 +876,7 @@ class BufferArraysImpl {
                 return this;
             }
             UpdatableBufferFloatArray result = new UpdatableBufferFloatArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -894,23 +892,21 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "unresizable AlgART array float[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static final class MutableBufferFloatArray extends UpdatableBufferFloatArray implements MutableFloatArray {
         MutableBufferFloatArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+                                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
         MutableBufferFloatArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+                                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -1022,7 +1018,7 @@ class BufferArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableBufferFloatArray result = new MutableBufferFloatArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -1033,7 +1029,7 @@ class BufferArraysImpl {
 
         public UpdatableFloatArray asUnresizable() {
             UpdatableBufferFloatArray result = new UpdatableBufferFloatArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -1045,12 +1041,13 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array float[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
+
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
     static class BufferCharArray extends AbstractBufferArray implements CharArray {
         BufferCharArray(
@@ -1403,7 +1400,7 @@ class BufferArraysImpl {
 
         public final CharArray asImmutable() {
             return new BufferCharArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
         }
 
         public final boolean isImmutable() {
@@ -1415,7 +1412,7 @@ class BufferArraysImpl {
                 return this;
             }
             UpdatableBufferCharArray result = new UpdatableBufferCharArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -1431,23 +1428,21 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "unresizable AlgART array char[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static final class MutableBufferCharArray extends UpdatableBufferCharArray implements MutableCharArray {
         MutableBufferCharArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+                                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
         MutableBufferCharArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+                                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -1559,7 +1554,7 @@ class BufferArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableBufferCharArray result = new MutableBufferCharArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -1570,7 +1565,7 @@ class BufferArraysImpl {
 
         public UpdatableCharArray asUnresizable() {
             UpdatableBufferCharArray result = new UpdatableBufferCharArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -1582,12 +1577,13 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array char[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
+
 
     static class BufferByteArray extends AbstractBufferArray implements ByteArray {
         BufferByteArray(
@@ -1940,7 +1936,7 @@ class BufferArraysImpl {
 
         public final ByteArray asImmutable() {
             return new BufferByteArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
         }
 
         public final boolean isImmutable() {
@@ -1952,7 +1948,7 @@ class BufferArraysImpl {
                 return this;
             }
             UpdatableBufferByteArray result = new UpdatableBufferByteArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -1968,23 +1964,21 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "unresizable AlgART array byte[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static final class MutableBufferByteArray extends UpdatableBufferByteArray implements MutableByteArray {
         MutableBufferByteArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+                                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
         MutableBufferByteArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+                                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -2096,7 +2090,7 @@ class BufferArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableBufferByteArray result = new MutableBufferByteArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -2107,7 +2101,7 @@ class BufferArraysImpl {
 
         public UpdatableByteArray asUnresizable() {
             UpdatableBufferByteArray result = new UpdatableBufferByteArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -2119,12 +2113,13 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array byte[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
+
 
     static class BufferShortArray extends AbstractBufferArray implements ShortArray {
         BufferShortArray(
@@ -2477,7 +2472,7 @@ class BufferArraysImpl {
 
         public final ShortArray asImmutable() {
             return new BufferShortArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
         }
 
         public final boolean isImmutable() {
@@ -2489,7 +2484,7 @@ class BufferArraysImpl {
                 return this;
             }
             UpdatableBufferShortArray result = new UpdatableBufferShortArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -2505,23 +2500,21 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "unresizable AlgART array short[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static final class MutableBufferShortArray extends UpdatableBufferShortArray implements MutableShortArray {
         MutableBufferShortArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+                                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
         MutableBufferShortArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+                                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -2633,7 +2626,7 @@ class BufferArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableBufferShortArray result = new MutableBufferShortArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -2644,7 +2637,7 @@ class BufferArraysImpl {
 
         public UpdatableShortArray asUnresizable() {
             UpdatableBufferShortArray result = new UpdatableBufferShortArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -2656,12 +2649,13 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array short[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
+
 
     static class BufferIntArray extends AbstractBufferArray implements IntArray {
         BufferIntArray(
@@ -2999,7 +2993,7 @@ class BufferArraysImpl {
 
         public final IntArray asImmutable() {
             return new BufferIntArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
         }
 
         public final boolean isImmutable() {
@@ -3011,7 +3005,7 @@ class BufferArraysImpl {
                 return this;
             }
             UpdatableBufferIntArray result = new UpdatableBufferIntArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -3027,23 +3021,21 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "unresizable AlgART array int[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static final class MutableBufferIntArray extends UpdatableBufferIntArray implements MutableIntArray {
         MutableBufferIntArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+                                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
         MutableBufferIntArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+                                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -3147,7 +3139,7 @@ class BufferArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableBufferIntArray result = new MutableBufferIntArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -3158,7 +3150,7 @@ class BufferArraysImpl {
 
         public UpdatableIntArray asUnresizable() {
             UpdatableBufferIntArray result = new UpdatableBufferIntArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -3170,12 +3162,13 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array int[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
+
 
     static class BufferLongArray extends AbstractBufferArray implements LongArray {
         BufferLongArray(
@@ -3502,7 +3495,7 @@ class BufferArraysImpl {
 
         public final LongArray asImmutable() {
             return new BufferLongArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
         }
 
         public final boolean isImmutable() {
@@ -3514,7 +3507,7 @@ class BufferArraysImpl {
                 return this;
             }
             UpdatableBufferLongArray result = new UpdatableBufferLongArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -3530,23 +3523,21 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "unresizable AlgART array long[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static final class MutableBufferLongArray extends UpdatableBufferLongArray implements MutableLongArray {
         MutableBufferLongArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+                                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
         MutableBufferLongArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+                                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -3650,7 +3641,7 @@ class BufferArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableBufferLongArray result = new MutableBufferLongArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -3661,7 +3652,7 @@ class BufferArraysImpl {
 
         public UpdatableLongArray asUnresizable() {
             UpdatableBufferLongArray result = new UpdatableBufferLongArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -3673,12 +3664,13 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array long[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
+
 
     static class BufferDoubleArray extends AbstractBufferArray implements DoubleArray {
         BufferDoubleArray(
@@ -4005,7 +3997,7 @@ class BufferArraysImpl {
 
         public final DoubleArray asImmutable() {
             return new BufferDoubleArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
         }
 
         public final boolean isImmutable() {
@@ -4017,7 +4009,7 @@ class BufferArraysImpl {
                 return this;
             }
             UpdatableBufferDoubleArray result = new UpdatableBufferDoubleArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -4033,23 +4025,21 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "unresizable AlgART array double[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static final class MutableBufferDoubleArray extends UpdatableBufferDoubleArray implements MutableDoubleArray {
         MutableBufferDoubleArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+                                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
         MutableBufferDoubleArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+                                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -4153,7 +4143,7 @@ class BufferArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableBufferDoubleArray result = new MutableBufferDoubleArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -4164,7 +4154,7 @@ class BufferArraysImpl {
 
         public UpdatableDoubleArray asUnresizable() {
             UpdatableBufferDoubleArray result = new UpdatableBufferDoubleArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -4176,24 +4166,23 @@ class BufferArraysImpl {
         public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array double[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
+
     /*Repeat.AutoGeneratedEnd*/
 
     static class BufferBitArray extends AbstractBufferArray implements BitArray {
         BufferBitArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+                       long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
         BufferBitArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+                       long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -4310,10 +4299,10 @@ class BufferArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             return new BufferBitArray(storage,
-                toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
-                underlyingArray == null ? this : underlyingArray);
+                    toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
+                    underlyingArray == null ? this : underlyingArray);
         }
 
         public Array subArr(long position, long count) {
@@ -4321,28 +4310,28 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             return new BufferBitArray(storage,
-                count, count, offset + position,
-                underlyingArray == null ? this : underlyingArray);
+                    count, count, offset + position,
+                    underlyingArray == null ? this : underlyingArray);
         }
 
         public DataBitBuffer buffer(DataBuffer.AccessMode mode, long capacity) {
-            return (DataBitBuffer)super.buffer(mode, capacity);
+            return (DataBitBuffer) super.buffer(mode, capacity);
         }
 
         public DataBitBuffer buffer(DataBuffer.AccessMode mode) {
-            return (DataBitBuffer)super.buffer(mode);
+            return (DataBitBuffer) super.buffer(mode);
         }
 
         public DataBitBuffer buffer(long capacity) {
-            return (DataBitBuffer)super.buffer(capacity);
+            return (DataBitBuffer) super.buffer(capacity);
         }
 
         public DataBitBuffer buffer() {
-            return (DataBitBuffer)super.buffer();
+            return (DataBitBuffer) super.buffer();
         }
 
         public boolean isUnresizable() {
@@ -4374,7 +4363,7 @@ class BufferArraysImpl {
         }
 
         public Array shallowClone() {
-            BufferBitArray result = (BufferBitArray)standardObjectClone();
+            BufferBitArray result = (BufferBitArray) standardObjectClone();
             if (underlyingArray == null) {
                 result.storage.attachArray(result);
                 forgetOnDeallocation(result);
@@ -4388,22 +4377,20 @@ class BufferArraysImpl {
 
         public String toString() {
             return "immutable AlgART array bit [" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isNew() ? ", new" : isNewReadOnlyView() ? ", new read-only view" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isNew() ? ", new" : isNewReadOnlyView() ? ", new read-only view" : ", view");
         }
     }
 
     static class UpdatableBufferBitArray extends BufferBitArray implements UpdatableBitArray {
         UpdatableBufferBitArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+                                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
         UpdatableBufferBitArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+                                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -4497,7 +4484,7 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (copyOnNextWrite) {
@@ -4514,10 +4501,10 @@ class BufferArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             UpdatableBufferBitArray result = new UpdatableBufferBitArray(storage,
-                toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
-                underlyingArray == null ? this : underlyingArray);
+                    toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -4527,19 +4514,19 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             UpdatableBufferBitArray result = new UpdatableBufferBitArray(storage,
-                count, count, offset + position,
-                underlyingArray == null ? this : underlyingArray);
+                    count, count, offset + position,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
 
         public final BitArray asImmutable() {
             return new BufferBitArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
         }
 
         public final boolean isImmutable() {
@@ -4551,7 +4538,7 @@ class BufferArraysImpl {
                 return this;
             }
             UpdatableBufferBitArray result = new UpdatableBufferBitArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -4561,29 +4548,27 @@ class BufferArraysImpl {
         }
 
         public UpdatableArray shallowClone() {
-            return (UpdatableBufferBitArray)super.shallowClone();
+            return (UpdatableBufferBitArray) super.shallowClone();
         }
 
         public String toString() {
             assert !isNewReadOnlyView();
             return "unresizable AlgART array bit[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 
     static final class MutableBufferBitArray extends UpdatableBufferBitArray implements MutableBitArray {
         MutableBufferBitArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+                              long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
         MutableBufferBitArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+                              long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -4694,7 +4679,7 @@ class BufferArraysImpl {
             if (isCopyOnNextWrite())
                 return this;
             MutableBufferBitArray result = new MutableBufferBitArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = true;
             return result;
         }
@@ -4705,22 +4690,22 @@ class BufferArraysImpl {
 
         public UpdatableBitArray asUnresizable() {
             UpdatableBufferBitArray result = new UpdatableBufferBitArray(storage, capacity, length, offset,
-                underlyingArray == null ? this : underlyingArray);
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
 
         public MutableBitArray shallowClone() {
-            return (MutableBufferBitArray)super.shallowClone();
+            return (MutableBufferBitArray) super.shallowClone();
         }
 
         public String toString() {
             assert !isNewReadOnlyView();
             return "mutable AlgART array bit[" + length() + "], @<"
-                + storage + ">, capacity " + capacity()
-                + (offset == 0 ? "" : ", offset = " + offset)
-                + (isCopyOnNextWrite() ? ", copy on next write" : "")
-                + (isNew() ? ", new" : ", view");
+                    + storage + ">, capacity " + capacity()
+                    + (offset == 0 ? "" : ", offset = " + offset)
+                    + (isCopyOnNextWrite() ? ", copy on next write" : "")
+                    + (isNew() ? ", new" : ", view");
         }
     }
 }
