@@ -734,15 +734,15 @@ class BufferArraysImpl {
     }
 
     static class UpdatableBufferFloatArray extends BufferFloatArray implements UpdatableFloatArray {
-        UpdatableBufferFloatArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+        UpdatableBufferFloatArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        UpdatableBufferFloatArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+        UpdatableBufferFloatArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -823,14 +823,14 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (copyOnNextWrite) {
                 reallocateStorage();
             }
-            storage.fillData(offset + position, count, Float.valueOf(value));
-            // manual boxing necessary for preprocessing byte and short arrays
+            final Float filler = value;
+            storage.fillData(offset + position, count, filler);
             return this;
         }
 
@@ -841,10 +841,10 @@ class BufferArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             UpdatableBufferFloatArray result = new UpdatableBufferFloatArray(storage,
-                toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
-                underlyingArray == null ? this : underlyingArray);
+                    toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -854,12 +854,12 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             UpdatableBufferFloatArray result = new UpdatableBufferFloatArray(storage,
-                count, count, offset + position,
-                underlyingArray == null ? this : underlyingArray);
+                    count, count, offset + position,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -1271,15 +1271,15 @@ class BufferArraysImpl {
     }
 
     static class UpdatableBufferCharArray extends BufferCharArray implements UpdatableCharArray {
-        UpdatableBufferCharArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+        UpdatableBufferCharArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        UpdatableBufferCharArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+        UpdatableBufferCharArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -1360,14 +1360,14 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (copyOnNextWrite) {
                 reallocateStorage();
             }
-            storage.fillData(offset + position, count, Character.valueOf(value));
-            // manual boxing necessary for preprocessing byte and short arrays
+            final Character filler = value;
+            storage.fillData(offset + position, count, filler);
             return this;
         }
 
@@ -1378,10 +1378,10 @@ class BufferArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             UpdatableBufferCharArray result = new UpdatableBufferCharArray(storage,
-                toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
-                underlyingArray == null ? this : underlyingArray);
+                    toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -1391,12 +1391,12 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             UpdatableBufferCharArray result = new UpdatableBufferCharArray(storage,
-                count, count, offset + position,
-                underlyingArray == null ? this : underlyingArray);
+                    count, count, offset + position,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -1808,15 +1808,15 @@ class BufferArraysImpl {
     }
 
     static class UpdatableBufferByteArray extends BufferByteArray implements UpdatableByteArray {
-        UpdatableBufferByteArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+        UpdatableBufferByteArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        UpdatableBufferByteArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+        UpdatableBufferByteArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -1897,14 +1897,14 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (copyOnNextWrite) {
                 reallocateStorage();
             }
-            storage.fillData(offset + position, count, Byte.valueOf(value));
-            // manual boxing necessary for preprocessing byte and short arrays
+            final Byte filler = value;
+            storage.fillData(offset + position, count, filler);
             return this;
         }
 
@@ -1915,10 +1915,10 @@ class BufferArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             UpdatableBufferByteArray result = new UpdatableBufferByteArray(storage,
-                toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
-                underlyingArray == null ? this : underlyingArray);
+                    toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -1928,12 +1928,12 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             UpdatableBufferByteArray result = new UpdatableBufferByteArray(storage,
-                count, count, offset + position,
-                underlyingArray == null ? this : underlyingArray);
+                    count, count, offset + position,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -2345,15 +2345,15 @@ class BufferArraysImpl {
     }
 
     static class UpdatableBufferShortArray extends BufferShortArray implements UpdatableShortArray {
-        UpdatableBufferShortArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+        UpdatableBufferShortArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        UpdatableBufferShortArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+        UpdatableBufferShortArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -2434,14 +2434,14 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (copyOnNextWrite) {
                 reallocateStorage();
             }
-            storage.fillData(offset + position, count, Short.valueOf(value));
-            // manual boxing necessary for preprocessing byte and short arrays
+            final Short filler = value;
+            storage.fillData(offset + position, count, filler);
             return this;
         }
 
@@ -2452,10 +2452,10 @@ class BufferArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             UpdatableBufferShortArray result = new UpdatableBufferShortArray(storage,
-                toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
-                underlyingArray == null ? this : underlyingArray);
+                    toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -2465,12 +2465,12 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             UpdatableBufferShortArray result = new UpdatableBufferShortArray(storage,
-                count, count, offset + position,
-                underlyingArray == null ? this : underlyingArray);
+                    count, count, offset + position,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -2876,15 +2876,15 @@ class BufferArraysImpl {
     }
 
     static class UpdatableBufferIntArray extends BufferIntArray implements UpdatableIntArray {
-        UpdatableBufferIntArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+        UpdatableBufferIntArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        UpdatableBufferIntArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+        UpdatableBufferIntArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -2956,14 +2956,14 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (copyOnNextWrite) {
                 reallocateStorage();
             }
-            storage.fillData(offset + position, count, Integer.valueOf(value));
-            // manual boxing necessary for preprocessing byte and short arrays
+            final Integer filler = value;
+            storage.fillData(offset + position, count, filler);
             return this;
         }
 
@@ -2974,10 +2974,10 @@ class BufferArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             UpdatableBufferIntArray result = new UpdatableBufferIntArray(storage,
-                toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
-                underlyingArray == null ? this : underlyingArray);
+                    toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -2987,12 +2987,12 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             UpdatableBufferIntArray result = new UpdatableBufferIntArray(storage,
-                count, count, offset + position,
-                underlyingArray == null ? this : underlyingArray);
+                    count, count, offset + position,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -3382,15 +3382,15 @@ class BufferArraysImpl {
     }
 
     static class UpdatableBufferLongArray extends BufferLongArray implements UpdatableLongArray {
-        UpdatableBufferLongArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+        UpdatableBufferLongArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        UpdatableBufferLongArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+        UpdatableBufferLongArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -3459,14 +3459,14 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (copyOnNextWrite) {
                 reallocateStorage();
             }
-            storage.fillData(offset + position, count, Long.valueOf(value));
-            // manual boxing necessary for preprocessing byte and short arrays
+            final Long filler = value;
+            storage.fillData(offset + position, count, filler);
             return this;
         }
 
@@ -3477,10 +3477,10 @@ class BufferArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             UpdatableBufferLongArray result = new UpdatableBufferLongArray(storage,
-                toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
-                underlyingArray == null ? this : underlyingArray);
+                    toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -3490,12 +3490,12 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             UpdatableBufferLongArray result = new UpdatableBufferLongArray(storage,
-                count, count, offset + position,
-                underlyingArray == null ? this : underlyingArray);
+                    count, count, offset + position,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -3885,15 +3885,15 @@ class BufferArraysImpl {
     }
 
     static class UpdatableBufferDoubleArray extends BufferDoubleArray implements UpdatableDoubleArray {
-        UpdatableBufferDoubleArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, boolean doAllocate)
-        {
+        UpdatableBufferDoubleArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        UpdatableBufferDoubleArray(DataStorage storage, long initialCapacity, long initialLength,
-            long initialOffset, AbstractBufferArray underlyingArray)
-        {
+        UpdatableBufferDoubleArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -3962,14 +3962,14 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             if (copyOnNextWrite) {
                 reallocateStorage();
             }
-            storage.fillData(offset + position, count, Double.valueOf(value));
-            // manual boxing necessary for preprocessing byte and short arrays
+            final Double filler = value;
+            storage.fillData(offset + position, count, filler);
             return this;
         }
 
@@ -3980,10 +3980,10 @@ class BufferArraysImpl {
                 throw rangeException(toIndex - 1);
             if (fromIndex > toIndex)
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
-                    + " > toIndex = " + toIndex + ") in " + getClass());
+                        + " > toIndex = " + toIndex + ") in " + getClass());
             UpdatableBufferDoubleArray result = new UpdatableBufferDoubleArray(storage,
-                toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
-                underlyingArray == null ? this : underlyingArray);
+                    toIndex - fromIndex, toIndex - fromIndex, offset + fromIndex,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
@@ -3993,12 +3993,12 @@ class BufferArraysImpl {
                 throw rangeException(position);
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             if (position > length - count)
                 throw rangeException(position + count - 1);
             UpdatableBufferDoubleArray result = new UpdatableBufferDoubleArray(storage,
-                count, count, offset + position,
-                underlyingArray == null ? this : underlyingArray);
+                    count, count, offset + position,
+                    underlyingArray == null ? this : underlyingArray);
             result.copyOnNextWrite = copyOnNextWrite;
             return result;
         }
