@@ -511,8 +511,7 @@ class BufferArraysImpl {
       \((double|long|int)\)\s*(popByte\(\)|popShort\(\)) ==>
           ($1) $2,,($1) ($2 & 0xFF),,($1) ($2 & 0xFFFF),,($1) $2,,... ;;
       (return\s+(?:\(\w+\)\s?)?)(storage\.get(?:Byte|Short)\((?:offset\s*\+\s*)?index\))\s*; ==>
-          $1$2;,,return ($2 & 0xFF);,,return ($2 & 0xFFFF);,,$1$2;,,$1$2;,,$1$2;
-    */
+          $1$2;,,return ($2 & 0xFF);,,return ($2 & 0xFFFF);,,$1$2;,,$1$2;,,$1$2; */
     static class BufferFloatArray extends AbstractBufferArray implements FloatArray {
         BufferFloatArray(
                 DataStorage storage, long initialCapacity, long initialLength,
@@ -900,13 +899,15 @@ class BufferArraysImpl {
     }
 
     static final class MutableBufferFloatArray extends UpdatableBufferFloatArray implements MutableFloatArray {
-        MutableBufferFloatArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, boolean doAllocate) {
+        MutableBufferFloatArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        MutableBufferFloatArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, AbstractBufferArray underlyingArray) {
+        MutableBufferFloatArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -1436,13 +1437,15 @@ class BufferArraysImpl {
     }
 
     static final class MutableBufferCharArray extends UpdatableBufferCharArray implements MutableCharArray {
-        MutableBufferCharArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, boolean doAllocate) {
+        MutableBufferCharArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        MutableBufferCharArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, AbstractBufferArray underlyingArray) {
+        MutableBufferCharArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -1972,13 +1975,15 @@ class BufferArraysImpl {
     }
 
     static final class MutableBufferByteArray extends UpdatableBufferByteArray implements MutableByteArray {
-        MutableBufferByteArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, boolean doAllocate) {
+        MutableBufferByteArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        MutableBufferByteArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, AbstractBufferArray underlyingArray) {
+        MutableBufferByteArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -2508,13 +2513,15 @@ class BufferArraysImpl {
     }
 
     static final class MutableBufferShortArray extends UpdatableBufferShortArray implements MutableShortArray {
-        MutableBufferShortArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, boolean doAllocate) {
+        MutableBufferShortArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        MutableBufferShortArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, AbstractBufferArray underlyingArray) {
+        MutableBufferShortArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -3029,13 +3036,15 @@ class BufferArraysImpl {
     }
 
     static final class MutableBufferIntArray extends UpdatableBufferIntArray implements MutableIntArray {
-        MutableBufferIntArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, boolean doAllocate) {
+        MutableBufferIntArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        MutableBufferIntArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, AbstractBufferArray underlyingArray) {
+        MutableBufferIntArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -3531,13 +3540,15 @@ class BufferArraysImpl {
     }
 
     static final class MutableBufferLongArray extends UpdatableBufferLongArray implements MutableLongArray {
-        MutableBufferLongArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, boolean doAllocate) {
+        MutableBufferLongArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        MutableBufferLongArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, AbstractBufferArray underlyingArray) {
+        MutableBufferLongArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
@@ -4033,13 +4044,15 @@ class BufferArraysImpl {
     }
 
     static final class MutableBufferDoubleArray extends UpdatableBufferDoubleArray implements MutableDoubleArray {
-        MutableBufferDoubleArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, boolean doAllocate) {
+        MutableBufferDoubleArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, boolean doAllocate) {
             super(storage, initialCapacity, initialLength, initialOffset, doAllocate);
         }
 
-        MutableBufferDoubleArray(DataStorage storage, long initialCapacity, long initialLength,
-                                long initialOffset, AbstractBufferArray underlyingArray) {
+        MutableBufferDoubleArray(
+                DataStorage storage, long initialCapacity, long initialLength,
+                long initialOffset, AbstractBufferArray underlyingArray) {
             super(storage, initialCapacity, initialLength, initialOffset, underlyingArray);
         }
 
