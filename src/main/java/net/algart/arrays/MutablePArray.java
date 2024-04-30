@@ -39,11 +39,11 @@ package net.algart.arrays;
 public interface MutablePArray extends UpdatablePArray, MutableArray {
     double popDouble();
 
-    void pushDouble(double value);
+    void add(double value);
 
-    void pushLong(long value);
+    void add(long value);
 
-    void pushInt(int value);
+    void add(int value);
 
     MutablePArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 

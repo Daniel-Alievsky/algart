@@ -145,6 +145,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void setBit(long[] dest, long index, boolean value) {
         synchronized (dest) {
             if (value)
@@ -398,6 +399,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void copyBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart copyBits_method_impl]]
         Objects.requireNonNull(dest, "Null dest");
@@ -436,14 +438,16 @@ public class PackedBitArrays {
                     long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
                     synchronized (dest) {
                         dest[dPos + cnt] =
-                                (src[sPos + cnt] & maskFinish) | (dest[dPos + cnt] & ~maskFinish);
+                                (src[sPos + cnt] & maskFinish) |
+                                        (dest[dPos + cnt] & ~maskFinish);
                     }
                 }
                 System.arraycopy(src, sPos, dest, dPos, cnt);
                 if (cntStart > 0) {
                     synchronized (dest) {
                         dest[dPosStart] =
-                                (src[sPosStart] & maskStart) | (dest[dPosStart] & ~maskStart);
+                                (src[sPosStart] & maskStart) |
+                                        (dest[dPosStart] & ~maskStart);
                     }
                 }
             } else {
@@ -494,7 +498,7 @@ public class PackedBitArrays {
                     // in this branch of all algorithm (overlap is impossible when count == 0).
                     //End_sPrev !! this comment is necessary for preprocessing by Repeater !!
                 }
-                for (; dPos > dPosMin; ) { // cnt times
+                while (dPos > dPosMin) { // cnt times
                     --sPos;
                     --dPos;
                     dest[dPos] = (sPrev << sPosRem64) | ((sPrev = src[sPos]) >>> sPosRem);
@@ -605,6 +609,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBits(long[] dest, long destPos, boolean[] src, int srcPos, int count) {
         //[[Repeat.SectionStart packBits_method_impl]]
         Objects.requireNonNull(dest, "Null dest");
@@ -730,6 +735,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsInverted(long[] dest, long destPos, boolean[] src, int srcPos, int count) {
         Objects.requireNonNull(dest, "Null dest");
         Objects.requireNonNull(src, "Null src");
@@ -862,6 +868,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreater(
             long[] dest, long destPos, char[] src, int srcPos, int count,
             char threshold) {
@@ -994,6 +1001,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLess(
             long[] dest, long destPos, char[] src, int srcPos, int count,
             char threshold) {
@@ -1126,6 +1134,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreaterOrEqual(
             long[] dest, long destPos, char[] src, int srcPos, int count,
             char threshold) {
@@ -1258,6 +1267,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLessOrEqual(
             long[] dest, long destPos, char[] src, int srcPos, int count,
             char threshold) {
@@ -1391,6 +1401,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreater(
             long[] dest, long destPos, byte[] src, int srcPos, int count,
             int threshold) {
@@ -1522,6 +1533,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLess(
             long[] dest, long destPos, byte[] src, int srcPos, int count,
             int threshold) {
@@ -1653,6 +1665,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreaterOrEqual(
             long[] dest, long destPos, byte[] src, int srcPos, int count,
             int threshold) {
@@ -1784,6 +1797,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLessOrEqual(
             long[] dest, long destPos, byte[] src, int srcPos, int count,
             int threshold) {
@@ -1916,6 +1930,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreater(
             long[] dest, long destPos, short[] src, int srcPos, int count,
             int threshold) {
@@ -2047,6 +2062,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLess(
             long[] dest, long destPos, short[] src, int srcPos, int count,
             int threshold) {
@@ -2178,6 +2194,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreaterOrEqual(
             long[] dest, long destPos, short[] src, int srcPos, int count,
             int threshold) {
@@ -2309,6 +2326,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLessOrEqual(
             long[] dest, long destPos, short[] src, int srcPos, int count,
             int threshold) {
@@ -2441,6 +2459,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreater(
             long[] dest, long destPos, int[] src, int srcPos, int count,
             int threshold) {
@@ -2572,6 +2591,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLess(
             long[] dest, long destPos, int[] src, int srcPos, int count,
             int threshold) {
@@ -2703,6 +2723,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreaterOrEqual(
             long[] dest, long destPos, int[] src, int srcPos, int count,
             int threshold) {
@@ -2834,6 +2855,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLessOrEqual(
             long[] dest, long destPos, int[] src, int srcPos, int count,
             int threshold) {
@@ -2966,6 +2988,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreater(
             long[] dest, long destPos, long[] src, int srcPos, int count,
             long threshold) {
@@ -3097,6 +3120,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLess(
             long[] dest, long destPos, long[] src, int srcPos, int count,
             long threshold) {
@@ -3228,6 +3252,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreaterOrEqual(
             long[] dest, long destPos, long[] src, int srcPos, int count,
             long threshold) {
@@ -3359,6 +3384,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLessOrEqual(
             long[] dest, long destPos, long[] src, int srcPos, int count,
             long threshold) {
@@ -3491,6 +3517,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreater(
             long[] dest, long destPos, float[] src, int srcPos, int count,
             float threshold) {
@@ -3622,6 +3649,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLess(
             long[] dest, long destPos, float[] src, int srcPos, int count,
             float threshold) {
@@ -3753,6 +3781,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreaterOrEqual(
             long[] dest, long destPos, float[] src, int srcPos, int count,
             float threshold) {
@@ -3884,6 +3913,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLessOrEqual(
             long[] dest, long destPos, float[] src, int srcPos, int count,
             float threshold) {
@@ -4016,6 +4046,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreater(
             long[] dest, long destPos, double[] src, int srcPos, int count,
             double threshold) {
@@ -4147,6 +4178,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLess(
             long[] dest, long destPos, double[] src, int srcPos, int count,
             double threshold) {
@@ -4278,6 +4310,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsGreaterOrEqual(
             long[] dest, long destPos, double[] src, int srcPos, int count,
             double threshold) {
@@ -4409,6 +4442,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void packBitsLessOrEqual(
             long[] dest, long destPos, double[] src, int srcPos, int count,
             double threshold) {
@@ -8815,6 +8849,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void fillBits(long[] dest, long destPos, long count, boolean value) {
         Objects.requireNonNull(dest, "Null dest");
         int dPos = (int) (destPos >>> 6);
@@ -8920,6 +8955,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void notBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart notBits_method_impl]]
         Objects.requireNonNull(dest, "Null dest");
@@ -9026,6 +9062,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void andBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart andBits_method_impl]]
         Objects.requireNonNull(dest, "Null dest");
@@ -9132,6 +9169,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void orBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart orBits_method_impl]]
         Objects.requireNonNull(dest, "Null dest");
@@ -9239,6 +9277,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void xorBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart xorBits_method_impl]]
         Objects.requireNonNull(dest, "Null dest");
@@ -9345,6 +9384,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void andNotBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart andNotBits_method_impl]]
         Objects.requireNonNull(dest, "Null dest");
@@ -9451,6 +9491,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void orNotBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         //[[Repeat.SectionStart orNotBits_method_impl]]
         Objects.requireNonNull(dest, "Null dest");
@@ -9558,6 +9599,7 @@ public class PackedBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void reverseBitsOrder(long[] dest, long destPos, long[] src, long srcPos, long count) {
         Objects.requireNonNull(dest, "Null dest");
         Objects.requireNonNull(src, "Null src");

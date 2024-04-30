@@ -94,6 +94,7 @@ class TinyBitArrays {
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void setBit(long[] dest, long index, boolean value) {
         synchronized (dest) {
             if (value)
@@ -128,6 +129,7 @@ class TinyBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void copyBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
 
         Objects.requireNonNull(dest, "Null dest");
@@ -166,14 +168,16 @@ class TinyBitArrays {
                     long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
                     synchronized (dest) {
                         dest[dPos + cnt] =
-                                (src[sPos + cnt] & maskFinish) | (dest[dPos + cnt] & ~maskFinish);
+                                (src[sPos + cnt] & maskFinish) |
+                                        (dest[dPos + cnt] & ~maskFinish);
                     }
                 }
                 System.arraycopy(src, sPos, dest, dPos, cnt);
                 if (cntStart > 0) {
                     synchronized (dest) {
                         dest[dPosStart] =
-                                (src[sPosStart] & maskStart) | (dest[dPosStart] & ~maskStart);
+                                (src[sPosStart] & maskStart) |
+                                        (dest[dPosStart] & ~maskStart);
                     }
                 }
             } else {
@@ -224,7 +228,7 @@ class TinyBitArrays {
                     // in this branch of all algorithm (overlap is impossible when count == 0).
                     //End_sPrev !! this comment is necessary for preprocessing by Repeater !!
                 }
-                for (; dPos > dPosMin; ) { // cnt times
+                while (dPos > dPosMin) { // cnt times
                     --sPos;
                     --dPos;
                     dest[dPos] = (sPrev << sPosRem64) | ((sPrev = src[sPos]) >>> sPosRem);
@@ -449,6 +453,7 @@ class TinyBitArrays {
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void fillBits(long[] dest, long destPos, long count, boolean value) {
         Objects.requireNonNull(dest, "Null dest");
         int dPos = (int) (destPos >>> 6);
@@ -507,6 +512,7 @@ class TinyBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void notBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
 
         Objects.requireNonNull(dest, "Null dest");
@@ -613,6 +619,7 @@ class TinyBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void andBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
 
         Objects.requireNonNull(dest, "Null dest");
@@ -719,6 +726,7 @@ class TinyBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void orBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
 
         Objects.requireNonNull(dest, "Null dest");
@@ -826,6 +834,7 @@ class TinyBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void xorBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
 
         Objects.requireNonNull(dest, "Null dest");
@@ -932,6 +941,7 @@ class TinyBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void andNotBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
 
         Objects.requireNonNull(dest, "Null dest");
@@ -1038,6 +1048,7 @@ class TinyBitArrays {
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void orNotBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
 
         Objects.requireNonNull(dest, "Null dest");

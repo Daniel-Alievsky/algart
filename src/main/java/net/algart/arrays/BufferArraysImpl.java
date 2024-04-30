@@ -950,23 +950,23 @@ class BufferArraysImpl {
             return (double) popFloat();
         }
 
-        public void pushDouble(double value) {
-            pushFloat((float) value);
-        }
-
         public long popLong() {
             return (long) popFloat();
-        }
-
-        public void pushLong(long value) {
-            pushFloat((float) value);
         }
 
         public int popInt() {
             return (int) popFloat();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushFloat((float) value);
+        }
+
+        public void add(long value) {
+            pushFloat((float) value);
+        }
+
+        public void add(int value) {
             pushFloat((float) value);
         }
 
@@ -1488,23 +1488,23 @@ class BufferArraysImpl {
             return (double) popChar();
         }
 
-        public void pushDouble(double value) {
-            pushChar((char) value);
-        }
-
         public long popLong() {
             return (long) popChar();
-        }
-
-        public void pushLong(long value) {
-            pushChar((char) value);
         }
 
         public int popInt() {
             return (int) popChar();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushChar((char) value);
+        }
+
+        public void add(long value) {
+            pushChar((char) value);
+        }
+
+        public void add(int value) {
             pushChar((char) value);
         }
 
@@ -2026,23 +2026,23 @@ class BufferArraysImpl {
             return (double) (popByte() & 0xFF);
         }
 
-        public void pushDouble(double value) {
-            pushByte((byte) value);
-        }
-
         public long popLong() {
             return (long) (popByte() & 0xFF);
-        }
-
-        public void pushLong(long value) {
-            pushByte((byte) value);
         }
 
         public int popInt() {
             return (int) (popByte() & 0xFF);
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushByte((byte) value);
+        }
+
+        public void add(long value) {
+            pushByte((byte) value);
+        }
+
+        public void add(int value) {
             pushByte((byte) value);
         }
 
@@ -2564,23 +2564,23 @@ class BufferArraysImpl {
             return (double) (popShort() & 0xFFFF);
         }
 
-        public void pushDouble(double value) {
-            pushShort((short) value);
-        }
-
         public long popLong() {
             return (long) (popShort() & 0xFFFF);
-        }
-
-        public void pushLong(long value) {
-            pushShort((short) value);
         }
 
         public int popInt() {
             return (int) (popShort() & 0xFFFF);
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushShort((short) value);
+        }
+
+        public void add(long value) {
+            pushShort((short) value);
+        }
+
+        public void add(int value) {
             pushShort((short) value);
         }
 
@@ -3087,15 +3087,19 @@ class BufferArraysImpl {
             return (double) popInt();
         }
 
-        public void pushDouble(double value) {
-            pushInt((int) value);
-        }
-
         public long popLong() {
             return (long) popInt();
         }
 
-        public void pushLong(long value) {
+        public void add(double value) {
+            pushInt((int) value);
+        }
+
+        public void add(long value) {
+            pushInt((int) value);
+        }
+
+        public void add(int value) {
             pushInt((int) value);
         }
 
@@ -3591,15 +3595,19 @@ class BufferArraysImpl {
             return (double) popLong();
         }
 
-        public void pushDouble(double value) {
-            pushLong((long) value);
-        }
-
         public int popInt() {
             return (int) popLong();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushLong((long) value);
+        }
+
+        public void add(long value) {
+            pushLong((long) value);
+        }
+
+        public void add(int value) {
             pushLong((long) value);
         }
 
@@ -4095,15 +4103,19 @@ class BufferArraysImpl {
             return (long) popDouble();
         }
 
-        public void pushLong(long value) {
-            pushDouble((double) value);
-        }
-
         public int popInt() {
             return (int) popDouble();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushDouble((double) value);
+        }
+
+        public void add(long value) {
+            pushDouble((double) value);
+        }
+
+        public void add(int value) {
             pushDouble((double) value);
         }
 
@@ -4622,23 +4634,23 @@ class BufferArraysImpl {
             return popBit() ? 1.0 : 0.0;
         }
 
-        public void pushDouble(double value) {
-            pushBit(value != 0.0);
-        }
-
         public long popLong() {
             return popBit() ? 1L : 0L;
-        }
-
-        public void pushLong(long value) {
-            pushBit(value != 0);
         }
 
         public int popInt() {
             return popBit() ? 1 : 0;
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushBit(value != 0.0);
+        }
+
+        public void add(long value) {
+            pushBit(value != 0);
+        }
+
+        public void add(int value) {
             pushBit(value != 0);
         }
 

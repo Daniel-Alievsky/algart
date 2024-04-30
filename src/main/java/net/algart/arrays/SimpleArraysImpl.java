@@ -1690,23 +1690,23 @@ class SimpleArraysImpl {
             return (double) popFloat();
         }
 
-        public void pushDouble(double value) {
-            pushFloat((float) value);
-        }
-
         public long popLong() {
             return (long) popFloat();
-        }
-
-        public void pushLong(long value) {
-            pushFloat((float) value);
         }
 
         public int popInt() {
             return (int) popFloat();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushFloat((float) value);
+        }
+
+        public void add(long value) {
+            pushFloat((float) value);
+        }
+
+        public void add(int value) {
             pushFloat((float) value);
         }
 
@@ -1834,23 +1834,23 @@ class SimpleArraysImpl {
             return (double) popFloat();
         }
 
-        public void pushDouble(double value) {
-            pushFloat((float) value);
-        }
-
         public long popLong() {
             return (long) popFloat();
-        }
-
-        public void pushLong(long value) {
-            pushFloat((float) value);
         }
 
         public int popInt() {
             return (int) popFloat();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushFloat((float) value);
+        }
+
+        public void add(long value) {
+            pushFloat((float) value);
+        }
+
+        public void add(int value) {
             pushFloat((float) value);
         }
 
@@ -3233,23 +3233,23 @@ class SimpleArraysImpl {
             return (double) popChar();
         }
 
-        public void pushDouble(double value) {
-            pushChar((char) value);
-        }
-
         public long popLong() {
             return (long) popChar();
-        }
-
-        public void pushLong(long value) {
-            pushChar((char) value);
         }
 
         public int popInt() {
             return (int) popChar();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushChar((char) value);
+        }
+
+        public void add(long value) {
+            pushChar((char) value);
+        }
+
+        public void add(int value) {
             pushChar((char) value);
         }
 
@@ -3387,23 +3387,23 @@ class SimpleArraysImpl {
             return (double) popChar();
         }
 
-        public void pushDouble(double value) {
-            pushChar((char) value);
-        }
-
         public long popLong() {
             return (long) popChar();
-        }
-
-        public void pushLong(long value) {
-            pushChar((char) value);
         }
 
         public int popInt() {
             return (int) popChar();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushChar((char) value);
+        }
+
+        public void add(long value) {
+            pushChar((char) value);
+        }
+
+        public void add(int value) {
             pushChar((char) value);
         }
 
@@ -4789,23 +4789,23 @@ class SimpleArraysImpl {
             return (double) (popByte() & 0xFF);
         }
 
-        public void pushDouble(double value) {
-            pushByte((byte) value);
-        }
-
         public long popLong() {
             return (long) (popByte() & 0xFF);
-        }
-
-        public void pushLong(long value) {
-            pushByte((byte) value);
         }
 
         public int popInt() {
             return (int) (popByte() & 0xFF);
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushByte((byte) value);
+        }
+
+        public void add(long value) {
+            pushByte((byte) value);
+        }
+
+        public void add(int value) {
             pushByte((byte) value);
         }
 
@@ -4933,23 +4933,23 @@ class SimpleArraysImpl {
             return (double) (popByte() & 0xFF);
         }
 
-        public void pushDouble(double value) {
-            pushByte((byte) value);
-        }
-
         public long popLong() {
             return (long) (popByte() & 0xFF);
-        }
-
-        public void pushLong(long value) {
-            pushByte((byte) value);
         }
 
         public int popInt() {
             return (int) (popByte() & 0xFF);
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushByte((byte) value);
+        }
+
+        public void add(long value) {
+            pushByte((byte) value);
+        }
+
+        public void add(int value) {
             pushByte((byte) value);
         }
 
@@ -6325,23 +6325,23 @@ class SimpleArraysImpl {
             return (double) (popShort() & 0xFFFF);
         }
 
-        public void pushDouble(double value) {
-            pushShort((short) value);
-        }
-
         public long popLong() {
             return (long) (popShort() & 0xFFFF);
-        }
-
-        public void pushLong(long value) {
-            pushShort((short) value);
         }
 
         public int popInt() {
             return (int) (popShort() & 0xFFFF);
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushShort((short) value);
+        }
+
+        public void add(long value) {
+            pushShort((short) value);
+        }
+
+        public void add(int value) {
             pushShort((short) value);
         }
 
@@ -6469,23 +6469,23 @@ class SimpleArraysImpl {
             return (double) (popShort() & 0xFFFF);
         }
 
-        public void pushDouble(double value) {
-            pushShort((short) value);
-        }
-
         public long popLong() {
             return (long) (popShort() & 0xFFFF);
-        }
-
-        public void pushLong(long value) {
-            pushShort((short) value);
         }
 
         public int popInt() {
             return (int) (popShort() & 0xFFFF);
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushShort((short) value);
+        }
+
+        public void add(long value) {
+            pushShort((short) value);
+        }
+
+        public void add(int value) {
             pushShort((short) value);
         }
 
@@ -7832,15 +7832,19 @@ class SimpleArraysImpl {
             return (double) popInt();
         }
 
-        public void pushDouble(double value) {
-            pushInt((int) value);
-        }
-
         public long popLong() {
             return (long) popInt();
         }
 
-        public void pushLong(long value) {
+        public void add(double value) {
+            pushInt((int) value);
+        }
+
+        public void add(long value) {
+            pushInt((int) value);
+        }
+
+        public void add(int value) {
             pushInt((int) value);
         }
 
@@ -7968,15 +7972,19 @@ class SimpleArraysImpl {
             return (double) popInt();
         }
 
-        public void pushDouble(double value) {
-            pushInt((int) value);
-        }
-
         public long popLong() {
             return (long) popInt();
         }
 
-        public void pushLong(long value) {
+        public void add(double value) {
+            pushInt((int) value);
+        }
+
+        public void add(long value) {
+            pushInt((int) value);
+        }
+
+        public void add(int value) {
             pushInt((int) value);
         }
 
@@ -9299,15 +9307,19 @@ class SimpleArraysImpl {
             return (double) popLong();
         }
 
-        public void pushDouble(double value) {
-            pushLong((long) value);
-        }
-
         public int popInt() {
             return (int) popLong();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushLong((long) value);
+        }
+
+        public void add(long value) {
+            pushLong((long) value);
+        }
+
+        public void add(int value) {
             pushLong((long) value);
         }
 
@@ -9435,15 +9447,19 @@ class SimpleArraysImpl {
             return (double) popLong();
         }
 
-        public void pushDouble(double value) {
-            pushLong((long) value);
-        }
-
         public int popInt() {
             return (int) popLong();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushLong((long) value);
+        }
+
+        public void add(long value) {
+            pushLong((long) value);
+        }
+
+        public void add(int value) {
             pushLong((long) value);
         }
 
@@ -10761,15 +10777,19 @@ class SimpleArraysImpl {
             return (long) popDouble();
         }
 
-        public void pushLong(long value) {
-            pushDouble((double) value);
-        }
-
         public int popInt() {
             return (int) popDouble();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushDouble((double) value);
+        }
+
+        public void add(long value) {
+            pushDouble((double) value);
+        }
+
+        public void add(int value) {
             pushDouble((double) value);
         }
 
@@ -10897,15 +10917,19 @@ class SimpleArraysImpl {
             return (long) popDouble();
         }
 
-        public void pushLong(long value) {
-            pushDouble((double) value);
-        }
-
         public int popInt() {
             return (int) popDouble();
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushDouble((double) value);
+        }
+
+        public void add(long value) {
+            pushDouble((double) value);
+        }
+
+        public void add(int value) {
             pushDouble((double) value);
         }
 
@@ -12197,6 +12221,18 @@ class SimpleArraysImpl {
             return this;
         }
 
+        public void add(double value) {
+            pushElement((Object) value);
+        }
+
+        public void add(long value) {
+            pushElement((Object) value);
+        }
+
+        public void add(int value) {
+            pushElement((Object) value);
+        }
+
         public Object popElement() {
             int i = (int) length - 1;
             if (i < 0)
@@ -12312,6 +12348,18 @@ class SimpleArraysImpl {
         public MutableObjectArray append(Array appendedArray) {
             appendImpl(appendedArray);
             return this;
+        }
+
+        public void add(double value) {
+            pushElement((Object) value);
+        }
+
+        public void add(long value) {
+            pushElement((Object) value);
+        }
+
+        public void add(int value) {
+            pushElement((Object) value);
         }
 
         public Object popElement() {
@@ -12904,6 +12952,7 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (srcIndex < 0 || srcIndex >= length)
                 throw rangeException(srcIndex);
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 if ((this.bitArray[(int) ((srcIndex) >>> 6)] & (1L << ((int) (srcIndex) & 63))) != 0L)
                     this.bitArray[(int) ((destIndex) >>> 6)] |= 1L << ((int) (destIndex) & 63);
@@ -12934,12 +12983,14 @@ class SimpleArraysImpl {
                 throw rangeException(secondIndex);
             long i = firstIndex, j = secondIndex;
             boolean temp = (this.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L;
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 if ((this.bitArray[(int) ((j) >>> 6)] & (1L << ((int) (j) & 63))) != 0L)
                     this.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
                 else
                     this.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
             }
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 if (temp)
                     this.bitArray[(int) ((j) >>> 6)] |= 1L << ((int) (j) & 63);
@@ -12948,6 +12999,7 @@ class SimpleArraysImpl {
             }
         }
 
+        @SuppressWarnings("SynchronizeOnNonFinalField")
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
@@ -12978,6 +13030,7 @@ class SimpleArraysImpl {
             }
         }
 
+        @SuppressWarnings("SynchronizeOnNonFinalField")
         public UpdatableArray copy(Array src) {
             if (src instanceof JABitSubArray a) {
                 long count = (Math.min(a.length, length));
@@ -13009,6 +13062,7 @@ class SimpleArraysImpl {
             return this;
         }
 
+        @SuppressWarnings("SynchronizeOnNonFinalField")
         public UpdatableArray swap(UpdatableArray another) {
             if (another instanceof UpdatableJABitSubArray a) {
                 long count = Math.min(a.length, length);
@@ -13067,6 +13121,7 @@ class SimpleArraysImpl {
         public final void setInt(long index, int value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 if (value != 0)
                     this.bitArray[(int) ((index) >>> 6)] |= 1L << ((int) (index) & 63);
@@ -13078,6 +13133,7 @@ class SimpleArraysImpl {
         public final void setBit(long index, boolean value) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 if (value)
                     this.bitArray[(int) ((index) >>> 6)] |= 1L << ((int) (index) & 63);
@@ -13091,6 +13147,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 this.bitArray[(int) ((index) >>> 6)] |= 1L << ((index) & 63);
             }
@@ -13101,6 +13158,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 this.bitArray[(int) ((index) >>> 6)] &= ~(1L << ((index) & 63));
             }
@@ -13233,8 +13291,10 @@ class SimpleArraysImpl {
                 throw rangeException(destIndex);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
-                if ((this.bitArray[(int) ((offset + srcIndex) >>> 6)] & (1L << ((int) (offset + srcIndex) & 63))) != 0L)
+                if ((this.bitArray[(int) ((offset + srcIndex) >>> 6)]
+                        & (1L << ((int) (offset + srcIndex) & 63))) != 0L)
                     this.bitArray[(int) ((offset + destIndex) >>> 6)] |= 1L << ((int) (offset + destIndex) & 63);
                 else
                     this.bitArray[(int) ((offset + destIndex) >>> 6)] &= ~(1L << ((int) (offset + destIndex) & 63));
@@ -13258,6 +13318,7 @@ class SimpleArraysImpl {
             PackedBitArrays.copyBits(this.bitArray, offset + destIndex, this.bitArray, offset + srcIndex, count);
         }
 
+        @SuppressWarnings("SynchronizeOnNonFinalField")
         public final void swap(long firstIndex, long secondIndex) {
             if (firstIndex < 0 || firstIndex >= length)
                 throw rangeException(firstIndex);
@@ -13281,6 +13342,7 @@ class SimpleArraysImpl {
             }
         }
 
+        @SuppressWarnings("SynchronizeOnNonFinalField")
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0)
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
@@ -13313,6 +13375,7 @@ class SimpleArraysImpl {
             }
         }
 
+        @SuppressWarnings("SynchronizeOnNonFinalField")
         public UpdatableArray copy(Array src) {
             if (src instanceof JABitSubArray a) {
                 long count = Math.min(a.length, length);
@@ -13337,6 +13400,7 @@ class SimpleArraysImpl {
                 if (count == 1) {
                     if (this.capacity < 0) // copy-on-next-write
                         reallocateStorage();
+                    //noinspection SynchronizeOnNonFinalField
                     synchronized (bitArray) {
                         if ((a.bitArray[(int) ((0) >>> 6)] & (1L << ((int) (0) & 63))) != 0L)
                             bitArray[(int) ((offset) >>> 6)] |= 1L << ((int) (offset) & 63);
@@ -13360,6 +13424,7 @@ class SimpleArraysImpl {
             return this;
         }
 
+        @SuppressWarnings("SynchronizeOnNonFinalField")
         public UpdatableArray swap(UpdatableArray another) {
             if (another instanceof UpdatableJABitSubArray a) {
                 long count = Math.min(a.length, length);
@@ -13426,6 +13491,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 if (value != 0)
                     this.bitArray[(int) ((offset + index) >>> 6)] |= 1L << ((int) (offset + index) & 63);
@@ -13439,6 +13505,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 if (value)
                     this.bitArray[(int) ((offset + index) >>> 6)] |= 1L << ((int) (offset + index) & 63);
@@ -13452,6 +13519,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 this.bitArray[(int) ((offset + index) >>> 6)] |= 1L << ((offset + index) & 63);
             }
@@ -13462,6 +13530,7 @@ class SimpleArraysImpl {
                 throw rangeException(index);
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 this.bitArray[(int) ((offset + index) >>> 6)] &= ~(1L << ((offset + index) & 63));
             }
@@ -13644,23 +13713,23 @@ class SimpleArraysImpl {
             return popBit() ? 1.0 : 0.0;
         }
 
-        public void pushDouble(double value) {
-            pushBit(value != 0.0);
-        }
-
         public long popLong() {
             return popBit() ? 1L : 0L;
-        }
-
-        public void pushLong(long value) {
-            pushBit(value != 0);
         }
 
         public int popInt() {
             return popBit() ? 1 : 0;
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushBit(value != 0.0);
+        }
+
+        public void add(long value) {
+            pushBit(value != 0);
+        }
+
+        public void add(int value) {
             pushBit(value != 0);
         }
 
@@ -13681,6 +13750,7 @@ class SimpleArraysImpl {
                 ensureCapacityImpl((long) i + 1);
             }
             this.length = i + 1;
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 if (value)
                     this.bitArray[(int) ((i) >>> 6)] |= 1L << ((int) (i) & 63);
@@ -13790,23 +13860,23 @@ class SimpleArraysImpl {
             return popBit() ? 1.0 : 0.0;
         }
 
-        public void pushDouble(double value) {
-            pushBit(value != 0.0);
-        }
-
         public long popLong() {
             return popBit() ? 1L : 0L;
-        }
-
-        public void pushLong(long value) {
-            pushBit(value != 0);
         }
 
         public int popInt() {
             return popBit() ? 1 : 0;
         }
 
-        public void pushInt(int value) {
+        public void add(double value) {
+            pushBit(value != 0.0);
+        }
+
+        public void add(long value) {
+            pushBit(value != 0);
+        }
+
+        public void add(int value) {
             pushBit(value != 0);
         }
 
@@ -13831,6 +13901,7 @@ class SimpleArraysImpl {
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
             this.length = i + 1;
+            //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 if (value)
                     this.bitArray[(int) ((offset + i) >>> 6)] |= 1L << ((int) (offset + i) & 63);
