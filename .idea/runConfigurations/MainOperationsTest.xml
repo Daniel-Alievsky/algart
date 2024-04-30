@@ -2,7 +2,7 @@
   <configuration default="false" name="MainOperationsTest" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.MainOperationsTest" />
     <module name="algart" />
-    <option name="PROGRAM_PARAMETERS" value="ALL 1000 20000 1 " />
+    <option name="PROGRAM_PARAMETERS" value="ALL 1000 10000 1 " />
     <option name="VM_PARAMETERS" value="-ea -esa -Dnet.algart.arrays.globalMemoryModel=SIMPLE -Dnet.algart.arrays.serverOptimization=true -Dnet.algart.arrays.CPUCount=4 -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256 -Dnet.algart.arrays.DefaultDataFileModel.bankSize=2048 -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0 -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT" />
     <extension name="coverage">
       <pattern>

@@ -6574,7 +6574,7 @@ class SimpleArraysImpl {
       (return\s+)157778  ==> $1Integer.MAX_VALUE;;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/min) ==> $1minPossibleValue();;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/max) ==> $1maxPossibleValue();;
-      public(\s+\w+)+\s+(get|set|pop|push)Int(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
+      public(\s+\w+)+\s+(get|set|pop)Int(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       \bFloat\b ==> Integer ;;
       Float(?!ing) ==> Int ;;
       float ==> int ;;
@@ -8073,7 +8073,7 @@ class SimpleArraysImpl {
       (return\s+)157778  ==> $1Long.MAX_VALUE;;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/min) ==> $1minPossibleValue();;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/max) ==> $1maxPossibleValue();;
-      public(\s+\w+)+\s+(get|set|pop|push)Long(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
+      public(\s+\w+)+\s+(get|set|pop)Long(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       public(\s+\w+)+\s+\w+ndexOf\(long\s+\w+,\s*long\s+\w+,\s*long(.*?)\n\s*}\s* ==> ;;
       public(\s+\w+)+\s+fill\((?:long\s+\w+,\s*long\s+\w+,\s*)?long\s+value(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       \(int\)\s*(\w+\.)?floatArray\[([^\]]*)\] ==> Arrays.truncateLongToInt($1longArray[$2]) ;;
@@ -9544,7 +9544,7 @@ class SimpleArraysImpl {
     /*Repeat.IncludeEnd*/
 
     /*Repeat(INCLUDE_FROM_FILE, THIS_FILE, impl)
-      public(\s+\w+)+\s+(get|set|pop|push)Double(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
+      public(\s+\w+)+\s+(get|set|pop)Double(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       public(\s+\w+)+\s+\w+ndexOf\(long\s+\w+,\s*long\s+\w+,\s*double(.*?)\n\s*}\s* ==> ;;
       public(\s+\w+)+\s+fill\((?:long\s+\w+,\s*long\s+\w+,\s*)?double\s+value(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       Float(?!ing) ==> Double ;;
