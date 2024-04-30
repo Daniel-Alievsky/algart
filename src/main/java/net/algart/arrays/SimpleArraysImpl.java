@@ -8077,6 +8077,7 @@ class SimpleArraysImpl {
       public(\s+\w+)+\s+\w+ndexOf\(long\s+\w+,\s*long\s+\w+,\s*long(.*?)\n\s*}\s* ==> ;;
       public(\s+\w+)+\s+fill\((?:long\s+\w+,\s*long\s+\w+,\s*)?long\s+value(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       \(int\)\s*(\w+\.)?floatArray\[([^\]]*)\] ==> Arrays.truncateLongToInt($1longArray[$2]) ;;
+      \(int\)\s*popFloat\(\) ==> Arrays.truncateLongToInt(popLong()) ;;
       Float(?!ing) ==> Long ;;
       float ==> long ;;
       PER_FLOAT ==> PER_LONG
@@ -9308,7 +9309,7 @@ class SimpleArraysImpl {
         }
 
         public int popInt() {
-            return (int) popLong();
+            return Arrays.truncateLongToInt(popLong());
         }
 
         public void add(double value) {
@@ -9448,7 +9449,7 @@ class SimpleArraysImpl {
         }
 
         public int popInt() {
-            return (int) popLong();
+            return Arrays.truncateLongToInt(popLong());
         }
 
         public void add(double value) {

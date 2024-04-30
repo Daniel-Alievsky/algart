@@ -609,7 +609,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param obj1 first compared object.
      * @param obj2 second compared object.
-     * @return <tt>true</tt> if <tt>obj2</tt> is a array and the specified arrays are equal.
+     * @return <tt>true</tt> if <tt>obj2</tt> is an array and the specified arrays are equal.
      */
     public static boolean equals(Array obj1, Object obj2) {
         if (!(obj2 instanceof Array))

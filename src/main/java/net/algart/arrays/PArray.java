@@ -124,7 +124,7 @@ public interface PArray extends Array {
      * or <tt>value?1.0:0.0</tt> for <tt>boolean</tt> values.
      * Please note that this method returns unsigned values for byte and short arrays.
      * Returned value contains full information stored in the element,
-     * excepting a case of very large <tt>long</tt> elements.
+     * excepting the case of very large <tt>long</tt> elements.
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.

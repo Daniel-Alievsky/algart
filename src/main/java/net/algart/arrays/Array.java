@@ -661,7 +661,7 @@ public interface Array {
      * If (and only if) this array implements {@link MutableArray} interface,
      * then the returned array also implements it.
      *
-     * <p><i>Copy-on-next-write</i> array is a array with the following special feature:
+     * <p><i>Copy-on-next-write</i> array is an array with the following special feature:
      * the next attempt (but not further!) to modify this array,
      * or any other access that can lead to its modification (like {@link DirectAccessible#javaArray()}
      * method), will lead to reallocation of the underlying storage, used for array elements,
@@ -730,7 +730,7 @@ public interface Array {
      * for copy-on-next-write arrays. The typical example is usage of
      * {@link DirectAccessible} interface. That interface, providing direct access to
      * the internal Java array (which is a storage of the array elements), can optimize
-     * most of algorithms processing a array. However, reallocation of
+     * most of the algorithms processing an array. However, reallocation of
      * the Java array, that will be a result of calling {@link DirectAccessible#javaArray()} for
      * copy-on-next-write array, can make such "optimization" very unwanted.
      *
@@ -754,7 +754,7 @@ public interface Array {
      *
      * <p>Typically, this method returns <tt>true</tt> if the array does not implement
      * {@link MutableArray}.
-     * But you should not use this condition to check whether a array is unresizable;
+     * But you should not use this condition to check whether an array is unresizable;
      * please use this method instead.
      * Maybe, some class from another package (or from future versions
      * of this package), implementing this {@link Array} interface, does not implement
@@ -1006,7 +1006,7 @@ public interface Array {
      * The most often usage of this method is finalization
      * via {@link net.algart.finalizing.Finalizer Finalizer} class:
      * see example in comments to {@link #checkUnallowedMutation()} method. Also this method
-     * can be useful if you need to pass a array with the same content
+     * can be useful if you need to pass an array with the same content
      * into some another class, but must be sure that further resizing
      * of the source array will not affect to correct work of that class.
      *
@@ -1440,7 +1440,7 @@ public interface Array {
     /**
      * Indicates whether some other array is equal to this one.
      * Returns <tt>true</tt> if and only if:<ol>
-     * <li>the specified object is a array (i.e. implements {@link Array}),</li>
+     * <li>the specified object is an array (i.e. implements {@link Array}),</li>
      * <li>both arrays have the same {@link #length() length},</li>
      * <li>for arrays of primitive elements
      * ({@link BitArray}, {@link CharArray},

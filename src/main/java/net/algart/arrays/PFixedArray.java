@@ -73,12 +73,11 @@ public interface PFixedArray extends PArray {
      * Returns the element #<tt>index</tt> converted to <tt>long</tt>:
      * <tt>(long)value&amp;0xFF</tt> for <tt>byte</tt> value,
      * <tt>(long)value&amp;0xFFFF</tt> for <tt>short</tt> value,
-     * <tt>(long)value</tt> for <tt>int</tt>, <tt>long</tt>,
-     * <tt>float</tt>, <tt>double</tt>, <tt>char</tt> values,
+     * <tt>(long)value</tt> for <tt>int</tt>, <tt>long</tt> or <tt>char</tt> values,
      * or as <tt>value?1:0</tt> for <tt>boolean</tt> values.
      * Please note that this method returns unsigned values for byte and short arrays.
      * Returned value contains full information stored in the element,
-     * if it is not a array of <tt>float</tt> or <tt>double</tt> elements.
+     * if it is not an array of <tt>float</tt> or <tt>double</tt> elements.
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.
@@ -91,15 +90,14 @@ public interface PFixedArray extends PArray {
      * Returns the element #<tt>index</tt> converted to <tt>int</tt>:
      * <tt>(int)value&amp;0xFF</tt> for <tt>byte</tt> value,
      * <tt>(int)value&amp;0xFFFF</tt> for <tt>short</tt> value,
-     * <tt>(int)value</tt> for <tt>int</tt>,
-     * <tt>float</tt>, <tt>double</tt>, <tt>char</tt> values,
+     * <tt>(int)value</tt> for <tt>int</tt> or <tt>char</tt> values,
      * <tt>value?1:0</tt> for <tt>boolean</tt> values,
      * <tt>min(max(value, Integer.MIN_VALUE), Integer.MAX_VALUE)</tt> (i&#46;e&#46; the value
      * truncated to the range <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt>)
      * for <tt>long</tt> values.
      * Please note that this method returns unsigned values for byte and short arrays.
      * Returned value contains full information stored in the element,
-     * if it is not a array of <tt>long</tt>, <tt>float</tt> or <tt>double</tt> elements.
+     * if it is not an array of <tt>long</tt>, <tt>float</tt> or <tt>double</tt> elements.
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.

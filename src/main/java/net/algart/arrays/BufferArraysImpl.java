@@ -335,6 +335,7 @@ class BufferArraysImpl {
             storage.swap(storage, offset + firstIndex, offset + secondIndex, count);
         }
 
+
         /* // Bad version with double copying: reminder, how easy to make a bug for several years
         public UpdatableArray copyOld(Array src) {
             if (!(this instanceof UpdatableArray))
@@ -511,7 +512,9 @@ class BufferArraysImpl {
       \((double|long|int)\)\s*(popByte\(\)|popShort\(\)) ==>
           ($1) $2,,($1) ($2 & 0xFF),,($1) ($2 & 0xFFFF),,($1) $2,,... ;;
       (return\s+(?:\(\w+\)\s?)?)(storage\.get(?:Byte|Short)\((?:offset\s*\+\s*)?index\))\s*; ==>
-          $1$2;,,return ($2 & 0xFF);,,return ($2 & 0xFFFF);,,$1$2;,,$1$2;,,$1$2;
+          $1$2;,,return ($2 & 0xFF);,,return ($2 & 0xFFFF);,,$1$2;,,$1$2;,,$1$2; ;;
+      (\(int\)\s*)(storage\.getLong\([^)]*\)) ==> $1$2,,$1$2,,$1$2,,$1$2,,Arrays.truncateLongToInt($2),,$1$2 ;;
+      (\(int\)\s*popLong\(\)) ==> $1,,$1,,$1,,$1,,Arrays.truncateLongToInt(popLong()),,$1
     */
     static class BufferFloatArray extends AbstractBufferArray implements FloatArray {
         BufferFloatArray(
@@ -3256,7 +3259,7 @@ class BufferArraysImpl {
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (int) storage.getLong(offset + index);
+            return Arrays.truncateLongToInt(storage.getLong(offset + index));
         }
 
         public final long getLong(long index) {
@@ -3596,7 +3599,7 @@ class BufferArraysImpl {
         }
 
         public int popInt() {
-            return (int) popLong();
+            return Arrays.truncateLongToInt(popLong());
         }
 
         public void add(double value) {
