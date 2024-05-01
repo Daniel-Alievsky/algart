@@ -181,7 +181,7 @@ public class PackedBitArraysPer8 {
 
     /**
      * Sets the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array <i>without synchronization</i>.
-     * May be used instead of {@link #setBit(long[], long, boolean)}, if you are not planning to call
+     * May be used instead of {@link #setBit(byte[], long, boolean)}, if you are not planning to call
      * this method from different threads for the same <tt>dest</tt> array.
      * Equivalent to the following operators:<pre>
      * synchronized (dest) {
