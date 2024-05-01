@@ -118,6 +118,20 @@ public interface LongArray extends PIntegerArray {
     }
     /*Repeat.IncludeEnd*/
 
+    /**
+     * Returns the element #<tt>index</tt>,
+     * truncated to the range <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt>:
+     * <tt>min(max(value, Integer.MIN_VALUE), Integer.MAX_VALUE)</tt>.
+     *
+     * <p>Note that this method is already declared in {@link PFixedArray}.
+     * It is redeclared here only for documentation and code search purposes.</p>
+     *
+     * @param index index of element to get.
+     * @return the element at the specified position in this array.
+     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     */
+    int getInt(long index);
+
     @Override
     default long[] jaLong() {
         return ja();
