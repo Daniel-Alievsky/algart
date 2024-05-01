@@ -2145,7 +2145,7 @@ class CopiesArraysImpl {
       Float\.floatToIntBits\((.*?)\) ==> $1 ;;
       (?:@Override\s+)?public\s+\w+\s+getLong(.*?)}\s*\/\/end_method\s* ==> ;;
       (?:@Override\s+)?public\s+\w+\s+(lastI|i)ndexOf\(long\s+\w+,\s*long\s+\w+,\s*long(.*?)\n\s*}\s* ==> ;;
-      return\s+\(int\)element ==> return Arrays.truncateLongToInt(element) ;;
+      return\s+\(int\)\s*element ==> return Arrays.truncateLongToInt(element) ;;
       \bFloat\b ==> Long ;;
       Float(?!ing) ==> Long ;;
       PER_FLOAT ==> PER_LONG ;;
@@ -2374,7 +2374,7 @@ class CopiesArraysImpl {
             if (index < 0 || index >= length) {
                 throw AbstractArray.rangeException(index, length, getClass());
             }
-            return (int) element;
+            return Arrays.truncateLongToInt(element);
         }//end_method
 
         public long getLong(long index) {
