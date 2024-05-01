@@ -1632,6 +1632,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJAFloatArray
             extends UpdatableJAFloatArray implements MutableFloatArray {
@@ -1778,6 +1779,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJAFloatSubArray
             extends UpdatableJAFloatSubArray implements MutableFloatArray
@@ -3175,6 +3177,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJACharArray
             extends UpdatableJACharArray implements MutableCharArray {
@@ -3331,6 +3334,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJACharSubArray
             extends UpdatableJACharSubArray implements MutableCharArray
@@ -4731,6 +4735,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJAByteArray
             extends UpdatableJAByteArray implements MutableByteArray {
@@ -4877,6 +4882,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJAByteSubArray
             extends UpdatableJAByteSubArray implements MutableByteArray
@@ -6267,6 +6273,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJAShortArray
             extends UpdatableJAShortArray implements MutableShortArray {
@@ -6413,6 +6420,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJAShortSubArray
             extends UpdatableJAShortSubArray implements MutableShortArray
@@ -7774,6 +7782,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJAIntArray
             extends UpdatableJAIntArray implements MutableIntArray {
@@ -7916,6 +7925,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJAIntSubArray
             extends UpdatableJAIntSubArray implements MutableIntArray
@@ -9250,6 +9260,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJALongArray
             extends UpdatableJALongArray implements MutableLongArray {
@@ -9392,6 +9403,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJALongSubArray
             extends UpdatableJALongSubArray implements MutableLongArray
@@ -10720,6 +10732,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJADoubleArray
             extends UpdatableJADoubleArray implements MutableDoubleArray {
@@ -10862,6 +10875,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("cast")
     static final class MutableJADoubleSubArray
             extends UpdatableJADoubleSubArray implements MutableDoubleArray
@@ -12178,6 +12192,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("rawtypes")
     static final class MutableJAObjectArray
             extends UpdatableJAObjectArray implements MutableObjectArray {
@@ -12309,6 +12324,7 @@ class SimpleArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
     @SuppressWarnings("rawtypes")
     static final class MutableJAObjectSubArray
             extends UpdatableJAObjectSubArray implements MutableObjectArray

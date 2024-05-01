@@ -902,6 +902,8 @@ class BufferArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
+    @SuppressWarnings("cast")
     static final class MutableBufferFloatArray extends UpdatableBufferFloatArray implements MutableFloatArray {
         MutableBufferFloatArray(
                 DataStorage storage, long initialCapacity, long initialLength,
@@ -1440,6 +1442,8 @@ class BufferArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
+    @SuppressWarnings("cast")
     static final class MutableBufferCharArray extends UpdatableBufferCharArray implements MutableCharArray {
         MutableBufferCharArray(
                 DataStorage storage, long initialCapacity, long initialLength,
@@ -1978,6 +1982,8 @@ class BufferArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
+    @SuppressWarnings("cast")
     static final class MutableBufferByteArray extends UpdatableBufferByteArray implements MutableByteArray {
         MutableBufferByteArray(
                 DataStorage storage, long initialCapacity, long initialLength,
@@ -2516,6 +2522,8 @@ class BufferArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
+    @SuppressWarnings("cast")
     static final class MutableBufferShortArray extends UpdatableBufferShortArray implements MutableShortArray {
         MutableBufferShortArray(
                 DataStorage storage, long initialCapacity, long initialLength,
@@ -3039,6 +3047,8 @@ class BufferArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
+    @SuppressWarnings("cast")
     static final class MutableBufferIntArray extends UpdatableBufferIntArray implements MutableIntArray {
         MutableBufferIntArray(
                 DataStorage storage, long initialCapacity, long initialLength,
@@ -3547,6 +3557,8 @@ class BufferArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
+    @SuppressWarnings("cast")
     static final class MutableBufferLongArray extends UpdatableBufferLongArray implements MutableLongArray {
         MutableBufferLongArray(
                 DataStorage storage, long initialCapacity, long initialLength,
@@ -4055,6 +4067,8 @@ class BufferArraysImpl {
         }
     }
 
+    // Some casts become necessary after replacing by regexps in Repeater:
+    @SuppressWarnings("cast")
     static final class MutableBufferDoubleArray extends UpdatableBufferDoubleArray implements MutableDoubleArray {
         MutableBufferDoubleArray(
                 DataStorage storage, long initialCapacity, long initialLength,
