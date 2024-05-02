@@ -11200,7 +11200,7 @@ class SimpleArraysImpl {
       \}(\s+)(public(\s+\w+)+\s+removeTop\(\))(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> }$1$2 {
             popElement();
         }$1;;
-      (JArrays\.copyOfRange) ==> (Object[])$1 ;;
+      (JArrays\.copyOfRange) ==> (Object[]) $1 ;;
       \(float\)\s*0 ==> null ;;
       getFloat ==> getElement ;;
       setFloat ==> setElement ;;
@@ -11410,7 +11410,7 @@ class SimpleArraysImpl {
 
         public final MutableObjectArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
-                return new MutableJAObjectArray((Object[])JArrays.copyOfRange(
+                return new MutableJAObjectArray((Object[]) JArrays.copyOfRange(
                         objectArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableObjectArray) super.mutableClone(memoryModel);
@@ -11419,7 +11419,7 @@ class SimpleArraysImpl {
 
         public final UpdatableObjectArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
-                return new UpdatableJAObjectArray((Object[])JArrays.copyOfRange(
+                return new UpdatableJAObjectArray((Object[]) JArrays.copyOfRange(
                         objectArray, 0, (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableObjectArray) super.updatableClone(memoryModel);
@@ -11622,7 +11622,7 @@ class SimpleArraysImpl {
 
         public final MutableObjectArray mutableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
-                return new MutableJAObjectArray((Object[])JArrays.copyOfRange(
+                return new MutableJAObjectArray((Object[]) JArrays.copyOfRange(
                         objectArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (MutableObjectArray) super.mutableClone(memoryModel);
@@ -11631,7 +11631,7 @@ class SimpleArraysImpl {
 
         public final UpdatableObjectArray updatableClone(MemoryModel memoryModel) {
             if (memoryModel == SimpleMemoryModel.INSTANCE) {
-                return new UpdatableJAObjectArray((Object[])JArrays.copyOfRange(
+                return new UpdatableJAObjectArray((Object[]) JArrays.copyOfRange(
                         objectArray, offset, offset + (int) length), (int) length).setNewStatus();
             } else {
                 return (UpdatableObjectArray) super.updatableClone(memoryModel);
