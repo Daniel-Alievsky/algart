@@ -3549,7 +3549,7 @@ class SimpleArraysImpl {
       (return\s+)157778  ==> $10xFF;;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/min) ==> $1minPossibleValue();;
       (return\s+)(valueForFloatingPoint)(?=;\s*\/\/max) ==> $1maxPossibleValue();;
-      value\s*==\s*\(float\)\s*value ==> value == ((int)value & 0xFF) ;;
+      value\s*==\s*\(float\)\s*value ==> value == ((int) value & 0xFF) ;;
       float\s+getFloat ==> int getByte ;;
       Float.valueOf\((\w+) ==> Byte.valueOf((byte) $1 ;;
       Float(?!ing) ==> Byte ;;
@@ -3638,11 +3638,11 @@ class SimpleArraysImpl {
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long getLong(long index) {
@@ -3658,11 +3658,11 @@ class SimpleArraysImpl {
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final int getByte(long index) {
@@ -3875,11 +3875,11 @@ class SimpleArraysImpl {
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, double value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long getLong(long index) {
@@ -3895,11 +3895,11 @@ class SimpleArraysImpl {
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? indexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final long lastIndexOf(long lowIndex, long highIndex, long value) {
-            return value == ((int)value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
+            return value == ((int) value & 0xFF) ? lastIndexOf(lowIndex, highIndex, (byte) value) : -1;
         }
 
         public final int getByte(long index) {
@@ -11216,8 +11216,8 @@ class SimpleArraysImpl {
       (Object\[\]\s+objectArray;) ==> $1
         final Class<?> elementType; ;;
       \@SuppressWarnings\(\"cast\"\) ==> @SuppressWarnings("rawtypes") ;;
-      (static\s+class\s+Trusted) ==> @SuppressWarnings("rawtypes") $1 ;;
-      (public\s+Object\[\]\s+ja) ==> @SuppressWarnings("unchecked") $1 ;;
+      ((?:\r(?!\n)|\n|\r\n)[ \t]+)(static\s+class\s+Trusted) ==> $1@SuppressWarnings("rawtypes")$1$2 ;;
+      ((?:\r(?!\n)|\n|\r\n)[ \t]+)(public\s+Object\[\]\s+ja) ==> $1@SuppressWarnings("unchecked")$1$2 ;;
       (public\s+(?:final\s+)?)(\w*?)((?:Object)?Array\s+asCopyOnNextWrite\(\)\s*\{.*?[\r\n]\s*}) ==> $1$2$3
 
         public $2ObjectArray cast(Class elementType) {
@@ -11426,7 +11426,8 @@ class SimpleArraysImpl {
             }
         }
 
-        @SuppressWarnings("unchecked") public Object[] ja() {
+        @SuppressWarnings("unchecked")
+        public Object[] ja() {
             return Arrays.toJavaArray(this);
         }
 
@@ -11637,7 +11638,8 @@ class SimpleArraysImpl {
             }
         }
 
-        @SuppressWarnings("unchecked") public Object[] ja() {
+        @SuppressWarnings("unchecked")
+        public Object[] ja() {
             return Arrays.toJavaArray(this);
         }
 
@@ -11649,7 +11651,8 @@ class SimpleArraysImpl {
         }
     }
 
-    @SuppressWarnings("rawtypes") static class TrustedJAObjectArray
+    @SuppressWarnings("rawtypes")
+    static class TrustedJAObjectArray
             extends JAObjectArray implements DirectAccessible {
         private int startHashCode = -1;
 
@@ -11673,7 +11676,8 @@ class SimpleArraysImpl {
             return 0;
         }
 
-        @SuppressWarnings("unchecked") public Object[] ja() {
+        @SuppressWarnings("unchecked")
+        public Object[] ja() {
             if (length == this.objectArray.length) {
                 if (isCopyOnNextWrite()) {
                     reallocateStorage();
@@ -11749,7 +11753,8 @@ class SimpleArraysImpl {
         }
     }//EndOfClass !! this comment is necessary for preprocessing by Repeater !!
 
-    @SuppressWarnings("rawtypes") static class TrustedJAObjectSubArray
+    @SuppressWarnings("rawtypes")
+    static class TrustedJAObjectSubArray
             extends JAObjectSubArray implements DirectAccessible {
         private int startHashCode = -1;
 
@@ -11776,7 +11781,8 @@ class SimpleArraysImpl {
             return offset;
         }
 
-        @SuppressWarnings("unchecked") public Object[] ja() {
+        @SuppressWarnings("unchecked")
+        public Object[] ja() {
             if (offset == 0 && length == this.objectArray.length) {
                 if (isCopyOnNextWrite()) {
                     reallocateStorage();
