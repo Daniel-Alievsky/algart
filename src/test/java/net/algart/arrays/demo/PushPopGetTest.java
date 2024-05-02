@@ -26,6 +26,7 @@ package net.algart.arrays.demo;
 
 import net.algart.arrays.*;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -34,7 +35,7 @@ import java.util.Random;
  * @author Daniel Alievsky
  */
 public class PushPopGetTest {
-    private final MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();
+    private MemoryModel mm;
 
     private final int arrayLength;
     private final long[] longs;
@@ -54,6 +55,11 @@ public class PushPopGetTest {
                     : rnd.nextBoolean() ? rnd.nextLong() + rnd.nextDouble()
                     : 100000000 * (rnd.nextDouble() - 0.5);
         }
+    }
+
+    public PushPopGetTest setMm(MemoryModel mm) {
+        this.mm = mm;
+        return this;
     }
 
     private void testArray(Class<?> elementType) {
@@ -165,17 +171,21 @@ public class PushPopGetTest {
         int numberOfTests = Integer.parseInt(args[1]);
         Random rnd = new Random(157);
         PushPopGetTest test = new PushPopGetTest(rnd, arrayLength);
+
         for (int testIndex = 1; testIndex <= numberOfTests; testIndex++) {
             if (testIndex % 100 == 0) {
                 System.out.print("\r" + testIndex + " ");
-                test.testArray(boolean.class);
-                test.testArray(byte.class);
-                test.testArray(char.class);
-                test.testArray(short.class);
-                test.testArray(int.class);
-                test.testArray(long.class);
-                test.testArray(float.class);
-                test.testArray(double.class);
+                for (MemoryModel mm : List.of(Arrays.SMM, Arrays.BMM)) {
+                    test.setMm(mm);
+                    test.testArray(boolean.class);
+                    test.testArray(byte.class);
+                    test.testArray(char.class);
+                    test.testArray(short.class);
+                    test.testArray(int.class);
+                    test.testArray(long.class);
+                    test.testArray(float.class);
+                    test.testArray(double.class);
+                }
             }
         }
         System.out.println("O'k");

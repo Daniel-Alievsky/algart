@@ -76,7 +76,7 @@ public interface Stack {
      * Removes the element at the top of this stack and returns it,
      * or throws <tt>EmptyStackException</tt> if the stack is empty.
      *
-     * <p>It this object is an AlgART array, impelementing {@link MutableArray} interface,
+     * <p>It this object is an AlgART array, implementing {@link MutableArray} interface,
      * and it is not empty, the same action may be performed by the following code:</p>
      * <pre>
      * Object result = array.{@link MutableArray#getElement(long) getElement}(array.{@link #length() length()}-1);
@@ -103,7 +103,7 @@ public interface Stack {
     /**
      * Appends <tt>value</tt> element to the top of this stack.
      *
-     * <p>It this object is an AlgART array, impelementing {@link MutableArray} interface,
+     * <p>It this object is an AlgART array, implementing {@link MutableArray} interface,
      * the same action may be performed by the following code:</p>
      * <pre>
      * array.{@link MutableArray#length(long) length}(array.{@link #length() length()}+1);
@@ -130,4 +130,21 @@ public interface Stack {
      * @throws TooLargeArrayException if the resulting stack length is too large for this type of stacks.
      */
     void pushElement(Object value);
+
+    /**
+     * Removes the element at the top of this stack and returns it,
+     * or throws <tt>EmptyStackException</tt> if the stack is empty.
+     * This method differs from {@link #popElement()} only in that it does not return any result,
+     * so it works slightly faster.
+     *
+     * @throws java.util.EmptyStackException if this stack is empty.
+     */
+    void removeTop();
+
+    /**
+     * Removes all elements from the stack
+     *
+     * @return a reference to this array.
+     */
+    Stack clear();
 }

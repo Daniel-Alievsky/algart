@@ -1001,6 +1001,15 @@ class BufferArraysImpl {
             storage.setFloat(offset + length - 1, value);
         }
 
+        public void removeTop() {
+            if (length == 0)
+                throw new EmptyStackException();
+            this.length--; // must be changed BEFORE reallocateStorage()
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
+        }
+
         public MutableFloatArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
@@ -1539,6 +1548,15 @@ class BufferArraysImpl {
                 reallocateStorage();
             }
             storage.setChar(offset + length - 1, value);
+        }
+
+        public void removeTop() {
+            if (length == 0)
+                throw new EmptyStackException();
+            this.length--; // must be changed BEFORE reallocateStorage()
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
         }
 
         public MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -2081,6 +2099,15 @@ class BufferArraysImpl {
             storage.setByte(offset + length - 1, value);
         }
 
+        public void removeTop() {
+            if (length == 0)
+                throw new EmptyStackException();
+            this.length--; // must be changed BEFORE reallocateStorage()
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
+        }
+
         public MutableByteArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
@@ -2621,6 +2648,15 @@ class BufferArraysImpl {
             storage.setShort(offset + length - 1, value);
         }
 
+        public void removeTop() {
+            if (length == 0)
+                throw new EmptyStackException();
+            this.length--; // must be changed BEFORE reallocateStorage()
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
+        }
+
         public MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
@@ -3142,6 +3178,15 @@ class BufferArraysImpl {
             storage.setInt(offset + length - 1, value);
         }
 
+        public void removeTop() {
+            if (length == 0)
+                throw new EmptyStackException();
+            this.length--; // must be changed BEFORE reallocateStorage()
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
+        }
+
         public MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
@@ -3652,6 +3697,15 @@ class BufferArraysImpl {
             storage.setLong(offset + length - 1, value);
         }
 
+        public void removeTop() {
+            if (length == 0)
+                throw new EmptyStackException();
+            this.length--; // must be changed BEFORE reallocateStorage()
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
+        }
+
         public MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
@@ -4160,6 +4214,15 @@ class BufferArraysImpl {
                 reallocateStorage();
             }
             storage.setDouble(offset + length - 1, value);
+        }
+
+        public void removeTop() {
+            if (length == 0)
+                throw new EmptyStackException();
+            this.length--; // must be changed BEFORE reallocateStorage()
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
         }
 
         public MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -4696,6 +4759,15 @@ class BufferArraysImpl {
                 reallocateStorage();
             }
             setBit(newLength - 1, value);
+        }
+
+        public void removeTop() {
+            if (length == 0)
+                throw new EmptyStackException();
+            this.length--; // must be changed BEFORE reallocateStorage()
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
         }
 
         public MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {

@@ -1715,6 +1715,8 @@ class SimpleArraysImpl {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             float result = this.floatArray[i];
             this.length = i;
             this.floatArray[i] = (float) 0;
@@ -1730,6 +1732,16 @@ class SimpleArraysImpl {
             }
             this.length = i + 1;
             this.floatArray[i] = value;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableFloatArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -1879,6 +1891,16 @@ class SimpleArraysImpl {
                 reallocateStorage();
             this.length = i + 1;
             this.floatArray[offset + i] = value;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableFloatArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -3260,6 +3282,8 @@ class SimpleArraysImpl {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             char result = this.charArray[i];
             this.length = i;
             this.charArray[i] = (char) 0;
@@ -3285,6 +3309,16 @@ class SimpleArraysImpl {
                 value.getChars(0, count, this.charArray, javaArrayOffset() + (int) index);
             }
             return this;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -3444,6 +3478,16 @@ class SimpleArraysImpl {
                 value.getChars(0, count, this.charArray, javaArrayOffset() + (int) index);
             }
             return this;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableCharArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -4818,6 +4862,8 @@ class SimpleArraysImpl {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             byte result = this.byteArray[i];
             this.length = i;
             this.byteArray[i] = (byte) 0;
@@ -4833,6 +4879,16 @@ class SimpleArraysImpl {
             }
             this.length = i + 1;
             this.byteArray[i] = value;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableByteArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -4982,6 +5038,16 @@ class SimpleArraysImpl {
                 reallocateStorage();
             this.length = i + 1;
             this.byteArray[offset + i] = value;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableByteArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -6356,6 +6422,8 @@ class SimpleArraysImpl {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             short result = this.shortArray[i];
             this.length = i;
             this.shortArray[i] = (short) 0;
@@ -6371,6 +6439,16 @@ class SimpleArraysImpl {
             }
             this.length = i + 1;
             this.shortArray[i] = value;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -6520,6 +6598,16 @@ class SimpleArraysImpl {
                 reallocateStorage();
             this.length = i + 1;
             this.shortArray[offset + i] = value;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableShortArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -7861,6 +7949,8 @@ class SimpleArraysImpl {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             int result = this.intArray[i];
             this.length = i;
             this.intArray[i] = (int) 0;
@@ -7876,6 +7966,16 @@ class SimpleArraysImpl {
             }
             this.length = i + 1;
             this.intArray[i] = value;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -8021,6 +8121,16 @@ class SimpleArraysImpl {
                 reallocateStorage();
             this.length = i + 1;
             this.intArray[offset + i] = value;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableIntArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -9339,6 +9449,8 @@ class SimpleArraysImpl {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             long result = this.longArray[i];
             this.length = i;
             this.longArray[i] = (long) 0;
@@ -9354,6 +9466,16 @@ class SimpleArraysImpl {
             }
             this.length = i + 1;
             this.longArray[i] = value;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -9499,6 +9621,16 @@ class SimpleArraysImpl {
                 reallocateStorage();
             this.length = i + 1;
             this.longArray[offset + i] = value;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableLongArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -10811,6 +10943,8 @@ class SimpleArraysImpl {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             double result = this.doubleArray[i];
             this.length = i;
             this.doubleArray[i] = (double) 0;
@@ -10826,6 +10960,16 @@ class SimpleArraysImpl {
             }
             this.length = i + 1;
             this.doubleArray[i] = value;
+        }
+
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
         }
 
         public MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -10973,6 +11117,16 @@ class SimpleArraysImpl {
             this.doubleArray[offset + i] = value;
         }
 
+        public void removeTop() {
+            int i = (int) length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no necessity to clear last element: MutableObjectArray has independent implementation
+        }
+
         public MutableDoubleArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
@@ -11044,6 +11198,9 @@ class SimpleArraysImpl {
       public(\s+\w+)+\s+\w+ndexOf\(long\s+\w+,\s*long\s+\w+,\s*(long|double)(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       public(\s+\w+)+\s+fill\((long\s+\w+,\s*long\s+\w+,\s*)?(long|double)\s+va(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       public(\s+\w+)+\s+(min|max)Value\((.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
+      \}(\s+)(public(\s+\w+)+\s+removeTop\(\))(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> }$1$2 {
+            popElement();
+        }$1;;
       (JArrays\.copyOfRange) ==> (Object[])$1 ;;
       \(float\)\s*0 ==> null ;;
       getFloat ==> getElement ;;
@@ -12253,6 +12410,8 @@ class SimpleArraysImpl {
             int i = (int) length - 1;
             if (i < 0)
                 throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             Object result = this.objectArray[i];
             this.length = i;
             this.objectArray[i] = null;
@@ -12268,6 +12427,10 @@ class SimpleArraysImpl {
             }
             this.length = i + 1;
             this.objectArray[i] = value;
+        }
+
+        public void removeTop() {
+            popElement();
         }
 
         public MutableObjectArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -12402,6 +12565,10 @@ class SimpleArraysImpl {
                 reallocateStorage();
             this.length = i + 1;
             this.objectArray[offset + i] = value;
+        }
+
+        public void removeTop() {
+            popElement();
         }
 
         public MutableObjectArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -13754,6 +13921,8 @@ class SimpleArraysImpl {
             long i = length - 1;
             if (i < 0)
                 throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             boolean result = (this.bitArray[(int) ((i) >>> 6)] & (1L << ((int) (i) & 63))) != 0L;
             this.length = i;
             // - no sense to spend time for setting freed bit to zero
@@ -13774,6 +13943,16 @@ class SimpleArraysImpl {
                 else
                     this.bitArray[(int) ((i) >>> 6)] &= ~(1L << ((int) (i) & 63));
             }
+        }
+
+        public void removeTop() {
+            long i = length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no sense to spend time for setting freed bit to zero
         }
 
         public MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -13925,6 +14104,16 @@ class SimpleArraysImpl {
                 else
                     this.bitArray[(int) ((offset + i) >>> 6)] &= ~(1L << ((int) (offset + i) & 63));
             }
+        }
+
+        public void removeTop() {
+            long i = length - 1;
+            if (i < 0)
+                throw new EmptyStackException();
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.length = i;
+            // - no sense to spend time for setting freed bit to zero
         }
 
         public MutableBitArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {

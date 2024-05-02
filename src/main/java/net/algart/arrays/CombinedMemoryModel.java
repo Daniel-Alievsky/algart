@@ -1553,6 +1553,14 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             pushElement(value);
         }
 
+        public void removeTop() {
+            long index = length() - 1;
+            if (index < 0) {
+                throw new EmptyStackException();
+            }
+            length(index);
+        }
+
         public MutableObjectArray<E> setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;

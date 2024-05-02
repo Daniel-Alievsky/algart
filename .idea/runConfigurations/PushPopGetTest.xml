@@ -3,7 +3,7 @@
     <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.PushPopGetTest" />
     <module name="algart" />
     <option name="PROGRAM_PARAMETERS" value="1000 10000" />
-    <option name="VM_PARAMETERS" value="-ea -esa -Dnet.algart.arrays.globalMemoryModel=BUFFER" />
+    <option name="VM_PARAMETERS" value="-ea -esa " />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="net.algart.arrays.demo.*" />
