@@ -63,100 +63,125 @@ public class PushPopGetTest {
     }
 
     private void testArray(Class<?> elementType) {
-        final MutablePArray array1 = (MutablePArray) mm.newEmptyArray(elementType);
-        final MutablePArray array2 = (MutablePArray) mm.newEmptyArray(elementType);
-        final MutablePArray array3 = (MutablePArray) mm.newEmptyArray(elementType);
-        final MutablePArray array4 = (MutablePArray) mm.newEmptyArray(elementType);
+        final MutablePArray array = (MutablePArray) mm.newEmptyArray(elementType);
+        final MutablePArray addedInt = (MutablePArray) mm.newEmptyArray(elementType);
+        final MutablePArray addedLong = (MutablePArray) mm.newEmptyArray(elementType);
+        final MutablePArray addedDouble = (MutablePArray) mm.newEmptyArray(elementType);
         for (int k = 0; k < arrayLength; k++) {
-            if (array1 instanceof BitStack a) {
+            int v = (int) longs[k];
+            addedInt.add(v);
+            addedLong.add((long) v);
+            // - must be equivalent
+        }
+        if (!addedInt.equals(addedLong)) {
+            throw new AssertionError("Bug in add(int)/add(long): " + addedInt);
+        }
+        addedInt.fill(0);
+        addedLong.fill(1);
+        for (int k = 0; k < arrayLength; k++) {
+            int v = (int) longs[k];
+            addedInt.setInt(k, v);
+            addedLong.setLong(k, v);
+            // - must be equivalent
+        }
+        if (!addedInt.equals(addedLong)) {
+            throw new AssertionError("Bug in setInt/setLong: " + addedInt);
+        }
+        addedInt.clear();
+        addedLong.clear();
+        for (int k = 0; k < arrayLength; k++) {
+            if (array instanceof BitStack a) {
                 boolean v = longs[k] != 0;
                 a.pushBit(v);
-                array2.add(v ? 1 : 0);
-                array3.add(v ? 1L : 0L);
-                array4.add(v ? 1.0 : 0.0);
-                assert ((PFixedArray) array2).getInt(k) == (v ? 1 : 0) : v;
-                assert ((PFixedArray) array3).getLong(k) == (v ? 1 : 0) : v;
-                assert array4.getDouble(k) == (v ? 1.0 : 0.0) : v;
-            } else if (array1 instanceof ByteStack a) {
+                addedInt.add(v ? 1 : 0);
+                addedLong.add(v ? 1L : 0L);
+                addedDouble.add(v ? 1.0 : 0.0);
+                assert ((PFixedArray) addedInt).getInt(k) == (v ? 1 : 0) : v;
+                assert ((PFixedArray) addedLong).getLong(k) == (v ? 1 : 0) : v;
+                assert addedDouble.getDouble(k) == (v ? 1.0 : 0.0) : v;
+            } else if (array instanceof ByteStack a) {
                 byte v = (byte) longs[k];
                 a.pushByte(v);
-                array2.add((int) v);
-                array3.add((long) v);
-                array4.add((double) v);
-                assert ((PFixedArray) array2).getInt(k) == (v & 0xFF) : v;
-                assert ((PFixedArray) array3).getLong(k) == (v & 0xFF) : v;
-                assert array4.getDouble(k) == (v & 0xFF) : v;
-            } else if (array1 instanceof CharStack a) {
+                addedInt.add((int) v);
+                addedLong.add((long) v);
+                addedDouble.add((double) v);
+                assert ((PFixedArray) addedInt).getInt(k) == (v & 0xFF) : v;
+                assert ((PFixedArray) addedLong).getLong(k) == (v & 0xFF) : v;
+                assert addedDouble.getDouble(k) == (v & 0xFF) : v;
+            } else if (array instanceof CharStack a) {
                 char v = (char) longs[k];
                 a.pushChar(v);
-                array2.add((int) v);
-                array3.add((long) v);
-                array4.add((double) v);
-                assert ((PFixedArray) array2).getInt(k) == v : v;
-                assert ((PFixedArray) array3).getLong(k) == v : v;
-                assert array4.getDouble(k) == v : v;
-            } else if (array1 instanceof ShortStack a) {
+                addedInt.add((int) v);
+                addedLong.add((long) v);
+                addedDouble.add((double) v);
+                assert ((PFixedArray) addedInt).getInt(k) == v : v;
+                assert ((PFixedArray) addedLong).getLong(k) == v : v;
+                assert addedDouble.getDouble(k) == v : v;
+            } else if (array instanceof ShortStack a) {
                 short v = (short) longs[k];
                 a.pushShort(v);
-                array2.add((int) v);
-                array3.add((long) v);
-                array4.add((double) v);
-                assert ((PFixedArray) array2).getInt(k) == (v & 0xFFFF) : v;
-                assert ((PFixedArray) array3).getLong(k) == (v & 0xFFFf) : v;
-                assert array4.getDouble(k) == (v & 0xFFFF) : v;
-            } else if (array1 instanceof IntStack a) {
+                addedInt.add((int) v);
+                addedLong.add((long) v);
+                addedDouble.add((double) v);
+                assert ((PFixedArray) addedInt).getInt(k) == (v & 0xFFFF) : v;
+                assert ((PFixedArray) addedLong).getLong(k) == (v & 0xFFFf) : v;
+                assert addedDouble.getDouble(k) == (v & 0xFFFF) : v;
+            } else if (array instanceof IntStack a) {
                 int v = (int) longs[k];
                 a.pushInt(v);
-                array2.add((int) v);
-                array3.add((long) v);
-                array4.add((double) v);
-                assert ((PFixedArray) array2).getInt(k) == v : v;
-                assert ((PFixedArray) array3).getLong(k) == v : v;
-                assert array4.getDouble(k) == v : v;
-            } else if (array1 instanceof LongStack a) {
+                addedInt.add((int) v);
+                addedLong.add((long) v);
+                addedDouble.add((double) v);
+                assert ((PFixedArray) addedInt).getInt(k) == v : v;
+                assert ((PFixedArray) addedLong).getLong(k) == v : v;
+                assert addedDouble.getDouble(k) == v : v;
+            } else if (array instanceof LongStack a) {
                 long v = longs[k];
                 v = (long) (double) v;
                 // - some long values cannot be exactly represented in double
                 a.pushLong(v);
-                array2.add(v);
-                // - adding long instead of int to avoid precision lost
-                array3.add(v);
-                array4.add((double) v);
-                assert ((PFixedArray) array2).getInt(k) ==
+                addedInt.add((int) v);
+                addedLong.add(v);
+                addedDouble.add((double) v);
+                assert ((PFixedArray) addedInt).getInt(k) == (int) v;
+                assert ((PFixedArray) addedLong).getInt(k) ==
                         Arrays.truncate(v, Integer.MIN_VALUE, Integer.MAX_VALUE) : v;
-                assert ((PFixedArray) array3).getLong(k) == v : v;
-                assert array4.getDouble(k) == v : v;
-            } else if (array1 instanceof FloatStack a) {
+                assert ((PFixedArray) addedLong).getLong(k) == v : v;
+                assert addedDouble.getDouble(k) == v : v;
+                addedInt.removeTop();
+                addedInt.add(v);
+                // adding long for further comparison
+            } else if (array instanceof FloatStack a) {
                 float v = (float) doubles[k];
                 a.pushFloat(v);
-                array2.add((int) v);
-                array3.add((long) v);
-                array4.add((double) v);
-                assert array1.getDouble(k) == v : v;
-                assert array2.getDouble(k) == (float) (int) v : v;
-                assert array3.getDouble(k) == (float) (long) v : v;
-                assert array4.getDouble(k) == v : v;
-            } else if (array1 instanceof DoubleStack a) {
+                addedInt.add((int) v);
+                addedLong.add((long) v);
+                addedDouble.add((double) v);
+                assert array.getDouble(k) == v : v;
+                assert addedInt.getDouble(k) == (float) (int) v : v;
+                assert addedLong.getDouble(k) == (float) (long) v : v;
+                assert addedDouble.getDouble(k) == v : v;
+            } else if (array instanceof DoubleStack a) {
                 double v = doubles[k];
                 a.pushDouble(v);
-                array2.add((int) v);
-                array3.add((long) v);
-                array4.add((double) v);
-                assert array1.getDouble(k) == v : v;
-                assert array2.getDouble(k) == (int) v : v;
-                assert array3.getDouble(k) == (double) (long) v : v;
-                assert array4.getDouble(k) == v : v;
+                addedInt.add((int) v);
+                addedLong.add((long) v);
+                addedDouble.add((double) v);
+                assert array.getDouble(k) == v : v;
+                assert addedInt.getDouble(k) == (int) v : v;
+                assert addedLong.getDouble(k) == (double) (long) v : v;
+                assert addedDouble.getDouble(k) == v : v;
             }
         }
-        if (array1 instanceof PFixedArray) {
-            if (!array1.equals(array2)) {
-                throw new AssertionError("Bug in add(int): " + array2);
+        if (array instanceof PFixedArray) {
+            if (!array.equals(addedInt)) {
+                throw new AssertionError("Bug in add(int): " + addedInt);
             }
-            if (!array1.equals(array3)) {
-                throw new AssertionError("Bug in add(long): " + array3);
+            if (!array.equals(addedLong)) {
+                throw new AssertionError("Bug in add(long): " + addedLong);
             }
-            if (!array1.equals(array4)) {
-                throw new AssertionError("Bug in add(double): " + array4);
+            if (!array.equals(addedDouble)) {
+                throw new AssertionError("Bug in add(double): " + addedDouble);
             }
         }
         //TODO!! check popInt/Long/Double
