@@ -48,11 +48,10 @@ class SimpleArraysImpl {
      * @param fromIndex the initial bit index in <tt>array</tt>, inclusive.
      * @param toIndex   the end bit index in <tt>array</tt>, exclusive.
      * @return the specified packed subarray.
-     * @throws NullPointerException if the <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException
-     *          if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
-     *          if <tt>toIndex</tt> is greater than <tt>array.length * 64</tt>,
-     *          or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>
+     * @throws NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
+     *                                   if <tt>toIndex</tt> is greater than <tt>array.length * 64</tt>,
+     *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>
      * @see PackedBitArrays#copyBits(long[], long, long[], long, long)
      */
     static long[] cloneBitSubArray(long[] array, long fromIndex, long toIndex) {
