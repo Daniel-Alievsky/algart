@@ -11193,7 +11193,7 @@ class SimpleArraysImpl {
       $1(Class<?> elementType, long$2super(elementType, initialCapacity ;;
       (new\s+\w*JAFloatArray\()(\d+\,|initialLength,|length,) ==> $1elementType, $2 ;;
       float.class ==> elementType ;;
-      public(\s+\w+)+\s+(get|set|pop|push)(Int|Long\(|Double\(|Element\()(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
+      public(\s+\w+)+\s+(get|set|pop|push|add)(Int|Long\(|Double\(|Element\()(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       public(\s+\w+)+\s+\w+ndexOf\(long\s+\w+,\s*long\s+\w+,\s*(long|double)(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       public(\s+\w+)+\s+fill\((long\s+\w+,\s*long\s+\w+,\s*)?(long|double)\s+va(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
       public(\s+\w+)+\s+(min|max)Value\((.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==> ;;
@@ -12399,18 +12399,6 @@ class SimpleArraysImpl {
             return this;
         }
 
-        public void add(double value) {
-            pushElement((Object) value);
-        }
-
-        public void add(long value) {
-            pushElement((Object) value);
-        }
-
-        public void add(int value) {
-            pushElement((Object) value);
-        }
-
         public Object popElement() {
             int i = (int) length - 1;
             if (i < 0)
@@ -12533,18 +12521,6 @@ class SimpleArraysImpl {
         public MutableObjectArray append(Array appendedArray) {
             appendImpl(appendedArray);
             return this;
-        }
-
-        public void add(double value) {
-            pushElement((Object) value);
-        }
-
-        public void add(long value) {
-            pushElement((Object) value);
-        }
-
-        public void add(int value) {
-            pushElement((Object) value);
         }
 
         public Object popElement() {
