@@ -67,8 +67,14 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
     void setLong(long index, long value);
 
     /**
-     * Equivalent to {@link #setLong(long, long) setLong(index, (long)value)},
-     * but may work little faster.
+     * Sets the element #<tt>index</tt> by conversion from <tt>long</tt>,
+     * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
+     * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
+     * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),
+     * or as <tt>value!=0</tt> for <tt>boolean</tt> element type.
+     *
+     * <p>This method is equivalent to both {@link #setLong(long, long) setLong(index, (long) value)}
+     * and {@link #setDouble(long, double) setDouble(index, (double) value)}, but may work little faster.
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.

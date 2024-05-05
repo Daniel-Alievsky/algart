@@ -963,15 +963,15 @@ class BufferArraysImpl {
             return (int) popFloat();
         }
 
-        public void add(double value) {
+        public void addDouble(double value) {
             pushFloat((float) value);
         }
 
-        public void add(long value) {
+        public void addLong(long value) {
             pushFloat((float) value);
         }
 
-        public void add(int value) {
+        public void addInt(int value) {
             pushFloat((float) value);
         }
 
@@ -1512,15 +1512,15 @@ class BufferArraysImpl {
             return (int) popChar();
         }
 
-        public void add(double value) {
+        public void addDouble(double value) {
             pushChar((char) value);
         }
 
-        public void add(long value) {
+        public void addLong(long value) {
             pushChar((char) value);
         }
 
-        public void add(int value) {
+        public void addInt(int value) {
             pushChar((char) value);
         }
 
@@ -2061,15 +2061,15 @@ class BufferArraysImpl {
             return (int) (popByte() & 0xFF);
         }
 
-        public void add(double value) {
+        public void addDouble(double value) {
             pushByte((byte) value);
         }
 
-        public void add(long value) {
+        public void addLong(long value) {
             pushByte((byte) value);
         }
 
-        public void add(int value) {
+        public void addInt(int value) {
             pushByte((byte) value);
         }
 
@@ -2610,15 +2610,15 @@ class BufferArraysImpl {
             return (int) (popShort() & 0xFFFF);
         }
 
-        public void add(double value) {
+        public void addDouble(double value) {
             pushShort((short) value);
         }
 
-        public void add(long value) {
+        public void addLong(long value) {
             pushShort((short) value);
         }
 
-        public void add(int value) {
+        public void addInt(int value) {
             pushShort((short) value);
         }
 
@@ -3140,15 +3140,15 @@ class BufferArraysImpl {
             return (long) popInt();
         }
 
-        public void add(double value) {
+        public void addDouble(double value) {
             pushInt((int) value);
         }
 
-        public void add(long value) {
+        public void addLong(long value) {
             pushInt((int) value);
         }
 
-        public void add(int value) {
+        public void addInt(int value) {
             pushInt((int) value);
         }
 
@@ -3659,15 +3659,15 @@ class BufferArraysImpl {
             return Arrays.truncateLongToInt(popLong());
         }
 
-        public void add(double value) {
+        public void addDouble(double value) {
             pushLong((long) value);
         }
 
-        public void add(long value) {
+        public void addLong(long value) {
             pushLong((long) value);
         }
 
-        public void add(int value) {
+        public void addInt(int value) {
             pushLong((long) value);
         }
 
@@ -4178,15 +4178,15 @@ class BufferArraysImpl {
             return (int) popDouble();
         }
 
-        public void add(double value) {
+        public void addDouble(double value) {
             pushDouble((double) value);
         }
 
-        public void add(long value) {
+        public void addLong(long value) {
             pushDouble((double) value);
         }
 
-        public void add(int value) {
+        public void addInt(int value) {
             pushDouble((double) value);
         }
 
@@ -4722,15 +4722,15 @@ class BufferArraysImpl {
             return popBit() ? 1 : 0;
         }
 
-        public void add(double value) {
+        public void addDouble(double value) {
             pushBit(value != 0.0);
         }
 
-        public void add(long value) {
+        public void addLong(long value) {
             pushBit(value != 0);
         }
 
-        public void add(int value) {
+        public void addInt(int value) {
             pushBit(value != 0);
         }
 

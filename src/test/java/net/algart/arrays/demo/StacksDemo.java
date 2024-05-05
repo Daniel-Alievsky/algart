@@ -42,6 +42,9 @@ public class StacksDemo {
             return;
         }
         int n = Integer.parseInt(args[1]);
+        if (n <= 0) {
+            throw new IllegalArgumentException("Zero or negative " + n);
+        }
         Stack stack1 = args[0].equals("int") ? Arrays.SystemSettings.globalMemoryModel().newEmptyIntArray() :
             CombinedMemoryModel.getInstance(new CombinedArraysDemo.MyCombinerSingle(mm)).newEmptyArray(
                 CombinedArraysDemo.Circle.class);
@@ -50,37 +53,42 @@ public class StacksDemo {
         for (int count = 1; count <= 5; count++) {
             System.out.println("*** ITERATION #" + count);
             long t1, t2, t3, t4, t5, t6;
-            if (stack1 instanceof IntStack) {
-                IntStack is1 = (IntStack) stack1;
+            if (stack1 instanceof IntStack is1) {
                 IntStack is2 = (IntStack) stack2;
                 t1 = System.nanoTime();
-                for (int k = 0; k < n; k++)
+                for (int k = 0; k < n; k++) {
                     is1.pushInt(k);
+                }
                 t2 = System.nanoTime();
                 clone1 = ((MutableArray) stack1).mutableClone(Arrays.SystemSettings.globalMemoryModel());
                 t3 = System.nanoTime();
-                for (int k = 0; k < n; k++)
+                for (int k = 0; k < n; k++) {
                     is2.pushInt(is1.popInt());
+                }
                 t4 = System.nanoTime();
-                clone2 = ((MutableArray) stack2).mutableClone(Arrays.SystemSettings.globalMemoryModel());
+                clone2 = ((Array) stack2).mutableClone(Arrays.SystemSettings.globalMemoryModel());
                 t5 = System.nanoTime();
-                for (int k = 0; k < n; k++)
+                for (int k = 0; k < n; k++) {
                     is2.popInt();
+                }
                 t6 = System.nanoTime();
             } else {
                 t1 = System.nanoTime();
-                for (int k = 0; k < n; k++)
+                for (int k = 0; k < n; k++) {
                     stack1.pushElement(new CombinedArraysDemo.Circle(-k, -k, k));
+                }
                 t2 = System.nanoTime();
-                clone1 = ((MutableArray) stack1).mutableClone(Arrays.SystemSettings.globalMemoryModel());
+                clone1 = ((Array) stack1).mutableClone(Arrays.SystemSettings.globalMemoryModel());
                 t3 = System.nanoTime();
-                for (int k = 0; k < n; k++)
+                for (int k = 0; k < n; k++) {
                     stack2.pushElement(stack1.popElement());
+                }
                 t4 = System.nanoTime();
-                clone2 = ((MutableArray) stack2).mutableClone(Arrays.SystemSettings.globalMemoryModel());
+                clone2 = ((Array) stack2).mutableClone(Arrays.SystemSettings.globalMemoryModel());
                 t5 = System.nanoTime();
-                for (int k = 0; k < n; k++)
+                for (int k = 0; k < n; k++) {
                     stack2.popElement();
+                }
                 t6 = System.nanoTime();
             }
             System.out.printf(Locale.US, "stack1.pushInt:                 %d ns, %.2f ns/element%n",
@@ -93,12 +101,10 @@ public class StacksDemo {
                 t5 - t4, (t5 - t4) * 1.0 / n);
             System.out.printf(Locale.US, "stack2.popInt:                  %d ns, %.2f ns/element%n",
                 t6 - t5, (t6 - t5) * 1.0 / n);
-            System.out.println("clone1: " + clone1);
-            if (clone1 instanceof Array)
-                System.out.println("    " + Arrays.toString((Array) clone1, "; ", 100));
-            System.out.println("clone2: " + clone2);
-            if (clone2 instanceof Array)
-                System.out.println("    " + Arrays.toString((Array) clone2, "; ", 100));
+            System.out.println("clone1: " + clone1.length() + " elements: " + clone1);
+            System.out.println("    " + Arrays.toString((Array) clone1, "; ", 100));
+            System.out.println("clone2: " + clone2.length() + " elements: " + clone2);
+            System.out.println("    " + Arrays.toString((Array) clone2, "; ", 100));
             System.out.println("stack1: " + stack1);
             System.out.println("stack2: " + stack2);
             System.out.println();

@@ -70,11 +70,11 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
      */
     double popDouble();
 
-    void add(double value);
+    void addDouble(double value);
 
-    void add(long value);
+    void addLong(long value);
 
-    void add(int value);
+    void addInt(int value);
 
     MutablePArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
