@@ -70,8 +70,42 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
      */
     double popDouble();
 
+    /**
+     * Appends <tt>value</tt> element to the end of this array with conversion from <tt>double</tt>,
+     * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
+     * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
+     * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),
+     * or as <tt>value!=0.0</tt> for <tt>boolean</tt> element type.
+     *
+     * <p>The same action may be performed by the following code:</p>
+     * <pre>
+     * array.{@link MutablePArray#length(long) length}(array.{@link #length() length()}+1);
+     * array.{@link UpdatablePArray#setDouble(long, double)
+     * setDouble}(array.{@link #length() length()}-1, value);
+     * </pre>
+     *
+     * @param value to be added to the top of this array.
+     * @throws TooLargeArrayException if the resulting stack length is too large for this type of array.
+     */
     void addDouble(double value);
 
+    /**
+     * Appends <tt>value</tt> element to the end of this array with conversion from <tt>long</tt>,
+     * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
+     * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
+     * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),
+     * or as <tt>value!=0</tt> for <tt>boolean</tt> element type.
+     *
+     * <p>The same action may be performed by the following code:</p>
+     * <pre>
+     * array.{@link MutablePArray#length(long) length}(array.{@link #length() length()}+1);
+     * array.{@link UpdatablePArray#setLong(long, long)
+     * setLong}(array.{@link #length() length()}-1, value);
+     * </pre>
+     *
+     * @param value to be added to the top of this array.
+     * @throws TooLargeArrayException if the resulting stack length is too large for this type of array.
+     */
     void addLong(long value);
 
     void addInt(int value);
