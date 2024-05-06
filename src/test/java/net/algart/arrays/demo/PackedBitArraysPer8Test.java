@@ -260,7 +260,6 @@ public class PackedBitArraysPer8Test {
                 showProgress(testCount);
             }
 
-
             System.out.println("Testing \"getBitsInReverseOrder\" method...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 for (int k = 0; k < len; k++) {

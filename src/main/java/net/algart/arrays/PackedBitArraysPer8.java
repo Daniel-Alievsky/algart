@@ -259,7 +259,7 @@ public class PackedBitArraysPer8 {
         int shift = 0;
         for (; ; ) {
             final int bitsLeft = 8 - sPosRem;
-            if (count >= bitsLeft) {
+            if (count > bitsLeft) {
                 final long actualBits = (src[sPos] & 0xFFL) >>> sPosRem;
                 // sPosRem=5, bitsLeft=3:
                 //     (01234567)
@@ -269,9 +269,10 @@ public class PackedBitArraysPer8 {
                 count -= bitsLeft;
                 shift += bitsLeft;
                 sPos++;
-                if (count == 0 || sPos >= src.length) {
+                if (sPos >= src.length) {
                     break;
                 }
+                sPosRem = 0;
             } else {
                 final long actualBits = (src[sPos] & (0xFFL >>> (bitsLeft - count))) >>> sPosRem;
                 // sPosRem=5, bitsLeft=3, count=2:
@@ -283,7 +284,6 @@ public class PackedBitArraysPer8 {
                 result |= actualBits << shift;
                 break;
             }
-            sPosRem = 0;
         }
         return result;
     }
@@ -396,9 +396,9 @@ public class PackedBitArraysPer8 {
         long result = 0;
         int sPosRem = (int) (srcPos & 7);
         int sPos = (int) srcPosDiv8;
-        while (count != 0) {
+        for (; ; ) {
             final int bitsLeft = 8 - sPosRem;
-            if (count >= bitsLeft) {
+            if (count > bitsLeft) {
                 final long actualBits = (long) src[sPos] & (0xFFL >>> sPosRem);
                 // sPosRem=5, bitsLeft=3:
                 //     (76543210)
@@ -407,6 +407,7 @@ public class PackedBitArraysPer8 {
                 result = (result << bitsLeft) | actualBits;
                 count -= bitsLeft;
                 sPos++;
+                sPosRem = 0;
             } else {
                 final long actualBits = (long) src[sPos] & ~(0xFF00 >>> sPosRem) & 0xFF;
                 // sPosRem=5, bitsLeft=3, count=2:
@@ -422,7 +423,6 @@ public class PackedBitArraysPer8 {
             if (sPos >= src.length) {
                 return result << count;
             }
-            sPosRem = 0;
         }
         return result;
     }

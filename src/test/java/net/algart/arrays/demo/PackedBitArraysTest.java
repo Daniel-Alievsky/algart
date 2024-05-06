@@ -40,6 +40,18 @@ public class PackedBitArraysTest {
     final static long tStart = System.currentTimeMillis();
     private static long tFix = tStart;
 
+    private static long simpleBits(long[] src, long srcPos, int count) {
+        long result = 0;
+        for (int k = 0; k < count; k++) {
+            if (srcPos + k >= 64 * (long) src.length) {
+                break;
+            }
+            final long bit = PackedBitArrays.getBit(src, srcPos + k) ? 1L : 0L;
+            result |= bit << k;
+        }
+        return result;
+    }
+
     static void showProgress(int testCount) {
         long t = System.currentTimeMillis();
         if (t - tFix > 500) {
@@ -171,6 +183,28 @@ public class PackedBitArraysTest {
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
                     }
+                }
+                showProgress(testCount);
+            }
+
+            System.out.println("Testing \"getBits\" method...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                for (int k = 0; k < len; k++) {
+                    boolean bTest = PackedBitArrays.getBits(pSrc, k, 1) == 1;
+                    boolean b = PackedBitArrays.getBit(pSrc, k);
+                    if (b != bTest) {
+                        throw new AssertionError("The bug A in getBits found in test #" +
+                                testCount + ", error found at " + k);
+                    }
+                }
+                int srcPos = rnd.nextInt(len);
+                int count = rnd.nextInt(65);
+                long vTest = PackedBitArrays.getBits(pSrc, srcPos, count);
+                long v = simpleBits(pSrc, srcPos, count);
+                if (vTest != v) {
+                    throw new AssertionError("The bug B in getBits found in test #" + testCount +
+                            ": srcPos = " + srcPos + ", count = " + count
+                            + ", " + Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v));
                 }
                 showProgress(testCount);
             }

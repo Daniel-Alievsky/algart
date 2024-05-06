@@ -182,6 +182,71 @@ public class PackedBitArrays {
     }
 
     /**
+     * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#srcPos</tt>,
+     * in the packed <tt>src</tt> bit array.
+     *
+     * <p>More precisely, the bit <tt>#(srcPos+k)</tt> will be returned in the bit <tt>#k</tt> of the returned
+     * <tt>long</tt> value <tt>R</tt>: the first bit <tt>#srcPos</tt> will be equal to <tt>R&amp;1</tt>,
+     * the following bit <tt>#(srcPos+1)</tt> will be equal to <tt>(R&gt;&gt;1)&amp;1</tt>, etc.
+     * If <tt>count=0</tt>, the result is 0.</p>
+     *
+     * <p>The same result can be calculated using the following loop:</p>
+     *
+     * <pre>
+     *      long result = 0;
+     *      for (int k = 0; k &lt; count; k++) {
+     *          final long bit = {@link #getBit(long[], long) PackedBitArrays.getBit}(src, srcPos + k) ? 1L : 0L;
+     *          result |= bit &lt;&lt; k;
+     *      }</pre>
+     *
+     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     *
+     * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
+     * after the end of the array (<tt>&ge;8*src.length</tt>); instead, all bits outside the array are considered zero.
+     * (But negative indexes are not allowed.)</p>
+     *
+     * @param src    the source array (bits are packed in <tt>long</tt> values).
+     * @param srcPos position of the first bit read in the source array.
+     * @param count  the number of bits to be unpacked (must be &gt;=0 and &lt;64).
+     * @return the sequence of <tt>count</tt> bits.
+     * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
+    public static long getBits(long[] src, long srcPos, int count) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IndexOutOfBoundsException("Negative srcPos argument: " + srcPos);
+        }
+        final long srcPosDiv64 = srcPos >>> 6;
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot get > 64 bits in getBits method");
+        }
+        if (count == 0 || srcPosDiv64 >= src.length) {
+            return 0;
+        }
+        int sPosRem = (int) (srcPos & 63);
+        int sPos = (int) srcPosDiv64;
+        int bitsLeft = 64 - sPosRem;
+        // Below is a simplified implementation of PackedBitArraysPer8.getBits for a case of maximum 2 iterations
+        if (count > bitsLeft) {
+            final long actualBitsLow = src[sPos] >>> sPosRem;
+            sPos++;
+            if (sPos >= src.length) {
+                return actualBitsLow;
+            }
+            final long actualBitsHigh = src[sPos] & (-1L >>> 64 - (count - bitsLeft));
+            return actualBitsLow | (actualBitsHigh << bitsLeft);
+        } else {
+            return (src[sPos] & (-1L >>> (bitsLeft - count))) >>> sPosRem;
+        }
+    }
+
+    /**
      * Returns a hash code based on the contents of the specified fragment of the given packed bit array.
      * If the passed array is <tt>null</tt> or <tt>fromIndex==toIndex</tt>, returns 0.
      *
@@ -336,7 +401,7 @@ public class PackedBitArrays {
             int last2 = (int) ((pos2 + length - 1) >>> 6);
             if (first1 == last1) {
                 // so, length < 64
-                long mask = ~((1L << (pos1 & 63)) - 1); // all bits pos1&63..63: correct even if (pos1&63)==0
+                long mask = -(1L << (pos1 & 63)); // all bits pos1&63..63: correct even if (pos1&63)==0
                 // here pos1 + length > 0: it can be zero only if length==0, that was checked above
                 int ofs = (int) ((pos1 + length) & 63);
                 if (ofs != 0)
@@ -344,7 +409,7 @@ public class PackedBitArrays {
                 return (array1[first1] & mask) == (array2[first2] & mask);
             }
             if ((pos1 & 63) != 0) {
-                long fromMask = ~((1L << (pos1 & 63)) - 1); // all bits pos1&63..63
+                long fromMask = -(1L << (pos1 & 63)); // all bits pos1&63..63
                 if ((array1[first1] & fromMask) != (array2[first2] & fromMask)) {
                     return false;
                 }
@@ -357,12 +422,10 @@ public class PackedBitArrays {
                     return false;
                 }
                 last1--;
-                last2--;
+                // last2--; // - will not be used
             }
             if (first1 <= last1) {
-                if (!JArrays.arrayEquals(array1, first1, array2, first2, last1 - first1 + 1)) {
-                    return false;
-                }
+                return JArrays.arrayEquals(array1, first1, array2, first2, last1 - first1 + 1);
             }
             return true;
         } else {
