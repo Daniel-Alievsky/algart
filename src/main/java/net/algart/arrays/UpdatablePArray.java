@@ -39,11 +39,30 @@ package net.algart.arrays;
  */
 public interface UpdatablePArray extends PArray, UpdatableArray {
     /**
-     * Sets the element #<tt>index</tt> by conversion from <tt>double</tt>,
+     * Sets the element #<tt>index</tt> with conversion from <tt>double</tt>,
      * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
      * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
      * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),
      * or as <tt>value!=0.0</tt> for <tt>boolean</tt> element type.
+     *
+     * <p>Depending on the specific subinterface implemented by the object,
+     * this method is equivalent to one of the following calls:</p>
+     *
+     * <ul>
+     *     <li>for {@link UpdatableBitArray}:
+     *     <tt>{@link UpdatableBitArray#setBit(long, boolean) setBit}(index, value != 0.0)</tt>;</li>
+     *     <li>for {@link UpdatableCharArray}:
+     *     <tt>{@link UpdatableCharArray#setChar(long, char) setChar}(index, (char) value)</tt>;</li>
+     *     <li>for {@link UpdatableByteArray}:
+     *     <tt>{@link UpdatableByteArray#setByte(long, byte) setByte}(index, (byte) value)</tt>;</li>
+     *     <li>for {@link UpdatableShortArray}:
+     *     <tt>{@link UpdatableShortArray#setShort(long, short) setShort}(index, (short) value)</tt>;</li>
+     *     <li>for {@link UpdatableLongArray}:
+     *     <tt>{@link UpdatableLongArray#setLong(long, long) setLong}(index, (long) value)</tt>;</li>
+     *     <li>for {@link UpdatableFloatArray}:
+     *     <tt>{@link UpdatableFloatArray#setFloat(long, float) setFloat}(index, (float) value)</tt>;</li>
+     *     <li>for {@link UpdatableDoubleArray}: the same method is already declared in this interface.</li>
+     * </ul>
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.
@@ -53,11 +72,30 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
     void setDouble(long index, double value);
 
     /**
-     * Sets the element #<tt>index</tt> by conversion from <tt>long</tt>,
+     * Sets the element #<tt>index</tt> with conversion from <tt>long</tt>,
      * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
      * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
      * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),
      * or as <tt>value!=0</tt> for <tt>boolean</tt> element type.
+     *
+     * <p>Depending on the specific subinterface implemented by the object,
+     * this method is equivalent to one of the following calls:</p>
+     *
+     * <ul>
+     *     <li>for {@link UpdatableBitArray}:
+     *     <tt>{@link UpdatableBitArray#setBit(long, boolean) setBit}(index, value != 0)</tt>;</li>
+     *     <li>for {@link UpdatableCharArray}:
+     *     <tt>{@link UpdatableCharArray#setChar(long, char) setChar}(index, (char) value)</tt>;</li>
+     *     <li>for {@link UpdatableByteArray}:
+     *     <tt>{@link UpdatableByteArray#setByte(long, byte) setByte}(index, (byte) value)</tt>;</li>
+     *     <li>for {@link UpdatableShortArray}:
+     *     <tt>{@link UpdatableShortArray#setShort(long, short) setShort}(index, (short) value)</tt>;</li>
+     *     <li>for {@link UpdatableLongArray}: the same method is already declared in this interface;</li>
+     *     <li>for {@link UpdatableFloatArray}:
+     *     <tt>{@link UpdatableFloatArray#setFloat(long, float) setFloat}(index, (float) value)</tt>;</li>
+     *     <li>for {@link UpdatableDoubleArray}:
+     *     <tt>{@link UpdatableDoubleArray#setDouble(long, double) setDouble}(index, (double) value)</tt>.</li>
+     * </ul>
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.
@@ -67,14 +105,14 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
     void setLong(long index, long value);
 
     /**
-     * Sets the element #<tt>index</tt> by conversion from <tt>long</tt>,
+     * Sets the element #<tt>index</tt> with conversion from <tt>int</tt>,
      * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
      * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
      * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),
      * or as <tt>value!=0</tt> for <tt>boolean</tt> element type.
      *
      * <p>This method is equivalent to both {@link #setLong(long, long) setLong(index, (long) value)}
-     * and {@link #setDouble(long, double) setDouble(index, (double) value)}, but may work little faster.
+     * and {@link #setDouble(long, double) setDouble(index, (double) value)}, but can work little faster.
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.
@@ -88,7 +126,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * <tt>{@link #fill(long, long, double) fill}(0, thisArray.length(), value)</tt>.
      *
      * @param value the value to be stored in all elements of the array.
-     * @return      a reference to this array.
+     * @return a reference to this array.
      * @see #fill(long, long, double)
      * @see Arrays#zeroFill(UpdatableArray)
      */
@@ -106,7 +144,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * @param position start index (inclusive) to be filled.
      * @param count    number of filled elements.
      * @param value    the value to be stored in the elements of the array.
-     * @return         a reference to this array.
+     * @return a reference to this array.
      * @throws IndexOutOfBoundsException for illegal <tt>position</tt> and <tt>count</tt>
      *                                   (<tt>position &lt; 0 || count &lt; 0 || position + count &gt; length()</tt>).
      * @see #fill(double)
@@ -119,7 +157,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * <tt>{@link #fill(long, long, long) fill}(0, thisArray.length(), value)</tt>.
      *
      * @param value the value to be stored in all elements of the array.
-     * @return      a reference to this array.
+     * @return a reference to this array.
      * @see #fill(long, long, long)
      * @see Arrays#zeroFill(UpdatableArray)
      */
@@ -137,7 +175,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * @param position start index (inclusive) to be filled.
      * @param count    number of filled elements.
      * @param value    the value to be stored in the elements of the array.
-     * @return         a reference to this array.
+     * @return a reference to this array.
      * @throws IndexOutOfBoundsException for illegal <tt>position</tt> and <tt>count</tt>
      *                                   (<tt>position &lt; 0 || count &lt; 0 || position + count &gt; length()</tt>).
      * @see #fill(long)

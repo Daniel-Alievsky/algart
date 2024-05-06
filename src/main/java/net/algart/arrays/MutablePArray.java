@@ -108,6 +108,19 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
      */
     void addLong(long value);
 
+    /**
+     * Appends <tt>value</tt> element to the end of this array with conversion from <tt>int</tt>,
+     * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
+     * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
+     * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),
+     * or as <tt>value!=0</tt> for <tt>boolean</tt> element type.
+     *
+     * <p>This method is equivalent to both {@link #addLong(long) addLong(index, (long) value)}
+     * and {@link #addDouble(double) addDouble((double) value)}, but can work little faster.
+     *
+     * @param value to be added to the top of this array.
+     * @throws TooLargeArrayException if the resulting stack length is too large for this type of array.
+     */
     void addInt(int value);
 
     MutablePArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
