@@ -24,11 +24,14 @@
 
 package net.algart.math.geometry;
 
+import java.io.Serial;
+
 /**
- * Thrown when two collinear (or amost collinear) vectors or segments are detected,
+ * Thrown when two collinear (or almost collinear) vectors or segments are detected,
  * but it is not permitted for the given situation.
  */
 public final class CollinearityException extends RuntimeException {
+    @Serial
     private static final long serialVersionUID = -181255282331453741L;
 
     /**

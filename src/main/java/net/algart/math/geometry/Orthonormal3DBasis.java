@@ -29,7 +29,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * <p>Right orthonormal basis in 3D space: 3 orthogonal unit vectors <b>i</b>, <b>j</b>, <b>k</b>.</p>
+ * <p>Right orthonormal basis in 3D Euclidean space: 3 orthogonal unit vectors <b>i</b>, <b>j</b>, <b>k</b>.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -350,6 +350,33 @@ public final class Orthonormal3DBasis {
     public static Orthonormal3DBasis getRandomBasis(Random random, double ix, double iy, double iz) {
         return Orthonormal3DBasis.getSomeBasis(ix, iy, iz).rotateJK(2 * Math.PI * random.nextDouble());
     }
+
+    /**
+     * Returns the square of the length of 3D segment with the given projections to the axes.
+     * Equivalent to <tt>x * x + y * y + z * z</tt>.
+     *
+     * @param x <i>x</i>-projection of the segment.
+     * @param y <i>y</i>-projection of the segment.
+     * @param z <i>z</i>-projection of the segment.
+     * @return the square of the segment length.
+     */
+    public static double lengthSquare(double x, double y, double z) {
+        return x * x + y * y + z * z;
+    }
+
+    /**
+     * Returns the length of 3D segment with the given projections to the axes.
+     * Equivalent to <tt>Math.sqrt({@link #lengthSquare(double, double, double) lengthSquare}(x, y, z)).</tt>.
+     *
+     * @param x <i>x</i>-projection of the segment.
+     * @param y <i>y</i>-projection of the segment.
+     * @param z <i>z</i>-projection of the segment.
+     * @return the segment length.
+     */
+    public static double length(double x, double y, double z) {
+        return Math.sqrt(x * x + y * y + z * z);
+    }
+
 
     /**
      * Returns <i>x</i>-component of <b>i</b> vector.
@@ -722,17 +749,7 @@ public final class Orthonormal3DBasis {
         return getBasis(ix, iy, iz, jx, jy, jz, false);
     }
 
-    public static double lengthSquare(double x, double y, double z) {
-        return x * x + y * y + z * z;
-    }
-
-    private static double length(double x, double y, double z) {
-        return Math.sqrt(x * x + y * y + z * z);
-    }
-
-
     private static int hashCode(double value) {
-        long l = Double.doubleToLongBits(value);
-        return (int) (l ^ (l >>> 32));
+        return Double.hashCode(value);
     }
 }
