@@ -25,6 +25,7 @@
 package net.algart.math.geometry.demo;
 
 import net.algart.math.Point;
+import net.algart.math.geometry.Orthonormal3DBasis;
 import net.algart.math.geometry.StraightLine3D;
 
 import java.util.Random;
@@ -74,6 +75,9 @@ public class DistanceToStraightTest {
                     s2.dx(), s2.dy(), s2.dz(),
                     x - s2.x0(), y - s2.y0(), z - s2.z0());
             if (different(d1, d5)) throw new AssertionError(d1 + "!=" + d5);
+            d1 = s2.distanceToStartPoint(x, y, z);
+            d2 = Orthonormal3DBasis.length(x - s2.x0(), y - s2.y0(), z - s2.z0());
+            if (d1 != d2) throw new AssertionError(d1 + "!=" + d2);
         }
         System.out.println("O'k");
     }
