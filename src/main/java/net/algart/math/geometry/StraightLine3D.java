@@ -20,11 +20,23 @@ public final class StraightLine3D implements Cloneable {
     private double dy = 0.0;
     private double dz = 0.0;
 
-    public StraightLine3D() {
+    private StraightLine3D() {
     }
 
     /**
-     * Creates new straight, passing through the origin (0,0,0).
+     * Creates some new straight, passing through the origin (0,0,0).
+     * The direction of this straight is (1,0,0) (<i>x</i>-axis), but you should not use this fact:
+     * in future versions this may change.
+     *
+     * @return new straight.
+     */
+    public static StraightLine3D getInstance() {
+        return new StraightLine3D();
+    }
+
+    /**
+     * Creates new straight, passing through the origin (0,0,0), with the given direction.
+     *
      * @param dx x-component of the direction <b>d</b>.
      * @param dy y-component of the direction <b>d</b>.
      * @param dz z-component of the direction <b>d</b>.
@@ -36,7 +48,8 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Creates new straight, passing through the given start point <tt>(x0,y0,z0)</tt>.
+     * Creates new straight, passing through the given start point <tt>(x0,y0,z0)</tt>, with the given direction.
+     *
      * @param x0 x-coordinate of the start point <b>o</b>.
      * @param y0 y-coordinate of the start point <b>o</b>.
      * @param z0 z-coordinate of the start point <b>o</b>.
@@ -265,7 +278,7 @@ public final class StraightLine3D implements Cloneable {
      * @return square of the distance between the point and this straight.
      */
     public double distanceToStraightSquare(double x, double y, double z) {
-        return  distanceToStraightSquare(dx, dy, dz, x - x0, y - y0, z - z0);
+        return distanceToStraightSquare(dx, dy, dz, x - x0, y - y0, z - z0);
     }
 
     /**
@@ -354,22 +367,22 @@ public final class StraightLine3D implements Cloneable {
      * <tt>{@link #getInstanceFromOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
      * where <tt><b>d</b>=(dx,dy,dz)</tt> is some unit vector.
      *
-     * <p>This method works faster than creating new instance of this class and calling its
+     * <p>This method works faster than creating a new instance of this class and calling its
      * {@link #distanceToStraightSquare(double, double, double)} method.
-     * But this method requires that <tt>(dx, dy, dz)</tt> vector is unit:
+     * But this method requires that the vector <tt>(dx, dy, dz)</tt> to be unit:
      * <tt>dx&nbsp;*&nbsp;dx&nbsp;+&nbsp;dy&nbsp;*&nbsp;dy+&nbsp;dz&nbsp;*&nbsp;dz&nbsp;=&nbsp;1.0</tt>,
-     * in other case its result will be incorrect.
+     * otherwise its result will be incorrect.
      *
      * @param dx x-component of the unit direction vector <b>d</b>.
      * @param dy y-component of the unit direction vector <b>d</b>.
      * @param dz z-component of the unit direction vector <b>d</b>.
-     * @param x x-coordinate of the point.
-     * @param y y-coordinate of the point.
-     * @param z z-coordinate of the point.
+     * @param x  x-coordinate of the point.
+     * @param y  y-coordinate of the point.
+     * @param z  z-coordinate of the point.
      */
     public static double distanceToStraightSquare(double dx, double dy, double dz, double x, double y, double z) {
         final double t = x * dx + y * dy + z * dz;
-        return Orthonormal3DBasis.length(x - t * dx, y - t * dy, z - t * dz);
+        return Orthonormal3DBasis.lengthSquare(x - t * dx, y - t * dy, z - t * dz);
         // - more stable solution than x^2+y^2+z^2-t^2
     }
 
@@ -385,9 +398,9 @@ public final class StraightLine3D implements Cloneable {
      * @param dx x-component of the unit direction vector <b>d</b>.
      * @param dy y-component of the unit direction vector <b>d</b>.
      * @param dz z-component of the unit direction vector <b>d</b>.
-     * @param x x-coordinate of the point.
-     * @param y y-coordinate of the point.
-     * @param z z-coordinate of the point.
+     * @param x  x-coordinate of the point.
+     * @param y  y-coordinate of the point.
+     * @param z  z-coordinate of the point.
      */
     public static double distanceToStraight(double dx, double dy, double dz, double x, double y, double z) {
         return Math.sqrt(distanceToStraightSquare(dx, dy, dz, x, y, z));
