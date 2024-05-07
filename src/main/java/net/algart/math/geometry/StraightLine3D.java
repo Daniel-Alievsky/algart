@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  * <p>Directional infinite straight line in 3D space.
- * It is defined as some <i>point</i> <b>o</b>=(x0,y0,z0), belonging to this straight,
+ * It is defined as some <i>start point</i> <b>o</b>=(x0,y0,z0), belonging to this straight,
  * and some <i>direction</i>, represented as a unit vector <b>d</b>=(dx,dy,dz).
  * The line consists of all point <b>p</b>=<b>o</b>+<i>t</i><b>d</b>, &minus;&infin;&lt;<i>t</i>&lt;+&infin;.</p>
  *
@@ -23,6 +23,28 @@ public final class StraightLine3D implements Cloneable {
     public StraightLine3D() {
     }
 
+    /**
+     * Creates new straight, passing through the origin (0,0,0).
+     * @param dx x-component of the direction <b>d</b>.
+     * @param dy y-component of the direction <b>d</b>.
+     * @param dz z-component of the direction <b>d</b>.
+     * @return new straight.
+     */
+    public static StraightLine3D getInstanceFromOrigin(
+            double dx, double dy, double dz) {
+        return new StraightLine3D().setDirection(dx, dy, dz);
+    }
+
+    /**
+     * Creates new straight, passing through the given start point <tt>(x0,y0,z0)</tt>.
+     * @param x0 x-coordinate of the start point <b>o</b>.
+     * @param y0 y-coordinate of the start point <b>o</b>.
+     * @param z0 z-coordinate of the start point <b>o</b>.
+     * @param dx x-component of the direction <b>d</b>.
+     * @param dy y-component of the direction <b>d</b>.
+     * @param dz z-component of the direction <b>d</b>.
+     * @return new straight.
+     */
     public static StraightLine3D getInstance(
             double x0, double y0, double z0,
             double dx, double dy, double dz) {
@@ -41,29 +63,29 @@ public final class StraightLine3D implements Cloneable {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongK(basis);
     }
 
-    public double getX0() {
+    public double x0() {
         return x0;
     }
 
-    public StraightLine3D setX0(double x0) {
+    public StraightLine3D x0(double x0) {
         this.x0 = x0;
         return this;
     }
 
-    public double getY0() {
+    public double y0() {
         return y0;
     }
 
-    public StraightLine3D setY0(double y0) {
+    public StraightLine3D y0(double y0) {
         this.y0 = y0;
         return this;
     }
 
-    public double getZ0() {
+    public double z0() {
         return z0;
     }
 
-    public StraightLine3D setZ0(double z0) {
+    public StraightLine3D z0(double z0) {
         this.z0 = z0;
         return this;
     }
@@ -75,15 +97,15 @@ public final class StraightLine3D implements Cloneable {
         return this;
     }
 
-    public double getDx() {
+    public double dx() {
         return dx;
     }
 
-    public double getDy() {
+    public double dy() {
         return dy;
     }
 
-    public double getDz() {
+    public double dz() {
         return dz;
     }
 
@@ -177,19 +199,22 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Returns x*dx + y*dy + z*dz.
+     * Returns projection of the given vector <b>a</b> to this straight: <tt>ax * dx + ay * dy + az * dz</tt>.
      *
-     * @param x x-coordinate of the point.
-     * @param y y-coordinate of the point.
-     * @param z z-coordinate of the point.
+     * <p>Equivalent to
+     * <tt>{@link Orthonormal3DBasis#scalarProduct Orthonormal3DBasis.scalarProduct}(ax, ay, ax, dx, dy, dz).</p>
+     *
+     * @param ax x-component of the vector.
+     * @param ay y-component of the vector.
+     * @param az z-component of the vector.
      * @return projection of the given vector to the direction of this straight.
      */
-    public double vectorProjection(double x, double y, double z) {
-        return x * dx + y * dy + z * dz;
+    public double vectorProjection(double ax, double ay, double az) {
+        return ax * dx + ay * dy + az * dz;
     }
 
     /**
-     * Returns (x&minus;x0)*dx + (y&minus;y0)*dy + (z&minus;z0)*dz.
+     * Returns <tt>(x&minus;x0)*dx + (y&minus;y0)*dy + (z&minus;z0)*dz</tt>.
      *
      * @param x x-coordinate of the point.
      * @param y y-coordinate of the point.
@@ -200,19 +225,6 @@ public final class StraightLine3D implements Cloneable {
         return (x - x0) * dx + (y - y0) * dy + (z - z0) * dz;
     }
 
-    public double distanceToStraightSquare(double x, double y, double z) {
-        x -= x0;
-        y -= y0;
-        z -= z0;
-        final double t = x * dx + y * dy + z * dz;
-        return Orthonormal3DBasis.lengthSquare(x - t * dx, y - t * dy, z - t * dz);
-        // - more stable solution than x^2+y^2+z^2-t^2
-    }
-
-    public double distanceToStraight(double x, double y, double z) {
-        return Math.sqrt(distanceToStraightSquare(x, y, z));
-    }
-
     /**
      * Returns (x&minus;x0)<sup>2</sup> + (y&minus;y0)<sup>2</sup> + (z&minus;z0)<sup>2</sup>.
      *
@@ -221,8 +233,54 @@ public final class StraightLine3D implements Cloneable {
      * @param z z-coordinate of the point.
      * @return square of the distance to the start point <b>o</b>.
      */
-    public double distanceToStartSquare(double x, double y, double z) {
+    public double distanceToStartPointSquare(double x, double y, double z) {
         return Orthonormal3DBasis.lengthSquare(x - x0, y - y0, z - z0);
+    }
+
+    /**
+     * Returns the distance from the given point <tt>(x,y,z)</tt> to the start point <tt>(x0,y0,z0)</tt>.
+     * <p>Equivalent to
+     * <tt>Math.sqrt({@link #distanceToStartPointSquare distanceToStartPointSquare}(x, y, z))</tt>.</p>
+     *
+     * @param x x-coordinate of the point.
+     * @param y y-coordinate of the point.
+     * @param z z-coordinate of the point.
+     * @return square of the distance to the start point <b>o</b>.
+     */
+    public double distanceToStartPoint(double x, double y, double z) {
+        return Math.sqrt(distanceToStartPointSquare(x, y, z));
+    }
+
+    /**
+     * Returns the square of the distance from the given point <tt>(x,y,z)</tt> to this straight.
+     *
+     * <p>Equivalent to
+     * {@link StraightLine3D#distanceToStraightSquare(double, double, double, double, double, double)
+     * StraightLine3D.distanceToStraightSquare}({@link #dx()}, {@link #dy()}, {@link #dz()}, x - {@link
+     * #x0()}, y - {@link #y0()}, z - {@link #z0()}).</p>
+     *
+     * @param x x-coordinate of the point.
+     * @param y y-coordinate of the point.
+     * @param z z-coordinate of the point.
+     * @return square of the distance between the point and this straight.
+     */
+    public double distanceToStraightSquare(double x, double y, double z) {
+        return  distanceToStraightSquare(dx, dy, dz, x - x0, y - y0, z - z0);
+    }
+
+    /**
+     * Returns the distance from the given point <tt>(x,y,z)</tt> to this straight.
+     * <p>Equivalent to
+     * <tt>Math.sqrt({@link #distanceToStraightSquare(double, double, double)
+     * distanceToStraightSquare}(x, y, z))</tt>.</p>
+     *
+     * @param x x-coordinate of the point.
+     * @param y y-coordinate of the point.
+     * @param z z-coordinate of the point.
+     * @return distance between the point and this straight.
+     */
+    public double distanceToStraight(double x, double y, double z) {
+        return Math.sqrt(distanceToStraightSquare(x, y, z));
     }
 
     /**
@@ -249,10 +307,9 @@ public final class StraightLine3D implements Cloneable {
      */
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof StraightLine3D)) {
+        if (!(o instanceof StraightLine3D that)) {
             return false;
         }
-        final StraightLine3D that = (StraightLine3D) o;
         return (Double.doubleToLongBits(that.x0) == Double.doubleToLongBits(x0)
                 && Double.doubleToLongBits(that.y0) == Double.doubleToLongBits(y0)
                 && Double.doubleToLongBits(that.z0) == Double.doubleToLongBits(z0)
@@ -269,12 +326,12 @@ public final class StraightLine3D implements Cloneable {
     @Override
     public int hashCode() {
         int result = 0;
-        result = 37 * result + hashCode(x0);
-        result = 37 * result + hashCode(y0);
-        result = 37 * result + hashCode(z0);
-        result = 37 * result + hashCode(dx);
-        result = 37 * result + hashCode(dy);
-        result = 37 * result + hashCode(dz);
+        result = 37 * result + Double.hashCode(x0);
+        result = 37 * result + Double.hashCode(y0);
+        result = 37 * result + Double.hashCode(z0);
+        result = 37 * result + Double.hashCode(dx);
+        result = 37 * result + Double.hashCode(dy);
+        result = 37 * result + Double.hashCode(dz);
         return result;
     }
 
@@ -292,10 +349,50 @@ public final class StraightLine3D implements Cloneable {
         }
     }
 
-    private static int hashCode(double value) {
-        long l = Double.doubleToLongBits(value);
-        return (int) (l ^ (l >>> 32));
+    /**
+     * Returns the square of the distance from the given point <tt>(x,y,z)</tt> to the straight
+     * <tt>{@link #getInstanceFromOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
+     * where <tt><b>d</b>=(dx,dy,dz)</tt> is some unit vector.
+     *
+     * <p>This method works faster than creating new instance of this class and calling its
+     * {@link #distanceToStraightSquare(double, double, double)} method.
+     * But this method requires that <tt>(dx, dy, dz)</tt> vector is unit:
+     * <tt>dx&nbsp;*&nbsp;dx&nbsp;+&nbsp;dy&nbsp;*&nbsp;dy+&nbsp;dz&nbsp;*&nbsp;dz&nbsp;=&nbsp;1.0</tt>,
+     * in other case its result will be incorrect.
+     *
+     * @param dx x-component of the unit direction vector <b>d</b>.
+     * @param dy y-component of the unit direction vector <b>d</b>.
+     * @param dz z-component of the unit direction vector <b>d</b>.
+     * @param x x-coordinate of the point.
+     * @param y y-coordinate of the point.
+     * @param z z-coordinate of the point.
+     */
+    public static double distanceToStraightSquare(double dx, double dy, double dz, double x, double y, double z) {
+        final double t = x * dx + y * dy + z * dz;
+        return Orthonormal3DBasis.length(x - t * dx, y - t * dy, z - t * dz);
+        // - more stable solution than x^2+y^2+z^2-t^2
     }
+
+    /**
+     * Returns the distance from the given point <tt>(x,y,z)</tt> to the straight
+     * <tt>{@link #getInstanceFromOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
+     * where <tt><b>d</b>=(dx,dy,dz)</tt> is some unit vector.
+     *
+     * <p>Equivalent to
+     * <tt>Math.sqrt({@link #distanceToStraightSquare(double, double, double, double, double, double)
+     * distanceToStraightSquare}(dx, dy, dz, x, y, z))</tt>.</p>
+     *
+     * @param dx x-component of the unit direction vector <b>d</b>.
+     * @param dy y-component of the unit direction vector <b>d</b>.
+     * @param dz z-component of the unit direction vector <b>d</b>.
+     * @param x x-coordinate of the point.
+     * @param y y-coordinate of the point.
+     * @param z z-coordinate of the point.
+     */
+    public static double distanceToStraight(double dx, double dy, double dz, double x, double y, double z) {
+        return Math.sqrt(distanceToStraightSquare(dx, dy, dz, x, y, z));
+    }
+
 
     // Called via reflection in the test for debugging needs; must be private
     private void setDirectionComponents(double dx, double dy, double dz) {

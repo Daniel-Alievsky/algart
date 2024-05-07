@@ -352,33 +352,6 @@ public final class Orthonormal3DBasis {
     }
 
     /**
-     * Returns the square of the length of 3D segment with the given projections to the axes.
-     * Equivalent to <tt>x * x + y * y + z * z</tt>.
-     *
-     * @param x <i>x</i>-projection of the segment.
-     * @param y <i>y</i>-projection of the segment.
-     * @param z <i>z</i>-projection of the segment.
-     * @return the square of the segment length.
-     */
-    public static double lengthSquare(double x, double y, double z) {
-        return x * x + y * y + z * z;
-    }
-
-    /**
-     * Returns the length of 3D segment with the given projections to the axes.
-     * Equivalent to <tt>Math.sqrt({@link #lengthSquare(double, double, double) lengthSquare}(x, y, z)).</tt>.
-     *
-     * @param x <i>x</i>-projection of the segment.
-     * @param y <i>y</i>-projection of the segment.
-     * @param z <i>z</i>-projection of the segment.
-     * @return the segment length.
-     */
-    public static double length(double x, double y, double z) {
-        return Math.sqrt(x * x + y * y + z * z);
-    }
-
-
-    /**
      * Returns <i>x</i>-component of <b>i</b> vector.
      *
      * @return <i>x</i>-component of <b>i</b> vector.
@@ -740,6 +713,48 @@ public final class Orthonormal3DBasis {
         result = 37 * result + hashCode(jy);
         result = 37 * result + hashCode(jz);
         return result;
+    }
+
+    /**
+     * Returns the square of the length of 3D segment with the given projections to the axes.
+     * Equivalent to <tt>x * x + y * y + z * z</tt>.
+     *
+     * @param x <i>x</i>-projection of the segment.
+     * @param y <i>y</i>-projection of the segment.
+     * @param z <i>z</i>-projection of the segment.
+     * @return the square of the segment length.
+     */
+    public static double lengthSquare(double x, double y, double z) {
+        return x * x + y * y + z * z;
+    }
+
+    /**
+     * Returns the length of 3D segment with the given projections to the axes.
+     * Equivalent to <tt>Math.sqrt({@link #lengthSquare(double, double, double) lengthSquare}(x, y, z)).</tt>.
+     *
+     * @param x <i>x</i>-projection of the segment.
+     * @param y <i>y</i>-projection of the segment.
+     * @param z <i>z</i>-projection of the segment.
+     * @return the segment length.
+     */
+    public static double length(double x, double y, double z) {
+        return Math.sqrt(x * x + y * y + z * z);
+    }
+
+    /**
+     * Returns the scalar product of <b>a</b> and <b>b</b> vectors:
+     * <tt>ax * bx + ay * by + az * bz</tt>.
+     *
+     * @param ax x-component of the vector <b>a</b>.
+     * @param ay y-component of the vector <b>a</b>.
+     * @param az z-component of the vector <b>a</b>.
+     * @param bx x-component of the vector <b>b</b>.
+     * @param by y-component of the vector <b>b</b>.
+     * @param bz z-component of the vector <b>b</b>.
+     * @return scalar product of two vectors.
+     */
+    public static double scalarProduct(double ax, double ay, double az, double bx, double by, double bz) {
+        return ax * bx + ay * by + az * bz;
     }
 
     private Orthonormal3DBasis reviveIfNecessary() {
