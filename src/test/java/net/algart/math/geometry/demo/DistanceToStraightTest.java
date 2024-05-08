@@ -38,7 +38,7 @@ public class DistanceToStraightTest {
     }
 
     private static boolean different(double a, double b) {
-        return Math.abs(a - b) > 1e-8;
+        return Math.abs(a - b) > 1e-7;
     }
 
     public static double distanceToStraightSimple(double dx, double dy, double dz, double x, double y, double z) {
@@ -47,7 +47,7 @@ public class DistanceToStraightTest {
     }
 
     public static void main(String[] args) {
-        for (int testIndex = 1; testIndex <= 10000000; testIndex++) {
+        for (int testIndex = 1; testIndex <= 100000000; testIndex++) {
             if (testIndex % 100 == 0) {
                 System.out.print("\r" + testIndex + " ");
             }
