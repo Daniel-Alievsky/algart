@@ -31,7 +31,7 @@ import java.util.*;
 
 /**
  * <p>Set-theoretic union of several 2-dimensional {@link IRectangularArea rectangles}
- * with integer integer coordinates of vertices and sides, parallel to coordinate axes.
+ * with integer coordinates of vertices and sides, parallel to coordinate axes.
  * This class allows to solve the following main tasks:
  * <ol>
  * <li>find connected components in this union;</li>
