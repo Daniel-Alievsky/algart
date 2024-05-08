@@ -1,7 +1,7 @@
 package net.algart.math.geometry;
 
 import java.util.Objects;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 /**
  * <p>Directional infinite straight line in 3D space.
@@ -168,7 +168,7 @@ public final class StraightLine3D implements Cloneable {
         return setDirection(0.0, 0.0, 1.0);
     }
 
-    public StraightLine3D setRandomDirection(Random random) {
+    public StraightLine3D setRandomDirection(RandomGenerator random) {
         for (; ; ) {
             final double dx = 2 * random.nextDouble() - 1.0;
             final double dy = 2 * random.nextDouble() - 1.0;

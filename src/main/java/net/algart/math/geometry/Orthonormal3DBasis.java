@@ -25,8 +25,8 @@
 package net.algart.math.geometry;
 
 import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.random.RandomGenerator;
 
 /**
  * <p>Right orthonormal basis in 3D Euclidean space: 3 orthogonal unit vectors <b>i</b>, <b>j</b>, <b>k</b>.</p>
@@ -319,7 +319,7 @@ public final class Orthonormal3DBasis {
      * @param random random generator used to create the basis.
      * @return new right orthonormal basis with random orientation.
      */
-    public static Orthonormal3DBasis getRandomBasis(Random random) {
+    public static Orthonormal3DBasis getRandomBasis(RandomGenerator random) {
         for (; ; ) {
             final double ix = 2 * random.nextDouble() - 1.0;
             final double iy = 2 * random.nextDouble() - 1.0;
@@ -347,7 +347,7 @@ public final class Orthonormal3DBasis {
      *                                  of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) is zero or
      *                                  too small (&lt; {@link #MIN_ALLOWED_LENGTH}).
      */
-    public static Orthonormal3DBasis getRandomBasis(Random random, double ix, double iy, double iz) {
+    public static Orthonormal3DBasis getRandomBasis(RandomGenerator random, double ix, double iy, double iz) {
         return Orthonormal3DBasis.getSomeBasis(ix, iy, iz).rotateJK(2 * Math.PI * random.nextDouble());
     }
 

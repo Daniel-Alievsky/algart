@@ -1293,7 +1293,7 @@ public class Matrices {
     }
 
     /**
-     * <p>Random <nobr>2-dimensional</nobr> polygon. It can be non-convex and even self-intersecting.
+     * <p><nobr>2-dimensional</nobr> polygon. It can be non-convex and even self-intersecting.
      *
      * <p>The points, lying precisely in the sides of the polygon (in particular, the vertices),
      * belong to this region.
