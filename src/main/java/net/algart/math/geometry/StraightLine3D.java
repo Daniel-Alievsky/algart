@@ -30,7 +30,7 @@ public final class StraightLine3D implements Cloneable {
      *
      * @return new straight.
      */
-    public static StraightLine3D getInstance() {
+    public static StraightLine3D getStraightLine() {
         return new StraightLine3D();
     }
 
@@ -42,7 +42,7 @@ public final class StraightLine3D implements Cloneable {
      * @param dz z-component of the direction <b>d</b>.
      * @return new straight.
      */
-    public static StraightLine3D getInstanceFromOrigin(
+    public static StraightLine3D getStraightLineContainingOrigin(
             double dx, double dy, double dz) {
         return new StraightLine3D().setDirection(dx, dy, dz);
     }
@@ -58,21 +58,21 @@ public final class StraightLine3D implements Cloneable {
      * @param dz z-component of the direction <b>d</b>.
      * @return new straight.
      */
-    public static StraightLine3D getInstance(
+    public static StraightLine3D getStraightLine(
             double x0, double y0, double z0,
             double dx, double dy, double dz) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirection(dx, dy, dz);
     }
 
-    public static StraightLine3D getInstanceAlongI(double x0, double y0, double z0, Orthonormal3DBasis basis) {
+    public static StraightLine3D getStraightLineAlongI(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongI(basis);
     }
 
-    public static StraightLine3D getInstanceAlongJ(double x0, double y0, double z0, Orthonormal3DBasis basis) {
+    public static StraightLine3D getStraightLineAlongJ(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongJ(basis);
     }
 
-    public static StraightLine3D getInstanceAlongK(double x0, double y0, double z0, Orthonormal3DBasis basis) {
+    public static StraightLine3D getStraightLineAlongK(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongK(basis);
     }
 
@@ -364,7 +364,7 @@ public final class StraightLine3D implements Cloneable {
 
     /**
      * Returns the square of the distance from the given point <tt>(x,y,z)</tt> to the straight
-     * <tt>{@link #getInstanceFromOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
+     * <tt>{@link #getStraightLineContainingOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
      * where <tt><b>d</b>=(dx,dy,dz)</tt> is some unit vector.
      *
      * <p>This method works faster than creating a new instance of this class and calling its
@@ -388,7 +388,7 @@ public final class StraightLine3D implements Cloneable {
 
     /**
      * Returns the distance from the given point <tt>(x,y,z)</tt> to the straight
-     * <tt>{@link #getInstanceFromOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
+     * <tt>{@link #getStraightLineContainingOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
      * where <tt><b>d</b>=(dx,dy,dz)</tt> is some unit vector.
      *
      * <p>Equivalent to

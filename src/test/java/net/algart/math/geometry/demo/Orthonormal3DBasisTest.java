@@ -62,23 +62,16 @@ public final class Orthonormal3DBasisTest {
                         + inverse + ", product = " + product + ", distance square = " + distanceSquare);
             }
             final double angle = rnd.nextDouble();
-            switch (rnd.nextInt(4)) {
-                case 0:
-                    basis = basis.rotateJK(angle);
+            basis = switch (rnd.nextInt(4)) {
+                case 0 -> basis.rotateJK(angle);
 //                    System.out.printf("Rotation I by %f: %s (%f)%n", angle, basis, iAbs((basis)));
-                    break;
-                case 1:
-                    basis = basis.rotateKI(angle);
+                case 1 -> basis.rotateKI(angle);
 //                    System.out.printf("Rotation J by %f: %s (%f)%n", angle, basis, iAbs((basis)));
-                    break;
-                case 2:
-                    basis = basis.rotateIJ(angle);
+                case 2 -> basis.rotateIJ(angle);
 //                    System.out.printf("Rotation K by %f: %s (%f)%n", angle, basis, iAbs((basis)));
-                    break;
-                case 3:
-                    basis = basis.rotate(rnd.nextDouble(), angle, rnd.nextDouble());
-                    break;
-            }
+                case 3 -> basis.rotate(rnd.nextDouble(), angle, rnd.nextDouble());
+                default -> basis;
+            };
         }
         System.out.printf(Locale.US, "Rotated basis: %s%n  |i|=%s, |j|=%s, |k|=%s%n",
                 basis, iAbs(basis), jAbs(basis), kAbs((basis)));

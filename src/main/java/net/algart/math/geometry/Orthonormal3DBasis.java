@@ -25,6 +25,7 @@
 package net.algart.math.geometry;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.random.RandomGenerator;
 
@@ -169,11 +170,12 @@ public final class Orthonormal3DBasis {
      * while this correction.
      *
      * <p>If the passed vectors are collinear or almost collinear (with very little angle difference,
-     * about 10<sup>&minus;8</sup>..10<sup>&minus;6</sup> radians or something like this), then
-     * behaviour depends on the argument <tt>exceptionOnCollinearity</tt>. If it is <tt>true</tt>,
+     * about 10<sup>&minus;8</sup>..10<sup>&minus;6</sup> radians or something like this),
+     * or if the length of one of the passed vectors is less than {@link #MIN_ALLOWED_LENGTH},
+     * then behaviour depends on <tt>exceptionOnCollinearity</tt> argument. If it is <tt>true</tt>,
      * the method throws {@link CollinearityException}. In other case, the method ignores the passed
      * vector (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>) and returns some basis according the passed vector
-     * (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>), like {@link #getSomeBasis(double, double, double)} method.
+     * (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>), as {@link #getSomeBasis(double, double, double)} method.
      *
      * @param ix                      <i>x</i>-component of new <b>i</b> vector
      *                                (maybe, multiplied by some <i>d</i><sub>1</sub> constant).
@@ -246,17 +248,19 @@ public final class Orthonormal3DBasis {
     /**
      * Analogue of {@link #getBasis(double, double, double, double, double, double, boolean)
      * getBasis(ix, iy, iz, jx, jy, jz, true}}, but instead of throwing exceptions this method
-     * just returns <tt>null</tt>.
-     * <p>In other words, this method returns <tt>null</tt> when
+     * just returns <tt>Optional.empty()</tt>.
+     *
+     * <p>In other words, this method returns <tt>Optional.empty()</tt> when
      * the length <tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
      * of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) or
      * the length <tt>sqrt</tt>(jx<sup>2</sup>+jy<sup>2</sup>+jz<sup>2</sup>)
      * of the passed vector (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>)
      * is zero or too small (&lt; {@link #MIN_ALLOWED_LENGTH}),
-     * and also this method returns <tt>null</tt> when
+     * and also this method returns <tt>Optional.empty()</tt> when
      * the passed two vectors are almost collinear.
      * In all other cases, this method is equivalent
-     * to {@link #getBasis(double, double, double, double, double, double, boolean)}.
+     * to <tt>Optional.of({@link #getBasis(double, double, double, double, double, double, boolean)
+     * getBasis(ix, iy, iz, jx, jy, jz, true/false)})</tt> (the last argument is not important).
      * This method <i>never</i> throws any exceptions.
      *
      * @param ix <i>x</i>-component of new <b>i</b> vector
@@ -273,18 +277,19 @@ public final class Orthonormal3DBasis {
      *           (maybe, multiplied by some <i>d</i><sub>2</sub> constant).
      * @return new right orthonormal basis with given direction of <b>i</b> vector
      * and the direction of <b>j</b> vector, chosen according the arguments
-     * (see {@link #getBasis(double, double, double, double, double, double, boolean)}).
+     * (see {@link #getBasis(double, double, double, double, double, double, boolean)}),
+     * or empty value in a case of problems.
      */
-    public static Orthonormal3DBasis getBasisOrNull(
+    public static Optional<Orthonormal3DBasis> optBasis(
             final double ix, final double iy, final double iz,
             final double jx, final double jy, final double jz) {
         final double lengthI = length(ix, iy, iz);
         if (lengthI < MIN_ALLOWED_LENGTH) {
-            return null;
+            return Optional.empty();
         }
         final double lengthJ = length(jx, jy, jz);
         if (lengthJ < MIN_ALLOWED_LENGTH) {
-            return null;
+            return Optional.empty();
         }
         double mult = 1.0 / lengthI;
         final double newIx = ix * mult;
@@ -301,14 +306,14 @@ public final class Orthonormal3DBasis {
             newJz -= newIz * ij; // correct if (ij)!=0: J = J-I(ij)
             final double correctedLengthJ = length(newJx, newJy, newJz);
             if (correctedLengthJ < COLLINEARITY_EPSILON) {
-                return null;
+                return Optional.empty();
             }
             mult = 1.0 / correctedLengthJ;
             newJx *= mult;
             newJy *= mult;
             newJz *= mult; // correct again
         }
-        return new Orthonormal3DBasis(newIx, newIy, newIz, newJx, newJy, newJz, 0);
+        return Optional.of(new Orthonormal3DBasis(newIx, newIy, newIz, newJx, newJy, newJz, 0));
     }
 
 
