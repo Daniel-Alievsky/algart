@@ -24,85 +24,171 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Creates some new straight, passing through the origin (0,0,0).
+     * Creates some new straight line, passing through the origin (0,0,0).
      * The direction of this straight is (1,0,0) (<i>x</i>-axis), but you should not use this fact:
      * in future versions this may change.
      *
-     * @return new straight.
+     * @return new straight line.
      */
-    public static StraightLine3D getStraightLine() {
+    public static StraightLine3D newLine() {
         return new StraightLine3D();
     }
 
     /**
-     * Creates new straight, passing through the origin (0,0,0), with the given direction.
+     * Creates new straight line, passing through the origin (0,0,0), with the given direction.
      *
-     * @param dx x-component of the direction <b>d</b>.
-     * @param dy y-component of the direction <b>d</b>.
-     * @param dz z-component of the direction <b>d</b>.
-     * @return new straight.
+     * <p>If the given <b>d</b> vector is not unit, it is automatically
+     * replaced with a unit vector of the same direction: all components are divided by its length.
+     * But if the vector is shorter than {@link Orthonormal3DBasis#MIN_ALLOWED_LENGTH},
+     * an exception is thrown.
+     *
+     * @param dx <i>x</i>-component of the direction <b>d</b>.
+     * @param dy <i>y</i>-component of the direction <b>d</b>.
+     * @param dz <i>z</i>-component of the direction <b>d</b>.
+     * @return new straight line.
+     * @throws IllegalArgumentException if the specified vector is zero or extremely short.
      */
-    public static StraightLine3D getStraightLineContainingOrigin(
+    public static StraightLine3D newLineThroughOrigin(
             double dx, double dy, double dz) {
         return new StraightLine3D().setDirection(dx, dy, dz);
     }
 
     /**
-     * Creates new straight, passing through the given start point <tt>(x0,y0,z0)</tt>, with the given direction.
+     * Creates new straight line, passing through the given start point <tt>(x0,y0,z0)</tt>, with the given direction.
      *
-     * @param x0 x-coordinate of the start point <b>o</b>.
-     * @param y0 y-coordinate of the start point <b>o</b>.
-     * @param z0 z-coordinate of the start point <b>o</b>.
-     * @param dx x-component of the direction <b>d</b>.
-     * @param dy y-component of the direction <b>d</b>.
-     * @param dz z-component of the direction <b>d</b>.
-     * @return new straight.
+     * <p>If the given <b>d</b> vector is not unit, it is automatically
+     * replaced with a unit vector of the same direction: all components are divided by its length.
+     * But if the vector is shorter than {@link Orthonormal3DBasis#MIN_ALLOWED_LENGTH},
+     * an exception is thrown.
+     *
+     * @param x0 <i>x</i>-coordinate of the start point <b>o</b>.
+     * @param y0 <i>y</i>-coordinate of the start point <b>o</b>.
+     * @param z0 <i>z</i>-coordinate of the start point <b>o</b>.
+     * @param dx <i>x</i>-component of the direction <b>d</b>.
+     * @param dy <i>y</i>-component of the direction <b>d</b>.
+     * @param dz <i>z</i>-component of the direction <b>d</b>.
+     * @return new straight line.
+     * @throws IllegalArgumentException if the specified vector is zero or extremely short.
      */
-    public static StraightLine3D getStraightLine(
+    public static StraightLine3D newLine(
             double x0, double y0, double z0,
             double dx, double dy, double dz) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirection(dx, dy, dz);
     }
 
-    public static StraightLine3D getStraightLineAlongI(double x0, double y0, double z0, Orthonormal3DBasis basis) {
+    /**
+     * Creates new straight line, passing through the given start point <tt>(x0,y0,z0)</tt>
+     * and directed along the unit vector <b>i</b> of the specified basis.
+     *
+     * @param x0    <i>x</i>-coordinate of the start point <b>o</b>.
+     * @param y0    <i>y</i>-coordinate of the start point <b>o</b>.
+     * @param z0    <i>z</i>-coordinate of the start point <b>o</b>.
+     * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
+     * @return new straight line.
+     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     */
+    public static StraightLine3D newLineAlongI(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongI(basis);
     }
 
-    public static StraightLine3D getStraightLineAlongJ(double x0, double y0, double z0, Orthonormal3DBasis basis) {
+    /**
+     * Creates new straight line, passing through the given start point <tt>(x0,y0,z0)</tt>
+     * and directed along the unit vector <b>j</b> of the specified basis.
+     *
+     * @param x0    <i>x</i>-coordinate of the start point <b>o</b>.
+     * @param y0    <i>y</i>-coordinate of the start point <b>o</b>.
+     * @param z0    <i>z</i>-coordinate of the start point <b>o</b>.
+     * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
+     * @return new straight line.
+     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     */
+    public static StraightLine3D newLineAlongJ(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongJ(basis);
     }
 
-    public static StraightLine3D getStraightLineAlongK(double x0, double y0, double z0, Orthonormal3DBasis basis) {
+    /**
+     * Creates new straight line, passing through the given start point <tt>(x0,y0,z0)</tt>
+     * and directed along the unit vector <b>k</b> of the specified basis.
+     *
+     * @param x0    <i>x</i>-coordinate of the start point <b>o</b>.
+     * @param y0    <i>y</i>-coordinate of the start point <b>o</b>.
+     * @param z0    <i>z</i>-coordinate of the start point <b>o</b>.
+     * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
+     * @return new straight line.
+     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     */
+    public static StraightLine3D newLineAlongK(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongK(basis);
     }
 
+    /**
+     * Returns <i>x</i>-coordinate of the <i>start point</i> <b>o</b>.
+     *
+     * @return <i>x</i>-coordinate of the <i>start point</i> <b>o</b>.
+     */
     public double x0() {
         return x0;
     }
 
+    /**
+     * Sets <i>x</i>-coordinate of the <i>start point</i> <b>o</b>.
+     *
+     * @param x0 new <i>x</i>-coordinate of the <i>start point</i> <b>o</b>.
+     * @return a reference to this object.
+     */
     public StraightLine3D x0(double x0) {
         this.x0 = x0;
         return this;
     }
 
+    /**
+     * Returns <i>y</i>-coordinate of the <i>start point</i> <b>o</b>.
+     *
+     * @return <i>y</i>-coordinate of the <i>start point</i> <b>o</b>.
+     */
     public double y0() {
         return y0;
     }
 
+    /**
+     * Sets <i>y</i>-coordinate of the <i>start point</i> <b>o</b>.
+     *
+     * @param y0 new <i>y</i>-coordinate of the <i>start point</i> <b>o</b>.
+     * @return a reference to this object.
+     */
     public StraightLine3D y0(double y0) {
         this.y0 = y0;
         return this;
     }
 
+    /**
+     * Returns <i>z</i>-coordinate of the <i>start point</i> <b>o</b>.
+     *
+     * @return <i>z</i>-coordinate of the <i>start point</i> <b>o</b>.
+     */
     public double z0() {
         return z0;
     }
 
+    /**
+     * Sets <i>z</i>-coordinate of the <i>start point</i> <b>o</b>.
+     *
+     * @param z0 new <i>z</i>-coordinate of the <i>start point</i> <b>o</b>.
+     * @return a reference to this object.
+     */
     public StraightLine3D z0(double z0) {
         this.z0 = z0;
         return this;
     }
 
+    /**
+     * Sets new <i>start point</i> <b>o</b>.
+     *
+     * @param x0 new <i>x</i>-coordinate of the <i>start point</i> <b>o</b>.
+     * @param y0 new <i>y</i>-coordinate of the <i>start point</i> <b>o</b>.
+     * @param z0 new <i>z</i>-coordinate of the <i>start point</i> <b>o</b>.
+     * @return a reference to this object.
+     */
     public StraightLine3D setStart(double x0, double y0, double z0) {
         this.x0 = x0;
         this.y0 = y0;
@@ -110,18 +196,47 @@ public final class StraightLine3D implements Cloneable {
         return this;
     }
 
+    /**
+     * Returns <i>x</i>-component of the direction <b>d</b>.
+     *
+     * @return <i>x</i>-component of the direction <b>d</b>.
+     */
     public double dx() {
         return dx;
     }
 
+    /**
+     * Returns <i>y</i>-component of the direction <b>d</b>.
+     *
+     * @return <i>y</i>-component of the direction <b>d</b>.
+     */
     public double dy() {
         return dy;
     }
 
+    /**
+     * Returns <i>z</i>-component of the direction <b>d</b>.
+     *
+     * @return <i>z</i>-component of the direction <b>d</b>.
+     */
     public double dz() {
         return dz;
     }
 
+    /**
+     * Sets new <i>direction</i> <b>d</b>.
+     *
+     * <p>If the given <b>d</b> vector is not unit, it is automatically
+     * replaced with a unit vector of the same direction: all components are divided by its length.
+     * But if the vector is shorter than {@link Orthonormal3DBasis#MIN_ALLOWED_LENGTH},
+     * an exception is thrown.
+     *
+     * @param dx new <i>x</i>-component of the direction <b>d</b>.
+     * @param dy new <i>y</i>-component of the direction <b>d</b>.
+     * @param dz new <i>z</i>-component of the direction <b>d</b>.
+     * @return a reference to this object.
+     * @throws IllegalArgumentException if the specified vector is zero or extremely short.
+     */
     public StraightLine3D setDirection(double dx, double dy, double dz) {
         final double length = Orthonormal3DBasis.length(dx, dy, dz);
         if (length < Orthonormal3DBasis.MIN_ALLOWED_LENGTH) {
@@ -134,6 +249,15 @@ public final class StraightLine3D implements Cloneable {
         return this;
     }
 
+    /**
+     * Shift the <i>start point</i> <b>o</b> along the direction <b>d</b>:<br>
+     * <b>o</b> = <b>o</b> + shift * <b>d</b>.<br>
+     * Please remember that <b>d</b> vector is unit, so the argument is equal to the actual value
+     * of shifting the start point.
+     *
+     * @param shift value of shifting.
+     * @return a reference to this object.
+     */
     public StraightLine3D shiftAlong(double shift) {
         x0 += shift * dx;
         y0 += shift * dy;
@@ -141,33 +265,76 @@ public final class StraightLine3D implements Cloneable {
         return this;
     }
 
+    /**
+     * Sets new <i>direction</i> <b>d</b> equal to the unit vector <b>i</b> of the specified basis.
+     *
+     * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
+     * @return a reference to this object.
+     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     */
     public StraightLine3D setDirectionAlongI(Orthonormal3DBasis basis) {
         Objects.requireNonNull(basis, "Null basis");
         return setDirection(basis.ix(), basis.iy(), basis.iz());
     }
 
+    /**
+     * Sets new <i>direction</i> <b>d</b> equal to the unit vector <b>j</b> of the specified basis.
+     *
+     * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
+     * @return a reference to this object.
+     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     */
     public StraightLine3D setDirectionAlongJ(Orthonormal3DBasis basis) {
         Objects.requireNonNull(basis, "Null basis");
         return setDirection(basis.jx(), basis.jy(), basis.jz());
     }
 
+    /**
+     * Sets new <i>direction</i> <b>d</b> equal to the unit vector <b>k</b> of the specified basis.
+     *
+     * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
+     * @return a reference to this object.
+     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     */
     public StraightLine3D setDirectionAlongK(Orthonormal3DBasis basis) {
         Objects.requireNonNull(basis, "Null basis");
         return setDirection(basis.kx(), basis.ky(), basis.kz());
     }
 
+    /**
+     * Sets new <i>direction</i> <b>d</b> equal to the unit vector (1,0,0).
+     *
+     * @return a reference to this object.
+     */
     public StraightLine3D setDirectionAlongX() {
         return setDirection(1.0, 0.0, 0.0);
     }
 
+    /**
+     * Sets new <i>direction</i> <b>d</b> equal to the unit vector (0,1,0).
+     *
+     * @return a reference to this object.
+     */
     public StraightLine3D setDirectionAlongY() {
         return setDirection(0.0, 1.0, 0.0);
     }
 
+    /**
+     * Sets new <i>direction</i> <b>d</b> equal to the unit vector (0,0,1).
+     *
+     * @return a reference to this object.
+     */
     public StraightLine3D setDirectionAlongZ() {
         return setDirection(0.0, 0.0, 1.0);
     }
 
+    /**
+     * Sets new <i>direction</i> randomly with uniform distribution in the space.
+     * This is chosen with help of <tt>random.nextDouble()</tt> method.
+     *
+     * @param random random generator used to create the basis.
+     * @return a reference to this object.
+     */
     public StraightLine3D setRandomDirection(RandomGenerator random) {
         for (; ; ) {
             final double dx = 2 * random.nextDouble() - 1.0;
@@ -199,14 +366,32 @@ public final class StraightLine3D implements Cloneable {
         return this;
     }
 
+    /**
+     * Returns <tt>{@link #x0() x0} + t * {@link #dx() dx}.</tt>
+     *
+     * @param t the shift value from the start point.
+     * @return <i>x</i>-coordinate of a point.
+     */
     public double x(double t) {
         return x0 + t * dx;
     }
 
+    /**
+     * Returns <tt>{@link #y0() y0} + t * {@link #dy() dy}.</tt>
+     *
+     * @param t the shift value from the start point.
+     * @return <i>y</i>-coordinate of a point.
+     */
     public double y(double t) {
         return y0 + t * dy;
     }
 
+    /**
+     * Returns <tt>{@link #z0() z0} + t * {@link #dz() dz}.</tt>
+     *
+     * @param t the shift value from the start point.
+     * @return <i>z</i>-coordinate of a point.
+     */
     public double z(double t) {
         return z0 + t * dz;
     }
@@ -364,7 +549,7 @@ public final class StraightLine3D implements Cloneable {
 
     /**
      * Returns the square of the distance from the given point <tt>(x,y,z)</tt> to the straight
-     * <tt>{@link #getStraightLineContainingOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
+     * <tt>{@link #newLineThroughOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
      * where <tt><b>d</b>=(dx,dy,dz)</tt> is some unit vector.
      *
      * <p>This method works faster than creating a new instance of this class and calling its
@@ -388,7 +573,7 @@ public final class StraightLine3D implements Cloneable {
 
     /**
      * Returns the distance from the given point <tt>(x,y,z)</tt> to the straight
-     * <tt>{@link #getStraightLineContainingOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
+     * <tt>{@link #newLineThroughOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
      * where <tt><b>d</b>=(dx,dy,dz)</tt> is some unit vector.
      *
      * <p>Equivalent to
@@ -405,7 +590,6 @@ public final class StraightLine3D implements Cloneable {
     public static double distanceToStraight(double dx, double dy, double dz, double x, double y, double z) {
         return Math.sqrt(distanceToStraightSquare(dx, dy, dz, x, y, z));
     }
-
 
     // Called via reflection in the test for debugging needs; must be private
     private void setDirectionComponents(double dx, double dy, double dz) {

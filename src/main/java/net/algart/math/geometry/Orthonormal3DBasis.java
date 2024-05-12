@@ -39,8 +39,8 @@ import java.util.random.RandomGenerator;
  */
 public final class Orthonormal3DBasis {
     /**
-     * Two vectors are considered to be "almost collinear", if the sine of the angle between them
-     * is less or about {@link #COLLINEARITY_EPSILON}.
+     * While creating a new basis, two vectors are considered to be "almost collinear"
+     * if the sine of the angle between them is less or about {@link #COLLINEARITY_EPSILON}.
      */
     public static final double COLLINEARITY_EPSILON = 1e-7;
     /**
@@ -54,8 +54,8 @@ public final class Orthonormal3DBasis {
     /**
      * Minimal allowed length of the vectors (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) and
      * (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>), passed to creation methods
-     * {@link #getBasis(double, double, double, double, double, double, boolean)},
-     * {@link #getSomeBasis(double, double, double)}.
+     * {@link #newBasis(double, double, double, double, double, double, boolean)},
+     * {@link #newSomeBasis(double, double, double)}.
      */
     public static final double MIN_ALLOWED_LENGTH = 1e-100;
 
@@ -133,7 +133,7 @@ public final class Orthonormal3DBasis {
      *                                  of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) is zero or
      *                                  too small (&lt; {@link #MIN_ALLOWED_LENGTH}).
      */
-    public static Orthonormal3DBasis getSomeBasis(double ix, double iy, double iz) {
+    public static Orthonormal3DBasis newSomeBasis(double ix, double iy, double iz) {
         final double xAbs = ix >= 0.0 ? ix : -ix;
         final double yAbs = iy >= 0.0 ? iy : -iy;
         final double zAbs = iz >= 0.0 ? iz : -iz;
@@ -142,16 +142,16 @@ public final class Orthonormal3DBasis {
                 // So, normalized vector I=(ix,iy,iz)/sqrt(ix^2+iy^2+iz^2) is in sectors 45 degree
                 // around axes Y and Z, strongly not collinear with (1,0,0):
                 // CollinearityException in the following getInstance is impossible
-                return getBasis(ix, iy, iz, 1.0, 0.0, 0.0, true);
+                return newBasis(ix, iy, iz, 1.0, 0.0, 0.0, true);
             } else {
                 // and so on...
-                return getBasis(ix, iy, iz, 0.0, 1.0, 0.0, true);
+                return newBasis(ix, iy, iz, 0.0, 1.0, 0.0, true);
             }
         } else {
             if (xAbs < zAbs) {
-                return getBasis(ix, iy, iz, 1.0, 0.0, 0.0, true);
+                return newBasis(ix, iy, iz, 1.0, 0.0, 0.0, true);
             } else {
-                return getBasis(ix, iy, iz, 0.0, 0.0, 1.0, true);
+                return newBasis(ix, iy, iz, 0.0, 0.0, 1.0, true);
             }
         }
     }
@@ -175,7 +175,7 @@ public final class Orthonormal3DBasis {
      * then behaviour depends on <tt>exceptionOnCollinearity</tt> argument. If it is <tt>true</tt>,
      * the method throws {@link CollinearityException}. In other case, the method ignores the passed
      * vector (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>) and returns some basis according the passed vector
-     * (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>), as {@link #getSomeBasis(double, double, double)} method.
+     * (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>), as {@link #newSomeBasis(double, double, double)} method.
      *
      * @param ix                      <i>x</i>-component of new <b>i</b> vector
      *                                (maybe, multiplied by some <i>d</i><sub>1</sub> constant).
@@ -200,7 +200,7 @@ public final class Orthonormal3DBasis {
      * @throws CollinearityException    if the passed two vectors are almost collinear and
      *                                  <tt>exceptionOnCollinearity==true</tt>.
      */
-    public static Orthonormal3DBasis getBasis(
+    public static Orthonormal3DBasis newBasis(
             final double ix, final double iy, final double iz,
             final double jx, final double jy, final double jz,
             final boolean exceptionOnCollinearity)
@@ -234,7 +234,7 @@ public final class Orthonormal3DBasis {
                     throw new CollinearityException("Passed I vector (" + ix + ", " + iy + ", " + iz + ") and "
                             + "J vector (" + jx + ", " + jy + ", " + jz + ") are collinear or almost collinear");
                 } else {
-                    return getSomeBasis(ix, iy, iz);
+                    return newSomeBasis(ix, iy, iz);
                 }
             }
             mult = 1.0 / correctedLengthJ;
@@ -246,7 +246,7 @@ public final class Orthonormal3DBasis {
     }
 
     /**
-     * Analogue of {@link #getBasis(double, double, double, double, double, double, boolean)
+     * Analogue of {@link #newBasis(double, double, double, double, double, double, boolean)
      * getBasis(ix, iy, iz, jx, jy, jz, true}}, but instead of throwing exceptions this method
      * just returns <tt>Optional.empty()</tt>.
      *
@@ -259,7 +259,7 @@ public final class Orthonormal3DBasis {
      * and also this method returns <tt>Optional.empty()</tt> when
      * the passed two vectors are almost collinear.
      * In all other cases, this method is equivalent
-     * to <tt>Optional.of({@link #getBasis(double, double, double, double, double, double, boolean)
+     * to <tt>Optional.of({@link #newBasis(double, double, double, double, double, double, boolean)
      * getBasis(ix, iy, iz, jx, jy, jz, true/false)})</tt> (the last argument is not important).
      * This method <i>never</i> throws any exceptions.
      *
@@ -277,7 +277,7 @@ public final class Orthonormal3DBasis {
      *           (maybe, multiplied by some <i>d</i><sub>2</sub> constant).
      * @return new right orthonormal basis with given direction of <b>i</b> vector
      * and the direction of <b>j</b> vector, chosen according the arguments
-     * (see {@link #getBasis(double, double, double, double, double, double, boolean)}),
+     * (see {@link #newBasis(double, double, double, double, double, double, boolean)}),
      * or empty value in a case of problems.
      */
     public static Optional<Orthonormal3DBasis> optBasis(
@@ -324,7 +324,7 @@ public final class Orthonormal3DBasis {
      * @param random random generator used to create the basis.
      * @return new right orthonormal basis with random orientation.
      */
-    public static Orthonormal3DBasis getRandomBasis(RandomGenerator random) {
+    public static Orthonormal3DBasis newRandomBasis(RandomGenerator random) {
         for (; ; ) {
             final double ix = 2 * random.nextDouble() - 1.0;
             final double iy = 2 * random.nextDouble() - 1.0;
@@ -332,7 +332,7 @@ public final class Orthonormal3DBasis {
             final double distanceSqr = ix * ix + iy * iy + iz * iz;
             if (distanceSqr >= 0.01 && distanceSqr < 1.0) {
                 // Note: the second check is necessary to provide uniform distribution in a sphere (not in a cube).
-                return getRandomBasis(random, ix, iy, iz);
+                return newRandomBasis(random, ix, iy, iz);
             }
         }
     }
@@ -352,8 +352,8 @@ public final class Orthonormal3DBasis {
      *                                  of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) is zero or
      *                                  too small (&lt; {@link #MIN_ALLOWED_LENGTH}).
      */
-    public static Orthonormal3DBasis getRandomBasis(RandomGenerator random, double ix, double iy, double iz) {
-        return Orthonormal3DBasis.getSomeBasis(ix, iy, iz).rotateJK(2 * Math.PI * random.nextDouble());
+    public static Orthonormal3DBasis newRandomBasis(RandomGenerator random, double ix, double iy, double iz) {
+        return Orthonormal3DBasis.newSomeBasis(ix, iy, iz).rotateJK(2 * Math.PI * random.nextDouble());
     }
 
     /**
@@ -766,7 +766,7 @@ public final class Orthonormal3DBasis {
         if (counter <= REVIVING_COUNT) {
             return this;
         }
-        return getBasis(ix, iy, iz, jx, jy, jz, false);
+        return newBasis(ix, iy, iz, jx, jy, jz, false);
     }
 
     private static int hashCode(double value) {

@@ -51,8 +51,8 @@ public class DistanceToStraightTest {
             if (testIndex % 100 == 0) {
                 System.out.print("\r" + testIndex + " ");
             }
-            StraightLine3D s1 = StraightLine3D.getStraightLineContainingOrigin(rnd(), rnd(), rnd());
-            StraightLine3D s2 = StraightLine3D.getStraightLine(rnd(), rnd(), rnd(), rnd(), rnd(), rnd());
+            StraightLine3D s1 = StraightLine3D.newLineThroughOrigin(rnd(), rnd(), rnd());
+            StraightLine3D s2 = StraightLine3D.newLine(rnd(), rnd(), rnd(), rnd(), rnd(), rnd());
             Point p = Point.valueOf(rnd(), rnd(), rnd());
             double x = p.x();
             double y = p.y();

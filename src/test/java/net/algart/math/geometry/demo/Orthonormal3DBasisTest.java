@@ -24,12 +24,27 @@
 
 package net.algart.math.geometry.demo;
 
+import net.algart.math.geometry.CollinearityException;
 import net.algart.math.geometry.Orthonormal3DBasis;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Random;
 
 public final class Orthonormal3DBasisTest {
+    private static void testNewBasis(double ix, double iy, double iz, double jx, double jy, double jz) {
+        Orthonormal3DBasis basis = null;
+        try {
+            basis = Orthonormal3DBasis.newBasis(ix, iy, iz, jx, jy, jz, true);
+        } catch (CollinearityException | IllegalArgumentException e) {
+            System.out.printf("Cannot create basis for (%s %s %s), (%s %s %s): %s%n", ix, iy, iz, jx, jy, jz, e);
+        }
+        Optional<Orthonormal3DBasis> opt = Orthonormal3DBasis.optBasis(ix, iy, iz, jx, jy, jz);
+        if (opt.isEmpty() != (basis == null)) {
+            throw new AssertionError("optBasis/newBasis mismatch!");
+        }
+    }
+
     private static double iAbs(Orthonormal3DBasis basis) {
         return Math.sqrt(basis.ix() * basis.ix() + basis.iy() * basis.iy() + basis.iz() * basis.iz());
     }
@@ -43,14 +58,18 @@ public final class Orthonormal3DBasisTest {
     }
 
     public static void main(String[] args) {
+        testNewBasis(0 , 0 , 0, 0, 0, 0);
+        testNewBasis(1000 , 0 , 0, 1000, 0, 0);
+        testNewBasis(1000 , 0 , 0, 0, 100, 0);
+        testNewBasis(0 , 1e-10 , 0, 0, 100, 0);
         Random rnd = new Random(157);
         Orthonormal3DBasis basis = Orthonormal3DBasis.DEFAULT;
         System.out.printf("Default basis: %s%n", basis);
         System.out.printf("jki basis: %s%n", basis.jki());
         System.out.printf("kij basis: %s%n", basis.kij());
-        basis = Orthonormal3DBasis.getBasis(0, 1, 0, 0, 5, 0, false);
+        basis = Orthonormal3DBasis.newBasis(0, 1, 0, 0, 5, 0, false);
         System.out.printf("Basis made for collinear pair: %s%n", basis);
-        basis = Orthonormal3DBasis.getSomeBasis(
+        basis = Orthonormal3DBasis.newSomeBasis(
                 rnd.nextGaussian(), rnd.nextGaussian(), rnd.nextGaussian());
         System.out.printf(Locale.US, "Starting basis: %s%n", basis);
         for (int k = 0; k < 11111111; k++) {
