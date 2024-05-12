@@ -363,7 +363,7 @@ public class Arrays {
 
         /**
          * Returns the current version of this AlgART libraries.
-         * Version format: "<major>.<medium>.<minor>[.<patch>]", for example: "3.1.0".
+         * Version format: "<major>.<medium>.<minor>[.<patch>]", for example: "1.3.0".
          *
          * @return AlgART version as a string.
          */
