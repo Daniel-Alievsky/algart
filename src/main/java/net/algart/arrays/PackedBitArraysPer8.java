@@ -779,7 +779,6 @@ public class PackedBitArraysPer8 {
                         v = (sNext >>> sPosRem) | ((src[sPos + 1] & 0xFF) << sPosRem8);
                     }
                     synchronized (dest) {
-
                         dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
                     }
                 }
@@ -790,17 +789,21 @@ public class PackedBitArraysPer8 {
     /*Repeat.IncludeEnd*/
 
     /**
-     * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
+     * Copies <tt>count</tt> bits, packed in <tt>src</tt> array in the reverse order,
+     * starting from the bit <tt>#srcPos</tt>, to packed <tt>dest</tt> array (in the normal order),
+     * starting from the bit <tt>#destPos</tt>.
      *
-     * <p><i>This method works correctly even if <tt>src == dest</tt>
-     * and the copied areas overlap</i>,
-     * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
-     * More precisely, in this case the copying is performed as if the
-     * bits at positions <tt>srcPos..srcPos+count-1</tt>
-     * were first unpacked to a temporary <tt>boolean[]</tt> array with <tt>count</tt> elements
-     * and then the contents of the temporary array were packed into positions
-     * <tt>destPos..destPos+count-1</code>.
+     * <p>The same action may be performed by the following operators:</p>
+     * <pre>
+     *     byte[] copy = pSrc.clone();
+     *     {@link PackedBitArraysPer8#reverseBitsOrderInEachByte(byte[])
+     *     PackedBitArraysPer8.reverseBitsOrderInEachByte}(copy);
+     *     {@link PackedBitArraysPer8#copyBits PackedBitArraysPer8.copyBits}(dest, destPos, copy, srcPos, count);
+     * </pre>
+     * <p>but without necessity to copy <tt>src</tt> bytes into a new array.
+     *
+     * <p>However, <i>this method <b>does not</b> work correctly if <tt>src == dest</tt>
+     * and the copied areas overlap</i>.</p>
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
      * @param destPos position of the first bit written in the destination array.
@@ -830,7 +833,8 @@ public class PackedBitArraysPer8 {
         if (sPosRem == dPosRem) {
             if (cntStart > 0) {
                 synchronized (dest) {
-                    dest[dPos] = (byte) (((src[sPos] & 0xFF) & maskStart) | (dest[dPos] & ~maskStart));
+                    dest[dPos] = (byte) ((REVERSE[src[sPos] & 0xFF] & maskStart) | (dest[dPos] & ~maskStart));
+                    // - only 8 low bits are stored
                 }
                 count -= cntStart;
                 dPos++;
@@ -844,7 +848,8 @@ public class PackedBitArraysPer8 {
             if (cntFinish > 0) {
                 int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
                 synchronized (dest) {
-                    dest[dPos] = (byte) (((src[sPos] & 0xFF) & maskFinish) | (dest[dPos] & ~maskFinish));
+                    dest[dPos] = (byte) ((REVERSE[src[sPos] & 0xFF] & maskFinish) | (dest[dPos] & ~maskFinish));
+                    // - only 8 low bits are stored
                 }
             }
         } else {
@@ -854,12 +859,13 @@ public class PackedBitArraysPer8 {
                 int v;
                 if (sPosRem + cntStart <= 8) { // cntStart bits are in a single src element
                     if (shift > 0)
-                        v = (sNext = (src[sPos] & 0xFF)) << shift;
+                        v = (sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) << shift;
                     else
-                        v = (sNext = (src[sPos] & 0xFF)) >>> -shift;
+                        v = (sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) >>> -shift;
                     sPosRem += cntStart;
                 } else {
-                    v = ((src[sPos] & 0xFF) >>> -shift) | ((sNext = (src[sPos + 1] & 0xFF)) << (8 + shift));
+                    v = ((REVERSE[src[sPos] & 0xFF] & 0xFF) >>> -shift) |
+                            ((sNext = (REVERSE[src[sPos + 1] & 0xFF] & 0xFF)) << (8 + shift));
                     sPos++;
                     sPosRem = (sPosRem + cntStart) & 7;
                 }
@@ -874,15 +880,15 @@ public class PackedBitArraysPer8 {
                 dPos++;
             } else {
                 if (count == 0) {
-                    return; // necessary check to avoid IndexOutOfBoundException while accessing (src[sPos] & 0xFF)
+                    return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
                 }
                 sNext = (src[sPos] & 0xFF);
             }
-            // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
+            // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
             final int sPosRem8 = 8 - sPosRem;
             for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; ) {
                 sPos++;
-                dest[dPos] = (byte) ((sNext >>> sPosRem) | ((sNext = (src[sPos] & 0xFF)) << sPosRem8));
+                dest[dPos] = (byte) ((sNext >>> sPosRem) | ((sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) << sPosRem8));
                 dPos++;
             }
             int cntFinish = (int) (count & 7);
@@ -892,7 +898,7 @@ public class PackedBitArraysPer8 {
                 if (sPosRem + cntFinish <= 8) { // cntFinish bits are in a single src element
                     v = sNext >>> sPosRem;
                 } else {
-                    v = (sNext >>> sPosRem) | ((src[sPos + 1] & 0xFF) << sPosRem8);
+                    v = (sNext >>> sPosRem) | ((REVERSE[src[sPos + 1] & 0xFF] & 0xFF) << sPosRem8);
                 }
                 synchronized (dest) {
                     dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
