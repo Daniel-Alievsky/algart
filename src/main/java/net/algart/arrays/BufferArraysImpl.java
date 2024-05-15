@@ -4565,6 +4565,36 @@ class BufferArraysImpl {
             storage.setBit(offset + index, false);
         }
 
+        @Override
+        public void setBitNoSync(long index, boolean value) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
+            storage.setBitNoSync(offset + index, value);
+        }
+
+        @Override
+        public void setBitNoSync(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
+            storage.setBitNoSync(offset + index, true);
+        }
+
+        @Override
+        public void clearBitNoSync(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (copyOnNextWrite) {
+                reallocateStorage();
+            }
+            storage.setBitNoSync(offset + index, false);
+        }
+
         public UpdatableBitArray fill(double value) {
             return fill(0, length, value);
         }

@@ -32,7 +32,7 @@ package net.algart.arrays;
  */
 public interface UpdatableFloatArray extends FloatArray, UpdatablePFloatingArray {
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt>.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt>.
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.
@@ -41,7 +41,7 @@ public interface UpdatableFloatArray extends FloatArray, UpdatablePFloatingArray
     void setFloat(long index, float value);
 
     /**
-     * Fills all elements of this array by the specified value. Equivalent to
+     * Fills all the elements of this array by the specified value. Equivalent to
      * <tt>{@link #fill(long, long, float) fill}(0, thisArray.length(), value)</tt>.
      *
      * @param value the value to be stored in all elements of the array.

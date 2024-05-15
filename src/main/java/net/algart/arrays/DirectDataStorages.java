@@ -33,7 +33,8 @@ import java.nio.*;
  * @author Daniel Alievsky
  */
 class DirectDataStorages {
-    private DirectDataStorages() {}
+    private DirectDataStorages() {
+    }
 
     /**
      * The simple implementation of data storage, based on buffers in RAM
@@ -60,16 +61,16 @@ class DirectDataStorages {
         DataStorage changeCapacity(long newCapacity, long offset, long length) {
             if (unresizable)
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
-                    + "(unallowed changeCapacity)");
-            DirectStorage result = (DirectStorage)newCompatibleEmptyStorage(false);
+                        + "(unallowed changeCapacity)");
+            DirectStorage result = (DirectStorage) newCompatibleEmptyStorage(false);
             ByteBuffer byteBuffer = newByteBuffer(newCapacity);
             if (this instanceof DirectBitStorage) {
                 LongBuffer longBuffer = byteBuffer.asLongBuffer();
-                PackedBitBuffers.copyBits(longBuffer, 0, ((DirectBitStorage)this).lb, offset, length);
+                PackedBitBuffers.copyBits(longBuffer, 0, ((DirectBitStorage) this).lb, offset, length);
                 result.bb = byteBuffer;
             } else {
-                JBuffers.copyByteBuffer(byteBuffer, 0, bb, (int)offset << bytesPerBufferElementLog(),
-                    (int)length << bytesPerBufferElementLog());
+                JBuffers.copyByteBuffer(byteBuffer, 0, bb, (int) offset << bytesPerBufferElementLog(),
+                        (int) length << bytesPerBufferElementLog());
                 result.bb = byteBuffer;
             }
             result.setSpecificBuffer();
@@ -128,19 +129,28 @@ class DirectDataStorages {
 
         @Override
         final boolean getBit(long index) {
-            int ii = (int)(index >>> 6), bit = ((int)index) & 63;
+            int ii = (int) (index >>> 6), bit = ((int) index) & 63;
             return (lb.get(ii) & (1L << bit)) != 0L;
         }
 
         @Override
         final void setBit(long index, boolean value) {
-            int ii = (int)(index >>> 6), bit = ((int)index) & 63;
-            synchronized(lb) {
+            int ii = (int) (index >>> 6), bit = ((int) index) & 63;
+            synchronized (lb) {
                 if (value)
                     lb.put(ii, lb.get(ii) | 1L << bit);
                 else
                     lb.put(ii, lb.get(ii) & ~(1L << bit));
             }
+        }
+
+        @Override
+        final void setBitNoSync(long index, boolean value) {
+            int ii = (int) (index >>> 6), bit = ((int) index) & 63;
+            if (value)
+                lb.put(ii, lb.get(ii) | 1L << bit);
+            else
+                lb.put(ii, lb.get(ii) & ~(1L << bit));
         }
 
         @Override
@@ -158,9 +168,9 @@ class DirectDataStorages {
         }
 
         final void swap(long firstIndex, long secondIndex) {
-            int ii1 = (int)(firstIndex >>> 6), bit1 = ((int)firstIndex) & 63;
-            int ii2 = (int)(secondIndex >>> 6), bit2 = ((int)secondIndex) & 63;
-            synchronized(lb) {
+            int ii1 = (int) (firstIndex >>> 6), bit1 = ((int) firstIndex) & 63;
+            int ii2 = (int) (secondIndex >>> 6), bit2 = ((int) secondIndex) & 63;
+            synchronized (lb) {
                 long l1 = lb.get(ii1);
                 long l2 = lb.get(ii2);
                 boolean v1 = (l1 & (1L << bit1)) != 0L;
@@ -180,7 +190,7 @@ class DirectDataStorages {
         }
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
-            PackedBitBuffers.unpackBits((boolean[])destArray, destArrayOffset, lb, pos, count);
+            PackedBitBuffers.unpackBits((boolean[]) destArray, destArrayOffset, lb, pos, count);
         }
 
         public void getBits(long pos, long[] destArray, long destArrayOffset, long count) {
@@ -188,7 +198,7 @@ class DirectDataStorages {
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
-            PackedBitBuffers.packBits(lb, pos, (boolean[])srcArray, srcArrayOffset, count);
+            PackedBitBuffers.packBits(lb, pos, (boolean[]) srcArray, srcArrayOffset, count);
         }
 
         public void setBits(long pos, long[] srcArray, long srcArrayOffset, long count) {
@@ -196,7 +206,7 @@ class DirectDataStorages {
         }
 
         void fillData(long pos, long count, Object fillerWrapper) {
-            PackedBitBuffers.fillBits(lb, pos, count, (Boolean)fillerWrapper);
+            PackedBitBuffers.fillBits(lb, pos, count, (Boolean) fillerWrapper);
         }
 
         void clearData(long pos, long count) {
@@ -205,7 +215,7 @@ class DirectDataStorages {
 
         boolean copy(DataStorage src, long srcPos, long destPos, long count) {
             if (src instanceof DirectBitStorage) {
-                PackedBitBuffers.copyBits(lb, destPos, ((DirectBitStorage)src).lb, srcPos, count);
+                PackedBitBuffers.copyBits(lb, destPos, ((DirectBitStorage) src).lb, srcPos, count);
                 return true;
             } else {
                 return false;
@@ -214,8 +224,8 @@ class DirectDataStorages {
 
         boolean swap(DataStorage another, long anotherPos, long thisPos, long count) {
             if (another instanceof DirectBitStorage) {
-                PackedBitBuffers.swapBits(((DirectBitStorage)another).lb, anotherPos,
-                    lb, thisPos, count);
+                PackedBitBuffers.swapBits(((DirectBitStorage) another).lb, anotherPos,
+                        lb, thisPos, count);
                 return true;
             } else {
                 return false;
@@ -238,15 +248,15 @@ class DirectDataStorages {
             throw new UnsupportedOperationException("addData is not supported for bit storages");
         }
 
-        void subtractData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
+        void subtractData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
             throw new UnsupportedOperationException("subtractData is not supported for bit storages");
         }
 
-        void absDiffData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
+        void absDiffData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
             throw new UnsupportedOperationException("absDiffData is not supported for bit storages");
         }
 
@@ -293,12 +303,12 @@ class DirectDataStorages {
 
         @Override
         final byte getByte(long index) {
-            return bb.get((int)index);
+            return bb.get((int) index);
         }
 
         @Override
         final void setByte(long index, byte value) {
-            bb.put((int)index, value);
+            bb.put((int) index, value);
         }
 
         @Override
@@ -306,7 +316,7 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.indexOfByte(bb, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.indexOfByte(bb, (int) lowIndex, (int) highIndex, value);
         }
 
         @Override
@@ -314,15 +324,15 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.lastIndexOfByte(bb, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.lastIndexOfByte(bb, (int) lowIndex, (int) highIndex, value);
         }
 
         final void copy(long destIndex, long srcIndex) {
-            bb.put((int)destIndex, bb.get(((int)srcIndex)));
+            bb.put((int) destIndex, bb.get(((int) srcIndex)));
         }
 
         final void swap(long firstIndex, long secondIndex) {
-            int i1 = (int)firstIndex, i2 = (int)secondIndex;
+            int i1 = (int) firstIndex, i2 = (int) secondIndex;
             byte v1 = bb.get(i1);
             byte v2 = bb.get(i2);
             bb.put(i1, v2);
@@ -331,18 +341,18 @@ class DirectDataStorages {
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
             ByteBuffer dup = bb.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.get((byte[])destArray, destArrayOffset, count);
+            dup.position((int) pos);
+            dup.get((byte[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
             ByteBuffer dup = bb.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.put((byte[])srcArray, srcArrayOffset, count);
+            dup.position((int) pos);
+            dup.put((byte[]) srcArray, srcArrayOffset, count);
         }
 
         void fillData(long pos, long count, Object fillerWrapper) {
-            JBuffers.fillByteBuffer(bb, (int)pos, (int)count, (Byte)fillerWrapper);
+            JBuffers.fillByteBuffer(bb, (int) pos, (int) count, (Byte) fillerWrapper);
         }
 
         void clearData(long pos, long count) {
@@ -351,7 +361,7 @@ class DirectDataStorages {
 
         boolean copy(DataStorage src, long srcPos, long destPos, long count) {
             if (src instanceof DirectByteStorage) {
-                JBuffers.copyByteBuffer(bb, (int)destPos, ((DirectByteStorage)src).bb, (int)srcPos, (int)count);
+                JBuffers.copyByteBuffer(bb, (int) destPos, ((DirectByteStorage) src).bb, (int) srcPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -360,8 +370,8 @@ class DirectDataStorages {
 
         boolean swap(DataStorage another, long anotherPos, long thisPos, long count) {
             if (another instanceof DirectByteStorage) {
-                JBuffers.swapByteBuffer(((DirectByteStorage)another).bb, (int)anotherPos,
-                    bb, (int)thisPos, (int)count);
+                JBuffers.swapByteBuffer(((DirectByteStorage) another).bb, (int) anotherPos,
+                        bb, (int) thisPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -369,33 +379,33 @@ class DirectDataStorages {
         }
 
         void minData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.minByteArrayAndBuffer((byte[])destArray, destArrayOffset, bb, (int)pos, count);
+            JBuffers.minByteArrayAndBuffer((byte[]) destArray, destArrayOffset, bb, (int) pos, count);
         }
 
         void maxData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.maxByteArrayAndBuffer((byte[])destArray, destArrayOffset, bb, (int)pos, count);
+            JBuffers.maxByteArrayAndBuffer((byte[]) destArray, destArrayOffset, bb, (int) pos, count);
         }
 
         void addData(long pos, int[] destArray, int destArrayOffset, int count) {
-            JBuffers.addByteBufferToArray(destArray, destArrayOffset, bb, (int)pos, count);
+            JBuffers.addByteBufferToArray(destArray, destArrayOffset, bb, (int) pos, count);
         }
 
         void addData(long pos, double[] destArray, int destArrayOffset, int count, double mult) {
-            JBuffers.addByteBufferToArray(destArray, destArrayOffset, bb, (int)pos, count, mult);
+            JBuffers.addByteBufferToArray(destArray, destArrayOffset, bb, (int) pos, count, mult);
         }
 
-        void subtractData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.subtractByteBufferFromArray((byte[])destArray, destArrayOffset,
-                bb, (int)pos, count, truncateOverflows);
+        void subtractData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.subtractByteBufferFromArray((byte[]) destArray, destArrayOffset,
+                    bb, (int) pos, count, truncateOverflows);
         }
 
-        void absDiffData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.absDiffOfByteArrayAndBuffer((byte[])destArray, destArrayOffset,
-                bb, (int)pos, count);
+        void absDiffData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.absDiffOfByteArrayAndBuffer((byte[]) destArray, destArrayOffset,
+                    bb, (int) pos, count);
         }
 
         void setSpecificBuffer() {

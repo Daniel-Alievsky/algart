@@ -54,7 +54,7 @@ package net.algart.arrays;
  */
 public interface UpdatableArray extends Array, ArrayExchanger {
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt>.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt>.
      * The new value is first automatically unwrapped if this array contains elements of primitive types.
      *
      * <p>It is a low-level method.

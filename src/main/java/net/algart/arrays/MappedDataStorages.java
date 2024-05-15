@@ -2745,6 +2745,8 @@ class MappedDataStorages {
             }
         }
 
+        // No special implementation for setBitNoSync: synchronization is needed in any case.
+
         @Override
         final long indexOfBit(long lowIndex, long highIndex, boolean value) {
             if (highIndex <= lowIndex) { // necessary check: our algorithm does not work with zero-length file

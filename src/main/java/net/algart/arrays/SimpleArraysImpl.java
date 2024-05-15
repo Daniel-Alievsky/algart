@@ -13329,6 +13329,31 @@ class SimpleArraysImpl {
             }
         }
 
+        public final void setBitNoSync(long index, boolean value) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (value)
+                this.bitArray[(int) ((index) >>> 6)] |= 1L << ((int) (index) & 63);
+            else
+                this.bitArray[(int) ((index) >>> 6)] &= ~(1L << ((int) (index) & 63));
+        }
+
+        public final void setBitNoSync(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.bitArray[(int) ((index) >>> 6)] |= 1L << ((index) & 63);
+        }
+
+        public final void clearBitNoSync(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.bitArray[(int) ((index) >>> 6)] &= ~(1L << ((index) & 63));
+        }
+
         public UpdatableBitArray fill(double value) {
             return fill(0, length, value);
         }
@@ -13699,6 +13724,33 @@ class SimpleArraysImpl {
             synchronized (this.bitArray) {
                 this.bitArray[(int) ((offset + index) >>> 6)] &= ~(1L << ((offset + index) & 63));
             }
+        }
+
+        public final void setBitNoSync(long index, boolean value) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            if (value)
+                this.bitArray[(int) ((offset + index) >>> 6)] |= 1L << ((int) (offset + index) & 63);
+            else
+                this.bitArray[(int) ((offset + index) >>> 6)] &= ~(1L << ((int) (offset + index) & 63));
+        }
+
+        public final void setBitNoSync(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.bitArray[(int) ((offset + index) >>> 6)] |= 1L << ((offset + index) & 63);
+        }
+
+        public final void clearBitNoSync(long index) {
+            if (index < 0 || index >= length)
+                throw rangeException(index);
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
+            this.bitArray[(int) ((offset + index) >>> 6)] &= ~(1L << ((offset + index) & 63));
         }
 
         public UpdatableBitArray fill(double value) {

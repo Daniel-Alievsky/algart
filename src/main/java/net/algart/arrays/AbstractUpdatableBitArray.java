@@ -753,18 +753,59 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
     }
 /*Repeat.IncludeEnd*/
 
+    /**
+     * This implementation calls <tt>{@link #setBit(long, boolean) setBit(index, true)}</tt>.
+     *
+     * @param index index of element to replace.
+     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     */
+    @Override
     public void setBit(long index) {
         setBit(index, true);
     }
 
     /**
-     * Clears the bit #<tt>index</tt> to 0 (<tt>false</tt>).
+     * This implementation calls <tt>{@link #setBit(long, boolean) setBit(index, false)}</tt>.
      *
      * @param index index of element to replace.
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      */
+    @Override
     public void clearBit(long index) {
         setBit(index, false);
+    }
+
+    /**
+     * This implementation calls <tt>{@link #setBit(long, boolean) setBit(index, value)}</tt>.
+     *
+     * @param index index of element to replace.
+     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     */
+    @Override
+    public void setBitNoSync(long index, boolean value) {
+        setBit(index, value);
+    }
+
+    /**
+     * This implementation calls <tt>{@link #setBitNoSync(long, boolean) setBitNoSync(index, true)}</tt>.
+     *
+     * @param index index of element to replace.
+     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     */
+    @Override
+    public void setBitNoSync(long index) {
+        setBitNoSync(index, true);
+    }
+
+    /**
+     * This implementation calls <tt>{@link #setBitNoSync(long, boolean) setBitNoSync(index, false)}</tt>.
+     *
+     * @param index index of element to replace.
+     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     */
+    @Override
+    public void clearBitNoSync(long index) {
+        setBitNoSync(index, false);
     }
 
     /**

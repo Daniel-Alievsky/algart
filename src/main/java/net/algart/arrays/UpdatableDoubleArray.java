@@ -35,7 +35,7 @@ package net.algart.arrays;
  */
 public interface UpdatableDoubleArray extends DoubleArray, UpdatablePFloatingArray {
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt>.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt>.
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.
@@ -44,7 +44,7 @@ public interface UpdatableDoubleArray extends DoubleArray, UpdatablePFloatingArr
     void setDouble(long index, double value);
 
     /**
-     * Fills all elements of this array by the specified value. Equivalent to
+     * Fills all the elements of this array by the specified value. Equivalent to
      * <tt>{@link #fill(long, long, double) fill}(0, thisArray.length(), value)</tt>.
      *
      * @param value the value to be stored in all elements of the array.

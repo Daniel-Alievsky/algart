@@ -38,7 +38,7 @@ package net.algart.arrays;
  */
 public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt>.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt>.
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.
@@ -47,7 +47,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     void setBit(long index, boolean value);
 
     /**
-     * Fills all elements of this array by the specified value. Equivalent to
+     * Fills all the elements of this array by the specified value. Equivalent to
      * <tt>{@link #fill(long, long, boolean) fill}(0, thisArray.length(), value)</tt>.
      *
      * @param value the value to be stored in all elements of the array.
@@ -89,7 +89,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     /*Repeat.IncludeEnd*/
 
     /**
-     * Sets the bit #<tt>index</tt> to 1 (<tt>true</tt>).
+     * Equivalent to <tt>{@link #setBit(long, boolean) setBit}(index, true)</tt>.
      *
      * @param index index of element to replace.
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
@@ -97,12 +97,51 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     void setBit(long index);
 
     /**
-     * Clears the bit #<tt>index</tt> to 0 (<tt>false</tt>).
+     * Equivalent to <tt>{@link #setBit(long, boolean) setBit}(index, false)</tt>.
      *
      * @param index index of element to replace.
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      */
     void clearBit(long index);
+
+    /**
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> <b>in a non-thread-safe manner</b>:
+     * without a strict requirement for internal synchronization.
+     * This means that when calling this method from different threads for the same instance,
+     * it can cause modification (corruption) of some bits "around" the bit <tt>#index</tt>,
+     * namely the bits inside the same 64-bit block with indexes <tt>64k...64k+63</tt>,
+     * where <tt>k=index/64</tt>.
+     *
+     * <p>In contrast, {@link #setBit(long, boolean)} method guarantees that setting a bit at index
+     * <i>i</i> will never affect to any bit with other index <i>j&ne;i</i>.
+     * This allows you to split bit array into several blocks and process each block in a separate thread,
+     * as it is possible for a regular Java array.</p>
+     *
+     * <p>Note that some classes may correctly implement this interface without any synchronization
+     * or, vise versa, always use synchronization. In such cases this method may be equivalent
+     * to {@link #setBit(long, boolean)}.</p>
+     *
+     * @param index index of element to replace.
+     * @param value element to be stored at the specified position.
+     * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
+     */
+    void setBitNoSync(long index, boolean value);
+
+    /**
+     * Equivalent to <tt>{@link #setBitNoSync(long, boolean) setBitNoSync}(index, true)</tt>.
+     *
+     * @param index index of element to replace.
+     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     */
+    void setBitNoSync(long index);
+
+    /**
+     * Equivalent to <tt>{@link #setBitNoSync(long, boolean) setBitNoSync}(index, false)</tt>.
+     *
+     * @param index index of element to replace.
+     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     */
+    void clearBitNoSync(long index);
 
     /**
      * Copies <tt>count</tt> bits from the specified <i>packed</i> bit array,

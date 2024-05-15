@@ -168,6 +168,18 @@ abstract class DataStorage {
      */
     abstract DataStorage changeCapacity(long newCapacity, long offset, long length);
 
+    /**
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a bit storage
+     * <b>in a non-thread-safe manner</b>.
+     *
+     * @param index the index of the data element in the source array (not sub-array).
+     * @param value the bit to be stored at the specified position.
+     * @throws UnsupportedOperationException if it is not a bit storage.
+     */
+    void setBitNoSync(long index, boolean value) {
+        setBit(index, value);
+    }
+
     /*Repeat() boolean|bit ==> char,,byte,,short,,int,,long,,float,,double;;
                Bit         ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double
      */
@@ -183,7 +195,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt> if it is a bit storage.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a bit storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the bit to be stored at the specified position.
@@ -244,7 +256,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt> if it is a char storage.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a char storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the char to be stored at the specified position.
@@ -305,7 +317,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt> if it is a byte storage.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a byte storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the byte to be stored at the specified position.
@@ -366,7 +378,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt> if it is a short storage.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a short storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the short to be stored at the specified position.
@@ -427,7 +439,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt> if it is a int storage.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a int storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the int to be stored at the specified position.
@@ -488,7 +500,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt> if it is a long storage.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a long storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the long to be stored at the specified position.
@@ -549,7 +561,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt> if it is a float storage.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a float storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the float to be stored at the specified position.
@@ -610,7 +622,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to specified <tt>value</tt> if it is a double storage.
+     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a double storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the double to be stored at the specified position.
