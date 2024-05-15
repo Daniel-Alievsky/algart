@@ -418,8 +418,7 @@ class DirectDataStorages {
                SHORT     ==> CHAR,,INT,,LONG,,FLOAT,,DOUBLE;;
                sb        ==> cb,,ib,,lb,,fb,,db;;
                (count)(,\s*truncateOverflows) ==> $1$2,,$1$2,,$1,,...;;
-               (JBuffers\.absDiffOfIntArrayAndBuffer\(.*?)\); ==> $1, truncateOverflows);,,...
-     */
+               (JBuffers\.absDiffOfIntArrayAndBuffer\(.*?)\); ==> $1, truncateOverflows);,,... */
     static class DirectShortStorage extends DirectStorage {
         private ShortBuffer sb;
 
@@ -445,12 +444,12 @@ class DirectDataStorages {
 
         @Override
         final short getShort(long index) {
-            return sb.get((int)index);
+            return sb.get((int) index);
         }
 
         @Override
         final void setShort(long index, short value) {
-            sb.put((int)index, value);
+            sb.put((int) index, value);
         }
 
         @Override
@@ -458,7 +457,7 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.indexOfShort(sb, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.indexOfShort(sb, (int) lowIndex, (int) highIndex, value);
         }
 
         @Override
@@ -466,15 +465,15 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.lastIndexOfShort(sb, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.lastIndexOfShort(sb, (int) lowIndex, (int) highIndex, value);
         }
 
         final void copy(long destIndex, long srcIndex) {
-            sb.put((int)destIndex, sb.get(((int)srcIndex)));
+            sb.put((int) destIndex, sb.get(((int) srcIndex)));
         }
 
         final void swap(long firstIndex, long secondIndex) {
-            int i1 = (int)firstIndex, i2 = (int)secondIndex;
+            int i1 = (int) firstIndex, i2 = (int) secondIndex;
             short v1 = sb.get(i1);
             short v2 = sb.get(i2);
             sb.put(i1, v2);
@@ -483,18 +482,18 @@ class DirectDataStorages {
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
             ShortBuffer dup = sb.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.get((short[])destArray, destArrayOffset, count);
+            dup.position((int) pos);
+            dup.get((short[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
             ShortBuffer dup = sb.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.put((short[])srcArray, srcArrayOffset, count);
+            dup.position((int) pos);
+            dup.put((short[]) srcArray, srcArrayOffset, count);
         }
 
         void fillData(long pos, long count, Object fillerWrapper) {
-            JBuffers.fillShortBuffer(sb, (int)pos, (int)count, (Short)fillerWrapper);
+            JBuffers.fillShortBuffer(sb, (int) pos, (int) count, (Short) fillerWrapper);
         }
 
         void clearData(long pos, long count) {
@@ -503,7 +502,7 @@ class DirectDataStorages {
 
         boolean copy(DataStorage src, long srcPos, long destPos, long count) {
             if (src instanceof DirectShortStorage) {
-                JBuffers.copyShortBuffer(sb, (int)destPos, ((DirectShortStorage)src).sb, (int)srcPos, (int)count);
+                JBuffers.copyShortBuffer(sb, (int) destPos, ((DirectShortStorage) src).sb, (int) srcPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -512,8 +511,8 @@ class DirectDataStorages {
 
         boolean swap(DataStorage another, long anotherPos, long thisPos, long count) {
             if (another instanceof DirectShortStorage) {
-                JBuffers.swapShortBuffer(((DirectShortStorage)another).sb, (int)anotherPos,
-                    sb, (int)thisPos, (int)count);
+                JBuffers.swapShortBuffer(((DirectShortStorage) another).sb, (int) anotherPos,
+                        sb, (int) thisPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -525,35 +524,36 @@ class DirectDataStorages {
         }
 
         void minData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.minShortArrayAndBuffer((short[])destArray, destArrayOffset, sb, (int)pos, count);
+            JBuffers.minShortArrayAndBuffer((short[]) destArray, destArrayOffset, sb, (int) pos, count);
         }
 
         void maxData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.maxShortArrayAndBuffer((short[])destArray, destArrayOffset, sb, (int)pos, count);
+            JBuffers.maxShortArrayAndBuffer((short[]) destArray, destArrayOffset, sb, (int) pos, count);
         }
 
         void addData(long pos, int[] destArray, int destArrayOffset, int count) {
-            JBuffers.addShortBufferToArray(destArray, destArrayOffset, sb, (int)pos, count);
+            JBuffers.addShortBufferToArray(destArray, destArrayOffset, sb, (int) pos, count);
         }
 
         void addData(long pos, double[] destArray, int destArrayOffset, int count, double mult) {
-            JBuffers.addShortBufferToArray(destArray, destArrayOffset, sb, (int)pos, count, mult);
+            JBuffers.addShortBufferToArray(destArray, destArrayOffset, sb, (int) pos, count, mult);
         }
 
-        void subtractData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.subtractShortBufferFromArray((short[])destArray, destArrayOffset,
-                sb, (int)pos, count, truncateOverflows);
+        void subtractData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.subtractShortBufferFromArray((short[]) destArray, destArrayOffset,
+                    sb, (int) pos, count, truncateOverflows);
         }
 
-        void absDiffData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.absDiffOfShortArrayAndBuffer((short[])destArray, destArrayOffset,
-                sb, (int)pos, count);
+        void absDiffData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.absDiffOfShortArrayAndBuffer((short[]) destArray, destArrayOffset,
+                    sb, (int) pos, count);
         }
     }
+
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
     static class DirectCharStorage extends DirectStorage {
         private CharBuffer cb;
@@ -580,12 +580,12 @@ class DirectDataStorages {
 
         @Override
         final char getChar(long index) {
-            return cb.get((int)index);
+            return cb.get((int) index);
         }
 
         @Override
         final void setChar(long index, char value) {
-            cb.put((int)index, value);
+            cb.put((int) index, value);
         }
 
         @Override
@@ -593,7 +593,7 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.indexOfChar(cb, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.indexOfChar(cb, (int) lowIndex, (int) highIndex, value);
         }
 
         @Override
@@ -601,15 +601,15 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.lastIndexOfChar(cb, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.lastIndexOfChar(cb, (int) lowIndex, (int) highIndex, value);
         }
 
         final void copy(long destIndex, long srcIndex) {
-            cb.put((int)destIndex, cb.get(((int)srcIndex)));
+            cb.put((int) destIndex, cb.get(((int) srcIndex)));
         }
 
         final void swap(long firstIndex, long secondIndex) {
-            int i1 = (int)firstIndex, i2 = (int)secondIndex;
+            int i1 = (int) firstIndex, i2 = (int) secondIndex;
             char v1 = cb.get(i1);
             char v2 = cb.get(i2);
             cb.put(i1, v2);
@@ -618,18 +618,18 @@ class DirectDataStorages {
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
             CharBuffer dup = cb.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.get((char[])destArray, destArrayOffset, count);
+            dup.position((int) pos);
+            dup.get((char[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
             CharBuffer dup = cb.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.put((char[])srcArray, srcArrayOffset, count);
+            dup.position((int) pos);
+            dup.put((char[]) srcArray, srcArrayOffset, count);
         }
 
         void fillData(long pos, long count, Object fillerWrapper) {
-            JBuffers.fillCharBuffer(cb, (int)pos, (int)count, (Character)fillerWrapper);
+            JBuffers.fillCharBuffer(cb, (int) pos, (int) count, (Character) fillerWrapper);
         }
 
         void clearData(long pos, long count) {
@@ -638,7 +638,7 @@ class DirectDataStorages {
 
         boolean copy(DataStorage src, long srcPos, long destPos, long count) {
             if (src instanceof DirectCharStorage) {
-                JBuffers.copyCharBuffer(cb, (int)destPos, ((DirectCharStorage)src).cb, (int)srcPos, (int)count);
+                JBuffers.copyCharBuffer(cb, (int) destPos, ((DirectCharStorage) src).cb, (int) srcPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -647,8 +647,8 @@ class DirectDataStorages {
 
         boolean swap(DataStorage another, long anotherPos, long thisPos, long count) {
             if (another instanceof DirectCharStorage) {
-                JBuffers.swapCharBuffer(((DirectCharStorage)another).cb, (int)anotherPos,
-                    cb, (int)thisPos, (int)count);
+                JBuffers.swapCharBuffer(((DirectCharStorage) another).cb, (int) anotherPos,
+                        cb, (int) thisPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -660,35 +660,36 @@ class DirectDataStorages {
         }
 
         void minData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.minCharArrayAndBuffer((char[])destArray, destArrayOffset, cb, (int)pos, count);
+            JBuffers.minCharArrayAndBuffer((char[]) destArray, destArrayOffset, cb, (int) pos, count);
         }
 
         void maxData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.maxCharArrayAndBuffer((char[])destArray, destArrayOffset, cb, (int)pos, count);
+            JBuffers.maxCharArrayAndBuffer((char[]) destArray, destArrayOffset, cb, (int) pos, count);
         }
 
         void addData(long pos, int[] destArray, int destArrayOffset, int count) {
-            JBuffers.addCharBufferToArray(destArray, destArrayOffset, cb, (int)pos, count);
+            JBuffers.addCharBufferToArray(destArray, destArrayOffset, cb, (int) pos, count);
         }
 
         void addData(long pos, double[] destArray, int destArrayOffset, int count, double mult) {
-            JBuffers.addCharBufferToArray(destArray, destArrayOffset, cb, (int)pos, count, mult);
+            JBuffers.addCharBufferToArray(destArray, destArrayOffset, cb, (int) pos, count, mult);
         }
 
-        void subtractData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.subtractCharBufferFromArray((char[])destArray, destArrayOffset,
-                cb, (int)pos, count, truncateOverflows);
+        void subtractData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.subtractCharBufferFromArray((char[]) destArray, destArrayOffset,
+                    cb, (int) pos, count, truncateOverflows);
         }
 
-        void absDiffData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.absDiffOfCharArrayAndBuffer((char[])destArray, destArrayOffset,
-                cb, (int)pos, count);
+        void absDiffData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.absDiffOfCharArrayAndBuffer((char[]) destArray, destArrayOffset,
+                    cb, (int) pos, count);
         }
     }
+
 
     static class DirectIntStorage extends DirectStorage {
         private IntBuffer ib;
@@ -715,12 +716,12 @@ class DirectDataStorages {
 
         @Override
         final int getInt(long index) {
-            return ib.get((int)index);
+            return ib.get((int) index);
         }
 
         @Override
         final void setInt(long index, int value) {
-            ib.put((int)index, value);
+            ib.put((int) index, value);
         }
 
         @Override
@@ -728,7 +729,7 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.indexOfInt(ib, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.indexOfInt(ib, (int) lowIndex, (int) highIndex, value);
         }
 
         @Override
@@ -736,15 +737,15 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.lastIndexOfInt(ib, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.lastIndexOfInt(ib, (int) lowIndex, (int) highIndex, value);
         }
 
         final void copy(long destIndex, long srcIndex) {
-            ib.put((int)destIndex, ib.get(((int)srcIndex)));
+            ib.put((int) destIndex, ib.get(((int) srcIndex)));
         }
 
         final void swap(long firstIndex, long secondIndex) {
-            int i1 = (int)firstIndex, i2 = (int)secondIndex;
+            int i1 = (int) firstIndex, i2 = (int) secondIndex;
             int v1 = ib.get(i1);
             int v2 = ib.get(i2);
             ib.put(i1, v2);
@@ -753,18 +754,18 @@ class DirectDataStorages {
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
             IntBuffer dup = ib.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.get((int[])destArray, destArrayOffset, count);
+            dup.position((int) pos);
+            dup.get((int[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
             IntBuffer dup = ib.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.put((int[])srcArray, srcArrayOffset, count);
+            dup.position((int) pos);
+            dup.put((int[]) srcArray, srcArrayOffset, count);
         }
 
         void fillData(long pos, long count, Object fillerWrapper) {
-            JBuffers.fillIntBuffer(ib, (int)pos, (int)count, (Integer)fillerWrapper);
+            JBuffers.fillIntBuffer(ib, (int) pos, (int) count, (Integer) fillerWrapper);
         }
 
         void clearData(long pos, long count) {
@@ -773,7 +774,7 @@ class DirectDataStorages {
 
         boolean copy(DataStorage src, long srcPos, long destPos, long count) {
             if (src instanceof DirectIntStorage) {
-                JBuffers.copyIntBuffer(ib, (int)destPos, ((DirectIntStorage)src).ib, (int)srcPos, (int)count);
+                JBuffers.copyIntBuffer(ib, (int) destPos, ((DirectIntStorage) src).ib, (int) srcPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -782,8 +783,8 @@ class DirectDataStorages {
 
         boolean swap(DataStorage another, long anotherPos, long thisPos, long count) {
             if (another instanceof DirectIntStorage) {
-                JBuffers.swapIntBuffer(((DirectIntStorage)another).ib, (int)anotherPos,
-                    ib, (int)thisPos, (int)count);
+                JBuffers.swapIntBuffer(((DirectIntStorage) another).ib, (int) anotherPos,
+                        ib, (int) thisPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -795,35 +796,36 @@ class DirectDataStorages {
         }
 
         void minData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.minIntArrayAndBuffer((int[])destArray, destArrayOffset, ib, (int)pos, count);
+            JBuffers.minIntArrayAndBuffer((int[]) destArray, destArrayOffset, ib, (int) pos, count);
         }
 
         void maxData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.maxIntArrayAndBuffer((int[])destArray, destArrayOffset, ib, (int)pos, count);
+            JBuffers.maxIntArrayAndBuffer((int[]) destArray, destArrayOffset, ib, (int) pos, count);
         }
 
         void addData(long pos, int[] destArray, int destArrayOffset, int count) {
-            JBuffers.addIntBufferToArray(destArray, destArrayOffset, ib, (int)pos, count);
+            JBuffers.addIntBufferToArray(destArray, destArrayOffset, ib, (int) pos, count);
         }
 
         void addData(long pos, double[] destArray, int destArrayOffset, int count, double mult) {
-            JBuffers.addIntBufferToArray(destArray, destArrayOffset, ib, (int)pos, count, mult);
+            JBuffers.addIntBufferToArray(destArray, destArrayOffset, ib, (int) pos, count, mult);
         }
 
-        void subtractData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.subtractIntBufferFromArray((int[])destArray, destArrayOffset,
-                ib, (int)pos, count, truncateOverflows);
+        void subtractData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.subtractIntBufferFromArray((int[]) destArray, destArrayOffset,
+                    ib, (int) pos, count, truncateOverflows);
         }
 
-        void absDiffData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.absDiffOfIntArrayAndBuffer((int[])destArray, destArrayOffset,
-                ib, (int)pos, count, truncateOverflows);
+        void absDiffData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.absDiffOfIntArrayAndBuffer((int[]) destArray, destArrayOffset,
+                    ib, (int) pos, count, truncateOverflows);
         }
     }
+
 
     static class DirectLongStorage extends DirectStorage {
         private LongBuffer lb;
@@ -850,12 +852,12 @@ class DirectDataStorages {
 
         @Override
         final long getLong(long index) {
-            return lb.get((int)index);
+            return lb.get((int) index);
         }
 
         @Override
         final void setLong(long index, long value) {
-            lb.put((int)index, value);
+            lb.put((int) index, value);
         }
 
         @Override
@@ -863,7 +865,7 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.indexOfLong(lb, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.indexOfLong(lb, (int) lowIndex, (int) highIndex, value);
         }
 
         @Override
@@ -871,15 +873,15 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.lastIndexOfLong(lb, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.lastIndexOfLong(lb, (int) lowIndex, (int) highIndex, value);
         }
 
         final void copy(long destIndex, long srcIndex) {
-            lb.put((int)destIndex, lb.get(((int)srcIndex)));
+            lb.put((int) destIndex, lb.get(((int) srcIndex)));
         }
 
         final void swap(long firstIndex, long secondIndex) {
-            int i1 = (int)firstIndex, i2 = (int)secondIndex;
+            int i1 = (int) firstIndex, i2 = (int) secondIndex;
             long v1 = lb.get(i1);
             long v2 = lb.get(i2);
             lb.put(i1, v2);
@@ -888,18 +890,18 @@ class DirectDataStorages {
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
             LongBuffer dup = lb.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.get((long[])destArray, destArrayOffset, count);
+            dup.position((int) pos);
+            dup.get((long[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
             LongBuffer dup = lb.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.put((long[])srcArray, srcArrayOffset, count);
+            dup.position((int) pos);
+            dup.put((long[]) srcArray, srcArrayOffset, count);
         }
 
         void fillData(long pos, long count, Object fillerWrapper) {
-            JBuffers.fillLongBuffer(lb, (int)pos, (int)count, (Long)fillerWrapper);
+            JBuffers.fillLongBuffer(lb, (int) pos, (int) count, (Long) fillerWrapper);
         }
 
         void clearData(long pos, long count) {
@@ -908,7 +910,7 @@ class DirectDataStorages {
 
         boolean copy(DataStorage src, long srcPos, long destPos, long count) {
             if (src instanceof DirectLongStorage) {
-                JBuffers.copyLongBuffer(lb, (int)destPos, ((DirectLongStorage)src).lb, (int)srcPos, (int)count);
+                JBuffers.copyLongBuffer(lb, (int) destPos, ((DirectLongStorage) src).lb, (int) srcPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -917,8 +919,8 @@ class DirectDataStorages {
 
         boolean swap(DataStorage another, long anotherPos, long thisPos, long count) {
             if (another instanceof DirectLongStorage) {
-                JBuffers.swapLongBuffer(((DirectLongStorage)another).lb, (int)anotherPos,
-                    lb, (int)thisPos, (int)count);
+                JBuffers.swapLongBuffer(((DirectLongStorage) another).lb, (int) anotherPos,
+                        lb, (int) thisPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -930,35 +932,36 @@ class DirectDataStorages {
         }
 
         void minData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.minLongArrayAndBuffer((long[])destArray, destArrayOffset, lb, (int)pos, count);
+            JBuffers.minLongArrayAndBuffer((long[]) destArray, destArrayOffset, lb, (int) pos, count);
         }
 
         void maxData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.maxLongArrayAndBuffer((long[])destArray, destArrayOffset, lb, (int)pos, count);
+            JBuffers.maxLongArrayAndBuffer((long[]) destArray, destArrayOffset, lb, (int) pos, count);
         }
 
         void addData(long pos, int[] destArray, int destArrayOffset, int count) {
-            JBuffers.addLongBufferToArray(destArray, destArrayOffset, lb, (int)pos, count);
+            JBuffers.addLongBufferToArray(destArray, destArrayOffset, lb, (int) pos, count);
         }
 
         void addData(long pos, double[] destArray, int destArrayOffset, int count, double mult) {
-            JBuffers.addLongBufferToArray(destArray, destArrayOffset, lb, (int)pos, count, mult);
+            JBuffers.addLongBufferToArray(destArray, destArrayOffset, lb, (int) pos, count, mult);
         }
 
-        void subtractData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.subtractLongBufferFromArray((long[])destArray, destArrayOffset,
-                lb, (int)pos, count);
+        void subtractData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.subtractLongBufferFromArray((long[]) destArray, destArrayOffset,
+                    lb, (int) pos, count);
         }
 
-        void absDiffData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.absDiffOfLongArrayAndBuffer((long[])destArray, destArrayOffset,
-                lb, (int)pos, count);
+        void absDiffData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.absDiffOfLongArrayAndBuffer((long[]) destArray, destArrayOffset,
+                    lb, (int) pos, count);
         }
     }
+
 
     static class DirectFloatStorage extends DirectStorage {
         private FloatBuffer fb;
@@ -985,12 +988,12 @@ class DirectDataStorages {
 
         @Override
         final float getFloat(long index) {
-            return fb.get((int)index);
+            return fb.get((int) index);
         }
 
         @Override
         final void setFloat(long index, float value) {
-            fb.put((int)index, value);
+            fb.put((int) index, value);
         }
 
         @Override
@@ -998,7 +1001,7 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.indexOfFloat(fb, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.indexOfFloat(fb, (int) lowIndex, (int) highIndex, value);
         }
 
         @Override
@@ -1006,15 +1009,15 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.lastIndexOfFloat(fb, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.lastIndexOfFloat(fb, (int) lowIndex, (int) highIndex, value);
         }
 
         final void copy(long destIndex, long srcIndex) {
-            fb.put((int)destIndex, fb.get(((int)srcIndex)));
+            fb.put((int) destIndex, fb.get(((int) srcIndex)));
         }
 
         final void swap(long firstIndex, long secondIndex) {
-            int i1 = (int)firstIndex, i2 = (int)secondIndex;
+            int i1 = (int) firstIndex, i2 = (int) secondIndex;
             float v1 = fb.get(i1);
             float v2 = fb.get(i2);
             fb.put(i1, v2);
@@ -1023,18 +1026,18 @@ class DirectDataStorages {
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
             FloatBuffer dup = fb.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.get((float[])destArray, destArrayOffset, count);
+            dup.position((int) pos);
+            dup.get((float[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
             FloatBuffer dup = fb.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.put((float[])srcArray, srcArrayOffset, count);
+            dup.position((int) pos);
+            dup.put((float[]) srcArray, srcArrayOffset, count);
         }
 
         void fillData(long pos, long count, Object fillerWrapper) {
-            JBuffers.fillFloatBuffer(fb, (int)pos, (int)count, (Float)fillerWrapper);
+            JBuffers.fillFloatBuffer(fb, (int) pos, (int) count, (Float) fillerWrapper);
         }
 
         void clearData(long pos, long count) {
@@ -1043,7 +1046,7 @@ class DirectDataStorages {
 
         boolean copy(DataStorage src, long srcPos, long destPos, long count) {
             if (src instanceof DirectFloatStorage) {
-                JBuffers.copyFloatBuffer(fb, (int)destPos, ((DirectFloatStorage)src).fb, (int)srcPos, (int)count);
+                JBuffers.copyFloatBuffer(fb, (int) destPos, ((DirectFloatStorage) src).fb, (int) srcPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -1052,8 +1055,8 @@ class DirectDataStorages {
 
         boolean swap(DataStorage another, long anotherPos, long thisPos, long count) {
             if (another instanceof DirectFloatStorage) {
-                JBuffers.swapFloatBuffer(((DirectFloatStorage)another).fb, (int)anotherPos,
-                    fb, (int)thisPos, (int)count);
+                JBuffers.swapFloatBuffer(((DirectFloatStorage) another).fb, (int) anotherPos,
+                        fb, (int) thisPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -1065,35 +1068,36 @@ class DirectDataStorages {
         }
 
         void minData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.minFloatArrayAndBuffer((float[])destArray, destArrayOffset, fb, (int)pos, count);
+            JBuffers.minFloatArrayAndBuffer((float[]) destArray, destArrayOffset, fb, (int) pos, count);
         }
 
         void maxData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.maxFloatArrayAndBuffer((float[])destArray, destArrayOffset, fb, (int)pos, count);
+            JBuffers.maxFloatArrayAndBuffer((float[]) destArray, destArrayOffset, fb, (int) pos, count);
         }
 
         void addData(long pos, int[] destArray, int destArrayOffset, int count) {
-            JBuffers.addFloatBufferToArray(destArray, destArrayOffset, fb, (int)pos, count);
+            JBuffers.addFloatBufferToArray(destArray, destArrayOffset, fb, (int) pos, count);
         }
 
         void addData(long pos, double[] destArray, int destArrayOffset, int count, double mult) {
-            JBuffers.addFloatBufferToArray(destArray, destArrayOffset, fb, (int)pos, count, mult);
+            JBuffers.addFloatBufferToArray(destArray, destArrayOffset, fb, (int) pos, count, mult);
         }
 
-        void subtractData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.subtractFloatBufferFromArray((float[])destArray, destArrayOffset,
-                fb, (int)pos, count);
+        void subtractData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.subtractFloatBufferFromArray((float[]) destArray, destArrayOffset,
+                    fb, (int) pos, count);
         }
 
-        void absDiffData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.absDiffOfFloatArrayAndBuffer((float[])destArray, destArrayOffset,
-                fb, (int)pos, count);
+        void absDiffData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.absDiffOfFloatArrayAndBuffer((float[]) destArray, destArrayOffset,
+                    fb, (int) pos, count);
         }
     }
+
 
     static class DirectDoubleStorage extends DirectStorage {
         private DoubleBuffer db;
@@ -1120,12 +1124,12 @@ class DirectDataStorages {
 
         @Override
         final double getDouble(long index) {
-            return db.get((int)index);
+            return db.get((int) index);
         }
 
         @Override
         final void setDouble(long index, double value) {
-            db.put((int)index, value);
+            db.put((int) index, value);
         }
 
         @Override
@@ -1133,7 +1137,7 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.indexOfDouble(db, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.indexOfDouble(db, (int) lowIndex, (int) highIndex, value);
         }
 
         @Override
@@ -1141,15 +1145,15 @@ class DirectDataStorages {
             if (lowIndex >= highIndex) {
                 return -1;
             } // after this check we are sure that overflow is impossible: indexes are <=length while calling this
-            return JBuffers.lastIndexOfDouble(db, (int)lowIndex, (int)highIndex, value);
+            return JBuffers.lastIndexOfDouble(db, (int) lowIndex, (int) highIndex, value);
         }
 
         final void copy(long destIndex, long srcIndex) {
-            db.put((int)destIndex, db.get(((int)srcIndex)));
+            db.put((int) destIndex, db.get(((int) srcIndex)));
         }
 
         final void swap(long firstIndex, long secondIndex) {
-            int i1 = (int)firstIndex, i2 = (int)secondIndex;
+            int i1 = (int) firstIndex, i2 = (int) secondIndex;
             double v1 = db.get(i1);
             double v2 = db.get(i2);
             db.put(i1, v2);
@@ -1158,18 +1162,18 @@ class DirectDataStorages {
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
             DoubleBuffer dup = db.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.get((double[])destArray, destArrayOffset, count);
+            dup.position((int) pos);
+            dup.get((double[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
             DoubleBuffer dup = db.duplicate(); // necessary while multithread access
-            dup.position((int)pos);
-            dup.put((double[])srcArray, srcArrayOffset, count);
+            dup.position((int) pos);
+            dup.put((double[]) srcArray, srcArrayOffset, count);
         }
 
         void fillData(long pos, long count, Object fillerWrapper) {
-            JBuffers.fillDoubleBuffer(db, (int)pos, (int)count, (Double)fillerWrapper);
+            JBuffers.fillDoubleBuffer(db, (int) pos, (int) count, (Double) fillerWrapper);
         }
 
         void clearData(long pos, long count) {
@@ -1178,7 +1182,7 @@ class DirectDataStorages {
 
         boolean copy(DataStorage src, long srcPos, long destPos, long count) {
             if (src instanceof DirectDoubleStorage) {
-                JBuffers.copyDoubleBuffer(db, (int)destPos, ((DirectDoubleStorage)src).db, (int)srcPos, (int)count);
+                JBuffers.copyDoubleBuffer(db, (int) destPos, ((DirectDoubleStorage) src).db, (int) srcPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -1187,8 +1191,8 @@ class DirectDataStorages {
 
         boolean swap(DataStorage another, long anotherPos, long thisPos, long count) {
             if (another instanceof DirectDoubleStorage) {
-                JBuffers.swapDoubleBuffer(((DirectDoubleStorage)another).db, (int)anotherPos,
-                    db, (int)thisPos, (int)count);
+                JBuffers.swapDoubleBuffer(((DirectDoubleStorage) another).db, (int) anotherPos,
+                        db, (int) thisPos, (int) count);
                 return true;
             } else {
                 return false;
@@ -1200,34 +1204,35 @@ class DirectDataStorages {
         }
 
         void minData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.minDoubleArrayAndBuffer((double[])destArray, destArrayOffset, db, (int)pos, count);
+            JBuffers.minDoubleArrayAndBuffer((double[]) destArray, destArrayOffset, db, (int) pos, count);
         }
 
         void maxData(long pos, Object destArray, int destArrayOffset, int count) {
-            JBuffers.maxDoubleArrayAndBuffer((double[])destArray, destArrayOffset, db, (int)pos, count);
+            JBuffers.maxDoubleArrayAndBuffer((double[]) destArray, destArrayOffset, db, (int) pos, count);
         }
 
         void addData(long pos, int[] destArray, int destArrayOffset, int count) {
-            JBuffers.addDoubleBufferToArray(destArray, destArrayOffset, db, (int)pos, count);
+            JBuffers.addDoubleBufferToArray(destArray, destArrayOffset, db, (int) pos, count);
         }
 
         void addData(long pos, double[] destArray, int destArrayOffset, int count, double mult) {
-            JBuffers.addDoubleBufferToArray(destArray, destArrayOffset, db, (int)pos, count, mult);
+            JBuffers.addDoubleBufferToArray(destArray, destArrayOffset, db, (int) pos, count, mult);
         }
 
-        void subtractData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.subtractDoubleBufferFromArray((double[])destArray, destArrayOffset,
-                db, (int)pos, count);
+        void subtractData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.subtractDoubleBufferFromArray((double[]) destArray, destArrayOffset,
+                    db, (int) pos, count);
         }
 
-        void absDiffData(long pos, Object destArray, int destArrayOffset, int count,
-            boolean truncateOverflows)
-        {
-            JBuffers.absDiffOfDoubleArrayAndBuffer((double[])destArray, destArrayOffset,
-                db, (int)pos, count);
+        void absDiffData(
+                long pos, Object destArray, int destArrayOffset, int count,
+                boolean truncateOverflows) {
+            JBuffers.absDiffOfDoubleArrayAndBuffer((double[]) destArray, destArrayOffset,
+                    db, (int) pos, count);
         }
     }
+
     /*Repeat.AutoGeneratedEnd*/
 }
