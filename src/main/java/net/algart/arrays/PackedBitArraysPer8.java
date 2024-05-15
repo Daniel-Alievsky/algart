@@ -840,10 +840,9 @@ public class PackedBitArraysPer8 {
                 dPos++;
                 sPos++;
             }
-            int cnt = (int) (count >>> 3);
-            System.arraycopy(src, sPos, dest, dPos, cnt);
-            sPos += cnt;
-            dPos += cnt;
+            for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; dPos++, sPos++) {
+                dest[dPos] = REVERSE[src[sPos] & 0xFF];
+            }
             int cntFinish = (int) (count & 7);
             if (cntFinish > 0) {
                 int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)

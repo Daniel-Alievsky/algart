@@ -395,19 +395,19 @@ public class PackedBitArraysPer8Test {
                 System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
                 System.arraycopy(bDest, 0, bDestWork2, 0, bDest.length);
                 int srcPos = rnd.nextInt(len + 1);
-                int destPos = rnd.nextInt(len + 1);
+                int destPos = srcPos;//rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBitsFromReverseOrder(pDestWork, destPos, pSrc, srcPos, count);
                 byte[] copy = pSrc.clone();
                 PackedBitArraysPer8.reverseBitsOrderInEachByte(copy);
                 PackedBitArraysPer8.copyBits(pDestWork1, destPos, copy, srcPos, count);
                 for (int k = 0; k < pDest.length; k++)
-                    if (pDestWork1[k] != pDestWork1[k]) {
+                    if (pDestWork1[k] != pDestWork[k]) {
                         throw new AssertionError("The bug A in copyBitsFromReverseOrder found in test #" +
                                 testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
                                 ", error found at " + k);
                     }
-                if (false) for (int k = 0; k < count; k++) {
+                for (int k = 0; k < count; k++) {
                     boolean bit = PackedBitArraysPer8.getBit(pDestWork, destPos + k);
                     boolean bitSrc = PackedBitArraysPer8.getBitInReverseOrder(pSrc, srcPos + k);
                     if (bitSrc != bit) {
