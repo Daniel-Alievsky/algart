@@ -779,6 +779,7 @@ public class PackedBitArraysPer8 {
                         v = (sNext >>> sPosRem) | ((src[sPos + 1] & 0xFF) << sPosRem8);
                     }
                     synchronized (dest) {
+
                         dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
                     }
                 }
@@ -787,6 +788,118 @@ public class PackedBitArraysPer8 {
 
     }
     /*Repeat.IncludeEnd*/
+
+    /**
+     * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
+     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
+     *
+     * <p><i>This method works correctly even if <tt>src == dest</tt>
+     * and the copied areas overlap</i>,
+     * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
+     * More precisely, in this case the copying is performed as if the
+     * bits at positions <tt>srcPos..srcPos+count-1</tt>
+     * were first unpacked to a temporary <tt>boolean[]</tt> array with <tt>count</tt> elements
+     * and then the contents of the temporary array were packed into positions
+     * <tt>destPos..destPos+count-1</code>.
+     *
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param src     the source array (bits are packed in <tt>byte</tt> values).
+     * @param srcPos  position of the first bit read in the source array.
+     * @param count   the number of bits to be copied (must be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
+    public static void copyBitsFromReverseOrder(byte[] dest, long destPos, byte[] src, long srcPos, long count) {
+        // Note: the following method IS NOT BUILT by Repeater; in a case of any improbable changes,
+        // this must be re-written manually!
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int sPos = (int) (srcPos >>> 3);
+        int dPos = (int) (destPos >>> 3);
+        int sPosRem = (int) (srcPos & 7);
+        int dPosRem = (int) (destPos & 7);
+        int cntStart = (-dPosRem) & 7;
+        int maskStart = -1 << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (1 << (dPosRem + cntStart)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        // Note: overlapping IS NOT supported!
+        if (sPosRem == dPosRem) {
+            if (cntStart > 0) {
+                synchronized (dest) {
+                    dest[dPos] = (byte) (((src[sPos] & 0xFF) & maskStart) | (dest[dPos] & ~maskStart));
+                }
+                count -= cntStart;
+                dPos++;
+                sPos++;
+            }
+            int cnt = (int) (count >>> 3);
+            System.arraycopy(src, sPos, dest, dPos, cnt);
+            sPos += cnt;
+            dPos += cnt;
+            int cntFinish = (int) (count & 7);
+            if (cntFinish > 0) {
+                int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
+                synchronized (dest) {
+                    dest[dPos] = (byte) (((src[sPos] & 0xFF) & maskFinish) | (dest[dPos] & ~maskFinish));
+                }
+            }
+        } else {
+            final int shift = dPosRem - sPosRem;
+            int sNext;
+            if (cntStart > 0) {
+                int v;
+                if (sPosRem + cntStart <= 8) { // cntStart bits are in a single src element
+                    if (shift > 0)
+                        v = (sNext = (src[sPos] & 0xFF)) << shift;
+                    else
+                        v = (sNext = (src[sPos] & 0xFF)) >>> -shift;
+                    sPosRem += cntStart;
+                } else {
+                    v = ((src[sPos] & 0xFF) >>> -shift) | ((sNext = (src[sPos + 1] & 0xFF)) << (8 + shift));
+                    sPos++;
+                    sPosRem = (sPosRem + cntStart) & 7;
+                }
+                // let's suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                synchronized (dest) {
+                    dest[dPos] = (byte) ((v & maskStart) | (dest[dPos] & ~maskStart));
+                }
+                count -= cntStart;
+                if (count == 0) {
+                    return; // little optimization
+                }
+                dPos++;
+            } else {
+                if (count == 0) {
+                    return; // necessary check to avoid IndexOutOfBoundException while accessing (src[sPos] & 0xFF)
+                }
+                sNext = (src[sPos] & 0xFF);
+            }
+            // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
+            final int sPosRem8 = 8 - sPosRem;
+            for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; ) {
+                sPos++;
+                dest[dPos] = (byte) ((sNext >>> sPosRem) | ((sNext = (src[sPos] & 0xFF)) << sPosRem8));
+                dPos++;
+            }
+            int cntFinish = (int) (count & 7);
+            if (cntFinish > 0) {
+                int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
+                int v;
+                if (sPosRem + cntFinish <= 8) { // cntFinish bits are in a single src element
+                    v = sNext >>> sPosRem;
+                } else {
+                    v = (sNext >>> sPosRem) | ((src[sPos + 1] & 0xFF) << sPosRem8);
+                }
+                synchronized (dest) {
+                    dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
+                }
+            }
+        }
+    }
 
     /**
      * Copies <tt>count</tt> bits from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
