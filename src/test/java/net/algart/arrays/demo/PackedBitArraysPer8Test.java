@@ -345,6 +345,8 @@ public class PackedBitArraysPer8Test {
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBits(pDestWork, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork, 0, len);
+                // unpacking necessary to show bDestWork1 in a case of the bug
                 for (int k = 0; k < count; k++) {
                     boolean bit = PackedBitArraysPer8.getBit(pDestWork, destPos + k);
                     if (bSrc[srcPos + k] != bit) {
@@ -357,7 +359,6 @@ public class PackedBitArraysPer8Test {
                                 + " instead of " + bSrc[srcPos + k] + ")");
                     }
                 }
-                PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork, 0, len);
                 System.arraycopy(bSrc, srcPos, bDestWork2, destPos, count);
                 for (int k = 0; k < len; k++) {
                     if (bDestWork1[k] != bDestWork2[k]) {
@@ -402,29 +403,35 @@ public class PackedBitArraysPer8Test {
                 System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
                 System.arraycopy(bDest, 0, bDestWork2, 0, bDest.length);
                 int srcPos = rnd.nextInt(len + 1);
-                int destPos = 0;//rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBitsFromReverseOrder(pDestWork, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork, 0, len);
+                // unpacking necessary to show bDestWork1 in a case of the bug
                 byte[] copy = pSrc.clone();
                 PackedBitArraysPer8.reverseBitsOrderInEachByte(copy);
                 PackedBitArraysPer8.copyBits(pDestWork1, destPos, copy, srcPos, count);
-                for (int k = 0; k < pDest.length; k++) {
-                    if (pDestWork1[k] != pDestWork[k]) {
-                        throw new AssertionError("The bug A in copyBitsFromReverseOrder found in test #" +
-                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
-                                ", error found at " + k);
-                    }
-                }
                 for (int k = 0; k < count; k++) {
                     boolean bit = PackedBitArraysPer8.getBit(pDestWork, destPos + k);
                     boolean bitSrc = PackedBitArraysPer8.getBitInReverseOrder(pSrc, srcPos + k);
                     if (bitSrc != bit) {
-                        throw new AssertionError("The bug B in copyBitsFromReverseOrder found in test #" +
+                        throw new AssertionError("The bug A in copyBitsFromReverseOrder found in test #" +
                                 testCount + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
                                 count + " (src=" + JArrays.toBinaryString(bSrc, "", 200) +
                                 ", dest=" + JArrays.toBinaryString(bDest, "", 200) +
                                 ", we have " + JArrays.toBinaryString(bDestWork1, "", 200) +
-                                ", dest[" + (destPos + k) + "]=" + bit + " instead of " + bSrc[srcPos + k] + ")");
+                                ", dest[" + (destPos + k) + "]=" + bit + " instead of " + bitSrc + ")");
+                    }
+                }
+                for (int k = 0; k < pDest.length; k++) {
+                    if (pDestWork1[k] != pDestWork[k]) {
+                        throw new AssertionError("The bug B in copyBitsFromReverseOrder found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", error found at " + k +
+                                " (src=" + JArrays.toBinaryString(bSrc, "", 200) +
+                                ", dest=" + JArrays.toBinaryString(bDest, "", 200) +
+                                ", we have " + JArrays.toBinaryString(bDestWork1, "", 200) +
+                                ", dest[" + k + "]=" + pDestWork[k] + " instead of " + pDestWork1[k] + ")");
                     }
                 }
                 showProgress(testCount);

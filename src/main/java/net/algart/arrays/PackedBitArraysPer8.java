@@ -881,7 +881,7 @@ public class PackedBitArraysPer8 {
                 if (count == 0) {
                     return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
                 }
-                sNext = (src[sPos] & 0xFF);
+                sNext = REVERSE[src[sPos] & 0xFF] & 0xFF;
             }
             // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
             final int sPosRem8 = 8 - sPosRem;
