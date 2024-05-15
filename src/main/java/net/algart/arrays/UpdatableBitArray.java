@@ -117,6 +117,10 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * This allows you to split bit array into several blocks and process each block in a separate thread,
      * as it is possible for a regular Java array.</p>
      *
+     * <p>If you are synchronizing access to this array via some form of external synchronization,
+     * then you may freely use this method instead of {@link #setBit(long, boolean)}: in this case,
+     * no additional internal synchronization is needed.</p>
+     *
      * <p>Note that some classes may correctly implement this interface without any synchronization
      * or, vise versa, always use synchronization. In such cases this method may be equivalent
      * to {@link #setBit(long, boolean)}.</p>

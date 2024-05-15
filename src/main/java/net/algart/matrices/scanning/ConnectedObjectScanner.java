@@ -114,7 +114,7 @@ import java.util.Objects;
  * In other words, all methods of this class are executed in the current thread.</p>
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
- * and can be synchronized manually, if multithread access is necessary.
+ * and can be synchronized manually, if multithreading access is necessary.
  * However, usually there are no reasons to use the same instance of this class in different threads:
  * usually there is much better idea to create a separate instance for every thread.</p>
  *
@@ -580,7 +580,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
 
     /**
      * Creates the instance, implementing the same algorithm with the same connectivity kind
-     * an the same scanned matrix as this one.
+     * and the same scanned matrix as this one.
      * The new instance has the same {@link #maxUsedMemory()} value as this one.
      * If this instance allocated some temporary buffers, they are not inherited:
      * the returned instance will allocate and use its own temporary buffers.
@@ -694,11 +694,16 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * Visits all unit (1) elements of the matrix, belonging to the connected object containing
      * the element with the specified coordinates, calls
      * <tt>elementVisitor.{@link ConnectedObjectScanner.ElementVisitor#visit visit}</tt> method for each element
-     * and clears this element ({@link UpdatableBitArray#clearBit(long)}).
+     * and clears this element ({@link UpdatableBitArray#clearBitNoSync(long)}).
      * Returns the number of visited elements.
      * If the element with the specified coordinates is zero, does nothing and returns 0.
      *
-     * <p>However, if <tt>forceClearing</tt> argument is <tt>false</tt>, this method
+     * <p>Note that the elements are cleared with help of ({@link UpdatableBitArray#clearBitNoSync(long)}) method,
+     * not {@link UpdatableBitArray#clearBit(long)}. This class is not thread-safe and cannot be used
+     * with the same matrix from different threads without external synchronization;
+     * but if you use external synchronization, {@link UpdatableBitArray#clearBitNoSync(long)} will work well.
+     *
+     * <p>If <tt>forceClearing</tt> argument is <tt>false</tt>, this method
      * may skip actual clearing the visited elements in the scanned matrix,
      * but clear bits in some internal buffer instead.
      * In this case, the {@link #nextUnitBit} method will work as if the bits was actually cleared.
@@ -1071,9 +1076,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 if (elementVisitor != null) {
                     elementVisitor.visit(coordinates, index); // see comments to "visit" call below
                 }
-                array.clearBit(index);
-                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array:
-                // an array may be copy-on-next-write (however, direct access is not used in current implementation)
+                array.clearBitNoSync(index);
+                // Synchronization has no sense here, because this class is not thread-safe itself.
+                // Note: even for SimpleMemoryModel, we here MUST call clearBitNoSync method instead of
+                // direct access to Java array: an array may be copy-on-next-write
+                // (however, direct access is not used in current implementation)
                 MutableIntArray largeStack = null;
                 long maxMemory = 0;
                 long counter = 1;
@@ -1167,7 +1174,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                             }
                             // Important: we call it AFTER saving coordinates in the stack;
                             // so, visit element may destroy the passed coordinates - it will not affect the algorithm
-                            array.clearBit(index);
+                            array.clearBitNoSync(index);
                         }
                     }
                 }
@@ -1212,9 +1219,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 if (elementVisitor != null) {
                     elementVisitor.visit(coordinates, index); // see comments to "visit" call below
                 }
-                array.clearBit(index);
-                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array:
-                // an array may be copy-on-next-write (however, direct access is not used in current implementation)
+                array.clearBitNoSync(index);
+                // Synchronization has no sense here, because this class is not thread-safe itself.
+                // Note: even for SimpleMemoryModel, we here MUST call clearBitNoSync method instead of
+                // direct access to Java array: an array may be copy-on-next-write
+                // (however, direct access is not used in current implementation)
                 MutableLongArray largeStack = null;
                 long maxMemory = 0;
                 long counter = 1;
@@ -1308,7 +1317,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                             }
                             // Important: we call it AFTER saving coordinates in the stack;
                             // so, visit element may destroy the passed coordinates - it will not affect the algorithm
-                            array.clearBit(index);
+                            array.clearBitNoSync(index);
                         }
                     }
                 }
@@ -1363,9 +1372,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 if (elementVisitor != null) {
                     elementVisitor.visit(null, index);
                 }
-                array.clearBit(index);
-                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array:
-                // array can be copy-on-next-write (however, direct access is not used in current implementation)
+                array.clearBitNoSync(index);
+                // Synchronization has no sense here, because this class is not thread-safe itself.
+                // Note: even for SimpleMemoryModel, we here MUST call clearBitNoSync method instead of
+                // direct access to Java array: an array may be copy-on-next-write
+                // (however, direct access is not used in current implementation)
                 MutableIntArray largeStack = null;
                 long maxMemory = 0;
                 long counter = 1;
@@ -1435,7 +1446,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         if (elementVisitor != null) {
                             elementVisitor.visit(null, index);
                         }
-                        array.clearBit(index);
+                        array.clearBitNoSync(index);
                     }
                 }
                 this.maxUsedMemory = Math.max(this.maxUsedMemory, (Arrays.BITS_PER_INT >> 3) * maxMemory);
@@ -1474,9 +1485,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 if (elementVisitor != null) {
                     elementVisitor.visit(null, index);
                 }
-                array.clearBit(index);
-                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array:
-                // array can be copy-on-next-write (however, direct access is not used in current implementation)
+                array.clearBitNoSync(index);
+                // Synchronization has no sense here, because this class is not thread-safe itself.
+                // Note: even for SimpleMemoryModel, we here MUST call clearBitNoSync method instead of
+                // direct access to Java array: an array may be copy-on-next-write
+                // (however, direct access is not used in current implementation)
                 MutableLongArray largeStack = null;
                 long maxMemory = 0;
                 long counter = 1;
@@ -1546,7 +1559,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         if (elementVisitor != null) {
                             elementVisitor.visit(null, index);
                         }
-                        array.clearBit(index);
+                        array.clearBitNoSync(index);
                     }
                 }
                 this.maxUsedMemory = Math.max(this.maxUsedMemory, (Arrays.BITS_PER_LONG >> 3) * maxMemory);
@@ -1614,9 +1627,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 if (elementVisitor != null) {
                     elementVisitor.visit(coordinates, index); // see comments to "visit" call below
                 }
-                array.clearBit(index);
-                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array:
-                // array can be copy-on-next-write (however, direct access is not used in current implementation)
+                array.clearBitNoSync(index);
+                // Synchronization has no sense here, because this class is not thread-safe itself.
+                // Note: even for SimpleMemoryModel, we here MUST call clearBitNoSync method instead of
+                // direct access to Java array: an array may be copy-on-next-write
+                // (however, direct access is not used in current implementation)
                 MutableIntArray largeQueue = null;
                 int intIndex = 157; // compiler requires some initialization
                 long maxMemory = 0;
@@ -1736,7 +1751,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                                 }
                                 // Important: we call it AFTER saving coordinates in the stack;
                                 // so, visit element may destroy the passed coordinates - it will not affect the algorithm
-                                array.clearBit(index);
+                                array.clearBitNoSync(index);
                             }
                             if (n > maxMemory) {
                                 maxMemory = n;
@@ -1789,9 +1804,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 if (elementVisitor != null) {
                     elementVisitor.visit(coordinates, index); // see comments to "visit" call below
                 }
-                array.clearBit(index);
-                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array:
-                // array can be copy-on-next-write (however, direct access is not used in current implementation)
+                array.clearBitNoSync(index);
+                // Synchronization has no sense here, because this class is not thread-safe itself.
+                // Note: even for SimpleMemoryModel, we here MUST call clearBitNoSync method instead of
+                // direct access to Java array: an array may be copy-on-next-write
+                // (however, direct access is not used in current implementation)
                 MutableLongArray largeQueue = null;
                 long longIndex = 157; // compiler requires some initialization
                 long maxMemory = 0;
@@ -1911,7 +1928,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                                 }
                                 // Important: we call it AFTER saving coordinates in the stack;
                                 // so, visit element may destroy the passed coordinates - it will not affect the algorithm
-                                array.clearBit(index);
+                                array.clearBitNoSync(index);
                             }
                             if (n > maxMemory) {
                                 maxMemory = n;
@@ -1972,9 +1989,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 if (elementVisitor != null) {
                     elementVisitor.visit(null, index); // see comments to "visit" call below
                 }
-                array.clearBit(index);
-                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array:
-                // array can be copy-on-next-write (however, direct access is not used in current implementation)
+                array.clearBitNoSync(index);
+                // Synchronization has no sense here, because this class is not thread-safe itself.
+                // Note: even for SimpleMemoryModel, we here MUST call clearBitNoSync method instead of
+                // direct access to Java array: an array may be copy-on-next-write
+                // (however, direct access is not used in current implementation)
                 MutableIntArray largeQueue = null;
                 long maxMemory = 0;
                 long counter = 1;
@@ -2057,7 +2076,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                             if (elementVisitor != null) {
                                 elementVisitor.visit(null, index);
                             }
-                            array.clearBit(index);
+                            array.clearBitNoSync(index);
                         }
                     }
                     if (n > maxMemory) {
@@ -2102,9 +2121,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 if (elementVisitor != null) {
                     elementVisitor.visit(null, index); // see comments to "visit" call below
                 }
-                array.clearBit(index);
-                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array:
-                // array can be copy-on-next-write (however, direct access is not used in current implementation)
+                array.clearBitNoSync(index);
+                // Synchronization has no sense here, because this class is not thread-safe itself.
+                // Note: even for SimpleMemoryModel, we here MUST call clearBitNoSync method instead of
+                // direct access to Java array: an array may be copy-on-next-write
+                // (however, direct access is not used in current implementation)
                 MutableLongArray largeQueue = null;
                 long maxMemory = 0;
                 long counter = 1;
@@ -2187,7 +2208,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                             if (elementVisitor != null) {
                                 elementVisitor.visit(null, index);
                             }
-                            array.clearBit(index);
+                            array.clearBitNoSync(index);
                         }
                     }
                     if (n > maxMemory) {
@@ -2264,9 +2285,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                 }
                 elementVisitor.visit(coordinatesClone, index);
             }
-            array.clearBit(index);
-            // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array:
-            // array can be copy-on-next-write (however, direct access is not used in current implementation)
+            array.clearBitNoSync(index);
+            // Synchronization has no sense here, because this class is not thread-safe itself.
+            // Note: even for SimpleMemoryModel, we here MUST call clearBitNoSync method instead of
+            // direct access to Java array: an array may be copy-on-next-write
+            // (however, direct access is not used in current implementation)
             initializeBuffer();
             buffer.setInt(index, 0); // duplicating "clearBit" in the buffer
             if (checked) {
@@ -2378,7 +2401,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         // Important: we call it AFTER saving coordinatesClone in coordinates;
                         // so, visit element may destroy the passed coordinates - it will not affect the algorithm
                         if (forceClearing) {
-                            array.clearBit(index);
+                            array.clearBitNoSync(index);
                         }
                         buffer.setInt(index, direction); // clearing the high bit
                         direction = 0;
@@ -2481,7 +2504,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                             elementVisitor.visit(null, indexClone);
                         }
                         if (forceClearing) {
-                            array.clearBit(index);
+                            array.clearBitNoSync(index);
                         }
                         buffer.setInt(index, direction); // clearing the high bit
                         direction = 0;
@@ -2581,7 +2604,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                         // Important: we call it AFTER saving coordinatesClone in coordinates;
                         // so, visit element may destroy the passed coordinates - it will not affect the algorithm
                         if (forceClearing) {
-                            array.clearBit(index);
+                            array.clearBitNoSync(index);
                         }
                         buffer.setInt(index, direction); // clearing the high bit
                         direction = 0;
