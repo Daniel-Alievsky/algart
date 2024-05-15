@@ -328,9 +328,9 @@ public class MatrixIO {
         String text = mi.toChars();
         Files.writeString(indexFile.toPath(), text);
         Arrays.copy(null, dest, array, 1, false);
-        dest.freeResources(null);
+        dest.freeResources();
         // - actually saves possible cached data to the file
-        array.freeResources(null);
+        array.freeResources();
         // - necessary to avoid overflowing 2 GB limit in 32-bit JVM
     }
 
@@ -344,9 +344,7 @@ public class MatrixIO {
             File matrixFile = new File(f, mi.dimCount() == 1 ? "vector" : "matrix");
             return mm.asMatrix(matrixFile, mi);
         } catch (IllegalInfoSyntaxException e) {
-            IOException ex = new IOException(e.getMessage());
-            ex.initCause(e);
-            throw ex;
+            throw new IOException(e.getMessage(), e);
         }
     }
 

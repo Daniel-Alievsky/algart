@@ -1150,6 +1150,17 @@ public interface Array {
     }
 
     /**
+     * Equivalent to <tt>{@link #loadResources(ArrayContext) loadResources}(null)</tt>.
+     * This is the most typical case of loading resources.
+     *
+     * @see #loadResources(ArrayContext)
+     * @see #freeResources(ArrayContext)
+     */
+    default void loadResources() {
+        loadResources(null);
+    }
+
+    /**
      * If there are some external resources, associated with this array, &mdash;
      * files, streams, sockets, locks, etc&#46; &mdash;
      * this method makes an effort to ensure that, when it returns,
@@ -1203,14 +1214,26 @@ public interface Array {
     void loadResources(ArrayContext context);
 
     /**
+     * Equivalent to <tt>{@link #flushResources(ArrayContext, boolean) flushResources}(null, false)</tt>.
+     * This is the most typical case of flushing resources.
+     *
+     * @see #loadResources(ArrayContext)
+     * @see #freeResources(ArrayContext)
+     */
+    default void flushResources() {
+        flushResources(null, false);
+    }
+
+    /**
      * Equivalent to <tt>{@link #flushResources(ArrayContext, boolean) flushResources}(context, false)</tt>.
-     * It is the most typical case of flushing resources.
      *
      * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
      * @see #loadResources(ArrayContext)
      * @see #freeResources(ArrayContext)
      */
-    void flushResources(ArrayContext context);
+    default void flushResources(ArrayContext context) {
+        flushResources(context, false);
+    }
 
     /**
      * If there are some external resources, associated with this array, &mdash;
@@ -1299,14 +1322,26 @@ public interface Array {
     void flushResources(ArrayContext context, boolean forcePhysicalWriting);
 
     /**
+     * Equivalent to <tt>{@link #freeResources(ArrayContext, boolean) freeResources}(null, false)</tt>.
+     * This is the most typical case of freeing resources.
+     *
+     * @see #loadResources(ArrayContext)
+     * @see #flushResources(ArrayContext)
+     */
+    default void freeResources() {
+        freeResources(null, false);
+    }
+
+    /**
      * Equivalent to <tt>{@link #freeResources(ArrayContext, boolean) freeResources}(context, false)</tt>.
-     * It is the most typical case of freeing resources.
      *
      * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
      * @see #loadResources(ArrayContext)
      * @see #flushResources(ArrayContext)
      */
-    void freeResources(ArrayContext context);
+    default void freeResources(ArrayContext context) {
+        freeResources(context, false);
+    }
 
     /**
      * If there are some resources, associated with this array, which are not controlled

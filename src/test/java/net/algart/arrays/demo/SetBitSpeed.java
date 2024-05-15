@@ -186,10 +186,10 @@ public class SetBitSpeed {
             testNormal(testData,a1, a2, a3, a4);
             testNoSync(testData,a1, a2, a3, a4);
         }
-        a1.freeResources(null);
-        a2.freeResources(null);
-        a3.freeResources(null);
-        a4.freeResources(null);
+        a1.freeResources();
+        a2.freeResources();
+        a3.freeResources();
+        a4.freeResources();
         System.gc();
         System.gc();
     }

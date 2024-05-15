@@ -313,13 +313,7 @@ class CopiesArraysImpl {
         public void loadResources(ArrayContext context) {
         }
 
-        public void flushResources(ArrayContext context) {
-        }
-
         public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
-        }
-
-        public void freeResources(ArrayContext context) {
         }
 
         public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
@@ -660,13 +654,7 @@ class CopiesArraysImpl {
         public void loadResources(ArrayContext context) {
         }
 
-        public void flushResources(ArrayContext context) {
-        }
-
         public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
-        }
-
-        public void freeResources(ArrayContext context) {
         }
 
         public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
@@ -1027,13 +1015,7 @@ class CopiesArraysImpl {
         public void loadResources(ArrayContext context) {
         }
 
-        public void flushResources(ArrayContext context) {
-        }
-
         public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
-        }
-
-        public void freeResources(ArrayContext context) {
         }
 
         public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
@@ -1379,13 +1361,7 @@ class CopiesArraysImpl {
         public void loadResources(ArrayContext context) {
         }
 
-        public void flushResources(ArrayContext context) {
-        }
-
         public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
-        }
-
-        public void freeResources(ArrayContext context) {
         }
 
         public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
@@ -1732,13 +1708,7 @@ class CopiesArraysImpl {
         public void loadResources(ArrayContext context) {
         }
 
-        public void flushResources(ArrayContext context) {
-        }
-
         public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
-        }
-
-        public void freeResources(ArrayContext context) {
         }
 
         public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
@@ -2073,13 +2043,7 @@ class CopiesArraysImpl {
         public void loadResources(ArrayContext context) {
         }
 
-        public void flushResources(ArrayContext context) {
-        }
-
         public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
-        }
-
-        public void freeResources(ArrayContext context) {
         }
 
         public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
@@ -2407,13 +2371,7 @@ class CopiesArraysImpl {
         public void loadResources(ArrayContext context) {
         }
 
-        public void flushResources(ArrayContext context) {
-        }
-
         public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
-        }
-
-        public void freeResources(ArrayContext context) {
         }
 
         public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
@@ -2739,13 +2697,7 @@ class CopiesArraysImpl {
         public void loadResources(ArrayContext context) {
         }
 
-        public void flushResources(ArrayContext context) {
-        }
-
         public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
-        }
-
-        public void freeResources(ArrayContext context) {
         }
 
         public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
@@ -3008,13 +2960,7 @@ class CopiesArraysImpl {
         public void loadResources(ArrayContext context) {
         }
 
-        public void flushResources(ArrayContext context) {
-        }
-
         public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
-        }
-
-        public void freeResources(ArrayContext context) {
         }
 
         public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {

@@ -152,7 +152,7 @@ public class SortingArraysTest {
             System.out.println("System.gc()");
             System.out.println();
         }
-        array.freeResources(null);
+        array.freeResources();
         test = null; // allows garbage collection
         DemoUtils.fullGC();
     }

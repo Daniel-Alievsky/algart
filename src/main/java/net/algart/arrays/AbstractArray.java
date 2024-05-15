@@ -454,15 +454,6 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * This implementation just calls {@link #flushResources(ArrayContext, boolean) flushResources(context, false)}.
-     *
-     * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
-     */
-    public final void flushResources(ArrayContext context) {
-        flushResources(context, false);
-    }
-
-    /**
      * This implementation calls the same method with the same arguments
      * for all underlying arrays, passed via the last argument
      * of the {@link #AbstractArray(long, long, Array...) constructor}.
@@ -479,15 +470,6 @@ public abstract class AbstractArray implements Array, Cloneable {
                     context == null ? null : context.part(k, k + 1, underlyingArrays.length),
                     forcePhysicalWriting);
         }
-    }
-
-    /**
-     * This implementation just calls {@link #freeResources(ArrayContext, boolean) freeResources(context, false)}.
-     *
-     * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
-     */
-    public final void freeResources(ArrayContext context) {
-        freeResources(context, false);
     }
 
     /**

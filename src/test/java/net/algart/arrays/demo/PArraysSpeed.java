@@ -267,9 +267,9 @@ public class PArraysSpeed {
 //              System.out.println("Sleeping 0.5 sec...");
 //              Thread.sleep(500);
 
-                ma1.freeResources(null);
-                ma2.freeResources(null);
-                ma3.freeResources(null);
+                ma1.freeResources();
+                ma2.freeResources();
+                ma3.freeResources();
                 if (useGc) {
                     System.gc();
                 }
