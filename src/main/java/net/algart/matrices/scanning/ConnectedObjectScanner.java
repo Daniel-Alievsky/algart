@@ -1072,8 +1072,8 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                     elementVisitor.visit(coordinates, index); // see comments to "visit" call below
                 }
                 array.clearBit(index);
-                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array
-                // array can be copy-on-next-write (however, direct access is not used in current implementation)
+                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array:
+                // an array may be copy-on-next-write (however, direct access is not used in current implementation)
                 MutableIntArray largeStack = null;
                 long maxMemory = 0;
                 long counter = 1;
@@ -1213,8 +1213,8 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                     elementVisitor.visit(coordinates, index); // see comments to "visit" call below
                 }
                 array.clearBit(index);
-                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array
-                // array can be copy-on-next-write (however, direct access is not used in current implementation)
+                // even for SimpleMemoryModel, we here MUST call clearBit method instead direct access to Java array:
+                // an array may be copy-on-next-write (however, direct access is not used in current implementation)
                 MutableLongArray largeStack = null;
                 long maxMemory = 0;
                 long counter = 1;

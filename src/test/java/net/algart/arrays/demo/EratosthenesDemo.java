@@ -109,8 +109,9 @@ public class EratosthenesDemo {
                             bs.clear(k);
                 }
             } else {
-                for (int k = 0; k <= n; k += startPattern.length())
-                    a.subArray(k, Math.min(k + startPattern.length(), n + 1)).copy(startPattern);
+                int len = (int) startPattern.length();
+                for (int k = 0; k <= n; k += len)
+                    a.subArray(k, Math.min(k + len, n + 1)).copy(startPattern);
             }
         } else {
             if (useBitSet) {
@@ -132,7 +133,7 @@ public class EratosthenesDemo {
             } else {
                 if (a.getBit(p)) {
                     for (int m = 2 * p; m <= n; m += p)
-                        a.clearBit(m);
+                        a.clearBitNoSync(m);
                 }
             }
             if (p % (p < 5 ? 2 : p < 50 ? 5 : p < 200 ? 20 : p < 2000 ? 200 : 2000) == 0) {
