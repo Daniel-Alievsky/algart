@@ -802,8 +802,9 @@ public class PackedBitArraysPer8 {
      * </pre>
      * <p>but without necessity to copy <tt>src</tt> bytes into a new array.
      *
-     * <p>However, <i>this method <b>does not</b> work correctly if <tt>src == dest</tt>
-     * and the copied areas overlap</i>.</p>
+     * <p>Warning: unlike {@link #copyBits(byte[], long, byte[], long, long)},
+     * this method <b>does not provide correct processing</b> the situation when <tt>src == dest</tt>
+     * and the copied areas overlap.</p>
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
      * @param destPos position of the first bit written in the destination array.

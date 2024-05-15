@@ -1492,10 +1492,41 @@ public class Matrices {
      * The product of all dimensions (<tt>dim[0]*dim[1]*...*dim[dim.length-1]</tt>)
      * must be equal to <tt>array.length()</tt>. The dimensions must not be negative.
      * The {@link Matrix#dimCount()} method will return <tt>dim.length</tt>,
-     * and {@link Matrix#dim(int) Matrix.dim(n)} method will return <tt>dim[n]</tt>.
+     * and {@link Matrix#dim(int) Matrix.dim(n)} method will return <tt>dim[n]</tt>.</p>
      *
      * <p>The passed <tt>dim</tt> argument is cloned by this method: no references to it
-     * are maintained by the created matrix.
+     * are maintained by the created matrix.</p>
+     *
+     * <p>This method has brief aliases:<br>
+     * {@link Array#matrix(long...)} and overridden versions in the subclasses:
+     * {@link PArray#matrix(long...)},
+     * {@link PFixedArray#matrix(long...)},
+     * {@link PNumberArray#matrix(long...)},
+     * {@link PFloatingArray#matrix(long...)},
+     * {@link PIntegerArray#matrix(long...)},
+     * {@link BitArray#matrix(long...)},
+     * {@link CharArray#matrix(long...)},
+     * {@link ByteArray#matrix(long...)},
+     * {@link ShortArray#matrix(long...)},
+     * {@link IntArray#matrix(long...)},
+     * {@link LongArray#matrix(long...)},
+     * {@link FloatArray#matrix(long...)},
+     * {@link DoubleArray#matrix(long...)},<br>
+     * {@link UpdatableArray#matrix(long...)} and overridden versions in the subclasses:
+     * {@link UpdatablePArray#matrix(long...)},
+     * {@link UpdatablePFixedArray#matrix(long...)},
+     * {@link UpdatablePNumberArray#matrix(long...)},
+     * {@link UpdatablePFloatingArray#matrix(long...)},
+     * {@link UpdatablePIntegerArray#matrix(long...)},
+     * {@link UpdatableBitArray#matrix(long...)},
+     * {@link UpdatableCharArray#matrix(long...)},
+     * {@link UpdatableByteArray#matrix(long...)},
+     * {@link UpdatableShortArray#matrix(long...)},
+     * {@link UpdatableIntArray#matrix(long...)},
+     * {@link UpdatableLongArray#matrix(long...)},
+     * {@link UpdatableFloatArray#matrix(long...)},
+     * {@link UpdatableDoubleArray#matrix(long...)}.</p>
+     *
      *
      * @param array an array storing all matrix elements.
      * @param dim   the matrix dimensions.

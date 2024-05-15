@@ -1155,7 +1155,7 @@ public interface Array {
      * this method makes an effort to ensure that, when it returns,
      * the content of this array will be resident in physical memory.
      * In other words, this method tries to preload the content of this array into RAM
-     * to provide fastest access to its elements in the nearest future.
+     * to provide the fastest access to its elements in the nearest future.
      *
      * <p>There are no any guarantees that <i>all</i> elements of this array will be really preloaded into RAM.
      * This method usually avoids loading too large amount of data, comparable with the whole amount of RAM.
