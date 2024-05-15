@@ -396,7 +396,7 @@ public class PackedBitArraysPer8Test {
                 showProgress(testCount);
             }
 
-            System.out.println("Testing \"copyBitsFromReverseOrder\" method, two different arrays...");
+            System.out.println("Testing \"copyBitsInReverseOrderToNormalOrder\" method, two different arrays...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork, 0, pDest.length);
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
@@ -405,7 +405,7 @@ public class PackedBitArraysPer8Test {
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
-                PackedBitArraysPer8.copyBitsFromReverseOrder(pDestWork, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.copyBitsInReverseOrderToNormalOrder(pDestWork, destPos, pSrc, srcPos, count);
                 PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork, 0, len);
                 // unpacking necessary to show bDestWork1 in a case of the bug
                 byte[] copy = pSrc.clone();

@@ -815,7 +815,12 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
-    public static void copyBitsFromReverseOrder(byte[] dest, long destPos, byte[] src, long srcPos, long count) {
+    public static void copyBitsInReverseOrderToNormalOrder(
+            byte[] dest,
+            long destPos,
+            byte[] src,
+            long srcPos,
+            long count) {
         // Note: the following method IS NOT BUILT by Repeater; in a case of any improbable changes,
         // this must be re-written manually!
         Objects.requireNonNull(dest, "Null dest");
