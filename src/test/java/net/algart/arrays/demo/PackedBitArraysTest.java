@@ -83,8 +83,9 @@ public class PackedBitArraysTest {
             seed = Long.parseLong(args[startArgIndex + 2]);
         }
         long startOffset = 0;
-        if (superLarge)
+        if (superLarge) {
             startOffset = 2333333333L;
+        }
 
         Random rnd = new Random(seed);
         System.out.println("Testing " + len + " bits with start random seed " + seed);
@@ -100,37 +101,46 @@ public class PackedBitArraysTest {
             System.out.println("Test #" + (densityIndex + 1) + "/50 with density " + density);
             System.out.println("Allocating memory... ");
             boolean[] bSrc = new boolean[len];
-            for (int k = 0; k < bSrc.length; k++)
+            for (int k = 0; k < bSrc.length; k++) {
                 bSrc[k] = rnd.nextDouble() <= density;
+            }
             short[] sSrc = new short[len];
-            for (int k = 0; k < sSrc.length; k++)
+            for (int k = 0; k < sSrc.length; k++) {
                 sSrc[k] = (short) rnd.nextInt();
+            }
             float[] fSrc = new float[len];
-            for (int k = 0; k < fSrc.length; k++)
+            for (int k = 0; k < fSrc.length; k++) {
                 fSrc[k] = (float) rnd.nextDouble();
+            }
             boolean[] bDest = new boolean[len];
-            for (int k = 0; k < bDest.length; k++)
+            for (int k = 0; k < bDest.length; k++) {
                 bDest[k] = rnd.nextDouble() <= density;
+            }
             int[] iDest = new int[len];
-            for (int k = 0; k < iDest.length; k++)
+            for (int k = 0; k < iDest.length; k++) {
                 iDest[k] = k;
+            }
             float[] fDest = new float[len];
-            for (int k = 0; k < bDest.length; k++)
+            for (int k = 0; k < bDest.length; k++) {
                 fDest[k] = rnd.nextFloat();
+            }
             boolean[] bDestWork1 = bDest.clone();
             boolean[] bDestWork2 = bDest.clone();
             int[] iDestWork1 = iDest.clone();
             int[] iDestWork2 = iDest.clone();
             float[] fDestWork = fDest.clone();
             int cardCorrect = 0;
-            for (int k = 0; k < len; k++)
-                if (bSrc[k])
+            for (int k = 0; k < len; k++) {
+                if (bSrc[k]) {
                     cardCorrect++;
+                }
+            }
 
             long longPackedLen = PackedBitArrays.packedLength(startOffset + len);
             int packedLen = (int) longPackedLen;
-            if (packedLen != longPackedLen)
+            if (packedLen != longPackedLen) {
                 throw new IllegalArgumentException("Too large bit array (>2^37-64 bits)");
+            }
             long[] pSrc = new long[packedLen];
             long[] pDest = new long[packedLen];
 
@@ -144,9 +154,10 @@ public class PackedBitArraysTest {
                     (rt.totalMemory() - rt.freeMemory()) / 1048576.0);
 
             long card = PackedBitArrays.cardinality(pSrc, startOffset, startOffset + len);
-            if (card != cardCorrect)
+            if (card != cardCorrect) {
                 throw new AssertionError("The bug in cardinality found at start: " + card +
                         " instead of " + cardCorrect);
+            }
             System.out.println("Number of high source bits is " + card);
             System.out.println();
 
@@ -217,24 +228,30 @@ public class PackedBitArraysTest {
                     int destPos = rnd.nextInt(len + 1);
                     int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                     PackedBitArrays.packBits(pDestWork, destPos, bSrc, srcPos, count);
-                    for (int k = 0; k < count; k++)
-                        if (bSrc[srcPos + k] != PackedBitArrays.getBit(pDestWork, destPos + k))
+                    for (int k = 0; k < count; k++) {
+                        if (bSrc[srcPos + k] != PackedBitArrays.getBit(pDestWork, destPos + k)) {
                             throw new AssertionError("The bug A in packBits found in test #"
                                     + testCount + ": "
                                     + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                     + ", error found at " + k);
-                    for (int k = 0; k < destPos; k++)
-                        if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                        }
+                    }
+                    for (int k = 0; k < destPos; k++) {
+                        if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                             throw new AssertionError("The bug B in packBits found in test #"
                                     + testCount + ": "
                                     + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                     + ", error found at " + k);
-                    for (int k = destPos + count; k < len; k++)
-                        if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                        }
+                    }
+                    for (int k = destPos + count; k < len; k++) {
+                        if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                             throw new AssertionError("The bug C in packBits found in test #"
                                     + testCount + ": "
                                     + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                     + ", error found at " + k);
+                        }
+                    }
                     showProgress(testCount);
                 }
             }
@@ -246,24 +263,30 @@ public class PackedBitArraysTest {
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArrays.packBitsInverted(pDestWork, destPos, bSrc, srcPos, count);
-                for (int k = 0; k < count; k++)
-                    if (bSrc[srcPos + k] == PackedBitArrays.getBit(pDestWork, destPos + k))
+                for (int k = 0; k < count; k++) {
+                    if (bSrc[srcPos + k] == PackedBitArrays.getBit(pDestWork, destPos + k)) {
                         throw new AssertionError("The bug A in packBitsInverted found in test #"
                                 + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = 0; k < destPos; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = 0; k < destPos; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug B in packBitsInverted found in test #"
                                 + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = destPos + count; k < len; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = destPos + count; k < len; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug C in packBitsInverted found in test #"
                                 + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -275,24 +298,30 @@ public class PackedBitArraysTest {
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 int threshold = rnd.nextInt() & 0xFFFF;
                 PackedBitArrays.packBitsGreater(pDestWork, destPos, sSrc, srcPos, count, threshold);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     if (((sSrc[srcPos + k] & 0xFFFF) > threshold) !=
-                            PackedBitArrays.getBit(pDestWork, destPos + k))
+                            PackedBitArrays.getBit(pDestWork, destPos + k)) {
                         throw new AssertionError("The bug A in packBitsGreater found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = 0; k < destPos; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = 0; k < destPos; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug B in packBitsGreater found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = destPos + count; k < len; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = destPos + count; k < len; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug C in packBitsGreater found in test #"
                                 + testCount + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -304,25 +333,31 @@ public class PackedBitArraysTest {
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 int threshold = rnd.nextInt() & 0xFFFF;
                 PackedBitArrays.packBitsLess(pDestWork, destPos, sSrc, srcPos, count, threshold);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     if (((sSrc[srcPos + k] & 0xFFFF) < threshold) !=
-                            PackedBitArrays.getBit(pDestWork, destPos + k))
+                            PackedBitArrays.getBit(pDestWork, destPos + k)) {
                         throw new AssertionError("The bug A in packBitsLess found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = 0; k < destPos; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = 0; k < destPos; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug B in packBitsLess found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = destPos + count; k < len; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = destPos + count; k < len; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug C in packBitsLess found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -334,25 +369,31 @@ public class PackedBitArraysTest {
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 int threshold = rnd.nextInt() & 0xFFFF;
                 PackedBitArrays.packBitsGreaterOrEqual(pDestWork, destPos, sSrc, srcPos, count, threshold);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     if (((sSrc[srcPos + k] & 0xFFFF) >= threshold) !=
-                            PackedBitArrays.getBit(pDestWork, destPos + k))
+                            PackedBitArrays.getBit(pDestWork, destPos + k)) {
                         throw new AssertionError("The bug A in packBitsGreaterOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = 0; k < destPos; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = 0; k < destPos; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug B in packBitsGreaterOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = destPos + count; k < len; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = destPos + count; k < len; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug C in packBitsGreaterOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -364,25 +405,31 @@ public class PackedBitArraysTest {
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 int threshold = rnd.nextInt() & 0xFFFF;
                 PackedBitArrays.packBitsLessOrEqual(pDestWork, destPos, sSrc, srcPos, count, threshold);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     if (((sSrc[srcPos + k] & 0xFFFF) <= threshold) !=
-                            PackedBitArrays.getBit(pDestWork, destPos + k))
+                            PackedBitArrays.getBit(pDestWork, destPos + k)) {
                         throw new AssertionError("The bug A in packBitsLessOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = 0; k < destPos; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = 0; k < destPos; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug B in packBitsLessOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = destPos + count; k < len; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = destPos + count; k < len; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug C in packBitsLessOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -394,24 +441,30 @@ public class PackedBitArraysTest {
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 float threshold = (float) rnd.nextDouble();
                 PackedBitArrays.packBitsGreaterOrEqual(pDestWork, destPos, fSrc, srcPos, count, threshold);
-                for (int k = 0; k < count; k++)
-                    if ((fSrc[srcPos + k] >= threshold) != PackedBitArrays.getBit(pDestWork, destPos + k))
+                for (int k = 0; k < count; k++) {
+                    if ((fSrc[srcPos + k] >= threshold) != PackedBitArrays.getBit(pDestWork, destPos + k)) {
                         throw new AssertionError("The bug A in packBitsGreaterOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = 0; k < destPos; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = 0; k < destPos; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug B in packBitsGreaterOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = destPos + count; k < len; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = destPos + count; k < len; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug C in packBitsGreaterOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -423,24 +476,30 @@ public class PackedBitArraysTest {
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 float threshold = (float) rnd.nextDouble();
                 PackedBitArrays.packBitsLessOrEqual(pDestWork, destPos, fSrc, srcPos, count, threshold);
-                for (int k = 0; k < count; k++)
-                    if ((fSrc[srcPos + k] <= threshold) != PackedBitArrays.getBit(pDestWork, destPos + k))
+                for (int k = 0; k < count; k++) {
+                    if ((fSrc[srcPos + k] <= threshold) != PackedBitArrays.getBit(pDestWork, destPos + k)) {
                         throw new AssertionError("The bug A in packBitsLessOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = 0; k < destPos; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = 0; k < destPos; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug B in packBitsLessOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
-                for (int k = destPos + count; k < len; k++)
-                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k))
+                    }
+                }
+                for (int k = destPos + count; k < len; k++) {
+                    if (PackedBitArrays.getBit(pDestWork, k) != PackedBitArrays.getBit(pDest, k)) {
                         throw new AssertionError("The bug C in packBitsLessOrEqual found in test #"
                                 + testCount
                                 + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -470,8 +529,8 @@ public class PackedBitArraysTest {
                     }
                 }
                 System.arraycopy(bSrc, srcPos, bDestWork2, destPos, count);
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug B in copyBits or unpackBits found in test #"
                                 + testCount
                                 + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
@@ -481,6 +540,8 @@ public class PackedBitArraysTest {
                                 + ", we have " + JArrays.toBinaryString(bDestWork1, "", 200)
                                 + " instead of " + JArrays.toBinaryString(bDestWork2, "", 200)
                                 + ")");
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -496,12 +557,14 @@ public class PackedBitArraysTest {
                         pDestWork, startOffset + destPos, pDestWork, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, destPos, pDestWork, startOffset + destPos, count);
                 System.arraycopy(bDestWork2, srcPos, bDestWork2, destPos, count);
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in copyBits or unpackBits found in test #"
                                 + testCount
                                 + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -514,7 +577,7 @@ public class PackedBitArraysTest {
                 PackedBitArrays.unpackBits(fDestWork, destPos, pSrc, startOffset + srcPos, count,
                         FLOAT_BIT_0, FLOAT_BIT_1);
                 System.arraycopy(bSrc, srcPos, bDestWork1, destPos, count);
-                for (int k = 0; k < len; k++)
+                for (int k = 0; k < len; k++) {
                     if (fDestWork[k] != (k < destPos || k >= destPos + count ? fDest[k] :
                             bDestWork1[k] ? FLOAT_BIT_1 : FLOAT_BIT_0)) {
                         throw new AssertionError("The bug in unpackBits to float[] found in test #"
@@ -522,6 +585,7 @@ public class PackedBitArraysTest {
                                 + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
                     }
+                }
                 showProgress(testCount);
             }
 
@@ -534,7 +598,7 @@ public class PackedBitArraysTest {
                 PackedBitArrays.unpackUnitBits(
                         fDestWork, destPos, pSrc, startOffset + srcPos, count, FLOAT_BIT_1);
                 System.arraycopy(bSrc, srcPos, bDestWork1, destPos, count);
-                for (int k = 0; k < len; k++)
+                for (int k = 0; k < len; k++) {
                     if (fDestWork[k] != (k < destPos || k >= destPos + count ? fDest[k] :
                             bDestWork1[k] ? FLOAT_BIT_1 : fDest[k])) {
                         throw new AssertionError("The bug in unpackUnitBits to float[] found in test #"
@@ -542,6 +606,7 @@ public class PackedBitArraysTest {
                                 + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
                     }
+                }
                 showProgress(testCount);
             }
 
@@ -554,7 +619,7 @@ public class PackedBitArraysTest {
                 PackedBitArrays.unpackZeroBits(
                         fDestWork, destPos, pSrc, startOffset + srcPos, count, FLOAT_BIT_0);
                 System.arraycopy(bSrc, srcPos, bDestWork1, destPos, count);
-                for (int k = 0; k < len; k++)
+                for (int k = 0; k < len; k++) {
                     if (fDestWork[k] != (k < destPos || k >= destPos + count ? fDest[k] :
                             bDestWork1[k] ? fDest[k] : FLOAT_BIT_0)) {
                         System.out.println(JArrays.toBinaryString(bSrc, ",", 100));
@@ -565,6 +630,7 @@ public class PackedBitArraysTest {
                                 + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
                     }
+                }
                 showProgress(testCount);
             }
 
@@ -576,14 +642,17 @@ public class PackedBitArraysTest {
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArrays.addBitsToInts(iDestWork1, destPos, pSrc, startOffset + srcPos, count);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     iDestWork2[destPos + k] += bSrc[srcPos + k] ? 1 : 0;
-                for (int k = 0; k < len; k++)
-                    if (iDestWork1[k] != iDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (iDestWork1[k] != iDestWork2[k]) {
                         throw new AssertionError("The bug in addBitsToInts found in test #"
                                 + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -597,14 +666,17 @@ public class PackedBitArraysTest {
                 boolean value = rnd.nextBoolean();
                 PackedBitArrays.fillBits(pDestWork, startOffset + destPos, count, value);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] = value;
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in fillBits found in test #"
                                 + testCount + ": "
                                 + "destPos = " + destPos + ", count = " + count + ", value = " + value
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -620,24 +692,29 @@ public class PackedBitArraysTest {
                 PackedBitArrays.notBits(
                         pDestWork, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] = !bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug A in notBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 System.arraycopy(pDest, 0, pDestWork, 0, pDest.length);
                 PackedBitArrays.copyBits(
                         pDestWork, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.notBits(
                         pDestWork, startOffset + destPos, pDestWork, startOffset + destPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork, startOffset, len);
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug B in notBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -652,13 +729,16 @@ public class PackedBitArraysTest {
                 PackedBitArrays.andBits(
                         pDestWork, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] &= bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in andBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -673,13 +753,16 @@ public class PackedBitArraysTest {
                 PackedBitArrays.orBits(
                         pDestWork, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] |= bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in orBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -694,13 +777,16 @@ public class PackedBitArraysTest {
                 PackedBitArrays.xorBits(
                         pDestWork, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] ^= bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in xorBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -715,13 +801,16 @@ public class PackedBitArraysTest {
                 PackedBitArrays.andNotBits(
                         pDestWork, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] &= !bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in andNotBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -736,13 +825,16 @@ public class PackedBitArraysTest {
                 PackedBitArrays.orNotBits(
                         pDestWork, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] |= !bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in orNotBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
             //[[Repeat.SectionEnd logicalOperations]]
@@ -758,14 +850,17 @@ public class PackedBitArraysTest {
                 PackedBitArrays.reverseBitsOrder(
                         pDestWork, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] = bSrc[srcPos + count - 1 - k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in reverseBitsOrder found in test #"
                                 + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 
@@ -775,14 +870,16 @@ public class PackedBitArraysTest {
                 int highIndex = rnd.nextInt(len + 1);
                 boolean value = rnd.nextBoolean();
                 long indexCorrect = JArrays.indexOfBoolean(bSrc, lowIndex, highIndex, value);
-                if (indexCorrect != -1)
+                if (indexCorrect != -1) {
                     indexCorrect += startOffset;
+                }
                 long index = PackedBitArrays.indexOfBit(
                         pSrc, startOffset + lowIndex, startOffset + highIndex, value);
-                if (index != indexCorrect)
+                if (index != indexCorrect) {
                     throw new AssertionError("The bug in indexOfBit found in test #" + testCount + ": "
                             + index + " instead of " + indexCorrect
                             + ", fromIndex=" + lowIndex + ", toIndex=" + highIndex + ", value=" + value);
+                }
                 showProgress(testCount);
             }
 
@@ -792,15 +889,17 @@ public class PackedBitArraysTest {
                 int highIndex = rnd.nextInt(len + 1);
                 boolean value = rnd.nextBoolean();
                 long indexCorrect = JArrays.lastIndexOfBoolean(bSrc, lowIndex, highIndex, value);
-                if (indexCorrect != -1)
+                if (indexCorrect != -1) {
                     indexCorrect += startOffset;
+                }
                 long index = PackedBitArrays.lastIndexOfBit(pSrc,
                         startOffset + lowIndex, startOffset + highIndex, value);
-                if (index != indexCorrect)
+                if (index != indexCorrect) {
                     throw new AssertionError("The bug in lastIndexOfBit found in test #"
                             + testCount + ": "
                             + index + " instead of " + indexCorrect
                             + ", fromIndex=" + lowIndex + ", toIndex=" + highIndex + ", value=" + value);
+                }
                 showProgress(testCount);
             }
 
@@ -809,13 +908,16 @@ public class PackedBitArraysTest {
                 int pos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - pos);
                 cardCorrect = 0;
-                for (int k = 0; k < count; k++)
-                    if (bSrc[pos + k])
+                for (int k = 0; k < count; k++) {
+                    if (bSrc[pos + k]) {
                         cardCorrect++;
+                    }
+                }
                 card = PackedBitArrays.cardinality(pSrc, startOffset + pos, startOffset + pos + count);
-                if (card != cardCorrect)
+                if (card != cardCorrect) {
                     throw new AssertionError("The bug in cardinality found in test #" + testCount + ": "
                             + card + " instead of " + cardCorrect);
+                }
                 showProgress(testCount);
             }
 
@@ -830,60 +932,68 @@ public class PackedBitArraysTest {
                         pDestWork, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 System.arraycopy(bSrc, srcPos, bDestWork1, destPos, count);
                 if (!PackedBitArrays.bitEquals(
-                        pSrc, startOffset + srcPos, pDestWork, startOffset + destPos, count))
+                        pSrc, startOffset + srcPos, pDestWork, startOffset + destPos, count)) {
                     throw new AssertionError("The bug in bitEquals (illegal false) found in test #"
                             + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count);
+                }
                 int h1 = PackedBitArrays.bitHashCode(
                         pSrc, startOffset + srcPos, startOffset + srcPos + count);
                 int h2 = PackedBitArrays.bitHashCode(
                         pDestWork, startOffset + destPos, startOffset + destPos + count);
-                if (h1 != h2)
+                if (h1 != h2) {
                     throw new AssertionError("The bug in bitHashCode found in test #" + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count);
+                }
                 if (count > 0) {
                     PackedBitArrays.setBit(pDestWork, startOffset + destPos + count - 1,
                             !PackedBitArrays.getBit(pDestWork, startOffset + destPos + count - 1));
                     if (PackedBitArrays.bitEquals(
-                            pSrc, startOffset + srcPos, pDestWork, startOffset + destPos, count))
+                            pSrc, startOffset + srcPos, pDestWork, startOffset + destPos, count)) {
                         throw new AssertionError("The bug in bitEquals "
                                 + "(illegal true after changing last bit) "
                                 + "found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count);
+                    }
                     h1 = PackedBitArrays.bitHashCode(
                             pDestWork, startOffset + destPos, startOffset + destPos + count);
-                    if (h1 == h2)
+                    if (h1 == h2) {
                         throw new AssertionError("The bug in bitHashCode "
                                 + "(changing last bit was not detected) "
                                 + "found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count);
+                    }
                     PackedBitArrays.setBit(pDestWork, startOffset + destPos + count - 1,
                             !PackedBitArrays.getBit(pDestWork, startOffset + destPos + count - 1));
                     PackedBitArrays.setBit(pDestWork, startOffset + destPos,
                             !PackedBitArrays.getBit(pDestWork, startOffset + destPos));
                     if (PackedBitArrays.bitEquals(
-                            pSrc, startOffset + srcPos, pDestWork, startOffset + destPos, count))
+                            pSrc, startOffset + srcPos, pDestWork, startOffset + destPos, count)) {
                         throw new AssertionError("The bug in bitEquals "
                                 + "(illegal true after changing first bit) "
                                 + "found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count);
+                    }
                     h1 = PackedBitArrays.bitHashCode(
                             pDestWork, startOffset + destPos, startOffset + destPos + count);
-                    if (h1 == h2)
+                    if (h1 == h2) {
                         throw new AssertionError("The bug in bitHashCode "
                                 + "(changing first bit was not detected) "
                                 + "found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count);
+                    }
                 }
-                if (!JArrays.arrayEquals(bSrc, srcPos, bDestWork1, destPos, count))
+                if (!JArrays.arrayEquals(bSrc, srcPos, bDestWork1, destPos, count)) {
                     throw new AssertionError("The bug in arrayEquals (illegal false) found in test #"
                             + testCount
                             + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count);
+                }
                 int h3 = JArrays.arrayHashCode(bSrc, srcPos, srcPos + count);
                 int h4 = JArrays.arrayHashCode(bDestWork1, destPos, destPos + count);
-                if (h3 != h4)
+                if (h3 != h4) {
                     throw new AssertionError("The bug in arrayHashCode found in test #" + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count);
+                }
                 showProgress(testCount);
             }
         }

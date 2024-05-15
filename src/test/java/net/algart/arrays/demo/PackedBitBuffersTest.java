@@ -59,38 +59,45 @@ public class PackedBitBuffersTest {
             seed = Long.parseLong(args[startArgIndex + 2]);
         }
         long startOffset = 0;
-        if (superLarge)
+        if (superLarge) {
             startOffset = 2333333333L;
+        }
 
         Random rnd = new Random(seed);
         System.out.println("Testing " + len + " bits with start random seed " + seed);
 
         for (int densityIndex = 0; densityIndex < 50; densityIndex++) {
             double density = rnd.nextDouble();
-            if (densityIndex == 0)
+            if (densityIndex == 0) {
                 density = 0.0;
-            else if (densityIndex == 1)
+            } else if (densityIndex == 1) {
                 density = 1.0;
+            }
             System.out.println("           ");
             System.out.println("Test #" + (densityIndex + 1) + "/50 with density " + density);
             System.out.println("Allocating memory... ");
             boolean[] bSrc = new boolean[len];
-            for (int k = 0; k < bSrc.length; k++)
+            for (int k = 0; k < bSrc.length; k++) {
                 bSrc[k] = rnd.nextDouble() <= density;
+            }
             boolean[] bDest = new boolean[len];
-            for (int k = 0; k < bDest.length; k++)
+            for (int k = 0; k < bDest.length; k++) {
                 bDest[k] = rnd.nextDouble() <= density;
+            }
             boolean[] bDestWork1 = bDest.clone();
             boolean[] bDestWork2 = bDest.clone();
             int cardCorrect = 0;
-            for (int k = 0; k < len; k++)
-                if (bSrc[k])
+            for (int k = 0; k < len; k++) {
+                if (bSrc[k]) {
                     cardCorrect++;
+                }
+            }
 
             long longPackedLen = PackedBitArrays.packedLength(startOffset + len);
             int packedLen = (int) longPackedLen;
-            if (packedLen != longPackedLen)
+            if (packedLen != longPackedLen) {
                 throw new IllegalArgumentException("Too large bit array (>2^37-64 bits)");
+            }
             LongBuffer pSrc = ByteBuffer.allocateDirect(packedLen * 8).asLongBuffer();
             LongBuffer pDest = ByteBuffer.allocateDirect(packedLen * 8).asLongBuffer();
 
@@ -106,9 +113,10 @@ public class PackedBitBuffersTest {
                     (rt.totalMemory() - rt.freeMemory()) / 1048576.0);
 
             long card = PackedBitBuffers.cardinality(pSrc, startOffset, startOffset + len);
-            if (card != cardCorrect)
+            if (card != cardCorrect) {
                 throw new AssertionError("The bug in cardinality found at start: " + card +
                         " instead of " + cardCorrect);
+            }
             System.out.println("Number of high source bits is " + card);
             System.out.println();
 
@@ -162,21 +170,27 @@ public class PackedBitBuffersTest {
                     int destPos = rnd.nextInt(len + 1);
                     int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                     PackedBitBuffers.packBits(pDestWork, destPos, bSrc, srcPos, count);
-                    for (int k = 0; k < count; k++)
-                        if (bSrc[srcPos + k] != PackedBitBuffers.getBit(pDestWork, destPos + k))
+                    for (int k = 0; k < count; k++) {
+                        if (bSrc[srcPos + k] != PackedBitBuffers.getBit(pDestWork, destPos + k)) {
                             throw new AssertionError("The bug A in packBits found in test #" +
                                     testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
                                     count + ", error found at " + k);
-                    for (int k = 0; k < destPos; k++)
-                        if (PackedBitBuffers.getBit(pDestWork, k) != PackedBitBuffers.getBit(pDest, k))
+                        }
+                    }
+                    for (int k = 0; k < destPos; k++) {
+                        if (PackedBitBuffers.getBit(pDestWork, k) != PackedBitBuffers.getBit(pDest, k)) {
                             throw new AssertionError("The bug B in packBits found in test #" +
                                     testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
                                     count + ", error found at " + k);
-                    for (int k = destPos + count; k < len; k++)
-                        if (PackedBitBuffers.getBit(pDestWork, k) != PackedBitBuffers.getBit(pDest, k))
+                        }
+                    }
+                    for (int k = destPos + count; k < len; k++) {
+                        if (PackedBitBuffers.getBit(pDestWork, k) != PackedBitBuffers.getBit(pDest, k)) {
                             throw new AssertionError("The bug C in packBits found in test #" +
                                     testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
                                     count + ", error found at " + k);
+                        }
+                    }
                     PackedBitArraysTest.showProgress(testCount);
                 }
             }
@@ -197,11 +211,13 @@ public class PackedBitBuffersTest {
                         reverseOrder);
                 PackedBitBuffers.unpackBits(bDestWork1, destPos, pDestWork, startOffset + destPos, count);
                 System.arraycopy(bSrc, srcPos, bDestWork2, destPos, count);
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in copyBits or unpackBits found in test #" +
                                 testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
                                 ", reverseOrder = " + reverseOrder + ", error found at " + k);
+                    }
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 
@@ -219,11 +235,13 @@ public class PackedBitBuffersTest {
                         pDestWork, startOffset + destPos, pDestWork, startOffset + srcPos, count);
                 PackedBitBuffers.unpackBits(bDestWork1, destPos, pDestWork, startOffset + destPos, count);
                 System.arraycopy(bDestWork2, srcPos, bDestWork2, destPos, count);
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in copyBits or unpackBits found in test #" +
                                 testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
                                 ", error found at " + k);
+                    }
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 
@@ -239,14 +257,17 @@ public class PackedBitBuffersTest {
                 boolean value = rnd.nextBoolean();
                 PackedBitBuffers.fillBits(pDestWork, startOffset + destPos, count, value);
                 PackedBitBuffers.unpackBits(bDestWork1, 0, pDestWork, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] = value;
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in fillBits found in test #" +
                                 testCount + ": "
                                 + "destPos = " + destPos + ", count = " + count + ", value = " + value
                                 + ", error found at " + k);
+                    }
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 
@@ -262,14 +283,17 @@ public class PackedBitBuffersTest {
                 PackedBitBuffers.notBits(
                         pDestWorkJA, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWorkJA, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] = !bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in notBits found in test #" +
                                 testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 
@@ -285,13 +309,16 @@ public class PackedBitBuffersTest {
                 PackedBitBuffers.andBits(
                         pDestWorkJA, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWorkJA, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] &= bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in andBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 
@@ -307,13 +334,16 @@ public class PackedBitBuffersTest {
                 PackedBitBuffers.orBits(
                         pDestWorkJA, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWorkJA, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] |= bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in orBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 
@@ -329,13 +359,16 @@ public class PackedBitBuffersTest {
                 PackedBitBuffers.xorBits(
                         pDestWorkJA, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWorkJA, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] ^= bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in xorBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 
@@ -351,13 +384,16 @@ public class PackedBitBuffersTest {
                 PackedBitBuffers.andNotBits(
                         pDestWorkJA, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWorkJA, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] &= !bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in andNotBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 
@@ -373,13 +409,16 @@ public class PackedBitBuffersTest {
                 PackedBitBuffers.orNotBits(
                         pDestWorkJA, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWorkJA, startOffset, len);
-                for (int k = 0; k < count; k++)
+                for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] |= !bSrc[srcPos + k];
-                for (int k = 0; k < len; k++)
-                    if (bDestWork1[k] != bDestWork2[k])
+                }
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
                         throw new AssertionError("The bug in orNotBits found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);
+                    }
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 
@@ -389,14 +428,16 @@ public class PackedBitBuffersTest {
                 int highIndex = rnd.nextInt(len + 1);
                 boolean value = rnd.nextBoolean();
                 long indexCorrect = JArrays.indexOfBoolean(bSrc, lowIndex, highIndex, value);
-                if (indexCorrect != -1)
+                if (indexCorrect != -1) {
                     indexCorrect += startOffset;
+                }
                 long index = PackedBitBuffers.indexOfBit(
                         pSrc, startOffset + lowIndex, startOffset + highIndex, value);
-                if (index != indexCorrect)
+                if (index != indexCorrect) {
                     throw new AssertionError("The bug in indexOfBit found in test #" + testCount + ": "
                             + index + " instead of " + indexCorrect
                             + ", fromIndex=" + lowIndex + ", toIndex=" + highIndex + ", value=" + value);
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 
@@ -406,14 +447,16 @@ public class PackedBitBuffersTest {
                 int highIndex = rnd.nextInt(len + 1);
                 boolean value = rnd.nextBoolean();
                 long indexCorrect = JArrays.lastIndexOfBoolean(bSrc, lowIndex, highIndex, value);
-                if (indexCorrect != -1)
+                if (indexCorrect != -1) {
                     indexCorrect += startOffset;
+                }
                 long index = PackedBitBuffers.lastIndexOfBit(pSrc,
                         startOffset + lowIndex, startOffset + highIndex, value);
-                if (index != indexCorrect)
+                if (index != indexCorrect) {
                     throw new AssertionError("The bug in lastIndexOfBit found in test #" + testCount + ": "
                             + index + " instead of " + indexCorrect
                             + ", fromIndex=" + lowIndex + ", toIndex=" + highIndex + ", value=" + value);
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
 
@@ -422,14 +465,17 @@ public class PackedBitBuffersTest {
                 int pos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - pos);
                 cardCorrect = 0;
-                for (int k = 0; k < count; k++)
-                    if (bSrc[pos + k])
+                for (int k = 0; k < count; k++) {
+                    if (bSrc[pos + k]) {
                         cardCorrect++;
+                    }
+                }
                 card = PackedBitBuffers.cardinality(
                         pSrc, startOffset + pos, startOffset + pos + count);
-                if (card != cardCorrect)
+                if (card != cardCorrect) {
                     throw new AssertionError("The bug in cardinality found in test #" + testCount + ": "
                             + card + " instead of " + cardCorrect);
+                }
                 PackedBitArraysTest.showProgress(testCount);
             }
         }
