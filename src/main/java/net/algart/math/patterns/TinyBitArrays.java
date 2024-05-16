@@ -112,9 +112,9 @@ class TinyBitArrays {
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
      *
-     * <p><i>This method works correctly even if <tt>src == dest</tt>
+     * <p><i>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and the copied areas overlap</i>,
-     * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
+     * i.e. if <tt>Math.abs(destPos&nbsp;-&nbsp;srcPos)&nbsp;&lt;&nbsp;count</tt>.
      * More precisely, in this case the copying is performed as if the
      * bits at positions <tt>srcPos..srcPos+count-1</tt>
      * were first unpacked to a temporary <tt>boolean[]</tt> array with <tt>count</tt> elements
