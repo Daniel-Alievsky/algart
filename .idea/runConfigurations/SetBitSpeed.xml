@@ -2,7 +2,7 @@
   <configuration default="false" name="SetBitSpeed" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.SetBitSpeed" />
     <module name="algart" />
-    <option name="PROGRAM_PARAMETERS" value="10000000 10" />
+    <option name="PROGRAM_PARAMETERS" value="4194304 32" />
     <option name="VM_PARAMETERS" value="-ea -esa -Dnet.algart.arrays.globalMemoryModel=SIMPLE" />
     <extension name="coverage">
       <pattern>

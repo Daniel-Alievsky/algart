@@ -323,7 +323,7 @@ public class PArraysSpeed {
                 t4 = System.nanoTime();
                 int sum11 = 0;
                 for (int q = 0; q < numberOfPasses; q++) {
-                    sum11 += Arrays.preciseSumOf(a1);
+                    sum11 += (int) Arrays.preciseSumOf(a1);
                 }
                 t5 = System.nanoTime();
                 int sum21 = 0;

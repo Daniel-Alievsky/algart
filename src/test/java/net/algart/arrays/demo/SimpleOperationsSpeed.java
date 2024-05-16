@@ -40,13 +40,6 @@ public final class SimpleOperationsSpeed {
                 name + ":", (t2 - t1) * 1e-6, (t2 - t1) / (double) n, (double) n / (t2 - t1));
     }
 
-    private static void setBitNonParallel(long[] dest, long index, boolean value) {
-        if (value)
-            dest[(int) (index >>> 6)] |= 1L << (index & 63);
-        else
-            dest[(int) (index >>> 6)] &= ~(1L << (index & 63));
-    }
-
     private static class IntFiller extends Arrays.ParallelExecutor {
         final int[] array;
 
@@ -68,6 +61,7 @@ public final class SimpleOperationsSpeed {
         UpdatableByteArray byteArray = Arrays.SMM.newByteArray(n);
         UpdatableIntArray intArray = Arrays.SMM.newIntArray(n);
         long[] bits = new long[(int) PackedBitArrays.packedLength(n)];
+        System.out.printf("Testing %s, %s, %s...%n", bitArray, byteArray, intArray);
         Random rnd = new Random(157);
         for (int k = 0; k < n; k++) {
             if (rnd.nextInt(3) == 0) {
@@ -242,13 +236,7 @@ public final class SimpleOperationsSpeed {
             t2 = System.nanoTime();
             time("unpackZeroBits() (->int)", t1, t2);
 
-            t1 = System.nanoTime();
-            for (int k = 0; k < n; k++) {
-                bitArray.setBit(k, true);
-            }
-            t2 = System.nanoTime();
-            time("setBit", t1, t2);
-
+            // Speed of operation below depends on the previous content of bits array!
             t1 = System.nanoTime();
             for (int k = 0; k < n; k++) {
                 PackedBitArrays.setBit(bits, k, true);
@@ -258,10 +246,24 @@ public final class SimpleOperationsSpeed {
 
             t1 = System.nanoTime();
             for (int k = 0; k < n; k++) {
-                setBitNonParallel(bits, k, true);
+                bitArray.setBit(k, true);
             }
             t2 = System.nanoTime();
-            time("setBitNonParallel", t1, t2);
+            time("setBit", t1, t2);
+
+            t1 = System.nanoTime();
+            for (int k = 0; k < n; k++) {
+                PackedBitArrays.setBitNoSync(bits, k, true);
+            }
+            t2 = System.nanoTime();
+            time("PackedBitArrays.setBitNoSync", t1, t2);
+
+            t1 = System.nanoTime();
+            for (int k = 0; k < n; k++) {
+                bitArray.setBitNoSync(k, true);
+            }
+            t2 = System.nanoTime();
+            time("setBitNoSync", t1, t2);
 
             t1 = System.nanoTime();
             boolean bit = false;

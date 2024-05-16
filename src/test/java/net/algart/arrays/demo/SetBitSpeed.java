@@ -176,6 +176,7 @@ public class SetBitSpeed {
             testData[i] = rnd.nextBoolean();
         }
 
+        boolean[] data = new boolean[arrayLength];
         UpdatableBitArray a1 = mm.newUnresizableBitArray(arrayLength);
         UpdatableBitArray a2 = mm.newUnresizableBitArray(arrayLength);
         UpdatableBitArray a3 = mm.newUnresizableBitArray(arrayLength);
@@ -183,8 +184,21 @@ public class SetBitSpeed {
 
         for (int test = 1; test <= numberOfIterations; test++) {
             System.out.printf("%nTest #%d for %s%n", test, a1);
-            testNormal(testData,a1, a2, a3, a4);
-            testNoSync(testData,a1, a2, a3, a4);
+
+            System.out.println("  Random values:");
+            System.arraycopy(testData, 0, data, 0, data.length);
+            testNormal(data,a1, a2, a3, a4);
+            testNoSync(data,a1, a2, a3, a4);
+
+            System.out.println("  1 values:");
+            java.util.Arrays.fill(data, true);
+            testNormal(data,a1, a2, a3, a4);
+            testNoSync(data,a1, a2, a3, a4);
+
+            System.out.println("  0 values:");
+            java.util.Arrays.fill(data, false);
+            testNormal(data,a1, a2, a3, a4);
+            testNoSync(data,a1, a2, a3, a4);
         }
         a1.freeResources();
         a2.freeResources();
