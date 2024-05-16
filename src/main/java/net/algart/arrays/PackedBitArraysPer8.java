@@ -573,7 +573,7 @@ public class PackedBitArraysPer8 {
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
      *
-     * <p><i>This method works correctly even if <tt>src == dest</tt>
+     * <p><i>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and the copied areas overlap</i>,
      * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
      * More precisely, in this case the copying is performed as if the
@@ -803,8 +803,15 @@ public class PackedBitArraysPer8 {
      * <p>but without necessity to copy <tt>src</tt> bytes into a new array.
      *
      * <p>Warning: unlike {@link #copyBits(byte[], long, byte[], long, long)},
-     * this method <b>does not provide correct processing</b> the situation when <tt>src == dest</tt>
-     * and the copied areas overlap.</p>
+     * this method <i>does not provide correct processing</i> the situation when <tt>src&nbsp;==&nbsp;dest</tt>
+     * and the copied areas overlap. However, this method still <i>does</i> work correctly if
+     * <tt>src&nbsp;==&nbsp;dest</tt> and <tt>destPos&nbsp;&le;&nbsp;srcPos</tt>. In particular,
+     * this method allows you to invert the bit order in place: the following call</p>
+     * <pre>
+     *      PackedBitArraysPer8.copyBitsInReverseOrderToNormalOrder(dest, 0, dest, 0, dest.length * 8);
+     * </pre>
+     * <p>is equivalent to <tt>{@link #reverseBitsOrderInEachByte(byte[])
+     * PackedBitArraysPer8.reverseBitsOrderInEachByte}(dest)</tt>.</p>
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
      * @param destPos position of the first bit written in the destination array.
