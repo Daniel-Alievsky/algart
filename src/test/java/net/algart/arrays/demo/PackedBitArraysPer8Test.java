@@ -544,7 +544,7 @@ public class PackedBitArraysPer8Test {
                 System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
                 int srcPos = rnd.nextInt(len + 1);
-                int destPos = srcPos; //rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBitsFromNormalToReverseOrder(pDestWork1, destPos, pSrc, srcPos, count);
                 PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
@@ -583,6 +583,68 @@ public class PackedBitArraysPer8Test {
                 copyBitsFromNormalToReverseOrderSimple(pDestWork2, destPos, pSrc, srcPos, count);
                 if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
                     throw new AssertionError("The bug C in copyBitsFromNormalToReverseOrder " +
+                            "found in test #" + testCount);
+                }
+                showProgress(testCount);
+            }
+
+            System.out.println("Testing \"copyBitsFromNormalToReverseOrder\" method, inside a single array...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                if (destPos > srcPos) {
+                    continue;
+                    // - copyBitsFromNormalToReverseOrder does not provide correct behaviour in this case
+                }
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                PackedBitArraysPer8.copyBitsFromNormalToReverseOrder(
+                        pDestWork1, destPos, pDestWork1, srcPos, count);
+                PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
+                // unpacking necessary to show bDestWork1 in a case of the bug
+                for (int k = 0; k < count; k++) {
+                    boolean bit = PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, destPos + k);
+                    boolean bitSrc = PackedBitArraysPer8.getBit(pDest, srcPos + k);
+                    if (bit != bitSrc) {
+                        throw new AssertionError("The bug A in copyBitsFromNormalToReverseOrder " +
+                                "found in test #" +
+                                testCount + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
+                                count + " (src=" + JArrays.toBinaryString(bSrc, "", 200) +
+                                ", dest=" + JArrays.toBinaryString(bDest, "", 200) +
+                                ", we have " + JArrays.toBinaryString(bDestWork1, "", 200) +
+                                ", dest[" + (destPos + k) + "]=" + bit + " instead of " + bitSrc + ")");
+                    }
+                }
+                for (int k = 0, m = (int) PackedBitArraysPer8.unpackedLength(pDest); k < m; k++) {
+                    if (k < destPos || k >= destPos + count) {
+                        boolean bit = PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, k);
+                        boolean bitSrc = PackedBitArraysPer8.getBitInReverseOrder(pDest, k);
+                        if (bit != bitSrc) {
+                            throw new AssertionError("The bug B in copyBitsFromNormalToReverseOrder " +
+                                    "found in test #" +
+                                    testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
+                                    count + ", error found at " + k +
+                                    " (src=" + JArrays.toBinaryString(bSrc, "", 200) +
+                                    ", dest=" + JArrays.toBinaryString(bDest, "", 200) +
+                                    ", we have " + JArrays.toBinaryString(bDestWork1, "", 200) +
+                                    ", dest[" + k + "]=" + bit + " instead of " + bitSrc + ")");
+                        }
+                    }
+                }
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                copyBitsFromNormalToReverseOrderSimple(pDestWork2, destPos, pDestWork2, srcPos, count);
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug C in copyBitsFromNormalToReverseOrder " +
+                            "found in test #" + testCount);
+                }
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                PackedBitArraysPer8.copyBitsFromNormalToReverseOrder(
+                        pDestWork1, 0, pDestWork1, 0, (long) pDestWork1.length * 8);
+                PackedBitArraysPer8.reverseBitsOrderInEachByte(pDestWork2);
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug D in copyBitsFromNormalToReverseOrder " +
                             "found in test #" + testCount);
                 }
                 showProgress(testCount);

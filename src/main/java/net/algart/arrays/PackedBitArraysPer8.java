@@ -31,18 +31,21 @@ import java.util.Objects;
 /**
  * <p>Operations with bit arrays packed into <tt>byte[]</tt> Java arrays.</p>
  *
- * <p>This is a shorthand analog of {@link PackedBitArrays} class, using <tt>byte</tt> values
+ * <p>This is an analog of {@link PackedBitArrays} class, using <tt>byte</tt> values
  * for packing bits instead of <tt>long</tt> values.
  * AlgART bit arrays do not use this class, but it can be useful while using external modules,
  * where bits are packed into bytes.
- * Note that for processing packed bit arrays, you
- * <b>should prefer {@link PackedBitArrays} class</b> for processing packed bit arrays
+ * Also this class contains some features for processing bits, packed into bytes in the reverse order:
+ * highest bit first, lowest bit last.</p>
+ *
+ * <p>Note that you
+ * <b>should prefer</b> {@link PackedBitArrays} class for processing packed bit arrays
  * when possible: that class works significantly faster for the same number of packed bits.
  *
  * <p>The maximal length of bit arrays supported by this class is <tt>2<sup>34</sup>-8</tt>.
  * All indexes and lengths passed to methods of this class must not exceed this value.
  *
- * <p>In all methods of this class, it's supposed that the bit <tt>#k</tt> in a packed <tt>byte[] array</tt>
+ * <p>In most methods of this class, it's supposed that the bit <tt>#k</tt> in a packed <tt>byte[] array</tt>
  * is the bit <tt>#(k%8)</tt> in the byte element <tt>array[k/8]</tt>. In other words, the bit <tt>#k</tt>
  * (<tt>false</tt> or <tt>true</tt> value) can be extracted by the following operator:</p>
  *
@@ -61,6 +64,11 @@ import java.util.Objects;
  *
  * <p>You may use {@link #getBit(byte[], long)} and {@link #setBit(byte[], long, boolean)}, implementing
  * the equivalent code.</p>
+ *
+ * <p>The order of bits within a byte, that corresponds to the above specification, is what we call
+ * the <b>normal</b> order. Some methods of this class also support the <b>reverse</b> bits order:
+ * see {@link #getBitInReverseOrder(byte[], long)} and {@link #setBitInReverseOrder(byte[], long, boolean)}
+ * methods.</p>
  *
  * <p>If any method of this class modifies some portion of an element of a packed <tt>byte[]</tt> Java array,
  * i.e. modifies less than all 8 its bits, then all accesses to this <tt>byte</tt> element are performed
@@ -818,15 +826,15 @@ public class PackedBitArraysPer8 {
 
     /**
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array in the reverse order,
-     * starting from the bit <tt>#srcPos</tt>, to packed <tt>dest</tt> array (in the normal order),
+     * starting from the bit <tt>#srcPos</tt>, to packed <tt>dest</tt> array, stored in the normal order,
      * starting from the bit <tt>#destPos</tt>.
      *
      * <p>The same action may be performed by the following operators:</p>
      * <pre>
      *     byte[] copy = pSrc.clone();
-     *     {@link PackedBitArraysPer8#reverseBitsOrderInEachByte(byte[])
+     *     {@link #reverseBitsOrderInEachByte(byte[])
      *     PackedBitArraysPer8.reverseBitsOrderInEachByte}(copy);
-     *     {@link PackedBitArraysPer8#copyBits PackedBitArraysPer8.copyBits}(dest, destPos, copy, srcPos, count);
+     *     {@link #copyBits PackedBitArraysPer8.copyBits}(dest, destPos, copy, srcPos, count);
      * </pre>
      * <p>but without necessity to copy <tt>src</tt> bytes into a new array.
      *
@@ -848,6 +856,8 @@ public class PackedBitArraysPer8 {
      * @param count   the number of bits to be copied (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     * @see #copyBits(byte[], long, byte[], long, long)
+     * @see #copyBitsFromNormalToReverseOrder(byte[], long, byte[], long, long)
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void copyBitsFromReverseToNormalOrder(
@@ -947,6 +957,45 @@ public class PackedBitArraysPer8 {
         }
     }
 
+    /**
+     * Copies <tt>count</tt> bits, packed in <tt>src</tt> array in the normal order,
+     * starting from the bit <tt>#srcPos</tt>, to packed <tt>dest</tt> array, stored in the reverse order,
+     * starting from the bit <tt>#destPos</tt>.
+     *
+     * <p>The same action may be performed by the following simple loop:</p>
+     * <pre>
+     *      byte[] copy = pSrc.clone();
+     *      for (int k = 0; k &lt; count; k++) {
+     *          final boolean bit = {@link #getBit
+     *              PackedBitArraysPer8.getBit}(copy, srcPos + k);
+     *          {@link #setBitInReverseOrder
+     *              PackedBitArraysPer8.setBitInReverseOrder}(dest, destPos + k, bit);
+     *      }
+     * </pre>
+     * <p>but this method works much faster.
+     *
+     * <p>Warning: unlike {@link #copyBits(byte[], long, byte[], long, long)},
+     * this method <i>does not provide correct processing</i> the situation when <tt>src&nbsp;==&nbsp;dest</tt>
+     * and the copied areas overlap. However, this method still <i>does</i> work correctly if
+     * <tt>src&nbsp;==&nbsp;dest</tt> and <tt>destPos&nbsp;&le;&nbsp;srcPos</tt>. In particular,
+     * this method allows you to invert the bit order in place: the following call</p>
+     * <pre>
+     *      PackedBitArraysPer8.copyBitsFromNormalToReverseOrder(dest, 0, dest, 0, dest.length * 8);
+     * </pre>
+     * <p>(as well as the same call of {@link #copyBitsFromReverseToNormalOrder})
+     * is equivalent to <tt>{@link #reverseBitsOrderInEachByte(byte[])
+     * PackedBitArraysPer8.reverseBitsOrderInEachByte}(dest)</tt>.</p>
+     *
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param src     the source array (bits are packed in <tt>byte</tt> values).
+     * @param srcPos  position of the first bit read in the source array.
+     * @param count   the number of bits to be copied (must be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     * @see #copyBits(byte[], long, byte[], long, long)
+     * @see #copyBitsFromReverseToNormalOrder(byte[], long, byte[], long, long)
+     */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void copyBitsFromNormalToReverseOrder(
             byte[] dest,
@@ -997,13 +1046,13 @@ public class PackedBitArraysPer8 {
                 int v;
                 if (sPosRem + cntStart <= 8) { // cntStart bits are in a single src element
                     if (shift > 0)
-                        v = (sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) << shift;
+                        v = (sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) >>> shift;
                     else
-                        v = (sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) >>> -shift;
+                        v = (sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) << -shift;
                     sPosRem += cntStart;
                 } else {
-                    v = ((REVERSE[src[sPos] & 0xFF] & 0xFF) >>> -shift) |
-                            ((sNext = (REVERSE[src[sPos + 1] & 0xFF] & 0xFF)) << (8 + shift));
+                    v = ((REVERSE[src[sPos] & 0xFF] & 0xFF) << -shift) |
+                            ((sNext = (REVERSE[src[sPos + 1] & 0xFF] & 0xFF)) >>> (8 + shift));
                     sPos++;
                     sPosRem = (sPosRem + cntStart) & 7;
                 }
@@ -1026,17 +1075,17 @@ public class PackedBitArraysPer8 {
             final int sPosRem8 = 8 - sPosRem;
             for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; ) {
                 sPos++;
-                dest[dPos] = (byte) ((sNext >>> sPosRem) | ((sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) << sPosRem8));
+                dest[dPos] = (byte) ((sNext << sPosRem) | ((sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) >>> sPosRem8));
                 dPos++;
             }
             int cntFinish = (int) (count & 7);
             if (cntFinish > 0) {
-                int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
+                int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
                 int v;
                 if (sPosRem + cntFinish <= 8) { // cntFinish bits are in a single src element
-                    v = sNext >>> sPosRem;
+                    v = sNext << sPosRem;
                 } else {
-                    v = (sNext >>> sPosRem) | ((REVERSE[src[sPos + 1] & 0xFF] & 0xFF) << sPosRem8);
+                    v = (sNext << sPosRem) | ((REVERSE[src[sPos + 1] & 0xFF] & 0xFF) >>> sPosRem8);
                 }
                 synchronized (dest) {
                     dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));

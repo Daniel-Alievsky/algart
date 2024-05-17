@@ -2,7 +2,7 @@
   <configuration default="false" name="PackedBitArraysPer8Test" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.PackedBitArraysPer8Test" />
     <module name="algart" />
-    <option name="PROGRAM_PARAMETERS" value="111 5011 157" />
+    <option name="PROGRAM_PARAMETERS" value="1011 500011" />
     <option name="VM_PARAMETERS" value="-ea -esa" />
     <extension name="coverage">
       <pattern>
