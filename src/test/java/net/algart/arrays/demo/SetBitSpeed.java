@@ -32,7 +32,7 @@ import java.util.Locale;
 import java.util.Random;
 
 /**
- * <p>Speed of primitive arrays: simplest speed test</p>
+ * <p>Speed of setting bits</p>
  *
  * @author Daniel Alievsky
  */
@@ -167,8 +167,8 @@ public class SetBitSpeed {
         }
         System.out.println(mm.toString());
 
-        int arrayLength = Integer.parseInt(args[0]);
-        int numberOfIterations = Integer.parseInt(args[1]);
+        final int arrayLength = Integer.parseInt(args[0]);
+        final int numberOfIterations = Integer.parseInt(args[1]);
 
         Random rnd = new Random(156);
         boolean[] testData = new boolean[arrayLength];

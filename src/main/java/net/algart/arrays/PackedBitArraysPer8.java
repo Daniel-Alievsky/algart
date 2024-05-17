@@ -982,7 +982,7 @@ public class PackedBitArraysPer8 {
      * <pre>
      *      PackedBitArraysPer8.copyBitsFromNormalToReverseOrder(dest, 0, dest, 0, dest.length * 8);
      * </pre>
-     * <p>(as well as the same call of {@link #copyBitsFromReverseToNormalOrder})
+     * <p>(like the similar call of {@link #copyBitsFromReverseToNormalOrder})
      * is equivalent to <tt>{@link #reverseBitsOrderInEachByte(byte[])
      * PackedBitArraysPer8.reverseBitsOrderInEachByte}(dest)</tt>.</p>
      *
