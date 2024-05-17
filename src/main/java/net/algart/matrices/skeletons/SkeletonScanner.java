@@ -1549,7 +1549,7 @@ public final class SkeletonScanner implements ArrayProcessor {
 
     /**
      * More efficient version of {@link #adjacentBranches()} method, which stores the results
-     * in the passed Java array instead of creating new Java array.
+     * in the specified Java array instead of creating new Java array.
      * This method is equivalent to calling that method and copying its result into
      * the beginning of <tt>result</tt> Java array, but does not allocate any arrays.
      * It is a better solution if we need to calculate adjacent branches in a long loop,

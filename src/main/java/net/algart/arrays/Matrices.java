@@ -1673,7 +1673,7 @@ public class Matrices {
     }
 
     /**
-     * Estimates the summary size (in bytes) of all the matrices in the passed collection.
+     * Estimates the summary size (in bytes) of all the matrices in the specified collection.
      * This method just calls {@link #sizeOf(Matrix)} method for each element of this collection
      * and returns the sum of the results of all these calls.
      *
@@ -4968,7 +4968,7 @@ public class Matrices {
         final long[] dimensions = interleaved.dimensions();
         final long numberOfMatrices = numberOfChannels(dimensions, false);
         if (list.size() != numberOfMatrices) {
-            throw new IllegalArgumentException("Number of elements in the passed list of separated matrix = "
+            throw new IllegalArgumentException("Number of elements in the specified list of separated matrices = "
                     + list.size() + " does not match to the first dimension " + numberOfMatrices +
                     " of the interleaved matrix " + interleaved);
         }

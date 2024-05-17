@@ -419,7 +419,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * method with the argument <tt>truncateOverflows=true</tt>.
      *
      * <p>The concrete algorithm, implementing by this class, can require some number of additional
-     * arguments <b>M</b><sub><i>k</i></sub>. If the number of matrices in the passed list
+     * arguments <b>M</b><sub><i>k</i></sub>. If the number of matrices in the specified list
      * <tt>additionalMatrices</tt> is less than the required one, this method throws
      * <tt>IllegalArgumentException</tt>.
      * If the number of passed matrices is greater than the required one, it is not an error:
@@ -576,7 +576,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * by {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed} method.
      *
      * <p>The concrete algorithm, implementing by this class, can require some number of additional
-     * arguments <b>M</b><sub><i>k</i></sub>. If the number of matrices in the passed list
+     * arguments <b>M</b><sub><i>k</i></sub>. If the number of matrices in the specified list
      * <tt>additionalMatrices</tt> is less than the required one, this method throws
      * <tt>IllegalArgumentException</tt>.
      * If the number of passed matrices is greater than the required one, it is not an error:

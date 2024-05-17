@@ -251,7 +251,7 @@ public class PackedBitArrays {
      * If the passed array is <tt>null</tt> or <tt>fromIndex==toIndex</tt>, returns 0.
      *
      * <p>The returned hash code depends only on the sequence of packed bits, but does not depend
-     * on the position of this sequence in the passed <tt>long[]</tt> array.
+     * on the position of this sequence in the specified <tt>long[]</tt> array.
      *
      * <p>For any two packed bit arrays <tt>a1</tt> and <tt>a2</tt> such that
      * <tt>PackedBitArrays.bitEquals(a1, pos1, a2, pos2, count)</tt>, it is also the case that

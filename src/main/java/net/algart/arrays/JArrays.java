@@ -1691,7 +1691,7 @@ public class JArrays {
      * the hash code is based on their identities rather than their contents.
      *
      * <p>The returned hash code depends only on the sequence of elements, but does not depend
-     * on the position of this sequence in the passed Java array.
+     * on the position of this sequence in the specified Java array.
      *
      * <p>For any two arrays <tt>a1</tt> and <tt>a2</tt> such that
      * <tt>JArrays.arrayEquals(a1, pos1, a2, pos2, count)</tt>, it is also the case that

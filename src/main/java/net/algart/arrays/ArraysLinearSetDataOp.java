@@ -57,7 +57,7 @@ class ArraysLinearSetDataOp {
     {
         Objects.requireNonNull(lf, "Null lf argument");
         if (lf.n() == 0) {
-            throw new AssertionError("No coefficients in the passed function " + lf);
+            throw new AssertionError("No coefficients in the specified function " + lf);
         }
         this.truncateOverflows = truncateOverflows;
         this.x = x;

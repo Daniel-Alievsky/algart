@@ -184,7 +184,6 @@ public class PackedBitArraysPer8 {
      * May be used instead of {@link #setBit(byte[], long, boolean)}, if you are not planning to call
      * this method from different threads for the same <tt>dest</tt> array.
      * Equivalent to the following operators:<pre>
-     * synchronized (dest) {
      * &#32;   if (value)
      * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] |= 1 &lt;&lt; (index &amp; 7);
      * &#32;   else
@@ -341,6 +340,35 @@ public class PackedBitArraysPer8 {
                 dest[(int) (index >>> 3)] &= (byte) ~(1 << bitIndex);
         }
     }
+
+    /**
+     * Sets the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array
+     * for a case, when the bits are packed in each byte in the reverse order,
+     * <i>without synchronization</i>.
+     * May be used instead of {@link #setBitInReverseOrder(byte[], long, boolean)}, if you are not planning to call
+     * this method from different threads for the same <tt>dest</tt> array.
+     * Equivalent to the following operators:<pre>
+     * &#32;   final int bitIndex = 7 - ((int) index &amp; 7);
+     * &#32;   if (value)
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] |= (1 &lt;&lt; bitIndex);
+     * &#32;   else
+     * &#32;       dest[(int)(index &gt;&gt;&gt; 3)] &amp;= ~(1 &lt;&lt; bitIndex);
+     * }
+     * </pre>
+     *
+     * @param dest  the destination array (bits are packed in <tt>long</tt> values).
+     * @param index index of the written bit.
+     * @param value new bit value.
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
+     */
+    public static void setBitInReverseOrderNoSync(byte[] dest, long index, boolean value) {
+        final int bitIndex = 7 - ((int) index & 7);
+        if (value)
+            dest[(int) (index >>> 3)] |= (byte) (1 << bitIndex);
+        else
+            dest[(int) (index >>> 3)] &= (byte) ~(1 << bitIndex);
+        }
 
     /**
      * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#srcPos</tt>,
@@ -808,7 +836,7 @@ public class PackedBitArraysPer8 {
      * <tt>src&nbsp;==&nbsp;dest</tt> and <tt>destPos&nbsp;&le;&nbsp;srcPos</tt>. In particular,
      * this method allows you to invert the bit order in place: the following call</p>
      * <pre>
-     *      PackedBitArraysPer8.copyBitsInReverseOrderToNormalOrder(dest, 0, dest, 0, dest.length * 8);
+     *      PackedBitArraysPer8.copyBitsFromReverseToNormalOrder(dest, 0, dest, 0, dest.length * 8);
      * </pre>
      * <p>is equivalent to <tt>{@link #reverseBitsOrderInEachByte(byte[])
      * PackedBitArraysPer8.reverseBitsOrderInEachByte}(dest)</tt>.</p>
@@ -822,7 +850,7 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
-    public static void copyBitsInReverseOrderToNormalOrder(
+    public static void copyBitsFromReverseToNormalOrder(
             byte[] dest,
             long destPos,
             byte[] src,
@@ -859,6 +887,104 @@ public class PackedBitArraysPer8 {
             int cntFinish = (int) (count & 7);
             if (cntFinish > 0) {
                 int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
+                synchronized (dest) {
+                    dest[dPos] = (byte) ((REVERSE[src[sPos] & 0xFF] & maskFinish) | (dest[dPos] & ~maskFinish));
+                    // - only 8 low bits are stored
+                }
+            }
+        } else {
+            final int shift = dPosRem - sPosRem;
+            int sNext;
+            if (cntStart > 0) {
+                int v;
+                if (sPosRem + cntStart <= 8) { // cntStart bits are in a single src element
+                    if (shift > 0)
+                        v = (sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) << shift;
+                    else
+                        v = (sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) >>> -shift;
+                    sPosRem += cntStart;
+                } else {
+                    v = ((REVERSE[src[sPos] & 0xFF] & 0xFF) >>> -shift) |
+                            ((sNext = (REVERSE[src[sPos + 1] & 0xFF] & 0xFF)) << (8 + shift));
+                    sPos++;
+                    sPosRem = (sPosRem + cntStart) & 7;
+                }
+                // let's suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                synchronized (dest) {
+                    dest[dPos] = (byte) ((v & maskStart) | (dest[dPos] & ~maskStart));
+                }
+                count -= cntStart;
+                if (count == 0) {
+                    return; // little optimization
+                }
+                dPos++;
+            } else {
+                if (count == 0) {
+                    return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
+                }
+                sNext = REVERSE[src[sPos] & 0xFF] & 0xFF;
+            }
+            // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
+            final int sPosRem8 = 8 - sPosRem;
+            for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; ) {
+                sPos++;
+                dest[dPos] = (byte) ((sNext >>> sPosRem) | ((sNext = (REVERSE[src[sPos] & 0xFF] & 0xFF)) << sPosRem8));
+                dPos++;
+            }
+            int cntFinish = (int) (count & 7);
+            if (cntFinish > 0) {
+                int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
+                int v;
+                if (sPosRem + cntFinish <= 8) { // cntFinish bits are in a single src element
+                    v = sNext >>> sPosRem;
+                } else {
+                    v = (sNext >>> sPosRem) | ((REVERSE[src[sPos + 1] & 0xFF] & 0xFF) << sPosRem8);
+                }
+                synchronized (dest) {
+                    dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
+                }
+            }
+        }
+    }
+
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
+    public static void copyBitsFromNormalToReverseOrder(
+            byte[] dest,
+            long destPos,
+            byte[] src,
+            long srcPos,
+            long count) {
+        // Note: the following method IS NOT BUILT by Repeater; in a case of any improbable changes,
+        // this must be re-written manually!
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int sPos = (int) (srcPos >>> 3);
+        int dPos = (int) (destPos >>> 3);
+        int sPosRem = (int) (srcPos & 7);
+        int dPosRem = (int) (destPos & 7);
+        int cntStart = (-dPosRem) & 7;
+        int maskStart = 0xFF >>> dPosRem; // dPosRem times 0, then 1 (from the highest bit)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (0xFF00 >>> (dPosRem + cntStart)); // &= dPosRem+cntStart times 1 (from the highest bit)
+        }
+        // Note: overlapping IS NOT supported!
+        if (sPosRem == dPosRem) {
+            if (cntStart > 0) {
+                synchronized (dest) {
+                    dest[dPos] = (byte) ((REVERSE[src[sPos] & 0xFF] & maskStart) | (dest[dPos] & ~maskStart));
+                    // - only 8 low bits are stored
+                }
+                count -= cntStart;
+                dPos++;
+                sPos++;
+            }
+            for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; dPos++, sPos++) {
+                dest[dPos] = REVERSE[src[sPos] & 0xFF];
+            }
+            int cntFinish = (int) (count & 7);
+            if (cntFinish > 0) {
+                int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
                 synchronized (dest) {
                     dest[dPos] = (byte) ((REVERSE[src[sPos] & 0xFF] & maskFinish) | (dest[dPos] & ~maskFinish));
                     // - only 8 low bits are stored

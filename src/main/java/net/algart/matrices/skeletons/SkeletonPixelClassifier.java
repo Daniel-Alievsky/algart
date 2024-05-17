@@ -694,7 +694,7 @@ public abstract class SkeletonPixelClassifier {
 
     /**
      * More efficient version of {@link #neighbourOffset(int) neighbourOffset(int)} method,
-     * which stores the results in the passed Java array instead of creating new Java array.
+     * which stores the results in the specified Java array instead of creating new Java array.
      * This method is equivalent to calling that method and copying its result into
      * <tt>coordinateIncrements</tt> argument, but does not allocate any arrays.
      * It is a better solution if we need to calculate neighbour offsets in a long loop,

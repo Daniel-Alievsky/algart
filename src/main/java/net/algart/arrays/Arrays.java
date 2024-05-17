@@ -3021,7 +3021,7 @@ public class Arrays {
 
     /**
      * Returns the dimensions of the matrix, coordinates of which are used as arguments of the underlying function
-     * in the passed {@link #isIndexFuncArray(Array) index-based functional array},
+     * in the specified {@link #isIndexFuncArray(Array) index-based functional array},
      * or throws an exception if this array is not a functional array,
      * calculated on the base of indexes.
      * More precisely, if the passed array is created by the methods
@@ -3740,7 +3740,7 @@ public class Arrays {
     }
 
     /**
-     * Increments the histogram of frequency of values in the passed array.
+     * Increments the histogram of frequency of values in the specified array.
      * The histogram corresponds to values in the range <tt>from&nbsp;&lt;=&nbsp;v&nbsp;&lt;&nbsp;to</tt>.
      *
      * <p>More precisely, if <tt>from&nbsp;&lt;&nbsp;to</tt>, then for every element <tt>#k</tt> of the
@@ -8812,7 +8812,7 @@ public class Arrays {
     }
 
     /**
-     * Estimates the number of elements in the passed array, corresponding to the specified memory size in bytes.
+     * Estimates the number of elements in the specified array, corresponding to the specified memory size in bytes.
      * If <tt>{@link #sizeOf(Array) sizeOf}(array)&lt;0</tt> ("unknown size" of array elements),
      * this method uses the assumption that every element occupies 4 bytes.
      * Returns 0 if the length of the array is 0.

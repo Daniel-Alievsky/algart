@@ -929,7 +929,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
 
     /**
      * Clears all elements of all connected objects in the {@link #matrix() matrix, corresponding to this object},
-     * and also clears all objects in the passed second matrix with same sizes, which are connected with at least
+     * and also clears all objects in the specified second matrix with same sizes, which are connected with at least
      * one unit (1) element of the first matrix. In other words, this method just calls
      * {@link #clear(ArrayContext, long...) clear} method for coordinates, corresponding to all unit
      * elements of the first matrix, in a {@link #clone() clone} of this scanner,

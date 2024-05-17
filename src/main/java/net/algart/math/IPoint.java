@@ -636,7 +636,7 @@ public class IPoint implements Comparable<IPoint> {
 
     /**
      * More efficient version of {@link #scaleAndShift(double[], Point)} method,
-     * which stores the coordinates of the result in the passed Java array instead of creating new instance
+     * which stores the coordinates of the result in the specified Java array instead of creating new instance
      * of this class.
      * Equivalent to the following call:
      * <nobr><tt>{@link #scaleAndShift(double[], Point) scaleAndShift}(multipliers,shift).{@link #coordinates(long[])

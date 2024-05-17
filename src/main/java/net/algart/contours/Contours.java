@@ -352,8 +352,8 @@ public final class Contours {
      *
      * <p>Note: touching matrix boundary flags, stored in the contour array, are defined by previous
      * <tt>addPoint</tt> calls, <b>not</b> by these 4 flags from the header.
-     * Corresponding 4 flags in the passed header are <b>ignored</b>.
-     * {@link ContourHeader#containingRectangle() Containing rectangle} in the passed header is also <b>ignored</b>;
+     * Corresponding 4 flags in the specified header are <b>ignored</b>.
+     * {@link ContourHeader#containingRectangle() Containing rectangle} in the specified header is also <b>ignored</b>;
      * instead, this function stores in the contour array the rectangle, calculated while previous
      * <tt>addPoint</tt> calls.
      *
