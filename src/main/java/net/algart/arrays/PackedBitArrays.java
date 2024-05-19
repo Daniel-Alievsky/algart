@@ -158,8 +158,6 @@ public class PackedBitArrays {
 
     /**
      * Sets the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array <i>without synchronization</i>.
-     * May be used instead of {@link #setBit(long[], long, boolean)}, if you are not planning to call
-     * this method from different threads for the same <tt>dest</tt> array.
      * Equivalent to the following operators:<pre>
      * &#32;   if (value)
      * &#32;       dest[(int)(index &gt;&gt;&gt; 6)] |= 1L &lt;&lt; (index &amp; 63);
@@ -167,6 +165,12 @@ public class PackedBitArrays {
      * &#32;       dest[(int)(index &gt;&gt;&gt; 6)] &amp;= ~(1L &lt;&lt; (index &amp; 63));
      * }
      * </pre>
+     *
+     * <p>Note that this method is usually <b>much</b> faster than {@link #setBit(long[], long, boolean)}.
+     * If you are not going to work with the same <tt>dest</tt> array from different threads,
+     * you should prefer this method.
+     * Also you may freely use this method if you are synchronizing access to this array via some
+     * form of external synchronization: in this case, no additional internal synchronization is needed.</p>
      *
      * @param dest  the destination array (bits are packed in <tt>long</tt> values).
      * @param index index of the written bit.
