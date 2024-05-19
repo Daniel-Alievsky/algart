@@ -5231,7 +5231,7 @@ public class PackedBitArrays {
         }
         if (count > unpackedLength(src) - srcPos) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it cannot contain " + count + " bits since " + srcPos + " position");
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
@@ -5724,7 +5724,7 @@ public class PackedBitArrays {
         }
         if (count > unpackedLength(src) - srcPos) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it cannot contain " + count + " bits since " + srcPos + " position");
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
@@ -6217,7 +6217,7 @@ public class PackedBitArrays {
         }
         if (count > unpackedLength(src) - srcPos) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it cannot contain " + count + " bits since " + srcPos + " position");
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
@@ -6710,7 +6710,7 @@ public class PackedBitArrays {
         }
         if (count > unpackedLength(src) - srcPos) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it cannot contain " + count + " bits since " + srcPos + " position");
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
@@ -7203,7 +7203,7 @@ public class PackedBitArrays {
         }
         if (count > unpackedLength(src) - srcPos) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it cannot contain " + count + " bits since " + srcPos + " position");
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
@@ -7696,7 +7696,7 @@ public class PackedBitArrays {
         }
         if (count > unpackedLength(src) - srcPos) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it cannot contain " + count + " bits since " + srcPos + " position");
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
@@ -8189,7 +8189,7 @@ public class PackedBitArrays {
         }
         if (count > unpackedLength(src) - srcPos) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it cannot contain " + count + " bits since " + srcPos + " position");
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
@@ -8682,7 +8682,7 @@ public class PackedBitArrays {
         }
         if (count > unpackedLength(src) - srcPos) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it cannot contain " + count + " bits since " + srcPos + " position");
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
@@ -9175,7 +9175,7 @@ public class PackedBitArrays {
         }
         if (count > unpackedLength(src) - srcPos) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it cannot contain " + count + " bits since " + srcPos + " position");
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +

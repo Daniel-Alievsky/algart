@@ -715,7 +715,8 @@ public class PackedBitArraysPer8Test {
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
-                PackedBitArraysPer8.notBits(pDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.notBits(
+                        pDestWork1, destPos, pSrc, srcPos, count);
                 PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
                 for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] = !bSrc[srcPos + k];
