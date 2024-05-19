@@ -659,12 +659,21 @@ public class PackedBitArraysPer8Test {
                 PackedBitArraysPer8.unpackBits(fDestWork, destPos, pSrc, srcPos, count,
                         FLOAT_BIT_0, FLOAT_BIT_1);
                 System.arraycopy(bSrc, srcPos, bDestWork1, destPos, count);
+                float[] floats = PackedBitArraysPer8.unpackBitsToFloats(pSrc, srcPos, count,
+                        FLOAT_BIT_0, FLOAT_BIT_1);
                 for (int k = 0; k < len; k++) {
                     if (fDestWork[k] != (k < destPos || k >= destPos + count ? fDest[k] :
                             bDestWork1[k] ? FLOAT_BIT_1 : FLOAT_BIT_0)) {
-                        throw new AssertionError("The bug in unpackBits to float[] found in test #" + testCount
-                                + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
-                                + ", error found at " + k);
+                        throw new AssertionError("The bug A in unpackBits to float[] found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", error found at " + k);
+                    }
+                }
+                for (int k = 0; k < count; k++) {
+                    if (floats[k] != fDestWork[destPos + k]) {
+                        throw new AssertionError("The bug B in unpackBitsToFloats found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", error found at " + k);
                     }
                 }
                 showProgress(testCount);
@@ -706,8 +715,7 @@ public class PackedBitArraysPer8Test {
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
-                PackedBitArraysPer8.notBits(
-                        pDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.notBits(pDestWork1, destPos, pSrc, srcPos, count);
                 PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
                 for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] = !bSrc[srcPos + k];
@@ -722,8 +730,7 @@ public class PackedBitArraysPer8Test {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
                 PackedBitArraysPer8.copyBits(
                         pDestWork1, destPos, pSrc, srcPos, count);
-                PackedBitArraysPer8.notBits(
-                        pDestWork1, destPos, pDestWork1, destPos, count);
+                PackedBitArraysPer8.notBits(pDestWork1, destPos, count);
                 PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
                 for (int k = 0; k < len; k++) {
                     if (bDestWork1[k] != bDestWork2[k]) {

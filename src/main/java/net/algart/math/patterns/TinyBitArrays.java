@@ -45,7 +45,7 @@ class TinyBitArrays {
      * @return <tt>64 * (long) array.length</tt>
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
-    public static long unpackedLength(byte[] array) {
+    public static long unpackedLength(long[] array) {
         return ((long) array.length) << 6;
     }
 
@@ -599,6 +599,20 @@ class TinyBitArrays {
             }
         }
 
+    }
+
+    /**
+     * Equivalent to <tt>{@link #notBits(long[], long, long[], long, long)
+     * notBits}(dest, destPos, dest, destPos, count)</tt>.
+     *
+     * @param dest    the source/destination array (bits are packed in <tt>long</tt> values).
+     * @param destPos position of the first bit written in the source/destination array.
+     * @param count   the number of bits to be inverted (must be &gt;=0).
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
+     */
+    public static void notBits(long[] dest, long destPos, long count) {
+        notBits(dest, destPos, dest, destPos, count);
     }
 
     /**

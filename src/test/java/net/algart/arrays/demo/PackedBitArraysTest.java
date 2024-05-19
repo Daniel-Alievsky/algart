@@ -577,13 +577,21 @@ public class PackedBitArraysTest {
                 PackedBitArrays.unpackBits(fDestWork, destPos, pSrc, startOffset + srcPos, count,
                         FLOAT_BIT_0, FLOAT_BIT_1);
                 System.arraycopy(bSrc, srcPos, bDestWork1, destPos, count);
+                float[] floats = PackedBitArrays.unpackBitsToFloats(pSrc, startOffset + srcPos, count,
+                        FLOAT_BIT_0, FLOAT_BIT_1);
                 for (int k = 0; k < len; k++) {
                     if (fDestWork[k] != (k < destPos || k >= destPos + count ? fDest[k] :
                             bDestWork1[k] ? FLOAT_BIT_1 : FLOAT_BIT_0)) {
-                        throw new AssertionError("The bug in unpackBits to float[] found in test #"
-                                + testCount
-                                + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
-                                + ", error found at " + k);
+                        throw new AssertionError("The bug A in unpackBits to float[] found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", error found at " + k);
+                    }
+                }
+                for (int k = 0; k < count; k++) {
+                    if (floats[k] != fDestWork[destPos + k]) {
+                        throw new AssertionError("The bug B in unpackBitsToFloats found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", error found at " + k);
                     }
                 }
                 showProgress(testCount);
@@ -705,8 +713,7 @@ public class PackedBitArraysTest {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
                 PackedBitArrays.copyBits(
                         pDestWork1, startOffset + destPos, pSrc, startOffset + srcPos, count);
-                PackedBitArrays.notBits(
-                        pDestWork1, startOffset + destPos, pDestWork1, startOffset + destPos, count);
+                PackedBitArrays.notBits(pDestWork1, startOffset + destPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork1, startOffset, len);
                 for (int k = 0; k < len; k++) {
                     if (bDestWork1[k] != bDestWork2[k]) {
