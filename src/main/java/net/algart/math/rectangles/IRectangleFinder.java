@@ -240,7 +240,7 @@ public abstract class IRectangleFinder {
 
     protected String algorithmName() {
         return "finder";
-    };
+    }
 
     // Not used now
     private static IRectangularArea checkAndFindContainingRectangle(

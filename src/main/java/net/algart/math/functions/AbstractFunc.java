@@ -39,7 +39,7 @@ package net.algart.math.functions;
  * @author Daniel Alievsky
  */
 public abstract class AbstractFunc implements Func {
-    private double[] EMPTY = new double[0];
+    private final double[] EMPTY = new double[0];
 
     public abstract double get(double ...x);
 

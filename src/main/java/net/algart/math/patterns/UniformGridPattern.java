@@ -135,7 +135,7 @@ public interface UniformGridPattern extends Pattern {
      *
      * @return the origin <b>o</b> of the uniform grid of this pattern.
      */
-    public Point originOfGrid();
+    Point originOfGrid();
 
     /**
      * Returns the array of grid <i>steps</i> <b>d</b> of this pattern.
@@ -152,7 +152,7 @@ public interface UniformGridPattern extends Pattern {
      *
      * @return an array containing all grid steps of this pattern.
      */
-    public double[] stepsOfGrid();
+    double[] stepsOfGrid();
 
     /**
      * Returns the grid <i>step</i> <i>d</i><sub><i>j</i></sub> along the coordinate #<i>j</i> of this pattern
@@ -166,7 +166,7 @@ public interface UniformGridPattern extends Pattern {
      * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or
      *                                   <tt>coordIndex&gt;={@link #dimCount() dimCount()}</tt>.
      */
-    public double stepOfGrid(int coordIndex);
+    double stepOfGrid(int coordIndex);
 
     /**
      * Indicates whether the other uniform-grid pattern has the same grid steps.
@@ -187,7 +187,7 @@ public interface UniformGridPattern extends Pattern {
      *                the grid steps of which should be compared with grid steps of this one.
      * @return <tt>true</tt> if the specified pattern has the same steps of grid.
      */
-    public boolean stepsOfGridEqual(UniformGridPattern pattern);
+    boolean stepsOfGridEqual(UniformGridPattern pattern);
 
     /**
      * Returns a set of all <i>grid indexes</i> <i>i</i><sub><i>j</i></sub> of this pattern.
@@ -249,7 +249,7 @@ public interface UniformGridPattern extends Pattern {
      *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
      * @see #gridIndexPattern()
      */
-    public Set<IPoint> gridIndexes();
+    Set<IPoint> gridIndexes();
 
     /**
      * Returns the minimal and maximal <i>grid index</i> <i>i</i><sub><i>j</i></sub>
@@ -280,7 +280,7 @@ public interface UniformGridPattern extends Pattern {
      * @see #gridIndexMax()
      * @see #gridIndexArea()
      */
-    public IRange gridIndexRange(int coordIndex);
+    IRange gridIndexRange(int coordIndex);
 
     /**
      * Returns the minimal and maximal <i>grid index</i> <i>i</i><sub><i>j</i></sub>
@@ -297,7 +297,7 @@ public interface UniformGridPattern extends Pattern {
      *
      * @return the ranges from minimal to maximal grid index for all space dimensions.
      */
-    public IRectangularArea gridIndexArea();
+    IRectangularArea gridIndexArea();
 
     /**
      * Returns the point, each coordinate #<i>j</i> of which
@@ -311,7 +311,7 @@ public interface UniformGridPattern extends Pattern {
      *
      * @return minimal grid index for all space dimensions as a point.
      */
-    public IPoint gridIndexMin();
+    IPoint gridIndexMin();
 
     /**
      * Returns the point, each coordinate #<i>j</i> of which
@@ -325,7 +325,7 @@ public interface UniformGridPattern extends Pattern {
      *
      * @return maximal grid index for all space dimensions as a point.
      */
-    public IPoint gridIndexMax();
+    IPoint gridIndexMax();
 
     /**
      * Returns <tt>true</tt> if and only if this uniform-grid pattern is an <i>ordinary integer pattern</i>,
@@ -344,7 +344,7 @@ public interface UniformGridPattern extends Pattern {
      *
      * @return whether the grid origin <b>o</b>=(0,0,...,0) and also all grid steps <i>d</i><sub><i>j</i></sub>=1.0.
      */
-    public boolean isOrdinary();
+    boolean isOrdinary();
 
     /**
      * Returns <tt>true</tt> if this pattern is <i>n</i>-dimensional rectangular parallelepiped.
@@ -384,7 +384,7 @@ public interface UniformGridPattern extends Pattern {
      *
      * @return <tt>true</tt> if this pattern is <i>n</i>-dimensional rectangular parallelepiped.
      */
-    public boolean isActuallyRectangular();
+    boolean isActuallyRectangular();
 
     /**
      * Returns an {@link #isOrdinary() ordinary} integer pattern with the same set of <i>grid indexes</i>
@@ -444,7 +444,7 @@ public interface UniformGridPattern extends Pattern {
      *         by <tt>double</tt> values).
      * @see #gridIndexes()
      */
-    public UniformGridPattern gridIndexPattern();
+    UniformGridPattern gridIndexPattern();
 
     /**
      * Returns another uniform-grid pattern, identical to this one with the only difference, that
@@ -523,7 +523,7 @@ public interface UniformGridPattern extends Pattern {
      *                                  to {@link UniformGridPattern} interface,
      *                                  section "Coordinate restrictions".
      */
-    public UniformGridPattern shiftGridIndexes(IPoint shift);
+    UniformGridPattern shiftGridIndexes(IPoint shift);
 
     /*Repeat()
         min(?!(us|g)) ==> max;;
@@ -593,7 +593,7 @@ public interface UniformGridPattern extends Pattern {
      *                                     in some rare situations, is near this limit
      *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
      */
-    public UniformGridPattern lowerSurface(int coordIndex);
+    UniformGridPattern lowerSurface(int coordIndex);
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
@@ -652,7 +652,7 @@ public interface UniformGridPattern extends Pattern {
      *                                     in some rare situations, is near this limit
      *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
      */
-    public UniformGridPattern upperSurface(int coordIndex);
+    UniformGridPattern upperSurface(int coordIndex);
     /*Repeat.AutoGeneratedEnd*/
 
     /**
@@ -679,21 +679,21 @@ public interface UniformGridPattern extends Pattern {
      *                                     in some rare situations, is near this limit
      *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
      */
-    public Pattern surface();
+    Pattern surface();
 
-    public UniformGridPattern shift(Point shift);
+    UniformGridPattern shift(Point shift);
 
-    public UniformGridPattern symmetric();
+    UniformGridPattern symmetric();
 
-    public UniformGridPattern multiply(double multiplier);
+    UniformGridPattern multiply(double multiplier);
 
-    public UniformGridPattern scale(double... multipliers);
+    UniformGridPattern scale(double... multipliers);
 
-    public UniformGridPattern projectionAlongAxis(int coordIndex);
+    UniformGridPattern projectionAlongAxis(int coordIndex);
 
-    public UniformGridPattern minBound(int coordIndex);
+    UniformGridPattern minBound(int coordIndex);
 
-    public UniformGridPattern maxBound(int coordIndex);
+    UniformGridPattern maxBound(int coordIndex);
 
-    public UniformGridPattern carcass();
+    UniformGridPattern carcass();
 }

@@ -40,14 +40,14 @@ public interface WeightedPattern extends Pattern {
      * @throws IllegalArgumentException if <tt>point.{@link IPoint#coordCount()
      *                                  coordCount()}!={@link #dimCount()}.
      */
-    public double weight(IPoint point);
+    double weight(IPoint point);
 
     /**
      * Returns the minimal and maximal weights of all points of this pattern.
      *
      * @return the minimal and maximal weights of all points of this pattern.
      */
-    public Range weightRange();
+    Range weightRange();
 
     /**
      * Returns <tt>true</tt> if the weights of all points are the same.
@@ -55,7 +55,7 @@ public interface WeightedPattern extends Pattern {
      *
      * @return <tt>true</tt> if the weights of all points are the same.
      */
-    public boolean isConstant();
+    boolean isConstant();
 
     /**
      * Returns the pattern shifted by the argument, that is consisting of points
@@ -68,7 +68,7 @@ public interface WeightedPattern extends Pattern {
      * @throws IllegalArgumentException if <tt>point.{@link IPoint#coordCount()
      *                                  coordCount()}!={@link #dimCount()}.
      */
-    public WeightedPattern shift(IPoint shift);
+    WeightedPattern shift(IPoint shift);
 
     /**
      * Returns the pattern consisting of points, generated from points of this instance
@@ -88,16 +88,16 @@ public interface WeightedPattern extends Pattern {
      * @param multiplier the multiplier.
      * @return the product of this pattern and the given scalar <tt>mult</tt>.
      */
-    public WeightedPattern multiply(double multiplier);
+    WeightedPattern multiply(double multiplier);
 
-    public WeightedPattern scale(double... multipliers);
+    WeightedPattern scale(double... multipliers);
 
     /**
      * Returns the symmetric pattern: equivalent to {@link #multiply(double) multiply(-1.0)}.
      *
      * @return the symmetric pattern.
      */
-    public WeightedPattern symmetric();
+    WeightedPattern symmetric();
 
     /**
      * Returns the product decomposition:
@@ -142,6 +142,6 @@ public interface WeightedPattern extends Pattern {
      * @return the decomposition of this pattern to the "product" (convolution) of smaller patterns.
      * @throws IllegalArgumentException if the argument is negative.
      */
-    public List<WeightedPattern> productDecomposition(int minimalPointCount);
+    List<WeightedPattern> productDecomposition(int minimalPointCount);
 
 }

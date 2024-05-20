@@ -60,25 +60,25 @@ import net.algart.math.Point;
  * @see QuickPointCountPattern
  */
 public interface DirectPointSetUniformGridPattern extends DirectPointSetPattern, UniformGridPattern {
-    public DirectPointSetUniformGridPattern shift(Point shift);
+    DirectPointSetUniformGridPattern shift(Point shift);
 
-    public DirectPointSetUniformGridPattern symmetric();
+    DirectPointSetUniformGridPattern symmetric();
 
-    public DirectPointSetUniformGridPattern multiply(double multiplier);
+    DirectPointSetUniformGridPattern multiply(double multiplier);
 
-    public DirectPointSetUniformGridPattern scale(double... multipliers);
+    DirectPointSetUniformGridPattern scale(double... multipliers);
 
-    public DirectPointSetUniformGridPattern projectionAlongAxis(int coordIndex);
+    DirectPointSetUniformGridPattern projectionAlongAxis(int coordIndex);
 
-    public DirectPointSetUniformGridPattern minBound(int coordIndex);
+    DirectPointSetUniformGridPattern minBound(int coordIndex);
 
-    public DirectPointSetUniformGridPattern maxBound(int coordIndex);
+    DirectPointSetUniformGridPattern maxBound(int coordIndex);
 
-    public DirectPointSetUniformGridPattern gridIndexPattern();
+    DirectPointSetUniformGridPattern gridIndexPattern();
 
-    public DirectPointSetUniformGridPattern shiftGridIndexes(IPoint shift);
+    DirectPointSetUniformGridPattern shiftGridIndexes(IPoint shift);
 
-    public DirectPointSetUniformGridPattern lowerSurface(int coordIndex);
+    DirectPointSetUniformGridPattern lowerSurface(int coordIndex);
 
-    public DirectPointSetUniformGridPattern upperSurface(int coordIndex);
+    DirectPointSetUniformGridPattern upperSurface(int coordIndex);
 }

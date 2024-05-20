@@ -79,7 +79,7 @@ public final class ApertureFilterOperator implements Operator {
             if (d <= 0) {
                 throw new IllegalArgumentException("Negative or zero aperture dimension #" + k + ": " + d);
             }
-            assert product <= Integer.MAX_VALUE;
+            // assert product <= Integer.MAX_VALUE;
             if (d > Integer.MAX_VALUE || (product *= d) > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("Too large number of points in the aperture: "
                     + "apertureDim[0] * apertureDim[1] * ... > Integer.MAX_VALUE");

@@ -533,7 +533,7 @@ public class IRangeFinder {
         int offset = resultOffset;
         for (int k = indexesFrom; k < indexesTo; k++) {
             final long packed = tree[k];
-            final int left = unpackHigh(packed);;
+            final int left = unpackHigh(packed);
             if (left > center) {
                 if (offset >= tree.length) {
                     ensureTreeCapacity((long) offset + 1);

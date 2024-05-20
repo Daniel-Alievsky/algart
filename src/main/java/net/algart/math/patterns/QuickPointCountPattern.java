@@ -73,5 +73,5 @@ public interface QuickPointCountPattern extends Pattern {
      *
      * @return <tt>true</tt> if the number of points in this pattern is greater than <tt>Long.MAX_VALUE</tt>.
      */
-    public boolean isPointCountVeryLarge();
+    boolean isPointCountVeryLarge();
 }

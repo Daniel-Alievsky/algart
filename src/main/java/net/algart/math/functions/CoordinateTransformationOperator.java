@@ -61,7 +61,7 @@ public interface CoordinateTransformationOperator extends Operator {
      *                                  (may be not thrown by some implementations,
      *                                  or may be thrown in other situations).
      */
-    public void map(double[] destPoint, double[] srcPoint);
+    void map(double[] destPoint, double[] srcPoint);
 
     /**
      * In this interface, this method is equivalent to
@@ -69,9 +69,9 @@ public interface CoordinateTransformationOperator extends Operator {
      * CoordinateTransformedFunc.getInstance(f, this)}.
      *
      * @param f the parent function, the arguments of which will be mapped by this operator.
-     * @return  new transformed function.
+     * @return new transformed function.
      */
-    public Func apply(Func f);
+    Func apply(Func f);
 
     /**
      * Returns the hash code of this object. The result depends on all parameters, specifying
@@ -79,7 +79,7 @@ public interface CoordinateTransformationOperator extends Operator {
      *
      * @return the hash code of this operator.
      */
-    public int hashCode();
+    int hashCode();
 
     /**
      * Indicates whether some other object is also a {@link CoordinateTransformationOperator
@@ -91,8 +91,7 @@ public interface CoordinateTransformationOperator extends Operator {
      * if the passed operator specifies a transformation, different than this one.
      *
      * @param obj the object to be compared for equality with this operator.
-     * @return    <tt>true</tt> if the specified object is a coordinate transformation operator equal to this one.
+     * @return <tt>true</tt> if the specified object is a coordinate transformation operator equal to this one.
      */
-    public boolean equals(Object obj);
-
+    boolean equals(Object obj);
 }

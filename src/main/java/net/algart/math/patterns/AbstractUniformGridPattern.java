@@ -845,8 +845,8 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                 return result;
             }
         }
-        if (pointCount < minimalPointCount || pointCount <= 1) {
-            return Collections.<Pattern>singletonList(this);
+        if (pointCount < minimalPointCount) {
+            return Collections.singletonList(this);
         }
         IRectangularArea gridIndexArea = gridIndexArea(); // actualization of all coordinate ranges
         boolean joinShortSegments = minimalPointCount > 4;

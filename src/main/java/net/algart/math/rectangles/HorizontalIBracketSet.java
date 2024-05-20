@@ -31,12 +31,12 @@ import java.util.*;
 class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
     private final List<H> allHorizontals;
     private final int numberOfHorizontals;
-    private boolean onlyStrictIntersections;
+    private final boolean onlyStrictIntersections;
     int horizontalIndex;
     H horizontal;
     long coord;
-    private NavigableSet<IBracket> intersectingSides = new TreeSet<IBracket>();
-    private List<IRectanglesUnion.FrameSide> sidesBuffer = new ArrayList<IRectanglesUnion.FrameSide>();
+    private final NavigableSet<IBracket> intersectingSides = new TreeSet<IBracket>();
+    private final List<IRectanglesUnion.FrameSide> sidesBuffer = new ArrayList<IRectanglesUnion.FrameSide>();
 
     public HorizontalIBracketSet(List<H> allHorizontals, boolean onlyStrictIntersections) {
         assert allHorizontals != null;

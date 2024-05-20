@@ -54,7 +54,7 @@ import java.util.stream.IntStream;
  * <p>Here <tt>MAGIC_WORD</tt> contains (in low bits) the value K. Value 2*N+K is the total number of 32-bit
  * integers, occupied by this contour: the next contours starts at the position "offset of this contour"+2*N+K.</p>
  *
- * <p><tt>minX, maxX, minY, maxY</tt> are the mininal/maximal coordinates of all points in this contour,
+ * <p><tt>minX, maxX, minY, maxY</tt> are the minimal/maximal coordinates of all points in this contour,
  * i.e. the rectangle, containing all this contour.
  * (It is allowed to store here some greater rectangle, <i>containing</i> it, but if the contour
  * is created by standard methods, <tt>minX, maxX, minY, maxY</tt> will contain correct minimums and maximums.)</p>
@@ -107,7 +107,7 @@ public final class Contours {
     // - Note: it is also useful (though not used) that it is essentially less than Integer.MAX_VALUE / 2;
     // so, we can freely add 1 or 2 to this value without overflow
 
-    private static boolean DEBUG_MODE = false;
+    private static final boolean DEBUG_MODE = false;
 
     int[] points = JArrays.EMPTY_INTS;
     int pointsLength = 0;
@@ -184,7 +184,7 @@ public final class Contours {
                         + " (full number of elements - number of header elements) at position " + p);
             }
             if ((long) p + (long) fullLength > serialized.length) {
-                throw new IllegalArgumentException("Serialized contour has not enough elemets: current position " + p
+                throw new IllegalArgumentException("Serialized contour has not enough elements: current position " + p
                         + " + number of contour elements " + fullLength + " > array length" + serialized.length);
             }
             checkedHeader.read(r, p);
@@ -3041,10 +3041,10 @@ public final class Contours {
                     maxX = pointX;
                 }
             }
-            final boolean horitontalBoundary = minX <= x && x <= maxX;
+            final boolean horizontalBoundary = minX <= x && x <= maxX;
             // - All points are at the same line y=intY.
             // Important: such simple check is possible due to n >= 4 (it would be incorrect if n==2, from==to).
-            return horitontalBoundary ? -1 : -2;
+            return horizontalBoundary ? -1 : -2;
         }
         return offset;
     }
