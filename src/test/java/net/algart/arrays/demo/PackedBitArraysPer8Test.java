@@ -151,7 +151,7 @@ public class PackedBitArraysPer8Test {
                 cardCorrect++;
             }
 
-            long longPackedLen = PackedBitArraysPer8.packedLength(len);
+            long longPackedLen = PackedBitArraysPer8.packedLength((long) len);
             int packedLen = (int) longPackedLen;
             if (packedLen != longPackedLen) {
                 throw new IllegalArgumentException("Too large bit array (>2^34-8 bits)");
@@ -895,7 +895,7 @@ public class PackedBitArraysPer8Test {
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
                 int count = rnd.nextInt(len + 1);
-                final int n = (int) PackedBitArraysPer8.packedLength(count);
+                final int n = PackedBitArraysPer8.packedLength(count);
                 long[] longs1 = PackedBitArraysPer8.toLongArray(Arrays.copyOf(pDestWork1, n));
                 if (longs1.length != PackedBitArrays.packedLength(count)) {
                     throw new AssertionError("The bug in toLongArray() length");

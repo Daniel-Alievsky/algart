@@ -1566,7 +1566,7 @@ public class Arrays {
      * <p>More precisely:
      * <ol>
      * <li>For {@link BitArray},
-     * returns <tt>8*{@link PackedBitArrays#packedLength
+     * returns <tt>8*{@link PackedBitArrays#packedLength(long)
      * PackedBitArrays.packedLength}(array.{@link Array#length() length()})</tt>
      * (8 is the number of bytes in one <tt>long</tt> value).</li>
      *
@@ -1632,7 +1632,7 @@ public class Arrays {
      * <p>More precisely:
      * <ul>
      * <li>for <tt>boolean.class</tt>,
-     * returns <tt>8*{@link PackedBitArrays#packedLength
+     * returns <tt>8*{@link PackedBitArrays#packedLength(long)
      * PackedBitArrays.packedLength}(arrayLength)</tt>
      * (8 is the number of bytes in one <tt>long</tt> value);</li>
      * <li>for <tt>char.class</tt>, returns <tt>2*arrayLength</tt>;</li>

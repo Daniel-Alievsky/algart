@@ -120,7 +120,7 @@ public class PackedBitArraysPer8GetBitsDemo {
             for (int k = 0; k < bSrc.length; k++) {
                 bSrc[k] = rnd.nextDouble() <= 0.5;
             }
-            final int packedLen = (int) PackedBitArraysPer8.packedLength(bSrc.length);
+            final int packedLen = PackedBitArraysPer8.packedLength(bSrc.length);
             final byte[] pSrc = new byte[packedLen];
             PackedBitArraysPer8.packBits(pSrc, 0, bSrc, 0, len);
 

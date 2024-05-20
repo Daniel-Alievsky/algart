@@ -60,7 +60,7 @@ public final class SimpleOperationsSpeed {
         UpdatableBitArray bitArray = Arrays.SMM.newBitArray(n);
         UpdatableByteArray byteArray = Arrays.SMM.newByteArray(n);
         UpdatableIntArray intArray = Arrays.SMM.newIntArray(n);
-        long[] bits = new long[(int) PackedBitArrays.packedLength(n)];
+        long[] bits = new long[PackedBitArrays.packedLength(n)];
         System.out.printf("Testing %s, %s, %s...%n", bitArray, byteArray, intArray);
         Random rnd = new Random(157);
         for (int k = 0; k < n; k++) {
