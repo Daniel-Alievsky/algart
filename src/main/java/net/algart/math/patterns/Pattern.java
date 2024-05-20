@@ -406,7 +406,7 @@ import net.algart.math.*;
  * then two patterns consists of the identical point sets.</li>
  * </ul>
  *
- * <h4>Multithread compatibility</h4>
+ * <h4>Multithreading compatibility</h4>
  *
  * <p>The classes, implementing this interface, are <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>

@@ -444,7 +444,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * where the dimensions of the "submatrix" are greater than dimensions of the source one by 1
  * and the <tt>continuationMode</tt> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
  *
- * <h4>Multithread compatibility</h4>
+ * <h4>Multithreading compatibility</h4>
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
  * and can be synchronized manually, if multithreading access is necessary.</p>

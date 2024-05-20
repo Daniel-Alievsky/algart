@@ -444,7 +444,7 @@ import java.util.*;
  * </ul>
  *
  *
- * <h4>Multithread compatibility</h4>
+ * <h4>Multithreading compatibility</h4>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.
