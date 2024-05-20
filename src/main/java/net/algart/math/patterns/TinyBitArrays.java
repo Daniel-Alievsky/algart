@@ -357,6 +357,7 @@ class TinyBitArrays {
             int low = (int) src[k];
             int high = (int) (src[k] >>> 32);
             srcPos += 64;
+            // - "0x80000000" below to avoid IDE warning about possible overflow
 
             dest[destPos] = (low & 1) != 0;
 
@@ -390,9 +391,10 @@ class TinyBitArrays {
             dest[destPos + 28] = (low & (1 << 28)) != 0;
             dest[destPos + 29] = (low & (1 << 29)) != 0;
             dest[destPos + 30] = (low & (1 << 30)) != 0;
-            dest[destPos + 31] = (low & (1 << 31)) != 0;
+            dest[destPos + 31] = (low & (0x80000000)) != 0;
 
 
+            // - "0x80000000" below to avoid IDE warning about possible overflow
 
             dest[destPos + 32] = (high & 0x1) != 0;
 
@@ -426,7 +428,7 @@ class TinyBitArrays {
             dest[destPos + 60] = (high & (1 << 28)) != 0;
             dest[destPos + 61] = (high & (1 << 29)) != 0;
             dest[destPos + 62] = (high & (1 << 30)) != 0;
-            dest[destPos + 63] = (high & (1 << 31)) != 0;
+            dest[destPos + 63] = (high & (0x80000000)) != 0;
 
             destPos += 64;
         }
