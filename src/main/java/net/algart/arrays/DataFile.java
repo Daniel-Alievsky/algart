@@ -402,7 +402,7 @@ public interface DataFile {
          * system shutdown. (In all other cases, {@link #unmap(boolean)} method is called instead.)
          *
          * <p>So, the implementation of this method should release all external resources,
-         * if there are such resources assosiated with this mapping buffer, but may not to force writing
+         * if there are such resources associated with this mapping buffer, but may not to force writing
          * buffer's content to external device, if it requires long time.
          *
          * <p>In {@link DefaultDataFileModel}, this method is equivalent to

@@ -298,7 +298,7 @@ public abstract class AbstractUpdatableObjectArray<E>
     @Override
     public ObjectArray<E> asImmutable() {
         final AbstractUpdatableObjectArray<E> parent = this;
-        return new AbstractObjectArray<E>(elementType, length, false, underlyingArrays) {
+        return new AbstractObjectArray<>(elementType, length, false, underlyingArrays) {
             @Override
             public E get(long index) {
                 return parent.get(index);
@@ -336,17 +336,15 @@ public abstract class AbstractUpdatableObjectArray<E>
 
             @Override
             protected void flushResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.flushResources(context, fromIndex, toIndex, forcePhysicalWriting);
             }
 
             @Override
             protected void freeResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.freeResources(context, fromIndex, toIndex, forcePhysicalWriting);
             }
         };

@@ -595,7 +595,7 @@
 
  <p>There is an often and important problem to protect some application data
  against unallowed changes, to avoid hard bugs connected with unexpected damage of application
- objects. Below is a typical code illustraging this problem:</p>
+ objects. Below is a typical code illustrating this problem:</p>
 
  <pre>
  DataClass a = ...; // some important data
@@ -846,7 +846,7 @@
  based on some external file, as in the {@link net.algart.arrays.LargeMemoryModel Large memory model},
  if the current thread is <i>interrupted</i> by <tt>Thread.interrupt()</tt> method.
  Also this error is thrown if the <tt>Thread.interrupt()</tt> method is called for a thread,
- that is currently performing multithread copying by {@link net.algart.arrays.Arrays#copy copy} method.
+ that is currently performing multithreading copying by {@link net.algart.arrays.Arrays#copy copy} method.
  Usually, such behavior is not suitable. So, <b>you should not try to interrupt the
  threads, processing AlgART arrays, via <tt>Thread.interrupt()</tt> technique!</b>
  Please use an alternative technique: some volatile flag, required interruption,

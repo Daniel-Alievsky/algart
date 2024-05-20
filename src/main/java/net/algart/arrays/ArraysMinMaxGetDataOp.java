@@ -454,9 +454,7 @@ class ArraysMinMaxGetDataOp {
                         return "byte array minimum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -489,9 +487,7 @@ class ArraysMinMaxGetDataOp {
                         return "byte array maximum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -525,9 +521,7 @@ class ArraysMinMaxGetDataOp {
                         return "char array minimum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -560,9 +554,7 @@ class ArraysMinMaxGetDataOp {
                         return "char array maximum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -595,9 +587,7 @@ class ArraysMinMaxGetDataOp {
                         return "short array minimum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -630,9 +620,7 @@ class ArraysMinMaxGetDataOp {
                         return "short array maximum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -665,9 +653,7 @@ class ArraysMinMaxGetDataOp {
                         return "int array minimum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -700,9 +686,7 @@ class ArraysMinMaxGetDataOp {
                         return "int array maximum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -735,9 +719,7 @@ class ArraysMinMaxGetDataOp {
                         return "long array minimum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -770,9 +752,7 @@ class ArraysMinMaxGetDataOp {
                         return "long array maximum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -805,9 +785,7 @@ class ArraysMinMaxGetDataOp {
                         return "float array minimum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -840,9 +818,7 @@ class ArraysMinMaxGetDataOp {
                         return "float array maximum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -875,9 +851,7 @@ class ArraysMinMaxGetDataOp {
                         return "double array minimum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {
@@ -910,9 +884,7 @@ class ArraysMinMaxGetDataOp {
                         return "double array maximum (" + clazz + ")";
                     }
                 };
-            } catch (SecurityException ex) {
-            } catch (NoSuchMethodException ex) {
-            } catch (ClassNotFoundException ex) {
+            } catch (SecurityException | NoSuchMethodException | ClassNotFoundException ignored) {
             }
         }
         return new ArrayMinMaxOp() {

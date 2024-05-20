@@ -516,7 +516,7 @@ public class Matrices {
         /**
          * Creates <i>n</i>-dimensional {@link Matrices.ConvexHyperpolyhedron convex hyperpolyhedron},
          * which is an intersection of <i>m</i> <nobr><i>n</i>-dimensional</nobr> half-spaces,
-         * specified by inequations
+         * specified by inequalities
          * <nobr><b>a</b><sub><i>i</i></sub><b>x</b> &le; <i>b</i><sub><i>i</i></sub></nobr>
          * (<i>i</i>=0,1,...,<i>m</i>&minus;1),
          * and the hyperparallelepiped, built by {@link #getHyperparallelepiped(IRange... coordRanges)} method with
@@ -535,7 +535,7 @@ public class Matrices {
          * must be listed in <tt>b</tt> argument.
          * The length <tt>a.length</tt> of the <tt>a</tt> array must be equal to the product <i>nm</i>,
          * where <i>n</i>=<tt>coordRanges.length</tt>, <i>m</i>=<tt>b.length</tt>.
-         * The number of inequations <i>m</i> can be any non-negative integer 0,1,2,...
+         * The number of inequalities <i>m</i> can be any non-negative integer 0,1,2,...
          *
          * <p>The number <i>n</i> of dimensions of the created region is equal to <tt>coordRanges.length</tt>.
          *
@@ -548,8 +548,8 @@ public class Matrices {
          * <p>The passed Java arrays are cloned by this method: no references to them
          * are maintained by the created object.
          *
-         * @param a           the matrix of coefficients of the left side of inequations, defining the half-spaces.
-         * @param b           the values in the right side of inequations, defining the half-spaces.
+         * @param a           the matrix of coefficients of the left side of inequalities, defining the half-spaces.
+         * @param b           the values on the right side of inequalities, defining the half-spaces.
          * @param coordRanges the ranges of coordinates of the containing hyperparallelepiped.
          * @return the intersection of the specified half-spaces and hyperparallelepiped.
          * @throws NullPointerException     if one of the arguments is <tt>null</tt>
@@ -995,7 +995,7 @@ public class Matrices {
      * <i>k</i>=0,1,...,<i>n</i>&minus;1.
      * </blockquote>
      *
-     * <p>The number of inequations <i>m</i> can be any non-negative integer 0,1,2,...
+     * <p>The number of inequalities <i>m</i> can be any non-negative integer 0,1,2,...
      * (the degenerated case <i>m</i>=0 is equivalent to the hyperparallelepiped).</p>
      *
      * <p>Convex hyperpolyhedrons can be created by the following methods:</p>
@@ -1146,7 +1146,7 @@ public class Matrices {
         }
 
         /**
-         * Returns the matrix <b>A</b>: coefficients of the left side of inequations, defining the half-spaces
+         * Returns the matrix <b>A</b>: coefficients of the left side of inequalities, defining the half-spaces
          * (see the {@link Matrices.ConvexHyperpolyhedron comments to this class}).
          * The elements of the matrix <b>A</b> will be listed in the returned array row by row:
          * <i>a</i><sub><i>ij</i></sub>=<tt>a[<i>i</i>*<i>n</i>+<i>j</i>]</tt>,
@@ -1156,21 +1156,21 @@ public class Matrices {
          *
          * <p>The returned array is a clone of the internal array stored in this object.
          *
-         * @return the matrix <b>A</b>: coefficients of the left side of inequations, defining the half-spaces.
+         * @return the matrix <b>A</b>: coefficients of the left side of inequalities, defining the half-spaces.
          */
         public double[] a() {
             return a.clone();
         }
 
         /**
-         * Returns the vector <b>b</b>: right sides of inequations, defining the half-spaces
+         * Returns the vector <b>b</b>: right sides of inequalities, defining the half-spaces
          * (see the {@link Matrices.ConvexHyperpolyhedron comments to this class}).
          * The elements of the vector <b>b</b> will be listed in the returned array.
          * The length of the returned array is the number of half-spaces.
          *
          * <p>The returned array is a clone of the internal array stored in this object.
          *
-         * @return the vector <b>b</b>: right sides of inequations, defining the half-spaces.
+         * @return the vector <b>b</b>: right sides of inequalities, defining the half-spaces.
          */
         public double[] b() {
             return b.clone();
@@ -1350,7 +1350,7 @@ public class Matrices {
                                 + (vxPrev - vx[k]) * (sectionY - vy[k]) / (vyPrev - vy[k]);
                     }
                 } else if (vyPrev != sectionY) { // && vy[k] == sectionY
-                    // We come at this horizontal; we should scan futher vertices and find, how we shall leave it
+                    // We come at this horizontal; we should scan further vertices and find, how we shall leave it
                     for (int i = k; ; ) {
                         ++i;
                         if (i == m) {
@@ -1364,7 +1364,7 @@ public class Matrices {
                             sectionX[sectionCount++] = vx[k];
                             if ((vyNext > sectionY) == (vyPrev > sectionY)) {
                                 // it means that we only touch the horizontal; in other case, we pass through it
-                                sectionX[sectionCount++] = vx[k]; // adding this vertice twice
+                                sectionX[sectionCount++] = vx[k]; // adding this vertex twice
                             }
                             break;
                         }
@@ -1542,7 +1542,7 @@ public class Matrices {
      * @see #matrixAtSubArray(Array, long, long...)
      */
     public static <T extends Array> Matrix<T> matrix(T array, long... dim) {
-        return new MatrixImpl<T>(array, dim);
+        return new MatrixImpl<>(array, dim);
     }
 
     /**
@@ -1599,9 +1599,9 @@ public class Matrices {
                         + " dim[0] * dim[1] * ... = " + correctLen + ", which is greater than the array length "
                         + array.length() + " + position " + position);
             }
-            array = InternalUtils.<T>cast(array.subArr(position, correctLen));
+            array = InternalUtils.cast(array.subArr(position, correctLen));
         }
-        return new MatrixImpl<T>(array, dim);
+        return new MatrixImpl<>(array, dim);
     }
 
     /**
@@ -5109,7 +5109,7 @@ public class Matrices {
                     b[k] = -minorValue;
                 }
             }
-            // Finding the sign of the inequation: we must have the inequation
+            // Finding the sign of the inequality: we must have the inequality
             //     a0*x0 + a1*x1 + ... + am*xm <= b
             double sum = 0.0;
             for (int j = 0; j < n; j++) {
@@ -5117,7 +5117,7 @@ public class Matrices {
             }
             if (sum == b[k]) { // the vertex lies at the hyperplane: the degeneration case
                 result = false;
-            } else if (sum > b[k]) { // we should invert the sign, because the given vertex must fulfil the inequation
+            } else if (sum > b[k]) { // we should invert the sign, because the given vertex must fulfil the inequality
                 for (int j = 0; j < n; j++) {
                     a[aOfs + j] = -a[aOfs + j];
                 }

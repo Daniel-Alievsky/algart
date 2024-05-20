@@ -330,7 +330,7 @@ class MappedDataStorages {
          * <tt>null</tt> for empty banks.
          */
         final Buffer[] specBufs;
-        // Should be final to avoid partial object intialization in shutdown hook!
+        // Should be final to avoid partial object initialization in shutdown hook!
 
         /**
          * The array element <tt>#bankPos[k]</tt> corresponds to
@@ -751,7 +751,7 @@ class MappedDataStorages {
             final ReentrantLock lock = this.lock;
             lock.lock();
             // All corrections of bh, specBuf, bankPos and bankCount MUST be synchronized always,
-            // even if this.syncNecessary was cleared: we still may call freeResourses that changes them.
+            // even if this.syncNecessary was cleared: we still may call freeResources that changes them.
             try {
                 long result;
                 final boolean firstTwoBanksAreSame, holeAt0;
@@ -2628,7 +2628,7 @@ class MappedDataStorages {
                                         + ". Deletion is scheduled on the next garbage collector execution. "
                                         + "(" + ex + ")");
                                     scheduleFinalizationForAllStorage(); // - we shall try to remove it at the next gc
-                                    finalizationHolder = null; // - immmediately allow gc for this storage
+                                    finalizationHolder = null; // - immediately allow gc for this storage
                                     dfp = null; // - cancel finalization notification in this GC pass
                                 }
                             } else {

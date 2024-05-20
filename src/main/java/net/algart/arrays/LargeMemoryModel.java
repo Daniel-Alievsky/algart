@@ -152,7 +152,7 @@ import java.util.logging.Logger;
  * {@link DataFile.BufferHolder#flush(boolean) DataFile.BufferHolder.flush(false)}
  * for all active mappings in the data file.
  * Please note that it does not guarantee that this all system resources,
- * associated with this data file, will be compeletely released.
+ * associated with this data file, will be completely released.
  * For example, the disk file can remain opened.
  * If you need to be sure that all system resources, as file handles,
  * will be freed by this method, you may use {@link StandardIODataFileModel}.</li>
@@ -1682,7 +1682,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
 
     /**
      * Returns a newly allocated copy of the set of all {@link DataFileModel data file models}, that were used
-     * in any instances of this class (as constructor agruments) since the application start.
+     * in any instances of this class (as constructor arguments) since the application start.
      * The data file model is included into this set only
      * if its {@link DataFileModel#isAutoDeletionRequested()}
      * method returns <tt>true</tt>.
@@ -1863,27 +1863,27 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
 
     private static String getNCopiesArrayDescription(PArray nCopiesArray) {
         if (nCopiesArray instanceof BitArray) {
-            return nCopiesArray.length() == 0 ? "false" : String.valueOf(((BitArray)nCopiesArray).getBit(0));
+            return nCopiesArray.isEmpty() ? "false" : String.valueOf(((BitArray)nCopiesArray).getBit(0));
         } else if (nCopiesArray instanceof CharArray) {
-            return nCopiesArray.length() == 0 ? "u0" : "u" + ((CharArray)nCopiesArray).getInt(0);
+            return nCopiesArray.isEmpty() ? "u0" : "u" + ((CharArray)nCopiesArray).getInt(0);
         } else if (nCopiesArray instanceof ByteArray) {
-            return nCopiesArray.length() == 0 ? "0" : String.valueOf(((ByteArray)nCopiesArray).getByte(0));
+            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((ByteArray)nCopiesArray).getByte(0));
         } else if (nCopiesArray instanceof ShortArray) {
-            return nCopiesArray.length() == 0 ? "0" : String.valueOf(((ShortArray)nCopiesArray).getShort(0));
+            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((ShortArray)nCopiesArray).getShort(0));
         } else if (nCopiesArray instanceof IntArray) {
-            return nCopiesArray.length() == 0 ? "0" : String.valueOf(((IntArray)nCopiesArray).getInt(0));
+            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((IntArray)nCopiesArray).getInt(0));
         } else if (nCopiesArray instanceof LongArray) {
-            return nCopiesArray.length() == 0 ? "0" : String.valueOf(((LongArray)nCopiesArray).getLong(0));
+            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((LongArray)nCopiesArray).getLong(0));
         } else if (nCopiesArray instanceof FloatArray) {
             float v;
-            return nCopiesArray.length() == 0 ? "0" : String.valueOf(v = ((FloatArray)nCopiesArray).getFloat(0))
+            return nCopiesArray.isEmpty() ? "0" : (v = ((FloatArray) nCopiesArray).getFloat(0))
                 + "__" + Float.floatToRawIntBits(v);
         } else if (nCopiesArray instanceof DoubleArray) {
             double v;
-            return nCopiesArray.length() == 0 ? "0" : String.valueOf(v = nCopiesArray.getDouble(0))
+            return nCopiesArray.isEmpty() ? "0" : (v = nCopiesArray.getDouble(0))
                 + "__" + Double.doubleToRawLongBits(v);
         } else {
-            throw new AssertionError("Unallowed type of passed array: " + nCopiesArray.getClass());
+            throw new AssertionError("Non-allowed type of passed array: " + nCopiesArray.getClass());
         }
     }
 

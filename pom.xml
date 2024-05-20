@@ -6,8 +6,8 @@
 
     <groupId>net.algart</groupId>
     <artifactId>algart</artifactId>
-    <version>1.4.6</version>
-    <!-- Please remember that you Arrays.SystemSettings.VERSION constant must be equal to this value! -->
+    <version>1.4.7</version>
+    <!-- Please REMEMBER that you Arrays.SystemSettings.VERSION constant must be equal to this value! -->
 
     <name>AlgART Java Libraries</name>
     <description>Open-source Java libraries, supporting generalized smart arrays and matrices with elements

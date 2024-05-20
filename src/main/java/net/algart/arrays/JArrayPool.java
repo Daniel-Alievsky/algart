@@ -42,7 +42,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public final class JArrayPool {
     private final Class<?> elementType;
     private final int arrayLength;
-    private final List<Reference<Object>> freeArrays = new LinkedList<Reference<Object>>();
+    private final List<Reference<Object>> freeArrays = new LinkedList<>();
     private final ReentrantLock lock = new ReentrantLock();
 
     private JArrayPool(Class<?> elementType, int arrayLength) {
@@ -143,7 +143,7 @@ public final class JArrayPool {
         }
         lock.lock();
         try {
-            freeArrays.add(new SoftReference<Object>(array));
+            freeArrays.add(new SoftReference<>(array));
         } finally {
             lock.unlock();
         }

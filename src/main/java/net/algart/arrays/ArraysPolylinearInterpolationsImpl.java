@@ -25,7 +25,7 @@
 package net.algart.arrays;
 
 /**
- * <p>Implementations of {@link Matrices} methods returning polylinear interpolations of the matrix.</p>
+ * <p>Implementations of {@link Matrices} methods returning poly-linear interpolations of the matrix.</p>
  *
  * @author Daniel Alievsky
  */

@@ -66,6 +66,6 @@ class MatrixImpl<T extends Array> extends AbstractMatrix<T> implements Matrix<T>
     }
 
     public <U extends Array> Matrix<U> matrix(U anotherArray) {
-        return new MatrixImpl<U>(anotherArray, dimensions);
+        return new MatrixImpl<>(anotherArray, dimensions);
     }
 }

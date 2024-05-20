@@ -32,7 +32,7 @@ public final class ContourLength {
 
     public ContourLength setNumberOfPoints(int numberOfPoints) {
         if (numberOfPoints <= 0) {
-            throw new IllegalArgumentException("Invalid cnntour length: zero or negative number of points "
+            throw new IllegalArgumentException("Invalid contour length: zero or negative number of points "
                     + numberOfPoints);
         }
         if (numberOfPoints >= Contours.MAX_CONTOUR_NUMBER_OF_POINTS) {

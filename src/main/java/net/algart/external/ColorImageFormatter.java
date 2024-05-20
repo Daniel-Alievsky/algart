@@ -36,16 +36,16 @@ import java.util.Objects;
 
 // Deprecated - should be replaced with new ...Converters
 interface ColorImageFormatter {
-    public BufferedImage toBufferedImage(List<? extends Matrix<? extends PArray>> image);
+    BufferedImage toBufferedImage(List<? extends Matrix<? extends PArray>> image);
 
-    public List<Matrix<UpdatablePArray>> toImage(BufferedImage bufferedImage);
+    List<Matrix<UpdatablePArray>> toImage(BufferedImage bufferedImage);
 
     // Deprecated - should be replaced with new methods in Converters
     class Simple implements ColorImageFormatter {
-        public static interface ColorBandsCorrector {
-            public byte[][] getPalette(); // ignored if null
+        public interface ColorBandsCorrector {
+            byte[][] getPalette(); // ignored if null
 
-            public byte[][] correct(byte[][] rgbAlpha);
+            byte[][] correct(byte[][] rgbAlpha);
         }
 
         /**

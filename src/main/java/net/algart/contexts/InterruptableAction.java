@@ -27,7 +27,7 @@ package net.algart.contexts;
 import java.util.Objects;
 
 /**
- * <p>The class allowing to execute some action, interruptable via standard Java technique,
+ * <p>The class allowing to execute some action, interruptible via standard Java technique,
  * in terms of some {@link InterruptionContext}.
  * In other words, it is a bridge between {@link InterruptionContext} and standard interruption technique
  * based on <tt>thread.interrupt()</tt> and <tt>Thread.interrupted()</tt> calls.</p>

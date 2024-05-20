@@ -296,8 +296,8 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
         checkSubArrayArguments(fromIndex, toIndex);
         final AbstractObjectArray<E> parent = this;
         final long offset = fromIndex;
-        return new AbstractObjectArray<E>(elementType, toIndex - fromIndex,
-            underlyingArraysAreParallel, underlyingArrays) {
+        return new AbstractObjectArray<>(elementType, toIndex - fromIndex,
+                underlyingArraysAreParallel, underlyingArrays) {
             @Override
             public E get(long index) {
                 if (index < 0 || index >= length) {
@@ -366,17 +366,15 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
 
             @Override
             protected void flushResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.flushResources(context, offset + fromIndex, offset + toIndex, forcePhysicalWriting);
             }
 
             @Override
             protected void freeResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.freeResources(context, offset + fromIndex, offset + toIndex, forcePhysicalWriting);
             }
         };

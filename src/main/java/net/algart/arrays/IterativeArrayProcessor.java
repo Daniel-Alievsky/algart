@@ -31,7 +31,7 @@ package net.algart.arrays;
  * Processing starts from creating an instance of this interface, usually associated with
  * some source array or matrix and implementing some processing algorithm.
  * Then the loop of {@link #performIteration iterations} is performed,
- * until the booleam flag {@link #done() done} will be set to <tt>true</tt>.
+ * until the boolean flag {@link #done() done} will be set to <tt>true</tt>.
  * Usually, each iteration modifies some AlgART array or matrix, and the flag <tt>done</tt> means
  * that further modifications are impossible.
  * Last, the result of calculations is returned by {@link #result()} method.
@@ -50,7 +50,7 @@ package net.algart.arrays;
  * </pre>
  *
  * <p>The {@link #process() process()} method organizes necessary loop and performs all "boring" work
- * connected with controling the context. In particular, it tries to estimate necessary number of iterations
+ * connected with controlling the context. In particular, it tries to estimate necessary number of iterations
  * and calls {@link #performIteration(ArrayContext)} method with the corresponding
  * {@link ArrayContext#part subcontext} of the processor's {@link #context() context},
  * that allows correct showing the progress bar in the application.</p>

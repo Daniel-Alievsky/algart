@@ -130,7 +130,7 @@ package net.algart.arrays;
  *
  * <li>Then you call {@link #map(long) map(long position)} method of the created data buffer
  * for any desired <i>mapping position</i> in the AlgART array.
- * After this call, the <i>mapping position</i> becomes equal to the passed passition,
+ * After this call, the <i>mapping position</i> becomes equal to the passed position,
  * and the number of actual elements <tt><i>count</i></tt> <tt>(=<i>toIndex</i>-<i>fromIndex</i>)</tt>
  * becomes equal to <tt>min(<i>capacity</i>,<i>length</i>-<i>position</i>)</tt>,
  * where <tt>length</tt> is the length of the AlgART array ({@link Array#length()})

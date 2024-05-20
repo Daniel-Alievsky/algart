@@ -35,7 +35,7 @@ package net.algart.arrays;
  * method or via mapping disk files.</p>
  *
  * <p>The arrays, created with help of different memory models, implement identical interfaces
- * and usually look absolutely identical for an application, but may work with differente
+ * and usually look absolutely identical for an application, but may work with different
  * performance. For example, if you need an array of simple object elements
  * (as "circles" or "points"), you may choose {@link CombinedMemoryModel} memory model to save memory
  * and provide quick memory allocation,

@@ -2149,7 +2149,7 @@ public class JArrays {
             highIndex = array.length;
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (array[--highIndex] == value) {
                 return highIndex;
             }
@@ -2217,7 +2217,7 @@ public class JArrays {
             highIndex = array.length;
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (array[--highIndex] == value) {
                 return highIndex;
             }
@@ -2285,7 +2285,7 @@ public class JArrays {
             highIndex = array.length;
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (array[--highIndex] == value) {
                 return highIndex;
             }
@@ -2353,7 +2353,7 @@ public class JArrays {
             highIndex = array.length;
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (array[--highIndex] == value) {
                 return highIndex;
             }
@@ -2421,7 +2421,7 @@ public class JArrays {
             highIndex = array.length;
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (array[--highIndex] == value) {
                 return highIndex;
             }
@@ -2489,7 +2489,7 @@ public class JArrays {
             highIndex = array.length;
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (array[--highIndex] == value) {
                 return highIndex;
             }
@@ -2557,7 +2557,7 @@ public class JArrays {
             highIndex = array.length;
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (array[--highIndex] == value) {
                 return highIndex;
             }
@@ -2625,7 +2625,7 @@ public class JArrays {
             highIndex = array.length;
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (array[--highIndex] == value) {
                 return highIndex;
             }
@@ -2706,13 +2706,13 @@ public class JArrays {
         }
         int min = Math.max(lowIndex, 0);
         if (value == null) {
-            for (; highIndex > min; ) {
+            while (highIndex > min) {
                 if (array[--highIndex] == null) {
                     return highIndex;
                 }
             }
         } else {
-            for (; highIndex > min; ) {
+            while (highIndex > min) {
                 if (value.equals(array[--highIndex])) {
                     return highIndex;
                 }
@@ -5106,8 +5106,8 @@ public class JArrays {
     }
 
     static class MinMaxTables {
-        static byte[] MIN_TABLE = new byte[65536];
-        static byte[] MAX_TABLE = new byte[65536];
+        static final byte[] MIN_TABLE = new byte[65536];
+        static final byte[] MAX_TABLE = new byte[65536];
         static {
             for (int b1 = 0; b1 < 256; b1++) {
                 for (int b2 = 0; b2 < 256; b2++) {

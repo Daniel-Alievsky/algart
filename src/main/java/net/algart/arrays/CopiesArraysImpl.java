@@ -347,7 +347,7 @@ class CopiesArraysImpl {
             if (a.length() != n) {
                 return false;
             }
-            if (n == 0 && a.length() == 0) {
+            if (n == 0 && a.isEmpty()) {
                 return true; // all empty float arrays are equal
             }
             if (a instanceof CopiesFloatArray) {
@@ -688,7 +688,7 @@ class CopiesArraysImpl {
             if (a.length() != n) {
                 return false;
             }
-            if (n == 0 && a.length() == 0) {
+            if (n == 0 && a.isEmpty()) {
                 return true; // all empty boolean arrays are equal
             }
             if (a instanceof CopiesBitArray) {
@@ -1049,7 +1049,7 @@ class CopiesArraysImpl {
             if (a.length() != n) {
                 return false;
             }
-            if (n == 0 && a.length() == 0) {
+            if (n == 0 && a.isEmpty()) {
                 return true; // all empty char arrays are equal
             }
             if (a instanceof CopiesCharArray) {
@@ -1396,7 +1396,7 @@ class CopiesArraysImpl {
             if (a.length() != n) {
                 return false;
             }
-            if (n == 0 && a.length() == 0) {
+            if (n == 0 && a.isEmpty()) {
                 return true; // all empty byte arrays are equal
             }
             if (a instanceof CopiesByteArray) {
@@ -1743,7 +1743,7 @@ class CopiesArraysImpl {
             if (a.length() != n) {
                 return false;
             }
-            if (n == 0 && a.length() == 0) {
+            if (n == 0 && a.isEmpty()) {
                 return true; // all empty short arrays are equal
             }
             if (a instanceof CopiesShortArray) {
@@ -2077,7 +2077,7 @@ class CopiesArraysImpl {
             if (a.length() != n) {
                 return false;
             }
-            if (n == 0 && a.length() == 0) {
+            if (n == 0 && a.isEmpty()) {
                 return true; // all empty int arrays are equal
             }
             if (a instanceof CopiesIntArray) {
@@ -2405,7 +2405,7 @@ class CopiesArraysImpl {
             if (a.length() != n) {
                 return false;
             }
-            if (n == 0 && a.length() == 0) {
+            if (n == 0 && a.isEmpty()) {
                 return true; // all empty long arrays are equal
             }
             if (a instanceof CopiesLongArray) {
@@ -2731,7 +2731,7 @@ class CopiesArraysImpl {
             if (a.length() != n) {
                 return false;
             }
-            if (n == 0 && a.length() == 0) {
+            if (n == 0 && a.isEmpty()) {
                 return true; // all empty double arrays are equal
             }
             if (a instanceof CopiesDoubleArray) {
@@ -2986,7 +2986,7 @@ class CopiesArraysImpl {
             if (a.length() != n) {
                 return false;
             }
-            if (n == 0 && a.length() == 0) {
+            if (n == 0 && a.isEmpty()) {
                 return true; // all empty Object arrays are equal
             }
             if (a instanceof CopiesObjectArray<?>) {

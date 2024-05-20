@@ -37,7 +37,7 @@ public interface ArrayExchanger32 extends ArrayExchanger {
      *     {@link #swap(int, int) swap}((int) first, (int) second);
      * </pre>
      * Note: for maximal performance, it does not check that the passed intexes are really 32-bit.
-     * While using with arrays, containing 2<sup>31</sup> elements or more, this comparator will work incorrecly.
+     * While using with arrays, containing 2<sup>31</sup> elements or more, this comparator will work incorrectly.
      *
      * @param first  index of the first exchanged element.
      * @param second index of the second exchanged element.

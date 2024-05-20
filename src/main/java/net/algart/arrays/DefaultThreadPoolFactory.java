@@ -350,9 +350,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
                     method.invoke(GLOBAL_THREAD_POOL, true);
                 } catch (NoSuchMethodException e) {
                     // System.out.println("Probably Java 1.5");
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace(); // strange situation
-                } catch (IllegalAccessException e) {
+                } catch (InvocationTargetException | IllegalAccessException e) {
                     e.printStackTrace(); // strange situation
                 }
             }

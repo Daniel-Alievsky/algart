@@ -70,7 +70,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * The underlying arrays passed by the last constructor argument.
      * It is the same reference, which was passed to the constructor (not its clone).
      */
-    protected Array[] underlyingArrays;
+    protected final Array[] underlyingArrays;
 
     private volatile byte newAndNewReadOnlyViewStatus = 0; // bit #0 / #1 is new / new-read-only-view status
 

@@ -95,7 +95,7 @@ public class Arrays {
         private SystemSettings() {
         }
 
-        private static final String VERSION = "1.4.4";
+        private static final String VERSION = "1.4.7";
         private static final int[] PARSED_VERSION;
         static {
             PARSED_VERSION = java.util.Arrays.stream(VERSION.split("\\.")).mapToInt(Integer::parseInt).toArray();
@@ -143,7 +143,7 @@ public class Arrays {
          * that means disabling any attempts of multiprocessor optimization.
          * If this property contains an integer greater than the limit 1024,
          * this limit is used instead.
-         * If some exception occurs while calling <tt>System.getProperty</tt> or if it is not an interger,
+         * If some exception occurs while calling <tt>System.getProperty</tt> or if it is not an integer,
          * it will contain the default value 256/8 (on 64/32-bit Java machines correspondingly).
          *
          * <p>32-bit and 64-bit Java are distinguished via {@link #isJava32()} method.
@@ -1137,13 +1137,11 @@ public class Arrays {
         }
 
         private static class DiskThreadPoolHolder {
-            private static ExecutorService globalDiskThreadPool = Executors.newSingleThreadExecutor(
-                    new ThreadFactory() {
-                        public Thread newThread(Runnable r) {
-                            Thread t = new Thread(r, "AlgART-disk-thread");
-                            t.setDaemon(true);
-                            return t;
-                        }
+            private static final ExecutorService globalDiskThreadPool = Executors.newSingleThreadExecutor(
+                    r -> {
+                        Thread t = new Thread(r, "AlgART-disk-thread");
+                        t.setDaemon(true);
+                        return t;
                     });
         }
     }
@@ -3463,7 +3461,7 @@ public class Arrays {
      * If the <tt>context</tt> argument is <tt>null</tt>,
      * then this method still may use several threads,
      * if {@link DefaultThreadPoolFactory} instance recommends it,
-     * and may be interruptable by <tt>Thread.interrupt()</tt>, alike
+     * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
      * <p>If the <tt>minMaxInfo</tt> argument is not <tt>null</tt>,
@@ -3625,7 +3623,7 @@ public class Arrays {
      * If the <tt>context</tt> argument is <tt>null</tt>,
      * then this method still may use several threads,
      * if {@link DefaultThreadPoolFactory} instance recommends it,
-     * and may be interruptable by <tt>Thread.interrupt()</tt>, alike
+     * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
      * <p>In a case of overflow (when 64 bits are not enough to represent the result or some partial sum),
@@ -3773,7 +3771,7 @@ public class Arrays {
      * If the <tt>context</tt> argument is <tt>null</tt>,
      * then this method still may use several threads,
      * if {@link DefaultThreadPoolFactory} instance recommends it,
-     * and may be interruptable by <tt>Thread.interrupt()</tt>, alike
+     * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
      * <p>Please remember that <tt>ByteArray</tt> and <tt>ShortArray</tt> are interpreted as unsigned.
@@ -3833,7 +3831,7 @@ public class Arrays {
      * If the <tt>context</tt> argument is <tt>null</tt>,
      * then this method still may use several threads,
      * if {@link DefaultThreadPoolFactory} instance recommends it,
-     * and may be interruptable by <tt>Thread.interrupt()</tt>, alike
+     * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
      * @param context   the context of calculations; may be <tt>null</tt>, then it will be ignored.
@@ -3887,7 +3885,7 @@ public class Arrays {
      * If the <tt>context</tt> argument is <tt>null</tt>,
      * then this method still may use several threads,
      * if {@link DefaultThreadPoolFactory} instance recommends it,
-     * and may be interruptable by <tt>Thread.interrupt()</tt>, alike
+     * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
      * @param context   the context of calculations; may be <tt>null</tt>, then it will be ignored.
@@ -3942,7 +3940,7 @@ public class Arrays {
      * If the <tt>context</tt> argument is <tt>null</tt>,
      * then this method still may use several threads,
      * if {@link DefaultThreadPoolFactory} instance recommends it,
-     * and may be interruptable by <tt>Thread.interrupt()</tt>, alike
+     * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
      * @param context   the context of calculations; may be <tt>null</tt>, then it will be ignored.
@@ -3996,7 +3994,7 @@ public class Arrays {
      * If the <tt>context</tt> argument is <tt>null</tt>,
      * then this method still may use several threads,
      * if {@link DefaultThreadPoolFactory} instance recommends it,
-     * and may be interruptable by <tt>Thread.interrupt()</tt>, alike
+     * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
      * @param context   the context of calculations; may be <tt>null</tt>, then it will be ignored.
@@ -4059,7 +4057,7 @@ public class Arrays {
      * If the <tt>context</tt> argument is <tt>null</tt>,
      * then this method still may use several threads,
      * if {@link DefaultThreadPoolFactory} instance recommends it,
-     * and may be interruptable by <tt>Thread.interrupt()</tt>, alike
+     * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
      * <p>This method is also equivalent to the following code:</p>
@@ -4146,7 +4144,7 @@ public class Arrays {
      * If the <tt>context</tt> argument is <tt>null</tt>,
      * then this method still may use several threads,
      * if {@link DefaultThreadPoolFactory} instance recommends it,
-     * and may be interruptable by <tt>Thread.interrupt()</tt>, alike
+     * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
      * @param context the context of calculations; may be <tt>null</tt>, then it will be ignored.
@@ -4205,7 +4203,7 @@ public class Arrays {
      * If the <tt>context</tt> argument is <tt>null</tt>,
      * then this method still may use several threads,
      * if {@link DefaultThreadPoolFactory} instance recommends it,
-     * and may be interruptable by <tt>Thread.interrupt()</tt>, alike
+     * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
      * @param context the context of calculations; may be <tt>null</tt>, then it will be ignored.
@@ -7756,7 +7754,7 @@ public class Arrays {
     /**
      * <p>The class simplifying the parallel processing a large AlgART array in several threads,
      * where each thread process a set of ranges of the source array ({@link Array#subArray Array.subArray}).
-     * Multithread processing can be very important on multiprocessor or multi-core computers
+     * Multi-thread processing can be very important on multiprocessor or multi-core computers
      * for complex processing algorithm.
      * In addition, this class provides an ability to interrupt calculations and
      * show the executing progress via the {@link ArrayContext}.
@@ -7764,7 +7762,7 @@ public class Arrays {
      * {@link Arrays#copy(ArrayContext, UpdatableArray, Array)},
      * {@link Arrays#rangeOf(ArrayContext, PArray)},
      * {@link Arrays#sumOf(ArrayContext, PArray)}, etc.
-     * and allows to easily create analogous multithread context-based algorithms.</p>
+     * and allows to easily create analogous multithreading context-based algorithms.</p>
      *
      * <p>The usage of this class is very simple. You just need to create an instance
      * by some of constructors and then call the only method {@link #process()}.
@@ -8457,7 +8455,7 @@ public class Arrays {
          * This default implementation of this method returns 0.
          * The overridden implementation may return some positive value.
          * In this case, first {@link #startGap(long) startGap(rangeIndex)}
-         * ellements will not be processed
+         * elements will not be processed
          * by {@link #processRange(long fromIndex, long toIndex, int threadIndex, long rangeIndex)} method:
          * they will be skipped and not passed to {@link #processSubArr(long, int, int)} method.
          * This can be useful for some algorithms that change the source AlgART arrays depending
@@ -9005,8 +9003,7 @@ public class Arrays {
         if (array instanceof DoubleArray)
             return new DataBuffersImpl.ArrayDoubleBuffer((DoubleArray) array, mode, capacity, trusted);
         if (array instanceof ObjectArray<?>)
-            return new DataBuffersImpl.ArrayObjectBuffer<Object>(
-                    InternalUtils.<ObjectArray<Object>>cast(array), mode, capacity, trusted);
+            return new DataBuffersImpl.ArrayObjectBuffer<>(InternalUtils.cast(array), mode, capacity, trusted);
         return new DataBuffersImpl.ArrayBuffer(array, mode, capacity, trusted);
         // - to be on the safe side, for possible "strange" inheritors
     }

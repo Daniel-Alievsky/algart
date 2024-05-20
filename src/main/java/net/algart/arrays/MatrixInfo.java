@@ -91,7 +91,7 @@ import java.util.Objects;
  * the matrix content in the data file. This offset is necessary for mapping the array to a disk file
  * via {@link LargeMemoryModel#asArray asArray} / {@link LargeMemoryModel#asUpdatableArray asUpdatableArray} methods
  * (it is their <tt>filePosition</tt> argument). For example, if you use this class to add
- * a fixed-size prefix to the file containg the matrix, this value may contain the prefix length.
+ * a fixed-size prefix to the file containing the matrix, this value may contain the prefix length.
  * You also may ignore this offset and always pass 0 (or any other value) as an argument
  * of {@link #valueOf(Matrix, long)} method.</li>
  *
@@ -301,7 +301,7 @@ public abstract class MatrixInfo {
      *
      * <p>The passed data must have format, corresponding to the current
      * {@link #DEFAULT_VERSION default format version} or to any previous format version,
-     * that was somewhen implemented by this class in the past.
+     * that was somewhere implemented by this class in the past.
      * In other case, {@link IllegalInfoSyntaxException} will be thrown.
      *
      * <p>The passed array may contain extra elements after the end of the stored information.
@@ -331,7 +331,7 @@ public abstract class MatrixInfo {
      *
      * <p>The passed data must have format, corresponding to the current
      * {@link #DEFAULT_VERSION default format version} or to any previous format version,
-     * that was somewhen implemented by this class in the past.
+     * that was somewhere implemented by this class in the past.
      * In other case, {@link IllegalInfoSyntaxException} will be thrown.
      *
      * <p>The passed char array may contain extra elements after the end of the stored information.

@@ -69,7 +69,7 @@ public interface DataFileModel<P> {
      *
      * @return the type of the data file paths used by this model.
      */
-    public Class<P> pathClass();
+    Class<P> pathClass();
 
     /**
      * Returns a new instance of {@link DataFile} object corresponding to the given path.
@@ -91,7 +91,7 @@ public interface DataFileModel<P> {
      * @return          new instance of {@link DataFile} object.
      * @throws NullPointerException if one of passed arguments is <tt>null</tt>.
      */
-    public DataFile getDataFile(P path, ByteOrder byteOrder);
+    DataFile getDataFile(P path, ByteOrder byteOrder);
 
     /**
      * Returns the path describing unique position of the data file (usually the absolute path to the disk file).
@@ -103,7 +103,7 @@ public interface DataFileModel<P> {
      * @throws NullPointerException if the argument is <tt>null</tt>.
      * @throws ClassCastException   if the data file was created by incompatible data file model.
      */
-    public P getPath(DataFile dataFile);
+    P getPath(DataFile dataFile);
 
     /**
      * Creates new temporary data file and returns a new instance of {@link DataFile}
@@ -132,7 +132,7 @@ public interface DataFileModel<P> {
      * @return            new instance of {@link DataFile} object corresponding newly created temporary data file.
      * @throws java.io.IOError in a case of any disk errors.
      */
-    public DataFile createTemporary(boolean unresizable);
+    DataFile createTemporary(boolean unresizable);
 
     /**
      * Deletes the data file.
@@ -168,7 +168,7 @@ public interface DataFileModel<P> {
      * @throws ClassCastException   if the data file was created by incompatible data file model.
      * @throws java.io.IOError in a case of any problems while file deletion.
      */
-    public boolean delete(DataFile dataFile);
+    boolean delete(DataFile dataFile);
 
     /**
      * This method is automatically called when the data file becomes unreachable,
@@ -202,7 +202,7 @@ public interface DataFileModel<P> {
      *                              performed by this package, while finishing the application;
      *                              <tt>false</tt> if it is called from the garbage collector.
      */
-    public void finalizationNotify(P dataFilePath, boolean isApplicationShutdown);
+    void finalizationNotify(P dataFilePath, boolean isApplicationShutdown);
 
     /**
      * Returns the set of all data files, that are
@@ -224,7 +224,7 @@ public interface DataFileModel<P> {
      *
      * @return the set of the paths of all created temporary files.
      */
-    public Set<DataFile> allTemporaryFiles();
+    Set<DataFile> allTemporaryFiles();
 
     /**
      * If <tt>value</tt> is <tt>true</tt>, adds the passed data file instance into
@@ -243,7 +243,7 @@ public interface DataFileModel<P> {
      *                 the internal collection of temporary files.
      * @throws NullPointerException if the passed data file is <tt>null</tt>.
      */
-    public void setTemporary(DataFile dataFile, boolean value);
+    void setTemporary(DataFile dataFile, boolean value);
 
     /**
      * Returns <tt>true</tt> if the standard cleanup procedure, that deletes all temporary files
@@ -272,7 +272,7 @@ public interface DataFileModel<P> {
      * @return <tt>true</tt> if the temporary data files, created by this model, should be automatically
      *         deleted by the standard cleanup procedure.
      */
-    public boolean isAutoDeletionRequested();
+    boolean isAutoDeletionRequested();
 
     /**
      * The number of memory banks, recommended for data files created by this factory.
@@ -294,7 +294,7 @@ public interface DataFileModel<P> {
      *
      * @return the recommended number of memory banks.
      */
-    public int recommendedNumberOfBanks();
+    int recommendedNumberOfBanks();
 
     /**
      * The size of every memory bank in bytes, recommended for data files created by this factory.
@@ -325,7 +325,7 @@ public interface DataFileModel<P> {
      * @return            the recommended size of every memory bank in bytes.
      * @see #recommendedSingleMappingLimit()
      */
-    public int recommendedBankSize(boolean unresizable);
+    int recommendedBankSize(boolean unresizable);
 
     /**
      * If a mapped AlgART array is {@link Array#isUnresizable() unresizable} and it's size, in bytes,
@@ -347,7 +347,7 @@ public interface DataFileModel<P> {
      * @return the recommended limit for file size, in bytes, so that less files, if they are unresizable,
      *         should be mapped only once by single call of {@link DataFile#map} method.
      */
-    public int recommendedSingleMappingLimit();
+    int recommendedSingleMappingLimit();
 
     /**
      * The size (in bytes) of the starting gap in all temporary files, created by
@@ -364,7 +364,7 @@ public interface DataFileModel<P> {
      * @return the size of the starting gap in the temporary files, in bytes.
      * @see MatrixInfo
      */
-    public long recommendedPrefixSize();
+    long recommendedPrefixSize();
 
     /**
      * If this method returns <tt>true</tt>, then mapping the data file by
@@ -383,5 +383,5 @@ public interface DataFileModel<P> {
      *
      * @return <tt>true</tt> if mapping outside the file length automatically increase the length.
      */
-    public boolean autoResizingOnMapping();
+    boolean autoResizingOnMapping();
 }

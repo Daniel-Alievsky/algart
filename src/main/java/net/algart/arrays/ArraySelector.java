@@ -309,7 +309,7 @@ public class ArraySelector {
      *
      ,,
                 <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double alues
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double values
      * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
      *
      *;;
@@ -2012,7 +2012,7 @@ public class ArraySelector {
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
      * <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double alues
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double values
      * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
      *
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
@@ -2044,7 +2044,7 @@ public class ArraySelector {
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
      * <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double alues
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double values
      * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
@@ -2070,7 +2070,7 @@ public class ArraySelector {
      * the element from <tt>double[]</tt> array.</p>
      *
      * <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double alues
+     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double values
      * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
      *
      * @param from          index of the first analysed element of some data array, inclusive.

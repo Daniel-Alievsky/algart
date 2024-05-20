@@ -287,7 +287,7 @@ public interface ArrayContext {
 
     /**
      * Returns the {@link ThreadPoolFactory thread pool factory} that should be used for
-     * planning parallel execution in multithread methods alike
+     * planning parallel execution in multithreading methods alike
      * {@link Arrays.ParallelExecutor#process()}.
      * This method never returns <tt>null</tt>.
      *
@@ -306,7 +306,7 @@ public interface ArrayContext {
      *
      * @throws RuntimeException (or some its subclass) if the application has requested to interrupt
      *                          the currently executing module. This exception will lead to stopping
-     *                          all threads, started by multithread method alike
+     *                          all threads, started by multithreading method alike
      *                          {@link Arrays#copy(ArrayContext, UpdatableArray, Array) copy},
      *                          and will be re-thrown by that method.
      */

@@ -36,8 +36,8 @@ public interface ArrayComparator32 extends ArrayComparator {
      * <pre>
      *     {@link #less(int, int) less}((int) first, (int) second);
      * </pre>
-     * Note: for maximal performance, it does not check that the passed intexes are really 32-bit.
-     * While using with arrays, containing 2<sup>31</sup> elements or more, this comparator will work incorrecly.
+     * Note: for maximal performance, it does not check that the passed indexes are really 32-bit.
+     * While using with arrays, containing 2<sup>31</sup> elements or more, this comparator will work incorrectly.
      *
      * @param first  index of the first compared element.
      * @param second index of the second compared element.

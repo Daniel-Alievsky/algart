@@ -43,7 +43,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * {@link #createTemporary(boolean)} method adds a path to this set,
      * {@link #delete(DataFile)} method removes the path from it.
      */
-    protected final Set<DataFile> allTemporaryFiles = Collections.synchronizedSet(new HashSet<DataFile>());
+    protected final Set<DataFile> allTemporaryFiles = Collections.synchronizedSet(new HashSet<>());
 
     /**
      * The path where new temporary files will be created by {@link #createTemporaryFile(boolean)} method
@@ -229,11 +229,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
     }
 
     public Set<DataFile> allTemporaryFiles() {
-        TreeSet<DataFile> result = new TreeSet<DataFile>(new Comparator<DataFile>() {
-            public int compare(DataFile o1, DataFile o2) {
-                return getPath(o1).compareTo(getPath(o2));
-            }
-        });
+        TreeSet<DataFile> result = new TreeSet<>((o1, o2) -> getPath(o1).compareTo(getPath(o2)));
         // TreeSet provides sorted list of files that looks better for users.
         synchronized(allTemporaryFiles) {
             result.addAll(allTemporaryFiles);
@@ -316,7 +312,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * Returns the prefix, used by the current implementation of
      * {@link #createTemporary(boolean)} method while creating temporary files &mdash;
      * see comments to that method. This prefix helps to indicate a concrete
-     * data file model class, which was used while creating temporaty files.
+     * data file model class, which was used while creating temporary files.
      *
      * <p>The result of this method must be at least three characters long.
      * In other case, its result will be automatically appended with "_" to fulfil

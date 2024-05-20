@@ -38,7 +38,7 @@ class ArraysFuncImpl {
 
     static final int BUFFER_SIZE = 65536; // bytes, or byte pairs for 64-bit types; must be <2^31
     static final int BIT_BUFFER_LENGTH = 64 * 8192; // bits; must be <2^31
-    static final int BITS_GAP = 256; // a little gap for better bits alighment; must be 2^k and >=64
+    static final int BITS_GAP = 256; // a little gap for better bits alignment; must be 2^k and >=64
 
     static final JArrayPool BIT_BUFFERS = JArrayPool.getInstance(long.class, (BIT_BUFFER_LENGTH + BITS_GAP) / 64 + 1);
     static final JArrayPool CHAR_BUFFERS = JArrayPool.getInstance(char.class, BUFFER_SIZE / 2);
@@ -6123,9 +6123,9 @@ class ArraysFuncImpl {
             }
             expanded.add(a);
         }
-        assert expanded.size() > 0 : "Empty list after extracting underlying functions";
+        assert !expanded.isEmpty() : "Empty list after extracting underlying functions";
         // MIN and MAX always have at least 1 argument: in a case of 0 arguments, asFuncArray method uses LinearFunc
-        return expanded.toArray(new PArray[expanded.size()]);
+        return expanded.toArray(new PArray[0]);
     }
 
     static void coordinatesInDoubles(long index, long[] dim, double[] result) {

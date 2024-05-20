@@ -193,7 +193,7 @@ public abstract class AbstractIterativeArrayProcessor<T>
         if (maxNumberOfIterations < 0) {
             return this;
         }
-        return new LimitedIterations<T>(this, maxNumberOfIterations);
+        return new LimitedIterations<>(this, maxNumberOfIterations);
     }
 
     public IterativeArrayProcessor<T> chain(IterativeArrayProcessor<T> followingProcessor, double weight) {
@@ -201,7 +201,7 @@ public abstract class AbstractIterativeArrayProcessor<T>
         if (weight < 0.0) {
             throw new IllegalArgumentException("Negative weight");
         }
-        return new Chain<T>(this, followingProcessor, weight);
+        return new Chain<>(this, followingProcessor, weight);
     }
 
     private static Array resultArray(Object result) {

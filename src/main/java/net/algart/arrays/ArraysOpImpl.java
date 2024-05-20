@@ -111,7 +111,7 @@ class ArraysOpImpl {
 
         @Override
         public void process() {
-            if (src.length() == 0) {
+            if (src.isEmpty()) {
                 result.setEmpty();
             } else if (src instanceof BitArray) {
                 // usually very quick algorithm, excepting very long constant bit arrays
@@ -335,7 +335,7 @@ class ArraysOpImpl {
 
         @Override
         protected synchronized void finish() {
-            if (src.length() > 0) {
+            if (!src.isEmpty()) {
                 result.setAll(indexOfMin, indexOfMax, (PArray) src);
             }
             for (DataBuffer buf : buffers) {
@@ -2054,7 +2054,7 @@ class ArraysOpImpl {
                 for (int k = 1; k < stack.length; k++) {
                     String methodName = stack[k].getMethodName();
                     String className = stack[k].getClassName();
-                    if (stackInfo.length() == 0) {
+                    if (stackInfo.isEmpty()) {
                         if ("copy".equals(methodName) &&
                             (Arrays.class.getName().equals(className) || Matrices.class.getName().equals(className))) {
                             continue;

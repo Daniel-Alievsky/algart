@@ -1235,7 +1235,7 @@ public class JBuffers {
             highIndex = buffer.limit();
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (buffer.get(--highIndex) == value) {
                 return highIndex;
             }
@@ -1305,7 +1305,7 @@ public class JBuffers {
             highIndex = buffer.limit();
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (buffer.get(--highIndex) == value) {
                 return highIndex;
             }
@@ -1375,7 +1375,7 @@ public class JBuffers {
             highIndex = buffer.limit();
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (buffer.get(--highIndex) == value) {
                 return highIndex;
             }
@@ -1445,7 +1445,7 @@ public class JBuffers {
             highIndex = buffer.limit();
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (buffer.get(--highIndex) == value) {
                 return highIndex;
             }
@@ -1515,7 +1515,7 @@ public class JBuffers {
             highIndex = buffer.limit();
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (buffer.get(--highIndex) == value) {
                 return highIndex;
             }
@@ -1585,7 +1585,7 @@ public class JBuffers {
             highIndex = buffer.limit();
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (buffer.get(--highIndex) == value) {
                 return highIndex;
             }
@@ -1655,7 +1655,7 @@ public class JBuffers {
             highIndex = buffer.limit();
         }
         int min = Math.max(lowIndex, 0);
-        for (; highIndex > min; ) {
+        while (highIndex > min) {
             if (buffer.get(--highIndex) == value) {
                 return highIndex;
             }

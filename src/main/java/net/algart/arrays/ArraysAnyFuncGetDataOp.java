@@ -39,7 +39,7 @@ import java.util.Objects;
  * @author Daniel Alievsky
  */
 class ArraysAnyFuncGetDataOp {
-    private static final int ANY_FUNC_BUFFER_LENGTH = 16384; // elements (nArgs * double[] + elementtype[])
+    private static final int ANY_FUNC_BUFFER_LENGTH = 16384; // elements (nArgs * double[] + element-type[])
     private static final boolean OPTIMIZE_ANY_FUNC_FOR_JARRAYS = true;
 
     private static final JArrayPool BOOLEAN_BUFFERS = JArrayPool.getInstance(boolean.class, ANY_FUNC_BUFFER_LENGTH);

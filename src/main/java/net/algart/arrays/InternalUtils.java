@@ -51,12 +51,12 @@ class InternalUtils {
         }
         try {
             String prop = System.getProperty("os.arch");
-            java32 = prop != null && prop.indexOf("64") == -1 && prop.toLowerCase().indexOf("x86") != -1;
+            java32 = prop != null && !prop.contains("64") && prop.toLowerCase().contains("x86");
             prop = System.getProperty("sun.arch.data.model"); // if exists, it is more robust
             if (prop != null) {
-                if (prop.indexOf("32") != -1) {
+                if (prop.contains("32")) {
                     java32 = true;
-                } else if (prop.indexOf("64") != -1) {
+                } else if (prop.contains("64")) {
                     java32 = false;
                 }
             }

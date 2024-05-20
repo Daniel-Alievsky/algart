@@ -78,9 +78,9 @@ public final class Contours {
     /**
      * Coordinates of points, saved in the contour, cannot be out of range
      * <tt>-0x40000000</tt> &le; <i>x, y</i> &le;<tt>0x3FFFFFFF</tt>
-     * It allows to guarantee that {@link ContourHeader#containingRectangle() containing rectangle}
+     * This allows to guarantee that {@link ContourHeader#containingRectangle() containing rectangle}
      * of each contour has sizes, less than <tt>Integer.MAX_VALUE</tt>.
-     * Also it allows to use positive values with bit #30 = 1 as reserved.
+     * Also, this allows to use positive values with bit #30 = 1 as reserved.
      */
     public static final int MIN_ABSOLUTE_COORDINATE = -0x40000000;
     public static final int MAX_ABSOLUTE_COORDINATE = 0x3FFFFFFF;
