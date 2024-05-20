@@ -113,6 +113,17 @@ public class PackedBitArrays {
     }
 
     /**
+     * Equivalent of {@link #packedLength(long)} for <tt>int</tt> argument.
+     *
+     * @param unpackedLength the number of bits (the length of bit array).
+     * @return <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt> (the length of corresponding <tt>long[]</tt> array).
+     */
+    public static int packedLength(int unpackedLength) {
+        return (unpackedLength + 63) >>> 6;
+        // here >>> must be used instead of >>, because unpackedLength+63 may be >Integer.MAX_VALUE
+    }
+
+    /**
      * Returns the bit <tt>#index</tt> in the packed <tt>src</tt> bit array.
      * Equivalent to the following expression:<pre>
      * (src[(int)(index &gt;&gt;&gt; 6)] &amp; (1L &lt;&lt; (index &amp; 63))) != 0L;
@@ -663,6 +674,40 @@ public class PackedBitArrays {
         //[[Repeat.SectionEnd copyBits_method_impl]]
     }
     /*Repeat.SectionEnd copyBits*/
+
+    /**
+     * Copies <tt>count</tt> bits from the <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
+     * into a newly created packed bit array <tt>long[{@link #packedLength(int) packedLength}(count)]</tt>
+     * returned as a result, starting from the bit #0.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #packBits(long[], long, boolean[], int, int)}
+     * method.</p>
+     *
+     * @param src    the source array (unpacked <tt>boolean</tt> values).
+     * @param srcPos position of the first bit read in the source array.
+     * @param count  the number of bits to be packed (must be &gt;=0).
+     * @return the result bit array, where bits are packed in <tt>long</tt>.
+     * @throws NullPointerException     if <tt>src</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     */
+    public static long[] packBits(boolean[] src, int srcPos, int count) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > src.length - srcPos) {
+            throw new IllegalArgumentException("Too short source array boolean[" + src.length +
+                    "]: it does not contain " + count + " bits since position " + srcPos);
+        }
+        final long[] result = new long[packedLength(count)];
+        packBits(result, 0, src, srcPos, count);
+        return result;
+    }
 
     /**
      * Copies <tt>count</tt> bits from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
@@ -4810,7 +4855,7 @@ public class PackedBitArrays {
 
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to newly created array <tt>boolean[count]</tt> array returned as a result.
+     * into a newly created array <tt>boolean[count]</tt> array returned as a result.
      * Every element <tt>result[k]</tt> of the result array is assigned to
      * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
      *
@@ -5322,7 +5367,7 @@ public class PackedBitArrays {
 
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to newly created array <tt>char[count]</tt> array returned as a result.
+     * into a newly created array <tt>char[count]</tt> array returned as a result.
      * Every element <tt>result[k]</tt> of the result array is assigned to
      * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
      *
@@ -5818,7 +5863,7 @@ public class PackedBitArrays {
 
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to newly created array <tt>byte[count]</tt> array returned as a result.
+     * into a newly created array <tt>byte[count]</tt> array returned as a result.
      * Every element <tt>result[k]</tt> of the result array is assigned to
      * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
      *
@@ -6314,7 +6359,7 @@ public class PackedBitArrays {
 
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to newly created array <tt>short[count]</tt> array returned as a result.
+     * into a newly created array <tt>short[count]</tt> array returned as a result.
      * Every element <tt>result[k]</tt> of the result array is assigned to
      * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
      *
@@ -6810,7 +6855,7 @@ public class PackedBitArrays {
 
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to newly created array <tt>int[count]</tt> array returned as a result.
+     * into a newly created array <tt>int[count]</tt> array returned as a result.
      * Every element <tt>result[k]</tt> of the result array is assigned to
      * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
      *
@@ -7306,7 +7351,7 @@ public class PackedBitArrays {
 
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to newly created array <tt>long[count]</tt> array returned as a result.
+     * into a newly created array <tt>long[count]</tt> array returned as a result.
      * Every element <tt>result[k]</tt> of the result array is assigned to
      * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
      *
@@ -7802,7 +7847,7 @@ public class PackedBitArrays {
 
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to newly created array <tt>float[count]</tt> array returned as a result.
+     * into a newly created array <tt>float[count]</tt> array returned as a result.
      * Every element <tt>result[k]</tt> of the result array is assigned to
      * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
      *
@@ -8298,7 +8343,7 @@ public class PackedBitArrays {
 
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to newly created array <tt>double[count]</tt> array returned as a result.
+     * into a newly created array <tt>double[count]</tt> array returned as a result.
      * Every element <tt>result[k]</tt> of the result array is assigned to
      * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
      *
@@ -8794,7 +8839,7 @@ public class PackedBitArrays {
 
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to newly created array <tt>Object[count]</tt> array returned as a result.
+     * into a newly created array <tt>Object[count]</tt> array returned as a result.
      * Every element <tt>result[k]</tt> of the result array is assigned to
      * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
      *

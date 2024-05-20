@@ -62,6 +62,17 @@ class TinyBitArrays {
     }
 
     /**
+     * Equivalent of {@link #packedLength(long)} for <tt>int</tt> argument.
+     *
+     * @param unpackedLength the number of bits (the length of bit array).
+     * @return <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt> (the length of corresponding <tt>long[]</tt> array).
+     */
+    public static int packedLength(int unpackedLength) {
+        return (unpackedLength + 63) >>> 6;
+        // here >>> must be used instead of >>, because unpackedLength+63 may be >Integer.MAX_VALUE
+    }
+
+    /**
      * Returns the bit <tt>#index</tt> in the packed <tt>src</tt> bit array.
      * Equivalent to the following expression:<pre>
      * (src[(int)(index &gt;&gt;&gt; 6)] &amp; (1L &lt;&lt; (index &amp; 63))) != 0L;

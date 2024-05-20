@@ -365,6 +365,15 @@ public class PackedBitArraysPer8Test {
                                 + ", error found at " + k);
                     }
                 }
+                byte[] packed = PackedBitArraysPer8.packBits(bSrc, srcPos, count);
+                for (int k = 0; k < 8 * packed.length; k++) {
+                    if (PackedBitArraysPer8.getBit(packed, k) != (k < count && bSrc[srcPos + k])) {
+                        throw new AssertionError("The bug D in packBits found in test #"
+                                + testCount + ": "
+                                + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 

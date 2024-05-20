@@ -252,6 +252,15 @@ public class PackedBitArraysTest {
                                     + ", error found at " + k);
                         }
                     }
+                    long[] packed = PackedBitArrays.packBits(bSrc, srcPos, count);
+                    for (int k = 0; k < 64 * packed.length; k++) {
+                        if (PackedBitArrays.getBit(packed, k) != (k < count && bSrc[srcPos + k])) {
+                            throw new AssertionError("The bug D in packBits found in test #"
+                                    + testCount + ": "
+                                    + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                    + ", error found at " + k);
+                        }
+                    }
                     showProgress(testCount);
                 }
             }

@@ -145,6 +145,17 @@ public class PackedBitArraysPer8 {
     }
 
     /**
+     * Equivalent of {@link #packedLength(long)} for <tt>int</tt> argument.
+     *
+     * @param unpackedLength the number of bits (the length of bit array).
+     * @return <tt>(unpackedLength + 7) &gt;&gt;&gt; 3</tt> (the length of corresponding <tt>byte[]</tt> array).
+     */
+    public static int packedLength(int unpackedLength) {
+        return (unpackedLength + 7) >>> 3;
+        // here >>> must be used instead of >>, because unpackedLength+63 may be >Integer.MAX_VALUE
+    }
+
+    /**
      * Returns the bit <tt>#index</tt> in the packed <tt>src</tt> bit array.
      * Equivalent to the following expression:<pre>
      * (src[(int)(index &gt;&gt;&gt; 3)] &amp; (1 &lt;&lt; (index &amp; 7))) != 0;
@@ -1092,6 +1103,40 @@ public class PackedBitArraysPer8 {
                 }
             }
         }
+    }
+
+    /**
+     * Copies <tt>count</tt> bits from the <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
+     * into a newly created packed bit array <tt>byte[{@link #packedLength(int) packedLength}(count)]</tt>
+     * returned as a result, starting from the bit #0.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #packBits(byte[], long, boolean[], int, int)}
+     * method.</p>
+     *
+     * @param src    the source array (unpacked <tt>boolean</tt> values).
+     * @param srcPos position of the first bit read in the source array.
+     * @param count  the number of bits to be packed (must be &gt;=0).
+     * @return the result bit array, where bits are packed in <tt>byte</tt>.
+     * @throws NullPointerException     if <tt>src</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     */
+    public static byte[] packBits(boolean[] src, int srcPos, int count) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > src.length - srcPos) {
+            throw new IllegalArgumentException("Too short source array boolean[" + src.length +
+                    "]: it does not contain " + count + " bits since position " + srcPos);
+        }
+        final byte[] result = new byte[packedLength(count)];
+        packBits(result, 0, src, srcPos, count);
+        return result;
     }
 
     /**
