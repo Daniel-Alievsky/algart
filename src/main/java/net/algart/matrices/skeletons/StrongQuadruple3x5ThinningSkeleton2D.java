@@ -110,7 +110,7 @@ import static net.algart.matrices.skeletons.ThinningTools.*;
  * but it is designed for 2-dimensional case: all other dimensions will be ignored.</p>
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
- * and can be synchronized manually, if multithread access is necessary.</p>
+ * and can be synchronized manually, if multithreading access is necessary.</p>
  *
  * @author Daniel Alievsky
  */

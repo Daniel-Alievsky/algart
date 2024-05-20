@@ -671,7 +671,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * @param  storage     the internal storage where the combined array elements will be stored
      * @return             combined array backed by the specified storage
      */
-    public final ObjectArray<E> asCombinedArray(Class<E> elementType, Array[] storage) {
+    public ObjectArray<E> asCombinedArray(Class<E> elementType, Array[] storage) {
         Array[] storageClone = storage.clone(); // preserves the type of storage elements
         for (int k = 0; k < storageClone.length; k++) {
             storageClone[k] = storageClone[k].asImmutable();
@@ -712,7 +712,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * @param  storage     the internal storage where the combined array elements will be stored
      * @return             combined array backed by the specified storage
      */
-    public final UpdatableObjectArray<E> asUpdatableCombinedArray(Class<E> elementType, UpdatableArray[] storage) {
+    public UpdatableObjectArray<E> asUpdatableCombinedArray(Class<E> elementType, UpdatableArray[] storage) {
         UpdatableArray[] storageClone = storage.clone(); // preserves the type of storage elements
         for (int k = 0; k < storageClone.length; k++) {
             storageClone[k] = storageClone[k].asUnresizable().shallowClone();
@@ -1671,11 +1671,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             return -1;
         }
 
-        public final E allocateElement() {
+        public E allocateElement() {
             return ((CombinerInPlace<E>)combiner).allocateElement();
         }
 
-        public final E getInPlace(long index, Object resultValue) {
+        public E getInPlace(long index, Object resultValue) {
             E resValue = InternalUtils.<E>cast(resultValue);
             ((CombinerInPlace<E>)combiner).getInPlace(index, resValue, storage);
             return resValue;
@@ -1697,17 +1697,17 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             super(elementType, initialCapacity, initialLength, combiner);
         }
 
-        public final E allocateElement() {
+        public E allocateElement() {
             return ((CombinerInPlace<E>)combiner).allocateElement();
         }
 
-        public final E getInPlace(long index, Object resultValue) {
+        public E getInPlace(long index, Object resultValue) {
             E resValue = InternalUtils.<E>cast(resultValue);
             ((CombinerInPlace<E>)combiner).getInPlace(index, resValue, storage);
             return resValue;
         }
 
-        public final UpdatableObjectInPlaceArray<E> subArray(long fromIndex, long toIndex) {
+        public UpdatableObjectInPlaceArray<E> subArray(long fromIndex, long toIndex) {
             checkSubArrayArguments(fromIndex, toIndex);
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
@@ -1717,7 +1717,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>)this.combiner);
         }
 
-        public final UpdatableObjectInPlaceArray<E> subArr(long position, long count) {
+        public UpdatableObjectInPlaceArray<E> subArr(long position, long count) {
             checkSubArrArguments(position, count);
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
@@ -1747,57 +1747,57 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             super(elementType, initialCapacity, initialLength, combiner);
         }
 
-        public final E allocateElement() {
+        public E allocateElement() {
             return ((CombinerInPlace<E>)combiner).allocateElement();
         }
 
-        public final E getInPlace(long index, Object resultValue) {
+        public E getInPlace(long index, Object resultValue) {
             E resValue = InternalUtils.<E>cast(resultValue);
             ((CombinerInPlace<E>)combiner).getInPlace(index, resValue, storage);
             return resValue;
         }
 
-        public final MutableObjectInPlaceArray<E> setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
+        public MutableObjectInPlaceArray<E> setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
             super.setData(arrayPos, srcArray, srcArrayOffset, count);
             return this;
         }
 
-        public final MutableObjectInPlaceArray<E> setData(long arrayPos, Object srcArray) {
+        public MutableObjectInPlaceArray<E> setData(long arrayPos, Object srcArray) {
             super.setData(arrayPos, srcArray);
             return this;
         }
 
-        public final MutableObjectInPlaceArray<E> copy(Array src) {
+        public MutableObjectInPlaceArray<E> copy(Array src) {
             super.copy(src);
             return this;
         }
 
-        public final MutableObjectInPlaceArray<E> swap(UpdatableArray another) {
+        public MutableObjectInPlaceArray<E> swap(UpdatableArray another) {
             super.swap(another);
             return this;
         }
 
-        public final MutableObjectInPlaceArray<E> length(long newLength) {
+        public MutableObjectInPlaceArray<E> length(long newLength) {
             super.length(newLength);
             return this;
         }
 
-        public final MutableObjectInPlaceArray<E> ensureCapacity(long minCapacity) {
+        public MutableObjectInPlaceArray<E> ensureCapacity(long minCapacity) {
             super.ensureCapacity(minCapacity);
             return this;
         }
 
-        public final MutableObjectInPlaceArray<E> trim() {
+        public MutableObjectInPlaceArray<E> trim() {
             super.trim();
             return this;
         }
 
-        public final MutableObjectInPlaceArray<E> append(Array appendedArray) {
+        public MutableObjectInPlaceArray<E> append(Array appendedArray) {
             super.append(appendedArray);
             return this;
         }
 
-        public final UpdatableObjectInPlaceArray<E> subArray(long fromIndex, long toIndex) {
+        public UpdatableObjectInPlaceArray<E> subArray(long fromIndex, long toIndex) {
             checkSubArrayArguments(fromIndex, toIndex);
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
@@ -1807,7 +1807,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>)this.combiner);
         }
 
-        public final UpdatableObjectInPlaceArray<E> subArr(long position, long count) {
+        public UpdatableObjectInPlaceArray<E> subArr(long position, long count) {
             checkSubArrArguments(position, count);
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
@@ -1817,7 +1817,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>)this.combiner);
         }
 
-        public final MutableObjectInPlaceArray<E> asCopyOnNextWrite() {
+        public MutableObjectInPlaceArray<E> asCopyOnNextWrite() {
             MutableArray[] stor = (MutableArray[])storage.clone();
             for (int k = 0; k < storage.length; k++) {
                 stor[k] = stor[k].asCopyOnNextWrite();
@@ -1826,7 +1826,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             return new MutableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>)this.combiner);
         }
 
-        public final UpdatableObjectInPlaceArray<E> asUnresizable() {
+        public UpdatableObjectInPlaceArray<E> asUnresizable() {
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
                 stor[k] = ((MutableArray[])storage)[k].asUnresizable();
@@ -1835,7 +1835,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>)this.combiner);
         }
 
-        public final MutableObjectInPlaceArray<E> shallowClone() {
+        public MutableObjectInPlaceArray<E> shallowClone() {
             return InternalUtils.cast(super.shallowClone());
         }
     }

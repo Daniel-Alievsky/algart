@@ -225,7 +225,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * GeneralizedBitProcessing.RoundingMode) getSingleThreadInstance} method.</p>
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
- * and can be synchronized manually, if multithread access is necessary.
+ * and can be synchronized manually, if multithreading access is necessary.
  * However, usually there are no reasons to use the same instance of this class in different threads:
  * usually there is much better idea to create a separate instance for every thread.</p>
  *

@@ -447,7 +447,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * <h4>Multithread compatibility</h4>
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
- * and can be synchronized manually, if multithread access is necessary.</p>
+ * and can be synchronized manually, if multithreading access is necessary.</p>
  *
  * @author Daniel Alievsky
  * @see SkeletonPixelClassifier

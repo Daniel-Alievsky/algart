@@ -71,7 +71,7 @@ public class Arrays {
         dummy = MappedDataStorages.class;
         dummy = DirectDataStorages.class;
         SystemSettings.globalMemoryModel();
-        // - Initialization of the main classes: necessary to avoid a strange dead-lock in JVM,
+        // - Initialization of the main classes: necessary to avoid a strange deadlock in JVM,
         // that occurs if the first access to our classes is performed from the shutdown hook.
         // In any case, it is useful to be sure that initialization of our classes,
         // that includes synchronization while creating default instances,
@@ -513,7 +513,7 @@ public class Arrays {
          *
          * <p>If you are sure that your AlgART arrays will not be too large,
          * you may ignore this method and use the {@link SimpleMemoryModel}.
-         * It is the most quick model for small arrays, but may be inefficient
+         * It is the quickest model for small arrays, but may be inefficient
          * for very large arrays (100-500 MB or more)
          * and does not allow work with arrays greater than 2 GB.
          *
@@ -714,7 +714,7 @@ public class Arrays {
          * this method makes a decision on the base of <tt>System.getProperty("os.arch")</tt>.
          * If it cannot make a decision (for example, due to some exception in the last <tt>getProperty</tt>
          * call), it returns <tt>false</tt> by default.
-         * All this analyse is performed only once while initializing while initializing {@link Arrays} class.
+         * All this analyse is performed only once while initializing {@link Arrays} class.
          *
          * @return <tt>true</tt> on 32-bit Java machines.
          * @see <a href="http://java.sun.com/docs/hotspot/HotSpotFAQ.html#64bit_detection">Frequently
@@ -7905,7 +7905,7 @@ public class Arrays {
                             && !src.isLazy() ? 1
                             // source array is probably file or memory: no reasons for multithreading copying
                             : Math.max(1, this.threadPoolFactory.recommendedNumberOfTasks(src));
-            assert this.numberOfTasks > 0;
+            // assert this.numberOfTasks > 0;
             long m = numberOfRanges > 0 ? numberOfRanges : recommendedNumberOfRanges(src, true);
             assert m > 0 : "A bug in recommendedNumberOfRanges(Array): it returns non-positive value " + m;
             this.numberOfRanges = correctNumberOfRanges(m, this.numberOfTasks);

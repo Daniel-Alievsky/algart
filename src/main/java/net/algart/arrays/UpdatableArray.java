@@ -43,7 +43,7 @@ package net.algart.arrays;
  *
  * <p>Updatable arrays, implementing this interface,
  * are not thread-safe, but <b>are thread-compatible</b>
- * and can be synchronized manually if multithread access is necessary.
+ * and can be synchronized manually if multithreading access is necessary.
  * Please see more details in the
  * <a href="package-summary.html#multithreading">package description</a>.</p>
  *

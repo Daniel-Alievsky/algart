@@ -171,7 +171,7 @@ public interface BitArray extends PFixedArray {
      * {@link #getBits(long, long[], long, long) getBits(pos, destArray, 0, someCount)}
      * and (for updatable array)
      * {@link UpdatableBitArray#setBits(long, long[], long, long) setBits(pos, srcArray, 0, someCount)}
-     * work essentially faster than for most of other ("slow") positions,
+     * work essentially faster than for most of the other ("slow") positions,
      * or <tt>-1</tt> if there is no such position,
      * in particular, if <tt>position&gt;={@link #length() length()}</tt>.
      *

@@ -1171,19 +1171,11 @@ public abstract class MatrixInfo {
             Objects.requireNonNull(additionalProperties, "Null additionalProperties argument");
             Map<String, String> additional = new LinkedHashMap<String, String>();
             for (Map.Entry<String, String> e : additionalProperties.entrySet()) {
-                Object key = e.getKey();
+                String key = e.getKey();
                 Objects.requireNonNull(key, "Null name of additional property");
-                if (!(key instanceof String)) {
-                    throw new ClassCastException("Illegal (not String) type of the name of additional property: "
-                        + key.getClass());
-                }
-                Object value = e.getValue();
+                String value = e.getValue();
                 Objects.requireNonNull(value, "Null value of additional property");
-                if (!(value instanceof String)) {
-                    throw new ClassCastException("Illegal (not String) type of the value of additional property: "
-                        + value.getClass());
-                }
-                additional.put((String) key, (String) value);
+                additional.put(key, value);
             }
             return new Version1_2(
                 elementType,

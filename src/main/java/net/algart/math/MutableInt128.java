@@ -35,7 +35,7 @@ import java.util.Objects;
  *
  * <p>Unlike <tt>BigInteger</tt>, this class is <b>mutable</b>, that allows to reuse one instance for 128-bit
  * calculation without memory allocation. This class is not thread-safe, but <b>is thread-compatible</b>
- * and can be synchronized manually if multithread access is necessary.
+ * and can be synchronized manually if multithreading access is necessary.
  *
  * @author Daniel Alievsky
  */

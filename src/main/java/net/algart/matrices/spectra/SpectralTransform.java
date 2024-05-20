@@ -111,7 +111,7 @@ import net.algart.arrays.*;
  * and showing the progress is not supported.</p>
  *
  * <p>The implementations of this class are not thread-safe, but <b>are thread-compatible</b>
- * and can be synchronized manually if multithread access is necessary.</p>
+ * and can be synchronized manually if multithreading access is necessary.</p>
  *
  * @author Daniel Alievsky
  */

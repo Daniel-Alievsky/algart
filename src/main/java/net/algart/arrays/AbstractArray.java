@@ -350,7 +350,7 @@ public abstract class AbstractArray implements Array, Cloneable {
     /**
      * This implementation returns <tt>{@link #underlyingArrays}.length &gt; 0</tt>.
      * Please override this if the access to underlying arrays is very quick
-     * (as for {@link Matrix#subMatrix(long[], long[])} or,
+     * (as for {@link Matrix#subMatrix(long[], long[])}) or,
      * vice versa, if there no underlying arrays, but getting an element requires some calculation
      * (as for {@link Arrays#asIndexFuncArray(net.algart.math.functions.Func, Class, long)}).
      *
@@ -373,7 +373,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * This implementation returns {@link #standardObjectClone()}.
      *
      * <p>Be careful: if you are extending this class to implement full {@link MutableArray} interface,
-     * your should investigate, whether you need to override this method to provide real independence
+     * you should investigate, whether you need to override this method to provide real independence
      * of the length, start offset, capacity, copy-on-next-write and
      * other information about any array characteristics besides its elements.
      *

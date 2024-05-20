@@ -56,7 +56,7 @@ import java.util.Set;
  *
  * <p>Objects implementing this interface may be not <b>immutable</b>
  * and not <b>thread-safe</b>, but must be <b>thread-compatible</b>
- * (allow manual synchronization for multithread access).</p>
+ * (allow manual synchronization for multithreading access).</p>
  *
  * @author Daniel Alievsky
  */

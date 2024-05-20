@@ -77,7 +77,7 @@ package net.algart.matrices.spectra;
  * and algorithms can work slower.</p>
  *
  * <p>The sample arrays are not thread-safe, but <b>are thread-compatible</b>
- * and can be synchronized manually if multithread access is necessary.</p>
+ * and can be synchronized manually if multithreading access is necessary.</p>
  *
  * @author Daniel Alievsky
  */

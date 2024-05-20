@@ -340,13 +340,13 @@ class DirectDataStorages {
         }
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
-            ByteBuffer dup = bb.duplicate(); // necessary while multithread access
+            ByteBuffer dup = bb.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.get((byte[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
-            ByteBuffer dup = bb.duplicate(); // necessary while multithread access
+            ByteBuffer dup = bb.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.put((byte[]) srcArray, srcArrayOffset, count);
         }
@@ -481,13 +481,13 @@ class DirectDataStorages {
         }
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
-            ShortBuffer dup = sb.duplicate(); // necessary while multithread access
+            ShortBuffer dup = sb.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.get((short[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
-            ShortBuffer dup = sb.duplicate(); // necessary while multithread access
+            ShortBuffer dup = sb.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.put((short[]) srcArray, srcArrayOffset, count);
         }
@@ -617,13 +617,13 @@ class DirectDataStorages {
         }
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
-            CharBuffer dup = cb.duplicate(); // necessary while multithread access
+            CharBuffer dup = cb.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.get((char[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
-            CharBuffer dup = cb.duplicate(); // necessary while multithread access
+            CharBuffer dup = cb.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.put((char[]) srcArray, srcArrayOffset, count);
         }
@@ -753,13 +753,13 @@ class DirectDataStorages {
         }
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
-            IntBuffer dup = ib.duplicate(); // necessary while multithread access
+            IntBuffer dup = ib.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.get((int[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
-            IntBuffer dup = ib.duplicate(); // necessary while multithread access
+            IntBuffer dup = ib.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.put((int[]) srcArray, srcArrayOffset, count);
         }
@@ -889,13 +889,13 @@ class DirectDataStorages {
         }
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
-            LongBuffer dup = lb.duplicate(); // necessary while multithread access
+            LongBuffer dup = lb.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.get((long[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
-            LongBuffer dup = lb.duplicate(); // necessary while multithread access
+            LongBuffer dup = lb.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.put((long[]) srcArray, srcArrayOffset, count);
         }
@@ -1025,13 +1025,13 @@ class DirectDataStorages {
         }
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
-            FloatBuffer dup = fb.duplicate(); // necessary while multithread access
+            FloatBuffer dup = fb.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.get((float[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
-            FloatBuffer dup = fb.duplicate(); // necessary while multithread access
+            FloatBuffer dup = fb.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.put((float[]) srcArray, srcArrayOffset, count);
         }
@@ -1161,13 +1161,13 @@ class DirectDataStorages {
         }
 
         void getData(long pos, Object destArray, int destArrayOffset, int count) {
-            DoubleBuffer dup = db.duplicate(); // necessary while multithread access
+            DoubleBuffer dup = db.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.get((double[]) destArray, destArrayOffset, count);
         }
 
         void setData(long pos, Object srcArray, int srcArrayOffset, int count) {
-            DoubleBuffer dup = db.duplicate(); // necessary while multithread access
+            DoubleBuffer dup = db.duplicate(); // necessary while multithreading access
             dup.position((int) pos);
             dup.put((double[]) srcArray, srcArrayOffset, count);
         }

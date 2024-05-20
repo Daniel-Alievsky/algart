@@ -59,7 +59,7 @@ package net.algart.arrays;
  *
  * <p>Objects, implementing this interface,
  * are not thread-safe, but <b>are thread-compatible</b>
- * and can be synchronized manually if multithread access is necessary.</p>
+ * and can be synchronized manually if multithreading access is necessary.</p>
  *
  * @author Daniel Alievsky
  */

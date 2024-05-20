@@ -39,7 +39,7 @@ import java.nio.*;
  *
  * <p>Objects implementing this interface may be not <b>immutable</b>
  * and not <b>thread-safe</b>, but must be <b>thread-compatible</b>
- * (allow manual synchronization for multithread access).</p>
+ * (allow manual synchronization for multithreading access).</p>
  *
  * @author Daniel Alievsky
  */
@@ -47,7 +47,7 @@ public interface DataFile {
     /**
      * Possible results of {@link DataFile#open(boolean)} method.
      */
-    public static enum OpenResult {
+    enum OpenResult {
         /**
          * Returned by link {@link DataFile#open(boolean)} method if the data file existed before the method call.
          */
@@ -67,7 +67,7 @@ public interface DataFile {
      *
      * @return the byte order in all returned byte buffers.
      */
-    public ByteOrder byteOrder();
+    ByteOrder byteOrder();
 
     /**
      * Opens the data file. Does nothing if it is already opened.
@@ -102,7 +102,7 @@ public interface DataFile {
      * @throws java.io.IOError in a case of some disk errors or if the argument is <tt>true</tt>
      *                         and there is no file with the given position.
      */
-    public OpenResult open(boolean readOnly);
+    OpenResult open(boolean readOnly);
 
     /**
      * Closes data file. Does nothing if it is already closed.
@@ -117,12 +117,12 @@ public interface DataFile {
      * @see #open(boolean)
      * @throws java.io.IOError in a case of some disk errors.
      */
-    public void close();
+    void close();
 
     /**
      * Tries to write any updates of this data file to the storage device that contains it.
      */
-    public void force();
+    void force();
 
     /**
      * Returns the argument passed to last {@link #open(boolean)} method.
@@ -131,7 +131,7 @@ public interface DataFile {
      *
      * @return <tt>true</tt> if the file is opened in read-only mode.
      */
-    public boolean isReadOnly();
+    boolean isReadOnly();
 
     /**
      * Maps a region of this data file directly into memory.
@@ -170,7 +170,7 @@ public interface DataFile {
      * @return                    an object allowing to access mapped data.
      * @throws java.io.IOError in a case of some disk errors.
      */
-    public BufferHolder map(Range range, boolean notLoadDataFromFile);
+    BufferHolder map(Range range, boolean notLoadDataFromFile);
 
     /**
      * Returns the current length of the data file.
@@ -178,7 +178,7 @@ public interface DataFile {
      * @return the current length of the data file.
      * @throws java.io.IOError in a case of some disk errors.
      */
-    public long length();
+    long length();
 
     /**
      * Resizes the data file.
@@ -186,7 +186,7 @@ public interface DataFile {
      * @param newLength new length of data file.
      * @throws java.io.IOError in a case of some disk errors.
      */
-    public void length(long newLength);
+    void length(long newLength);
 
     /**
      * <p>Pair of 2 <tt>long</tt> values <tt>position</tt>
@@ -197,7 +197,7 @@ public interface DataFile {
      *
      * @see DataFile#map(Range, boolean)
      */
-    public static final class Range implements Comparable<Range> {
+    final class Range implements Comparable<Range> {
         private final long position;
         private final long length;
 
@@ -297,10 +297,10 @@ public interface DataFile {
      *
      * <p>Objects implementing this interface may be not <b>immutable</b>
      * and not <b>thread-safe</b>, but must be <b>thread-compatible</b>
-     * (allow manual synchronization for multithread access).</p>
+     * (allow manual synchronization for multithreading access).</p>
      *
      */
-    public static interface BufferHolder {
+    interface BufferHolder {
         /**
          * Returns the mapped region within the file, in bytes.
          * The result is identical to the first argument of {@link DataFile#map(Range, boolean)} method,
@@ -308,7 +308,7 @@ public interface DataFile {
          *
          * @return the mapped region within the file, in bytes.
          */
-        public Range range();
+        Range range();
 
         /**
          * Returns the mapped data. Usually returns <tt>MappedByteBuffer</tt>/
@@ -317,7 +317,7 @@ public interface DataFile {
          *
          * @return the mapped data.
          */
-        public ByteBuffer data();
+        ByteBuffer data();
 
         /**
          * Returns the object which deallocation by the garbage collector allows all
@@ -331,14 +331,14 @@ public interface DataFile {
          *
          * @return the object which deallocation allows all manipulations with the source mappable object.
          */
-        public Object mappingObject();
+        Object mappingObject();
 
         /**
          * Makes an effort to ensure that this buffer's content will be resident in physical memory.
          * In other words, this method tries to preload the content of this buffer into RAM
          * to provide fastest access to its content in the nearest future.
          */
-        public void load();
+        void load();
 
         /**
          * Forces any changes made to this buffer's content to be written to the
@@ -368,7 +368,7 @@ public interface DataFile {
          *                             to the external device.
          * @throws java.io.IOError in a case of some disk errors.
          */
-        public void flush(boolean forcePhysicalWriting);
+        void flush(boolean forcePhysicalWriting);
 
         /**
          * Unmaps the data: releases all system resources associated with this mapping.
@@ -389,7 +389,7 @@ public interface DataFile {
          *                             to the external device.
          * @throws java.io.IOError in a case of some disk errors.
          */
-        public void unmap(boolean forcePhysicalWriting);
+        void unmap(boolean forcePhysicalWriting);
 
         /**
          * This method either performs the same actions as {@link #unmap(boolean) unmap(false)} method
@@ -423,7 +423,7 @@ public interface DataFile {
          *
          * @throws java.io.IOError in a case of some disk errors.
          */
-        public boolean dispose();
+        boolean dispose();
         // Result of dispose() method is ignored in current implementation of AlgART arrays.
 
         /**
@@ -436,6 +436,6 @@ public interface DataFile {
          *
          * @return <tt>true</tt> if this object was quickly loaded from some cache.
          */
-        public boolean isLoadedFromCache();
+        boolean isLoadedFromCache();
     }
 }

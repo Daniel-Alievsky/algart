@@ -113,7 +113,7 @@ import net.algart.arrays.*;
  * and the <tt>continuationMode</tt> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
  *
  * <p>The classes, implementing this interface, are usually <b>thread-compatible</b>
- * and can be synchronized manually, if multithread access is necessary.</p>
+ * and can be synchronized manually, if multithreading access is necessary.</p>
  *
  * @author Daniel Alievsky
  */

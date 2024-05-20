@@ -412,7 +412,7 @@ package net.algart.arrays;
  *
  * <p>The data buffers are not thread-safe, but <b>are thread-compatible</b>
  * and can be synchronized manually (together with AlgART arrays accessed via the buffers)
- * if multithread access is necessary.</p>
+ * if multithreading access is necessary.</p>
  *
  * @author Daniel Alievsky
  */

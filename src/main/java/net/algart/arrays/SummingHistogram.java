@@ -265,7 +265,7 @@ import java.util.Objects;
  * So, this class does not provide a mechanism for comparing different histograms.</p>
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
- * and can be synchronized manually, if multithread access is necessary.</p>
+ * and can be synchronized manually, if multithreading access is necessary.</p>
  *
  * @author Daniel Alievsky
  */
@@ -337,7 +337,7 @@ public abstract class SummingHistogram extends Histogram {
      * So, this class does not provide a mechanism for comparing different instances of this class.</p>
      *
      * <p>This class is not thread-safe, but <b>is thread-compatible</b>
-     * and can be synchronized manually, if multithread access is necessary.</p>
+     * and can be synchronized manually, if multithreading access is necessary.</p>
      */
     public static final class CountOfValues {
         double count = Double.NaN;

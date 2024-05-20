@@ -337,7 +337,7 @@ import java.util.Objects;
  * So, this class does not provide a mechanism for comparing different histograms.</p>
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
- * and can be synchronized manually, if multithread access is necessary.</p>
+ * and can be synchronized manually, if multithreading access is necessary.</p>
  *
  * @author Daniel Alievsky
  */

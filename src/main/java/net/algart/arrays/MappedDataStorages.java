@@ -3712,7 +3712,7 @@ class MappedDataStorages {
         void getDataFromFirstBank(Buffer buf, long firstBankOffset, Object destArray, int destArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            ByteBuffer dup = ((ByteBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            ByteBuffer dup = ((ByteBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.get((byte[])destArray, destArrayOffset, count);
         }
@@ -3720,7 +3720,7 @@ class MappedDataStorages {
         void setDataInFirstBank(Buffer buf, long firstBankOffset, Object srcArray, int srcArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            ByteBuffer dup = ((ByteBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            ByteBuffer dup = ((ByteBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.put((byte[])srcArray, srcArrayOffset, count);
         }
@@ -4092,7 +4092,7 @@ class MappedDataStorages {
         void getDataFromFirstBank(Buffer buf, long firstBankOffset, Object destArray, int destArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            CharBuffer dup = ((CharBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            CharBuffer dup = ((CharBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.get((char[])destArray, destArrayOffset, count);
         }
@@ -4100,7 +4100,7 @@ class MappedDataStorages {
         void setDataInFirstBank(Buffer buf, long firstBankOffset, Object srcArray, int srcArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            CharBuffer dup = ((CharBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            CharBuffer dup = ((CharBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.put((char[])srcArray, srcArrayOffset, count);
         }
@@ -4472,7 +4472,7 @@ class MappedDataStorages {
         void getDataFromFirstBank(Buffer buf, long firstBankOffset, Object destArray, int destArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            ShortBuffer dup = ((ShortBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            ShortBuffer dup = ((ShortBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.get((short[])destArray, destArrayOffset, count);
         }
@@ -4480,7 +4480,7 @@ class MappedDataStorages {
         void setDataInFirstBank(Buffer buf, long firstBankOffset, Object srcArray, int srcArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            ShortBuffer dup = ((ShortBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            ShortBuffer dup = ((ShortBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.put((short[])srcArray, srcArrayOffset, count);
         }
@@ -4852,7 +4852,7 @@ class MappedDataStorages {
         void getDataFromFirstBank(Buffer buf, long firstBankOffset, Object destArray, int destArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            IntBuffer dup = ((IntBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            IntBuffer dup = ((IntBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.get((int[])destArray, destArrayOffset, count);
         }
@@ -4860,7 +4860,7 @@ class MappedDataStorages {
         void setDataInFirstBank(Buffer buf, long firstBankOffset, Object srcArray, int srcArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            IntBuffer dup = ((IntBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            IntBuffer dup = ((IntBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.put((int[])srcArray, srcArrayOffset, count);
         }
@@ -5232,7 +5232,7 @@ class MappedDataStorages {
         void getDataFromFirstBank(Buffer buf, long firstBankOffset, Object destArray, int destArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            LongBuffer dup = ((LongBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            LongBuffer dup = ((LongBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.get((long[])destArray, destArrayOffset, count);
         }
@@ -5240,7 +5240,7 @@ class MappedDataStorages {
         void setDataInFirstBank(Buffer buf, long firstBankOffset, Object srcArray, int srcArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            LongBuffer dup = ((LongBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            LongBuffer dup = ((LongBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.put((long[])srcArray, srcArrayOffset, count);
         }
@@ -5612,7 +5612,7 @@ class MappedDataStorages {
         void getDataFromFirstBank(Buffer buf, long firstBankOffset, Object destArray, int destArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            FloatBuffer dup = ((FloatBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            FloatBuffer dup = ((FloatBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.get((float[])destArray, destArrayOffset, count);
         }
@@ -5620,7 +5620,7 @@ class MappedDataStorages {
         void setDataInFirstBank(Buffer buf, long firstBankOffset, Object srcArray, int srcArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            FloatBuffer dup = ((FloatBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            FloatBuffer dup = ((FloatBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.put((float[])srcArray, srcArrayOffset, count);
         }
@@ -5992,7 +5992,7 @@ class MappedDataStorages {
         void getDataFromFirstBank(Buffer buf, long firstBankOffset, Object destArray, int destArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            DoubleBuffer dup = ((DoubleBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            DoubleBuffer dup = ((DoubleBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.get((double[])destArray, destArrayOffset, count);
         }
@@ -6000,7 +6000,7 @@ class MappedDataStorages {
         void setDataInFirstBank(Buffer buf, long firstBankOffset, Object srcArray, int srcArrayOffset, int count) {
             int ofs = (int)firstBankOffset;
             assert firstBankOffset == ofs;
-            DoubleBuffer dup = ((DoubleBuffer)buf).duplicate(); // necessary for multithread access if !this.syncNecessary
+            DoubleBuffer dup = ((DoubleBuffer)buf).duplicate(); // necessary for multithreading if !this.syncNecessary
             dup.position(ofs);
             dup.put((double[])srcArray, srcArrayOffset, count);
         }

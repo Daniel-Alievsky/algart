@@ -198,7 +198,7 @@ import java.util.Objects;
  * In other words, all methods of this class are executed in the current thread.</p>
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
- * and can be synchronized manually, if multithread access is necessary.
+ * and can be synchronized manually, if multithreading access is necessary.
  * <b>Warning</b>! Even if you use in several different threads different instances of this class,
  * created via one of the following methods:</p>
  *

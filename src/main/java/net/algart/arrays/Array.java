@@ -48,7 +48,7 @@ import java.nio.ByteOrder;
  * <p>{@link #asImmutable() Immutable} arrays, implementing this interface,
  * are <b>thread-safe</b> and can be used simultaneously in several threads.
  * All other kinds of arrays <b>are thread-compatible</b>
- * and can be synchronized manually if multithread access is necessary.
+ * and can be synchronized manually if multithreading access is necessary.
  * Please see more details in the
  * <a href="package-summary.html#multithreading">package description</a>.</p>
  *
@@ -122,7 +122,7 @@ public interface Array {
      * <p>There is a guarantee that this method works very quickly
      * (usually it just returns a constant value).
      *
-     * @return canonical AlgART type of an updatable array of the same kind.
+     * @return canonical AlgART type of updatable array of the same kind.
      */
     Class<? extends UpdatableArray> updatableType();
 
@@ -241,7 +241,7 @@ public interface Array {
      * {@link MutableObjectArray} subinterfaces), this method may allocate new instances
      * for Java array elements <tt>destArray[destArrayOffset]..destArray[destArrayOffset+count-1]</tt>,
      * but also may change the state of already existing non-null elements: it depends on implementation.
-     * In any case, you can be sure that if some of target elements <tt>destArray[k]==null</tt>,
+     * In any case, you can be sure that if some of the target elements <tt>destArray[k]==null</tt>,
      * this method always allocate new element.
      *
      * <p>Note: if <tt>IndexOutOfBoundsException</tt> occurs due to attempt to write data outside the passed
@@ -616,7 +616,7 @@ public interface Array {
     Array asTrustedImmutable();
 
     /**
-     * Tries to check, whether some unallowed mutations of this {@link #asTrustedImmutable()
+     * Tries to check, whether some non-allowed mutations of this {@link #asTrustedImmutable()
      * trusted immutable} array took place,
      * and throw {@link UnallowedMutationError} in this case.
      * Does nothing if this array implement {@link UpdatableArray} interface
@@ -675,13 +675,13 @@ public interface Array {
      *
      * <p>Please be careful: it you will want to change arrays created by this method, the result may
      * be unexpected! For example, an attempt to copy other arrays into copy-on-next-write array
-     * by some methods like {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} will probable
+     * by some methods like {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} will probably
      * do nothing. The reason is working with the array via its subarrays &mdash;
      * for example, {@link Arrays#copy(ArrayContext, UpdatableArray, Array) Arrays.copy} method
      * splits the source and target arrays into subarrays and copies these subarrays.
      * (Usual {@link UpdatableArray#copy(Array)} method and other mutation methods
      * of the resulting array will work normally.)
-     * The main goal of copy-on-next-write arrays is <i>protection</i> againts unwanted changing
+     * The main goal of copy-on-next-write arrays is <i>protection</i> against unwanted changing
      * an original array; it is supposed that the client, in normal situation, will only read
      * such arrays and will not try to change them.
      *
@@ -1141,7 +1141,7 @@ public interface Array {
      * @throws IllegalArgumentException if the passed array is resizable
      *                                  (for example, implements {@link MutableArray}),
      *                                  or if the number of dimensions is 0 (empty <tt>dim</tt> Java array),
-     *                                  or if some of dimensions are negative.
+     *                                  or if some of the dimensions are negative.
      * @throws SizeMismatchException    if the product of all dimensions is not equal to the array length.
      * @throws TooLargeArrayException   if the product of all dimensions is greater than <tt>Long.MAX_VALUE</tt>.
      */
@@ -1240,7 +1240,7 @@ public interface Array {
      * files, streams, sockets, locks, etc&#46; &mdash;
      * and some array data are not still reflected in that resources
      * (for example, were not saved in the disk file yet),
-     * this method <i>flushs</i> all these data to the external devices.
+     * this method <i>flushes</i> all these data to the external devices.
      *
      * <p>This method may not perform <i>immediate</i> writing data to the storage devices.
      * But it guarantees that:<ol>
@@ -1262,7 +1262,7 @@ public interface Array {
      * <p>If <tt>forcePhysicalWriting</tt> argument is <tt>true</tt>, this
      * method tries to physically flush all unsaved elements of this array to the storage device.
      * The precise actions, performed in this case, are not specified.
-     * The typical behaviour: all internal caches, if they are provided by Java imlementation of the AlgART array,
+     * The typical behaviour: all internal caches, if they are provided by Java implementation of the AlgART array,
      * are written to the external device via OS calls, and OS is requested to flush buffers or file-mapping
      * to the physical disk.
      * The mode <tt>forcePhysicalWriting=true</tt> increases chances that the data will be really flushed to

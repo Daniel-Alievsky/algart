@@ -164,7 +164,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * lying at the same positions as the elements of some connected object of the scanned matrix.</p>
      *
      * <p>This class is not thread-safe, but <b>is thread-compatible</b>
-     * and can be synchronized manually, if multithread access is necessary.</p>
+     * and can be synchronized manually, if multithreading access is necessary.</p>
      */
     public static class MaskElementCounter implements ConnectedObjectScanner.ElementVisitor {
         private final Matrix<? extends BitArray> mask;
@@ -724,7 +724,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      *
      * <p>This method never modifies the passed <tt>coordinates</tt> array:
      * it is cloned in the beginning of the method and is not used after this.
-     * It can be important in a case of multithread access.</p>
+     * It can be important in a case of multithreading access.</p>
      *
      * @param context        the context of scanning; may be <tt>null</tt>, then will be ignored.
      *                       The main purpose of the context in most implementation is to allow interruption

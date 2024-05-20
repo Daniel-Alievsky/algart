@@ -49,7 +49,7 @@ import java.util.Objects;
  * on {@link PArray#getDouble(long)} and {@link UpdatablePArray#setDouble(long, double)} calls.</p>
  *
  * <p>The instances of this class are not thread-safe, but <b>are thread-compatible</b>
- * and can may be synchronized manually if multithread access is necessary.</p>
+ * and can may be synchronized manually if multithreading access is necessary.</p>
  *
  * @author Daniel Alievsky
  */

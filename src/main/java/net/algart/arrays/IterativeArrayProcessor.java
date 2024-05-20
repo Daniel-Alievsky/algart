@@ -70,7 +70,7 @@ package net.algart.arrays;
  * <p>All other methods are usually inherited from {@link AbstractIterativeArrayProcessor} class.</p>
  *
  * <p>Implementations of this interface are <b>thread-compatible</b>
- * (allow manual synchronization for multithread access).
+ * (allow manual synchronization for multithreading access).
  * Without external synchronization, the methods of this interface may return unspecified results
  * while simultaneous accessing the same instance from several threads.</p>
  *
