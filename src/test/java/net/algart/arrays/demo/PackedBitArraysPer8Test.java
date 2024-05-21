@@ -340,10 +340,12 @@ public class PackedBitArraysPer8Test {
             System.out.println("Testing \"packBits\" method...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.packBits(pDestWork1, destPos, bSrc, srcPos, count);
+                PackedBitArraysPer8.packBitsNoSync(pDestWork2, destPos, bSrc, srcPos, count);
                 for (int k = 0; k < count; k++) {
                     if (bSrc[srcPos + k] != PackedBitArraysPer8.getBit(pDestWork1, destPos + k)) {
                         throw new AssertionError("The bug A in packBits found in test #" + testCount + ": "
@@ -374,18 +376,24 @@ public class PackedBitArraysPer8Test {
                                 + ", error found at " + k);
                     }
                 }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug E in packBitsNoSync " +
+                            "found in test #" + testCount);
+                }
                 showProgress(testCount);
             }
 
             System.out.println("Testing \"copyBits\" method, two different arrays...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
                 System.arraycopy(bDest, 0, bDestWork2, 0, bDest.length);
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBits(pDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.copyBitsNoSync(pDestWork2, destPos, pSrc, srcPos, count);
                 PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
                 // unpacking necessary to show bDestWork1 in a case of the bug
                 for (int k = 0; k < count; k++) {
@@ -413,26 +421,36 @@ public class PackedBitArraysPer8Test {
                                 ")");
                     }
                 }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug C in copyBitsNoSync " +
+                            "found in test #" + testCount);
+                }
                 showProgress(testCount);
             }
 
             System.out.println("Testing \"copyBits\" + \"unpackBits\" method, inside a single array...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
                 System.arraycopy(bDest, 0, bDestWork2, 0, bDest.length);
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBits(pDestWork1, destPos, pDestWork1, srcPos, count);
+                PackedBitArraysPer8.copyBitsNoSync(pDestWork2, destPos, pDestWork2, srcPos, count);
                 PackedBitArraysPer8.unpackBits(bDestWork1, destPos, pDestWork1, destPos, count);
                 System.arraycopy(bDestWork2, srcPos, bDestWork2, destPos, count);
                 for (int k = 0; k < len; k++) {
                     if (bDestWork1[k] != bDestWork2[k]) {
-                        throw new AssertionError("The bug in copyBits or unpackBits found in test #" +
+                        throw new AssertionError("The bug A in copyBits or unpackBits found in test #" +
                                 testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
                                 count + ", error found at " + k);
                     }
+                }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug B in copyBitsNoSync " +
+                            "found in test #" + testCount);
                 }
                 showProgress(testCount);
             }
@@ -440,11 +458,13 @@ public class PackedBitArraysPer8Test {
             System.out.println("Testing \"copyBitsFromReverseToNormalOrder\" method, two different arrays...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBitsFromReverseToNormalOrder(pDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.copyBitsFromReverseToNormalOrderNoSync(pDestWork2, destPos, pSrc, srcPos, count);
                 PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
                 // unpacking necessary to show bDestWork1 in a case of the bug
                 for (int k = 0; k < count; k++) {
@@ -460,13 +480,17 @@ public class PackedBitArraysPer8Test {
                                 ", dest[" + (destPos + k) + "]=" + bit + " instead of " + bitSrc + ")");
                     }
                 }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug B in copyBitsFromReverseToNormalOrderNoSync " +
+                            "found in test #" + testCount);
+                }
                 System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 byte[] copy = pSrc.clone();
                 PackedBitArraysPer8.reverseBitsOrderInEachByte(copy);
                 PackedBitArraysPer8.copyBits(pDestWork2, destPos, copy, srcPos, count);
                 for (int k = 0; k < pDest.length; k++) {
                     if (pDestWork2[k] != pDestWork1[k]) {
-                        throw new AssertionError("The bug B in copyBitsFromReverseToNormalOrder " +
+                        throw new AssertionError("The bug C in copyBitsFromReverseToNormalOrder " +
                                 "found in test #" +
                                 testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
                                 ", error found at " + k +
@@ -479,7 +503,7 @@ public class PackedBitArraysPer8Test {
                 System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 copyBitsFromReverseToNormalOrderSimple(pDestWork2, destPos, pSrc, srcPos, count);
                 if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
-                    throw new AssertionError("The bug C in copyBitsFromReverseToNormalOrder " +
+                    throw new AssertionError("The bug D in copyBitsFromReverseToNormalOrder " +
                             "found in test #" + testCount);
                 }
                 showProgress(testCount);
@@ -488,6 +512,7 @@ public class PackedBitArraysPer8Test {
             System.out.println("Testing \"copyBitsFromReverseToNormalOrder\" method, inside a single array...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
@@ -498,6 +523,8 @@ public class PackedBitArraysPer8Test {
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBitsFromReverseToNormalOrder(
                         pDestWork1, destPos, pDestWork1, srcPos, count);
+                PackedBitArraysPer8.copyBitsFromReverseToNormalOrderNoSync(
+                        pDestWork2, destPos, pDestWork2, srcPos, count);
                 PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
                 // unpacking necessary to show bDestWork1 in a case of the bug
                 for (int k = 0; k < count; k++) {
@@ -529,10 +556,14 @@ public class PackedBitArraysPer8Test {
                         }
                     }
                 }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug C in copyBitsFromReverseToNormalOrderNoSync " +
+                            "found in test #" + testCount);
+                }
                 System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 copyBitsFromReverseToNormalOrderSimple(pDestWork2, destPos, pDestWork2, srcPos, count);
                 if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
-                    throw new AssertionError("The bug C in copyBitsFromReverseToNormalOrder " +
+                    throw new AssertionError("The bug D in copyBitsFromReverseToNormalOrder " +
                             "found in test #" + testCount);
                 }
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
@@ -541,7 +572,7 @@ public class PackedBitArraysPer8Test {
                         pDestWork1, 0, pDestWork1, 0, (long) pDestWork1.length * 8);
                 PackedBitArraysPer8.reverseBitsOrderInEachByte(pDestWork2);
                 if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
-                    throw new AssertionError("The bug D in copyBitsFromReverseToNormalOrder " +
+                    throw new AssertionError("The bug E in copyBitsFromReverseToNormalOrder " +
                             "found in test #" + testCount);
                 }
                 showProgress(testCount);
@@ -551,11 +582,13 @@ public class PackedBitArraysPer8Test {
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
                 System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBitsFromNormalToReverseOrder(pDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.copyBitsFromNormalToReverseOrderNoSync(pDestWork2, destPos, pSrc, srcPos, count);
                 PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
                 // unpacking necessary to show bDestWork1 in a case of the bug
                 for (int k = 0; k < count; k++) {
@@ -588,10 +621,14 @@ public class PackedBitArraysPer8Test {
                         }
                     }
                 }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug C in copyBitsFromNormalToReverseOrderNoSync " +
+                            "found in test #" + testCount);
+                }
                 System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 copyBitsFromNormalToReverseOrderSimple(pDestWork2, destPos, pSrc, srcPos, count);
                 if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
-                    throw new AssertionError("The bug C in copyBitsFromNormalToReverseOrder " +
+                    throw new AssertionError("The bug D in copyBitsFromNormalToReverseOrder " +
                             "found in test #" + testCount);
                 }
                 showProgress(testCount);
@@ -600,6 +637,7 @@ public class PackedBitArraysPer8Test {
             System.out.println("Testing \"copyBitsFromNormalToReverseOrder\" method, inside a single array...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
@@ -610,6 +648,8 @@ public class PackedBitArraysPer8Test {
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBitsFromNormalToReverseOrder(
                         pDestWork1, destPos, pDestWork1, srcPos, count);
+                PackedBitArraysPer8.copyBitsFromNormalToReverseOrderNoSync(
+                        pDestWork2, destPos, pDestWork2, srcPos, count);
                 PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
                 // unpacking necessary to show bDestWork1 in a case of the bug
                 for (int k = 0; k < count; k++) {
@@ -641,10 +681,14 @@ public class PackedBitArraysPer8Test {
                         }
                     }
                 }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug C in copyBitsFromNormalToReverseOrderNoSync " +
+                            "found in test #" + testCount);
+                }
                 System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 copyBitsFromNormalToReverseOrderSimple(pDestWork2, destPos, pDestWork2, srcPos, count);
                 if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
-                    throw new AssertionError("The bug C in copyBitsFromNormalToReverseOrder " +
+                    throw new AssertionError("The bug D in copyBitsFromNormalToReverseOrder " +
                             "found in test #" + testCount);
                 }
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
@@ -653,7 +697,7 @@ public class PackedBitArraysPer8Test {
                         pDestWork1, 0, pDestWork1, 0, (long) pDestWork1.length * 8);
                 PackedBitArraysPer8.reverseBitsOrderInEachByte(pDestWork2);
                 if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
-                    throw new AssertionError("The bug D in copyBitsFromNormalToReverseOrder " +
+                    throw new AssertionError("The bug E in copyBitsFromNormalToReverseOrder " +
                             "found in test #" + testCount);
                 }
                 showProgress(testCount);
