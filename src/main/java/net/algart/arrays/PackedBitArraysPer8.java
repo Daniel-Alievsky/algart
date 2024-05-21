@@ -835,7 +835,6 @@ public class PackedBitArraysPer8 {
         }
 
     }
-    /*Repeat.IncludeEnd*/
 
     /**
      * Equivalent to {@link #copyBits(byte[], long, byte[], long, long)} method with the only exception,
@@ -852,8 +851,6 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void copyBitsNoSync(byte[] dest, long destPos, byte[] src, long srcPos, long count) {
-        // Note: the following method IS NOT BUILT by Repeater; in a case of any improbable changes,
-        // this must be re-written manually!
         Objects.requireNonNull(dest, "Null dest");
         Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 3);
@@ -866,12 +863,17 @@ public class PackedBitArraysPer8 {
             cntStart = (int) count;
             maskStart &= (1 << (dPosRem + cntStart)) - 1; // &= dPosRem+cntStart times 1 (from the left)
         }
-        if (src == dest && srcPos <= destPos && srcPos + count > destPos) {
+        //Start_reverseOrder !! this comment is necessary for preprocessing by Repeater !!
+        if (src == dest && srcPos <= destPos && srcPos + count > destPos)
+        //End_reverseOrder !! this comment is necessary for preprocessing by Repeater !!
+        {
             // overlap possible
             if (sPosRem == dPosRem) {
+                //Start_nothingToDo !! this comment is necessary for preprocessing by Repeater !!
                 if (sPos == dPos) {
                     return; // nothing to do
                 }
+                //End_nothingToDo !! this comment is necessary for preprocessing by Repeater !!
                 final int sPosStart = sPos;
                 final int dPosStart = dPos;
                 if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
@@ -928,6 +930,7 @@ public class PackedBitArraysPer8 {
                     }
                     dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
                 } else {
+                    //Start_sPrev !! this comment is necessary for preprocessing by Repeater !!
                     sPrev = (src[sPos] & 0xFF);
                     // IndexOutOfBoundException is impossible here, because there is one of the following situations:
                     // 1) cnt > 0, then (src[sPos] & 0xFF) is really necessary in the following loop;
@@ -991,7 +994,6 @@ public class PackedBitArraysPer8 {
                         sPosRem = (sPosRem + cntStart) & 7;
                     }
                     // let's suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
-
                     dest[dPos] = (byte) ((v & maskStart) | (dest[dPos] & ~maskStart));
                     count -= cntStart;
                     if (count == 0) {
@@ -1020,12 +1022,12 @@ public class PackedBitArraysPer8 {
                     } else {
                         v = (sNext >>> sPosRem) | ((src[sPos + 1] & 0xFF) << sPosRem8);
                     }
-
                     dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
                 }
             }
         }
     }
+    /*Repeat.IncludeEnd*/
 
     /**
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array in the reverse order,

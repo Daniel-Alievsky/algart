@@ -675,6 +675,198 @@ public class PackedBitArrays {
         }
         //[[Repeat.SectionEnd copyBits_method_impl]]
     }
+
+    /**
+     * Equivalent to {@link #copyBits(long[], long, long[], long, long)} method with the only exception,
+     * that this method does not perform synchronization on <tt>dest</tt> array.
+     * You may use this method instead of {@link #copyBits},
+     * if you are not planning to call it from different threads for the same <tt>dest</tt> array.
+     *
+     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param srcPos  position of the first bit read in the source array.
+     * @param count   the number of bits to be copied (must be &gt;=0).
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
+    public static void copyBitsNoSync(long[] dest, long destPos, long[] src, long srcPos, long count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int sPos = (int) (srcPos >>> 6);
+        int dPos = (int) (destPos >>> 6);
+        int sPosRem = (int) (srcPos & 63);
+        int dPosRem = (int) (destPos & 63);
+        int cntStart = (-dPosRem) & 63;
+        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (1L << (dPosRem + cntStart)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        //Start_reverseOrder !! this comment is necessary for preprocessing by Repeater !!
+        if (src == dest && srcPos <= destPos && srcPos + count > destPos)
+        //End_reverseOrder !! this comment is necessary for preprocessing by Repeater !!
+        {
+            // overlap possible
+            if (sPosRem == dPosRem) {
+                //Start_nothingToDo !! this comment is necessary for preprocessing by Repeater !!
+                if (sPos == dPos) {
+                    return; // nothing to do
+                }
+                //End_nothingToDo !! this comment is necessary for preprocessing by Repeater !!
+                final int sPosStart = sPos;
+                final int dPosStart = dPos;
+                if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
+                    count -= cntStart;
+                    dPos++;
+                    sPos++;
+                }
+                int cnt = (int) (count >>> 6);
+                int cntFinish = (int) (count & 63);
+                if (cntFinish > 0) {
+                    long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                    dest[dPos + cnt] =
+                            (src[sPos + cnt] & maskFinish) |
+                                    (dest[dPos + cnt] & ~maskFinish);
+                }
+                System.arraycopy(src, sPos, dest, dPos, cnt);
+                if (cntStart > 0) {
+                    dest[dPosStart] =
+                            (src[sPosStart] & maskStart) |
+                                    (dest[dPosStart] & ~maskStart);
+                }
+            } else {
+                final int shift = dPosRem - sPosRem;
+                final int sPosStart = sPos;
+                final int dPosStart = dPos;
+                final int sPosRemStart = sPosRem;
+                final long dPosMin;
+                if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
+                    if (sPosRem + cntStart <= 64) { // cntStart bits are in a single src element
+                        sPosRem += cntStart;
+                    } else {
+                        sPos++;
+                        sPosRem = (sPosRem + cntStart) & 63;
+                    }
+                    // we suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                    count -= cntStart;
+                    dPos++;
+                }
+                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
+                int cnt = (int) (count >>> 6);
+                dPosMin = dPos;
+                sPos += cnt;
+                dPos += cnt;
+                int cntFinish = (int) (count & 63);
+                final int sPosRem64 = 64 - sPosRem;
+                long sPrev;
+                if (cntFinish > 0) {
+                    long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                    long v;
+                    if (sPosRem + cntFinish <= 64) { // cntFinish bits are in a single src element
+                        v = (sPrev = src[sPos]) >>> sPosRem;
+                    } else {
+                        v = ((sPrev = src[sPos]) >>> sPosRem) | (src[sPos + 1] << sPosRem64);
+                    }
+                    dest[dPos] = (v & maskFinish) | (dest[dPos] & ~maskFinish);
+                } else {
+                    //Start_sPrev !! this comment is necessary for preprocessing by Repeater !!
+                    sPrev = src[sPos];
+                    // IndexOutOfBoundException is impossible here, because there is one of the following situations:
+                    // 1) cnt > 0, then src[sPos] is really necessary in the following loop;
+                    // 2) cnt == 0 and cntStart > 0, then src[sPos] will be necessary for making dest[dPosStart].
+                    // All other situations are impossible here:
+                    // 3) cntFinish > 0: it was processed above in "if (cntFinish > 0)..." branch;
+                    // 4) cntStart == 0, cntFinish == 0 and cnt == 0, i.e. count == 0: it's impossible
+                    // in this branch of all algorithm (overlap is impossible when count == 0).
+                    //End_sPrev !! this comment is necessary for preprocessing by Repeater !!
+                }
+                while (dPos > dPosMin) { // cnt times
+                    --sPos;
+                    --dPos;
+                    dest[dPos] = (sPrev << sPosRem64) | ((sPrev = src[sPos]) >>> sPosRem);
+                }
+                if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
+                    long v;
+                    if (sPosRemStart + cntStart <= 64) { // cntStart bits are in a single src element
+                        if (shift > 0)
+                            v = src[sPosStart] << shift;
+                        else
+                            v = src[sPosStart] >>> -shift;
+                    } else {
+                        v = (src[sPosStart] >>> -shift) | (src[sPosStart + 1] << (64 + shift));
+                    }
+                    dest[dPosStart] = (v & maskStart) | (dest[dPosStart] & ~maskStart);
+                }
+            }
+        } else {
+            // usual case
+            if (sPosRem == dPosRem) {
+                if (cntStart > 0) {
+                    dest[dPos] = (src[sPos] & maskStart) | (dest[dPos] & ~maskStart);
+                    count -= cntStart;
+                    dPos++;
+                    sPos++;
+                }
+                int cnt = (int) (count >>> 6);
+                System.arraycopy(src, sPos, dest, dPos, cnt);
+                sPos += cnt;
+                dPos += cnt;
+                int cntFinish = (int) (count & 63);
+                if (cntFinish > 0) {
+                    long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                    dest[dPos] = (src[sPos] & maskFinish) | (dest[dPos] & ~maskFinish);
+                }
+            } else {
+                final int shift = dPosRem - sPosRem;
+                long sNext;
+                if (cntStart > 0) {
+                    long v;
+                    if (sPosRem + cntStart <= 64) { // cntStart bits are in a single src element
+                        if (shift > 0)
+                            v = (sNext = src[sPos]) << shift;
+                        else
+                            v = (sNext = src[sPos]) >>> -shift;
+                        sPosRem += cntStart;
+                    } else {
+                        v = (src[sPos] >>> -shift) | ((sNext = src[sPos + 1]) << (64 + shift));
+                        sPos++;
+                        sPosRem = (sPosRem + cntStart) & 63;
+                    }
+                    // let's suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                    dest[dPos] = (v & maskStart) | (dest[dPos] & ~maskStart);
+                    count -= cntStart;
+                    if (count == 0) {
+                        return; // little optimization
+                    }
+                    dPos++;
+                } else {
+                    if (count == 0) {
+                        return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
+                    }
+                    sNext = src[sPos];
+                }
+                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
+                final int sPosRem64 = 64 - sPosRem;
+                for (int dPosMax = dPos + (int) (count >>> 6); dPos < dPosMax; ) {
+                    sPos++;
+                    dest[dPos] = (sNext >>> sPosRem) | ((sNext = src[sPos]) << sPosRem64);
+                    dPos++;
+                }
+                int cntFinish = (int) (count & 63);
+                if (cntFinish > 0) {
+                    long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+                    long v;
+                    if (sPosRem + cntFinish <= 64) { // cntFinish bits are in a single src element
+                        v = sNext >>> sPosRem;
+                    } else {
+                        v = (sNext >>> sPosRem) | (src[sPos + 1] << sPosRem64);
+                    }
+                    dest[dPos] = (v & maskFinish) | (dest[dPos] & ~maskFinish);
+                }
+            }
+        }
+    }
     /*Repeat.SectionEnd copyBits*/
 
     /**
