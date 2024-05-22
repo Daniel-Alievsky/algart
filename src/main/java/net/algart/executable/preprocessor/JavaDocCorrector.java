@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.executable.preprocessor.java;
+package net.algart.executable.preprocessor;
 
 import java.io.*;
 import java.util.HashSet;

@@ -70,7 +70,7 @@
 ]]></bottom>
         -->
         </javadoc>
-        <java classpath="../target/classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
+        <java classpath="../target/classes" classname="net.algart.executable.preprocessor.JavaDocCorrector" failonerror="true">
             <arg value="../docs/api/"/>
         </java>
         <replace dir="../docs/api" summary="true">

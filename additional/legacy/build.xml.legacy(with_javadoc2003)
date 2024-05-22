@@ -89,7 +89,7 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
 <!--/algartBottom-->
 ]]></bottom>
         </javadoc>
-        <java classpath="../target/classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
+        <java classpath="../target/classes" classname="net.algart.executable.preprocessor.JavaDocCorrector" failonerror="true">
             <arg value="../docs/api/"/>
         </java>
         <replace dir="../docs/api" summary="true">
@@ -150,7 +150,7 @@ var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
 <!--/algartBottom-->
 ]]></bottom>
         </javadoc>
-        <java classpath="../target/classes" classname="net.algart.executable.preprocessor.java.JavaDocCorrector" failonerror="true">
+        <java classpath="../target/classes" classname="net.algart.executable.preprocessor.JavaDocCorrector" failonerror="true">
             <arg value="../additional/legacy/algart2003/docs/api/"/>
         </java>
         <replace dir="../additional/legacy/algart2003/docs/api" summary="true">
