@@ -45,6 +45,7 @@ public class Repeater implements Cloneable {
             super("Illegal Repeater syntax" + message);
         }
 
+        @Serial
         private static final long serialVersionUID = 1283256722407269023L;
     }
 
