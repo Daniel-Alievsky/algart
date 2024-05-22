@@ -95,7 +95,7 @@ public class Arrays {
         private SystemSettings() {
         }
 
-        private static final String VERSION = "1.4.7";
+        private static final String VERSION = "1.4.8";
         private static final int[] PARSED_VERSION;
         static {
             PARSED_VERSION = java.util.Arrays.stream(VERSION.split("\\.")).mapToInt(Integer::parseInt).toArray();
