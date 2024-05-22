@@ -694,6 +694,53 @@ class TinyBitArrays {
             }
         }
     }
+
+    /**
+     * Equivalent to {@link #fillBits(long[], long, long, boolean)}
+     * method with the only exception,
+     * that this method does not perform synchronization on <tt>dest</tt> array.
+     * You may use this method instead of {@link #fillBits},
+     * if you are not planning to call it from different threads for the same <tt>dest</tt> array.
+     *
+     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param count   the number of bits to be filled (must be &gt;=0).
+     * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
+     */
+    public static void fillBitsNoSync(long[] dest, long destPos, long count, boolean value) {
+        Objects.requireNonNull(dest, "Null dest");
+        int dPos = (int) (destPos >>> 6);
+        int dPosRem = (int) (destPos & 63);
+        int cntStart = (-dPosRem) & 63;
+        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (1L << (dPosRem + cntStart)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        if (cntStart > 0) {
+            if (value)
+                dest[dPos] |= maskStart;
+            else
+                dest[dPos] &= ~maskStart;
+            count -= cntStart;
+            dPos++;
+        }
+        long longValue = value ? -1 : 0;
+        for (int dPosMax = dPos + (int) (count >>> 6); dPos < dPosMax; dPos++) {
+            dest[dPos] = longValue;
+        }
+        int cntFinish = (int) (count & 63);
+        if (cntFinish > 0) {
+            long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+            if (value)
+                dest[dPos] |= maskFinish;
+            else
+                dest[dPos] &= ~maskFinish;
+
+        }
+    }
     /*Repeat.IncludeEnd*/
 
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/PackedBitArrays.java, logicalOperations)

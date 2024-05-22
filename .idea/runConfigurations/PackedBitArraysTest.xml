@@ -2,7 +2,7 @@
   <configuration default="false" name="PackedBitArraysTest" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.PackedBitArraysTest" />
     <module name="algart" />
-    <option name="PROGRAM_PARAMETERS" value="1000 30000" />
+    <option name="PROGRAM_PARAMETERS" value="1000 10000" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="net.algart.arrays.demo.*" />

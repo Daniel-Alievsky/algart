@@ -225,10 +225,12 @@ public class PackedBitArraysTest {
                 System.out.println("Testing \"packBits\" method...");
                 for (int testCount = 0; testCount < numberOfTests; testCount++) {
                     System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                    System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                     int srcPos = rnd.nextInt(len + 1);
                     int destPos = rnd.nextInt(len + 1);
                     int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                     PackedBitArrays.packBits(pDestWork1, destPos, bSrc, srcPos, count);
+                    PackedBitArrays.packBitsNoSync(pDestWork2, destPos, bSrc, srcPos, count);
                     for (int k = 0; k < count; k++) {
                         if (bSrc[srcPos + k] != PackedBitArrays.getBit(pDestWork1, destPos + k)) {
                             throw new AssertionError("The bug A in packBits found in test #"
@@ -261,6 +263,10 @@ public class PackedBitArraysTest {
                                     + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                     + ", error found at " + k);
                         }
+                    }
+                    if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                        throw new AssertionError("The bug E in packBitsNoSync " +
+                                "found in test #" + testCount);
                     }
                     showProgress(testCount);
                 }
@@ -691,23 +697,29 @@ public class PackedBitArraysTest {
             System.out.println("Testing \"fillBits\" method...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
                 System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
                 System.arraycopy(bDest, 0, bDestWork2, 0, bDest.length);
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - destPos);
                 boolean value = rnd.nextBoolean();
                 PackedBitArrays.fillBits(pDestWork1, startOffset + destPos, count, value);
+                PackedBitArrays.fillBitsNoSync(pDestWork2, startOffset + destPos, count, value);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork1, startOffset, len);
                 for (int k = 0; k < count; k++) {
                     bDestWork2[destPos + k] = value;
                 }
                 for (int k = 0; k < len; k++) {
                     if (bDestWork1[k] != bDestWork2[k]) {
-                        throw new AssertionError("The bug in fillBits found in test #"
+                        throw new AssertionError("The bug A in fillBits found in test #"
                                 + testCount + ": "
                                 + "destPos = " + destPos + ", count = " + count + ", value = " + value
                                 + ", error found at " + k);
                     }
+                }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug B in fillBitsNoSync " +
+                            "found in test #" + testCount);
                 }
                 showProgress(testCount);
             }
