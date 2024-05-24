@@ -248,7 +248,6 @@ public class PackedBitArraysPer8 {
         return result;
     }
 
-
     /**
      * Returns <tt>((long) array.length) &lt;&lt; 3</tt>: the maximal number of bits that
      * can be stored in the specified array.
@@ -650,6 +649,55 @@ public class PackedBitArraysPer8 {
             }
         }
         return result;
+    }
+
+    public static void setBits64InReverseOrder(byte[] dest, long destPos, long bits, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        if (destPos < 0) {
+            throw new IndexOutOfBoundsException("Negative destPos argument: " + destPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot set > 64 bits in setBits64 method");
+        }
+        final long destPosDiv8 = destPos >>> 3;
+        if (count == 0 || destPosDiv8 >= dest.length) {
+            return;
+        }
+        int dPosRem = (int) (destPos & 7);
+        int cntStart = (-dPosRem) & 7;
+        int maskStart = 0xFF >>> dPosRem; // dPosRem times 0, then 1 (from the highest bit)
+        if (cntStart > count) {
+            cntStart = count;
+            maskStart &= (0xFF00 >>> (dPosRem + cntStart)); // &= dPosRem+cntStart times 1 (from the highest bit)
+        }
+        int dPos = (int) destPosDiv8;
+        synchronized (dest) {
+            if (cntStart > 0) {
+                // bits #count-cntStart...#count-1 of "bits" argument must be copied to
+                // bits #dPosRem..#dPosRem+(cntStart-1).
+                // This means shifting >>> (count-cntStart)-dPosRem
+                count -= cntStart;
+                final int shift = count - dPosRem;
+                final long v = shift > 0 ? bits >>> shift : bits << -shift;
+                dest[dPos++] = (byte) ((v & maskStart) | (dest[dPos] & ~maskStart));
+            }
+            while (count >= 8) {
+                if (dPos >= dest.length) {
+                    return;
+                }
+                count -= 8;
+                dest[dPos++] = (byte) (bits >>> count);
+            }
+            if (count > 0 && dPos < dest.length) {
+                int maskFinish = 0xFF00 >>> count; // count times 1 (from the highest bit)
+                final long v = bits << (8 - count);
+                dest[dPos] = (byte) ((bits & maskFinish) | (dest[dPos] & ~maskFinish));
+            }
+        }
     }
 
     // Note: in the following regexp, we must replace src[...] ==> src[...] & 0xFF,
