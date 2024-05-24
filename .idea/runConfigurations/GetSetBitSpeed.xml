@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="SetBitSpeed" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.SetBitSpeed" />
+  <configuration default="false" name="GetSetBitSpeed" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.GetSetBitSpeed" />
     <module name="algart" />
     <option name="PROGRAM_PARAMETERS" value="4194304 32" />
     <option name="VM_PARAMETERS" value="-ea -esa -Dnet.algart.arrays.globalMemoryModel=SIMPLE" />

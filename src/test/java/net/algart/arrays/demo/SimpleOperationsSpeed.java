@@ -239,28 +239,28 @@ public final class SimpleOperationsSpeed {
             // Speed of operation below depends on the previous content of bits array!
             t1 = System.nanoTime();
             for (int k = 0; k < n; k++) {
-                PackedBitArrays.setBit(bits, k, true);
+                PackedBitArrays.setBit(bits, k, ((k & 1) != 0));
             }
             t2 = System.nanoTime();
             time("PackedBitArrays.setBit", t1, t2);
 
             t1 = System.nanoTime();
             for (int k = 0; k < n; k++) {
-                bitArray.setBit(k, true);
+                bitArray.setBit(k, ((k & 1) != 0));
             }
             t2 = System.nanoTime();
             time("setBit", t1, t2);
 
             t1 = System.nanoTime();
             for (int k = 0; k < n; k++) {
-                PackedBitArrays.setBitNoSync(bits, k, true);
+                PackedBitArrays.setBitNoSync(bits, k, (k & 1) != 0);
             }
             t2 = System.nanoTime();
             time("PackedBitArrays.setBitNoSync", t1, t2);
 
             t1 = System.nanoTime();
             for (int k = 0; k < n; k++) {
-                bitArray.setBitNoSync(k, true);
+                bitArray.setBitNoSync(k, (k & 1) != 0);
             }
             t2 = System.nanoTime();
             time("setBitNoSync", t1, t2);
@@ -273,6 +273,32 @@ public final class SimpleOperationsSpeed {
             t2 = System.nanoTime();
             someInfo += (bit ? 1 : 2);
             time("getBit", t1, t2);
+
+            t1 = System.nanoTime();
+            bit = false;
+            for (int k = 0; k < n; k++) {
+                bit |= PackedBitArrays.getBit(bits, k);
+            }
+            t2 = System.nanoTime();
+            someInfo += (bit ? 1 : 2);
+            time("PackedBitArrays.getBit", t1, t2);
+
+            long longSum = 0;
+            t1 = System.nanoTime();
+            for (int k = 0; k < n; k++) {
+                longSum += PackedBitArrays.getBits64(bits, k, 1);
+            }
+            t2 = System.nanoTime();
+            someInfo += longSum;
+            time("PackedBitArrays.getBits64(1)", t1, t2);
+
+            t1 = System.nanoTime();
+            for (int k = 0; k < n; k++) {
+                longSum += PackedBitArrays.getBits64(bits, k, 5);
+            }
+            t2 = System.nanoTime();
+            someInfo += longSum;
+            time("PackedBitArrays.getBits64(4)", t1, t2);
 
             t1 = System.nanoTime();
             for (int k = 0; k < n; k++) {
@@ -377,7 +403,7 @@ public final class SimpleOperationsSpeed {
             time("simple longs[k]=k", t1, t2);
 
             t1 = System.nanoTime();
-            long longSum = 0;
+            longSum = 0;
             for (int k = 0; k < n; k++) {
                 longSum += longs[k];
             }

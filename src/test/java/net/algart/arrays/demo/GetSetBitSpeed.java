@@ -25,18 +25,16 @@
 package net.algart.arrays.demo;
 
 import net.algart.arrays.*;
-import net.algart.math.functions.LinearFunc;
 
-import java.nio.IntBuffer;
 import java.util.Locale;
 import java.util.Random;
 
 /**
- * <p>Speed of setting bits</p>
+ * <p>Speed of getting/setting bits</p>
  *
  * @author Daniel Alievsky
  */
-public class SetBitSpeed {
+public class GetSetBitSpeed {
     private static final MemoryModel mm = Arrays.SystemSettings.globalMemoryModel();
 
     private static void testNormal(
@@ -161,7 +159,7 @@ public class SetBitSpeed {
 
     public static void main(String[] args) throws InterruptedException {
         if (args.length < 2) {
-            System.out.println("Usage: " + SetBitSpeed.class.getName()
+            System.out.println("Usage: " + GetSetBitSpeed.class.getName()
                 + " arrayLength numberOfIterations");
             return;
         }
