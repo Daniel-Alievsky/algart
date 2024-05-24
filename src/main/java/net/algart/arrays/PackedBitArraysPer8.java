@@ -262,14 +262,14 @@ public class PackedBitArraysPer8 {
         if (srcPos < 0) {
             throw new IndexOutOfBoundsException("Negative srcPos argument: " + srcPos);
         }
-        final long srcPosDiv8 = srcPos >>> 3;
         if (count < 0) {
             throw new IllegalArgumentException("Negative count argument: " + count);
         }
         if (count > 64) {
             throw new IllegalArgumentException("Too large count argument: " + count +
-                    "; we cannot get > 64 bits in getBits method");
+                    "; we cannot get > 64 bits in getBits64 method");
         }
+        final long srcPosDiv8 = srcPos >>> 3;
         if (count == 0 || srcPosDiv8 >= src.length) {
             return 0;
         }
@@ -306,6 +306,51 @@ public class PackedBitArraysPer8 {
             }
         }
         return result;
+    }
+
+    public static void setBits64(byte[] dest, long destPos, long bits, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        if (destPos < 0) {
+            throw new IndexOutOfBoundsException("Negative destPos argument: " + destPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot set > 64 bits in setBits64 method");
+        }
+        final long destPosDiv8 = destPos >>> 3;
+        if (count == 0 || destPosDiv8 >= dest.length) {
+            return;
+        }
+        int dPosRem = (int) (destPos & 7);
+        int cntStart = (-dPosRem) & 7;
+        int maskStart = -1 << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = count;
+            maskStart &= (1 << (dPosRem + count)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        int dPos = (int) destPosDiv8;
+        synchronized (dest) {
+            if (cntStart > 0) {
+                dest[dPos++] = (byte) (((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart));
+                count -= cntStart;
+                bits >>>= cntStart;
+            }
+            while (count >= 8) {
+                if (dPos >= dest.length) {
+                    return;
+                }
+                dest[dPos++] = (byte) bits;
+                count -= 8;
+                bits >>>= 8;
+            }
+            if (count > 0 && dPos < dest.length) {
+                int maskFinish = (1 << count) - 1; // count times 1 (from the left)
+                dest[dPos] = (byte) ((bits & maskFinish) | (dest[dPos] & ~maskFinish));
+            }
+        }
     }
 
     /**
@@ -435,10 +480,14 @@ public class PackedBitArraysPer8 {
         if (srcPos < 0) {
             throw new IndexOutOfBoundsException("Negative srcPos argument: " + srcPos);
         }
-        final long srcPosDiv8 = srcPos >>> 3;
         if (count < 0) {
             throw new IllegalArgumentException("Negative count argument: " + count);
         }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot get > 64 bits in getBits64 method");
+        }
+        final long srcPosDiv8 = srcPos >>> 3;
         if (count == 0 || srcPosDiv8 >= src.length) {
             return 0;
         }
@@ -695,7 +744,6 @@ public class PackedBitArraysPer8 {
                 final int sPosStart = sPos;
                 final int dPosStart = dPos;
                 final int sPosRemStart = sPosRem;
-                final long dPosMin;
                 if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
                     if (sPosRem + cntStart <= 8) { // cntStart bits are in a single src element
                         sPosRem += cntStart;
@@ -709,7 +757,7 @@ public class PackedBitArraysPer8 {
                 }
                 // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
                 int cnt = (int) (count >>> 3);
-                dPosMin = dPos;
+                final long dPosMin = dPos;
                 sPos += cnt;
                 dPos += cnt;
                 int cntFinish = (int) (count & 7);
@@ -900,7 +948,6 @@ public class PackedBitArraysPer8 {
                 final int sPosStart = sPos;
                 final int dPosStart = dPos;
                 final int sPosRemStart = sPosRem;
-                final long dPosMin;
                 if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
                     if (sPosRem + cntStart <= 8) { // cntStart bits are in a single src element
                         sPosRem += cntStart;
@@ -914,7 +961,7 @@ public class PackedBitArraysPer8 {
                 }
                 // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
                 int cnt = (int) (count >>> 3);
-                dPosMin = dPos;
+                final long dPosMin = dPos;
                 sPos += cnt;
                 dPos += cnt;
                 int cntFinish = (int) (count & 7);
@@ -1681,6 +1728,46 @@ public class PackedBitArraysPer8 {
     }
 
     /**
+     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
+     * to newly created array <tt>boolean[count]</tt> array returned as a result.
+     * Every element <tt>result[k]</tt> of the result array is assigned to
+     * <tt>{@link #getBit getBit}(srcPos+k)</tt>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBits(boolean[], int, byte[], long, int)}
+     * method.</p>
+     *
+     * @param src       the source array (bits are packed in <tt>byte</tt> values).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @return the unpacked <tt>boolean</tt> array.
+     * @throws NullPointerException     if <tt>src</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     */
+    public static boolean[] unpackBitsToBooleans(byte[] src, long srcPos, long count) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final boolean[] result = new boolean[(int) count];
+        unpackBits(result, 0, src, srcPos, result.length);
+        return result;
+    }
+
+    /**
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> <tt>boolean</tt> array, starting from the element <tt>#destPos</tt>.
      *
@@ -1746,7 +1833,7 @@ public class PackedBitArraysPer8 {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <tt>boolean</tt> array.
-     * @throws NullPointerException     if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if either <tt>src</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
@@ -1772,7 +1859,6 @@ public class PackedBitArraysPer8 {
         final boolean[] result = new boolean[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -1845,7 +1931,7 @@ public class PackedBitArraysPer8 {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <tt>char</tt> array.
-     * @throws NullPointerException     if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if either <tt>src</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
@@ -1871,7 +1957,6 @@ public class PackedBitArraysPer8 {
         final char[] result = new char[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -1943,7 +2028,7 @@ public class PackedBitArraysPer8 {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <tt>byte</tt> array.
-     * @throws NullPointerException     if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if either <tt>src</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
@@ -1969,7 +2054,6 @@ public class PackedBitArraysPer8 {
         final byte[] result = new byte[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -2041,7 +2125,7 @@ public class PackedBitArraysPer8 {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <tt>short</tt> array.
-     * @throws NullPointerException     if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if either <tt>src</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
@@ -2067,7 +2151,6 @@ public class PackedBitArraysPer8 {
         final short[] result = new short[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -2139,7 +2222,7 @@ public class PackedBitArraysPer8 {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <tt>int</tt> array.
-     * @throws NullPointerException     if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if either <tt>src</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
@@ -2165,7 +2248,6 @@ public class PackedBitArraysPer8 {
         final int[] result = new int[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -2237,7 +2319,7 @@ public class PackedBitArraysPer8 {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <tt>long</tt> array.
-     * @throws NullPointerException     if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if either <tt>src</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
@@ -2263,7 +2345,6 @@ public class PackedBitArraysPer8 {
         final long[] result = new long[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -2335,7 +2416,7 @@ public class PackedBitArraysPer8 {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <tt>float</tt> array.
-     * @throws NullPointerException     if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if either <tt>src</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
@@ -2361,7 +2442,6 @@ public class PackedBitArraysPer8 {
         final float[] result = new float[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -2433,7 +2513,7 @@ public class PackedBitArraysPer8 {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <tt>double</tt> array.
-     * @throws NullPointerException     if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if either <tt>src</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
@@ -2459,7 +2539,6 @@ public class PackedBitArraysPer8 {
         final double[] result = new double[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -2531,7 +2610,7 @@ public class PackedBitArraysPer8 {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <tt>Object</tt> array.
-     * @throws NullPointerException     if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if either <tt>src</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
@@ -2557,7 +2636,6 @@ public class PackedBitArraysPer8 {
         final Object[] result = new Object[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**

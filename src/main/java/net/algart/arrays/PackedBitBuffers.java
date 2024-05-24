@@ -295,7 +295,6 @@ public class PackedBitBuffers {
                 final int sPosStart = sPos;
                 final int dPosStart = dPos;
                 final int sPosRemStart = sPosRem;
-                final long dPosMin;
                 if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
                     if (sPosRem + cntStart <= 64) { // cntStart bits are in a single src element
                         sPosRem += cntStart;
@@ -309,7 +308,7 @@ public class PackedBitBuffers {
                 }
                 // Now the bit #0 of dest.get(dPos) corresponds to the bit #sPosRem of src.get(sPos)
                 int cnt = (int) (count >>> 6);
-                dPosMin = dPos;
+                final long dPosMin = dPos;
                 sPos += cnt;
                 dPos += cnt;
                 int cntFinish = (int) (count & 63);

@@ -595,6 +595,17 @@ public class PackedBitArraysTest {
                     throw new AssertionError("The bug B in copyBitsNoSync " +
                             "found in test #" + testCount);
                 }
+                boolean[] unpacked = PackedBitArrays.unpackBitsToBooleans(pDestWork1, destPos, count);
+                if (unpacked.length != count) {
+                    throw new AssertionError("Invalid length");
+                }
+                for (int k = 0; k < count; k++) {
+                    if (unpacked[k] != bDestWork1[destPos + k]) {
+                        throw new AssertionError("The bug C in unpackBits in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
+                                count + ", error found at " + k);
+                    }
+                }
                 showProgress(testCount);
             }
 

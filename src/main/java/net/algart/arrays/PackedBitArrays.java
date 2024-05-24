@@ -235,14 +235,14 @@ public class PackedBitArrays {
         if (srcPos < 0) {
             throw new IndexOutOfBoundsException("Negative srcPos argument: " + srcPos);
         }
-        final long srcPosDiv64 = srcPos >>> 6;
         if (count < 0) {
             throw new IllegalArgumentException("Negative count argument: " + count);
         }
         if (count > 64) {
             throw new IllegalArgumentException("Too large count argument: " + count +
-                    "; we cannot get > 64 bits in getBits method");
+                    "; we cannot get > 64 bits in getBits64 method");
         }
+        final long srcPosDiv64 = srcPos >>> 6;
         if (count == 0 || srcPosDiv64 >= src.length) {
             return 0;
         }
@@ -535,7 +535,6 @@ public class PackedBitArrays {
                 final int sPosStart = sPos;
                 final int dPosStart = dPos;
                 final int sPosRemStart = sPosRem;
-                final long dPosMin;
                 if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
                     if (sPosRem + cntStart <= 64) { // cntStart bits are in a single src element
                         sPosRem += cntStart;
@@ -549,7 +548,7 @@ public class PackedBitArrays {
                 }
                 // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
                 int cnt = (int) (count >>> 6);
-                dPosMin = dPos;
+                final long dPosMin = dPos;
                 sPos += cnt;
                 dPos += cnt;
                 int cntFinish = (int) (count & 63);
@@ -740,7 +739,6 @@ public class PackedBitArrays {
                 final int sPosStart = sPos;
                 final int dPosStart = dPos;
                 final int sPosRemStart = sPosRem;
-                final long dPosMin;
                 if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
                     if (sPosRem + cntStart <= 64) { // cntStart bits are in a single src element
                         sPosRem += cntStart;
@@ -754,7 +752,7 @@ public class PackedBitArrays {
                 }
                 // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
                 int cnt = (int) (count >>> 6);
-                dPosMin = dPos;
+                final long dPosMin = dPos;
                 sPos += cnt;
                 dPos += cnt;
                 int cntFinish = (int) (count & 63);
@@ -5149,6 +5147,46 @@ public class PackedBitArrays {
     /*Repeat.SectionStart unpackBits*/
 
     /**
+     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
+     * into a newly created array <tt>boolean[count]</tt> array returned as a result.
+     * Every element <tt>result[k]</tt> of the result array is assigned to
+     * <tt>{@link #getBit getBit}(srcPos+k)</tt>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBits(boolean[], int, long[], long, int)}
+     * method.</p>
+     *
+     * @param src       the source array (bits are packed in <tt>byte</tt> values).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @return the unpacked <tt>boolean</tt> array.
+     * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     */
+    public static boolean[] unpackBitsToBooleans(long[] src, long srcPos, long count) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final boolean[] result = new boolean[(int) count];
+        unpackBits(result, 0, src, srcPos, result.length);
+        return result;
+    }
+
+    /**
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
      * to <tt>dest</tt> boolean array, starting from the element <tt>#destPos</tt>.
      *
@@ -5306,7 +5344,6 @@ public class PackedBitArrays {
         final boolean[] result = new boolean[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -5818,7 +5855,6 @@ public class PackedBitArrays {
         final char[] result = new char[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -6314,7 +6350,6 @@ public class PackedBitArrays {
         final byte[] result = new byte[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -6810,7 +6845,6 @@ public class PackedBitArrays {
         final short[] result = new short[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -7306,7 +7340,6 @@ public class PackedBitArrays {
         final int[] result = new int[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -7802,7 +7835,6 @@ public class PackedBitArrays {
         final long[] result = new long[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -8298,7 +8330,6 @@ public class PackedBitArrays {
         final float[] result = new float[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -8794,7 +8825,6 @@ public class PackedBitArrays {
         final double[] result = new double[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**
@@ -9290,7 +9320,6 @@ public class PackedBitArrays {
         final Object[] result = new Object[(int) count];
         unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
         return result;
-
     }
 
     /**

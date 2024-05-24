@@ -24,6 +24,8 @@
 
 package net.algart.math.patterns;
 
+import net.algart.arrays.TooLargeArrayException;
+
 import java.util.Objects;
 
 /**
@@ -196,7 +198,6 @@ class TinyBitArrays {
                 final int sPosStart = sPos;
                 final int dPosStart = dPos;
                 final int sPosRemStart = sPosRem;
-                final long dPosMin;
                 if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
                     if (sPosRem + cntStart <= 64) { // cntStart bits are in a single src element
                         sPosRem += cntStart;
@@ -210,7 +211,7 @@ class TinyBitArrays {
                 }
                 // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
                 int cnt = (int) (count >>> 6);
-                dPosMin = dPos;
+                final long dPosMin = dPos;
                 sPos += cnt;
                 dPos += cnt;
                 int cntFinish = (int) (count & 63);
@@ -401,7 +402,6 @@ class TinyBitArrays {
                 final int sPosStart = sPos;
                 final int dPosStart = dPos;
                 final int sPosRemStart = sPosRem;
-                final long dPosMin;
                 if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
                     if (sPosRem + cntStart <= 64) { // cntStart bits are in a single src element
                         sPosRem += cntStart;
@@ -415,7 +415,7 @@ class TinyBitArrays {
                 }
                 // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
                 int cnt = (int) (count >>> 6);
-                dPosMin = dPos;
+                final long dPosMin = dPos;
                 sPos += cnt;
                 dPos += cnt;
                 int cntFinish = (int) (count & 63);
@@ -532,6 +532,46 @@ class TinyBitArrays {
 
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/PackedBitArrays.java, unpackBits)
        !! Auto-generated: NOT EDIT !! */
+
+    /**
+     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
+     * into a newly created array <tt>boolean[count]</tt> array returned as a result.
+     * Every element <tt>result[k]</tt> of the result array is assigned to
+     * <tt>{@link #getBit getBit}(srcPos+k)</tt>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBits(boolean[], int, long[], long, int)}
+     * method.</p>
+     *
+     * @param src       the source array (bits are packed in <tt>byte</tt> values).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @return the unpacked <tt>boolean</tt> array.
+     * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
+     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     */
+    public static boolean[] unpackBitsToBooleans(long[] src, long srcPos, long count) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final boolean[] result = new boolean[(int) count];
+        unpackBits(result, 0, src, srcPos, result.length);
+        return result;
+    }
 
     /**
      * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,

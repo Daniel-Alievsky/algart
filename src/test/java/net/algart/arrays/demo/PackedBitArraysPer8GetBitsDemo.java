@@ -30,7 +30,8 @@ import net.algart.arrays.PackedBitArraysPer8;
 import java.util.Random;
 
 /**
- * <p>Illustration for {@link PackedBitArraysPer8#getBits64(byte[], long, int)} method.</p>
+ * <p>Illustration for {@link PackedBitArraysPer8#getBits64} and {@link PackedBitArraysPer8#setBits64}
+ * methods.</p>
  *
  * @author Daniel Alievsky
  */
@@ -52,25 +53,40 @@ public class PackedBitArraysPer8GetBitsDemo {
     }
 
     private static void getBitsTest(byte[] pSrc, int pos, int count, int len) {
-        boolean[] booleans = new boolean[len];
-        PackedBitArraysPer8.unpackBits(booleans, 0, pSrc, 0, len);
-        final String full = JArrays.toBinaryString(booleans, "", 200);
+        System.out.println("Test in normal order");
+        System.out.println("[       ".repeat(len / 8));
+        final String full = JArrays.toBinaryString(
+                PackedBitArraysPer8.unpackBitsToBooleans(pSrc, 0, len), "", 200);
         System.out.println(full);
 
-        final long bits = PackedBitArraysPer8.getBits64(pSrc, pos, count);
+        long bits = PackedBitArraysPer8.getBits64(pSrc, pos, count);
         final String local = bitsToString(bits, count);
         System.out.println(" ".repeat(pos) + local);
         if (!full.substring(pos, pos + count).equals(local)) {
-            throw new AssertionError("Bug in getBits");
+            throw new AssertionError("Bug in getBits64");
+        }
+        byte[] pDest = pSrc.clone();
+        for (long testBits : new long[] {0, 3, -1, -4, ~bits, bits, 0x5555555555555555L}) {
+            System.out.println(" ".repeat(pos) + bitsToString(testBits, count) + " - updating:");
+            PackedBitArraysPer8.setBits64(pDest, pos, testBits, count);
+            System.out.println(JArrays.toBinaryString(
+                    PackedBitArraysPer8.unpackBitsToBooleans(pDest, 0, len), "", 200));
+            bits = PackedBitArraysPer8.getBits64(pDest, pos, count);
+            testBits &= (1L << count) - 1;
+            if (bits != testBits) {
+                System.out.println(" ".repeat(pos) + bitsToString(bits, count));
+                throw new AssertionError("Bug in setBits64");
+            }
         }
     }
 
     private static void getBitsTestInReverseOrder(byte[] pSrc, int pos, int count, int len) {
+        System.out.println("Test in reverse order");
+        System.out.println("[       ".repeat(len / 8));
         byte[] reverse = pSrc.clone();
         PackedBitArraysPer8.reverseBitsOrderInEachByte(reverse);
-        boolean[] booleans = new boolean[len];
-        PackedBitArraysPer8.unpackBits(booleans, 0, reverse, 0, len);
-        final String full = JArrays.toBinaryString(booleans, "", 200);
+        final String full = JArrays.toBinaryString(
+                PackedBitArraysPer8.unpackBitsToBooleans(reverse, 0, len), "", 200);
         System.out.println(full);
 
         // Other way to show bits:
@@ -94,7 +110,7 @@ public class PackedBitArraysPer8GetBitsDemo {
     public static void main(String[] args) {
         if (args.length < 2) {
             System.out.println("Usage: " + PackedBitArraysPer8GetBitsDemo.class.getName()
-                    + " srcPos count [randSeed]");
+                    + " pos count [randSeed]");
             return;
         }
 
@@ -110,11 +126,11 @@ public class PackedBitArraysPer8GetBitsDemo {
         System.out.println("Start random seed " + seed);
 
         for (int test = 1; test <= 50; test++) {
-            System.out.printf("Test #%d%n", test);
+            System.out.printf("%nTest #%d%n", test);
             final int len = 100;
             boolean[] bSrc = new boolean[len];
             for (int k = 0; k < bSrc.length; k++) {
-                bSrc[k] = rnd.nextDouble() <= 0.5;
+                bSrc[k] = rnd.nextBoolean();
             }
             final int packedLen = PackedBitArraysPer8.packedLength(bSrc.length);
             final byte[] pSrc = new byte[packedLen];
