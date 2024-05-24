@@ -40,7 +40,7 @@ public class PackedBitArraysTest {
     final static long tStart = System.currentTimeMillis();
     private static long tFix = tStart;
 
-    private static long simpleBits(long[] src, long srcPos, int count) {
+    private static long getBits64Simple(long[] src, long srcPos, int count) {
         long result = 0;
         for (int k = 0; k < count; k++) {
             if (srcPos + k >= 64 * (long) src.length) {
@@ -199,22 +199,22 @@ public class PackedBitArraysTest {
                 showProgress(testCount);
             }
 
-            System.out.println("Testing \"getBits\" method...");
+            System.out.println("Testing \"getBits64\" method...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 for (int k = 0; k < len; k++) {
-                    boolean bTest = PackedBitArrays.getBits(pSrc, startOffset + k, 1) == 1;
+                    boolean bTest = PackedBitArrays.getBits64(pSrc, startOffset + k, 1) == 1;
                     boolean b = PackedBitArrays.getBit(pSrc, startOffset + k);
                     if (b != bTest) {
-                        throw new AssertionError("The bug A in getBits found in test #" +
+                        throw new AssertionError("The bug A in getBits64 found in test #" +
                                 testCount + ", error found at " + k);
                     }
                 }
                 int srcPos = rnd.nextInt(len);
                 int count = rnd.nextInt(65);
-                long vTest = PackedBitArrays.getBits(pSrc, startOffset + srcPos, count);
-                long v = simpleBits(pSrc, startOffset + srcPos, count);
+                long vTest = PackedBitArrays.getBits64(pSrc, startOffset + srcPos, count);
+                long v = getBits64Simple(pSrc, startOffset + srcPos, count);
                 if (vTest != v) {
-                    throw new AssertionError("The bug B in getBits found in test #" + testCount +
+                    throw new AssertionError("The bug B in getBits64 found in test #" + testCount +
                             ": srcPos = " + srcPos + ", count = " + count
                             + ", " + Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v));
                 }

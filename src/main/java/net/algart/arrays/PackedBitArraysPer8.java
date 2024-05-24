@@ -257,7 +257,7 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
-    public static long getBits(byte[] src, long srcPos, int count) {
+    public static long getBits64(byte[] src, long srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
         if (srcPos < 0) {
             throw new IndexOutOfBoundsException("Negative srcPos argument: " + srcPos);
@@ -430,7 +430,7 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
-    public static long getBitsInReverseOrder(byte[] src, long srcPos, int count) {
+    public static long getBits64InReverseOrder(byte[] src, long srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
         if (srcPos < 0) {
             throw new IndexOutOfBoundsException("Negative srcPos argument: " + srcPos);

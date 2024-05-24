@@ -41,7 +41,7 @@ import java.util.Random;
 public class PackedBitArraysPer8Test {
     private static final float FLOAT_BIT_0 = -1f, FLOAT_BIT_1 = 157f;
 
-    private static long getBitsSimple(byte[] src, long srcPos, int count) {
+    private static long getBits64Simple(byte[] src, long srcPos, int count) {
         long result = 0;
         for (int k = 0; k < count; k++) {
             if (srcPos + k >= 8 * (long) src.length) {
@@ -53,7 +53,7 @@ public class PackedBitArraysPer8Test {
         return result;
     }
 
-    private static long getBitsInReverseOrderSimple(byte[] src, long srcPos, int count) {
+    private static long getBits64InReverseOrderSimple(byte[] src, long srcPos, int count) {
         long result = 0;
         for (int k = 0; k < count; k++) {
             if (srcPos + k < 8 * (long) src.length) {
@@ -273,44 +273,44 @@ public class PackedBitArraysPer8Test {
                 showProgress(testCount);
             }
 
-            System.out.println("Testing \"getBits\" method...");
+            System.out.println("Testing \"getBits64\" method...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 for (int k = 0; k < len; k++) {
-                    boolean bTest = PackedBitArraysPer8.getBits(pSrc, k, 1) == 1;
+                    boolean bTest = PackedBitArraysPer8.getBits64(pSrc, k, 1) == 1;
                     boolean b = PackedBitArraysPer8.getBit(pSrc, k);
                     if (b != bTest) {
-                        throw new AssertionError("The bug A in getBits found in test #" +
+                        throw new AssertionError("The bug A in getBits64 found in test #" +
                                 testCount + ", error found at " + k);
                     }
                 }
                 int srcPos = rnd.nextInt(len);
                 int count = rnd.nextInt(65);
-                long vTest = PackedBitArraysPer8.getBits(pSrc, srcPos, count);
-                long v = getBitsSimple(pSrc, srcPos, count);
+                long vTest = PackedBitArraysPer8.getBits64(pSrc, srcPos, count);
+                long v = getBits64Simple(pSrc, srcPos, count);
                 if (vTest != v) {
-                    throw new AssertionError("The bug B in getBits found in test #" + testCount +
+                    throw new AssertionError("The bug B in getBits64 found in test #" + testCount +
                             ": srcPos = " + srcPos + ", count = " + count
                             + ", " + Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v));
                 }
                 showProgress(testCount);
             }
 
-            System.out.println("Testing \"getBitsInReverseOrder\" method...");
+            System.out.println("Testing \"getBits64InReverseOrder\" method...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 for (int k = 0; k < len; k++) {
-                    boolean bTest = PackedBitArraysPer8.getBitsInReverseOrder(pSrc, k, 1) == 1;
+                    boolean bTest = PackedBitArraysPer8.getBits64InReverseOrder(pSrc, k, 1) == 1;
                     boolean b = PackedBitArraysPer8.getBitInReverseOrder(pSrc, k);
                     if (b != bTest) {
-                        throw new AssertionError("The bug A in getBitsInReverseOrder found in test #" +
+                        throw new AssertionError("The bug A in getBits64InReverseOrder found in test #" +
                                 testCount + ", error found at " + k);
                     }
                 }
                 int srcPos = rnd.nextInt(len);
                 int count = rnd.nextInt(65);
-                long vTest = PackedBitArraysPer8.getBitsInReverseOrder(pSrc, srcPos, count);
-                long v = getBitsInReverseOrderSimple(pSrc, srcPos, count);
+                long vTest = PackedBitArraysPer8.getBits64InReverseOrder(pSrc, srcPos, count);
+                long v = getBits64InReverseOrderSimple(pSrc, srcPos, count);
                 if (vTest != v) {
-                    throw new AssertionError("The bug B in getBitsInReverseOrder found in test #" +
+                    throw new AssertionError("The bug B in getBits64InReverseOrder found in test #" +
                             testCount + ": srcPos = " + srcPos + ", count = " + count +
                             ", " + Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v));
                 }
@@ -325,12 +325,12 @@ public class PackedBitArraysPer8Test {
                     // ScifioBitBuffer simply stops the loop and leaves the result not shifted left enough,
                     // but AlgART supposes that we have zeros outside the array
                 }
-                vTest = (int) PackedBitArraysPer8.getBitsInReverseOrder(pSrc, srcPos, count);
+                vTest = (int) PackedBitArraysPer8.getBits64InReverseOrder(pSrc, srcPos, count);
                 ScifioBitBuffer bitBuffer = new ScifioBitBuffer(pSrc);
                 bitBuffer.skipBits(srcPos);
                 v = bitBuffer.getBits(count);
                 if (vTest != v) {
-                    throw new AssertionError("The bug C in getBitsInReverseOrder found in test #" +
+                    throw new AssertionError("The bug C in getBits64InReverseOrder found in test #" +
                             testCount + ": srcPos = " + srcPos + ", count = " + count + ", "
                             + Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v));
                 }

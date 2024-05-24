@@ -25,16 +25,12 @@
 package net.algart.arrays.demo;
 
 import net.algart.arrays.JArrays;
-import net.algart.arrays.PackedBitArrays;
 import net.algart.arrays.PackedBitArraysPer8;
 
-import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.Locale;
 import java.util.Random;
 
 /**
- * <p>Illustration for {@link PackedBitArraysPer8#getBits(byte[], long, int)} method.</p>
+ * <p>Illustration for {@link PackedBitArraysPer8#getBits64(byte[], long, int)} method.</p>
  *
  * @author Daniel Alievsky
  */
@@ -61,7 +57,7 @@ public class PackedBitArraysPer8GetBitsDemo {
         final String full = JArrays.toBinaryString(booleans, "", 200);
         System.out.println(full);
 
-        final long bits = PackedBitArraysPer8.getBits(pSrc, pos, count);
+        final long bits = PackedBitArraysPer8.getBits64(pSrc, pos, count);
         final String local = bitsToString(bits, count);
         System.out.println(" ".repeat(pos) + local);
         if (!full.substring(pos, pos + count).equals(local)) {
@@ -87,7 +83,7 @@ public class PackedBitArraysPer8GetBitsDemo {
             throw new AssertionError("Bug in getBitInReverseOrder (single bit)");
         }
 
-        final long bits = PackedBitArraysPer8.getBitsInReverseOrder(pSrc, pos, count);
+        final long bits = PackedBitArraysPer8.getBits64InReverseOrder(pSrc, pos, count);
         final String local = bitsInReverseOrderToString(bits, count);
         System.out.println(" ".repeat(pos) + local);
         if (!full.substring(pos, pos + count).equals(local)) {

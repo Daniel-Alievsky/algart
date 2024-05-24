@@ -230,7 +230,7 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
-    public static long getBits(long[] src, long srcPos, int count) {
+    public static long getBits64(long[] src, long srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
         if (srcPos < 0) {
             throw new IndexOutOfBoundsException("Negative srcPos argument: " + srcPos);
