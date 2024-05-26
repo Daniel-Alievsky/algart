@@ -124,11 +124,16 @@ public class PackedBitArraysTest {
             for (int k = 0; k < bDest.length; k++) {
                 fDest[k] = rnd.nextFloat();
             }
+            Short[] oDest = new Short[len];
+            for (int k = 0; k < oDest.length; k++) {
+                oDest[k] = (short) rnd.nextInt();
+            }
             boolean[] bDestWork1 = bDest.clone();
             boolean[] bDestWork2 = bDest.clone();
             int[] iDestWork1 = iDest.clone();
             int[] iDestWork2 = iDest.clone();
             float[] fDestWork = fDest.clone();
+            Short[] oDestWork = oDest.clone();
             int cardCorrect = 0;
             for (int k = 0; k < len; k++) {
                 if (bSrc[k]) {
@@ -633,6 +638,28 @@ public class PackedBitArraysTest {
                         throw new AssertionError("The bug B in unpackBitsToFloats found in test #" +
                                 testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
                                 ", error found at " + k);
+                    }
+                }
+                showProgress(testCount);
+            }
+
+            System.out.println("Testing \"unpackBits\" to Short[]...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(oDest, 0, oDestWork, 0, oDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                PackedBitArrays.unpackBits(oDestWork, destPos, pSrc, startOffset + srcPos, count,
+                        (short) 134, (short) 3241);
+                System.arraycopy(bSrc, srcPos, bDestWork1, destPos, count);
+                for (int k = 0; k < len; k++) {
+                    short v = oDestWork[k];
+                    int vTest = k < destPos || k >= destPos + count ? oDest[k] : bDestWork1[k] ? 3241 : 134;
+                    if (v != vTest) {
+                        throw new AssertionError("The bug A in unpackBits to Short[] found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", error found at " + k +
+                                ", " + v + " instead of " + vTest);
                     }
                 }
                 showProgress(testCount);

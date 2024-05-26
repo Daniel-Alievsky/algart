@@ -483,10 +483,10 @@ public class PackedBitArraysPer8 {
             maskStart &= (1 << (dPosRem + count)) - 1; // &= dPosRem+cntStart times 1 (from the left)
         }
         int dPos = (int) destPosDiv8;
-        assert dPos < dest.length;
         synchronized (dest) {
             if (cntStart > 0) {
-                dest[dPos++] = (byte) (((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart));
+                dest[dPos] = (byte) (((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart));
+                dPos++;
                 count -= cntStart;
                 bits >>>= cntStart;
             }
@@ -543,7 +543,8 @@ public class PackedBitArraysPer8 {
         }
         int dPos = (int) destPosDiv8;
         if (cntStart > 0) {
-            dest[dPos++] = (byte) (((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart));
+            dest[dPos] = (byte) (((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart));
+            dPos++;
             count -= cntStart;
             bits >>>= cntStart;
         }
@@ -743,7 +744,7 @@ public class PackedBitArraysPer8 {
      *
      * <pre>
      *      for (int k = 0; k &lt; count; k++) {
-     *          final long bit = (bits &gt;&gt;&gt; k) & 1L;
+     *          final long bit = (bits &gt;&gt;&gt; (count - 1 - k)) & 1L;
      *          {@link #setBitInReverseOrder(byte[], long, boolean)
      *          PackedBitArraysPer8.setBitInReverseOrder}(dest, destPos + k, bit != 0);
      *      }</pre>
@@ -782,17 +783,19 @@ public class PackedBitArraysPer8 {
         int maskStart = 0xFF >>> dPosRem; // dPosRem times 0, then 1 (from the highest bit)
         if (cntStart > count) {
             cntStart = count;
-            maskStart &= (0xFF00 >>> (dPosRem + cntStart)); // &= dPosRem+cntStart times 1 (from the highest bit)
+            maskStart &= (0xFF00 >>> (dPosRem + count)); // &= dPosRem+cntStart times 1 (from the highest bit)
         }
         int dPos = (int) destPosDiv8;
         synchronized (dest) {
             if (cntStart > 0) {
-                assert cntStart + dPosRem == 8;
                 // bits #count-cntStart...#count-1 of "bits" argument should be copied to
-                // bits #8-dPosRem-cntStart..#8-dPosRem-1 (where 8-dPosRem=cntStart)
-                // This means shifting >>> (count-1)-(8-dPosRem-1) = count-cntStart
+                // bits #8-dPosRem-cntStart..#8-dPosRem-1 (where 8-dPosRem = original cntStart)
+                // This means shifting >>> (count-1)-(8-dPosRem-1)
+                int shift = count - (8 - dPosRem);
+                long v = shift >= 0 ? bits >>> shift : bits << -shift;
+                dest[dPos] = (byte) ((v & maskStart) | (dest[dPos] & ~maskStart));
+                dPos++;
                 count -= cntStart;
-                dest[dPos++] = (byte) (((bits >>> count) & maskStart) | (dest[dPos] & ~maskStart));
             }
             while (count >= 8) {
                 if (dPos >= dest.length) {
@@ -852,12 +855,14 @@ public class PackedBitArraysPer8 {
         }
         int dPos = (int) destPosDiv8;
         if (cntStart > 0) {
-            assert cntStart + dPosRem == 8;
             // bits #count-cntStart...#count-1 of "bits" argument should be copied to
-            // bits #8-dPosRem-cntStart..#8-dPosRem-1 (where 8-dPosRem=cntStart)
-            // This means shifting >>> (count-1)-(8-dPosRem-1) = count-cntStart
+            // bits #8-dPosRem-cntStart..#8-dPosRem-1 (where 8-dPosRem = original cntStart)
+            // This means shifting >>> (count-1)-(8-dPosRem-1)
+            int shift = count - (8 - dPosRem);
+            long v = shift >= 0 ? bits >>> shift : bits << -shift;
+            dest[dPos] = (byte) ((v & maskStart) | (dest[dPos] & ~maskStart));
+            dPos++;
             count -= cntStart;
-            dest[dPos++] = (byte) (((bits >>> count) & maskStart) | (dest[dPos] & ~maskStart));
         }
         while (count >= 8) {
             if (dPos >= dest.length) {

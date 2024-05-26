@@ -76,7 +76,7 @@ public class PackedBitArraysPer8Test {
 
     public static void setBits64InReverseOrderSimple(byte[] dest, long destPos, long bits, int count) {
         for (int k = 0; k < count; k++) {
-            final long bit = (bits >>> k) & 1L;
+            final long bit = (bits >>> (count - 1 - k)) & 1L;
             if (destPos + k >= 8 * (long) dest.length) {
                 break;
             }
@@ -322,6 +322,9 @@ public class PackedBitArraysPer8Test {
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(65);
                 long v = PackedBitArraysPer8.getBits64(pSrc, srcPos, count);
+                if (count < 64 && v != (v & ((1L << count) - 1))) {
+                    throw new AssertionError(Long.toBinaryString(v));
+                }
                 boolean sync = rnd.nextBoolean();
                 setBits64Simple(pDestWork1, destPos, v, count);
                 if (sync) {
@@ -330,7 +333,7 @@ public class PackedBitArraysPer8Test {
                     PackedBitArraysPer8.setBits64NoSync(pDestWork2, destPos, v, count);
                 }
                 long vTest = getBits64Simple(pDestWork2,destPos, count);
-                if (vTest != v) {
+                if (destPos + count <= len && vTest != v) {
                     throw new AssertionError("The bug A in setBits64 found in test #" + testCount +
                             ": destPos = " + destPos + ", count = " + count + ", " +
                             Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v) +
@@ -381,8 +384,43 @@ public class PackedBitArraysPer8Test {
                 v = bitBuffer.getBits(count);
                 if (vTest != v) {
                     throw new AssertionError("The bug C in getBits64InReverseOrder found in test #" +
-                            testCount + ": srcPos = " + srcPos + ", count = " + count + ", "
-                            + Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v));
+                            testCount + ": srcPos = " + srcPos + ", count = " + count + ", " +
+                            Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v));
+                }
+                showProgress(testCount);
+            }
+
+            System.out.println("Testing \"setBits64InReverseOrder\" method...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(65);
+                long v = PackedBitArraysPer8.getBits64InReverseOrder(pSrc, srcPos, count);
+                if (count < 64 && v != (v & ((1L << count) - 1))) {
+                    throw new AssertionError(Long.toBinaryString(v));
+                }
+                boolean sync = rnd.nextBoolean();
+                setBits64InReverseOrderSimple(pDestWork1, destPos, v, count);
+                if (sync) {
+                    PackedBitArraysPer8.setBits64InReverseOrder(pDestWork2, destPos, v, count);
+                } else {
+                    PackedBitArraysPer8.setBits64InReverseOrderNoSync(pDestWork2, destPos, v, count);
+                }
+                long vTest = getBits64InReverseOrderSimple(pDestWork2,destPos, count);
+                if (destPos + count <= len && vTest != v) {
+                    throw new AssertionError("The bug A in setBits64InReverseOrder found in test #" +
+                            testCount +
+                            ": destPos = " + destPos + ", count = " + count + ", " +
+                            Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v) +
+                            (sync ? "" : ", no-sync version"));
+                }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug B in setBits64InReverseOrder " +
+                            "found in test #" + testCount +
+                            ": destPos = " + destPos + ", count = " + count +
+                            (sync ? "" : ", no-sync version"));
                 }
                 showProgress(testCount);
             }
