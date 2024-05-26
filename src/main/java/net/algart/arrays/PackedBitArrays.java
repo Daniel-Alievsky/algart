@@ -264,6 +264,77 @@ public class PackedBitArrays {
             return (src[sPos] & (-1L >>> (bitsLeft - count))) >>> sPosRem;
         }
     }
+
+    /**
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
+     * in the packed <tt>dest</tt> bit array. This is the reverse operation of {@link #getBits64(long[], long, int)}.
+     *
+     * <p>This function is equivalent to the following loop:</p>
+     *
+     * <pre>
+     *      for (int k = 0; k &lt; count; k++) {
+     *          final long bit = (bits &gt;&gt;&gt; k) & 1L;
+     *          {@link #setBit(long[], long, boolean) PackedBitArrays.setBit}(dest, destPos + k, bit != 0);
+     *      }</pre>
+     *
+     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     *
+     * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
+     * after the end of the array (<tt>&ge;8*dest.length</tt>); instead, extra bits outside the array are just ignored.
+     * (But negative indexes are not allowed.)</p>
+     *
+     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param count   the number of bits to be written (must be &gt;=0 and &lt;64).
+     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
+    public static void setBits64(long[] dest, long destPos, long bits, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        if (destPos < 0) {
+            throw new IndexOutOfBoundsException("Negative destPos argument: " + destPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot set > 64 bits in setBits64 method");
+        }
+        final long destPosDiv64 = destPos >>> 6;
+        if (count == 0 || destPosDiv64 >= dest.length) {
+            return;
+        }
+        int dPosRem = (int) (destPos & 63);
+        int cntStart = (-dPosRem) & 63;
+        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = count;
+            maskStart &= (1L << (dPosRem + count)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        int dPos = (int) destPosDiv64;
+        synchronized (dest) {
+            if (cntStart > 0) {
+                dest[dPos] = ((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart);
+                dPos++;
+                count -= cntStart;
+                bits >>>= cntStart;
+            }
+            while (count >= 8) {
+                if (dPos >= dest.length) {
+                    return;
+                }
+                dest[dPos++] = (byte) bits;
+                count -= 8;
+                bits >>>= 8;
+            }
+            if (count > 0 && dPos < dest.length) {
+                long maskFinish = (1L << count) - 1; // count times 1 (from the left)
+                dest[dPos] = (bits & maskFinish) | (dest[dPos] & ~maskFinish);
+            }
+        }
+    }
     /*Repeat.SectionEnd bits_64*/
 
     /**
