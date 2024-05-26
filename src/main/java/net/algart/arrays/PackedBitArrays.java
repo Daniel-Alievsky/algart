@@ -321,15 +321,12 @@ public class PackedBitArrays {
                 count -= cntStart;
                 bits >>>= cntStart;
             }
-            while (count >= 8) {
-                if (dPos >= dest.length) {
-                    return;
-                }
-                dest[dPos++] = (byte) bits;
-                count -= 8;
-                bits >>>= 8;
+            if (dPos >= dest.length) {
+                return;
             }
-            if (count > 0 && dPos < dest.length) {
+            if (count == 64) {
+                dest[dPos] = bits;
+            } else if (count > 0) {
                 long maskFinish = (1L << count) - 1; // count times 1 (from the left)
                 dest[dPos] = (bits & maskFinish) | (dest[dPos] & ~maskFinish);
             }

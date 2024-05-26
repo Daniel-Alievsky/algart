@@ -53,7 +53,7 @@ public class PackedBitArraysPer8Test {
         return result;
     }
 
-    public static void setBits64Simple(byte[] dest, long destPos, long bits, int count) {
+    private static void setBits64Simple(byte[] dest, long destPos, long bits, int count) {
         for (int k = 0; k < count; k++) {
             final long bit = (bits >>> k) & 1L;
             if (destPos + k >= 8 * (long) dest.length) {
