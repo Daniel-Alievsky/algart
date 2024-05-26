@@ -198,6 +198,7 @@ public class PackedBitArrays {
             dest[(int) (index >>> 6)] &= ~(1L << (index & 63));
     }
 
+    /*Repeat.SectionStart bits_64*/
     /**
      * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#srcPos</tt>,
      * in the packed <tt>src</tt> bit array.
@@ -262,6 +263,7 @@ public class PackedBitArrays {
             return (src[sPos] & (-1L >>> (bitsLeft - count))) >>> sPosRem;
         }
     }
+    /*Repeat.SectionEnd bits_64*/
 
     /**
      * Returns a hash code based on the contents of the specified fragment of the given packed bit array.
@@ -5165,7 +5167,7 @@ public class PackedBitArrays {
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
      */
-    public static boolean[] unpackBitsToBooleans(long[] src, long srcPos, long count) {
+    public static boolean[] unpackBits(long[] src, long srcPos, long count) {
         Objects.requireNonNull(src, "Null src");
         if (srcPos < 0) {
             throw new IllegalArgumentException("Negative srcPos = " + srcPos);
@@ -5299,7 +5301,9 @@ public class PackedBitArrays {
     }
     /*Repeat.SectionEnd unpackBits*/
 
-    /*Repeat() boolean ==> char,,byte,,short,,int,,long,,float,,double,,Object;;
+    /*Repeat() (boolean\[\] unpackBits) ==>
+               $1ToChars,,$1ToBytes,,$1ToShorts,,$1ToInts,,$1ToLongs,,$1ToFloats,,$1ToDoubles,,$1ToObjects;;
+               boolean ==> char,,byte,,short,,int,,long,,float,,double,,Object;;
                Booleans ==> Chars,,Bytes,,Shorts,,Ints,,Longs,,Floats,,Doubles,,Objects */
 
     /**
@@ -5323,7 +5327,7 @@ public class PackedBitArrays {
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
      */
-    public static boolean[] unpackBitsToBooleans(
+    public static boolean[] unpackBits(
             long[] src, long srcPos, long count,
             boolean bit0Value, boolean bit1Value) {
         Objects.requireNonNull(src, "Null src");

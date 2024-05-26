@@ -552,7 +552,7 @@ class TinyBitArrays {
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
      */
-    public static boolean[] unpackBitsToBooleans(long[] src, long srcPos, long count) {
+    public static boolean[] unpackBits(long[] src, long srcPos, long count) {
         Objects.requireNonNull(src, "Null src");
         if (srcPos < 0) {
             throw new IllegalArgumentException("Negative srcPos = " + srcPos);

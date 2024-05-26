@@ -595,7 +595,7 @@ public class PackedBitArraysTest {
                     throw new AssertionError("The bug B in copyBitsNoSync " +
                             "found in test #" + testCount);
                 }
-                boolean[] unpacked = PackedBitArrays.unpackBitsToBooleans(pDestWork1, destPos, count);
+                boolean[] unpacked = PackedBitArrays.unpackBits(pDestWork1, destPos, count);
                 if (unpacked.length != count) {
                     throw new AssertionError("Invalid length");
                 }

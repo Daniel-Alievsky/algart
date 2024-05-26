@@ -54,14 +54,14 @@ public class PackedBitArraysPer8GetBitsDemo {
 
     private static String toBinaryString(byte[] pSrc, int len) {
         return JArrays.toBinaryString(
-                PackedBitArraysPer8.unpackBitsToBooleans(pSrc, 0, len), "", 200);
+                PackedBitArraysPer8.unpackBits(pSrc, 0, len), "", 200);
     }
 
     private static String toBinaryStringInReverseOrder(byte[] pSrc, int len) {
         byte[] reverse = pSrc.clone();
         PackedBitArraysPer8.reverseBitsOrderInEachByte(reverse);
         return JArrays.toBinaryString(
-                PackedBitArraysPer8.unpackBitsToBooleans(reverse, 0, len), "", 200);
+                PackedBitArraysPer8.unpackBits(reverse, 0, len), "", 200);
     }
 
     private static void getBitsTest(byte[] pSrc, int pos, int count, int len) {

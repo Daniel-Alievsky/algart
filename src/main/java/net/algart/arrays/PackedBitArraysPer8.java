@@ -1794,7 +1794,7 @@ public class PackedBitArraysPer8 {
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
      */
-    public static boolean[] unpackBitsToBooleans(byte[] src, long srcPos, long count) {
+    public static boolean[] unpackBits(byte[] src, long srcPos, long count) {
         Objects.requireNonNull(src, "Null src");
         if (srcPos < 0) {
             throw new IllegalArgumentException("Negative srcPos = " + srcPos);
@@ -1862,7 +1862,9 @@ public class PackedBitArraysPer8 {
         }
     }
 
-    /*Repeat() boolean ==> char,,byte,,short,,int,,long,,float,,double,,Object;;
+    /*Repeat() (boolean\[\] unpackBits) ==>
+               $1ToChars,,$1ToBytes,,$1ToShorts,,$1ToInts,,$1ToLongs,,$1ToFloats,,$1ToDoubles,,$1ToObjects;;
+               boolean ==> char,,byte,,short,,int,,long,,float,,double,,Object;;
                Booleans ==> Chars,,Bytes,,Shorts,,Ints,,Longs,,Floats,,Doubles,,Objects */
 
     /**
@@ -1886,7 +1888,7 @@ public class PackedBitArraysPer8 {
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
      */
-    public static boolean[] unpackBitsToBooleans(
+    public static boolean[] unpackBits(
             byte[] src, long srcPos, long count,
             boolean bit0Value, boolean bit1Value) {
         Objects.requireNonNull(src, "Null src");

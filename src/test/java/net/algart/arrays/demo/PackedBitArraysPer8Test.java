@@ -452,7 +452,7 @@ public class PackedBitArraysPer8Test {
                     throw new AssertionError("The bug B in copyBitsNoSync " +
                             "found in test #" + testCount);
                 }
-                boolean[] unpacked = PackedBitArraysPer8.unpackBitsToBooleans(pDestWork1, destPos, count);
+                boolean[] unpacked = PackedBitArraysPer8.unpackBits(pDestWork1, destPos, count);
                 if (unpacked.length != count) {
                     throw new AssertionError("Invalid length");
                 }
