@@ -377,7 +377,7 @@ public class PackedBitArraysPer8 {
      *
      * @param src    the source array (bits are packed in <tt>byte</tt> values).
      * @param srcPos position of the first bit read in the source array.
-     * @param count  the number of bits to be unpacked (must be &gt;=0 and &lt;64).
+     * @param count  the number of bits to be unpacked (must be in range 0..64).
      * @return the sequence of <tt>count</tt> bits.
      * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
@@ -454,7 +454,7 @@ public class PackedBitArraysPer8 {
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param count   the number of bits to be written (must be &gt;=0 and &lt;64).
+     * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
@@ -513,7 +513,7 @@ public class PackedBitArraysPer8 {
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param count   the number of bits to be written (must be &gt;=0 and &lt;64).
+     * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
@@ -678,7 +678,7 @@ public class PackedBitArraysPer8 {
      *
      * @param src    the source array (bits are packed in <tt>byte</tt> values).
      * @param srcPos position of the first bit read in the source array.
-     * @param count  the number of bits to be unpacked (must be &gt;=0 and &lt;64).
+     * @param count  the number of bits to be unpacked (must be in range 0..64).
      * @return the sequence of <tt>count</tt> bits.
      * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
@@ -757,7 +757,7 @@ public class PackedBitArraysPer8 {
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param count   the number of bits to be written (must be &gt;=0 and &lt;64).
+     * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
@@ -825,7 +825,7 @@ public class PackedBitArraysPer8 {
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param count   the number of bits to be written (must be &gt;=0 and &lt;64).
+     * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.

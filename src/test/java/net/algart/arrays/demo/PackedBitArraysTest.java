@@ -252,8 +252,7 @@ public class PackedBitArraysTest {
                 if (sync) {
                     PackedBitArrays.setBits64(pDestWork2, destPos, v, count);
                 } else {
-                    PackedBitArrays.setBits64(pDestWork2, destPos, v, count);
-                    //TODO!!
+                    PackedBitArrays.setBits64NoSync(pDestWork2, destPos, v, count);
                 }
                 long vTest = getBits64Simple(pDestWork2,destPos, count);
                 if (destPos + count <= len && vTest != v) {

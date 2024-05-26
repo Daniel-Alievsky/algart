@@ -302,6 +302,27 @@ public final class SimpleOperationsSpeed {
 
             t1 = System.nanoTime();
             for (int k = 0; k < n; k++) {
+                PackedBitArrays.setBits64(bits, k, k & 31, 1);
+            }
+            t2 = System.nanoTime();
+            time("PackedBitArrays.setBits64(1)", t1, t2);
+
+            t1 = System.nanoTime();
+            for (int k = 0; k < n; k++) {
+                PackedBitArrays.setBits64NoSync(bits, k, k & 31, 1);
+            }
+            t2 = System.nanoTime();
+            time("PackedBitArrays.setBits64NoSync(1)", t1, t2);
+
+            t1 = System.nanoTime();
+            for (int k = 0; k < n; k++) {
+                PackedBitArrays.setBits64NoSync(bits, k, k & 31, 5);
+            }
+            t2 = System.nanoTime();
+            time("PackedBitArrays.setBits64NoSync(5)", t1, t2);
+
+            t1 = System.nanoTime();
+            for (int k = 0; k < n; k++) {
                 byteArray.setByte(k, (byte) k);
             }
             t2 = System.nanoTime();

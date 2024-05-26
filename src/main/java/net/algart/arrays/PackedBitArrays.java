@@ -226,7 +226,7 @@ public class PackedBitArrays {
      *
      * @param src    the source array (bits are packed in <tt>long</tt> values).
      * @param srcPos position of the first bit read in the source array.
-     * @param count  the number of bits to be unpacked (must be &gt;=0 and &lt;64).
+     * @param count  the number of bits to be unpacked (must be in range 0..64).
      * @return the sequence of <tt>count</tt> bits.
      * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
@@ -285,7 +285,7 @@ public class PackedBitArrays {
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param count   the number of bits to be written (must be &gt;=0 and &lt;64).
+     * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
@@ -321,15 +321,59 @@ public class PackedBitArrays {
                 count -= cntStart;
                 bits >>>= cntStart;
             }
-            if (dPos >= dest.length) {
-                return;
-            }
-            if (count == 64) {
-                dest[dPos] = bits;
-            } else if (count > 0) {
-                long maskFinish = (1L << count) - 1; // count times 1 (from the left)
+            if (count > 0 && dPos < dest.length) {
+                long maskFinish = (2L << (count - 1)) - 1; // count times 1 (from the left)
                 dest[dPos] = (bits & maskFinish) | (dest[dPos] & ~maskFinish);
             }
+        }
+    }
+
+    /**
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
+     * in the packed <tt>dest</tt> bit array <i>without synchronization</i>.
+     * May be used instead of {@link #setBits64(long[], long, long, int)}, if you are not planning to call
+     * this method from different threads for the same <tt>dest</tt> array.
+     *
+     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param count   the number of bits to be written (must be in range 0..64).
+     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
+    public static void setBits64NoSync(long[] dest, long destPos, long bits, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        if (destPos < 0) {
+            throw new IndexOutOfBoundsException("Negative destPos argument: " + destPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot set > 64 bits in setBits64 method");
+        }
+        final long destPosDiv64 = destPos >>> 6;
+        if (count == 0 || destPosDiv64 >= dest.length) {
+            return;
+        }
+        int dPosRem = (int) (destPos & 63);
+        int cntStart = (-dPosRem) & 63;
+        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = count;
+            maskStart &= (1L << (dPosRem + count)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        int dPos = (int) destPosDiv64;
+        if (cntStart > 0) {
+            dest[dPos] = ((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart);
+            dPos++;
+            count -= cntStart;
+            bits >>>= cntStart;
+        }
+        if (count > 0 && dPos < dest.length) {
+            long maskFinish = (2L << (count - 1)) - 1; // count times 1 (from the left)
+            dest[dPos] = (bits & maskFinish) | (dest[dPos] & ~maskFinish);
         }
     }
     /*Repeat.SectionEnd bits_64*/
