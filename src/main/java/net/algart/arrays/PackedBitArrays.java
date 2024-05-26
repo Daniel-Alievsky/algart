@@ -273,7 +273,7 @@ public class PackedBitArrays {
      *
      * <pre>
      *      for (int k = 0; k &lt; count; k++) {
-     *          final long bit = (bits &gt;&gt;&gt; k) & 1L;
+     *          final long bit = (bits &gt;&gt;&gt; k) &amp; 1L;
      *          {@link #setBit(long[], long, boolean) PackedBitArrays.setBit}(dest, destPos + k, bit != 0);
      *      }</pre>
      *

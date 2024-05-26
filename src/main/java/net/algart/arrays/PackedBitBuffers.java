@@ -248,7 +248,7 @@ public class PackedBitBuffers {
      *
      * <pre>
      *      for (int k = 0; k &lt; count; k++) {
-     *          final long bit = (bits &gt;&gt;&gt; k) & 1L;
+     *          final long bit = (bits &gt;&gt;&gt; k) &amp; 1L;
      *          {@link #setBit(LongBuffer, long, boolean) PackedBitBuffers.setBit}(dest, destPos + k, bit != 0);
      *      }</pre>
      *

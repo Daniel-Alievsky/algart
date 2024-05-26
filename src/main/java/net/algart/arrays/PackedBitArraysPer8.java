@@ -442,7 +442,7 @@ public class PackedBitArraysPer8 {
      *
      * <pre>
      *      for (int k = 0; k &lt; count; k++) {
-     *          final long bit = (bits &gt;&gt;&gt; k) & 1L;
+     *          final long bit = (bits &gt;&gt;&gt; k) &amp; 1L;
      *          {@link #setBit(byte[], long, boolean) PackedBitArraysPer8.setBit}(dest, destPos + k, bit != 0);
      *      }</pre>
      *
@@ -744,7 +744,7 @@ public class PackedBitArraysPer8 {
      *
      * <pre>
      *      for (int k = 0; k &lt; count; k++) {
-     *          final long bit = (bits &gt;&gt;&gt; (count - 1 - k)) & 1L;
+     *          final long bit = (bits &gt;&gt;&gt; (count - 1 - k)) &amp; 1L;
      *          {@link #setBitInReverseOrder(byte[], long, boolean)
      *          PackedBitArraysPer8.setBitInReverseOrder}(dest, destPos + k, bit != 0);
      *      }</pre>
