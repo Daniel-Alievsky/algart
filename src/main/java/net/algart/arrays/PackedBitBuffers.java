@@ -193,11 +193,12 @@ public class PackedBitBuffers {
      * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
      *
      * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
-     * after the end of the array (<tt>&ge;8*src.length</tt>); instead, all bits outside the array are considered zero.
+     * after the end of the buffer (<tt>&ge;64*src.limit()</tt>);
+     * instead, all bits outside the buffer are considered zero.
      * (But negative indexes are not allowed.)</p>
      *
-     * @param src   the source buffer (bits are packed into <tt>long</tt> values).
-     * @param srcPos  position of the first bit read in the source buffer.
+     * @param src    the source buffer (bits are packed into <tt>long</tt> values).
+     * @param srcPos position of the first bit read in the source buffer.
      * @param count  the number of bits to be unpacked (must be &gt;=0 and &lt;64).
      * @return the sequence of <tt>count</tt> bits.
      * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
@@ -237,6 +238,123 @@ public class PackedBitBuffers {
             return (src.get(sPos) & (-1L >>> (bitsLeft - count))) >>> sPosRem;
         }
     }
+
+    /**
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
+     * in the packed <tt>dest</tt> bit buffer.
+     * This is the reverse operation of {@link #getBits64(LongBuffer, long, int)}.
+     *
+     * <p>This function is equivalent to the following loop:</p>
+     *
+     * <pre>
+     *      for (int k = 0; k &lt; count; k++) {
+     *          final long bit = (bits &gt;&gt;&gt; k) & 1L;
+     *          {@link #setBit(LongBuffer, long, boolean) PackedBitBuffers.setBit}(dest, destPos + k, bit != 0);
+     *      }</pre>
+     *
+     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     *
+     * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
+     * after the end of the buffer (<tt>&ge;64*dest.limit()</tt>);
+     * instead, extra bits outside the buffer are just ignored.
+     * (But negative indexes are not allowed.)</p>
+     *
+     * @param dest    the destination buffer (bits are packed into <tt>long</tt> values).
+     * @param destPos position of the first bit written in the destination buffer.
+     * @param count   the number of bits to be written (must be in range 0..64).
+     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
+    public static void setBits64(LongBuffer dest, long destPos, long bits, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        if (destPos < 0) {
+            throw new IndexOutOfBoundsException("Negative destPos argument: " + destPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot set > 64 bits in setBits64 method");
+        }
+        final long destPosDiv64 = destPos >>> 6;
+        final int length = dest.limit();
+        if (count == 0 || destPosDiv64 >= length) {
+            return;
+        }
+        int dPosRem = (int) (destPos & 63);
+        int cntStart = (-dPosRem) & 63;
+        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = count;
+            maskStart &= (1L << (dPosRem + count)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        int dPos = (int) destPosDiv64;
+        synchronized (getLock(dest)) {
+            if (cntStart > 0) {
+                dest.put(dPos, ((bits << dPosRem) & maskStart) | (dest.get(dPos) & ~maskStart));
+                dPos++;
+                count -= cntStart;
+                bits >>>= cntStart;
+            }
+            if (count > 0 && dPos < length) {
+                long maskFinish = (2L << (count - 1)) - 1; // count times 1 (from the left)
+                dest.put(dPos, (bits & maskFinish) | (dest.get(dPos) & ~maskFinish));
+            }
+        }
+    }
+
+    /**
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
+     * in the packed <tt>dest</tt> bit buffer <i>without synchronization</i>.
+     * May be used instead of {@link #setBits64(LongBuffer, long, long, int)}, if you are not planning to call
+     * this method from different threads for the same <tt>dest</tt> buffer.
+     *
+     * @param dest    the destination buffer (bits are packed in <tt>long</tt> values).
+     * @param destPos position of the first bit written in the destination buffer.
+     * @param count   the number of bits to be written (must be in range 0..64).
+     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
+    public static void setBits64NoSync(LongBuffer dest, long destPos, long bits, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        if (destPos < 0) {
+            throw new IndexOutOfBoundsException("Negative destPos argument: " + destPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot set > 64 bits in setBits64 method");
+        }
+        final long destPosDiv64 = destPos >>> 6;
+        final int length = dest.limit();
+        if (count == 0 || destPosDiv64 >= length) {
+            return;
+        }
+        int dPosRem = (int) (destPos & 63);
+        int cntStart = (-dPosRem) & 63;
+        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = count;
+            maskStart &= (1L << (dPosRem + count)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        int dPos = (int) destPosDiv64;
+        if (cntStart > 0) {
+            dest.put(dPos, ((bits << dPosRem) & maskStart) | (dest.get(dPos) & ~maskStart));
+            dPos++;
+            count -= cntStart;
+            bits >>>= cntStart;
+        }
+        if (count > 0 && dPos < length) {
+            long maskFinish = (2L << (count - 1)) - 1; // count times 1 (from the left)
+            dest.put(dPos, (bits & maskFinish) | (dest.get(dPos) & ~maskFinish));
+        }
+    }
+
 
     /**
      * Copies <tt>count</tt> bits, packed into <tt>src</tt> buffer, starting from the bit <tt>#srcPos</tt>,

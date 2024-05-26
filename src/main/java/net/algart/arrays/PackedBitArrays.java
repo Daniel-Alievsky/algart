@@ -221,7 +221,7 @@ public class PackedBitArrays {
      * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
      *
      * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
-     * after the end of the array (<tt>&ge;8*src.length</tt>); instead, all bits outside the array are considered zero.
+     * after the end of the array (<tt>&ge;64*src.length</tt>); instead, all bits outside the array are considered zero.
      * (But negative indexes are not allowed.)</p>
      *
      * @param src    the source array (bits are packed in <tt>long</tt> values).
@@ -280,7 +280,7 @@ public class PackedBitArrays {
      * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
      *
      * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
-     * after the end of the array (<tt>&ge;8*dest.length</tt>); instead, extra bits outside the array are just ignored.
+     * after the end of the array (<tt>&ge;64*dest.length</tt>); instead, extra bits outside the array are just ignored.
      * (But negative indexes are not allowed.)</p>
      *
      * @param dest    the destination array (bits are packed in <tt>long</tt> values).
