@@ -310,7 +310,7 @@ public class PackedBitArraysPer8 {
      * }
      * </pre>
      *
-     * @param dest  the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest  the destination array (bits are packed in <tt>byte</tt> values).
      * @param index index of the written bit.
      * @param value new bit value.
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
@@ -338,7 +338,7 @@ public class PackedBitArraysPer8 {
      * }
      * </pre>
      *
-     * @param dest  the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest  the destination array (bits are packed in <tt>byte</tt> values).
      * @param index index of the written bit.
      * @param value new bit value.
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
@@ -434,6 +434,31 @@ public class PackedBitArraysPer8 {
         return result;
     }
 
+    /**
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
+     * in the packed <tt>dest</tt> bit array. This is the reverse operation of {@link #getBits64(byte[], long, int)}.
+     *
+     * <p>This function is equivalent to the following loop:</p>
+     *
+     * <pre>
+     *      for (int k = 0; k &lt; count; k++) {
+     *          final long bit = (bits &gt;&gt;&gt; k) & 1L;
+     *          {@link #setBit(byte[], long, boolean) PackedBitArraysPer8.setBit}(dest, destPos + k, bit != 0);
+     *      }</pre>
+     *
+     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     *
+     * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
+     * after the end of the array (<tt>&ge;8*dest.length</tt>); instead, extra bits outside the array are just ignored.
+     * (But negative indexes are not allowed.)</p>
+     *
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param count   the number of bits to be written (must be &gt;=0 and &lt;64).
+     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
     public static void setBits64(byte[] dest, long destPos, long bits, int count) {
         Objects.requireNonNull(dest, "Null dest");
         if (destPos < 0) {
@@ -458,6 +483,7 @@ public class PackedBitArraysPer8 {
             maskStart &= (1 << (dPosRem + count)) - 1; // &= dPosRem+cntStart times 1 (from the left)
         }
         int dPos = (int) destPosDiv8;
+        assert dPos < dest.length;
         synchronized (dest) {
             if (cntStart > 0) {
                 dest[dPos++] = (byte) (((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart));
@@ -476,6 +502,62 @@ public class PackedBitArraysPer8 {
                 int maskFinish = (1 << count) - 1; // count times 1 (from the left)
                 dest[dPos] = (byte) ((bits & maskFinish) | (dest[dPos] & ~maskFinish));
             }
+        }
+    }
+
+    /**
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
+     * in the packed <tt>dest</tt> bit array, <i>without synchronization</i>.
+     * May be used instead of {@link #setBits64(byte[], long, long, int)}, if you are not planning to call
+     * this method from different threads for the same <tt>dest</tt> array.
+     *
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param count   the number of bits to be written (must be &gt;=0 and &lt;64).
+     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
+    public static void setBits64NoSync(byte[] dest, long destPos, long bits, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        if (destPos < 0) {
+            throw new IndexOutOfBoundsException("Negative destPos argument: " + destPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot set > 64 bits in setBits64NoSync method");
+        }
+        final long destPosDiv8 = destPos >>> 3;
+        if (count == 0 || destPosDiv8 >= dest.length) {
+            return;
+        }
+        int dPosRem = (int) (destPos & 7);
+        int cntStart = (-dPosRem) & 7;
+        int maskStart = -1 << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = count;
+            maskStart &= (1 << (dPosRem + count)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        int dPos = (int) destPosDiv8;
+        if (cntStart > 0) {
+            dest[dPos++] = (byte) (((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart));
+            count -= cntStart;
+            bits >>>= cntStart;
+        }
+        while (count >= 8) {
+            if (dPos >= dest.length) {
+                return;
+            }
+            dest[dPos++] = (byte) bits;
+            count -= 8;
+            bits >>>= 8;
+        }
+        if (count > 0 && dPos < dest.length) {
+            int maskFinish = (1 << count) - 1; // count times 1 (from the left)
+            dest[dPos] = (byte) ((bits & maskFinish) | (dest[dPos] & ~maskFinish));
         }
     }
 
@@ -515,7 +597,7 @@ public class PackedBitArraysPer8 {
      * }
      * </pre>
      *
-     * @param dest  the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest  the destination array (bits are packed in <tt>byte</tt> values).
      * @param index index of the written bit.
      * @param value new bit value.
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
@@ -548,7 +630,7 @@ public class PackedBitArraysPer8 {
      * }
      * </pre>
      *
-     * @param dest  the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest  the destination array (bits are packed in <tt>byte</tt> values).
      * @param index index of the written bit.
      * @param value new bit value.
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
@@ -572,7 +654,7 @@ public class PackedBitArraysPer8 {
      * getBitInReverseOrder}(src, srcPos+k)</tt>,
      * will be returned in the bit <tt>#(count-1-k)</tt> (in direct order) of the returned
      * <tt>long</tt> value <tt>R</tt>, i.e. it is equal to <tt><tt>(R&gt;&gt;(count-1-k))&amp;1</tt></tt>.
-     * If <tt>count=0</tt>, the result is 0.</p>
+     * If <tt>count=30</tt>, the result is 0.</p>
      *
      * <p>The same result can be calculated using the following loop:</p>
      *
@@ -651,6 +733,34 @@ public class PackedBitArraysPer8 {
         return result;
     }
 
+    /**
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
+     * in the packed <tt>dest</tt> bit array
+     * for a case, when the bits are packed in each byte in the reverse order.
+     * This is the reverse operation of {@link #getBits64InReverseOrder(byte[], long, int)}.
+     *
+     * <p>This function is equivalent to the following loop:</p>
+     *
+     * <pre>
+     *      for (int k = 0; k &lt; count; k++) {
+     *          final long bit = (bits &gt;&gt;&gt; k) & 1L;
+     *          {@link #setBitInReverseOrder(byte[], long, boolean)
+     *          PackedBitArraysPer8.setBitInReverseOrder}(dest, destPos + k, bit != 0);
+     *      }</pre>
+     *
+     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     *
+     * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
+     * after the end of the array (<tt>&ge;8*dest.length</tt>); instead, extra bits outside the array are just ignored.
+     * (But negative indexes are not allowed.)</p>
+     *
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param count   the number of bits to be written (must be &gt;=0 and &lt;64).
+     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
     public static void setBits64InReverseOrder(byte[] dest, long destPos, long bits, int count) {
         Objects.requireNonNull(dest, "Null dest");
         if (destPos < 0) {
@@ -661,7 +771,7 @@ public class PackedBitArraysPer8 {
         }
         if (count > 64) {
             throw new IllegalArgumentException("Too large count argument: " + count +
-                    "; we cannot set > 64 bits in setBits64 method");
+                    "; we cannot set > 64 bits in setBits64InReverseOrder method");
         }
         final long destPosDiv8 = destPos >>> 3;
         if (count == 0 || destPosDiv8 >= dest.length) {
@@ -677,13 +787,12 @@ public class PackedBitArraysPer8 {
         int dPos = (int) destPosDiv8;
         synchronized (dest) {
             if (cntStart > 0) {
-                // bits #count-cntStart...#count-1 of "bits" argument must be copied to
-                // bits #dPosRem..#dPosRem+(cntStart-1).
-                // This means shifting >>> (count-cntStart)-dPosRem
+                assert cntStart + dPosRem == 8;
+                // bits #count-cntStart...#count-1 of "bits" argument should be copied to
+                // bits #8-dPosRem-cntStart..#8-dPosRem-1 (where 8-dPosRem=cntStart)
+                // This means shifting >>> (count-1)-(8-dPosRem-1) = count-cntStart
                 count -= cntStart;
-                final int shift = count - dPosRem;
-                final long v = shift > 0 ? bits >>> shift : bits << -shift;
-                dest[dPos++] = (byte) ((v & maskStart) | (dest[dPos] & ~maskStart));
+                dest[dPos++] = (byte) (((bits >>> count) & maskStart) | (dest[dPos] & ~maskStart));
             }
             while (count >= 8) {
                 if (dPos >= dest.length) {
@@ -694,9 +803,75 @@ public class PackedBitArraysPer8 {
             }
             if (count > 0 && dPos < dest.length) {
                 int maskFinish = 0xFF00 >>> count; // count times 1 (from the highest bit)
-                final long v = bits << (8 - count);
-                dest[dPos] = (byte) ((bits & maskFinish) | (dest[dPos] & ~maskFinish));
+                // We still did not use only the count lowest bits
+                // #0...#count-3; they should be copied to
+                // #7...#(8-count) bits ot dest[dPos]
+                dest[dPos] = (byte) (((bits << (8 - count)) & maskFinish) | (dest[dPos] & ~maskFinish));
             }
+        }
+    }
+
+    /**
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
+     * in the packed <tt>dest</tt> bit array
+     * for a case, when the bits are packed in each byte in the reverse order,
+     * <i>without synchronization</i>.
+     * May be used instead of {@link #setBits64InReverseOrder(byte[], long, long, int)},
+     * if you are not planning to call
+     * this method from different threads for the same <tt>dest</tt> array.
+     *
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param count   the number of bits to be written (must be &gt;=0 and &lt;64).
+     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
+    public static void setBits64InReverseOrderNoSync(byte[] dest, long destPos, long bits, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        if (destPos < 0) {
+            throw new IndexOutOfBoundsException("Negative destPos argument: " + destPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot set > 64 bits in setBits64InReverseOrderNoSync method");
+        }
+        final long destPosDiv8 = destPos >>> 3;
+        if (count == 0 || destPosDiv8 >= dest.length) {
+            return;
+        }
+        int dPosRem = (int) (destPos & 7);
+        int cntStart = (-dPosRem) & 7;
+        int maskStart = 0xFF >>> dPosRem; // dPosRem times 0, then 1 (from the highest bit)
+        if (cntStart > count) {
+            cntStart = count;
+            maskStart &= (0xFF00 >>> (dPosRem + cntStart)); // &= dPosRem+cntStart times 1 (from the highest bit)
+        }
+        int dPos = (int) destPosDiv8;
+        if (cntStart > 0) {
+            assert cntStart + dPosRem == 8;
+            // bits #count-cntStart...#count-1 of "bits" argument should be copied to
+            // bits #8-dPosRem-cntStart..#8-dPosRem-1 (where 8-dPosRem=cntStart)
+            // This means shifting >>> (count-1)-(8-dPosRem-1) = count-cntStart
+            count -= cntStart;
+            dest[dPos++] = (byte) (((bits >>> count) & maskStart) | (dest[dPos] & ~maskStart));
+        }
+        while (count >= 8) {
+            if (dPos >= dest.length) {
+                return;
+            }
+            count -= 8;
+            dest[dPos++] = (byte) (bits >>> count);
+        }
+        if (count > 0 && dPos < dest.length) {
+            int maskFinish = 0xFF00 >>> count; // count times 1 (from the highest bit)
+            // We still did not use only the count lowest bits
+            // #0...#count-3; they should be copied to
+            // #7...#(8-count) bits ot dest[dPos]
+            dest[dPos] = (byte) (((bits << (8 - count)) & maskFinish) | (dest[dPos] & ~maskFinish));
         }
     }
 
@@ -1785,9 +1960,9 @@ public class PackedBitArraysPer8 {
      * of incorrect arguments, than {@link #unpackBits(boolean[], int, byte[], long, int)}
      * method.</p>
      *
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
-     * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param src    the source array (bits are packed in <tt>byte</tt> values).
+     * @param srcPos position of the first bit read in the source array.
+     * @param count  the number of elements to be unpacked (must be &gt;=0).
      * @return the unpacked <tt>boolean</tt> array.
      * @throws NullPointerException     if <tt>src</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or

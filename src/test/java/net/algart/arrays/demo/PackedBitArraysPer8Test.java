@@ -53,6 +53,16 @@ public class PackedBitArraysPer8Test {
         return result;
     }
 
+    public static void setBits64Simple(byte[] dest, long destPos, long bits, int count) {
+        for (int k = 0; k < count; k++) {
+            final long bit = (bits >>> k) & 1L;
+            if (destPos + k >= 8 * (long) dest.length) {
+                break;
+            }
+            PackedBitArraysPer8.setBit(dest, destPos + k, bit != 0);
+        }
+    }
+
     private static long getBits64InReverseOrderSimple(byte[] src, long srcPos, int count) {
         long result = 0;
         for (int k = 0; k < count; k++) {
@@ -62,6 +72,16 @@ public class PackedBitArraysPer8Test {
             }
         }
         return result;
+    }
+
+    public static void setBits64InReverseOrderSimple(byte[] dest, long destPos, long bits, int count) {
+        for (int k = 0; k < count; k++) {
+            final long bit = (bits >>> k) & 1L;
+            if (destPos + k >= 8 * (long) dest.length) {
+                break;
+            }
+            PackedBitArraysPer8.setBitInReverseOrder(dest, destPos + k, bit != 0);
+        }
     }
 
     private static void copyBitsFromReverseToNormalOrderSimple(
@@ -261,8 +281,7 @@ public class PackedBitArraysPer8Test {
                     PackedBitArraysPer8.setBitInReverseOrder(pDestWork1, destPos + k,
                             PackedBitArraysPer8.getBitInReverseOrder(pSrc, srcPos + k));
                 }
-                for (int k = 0; k < count; k
-                        ++) {
+                for (int k = 0; k < count; k++) {
                     if (PackedBitArraysPer8.getBitInReverseOrder(pSrc, srcPos + k) !=
                             PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, destPos + k)) {
                         throw new AssertionError("The bug C in setBitInReverseOrder found in test #" +
@@ -291,6 +310,36 @@ public class PackedBitArraysPer8Test {
                     throw new AssertionError("The bug B in getBits64 found in test #" + testCount +
                             ": srcPos = " + srcPos + ", count = " + count
                             + ", " + Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v));
+                }
+                showProgress(testCount);
+            }
+
+            System.out.println("Testing \"setBits64\" method...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(65);
+                long v = PackedBitArraysPer8.getBits64(pSrc, srcPos, count);
+                boolean sync = rnd.nextBoolean();
+                setBits64Simple(pDestWork1, destPos, v, count);
+                if (sync) {
+                    PackedBitArraysPer8.setBits64(pDestWork2, destPos, v, count);
+                } else {
+                    PackedBitArraysPer8.setBits64NoSync(pDestWork2, destPos, v, count);
+                }
+                long vTest = getBits64Simple(pDestWork2,destPos, count);
+                if (vTest != v) {
+                    throw new AssertionError("The bug A in setBits64 found in test #" + testCount +
+                            ": destPos = " + destPos + ", count = " + count + ", " +
+                            Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v) +
+                            ", " + (sync ? "" : "no-sync version"));
+                }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug B in setBits64 " +
+                            "found in test #" + testCount +
+                            ", " + (sync ? "" : "no-sync version"));
                 }
                 showProgress(testCount);
             }

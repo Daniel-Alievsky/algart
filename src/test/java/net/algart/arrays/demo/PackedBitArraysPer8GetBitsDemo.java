@@ -44,7 +44,7 @@ public class PackedBitArraysPer8GetBitsDemo {
         return sb.toString();
     }
 
-    private static String bitsInReverseOrderToString(long packed, int count) {
+    private static String bitsToStringInReverseOrder(long packed, int count) {
         final StringBuilder sb = new StringBuilder();
         for (int k = count - 1; k >= 0; k--) {
             sb.append((packed >>> k) & 1);
@@ -107,20 +107,20 @@ public class PackedBitArraysPer8GetBitsDemo {
         }
 
         long bits = PackedBitArraysPer8.getBits64InReverseOrder(pSrc, pos, count);
-        final String local = bitsInReverseOrderToString(bits, count);
+        final String local = bitsToStringInReverseOrder(bits, count);
         System.out.println(" ".repeat(pos) + local);
         if (!full.substring(pos, pos + count).equals(local)) {
             throw new AssertionError("Bug in getBitsInReverseOrder");
         }
         byte[] pDest = pSrc.clone();
         for (long testBits : new long[] {0, 3, -1, -4, ~bits, bits, 0x5555555555555555L}) {
-            System.out.println(" ".repeat(pos) + bitsToString(testBits, count) + " - updating:");
+            System.out.println(" ".repeat(pos) + bitsToStringInReverseOrder(testBits, count) + " - updating:");
             PackedBitArraysPer8.setBits64InReverseOrder(pDest, pos, testBits, count);
             System.out.println(toBinaryStringInReverseOrder(pDest, len));
             bits = PackedBitArraysPer8.getBits64InReverseOrder(pDest, pos, count);
             testBits &= (1L << count) - 1;
             if (bits != testBits) {
-                System.out.println(" ".repeat(pos) + bitsInReverseOrderToString(bits, count));
+                System.out.println(" ".repeat(pos) + bitsToStringInReverseOrder(bits, count));
                 throw new AssertionError("Bug in setBits64InReverseOrder");
             }
         }
