@@ -283,7 +283,7 @@ public class PackedBitArraysPer8Test {
                                 testCount + ", error found at " + k);
                     }
                 }
-                int srcPos = rnd.nextInt(len);
+                int srcPos = rnd.nextInt(len + 100);
                 int count = rnd.nextInt(65);
                 long vTest = PackedBitArraysPer8.getBits64(pSrc, srcPos, count);
                 long v = getBits64Simple(pSrc, srcPos, count);
@@ -305,7 +305,7 @@ public class PackedBitArraysPer8Test {
                                 testCount + ", error found at " + k);
                     }
                 }
-                int srcPos = rnd.nextInt(len);
+                int srcPos = rnd.nextInt(len + 100);
                 int count = rnd.nextInt(65);
                 long vTest = PackedBitArraysPer8.getBits64InReverseOrder(pSrc, srcPos, count);
                 long v = getBits64InReverseOrderSimple(pSrc, srcPos, count);
@@ -318,6 +318,7 @@ public class PackedBitArraysPer8Test {
                 System.arraycopy(pSrc, 0, pDestWork1, 0, pDest.length);
                 PackedBitArraysPer8.reverseBitsOrderInEachByte(pDestWork1);
 
+                srcPos = Math.min(srcPos, len);
                 count = rnd.nextInt(33);
                 if (srcPos + count > pSrc.length * 8) {
                     count = pSrc.length * 8 - srcPos;

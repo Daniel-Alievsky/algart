@@ -209,7 +209,7 @@ public class PackedBitArraysTest {
                                 testCount + ", error found at " + k);
                     }
                 }
-                int srcPos = rnd.nextInt(len);
+                int srcPos = rnd.nextInt(len + 100);
                 int count = rnd.nextInt(65);
                 long vTest = PackedBitArrays.getBits64(pSrc, startOffset + srcPos, count);
                 long v = getBits64Simple(pSrc, startOffset + srcPos, count);

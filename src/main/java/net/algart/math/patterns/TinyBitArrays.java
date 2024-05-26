@@ -543,9 +543,9 @@ class TinyBitArrays {
      * of incorrect arguments, than {@link #unpackBits(boolean[], int, long[], long, int)}
      * method.</p>
      *
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
-     * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param src    the source array (bits are packed in <tt>byte</tt> values).
+     * @param srcPos position of the first bit read in the source array.
+     * @param count  the number of elements to be unpacked (must be &gt;=0).
      * @return the unpacked <tt>boolean</tt> array.
      * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or

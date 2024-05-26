@@ -36,6 +36,18 @@ import net.algart.arrays.*;
  * @author Daniel Alievsky
  */
 public class PackedBitBuffersTest {
+    private static long getBits64Simple(LongBuffer src, long srcPos, int count) {
+        long result = 0;
+        for (int k = 0; k < count; k++) {
+            if (srcPos + k >= 64 * (long) src.limit()) {
+                break;
+            }
+            final long bit = PackedBitBuffers.getBit(src, srcPos + k) ? 1L : 0L;
+            result |= bit << k;
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         boolean superLarge = false;
         int startArgIndex = 0;
@@ -156,6 +168,28 @@ public class PackedBitBuffersTest {
                                 testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
                                 ", error found at " + k);
                     }
+                }
+                PackedBitArraysTest.showProgress(testCount);
+            }
+
+            System.out.println("Testing \"getBits64\" method...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                for (int k = 0; k < len; k++) {
+                    boolean bTest = PackedBitBuffers.getBits64(pSrc, startOffset + k, 1) == 1;
+                    boolean b = PackedBitBuffers.getBit(pSrc, startOffset + k);
+                    if (b != bTest) {
+                        throw new AssertionError("The bug A in getBits64 found in test #" +
+                                testCount + ", error found at " + k);
+                    }
+                }
+                int srcPos = rnd.nextInt(len + 100);
+                int count = rnd.nextInt(65);
+                long vTest = PackedBitBuffers.getBits64(pSrc, startOffset + srcPos, count);
+                long v = getBits64Simple(pSrc, startOffset + srcPos, count);
+                if (vTest != v) {
+                    throw new AssertionError("The bug B in getBits64 found in test #" + testCount +
+                            ": srcPos = " + srcPos + ", count = " + count
+                            + ", " + Long.toBinaryString(vTest) + " instead of " + Long.toBinaryString(v));
                 }
                 PackedBitArraysTest.showProgress(testCount);
             }

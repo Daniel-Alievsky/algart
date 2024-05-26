@@ -1863,9 +1863,9 @@ public class PackedBitArraysPer8 {
     }
 
     /*Repeat() (boolean\[\] unpackBits) ==>
-               $1ToChars,,$1ToBytes,,$1ToShorts,,$1ToInts,,$1ToLongs,,$1ToFloats,,$1ToDoubles,,$1ToObjects;;
-               boolean ==> char,,byte,,short,,int,,long,,float,,double,,Object;;
-               Booleans ==> Chars,,Bytes,,Shorts,,Ints,,Longs,,Floats,,Doubles,,Objects */
+               $1ToChars,,$1ToBytes,,$1ToShorts,,$1ToInts,,$1ToLongs,,$1ToFloats,,$1ToDoubles;;
+               boolean ==> char,,byte,,short,,int,,long,,float,,double;;
+               Booleans ==> Chars,,Bytes,,Shorts,,Ints,,Longs,,Floats,,Doubles */
 
     /**
      * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
@@ -2610,103 +2610,6 @@ public class PackedBitArraysPer8 {
     public static void unpackBits(
             double[] dest, int destPos, byte[] src, long srcPos, int count,
             double bit0Value, double bit1Value) {
-        Objects.requireNonNull(dest, "Null dest");
-        Objects.requireNonNull(src, "Null src");
-        int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
-        if (countStart > count) {
-            countStart = count;
-        }
-        for (int destPosMax = destPos + countStart; destPos < destPosMax; srcPos++, destPos++) {
-            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (srcPos & 7))) != 0 ? bit1Value : bit0Value;
-        }
-        count -= countStart;
-        int cnt = count >>> 3;
-        for (int k = (int) (srcPos >>> 3), kMax = k + cnt; k < kMax; k++) {
-            int v = src[k];
-            srcPos += 8;
-
-            dest[destPos] = (v & 1) != 0 ? bit1Value : bit0Value;
-
-            dest[destPos + 1] = (v & (1 << 1)) != 0 ? bit1Value : bit0Value;
-            dest[destPos + 2] = (v & (1 << 2)) != 0 ? bit1Value : bit0Value;
-            dest[destPos + 3] = (v & (1 << 3)) != 0 ? bit1Value : bit0Value;
-            dest[destPos + 4] = (v & (1 << 4)) != 0 ? bit1Value : bit0Value;
-            dest[destPos + 5] = (v & (1 << 5)) != 0 ? bit1Value : bit0Value;
-            dest[destPos + 6] = (v & (1 << 6)) != 0 ? bit1Value : bit0Value;
-            dest[destPos + 7] = (v & (1 << 7)) != 0 ? bit1Value : bit0Value;
-
-            destPos += 8;
-        }
-        int countFinish = count & 7;
-        for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
-            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (srcPos & 7))) != 0 ? bit1Value : bit0Value;
-        }
-    }
-
-
-    /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to newly created array <tt>Object[count]</tt> array returned as a result.
-     * Every element <tt>result[k]</tt> of the result array is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
-     *
-     * <p>Note that this method provides more user-friendly exception messages in a case
-     * of incorrect arguments, than {@link #unpackBits(Object[], int, byte[], long, int, Object, Object)}
-     * method.</p>
-     *
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
-     * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
-     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
-     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @return the unpacked <tt>Object</tt> array.
-     * @throws NullPointerException     if either <tt>src</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
-     *                                  if copying would cause access of data outside the source array bounds.
-     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
-     */
-    public static Object[] unpackBitsToObjects(
-            byte[] src, long srcPos, long count,
-            Object bit0Value, Object bit1Value) {
-        Objects.requireNonNull(src, "Null src");
-        if (srcPos < 0) {
-            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
-        }
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
-        }
-        if (count > unpackedLength(src) - srcPos) {
-            throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it cannot contain " + count + " bits since position " + srcPos);
-        }
-        if (count > Integer.MAX_VALUE) {
-            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
-                    count + " >= 2^31 bits");
-        }
-        final Object[] result = new Object[(int) count];
-        unpackBits(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
-        return result;
-    }
-
-    /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> <tt>Object</tt> array, starting from the element <tt>#destPos</tt>.
-     * It means that every element <tt>dest[destPos+k]</tt> is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
-     *
-     * @param dest      the destination array (unpacked <tt>Object</tt> values).
-     * @param destPos   position of the first written element in the destination array.
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
-     * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
-     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
-     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
-     */
-    public static void unpackBits(
-            Object[] dest, int destPos, byte[] src, long srcPos, int count,
-            Object bit0Value, Object bit1Value) {
         Objects.requireNonNull(dest, "Null dest");
         Objects.requireNonNull(src, "Null src");
         int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
