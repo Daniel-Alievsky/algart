@@ -171,6 +171,9 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     default void setBits64(long arrayPos, long bits, int count) {
+        if (arrayPos < 0) {
+            throw new IndexOutOfBoundsException("Negative arrayPos argument: " + arrayPos);
+        }
         if (count < 0) {
             throw new IllegalArgumentException("Negative count argument: " + count);
         }
@@ -212,6 +215,9 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     default void setBits64NoSync(long arrayPos, long bits, int count) {
+        if (arrayPos < 0) {
+            throw new IndexOutOfBoundsException("Negative arrayPos argument: " + arrayPos);
+        }
         if (count < 0) {
             throw new IllegalArgumentException("Negative count argument: " + count);
         }

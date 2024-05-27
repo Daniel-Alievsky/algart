@@ -165,6 +165,9 @@ public interface BitArray extends PFixedArray {
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     default long getBits64(long arrayPos, int count) {
+        if (arrayPos < 0) {
+            throw new IndexOutOfBoundsException("Negative arrayPos argument: " + arrayPos);
+        }
         if (count < 0) {
             throw new IllegalArgumentException("Negative count argument: " + count);
         }
