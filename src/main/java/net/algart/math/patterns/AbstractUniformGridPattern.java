@@ -24,6 +24,7 @@
 
 package net.algart.math.patterns;
 
+import net.algart.arrays.PackedBitArrays;
 import net.algart.math.*;
 
 import java.util.*;
@@ -1198,8 +1199,9 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         for (int k = n - 1; k >= 0; k--) {
             oldDisp -= oldHyperplaneSize;
             newDisp -= newHyperplaneSize;
-            TinyBitArrays.copyBits(array, newDisp, array, oldDisp, oldHyperplaneSize);
-            TinyBitArrays.fillBits(array, newDisp + oldHyperplaneSize, newHyperplaneSize - oldHyperplaneSize, false);
+            PackedBitArrays.copyBits(array, newDisp, array, oldDisp, oldHyperplaneSize);
+            PackedBitArrays.fillBits(array,
+                    newDisp + oldHyperplaneSize, newHyperplaneSize - oldHyperplaneSize, false);
         }
         return result;
     }

@@ -3,7 +3,7 @@
     <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.GetSetBitSpeed" />
     <module name="algart" />
     <option name="PROGRAM_PARAMETERS" value="4194304 16" />
-    <option name="VM_PARAMETERS" value="-ea -esa -Dnet.algart.arrays.globalMemoryModel=LARGE" />
+    <option name="VM_PARAMETERS" value="-ea -esa -Dnet.algart.arrays.globalMemoryModel=SIMPLE" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="net.algart.arrays.demo.*" />

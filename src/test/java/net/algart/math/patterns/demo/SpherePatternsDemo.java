@@ -64,11 +64,11 @@ public class SpherePatternsDemo {
         Set<Point> points = p.points();
         System.out.println(points.size() + " points");
         if (points.size() < 1000)
-            System.out.println(new TreeSet<Point>(points));
+            System.out.println(new TreeSet<>(points));
         for (int iterationIndex = 1; iterationIndex <= numberOfIterations; iterationIndex++) {
             System.out.println();
             System.out.println("Iteration #" + iterationIndex);
-            if (p instanceof UniformGridPattern && ((UniformGridPattern)p).isActuallyRectangular()) {
+            if (((UniformGridPattern)p).isActuallyRectangular()) {
                 System.out.println("It is rectangular");
             }
             if (p.isSurelySinglePoint()) {
@@ -88,15 +88,17 @@ public class SpherePatternsDemo {
             points = p.round().lowerSurface(iterationIndex % dimCount).points();
             System.out.println(points.size() + " left points along axis #" + iterationIndex % dimCount + ":");
             if (points.size() < 1000)
-                System.out.println(new TreeSet<Point>(points));
+                System.out.println(new TreeSet<>(points));
             points = p.round().upperSurface(iterationIndex % dimCount).points();
             System.out.println(points.size() + " right points along axis #" + iterationIndex % dimCount + ":");
             if (points.size() < 1000)
-                System.out.println(new TreeSet<Point>(points));
+                System.out.println(new TreeSet<>(points));
             points = p.round().surface().points();
             System.out.println(points.size() + " boundary:");
             if (points.size() < 1000)
-                System.out.println(new TreeSet<Point>(points));
+                System.out.println(new TreeSet<>(points));
+            System.out.println("Carcass:");
+            System.out.println("    " + p.carcass() + " " + new TreeSet<>(p.carcass().points()));
             t1 = System.nanoTime();
             List<Pattern> minkowskiDecomposition = p.minkowskiDecomposition(minimalPointCountForDecomposition);
             t2 = System.nanoTime();
@@ -116,7 +118,7 @@ public class SpherePatternsDemo {
                     k + 1, unionDecomposition.size(), (t2 - t1) * 1e-6, (t2 - t1) / (double) p.pointCount());
                 for (Pattern q : unionDecomposition) {
                     System.out.println("    " + q
-                        + (!q.hasMinkowskiDecomposition() ? " " + new TreeSet<IPoint>(q.roundedPoints()) : ""));
+                        + (!q.hasMinkowskiDecomposition() ? " " + new TreeSet<>(q.roundedPoints()) : ""));
                 }
                 t1 = System.nanoTime();
                 long totalPatternCount = 0, totalPointCount = 0;

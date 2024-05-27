@@ -67,7 +67,7 @@ public class RectangularPatternsDemo {
         System.out.println("Created pattern: " + p);
         System.out.println("Integer number of points: " + p.pointCount());
         System.out.println("Approximate number of points: " + p.largePointCount());
-        if (p instanceof QuickPointCountPattern && ((QuickPointCountPattern) p).isPointCountVeryLarge()) {
+        if (((QuickPointCountPattern) p).isPointCountVeryLarge()) {
             System.out.println("It is very large");
         }
         if (p.isActuallyRectangular()) {
@@ -98,41 +98,41 @@ public class RectangularPatternsDemo {
         Set<IPoint> roundedPoints = p.roundedPoints();
         System.out.println(roundedPoints.size() + " rounded points");
         if (roundedPoints.size() < 1000) {
-            System.out.println(new TreeSet<IPoint>(roundedPoints));
+            System.out.println(new TreeSet<>(roundedPoints));
         }
         Set<Point> points = p.points();
         System.out.println(points.size() + " points");
         if (points.size() < 1000) {
-            System.out.println(new TreeSet<Point>(points));
+            System.out.println(new TreeSet<>(points));
         }
         points = p.lowerSurface(0).points();
         System.out.println(points.size() + " left points:");
         if (points.size() < 1000) {
-            System.out.println(new TreeSet<Point>(points));
+            System.out.println(new TreeSet<>(points));
         }
         points = p.upperSurface(0).points();
         System.out.println(points.size() + " right points:");
         if (points.size() < 1000) {
-            System.out.println(new TreeSet<Point>(points));
+            System.out.println(new TreeSet<>(points));
         }
         points = p.surface().points();
         System.out.println(points.size() + " boundary:");
         if (points.size() < 1000) {
-            System.out.println(new TreeSet<Point>(points));
+            System.out.println(new TreeSet<>(points));
         }
         System.out.println("Carcass:");
-        System.out.println("    " + p.carcass() + " " + new TreeSet<Point>(p.carcass().points()));
+        System.out.println("    " + p.carcass() + " " + new TreeSet<>(p.carcass().points()));
         List<Pattern> unionDecomposition = p.unionDecomposition(minimalPointCountForDecomposition);
         System.out.println("Union decomposition to " + unionDecomposition.size() + " patterns:");
         for (Pattern q : unionDecomposition) {
             System.out.println("    " + q
-                + (!q.hasMinkowskiDecomposition() ? " " + new TreeSet<Point>(q.points()) : ""));
+                + (!q.hasMinkowskiDecomposition() ? " " + new TreeSet<>(q.points()) : ""));
         }
         List<Pattern> minkowskiDecomposition = p.minkowskiDecomposition(minimalPointCountForDecomposition);
         System.out.println("Minkowski decomposition to " + minkowskiDecomposition.size() + " patterns:");
         for (Pattern q : minkowskiDecomposition) {
             System.out.println("    " + q
-                + (!q.hasMinkowskiDecomposition() ? " " + new TreeSet<Point>(q.points()) : ""));
+                + (!q.hasMinkowskiDecomposition() ? " " + new TreeSet<>(q.points()) : ""));
         }
     }
 }

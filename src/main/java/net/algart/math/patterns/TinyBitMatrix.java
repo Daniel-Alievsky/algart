@@ -24,6 +24,7 @@
 
 package net.algart.math.patterns;
 
+import net.algart.arrays.PackedBitArrays;
 import net.algart.math.IPoint;
 
 import java.util.HashSet;
@@ -43,7 +44,7 @@ class TinyBitMatrix {
 
     private TinyBitMatrix(long[] array, int[] dimensions) {
         this.length = checkDimensions(dimensions);
-        long packedLength = TinyBitArrays.packedLength(this.length);
+        long packedLength = PackedBitArrays.packedLength(this.length);
         if (packedLength > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("Too large bit array: >=2^37 elements");
         }
@@ -56,7 +57,7 @@ class TinyBitMatrix {
 
     TinyBitMatrix(int[] dimensions) {
         this.length = checkDimensions(dimensions);
-        long packedLength = TinyBitArrays.packedLength(this.length);
+        long packedLength = PackedBitArrays.packedLength(this.length);
         if (packedLength > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("Too large bit array: >=2^37 elements");
         }
@@ -161,7 +162,7 @@ class TinyBitMatrix {
             throw new IllegalArgumentException("Number of dimensions of the pattern and the bit matrix mismatch");
         }
         for (IPoint ip : pattern.roundedPoints()) {
-            TinyBitArrays.setBit(array, pseudoCyclicIndex(ip.coordinates()), true);
+            PackedBitArrays.setBit(array, pseudoCyclicIndex(ip.coordinates()), true);
         }
     }
 
@@ -190,18 +191,18 @@ class TinyBitMatrix {
         for (IPoint ip : points) {
             long shift = pseudoCyclicIndex(ip.coordinates());
             if (first) {
-                TinyBitArrays.copyBits(array, shift, src.array, 0, length - shift);
-                TinyBitArrays.copyBits(array, 0, src.array, length - shift, shift);
+                PackedBitArrays.copyBits(array, shift, src.array, 0, length - shift);
+                PackedBitArrays.copyBits(array, 0, src.array, length - shift, shift);
             } else {
-                TinyBitArrays.orBits(array, shift, src.array, 0, length - shift);
-                TinyBitArrays.orBits(array, 0, src.array, length - shift, shift);
+                PackedBitArrays.orBits(array, shift, src.array, 0, length - shift);
+                PackedBitArrays.orBits(array, 0, src.array, length - shift, shift);
             }
             first = false;
         }
     }
 
     public long cardinality() {
-        return TinyBitArrays.cardinality(array, 0, length);
+        return PackedBitArrays.cardinality(array, 0, length);
     }
 
     private void addPoints(
@@ -212,7 +213,7 @@ class TinyBitMatrix {
         if (currentCoordIndex == 0) {
             coordinates[0] = 0;
             int n = dim(0);
-            TinyBitArrays.unpackBits(temp, 0, array, pseudoCyclicIndex(coordinates), n);
+            PackedBitArrays.unpackBits(temp, 0, array, pseudoCyclicIndex(coordinates), n);
             for (int i = 0; i < n; i++) {
                 if (temp[i]) {
                     coordinates[0] = i;
