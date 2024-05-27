@@ -175,7 +175,7 @@ public class ContinuedStreamingApertureProcessor extends StreamingApertureProces
      * Usually, the returned instance is used only for performing a
      * {@link ArrayContext#part(double, double) subtask} of the full task.
      *
-     * @param newContext another context, used by the returned instance; may be <tt>null</tt>.
+     * @param newContext another context, used by the returned instance; can be <tt>null</tt>.
      * @return           new instance with another context.
      */
     @Override

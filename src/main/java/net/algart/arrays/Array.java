@@ -145,7 +145,7 @@ public interface Array {
      * <p>There is a guarantee that this method works very quickly
      * (usually it just returns a constant value).
      *
-     * @return canonical AlgART type of a resizable array of the same kind.
+     * @return canonical AlgART class of a resizable array of the same kind.
      */
     Class<? extends MutableArray> mutableType();
 
@@ -278,8 +278,8 @@ public interface Array {
      * {@link MutableObjectArray} subinterfaces), this method may allocate new instances
      * for Java array elements <tt>destArray[0]..destArray[count-1]</tt>,
      * but also may change the state of already existing non-null elements: it depends on implementation.
-     * In any case, you can be sure that if some of target elements <tt>destArray[k]==null</tt>,
-     * this method always allocate new element.
+     * In any case, you can be sure: if some of the target elements <tt>destArray[k]==null</tt>,
+     * this method always allocates new elements.
      *
      * @param arrayPos  starting position in this AlgART array.
      * @param destArray the target Java array.
@@ -668,12 +668,12 @@ public interface Array {
      * before performing the operation. In other words,
      * you have a guarantee: if this array is a view of some another array or data
      * (for example, a {@link #subArray(long, long) subarray} or
-     * a {@link SimpleMemoryModel#asUpdatableArray(Object) view of Java array},
+     * a {@link SimpleMemoryModel#asUpdatableArray(Object) view of Java array}),
      * that there are no ways to change that data
-     * via accessing the returned array. Any changes, it they will occur,
+     * via accessing the returned array. Any changes, if they will occur,
      * will be performed with the newly allocated storage only.
      *
-     * <p>Please be careful: it you will want to change arrays created by this method, the result may
+     * <p>Please be careful: if you will want to change arrays created by this method, the result may
      * be unexpected! For example, an attempt to copy other arrays into copy-on-next-write array
      * by some methods like {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} will probably
      * do nothing. The reason is working with the array via its subarrays &mdash;
@@ -920,7 +920,7 @@ public interface Array {
 
     /**
      * Returns <tt>true</tt> if this array instance is <i>lazy</i>, i&#46;e&#46;
-     * if an access to its element means some calculations for producing result or actual saving element.
+     * if access to its element means some calculations for producing result or actual saving element.
      * Examples of <i>lazy</i> arrays are results of
      * {@link Arrays#asFuncArray(net.algart.math.functions.Func, Class, PArray...)}
      * and analogous methods.
@@ -1005,7 +1005,7 @@ public interface Array {
      * of array views: {@link #asImmutable()}, {@link UpdatableArray#asUnresizable()}, etc.
      * The most often usage of this method is finalization
      * via {@link net.algart.finalizing.Finalizer Finalizer} class:
-     * see example in comments to {@link #checkUnallowedMutation()} method. Also this method
+     * see example in comments to {@link #checkUnallowedMutation()} method. Also, this method
      * can be useful if you need to pass an array with the same content
      * into some another class, but must be sure that further resizing
      * of the source array will not affect to correct work of that class.
@@ -1206,7 +1206,7 @@ public interface Array {
      * created by {@link Arrays#nByteCopies}, {@link Arrays#nCharCopies}, etc.:
      * these arrays have no associated resources.
      *
-     * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @see #freeResources(ArrayContext)
      * @see #flushResources(ArrayContext)
      * @see #flushResources(ArrayContext, boolean)
@@ -1227,7 +1227,7 @@ public interface Array {
     /**
      * Equivalent to <tt>{@link #flushResources(ArrayContext, boolean) flushResources}(context, false)</tt>.
      *
-     * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @see #loadResources(ArrayContext)
      * @see #freeResources(ArrayContext)
      */
@@ -1312,7 +1312,7 @@ public interface Array {
      * however, it is still possible that the second call will spend time for writing data again t
      * o an external device.
      *
-     * @param context              the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      * @see #loadResources(ArrayContext)

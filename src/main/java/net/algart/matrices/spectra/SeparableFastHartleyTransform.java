@@ -387,7 +387,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
-     * @param context the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
      *                (see comments to {@link SpectralTransform}).
      * @param fRe     the real parts of the elements of the resulting matrix (Fourier spectrum).
      * @param fIm     the imaginary parts of the elements of the resulting matrix (Fourier spectrum).
@@ -440,7 +440,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
-     * @param context the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
      *                (see comments to {@link SpectralTransform}).
      * @param fRe     the real parts of the elements of the resulting matrix (Fourier spectrum).
      * @param fIm     the imaginary parts of the elements of the resulting matrix (Fourier spectrum).

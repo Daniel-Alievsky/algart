@@ -351,7 +351,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * This implementation returns <tt>{@link #underlyingArrays}.length &gt; 0</tt>.
      * Please override this if the access to underlying arrays is very quick
      * (as for {@link Matrix#subMatrix(long[], long[])}) or,
-     * vice versa, if there no underlying arrays, but getting an element requires some calculation
+     * vice versa, if there are no underlying arrays, but getting an element requires some calculation
      * (as for {@link Arrays#asIndexFuncArray(net.algart.math.functions.Func, Class, long)}).
      *
      * @return <tt>true</tt> if and only if {@link #underlyingArrays} is non-empty.
@@ -448,7 +448,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * preloading correct part all underlying arrays, passed via the last argument
      * of the {@link #AbstractArray(long, long, Array...) constructor}.
      *
-     * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
      */
     public void loadResources(ArrayContext context) {
     }
@@ -460,7 +460,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * Please override it if you want to provide (in a case of subarray)
      * flushing correct part of the underlying arrays.
      *
-     * @param context              the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      */
@@ -478,7 +478,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * Please override it if you want to provide (in a case of subarray)
      * freeing correct part of the underlying arrays.
      *
-     * @param context              the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      */
@@ -638,7 +638,7 @@ public abstract class AbstractArray implements Array, Cloneable {
             }
         } else {
             DataBuffer buf1 = Arrays.bufferInternal(obj1, DataBuffer.AccessMode.READ,
-                    largeBufferCapacity(obj1), // its better to use large blocks while scanning
+                    largeBufferCapacity(obj1), // it's better to use large blocks while scanning
                     true);
             DataBuffer buf2 = Arrays.bufferInternal(a, DataBuffer.AccessMode.READ,
                     buf1.capacity(), true);
@@ -676,7 +676,7 @@ public abstract class AbstractArray implements Array, Cloneable {
         if (thisArray instanceof BitArray) {
             result = 8 * 32768;
             // 32 KB: for bit arrays, it may be better choice than 16 KB
-            // because it essentially reduce the time for loop organization
+            // because this essentially reduces the time for loop organization
             // (most loops work with long[] array, and 32 KB means only 4096 longs)
         } else {
             int bitsPerElement = thisArray instanceof PArray ?
@@ -749,7 +749,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * <p>The call of this method is a suitable implementation of
      * {@link #shallowClone()} method for most cases.
      *
-     * <p>Please note that this method clones a reference {@link #underlyingArrays} and does not tries
+     * <p>Please note that this method clones a reference {@link #underlyingArrays} and does not try
      * to create a clone of this Java array.
      *
      * @return result of default <tt>Object.clone()</tt>
@@ -1055,7 +1055,7 @@ public abstract class AbstractArray implements Array, Cloneable {
                 tRead += (t2 = nanoTime()) - t1;
             } else {
                 DataBuffer srcBuf = Arrays.bufferInternal(src, DataBuffer.AccessMode.READ,
-                        largeBufferCapacity(thisArray), // its better to use large blocks while copying
+                        largeBufferCapacity(thisArray), // it's better to use large blocks while copying
                         true);
                 Arrays.enableCaching(srcBuf);
                 t1 = nanoTime();

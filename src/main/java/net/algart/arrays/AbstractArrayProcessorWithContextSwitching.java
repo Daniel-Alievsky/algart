@@ -58,7 +58,7 @@ public abstract class AbstractArrayProcessorWithContextSwitching
      * Creates an instance of this class with the given context.
      * The reference to the passed argument will be returned by {@link #context()} method.
      *
-     * @param context the context used by this instance for all operations (may be <tt>null</tt>).
+     * @param context the context used by this instance for all operations (can be <tt>null</tt>).
      */
     protected AbstractArrayProcessorWithContextSwitching(ArrayContext context) {
         setContext(context);
@@ -71,7 +71,7 @@ public abstract class AbstractArrayProcessorWithContextSwitching
      * This technique is suitable for most implementation. However, if you need, you can
      * override this method; maybe, it is enough to override <tt>clone()</tt> instead.
      *
-     * @param newContext another context, used by the returned instance; may be <tt>null</tt>.
+     * @param newContext another context, used by the returned instance; can be <tt>null</tt>.
      * @return           new instance with another context.
      */
     public ArrayProcessorWithContextSwitching context(ArrayContext newContext) {
@@ -91,7 +91,7 @@ public abstract class AbstractArrayProcessorWithContextSwitching
      *
      * <p>This method works very quickly (it just returns a value of some private field).
      *
-     * @return the current context used by this instance; may be <tt>null</tt>.
+     * @return the current context used by this instance; can be <tt>null</tt>.
      */
     public final ArrayContext context() {
         return context;

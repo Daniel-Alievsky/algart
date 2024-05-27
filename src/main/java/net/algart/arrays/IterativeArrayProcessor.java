@@ -92,12 +92,12 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      * Instead, this method should use the context of execution specified by <tt>context</tt> argument.
      * This method is called by {@link #process()} method with the argument,
      * describing {@link ArrayContext#part(double, double) a&nbsp;subtrask} of the full algorithm.
-     * The <tt>context</tt> argument may be <tt>null</tt>:
+     * The <tt>context</tt> argument can be <tt>null</tt>:
      * this method should work properly in this case (ignore the context).
      *
      * <p>This method must be implemented while creating a new iterative array-processing algorithm.
      *
-     * @param context the context used by this instance for all operations; may be <tt>null</tt>.
+     * @param context the context used by this instance for all operations; can be <tt>null</tt>.
      */
     public void performIteration(ArrayContext context);
 
@@ -150,7 +150,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      *
      * <p>This method must be implemented while creating a new iterative array-processing algorithm.
      *
-     * @return the result of the previous iteration (may be <tt>null</tt>).
+     * @return the result of the previous iteration (can be <tt>null</tt>).
      */
     public T result();
 
@@ -176,7 +176,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      *
      * <p>This method must be implemented while creating a new iterative array-processing algorithm.
      *
-     * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
      */
     public void freeResources(ArrayContext context);
 

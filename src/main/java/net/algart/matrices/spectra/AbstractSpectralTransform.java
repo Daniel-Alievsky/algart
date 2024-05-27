@@ -94,7 +94,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * {@link #directTransformMatrix directTransformMatrix} and {@link #inverseTransformMatrix inverseTransformMatrix}
  * methods by this class. Really, this implementation performs much more: for example, downloads parts of large
  * matrices into Java memory ({@link SimpleMemoryModel}) for better performance; splits the execution into
- * several parallel tasks on multi-core or multiprocessor computers, according the passed {@link ArrayContext}
+ * several parallel tasks on multicore or multiprocessor computers, according the passed {@link ArrayContext}
  * or via {@link DefaultThreadPoolFactory} when this context is <tt>null</tt>; provides used interruption and
  * showing progress via the passed {@link ArrayContext} (if it's not <tt>null</tt>); etc.</p>
  *
@@ -178,7 +178,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * if {@link #isLengthAllowed(long) isLengthAllowed} returns <tt>false</tt>, this mewthod
      * throws <tt>IllegalArgumentException</tt>.
      *
-     * @param context the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
      * @throws NullPointerException          if the <tt>samples</tt> argument is <tt>null</tt>.

@@ -111,7 +111,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
      * <nobr><tt>(length-1)*vectorStep+vectorLength &lt;= samples.length()</tt></nobr>.
      *
      * @param memoryModel  the memory model, which will be used, when necessary, by
-     *                     {@link #newCompatibleSamplesArray(long)} method; may be <tt>null</tt>,
+     *                     {@link #newCompatibleSamplesArray(long)} method; can be <tt>null</tt>,
      *                     then {@link SimpleMemoryModel} will be used.
      * @param samples      the samples.
      * @param vectorLength the length of each real vector.

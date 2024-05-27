@@ -215,7 +215,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * method, is tiled, then the temporary AlgART arrays are tiled with the same tile structure.
  *
  * <p>This class uses multithreading (alike {@link Arrays#copy(ArrayContext, UpdatableArray, Array)}
- * and similar methods) to optimize calculations on multiprocessor or multi-core computers.
+ * and similar methods) to optimize calculations on multiprocessor or multicore computers.
  * Namely, the {@link #process(UpdatablePArray, PArray, Range, long) process} method
  * processes different bit slices in several parallel threads.
  * However, it is not useful if the bitwise processing method {@link
@@ -374,7 +374,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * Returns new instance of this class.
      *
      * @param context        the {@link #context() context} that will be used by this object;
-     *                       may be <tt>null</tt>, then it will be ignored, and all temporary arrays
+     *                       can be <tt>null</tt>, then it will be ignored, and all temporary arrays
      *                       will be created by {@link SimpleMemoryModel}.
      * @param sliceOperation the bit processing operation that will be generalized by this instance.
      * @param roundingMode   the rounding mode, used by the created instance.
@@ -397,7 +397,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * already uses multithreading.
      *
      * @param context        the {@link #context() context} that will be used by this object;
-     *                       may be <tt>null</tt>, then it will be ignored, and all temporary arrays
+     *                       can be <tt>null</tt>, then it will be ignored, and all temporary arrays
      *                       will be created by {@link SimpleMemoryModel}.
      * @param sliceOperation the bit processing operation that will be generalized by this instance.
      * @param roundingMode   the rounding mode, used by the created instance.
@@ -419,7 +419,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * Usually, the returned instance is used only for performing a
      * {@link ArrayContext#part(double, double) subtask} of the full task.
      *
-     * @param newContext another context, used by the returned instance; may be <tt>null</tt>.
+     * @param newContext another context, used by the returned instance; can be <tt>null</tt>.
      * @return           new instance with another context.
      */
     @Override

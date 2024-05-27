@@ -407,7 +407,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * Returns <tt>true</tt> if the passed array was created by some instance of this memory model.
      * Returns <tt>false</tt> if the passed array is <tt>null</tt> or an AlgART array created by another memory model.
      *
-     * @param array the checked array  (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param array the checked array  (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return      <tt>true</tt> if this array is a large array created by a large memory model.
      */
     public static boolean isLargeArray(Array array) {

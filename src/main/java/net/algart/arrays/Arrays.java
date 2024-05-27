@@ -578,7 +578,7 @@ public class Arrays {
          * copying a usual matrix to the matrix created by the {@link Matrix#tile(long...)} method and, inversely,
          * for copying a result of {@link Matrix#tile(long...)} method into a usual matrix.
          * If a method of this package, such as {@link Matrices#copy(ArrayContext, Matrix, Matrix)},
-         * detects that one from two matrices is tiled and it should be copied into/from another usual (untiled)
+         * detects that one from two matrices is tiled, and it should be copied into/from another usual (untiled)
          * matrix, and that the tiled matrix is not created by a very quick memory model alike
          * {@link SimpleMemoryModel}, then the method allocates a buffer in the Java heap space
          * up to {@link #maxTempJavaMemoryForTiling()} bytes
@@ -630,7 +630,7 @@ public class Arrays {
 
         /**
          * Specifies the maximal size of memory block, in bytes, that should be processed in several threads
-         * for optimization on multiprocessor or multi-core computers.
+         * for optimization on multiprocessor or multicore computers.
          *
          * <p>Many algorithms, in particular, based on
          * <nobr>{@link Arrays#copy(ArrayContext, UpdatableArray, Array)}</nobr> method and
@@ -659,7 +659,7 @@ public class Arrays {
          * it will contain the default <tt>1048576</tt> value.
          *
          * @return the maximal size of memory block, in bytes, that should be processed in several threads
-         * for optimization on multiprocessor or multi-core computers,
+         * for optimization on multiprocessor or multicore computers,
          * <tt>1048576</tt> by default.
          */
         public static long maxMultithreadingMemory() {
@@ -972,7 +972,7 @@ public class Arrays {
         /**
          * An analog of <tt>Boolean.getBoolean</tt>, but returns <tt>defaultValue</tt>
          * if there is no required property, or if it doesn't equal "<tt>true</tt>" or "<tt>false</tt>",
-         * or in a case of any exception. (The test of this string is case insensitive.)
+         * or in a case of any exception. (The test of this string is case-insensitive.)
          *
          * <p>Unlike <tt>Boolean.getBoolean</tt>,
          * this method catches all exceptions, including <tt>SecurityException</tt>, and returns
@@ -1651,7 +1651,7 @@ public class Arrays {
      *
      * <p>This method never throws exceptions.
      *
-     * @param elementType some primitive element type; may be <tt>null</tt>, then &minus;1 is returned.
+     * @param elementType some primitive element type; can be <tt>null</tt>, then &minus;1 is returned.
      * @param arrayLength the desired length of the AlgART array.
      * @return the estimated size of the AlgART array in bytes or &minus;1 if it is unknown.
      * @see #sizeOf(Array)
@@ -1705,7 +1705,7 @@ public class Arrays {
      * <li>for all other cases, returns <tt>-1</tt> ("unknown size").</li>
      * </ul>
      *
-     * @param elementType some primitive element type; may be <tt>null</tt>, then &minus;1 is returned.
+     * @param elementType some primitive element type; can be <tt>null</tt>, then &minus;1 is returned.
      * @return the size of each element of the AlgART array in bytes or &minus;1 if it is unknown.
      * @see #sizeOf(Array)
      */
@@ -1755,7 +1755,7 @@ public class Arrays {
      * <li>for all other cases, returns <tt>-1</tt> ("unknown size").</li>
      * </ul>
      *
-     * @param elementType some primitive element type; may be <tt>null</tt>, then &minus;1 is returned.
+     * @param elementType some primitive element type; can be <tt>null</tt>, then &minus;1 is returned.
      * @return the size of each element of the AlgART array in bits or &minus;1 if it is unknown.
      * @see #sizeOf(Array)
      * @see PArray#bitsPerElement()
@@ -1794,7 +1794,7 @@ public class Arrays {
      * Returns <tt>true</tt> if the passed element type is <tt>float.class</tt>
      * or <tt>double.class</tt>.
      *
-     * @param elementType some primitive element type; may be <tt>null</tt>, then <tt>false</tt> is returned.
+     * @param elementType some primitive element type; can be <tt>null</tt>, then <tt>false</tt> is returned.
      * @return whether this element type is a floating-point primitive type.
      */
     public static boolean isFloatingPointElementType(Class<?> elementType) {
@@ -1805,7 +1805,7 @@ public class Arrays {
      * Returns <tt>true</tt> if the passed element type is <tt>boolean.class</tt>,
      * <tt>short.class</tt>, <tt>byte.class</tt> or <tt>short.class</tt>.
      *
-     * @param elementType some primitive element type; may be <tt>null</tt>, then <tt>false</tt> is returned.
+     * @param elementType some primitive element type; can be <tt>null</tt>, then <tt>false</tt> is returned.
      * @return whether this element type should be interpreted as unsigned primitive type.
      */
     public static boolean isUnsignedElementType(Class<?> elementType) {
@@ -2443,7 +2443,7 @@ public class Arrays {
      * <p>Such optimization is performed automatically while accessing a constant array via
      * a {@link DataBuffer data buffer}.
      *
-     * @param array the checked AlgART array (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param array the checked AlgART array (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed array was created by one of <tt>n<i>Xxx</i>Copies</tt>
      * methods of this class.
      */
@@ -2934,7 +2934,7 @@ public class Arrays {
      * the used mathematical function. However, if the array is a {@link Array#subArray} subarray}
      * of some functional array, this method returns <tt>false</tt>.
      *
-     * @param array the checked AlgART array (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param array the checked AlgART array (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed array a functional one.
      * @see #isIndexFuncArray(Array)
      */
@@ -3228,7 +3228,7 @@ public class Arrays {
      *
      * <ol>
      * <li>This method performs copying in several threads. It may be very important on multiprocessor
-     * or multi-core computers for the case, when the source array is a "lazy" view of another arrays,
+     * or multicore computers for the case, when the source array is a "lazy" view of another arrays,
      * that is when reading data from it means performing complex algorithm calculating the data.
      * The good example is an array returned by {@link #asFuncArray(Func, Class, PArray...)},
      * when the result of this method is calculated on the base of tens or hundreds source arrays
@@ -7754,7 +7754,7 @@ public class Arrays {
     /**
      * <p>The class simplifying the parallel processing a large AlgART array in several threads,
      * where each thread process a set of ranges of the source array ({@link Array#subArray Array.subArray}).
-     * Multi-thread processing can be very important on multiprocessor or multi-core computers
+     * Multi-thread processing can be very important on multiprocessor or multicore computers
      * for complex processing algorithm.
      * In addition, this class provides an ability to interrupt calculations and
      * show the executing progress via the {@link ArrayContext}.

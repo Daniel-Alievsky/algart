@@ -1788,7 +1788,7 @@ public abstract class SummingHistogram extends Histogram {
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
-     *                      may be <tt>null</tt>, then will be ignored.
+     *                      can be <tt>null</tt>, then will be ignored.
      * @return              the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      *                      the simple histogram model, between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
      *                      <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.
@@ -1879,7 +1879,7 @@ public abstract class SummingHistogram extends Histogram {
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
-     *                      may be <tt>null</tt>, then will be ignored.
+     *                      can be <tt>null</tt>, then will be ignored.
      * @return              the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      *                      the simple histogram model, between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
      *                      <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.

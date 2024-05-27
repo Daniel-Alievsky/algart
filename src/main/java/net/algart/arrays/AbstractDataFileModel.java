@@ -343,14 +343,14 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * <tt>File.createTempFile(prefix,suffix,{@link #tempPath}).getAbsolutePath()</tt>, where
      * <tt>tempPath</tt> is the constructor argument (<tt>null</tt> for constructor without
      * <tt>File</tt> argument), <tt>prefix</tt> is the result of {@link #temporaryFilePrefix()}
-     * method (appened to the length 3 with "_" character if its length &lt;3),
+     * method, padded to length 3 with "_" character if its length &lt;3,
      * <tt>suffix</tt> is calculated as<pre>
      * String suffix = (unresizable ? ".uarray." : ".marray.")
      * + ({@link #byteOrderInTemporaryFiles()} == ByteOrder.BIG_ENDIAN ? "be.tmp" : "le.tmp");
      * </pre>
      *
      * <p>If {@link #isConcreteFile()} method returns <tt>true</tt>
-     * (i.e. if {@link #tempPath} is not <tt>null</tt>, and it is a file or does not exists:
+     * (i.e. if {@link #tempPath} is not <tt>null</tt>, and it is a file or does not exist:
      * <nobr><tt>!tempPath.exists() || tempPath.isFile()</tt></nobr>),
      * this implementation calls <tt>tempPath.createNewFile()</tt> and returns <tt>tempPath</tt>.
      *
@@ -358,7 +358,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      *
      * <p>This method does not try to use <tt>File.deleteOnExit()</tt> method
      * for created files.
-     * Instead, the temporary files will deleted via built-in
+     * Instead, the temporary files will be deleted via built-in
      * cleanup procedure (described in comments to {@link #allTemporaryFiles()} method),
      * if {@link #isAutoDeletionRequested()} method returns <tt>true</tt>.
      * The reasons are the Sun's bugs #6359560:
@@ -403,7 +403,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * the best choice for temporary data, that will be automatically deleted
      * before application exit and, probably, will never be transferred to another computers.
      * You may override this method to specify another byte order;
-     * it be useful if you are planning to clear temporary status
+     * this is useful if you are planning to clear temporary status
      * for some arrays via {@link LargeMemoryModel#setTemporary(Array, boolean)} method.
      *
      * @return byte order that is used for new temporary files.

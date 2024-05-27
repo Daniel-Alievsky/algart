@@ -943,7 +943,7 @@
 
  <dt>"<b><tt>net.algart.arrays.maxMultithreadingMemory</tt></b>"</dt>
  <dd>Defines the maximal size of memory block, in bytes, that should be processed in several threads
- for optimization on multiprocessor or multi-core computers.
+ for optimization on multiprocessor or multicore computers.
  May contain any positive <tt>long</tt> value.
  Default value is <tt>1048576)</tt> (1 MB).
  See {@link net.algart.arrays.Arrays.SystemSettings#maxMultithreadingMemory()} for more details.</dd>

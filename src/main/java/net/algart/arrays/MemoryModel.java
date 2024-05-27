@@ -1578,7 +1578,7 @@ public interface MemoryModel {
      *
      * <p>Returns <tt>false</tt> if the passed argument is <tt>null</tt>.
      *
-     * @param array the AlgART array (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param array the AlgART array (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed <tt>array</tt> was created by this memory model.
      */
     boolean isCreatedBy(Array array);

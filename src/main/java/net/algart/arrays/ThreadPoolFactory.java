@@ -116,7 +116,7 @@ public interface ThreadPoolFactory {
      * after finishing your algorithm.
      *
      * <p>The <tt>threadFactory</tt> can be used for creation new thread pool.
-     * This argument <i>may be <tt>null</tt></i>: in this case, some default thread factory should be used.
+     * This argument <i>can be <tt>null</tt></i>: in this case, some default thread factory should be used.
      *
      * @param threadFactory if not <tt>null</tt>, specifies the desired thread factory for using by the thread pool.
      * @return              the thread pool for parallel processing large data.
@@ -132,7 +132,7 @@ public interface ThreadPoolFactory {
      * after finishing your algorithm.
      *
      * <p>The <tt>threadFactory</tt> may be used for creation new thread pool.
-     * This argument <i>may be <tt>null</tt></i>: in this case, some default thread factory should be used.
+     * This argument <i>can be <tt>null</tt></i>: in this case, some default thread factory should be used.
      *
      * @param sourceArray   some AlgART array that should be processed.
      * @param threadFactory if not <tt>null</tt>, specifies the desired thread factory for using by the thread pool.
@@ -216,7 +216,7 @@ public interface ThreadPoolFactory {
      *
      * @param threadFactory the factory, passed to {@link #getThreadPool(java.util.concurrent.ThreadFactory)}
      *                      method to get the necessary thread pool;
-     *                      may be <tt>null</tt>, then some default thread factory will be used.
+     *                      can be <tt>null</tt>, then some default thread factory will be used.
      * @param tasks         the tasks which should be performed.
      * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is <tt>null</tt>.
      * @see #performTasks(Array, java.util.concurrent.ThreadFactory, Runnable[])
@@ -235,7 +235,7 @@ public interface ThreadPoolFactory {
      * @param threadFactory the factory, passed to
      *                      {@link #getThreadPool(Array, java.util.concurrent.ThreadFactory)}
      *                      method to get the necessary thread pool;
-     *                      may be <tt>null</tt>, then some default thread factory will be used.
+     *                      can be <tt>null</tt>, then some default thread factory will be used.
      * @param tasks         the tasks which should be performed.
      * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is <tt>null</tt>.
      */

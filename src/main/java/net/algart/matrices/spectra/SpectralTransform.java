@@ -168,7 +168,7 @@ public interface SpectralTransform {
      * Direct transform of the passed sample array to its spectrum.
      * The resulting data are returned in the same sample array.
      *
-     * @param context the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
      * @throws NullPointerException          if the <tt>samples</tt> argument is <tt>null</tt>.

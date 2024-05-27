@@ -82,7 +82,7 @@ class ArraysBufferedCopier {
      * The <tt>numberOfTasks</tt> argument of the constructors of that classes will be equal to the argument
      * of {@link #getInstance(ArrayContext, UpdatableArray, Array, int, boolean, boolean) getInstance} method.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest    the destination array.
      * @param src     the source array.
      * @param compare whether this method must use {@link ArraysOpImpl.ComparingCopier}.
@@ -99,7 +99,7 @@ class ArraysBufferedCopier {
      * Copies <tt>src</tt> to <tt>dest</tt> via {@link ArraysOpImpl.ComparingCopier} or {@link Arrays.Copier}.
      * The <tt>numberOfTasks</tt> argument of the constructors of that classes will be equal to the passed argument.
      *
-     * @param context       the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context       the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest          the destination array.
      * @param src           the source array.
      * @param numberOfTasks the desired number of tasks; may be 0 for automatic detection.

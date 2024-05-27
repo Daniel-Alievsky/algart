@@ -357,7 +357,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * or its superclass, or <tt>null</tt>.
          * So, the type cast is trivial here.
          *
-         * <p>For primitive element types, <tt>continuationConstant</tt> may be <tt>null</tt> or <i>any</i>
+         * <p>For primitive element types, <tt>continuationConstant</tt> can be <tt>null</tt> or <i>any</i>
          * wrapper for primitive types: <tt>Boolean</tt>, <tt>Character</tt>, <tt>Byte</tt>, <tt>Short</tt>,
          * <tt>Integer</tt>, <tt>Long</tt>, <tt>Float</tt>, <tt>Double</tt>. In this case,
          * the following casting rules are used while reading elements (I remind that attempts to write

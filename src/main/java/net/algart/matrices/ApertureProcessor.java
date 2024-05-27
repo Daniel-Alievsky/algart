@@ -70,7 +70,7 @@ import java.util.Map;
  * <i>after</i> the call of {@link #process(Map, Map) process} method.</p>
  *
  * <p>Some of the resulting matrices <b>M'</b><sub><i>j</i></sub> (but not the source arguments),
- * passed to {@link #process(Map, Map) process} method, may be <tt>null</tt> &mdash;
+ * passed to {@link #process(Map, Map) process} method, can be <tt>null</tt> &mdash;
  * it means that {@link #process(Map, Map) process} method <i>must</i> create them itself.
  * (And it also <i>may</i> create some additional matrices <b>M'</b><sub><i>j</i></sub>, not contained
  * in <tt>dest</tt> while calling this method.)

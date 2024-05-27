@@ -284,7 +284,7 @@ public interface DataFileModel<P> {
      * Usual values are 8-16.
      *
      <!--Repeat.SectionStart recommendedNumberOfBanks_multiprocessor-->
-     * <p>Please note that many algorithms, on multiprocessor or multi-core systems,
+     * <p>Please note that many algorithms, on multiprocessor or multicore systems,
      * use several parallel threads for processing arrays: see {@link Arrays.ParallelExecutor}.
      * So, the number of banks should be enough for parallel using by all CPU units,
      * to avoid frequently bank swapping.

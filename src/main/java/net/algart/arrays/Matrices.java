@@ -214,7 +214,7 @@ public class Matrices {
              * This implementation returns <tt>null</tt>.
              *
              * @param apertureDim the sizes of averaged aperture in the source matrix.
-             * @return the function that will be used for averaging; may be <tt>null</tt>
+             * @return the function that will be used for averaging; can be <tt>null</tt>
              * (default behavior).
              */
             protected Func getAveragingFunc(long[] apertureDim) {
@@ -1922,7 +1922,7 @@ public class Matrices {
      *
      * @param context     the context; allows to specify (in particular)
      *                    the memory model for creating returned matrices;
-     *                    may be <tt>null</tt>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
+     *                    can be <tt>null</tt>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param interleaved the source interleaved matrix.
      * @param limit       maximal allowed number of returned matrices (the first dimension of the source matrix).
      * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension

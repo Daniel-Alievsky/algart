@@ -125,7 +125,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
      * <nobr><tt>(length-1)*vectorStep+vectorLength &lt;= min(samplesRe.length(),samplesIm.length())</tt></nobr>.
      *
      * @param memoryModel  the memory model, which will be used, when necessary, by
-     *                     {@link #newCompatibleSamplesArray(long)} method; may be <tt>null</tt>,
+     *                     {@link #newCompatibleSamplesArray(long)} method; can be <tt>null</tt>,
      *                     then {@link SimpleMemoryModel} will be used.
      * @param samplesRe    the real parts of all samples.
      * @param samplesIm    the imaginary parts of all samples.

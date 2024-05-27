@@ -84,7 +84,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * <p>This array is not <i>{@link #isNew() new}</i> by default.
      * This is correct usually, because this class is often used
      * for creating a view of another data. However, if the instance
-     * if this class does not depend on any other data sources,
+     * of this class does not depend on any other data sources,
      * you may call {@link #setNewStatus(boolean) setNewStatus(true)} in
      * the constructor of your subclass.
      *
@@ -569,7 +569,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * This implementation calls
      * {@link #loadResources(ArrayContext, long, long) loadResources(context, 0, length())}.
      *
-     * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
      */
     @Override
     public void loadResources(ArrayContext context) {
@@ -581,7 +581,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * {@link #flushResources(ArrayContext, long, long, boolean)
      * flushResources(context, 0, length(), forcePhysicalWriting)}.
      *
-     * @param context              the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      */
@@ -595,7 +595,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * {@link #freeResources(ArrayContext, long, long, boolean)
      * freeResources(context, 0, length()), forcePhysicalWriting)}.
      *
-     * @param context              the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      */
@@ -615,7 +615,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * if the <tt>underlyingArraysAreParallel</tt> constructor argument was <tt>true</tt>,
      * or does nothing in other case.
      *
-     * @param context   the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context   the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @param fromIndex low endpoint (inclusive) of the subarray that should be loaded.
      * @param toIndex   high endpoint (exclusive) of the subarray that should be loaded.
      * @throws IndexOutOfBoundsException for illegal fromIndex and toIndex
@@ -643,7 +643,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * or for original underlying arrays in other case
      * (alike {@link AbstractArray#flushResources(ArrayContext, boolean)}).
      *
-     * @param context              the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @param fromIndex            low endpoint (inclusive) of the subarray that should be flushed.
      * @param toIndex              high endpoint (exclusive) of the subarray that should be flushed.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
@@ -676,7 +676,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * or for original underlying arrays in other case
      * (alike {@link AbstractArray#freeResources(ArrayContext, boolean)}).
      *
-     * @param context              the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @param fromIndex            low endpoint (inclusive) of the subarray that should be freed.
      * @param toIndex              high endpoint (exclusive) of the subarray that should be freed.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources

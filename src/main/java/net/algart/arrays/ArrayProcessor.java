@@ -53,7 +53,7 @@ public interface ArrayProcessor {
      * This method may return <tt>null</tt>; the classes, implementing this interface,
      * should work in this situation as while using {@link ArrayContext#DEFAULT} context.
      *
-     * @return the current context used by this instance; may be <tt>null</tt>.
+     * @return the current context used by this instance; can be <tt>null</tt>.
      */
     public ArrayContext context();
 }

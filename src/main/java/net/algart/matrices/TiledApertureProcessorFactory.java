@@ -81,7 +81,7 @@ import java.util.*;
  * is always single-pass: each tile is downloaded and saved only 1 time, and multipass processing is applied
  * to relatively little tile matrices, usually allocated in {@link SimpleMemoryModel}.</p>
  *
- * <p>Third, tiling by this class is the simplest way to optimize an algorithm for multiprocessor or multi-core
+ * <p>Third, tiling by this class is the simplest way to optimize an algorithm for multiprocessor or multicore
  * computers, if the algorithm does not provide multithreading optimization itself:
  * several tiles can be processed simultaneously in parallel threads. See below about multithreading.</p>
  *
@@ -272,7 +272,7 @@ import java.util.*;
  *
  * <p>Note: {@link ApertureProcessor#process(Map dest, Map src) process}
  * method of the tiled processor can process several tiles simultaneously in parallel threads
- * to optimize calculations on multiprocessor or multi-core computers.
+ * to optimize calculations on multiprocessor or multicore computers.
  * It depends on the <tt>numberOfTasks</tt> argument of the instantiation methods <tt>getInstance</tt>.
  * If it is 0 (or absent), the desired number of parallel tasks
  * is detected automatically on the base of the {@link ArrayContext} argument
@@ -695,7 +695,7 @@ public final class TiledApertureProcessorFactory {
      * no references to them are maintained by the created object.
      *
      * @param context           the {@link #context() context} that will be used by this tiler;
-     *                          may be <tt>null</tt>, then it will be ignored, and
+     *                          can be <tt>null</tt>, then it will be ignored, and
      *                          the {@link #tile(ApertureProcessor) tiled} processor will create all temporary
      *                          matrices in {@link SimpleMemoryModel}.<br>&nbsp;
      * @param continuationMode  continuation mode, used by the {@link #tile(ApertureProcessor) tiled} processor
@@ -720,7 +720,7 @@ public final class TiledApertureProcessorFactory {
      *                          <tt>newMatrix.{@link Matrix#tile(long...) tile}(allocationTileDim)</tt>.
      *                          If it is <tt>null</tt>, the resulting matrices are not tiled.<br>&nbsp;
      * @param numberOfTasks     the desired number of tiles, which should be processed simultaneously in
-     *                          parallel threads to optimize calculations on multiprocessor or multi-core computers;
+     *                          parallel threads to optimize calculations on multiprocessor or multicore computers;
      *                          may be 0, then it will be detected automatically as
      *                          <tt>{@link Arrays#getThreadPoolFactory(ArrayContext)
      *                          Arrays.getThreadPoolFactory}(context).{@link
@@ -768,7 +768,7 @@ public final class TiledApertureProcessorFactory {
      * <p>See also the {@link TiledApertureProcessorFactory comments to this class}, the section
      * "Contexts for the one-tile processor".
      *
-     * @return the current context, used by this tiler; may be <tt>null</tt>.
+     * @return the current context, used by this tiler; can be <tt>null</tt>.
      */
     public ArrayContext context() {
         return this.context;
@@ -851,7 +851,7 @@ public final class TiledApertureProcessorFactory {
 
     /**
      * Returns the number of tiles, which should be processed simultaneously in
-     * parallel threads to optimize calculations on multiprocessor or multi-core computers.
+     * parallel threads to optimize calculations on multiprocessor or multicore computers.
      * It is equal to:
      * <ul>
      * <li><tt>numberOfTasks</tt> argument if this instance was created by

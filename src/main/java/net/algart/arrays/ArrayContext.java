@@ -265,7 +265,7 @@ public interface ArrayContext {
      * &nbsp;&nbsp;&nbsp;&nbsp;<tt>process({@link Array} arrayToProcess).</tt><br>
      * Then, let's have a special application, where this algorithm is applied to a sequence of
      * {@link Array#subArray(long, long) subarrays} of another large array.
-     * It is very probable that your <tt>process</tt> method does not need to know, which subarray
+     * It is very probable that your <tt>process</tt> method does not need to know which subarray
      * (from which position) is processed now, but if you still need this (maybe for debugging),
      * you can pass this information via {@link ArrayProcessorWithContextSwitching#context(ArrayContext) switching
      * the context} to the result of this method with an appropriate <tt>customData</tt> object.
@@ -333,7 +333,7 @@ public interface ArrayContext {
      * updateProgress}(new ArrayContext.Event(elementType, readyCount, length))</tt></nobr>.
      *
      * @param elementType           the result of {@link ArrayContext.Event#elementType()} method in the event;
-     *                              may be <tt>null</tt>.
+     *                              can be <tt>null</tt>.
      * @param readyCount            the only element in the result of {@link ArrayContext.Event#readyCountPerTask()}
      *                              method in the event.
      * @param length                the result of {@link ArrayContext.Event#length()} method in the created event.
@@ -345,7 +345,7 @@ public interface ArrayContext {
      * of the currently executing thread in a group of {@link #numberOfThreads()} parallel threads.
      * This information can be useful, if you create a group of tasks (for example, with help of
      * {@link ThreadPoolFactory} class), which are executed parallel in several threads
-     * (usually, to optimize calculations on multiprocessor or multi-core computers).
+     * (usually, to optimize calculations on multiprocessor or multicore computers).
      *
      * <p>To create a context, in which this method returns a value different than <tt>0</tt>, please use
      * <nobr>{@link #multithreadingVersion(int currentThreadIndex, int numberOfThreads)}</nobr> method.
@@ -366,11 +366,11 @@ public interface ArrayContext {
      * This value is not the number of <i>all</i> executing threads and not the number of threads, which are
      * <i>really</i> executing at this moment &mdash; it is the number of elements in some group of tasks
      * (for example, created by {@link ThreadPoolFactory} class), which should be executed parallel in several threads
-     * (usually, to optimize calculations on multiprocessor or multi-core computers) and which should be distinguished
+     * (usually, to optimize calculations on multiprocessor or multicore computers) and which should be distinguished
      * via {@link #currentThreadIndex()} method. The main goal of this method is to estimate
      * the maximal possible value of {@link #currentThreadIndex()}.
      *
-     * <p>To create a context, in which this method returns a value different than <tt>1</tt>, please use
+     * <p>To create a context, in which this method returns a value different from <tt>1</tt>, please use
      * <nobr>{@link #multithreadingVersion(int currentThreadIndex, int numberOfThreads)}</nobr> method.
      *
      * <p>The result of this method is always positive (<tt>&ge;1</tt>).
@@ -387,7 +387,7 @@ public interface ArrayContext {
      * containing additional information about the current execution context,
      * not provided by other methods of this class.
      *
-     * <p>To create a context, in which this method returns a value different than <tt>null</tt>, please use
+     * <p>To create a context, in which this method returns a value different from <tt>null</tt>, please use
      * <nobr>{@link #customDataVersion(Object)}</nobr> method.
      *
      * <p>The result of this method may belong to any type. So, it is a good idea to check its type
@@ -418,7 +418,7 @@ public interface ArrayContext {
          * Equivalent to <tt>new&nbsp;Event(elementType, new long[] {length}, new long[] {readyCount})</tt>.
          *
          * @param elementType           the result of {@link #elementType()} method in the created event;
-         *                              may be <tt>null</tt>.
+         *                              can be <tt>null</tt>.
          * @param readyCount            the only element in the result of {@link #readyCountPerTask()} method
          *                              in the created event.
          * @param length                the result of {@link #length()} method in the created event.
