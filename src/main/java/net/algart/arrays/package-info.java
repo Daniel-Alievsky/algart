@@ -48,7 +48,14 @@
  <p>The basic interface fo representing AlgART multi-dimensional matrix is <b>{@link net.algart.arrays.Matrix}</b>.</p>
 
  <p>The classes <b>{@link net.algart.arrays.Arrays}</b> and <b>{@link net.algart.arrays.Matrices}</b>
- offer a wide collection of useful functions for processing AlgART arrays and matrices.</p>
+ offer a wide collection of useful functions for processing AlgART arrays and matrices.
+ The classes
+ <b>{@link net.algart.arrays.JArrays}</b>,
+ <b>{@link net.algart.arrays.JBuffers}</b>,
+ <b>{@link net.algart.arrays.PackedBitArrays}</b>,
+ <b>{@link net.algart.arrays.PackedBitArraysPer8}</b>,
+ <b>{@link net.algart.arrays.PackedBitBuffers}</b>
+ provide some basic functionality for processing regular Java arrays, buffers, and packed bit arrays.</p>
 
  <h4>Contents</h4>
  <ul>
