@@ -157,7 +157,7 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      *                                  of if <tt>bitLevels=precision.{@link CustomRankPrecision#bitLevels()
      *                                  bitLevels()}</tt> are incorrect:
      *                                  <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
      *                                  for some&nbsp;<i>k</i>.
      */

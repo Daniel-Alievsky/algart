@@ -759,7 +759,7 @@ public class IRectangularArea {
      * @param areas collection of areas (we find intersection with each from them).
      * @return     intersection of this and the second rectangular area or <tt>null</tt> if they do not intersect.
      * @throws NullPointerException     if the argument is <tt>null</tt> or one of its elements is <tt>null</tt>.
-     * @throws IllegalArgumentException if this rectangular area or some of elements of the passed collection
+     * @throws IllegalArgumentException if this rectangular area or some of the elements of the passed collection
      *                                  have different {@link #coordCount()}.
      */
     public List<IRectangularArea> intersection(Collection<IRectangularArea> areas) {
@@ -869,7 +869,7 @@ public class IRectangularArea {
      *                           the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
      * @throws NullPointerException     if <tt>fromWhatToSubtract</tt> or <tt>whatToSubtract</tt> argument
      *                                  is <tt>null</tt> or if one of their elements it <tt>null</tt>.
-     * @throws IllegalArgumentException if some of elements of the passed collections
+     * @throws IllegalArgumentException if some of the elements of the passed collections
      *                                  have different {@link #coordCount()}.
      * @see #subtractCollection(java.util.Queue, IRectangularArea...)
      */
@@ -901,7 +901,7 @@ public class IRectangularArea {
      *                           the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
      * @throws NullPointerException     if <tt>fromWhatToSubtract</tt> or <tt>whatToSubtract</tt> argument
      *                                  is <tt>null</tt> or if one of their elements it <tt>null</tt>.
-     * @throws IllegalArgumentException if some of elements of the passed collection and array
+     * @throws IllegalArgumentException if some of the elements of the passed collection and array
      *                                  have different {@link #coordCount()}.
      */
     public static Queue<IRectangularArea> subtractCollection(
@@ -921,7 +921,7 @@ public class IRectangularArea {
      *                           (<b>A</b> = this object, <b>B</b> = union of all <tt>whatToSubtract</tt>).
      * @throws NullPointerException     if <tt>whatToSubtract</tt> argument
      *                                  is <tt>null</tt> or if one of their elements it <tt>null</tt>.
-     * @throws IllegalArgumentException if this rectangular area or some of elements of the passed collection
+     * @throws IllegalArgumentException if this rectangular area or some of the elements of the passed collection
      *                                  have different {@link #coordCount()}.
      */
     public Queue<IRectangularArea> subtract(Collection<IRectangularArea> whatToSubtract) {
@@ -941,7 +941,7 @@ public class IRectangularArea {
      *                           (<b>A</b> = this object, <b>B</b> = union of all <tt>whatToSubtract</tt>).
      * @throws NullPointerException     if <tt>whatToSubtract</tt> argument
      *                                  is <tt>null</tt> or if one of their elements it <tt>null</tt>.
-     * @throws IllegalArgumentException if this rectangular area or some of elements of the passed array
+     * @throws IllegalArgumentException if this rectangular area or some of the elements of the passed array
      *                                  have different {@link #coordCount()}.
      */
     public Queue<IRectangularArea> subtract(IRectangularArea... whatToSubtract) {

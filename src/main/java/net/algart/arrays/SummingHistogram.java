@@ -476,7 +476,7 @@ public abstract class SummingHistogram extends Histogram {
      * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
@@ -516,7 +516,7 @@ public abstract class SummingHistogram extends Histogram {
      * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
@@ -552,7 +552,7 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Long.MAX_VALUE</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
@@ -595,7 +595,7 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Long.MAX_VALUE</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
@@ -629,7 +629,7 @@ public abstract class SummingHistogram extends Histogram {
      * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
@@ -669,7 +669,7 @@ public abstract class SummingHistogram extends Histogram {
      * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
@@ -705,7 +705,7 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Integer.MAX_VALUE</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
@@ -748,7 +748,7 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Integer.MAX_VALUE</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.

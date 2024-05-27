@@ -725,7 +725,7 @@ public class Matrices {
          * In particular, it is possible for {@link Polygon2D},
          * if some sides of the polygon lie exactly at the horizontal <i>y</i>=<tt>sectionCoordinateValue</tt>.
          *
-         * <p>Implementations of this method in this packages, besides the implementation in
+         * <p>Implementations of this method in these packages, besides the implementation in
          * {@link Polygon2D} class, never return more than 1 region in the result.
          *
          * <p>You <i>must</i> override this method if you prefer not to implement {@link #contains(long...)} method
@@ -1370,7 +1370,7 @@ public class Matrices {
                         }
                     }
                 } else { // vy[k] == vyPrev == sectionY: count the horizontal segment.
-                    // We adds a segment even if vx[k]==vxPrev: it is possible that all vertices are the same point
+                    // We add a segment even if vx[k]==vxPrev: it is possible that all vertices are the same point
                     horizontalCount++;
                 }
             }
@@ -4727,7 +4727,7 @@ public class Matrices {
      *                                  is not equal to <tt>src.{@link Matrix#elementType() elementType()}</tt>
      *                                  and is not its superclass (for non-primitive element types).
      * @throws ClassCastException       if <tt>outsideValue</tt> is not <tt>null</tt> and its class is illegal, i.e.
-     *                                  cannot be casted to the necessary type according the rules specified
+     *                                  cannot be cast to the necessary type according the rules specified
      *                                  for the {@link Matrix.ContinuationMode#getConstantMode(Object)
      *                                  constant submatrix continuation mode}.
      */
@@ -4800,7 +4800,7 @@ public class Matrices {
      * @throws NullPointerException if <tt>dest</tt>, <tt>src</tt>, <tt>destRegion</tt> or <tt>shifts</tt>
      *                              argument is <tt>null</tt>.
      * @throws ClassCastException   if <tt>value</tt> is not <tt>null</tt> and its class is illegal, i.e.
-     *                              cannot be casted to the necessary type according the rules specified
+     *                              cannot be cast to the necessary type according the rules specified
      *                              for the {@link Matrix.ContinuationMode#getConstantMode(Object)
      *                              constant submatrix continuation mode}.
      */

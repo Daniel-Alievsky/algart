@@ -192,7 +192,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * where <tt><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></tt>
          * are the low endpoints of all coordinates of the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
-         * or {@link Matrix#subMatr(long[], long[], ContinuationMode)} method).
+         * or {@link Matrix#subMatr(long[], long[], ContinuationMode)} method.
          * An attempt to read this element of the submatrix returns the corresponding element
          * of the source matrix <tt>m</tt>,
          * and an attempt to write into this element of the submatrix modifies the corresponding element
@@ -1345,7 +1345,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
      *                                   continuation constant} is not <tt>null</tt> and the class of this
      *                                   constant is illegal, i.e.
-     *                                   cannot be casted to the necessary type according the rules, specified
+     *                                   cannot be cast to the necessary type according the rules, specified
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      * @see #subMatr(long[], long[], ContinuationMode)
@@ -1377,7 +1377,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
      *                                   continuation constant} is not <tt>null</tt> and the class of this
      *                                   constant is illegal, i.e.
-     *                                   cannot be casted to the necessary type according the rules, specified
+     *                                   cannot be cast to the necessary type according the rules, specified
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      */
@@ -1408,7 +1408,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
      *                                   continuation constant} is not <tt>null</tt> and the class of this
      *                                   constant is illegal, i.e.
-     *                                   cannot be casted to the necessary type according the rules, specified
+     *                                   cannot be cast to the necessary type according the rules, specified
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      */
@@ -1441,7 +1441,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
      *                                   continuation constant} is not <tt>null</tt> and the class of this
      *                                   constant is illegal, i.e.
-     *                                   cannot be casted to the necessary type according the rules, specified
+     *                                   cannot be cast to the necessary type according the rules, specified
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      */
@@ -1522,7 +1522,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
      *                                   continuation constant} is not <tt>null</tt> and the class of this
      *                                   constant is illegal, i.e.
-     *                                   cannot be casted to the necessary type according the rules, specified
+     *                                   cannot be cast to the necessary type according the rules, specified
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      * @see #subMatr(long[], long[])
@@ -1554,7 +1554,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
      *                                   continuation constant} is not <tt>null</tt> and the class of this
      *                                   constant is illegal, i.e.
-     *                                   cannot be casted to the necessary type according the rules, specified
+     *                                   cannot be cast to the necessary type according the rules, specified
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      */
@@ -1588,7 +1588,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
      *                                   continuation constant} is not <tt>null</tt> and the class of this
      *                                   constant is illegal, i.e.
-     *                                   cannot be casted to the necessary type according the rules, specified
+     *                                   cannot be cast to the necessary type according the rules, specified
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
      */

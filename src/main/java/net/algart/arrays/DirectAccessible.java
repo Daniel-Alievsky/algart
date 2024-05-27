@@ -109,7 +109,7 @@ package net.algart.arrays;
 public interface DirectAccessible {
     /**
      * Returns <tt>true</tt> if, and only if, this object (usually AlgART array)
-     * is backed by an accessible Java array, that can be get by {@link #javaArray()} method.
+     * is backed by an accessible Java array, that can be gotten by {@link #javaArray()} method.
      * If (and only if) this method returns <tt>false</tt>,
      * then {@link #javaArray()} method throws {@link NoJavaArrayException}.
      *

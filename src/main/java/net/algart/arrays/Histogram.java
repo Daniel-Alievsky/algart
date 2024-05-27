@@ -376,7 +376,7 @@ public abstract class Histogram {
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
      * where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
      * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
-     * excepting the last "wide" bar which can be a sum of less number of bars <b>b</b>[<i>j</i>].
+     * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
      * The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
      * <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
      *
@@ -416,7 +416,7 @@ public abstract class Histogram {
      * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
@@ -455,7 +455,7 @@ public abstract class Histogram {
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
      * where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
      * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
-     * excepting the last "wide" bar which can be a sum of less number of bars <b>b</b>[<i>j</i>].
+     * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
      * The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
      * <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
      *
@@ -496,7 +496,7 @@ public abstract class Histogram {
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Long.MAX_VALUE</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
@@ -536,7 +536,7 @@ public abstract class Histogram {
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
      * where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
      * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
-     * excepting the last "wide" bar which can be a sum of less number of bars <b>b</b>[<i>j</i>].
+     * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
      * The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
      * <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
      *
@@ -571,7 +571,7 @@ public abstract class Histogram {
      * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
@@ -614,7 +614,7 @@ public abstract class Histogram {
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
      * where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
      * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
-     * excepting the last "wide" bar which can be a sum of less number of bars <b>b</b>[<i>j</i>].
+     * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
      * The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
      * <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
      *
@@ -650,7 +650,7 @@ public abstract class Histogram {
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Integer.MAX_VALUE</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
+     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
      *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
      *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
@@ -951,7 +951,7 @@ public abstract class Histogram {
      * {@link #moveToPreciseRank(double)}.
      *
      * <p>The special case
-     * <nobr><i>N</i>={@link #total()}=0</nobr> is an exception from the last rule:
+     * <nobr><i>N</i>={@link #total()}=0</nobr> is an exception to the last rule:
      * in this case, all 3 methods {@link #moveToPreciseRank(double) moveToPreciseRank},
      * {@link #moveToRank(double) moveToRank} and {@link #moveToIRank(long) moveToIRank} are equivalent,
      * but the concrete results of {@link #currentValue()} method (i.e. <i>v</i>)

@@ -429,7 +429,7 @@ public enum DependenceApertureBuilder {
      * AlgART matrix, i.e. are non-negative and their product is not greater than
      * <nobr><tt>Long.MAX_VALUE</tt></nobr>. If it is not so, <tt>IndexOutOfBoundsException</tt> is thrown.
      *
-     * <p>In the special case, when some of elements of the <tt>matrixDimensions</tt> array is zero,
+     * <p>In the special case, when some of the elements of the <tt>matrixDimensions</tt> array is zero,
      * this method returns a precise clone of this array without changes.
      *
      * <p>Note: the matrix, returned by
