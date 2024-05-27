@@ -34,6 +34,18 @@ import java.util.Random;
  * @author Daniel Alievsky
  */
 public class NCopiesGetTest {
+    private static void testGetBits64(BitArray array, Random rnd) {
+        int len = array.length32();
+        int count = rnd.nextInt(65);
+        long required = !array.getBit(0) ? 0
+                : count == 0 ? 0
+                : count == 64 ? -1
+                : (1L << count) - 1L;
+        int pos = rnd.nextInt(len - count + 1);
+        long v = array.getBits64(pos, count);
+        if (v != required) throw new AssertionError(count + ": " + v);
+    }
+
     private static void testGet(PArray array) {
         if (array instanceof BitArray a) {
             int v = a.getBit(0) ? 1 : 0;
@@ -85,6 +97,7 @@ public class NCopiesGetTest {
             if (test % 100000 == 0) {
                 System.out.print("\r" + test);
             }
+            testGetBits64(Arrays.nBitCopies(100, rnd.nextBoolean()), rnd);
             testGet(Arrays.nBitCopies(100, rnd.nextBoolean()));
             testGet(Arrays.nByteCopies(100, (byte) rnd.nextInt()));
             testGet(Arrays.nCharCopies(100, (char) rnd.nextInt()));

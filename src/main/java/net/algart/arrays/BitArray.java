@@ -138,11 +138,11 @@ public interface BitArray extends PFixedArray {
     int getInt(long index);
 
     /**
-     * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#srcPos</tt>.
+     * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#arrayPos</tt>.
      *
-     * <p>More precisely, the bit <tt>#(srcPos+k)</tt> will be returned in the bit <tt>#k</tt> of the returned
-     * <tt>long</tt> value <tt>R</tt>: the first bit <tt>#srcPos</tt> will be equal to <tt>R&amp;1</tt>,
-     * the following bit <tt>#(srcPos+1)</tt> will be equal to <tt>(R&gt;&gt;1)&amp;1</tt>, etc.
+     * <p>More precisely, the bit <tt>#(arrayPos+k)</tt> will be returned in the bit <tt>#k</tt> of the returned
+     * <tt>long</tt> value <tt>R</tt>: the first bit <tt>#arrayPos</tt> will be equal to <tt>R&amp;1</tt>,
+     * the following bit <tt>#(arrayPos+1)</tt> will be equal to <tt>(R&gt;&gt;1)&amp;1</tt>, etc.
      * If <tt>count=0</tt>, the result is 0.</p>
      *
      * <p>The same result can be calculated using the following loop:</p>
@@ -150,19 +150,19 @@ public interface BitArray extends PFixedArray {
      * <pre>
      *      long result = 0;
      *      for (int k = 0; k &lt; count; k++) {
-     *          final long bit = {@link #getBit(long) getBit}(srcPos + k) ? 1L : 0L;
+     *          final long bit = {@link #getBit(long) getBit}(arrayPos + k) ? 1L : 0L;
      *          result |= bit &lt;&lt; k;
      *      }</pre>
      *
      * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
      *
-     * @param srcPos position of the first bit read in the source array.
-     * @param count  the number of bits to be unpacked (must be in range 0..64).
+     * @param arrayPos position of the first bit read in the source array.
+     * @param count    the number of bits to be unpacked (must be in range 0..64).
      * @return the sequence of <tt>count</tt> bits.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
-    default long getBits64(long srcPos, int count) {
+    default long getBits64(long arrayPos, int count) {
         if (count < 0) {
             throw new IllegalArgumentException("Negative count argument: " + count);
         }
@@ -172,7 +172,7 @@ public interface BitArray extends PFixedArray {
         }
         long result = 0;
         for (int k = 0; k < count; k++) {
-            final long bit = getBit(srcPos + k) ? 1L : 0L;
+            final long bit = getBit(arrayPos + k) ? 1L : 0L;
             result |= bit << k;
         }
         return result;

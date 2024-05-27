@@ -149,7 +149,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     void clearBitNoSync(long index);
 
     /**
-     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>.
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#arrayPos</tt>.
      * This is the reverse operation of {@link #getBits64(long, int)}.
      *
      * <p>This function is equivalent to the following loop:</p>
@@ -157,17 +157,17 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * <pre>
      *      for (int k = 0; k &lt; count; k++) {
      *          final long bit = (bits &gt;&gt;&gt; k) &amp; 1L;
-     *          {@link #setBit(long, boolean) setBit}(destPos + k, bit != 0);
+     *          {@link #setBit(long, boolean) setBit}(arrayPos + k, bit != 0);
      *      }</pre>
      *
      * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
      *
-     * @param destPos position of the first bit written in the destination array.
-     * @param count   the number of bits to be written (must be in range 0..64).
+     * @param arrayPos position of the first bit written in the destination array.
+     * @param count    the number of bits to be written (must be in range 0..64).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
-    default void setBits64(long destPos, long bits, int count) {
+    default void setBits64(long arrayPos, long bits, int count) {
         if (count < 0) {
             throw new IllegalArgumentException("Negative count argument: " + count);
         }
@@ -179,12 +179,12 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
             // - inverse loop order allows to guarantee that IndexOutOfBoundsException
             // will occur before modifying anything
             final long bit = (bits >>> k) & 1L;
-            setBit(destPos + k, bit != 0);
+            setBit(arrayPos + k, bit != 0);
         }
     }
 
     /**
-     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#arrayPos</tt>
      * <b>in a non-thread-safe manner</b>:
      * without a strict requirement for internal synchronization.
      * This means that when calling this method from different threads for the same instance,
@@ -201,12 +201,12 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * or, vise versa, always use synchronization. In such cases this method may be equivalent
      * to {@link #setBits64(long, long, int)}.</p>     *
      *
-     * @param destPos position of the first bit written in the destination array.
-     * @param count   the number of bits to be written (must be in range 0..64).
+     * @param arrayPos position of the first bit written in the destination array.
+     * @param count    the number of bits to be written (must be in range 0..64).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
-    default void setBits64NoSync(long destPos, long bits, int count) {
+    default void setBits64NoSync(long arrayPos, long bits, int count) {
         if (count < 0) {
             throw new IllegalArgumentException("Negative count argument: " + count);
         }
@@ -218,7 +218,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
             // - inverse loop order allows to guarantee that IndexOutOfBoundsException
             // will occur before modifying anything
             final long bit = (bits >>> k) & 1L;
-            setBitNoSync(destPos + k, bit != 0);
+            setBitNoSync(arrayPos + k, bit != 0);
         }
     }
 

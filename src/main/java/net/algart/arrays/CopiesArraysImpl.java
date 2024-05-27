@@ -715,6 +715,24 @@ class CopiesArraysImpl {
             return 1;
         }
 
+        @Override
+        public long getBits64(long arrayPos, int count) {
+            if (count < 0) {
+                throw new IllegalArgumentException("Negative count argument: " + count);
+            }
+            if (count > 64) {
+                throw new IllegalArgumentException("Too large count argument: " + count +
+                        "; we cannot set > 64 bits in setBits64 method");
+            }
+            if (arrayPos < 0) {
+                throw AbstractArray.rangeException(arrayPos, length, getClass());
+            }
+            if (arrayPos > length - count) {
+                throw AbstractArray.rangeException(arrayPos + count - 1, length, getClass());
+            }
+            return this.element && count > 0 ? (2L << (count - 1)) - 1L : 0L;
+        }
+
         // The following implementation MUST NOT use DataBuffer class: it's implementation may call this method
         public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
             Objects.requireNonNull(destArray, "Null destArray argument");
