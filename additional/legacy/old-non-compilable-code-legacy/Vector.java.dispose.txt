@@ -8,7 +8,7 @@
      * may lead to any <tt>RuntimeException</tt> or <tt>Error</tt>
      * (but also may not, depending on implementation).
      * We do not guarantee which type of exceptions will be thrown;
-     * for example, it may be <tt>NullPointerException</tt> or {@link IOError}.
+     * for example, it can be <tt>NullPointerException</tt> or {@link IOError}.
      * But: you are free to call this <tt>dispose()</tt> method again,
      * its subsequent calls do nothing.
      * We also guarantee that the vectors, created by the simplest {@link VMMArray}

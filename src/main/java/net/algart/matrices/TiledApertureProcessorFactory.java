@@ -778,7 +778,7 @@ public final class TiledApertureProcessorFactory {
      * Switches the context: returns an instance, identical to this one excepting
      * that it uses the specified <tt>newContext</tt> for all operations.
      *
-     * @param newContext another context, used by the returned instance; may be <tt>null</tt>.
+     * @param newContext another context, used by the returned instance; can be <tt>null</tt>.
      * @return           new instance with another context.
      */
     public TiledApertureProcessorFactory context(ArrayContext newContext) {

@@ -1335,7 +1335,7 @@ public interface Array {
     /**
      * Equivalent to <tt>{@link #freeResources(ArrayContext, boolean) freeResources}(context, false)</tt>.
      *
-     * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @see #loadResources(ArrayContext)
      * @see #flushResources(ArrayContext)
      */
@@ -1434,7 +1434,7 @@ public interface Array {
      * In other case, thousands of inactive instances of AlgART arrays with non-released resources
      * can exhaust all available RAM (or address space).
      *
-     * @param context              the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      * @see #loadResources(ArrayContext context)

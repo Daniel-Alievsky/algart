@@ -449,7 +449,7 @@ public interface ArrayContext {
          * are cloned by this method: no references to them are maintained by the created instance.
          *
          * @param elementType           the result of {@link #elementType()} method in the created event;
-         *                              may be <tt>null</tt>.
+         *                              can be <tt>null</tt>.
          * @param readyCountPerTask     the result of {@link #readyCountPerTask()} method in the created event.
          * @param lengthPerTask         the result of {@link #lengthPerTask()} method in the created event.
          * @throws NullPointerException     if <tt>lengthPerTask</tt> or <tt>readyCountPerTask</tt> is <tt>null</tt>.

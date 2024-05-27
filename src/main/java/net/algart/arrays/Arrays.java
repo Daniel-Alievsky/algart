@@ -2792,7 +2792,7 @@ public class Arrays {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)
      * applyFunc(context, f, true, result, x)}.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART arrays.
      * @param result  the destination array.
      * @param x       the source arrays; may be empty;
@@ -2816,7 +2816,7 @@ public class Arrays {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, int, boolean, Func, UpdatablePArray, PArray...)
      * applyFunc(context, f, truncateOverflows, 0, true, result, x)}.
      *
-     * @param context           the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context           the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param truncateOverflows the behavior of typecasting: see
      *                          {@link #asFuncArray(boolean, Func, Class, PArray...)}.
      * @param f                 the mathematical function applied to the source AlgART arrays.
@@ -2857,11 +2857,11 @@ public class Arrays {
      * another way: <tt>lazy = {@link #asIndexFuncArray(boolean, Func, Class, long)
      * asIndexFuncArray(truncateOverflows, f, result.type(), result.length())}</tt>.
      *
-     * @param context           the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context           the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param truncateOverflows the behavior of typecasting: see
      *                          {@link #asFuncArray(boolean, Func, Class, PArray...)}.
      * @param numberOfTasks     the desired number of parallel tasks;
-     *                          may be <tt>0</tt>, then it will be chosen automatically.
+     *                          can be <tt>0</tt>, then it will be chosen automatically.
      * @param strictMode        if <tt>false</tt>, optimization is allowed even if it can lead to little differences
      *                          between the lazy and copied elements.
      * @param f                 the mathematical function applied to the source AlgART arrays.
@@ -2957,7 +2957,7 @@ public class Arrays {
      * or by equivalent methods like {@link Matrices#asResized(Matrices.ResizingMethod, Matrix, long...)},
      * based on these calls.
      *
-     * @param array the checked AlgART array (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param array the checked AlgART array (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed array a functional one, calculated on the base of array indexes only.
      * @see #isFuncArray(Array)
      * @see Matrices#isCoordFuncMatrix(Matrix)
@@ -3123,7 +3123,7 @@ public class Arrays {
      * but may return <tt>false</tt> if the subarray does not intersect
      * bounds between concatenated arrays.
      *
-     * @param array the checked AlgART array (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param array the checked AlgART array (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed array a concatenation view of other arrays.
      */
     public static boolean isConcatenation(Array array) {
@@ -3193,7 +3193,7 @@ public class Arrays {
      * of some shifted array, this method may return both <tt>true</tt> and <tt>false</tt>,
      * depending on bounds of the subarray.
      *
-     * @param array the checked AlgART array (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param array the checked AlgART array (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed array a shifted array.
      */
     public static boolean isShifted(Array array) {
@@ -3308,7 +3308,7 @@ public class Arrays {
      * {@link MutableObjectArray} subinterfaces), this method may copy only references to elements,
      * but also may copy the content of elements: it depends on implementation.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest    the destination array.
      * @param src     the source array.
      * @return the information about copying.
@@ -3339,11 +3339,11 @@ public class Arrays {
      * <p>This method can be convenient, for example, if you are sure that multithreading
      * is not useful in a concrete algorithm and the number of tasks should be <tt>1</tt>.
      *
-     * @param context       the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context       the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest          the destination array.
      * @param src           the source array.
      * @param numberOfTasks the desired number of parallel tasks;
-     *                      may be <tt>0</tt>, then it will be chosen automatically.
+     *                      can be <tt>0</tt>, then it will be chosen automatically.
      * @return the information about copying.
      * @throws NullPointerException     if <tt>src</tt> or <tt>dest</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if the source and destination element types do not match,
@@ -3380,11 +3380,11 @@ public class Arrays {
      * <p>If <tt>strictMode=true</tt>, this method is equivalent to
      * {@link #copy(ArrayContext context, UpdatableArray dest, Array src, int numberOfTasks)}.
      *
-     * @param context       the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context       the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest          the destination array.
      * @param src           the source array.
      * @param numberOfTasks the desired number of parallel tasks;
-     *                      may be <tt>0</tt>, then it will be chosen automatically.
+     *                      can be <tt>0</tt>, then it will be chosen automatically.
      * @param strictMode    if <tt>false</tt>, optimization is allowed even if it can lead to little differences
      *                      between the source and copied elements.
      * @return the information about copying.
@@ -3415,7 +3415,7 @@ public class Arrays {
      * array was changed as a result of copying from <tt>src</tt> array,
      * in terms of the {@link Array#equals(Object)} method.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest    the destination array.
      * @param src     the source array.
      * @return the information about copying.
@@ -3434,7 +3434,7 @@ public class Arrays {
      *
      * @param array      some primitive array.
      * @param minMaxInfo the object where to store the indexes and values of found minimum and maximum;
-     *                   may be <tt>null</tt> if you need only the values of the minimum and maximum.
+     *                   can be <tt>null</tt> if you need only the values of the minimum and maximum.
      * @return the values of the found minimal and maximal elements.
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
      * @throws java.io.IOError      if the current thread is interrupted by the standard
@@ -3490,10 +3490,10 @@ public class Arrays {
      * It can be useful if you call this method in a separate thread and need to use
      * the calculated information after finishing this method.
      *
-     * @param context    the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context    the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param array      some primitive array.
      * @param minMaxInfo the object where to store the indexes and values of found minimum and maximum;
-     *                   may be <tt>null</tt> if you need only the values of the minimum and maximum.
+     *                   can be <tt>null</tt> if you need only the values of the minimum and maximum.
      * @return the values of the found minimal and maximal elements.
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
      * @throws java.io.IOError      if the current thread is interrupted by the standard
@@ -3530,7 +3530,7 @@ public class Arrays {
     /**
      * Equivalent to {@link #rangeOf(ArrayContext, PArray, MinMaxInfo) rangeOf(context, array, null)}</tt>.
      *
-     * @param context the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param array   some primitive array.
      * @return the values of the found minimal and maximal elements.
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
@@ -3569,7 +3569,7 @@ public class Arrays {
      *
      * <p>Please remember that <tt>ByteArray</tt> and <tt>ShortArray</tt> are interpreted as unsigned.
      *
-     * @param context the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param array   some primitive array.
      * @return the sum of all array elements.
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
@@ -3635,7 +3635,7 @@ public class Arrays {
      *
      * <p>Please remember that <tt>ByteArray</tt> and <tt>ShortArray</tt> are interpreted as unsigned.
      *
-     * @param context       the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context       the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param array         some primitive array, excluding floating point arrays.
      * @param checkOverflow whether overflow should lead to <tt>ArithmeticException</tt>
      * @return the sum of all array elements.
@@ -3673,7 +3673,7 @@ public class Arrays {
      * Equivalent to {@link #preciseSumOf(ArrayContext, PFixedArray, boolean)
      * preciseSumOf(context, array, false)}</tt>.
      *
-     * @param context the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param array   some primitive array, excluding floating point arrays.
      * @return the sum of all array elements.
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
@@ -3690,7 +3690,7 @@ public class Arrays {
      * Equivalent to <tt>{@link #preciseSumOf(ArrayContext, PFixedArray)
      * preciseSumOf(context, bitArray)}</tt>.
      *
-     * @param context  the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context  the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param bitArray the bit array.
      * @return the number of bits set to <tt>true</tt> in this array.
      * @throws NullPointerException if <tt>bitArray</tt> argument is <tt>null</tt>.
@@ -3776,7 +3776,7 @@ public class Arrays {
      *
      * <p>Please remember that <tt>ByteArray</tt> and <tt>ShortArray</tt> are interpreted as unsigned.
      *
-     * @param context   the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context   the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param array     some primitive array.
      * @param histogram the histogram to be incremented: <tt>histogram.length</tt> columns
      *                  between <tt>from</tt> and <tt>to</tt>.
@@ -3834,7 +3834,7 @@ public class Arrays {
      * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context   the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context   the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
@@ -3888,7 +3888,7 @@ public class Arrays {
      * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context   the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context   the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
@@ -3943,7 +3943,7 @@ public class Arrays {
      * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context   the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context   the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
@@ -3997,7 +3997,7 @@ public class Arrays {
      * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context   the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context   the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
      * @param threshold the threshold that will be compared with all elements of <tt>array</tt>.
@@ -4077,7 +4077,7 @@ public class Arrays {
      * {@link UpdatablePArray#setDouble(long, double)} and
      * {@link #asFuncArray(boolean, Func, Class, PArray...) asFuncArray} methods.)
      *
-     * @param context the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param array   some primitive array.
      * @param bits    the bit array that should be "unpacked" to <tt>array</tt>.
      * @param filler0 the value that will be set in <tt>array</tt> for zero bits.
@@ -4147,7 +4147,7 @@ public class Arrays {
      * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param array   some primitive array.
      * @param bits    the bit array, the unit elements of which should be "unpacked" to <tt>array</tt>.
      * @param filler1 the value that will be set in <tt>array</tt> for unit bits.
@@ -4206,7 +4206,7 @@ public class Arrays {
      * and may be interruptible by <tt>Thread.interrupt()</tt>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context the context of calculations; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of calculations; can be <tt>null</tt>, then it will be ignored.
      * @param array   some primitive array.
      * @param bits    the bit array, the zero elements of which should be "unpacked" to <tt>array</tt>.
      * @param filler0 the value that will be set in <tt>array</tt> for zero bits.
@@ -4284,7 +4284,7 @@ public class Arrays {
      * <p>If the source and result array have the same element type, this method just copies <tt>array</tt>
      * to <tt>result</tt>.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param result  the destination array.
      * @param array   the source array.
      * @throws NullPointerException  if <tt>result</tt> or <tt>array</tt> is <tt>null</tt>.
@@ -4356,7 +4356,7 @@ public class Arrays {
      * Note that <nobr><tt>Arrays.{@link #sizeOf(Array) sizeOf}(array)</tt></nobr> is a suitable length
      * for all types (though for {@link BitArray} it can be little greater than necessary).
      *
-     * <p>The <tt>bytes</tt> argument may be <tt>null</tt>; in this case, this method automatically allocates
+     * <p>The <tt>bytes</tt> argument can be <tt>null</tt>; in this case, this method automatically allocates
      * <tt>byte[]</tt> array with minimal necessary length <nobr><tt>Arrays.{@link #sizeOfBytesForCopying(PArray)
      * sizeOfBytesForCopying}(array)</tt></nobr>, copies all elements of the AlgART array
      * into it and returns it.
@@ -4414,7 +4414,7 @@ public class Arrays {
      *
      * @param array     the source AlgART array.
      * @param bytes     Java array, to which the content of the source array will be copied;
-     *                  may be <tt>null</tt>, then it will be allocated automatically
+     *                  can be <tt>null</tt>, then it will be allocated automatically
      * @param byteOrder the byte order for element types, greater than 1 byte;
      *                  it is not used in cases of {@link ByteArray} and {@link BitArray}.
      * @return Java array with resulting data;
@@ -4917,7 +4917,7 @@ public class Arrays {
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
-     * @param result the result <tt>byte[]</tt> array; may be <tt>null</tt>, then it will be created automatically.
+     * @param result the result <tt>byte[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param array  the source AlgART array.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source AlgART array,
@@ -4995,7 +4995,7 @@ public class Arrays {
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
-     * @param result the result <tt>short[]</tt> array; may be <tt>null</tt>, then it will be created automatically.
+     * @param result the result <tt>short[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param array  the source AlgART array.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source AlgART array,
@@ -5073,7 +5073,7 @@ public class Arrays {
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
-     * @param result the result <tt>int[]</tt> array; may be <tt>null</tt>, then it will be created automatically.
+     * @param result the result <tt>int[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param array  the source AlgART array.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source AlgART array,
@@ -5151,7 +5151,7 @@ public class Arrays {
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
-     * @param result the result <tt>long[]</tt> array; may be <tt>null</tt>, then it will be created automatically.
+     * @param result the result <tt>long[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param array  the source AlgART array.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source AlgART array,
@@ -5229,7 +5229,7 @@ public class Arrays {
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
-     * @param result the result <tt>float[]</tt> array; may be <tt>null</tt>, then it will be created automatically.
+     * @param result the result <tt>float[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param array  the source AlgART array.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source AlgART array,
@@ -5307,7 +5307,7 @@ public class Arrays {
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
-     * @param result the result <tt>double[]</tt> array; may be <tt>null</tt>, then it will be created automatically.
+     * @param result the result <tt>double[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param array  the source AlgART array.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source AlgART array,
@@ -7040,7 +7040,7 @@ public class Arrays {
      * if <tt>context==null</tt>.
      * It is the most typical way to get new thread pool factory for processing AlgART arrays.
      *
-     * @param context some array context; may be <tt>null</tt>.
+     * @param context some array context; can be <tt>null</tt>.
      * @return the thread pool factory, provided by this context, or the default thread pool factory
      * if the argument is <tt>null</tt>.
      */
@@ -7836,7 +7836,7 @@ public class Arrays {
          * Please see comments for {@link #process()} and {@link #processRange(long, long, int, long)}
          * method for precise specification of using the context.
          *
-         * <p>The <tt>dest</tt> argument is not required and may be <tt>null</tt>: maybe, the algorithm
+         * <p>The <tt>dest</tt> argument is not required and can be <tt>null</tt>: maybe, the algorithm
          * does not fill any resulting array (for example, {@link Arrays#sumOf(ArrayContext, PArray)} method).
          * But if it is specified, this class supposes that the implementation of its
          * {@link #processSubArr(long position, int count, int threadIndex)} abstract method
@@ -7848,7 +7848,7 @@ public class Arrays {
          * If this argument is not <tt>null</tt>, the lengths of the source and destination arrays
          * must be identical.
          *
-         * @param context        the context of processing; may be <tt>null</tt>, then it will be ignored.
+         * @param context        the context of processing; can be <tt>null</tt>, then it will be ignored.
          * @param dest           the destination array or <tt>null</tt> if this algorithm does not write data
          *                       to any resulting AlgART array.
          * @param src            the source processed array.
@@ -8377,7 +8377,7 @@ public class Arrays {
          * this method does not process any elements.
          *
          * <p>You may override this method, if this simple scheme is not appropriate for your algorithm.
-         * In this case, please not forget to periodically call {@link #increaseReadyCount(int, long)},
+         * In this case, please don't forget to periodically call {@link #increaseReadyCount(int, long)},
          * {@link #updateProgress()} and {@link #checkInterruption()} methods.
          *
          * <p>This method may not throw exceptions for incorrect arguments.
@@ -8532,7 +8532,7 @@ public class Arrays {
         /**
          * Return the total number of the processed elements of the source array.
          * This number is 0 after creating the instance and changed
-         * (its the only way) by the periodic calls of {@link #increaseReadyCount(int, long)} method.
+         * (it's the only way) by the periodic calls of {@link #increaseReadyCount(int, long)} method.
          *
          * <p>This method is internally synchronized to provide correct value,
          * that may be updated by several threads.
@@ -8751,7 +8751,7 @@ public class Arrays {
          * Arrays.copy(context, dest, src, numberOfTasks)} call, excepting that
          * the last method sometimes uses more complex copying algorithms.
          *
-         * @param context        the context of copying; may be <tt>null</tt>, then it will be ignored.
+         * @param context        the context of copying; can be <tt>null</tt>, then it will be ignored.
          * @param dest           the destination array.
          * @param src            the source array.
          * @param numberOfTasks  the desired number of parallel tasks or 0 if you want to determine
@@ -8896,7 +8896,7 @@ public class Arrays {
      * Returns <tt>true</tt> if the passed array is a not-<tt>null</tt> built-in array of some AlgART matrix,
      * created by {@link Matrix#tile()} method.
      *
-     * @param array the checked AlgART array (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param array the checked AlgART array (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed array a build-in array of some tiled AlgART matrix.
      */
     static boolean isTiled(Array array) {
@@ -8908,7 +8908,7 @@ public class Arrays {
      * created by {@link Matrix#tile()} method or by extracting submatrix (by one or several sequential
      * <tt>subMatrix/subMatr</tt> methods) from a matrix, created by {@link Matrix#tile()} method.
      *
-     * @param array the checked AlgART array (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param array the checked AlgART array (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed array a build-in array of some tiled AlgART matrix or
      * a submatrix of such a matrix.
      */

@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
  *
  * <p>This class always represents some <i>time interval</i>, or a time between some start moment
  * and another moment. It is not a calendar date or astronomical time.
- * The way of representing time may depend on implementation; for example, it may be <tt>long</tt>
+ * The way of representing time may depend on implementation; for example, it can be <tt>long</tt>
  * number of nanoseconds, <tt>double</tt> number of seconds, etc.</p>
  *
  * <p>It is guaranteed that this class allows to represent, with maximal possible precision,

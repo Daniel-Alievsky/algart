@@ -185,7 +185,7 @@ public interface SpectralTransform {
      * Inverse transform of the spectrum back to the original sample array.
      * The resulting data are returned in the same sample array.
      *
-     * @param context the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
      * @throws NullPointerException          if the <tt>samples</tt> argument is <tt>null</tt>.
@@ -209,7 +209,7 @@ public interface SpectralTransform {
      * (It is allowed only if {@link #areComplexSamplesRequired()} method returns <tt>false</tt>.)
      * The resulting data are returned in the same AlgART matrices.
      *
-     * @param context  the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context  the context that will be used by this algorithm; can be <tt>null</tt>
      *                 (see comments to {@link SpectralTransform}).
      * @param matrixRe the transformed matrix if we have a real matrix;
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
@@ -238,7 +238,7 @@ public interface SpectralTransform {
      * (It is allowed only if {@link #areComplexSamplesRequired()} method returns <tt>false</tt>.)
      * The resulting data are returned in the same AlgART matrices.
      *
-     * @param context  the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context  the context that will be used by this algorithm; can be <tt>null</tt>
      *                 (see comments to {@link SpectralTransform}).
      * @param matrixRe the transformed matrix if we have a real matrix;
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.

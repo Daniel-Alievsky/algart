@@ -918,7 +918,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * <nobr><tt>{@link #index(long...) index}({@link #coordinates(long, long[])
      * coordinates}(index, null)) == index</tt></nobr>.
      *
-     * <p>The <tt>result</tt> argument may be <tt>null</tt> or some array, containing at least {@link #dimCount()}
+     * <p>The <tt>result</tt> argument can be <tt>null</tt> or some array, containing at least {@link #dimCount()}
      * elements. If the first case, this method allocates new Java array <tt>long[{@link #dimCount()}]</tt>
      * for storing coordinates and returns it.
      * In the second case, this method stores the found coordinates in <tt>result</tt> array and returns it.
@@ -927,7 +927,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * 0 &le; result[<i>k</i>] &lt; {@link #dim(int) dim}(<i>k</i>)</pre>
      *
      * @param index  the linear index in the built-in AlgART array.
-     * @param result the array where you want to store results; may be <tt>null</tt>.
+     * @param result the array where you want to store results; can be <tt>null</tt>.
      * @return a reference to the <tt>result</tt> argument, if it is not <tt>null</tt>,
      * else newly created Java array contains all calculated coordinates.
      * @throws IllegalArgumentException  if <tt>result!=null</tt>, but <tt>result.length&lt;{@link #dimCount()}</tt>.
@@ -1976,14 +1976,14 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Equivalent to <tt>{@link #array()}.{@link Array#flushResources(ArrayContext) flushResources(context)}</tt>.
      *
-     * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
      */
     void flushResources(ArrayContext context);
 
     /**
      * Equivalent to <tt>{@link #array()}.{@link Array#freeResources(ArrayContext) freeResources(context)}</tt>.
      *
-     * @param context the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
      */
     void freeResources(ArrayContext context);
 

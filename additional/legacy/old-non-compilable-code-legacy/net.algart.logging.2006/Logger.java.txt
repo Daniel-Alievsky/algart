@@ -232,7 +232,7 @@ public class Logger implements Log, Cloneable {
      *
      * <p>Please see an example of setting a class in the comments to {@link #cloneLogger()} method.
      *
-     * <p>Current class may be <tt>null</tt>: it is the default value.
+     * <p>Current class can be <tt>null</tt>: it is the default value.
      *
      * @param thisClass new current executed class.
      * @return          a reference to this logger.
@@ -266,7 +266,7 @@ public class Logger implements Log, Cloneable {
      *
      * <p>Please see an example of setting a class in the comments to {@link #cloneLogger()} method.
      *
-     * <p>Current method may be <tt>null</tt>: it is the default value.
+     * <p>Current method can be <tt>null</tt>: it is the default value.
      *
      * @param methodName new current executed method.
      * @return           a reference to this logger.
@@ -300,7 +300,7 @@ public class Logger implements Log, Cloneable {
      *
      * <p>Please see an example of setting a class in the comments to {@link #cloneLogger()} method.
      *
-     * <p>Current method may be <tt>null</tt>: it is the default value.
+     * <p>Current method can be <tt>null</tt>: it is the default value.
      *
      * @param thisInstance new current executed method.
      * @return           a reference to this logger.
@@ -335,7 +335,7 @@ public class Logger implements Log, Cloneable {
      *
      * <p>Please see an example of setting a context in the comments to {@link #clone()} method.
      *
-     * <p>Current context may be <tt>null</tt>: it is the default value.
+     * <p>Current context can be <tt>null</tt>: it is the default value.
      *
      * @param value new current context.
      * @return      a reference to this logger.

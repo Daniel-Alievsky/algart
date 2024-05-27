@@ -154,7 +154,7 @@ public class TiledMorphology implements Morphology {
      * getInstance}({@link #parent()}.{@link Morphology#context(ArrayContext)
      * context}(newContext), {@link #tiler() tiler()}).</tt>
      *
-     * @param newContext another context, used by the returned instance; may be <tt>null</tt>.
+     * @param newContext another context, used by the returned instance; can be <tt>null</tt>.
      * @return           new instance with another context.
      */
     public Morphology context(ArrayContext newContext) {

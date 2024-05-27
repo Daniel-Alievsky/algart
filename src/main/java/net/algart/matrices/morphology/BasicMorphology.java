@@ -88,7 +88,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
      * getInstance}(context, {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()}).
      *
      * @param context the {@link #context() context} that will be used by this object;
-     *                may be <tt>null</tt>, then it will be ignored.
+     *                can be <tt>null</tt>, then it will be ignored.
      * @return new instance of this class.
      */
     public static BasicMorphology getInstance(ArrayContext context) {
@@ -108,7 +108,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
      * specified by the context: {@link ArrayContext#getMemoryModel()}.
      *
      * @param context           the {@link #context() context} that will be used by this object;
-     *                          may be <tt>null</tt>, then it will be ignored.
+     *                          can be <tt>null</tt>, then it will be ignored.
      * @param maxTempJavaMemory maximal amount of Java memory, in bytes, allowed for allocating
      *                          by methods of this class.
      * @return new instance of this class.

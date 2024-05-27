@@ -146,7 +146,7 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      * {@link RankMorphology}.
      *
      * @param context       the {@link #context() context} that will be used by this object;
-     *                      may be <tt>null</tt>, then it will be ignored.
+     *                      can be <tt>null</tt>, then it will be ignored.
      * @param dilationLevel the level: 1.0 means strict dilation and erosion as described in {@link Morphology}
      *                      interface, 0.5 means median, 0.0 means that dilation works like erosion and erosion
      *                      works like dilation (but with a {@link Pattern#symmetric() symmetric} pattern).

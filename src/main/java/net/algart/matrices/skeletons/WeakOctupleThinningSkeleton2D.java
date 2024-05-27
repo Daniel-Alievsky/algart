@@ -120,7 +120,7 @@ public class WeakOctupleThinningSkeleton2D extends AbstractThinningSkeleton2D im
      * This mode essentially slows down the algorithm.
      *
      * @param context          the {@link #context() context} that will be used by this object;
-     *                         may be <tt>null</tt>, then it will be ignored.
+     *                         can be <tt>null</tt>, then it will be ignored.
      * @param matrix           the bit matrix that should be processed and returned by {@link #result()} method.
      * @param straightThinning whether the algorithm will perform thinning along x- and y-axes; usually <tt>true</tt>.
      * @param diagonalThinning whether the algorithm will perform diagonal thinning; usually <tt>true</tt>.
@@ -141,7 +141,7 @@ public class WeakOctupleThinningSkeleton2D extends AbstractThinningSkeleton2D im
      * getInstance(context, matrix, true, true, false)}.
      *
      * @param context          the {@link #context() context} that will be used by this object;
-     *                         may be <tt>null</tt>, then it will be ignored.
+     *                         can be <tt>null</tt>, then it will be ignored.
      * @param matrix           the bit matrix that should be processed and returned by {@link #result()} method.
      * @return                 new instance of this class.
      * @throws NullPointerException if <tt>matrix</tt> argument is <tt>null</tt>.

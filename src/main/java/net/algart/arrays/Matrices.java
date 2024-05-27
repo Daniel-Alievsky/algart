@@ -2041,7 +2041,7 @@ public class Matrices {
      *
      * @param context   the context; allows to specify (in particular)
      *                  the memory model for creating returned matrix;
-     *                  may be <tt>null</tt>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
+     *                  can be <tt>null</tt>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param separated list of the source matrices-"channels" (like the red, green, blue channels for 3-channel
      *                  RGB image); must be non-empty.
      * @return result matrix, where "channels" are interleaved along the first dimension
@@ -2600,7 +2600,7 @@ public class Matrices {
      * You may get the underlying matrix, passed to those methods in the first argument,
      * by <tt>{@link #getUnderlyingMatrix(Func)}</tt>.
      *
-     * @param f some mathematical function (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param f some mathematical function (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return whether this function is an interpolation view of some AlgART matrix.
      * @see #getUnderlyingMatrix(Func)
      * @see #isOnlyInsideInterpolationFunc(Func)
@@ -2617,7 +2617,7 @@ public class Matrices {
      * You may get the underlying matrix, passed to those methods in the first argument,
      * by <tt>{@link #getUnderlyingMatrix(Func)}</tt>.
      *
-     * @param f some mathematical function (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param f some mathematical function (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return whether this function is an interpolation view of some AlgART matrix without outside continuation.
      * @see #isInterpolationFunc(Func)
      * @see #getUnderlyingMatrix(Func)
@@ -2634,7 +2634,7 @@ public class Matrices {
      * You may get the underlying matrix, passed to those methods in the first argument,
      * by <tt>{@link #getUnderlyingMatrix(Func)}</tt>.
      *
-     * @param f some mathematical function (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param f some mathematical function (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return whether this function is an interpolation view of some AlgART matrix without outside continuation
      * with checking indexes.
      * @see #isInterpolationFunc(Func)
@@ -2653,7 +2653,7 @@ public class Matrices {
      * You may get the underlying matrix, passed to those methods in the first argument,
      * by <tt>{@link #getUnderlyingMatrix(Func)}</tt>.
      *
-     * @param f some mathematical function (may be <tt>null</tt>, than the method returns <tt>false</tt>).
+     * @param f some mathematical function (can be <tt>null</tt>, than the method returns <tt>false</tt>).
      * @return whether this function is an interpolation view of some AlgART matrix with outside continuation.
      * @see #isInterpolationFunc(Func)
      * @see #getUnderlyingMatrix(Func)
@@ -2823,7 +2823,7 @@ public class Matrices {
      * Arrays.isIndexFuncArray}(matrix.{@link Matrix#array() array()})</tt>
      * </pre>
      *
-     * @param matrix the checked AlgART matrix (may be <tt>null</tt>, then the method returns <tt>false</tt>).
+     * @param matrix the checked AlgART matrix (can be <tt>null</tt>, then the method returns <tt>false</tt>).
      * @return <tt>true</tt> if the passed matrix a functional one, calculated on the base of coordinates only.
      */
     public static boolean isCoordFuncMatrix(Matrix<? extends PArray> matrix) {
@@ -3133,7 +3133,7 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix)
      * applyFunc(context, true, f, result, x)}.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x       the source matrix.
@@ -3157,7 +3157,7 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x))</tt>.
      *
-     * @param context           the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context           the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3182,7 +3182,7 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix, Matrix)
      * applyFunc(context, true, f, result, x1, x2)}.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x1      1st AlgART matrix.
@@ -3207,7 +3207,7 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2))</tt>.
      *
-     * @param context           the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context           the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3233,7 +3233,7 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix, Matrix, Matrix)
      * applyFunc(context, true, f, result, x1, x2, x3)}.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x1      1st AlgART matrix.
@@ -3260,7 +3260,7 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2, x3))</tt>.
      *
-     * @param context           the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context           the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3288,7 +3288,7 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix, Matrix, Matrix)
      * applyFunc(context, true, f, result, x1, x2, x3, x4)}.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x1      1st AlgART matrix.
@@ -3317,7 +3317,7 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2, x3, x4))</tt>.
      *
-     * @param context           the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context           the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3347,7 +3347,7 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, List)
      * applyFunc(context, true, f, result, x)}.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x       several AlgART matrices; may be empty.
@@ -3376,7 +3376,7 @@ public class Matrices {
      * {@link Matrix#dimEquals(Matrix) same dimensions} as <tt>result</tt> one,
      * and throws an exception in other case.
      *
-     * @param context           the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context           the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3529,7 +3529,7 @@ public class Matrices {
      * <p>If the source and result matrices have the same element type, this method just copies <tt>matrix</tt>
      * to <tt>result</tt>.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param result  the destination matrix.
      * @param matrix  the source matrix.
      * @throws NullPointerException  if <tt>result</tt> or <tt>matrix</tt> is <tt>null</tt>.
@@ -3671,7 +3671,7 @@ public class Matrices {
      * @param resizingMethod the algorithm of resizing.
      * @param matrix         the source AlgART matrix.
      * @param newDim         the dimensions of resized matrix.
-     * @param scales         the scales of resizing along every coordinate; may be <tt>null</tt>,
+     * @param scales         the scales of resizing along every coordinate; can be <tt>null</tt>,
      *                       then calculated automatically as
      *                       <tt>scales[k] = (double)newDim[k]/(double)matrix.{@link Matrix#dim(int) dim}(k)</tt>.
      * @return the resized matrix.
@@ -3733,7 +3733,7 @@ public class Matrices {
      * <p>By the way, in a case of such differences the results of this method usually better correspond
      * to intuitive expectations of the results of resizing.
      *
-     * @param context        the context of resizing; may be <tt>null</tt>, then it will be ignored.
+     * @param context        the context of resizing; can be <tt>null</tt>, then it will be ignored.
      * @param resizingMethod the algorithm of resizing.
      * @param result         the destination matrix.
      * @param src            the source matrix.
@@ -4418,7 +4418,7 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest    the destination matrix.
      * @param src     the source matrix.
      * @return the information about copying.
@@ -4442,11 +4442,11 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context       the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context       the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest          the destination matrix.
      * @param src           the source matrix.
      * @param numberOfTasks the required number of parallel tasks;
-     *                      may be <tt>0</tt>, then it will be chosen automatically.
+     *                      can be <tt>0</tt>, then it will be chosen automatically.
      * @return the information about copying.
      * @throws NullPointerException     if <tt>src</tt> or <tt>dest</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if the source and destination element types do not match,
@@ -4475,11 +4475,11 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context       the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context       the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest          the destination matrix.
      * @param src           the source matrix.
      * @param numberOfTasks the required number of parallel tasks;
-     *                      may be <tt>0</tt>, then it will be chosen automatically.
+     *                      can be <tt>0</tt>, then it will be chosen automatically.
      * @param strictMode    if <tt>false</tt>, optimization is allowed even if it can lead to little differences
      *                      between the source and copied elements.
      * @return the information about copying.
@@ -4510,7 +4510,7 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest    the destination matrix.
      * @param src     the source matrix.
      * @return the result of {@link Arrays#compareAndCopy Arrays.compareAndCopy} call.
@@ -4611,7 +4611,7 @@ public class Matrices {
      * before starting the copying, and <tt>IndexOutOfBoundsException</tt> is thrown if necessary
      * in the very beginning: so, this method is atomic regarding failures for hyperparallelepipeds.
      *
-     * @param context    the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context    the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest       the destination matrix.
      * @param src        the source matrix.
      * @param destRegion the region in the destination matrix that should be copied from the source one.
@@ -4672,7 +4672,7 @@ public class Matrices {
      * <p>For non-primitive element types, the <tt>outsideValue</tt> argument
      * must be some instance of the class <tt>src.{@link Matrix#elementType() elementType()}</tt>,
      * or its superclass, or <tt>null</tt>.
-     * For primitive element types, <tt>outsideValue</tt> may be <tt>null</tt> or <i>any</i>
+     * For primitive element types, <tt>outsideValue</tt> can be <tt>null</tt> or <i>any</i>
      * wrapper for primitive types: <tt>Boolean</tt>, <tt>Byte</tt>, etc. The rules of conversion
      * of this value to required primitive type are exactly the same as in
      * {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
@@ -4714,7 +4714,7 @@ public class Matrices {
      * }
      * </pre>
      *
-     * @param context      the context of copying; may be <tt>null</tt>, then it will be ignored.
+     * @param context      the context of copying; can be <tt>null</tt>, then it will be ignored.
      * @param dest         the destination matrix.
      * @param src          the source matrix.
      * @param destRegion   the region in the destination matrix that should be copied from the source one.
@@ -4787,13 +4787,13 @@ public class Matrices {
      * <p>For non-primitive element types, the <tt>value</tt> argument
      * must be some instance of the class <tt>src.{@link Matrix#elementType() elementType()}</tt>,
      * or its superclass, or <tt>null</tt>.
-     * For primitive element types, <tt>value</tt> may be <tt>null</tt> or <i>any</i>
+     * For primitive element types, <tt>value</tt> can be <tt>null</tt> or <i>any</i>
      * wrapper for primitive types: <tt>Boolean</tt>, <tt>Byte</tt>, etc. The rules of conversion
      * of this value to required primitive type are exactly the same as in
      * {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
      * the case of the {@link Matrix.ContinuationMode#getConstantMode(Object) constant continuation mode}.
      *
-     * @param context    the context of filling; may be <tt>null</tt>, then it will be ignored.
+     * @param context    the context of filling; can be <tt>null</tt>, then it will be ignored.
      * @param dest       the destination matrix.
      * @param destRegion the region in the destination matrix that should be filled by the specified value.
      * @param value      the value to be stored in all elements of the matrix inside the region.

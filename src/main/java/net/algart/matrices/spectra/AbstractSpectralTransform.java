@@ -207,7 +207,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * if {@link #isLengthAllowed(long) isLengthAllowed} returns <tt>false</tt>, this mewthod
      * throws <tt>IllegalArgumentException</tt>.
      *
-     * @param context the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
      * @throws NullPointerException          if the <tt>samples</tt> argument is <tt>null</tt>.
@@ -239,7 +239,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * {@link #isLengthAllowed(long)} method returns <tt>true</tt> for them. If it is not so,
      * {@link IllegalArgumentException} is thrown.
      *
-     * @param context  the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context  the context that will be used by this algorithm; can be <tt>null</tt>
      *                 (see comments to {@link SpectralTransform}).
      * @param matrixRe the transformed matrix if we have a real matrix;
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
@@ -278,7 +278,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * {@link #isLengthAllowed(long)} method returns <tt>true</tt> for them. If it is not so,
      * {@link IllegalArgumentException} is thrown.
      *
-     * @param context  the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context  the context that will be used by this algorithm; can be <tt>null</tt>
      *                 (see comments to {@link SpectralTransform}).
      * @param matrixRe the transformed matrix if we have a real matrix;
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
@@ -324,7 +324,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * returns <tt>true</tt>;
      * 3) {@link #isLengthAllowed(long)} returns <tt>true</tt> for <tt>samples.length()</tt>.
      *
-     * @param context the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
      * @param inverse <tt>true</tt> if this method implements the inverse transform,
@@ -346,7 +346,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * 3) <tt>matrixIm</tt> (if not <tt>null</tt>) has the same dimensions as <tt>matrixRe</tt> and
      * 4) {@link #isLengthAllowed(long)} returns <tt>true</tt> for all these dimensions.
      *
-     * @param context  the context that will be used by this algorithm; may be <tt>null</tt>
+     * @param context  the context that will be used by this algorithm; can be <tt>null</tt>
      *                 (see comments to {@link SpectralTransform}).
      * @param matrixRe the transformed matrix if we have a real matrix;
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.

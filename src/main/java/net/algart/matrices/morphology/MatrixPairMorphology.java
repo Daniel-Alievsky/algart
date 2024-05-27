@@ -106,7 +106,7 @@ public final class MatrixPairMorphology {
      * but the results near matrix boundary are not strictly specified. Really, in this case the current implmentation
      * uses CYCLIC or PSEUDO_CYCLIC mode, but it can change in future versions.
      *
-     * @param continuationMode new continuation mode; may be <tt>null</tt>, then will be chosen
+     * @param continuationMode new continuation mode; can be <tt>null</tt>, then will be chosen
      *                         automatically to provide better performance
      * @return a reference to this object.
      */

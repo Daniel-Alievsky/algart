@@ -51,7 +51,7 @@ public abstract class MatrixToBufferedImageConverter {
      * by {@link #toDataBuffer(net.algart.arrays.Matrix)} method, maybe with some post-processing.)
      *
      * @param packedMatrix the packed matrix.
-     * @param dataBuffer   the data for <tt>BufferedImage</tt>; may be <tt>null</tt>, then it is automatically
+     * @param dataBuffer   the data for <tt>BufferedImage</tt>; can be <tt>null</tt>, then it is automatically
      *                     created as {@link #toDataBuffer(net.algart.arrays.Matrix)
      *                     toDataBuffer(packedMatrix)}.
      * @return             the <tt>BufferedImage</tt> with the same data.
@@ -234,7 +234,7 @@ public abstract class MatrixToBufferedImageConverter {
     /**
      * Returns the band masks, which will be passed to <tt>Raster.createPackedRaster</tt> method,
      * if you want to convert data into a packed <tt>BufferedImage</tt>.
-     * The resulting array may be <tt>null</tt>, that means an unpacked form of the raster
+     * The resulting array can be <tt>null</tt>, that means an unpacked form of the raster
      * (<tt>Raster.createBandedRaster</tt>), or an array containing <tt>bandCount</tt> elements:
      * red, green, blue and (if necessary) alpha masks.
      *

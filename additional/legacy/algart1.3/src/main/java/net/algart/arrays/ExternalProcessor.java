@@ -262,7 +262,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * <p>Note: you can use these features, even if you are not going to call external commands
      * via {@link #execute(ProcessBuilder)} method.
      *
-     * @param context          the context of execution; may be <tt>null</tt>, then will be ignored.
+     * @param context          the context of execution; can be <tt>null</tt>, then will be ignored.
      *                         In the current implementations, it is used only to allow the user to stop
      *                         the running external application: see {@link #context()} method.
      * @param tempDirectory    the path to the global disk directory for allocating temporary data;
@@ -291,7 +291,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * Equivalent to <tt>{@link #getInstance(ArrayContext, String, String)
      * getInstance}(context, {@link #getDefaultTempDirectory()}, "")</tt>.
      *
-     * @param context the context of execution; may be <tt>null</tt>, then will be ignored.
+     * @param context the context of execution; can be <tt>null</tt>, then will be ignored.
      *                In the current implementations, it is used only to allow the user to stop
      *                the running external application: see {@link #context()} method.
      * @return new instance of this class.
@@ -572,7 +572,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * @param propertyKey the key, indicating the system property.
      * @param envVarName  the name of the environment variable.
      * @param defaultPath the path, returned when both the system property and the environment variable
-     *                    are not specified; may be <tt>null</tt>.
+     *                    are not specified; can be <tt>null</tt>.
      * @return the existing disk path, containing in the system property / environment variable
      *         with the given key / name, or <tt>null</tt> of there is no system property
      *         with the given key, there is no environment variable with the given name and
@@ -985,7 +985,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * checkInterruption()}</tt>, and if some exception is thrown, terminates the external process
      * by <tt>java.lang.Process.destroy()</tt>.
      *
-     * @return the current context used by this instance; may be <tt>null</tt>.
+     * @return the current context used by this instance; can be <tt>null</tt>.
      */
     public ArrayContext context() {
         return context;
@@ -1069,7 +1069,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * into this stream.
      *
      * @param outputStream the output stream for duplication of the standard OS output stream of external programs;
-     *                     may be <tt>null</tt>, then it will be ignored.
+     *                     can be <tt>null</tt>, then it will be ignored.
      * @see #getOutputStream()
      * @see #setErrorStream(java.io.OutputStream)
      */
@@ -1108,7 +1108,7 @@ public class ExternalProcessor implements ArrayProcessor, Closeable {
      * thrown by {@link #execute(ProcessBuilder)} method.
      *
      * @param errorStream the output stream for duplication of the standard OS error stream of external programs;
-     *                    may be <tt>null</tt>, then it will be ignored.
+     *                    can be <tt>null</tt>, then it will be ignored.
      * @see #getErrorStream()
      * @see #setOutputStream(java.io.OutputStream)
      */
