@@ -31,7 +31,6 @@ package net.algart.arrays;
   Float(?!ing) ==> Boolean ;;
   float ==> boolean
      !! Auto-generated: NOT EDIT !! */
-
 /**
  * <p>AlgART array of <tt>boolean</tt> values, read/write access, no resizing.</p>
  *
@@ -52,7 +51,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * <tt>{@link #fill(long, long, boolean) fill}(0, thisArray.length(), value)</tt>.
      *
      * @param value the value to be stored in all elements of the array.
-     * @return a reference to this array.
+     * @return      a reference to this array.
      * @see #fill(long, long, boolean)
      * @see Arrays#zeroFill(UpdatableArray)
      */
@@ -70,7 +69,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @param position start index (inclusive) to be filled.
      * @param count    number of filled elements.
      * @param value    the value to be stored in the elements of the array.
-     * @return a reference to this array.
+     * @return         a reference to this array.
      * @throws IndexOutOfBoundsException for illegal <tt>position</tt> and <tt>count</tt>
      *                                   (<tt>position &lt; 0 || count &lt; 0 || position + count &gt; length()</tt>).
      * @see #fill(boolean)

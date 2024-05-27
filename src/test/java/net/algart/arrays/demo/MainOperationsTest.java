@@ -921,12 +921,13 @@ public class MainOperationsTest implements Cloneable {
             return;
         if (!(a instanceof BitArray))
             return;
-        if (!title(ti, "Testing \"getBits\" and \"setBits\" methods..."))
+        if (!title(ti, "Testing \"getBits\", \"setBits\", \"getBits64\", \"setBits64[NoSync]\"  methods..."))
             return;
         for (int testCount = 0; testCount < numberOfTests; testCount++) {
             int srcPos = rnd.nextInt(len + 1) / blockSize * blockSize;
             int destPos = rnd.nextInt(len + 1) / blockSize * blockSize;
             int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos)) / blockSize * blockSize;
+
             work1.copy(a);
             work2.copy(a);
             ((BitArray) a).getBits(srcPos, workJBits, 0, count);
@@ -949,6 +950,25 @@ public class MainOperationsTest implements Cloneable {
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
             if (!work1.equals(work2))
                 throw new AssertionError("The bug in equals found in test #" + testCount);
+
+            count = Math.min(count, 64);
+            ((BitArray) a).getBits(0, workJBits, 0, len);
+            work1.copy(a);
+            work2.copy(a);
+            long v = ((BitArray) work1).getBits64(srcPos, count);
+            if (v != PackedBitArrays.getBits64(workJBits, srcPos, count)) {
+                throw new AssertionError("The bug D in getBits64 found in test #"
+                        + testCount + ": destPos = " + destPos + ", count = " + count);
+            }
+            ((UpdatableBitArray) work1).setBits64(destPos, v, count);
+            PackedBitArrays.setBits64NoSync(workJBits, destPos, v, count);
+            ((UpdatableBitArray) work2).setBits(0, workJBits, 0, len);
+            if (!work1.equals(work2))
+                throw new AssertionError("The bug E in setBits64 found in test #" + testCount);
+            work2.copy(a);
+            ((UpdatableBitArray) work2).setBits64NoSync(destPos, v, count);
+            if (!work1.equals(work2))
+                throw new AssertionError("The bug F in setBits64NoSync found in test #" + testCount);
             showProgress(testCount, numberOfTests);
         }
     }

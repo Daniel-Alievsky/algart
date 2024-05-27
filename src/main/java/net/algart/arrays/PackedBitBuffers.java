@@ -467,14 +467,14 @@ public class PackedBitBuffers {
                     long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
                     synchronized (getLock(dest)) {
                         dest.put(dPos + cnt, (src.get(sPos + cnt) & maskFinish) |
-                                (dest.get(dPos + cnt) & ~maskFinish));
+                                        (dest.get(dPos + cnt) & ~maskFinish));
                     }
                 }
                 JBuffers.copyLongBuffer(dest, dPos, src, sPos, cnt, reverseOrder);
                 if (cntStart > 0) {
                     synchronized (getLock(dest)) {
                         dest.put(dPosStart, (src.get(sPosStart) & maskStart) |
-                                (dest.get(dPosStart) & ~maskStart));
+                                        (dest.get(dPosStart) & ~maskStart));
                     }
                 }
             } else {
@@ -514,8 +514,8 @@ public class PackedBitBuffers {
                     }
                 } else {
                     sPrev = cnt == 0 ? 0 : src.get(sPos);
-                    // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
-                    // because the reverseOrder=true argument may be passed in this case
+        // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
+        // because the reverseOrder=true argument may be passed in this case
                 }
                 while (dPos > dPosMin) { // cnt times
                     --sPos;

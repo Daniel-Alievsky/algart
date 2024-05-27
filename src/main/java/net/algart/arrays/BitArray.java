@@ -37,8 +37,6 @@ package net.algart.arrays;
   float ==> boolean
      !! Auto-generated: NOT EDIT !! */
 
-import java.util.Objects;
-
 /**
  * <p>AlgART array of <tt>boolean</tt> values, read-only access.</p>
  *
