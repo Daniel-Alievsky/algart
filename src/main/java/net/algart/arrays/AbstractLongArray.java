@@ -691,7 +691,7 @@ public abstract class AbstractLongArray extends AbstractArray implements LongArr
      * or for original underlying arrays in other case
      * (alike {@link AbstractArray#freeResources(ArrayContext, boolean)}).
      *
-     * @param context              the context of execution; may be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
      * @param fromIndex            low endpoint (inclusive) of the subarray that should be freed.
      * @param toIndex              high endpoint (exclusive) of the subarray that should be freed.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources

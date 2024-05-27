@@ -48,7 +48,7 @@ public abstract class AbstractUpdatableCharArray extends AbstractCharArray imple
      * <p>This array is not <i>{@link #isNew() new}</i> by default.
      * This is correct usually, because this class is often used
      * for creating a view of another data. However, if the instance
-     * if this class does not depend on any other data sources,
+     * of this class does not depend on any other data sources,
      * you may call {@link #setNewStatus(boolean) setNewStatus(true)} in
      * the constructor of your subclass.
      *
