@@ -380,7 +380,8 @@ public class PackedBitArraysPer8 {
      * @param count  the number of bits to be unpacked (must be in range 0..64).
      * @return the sequence of <tt>count</tt> bits.
      * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
+     * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt> or
+     *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     public static long getBits64(byte[] src, long srcPos, int count) {
@@ -456,7 +457,8 @@ public class PackedBitArraysPer8 {
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt> or
+     *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     public static void setBits64(byte[] dest, long destPos, long bits, int count) {
@@ -515,7 +517,8 @@ public class PackedBitArraysPer8 {
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt> or
+     *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     public static void setBits64NoSync(byte[] dest, long destPos, long bits, int count) {
@@ -681,7 +684,8 @@ public class PackedBitArraysPer8 {
      * @param count  the number of bits to be unpacked (must be in range 0..64).
      * @return the sequence of <tt>count</tt> bits.
      * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
+     * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt> or
+     *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     public static long getBits64InReverseOrder(byte[] src, long srcPos, int count) {
@@ -759,7 +763,8 @@ public class PackedBitArraysPer8 {
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt> or
+     *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     public static void setBits64InReverseOrder(byte[] dest, long destPos, long bits, int count) {
@@ -827,7 +832,8 @@ public class PackedBitArraysPer8 {
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt> or
+     *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     public static void setBits64InReverseOrderNoSync(byte[] dest, long destPos, long bits, int count) {

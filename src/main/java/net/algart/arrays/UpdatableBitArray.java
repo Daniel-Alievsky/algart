@@ -31,6 +31,7 @@ package net.algart.arrays;
   Float(?!ing) ==> Boolean ;;
   float ==> boolean
      !! Auto-generated: NOT EDIT !! */
+
 /**
  * <p>AlgART array of <tt>boolean</tt> values, read/write access, no resizing.</p>
  *
@@ -51,7 +52,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * <tt>{@link #fill(long, long, boolean) fill}(0, thisArray.length(), value)</tt>.
      *
      * @param value the value to be stored in all elements of the array.
-     * @return      a reference to this array.
+     * @return a reference to this array.
      * @see #fill(long, long, boolean)
      * @see Arrays#zeroFill(UpdatableArray)
      */
@@ -69,7 +70,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @param position start index (inclusive) to be filled.
      * @param count    number of filled elements.
      * @param value    the value to be stored in the elements of the array.
-     * @return         a reference to this array.
+     * @return a reference to this array.
      * @throws IndexOutOfBoundsException for illegal <tt>position</tt> and <tt>count</tt>
      *                                   (<tt>position &lt; 0 || count &lt; 0 || position + count &gt; length()</tt>).
      * @see #fill(boolean)
@@ -149,6 +150,80 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     void clearBitNoSync(long index);
 
     /**
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>.
+     * This is the reverse operation of {@link #getBits64(long, int)}.
+     *
+     * <p>This function is equivalent to the following loop:</p>
+     *
+     * <pre>
+     *      for (int k = 0; k &lt; count; k++) {
+     *          final long bit = (bits &gt;&gt;&gt; k) &amp; 1L;
+     *          {@link #setBit(long, boolean) setBit}(destPos + k, bit != 0);
+     *      }</pre>
+     *
+     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     *
+     * @param destPos position of the first bit written in the destination array.
+     * @param count   the number of bits to be written (must be in range 0..64).
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside this array.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
+    default void setBits64(long destPos, long bits, int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot set > 64 bits in setBits64 method");
+        }
+        for (int k = count - 1; k >= 0; k--) {
+            // - inverse loop order allows to guarantee that IndexOutOfBoundsException
+            // will occur before modifying anything
+            final long bit = (bits >>> k) & 1L;
+            setBit(destPos + k, bit != 0);
+        }
+    }
+
+    /**
+     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>
+     * <b>in a non-thread-safe manner</b>:
+     * without a strict requirement for internal synchronization.
+     * This means that when calling this method from different threads for the same instance,
+     * it can cause modification (corruption) of some bits "around" the bit <tt>#index</tt>,
+     * namely the bits inside the same 64-bit block with indexes <tt>64k...64k+63</tt>,
+     * where <tt>k=index/64</tt>.
+     *
+     * <p>Note that this method is usually <b>much</b> faster than {@link #setBits64(long, long, int)}.
+     * If you are not going to work with this array from different threads, you should prefer this method.
+     * Also you may freely use this method if you are synchronizing access to this array via some
+     * form of external synchronization: in this case, no additional internal synchronization is needed.</p>
+     *
+     * <p>Note that some classes may correctly implement this interface without any synchronization
+     * or, vise versa, always use synchronization. In such cases this method may be equivalent
+     * to {@link #setBits64(long, long, int)}.</p>     *
+     *
+     * @param destPos position of the first bit written in the destination array.
+     * @param count   the number of bits to be written (must be in range 0..64).
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside this array.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
+    default void setBits64NoSync(long destPos, long bits, int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot set > 64 bits in setBits64 method");
+        }
+        for (int k = count - 1; k >= 0; k--) {
+            // - inverse loop order allows to guarantee that IndexOutOfBoundsException
+            // will occur before modifying anything
+            final long bit = (bits >>> k) & 1L;
+            setBitNoSync(destPos + k, bit != 0);
+        }
+    }
+
+    /**
      * Copies <tt>count</tt> bits from the specified <i>packed</i> bit array,
      * starting from <tt>srcArrayOffset</tt> index,
      * into this array, starting from <tt>arrayPos</tt> index.
@@ -170,9 +245,10 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @param srcArray       the source packed bit array.
      * @param srcArrayOffset starting position in the source packed bit array.
      * @param count          the number of bits to be copied.
-     * @return               a reference to this AlgART array.
+     * @return a reference to this AlgART array.
      * @throws NullPointerException      if <tt>srcArray</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt>.
      * @see #getData(long, Object, int, int)
      * @see #getBits(long, long[], long, long)
      * @see PackedBitArrays

@@ -114,7 +114,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @param count          the number of elements to be copied.
      * @return               a reference to this AlgART array.
      * @throws NullPointerException      if <tt>srcArray</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException  if <tt>srcArray</tt> argument is not an array.
+     * @throws IllegalArgumentException  if <tt>srcArray</tt> argument is not an array or if <tt>count &lt; 0</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
      * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
      *                                   {@link #elementType() elementType()}.

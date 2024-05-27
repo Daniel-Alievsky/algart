@@ -37,6 +37,8 @@ package net.algart.arrays;
   float ==> boolean
      !! Auto-generated: NOT EDIT !! */
 
+import java.util.Objects;
+
 /**
  * <p>AlgART array of <tt>boolean</tt> values, read-only access.</p>
  *
@@ -138,6 +140,47 @@ public interface BitArray extends PFixedArray {
     int getInt(long index);
 
     /**
+     * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#srcPos</tt>.
+     *
+     * <p>More precisely, the bit <tt>#(srcPos+k)</tt> will be returned in the bit <tt>#k</tt> of the returned
+     * <tt>long</tt> value <tt>R</tt>: the first bit <tt>#srcPos</tt> will be equal to <tt>R&amp;1</tt>,
+     * the following bit <tt>#(srcPos+1)</tt> will be equal to <tt>(R&gt;&gt;1)&amp;1</tt>, etc.
+     * If <tt>count=0</tt>, the result is 0.</p>
+     *
+     * <p>The same result can be calculated using the following loop:</p>
+     *
+     * <pre>
+     *      long result = 0;
+     *      for (int k = 0; k &lt; count; k++) {
+     *          final long bit = {@link #getBit(long) getBit}(srcPos + k) ? 1L : 0L;
+     *          result |= bit &lt;&lt; k;
+     *      }</pre>
+     *
+     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     *
+     * @param srcPos position of the first bit read in the source array.
+     * @param count  the number of bits to be unpacked (must be in range 0..64).
+     * @return the sequence of <tt>count</tt> bits.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside this array.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     */
+    default long getBits64(long srcPos, int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count argument: " + count);
+        }
+        if (count > 64) {
+            throw new IllegalArgumentException("Too large count argument: " + count +
+                    "; we cannot set > 64 bits in setBits64 method");
+        }
+        long result = 0;
+        for (int k = 0; k < count; k++) {
+            final long bit = getBit(srcPos + k) ? 1L : 0L;
+            result |= bit << k;
+        }
+        return result;
+    }
+
+    /**
      * Copies <tt>count</tt> bits of this array, starting from <tt>arrayPos</tt> index,
      * into the specified <i>packed</i> bit array, starting from <tt>destArrayOffset</tt> index.
      *
@@ -160,6 +203,7 @@ public interface BitArray extends PFixedArray {
      * @param count           the number of bits to be copied.
      * @throws NullPointerException      if <tt>destArray</tt> argument is <tt>null</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target Java array.
+     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt>.
      * @see BitArray#getData(long, Object, int, int)
      * @see UpdatableBitArray#setBits(long, long[], long, long)
      * @see PackedBitArrays

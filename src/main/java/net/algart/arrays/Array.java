@@ -255,7 +255,7 @@ public interface Array {
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be copied.
      * @throws NullPointerException      if <tt>destArray</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException  if <tt>destArray</tt> argument is not an array.
+     * @throws IllegalArgumentException  if <tt>destArray</tt> argument is not an array or if <tt>count &lt; 0</tt>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target Java array.
      * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
      *                                   {@link #elementType()}.

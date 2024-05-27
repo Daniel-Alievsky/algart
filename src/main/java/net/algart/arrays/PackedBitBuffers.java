@@ -133,7 +133,7 @@ public class PackedBitBuffers {
      * @param dest  the destination buffer (bits are packed into <tt>long</tt> values).
      * @param index index of the written bit.
      * @param value new bit value.
-     * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
+     * @throws IndexOutOfBoundsException if this method cause access of data outside buffer limit.
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      */
     public static void setBit(LongBuffer dest, long index, boolean value) {
@@ -162,7 +162,7 @@ public class PackedBitBuffers {
      * @param dest  the destination buffer (bits are packed into <tt>long</tt> values).
      * @param index index of the written bit.
      * @param value new bit value.
-     * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
+     * @throws IndexOutOfBoundsException if this method cause access of data outside buffer limit.
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
      */
     public static void setBitNoSync(LongBuffer dest, long index, boolean value) {
@@ -202,7 +202,8 @@ public class PackedBitBuffers {
      * @param count  the number of bits to be unpacked (must be &gt;=0 and &lt;64).
      * @return the sequence of <tt>count</tt> bits.
      * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt>.
+     * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt> or
+     *                                   if copying would cause access of data outside buffer limits.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     public static long getBits64(LongBuffer src, long srcPos, int count) {
@@ -263,7 +264,8 @@ public class PackedBitBuffers {
      * @param destPos position of the first bit written in the destination buffer.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt> or
+     *                                   if copying would cause access of data outside buffer limits.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     public static void setBits64(LongBuffer dest, long destPos, long bits, int count) {
@@ -315,7 +317,8 @@ public class PackedBitBuffers {
      * @param destPos position of the first bit written in the destination buffer.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt>.
+     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt> or
+     *                                   if copying would cause access of data outside buffer limits.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
      */
     public static void setBits64NoSync(LongBuffer dest, long destPos, long bits, int count) {
@@ -464,14 +467,14 @@ public class PackedBitBuffers {
                     long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
                     synchronized (getLock(dest)) {
                         dest.put(dPos + cnt, (src.get(sPos + cnt) & maskFinish) |
-                                        (dest.get(dPos + cnt) & ~maskFinish));
+                                (dest.get(dPos + cnt) & ~maskFinish));
                     }
                 }
                 JBuffers.copyLongBuffer(dest, dPos, src, sPos, cnt, reverseOrder);
                 if (cntStart > 0) {
                     synchronized (getLock(dest)) {
                         dest.put(dPosStart, (src.get(sPosStart) & maskStart) |
-                                        (dest.get(dPosStart) & ~maskStart));
+                                (dest.get(dPosStart) & ~maskStart));
                     }
                 }
             } else {
@@ -511,8 +514,8 @@ public class PackedBitBuffers {
                     }
                 } else {
                     sPrev = cnt == 0 ? 0 : src.get(sPos);
-        // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
-        // because the reverseOrder=true argument may be passed in this case
+                    // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
+                    // because the reverseOrder=true argument may be passed in this case
                 }
                 while (dPos > dPosMin) { // cnt times
                     --sPos;
