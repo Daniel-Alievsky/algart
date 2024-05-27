@@ -221,7 +221,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      *
      * <p>Some elements may be copied incorrectly if this array and <tt>src</tt>
      * are views of the same data and the swapped data areas overlap
-     * (in the example above, <tt>Math.abs(destPos - srcPos) &lt; count)</tt>.
+     * (in the example above, <tt>Math.abs(destPos - srcPos) &lt; count)</tt>).
      * However, for arrays, created by {@link SimpleMemoryModel}, this method work correctly <i>always</i>,
      * even for overlapping areas.
      * For any arrays, if the copied areas of the underlying data are <i>the same</i>
@@ -263,7 +263,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      *
      * <p>Some elements may be swapped incorrectly if this array and <tt>another</tt> is the same array,
      * or are views of the same data, and the swapped areas overlap
-     * (in the example above, <tt>Math.abs(pos1 - pos2) &lt; count)</tt>.
+     * (in the example above, <tt>Math.abs(pos1 - pos2) &lt; count)</tt>).
      *
      * <p>This method must work always if the element types of this and <tt>src</tt> arrays
      * (returned by {@link #elementType()}) are the same.
@@ -313,7 +313,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
     /**
      * Clears the "{@link #isNew() new status}" for this array instance.
      * After this call, the {@link #isNew()} method will return <tt>false</tt> for this instance.
-     * If the internal storage of this array will be reallocated in future,
+     * If the internal storage of this array will be reallocated in the future,
      * this instance may become "new" again.
      *
      * <p>The access to the "new status", provided by this and {@link #isNew()} method,

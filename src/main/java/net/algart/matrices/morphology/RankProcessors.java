@@ -92,7 +92,7 @@ public class RankProcessors {
      * @return             the new streaming aperture processor, finding the percentile.
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
@@ -151,7 +151,7 @@ public class RankProcessors {
      * @return             the new streaming aperture processor, finding the rank.
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
@@ -231,7 +231,7 @@ public class RankProcessors {
      * @return             the new streaming aperture processor, finding the mean between 2 percentiles.
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
@@ -314,7 +314,7 @@ public class RankProcessors {
      * @return             the new streaming aperture processor, finding the mean between 2 values.
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
@@ -386,7 +386,7 @@ public class RankProcessors {
      * @return               the new streaming aperture processor, finding the given function of the aperture sum.
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
@@ -485,7 +485,7 @@ public class RankProcessors {
      *                       matrix <b>M</b><sub>0</sub> and the pair of percentiles.
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of elements <tt>bitLevels</tt> is not in 1..30 range, or if
+     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */

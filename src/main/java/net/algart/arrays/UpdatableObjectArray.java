@@ -45,7 +45,7 @@ public interface UpdatableObjectArray<E> extends ObjectArray<E>, UpdatableArray 
     void set(long index, E value);
 
     /**
-     * Fills all elements of this array by the specified value. Equivalent to
+     * Fills all the elements of this array by the specified value. Equivalent to
      * <tt>{@link #fill(long, long, Object) fill}(0, thisArray.length(), value)</tt>.
      *
      * @param value the value to be stored in all elements of the array.
