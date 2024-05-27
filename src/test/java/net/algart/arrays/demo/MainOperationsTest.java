@@ -72,44 +72,34 @@ public class MainOperationsTest implements Cloneable {
             long[] ja = (long[]) javaArray;
             for (int k = from; k < to; k++)
                 PackedBitArrays.setBit(ja, k, ((k - from + startValue) & 1) == 1);
-        } else if (javaArray instanceof boolean[]) {
-            boolean[] ja = (boolean[]) javaArray;
+        } else if (javaArray instanceof boolean[] ja) {
             for (int k = from; k < to; k++)
                 ja[k] = ((k - from + startValue) & 1) == 1;
-        } else if (javaArray instanceof char[]) {
-            char[] ja = (char[]) javaArray;
+        } else if (javaArray instanceof char[] ja) {
             for (int k = from; k < to; k++)
                 ja[k] = (char) (k - from + startValue);
-        } else if (javaArray instanceof byte[]) {
-            byte[] ja = (byte[]) javaArray;
+        } else if (javaArray instanceof byte[] ja) {
             for (int k = from; k < to; k++)
                 ja[k] = (byte) (k - from + startValue);
-        } else if (javaArray instanceof short[]) {
-            short[] ja = (short[]) javaArray;
+        } else if (javaArray instanceof short[] ja) {
             for (int k = from; k < to; k++)
                 ja[k] = (short) (k - from + startValue);
-        } else if (javaArray instanceof int[]) {
-            int[] ja = (int[]) javaArray;
+        } else if (javaArray instanceof int[] ja) {
             for (int k = from; k < to; k++)
                 ja[k] = k - from + startValue;
-        } else if (javaArray instanceof long[]) {
-            long[] ja = (long[]) javaArray;
+        } else if (javaArray instanceof long[] ja) {
             for (int k = from; k < to; k++)
                 ja[k] = k - from + startValue;
-        } else if (javaArray instanceof float[]) {
-            float[] ja = (float[]) javaArray;
+        } else if (javaArray instanceof float[] ja) {
             for (int k = from; k < to; k++)
                 ja[k] = k - from + startValue;
-        } else if (javaArray instanceof double[]) {
-            double[] ja = (double[]) javaArray;
+        } else if (javaArray instanceof double[] ja) {
             for (int k = from; k < to; k++)
                 ja[k] = k - from + startValue;
-        } else if (javaArray instanceof String[]) {
-            String[] ja = (String[]) javaArray;
+        } else if (javaArray instanceof String[] ja) {
             for (int k = from; k < to; k++)
                 ja[k] = k - from + startValue + "";
-        } else if (javaArray instanceof Circle[]) {
-            Circle[] ja = (Circle[]) javaArray;
+        } else if (javaArray instanceof Circle[] ja) {
             for (int k = from; k < to; k++)
                 ja[k] = new Circle(k - from + startValue, -(k - from + startValue), k - from + startValue);
         } else {
@@ -961,12 +951,18 @@ public class MainOperationsTest implements Cloneable {
                         + testCount + ": destPos = " + destPos + ", count = " + count);
             }
             ((UpdatableBitArray) work1).setBits64(destPos, v, count);
-            PackedBitArrays.setBits64NoSync(workJBits, destPos, v, count);
+            PackedBitArrays.setBits64(workJBits, destPos, v, count);
             ((UpdatableBitArray) work2).setBits(0, workJBits, 0, len);
             if (!work1.equals(work2))
                 throw new AssertionError("The bug E in setBits64 found in test #" + testCount);
             work2.copy(a);
-            ((UpdatableBitArray) work2).setBits64NoSync(destPos, v, count);
+            if (multithreading) {
+                // - as an alternative, we could synchronize all access to work2 externally,
+                // but in this class this is very inconvenient
+                ((UpdatableBitArray) work2).setBits64(destPos, v, count);
+            } else {
+                ((UpdatableBitArray) work2).setBits64NoSync(destPos, v, count);
+            }
             if (!work1.equals(work2))
                 throw new AssertionError("The bug F in setBits64NoSync found in test #" + testCount);
             showProgress(testCount, numberOfTests);

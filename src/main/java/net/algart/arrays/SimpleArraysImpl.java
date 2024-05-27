@@ -12727,6 +12727,24 @@ class SimpleArraysImpl {
             return (this.bitArray[(int) ((index) >>> 6)] & (1L << ((int) (index) & 63))) != 0L;
         }
 
+        @Override
+        public final long getBits64(long arrayPos, int count) {
+            if (arrayPos < 0) {
+                throw rangeException(arrayPos);
+            }
+            if (count < 0) {
+                throw new IllegalArgumentException("Negative count argument: " + count);
+            }
+            if (count > 64) {
+                throw new IllegalArgumentException("Too large count argument: " + count +
+                        "; we cannot get > 64 bits in getBits64 method");
+            }
+            if (arrayPos > length - count) {
+                throw rangeException(arrayPos + count - 1);
+            }
+            return PackedBitArrays.getBits64Impl(bitArray, arrayPos, count);
+        }
+
         public final long indexOf(long lowIndex, long highIndex, boolean value) {
             if (lowIndex < 0) {
                 lowIndex = 0;
@@ -12961,6 +12979,24 @@ class SimpleArraysImpl {
             if (index < 0 || index >= length)
                 throw rangeException(index);
             return (this.bitArray[(int) ((offset + index) >>> 6)] & (1L << ((int) (offset + index) & 63))) != 0L;
+        }
+
+        @Override
+        public final long getBits64(long arrayPos, int count) {
+            if (arrayPos < 0) {
+                throw rangeException(arrayPos);
+            }
+            if (count < 0) {
+                throw new IllegalArgumentException("Negative count argument: " + count);
+            }
+            if (count > 64) {
+                throw new IllegalArgumentException("Too large count argument: " + count +
+                        "; we cannot get > 64 bits in getBits64 method");
+            }
+            if (arrayPos > length - count) {
+                throw rangeException(arrayPos + count - 1);
+            }
+            return PackedBitArrays.getBits64Impl(bitArray, offset + arrayPos, count);
         }
 
         public long indexOf(long lowIndex, long highIndex, boolean value) {
@@ -13352,6 +13388,46 @@ class SimpleArraysImpl {
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
             this.bitArray[(int) ((index) >>> 6)] &= ~(1L << ((index) & 63));
+        }
+
+        @Override
+        public void setBits64(long arrayPos, long bits, int count) {
+            if (arrayPos < 0) {
+                throw rangeException(arrayPos);
+            }
+            if (count < 0) {
+                throw new IllegalArgumentException("Negative count argument: " + count);
+            }
+            if (count > 64) {
+                throw new IllegalArgumentException("Too large count argument: " + count +
+                        "; we cannot get > 64 bits in getBits64 method");
+            }
+            if (arrayPos > length - count) {
+                throw rangeException(arrayPos + count - 1);
+            }
+            //noinspection SynchronizeOnNonFinalField
+            synchronized (this.bitArray) {
+                PackedBitArrays.setBits64Impl(bitArray, arrayPos, bits, count);
+            }
+        }
+
+        @Override
+        public void setBits64NoSync(long arrayPos, long bits, int count) {
+            if (arrayPos < 0) {
+                throw rangeException(arrayPos);
+            }
+            if (count < 0) {
+                throw new IllegalArgumentException("Negative count argument: " + count);
+            }
+            if (count > 64) {
+                throw new IllegalArgumentException("Too large count argument: " + count +
+                        "; we cannot get > 64 bits in getBits64 method");
+            }
+            if (arrayPos > length - count) {
+                throw rangeException(arrayPos + count - 1);
+            }
+            PackedBitArrays.setBits64Impl(bitArray, arrayPos, bits, count);
+
         }
 
         public UpdatableBitArray fill(double value) {
@@ -13751,6 +13827,45 @@ class SimpleArraysImpl {
             if (this.capacity < 0) // copy-on-next-write
                 reallocateStorage();
             this.bitArray[(int) ((offset + index) >>> 6)] &= ~(1L << ((offset + index) & 63));
+        }
+
+        @Override
+        public void setBits64(long arrayPos, long bits, int count) {
+            if (arrayPos < 0) {
+                throw rangeException(arrayPos);
+            }
+            if (count < 0) {
+                throw new IllegalArgumentException("Negative count argument: " + count);
+            }
+            if (count > 64) {
+                throw new IllegalArgumentException("Too large count argument: " + count +
+                        "; we cannot get > 64 bits in getBits64 method");
+            }
+            if (arrayPos > length - count) {
+                throw rangeException(arrayPos + count - 1);
+            }
+            //noinspection SynchronizeOnNonFinalField
+            synchronized (this.bitArray) {
+                PackedBitArrays.setBits64Impl(bitArray, offset + arrayPos, bits, count);
+            }
+        }
+
+        @Override
+        public void setBits64NoSync(long arrayPos, long bits, int count) {
+            if (arrayPos < 0) {
+                throw rangeException(arrayPos);
+            }
+            if (count < 0) {
+                throw new IllegalArgumentException("Negative count argument: " + count);
+            }
+            if (count > 64) {
+                throw new IllegalArgumentException("Too large count argument: " + count +
+                        "; we cannot get > 64 bits in getBits64 method");
+            }
+            if (arrayPos > length - count) {
+                throw rangeException(arrayPos + count - 1);
+            }
+            PackedBitArrays.setBits64Impl(bitArray, offset + arrayPos, bits, count);
         }
 
         public UpdatableBitArray fill(double value) {

@@ -4381,7 +4381,7 @@ class BufferArraysImpl {
             if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
             }
-            return storage.getBits64(arrayPos, count);
+            return storage.getBits64(offset + arrayPos, count);
         }
 
         public final long indexOf(long lowIndex, long highIndex, boolean value) {
@@ -4628,7 +4628,7 @@ class BufferArraysImpl {
             if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
             }
-            storage.setBits64(arrayPos, bits, count);
+            storage.setBits64(offset + arrayPos, bits, count);
         }
 
         @Override
@@ -4646,7 +4646,7 @@ class BufferArraysImpl {
             if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
             }
-            storage.setBits64NoSync(arrayPos, bits, count);
+            storage.setBits64NoSync(offset + arrayPos, bits, count);
         }
 
         public UpdatableBitArray fill(double value) {

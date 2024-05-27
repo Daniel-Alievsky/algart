@@ -119,8 +119,10 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      *
      * <p>Note that this method is usually <b>much</b> faster than {@link #setBit(long, boolean)}.
      * If you are not going to work with this array from different threads, you should prefer this method.
-     * Also you may freely use this method if you are synchronizing access to this array via some
-     * form of external synchronization: in this case, no additional internal synchronization is needed.</p>
+     * Also you may freely use this method if you are synchronizing all access to this array via some
+     * form of external synchronization: in this case, no additional internal synchronization is needed.
+     * (But remember: such external synchronization must be used on <b>any</b> access to this array,
+     * not only when calling this method!)</p>
      *
      * <p>Note that some classes may correctly implement this interface without any synchronization
      * or, vise versa, always use synchronization. In such cases this method may be equivalent
@@ -195,8 +197,10 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      *
      * <p>Note that this method is usually <b>much</b> faster than {@link #setBits64(long, long, int)}.
      * If you are not going to work with this array from different threads, you should prefer this method.
-     * Also you may freely use this method if you are synchronizing access to this array via some
-     * form of external synchronization: in this case, no additional internal synchronization is needed.</p>
+     * Also you may freely use this method if you are synchronizing all access to this array via some
+     * form of external synchronization: in this case, no additional internal synchronization is needed.
+     * (But remember: such external synchronization must be used on <b>any</b> access to this array,
+     * not only when calling this method!)</p>
      *
      * <p>Note that some classes may correctly implement this interface without any synchronization
      * or, vise versa, always use synchronization. In such cases this method may be equivalent

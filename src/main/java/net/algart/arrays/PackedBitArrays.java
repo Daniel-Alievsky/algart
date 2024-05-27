@@ -182,8 +182,10 @@ public class PackedBitArrays {
      * <p>Note that this method is usually <b>much</b> faster than {@link #setBit(long[], long, boolean)}.
      * If you are not going to work with the same <tt>dest</tt> array from different threads,
      * you should prefer this method.
-     * Also you may freely use this method if you are synchronizing access to this array via some
-     * form of external synchronization: in this case, no additional internal synchronization is needed.</p>
+     * Also you may freely use this method if you are synchronizing all access to this array via some
+     * form of external synchronization: in this case, no additional internal synchronization is needed.
+     * (But remember: such external synchronization must be used on <b>any</b> access to this array,
+     * not only when calling this method!)</p>
      *
      * @param dest  the destination array (bits are packed in <tt>long</tt> values).
      * @param index index of the written bit.
@@ -197,8 +199,6 @@ public class PackedBitArrays {
         else
             dest[(int) (index >>> 6)] &= ~(1L << (index & 63));
     }
-
-    /*Repeat.SectionStart bits_64*/
 
     /**
      * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#srcPos</tt>,
@@ -245,25 +245,7 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Too large count argument: " + count +
                     "; we cannot get > 64 bits in getBits64 method");
         }
-        final long srcPosDiv64 = srcPos >>> 6;
-        if (count == 0 || srcPosDiv64 >= src.length) {
-            return 0;
-        }
-        int sPosRem = (int) (srcPos & 63);
-        int sPos = (int) srcPosDiv64;
-        int bitsLeft = 64 - sPosRem;
-        // Below is a simplified implementation of PackedBitArraysPer8.getBits for a case of maximum 2 iterations
-        if (count > bitsLeft) {
-            final long actualBitsLow = src[sPos] >>> sPosRem;
-            sPos++;
-            if (sPos >= src.length) {
-                return actualBitsLow;
-            }
-            final long actualBitsHigh = src[sPos] & (-1L >>> 64 - (count - bitsLeft));
-            return actualBitsLow | (actualBitsHigh << bitsLeft);
-        } else {
-            return (src[sPos] & (-1L >>> (bitsLeft - count))) >>> sPosRem;
-        }
+        return getBits64Impl(src, srcPos, count);
     }
 
     /**
@@ -304,29 +286,8 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Too large count argument: " + count +
                     "; we cannot set > 64 bits in setBits64 method");
         }
-        final long destPosDiv64 = destPos >>> 6;
-        if (count == 0 || destPosDiv64 >= dest.length) {
-            return;
-        }
-        int dPosRem = (int) (destPos & 63);
-        int cntStart = (-dPosRem) & 63;
-        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
-        if (cntStart > count) {
-            cntStart = count;
-            maskStart &= (1L << (dPosRem + count)) - 1; // &= dPosRem+cntStart times 1 (from the left)
-        }
-        int dPos = (int) destPosDiv64;
         synchronized (dest) {
-            if (cntStart > 0) {
-                dest[dPos] = ((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart);
-                dPos++;
-                count -= cntStart;
-                bits >>>= cntStart;
-            }
-            if (count > 0 && dPos < dest.length) {
-                long maskFinish = (2L << (count - 1)) - 1; // count times 1 (from the left)
-                dest[dPos] = (bits & maskFinish) | (dest[dPos] & ~maskFinish);
-            }
+            setBits64Impl(dest, destPos, bits, count);
         }
     }
 
@@ -356,30 +317,8 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Too large count argument: " + count +
                     "; we cannot set > 64 bits in setBits64NoSync method");
         }
-        final long destPosDiv64 = destPos >>> 6;
-        if (count == 0 || destPosDiv64 >= dest.length) {
-            return;
-        }
-        int dPosRem = (int) (destPos & 63);
-        int cntStart = (-dPosRem) & 63;
-        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
-        if (cntStart > count) {
-            cntStart = count;
-            maskStart &= (1L << (dPosRem + count)) - 1; // &= dPosRem+cntStart times 1 (from the left)
-        }
-        int dPos = (int) destPosDiv64;
-        if (cntStart > 0) {
-            dest[dPos] = ((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart);
-            dPos++;
-            count -= cntStart;
-            bits >>>= cntStart;
-        }
-        if (count > 0 && dPos < dest.length) {
-            long maskFinish = (2L << (count - 1)) - 1; // count times 1 (from the left)
-            dest[dPos] = (bits & maskFinish) | (dest[dPos] & ~maskFinish);
-        }
+        setBits64Impl(dest, destPos, bits, count);
     }
-    /*Repeat.SectionEnd bits_64*/
 
     /**
      * Returns a hash code based on the contents of the specified fragment of the given packed bit array.
@@ -11091,6 +11030,53 @@ public class PackedBitArrays {
         //[[Repeat.SectionEnd cardinality_method_impl]]
     }
     /*Repeat.SectionEnd cardinality*/
+
+    static long getBits64Impl(long[] src, long srcPos, int count) {
+        final long srcPosDiv64 = srcPos >>> 6;
+        if (count == 0 || srcPosDiv64 >= src.length) {
+            return 0;
+        }
+        int sPosRem = (int) (srcPos & 63);
+        int sPos = (int) srcPosDiv64;
+        int bitsLeft = 64 - sPosRem;
+        // Below is a simplified implementation of PackedBitArraysPer8.getBits for a case of maximum 2 iterations
+        if (count > bitsLeft) {
+            final long actualBitsLow = src[sPos] >>> sPosRem;
+            sPos++;
+            if (sPos >= src.length) {
+                return actualBitsLow;
+            }
+            final long actualBitsHigh = src[sPos] & (-1L >>> 64 - (count - bitsLeft));
+            return actualBitsLow | (actualBitsHigh << bitsLeft);
+        } else {
+            return (src[sPos] & (-1L >>> (bitsLeft - count))) >>> sPosRem;
+        }
+    }
+
+    static void setBits64Impl(long[] dest, long destPos, long bits, int count) {
+        final long destPosDiv64 = destPos >>> 6;
+        if (count == 0 || destPosDiv64 >= dest.length) {
+            return;
+        }
+        int dPosRem = (int) (destPos & 63);
+        int cntStart = (-dPosRem) & 63;
+        long maskStart = -1L << dPosRem; // dPosRem times 0, then 1 (from the left)
+        if (cntStart > count) {
+            cntStart = count;
+            maskStart &= (1L << (dPosRem + count)) - 1; // &= dPosRem+cntStart times 1 (from the left)
+        }
+        int dPos = (int) destPosDiv64;
+        if (cntStart > 0) {
+            dest[dPos] = ((bits << dPosRem) & maskStart) | (dest[dPos] & ~maskStart);
+            dPos++;
+            count -= cntStart;
+            bits >>>= cntStart;
+        }
+        if (count > 0 && dPos < dest.length) {
+            long maskFinish = (2L << (count - 1)) - 1; // count times 1 (from the left)
+            dest[dPos] = (bits & maskFinish) | (dest[dPos] & ~maskFinish);
+        }
+    }
 
     static int numberOfLeadingZeros(long i) {
         // The 64-bit version of the algorithm published in
