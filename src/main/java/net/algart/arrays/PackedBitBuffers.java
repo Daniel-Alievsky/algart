@@ -181,7 +181,8 @@ public class PackedBitBuffers {
      * the following bit <tt>#(srcPos+1)</tt> will be equal to <tt>(R&gt;&gt;1)&amp;1</tt>, etc.
      * If <tt>count=0</tt>, the result is 0.</p>
      *
-     * <p>The same result can be calculated using the following loop:</p>
+     * <p>The same result can be calculated using the following loop
+     * (for correct <tt>count</tt> in the range 0..64):</p>
      *
      * <pre>
      *      long result = 0;
@@ -245,7 +246,8 @@ public class PackedBitBuffers {
      * in the packed <tt>dest</tt> bit buffer.
      * This is the reverse operation of {@link #getBits64(LongBuffer, long, int)}.
      *
-     * <p>This function is equivalent to the following loop:</p>
+     * <p>This function is equivalent to the following loop
+     * (for correct <tt>count</tt> in the range 0..64):</p>
      *
      * <pre>
      *      for (int k = 0; k &lt; count; k++) {

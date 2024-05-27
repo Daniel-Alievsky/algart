@@ -154,7 +154,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#arrayPos</tt>.
      * This is the reverse operation of {@link #getBits64(long, int)}.
      *
-     * <p>This function is equivalent to the following loop:</p>
+     * <p>This function is equivalent to the following loop (for correct <tt>count</tt> in the range 0..64):</p>
      *
      * <pre>
      *      for (int k = 0; k &lt; count; k++) {
