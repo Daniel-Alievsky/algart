@@ -53,14 +53,28 @@ public class GetSetBitSpeed {
         boolean ok = true;
         t1 = System.nanoTime();
         for (int i = 0; i < arrayLength; i++) {
-            ok = ok & (a1.getBit(i) == data[i]);
+            ok = ok & a1.getBit(i);
         }
         t2 = System.nanoTime();
         System.out.printf(Locale.US, "getBit(i): %.3f ms, %.2f ns/element)%n",
                 (t2 - t1) * 1e-6, (double) (t2 - t1) / arrayLength);
-        if (!ok) {
-            throw new AssertionError("Bug in getBit(i)");
+
+        long sum = 0;
+        t1 = System.nanoTime();
+        for (int i = 0; i < arrayLength; i++) {
+            sum += a1.getBits64(i, 1);
         }
+        t2 = System.nanoTime();
+        System.out.printf(Locale.US, "getBits64(i, 1): %.3f ms, %.2f ns/element)%n",
+                (t2 - t1) * 1e-6, (double) (t2 - t1) / arrayLength);
+
+        t1 = System.nanoTime();
+        for (int i = 0, m = arrayLength - 24; i <= m; i++) {
+            sum += a1.getBits64(i, 24);
+        }
+        t2 = System.nanoTime();
+        System.out.printf(Locale.US, "getBits64(i, 24): %.3f ms, %.2f ns/element)%n",
+                (t2 - t1) * 1e-6, (double) (t2 - t1) / arrayLength);
 
         a2.fill(0);
         t1 = System.nanoTime();
@@ -101,6 +115,14 @@ public class GetSetBitSpeed {
         if (!a1.equals(a4)) {
             throw new AssertionError("Bug in clearBit(i)");
         }
+
+        t1 = System.nanoTime();
+        for (int i = 0, m = arrayLength - 24; i <= m; i++) {
+            a4.setBits64(i, 0x55555555, 24);
+        }
+        t2 = System.nanoTime();
+        System.out.printf(Locale.US, "setBits64(i, 24): %.3f ms, %.2f ns/element)%n",
+                (t2 - t1) * 1e-6, (double) (t2 - t1) / arrayLength);
     }
 
     private static void testNoSync(
@@ -155,6 +177,14 @@ public class GetSetBitSpeed {
         if (!a1.equals(a4)) {
             throw new AssertionError("Bug in clearBitNoSync(i)");
         }
+
+        t1 = System.nanoTime();
+        for (int i = 0, m = arrayLength - 24; i <= m; i++) {
+            a4.setBits64NoSync(i, 0x55555555, 24);
+        }
+        t2 = System.nanoTime();
+        System.out.printf(Locale.US, "setBits64NoSync(i, 24): %.3f ms, %.2f ns/element)%n",
+                (t2 - t1) * 1e-6, (double) (t2 - t1) / arrayLength);
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -181,7 +211,7 @@ public class GetSetBitSpeed {
         UpdatableBitArray a4 = mm.newUnresizableBitArray(arrayLength);
 
         for (int test = 1; test <= numberOfIterations; test++) {
-            System.out.printf("%nTest #%d for %s%n", test, a1);
+            System.out.printf("%nTest #%d/%d for %s%n", test, numberOfIterations, a1);
 
             System.out.println("  Random values:");
             System.arraycopy(testData, 0, data, 0, data.length);

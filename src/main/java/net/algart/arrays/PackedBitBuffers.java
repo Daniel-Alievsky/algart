@@ -331,7 +331,7 @@ public class PackedBitBuffers {
         }
         if (count > 64) {
             throw new IllegalArgumentException("Too large count argument: " + count +
-                    "; we cannot set > 64 bits in setBits64 method");
+                    "; we cannot set > 64 bits in setBits64NoSync method");
         }
         final long destPosDiv64 = destPos >>> 6;
         final int length = dest.limit();

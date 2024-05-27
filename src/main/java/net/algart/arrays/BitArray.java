@@ -154,7 +154,8 @@ public interface BitArray extends PFixedArray {
      *          result |= bit &lt;&lt; k;
      *      }</pre>
      *
-     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     * <p>But this method works significantly faster in basic implementations of this interface,
+     * if <tt>count</tt> is greater than 1.</p>
      *
      * @param arrayPos position of the first bit read in the source array.
      * @param count    the number of bits to be unpacked (must be in range 0..64).
@@ -168,7 +169,7 @@ public interface BitArray extends PFixedArray {
         }
         if (count > 64) {
             throw new IllegalArgumentException("Too large count argument: " + count +
-                    "; we cannot set > 64 bits in setBits64 method");
+                    "; we cannot get > 64 bits in getBits64 method");
         }
         long result = 0;
         for (int k = 0; k < count; k++) {

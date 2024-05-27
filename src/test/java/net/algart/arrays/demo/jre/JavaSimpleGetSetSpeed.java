@@ -29,7 +29,7 @@ package net.algart.arrays.demo.jre;
  *
  * @author Daniel Alievsky
  */
-public class GetSetSpeed {
+public class JavaSimpleGetSetSpeed {
     static long nanoTime() {
 //        return net.algart.performance.Time.currentTimeNanoseconds();
         return System.nanoTime();

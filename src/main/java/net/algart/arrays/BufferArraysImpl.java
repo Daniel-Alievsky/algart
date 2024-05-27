@@ -4366,6 +4366,24 @@ class BufferArraysImpl {
             return storage.getBit(offset + index);
         }
 
+        @Override
+        public long getBits64(long arrayPos, int count) {
+            if (arrayPos < 0) {
+                throw rangeException(arrayPos);
+            }
+            if (count < 0) {
+                throw new IllegalArgumentException("Negative count argument: " + count);
+            }
+            if (count > 64) {
+                throw new IllegalArgumentException("Too large count argument: " + count +
+                        "; we cannot get > 64 bits in getBits64 method");
+            }
+            if (arrayPos > length - count) {
+                throw rangeException(arrayPos + count - 1);
+            }
+            return storage.getBits64(arrayPos, count);
+        }
+
         public final long indexOf(long lowIndex, long highIndex, boolean value) {
             if (lowIndex < 0) {
                 lowIndex = 0;
@@ -4593,6 +4611,42 @@ class BufferArraysImpl {
                 reallocateStorage();
             }
             storage.setBitNoSync(offset + index, false);
+        }
+
+        @Override
+        public void setBits64(long arrayPos, long bits, int count) {
+            if (arrayPos < 0) {
+                throw rangeException(arrayPos);
+            }
+            if (count < 0) {
+                throw new IllegalArgumentException("Negative count argument: " + count);
+            }
+            if (count > 64) {
+                throw new IllegalArgumentException("Too large count argument: " + count +
+                        "; we cannot set > 64 bits in setBits64 method");
+            }
+            if (arrayPos > length - count) {
+                throw rangeException(arrayPos + count - 1);
+            }
+            storage.setBits64(arrayPos, bits, count);
+        }
+
+        @Override
+        public void setBits64NoSync(long arrayPos, long bits, int count) {
+            if (arrayPos < 0) {
+                throw rangeException(arrayPos);
+            }
+            if (count < 0) {
+                throw new IllegalArgumentException("Negative count argument: " + count);
+            }
+            if (count > 64) {
+                throw new IllegalArgumentException("Too large count argument: " + count +
+                        "; we cannot set > 64 bits in setBits64NoSync method");
+            }
+            if (arrayPos > length - count) {
+                throw rangeException(arrayPos + count - 1);
+            }
+            storage.setBits64NoSync(arrayPos, bits, count);
         }
 
         public UpdatableBitArray fill(double value) {

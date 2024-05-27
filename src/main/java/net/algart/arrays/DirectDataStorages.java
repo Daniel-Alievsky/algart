@@ -154,6 +154,21 @@ class DirectDataStorages {
         }
 
         @Override
+        long getBits64(long arrayPos, int count) {
+            return PackedBitBuffers.getBits64(lb, arrayPos, count);
+        }
+
+        @Override
+        void setBits64(long arrayPos, long bits, int count) {
+            PackedBitBuffers.setBits64(lb, arrayPos, bits, count);
+        }
+
+        @Override
+        void setBits64NoSync(long arrayPos, long bits, int count) {
+            PackedBitBuffers.setBits64NoSync(lb, arrayPos, bits, count);
+        }
+
+        @Override
         final long indexOfBit(long lowIndex, long highIndex, boolean value) {
             return PackedBitBuffers.indexOfBit(lb, lowIndex, highIndex, value);
         }

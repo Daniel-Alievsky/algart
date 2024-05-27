@@ -2745,7 +2745,19 @@ class MappedDataStorages {
             }
         }
 
-        // No special implementation for setBitNoSync: synchronization is needed in any case.
+        long getBits64(long arrayPos, int count) {
+            long[] array = new long[1];
+            getBits(arrayPos, array, 0, count);
+            return array[0];
+        }
+
+        void setBits64(long arrayPos, long bits, int count) {
+            long[] array = new long[1];
+            array[0] = bits;
+            setBits(arrayPos, array, 0, count);
+        }
+
+        // No special implementation for setBitNoSync and setBits64NoSync: synchronization is needed in any case.
 
         @Override
         final long indexOfBit(long lowIndex, long highIndex, boolean value) {

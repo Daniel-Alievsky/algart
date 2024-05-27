@@ -180,6 +180,18 @@ abstract class DataStorage {
         setBit(index, value);
     }
 
+    long getBits64(long arrayPos, int count) {
+        throw new UnsupportedOperationException("It is not a bit storage");
+    }
+
+    void setBits64(long arrayPos, long bits, int count) {
+        throw new UnsupportedOperationException("It is not a bit storage");
+    }
+
+    void setBits64NoSync(long arrayPos, long bits, int count) {
+        setBits64(arrayPos, bits, count);
+    }
+
     /*Repeat() boolean|bit ==> char,,byte,,short,,int,,long,,float,,double;;
                Bit         ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double
      */

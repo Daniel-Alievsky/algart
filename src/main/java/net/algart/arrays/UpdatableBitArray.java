@@ -160,7 +160,8 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      *          {@link #setBit(long, boolean) setBit}(arrayPos + k, bit != 0);
      *      }</pre>
      *
-     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     * <p>But this method works significantly faster in basic implementations of this interface,
+     * if <tt>count</tt> is greater than 1.</p>
      *
      * @param arrayPos position of the first bit written in the destination array.
      * @param count    the number of bits to be written (must be in range 0..64).
@@ -199,7 +200,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      *
      * <p>Note that some classes may correctly implement this interface without any synchronization
      * or, vise versa, always use synchronization. In such cases this method may be equivalent
-     * to {@link #setBits64(long, long, int)}.</p>     *
+     * to {@link #setBits64(long, long, int)}.</p>
      *
      * @param arrayPos position of the first bit written in the destination array.
      * @param count    the number of bits to be written (must be in range 0..64).
@@ -212,7 +213,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
         }
         if (count > 64) {
             throw new IllegalArgumentException("Too large count argument: " + count +
-                    "; we cannot set > 64 bits in setBits64 method");
+                    "; we cannot set > 64 bits in setBits64NoSync method");
         }
         for (int k = count - 1; k >= 0; k--) {
             // - inverse loop order allows to guarantee that IndexOutOfBoundsException

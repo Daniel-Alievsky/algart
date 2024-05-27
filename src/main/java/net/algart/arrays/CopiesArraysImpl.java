@@ -722,7 +722,7 @@ class CopiesArraysImpl {
             }
             if (count > 64) {
                 throw new IllegalArgumentException("Too large count argument: " + count +
-                        "; we cannot set > 64 bits in setBits64 method");
+                        "; we cannot get > 64 bits in getBits64 method");
             }
             if (arrayPos < 0) {
                 throw AbstractArray.rangeException(arrayPos, length, getClass());
