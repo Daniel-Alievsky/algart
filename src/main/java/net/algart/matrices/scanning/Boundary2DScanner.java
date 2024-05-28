@@ -208,7 +208,7 @@ import java.util.Objects;
  * </ul>
  *
  * <p>then you either must pass different buffer matrices in different threads,
- * or manually synchronize all called methods.
+ * or you must synchronize usage of this class and <b>all</b> accesses to these matrices from any threads.</p>
  * In other case, the content of buffer matrices will be unspecified and behavior of the scanning algorithm
  * will be undefined.</p>
  *
@@ -1413,13 +1413,13 @@ public abstract class Boundary2DScanner {
      * The only case when it can be important is calling {@link #nextBoundary()} after
      * direct positioning by {@link #goTo} method.)</small>
      *
-     * <p>If the new found position corresponds to a left pixel side
+     * <p>If the newly found position corresponds to a left pixel side
      * ({@link #side()} is {@link Side#X_MINUS Side.X_MINUS}),
      * this method changes the current state to <i>state&nbsp;1</i>.
      * It means an external boundary, if the scanning the matrix was started outside any boundaries,
      * in particular, if {@link #goTo goTo} method was never called.
      *
-     * <p>If the new found position corresponds to a right pixel side
+     * <p>If the newly found position corresponds to a right pixel side
      * ({@link #side()} is {@link Side#X_PLUS Side.X_PLUS}),
      * this method changes the current state to <i>state&nbsp;2</i>
      * It means an internal boundary, if the scanning the matrix was started outside any boundaries,

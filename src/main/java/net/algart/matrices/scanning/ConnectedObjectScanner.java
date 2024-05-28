@@ -115,8 +115,10 @@ import java.util.Objects;
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
  * and can be synchronized manually, if multithreading access is necessary.
- * However, usually there are no reasons to use the same instance of this class in different threads:
- * usually there is much better idea to create a separate instance for every thread.</p>
+ * But see the <b>warning</b> in the comments to
+ * {@link #clear(ArrayContext, ElementVisitor, long[], boolean) clear} method.
+ * Usually there are no reasons to use the same instance of this class in different threads:
+ * there is much better idea to create a separate instance for every thread.</p>
  *
  * @author Daniel Alievsky
  */
@@ -698,10 +700,11 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * Returns the number of visited elements.
      * If the element with the specified coordinates is zero, does nothing and returns 0.
      *
-     * <p>Note that the elements are cleared with help of ({@link UpdatableBitArray#clearBitNoSync(long)}) method,
-     * not {@link UpdatableBitArray#clearBit(long)}. This class is not thread-safe and cannot be used
-     * with the same matrix from different threads without external synchronization;
-     * but if you use external synchronization, {@link UpdatableBitArray#clearBitNoSync(long)} will work well.
+     * <p><b>Warning:</b> the elements are cleared with help of ({@link UpdatableBitArray#clearBitNoSync(long)})
+     * method, not {@link UpdatableBitArray#clearBit(long)}. This means that you should be very careful
+     * if you use the same {@link #matrix() scanned matrix} in parallel threads. While multithreading usage
+     * you must synchronize <b>all</b> accesses to this matrix, even if a parallel threads work with other
+     * areas of this matrix that do not intersect with the currently scanned object.</p>
      *
      * <p>If <tt>forceClearing</tt> argument is <tt>false</tt>, this method
      * may skip actual clearing the visited elements in the scanned matrix,
