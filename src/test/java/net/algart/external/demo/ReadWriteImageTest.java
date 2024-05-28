@@ -40,7 +40,7 @@ public class ReadWriteImageTest {
     public static void main(String[] args) throws IOException {
         if (args.length < 3) {
             System.out.printf("Usage: %s source_image.jpg/png/bmp copy_1.jpg/png/bmp copy_2.jpg/png/bmp%n",
-                    ReadWriteImageTest.class);
+                    ReadWriteImageTest.class.getName());
             return;
         }
         final Path sourceFile = Paths.get(args[0]);
