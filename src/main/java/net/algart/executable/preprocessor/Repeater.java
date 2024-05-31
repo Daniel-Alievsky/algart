@@ -357,7 +357,7 @@ public class Repeater implements Cloneable {
 
                 int p2 = p1;
                 String repeatedText;
-                String endMarker[];
+                String[] endMarker;
                 String middleMarkerWarn;
                 String p2Spaces = "";
                 if (otherFileSection == null) {

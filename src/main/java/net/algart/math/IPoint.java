@@ -41,7 +41,7 @@ import java.util.zip.*;
  */
 public class IPoint implements Comparable<IPoint> {
     /*Repeat.SectionStart begin*/
-    private static final IPoint originsCache[] = new IPoint[16];
+    private static final IPoint[] originsCache = new IPoint[16];
     static {
         for (int i = 1; i <= originsCache.length; i++) {
             originsCache[i - 1] = new IPoint(new long[i]) { // zero-filled by Java

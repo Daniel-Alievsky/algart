@@ -226,7 +226,7 @@ public abstract class RealScalarSampleArray implements SampleArray {
 
     //[[Repeat() Float ==> Double;;
     //           float ==> double;;
-    //           \(double\)\(([^)]+)\) ==> $1 ]]
+    //           \(double\)\s*\(([^)]+)\) ==> $1 ]]
     static final class DirectRealFloatSampleArray extends RealScalarSampleArray {
         final float[] samples;
         final int ofs;

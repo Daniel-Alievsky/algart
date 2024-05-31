@@ -305,7 +305,7 @@ public final class IRange {
 
     private static final int MAX_CACHED = 1024;
     private static class DegenerateIRangeCache {
-        static final IRange cache[] = new IRange[2 * MAX_CACHED + 1];
+        static final IRange[] cache = new IRange[2 * MAX_CACHED + 1];
 
         static {
             for(int i = -MAX_CACHED; i <= MAX_CACHED; i++)

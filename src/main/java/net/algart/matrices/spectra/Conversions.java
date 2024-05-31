@@ -839,8 +839,8 @@ class Conversions {
 
     //[[Repeat() Float ==> Double;;
     //           float ==> double;;
-    //           \(double\)\(([^)]+)\) ==> $1;;
-    //           \(double\)([\w\-]+) ==> $1 ]]
+    //           \(double\)\s*\(([^)]+)\) ==> $1;;
+    //           \(double\)\s*([\w\-]+) ==> $1 ]]
     private static void fourierToSeparableHartleyFloatArray(
             ArrayContext context,
             UpdatablePNumberArray hRe, UpdatablePNumberArray hIm,
@@ -1106,14 +1106,14 @@ class Conversions {
                 double sIm = 0.5 * (fIm1 + fIm2);
                 double dRe = 0.5 * (fRe1 - fRe2);
                 double dIm = 0.5 * (fIm1 - fIm2);
-                hReJA1[hReOfs1 + k1] = (double) (sRe - dIm);
-                hReJA2[hReOfs2 + k2] = (double) (sRe + dIm);
+                hReJA1[hReOfs1 + k1] = sRe - dIm;
+                hReJA2[hReOfs2 + k2] = sRe + dIm;
                 if (hIm != null) {
-                    hImJA1[hImOfs1 + k1] = (double) (sIm + dRe);
-                    hImJA2[hImOfs2 + k2] = (double) (sIm - dRe);
+                    hImJA1[hImOfs1 + k1] = sIm + dRe;
+                    hImJA2[hImOfs2 + k2] = sIm - dRe;
                 }
             }
-            count += disp1 + len == disp2 + 1 ? 2 * len - 1 : 2 * len; //odd or even n-1
+            count += disp1 + len == disp2 + 1 ? 2L * len - 1 : 2L * len; //odd or even n-1
             hReBuf1.force();
             if (hIm != null) {
                 hImBuf1.force();
@@ -1129,7 +1129,7 @@ class Conversions {
                 assert disp1 + len == disp2 || disp1 + len == disp2 + 1;
                 break;
             }
-            if (disp2 - disp1 >= 3 * len) { // no risk of overflow: len is never too big
+            if (disp2 - disp1 >= 3L * len) { // no risk of overflow: len is never too big
                 //.............................
                 //  [    ]
                 //                      [    ]
@@ -1221,15 +1221,15 @@ class Conversions {
             double dIm12 = 0.5 * (fLIm1 - fRIm2);
             double dRe21 = 0.5 * (fLRe2 - fRRe1);
             double dIm21 = 0.5 * (fLIm2 - fRIm1);
-            hReJA1[hReOfs1 + kL] = (double) (sRe21 - dIm12);
-            hReJA1[hReOfs1 + kR] = (double) (sRe12 + dIm21);
-            hReJA2[hReOfs2 + kL] = (double) (sRe12 - dIm21);
-            hReJA2[hReOfs2 + kR] = (double) (sRe21 + dIm12);
+            hReJA1[hReOfs1 + kL] = sRe21 - dIm12;
+            hReJA1[hReOfs1 + kR] = sRe12 + dIm21;
+            hReJA2[hReOfs2 + kL] = sRe12 - dIm21;
+            hReJA2[hReOfs2 + kR] = sRe21 + dIm12;
             if (hIm1 != null) {
-                hImJA1[hImOfs1 + kL] = (double) (sIm21 + dRe12);
-                hImJA1[hImOfs1 + kR] = (double) (sIm12 - dRe21);
-                hImJA2[hImOfs2 + kL] = (double) (sIm12 + dRe21);
-                hImJA2[hImOfs2 + kR] = (double) (sIm21 - dRe12);
+                hImJA1[hImOfs1 + kL] = sIm21 + dRe12;
+                hImJA1[hImOfs1 + kR] = sIm12 - dRe21;
+                hImJA2[hImOfs2 + kL] = sIm12 + dRe21;
+                hImJA2[hImOfs2 + kR] = sIm21 - dRe12;
             }
         }
     }

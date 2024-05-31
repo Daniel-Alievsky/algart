@@ -364,7 +364,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
     //[[Repeat() Float ==> Double;;
     //           float ==> double;;
     //           FLOAT ==> DOUBLE;;
-    //           \(double\)\(([^)]+)\) ==> $1 ]]
+    //           \(double\)\s*\(([^)]+)\) ==> $1 ]]
     static class ComplexFloatVectorSampleArray extends ComplexVectorSampleArray {
         final int vectorLen;
         final int vectorLen2;

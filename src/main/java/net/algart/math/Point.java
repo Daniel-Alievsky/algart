@@ -46,7 +46,7 @@ public class Point implements Comparable<Point> {
       Long.MAX_VALUE ==> Double.POSITIVE_INFINITY ;;
       IPoint ==> Point;;
       long ==> double   !! Auto-generated: NOT EDIT !! */
-    private static final Point originsCache[] = new Point[16];
+    private static final Point[] originsCache = new Point[16];
     static {
         for (int i = 1; i <= originsCache.length; i++) {
             originsCache[i - 1] = new Point(new double[i]) { // zero-filled by Java

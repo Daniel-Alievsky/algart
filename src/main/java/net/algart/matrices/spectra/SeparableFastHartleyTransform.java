@@ -952,7 +952,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
 
     //[[Repeat() Float ==> Double;;
     //           float ==> double;;
-    //           \(double\)\(([^)]+)\) ==> $1 ]]
+    //           \(double\)\s*\(([^)]+)\) ==> $1 ]]
     private static void fhtJavaFloatMainLoop(ArrayContext context, SampleArray samples,
         final int pos, final int logN, final int originalLogN)
     {
