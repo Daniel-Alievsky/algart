@@ -474,18 +474,18 @@ public class PackedBitBuffers {
             long srcPos,
             long count,
             boolean reverseOrder) {
-        //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, copyBits_method_impl)
-        //  dest\[([^\]]+)\]\s*=(\s*)([^;]*) ==> dest.put($1,$2$3);;
-        //  (src|dest)\[([^\]]+)\] ==> $1.get($2);;
-        //  (synchronized\s*\()(\s*\w+\s*)\) ==> $1getLock($2));;
-        //  //Start_reverseOrder.*?//End_reverseOrder.*?(?:\r(?!\n)|\n|\r\n)\s+\{ ==>
-        //  if (reverseOrder) {;;
-        //  //Start_nothingToDo.*?//End_nothingToDo.*?(\r(?!\n)|\n|\r\n) ==> $1;;
-        //  //Start_sPrev.*?//End_sPrev.*?(\r(?!\n)|\n|\r\n) ==> sPrev = cnt == 0 ? 0 : src.get(sPos);
-        // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
-        // because the reverseOrder=true argument may be passed in this case$1;;
-        //  System\.arraycopy\((\w+,\s*\w+,\s*)(\w+,\s*\w+,\s*)(\w+)\) ==>
-        //  JBuffers.copyLongBuffer($2$1$3, reverseOrder)   !! Auto-generated: NOT EDIT !! >>
+        /*Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, copyBits_method_impl)
+          dest\[([^\]]+)\]\s*=(\s*)([^;]*) ==> dest.put($1,$2$3);;
+          (src|dest)\[([^\]]+)\] ==> $1.get($2);;
+          (synchronized\s*\()(\s*\w+\s*)\) ==> $1getLock($2));;
+          \/\/Start_reverseOrder.*?\/\/End_reverseOrder.*?(?:\r(?!\n)|\n|\r\n)\s+\{ ==>
+          if (reverseOrder) {;;
+          \/\/Start_nothingToDo.*?\/\/End_nothingToDo.*?(\r(?!\n)|\n|\r\n) ==> $1;;
+          \/\/Start_sPrev.*?\/\/End_sPrev.*?(\r(?!\n)|\n|\r\n) ==> sPrev = cnt == 0 ? 0 : src.get(sPos);
+                    // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
+                    // because the reverseOrder=true argument may be passed in this case $1;;
+          System\.arraycopy\((\w+,\s*\w+,\s*)(\w+,\s*\w+,\s*)(\w+)\) ==>
+          JBuffers.copyLongBuffer($2$1$3, reverseOrder)   !! Auto-generated: NOT EDIT !!*/
         Objects.requireNonNull(dest, "Null dest");
         Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 6);
@@ -564,8 +564,8 @@ public class PackedBitBuffers {
                     }
                 } else {
                     sPrev = cnt == 0 ? 0 : src.get(sPos);
-        // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
-        // because the reverseOrder=true argument may be passed in this case
+                    // Unlike PackedBitArrays.copyBits, IndexOutOfBoundException is possible here when count=0,
+                    // because the reverseOrder=true argument may be passed in this case
                 }
                 while (dPos > dPosMin) { // cnt times
                     --sPos;
@@ -662,7 +662,7 @@ public class PackedBitBuffers {
                 }
             }
         }
-        //<<Repeat.IncludeEnd>>
+        /*Repeat.IncludeEnd*/
     }
 
     /**
