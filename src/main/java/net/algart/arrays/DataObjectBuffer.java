@@ -30,11 +30,11 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface DataObjectBuffer<E> extends DataBuffer {
-    public DataObjectBuffer<E> map(long position);
+    DataObjectBuffer<E> map(long position);
 
-    public DataObjectBuffer<E> mapNext();
+    DataObjectBuffer<E> mapNext();
 
-    public DataObjectBuffer<E> force();
+    DataObjectBuffer<E> force();
 
-    public E[] data();
+    E[] data();
 }

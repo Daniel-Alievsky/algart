@@ -183,7 +183,7 @@ class ArraysBufferedCopier {
                 this.fFiltered = null;
                 fTransformed = null;
             }
-            if (dest.length() != 0 // no reasons to optimize zero-length matrix
+            if (!dest.isEmpty() // no reasons to optimize zero-length matrix
                 && Arrays.longMul(dim) == dest.length() // we are copying whole matrix, not only a starting part
                 && src.length() == dest.length() // to be on the safe side
                 && fTransformed != null // the source matrix is a transformed parent function

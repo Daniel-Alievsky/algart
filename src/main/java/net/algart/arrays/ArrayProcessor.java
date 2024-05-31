@@ -55,5 +55,5 @@ public interface ArrayProcessor {
      *
      * @return the current context used by this instance; can be <tt>null</tt>.
      */
-    public ArrayContext context();
+    ArrayContext context();
 }

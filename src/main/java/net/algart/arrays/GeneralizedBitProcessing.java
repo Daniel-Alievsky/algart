@@ -251,7 +251,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * Algorithm of processing bit arrays, that should be generalized for another element types via
      * {@link GeneralizedBitProcessing} class.
      */
-    public static interface SliceOperation {
+    public interface SliceOperation {
         /**
          * Processes the source bit array <tt>srcBits</tt> and saves the results in <tt>destBits</tt> bit array.
          * This method is called by
@@ -326,8 +326,9 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
          *                        process} method.
          * @throws NullPointerException if <tt>srcBits</tt> or <tt>destBits</tt> argument is <tt>null</tt>.
          */
-        public void processBits(ArrayContext context, UpdatableBitArray destBits, BitArray srcBits,
-            long sliceIndex, int threadIndex, int numberOfThreads);
+        void processBits(
+                ArrayContext context, UpdatableBitArray destBits, BitArray srcBits,
+                long sliceIndex, int threadIndex, int numberOfThreads);
 
         /**
          * Indicates whether this algorithm can work in place.
@@ -347,7 +348,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
          *         processBits} method can work correctly when <tt>destBits==srcBits</tt> or <tt>false</tt>
          *         if that method requires different source and destination arrays.
          */
-        public boolean isInPlaceProcessingAllowed();
+        boolean isInPlaceProcessingAllowed();
     }
 
     private final ThreadPoolFactory threadPoolFactory;

@@ -34,9 +34,9 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface UpdatableObjectInPlaceArray<E> extends ObjectInPlaceArray<E>, UpdatableObjectArray<E> {
-    public UpdatableObjectInPlaceArray<E> subArray(long fromIndex, long toIndex);
+    UpdatableObjectInPlaceArray<E> subArray(long fromIndex, long toIndex);
 
-    public UpdatableObjectInPlaceArray<E> subArr(long position, long count);
+    UpdatableObjectInPlaceArray<E> subArr(long position, long count);
 
-    public UpdatableObjectInPlaceArray<E> asUnresizable();
+    UpdatableObjectInPlaceArray<E> asUnresizable();
 }

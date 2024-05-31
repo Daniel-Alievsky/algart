@@ -182,9 +182,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     static final Finalizer globalStorageFinalizer = new Finalizer();
     static final Logger LOGGER = Logger.getLogger(LargeMemoryModel.class.getName());
 
-    private static ReferenceQueue<DataFileModel<?>> reapedDataFileModels = new ReferenceQueue<DataFileModel<?>>();
+    private static final ReferenceQueue<DataFileModel<?>> reapedDataFileModels = new ReferenceQueue<>();
     static final Map<WeakReference<DataFileModel<?>>, Object> allUsedDataFileModelsWithAutoDeletion =
-        new IdentityHashMap<WeakReference<DataFileModel<?>>, Object>();
+            new IdentityHashMap<>();
     // must be initialized before creating default instance
 
     static final int MAX_NUMBER_OF_BANKS_IN_LAZY_FILL_MAP = Math.max(0,
@@ -228,7 +228,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         GLOBAL_DATA_FILE_MODEL = InternalUtils.cast(dfm);
     }
 
-    private static final LargeMemoryModel<File> DEFAULT_INSTANCE = new LargeMemoryModel<File>(GLOBAL_DATA_FILE_MODEL);
+    private static final LargeMemoryModel<File> DEFAULT_INSTANCE = new LargeMemoryModel<>(GLOBAL_DATA_FILE_MODEL);
 
     private final DataFileModel<P> dataFileModel;
 
@@ -245,7 +245,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
             synchronized(allUsedDataFileModelsWithAutoDeletion) {
                 reapDataFileModels();
                 allUsedDataFileModelsWithAutoDeletion.put(
-                    new WeakReference<DataFileModel<?>>(dataFileModel, reapedDataFileModels), DUMMY);
+                        new WeakReference<>(dataFileModel, reapedDataFileModels), DUMMY);
             }
         }
     }
@@ -293,7 +293,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         LargeMemoryModel<P> defInst = InternalUtils.cast(DEFAULT_INSTANCE);
         return dataFileModel == defInst.dataFileModel ?
             defInst :
-            new LargeMemoryModel<P>(dataFileModel);
+                new LargeMemoryModel<>(dataFileModel);
     }
 
     /**
@@ -1472,7 +1472,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     public static MatrixInfo getMatrixInfoForSavingInFile(Matrix<? extends PArray> matrix, long dataOffset) {
         Objects.requireNonNull(matrix, "Null matrix argument");
         MatrixInfo matrixInfo = MatrixInfo.valueOf(matrix, dataOffset);
-        Map<String, String> properties = new LinkedHashMap<String, String>();
+        Map<String, String> properties = new LinkedHashMap<>();
         if (Arrays.isNCopies(matrix.array())) {
             properties.put(CONSTANT_PROPERTY_NAME, getNCopiesArrayDescription(matrix.array()));
         }
@@ -1702,7 +1702,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @return a newly allocated copy of the set of all used {@link DataFileModel data file models}.
      */
     public static Set<DataFileModel<?>> allUsedDataFileModelsWithAutoDeletion() {
-        Set<DataFileModel<?>> result = new HashSet<DataFileModel<?>>();
+        Set<DataFileModel<?>> result = new HashSet<>();
         synchronized(allUsedDataFileModelsWithAutoDeletion) {
             reapDataFileModels();
             for (WeakReference<DataFileModel<?>> ref : allUsedDataFileModelsWithAutoDeletion.keySet()) {

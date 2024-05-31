@@ -207,7 +207,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * An attempt to create a submatrix with this continuation mode,
          * which does not lie fully inside the original matrix, leads to <tt>IndexOutOfBoundsException</tt>.
          */
-        public static ContinuationMode NONE = new ContinuationMode("not-continued mode");
+        public static final ContinuationMode NONE = new ContinuationMode("not-continued mode");
 
         /**
          * The <i>cyclic</i> (or <i>true-cyclic</i>) continuation mode.
@@ -232,7 +232,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * is a submatrix of an infinite "matrix", which is come out from the original matrix
          * by infinite periodical repeating along all coordinate axes.
          */
-        public static ContinuationMode CYCLIC = new ContinuationMode("cyclically-continued mode");
+        public static final ContinuationMode CYCLIC = new ContinuationMode("cyclically-continued mode");
 
         /**
          * The <i>pseudo-cyclic</i> (or <i>toroidal</i>) continuation mode.
@@ -259,7 +259,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * It is the most natural mode for many image processing algorithms,
          * which work directly with the built-in array instead of working with coordinates of matrix elements.
          */
-        public static ContinuationMode PSEUDO_CYCLIC = new ContinuationMode("pseudo-cyclically-continued mode");
+        public static final ContinuationMode PSEUDO_CYCLIC = new ContinuationMode("pseudo-cyclically-continued mode");
 
         /**
          * The <i>mirror-cyclic</i> continuation mode.
@@ -287,7 +287,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * In other words, it's possible to say that the matrix is infinitely reflected in each its bound as
          * in a mirror. Usually this mode provides the best smoothness of continuation of the matrix.
          */
-        public static ContinuationMode MIRROR_CYCLIC = new ContinuationMode("mirroring-cyclically-continued mode");
+        public static final ContinuationMode MIRROR_CYCLIC = new ContinuationMode("mirroring-cyclically-continued mode");
 
         /**
          * The special case of constant continuation mode, corresponding to continuing by <tt>null</tt>
@@ -298,7 +298,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * including non-primitive objects. For matrices with primitive element type, this mode is equivalent
          * to {@link #ZERO_CONSTANT}.
          */
-        public static ContinuationMode NULL_CONSTANT = new ConstantImpl(null);
+        public static final ContinuationMode NULL_CONSTANT = new ConstantImpl(null);
 
         /**
          * The special popular case of constant continuation mode, corresponding to continuing by <tt>0.0d</tt>
@@ -309,7 +309,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <p>Note: unlike {@link #NULL_CONSTANT}, this mode can be used only with matrices, containing elements of
          * some primitive type, i.e. with <nobr><tt>{@link Matrix}&lt;? extends {@link PArray}&gt;</tt></nobr>.
          */
-        public static ContinuationMode ZERO_CONSTANT = new ConstantImpl(0.0d);
+        public static final ContinuationMode ZERO_CONSTANT = new ConstantImpl(0.0d);
 
         /**
          * The special popular case of constant continuation mode, corresponding to continuing by
@@ -320,7 +320,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <p>Note: unlike {@link #NULL_CONSTANT}, this mode can be used only with matrices, containing elements of
          * some primitive type, i.e. with <nobr><tt>{@link Matrix}&lt;? extends {@link PArray}&gt;</tt></nobr>.
          */
-        public static ContinuationMode NAN_CONSTANT = new ConstantImpl(Double.NaN);
+        public static final ContinuationMode NAN_CONSTANT = new ConstantImpl(Double.NaN);
 
         /**
          * Creates an instance of this class for <i>constant</i> continuation mode.
@@ -584,7 +584,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * It can be useful while storing indexes of elements of little 3x3x3x... submatrix (aperture):
      * signed <tt>short</tt> type is enough in this case.
      */
-    public final int MAX_DIM_COUNT_FOR_SOME_ALGORITHMS = 9;
+    int MAX_DIM_COUNT_FOR_SOME_ALGORITHMS = 9;
 
     /**
      * Returns a reference to the built-in AlgART array.

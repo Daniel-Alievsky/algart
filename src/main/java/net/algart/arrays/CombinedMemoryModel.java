@@ -187,7 +187,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * @param storage a set of arrays where the retrieved content is stored now.
          * @return        new created object containing an element #<tt>index</tt> of combined array.
          */
-        public E get(long index, Array[] storage);
+        E get(long index, Array[] storage);
 
         /**
          * Stores the element <tt>value</tt> at position #<tt>index</tt> of the combined array
@@ -206,7 +206,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * @param value   the stored element
          * @param storage a set of arrays where the content will be stored.
          */
-        public void set(long index, E value, UpdatableArray[] storage);
+        void set(long index, E value, UpdatableArray[] storage);
 
         /**
          * Should create a storage (several AlgART arrays),
@@ -232,7 +232,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * in other case they <i>must</i> be mutable and implement {@link MutableArray} interface.
          * @return created storage.
          */
-        public UpdatableArray[] allocateStorage(long length, boolean unresizable);
+        UpdatableArray[] allocateStorage(long length, boolean unresizable);
 
         /**
          * Should return the number of sequential elements of the array #<tt>indexOfArrayInStorage</tt>
@@ -242,7 +242,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * @param indexOfArrayInStorage index of the storage array.
          * @return                      the number of sequential elements used for storing one combined element.
          */
-        public int numbersOfElementsPerOneCombinedElement(int indexOfArrayInStorage);
+        int numbersOfElementsPerOneCombinedElement(int indexOfArrayInStorage);
     }
 
     /**
@@ -264,7 +264,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          *
          * @return some instance of an element of the combined array.
          */
-        public E allocateElement();
+        E allocateElement();
 
         /**
          * Loads an element #<tt>index</tt> of the combined array from the given set of arrays
@@ -276,7 +276,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * @param storage     a set of arrays where the retrieved content is stored now.
          * @throws NullPointerException if <tt>resultValue</tt> is <tt>null</tt>.
          */
-        public void getInPlace(long index, E resultValue, Array[] storage);
+        void getInPlace(long index, E resultValue, Array[] storage);
     }
 
     /**
@@ -313,7 +313,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * @param count        the number of elements to be retrieved.
          * @param storage      a set of arrays where the retrieved content is stored now.
          */
-        public void get(long index, E[] resultValues, int offset, int count, Array[] storage);
+        void get(long index, E[] resultValues, int offset, int count, Array[] storage);
 
         /**
          * Stores <tt>count</tt> elements of the combined array,
@@ -338,7 +338,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * @param count   the number of elements to be stored.
          * @param storage a set of arrays where the content will be stored.
          */
-        public void set(long index, E[] values, int offset, int count, UpdatableArray[] storage);
+        void set(long index, E[] values, int offset, int count, UpdatableArray[] storage);
     }
 
     /**

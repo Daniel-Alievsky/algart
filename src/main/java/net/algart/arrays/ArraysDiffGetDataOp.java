@@ -296,7 +296,7 @@ class ArraysDiffGetDataOp {
     }
 
     private interface ArrayDiffOp {
-        public void process(Object dest, int destOffset, Object src, int srcOffset, int len);
+        void process(Object dest, int destOffset, Object src, int srcOffset, int len);
     }
 
     //[[Repeat() byte ==> char,,short,,int,,long,,float,,double;;

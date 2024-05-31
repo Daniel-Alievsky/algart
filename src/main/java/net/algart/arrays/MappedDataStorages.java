@@ -399,7 +399,7 @@ class MappedDataStorages {
          * The number of ByteBuffers that are in use.
          * Used if UNSAFE_UNMAP_ON_EXIT to not try unmap files that are in use now.
          */
-        private AtomicInteger mappingInUseCounter = new AtomicInteger(0);
+        private final AtomicInteger mappingInUseCounter = new AtomicInteger(0);
 
         /**
          * Indicates whether <tt>mappingInUseCounter</tt> was overflown at least once.
@@ -726,7 +726,7 @@ class MappedDataStorages {
             }
         }
 
-        static enum LoadingMode {DEFAULT, PRELOAD_DATA_FROM_FILE, NOT_LOAD_DATA_FROM_FILE}
+        enum LoadingMode {DEFAULT, PRELOAD_DATA_FROM_FILE, NOT_LOAD_DATA_FROM_FILE}
         /**
          * Reduced version of {@link #translateIndex(long, boolean)} and
          * {@link #translateIndexWO(long, boolean)} that works only
@@ -1883,7 +1883,7 @@ class MappedDataStorages {
             return mappingInUseCounterOverflow ? Integer.MAX_VALUE : mappingInUseCounter.get();
         }
 
-        private static enum DisposeCaller {
+        private enum DisposeCaller {
             SHUTDOWN_HOOK("AlgART cleaner", LargeMemoryModel.DELETION_TIMEOUT_IN_CLEANER),
             DISPOSE_METHOD("dispose method", LargeMemoryModel.DELETION_TIMEOUT_IN_DISPOSE);
 
@@ -2331,7 +2331,7 @@ class MappedDataStorages {
             scheduleFinalizationForAllStorage();
         }
 
-        private static enum ReleaseMode {DATA_MUST_STAY_ALIVE, DATA_MAY_BE_LOST}
+        private enum ReleaseMode {DATA_MUST_STAY_ALIVE, DATA_MAY_BE_LOST}
         // Returns false if bh[bank] is empty (null)
         private boolean unmapBank(int bank, ReleaseMode mode, boolean forcePhysicalWriting) {
             // may be called from non-synchronized code: finalizing by decreaseArrayOrMappingCounter
@@ -2407,7 +2407,7 @@ class MappedDataStorages {
             }
         }
 
-        private static enum LogAllBanksCallPlace {
+        private enum LogAllBanksCallPlace {
             translateFailedIndex, translateFailedIndexSame, translateFailedIndexHole, loadBank
         }
 
@@ -2540,7 +2540,7 @@ class MappedDataStorages {
             }
         }
 
-        private static enum CounterKind {ARRAY_COUNTER, MAPPING_COUNTER}
+        private enum CounterKind {ARRAY_COUNTER, MAPPING_COUNTER}
         private void decreaseArrayOrMappingCounter(CounterKind counterKind) {
             DataFile df = null;
             Object dfp = null;

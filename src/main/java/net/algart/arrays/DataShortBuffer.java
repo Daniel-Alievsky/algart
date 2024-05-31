@@ -34,20 +34,20 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface DataShortBuffer extends DataBuffer {
-    public DataShortBuffer map(long position);
+    DataShortBuffer map(long position);
 
-    public DataShortBuffer map(long position, boolean readData);
+    DataShortBuffer map(long position, boolean readData);
 
-    public DataShortBuffer mapNext();
+    DataShortBuffer mapNext();
 
-    public DataShortBuffer mapNext(boolean readData);
+    DataShortBuffer mapNext(boolean readData);
 
-    public DataShortBuffer map(long position, long maxCount);
+    DataShortBuffer map(long position, long maxCount);
 
-    public DataShortBuffer map(long position, long maxCount, boolean readData);
+    DataShortBuffer map(long position, long maxCount, boolean readData);
 
-    public DataShortBuffer force();
+    DataShortBuffer force();
 
-    public short[] data();
+    short[] data();
 }
 /*Repeat.IncludeEnd*/

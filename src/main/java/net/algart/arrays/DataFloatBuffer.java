@@ -31,20 +31,20 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface DataFloatBuffer extends DataBuffer {
-    public DataFloatBuffer map(long position);
+    DataFloatBuffer map(long position);
 
-    public DataFloatBuffer map(long position, boolean readData);
+    DataFloatBuffer map(long position, boolean readData);
 
-    public DataFloatBuffer mapNext();
+    DataFloatBuffer mapNext();
 
-    public DataFloatBuffer mapNext(boolean readData);
+    DataFloatBuffer mapNext(boolean readData);
 
-    public DataFloatBuffer map(long position, long maxCount);
+    DataFloatBuffer map(long position, long maxCount);
 
-    public DataFloatBuffer map(long position, long maxCount, boolean readData);
+    DataFloatBuffer map(long position, long maxCount, boolean readData);
 
-    public DataFloatBuffer force();
+    DataFloatBuffer force();
 
-    public float[] data();
+    float[] data();
 }
 /*Repeat.SectionEnd all*/

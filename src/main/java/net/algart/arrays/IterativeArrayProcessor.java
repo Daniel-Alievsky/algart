@@ -99,7 +99,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      *
      * @param context the context used by this instance for all operations; can be <tt>null</tt>.
      */
-    public void performIteration(ArrayContext context);
+    void performIteration(ArrayContext context);
 
     /**
      * Returns <tt>true</tt> if and only if the algorithm was successfully finished and there is
@@ -115,7 +115,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      *
      * @return <tt>true</tt> if and only if the algorithm was successfully finished.
      */
-    public boolean done();
+    boolean done();
 
     /**
      * Estimates the number of iterations, that should be performed from this moment to finish the algorithm.
@@ -132,7 +132,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      *
      * @return the estimated number of iterations, that should be performed from this moment to finish the algorithm.
      */
-    public long estimatedNumberOfIterations();
+    long estimatedNumberOfIterations();
 
     /**
      * Returns the result of the previous iteration.
@@ -152,7 +152,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      *
      * @return the result of the previous iteration (can be <tt>null</tt>).
      */
-    public T result();
+    T result();
 
     /**
      * If there are some resources, allocated by this object, which are not controlled
@@ -178,7 +178,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      *
      * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
      */
-    public void freeResources(ArrayContext context);
+    void freeResources(ArrayContext context);
 
     /**
      * Performs a loop of calls of {@link #performIteration performIteration} method, while
@@ -205,7 +205,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      * @return the result of all calculations
      *         (the result of {@link #result()} method after the last performed iteration).
      */
-    public T process();
+    T process();
 
     /**
      * Returns new object, implementing this interface, equivalent to this algorithm
@@ -250,7 +250,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      *                              in the returned instance always returns <tt>true</tt>.
      * @return                      new algorithm, equivalent to this algorithm with limited number of iterations.
      */
-    public IterativeArrayProcessor<T> limitIterations(long maxNumberOfIterations);
+    IterativeArrayProcessor<T> limitIterations(long maxNumberOfIterations);
 
     /**
      * Returns new object, implementing this interface, equivalent to the chain of this algorithm
@@ -312,5 +312,5 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      * @throws NullPointerException     if <tt>followingProcessor</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>weight</tt> argument is negative.
      */
-    public IterativeArrayProcessor<T> chain(IterativeArrayProcessor<T> followingProcessor, double weight);
+    IterativeArrayProcessor<T> chain(IterativeArrayProcessor<T> followingProcessor, double weight);
 }

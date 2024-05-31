@@ -1080,7 +1080,7 @@ public class Arrays {
          *
          * <p>It is obvious that any implementation of this interface is <b>thread-safe</b>.</p>
          */
-        public static interface DiskSynchronizer {
+        public interface DiskSynchronizer {
             /**
              * Performs the specified action synchronously.
              * Depending on implementation, it is probably performed with some form of global synchronization.
@@ -1099,7 +1099,7 @@ public class Arrays {
              * @return result of the operation.
              * @throws Exception if unable to compute a result.
              */
-            public <T> T doSynchronously(String fileName, Callable<T> action) throws Exception;
+            <T> T doSynchronously(String fileName, Callable<T> action) throws Exception;
         }
 
         /**
@@ -7248,7 +7248,7 @@ public class Arrays {
      * Describes when to execute the task passed to
      * {@link Arrays#addShutdownTask(Runnable, TaskExecutionOrder)} method.
      */
-    public static enum TaskExecutionOrder {
+    public enum TaskExecutionOrder {
         BEFORE_STANDARD, AFTER_STANDARD
     }
 
@@ -7308,7 +7308,7 @@ public class Arrays {
      * returned by all these copying methods.
      * Can be useful for profiling and debugging needs.
      */
-    public static enum CopyAlgorithm {
+    public enum CopyAlgorithm {
         /**
          * Usual parallel copying algorithm, implemented by {@link Arrays.Copier} class or
          * by the analogous private class,

@@ -48,5 +48,5 @@ public interface ArrayProcessorWithContextSwitching extends ArrayProcessor {
      * @param newContext another context, used by the returned instance; can be <tt>null</tt>.
      * @return           new instance with another context.
      */
-    public ArrayProcessorWithContextSwitching context(ArrayContext newContext);
+    ArrayProcessorWithContextSwitching context(ArrayContext newContext);
 }

@@ -24,10 +24,10 @@
 
 package net.algart.arrays;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -1001,7 +1001,7 @@ public abstract class MatrixInfo {
                     q = len;
                 }
                 String line = chars.substring(p, q).trim(); // possible '\r' is also trimmed
-                if (line.length() == 0) {
+                if (line.isEmpty()) {
                     break; // an empty or space line, as well as p==len, signals about the end of properties list
                 }
                 if (line.startsWith("#")) {
@@ -1100,9 +1100,7 @@ public abstract class MatrixInfo {
                         }
                         String decodedValue;
                         try {
-                            decodedValue = URLDecoder.decode(value, "UTF-8");
-                        } catch (UnsupportedEncodingException e) {
-                            throw new AssertionError("UTF-8 is not supported by URLDecoder? " + e);
+                            decodedValue = URLDecoder.decode(value, StandardCharsets.UTF_8);
                         } catch (IllegalArgumentException e) {
                             IllegalInfoSyntaxException ex = new IllegalInfoSyntaxException(
                                 "URLDecoder cannot decode additional property value in the line #"
@@ -1226,11 +1224,7 @@ public abstract class MatrixInfo {
                         + ": illegal property name \"" + name + "\"");
                 }
                 String encodedValue;
-                try {
-                    encodedValue = URLEncoder.encode(entry.getValue(), "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    throw new AssertionError("UTF-8 is not supported by URLEncoder? " + e);
-                }
+                encodedValue = URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8);
                 sb.append(name).append('=').append(encodedValue).append('\n');
                 if (sb.length() > MAX_SERIALIZED_MATRIX_INFO_LENGTH - 1) { //-1 due to the final '\n'
                     throw new IllegalStateException("Too huge set of additional properties in " + this

@@ -36,15 +36,15 @@ class ArraysSubMatrixImpl {
     static final long OUTSIDE_INDEX = -1;
 
     interface SubMatrixArray {
-        public Matrix<? extends Array> baseMatrix();
+        Matrix<? extends Array> baseMatrix();
 
-        public Matrix.ContinuationMode continuationMode();
+        Matrix.ContinuationMode continuationMode();
 
-        public long[] from();
+        long[] from();
 
-        public long[] to();
+        long[] to();
 
-        public long[] dimensions();
+        long[] dimensions();
     }
 
     /*Repeat() boolean(?!\s+(isLazy|mustBeInside)) ==> char,,byte,,short,,int,,long,,float,,double,,E;;

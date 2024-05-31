@@ -34,20 +34,20 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface DataDoubleBuffer extends DataBuffer {
-    public DataDoubleBuffer map(long position);
+    DataDoubleBuffer map(long position);
 
-    public DataDoubleBuffer map(long position, boolean readData);
+    DataDoubleBuffer map(long position, boolean readData);
 
-    public DataDoubleBuffer mapNext();
+    DataDoubleBuffer mapNext();
 
-    public DataDoubleBuffer mapNext(boolean readData);
+    DataDoubleBuffer mapNext(boolean readData);
 
-    public DataDoubleBuffer map(long position, long maxCount);
+    DataDoubleBuffer map(long position, long maxCount);
 
-    public DataDoubleBuffer map(long position, long maxCount, boolean readData);
+    DataDoubleBuffer map(long position, long maxCount, boolean readData);
 
-    public DataDoubleBuffer force();
+    DataDoubleBuffer force();
 
-    public double[] data();
+    double[] data();
 }
 /*Repeat.IncludeEnd*/

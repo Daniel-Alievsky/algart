@@ -77,7 +77,7 @@ public interface ThreadPoolFactory {
      *
      * @return the recommended number of parallel tasks to perform the processing (&gt;0).
      */
-    public int recommendedNumberOfTasks();
+    int recommendedNumberOfTasks();
 
     /**
      * Returns the recommended number of tasks, which your algorithm is split into
@@ -94,7 +94,7 @@ public interface ThreadPoolFactory {
      * @return            the recommended number of parallel tasks to perform the processing (&gt;0).
      * @throws NullPointerException if the argument is <tt>null</tt> (not necessary).
      */
-    public int recommendedNumberOfTasks(Array sourceArray);
+    int recommendedNumberOfTasks(Array sourceArray);
 
     /**
      * Returns new factory, identical to this one with the only exception that the recommended number of tasks
@@ -105,7 +105,7 @@ public interface ThreadPoolFactory {
      *
      * @return the single-thread version of this factory.
      */
-    public ThreadPoolFactory singleThreadVersion();
+    ThreadPoolFactory singleThreadVersion();
 
     /**
      * Returns the thread pool that should be used for multithreading processing large data.
@@ -121,7 +121,7 @@ public interface ThreadPoolFactory {
      * @param threadFactory if not <tt>null</tt>, specifies the desired thread factory for using by the thread pool.
      * @return              the thread pool for parallel processing large data.
      */
-    public ExecutorService getThreadPool(ThreadFactory threadFactory);
+    ExecutorService getThreadPool(ThreadFactory threadFactory);
 
     /**
      * Returns the thread pool that should be used for multithreading processing an AlgART array.
@@ -139,7 +139,7 @@ public interface ThreadPoolFactory {
      * @return              the thread pool for parallel processing the array.
      * @throws NullPointerException if <tt>sourceArray</tt> argument is <tt>null</tt> (not necessary).
      */
-    public ExecutorService getThreadPool(Array sourceArray, ThreadFactory threadFactory);
+    ExecutorService getThreadPool(Array sourceArray, ThreadFactory threadFactory);
 
     /**
      * Finishes using the thread pool returned by {@link #getThreadPool(Array, ThreadFactory)} method.
@@ -152,7 +152,7 @@ public interface ThreadPoolFactory {
      * @param pool the thread pool created by the previous {@link #getThreadPool(Array, ThreadFactory)} call.
      * @throws NullPointerException if the argument is <tt>null</tt> (not necessary).
      */
-    public void releaseThreadPool(ExecutorService pool);
+    void releaseThreadPool(ExecutorService pool);
 
     /**
      * Equivalent to <tt>{@link #performTasks(java.util.concurrent.ThreadFactory, Runnable[])
@@ -161,7 +161,7 @@ public interface ThreadPoolFactory {
      * @param tasks the tasks which should be performed.
      * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is <tt>null</tt>.
      */
-    public void performTasks(Runnable[] tasks);
+    void performTasks(Runnable[] tasks);
 
     /**
      * Performs the specified tasks by the thread pool, returned by
@@ -221,7 +221,7 @@ public interface ThreadPoolFactory {
      * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is <tt>null</tt>.
      * @see #performTasks(Array, java.util.concurrent.ThreadFactory, Runnable[])
      */
-    public void performTasks(ThreadFactory threadFactory, Runnable[] tasks);
+    void performTasks(ThreadFactory threadFactory, Runnable[] tasks);
 
     /**
      * Equivalent to {@link #performTasks(java.util.concurrent.ThreadFactory, Runnable[])} method
@@ -239,7 +239,7 @@ public interface ThreadPoolFactory {
      * @param tasks         the tasks which should be performed.
      * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is <tt>null</tt>.
      */
-    public void performTasks(Array sourceArray, ThreadFactory threadFactory, Runnable[] tasks);
+    void performTasks(Array sourceArray, ThreadFactory threadFactory, Runnable[] tasks);
 
     /**
      * Equivalent to <tt>{@link #performTasks(Runnable[])
@@ -253,7 +253,7 @@ public interface ThreadPoolFactory {
      * @throws IndexOutOfBoundsException if <tt>from &lt; 0</tt> or <tt>from &gt; tasks.length</tt>.
      * @throws IllegalArgumentException  if <tt>from &gt; to</tt>.
      */
-    public void performTasks(Runnable[] tasks, int from, int to);
+    void performTasks(Runnable[] tasks, int from, int to);
 
     /**
      * Equivalent to <tt>{@link #performTasks(ThreadFactory, Runnable[])
@@ -267,5 +267,5 @@ public interface ThreadPoolFactory {
      * @throws IndexOutOfBoundsException if <tt>from &lt; 0</tt> or <tt>from &gt; tasks.length</tt>.
      * @throws IllegalArgumentException  if <tt>from &gt; to</tt>.
      */
-    public void performTasks(ThreadFactory threadFactory, Runnable[] tasks, int from, int to);
+    void performTasks(ThreadFactory threadFactory, Runnable[] tasks, int from, int to);
 }

@@ -68,7 +68,7 @@ public class Matrices {
 
         private final IRange dependenceCoordRange;
 
-        private InterpolationMethod(IRange dependenceCoordRange) {
+        InterpolationMethod(IRange dependenceCoordRange) {
             this.dependenceCoordRange = dependenceCoordRange;
         }
 
@@ -759,7 +759,7 @@ public class Matrices {
 
                 @Override
                 public String toString() {
-                    return "section at " + sectionCoordinateValue + " of " + parent.toString();
+                    return "section at " + sectionCoordinateValue + " of " + parent;
                 }
             }};
         }

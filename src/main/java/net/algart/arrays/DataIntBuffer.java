@@ -34,20 +34,20 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface DataIntBuffer extends DataBuffer {
-    public DataIntBuffer map(long position);
+    DataIntBuffer map(long position);
 
-    public DataIntBuffer map(long position, boolean readData);
+    DataIntBuffer map(long position, boolean readData);
 
-    public DataIntBuffer mapNext();
+    DataIntBuffer mapNext();
 
-    public DataIntBuffer mapNext(boolean readData);
+    DataIntBuffer mapNext(boolean readData);
 
-    public DataIntBuffer map(long position, long maxCount);
+    DataIntBuffer map(long position, long maxCount);
 
-    public DataIntBuffer map(long position, long maxCount, boolean readData);
+    DataIntBuffer map(long position, long maxCount, boolean readData);
 
-    public DataIntBuffer force();
+    DataIntBuffer force();
 
-    public int[] data();
+    int[] data();
 }
 /*Repeat.IncludeEnd*/
