@@ -4361,7 +4361,8 @@ class ArraysFuncImpl {
         }
 
         //[[Repeat() int\s+(getByte|result) ==> char $1,,int $1;;
-        //           (return\s+v\b)(.*?); ==> return (char)(v$2);,,$1$2; ;;
+        //           (return\s+v\b)(.*?); ==> return (char) (v$2);,,$1$2; ;;
+        //           (return\s+Math\b)(.*?); ==> return (char) (Math$2);,,$1$2; ;;
         //           byte ==> char,,short;;
         //           Byte ==> Char,,Short;;
         //           (\s+&\s+0xFF) ==> $1FF,,...]]
@@ -4411,7 +4412,7 @@ class ArraysFuncImpl {
 
                     public char getChar(long index) {
                         int v = x0.getChar(index) - x1.getChar(index);
-                        return (char)(Math.max(v, 0));
+                        return (char) (Math.max(v, 0));
                     }
 
                     public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
@@ -4427,7 +4428,7 @@ class ArraysFuncImpl {
 
                     public char getChar(long index) {
                         int v = x0.getChar(index) - x1.getChar(index);
-                        return (char)(v & 0xFFFF);
+                        return (char) (v & 0xFFFF);
                     }
 
                     public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
