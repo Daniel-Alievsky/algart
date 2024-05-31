@@ -444,7 +444,7 @@ class Conversions {
                     fImJA2[fImOfs2 + k2] = (float) (sIm + dRe);
                 }
             }
-            count += disp1 + len == disp2 + 1 ? 2 * len - 1 : 2 * len; //odd or even n-1
+            count += disp1 + len == disp2 + 1 ? 2L * len - 1 : 2L * len; //odd or even n-1
             fReBuf1.force();
             fImBuf1.force();
             fReBuf2.force();
@@ -456,7 +456,7 @@ class Conversions {
                 assert disp1 + len == disp2 || disp1 + len == disp2 + 1;
                 break;
             }
-            if (disp2 - disp1 >= 3 * len) { // no risk of overflow: len is never too big
+            if (disp2 - disp1 >= 3L * len) { // no risk of overflow: len is never too big
                 //.............................
                 //  [    ]
                 //                      [    ]
@@ -655,7 +655,7 @@ class Conversions {
                     fImJA2[fImOfs2 + k2] = (double) (sIm + dRe);
                 }
             }
-            count += disp1 + len == disp2 + 1 ? 2 * len - 1 : 2 * len; //odd or even n-1
+            count += disp1 + len == disp2 + 1 ? 2L * len - 1 : 2L * len; //odd or even n-1
             fReBuf1.force();
             fImBuf1.force();
             fReBuf2.force();
@@ -667,7 +667,7 @@ class Conversions {
                 assert disp1 + len == disp2 || disp1 + len == disp2 + 1;
                 break;
             }
-            if (disp2 - disp1 >= 3 * len) { // no risk of overflow: len is never too big
+            if (disp2 - disp1 >= 3L * len) { // no risk of overflow: len is never too big
                 //.............................
                 //  [    ]
                 //                      [    ]
@@ -916,7 +916,7 @@ class Conversions {
                     hImJA2[hImOfs2 + k2] = (float) (sIm - dRe);
                 }
             }
-            count += disp1 + len == disp2 + 1 ? 2 * len - 1 : 2 * len; //odd or even n-1
+            count += disp1 + len == disp2 + 1 ? 2L * len - 1 : 2L * len; //odd or even n-1
             hReBuf1.force();
             if (hIm != null) {
                 hImBuf1.force();
@@ -932,7 +932,7 @@ class Conversions {
                 assert disp1 + len == disp2 || disp1 + len == disp2 + 1;
                 break;
             }
-            if (disp2 - disp1 >= 3 * len) { // no risk of overflow: len is never too big
+            if (disp2 - disp1 >= 3L * len) { // no risk of overflow: len is never too big
                 //.............................
                 //  [    ]
                 //                      [    ]
