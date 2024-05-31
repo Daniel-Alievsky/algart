@@ -25,6 +25,7 @@
 package net.algart.executable.preprocessor;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -113,7 +114,7 @@ public class JavaDocCorrector {
 
     private static String readUTF8(File file) throws IOException {
         InputStream inputStream = new FileInputStream(file);
-        Reader reader = new InputStreamReader(inputStream, "UTF-8");
+        Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
         StringBuilder sb = new StringBuilder();
         try {
             char[] buf = new char[65536];
@@ -129,7 +130,7 @@ public class JavaDocCorrector {
 
     private static void writeUTF8(File file, String text) throws IOException {
         FileOutputStream outputStream = new FileOutputStream(file);
-        Writer writer = new OutputStreamWriter(outputStream, "UTF-8");
+        Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
         try {
             writer.write(text);
         } catch (IOException e) {

@@ -611,17 +611,16 @@ public class ProjectiveOperator
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof ProjectiveOperator)) {
+        if (!(obj instanceof ProjectiveOperator po)) {
             return false;
         }
-        ProjectiveOperator po = (ProjectiveOperator)obj;
         if (n != po.n) {
             return false;
         }
         if (d != po.d) {
             return false;
         }
-        if ((a != null) != (po.a != null)) {
+        if ((a == null) == (po.a != null)) {
             return false;
         }
         if (a != null) {
@@ -631,7 +630,7 @@ public class ProjectiveOperator
                 }
             }
         }
-        if ((diagonal != null) != (po.diagonal != null)) {
+        if ((diagonal == null) == (po.diagonal != null)) {
             return false;
         }
         if (diagonal != null) {
@@ -646,7 +645,7 @@ public class ProjectiveOperator
                 return false;
             }
         }
-        if ((c != null) != (po.c != null)) {
+        if ((c == null) == (po.c != null)) {
             return false;
         }
         if (c != null) {
