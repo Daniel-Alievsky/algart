@@ -56,5 +56,5 @@ public interface ProgressUpdater extends Context {
      * @param readyPart the part of calculations that is already done (from 0.0 to 1.0).
      * @param force     whether this information must be shown always (<tt>true</tt>) or may be lost (<tt>false</tt>).
      */
-    public void updateProgress(double readyPart, boolean force);
+    void updateProgress(double readyPart, boolean force);
 }

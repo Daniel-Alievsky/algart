@@ -905,7 +905,7 @@ public final class TiledApertureProcessorFactory {
     private class BasicTilingProcessor<K> extends AbstractArrayProcessorWithContextSwitching
         implements ApertureProcessor<K>, ArrayProcessorWithContextSwitching
     {
-        private ApertureProcessor<K> oneTileProcessor;
+        private final ApertureProcessor<K> oneTileProcessor;
 
         private BasicTilingProcessor(ApertureProcessor<K> oneTileProcessor) {
             super(context);

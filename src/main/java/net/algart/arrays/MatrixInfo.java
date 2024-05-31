@@ -192,7 +192,7 @@ public abstract class MatrixInfo {
     /**
      * The current default version of the serialized format of the information about matrices: "1.2".
      */
-    public static String DEFAULT_VERSION = VERSION_1_2;
+    public static final String DEFAULT_VERSION = VERSION_1_2;
 
     private static final String ELEMENT_TYPE_PROPERTY_NAME = "__element";
     private static final String BYTE_ORDER_PROPERTY_NAME = "__order";

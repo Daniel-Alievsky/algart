@@ -52,7 +52,7 @@ public interface Frame<P extends FramePosition> {
      *
      * @return the number of space dimensions
      */
-    public int dimCount();
+    int dimCount();
 
     /**
      * The matrix, contained in this frame.
@@ -61,7 +61,7 @@ public interface Frame<P extends FramePosition> {
      *
      * @return matrix contained in this frame.
      */
-    public Matrix<? extends PArray> matrix();
+    Matrix<? extends PArray> matrix();
 
     /**
      * The position in <i>n</i>-dimensional space, where the given {@link #matrix() matrix} is placed.
@@ -72,13 +72,13 @@ public interface Frame<P extends FramePosition> {
      *
      * @return position in <i>n</i>-dimensional space, where the given {@link #matrix() matrix} is placed.
      */
-    public P position();
+    P position();
 
     /**
      * Calls {@link Matrix#freeResources(net.algart.arrays.ArrayContext) Matrix.freeResources(null)} for the matrix,
      * contained in this frame.
      */
-    public void freeResources();
+    void freeResources();
 
     /**
      * Returns the hash code of this object. The result depends both on the {@link #matrix() matrix}
@@ -86,7 +86,7 @@ public interface Frame<P extends FramePosition> {
      *
      * @return the hash code of this frame.
      */
-    public int hashCode();
+    int hashCode();
 
     /**
      * Indicates whether some other object is also a {@link Frame},
@@ -99,5 +99,5 @@ public interface Frame<P extends FramePosition> {
      * @param obj the object to be compared for equality with this frame.
      * @return    <tt>true</tt> if the specified object is a frame containing the equal matrix and position.
      */
-    public boolean equals(Object obj);
+    boolean equals(Object obj);
 }

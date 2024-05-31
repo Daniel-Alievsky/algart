@@ -36,15 +36,15 @@ import java.util.Objects;
 
 abstract class RankOperationProcessor extends StreamingApertureProcessor {
     static final int BUFFER_BLOCK_SIZE = 65536;
-    static boolean OPTIMIZE_GET_DATA = Arrays.SystemSettings.getBooleanProperty(
+    static final boolean OPTIMIZE_GET_DATA = Arrays.SystemSettings.getBooleanProperty(
         "net.algart.matrices.morphology.RankMorphology.optimizeGetData", true);
-    static boolean OPTIMIZE_DIRECT_ARRAYS = Arrays.SystemSettings.getBooleanProperty(
+    static final boolean OPTIMIZE_DIRECT_ARRAYS = Arrays.SystemSettings.getBooleanProperty(
         "net.algart.matrices.morphology.RankMorphology.optimizeDirectArrays", true);
-    static boolean INLINE_ONE_LEVEL = Arrays.SystemSettings.getBooleanProperty(
+    static final boolean INLINE_ONE_LEVEL = Arrays.SystemSettings.getBooleanProperty(
         "net.algart.matrices.morphology.RankMorphology.inlineOneLevel", true);
-    static boolean OPTIMIZE_SEGMENTS_ALONG_AXES = Arrays.SystemSettings.getBooleanProperty(
+    static final boolean OPTIMIZE_SEGMENTS_ALONG_AXES = Arrays.SystemSettings.getBooleanProperty(
         "net.algart.matrices.morphology.RankMorphology.optimizeSegmentsAlongAxes", true);
-    static boolean SPECIAL_OPTIMIZE_THIN_PATTERNS_POWERS_OF_TWO = Arrays.SystemSettings.getBooleanProperty(
+    static final boolean SPECIAL_OPTIMIZE_THIN_PATTERNS_POWERS_OF_TWO = Arrays.SystemSettings.getBooleanProperty(
         "net.algart.matrices.morphology.RankMorphology.specialOptimizeThinPatternsPowersOfTwo", true);
     // - these constants are not final to allow changing via reflection in special tests
 

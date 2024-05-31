@@ -47,5 +47,5 @@ public interface RectangleUpdater extends Context {
      * @param width  the width of the rectangle.
      * @param height the width of the rectangle.
      */
-    public void updateRectangle(double left, double top, double width, double height);
+    void updateRectangle(double left, double top, double width, double height);
 }

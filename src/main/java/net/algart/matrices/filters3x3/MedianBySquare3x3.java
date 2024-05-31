@@ -30,7 +30,7 @@ import java.util.Random;
 public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
     private static final boolean USE_ANTI_DOZ_TABLE_FOR_BYTES = false;
     // - should be false for better performance
-    static int[] ANTI_DOZ_TABLE_FOR_BYTES = createAntiDozTable();
+    static final int[] ANTI_DOZ_TABLE_FOR_BYTES = createAntiDozTable();
 
     MedianBySquare3x3(Class<?> elementType, long[] dimensions) {
         super(elementType, dimensions, 4);

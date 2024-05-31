@@ -115,10 +115,9 @@ import static net.algart.matrices.skeletons.ThinningTools.*;
  * @author Daniel Alievsky
  */
 public class StrongQuadruple3x5ThinningSkeleton2D extends AbstractThinningSkeleton2D implements ThinningSkeleton {
-    static boolean TOP_3X5_WEAKENING = false; // should be false
-    static boolean BOTTOM_3X5_WEAKENING = true; // should be true
+    static final boolean TOP_3X5_WEAKENING = false; // should be false
+    static final boolean BOTTOM_3X5_WEAKENING = true; // should be true
     // - These flags must not be true together to avoid breaking connectivity.
-    // They are not final to allow changing via reflection.
 
     private static final int[][] SKELETON_XP = {
         {1, 0},          // 0: -A2

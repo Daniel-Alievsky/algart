@@ -380,7 +380,7 @@ public interface RankMorphology extends Morphology {
      * <p>This constant contains <tt>Double.NEGATIVE_INFINITY</tt> value,
      * which is usually useless in a role of the ordinary <i>filler</i> for the mode A of calculations.
      */
-    public static final double FILL_MIN_VALUE = Double.NEGATIVE_INFINITY;
+    double FILL_MIN_VALUE = Double.NEGATIVE_INFINITY;
 
     /**
      * Special value of <tt>filler</tt> argument of methods, calculating <i>mean between 2 values</i>,
@@ -397,7 +397,7 @@ public interface RankMorphology extends Morphology {
      * <p>This constant contains <tt>Double.POSITIVE_INFINITY</tt> value,
      * which is usually useless in a role of the ordinary <i>filler</i> for the mode A of calculations.
      */
-    public static final double FILL_MAX_VALUE = Double.POSITIVE_INFINITY;
+    double FILL_MAX_VALUE = Double.POSITIVE_INFINITY;
 
     /**
      * Special value of <tt>filler</tt> argument of methods, calculating <i>mean between 2 values</i>,
@@ -441,9 +441,9 @@ public interface RankMorphology extends Morphology {
      * </pre>
      * always returns <tt>false</tt>. You should use <tt>Double.isNaN(x)</tt> call instead.
      */
-    public static final double FILL_NEAREST_VALUE = Double.NaN;
+    double FILL_NEAREST_VALUE = Double.NaN;
 
-    public RankMorphology context(ArrayContext newContext);
+    RankMorphology context(ArrayContext newContext);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -500,8 +500,9 @@ public interface RankMorphology extends Morphology {
      * @see #percentile(Matrix, Matrix, Pattern)
      * @see #percentile(Matrix, Matrix, Matrix, Pattern)
      */
-    public Matrix<? extends PArray> asPercentile(Matrix<? extends PArray> src,
-        Matrix<? extends PArray> percentileIndexes, Pattern pattern);
+    Matrix<? extends PArray> asPercentile(
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> percentileIndexes, Pattern pattern);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -561,8 +562,9 @@ public interface RankMorphology extends Morphology {
      * @see #percentile(Matrix, double, Pattern)
      * @see #percentile(Matrix, Matrix, double, Pattern)
      */
-    public Matrix<? extends PArray> asPercentile(Matrix<? extends PArray> src,
-        double percentileIndex, Pattern pattern);
+    Matrix<? extends PArray> asPercentile(
+            Matrix<? extends PArray> src,
+            double percentileIndex, Pattern pattern);
 
     /**
      * Returns a new updatable matrix, containing the <i>percentile</i>
@@ -618,8 +620,9 @@ public interface RankMorphology extends Morphology {
      * @see #asPercentile(Matrix, Matrix, Pattern)
      * @see #percentile(Matrix, Matrix, Matrix, Pattern)
      */
-    public Matrix<? extends UpdatablePArray> percentile(Matrix<? extends PArray> src,
-        Matrix<? extends PArray> percentileIndexes, Pattern pattern);
+    Matrix<? extends UpdatablePArray> percentile(
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> percentileIndexes, Pattern pattern);
 
     /**
      * Returns a new updatable matrix, containing the <i>percentile</i>
@@ -678,8 +681,9 @@ public interface RankMorphology extends Morphology {
      * @see #asPercentile(Matrix, double, Pattern)
      * @see #percentile(Matrix, Matrix, double, Pattern)
      */
-    public Matrix<? extends UpdatablePArray> percentile(Matrix<? extends PArray> src,
-        double percentileIndex, Pattern pattern);
+    Matrix<? extends UpdatablePArray> percentile(
+            Matrix<? extends PArray> src,
+            double percentileIndex, Pattern pattern);
 
     /**
      * Equivalent to {@link #percentile(Matrix, Matrix, Pattern)} method, but the result matrix
@@ -717,8 +721,9 @@ public interface RankMorphology extends Morphology {
      * @see #asPercentile(Matrix, Matrix, Pattern)
      * @see #percentile(Matrix, Matrix, Pattern)
      */
-    public void percentile(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        Matrix<? extends PArray> percentileIndexes, Pattern pattern);
+    void percentile(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
+            Matrix<? extends PArray> percentileIndexes, Pattern pattern);
 
     /**
      * Equivalent to {@link #percentile(Matrix, double, Pattern)} method, but the result matrix
@@ -743,8 +748,9 @@ public interface RankMorphology extends Morphology {
      * @see #asPercentile(Matrix, double, Pattern)
      * @see #percentile(Matrix, double, Pattern)
      */
-    public void percentile(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        double percentileIndex, Pattern pattern);
+    void percentile(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
+            double percentileIndex, Pattern pattern);
 
     /**
      * Returns an immutable view of the passed <tt>baseMatrix</tt> matrix,
@@ -807,8 +813,9 @@ public interface RankMorphology extends Morphology {
      * @see #rank(Class, Matrix, Matrix, Pattern)
      * @see #rank(Matrix, Matrix, Matrix, Pattern)
      */
-    public <T extends PArray> Matrix<T> asRank(Class<? extends T> requiredType,
-        Matrix<? extends PArray> baseMatrix, Matrix<? extends PArray> rankedMatrix, Pattern pattern);
+    <T extends PArray> Matrix<T> asRank(
+            Class<? extends T> requiredType,
+            Matrix<? extends PArray> baseMatrix, Matrix<? extends PArray> rankedMatrix, Pattern pattern);
 
     /**
      * Returns a new updatable matrix, containing the <i>rank</i>
@@ -882,8 +889,9 @@ public interface RankMorphology extends Morphology {
      * @see #asRank(Class, Matrix, Matrix, Pattern)
      * @see #rank(Matrix, Matrix, Matrix, Pattern)
      */
-    public <T extends PArray> Matrix<? extends T> rank(Class<? extends T> requiredType,
-        Matrix<? extends PArray> baseMatrix, Matrix<? extends PArray> rankedMatrix, Pattern pattern);
+    <T extends PArray> Matrix<? extends T> rank(
+            Class<? extends T> requiredType,
+            Matrix<? extends PArray> baseMatrix, Matrix<? extends PArray> rankedMatrix, Pattern pattern);
 
     /**
      * Equivalent to {@link #rank(Class, Matrix, Matrix, Pattern)} method, but the result matrix
@@ -930,8 +938,8 @@ public interface RankMorphology extends Morphology {
      * @see #asRank(Class, Matrix, Matrix, Pattern)
      * @see #rank(Class, Matrix, Matrix, Pattern)
      */
-    public void rank(Matrix<? extends UpdatablePArray> dest,
-        Matrix<? extends PArray> baseMatrix, Matrix<? extends PArray> rankedMatrix, Pattern pattern);
+    void rank(Matrix<? extends UpdatablePArray> dest,
+              Matrix<? extends PArray> baseMatrix, Matrix<? extends PArray> rankedMatrix, Pattern pattern);
 
 
     /**
@@ -978,10 +986,11 @@ public interface RankMorphology extends Morphology {
      * @see #meanBetweenPercentiles(Matrix, Matrix, Matrix, Pattern, double)
      * @see #meanBetweenPercentiles(Matrix, Matrix, Matrix, Matrix, Pattern, double)
      */
-    public Matrix<? extends PArray> asMeanBetweenPercentiles(Matrix<? extends PArray> src,
-        Matrix<? extends PArray> fromPercentileIndexes,
-        Matrix<? extends PArray> toPercentileIndexes,
-        Pattern pattern, double filler);
+    Matrix<? extends PArray> asMeanBetweenPercentiles(
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> fromPercentileIndexes,
+            Matrix<? extends PArray> toPercentileIndexes,
+            Pattern pattern, double filler);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -1036,10 +1045,11 @@ public interface RankMorphology extends Morphology {
      * @see #meanBetweenPercentiles(Matrix, double, double, Pattern, double)
      * @see #meanBetweenPercentiles(Matrix, Matrix, double, double, Pattern, double)
      */
-    public Matrix<? extends PArray> asMeanBetweenPercentiles(Matrix<? extends PArray> src,
-        double fromPercentileIndex,
-        double toPercentileIndex,
-        Pattern pattern, double filler);
+    Matrix<? extends PArray> asMeanBetweenPercentiles(
+            Matrix<? extends PArray> src,
+            double fromPercentileIndex,
+            double toPercentileIndex,
+            Pattern pattern, double filler);
 
     /**
      * Returns a new updatable matrix, containing the <i>mean between 2 percentiles</i>
@@ -1083,10 +1093,11 @@ public interface RankMorphology extends Morphology {
      * @see #asMeanBetweenPercentiles(Matrix, Matrix, Matrix, Pattern, double)
      * @see #meanBetweenPercentiles(Matrix, Matrix, Matrix, Matrix, Pattern, double)
      */
-    public Matrix<? extends UpdatablePArray> meanBetweenPercentiles(Matrix<? extends PArray> src,
-        Matrix<? extends PArray> fromPercentileIndexes,
-        Matrix<? extends PArray> toPercentileIndexes,
-        Pattern pattern, double filler);
+    Matrix<? extends UpdatablePArray> meanBetweenPercentiles(
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> fromPercentileIndexes,
+            Matrix<? extends PArray> toPercentileIndexes,
+            Pattern pattern, double filler);
 
     /**
      * Returns a new updatable matrix, containing the <i>mean between 2 percentiles</i>
@@ -1139,10 +1150,11 @@ public interface RankMorphology extends Morphology {
      * @see #asMeanBetweenPercentiles(Matrix, double, double, Pattern, double)
      * @see #meanBetweenPercentiles(Matrix, Matrix, double, double, Pattern, double)
      */
-    public Matrix<? extends UpdatablePArray> meanBetweenPercentiles(Matrix<? extends PArray> src,
-        double fromPercentileIndex,
-        double toPercentileIndex,
-        Pattern pattern, double filler);
+    Matrix<? extends UpdatablePArray> meanBetweenPercentiles(
+            Matrix<? extends PArray> src,
+            double fromPercentileIndex,
+            double toPercentileIndex,
+            Pattern pattern, double filler);
 
     /**
      * Equivalent to {@link #meanBetweenPercentiles(Matrix, Matrix, Matrix, Pattern, double)} method,
@@ -1180,10 +1192,11 @@ public interface RankMorphology extends Morphology {
      * @see #asMeanBetweenPercentiles(Matrix, Matrix, Matrix, Pattern, double)
      * @see #meanBetweenPercentiles(Matrix, Matrix, Matrix, Pattern, double)
      */
-    public void meanBetweenPercentiles(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        Matrix<? extends PArray> fromPercentileIndexes,
-        Matrix<? extends PArray> toPercentileIndexes,
-        Pattern pattern, double filler);
+    void meanBetweenPercentiles(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
+            Matrix<? extends PArray> fromPercentileIndexes,
+            Matrix<? extends PArray> toPercentileIndexes,
+            Pattern pattern, double filler);
 
     /**
      * Equivalent to {@link #meanBetweenPercentiles(Matrix, double, double, Pattern, double)} method,
@@ -1221,10 +1234,11 @@ public interface RankMorphology extends Morphology {
      * @see #asMeanBetweenPercentiles(Matrix, double, double, Pattern, double)
      * @see #meanBetweenPercentiles(Matrix, double, double, Pattern, double)
      */
-    public void meanBetweenPercentiles(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        double fromPercentileIndex,
-        double toPercentileIndex,
-        Pattern pattern, double filler);
+    void meanBetweenPercentiles(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
+            double fromPercentileIndex,
+            double toPercentileIndex,
+            Pattern pattern, double filler);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -1282,10 +1296,11 @@ public interface RankMorphology extends Morphology {
      * @see #meanBetweenValues(Matrix, Matrix, Matrix, Pattern, double)
      * @see #meanBetweenValues(Matrix, Matrix, Matrix, Matrix, Pattern, double)
      */
-    public Matrix<? extends PArray> asMeanBetweenValues(Matrix<? extends PArray> src,
-        Matrix<? extends PArray> minValues,
-        Matrix<? extends PArray> maxValues,
-        Pattern pattern, double filler);
+    Matrix<? extends PArray> asMeanBetweenValues(
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> minValues,
+            Matrix<? extends PArray> maxValues,
+                                                 Pattern pattern, double filler);
 
     /**
      * Returns a new updatable matrix, containing the <i>mean between 2 values</i>
@@ -1342,10 +1357,11 @@ public interface RankMorphology extends Morphology {
      * @see #asMeanBetweenValues(Matrix, Matrix, Matrix, Pattern, double)
      * @see #meanBetweenValues(Matrix, Matrix, Matrix, Matrix, Pattern, double)
      */
-    public Matrix<? extends UpdatablePArray> meanBetweenValues(Matrix<? extends PArray> src,
-        Matrix<? extends PArray> minValues,
-        Matrix<? extends PArray> maxValues,
-        Pattern pattern, double filler);
+    Matrix<? extends UpdatablePArray> meanBetweenValues(
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> minValues,
+            Matrix<? extends PArray> maxValues,
+            Pattern pattern, double filler);
 
     /**
      * Equivalent to {@link #meanBetweenValues(Matrix, Matrix, Matrix, Pattern, double)} method, but the result matrix
@@ -1384,10 +1400,11 @@ public interface RankMorphology extends Morphology {
      * @see #asMeanBetweenValues(Matrix, Matrix, Matrix, Pattern, double)
      * @see #meanBetweenValues(Matrix, Matrix, Matrix, Pattern, double)
      */
-    public void meanBetweenValues(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        Matrix<? extends PArray> minValues,
-        Matrix<? extends PArray> maxValues,
-        Pattern pattern, double filler);
+    void meanBetweenValues(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
+            Matrix<? extends PArray> minValues,
+            Matrix<? extends PArray> maxValues,
+            Pattern pattern, double filler);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -1490,7 +1507,7 @@ public interface RankMorphology extends Morphology {
      * @see #mean(Matrix, Pattern)
      * @see #mean(Matrix, Matrix, Pattern)
      */
-    public Matrix<? extends PArray> asMean(Matrix<? extends PArray> src, Pattern pattern);
+    Matrix<? extends PArray> asMean(Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Returns a new updatable matrix, containing the <i>mean</i>
@@ -1593,7 +1610,7 @@ public interface RankMorphology extends Morphology {
      * @see #asMean(Matrix, Pattern)
      * @see #mean(Matrix, Matrix, Pattern)
      */
-    public Matrix<? extends UpdatablePArray> mean(Matrix<? extends PArray> src, Pattern pattern);
+    Matrix<? extends UpdatablePArray> mean(Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Equivalent to {@link #mean(Matrix, Pattern)} method,
@@ -1677,7 +1694,7 @@ public interface RankMorphology extends Morphology {
      * @see #asMean(Matrix, Pattern)
      * @see #mean(Matrix, Pattern)
      */
-    public void mean(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern);
+    void mean(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -1720,8 +1737,9 @@ public interface RankMorphology extends Morphology {
      * @see #functionOfSum(Matrix, Pattern, Func)
      * @see #functionOfSum(Matrix, Matrix, Pattern, Func)
      */
-    public Matrix<? extends PArray> asFunctionOfSum(Matrix<? extends PArray> src,
-        Pattern pattern, Func processingFunc);
+    Matrix<? extends PArray> asFunctionOfSum(
+            Matrix<? extends PArray> src,
+            Pattern pattern, Func processingFunc);
 
     /**
      * Returns a new updatable matrix, containing the result of some given function
@@ -1762,8 +1780,9 @@ public interface RankMorphology extends Morphology {
      * @see #asFunctionOfSum(Matrix, Pattern, Func)
      * @see #functionOfSum(Matrix, Matrix, Pattern, Func)
      */
-    public Matrix<? extends UpdatablePArray> functionOfSum(Matrix<? extends PArray> src,
-        Pattern pattern, Func processingFunc);
+    Matrix<? extends UpdatablePArray> functionOfSum(
+            Matrix<? extends PArray> src,
+            Pattern pattern, Func processingFunc);
 
     /**
      * Equivalent to {@link #functionOfSum(Matrix, Pattern, Func)} method,
@@ -1796,8 +1815,9 @@ public interface RankMorphology extends Morphology {
      * @see #asFunctionOfSum(Matrix, Pattern, Func)
      * @see #functionOfSum(Matrix, Pattern, Func)
      */
-    public void functionOfSum(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        Pattern pattern, Func processingFunc);
+    void functionOfSum(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
+            Pattern pattern, Func processingFunc);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -1859,10 +1879,11 @@ public interface RankMorphology extends Morphology {
      * @see #functionOfPercentilePair(Matrix, Matrix, Matrix, Pattern, Func)
      * @see #functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, Pattern, Func)
      */
-    public Matrix<? extends PArray> asFunctionOfPercentilePair(Matrix<? extends PArray> src,
-        Matrix<? extends PArray> percentileIndexes1,
-        Matrix<? extends PArray> percentileIndexes2,
-        Pattern pattern, Func processingFunc);
+    Matrix<? extends PArray> asFunctionOfPercentilePair(
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> percentileIndexes1,
+            Matrix<? extends PArray> percentileIndexes2,
+            Pattern pattern, Func processingFunc);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -1921,10 +1942,11 @@ public interface RankMorphology extends Morphology {
      * @see #functionOfPercentilePair(Matrix, double, double, Pattern, Func)
      * @see #functionOfPercentilePair(Matrix, Matrix, double, double, Pattern, Func)
      */
-    public Matrix<? extends PArray> asFunctionOfPercentilePair(Matrix<? extends PArray> src,
-        double percentileIndex1,
-        double percentileIndex2,
-        Pattern pattern, Func processingFunc);
+    Matrix<? extends PArray> asFunctionOfPercentilePair(
+            Matrix<? extends PArray> src,
+            double percentileIndex1,
+            double percentileIndex2,
+            Pattern pattern, Func processingFunc);
 
     /**
      * Returns a new updatable matrix, containing the result of some given function
@@ -1985,10 +2007,11 @@ public interface RankMorphology extends Morphology {
      * @see #asFunctionOfPercentilePair(Matrix, Matrix, Matrix, Pattern, Func)
      * @see #functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, Pattern, Func)
      */
-    public Matrix<? extends UpdatablePArray> functionOfPercentilePair(Matrix<? extends PArray> src,
-        Matrix<? extends PArray> percentileIndexes1,
-        Matrix<? extends PArray> percentileIndexes2,
-        Pattern pattern, Func processingFunc);
+    Matrix<? extends UpdatablePArray> functionOfPercentilePair(
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> percentileIndexes1,
+            Matrix<? extends PArray> percentileIndexes2,
+            Pattern pattern, Func processingFunc);
 
     /**
      * Returns a new updatable matrix, containing the result of some given function
@@ -2046,10 +2069,11 @@ public interface RankMorphology extends Morphology {
      * @see #asFunctionOfPercentilePair(Matrix, double, double, Pattern, Func)
      * @see #functionOfPercentilePair(Matrix, Matrix, double, double, Pattern, Func)
      */
-    public Matrix<? extends UpdatablePArray> functionOfPercentilePair(Matrix<? extends PArray> src,
-        double percentileIndex1,
-        double percentileIndex2,
-        Pattern pattern, Func processingFunc);
+    Matrix<? extends UpdatablePArray> functionOfPercentilePair(
+            Matrix<? extends PArray> src,
+            double percentileIndex1,
+            double percentileIndex2,
+            Pattern pattern, Func processingFunc);
 
     /**
      * Equivalent to {@link #functionOfPercentilePair(Matrix, Matrix, Matrix, Pattern, Func)} method,
@@ -2088,10 +2112,11 @@ public interface RankMorphology extends Morphology {
      * @see #asFunctionOfPercentilePair(Matrix, Matrix, Matrix, Pattern, Func)
      * @see #functionOfPercentilePair(Matrix, Matrix, Matrix, Pattern, Func)
      */
-    public void functionOfPercentilePair(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        Matrix<? extends PArray> percentileIndexes1,
-        Matrix<? extends PArray> percentileIndexes2,
-        Pattern pattern, Func processingFunc);
+    void functionOfPercentilePair(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
+            Matrix<? extends PArray> percentileIndexes1,
+            Matrix<? extends PArray> percentileIndexes2,
+            Pattern pattern, Func processingFunc);
 
     /**
      * Equivalent to {@link #functionOfPercentilePair(Matrix, double, double, Pattern, Func)} method,
@@ -2128,8 +2153,9 @@ public interface RankMorphology extends Morphology {
      * @see #asFunctionOfPercentilePair(Matrix, double, double, Pattern, Func)
      * @see #functionOfPercentilePair(Matrix, double, double, Pattern, Func)
      */
-    public void functionOfPercentilePair(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        double percentileIndex1,
-        double percentileIndex2,
-        Pattern pattern, Func processingFunc);
+    void functionOfPercentilePair(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
+            double percentileIndex1,
+            double percentileIndex2,
+            Pattern pattern, Func processingFunc);
 }

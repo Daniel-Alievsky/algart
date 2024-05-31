@@ -402,7 +402,7 @@ public final class LinearOperator extends ProjectiveOperator {
      * @throws IllegalArgumentException if <tt>destPoint.length</tt> or <tt>srcPoint.length</tt>
      *                                  is not equal to the {@link #n() number of dimensions}.
      */
-    public final void inverseMap(double[] srcPoint, double[] destPoint) {
+    public void inverseMap(double[] srcPoint, double[] destPoint) {
         Objects.requireNonNull(srcPoint, "Null srcPoint");
         Objects.requireNonNull(destPoint, "Null destPoint");
         if (srcPoint.length != n)

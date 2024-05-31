@@ -29,7 +29,7 @@ import net.algart.math.patterns.WeightedPattern;
 
 public interface Convolution extends ArrayProcessorWithContextSwitching {
 
-    public Convolution context(ArrayContext newContext);
+    Convolution context(ArrayContext newContext);
 
     /**
      * Returns <tt>true</tt>, if this class works in the default
@@ -51,20 +51,21 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      *
      * @return whether this class works in the pseudo-cyclic continuation mode.
      */
-    public boolean isPseudoCyclic();
+    boolean isPseudoCyclic();
 
-    public double increment(Class<?> elementType);
+    double increment(Class<?> elementType);
+
     /**
      * Equivalent to <tt>{@link #asConvolution(Class, Matrix, WeightedPattern)
      * asConvolution}(src.{@link Matrix#type(Class) type}(PArray.class), src, pattern)</tt>.
      * In other words, the element type of the returned matrix is chosen the same as in <tt>src</tt> matrix.
      *
-     * @param src          the source matrix.
-     * @param pattern      the pattern.
-     * @return             the "lazy" matrix containing the convolution of the source matrix with the given pattern.
+     * @param src     the source matrix.
+     * @param pattern the pattern.
+     * @return the "lazy" matrix containing the convolution of the source matrix with the given pattern.
      * @throws NullPointerException if one of the arguments is <tt>null</tt>.
      */
-    public Matrix<? extends PArray> asConvolution(Matrix<? extends PArray> src, WeightedPattern pattern);
+    Matrix<? extends PArray> asConvolution(Matrix<? extends PArray> src, WeightedPattern pattern);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -102,11 +103,12 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param src          the source matrix.
      * @param pattern      the pattern.
-     * @return             the "lazy" matrix containing the convolution of the source matrix with the given pattern.
+     * @return the "lazy" matrix containing the convolution of the source matrix with the given pattern.
      * @throws NullPointerException if one of the arguments is <tt>null</tt>.
      */
-    public <T extends PArray> Matrix<T> asConvolution(Class<? extends T> requiredType,
-        Matrix<? extends PArray> src, WeightedPattern pattern);
+    <T extends PArray> Matrix<T> asConvolution(
+            Class<? extends T> requiredType,
+            Matrix<? extends PArray> src, WeightedPattern pattern);
 
     /**
      * Returns a new updatable matrix, containing the <i>convolution</i>
@@ -128,7 +130,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * <blockquote>
      * <big>&sum;</big> <i>w</i><sub><i>i</i></sub><i>m</i><sub><i>i</i></sub>
      * </blockquote>
-     *
+     * <p>
      * The {@link Matrix#elementType() element type}
      * of the created matrix is the same as the element type of the source one.
      * The <tt>byte</tt> and <tt>short</tt> elements are considered to be unsigned.
@@ -143,15 +145,17 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      *
      * @param src     the source matrix.
      * @param pattern the pattern.
-     * @return        the result of convolution of the source matrix with the given pattern.
+     * @return the result of convolution of the source matrix with the given pattern.
      * @throws NullPointerException if one of the arguments is <tt>null</tt>.
      * @see #asConvolution(Class, Matrix, WeightedPattern)
      */
-    public Matrix<? extends UpdatablePArray> convolution(Matrix<? extends PArray> src, WeightedPattern pattern);
+    Matrix<? extends UpdatablePArray> convolution(Matrix<? extends PArray> src, WeightedPattern pattern);
 
-    public <T extends PArray> Matrix<? extends T> convolution(Class<? extends T> requiredType,
-        Matrix<? extends PArray> src, WeightedPattern pattern);
+    <T extends PArray> Matrix<? extends T> convolution(
+            Class<? extends T> requiredType,
+            Matrix<? extends PArray> src, WeightedPattern pattern);
 
-    public void convolution(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        WeightedPattern pattern);
+    void convolution(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
+            WeightedPattern pattern);
 }

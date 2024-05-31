@@ -96,7 +96,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * <p>Note that the <tt>byte</tt> and <tt>short</tt> elements are considered to be unsigned integers
      * while subtraction.</p>
      */
-    public static enum SubtractionMode {
+    enum SubtractionMode {
         /**
          * No subtractions are performed: standard behaviour.
          * See {@link SubtractionMode comments to this enumeration} for more details.
@@ -134,7 +134,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
             Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src);
     }
 
-    public Morphology context(ArrayContext newContext);
+    Morphology context(ArrayContext newContext);
 
     /**
      * Returns <tt>true</tt>, if this class works in the default
@@ -156,7 +156,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *
      * @return whether this class works in the pseudo-cyclic continuation mode.
      */
-    public boolean isPseudoCyclic();
+    boolean isPseudoCyclic();
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -188,7 +188,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends PArray> asDilation(Matrix<? extends PArray> src, Pattern pattern);
+    Matrix<? extends PArray> asDilation(Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -221,7 +221,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends PArray> asErosion(Matrix<? extends PArray> src, Pattern pattern);
+    Matrix<? extends PArray> asErosion(Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Returns a new updatable matrix, containing the <i>dilation</i>
@@ -265,7 +265,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @see #dilation(Matrix, Matrix, Pattern, boolean)
      * @see #dilation(Matrix, Pattern, Morphology.SubtractionMode)
      */
-    public Matrix<? extends UpdatablePArray> dilation(Matrix<? extends PArray> src, Pattern pattern);
+    Matrix<? extends UpdatablePArray> dilation(Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Returns a new updatable matrix, containing the <i>erosion</i>
@@ -310,7 +310,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @see #erosion(Matrix, Matrix, Pattern, boolean)
      * @see #erosion(Matrix, Pattern, Morphology.SubtractionMode)
      */
-    public Matrix<? extends UpdatablePArray> erosion(Matrix<? extends PArray> src, Pattern pattern);
+    Matrix<? extends UpdatablePArray> erosion(Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Extended version of {@link #dilation(Matrix, Pattern)} method: if <tt>subtractionMode</tt> argument
@@ -334,8 +334,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends UpdatablePArray> dilation(Matrix<? extends PArray> src, Pattern pattern,
-        SubtractionMode subtractionMode);
+    Matrix<? extends UpdatablePArray> dilation(
+            Matrix<? extends PArray> src, Pattern pattern,
+            SubtractionMode subtractionMode);
 
     /**
      * Extended version of {@link #erosion(Matrix, Pattern)} method: if <tt>subtractionMode</tt> argument
@@ -359,8 +360,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends UpdatablePArray> erosion(Matrix<? extends PArray> src, Pattern pattern,
-        SubtractionMode subtractionMode);
+    Matrix<? extends UpdatablePArray> erosion(
+            Matrix<? extends PArray> src, Pattern pattern,
+            SubtractionMode subtractionMode);
 
     /**
      * Equivalent to {@link #dilation(Matrix, Pattern)} method, but the result matrix
@@ -403,8 +405,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public void dilation(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern,
-        boolean disableMemoryAllocation);
+    void dilation(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern,
+            boolean disableMemoryAllocation);
 
     /**
      * Equivalent to {@link #erosion(Matrix, Pattern)} method, but the result matrix
@@ -447,8 +450,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public void erosion(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern,
-        boolean disableMemoryAllocation);
+    void erosion(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern,
+            boolean disableMemoryAllocation);
 
 
     /**
@@ -463,7 +467,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public void dilation(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern);
+    void dilation(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Equivalent to {@link #erosion(Matrix, Matrix, Pattern, boolean) erosion(dest, src, pattern, false)}.
@@ -477,7 +481,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public void erosion(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern);
+    void erosion(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Returns a new updatable matrix, containing the result of sequential
@@ -503,8 +507,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends UpdatablePArray> dilationErosion(Matrix<? extends PArray> src,
-        Pattern dilationPattern, Pattern erosionPattern, SubtractionMode subtractionMode);
+    Matrix<? extends UpdatablePArray> dilationErosion(
+            Matrix<? extends PArray> src,
+            Pattern dilationPattern, Pattern erosionPattern, SubtractionMode subtractionMode);
 
     /**
      * Returns a new updatable matrix, containing the result of sequential
@@ -530,8 +535,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends UpdatablePArray> erosionDilation(Matrix<? extends PArray> src,
-        Pattern erosionPattern, Pattern dilationPattern, SubtractionMode subtractionMode);
+    Matrix<? extends UpdatablePArray> erosionDilation(
+            Matrix<? extends PArray> src,
+            Pattern erosionPattern, Pattern dilationPattern, SubtractionMode subtractionMode);
 
     /**
      * Returns a new updatable matrix, containing the <i>closing</i>
@@ -565,8 +571,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends UpdatablePArray> closing(Matrix<? extends PArray> src, Pattern pattern,
-        SubtractionMode subtractionMode);
+    Matrix<? extends UpdatablePArray> closing(
+            Matrix<? extends PArray> src, Pattern pattern,
+            SubtractionMode subtractionMode);
 
     /**
      * Returns a new updatable matrix, containing the <i>opening</i>
@@ -600,8 +607,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends UpdatablePArray> opening(Matrix<? extends PArray> src, Pattern pattern,
-        SubtractionMode subtractionMode);
+    Matrix<? extends UpdatablePArray> opening(
+            Matrix<? extends PArray> src, Pattern pattern,
+            SubtractionMode subtractionMode);
 
     /**
      * Returns a new updatable matrix, containing the <i>weak dilation</i>
@@ -627,7 +635,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends UpdatablePArray> weakDilation(Matrix<? extends PArray> src, Pattern pattern);
+    Matrix<? extends UpdatablePArray> weakDilation(Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Returns a new updatable matrix, containing the <i>weak erosion</i>
@@ -653,7 +661,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends UpdatablePArray> weakErosion(Matrix<? extends PArray> src, Pattern pattern);
+    Matrix<? extends UpdatablePArray> weakErosion(Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Returns the elementwise minimum between the source matrix and the result of
@@ -726,8 +734,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends UpdatablePArray> maskedDilationErosion(Matrix<? extends PArray> src,
-        Pattern dilationPattern, Pattern erosionPattern);
+    Matrix<? extends UpdatablePArray> maskedDilationErosion(
+            Matrix<? extends PArray> src,
+            Pattern dilationPattern, Pattern erosionPattern);
 
     /**
      * Returns the elementwise maximum between the source matrix and the result of
@@ -746,8 +755,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends UpdatablePArray> maskedErosionDilation(Matrix<? extends PArray> src,
-        Pattern erosionPattern, Pattern dilationPattern);
+    Matrix<? extends UpdatablePArray> maskedErosionDilation(
+            Matrix<? extends PArray> src,
+            Pattern erosionPattern, Pattern dilationPattern);
 
 
     /**
@@ -772,5 +782,5 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
      */
-    public Matrix<? extends UpdatablePArray> beucherGradient(Matrix<? extends PArray> src, Pattern pattern);
+    Matrix<? extends UpdatablePArray> beucherGradient(Matrix<? extends PArray> src, Pattern pattern);
 }

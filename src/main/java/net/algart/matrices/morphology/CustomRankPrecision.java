@@ -45,7 +45,7 @@ public interface CustomRankPrecision {
      * must not be greater than this value; in other case, an attempt to create an instance
      * of {@link BasicRankMorphology} will lead to <tt>IllegalArgumentException</tt>.
      */
-    public static final int MAX_NUMBER_OF_ANALYZED_BITS = 30;
+    int MAX_NUMBER_OF_ANALYZED_BITS = 30;
     // must be in 1..30 range; 31 or greater values can lead to problems in RankOperationProcessor inheritors
 
     /**
@@ -115,14 +115,14 @@ public interface CustomRankPrecision {
      *         (the last element of this array).
      * @see #numberOfAnalyzedBits()
      */
-    public int[] bitLevels();
+    int[] bitLevels();
 
     /**
      * Returns the last element of the {@link #bitLevels()} array.
      *
      * @return the maximal possible total number of analyzed bits <nobr>&mu;=log<sub>2</sub>(histogram length)</nobr>.
      */
-    public int numberOfAnalyzedBits();
+    int numberOfAnalyzedBits();
 
     /**
      * Selects the histogram model used while calculating rank characteristics:
@@ -132,5 +132,5 @@ public interface CustomRankPrecision {
      *
      * @return whether the rank operations should be performed in the precise histogram model.
      */
-    public boolean interpolated();
+    boolean interpolated();
 }

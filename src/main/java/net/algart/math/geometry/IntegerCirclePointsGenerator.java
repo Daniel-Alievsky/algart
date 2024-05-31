@@ -33,7 +33,8 @@ package net.algart.math.geometry;
  */
 public class IntegerCirclePointsGenerator {
 
-    private IntegerCirclePointsGenerator() {  }
+    private IntegerCirclePointsGenerator() {
+    }
 
     public static IntegerCirclePointsGenerator getInstance() {
         return new IntegerCirclePointsGenerator();
@@ -54,10 +55,10 @@ public class IntegerCirclePointsGenerator {
         if (r < 0 || r > 10000000)
             throw new IllegalArgumentException("All radii should be in range 0..10000000");
         if (r == 0)
-            return new int[] {0,0}; // do not return 4 identical points
-        int[] result = circlePointsReference.getCirclePoints(r,0);
+            return new int[]{0, 0}; // do not return 4 identical points
+        int[] result = circlePointsReference.getCirclePoints(r, 0);
         if (result == null) {
-            int[] xyBuff = new int[2 * 4 * ((int)(SQRT2 * r) + 5)]; // 5 is a little gap, really required 1 or 2
+            int[] xyBuff = new int[2 * 4 * ((int) (SQRT2 * r) + 5)]; // 5 is a little gap, really required 1 or 2
             int quarterArrayLen = getCircleQuarter1Points(r, xyBuff);
             int arrayLen = appendCircleQuarters234Points(quarterArrayLen, xyBuff);
             result = new int[arrayLen];
@@ -82,23 +83,23 @@ public class IntegerCirclePointsGenerator {
         if (delta == 0)
             return getCirclePoints(r);
         if (r == 0)
-            return new int[] {0,0};
-        int[] result = circlePointsReference.getCirclePoints(r,delta);
+            return new int[]{0, 0};
+        int[] result = circlePointsReference.getCirclePoints(r, delta);
         if (result == null) {
-            int[] xyBuff = new int[2*4*((int)(SQRT2*r)+5)]; // 5 is a little gap, really required 1 or 2
-            int quarterArrayLen = getCircleQuarter1Points(r,xyBuff);
-            int rHalf = r/2;
+            int[] xyBuff = new int[2 * 4 * ((int) (SQRT2 * r) + 5)]; // 5 is a little gap, really required 1 or 2
+            int quarterArrayLen = getCircleQuarter1Points(r, xyBuff);
+            int rHalf = r / 2;
             for (int disp = 0; disp < quarterArrayLen; disp += 2) {
-                int x = xyBuff[disp], y = xyBuff[disp+1];
-                xyBuff[disp] = (x * (r+delta) + rHalf) / r;
-                xyBuff[disp+1] = (y * (r+delta) + rHalf) / r;
+                int x = xyBuff[disp], y = xyBuff[disp + 1];
+                xyBuff[disp] = (x * (r + delta) + rHalf) / r;
+                xyBuff[disp + 1] = (y * (r + delta) + rHalf) / r;
                 // That is round((x,y) * (r+delta)/r), because x,y >= 0
                 // This point is never equal to x,y if delta > 0
             }
-            int arrayLen = appendCircleQuarters234Points(quarterArrayLen,xyBuff);
+            int arrayLen = appendCircleQuarters234Points(quarterArrayLen, xyBuff);
             result = new int[arrayLen];
-            System.arraycopy(xyBuff,0,result,0,arrayLen);
-            circlePointsReference.putCirclePoints(r,delta,result);
+            System.arraycopy(xyBuff, 0, result, 0, arrayLen);
+            circlePointsReference.putCirclePoints(r, delta, result);
         }
         return result;
     }
@@ -116,11 +117,11 @@ public class IntegerCirclePointsGenerator {
 
     private static class CirclePointsTable {
         int deltaR;
-        int[][] circlePoints = new int[MAX_CACHED_RADIUS+1][];
+        final int[][] circlePoints = new int[MAX_CACHED_RADIUS + 1][];
     }
 
     private static class CirclePointsReference {
-        CirclePointsTable[] tables = new CirclePointsTable[MAX_NUMBER_OF_CACHED_DELTAR];
+        final CirclePointsTable[] tables = new CirclePointsTable[MAX_NUMBER_OF_CACHED_DELTAR];
         int tablesLen = 0;
 
         synchronized int[] getCirclePoints(int r, int deltaR) {
@@ -133,7 +134,7 @@ public class IntegerCirclePointsGenerator {
                     tables[0] = table;
                     if (DEBUG_LEVEL >= 6)
                         System.out.println("Circle points found in cache at position " + k
-                            + ": deltaR = " + deltaR + ", r = " + r);
+                                + ": deltaR = " + deltaR + ", r = " + r);
                     return table.circlePoints[r];
                 }
             }
@@ -150,7 +151,7 @@ public class IntegerCirclePointsGenerator {
                     tables[k].circlePoints[r] = circlePoints;
                     if (DEBUG_LEVEL >= 5)
                         System.out.println("Saving circle points in cache at position " + k
-                            + ": deltaR = " + deltaR + ", r = " + r);
+                                + ": deltaR = " + deltaR + ", r = " + r);
                     return;
                 }
             }
@@ -170,26 +171,30 @@ public class IntegerCirclePointsGenerator {
         }
     }
 
-    private CirclePointsReference circlePointsReference = new CirclePointsReference();
+    private final CirclePointsReference circlePointsReference = new CirclePointsReference();
 
     private static final double SQRT2 = Math.sqrt(2.0);
+
     private static int getCircleQuarter1Points(int r, int[] xyBuff) {
         // Bresenham algorithm
         int disp = 0;
         int x = r, y = 0;
-        int d = 3-2*r; // 2 * (x^2+y^2-(r+eps)^2)
+        int d = 3 - 2 * r; // 2 * (x^2+y^2-(r+eps)^2)
         while (x >= y) {
             xyBuff[disp++] = x;
             xyBuff[disp++] = y;
             if (d < 0) {
-                d += 4*y+6; y++;
+                d += 4 * y + 6;
+                y++;
             } else {
-                d += 4*(y-x)+10; x--; y++;
+                d += 4 * (y - x) + 10;
+                x--;
+                y++;
             }
         }
-        int symDisp = disp-2;
-        if (x == y) symDisp -= 2;
-        for (; symDisp > 0; disp+=2, symDisp-=2) {
+        int symDisp = disp - 2;
+        // if (x == y) symDisp -= 2; // - impossible: while x>=y above
+        for (; symDisp > 0; disp += 2, symDisp -= 2) {
             // Here symDisp > 0, not >=0! We should include (r,0) point, but not (0,r)!
             xyBuff[disp] = xyBuff[symDisp + 1];
             xyBuff[disp + 1] = xyBuff[symDisp];
@@ -198,19 +203,19 @@ public class IntegerCirclePointsGenerator {
     }
 
     private static int appendCircleQuarters234Points(int quarterArrayLen, int[] xyBuff) {
-        for (int k = 0, disp = quarterArrayLen; k < quarterArrayLen; k+=2,disp+=2) {
-            xyBuff[disp] = -xyBuff[k+1];    // x' = -y
-            xyBuff[disp+1] = xyBuff[k];     // y' = x
+        for (int k = 0, disp = quarterArrayLen; k < quarterArrayLen; k += 2, disp += 2) {
+            xyBuff[disp] = -xyBuff[k + 1];    // x' = -y
+            xyBuff[disp + 1] = xyBuff[k];     // y' = x
         }
-        for (int k = 0, disp = 2*quarterArrayLen; k < quarterArrayLen; k+=2,disp+=2) {
+        for (int k = 0, disp = 2 * quarterArrayLen; k < quarterArrayLen; k += 2, disp += 2) {
             xyBuff[disp] = -xyBuff[k];      // x' = -x
-            xyBuff[disp+1] = -xyBuff[k+1];  // y' = -y
+            xyBuff[disp + 1] = -xyBuff[k + 1];  // y' = -y
         }
-        for (int k = 0, disp = 3*quarterArrayLen; k < quarterArrayLen; k+=2,disp+=2) {
-            xyBuff[disp] = xyBuff[k+1];     // x' = y
-            xyBuff[disp+1] = -xyBuff[k];    // y' = -x
+        for (int k = 0, disp = 3 * quarterArrayLen; k < quarterArrayLen; k += 2, disp += 2) {
+            xyBuff[disp] = xyBuff[k + 1];     // x' = y
+            xyBuff[disp + 1] = -xyBuff[k];    // y' = -x
         }
-        return 4*quarterArrayLen;
+        return 4 * quarterArrayLen;
     }
 
     private static boolean isTrueStaticFlag;

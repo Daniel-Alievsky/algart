@@ -487,8 +487,8 @@ public class IRectanglesUnion {
     }
 
     public static class HorizontalBoundaryLink extends BoundaryLink {
-        VerticalSideSeries transversalSeriesFrom;
-        VerticalSideSeries transversalSeriesTo;
+        final VerticalSideSeries transversalSeriesFrom;
+        final VerticalSideSeries transversalSeriesTo;
         // - these two fields are necessary only while constructing the boundary
         VerticalBoundaryLink linkFrom = null;
         VerticalBoundaryLink linkTo = null;

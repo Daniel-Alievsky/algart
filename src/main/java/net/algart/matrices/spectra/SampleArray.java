@@ -90,7 +90,7 @@ public interface SampleArray {
      * as well as for creating arrays not longer than this one.
      * The value of this limit is {@value}, that is enough for most practical needs in temporary values.
      */
-    public static final int GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH = 64;
+    int GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH = 64;
 
     /**
      * Returns <tt>true</tt> if the samples in this array are complex, <tt>false</tt> if they are real.
@@ -102,7 +102,7 @@ public interface SampleArray {
      *
      * @return <tt>true</tt> if the samples in this array are complex.
      */
-    public boolean isComplex();
+    boolean isComplex();
 
     /**
      * Returns the length: number of elements in this array.
@@ -110,7 +110,7 @@ public interface SampleArray {
      *
      * @return the length: number of elements in this array.
      */
-    public long length();
+    long length();
 
     /**
      * Creates a new array of samples of the same kind as this one.
@@ -156,7 +156,7 @@ public interface SampleArray {
      * @return       new sample array, compatible with this one.
      * @throws IllegalArgumentException if the argument is negative.
      */
-    public SampleArray newCompatibleSamplesArray(long length);
+    SampleArray newCompatibleSamplesArray(long length);
 
     /**
      * Copies the sample #<tt>srcIndex</tt> from <tt>src</tt> array into position
@@ -172,7 +172,7 @@ public interface SampleArray {
      *                                  <tt>ClassCastException</tt> or
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      */
-    public void copy(long destIndex, SampleArray src, long srcIndex);
+    void copy(long destIndex, SampleArray src, long srcIndex);
 
     /**
      * Swaps samples at positions #<tt>firstIndex</tt> and #<tt>secondIndex</tt> inside this array.
@@ -181,7 +181,7 @@ public interface SampleArray {
      * @param firstIndex  first index of sample to exchange.
      * @param secondIndex second index of sample to exchange.
      */
-    public void swap(long firstIndex, long secondIndex);
+    void swap(long firstIndex, long secondIndex);
 
     /**
      * Adds the sample #<tt>srcIndex2</tt> of <tt>src</tt> array to the sample #<tt>srcIndex1</tt>
@@ -200,7 +200,7 @@ public interface SampleArray {
      *                                  <tt>ClassCastException</tt> or
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      */
-    public void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2);
+    void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2);
 
     /**
      * Subtracts the sample #<tt>srcIndex2</tt> of <tt>src</tt> array from the sample #<tt>srcIndex1</tt>
@@ -219,7 +219,7 @@ public interface SampleArray {
      *                                  <tt>ClassCastException</tt> or
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      */
-    public void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2);
+    void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2);
 
     /**
      * Adds the sample #<tt>srcIndex2</tt> of <tt>src2</tt> array to the sample #<tt>srcIndex1</tt>
@@ -238,7 +238,7 @@ public interface SampleArray {
      *                                  <tt>ClassCastException</tt> or
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      */
-    public void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2);
+    void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2);
 
     /**
      * Subtracts the sample #<tt>srcIndex2</tt> of <tt>src2</tt> array from the sample #<tt>srcIndex1</tt>
@@ -257,7 +257,7 @@ public interface SampleArray {
      *                                  <tt>ClassCastException</tt> or
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      */
-    public void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2);
+    void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2);
 
     /**
      * Adds the sample #<tt>srcIndex2</tt> of this array to the sample #<tt>srcIndex1</tt>
@@ -269,7 +269,7 @@ public interface SampleArray {
      * @param srcIndex1 the index of the first summand in this array.
      * @param srcIndex2 the index of the second summand in this array.
      */
-    public void add(long destIndex, long srcIndex1, long srcIndex2);
+    void add(long destIndex, long srcIndex1, long srcIndex2);
 
     /**
      * Subtracts the sample #<tt>srcIndex2</tt> of this array from the sample #<tt>srcIndex1</tt>
@@ -281,7 +281,7 @@ public interface SampleArray {
      * @param srcIndex1 the index of the minuend in this array.
      * @param srcIndex2 the index of the subtrahend in this array.
      */
-    public void sub(long destIndex, long srcIndex1, long srcIndex2);
+    void sub(long destIndex, long srcIndex1, long srcIndex2);
 
     /**
      * Multiplies the sample #<tt>srcIndex</tt> of <tt>src</tt> array by the complex scalar
@@ -306,7 +306,7 @@ public interface SampleArray {
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      * @see #isComplex()
      */
-    public void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm);
+    void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm);
 
     /**
      * Multiplies the sample #<tt>destIndex</tt> of this array by the real scalar <tt>a</tt>
@@ -317,7 +317,7 @@ public interface SampleArray {
      * @param index index of sample in this array.
      * @param a     the real scalar.
      */
-    public void multiplyByRealScalar(long index, double a);
+    void multiplyByRealScalar(long index, double a);
 
     /**
      * Multiplies the sample #<tt>srcIndex1</tt> of this array by the real scalar <tt>a1</tt>,
@@ -330,7 +330,7 @@ public interface SampleArray {
      * @param srcIndex2 the index of the second sample in this array.
      * @param a2        the multiplier for the second sample.
      */
-    public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2);
+    void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2);
 
     /**
      * Multiplies the samples #<tt>fromIndex..toIndex-1</tt> of this array by the real scalar <tt>a</tt>
@@ -342,7 +342,7 @@ public interface SampleArray {
      * @param toIndex   high index (exclusive) of elements to be multiplied.
      * @param a         the real scalar.
      */
-    public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a);
+    void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a);
 
     /**
      * Returns a string representation of this sample array as contatenated string representations of samples,
@@ -368,5 +368,5 @@ public interface SampleArray {
      * @throws NullPointerException     if <tt>format</tt> or <tt>separator</tt> argument is <tt>null</tt>
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
-    public String toString(String format, String separator, int maxStringLength);
+    String toString(String format, String separator, int maxStringLength);
 }

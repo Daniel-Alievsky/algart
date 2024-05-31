@@ -43,5 +43,5 @@ public interface CurrentFolderContext extends Context {
      *
      * @return the current folder.
      */
-    public String getCurrentFolder();
+    String getCurrentFolder();
 }

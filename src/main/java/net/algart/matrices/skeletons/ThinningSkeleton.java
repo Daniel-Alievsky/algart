@@ -130,7 +130,7 @@ public interface ThinningSkeleton extends IterativeArrayProcessor<Matrix<? exten
      * @return               whether the matrix should be thinned along this direction.
      * @throws IllegalArgumentException if <tt>directionIndex</tt> is not in 0..7 range.
      */
-    public boolean isThinningRequired(int directionIndex);
+    boolean isThinningRequired(int directionIndex);
 
     // WARNING: SUN BUG IN javadoc UTILITY (1.6.0_04, 1.7.0-ea)!
     // Below we cannot write "{@link #result()}" - it leads to ClassCastException in javadoc.
@@ -162,5 +162,5 @@ public interface ThinningSkeleton extends IterativeArrayProcessor<Matrix<? exten
      * @return               the thinned view if the current {@link #result()} matrix.
      * @throws IllegalArgumentException if <tt>directionIndex</tt> is not in 0..7 range.
      */
-    public Matrix<BitArray> asThinning(int directionIndex);
+    Matrix<BitArray> asThinning(int directionIndex);
 }

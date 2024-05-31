@@ -4772,13 +4772,13 @@ class ArraysFuncImpl {
     }
 
     interface FuncArray {
-        public Func f();
+        Func f();
 
-        public boolean truncateOverflows();
+        boolean truncateOverflows();
     }
 
     interface CoordFuncArray extends FuncArray {
-        public long[] dimensions();
+        long[] dimensions();
     }
 
     interface FuncArrayWithArguments extends FuncArray {
@@ -4786,9 +4786,9 @@ class ArraysFuncImpl {
     }
 
     interface OptimizationHelperInfo {
-        public Object getOptimizationHelperInfo();
+        Object getOptimizationHelperInfo();
 
-        public void setOptimizationHelperInfo(Object helperInfo);
+        void setOptimizationHelperInfo(Object helperInfo);
     }
 
     //[[Repeat() Bit ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double;;
@@ -4866,8 +4866,8 @@ class ArraysFuncImpl {
         implements FuncArrayWithArguments
     {
         private final ArraysAnyFuncGetDataOp afgdo;
-        PArray[] x;
-        PArray x0;
+        final PArray[] x;
+        final PArray x0;
 
         FuncBitArrayWithArguments(boolean truncateOverflows, long length, Func f, PArray... x) {
             super(truncateOverflows, length, f, x);
@@ -4960,8 +4960,8 @@ class ArraysFuncImpl {
         implements FuncArrayWithArguments
     {
         private final ArraysAnyFuncGetDataOp afgdo;
-        PArray[] x;
-        PArray x0;
+        final PArray[] x;
+        final PArray x0;
 
         FuncCharArrayWithArguments(boolean truncateOverflows, long length, Func f, PArray... x) {
             super(truncateOverflows, length, f, x);
@@ -5053,8 +5053,8 @@ class ArraysFuncImpl {
         implements FuncArrayWithArguments
     {
         private final ArraysAnyFuncGetDataOp afgdo;
-        PArray[] x;
-        PArray x0;
+        final PArray[] x;
+        final PArray x0;
 
         FuncByteArrayWithArguments(boolean truncateOverflows, long length, Func f, PArray... x) {
             super(truncateOverflows, length, f, x);
@@ -5146,8 +5146,8 @@ class ArraysFuncImpl {
         implements FuncArrayWithArguments
     {
         private final ArraysAnyFuncGetDataOp afgdo;
-        PArray[] x;
-        PArray x0;
+        final PArray[] x;
+        final PArray x0;
 
         FuncShortArrayWithArguments(boolean truncateOverflows, long length, Func f, PArray... x) {
             super(truncateOverflows, length, f, x);
@@ -5239,8 +5239,8 @@ class ArraysFuncImpl {
         implements FuncArrayWithArguments
     {
         private final ArraysAnyFuncGetDataOp afgdo;
-        PArray[] x;
-        PArray x0;
+        final PArray[] x;
+        final PArray x0;
 
         FuncIntArrayWithArguments(boolean truncateOverflows, long length, Func f, PArray... x) {
             super(truncateOverflows, length, f, x);
@@ -5332,8 +5332,8 @@ class ArraysFuncImpl {
         implements FuncArrayWithArguments
     {
         private final ArraysAnyFuncGetDataOp afgdo;
-        PArray[] x;
-        PArray x0;
+        final PArray[] x;
+        final PArray x0;
 
         FuncLongArrayWithArguments(boolean truncateOverflows, long length, Func f, PArray... x) {
             super(truncateOverflows, length, f, x);
@@ -5425,8 +5425,8 @@ class ArraysFuncImpl {
         implements FuncArrayWithArguments
     {
         private final ArraysAnyFuncGetDataOp afgdo;
-        PArray[] x;
-        PArray x0;
+        final PArray[] x;
+        final PArray x0;
 
         FuncFloatArrayWithArguments(boolean truncateOverflows, long length, Func f, PArray... x) {
             super(truncateOverflows, length, f, x);
@@ -5518,8 +5518,8 @@ class ArraysFuncImpl {
         implements FuncArrayWithArguments
     {
         private final ArraysAnyFuncGetDataOp afgdo;
-        PArray[] x;
-        PArray x0;
+        final PArray[] x;
+        final PArray x0;
 
         FuncDoubleArrayWithArguments(boolean truncateOverflows, long length, Func f, PArray... x) {
             super(truncateOverflows, length, f, x);
@@ -5552,7 +5552,7 @@ class ArraysFuncImpl {
     {
         final Func.Updatable f;
         final boolean truncateOverflows;
-        UpdatablePArray[] x;
+        final UpdatablePArray[] x;
         private final ArraysAnyFuncGetDataOp afgdo;
         private volatile Object optimizationHelperInfo;
 
@@ -5620,7 +5620,7 @@ class ArraysFuncImpl {
     {
         final Func.Updatable f;
         final boolean truncateOverflows;
-        UpdatablePArray[] x;
+        final UpdatablePArray[] x;
         private final ArraysAnyFuncGetDataOp afgdo;
         private volatile Object optimizationHelperInfo;
 
@@ -5687,7 +5687,7 @@ class ArraysFuncImpl {
     {
         final Func.Updatable f;
         final boolean truncateOverflows;
-        UpdatablePArray[] x;
+        final UpdatablePArray[] x;
         private final ArraysAnyFuncGetDataOp afgdo;
         private volatile Object optimizationHelperInfo;
 
@@ -5754,7 +5754,7 @@ class ArraysFuncImpl {
     {
         final Func.Updatable f;
         final boolean truncateOverflows;
-        UpdatablePArray[] x;
+        final UpdatablePArray[] x;
         private final ArraysAnyFuncGetDataOp afgdo;
         private volatile Object optimizationHelperInfo;
 
@@ -5821,7 +5821,7 @@ class ArraysFuncImpl {
     {
         final Func.Updatable f;
         final boolean truncateOverflows;
-        UpdatablePArray[] x;
+        final UpdatablePArray[] x;
         private final ArraysAnyFuncGetDataOp afgdo;
         private volatile Object optimizationHelperInfo;
 
@@ -5888,7 +5888,7 @@ class ArraysFuncImpl {
     {
         final Func.Updatable f;
         final boolean truncateOverflows;
-        UpdatablePArray[] x;
+        final UpdatablePArray[] x;
         private final ArraysAnyFuncGetDataOp afgdo;
         private volatile Object optimizationHelperInfo;
 
@@ -5955,7 +5955,7 @@ class ArraysFuncImpl {
     {
         final Func.Updatable f;
         final boolean truncateOverflows;
-        UpdatablePArray[] x;
+        final UpdatablePArray[] x;
         private final ArraysAnyFuncGetDataOp afgdo;
         private volatile Object optimizationHelperInfo;
 
@@ -6022,7 +6022,7 @@ class ArraysFuncImpl {
     {
         final Func.Updatable f;
         final boolean truncateOverflows;
-        UpdatablePArray[] x;
+        final UpdatablePArray[] x;
         private final ArraysAnyFuncGetDataOp afgdo;
         private volatile Object optimizationHelperInfo;
 

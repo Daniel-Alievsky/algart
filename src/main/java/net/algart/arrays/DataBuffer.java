@@ -425,7 +425,7 @@ public interface DataBuffer {
      *
      * @see Array#buffer(net.algart.arrays.DataBuffer.AccessMode, long)
      */
-    public enum AccessMode {
+    enum AccessMode {
         /**
          * This access mode should be used if you need read-only access to the data.
          * For AlgART arrays, it is the only allowed mode if the array does not implement
@@ -473,7 +473,7 @@ public interface DataBuffer {
         PRIVATE
     }
 
-    public AccessMode mode();
+    AccessMode mode();
 
     /**
      * Returns the Java array which contains the mapped region of the data.
@@ -492,7 +492,7 @@ public interface DataBuffer {
      *
      * @return the Java array which contains the mapped region of the data.
      */
-    public Object data();
+    Object data();
 
     /**
      * Maps this data buffer to the specified position of the underlying data storage (usually AlgART array)
@@ -514,7 +514,7 @@ public interface DataBuffer {
      * @see #map(long, long)
      * @see #map(long, boolean)
      */
-    public DataBuffer map(long position);
+    DataBuffer map(long position);
 
     /**
      * An analog of {@link #map(long)} with the only exception, that when <tt>readData=false</tt>,
@@ -533,7 +533,7 @@ public interface DataBuffer {
      * @see #mapNext(boolean)
      * @see #map(long, long, boolean)
      */
-    public DataBuffer map(long position, boolean readData);
+    DataBuffer map(long position, boolean readData);
 
     /**
      * Maps the next region in the underlying data storage (usually AlgART array).
@@ -552,7 +552,7 @@ public interface DataBuffer {
      * @see #map(long)
      * @see #mapNext(boolean)
      */
-    public DataBuffer mapNext();
+    DataBuffer mapNext();
 
     /**
      * An analog of {@link #mapNext()} with the only exception, that when <tt>readData=false</tt>,
@@ -569,7 +569,7 @@ public interface DataBuffer {
      * @return a reference to this data buffer.
      * @see #map(long, boolean)
      */
-    public DataBuffer mapNext(boolean readData);
+    DataBuffer mapNext(boolean readData);
 
     /**
      * Equivalent to {@link #map(long, long, boolean) map(position, maxCount, true)}.
@@ -582,7 +582,7 @@ public interface DataBuffer {
      * @throws IllegalArgumentException  if the specified <tt>maxCount</tt> is negative.
      * @see #map(long)
      */
-    public DataBuffer map(long position, long maxCount);
+    DataBuffer map(long position, long maxCount);
 
     /**
      * Maps this data buffer to the specified position of the underlying data storage (usually AlgART array)
@@ -617,7 +617,7 @@ public interface DataBuffer {
      * @see #map(long)
      * @see #map(long, long)
      */
-    public DataBuffer map(long position, long maxCount, boolean readData);
+    DataBuffer map(long position, long maxCount, boolean readData);
 
     /**
      * Writes all elements in the <i>actual region</i> of the {@link #data()} Java array
@@ -636,7 +636,7 @@ public interface DataBuffer {
      * @throws IllegalStateException if the access mode is {@link DataBuffer.AccessMode#READ READ}.
      * @see #force(long, long)
      */
-    public DataBuffer force();
+    DataBuffer force();
 
     /**
      * Writes all elements in the specified region of the {@link #data()} Java array
@@ -663,7 +663,7 @@ public interface DataBuffer {
      *                                  <tt>{@link #fromIndex()}..{@link #toIndex()}-1</tt>.
      * @see #force()
      */
-    public DataBuffer force(long fromIndex, long toIndex);
+    DataBuffer force(long fromIndex, long toIndex);
 
     /**
      * Returns the current <i>mapping position</i>.
@@ -671,7 +671,7 @@ public interface DataBuffer {
      *
      * @return the current <i>mapping position</i>.
      */
-    public long position();
+    long position();
 
     /**
      * Returns the <i>capacity</i> of this data buffer.
@@ -679,7 +679,7 @@ public interface DataBuffer {
      *
      * @return the <i>capacity</i> of this data buffer.
      */
-    public long capacity();
+    long capacity();
 
     /**
      * Returns the low boundary (inclusive) of the current <i>actual region</i>.
@@ -687,7 +687,7 @@ public interface DataBuffer {
      *
      * @return the low boundary (inclusive) of the current <i>actual region</i>.
      */
-    public long fromIndex();
+    long fromIndex();
 
     /**
      * Returns the high boundary (exclusive) of the current <i>actual region</i>.
@@ -695,7 +695,7 @@ public interface DataBuffer {
      *
      * @return the high boundary (exclusive) of the current <i>actual region</i>.
      */
-    public long toIndex();
+    long toIndex();
 
     /**
      * Returns the number of elements in the current <i>actual region</i>.
@@ -704,7 +704,7 @@ public interface DataBuffer {
      *
      * @return the number of elements in the current <i>actual region</i>.
      */
-    public long count();
+    long count();
 
     /**
      * Returns <tt>true</tt> if and only if <tt>{@link #count()}&gt;0</tt>.
@@ -717,7 +717,7 @@ public interface DataBuffer {
      *
      * @return <tt>true</tt> if this buffer is non-empty.
      */
-    public boolean hasData();
+    boolean hasData();
 
     /**
      * Returns <tt>true</tt> if this buffer is <i>direct</i>.
@@ -732,7 +732,7 @@ public interface DataBuffer {
      *
      * @return <tt>true</tt> if this buffer is direct.
      */
-    public boolean isDirect();
+    boolean isDirect();
 
     /**
      * Returns <tt>(int){@link #fromIndex()}</tt>, if <tt>{@link #fromIndex()}&lt;=Integer.MAX_VALUE</tt>,
@@ -745,7 +745,7 @@ public interface DataBuffer {
      * @throws DataBufferIndexOverflowException
      *          if <tt>{@link #fromIndex()}&gt;Integer.MAX_VALUE</tt>.
      */
-    public int from();
+    int from();
 
     /**
      * Returns <tt>(int){@link #toIndex()}</tt>, if <tt>{@link #toIndex()}&lt;=Integer.MAX_VALUE</tt>,
@@ -758,7 +758,7 @@ public interface DataBuffer {
      * @throws DataBufferIndexOverflowException
      *          if <tt>{@link #toIndex()}&gt;Integer.MAX_VALUE</tt>.
      */
-    public int to();
+    int to();
 
     /**
      * Returns <tt>(int){@link #count()}</tt>, if <tt>{@link #count()}&lt;=Integer.MAX_VALUE</tt>,
@@ -771,5 +771,5 @@ public interface DataBuffer {
      * @throws DataBufferIndexOverflowException
      *          if <tt>{@link #count()}&gt;Integer.MAX_VALUE</tt>.
      */
-    public int cnt();
+    int cnt();
 }

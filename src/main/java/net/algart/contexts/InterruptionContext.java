@@ -81,7 +81,7 @@ public interface InterruptionContext extends Context {
      * The application may extend this class to pass some additional information about
      * interruption reason to that method.
      */
-    public static class Event {
+    class Event {
     }
 
     /**
@@ -90,14 +90,14 @@ public interface InterruptionContext extends Context {
      * {@link InterruptionContext#removeInterruptionListener removed} by
      * the {@link InterruptionContext interruption context}.
      */
-    public static interface Listener extends EventListener {
+    interface Listener extends EventListener {
         /**
          * This method is called by an application when it attempts to stop execution
          * of some long-working module.
          *
          * @param event interruption event.
          */
-        public void interruptionRequested(Event event);
+        void interruptionRequested(Event event);
     }
 
     /**
@@ -106,7 +106,7 @@ public interface InterruptionContext extends Context {
      *
      * @throws InterruptionException if the application has requested to interrupt the currently executing module.
      */
-    public void checkInterruption() throws InterruptionException;
+    void checkInterruption() throws InterruptionException;
 
     /**
      * Adds the listener to receive interruption requests.
@@ -119,7 +119,7 @@ public interface InterruptionContext extends Context {
      *
      * @param listener the listener that will be invoked when the application attempts to interrupt module execution.
      */
-    public void addInterruptionListener(Listener listener);
+    void addInterruptionListener(Listener listener);
 
     /**
      * Removes the listener added by {@link #addInterruptionListener(Listener)} method.
@@ -128,5 +128,5 @@ public interface InterruptionContext extends Context {
      *
      * @param listener the listener that should be removed.
      */
-    public void removeInterruptionListener(Listener listener);
+    void removeInterruptionListener(Listener listener);
 }

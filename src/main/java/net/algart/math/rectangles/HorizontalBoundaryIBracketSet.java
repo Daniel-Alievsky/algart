@@ -37,7 +37,7 @@ class HorizontalBoundaryIBracketSet<L extends IRectanglesUnion.BoundaryLink> {
     int horizontalIndex;
     L horizontal;
     long coord;
-    private NavigableSet<Integer> intersectingLinks = new TreeSet<Integer>();
+    private final NavigableSet<Integer> intersectingLinks = new TreeSet<>();
     // - index if x-coordinates array for of all points, where the current horizontal goes out of the figure
 
     public HorizontalBoundaryIBracketSet(List<L> allHorizontals) {

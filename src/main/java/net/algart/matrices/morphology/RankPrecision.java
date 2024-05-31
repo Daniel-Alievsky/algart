@@ -498,7 +498,7 @@ public enum RankPrecision implements CustomRankPrecision {
     final int[] bitLevels;
     final boolean interpolated;
 
-    private RankPrecision(int[] bitLevels, boolean interpolated) {
+    RankPrecision(int[] bitLevels, boolean interpolated) {
         assert bitLevels.length > 0;
         this.bitLevels = bitLevels;
         this.interpolated = interpolated;

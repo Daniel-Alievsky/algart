@@ -240,7 +240,7 @@ public abstract class SkeletonPixelClassifier {
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
      * there are no ways to modify settings of the created instance.</p>
      */
-    public static enum AttachmentInformation {
+    public enum AttachmentInformation {
         /**
          * Indicates that {@link SkeletonPixelClassifier#asPixelTypes asPixelTypes} method must return,
          * for attachable branch ends, the direction (neighbour index) towards the branch,

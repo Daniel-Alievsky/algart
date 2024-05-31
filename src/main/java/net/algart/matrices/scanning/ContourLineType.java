@@ -106,7 +106,7 @@ public enum ContourLineType {
     static final int SEGMENT_CENTERS_POLYLINE_CODE = 2;
 
     final int code;
-    private ContourLineType(int code) {
+    ContourLineType(int code) {
         this.code = code;
     }
 

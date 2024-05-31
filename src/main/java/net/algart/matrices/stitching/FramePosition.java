@@ -31,9 +31,9 @@ import net.algart.math.functions.Func;
 
 
 public interface FramePosition {
-    public RectangularArea area();
+    RectangularArea area();
 
-    public Func asInterpolationFunc(Matrix<? extends PArray> sourceMatrix);
+    Func asInterpolationFunc(Matrix<? extends PArray> sourceMatrix);
 
     /**
      * Returns the hash code of this object. The result depends on all parameters, specifying
@@ -41,7 +41,7 @@ public interface FramePosition {
      *
      * @return the hash code of this frame position.
      */
-    public int hashCode();
+    int hashCode();
 
     /**
      * Indicates whether some other object is also {@link FramePosition},
@@ -55,5 +55,5 @@ public interface FramePosition {
      * @param obj the object to be compared for equality with this frame position.
      * @return    <tt>true</tt> if the specified object is a frame position equal to this one.
      */
-    public boolean equals(Object obj);
+    boolean equals(Object obj);
 }

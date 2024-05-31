@@ -135,10 +135,10 @@ public interface SpectralTransform {
      * cannot be negative.
      *
      * @param length the checked length or matrix dimension.
-     * @return       whether the specified argument is an allowed dimension for arrays or matrices,
-     *               trasformed by this transformation.
+     * @return whether the specified argument is an allowed dimension for arrays or matrices,
+     * trasformed by this transformation.
      */
-    public boolean isLengthAllowed(long length);
+    boolean isLengthAllowed(long length);
 
     /**
      * Returns <tt>true</tt> if the transformation methods of this class ({@link #directTransform directTransform},
@@ -159,9 +159,9 @@ public interface SpectralTransform {
      * in {@link FastFourierTransform} class and <tt>false</tt> in {@link SeparableFastHartleyTransform} class.
      *
      * @return <tt>true</tt> if this class can transform complex samples only,
-     *         <tt>false</tt> if real samples can be transformed too.
+     * <tt>false</tt> if real samples can be transformed too.
      */
-    public boolean areComplexSamplesRequired();
+    boolean areComplexSamplesRequired();
 
 
     /**
@@ -179,7 +179,7 @@ public interface SpectralTransform {
      *                                       but <tt>samples.{@link SampleArray#isComplex() isComplex()}</tt> method
      *                                       returns <tt>false</tt>.
      */
-    public void directTransform(ArrayContext context, SampleArray samples);
+    void directTransform(ArrayContext context, SampleArray samples);
 
     /**
      * Inverse transform of the spectrum back to the original sample array.
@@ -196,7 +196,7 @@ public interface SpectralTransform {
      *                                       but <tt>samples.{@link SampleArray#isComplex() isComplex()}</tt> method
      *                                       returns <tt>false</tt>.
      */
-    public void inverseTransform(ArrayContext context, SampleArray samples);
+    void inverseTransform(ArrayContext context, SampleArray samples);
 
 
     /**
@@ -224,9 +224,10 @@ public interface SpectralTransform {
      * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>
      *                                       and <tt>matrixIm</tt> argument is <tt>null</tt>.
      */
-    public void directTransformMatrix(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> matrixRe,
-        Matrix<? extends UpdatablePNumberArray> matrixIm);
+    void directTransformMatrix(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> matrixRe,
+            Matrix<? extends UpdatablePNumberArray> matrixIm);
 
     /**
      * Inverse transform of the spectrum back to the original matrix of real or complex numbers.
@@ -253,7 +254,8 @@ public interface SpectralTransform {
      * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>
      *                                       and <tt>matrixIm</tt> argument is <tt>null</tt>.
      */
-    public void inverseTransformMatrix(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> matrixRe,
-        Matrix<? extends UpdatablePNumberArray> matrixIm);
+    void inverseTransformMatrix(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> matrixRe,
+            Matrix<? extends UpdatablePNumberArray> matrixIm);
 }

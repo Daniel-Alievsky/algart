@@ -63,7 +63,7 @@ public interface ArrayMemoryContext extends Context {
      *
      * @return the desired memory model.
      */
-    public MemoryModel getMemoryModel();
+    MemoryModel getMemoryModel();
 
     /**
      * Returns the {@link MemoryModel memory model} that should be used
@@ -77,7 +77,7 @@ public interface ArrayMemoryContext extends Context {
      * @return            the desired memory model.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
-    public MemoryModel getMemoryModel(Class<?> elementType);
+    MemoryModel getMemoryModel(Class<?> elementType);
 
     /**
      * Returns the {@link MemoryModel memory model} that should be used
@@ -96,5 +96,5 @@ public interface ArrayMemoryContext extends Context {
      * @return         the desired memory model.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
-    public MemoryModel getMemoryModel(String settings);
+    MemoryModel getMemoryModel(String settings);
 }

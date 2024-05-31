@@ -253,7 +253,7 @@ public interface ApertureProcessor<K> {
      *                                                 method; but other implementations are permitted to throw
      *                                                 another exceptions in this case.
      */
-    public void process(Map<K, Matrix<?>> dest, Map<K, Matrix<?>> src);
+    void process(Map<K, Matrix<?>> dest, Map<K, Matrix<?>> src);
 
     /**
      * Returns the dependence aperture <b>A</b><sub><i>i</i></sub>
@@ -270,5 +270,5 @@ public interface ApertureProcessor<K> {
      * @param srcMatrixKey the index (key) of the source matrix.
      * @return             the dependence aperture of the processing algorithm for this source matrix.
      */
-    public IRectangularArea dependenceAperture(K srcMatrixKey);
+    IRectangularArea dependenceAperture(K srcMatrixKey);
 }

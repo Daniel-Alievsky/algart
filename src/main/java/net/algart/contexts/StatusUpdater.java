@@ -46,7 +46,7 @@ public interface StatusUpdater extends Context {
      *
      * @param message some information message; must not be <tt>null</tt>.
      */
-    public void updateStatus(String message);
+    void updateStatus(String message);
 
     /**
      * Shows some information message to the user.
@@ -67,5 +67,5 @@ public interface StatusUpdater extends Context {
      * @param message some information message; must not be <tt>null</tt>.
      * @param force   whether this information must be shown always (<tt>true</tt>) or may be lost (<tt>false</tt>).
      */
-    public void updateStatus(String message, boolean force);
+    void updateStatus(String message, boolean force);
 }

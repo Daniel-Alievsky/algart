@@ -28,9 +28,9 @@ import java.util.List;
 
 public interface StitchingMethod<P extends FramePosition> {
 
-    public StitchingFunc getStitchingFunc(List<? extends Frame<P>> frames);
+    StitchingFunc getStitchingFunc(List<? extends Frame<P>> frames);
 
-    public boolean simpleBehaviorForEmptySpace();
+    boolean simpleBehaviorForEmptySpace();
 
-    public boolean simpleBehaviorForSingleFrame();
+    boolean simpleBehaviorForSingleFrame();
 }

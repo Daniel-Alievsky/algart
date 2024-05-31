@@ -48,5 +48,5 @@ public interface ArrayThreadPoolContext extends Context {
      *
      * @return the desired thread pool factory.
      */
-    public ThreadPoolFactory getThreadPoolFactory();
+    ThreadPoolFactory getThreadPoolFactory();
 }
