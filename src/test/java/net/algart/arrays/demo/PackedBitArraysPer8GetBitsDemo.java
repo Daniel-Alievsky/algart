@@ -149,7 +149,7 @@ public class PackedBitArraysPer8GetBitsDemo {
         System.out.printf("Length %d, packed length %d, reverse unpacked length %d%n",
                 len,
                 packedLen,
-                PackedBitArrays.unpackedLength(packedLen));
+                PackedBitArraysPer8.unpackedLength(packedLen));
 
         for (int test = 1; test <= 50; test++) {
             System.out.printf("%nTest #%d%n", test);

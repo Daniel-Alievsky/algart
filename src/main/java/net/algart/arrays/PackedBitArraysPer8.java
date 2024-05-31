@@ -254,7 +254,7 @@ public class PackedBitArraysPer8 {
      *
      * @param packedLength number of packed bytes.
      * @return <tt>8 * packedLength</tt>
-     * @throws TooLargeArrayException if the argument is too large: &ge; 2<sup>60</sup>.
+     * @throws TooLargeArrayException   if the argument is too large: &ge; 2<sup>60</sup>.
      * @throws IllegalArgumentException if the argument is negative.
      */
     public static long unpackedLength(long packedLength) {

@@ -92,7 +92,7 @@ public class PackedBitBuffers {
      *
      * @param packedLength number of packed <tt>long[]</tt> values.
      * @return <tt>64 * packedLength</tt>
-     * @throws TooLargeArrayException if the argument is too large: &ge; 2<sup>57</sup>.
+     * @throws TooLargeArrayException   if the argument is too large: &ge; 2<sup>57</sup>.
      * @throws IllegalArgumentException if the argument is negative.
      */
     public static long unpackedLength(long packedLength) {
@@ -103,7 +103,7 @@ public class PackedBitBuffers {
      * Returns <tt>((long) buffer.limit())) &lt;&lt; 6</tt>: the maximal number of bits that
      * can be stored in the specified buffer.
      *
-     * @param src   the buffer (bits are packed into <tt>long</tt> values).
+     * @param buffer the buffer (bits are packed into <tt>long</tt> values).
      * @return <tt>64 * (long) buffer.limit()</tt>
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
