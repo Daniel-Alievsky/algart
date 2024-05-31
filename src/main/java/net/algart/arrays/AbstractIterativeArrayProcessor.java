@@ -165,7 +165,7 @@ public abstract class AbstractIterativeArrayProcessor<T>
                 for (int k = 1; k < stack.length; k++) {
                     String methodName = stack[k].getMethodName();
                     String className = stack[k].getClassName();
-                    if (stackInfo.length() == 0) {
+                    if (stackInfo.isEmpty()) {
                         if ("process".equals(methodName) &&
                             AbstractIterativeArrayProcessor.class.getName().equals(className)) {
                             continue;
