@@ -90,7 +90,7 @@
                                               fork="true" failonerror="true">
                                             <!-- See https://ant.apache.org/manual/Tasks/java.html -->
                                             <classpath refid="maven.compile.classpath"/>
-                                            <arg value="${version}"/>
+                                            <arg value="${project.version}"/>
                                         </java>
                                         <echo level="info"/>
                                     </target>
