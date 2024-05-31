@@ -475,7 +475,7 @@ public class PackedBitBuffers {
             long count,
             boolean reverseOrder) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, copyBits_method_impl)
-        //  dest\[([^\]]+)\]\s*=\s*([^;]*) ==> dest.put($1, $2);;
+        //  dest\[([^\]]+)\]\s*=(\s*)([^;]*) ==> dest.put($1,$2$3);;
         //  (src|dest)\[([^\]]+)\] ==> $1.get($2);;
         //  (synchronized\s*\()(\s*\w+\s*)\) ==> $1getLock($2));;
         //  //Start_reverseOrder.*?//End_reverseOrder.*?(?:\r(?!\n)|\n|\r\n)\s+\{ ==>
@@ -514,14 +514,16 @@ public class PackedBitBuffers {
                 if (cntFinish > 0) {
                     long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
                     synchronized (getLock(dest)) {
-                        dest.put(dPos + cnt, (src.get(sPos + cnt) & maskFinish) |
+                        dest.put(dPos + cnt,
+                                (src.get(sPos + cnt) & maskFinish) |
                                         (dest.get(dPos + cnt) & ~maskFinish));
                     }
                 }
                 JBuffers.copyLongBuffer(dest, dPos, src, sPos, cnt, reverseOrder);
                 if (cntStart > 0) {
                     synchronized (getLock(dest)) {
-                        dest.put(dPosStart, (src.get(sPosStart) & maskStart) |
+                        dest.put(dPosStart,
+                                (src.get(sPosStart) & maskStart) |
                                         (dest.get(dPosStart) & ~maskStart));
                     }
                 }
