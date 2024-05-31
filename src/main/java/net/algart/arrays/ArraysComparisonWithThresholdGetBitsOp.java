@@ -30,7 +30,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * <p>Implementation of {@link BitArray#getBits(long, long[], long, long)} methods
  * in the custom implementations of functional arrays for rectangular binary functions.
- * Used by {@link ArraysFuncImpl} class.</p>
+ * Can be used by {@link ArraysFuncImpl} class, but not used now.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>.</p>
  *
@@ -44,8 +44,8 @@ class ArraysComparisonWithThresholdGetBitsOp {
     private final DataBuffer dbuf;
 
     private final double threshold;
-    private boolean greater;
-    private boolean inclusive;
+    private final boolean greater;
+    private final boolean inclusive;
     private final JArrayPool bufferPool;
 
     ArraysComparisonWithThresholdGetBitsOp(PArray x0, double threshold, boolean greater, boolean inclusive) {

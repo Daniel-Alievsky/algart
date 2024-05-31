@@ -945,11 +945,11 @@ class ArraysFuncImpl {
                 if (x[0] instanceof BitArray) {
                     return InternalUtils.<T>cast(
                         new FuncBitArrayWithArguments(truncateOverflows, len, f, x) {
-                            BitArray x0 = (BitArray)x[0];
+                            final BitArray x0 = (BitArray)x[0];
                             final ArraysBitTableGetDataOp tgdo = new ArraysBitTableGetDataOp(
                                 truncateOverflows, x0, f, BIT_TYPE_CODE);
-                            boolean v0 = tgdo.booleanTable[0];
-                            boolean v1 = tgdo.booleanTable[1];
+                            final boolean v0 = tgdo.booleanTable[0];
+                            final boolean v1 = tgdo.booleanTable[1];
 //                            {
 //                                System.out.println(v0 + "; " + v1 + "; " + f);
 //                            }
@@ -965,10 +965,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ByteArray) {
                     return InternalUtils.<T>cast(
                         new FuncBitArrayWithArguments(truncateOverflows, len, f, x) {
-                            ByteArray x0 = (ByteArray)x[0];
+                            final ByteArray x0 = (ByteArray)x[0];
                             final ArraysByteTableGetDataOp tgdo = new ArraysByteTableGetDataOp(
                                 truncateOverflows, x0, f, BIT_TYPE_CODE);
-                            boolean[] v = tgdo.booleanTable;
+                            final boolean[] v = tgdo.booleanTable;
 
                             public boolean getBit(long index) {
                                 return v[x0.getByte(index) & 0xFF];
@@ -981,10 +981,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ShortArray && quickTableVersion) {
                     return InternalUtils.<T>cast(
                         new FuncBitArrayWithArguments(truncateOverflows, len, f, x) {
-                            ShortArray x0 = (ShortArray)x[0];
+                            final ShortArray x0 = (ShortArray)x[0];
                             final ArraysShortTableGetDataOp tgdo = new ArraysShortTableGetDataOp(
                                 truncateOverflows, x0, f, BIT_TYPE_CODE);
-                            boolean[] v = tgdo.booleanTable;
+                            final boolean[] v = tgdo.booleanTable;
 
                             public boolean getBit(long index) {
                                 return v[x0.getShort(index) & 0xFFFF];
@@ -1028,11 +1028,11 @@ class ArraysFuncImpl {
                 if (x[0] instanceof BitArray) {
                     return InternalUtils.<T>cast(
                         new FuncCharArrayWithArguments(truncateOverflows, len, f, x) {
-                            BitArray x0 = (BitArray)x[0];
+                            final BitArray x0 = (BitArray)x[0];
                             final ArraysBitTableGetDataOp tgdo = new ArraysBitTableGetDataOp(
                                 truncateOverflows, x0, f, CHAR_TYPE_CODE);
-                            char v0 = tgdo.charTable[0];
-                            char v1 = tgdo.charTable[1];
+                            final char v0 = tgdo.charTable[0];
+                            final char v1 = tgdo.charTable[1];
 
                             public char getChar(long index) {
                                 return x0.getBit(index) ? v1 : v0;
@@ -1045,10 +1045,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ByteArray) {
                     return InternalUtils.<T>cast(
                         new FuncCharArrayWithArguments(truncateOverflows, len, f, x) {
-                            ByteArray x0 = (ByteArray)x[0];
+                            final ByteArray x0 = (ByteArray)x[0];
                             final ArraysByteTableGetDataOp tgdo = new ArraysByteTableGetDataOp(
                                 truncateOverflows, x0, f, CHAR_TYPE_CODE);
-                            char[] v = tgdo.charTable;
+                            final char[] v = tgdo.charTable;
 
                             public char getChar(long index) {
                                 return v[x0.getByte(index) & 0xFF];
@@ -1061,10 +1061,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ShortArray) {
                     return InternalUtils.<T>cast(
                         new FuncCharArrayWithArguments(truncateOverflows, len, f, x) {
-                            ShortArray x0 = (ShortArray)x[0];
+                            final ShortArray x0 = (ShortArray)x[0];
                             final ArraysShortTableGetDataOp tgdo = new ArraysShortTableGetDataOp(
                                 truncateOverflows, x0, f, CHAR_TYPE_CODE);
-                            char[] v = tgdo.charTable;
+                            final char[] v = tgdo.charTable;
 
                             public char getChar(long index) {
                                 return v[x0.getShort(index) & 0xFFFF];
@@ -1154,11 +1154,11 @@ class ArraysFuncImpl {
                 if (x[0] instanceof BitArray) {
                     return InternalUtils.<T>cast(
                         new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
-                            BitArray x0 = (BitArray)x[0];
+                            final BitArray x0 = (BitArray)x[0];
                             final ArraysBitTableGetDataOp tgdo = new ArraysBitTableGetDataOp(
                                 truncateOverflows, x0, f, BYTE_TYPE_CODE);
-                            int v0 = tgdo.byteTable[0] & 0xFF;
-                            int v1 = tgdo.byteTable[1] & 0xFF;
+                            final int v0 = tgdo.byteTable[0] & 0xFF;
+                            final int v1 = tgdo.byteTable[1] & 0xFF;
 
                             public int getByte(long index) {
                                 return x0.getBit(index) ? v1 : v0;
@@ -1171,10 +1171,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ByteArray) {
                     return InternalUtils.<T>cast(
                         new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
-                            ByteArray x0 = (ByteArray)x[0];
+                            final ByteArray x0 = (ByteArray)x[0];
                             final ArraysByteTableGetDataOp tgdo = new ArraysByteTableGetDataOp(
                                 truncateOverflows, x0, f, BYTE_TYPE_CODE);
-                            byte[] v = tgdo.byteTable;
+                            final byte[] v = tgdo.byteTable;
 
                             public int getByte(long index) {
                                 return v[x0.getByte(index) & 0xFF] & 0xFF;
@@ -1187,10 +1187,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ShortArray) {
                     return InternalUtils.<T>cast(
                         new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
-                            ShortArray x0 = (ShortArray)x[0];
+                            final ShortArray x0 = (ShortArray)x[0];
                             final ArraysShortTableGetDataOp tgdo = new ArraysShortTableGetDataOp(
                                 truncateOverflows, x0, f, BYTE_TYPE_CODE);
-                            byte[] v = tgdo.byteTable;
+                            final byte[] v = tgdo.byteTable;
 
                             public int getByte(long index) {
                                 return v[x0.getShort(index) & 0xFFFF] & 0xFF;
@@ -1270,11 +1270,11 @@ class ArraysFuncImpl {
                 if (x[0] instanceof BitArray) {
                     return InternalUtils.<T>cast(
                         new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
-                            BitArray x0 = (BitArray)x[0];
+                            final BitArray x0 = (BitArray)x[0];
                             final ArraysBitTableGetDataOp tgdo = new ArraysBitTableGetDataOp(
                                 truncateOverflows, x0, f, SHORT_TYPE_CODE);
-                            int v0 = tgdo.shortTable[0] & 0xFFFF;
-                            int v1 = tgdo.shortTable[1] & 0xFFFF;
+                            final int v0 = tgdo.shortTable[0] & 0xFFFF;
+                            final int v1 = tgdo.shortTable[1] & 0xFFFF;
 
                             public int getShort(long index) {
                                 return x0.getBit(index) ? v1 : v0;
@@ -1287,10 +1287,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ByteArray) {
                     return InternalUtils.<T>cast(
                         new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
-                            ByteArray x0 = (ByteArray)x[0];
+                            final ByteArray x0 = (ByteArray)x[0];
                             final ArraysByteTableGetDataOp tgdo = new ArraysByteTableGetDataOp(
                                 truncateOverflows, x0, f, SHORT_TYPE_CODE);
-                            short[] v = tgdo.shortTable;
+                            final short[] v = tgdo.shortTable;
 
                             public int getShort(long index) {
                                 return v[x0.getByte(index) & 0xFF] & 0xFFFF;
@@ -1303,10 +1303,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ShortArray) {
                     return InternalUtils.<T>cast(
                         new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
-                            ShortArray x0 = (ShortArray)x[0];
+                            final ShortArray x0 = (ShortArray)x[0];
                             final ArraysShortTableGetDataOp tgdo = new ArraysShortTableGetDataOp(
                                 truncateOverflows, x0, f, SHORT_TYPE_CODE);
-                            short[] v = tgdo.shortTable;
+                            final short[] v = tgdo.shortTable;
 
                             public int getShort(long index) {
                                 return v[x0.getShort(index) & 0xFFFF] & 0xFFFF;
@@ -1386,11 +1386,11 @@ class ArraysFuncImpl {
                 if (x[0] instanceof BitArray) {
                     return InternalUtils.<T>cast(
                         new FuncIntArrayWithArguments(truncateOverflows, len, f, x) {
-                            BitArray x0 = (BitArray)x[0];
+                            final BitArray x0 = (BitArray)x[0];
                             final ArraysBitTableGetDataOp tgdo = new ArraysBitTableGetDataOp(
                                 truncateOverflows, x0, f, INT_TYPE_CODE);
-                            int v0 = tgdo.intTable[0];
-                            int v1 = tgdo.intTable[1];
+                            final int v0 = tgdo.intTable[0];
+                            final int v1 = tgdo.intTable[1];
 
                             public int getInt(long index) {
                                 return x0.getBit(index) ? v1 : v0;
@@ -1403,10 +1403,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ByteArray) {
                     return InternalUtils.<T>cast(
                         new FuncIntArrayWithArguments(truncateOverflows, len, f, x) {
-                            ByteArray x0 = (ByteArray)x[0];
+                            final ByteArray x0 = (ByteArray)x[0];
                             final ArraysByteTableGetDataOp tgdo = new ArraysByteTableGetDataOp(
                                 truncateOverflows, x0, f, INT_TYPE_CODE);
-                            int[] v = tgdo.intTable;
+                            final int[] v = tgdo.intTable;
 
                             public int getInt(long index) {
                                 return v[x0.getByte(index) & 0xFF];
@@ -1419,10 +1419,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ShortArray) {
                     return InternalUtils.<T>cast(
                         new FuncIntArrayWithArguments(truncateOverflows, len, f, x) {
-                            ShortArray x0 = (ShortArray)x[0];
+                            final ShortArray x0 = (ShortArray)x[0];
                             final ArraysShortTableGetDataOp tgdo = new ArraysShortTableGetDataOp(
                                 truncateOverflows, x0, f, INT_TYPE_CODE);
-                            int[] v = tgdo.intTable;
+                            final int[] v = tgdo.intTable;
 
                             public int getInt(long index) {
                                 return v[x0.getShort(index) & 0xFFFF];
@@ -1506,11 +1506,11 @@ class ArraysFuncImpl {
                 if (x[0] instanceof BitArray) {
                     return InternalUtils.<T>cast(
                         new FuncLongArrayWithArguments(truncateOverflows, len, f, x) {
-                            BitArray x0 = (BitArray)x[0];
+                            final BitArray x0 = (BitArray)x[0];
                             final ArraysBitTableGetDataOp tgdo = new ArraysBitTableGetDataOp(
                                 truncateOverflows, x0, f, LONG_TYPE_CODE);
-                            long v0 = tgdo.longTable[0];
-                            long v1 = tgdo.longTable[1];
+                            final long v0 = tgdo.longTable[0];
+                            final long v1 = tgdo.longTable[1];
 
                             public long getLong(long index) {
                                 return x0.getBit(index) ? v1 : v0;
@@ -1523,10 +1523,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ByteArray) {
                     return InternalUtils.<T>cast(
                         new FuncLongArrayWithArguments(truncateOverflows, len, f, x) {
-                            ByteArray x0 = (ByteArray)x[0];
+                            final ByteArray x0 = (ByteArray)x[0];
                             final ArraysByteTableGetDataOp tgdo = new ArraysByteTableGetDataOp(
                                 truncateOverflows, x0, f, LONG_TYPE_CODE);
-                            long[] v = tgdo.longTable;
+                            final long[] v = tgdo.longTable;
 
                             public long getLong(long index) {
                                 return v[x0.getByte(index) & 0xFF];
@@ -1539,10 +1539,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ShortArray && quickTableVersion) {
                     return InternalUtils.<T>cast(
                         new FuncLongArrayWithArguments(truncateOverflows, len, f, x) {
-                            ShortArray x0 = (ShortArray)x[0];
+                            final ShortArray x0 = (ShortArray)x[0];
                             final ArraysShortTableGetDataOp tgdo = new ArraysShortTableGetDataOp(
                                 truncateOverflows, x0, f, LONG_TYPE_CODE);
-                            long[] v = tgdo.longTable;
+                            final long[] v = tgdo.longTable;
 
                             public long getLong(long index) {
                                 return v[x0.getShort(index) & 0xFFFF];
@@ -1590,11 +1590,11 @@ class ArraysFuncImpl {
                 if (x[0] instanceof BitArray) {
                     return InternalUtils.<T>cast(
                         new FuncFloatArrayWithArguments(truncateOverflows, len, f, x) {
-                            BitArray x0 = (BitArray)x[0];
+                            final BitArray x0 = (BitArray)x[0];
                             final ArraysBitTableGetDataOp tgdo = new ArraysBitTableGetDataOp(
                                 truncateOverflows, x0, f, FLOAT_TYPE_CODE);
-                            float v0 = tgdo.floatTable[0];
-                            float v1 = tgdo.floatTable[1];
+                            final float v0 = tgdo.floatTable[0];
+                            final float v1 = tgdo.floatTable[1];
 
                             public float getFloat(long index) {
                                 return x0.getBit(index) ? v1 : v0;
@@ -1607,10 +1607,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ByteArray) {
                     return InternalUtils.<T>cast(
                         new FuncFloatArrayWithArguments(truncateOverflows, len, f, x) {
-                            ByteArray x0 = (ByteArray)x[0];
+                            final ByteArray x0 = (ByteArray)x[0];
                             final ArraysByteTableGetDataOp tgdo = new ArraysByteTableGetDataOp(
                                 truncateOverflows, x0, f, FLOAT_TYPE_CODE);
-                            float[] v = tgdo.floatTable;
+                            final float[] v = tgdo.floatTable;
 
                             public float getFloat(long index) {
                                 return v[x0.getByte(index) & 0xFF];
@@ -1623,10 +1623,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ShortArray && quickTableVersion) {
                     return InternalUtils.<T>cast(
                         new FuncFloatArrayWithArguments(truncateOverflows, len, f, x) {
-                            ShortArray x0 = (ShortArray)x[0];
+                            final ShortArray x0 = (ShortArray)x[0];
                             final ArraysShortTableGetDataOp tgdo = new ArraysShortTableGetDataOp(
                                 truncateOverflows, x0, f, FLOAT_TYPE_CODE);
-                            float[] v = tgdo.floatTable;
+                            final float[] v = tgdo.floatTable;
 
                             public float getFloat(long index) {
                                 return v[x0.getShort(index) & 0xFFFF];
@@ -1673,11 +1673,11 @@ class ArraysFuncImpl {
                 if (x[0] instanceof BitArray) {
                     return InternalUtils.<T>cast(
                         new FuncDoubleArrayWithArguments(truncateOverflows, len, f, x) {
-                            BitArray x0 = (BitArray)x[0];
+                            final BitArray x0 = (BitArray)x[0];
                             final ArraysBitTableGetDataOp tgdo = new ArraysBitTableGetDataOp(
                                 truncateOverflows, x0, f, DOUBLE_TYPE_CODE);
-                            double v0 = tgdo.doubleTable[0];
-                            double v1 = tgdo.doubleTable[1];
+                            final double v0 = tgdo.doubleTable[0];
+                            final double v1 = tgdo.doubleTable[1];
 
                             public double getDouble(long index) {
                                 return x0.getBit(index) ? v1 : v0;
@@ -1690,10 +1690,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ByteArray) {
                     return InternalUtils.<T>cast(
                         new FuncDoubleArrayWithArguments(truncateOverflows, len, f, x) {
-                            ByteArray x0 = (ByteArray)x[0];
+                            final ByteArray x0 = (ByteArray)x[0];
                             final ArraysByteTableGetDataOp tgdo = new ArraysByteTableGetDataOp(
                                 truncateOverflows, x0, f, DOUBLE_TYPE_CODE);
-                            double[] v = tgdo.doubleTable;
+                            final double[] v = tgdo.doubleTable;
 
                             public double getDouble(long index) {
                                 return v[x0.getByte(index) & 0xFF];
@@ -1706,10 +1706,10 @@ class ArraysFuncImpl {
                 } else if (x[0] instanceof ShortArray && quickTableVersion) {
                     return InternalUtils.<T>cast(
                         new FuncDoubleArrayWithArguments(truncateOverflows, len, f, x) {
-                            ShortArray x0 = (ShortArray)x[0];
+                            final ShortArray x0 = (ShortArray)x[0];
                             final ArraysShortTableGetDataOp tgdo = new ArraysShortTableGetDataOp(
                                 truncateOverflows, x0, f, DOUBLE_TYPE_CODE);
-                            double[] v = tgdo.doubleTable;
+                            final double[] v = tgdo.doubleTable;
 
                             public double getDouble(long index) {
                                 return v[x0.getShort(index) & 0xFFFF];
@@ -2862,7 +2862,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncBitArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, BIT_TYPE_CODE);
 
                             public boolean getBit(long index) {
@@ -2888,7 +2888,7 @@ class ArraysFuncImpl {
                     } else {
                         return InternalUtils.<T>cast(
                             new FuncCharArrayWithArguments(truncateOverflows, len, f, x) {
-                                ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                                final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                     truncateOverflows, x, lf, CHAR_TYPE_CODE);
 
                                 public char getChar(long index) {
@@ -2909,8 +2909,8 @@ class ArraysFuncImpl {
                 } else if (a0 == 1.0 && b == 0.0 && x[0] instanceof PFixedArray) {
                     return InternalUtils.<T>cast(
                         new FuncCharArrayWithArguments(truncateOverflows, len, f, x) {
-                            PFixedArray x0Fix = (PFixedArray)x0;
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final PFixedArray x0Fix = (PFixedArray)x0;
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, CHAR_TYPE_CODE);
 
                             public char getChar(long index) {
@@ -2925,7 +2925,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncCharArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, CHAR_TYPE_CODE);
 
                             public char getChar(long index) {
@@ -2953,7 +2953,7 @@ class ArraysFuncImpl {
                     } else {
                         return InternalUtils.<T>cast(
                             new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
-                                ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                                final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                     truncateOverflows, x, lf, BYTE_TYPE_CODE);
 
                                 public int getByte(long index) {
@@ -2972,8 +2972,8 @@ class ArraysFuncImpl {
                 } else if (a0 == 1.0 && b == 0.0 && x[0] instanceof PFixedArray) {
                     return InternalUtils.<T>cast(
                         new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
-                            PFixedArray x0Fix = (PFixedArray)x0;
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final PFixedArray x0Fix = (PFixedArray)x0;
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, BYTE_TYPE_CODE);
 
                             public int getByte(long index) {
@@ -2988,7 +2988,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, BYTE_TYPE_CODE);
 
                             public int getByte(long index) {
@@ -3013,7 +3013,7 @@ class ArraysFuncImpl {
                     } else {
                         return InternalUtils.<T>cast(
                             new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
-                                ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                                final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                     truncateOverflows, x, lf, SHORT_TYPE_CODE);
 
                                 public int getShort(long index) {
@@ -3032,8 +3032,8 @@ class ArraysFuncImpl {
                 } else if (a0 == 1.0 && b == 0.0 && x[0] instanceof PFixedArray) {
                     return InternalUtils.<T>cast(
                         new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
-                            PFixedArray x0Fix = (PFixedArray)x0;
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final PFixedArray x0Fix = (PFixedArray)x0;
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, SHORT_TYPE_CODE);
 
                             public int getShort(long index) {
@@ -3048,7 +3048,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, SHORT_TYPE_CODE);
 
                             public int getShort(long index) {
@@ -3071,7 +3071,7 @@ class ArraysFuncImpl {
                     } else {
                         return InternalUtils.<T>cast(
                             new FuncIntArrayWithArguments(truncateOverflows, len, f, x) {
-                                ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                                final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                     truncateOverflows, x, lf, INT_TYPE_CODE);
 
                                 public int getInt(long index) {
@@ -3090,8 +3090,8 @@ class ArraysFuncImpl {
                 } else if (a0 == 1.0 && b == 0.0 && x[0] instanceof PFixedArray) {
                     return InternalUtils.<T>cast(
                         new FuncIntArrayWithArguments(truncateOverflows, len, f, x) {
-                            PFixedArray x0Fix = (PFixedArray)x0;
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final PFixedArray x0Fix = (PFixedArray)x0;
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, INT_TYPE_CODE);
 
                             public int getInt(long index) {
@@ -3106,7 +3106,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncIntArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, INT_TYPE_CODE);
 
                             public int getInt(long index) {
@@ -3129,8 +3129,8 @@ class ArraysFuncImpl {
                 } else if (a0 == 1.0 && b == 0.0 && x[0] instanceof PFixedArray) {
                     return InternalUtils.<T>cast(
                         new FuncLongArrayWithArguments(truncateOverflows, len, f, x) {
-                            PFixedArray x0Fix = (PFixedArray)x0;
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final PFixedArray x0Fix = (PFixedArray)x0;
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, LONG_TYPE_CODE);
 
                             public long getLong(long index) {
@@ -3144,7 +3144,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncLongArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, LONG_TYPE_CODE);
 
                             public long getLong(long index) {
@@ -3171,7 +3171,7 @@ class ArraysFuncImpl {
                 } else if (a0 == 1.0 && b == 0.0) {
                     return InternalUtils.<T>cast(
                         new FuncFloatArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, FLOAT_TYPE_CODE);
 
                             public float getFloat(long index) {
@@ -3185,7 +3185,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncFloatArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, FLOAT_TYPE_CODE);
 
                             public float getFloat(long index) {
@@ -3208,7 +3208,7 @@ class ArraysFuncImpl {
                 } else if (a0 == 1.0 && b == 0.0) {
                     return InternalUtils.<T>cast(
                         new FuncDoubleArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, DOUBLE_TYPE_CODE);
 
                             public double getDouble(long index) {
@@ -3222,7 +3222,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncDoubleArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, DOUBLE_TYPE_CODE);
 
                             public double getDouble(long index) {
@@ -3250,7 +3250,7 @@ class ArraysFuncImpl {
             if (Arrays.isBitType(requiredType)) {
                 return InternalUtils.<T>cast(
                     new FuncBitArrayWithArguments(truncateOverflows, len, f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, BIT_TYPE_CODE);
 
                         public boolean getBit(long index) {
@@ -3278,7 +3278,7 @@ class ArraysFuncImpl {
                 if (truncateOverflows) {
                     return InternalUtils.<T>cast(
                         new FuncCharArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, CHAR_TYPE_CODE);
 
                             public char getChar(long index) {
@@ -3308,7 +3308,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncCharArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, CHAR_TYPE_CODE);
 
                             public char getChar(long index) {
@@ -3342,7 +3342,7 @@ class ArraysFuncImpl {
                 if (truncateOverflows) {
                     return InternalUtils.<T>cast(
                         new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, BYTE_TYPE_CODE);
 
                             public int getByte(long index) {
@@ -3360,7 +3360,7 @@ class ArraysFuncImpl {
                                     }
                                     v = (int)sum;
                                 }
-                                return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFF);
                             }
 
                             public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
@@ -3370,7 +3370,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, BYTE_TYPE_CODE);
 
                             public int getByte(long index) {
@@ -3401,7 +3401,7 @@ class ArraysFuncImpl {
                 if (truncateOverflows) {
                     return InternalUtils.<T>cast(
                         new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, SHORT_TYPE_CODE);
 
                             public int getShort(long index) {
@@ -3419,7 +3419,7 @@ class ArraysFuncImpl {
                                     }
                                     v = (int)sum;
                                 }
-                                return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFFFF);
                             }
 
                             public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
@@ -3429,7 +3429,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, SHORT_TYPE_CODE);
 
                             public int getShort(long index) {
@@ -3460,7 +3460,7 @@ class ArraysFuncImpl {
                 if (truncateOverflows) {
                     return InternalUtils.<T>cast(
                         new FuncIntArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, INT_TYPE_CODE);
 
                             public int getInt(long index) {
@@ -3487,7 +3487,7 @@ class ArraysFuncImpl {
                 } else {
                     return InternalUtils.<T>cast(
                         new FuncIntArrayWithArguments(truncateOverflows, len, f, x) {
-                            ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                            final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                                 truncateOverflows, x, lf, INT_TYPE_CODE);
 
                             public int getInt(long index) {
@@ -3523,7 +3523,7 @@ class ArraysFuncImpl {
                 // truncateOverflows has no effect
                 return InternalUtils.<T>cast(
                     new FuncLongArrayWithArguments(truncateOverflows, len, f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, LONG_TYPE_CODE);
 
                         public long getLong(long index) {
@@ -3553,7 +3553,7 @@ class ArraysFuncImpl {
                 // truncateOverflows has no effect
                 return InternalUtils.<T>cast(
                     new FuncFloatArrayWithArguments(truncateOverflows, len, f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, FLOAT_TYPE_CODE);
 
                         public float getFloat(long index) {
@@ -3582,7 +3582,7 @@ class ArraysFuncImpl {
                 // truncateOverflows has no effect
                 return InternalUtils.<T>cast(
                     new FuncDoubleArrayWithArguments(truncateOverflows, len, f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, DOUBLE_TYPE_CODE);
 
                         public double getDouble(long index) {
@@ -3651,9 +3651,9 @@ class ArraysFuncImpl {
             // adding 0.0 replaces -0.0 with +0.0: necessary for compatibility with optimization branch
             return InternalUtils.<T>cast(
                 new UpdatableFuncBitArray(truncateOverflows, x.length(), f, x) {
-                    ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                    final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                         truncateOverflows, x, lf, BIT_TYPE_CODE);
-                    ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                    final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                         truncateOverflows, x[0], lf, BIT_TYPE_CODE);
 
                     public boolean getBit(long index) {
@@ -3684,9 +3684,9 @@ class ArraysFuncImpl {
             if (truncateOverflows) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncCharArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, CHAR_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, CHAR_TYPE_CODE);
 
                         public char getChar(long index) {
@@ -3718,10 +3718,10 @@ class ArraysFuncImpl {
             } else if (a == 1.0 && b == 0.0 && x instanceof PFixedArray) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncCharArray(truncateOverflows, x.length(), f, x) {
-                        PFixedArray x0Fix = (PFixedArray)x[0];
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final PFixedArray x0Fix = (PFixedArray)x[0];
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, CHAR_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, CHAR_TYPE_CODE);
 
                         public char getChar(long index) {
@@ -3745,9 +3745,9 @@ class ArraysFuncImpl {
             } else {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncCharArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, CHAR_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, CHAR_TYPE_CODE);
 
                         public char getChar(long index) {
@@ -3782,9 +3782,9 @@ class ArraysFuncImpl {
             if (truncateOverflows) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncByteArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo =new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo =new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, BYTE_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, BYTE_TYPE_CODE);
 
                         public int getByte(long index) {
@@ -3814,10 +3814,10 @@ class ArraysFuncImpl {
             } else if (a == 1.0 && b == 0.0 && x instanceof PFixedArray) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncByteArray(truncateOverflows, x.length(), f, x) {
-                        PFixedArray x0Fix = (PFixedArray)x[0];
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final PFixedArray x0Fix = (PFixedArray)x[0];
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, BYTE_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, BYTE_TYPE_CODE);
 
                         public int getByte(long index) {
@@ -3841,9 +3841,9 @@ class ArraysFuncImpl {
             } else {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncByteArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, BYTE_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, BYTE_TYPE_CODE);
 
                         public int getByte(long index) {
@@ -3875,9 +3875,9 @@ class ArraysFuncImpl {
             if (truncateOverflows) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncShortArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo =new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo =new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, SHORT_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, SHORT_TYPE_CODE);
 
                         public int getShort(long index) {
@@ -3907,10 +3907,10 @@ class ArraysFuncImpl {
             } else if (a == 1.0 && b == 0.0 && x instanceof PFixedArray) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncShortArray(truncateOverflows, x.length(), f, x) {
-                        PFixedArray x0Fix = (PFixedArray)x[0];
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final PFixedArray x0Fix = (PFixedArray)x[0];
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, SHORT_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, SHORT_TYPE_CODE);
 
                         public int getShort(long index) {
@@ -3934,9 +3934,9 @@ class ArraysFuncImpl {
             } else {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncShortArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, SHORT_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, SHORT_TYPE_CODE);
 
                         public int getShort(long index) {
@@ -3968,9 +3968,9 @@ class ArraysFuncImpl {
             if (truncateOverflows) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncIntArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, INT_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, INT_TYPE_CODE);
 
                         public int getInt(long index) {
@@ -4000,10 +4000,10 @@ class ArraysFuncImpl {
             } else if (a == 1.0 && b == 0.0 && x instanceof PFixedArray) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncIntArray(truncateOverflows, x.length(), f, x) {
-                        PFixedArray x0Fix = (PFixedArray)x[0];
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final PFixedArray x0Fix = (PFixedArray)x[0];
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, INT_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, INT_TYPE_CODE);
 
                         public int getInt(long index) {
@@ -4027,9 +4027,9 @@ class ArraysFuncImpl {
             } else {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncIntArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, INT_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, INT_TYPE_CODE);
 
                         public int getInt(long index) {
@@ -4062,9 +4062,9 @@ class ArraysFuncImpl {
             if (truncateInSet) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncLongArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, LONG_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, LONG_TYPE_CODE);
 
                         public long getLong(long index) {
@@ -4089,10 +4089,10 @@ class ArraysFuncImpl {
             } else if (a == 1.0 && b == 0.0 && x instanceof PFixedArray) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncLongArray(truncateOverflows, x.length(), f, x) {
-                        PFixedArray x0Fix = (PFixedArray)x[0];
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final PFixedArray x0Fix = (PFixedArray)x[0];
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, LONG_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, LONG_TYPE_CODE);
 
                         public long getLong(long index) {
@@ -4115,9 +4115,9 @@ class ArraysFuncImpl {
             } else {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncLongArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, LONG_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, LONG_TYPE_CODE);
 
                         public long getLong(long index) {
@@ -4154,9 +4154,9 @@ class ArraysFuncImpl {
             if (truncateInSet) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncFloatArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, FLOAT_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, FLOAT_TYPE_CODE);
 
                         public float getFloat(long index) {
@@ -4181,9 +4181,9 @@ class ArraysFuncImpl {
             } else if (a == 1.0 && b == 0.0) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncFloatArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, FLOAT_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, FLOAT_TYPE_CODE);
 
                         public float getFloat(long index) {
@@ -4210,9 +4210,9 @@ class ArraysFuncImpl {
             } else {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncFloatArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, FLOAT_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, FLOAT_TYPE_CODE);
 
                         public float getFloat(long index) {
@@ -4245,9 +4245,9 @@ class ArraysFuncImpl {
             if (truncateInSet) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncDoubleArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, DOUBLE_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, DOUBLE_TYPE_CODE);
 
                         public double getDouble(long index) {
@@ -4272,9 +4272,9 @@ class ArraysFuncImpl {
             } else if (a == 1.0 && b == 0.0) {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncDoubleArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, DOUBLE_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, DOUBLE_TYPE_CODE);
 
                         public double getDouble(long index) {
@@ -4301,9 +4301,9 @@ class ArraysFuncImpl {
             } else {
                 return InternalUtils.<T>cast(
                     new UpdatableFuncDoubleArray(truncateOverflows, x.length(), f, x) {
-                        ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
+                        final ArraysLinearGetDataOp lgdo = new ArraysLinearGetDataOp(
                             truncateOverflows, x, lf, DOUBLE_TYPE_CODE);
-                        ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
+                        final ArraysLinearSetDataOp lsdo = new ArraysLinearSetDataOp(
                             truncateOverflows, x[0], lf, DOUBLE_TYPE_CODE);
 
                         public double getDouble(long index) {

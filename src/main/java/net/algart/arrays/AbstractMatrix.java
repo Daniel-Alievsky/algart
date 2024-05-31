@@ -384,8 +384,8 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
 
     public Matrix<T> subMatrix(IRectangularArea area) {
         Objects.requireNonNull(area, "Null area argument");
-        long from[] = area.min().coordinates();
-        long to[] = area.max().coordinates();
+        long[] from = area.min().coordinates();
+        long[] to = area.max().coordinates();
         for (int k = 0; k < to.length; k++) {
             to[k]++;
         }

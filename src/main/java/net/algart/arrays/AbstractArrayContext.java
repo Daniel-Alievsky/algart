@@ -395,7 +395,7 @@ public abstract class AbstractArrayContext implements ArrayContext {
     }
 
     private class CustomDataVersion extends AbstractArrayContext implements ArrayContext {
-        private Object customData;
+        private final Object customData;
         private CustomDataVersion(Object customData) {
             this.customData = customData;
         }

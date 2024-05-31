@@ -9135,7 +9135,7 @@ public class Arrays {
     }
 
     private static class AlgARTArrayCharSequence implements CharSequence {
-        private CharArray charArray;
+        private final CharArray charArray;
 
         private AlgARTArrayCharSequence(CharArray charArray) {
             Objects.requireNonNull(charArray, "Null charArray argument");
