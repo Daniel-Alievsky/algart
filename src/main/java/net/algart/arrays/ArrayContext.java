@@ -200,6 +200,19 @@ public interface ArrayContext {
     ArrayContext part(long from, long to, long total);
 
     /**
+     * Equivalent to {@link #part(long, long, long)} for <tt>int</tt> arguments.
+     * @param from  the estimated ready part, from 0 to <tt>total</tt>,
+     *              of the total algorithm at the start of the subtask.
+     * @param to    the estimated ready part, from 0.0 to <tt>total</tt>,
+     *              of the total algorithm at the finish of the subtask.
+     * @param total the number of some operation in the full task.
+     * @return      new context, describing the execution of the subtask of the current task.
+     * @throws IllegalArgumentException if <tt>from</tt> or <tt>to</tt> is not in <tt>0..total</tt> range,
+     *                                  or if <tt>from&gt;to</tt>, or if <tt>total&lt;0</tt>.
+     */
+    ArrayContext part(int from, int to, int total);
+
+    /**
      * Returns new context, identical to this one with the only exception that its
      * {@link #updateProgress(Event)} method does nothing.
      * It can be useful in multithreading algorithms, when some complex tasks,

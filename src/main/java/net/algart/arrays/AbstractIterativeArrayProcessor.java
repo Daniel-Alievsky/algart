@@ -181,9 +181,9 @@ public abstract class AbstractIterativeArrayProcessor<T>
                     + "(%.4f ms/iteration" + (result == null ? "" : ", %.3f ns/element") + ") by " + this
                     + (resultArray == null ? " " : " [" + result + "] ") + "in " + stackInfo,
                     count, 1e-6 * (t2 - t1),
-                    1e-6 * (t2 - t1) / Math.max(1.0, count),
+                    1e-6 * (t2 - t1) / Math.max(1.0, (double) count),
                     resultArray == null ? null :
-                    (t2 - t1) / Math.max(1.0, count) / resultArray.length()));
+                    (t2 - t1) / Math.max(1.0, (double) count) / resultArray.length()));
             }
         }
         return result;

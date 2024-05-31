@@ -2067,7 +2067,7 @@ class ArraysOpImpl {
                 Arrays.LOGGER.config(String.format(Locale.US,
                     "Array is copied in %.3f ms (%.2f ns/element, %d underlying) "
                     + "[%s -> %s] in %s",
-                    1e-6 * (t2 - t1), (t2 - t1) / Math.max(1.0, src.length()),
+                    1e-6 * (t2 - t1), (t2 - t1) / Math.max(1.0, (double) src.length()),
                     Arrays.getUnderlyingArraysCount(src),
                     src, dest, stackInfo));
             }

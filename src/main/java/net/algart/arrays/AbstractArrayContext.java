@@ -62,11 +62,16 @@ public abstract class AbstractArrayContext implements ArrayContext {
             throw new IllegalArgumentException("Illegal from=" + from + " or to=" + to
                 + " (\"from\" must not be greater than \"to\")");
         if (total == 0) {
-            assert from == 0;
-            assert to == 0;
+            // assert from == 0;
+            // assert to == 0;
             return part(0.0, 1.0);
         }
         return part((double)from / (double)total, to == total ? 1.0 : (double)to / (double)total);
+    }
+
+    @Override
+    public ArrayContext part(int from, int to, int total) {
+        return part((long) from, (long) to, (long) total);
     }
 
     public ArrayContext noProgressVersion() {
