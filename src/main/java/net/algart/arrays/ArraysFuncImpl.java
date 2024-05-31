@@ -285,7 +285,7 @@ class ArraysFuncImpl {
                                     throw rangeException(index);
                                 }
                                 int v = (int)this.f.get(index);
-                                return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFF);
                             }
                         });
                 } else if (dim.length == 2) {
@@ -298,7 +298,7 @@ class ArraysFuncImpl {
                                     throw rangeException(index);
                                 }
                                 int v = (int)this.f.get(index % dimX, index / dimX);
-                                return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFF);
                             }
                         });
                 } else if (dim.length == 3) {
@@ -312,7 +312,7 @@ class ArraysFuncImpl {
                                     throw rangeException(index);
                                 }
                                 int v = (int)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY);
-                                return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFF);
                             }
                         });
                 } else {
@@ -325,7 +325,7 @@ class ArraysFuncImpl {
                                 double[] coordinates = new double[dim.length];
                                 coordinatesInDoubles(index, dim, coordinates);
                                 int v = (int)this.f.get(coordinates);
-                                return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFF);
                             }
                         });
                 }
@@ -391,7 +391,7 @@ class ArraysFuncImpl {
                                     throw rangeException(index);
                                 }
                                 int v = (int)this.f.get(index);
-                                return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFFFF);
                             }
                         });
                 } else if (dim.length == 2) {
@@ -404,7 +404,7 @@ class ArraysFuncImpl {
                                     throw rangeException(index);
                                 }
                                 int v = (int)this.f.get(index % dimX, index / dimX);
-                                return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFFFF);
                             }
                         });
                 } else if (dim.length == 3) {
@@ -418,7 +418,7 @@ class ArraysFuncImpl {
                                     throw rangeException(index);
                                 }
                                 int v = (int)this.f.get(index % dimX, index % dimXY / dimX, index / dimXY);
-                                return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFFFF);
                             }
                         });
                 } else {
@@ -431,7 +431,7 @@ class ArraysFuncImpl {
                                 double[] coordinates = new double[dim.length];
                                 coordinatesInDoubles(index, dim, coordinates);
                                 int v = (int)this.f.get(coordinates);
-                                return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFFFF);
                             }
                         });
                 }
@@ -1207,7 +1207,7 @@ class ArraysFuncImpl {
                         new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
                             public int getByte(long index) {
                                 int v = (int)this.f.get(this.x[0].getDouble(index));
-                                return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFF);
                             }
                         });
                 } else if (x.length == 2) {
@@ -1215,7 +1215,7 @@ class ArraysFuncImpl {
                         new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
                             public int getByte(long index) {
                                 int v = (int)this.f.get(this.x[0].getDouble(index), this.x[1].getDouble(index));
-                                return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFF);
                             }
                         });
                 } else {
@@ -1227,7 +1227,7 @@ class ArraysFuncImpl {
                                     args[k] = this.x[k].getDouble(index);
                                 }
                                 int v = (int)this.f.get(args);
-                                return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFF);
                             }
                         });
                 }
@@ -1323,7 +1323,7 @@ class ArraysFuncImpl {
                         new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
                             public int getShort(long index) {
                                 int v = (int)this.f.get(this.x[0].getDouble(index));
-                                return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFFFF);
                             }
                         });
                 } else if (x.length == 2) {
@@ -1331,7 +1331,7 @@ class ArraysFuncImpl {
                         new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
                             public int getShort(long index) {
                                 int v = (int)this.f.get(this.x[0].getDouble(index), this.x[1].getDouble(index));
-                                return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFFFF);
                             }
                         });
                 } else {
@@ -1343,7 +1343,7 @@ class ArraysFuncImpl {
                                     args[k] = this.x[k].getDouble(index);
                                 }
                                 int v = (int)this.f.get(args);
-                                return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFFFF);
                             }
                         });
                 }
@@ -1820,7 +1820,7 @@ class ArraysFuncImpl {
                             if (truncateInSet[0]) {
                                 double v = value ? argsTrue[0] : argsFalse[0];
                                 this.x[0].setDouble(index,
-                                    v < minXElement[0] ? minXElement[0] : v > maxXElement[0] ? maxXElement[0] : v);
+                                    v < minXElement[0] ? minXElement[0] : Math.min(v, maxXElement[0]));
                             } else {
                                 this.x[0].setDouble(index, value ? argsTrue[0] : argsFalse[0]);
                             }
@@ -1845,7 +1845,7 @@ class ArraysFuncImpl {
                                 if (truncateInSet[k]) {
                                     double v = args[k];
                                     this.x[k].setDouble(index,
-                                        v < minXElement[k] ? minXElement[k] : v > maxXElement[k] ? maxXElement[k] : v);
+                                        v < minXElement[k] ? minXElement[k] : Math.min(v, maxXElement[k]));
                                 } else {
                                     this.x[k].setDouble(index, args[k]);
                                 }
@@ -1872,8 +1872,7 @@ class ArraysFuncImpl {
                                 if (truncateInSet[0]) {
                                     this.x[0].setDouble(index,
                                         args[0] < minXElement[0] ? minXElement[0] :
-                                            args[0] > maxXElement[0] ? maxXElement[0] :
-                                                args[0]);
+                                                Math.min(args[0], maxXElement[0]));
                                 } else {
                                     this.x[0].setDouble(index, args[0]);
                                 }
@@ -1902,7 +1901,7 @@ class ArraysFuncImpl {
                                         double v = args[k];
                                         this.x[k].setDouble(index,
                                             v < minXElement[k] ? minXElement[k] :
-                                                v > maxXElement[k] ? maxXElement[k] : v);
+                                                    Math.min(v, maxXElement[k]));
                                     } else {
                                         this.x[k].setDouble(index, args[k]);
                                     }
@@ -1966,7 +1965,7 @@ class ArraysFuncImpl {
                         new UpdatableFuncByteArray(truncateOverflows, len, f, x) {
                             public int getByte(long index) {
                                 int v = (int)this.f.get(this.x[0].getDouble(index));
-                                return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFF);
                             }
 
                             public void setByte(long index, byte value) {
@@ -1974,8 +1973,7 @@ class ArraysFuncImpl {
                                 if (truncateInSet[0]) {
                                     this.x[0].setDouble(index,
                                         args[0] < minXElement[0] ? minXElement[0] :
-                                            args[0] > maxXElement[0] ? maxXElement[0] :
-                                                args[0]);
+                                                Math.min(args[0], maxXElement[0]));
                                 } else {
                                     this.x[0].setDouble(index, args[0]);
                                 }
@@ -1989,7 +1987,7 @@ class ArraysFuncImpl {
                                     args[k] = this.x[k].getDouble(index);
                                 }
                                 int v = (int)this.f.get(args);
-                                return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFF);
                             }
 
                             public void setByte(long index, byte value) {
@@ -2002,7 +2000,7 @@ class ArraysFuncImpl {
                                         double v = args[k];
                                         this.x[k].setDouble(index,
                                             v < minXElement[k] ? minXElement[k] :
-                                                v > maxXElement[k] ? maxXElement[k] : v);
+                                                    Math.min(v, maxXElement[k]));
                                     } else {
                                         this.x[k].setDouble(index, args[k]);
                                     }
@@ -2064,7 +2062,7 @@ class ArraysFuncImpl {
                         new UpdatableFuncShortArray(truncateOverflows, len, f, x) {
                             public int getShort(long index) {
                                 int v = (int)this.f.get(this.x[0].getDouble(index));
-                                return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFFFF);
                             }
 
                             public void setShort(long index, short value) {
@@ -2072,8 +2070,7 @@ class ArraysFuncImpl {
                                 if (truncateInSet[0]) {
                                     this.x[0].setDouble(index,
                                         args[0] < minXElement[0] ? minXElement[0] :
-                                            args[0] > maxXElement[0] ? maxXElement[0] :
-                                                args[0]);
+                                                Math.min(args[0], maxXElement[0]));
                                 } else {
                                     this.x[0].setDouble(index, args[0]);
                                 }
@@ -2087,7 +2084,7 @@ class ArraysFuncImpl {
                                     args[k] = this.x[k].getDouble(index);
                                 }
                                 int v = (int)this.f.get(args);
-                                return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                                return v < 0 ? 0 : Math.min(v, 0xFFFF);
                             }
 
                             public void setShort(long index, short value) {
@@ -2100,7 +2097,7 @@ class ArraysFuncImpl {
                                         double v = args[k];
                                         this.x[k].setDouble(index,
                                             v < minXElement[k] ? minXElement[k] :
-                                                v > maxXElement[k] ? maxXElement[k] : v);
+                                                    Math.min(v, maxXElement[k]));
                                     } else {
                                         this.x[k].setDouble(index, args[k]);
                                     }
@@ -2171,8 +2168,7 @@ class ArraysFuncImpl {
                                 if (truncateInSet[0]) {
                                     this.x[0].setDouble(index,
                                         args[0] < minXElement[0] ? minXElement[0] :
-                                            args[0] > maxXElement[0] ? maxXElement[0] :
-                                                args[0]);
+                                                Math.min(args[0], maxXElement[0]));
                                 } else {
                                     this.x[0].setDouble(index, args[0]);
                                 }
@@ -2199,7 +2195,7 @@ class ArraysFuncImpl {
                                         double v = args[k];
                                         this.x[k].setDouble(index,
                                             v < minXElement[k] ? minXElement[k] :
-                                                v > maxXElement[k] ? maxXElement[k] : v);
+                                                    Math.min(v, maxXElement[k]));
                                     } else {
                                         this.x[k].setDouble(index, args[k]);
                                     }
@@ -2269,8 +2265,7 @@ class ArraysFuncImpl {
                             if (truncateInSet[0]) {
                                 this.x[0].setDouble(index,
                                     args[0] < minXElement[0] ? minXElement[0] :
-                                        args[0] > maxXElement[0] ? maxXElement[0] :
-                                            args[0]);
+                                            Math.min(args[0], maxXElement[0]));
                             } else if (longPrecisionInSet[0]) {
                                 this.x[0].setLong(index, (long)args[0]);
                             } else {
@@ -2298,7 +2293,7 @@ class ArraysFuncImpl {
                                 if (truncateInSet[k]) {
                                     double v = args[k];
                                     this.x[k].setDouble(index,
-                                        v < minXElement[k] ? minXElement[k] : v > maxXElement[k] ? maxXElement[k] : v);
+                                        v < minXElement[k] ? minXElement[k] : Math.min(v, maxXElement[k]));
                                 } else if (longPrecisionInSet[k]) {
                                     this.x[k].setLong(index, (long)args[k]);
                                 } else {
@@ -2328,8 +2323,7 @@ class ArraysFuncImpl {
                             if (truncateInSet[0]) {
                                 this.x[0].setDouble(index,
                                     args[0] < minXElement[0] ? minXElement[0] :
-                                        args[0] > maxXElement[0] ? maxXElement[0] :
-                                            args[0]);
+                                            Math.min(args[0], maxXElement[0]));
                             } else if (longPrecisionInSet[0]) {
                                 this.x[0].setLong(index, (long)args[0]);
                             } else {
@@ -2357,7 +2351,7 @@ class ArraysFuncImpl {
                                 if (truncateInSet[k]) {
                                     double v = args[k];
                                     this.x[k].setDouble(index,
-                                        v < minXElement[k] ? minXElement[k] : v > maxXElement[k] ? maxXElement[k] : v);
+                                        v < minXElement[k] ? minXElement[k] : Math.min(v, maxXElement[k]));
                                 } else if (longPrecisionInSet[k]) {
                                     this.x[k].setLong(index, (long)args[k]);
                                 } else {
@@ -2384,8 +2378,7 @@ class ArraysFuncImpl {
                             if (truncateInSet[0]) {
                                 this.x[0].setDouble(index,
                                     args[0] < minXElement[0] ? minXElement[0] :
-                                        args[0] > maxXElement[0] ? maxXElement[0] :
-                                            args[0]);
+                                            Math.min(args[0], maxXElement[0]));
                             } else if (longPrecisionInSet[0]) {
                                 this.x[0].setLong(index, (long)args[0]);
                             } else {
@@ -2413,7 +2406,7 @@ class ArraysFuncImpl {
                                 if (truncateInSet[k]) {
                                     double v = args[k];
                                     this.x[k].setDouble(index,
-                                        v < minXElement[k] ? minXElement[k] : v > maxXElement[k] ? maxXElement[k] : v);
+                                        v < minXElement[k] ? minXElement[k] : Math.min(v, maxXElement[k]));
                                 } else if (longPrecisionInSet[k]) {
                                     this.x[k].setLong(index, (long)args[k]);
                                 } else {
@@ -2949,7 +2942,7 @@ class ArraysFuncImpl {
                         int v = (int)b;
                         return InternalUtils.<T>cast(
                             new CopiesArraysImpl.CopiesByteArray(len,
-                                (byte)(v < 0 ? 0 : v > 0xFF ? 0xFF : v), truncateOverflows, f));
+                                (byte)(v < 0 ? 0 : Math.min(v, 0xFF)), truncateOverflows, f));
                     } else {
                         return InternalUtils.<T>cast(
                             new FuncByteArrayWithArguments(truncateOverflows, len, f, x) {
@@ -2958,7 +2951,7 @@ class ArraysFuncImpl {
 
                                 public int getByte(long index) {
                                     int v = (int)(a0 * x0.getDouble(index) + b);
-                                    return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                                    return v < 0 ? 0 : Math.min(v, 0xFF);
                                 }
 
                                 public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
@@ -3009,7 +3002,7 @@ class ArraysFuncImpl {
                         int v = (int)b;
                         return InternalUtils.<T>cast(
                             new CopiesArraysImpl.CopiesShortArray(len,
-                                (short)(v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v), truncateOverflows, f));
+                                (short)(v < 0 ? 0 : Math.min(v, 0xFFFF)), truncateOverflows, f));
                     } else {
                         return InternalUtils.<T>cast(
                             new FuncShortArrayWithArguments(truncateOverflows, len, f, x) {
@@ -3018,7 +3011,7 @@ class ArraysFuncImpl {
 
                                 public int getShort(long index) {
                                     int v = (int)(a0 * x0.getDouble(index) + b);
-                                    return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                                    return v < 0 ? 0 : Math.min(v, 0xFFFF);
                                 }
 
                                 public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
@@ -3667,7 +3660,7 @@ class ArraysFuncImpl {
                     public void setBit(long index, boolean value) {
                         if (truncateInSet) {
                             double v = value ? vTrue : vFalse;
-                            x[0].setDouble(index, v < minXElement ? minXElement : v > maxXElement ? maxXElement : v);
+                            x[0].setDouble(index, v < minXElement ? minXElement : Math.min(v, maxXElement));
                         } else {
                             x[0].setDouble(index, value ? vTrue : vFalse);
                         }
@@ -3704,7 +3697,7 @@ class ArraysFuncImpl {
                             if (truncateInSet) {
                                 double v = (value - b) * aInv;
                                 x[0].setDouble(index,
-                                    v < minXElement ? minXElement : v > maxXElement ? maxXElement : v);
+                                    v < minXElement ? minXElement : Math.min(v, maxXElement));
                             } else {
                                 x[0].setDouble(index, (value - b) * aInv);
                             }
@@ -3789,7 +3782,7 @@ class ArraysFuncImpl {
 
                         public int getByte(long index) {
                             int v = (int)(a * x[0].getDouble(index) + b);
-                            return v < 0 ? 0 : v > 0xFF ? 0xFF : v;
+                            return v < 0 ? 0 : Math.min(v, 0xFF);
                         }
 
                         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
@@ -3800,7 +3793,7 @@ class ArraysFuncImpl {
                             if (truncateInSet) {
                                 double v = ((value & 0xFF) - b) * aInv;
                                 x[0].setDouble(index,
-                                    v < minXElement ? minXElement : v > maxXElement ? maxXElement : v);
+                                    v < minXElement ? minXElement : Math.min(v, maxXElement));
                             } else {
                                 x[0].setDouble(index, ((value & 0xFF) - b) * aInv);
                             }
@@ -3882,7 +3875,7 @@ class ArraysFuncImpl {
 
                         public int getShort(long index) {
                             int v = (int)(a * x[0].getDouble(index) + b);
-                            return v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v;
+                            return v < 0 ? 0 : Math.min(v, 0xFFFF);
                         }
 
                         public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
@@ -3893,7 +3886,7 @@ class ArraysFuncImpl {
                             if (truncateInSet) {
                                 double v = ((value & 0xFFFF) - b) * aInv;
                                 x[0].setDouble(index,
-                                    v < minXElement ? minXElement : v > maxXElement ? maxXElement : v);
+                                    v < minXElement ? minXElement : Math.min(v, maxXElement));
                             } else {
                                 x[0].setDouble(index, ((value & 0xFFFF) - b) * aInv);
                             }
@@ -3986,7 +3979,7 @@ class ArraysFuncImpl {
                             if (truncateInSet) {
                                 double v = (value - b) * aInv;
                                 x[0].setDouble(index,
-                                    v < minXElement ? minXElement : v > maxXElement ? maxXElement : v);
+                                    v < minXElement ? minXElement : Math.min(v, maxXElement));
                             } else {
                                 x[0].setDouble(index, (value - b) * aInv);
                             }
@@ -4078,7 +4071,7 @@ class ArraysFuncImpl {
 
                         public void setLong(long index, long value) {
                             double v = (value - b) * aInv;
-                            x[0].setDouble(index, v < minXElement ? minXElement : v > maxXElement ? maxXElement : v);
+                            x[0].setDouble(index, v < minXElement ? minXElement : Math.min(v, maxXElement));
                         }
 
                         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -4170,7 +4163,7 @@ class ArraysFuncImpl {
 
                         public void setFloat(long index, float value) {
                             double v = (value - b) * aInv;
-                            x[0].setDouble(index, v < minXElement ? minXElement : v > maxXElement ? maxXElement : v);
+                            x[0].setDouble(index, v < minXElement ? minXElement : Math.min(v, maxXElement));
                         }
 
                         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -4261,7 +4254,7 @@ class ArraysFuncImpl {
 
                         public void setDouble(long index, double value) {
                             double v = (value - b) * aInv;
-                            x[0].setDouble(index, v < minXElement ? minXElement : v > maxXElement ? maxXElement : v);
+                            x[0].setDouble(index, v < minXElement ? minXElement : Math.min(v, maxXElement));
                         }
 
                         public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -4382,7 +4375,7 @@ class ArraysFuncImpl {
 
                     public int getByte(long index) {
                         int v = x0.getByte(index) - x1.getByte(index);
-                        return v < 0 ? 0 : v;
+                        return Math.max(v, 0);
                     }
 
                     public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
@@ -4418,7 +4411,7 @@ class ArraysFuncImpl {
 
                     public char getChar(long index) {
                         int v = x0.getChar(index) - x1.getChar(index);
-                        return (char)(v < 0 ? 0 : v);
+                        return (char)(Math.max(v, 0));
                     }
 
                     public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
@@ -4453,7 +4446,7 @@ class ArraysFuncImpl {
 
                     public int getShort(long index) {
                         int v = x0.getShort(index) - x1.getShort(index);
-                        return v < 0 ? 0 : v;
+                        return Math.max(v, 0);
                     }
 
                     public void getData(long arrayPos, Object destArray, int destArrayOffset, int count) {
