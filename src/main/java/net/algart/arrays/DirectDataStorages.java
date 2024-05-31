@@ -59,9 +59,10 @@ class DirectDataStorages {
         }
 
         DataStorage changeCapacity(long newCapacity, long offset, long length) {
-            if (unresizable)
+            if (unresizable) {
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
                         + "(unallowed changeCapacity)");
+            }
             DirectStorage result = (DirectStorage) newCompatibleEmptyStorage(false);
             ByteBuffer byteBuffer = newByteBuffer(newCapacity);
             if (this instanceof DirectBitStorage) {
@@ -80,18 +81,21 @@ class DirectDataStorages {
         abstract void setSpecificBuffer();
 
         private ByteBuffer newByteBuffer(long capacity) {
-            if (capacity < 0)
+            if (capacity < 0) {
                 throw new AssertionError("Negative capacity in package-private method");
+            }
             long arrayLength = capacity;
             if (this instanceof DirectBitStorage) {
-                arrayLength = PackedBitArrays.packedLength(capacity);
+                arrayLength = PackedBitBuffers.packedLength(capacity);
             }
             final long byteBufferLength = arrayLength << bytesPerBufferElementLog();
             if (arrayLength != (int) arrayLength || byteBufferLength != (int) byteBufferLength)
                 // - 1st check is also necessary to be sure, that
                 // "<< bytesPerBufferElementLog()"  performed without overflow
+            {
                 throw new TooLargeArrayException("Too large desired array capacity for BufferMemoryModel: "
                         + capacity + " = 0x" + Long.toHexString(capacity) + " (" + this + ")");
+            }
             ByteBuffer result = ByteBuffer.allocateDirect((int) byteBufferLength);
             result.order(ByteOrder.nativeOrder());
             // The following code has become unnecessary after correction of JDK JavaDoc in Java 1.7:
@@ -137,20 +141,22 @@ class DirectDataStorages {
         final void setBit(long index, boolean value) {
             int ii = (int) (index >>> 6), bit = ((int) index) & 63;
             synchronized (lb) {
-                if (value)
+                if (value) {
                     lb.put(ii, lb.get(ii) | 1L << bit);
-                else
+                } else {
                     lb.put(ii, lb.get(ii) & ~(1L << bit));
+                }
             }
         }
 
         @Override
         final void setBitNoSync(long index, boolean value) {
             int ii = (int) (index >>> 6), bit = ((int) index) & 63;
-            if (value)
+            if (value) {
                 lb.put(ii, lb.get(ii) | 1L << bit);
-            else
+            } else {
                 lb.put(ii, lb.get(ii) & ~(1L << bit));
+            }
         }
 
         @Override
@@ -191,15 +197,17 @@ class DirectDataStorages {
                 boolean v1 = (l1 & (1L << bit1)) != 0L;
                 boolean v2 = (l2 & (1L << bit2)) != 0L;
                 if (v1 != v2) {
-                    if (v2)
+                    if (v2) {
                         lb.put(ii1, l1 | 1L << bit1);
-                    else
+                    } else {
                         lb.put(ii1, l1 & ~(1L << bit1));
+                    }
                     l2 = lb.get(ii2); // for swapping 2 bits in the same long element
-                    if (v1)
+                    if (v1) {
                         lb.put(ii2, l2 | 1L << bit2);
-                    else
+                    } else {
                         lb.put(ii2, l2 & ~(1L << bit2));
+                    }
                 }
             }
         }

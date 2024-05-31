@@ -87,12 +87,58 @@ public class PackedBitBuffers {
     }
 
     /**
+     * Returns <tt>packedLength &lt;&lt; 6</tt>: the maximal number of bits that
+     * can be stored in the specified number of <tt>long</tt> values.
+     *
+     * @param packedLength number of packed <tt>long[]</tt> values.
+     * @return <tt>64 * packedLength</tt>
+     * @throws TooLargeArrayException if the argument is too large: &ge; 2<sup>57</sup>.
+     * @throws IllegalArgumentException if the argument is negative.
+     */
+    public static long unpackedLength(long packedLength) {
+        return PackedBitArrays.unpackedLength(packedLength);
+    }
+
+    /**
+     * Returns <tt>((long) buffer.limit())) &lt;&lt; 6</tt>: the maximal number of bits that
+     * can be stored in the specified buffer.
+     *
+     * @param src   the buffer (bits are packed into <tt>long</tt> values).
+     * @return <tt>64 * (long) buffer.limit()</tt>
+     * @throws NullPointerException if the argument is <tt>null</tt>.
+     */
+    public static long unpackedLength(LongBuffer buffer) {
+        return ((long) buffer.limit()) << 6;
+    }
+
+    /**
+     * Returns <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt>: the minimal number of <tt>long</tt> values
+     * allowing to store <tt>unpackedLength</tt> bits.
+     *
+     * @param unpackedLength the number of bits (the length of bit array).
+     * @return <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt> (the length of corresponding <tt>long[]</tt> array).
+     */
+    public static long packedLength(long unpackedLength) {
+        return PackedBitArrays.packedLength(unpackedLength);
+    }
+
+    /**
+     * Equivalent of {@link #packedLength(long)} for <tt>int</tt> argument.
+     *
+     * @param unpackedLength the number of bits (the length of bit array).
+     * @return <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt> (the length of corresponding <tt>long[]</tt> array).
+     */
+    public static int packedLength(int unpackedLength) {
+        return PackedBitArrays.packedLength(unpackedLength);
+    }
+
+    /**
      * Returns <tt>buffer.hasArray()?buffer.array():buffer</tt>.
      * This object is used by all methods of this class for synchronization, when any portion (not all 64 bits)
      * of some <tt>long</tt> element is modified.
      * Synchronization by <tt>buffer.array()</tt> (instead of <tt>buffer</tt> instance) allows
      * to use in different threads different instances of <tt>LongBuffer</tt>, created by <tt>LongBuffer.wrap</tt>
-     * method for the sampe Java <tt>long[]</tt> array.
+     * method for the same Java <tt>long[]</tt> array.
      *
      * @param buffer the buffer.
      * @return this buffer if it is not backed by a Java array, the underlying Java array if it is backed by it.

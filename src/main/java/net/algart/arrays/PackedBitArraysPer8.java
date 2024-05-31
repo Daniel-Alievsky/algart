@@ -249,6 +249,26 @@ public class PackedBitArraysPer8 {
     }
 
     /**
+     * Returns <tt>packedLength &lt;&lt; 3</tt>: the maximal number of bits that
+     * can be stored in the specified number of bytes.
+     *
+     * @param packedLength number of packed bytes.
+     * @return <tt>8 * packedLength</tt>
+     * @throws TooLargeArrayException if the argument is too large: &ge; 2<sup>60</sup>.
+     * @throws IllegalArgumentException if the argument is negative.
+     */
+    public static long unpackedLength(long packedLength) {
+        if (packedLength < 0) {
+            throw new IllegalArgumentException("Negative packed length");
+        }
+        if (packedLength >= 1L << 60) {
+            throw new TooLargeArrayException("Too large packed length: number of unpacked bits >= 2^60");
+        }
+        return packedLength << 3;
+    }
+
+
+    /**
      * Returns <tt>((long) array.length) &lt;&lt; 3</tt>: the maximal number of bits that
      * can be stored in the specified array.
      *
@@ -266,8 +286,12 @@ public class PackedBitArraysPer8 {
      *
      * @param unpackedLength the number of bits (the length of bit array).
      * @return <tt>(unpackedLength + 7) &gt;&gt;&gt; 3</tt> (the length of corresponding <tt>byte[]</tt> array).
+     * @throws IllegalArgumentException if the argument is negative.
      */
     public static long packedLength(long unpackedLength) {
+        if (unpackedLength < 0) {
+            throw new IllegalArgumentException("Negative unpacked length");
+        }
         return (unpackedLength + 7) >>> 3;
         // here >>> must be used instead of >>, because unpackedLength+7 may be >Long.MAX_VALUE
     }
@@ -277,8 +301,12 @@ public class PackedBitArraysPer8 {
      *
      * @param unpackedLength the number of bits (the length of bit array).
      * @return <tt>(unpackedLength + 7) &gt;&gt;&gt; 3</tt> (the length of corresponding <tt>byte[]</tt> array).
+     * @throws IllegalArgumentException if the argument is negative.
      */
     public static int packedLength(int unpackedLength) {
+        if (unpackedLength < 0) {
+            throw new IllegalArgumentException("Negative unpacked length");
+        }
         return (unpackedLength + 7) >>> 3;
         // here >>> must be used instead of >>, because unpackedLength+63 may be >Integer.MAX_VALUE
     }

@@ -455,7 +455,7 @@ public class BufferMemoryModel extends AbstractMemoryModel {
         if (length < 0) {
             throw new IllegalArgumentException("Negative length");
         }
-        final long packedLength = PackedBitArrays.packedLength(length);
+        final long packedLength = PackedBitBuffers.packedLength(length);
         ByteBuffer bb = byteBuffer.duplicate();
         bb.order(byteBuffer.order());
         bb.rewind(); // necessary for correct creation of non-byte buffers via asXxxBuffer

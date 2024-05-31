@@ -91,6 +91,25 @@ public class PackedBitArrays {
     /*Repeat.SectionStart primitives*/
 
     /**
+     * Returns <tt>packedLength &lt;&lt; 6</tt>: the maximal number of bits that
+     * can be stored in the specified number of <tt>long</tt> values.
+     *
+     * @param packedLength number of packed <tt>long[]</tt> values.
+     * @return <tt>64 * packedLength</tt>
+     * @throws TooLargeArrayException if the argument is too large: &ge; 2<sup>57</sup>.
+     * @throws IllegalArgumentException if the argument is negative.
+     */
+    public static long unpackedLength(long packedLength) {
+        if (packedLength < 0) {
+            throw new IllegalArgumentException("Negative packed length");
+        }
+        if (packedLength >= 1L << 57) {
+            throw new TooLargeArrayException("Too large packed length: number of unpacked bits >= 2^63");
+        }
+        return packedLength << 6;
+    }
+
+    /**
      * Returns <tt>((long) array.length) &lt;&lt; 6</tt>: the maximal number of bits that
      * can be stored in the specified array.
      *
@@ -108,8 +127,12 @@ public class PackedBitArrays {
      *
      * @param unpackedLength the number of bits (the length of bit array).
      * @return <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt> (the length of corresponding <tt>long[]</tt> array).
+     * @throws IllegalArgumentException if the argument is negative.
      */
     public static long packedLength(long unpackedLength) {
+        if (unpackedLength < 0) {
+            throw new IllegalArgumentException("Negative unpacked length");
+        }
         return (unpackedLength + 63) >>> 6;
         // here >>> must be used instead of >>, because unpackedLength+63 may be >Long.MAX_VALUE
     }
@@ -119,8 +142,12 @@ public class PackedBitArrays {
      *
      * @param unpackedLength the number of bits (the length of bit array).
      * @return <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt> (the length of corresponding <tt>long[]</tt> array).
+     * @throws IllegalArgumentException if the argument is negative.
      */
     public static int packedLength(int unpackedLength) {
+        if (unpackedLength < 0) {
+            throw new IllegalArgumentException("Negative unpacked length");
+        }
         return (unpackedLength + 63) >>> 6;
         // here >>> must be used instead of >>, because unpackedLength+63 may be >Integer.MAX_VALUE
     }

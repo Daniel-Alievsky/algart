@@ -115,7 +115,7 @@ public class PackedBitBuffersTest {
                 }
             }
 
-            long longPackedLen = PackedBitArrays.packedLength(startOffset + len);
+            long longPackedLen = PackedBitBuffers.packedLength(startOffset + len);
             int packedLen = (int) longPackedLen;
             if (packedLen != longPackedLen) {
                 throw new IllegalArgumentException("Too large bit array (>2^37-64 bits)");
