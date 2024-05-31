@@ -113,7 +113,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the percentile by the call
      * <nobr><tt>{@link #percentile(Matrix, Matrix, Matrix, Pattern)
      * percentile}(dest,src,percentileIndexes,pattern)</tt></nobr>
@@ -195,7 +195,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel memoryModel}.{@link MemoryModel#newMatrix(Class, Class, long...)
+     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Class, long...)
      * newMatrix}(UpdatablePArray.class,{@link Arrays#elementType(Class)
      * Arrays.elementType}(requiredType),baseMatrix.dimensions())</tt></nobr>, calculates the rank by the call
      * <nobr><tt>{@link #rank(Matrix, Matrix, Matrix, Pattern)
@@ -286,7 +286,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the mean between 2 percentiles by the call
      * <nobr><tt>{@link #meanBetweenPercentiles(Matrix, Matrix, Matrix, Matrix, Pattern, double)
      * meanBetweenPercentiles}(dest,src,fromPercentileIndexes,toPercentileIndexes,pattern,filler)</tt></nobr>
@@ -402,7 +402,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the mean between 2 values by the call
      * <nobr><tt>{@link #meanBetweenValues(Matrix, Matrix, Matrix, Matrix, Pattern, double)
      * meanBetweenValues}(dest,src,minValues,maxValues,pattern,filler)</tt></nobr>
@@ -473,7 +473,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the mean by the call
      * <nobr><tt>{@link #mean(Matrix, Matrix, Pattern)
      * mean}(dest,src,pattern)</tt></nobr>
@@ -531,7 +531,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the function of aperture sum by the call
      * <nobr><tt>{@link #functionOfSum(Matrix, Matrix, Pattern, Func)
      * functionOfSum}(dest,src,pattern,processingFunc)</tt></nobr>
@@ -604,7 +604,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the function of the source matrix
      * and 2 percentiles by the call
      * <nobr><tt>{@link #functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, Pattern, Func)

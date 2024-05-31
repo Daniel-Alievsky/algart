@@ -26,8 +26,8 @@ package net.algart.arrays;
 
 import java.io.FileNotFoundException;
 import java.io.IOError;
-import java.lang.reflect.*;
 import java.io.IOException;
+import java.io.Serial;
 
 /**
  * <p>This class is obsolete: it was created for compatibility with Java 1.5.</p>
@@ -72,6 +72,7 @@ class IOErrorJ5 extends Error {
         return null;
     }
 
+    @Serial
     private static final long serialVersionUID = 6083384198859120376L;
 
     public static void main(String[] args) {
