@@ -719,7 +719,7 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Copies <code>count</code> bits from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * Packs <code>count</code> bits from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> buffer, starting from the bit <code>#destPos</code>.
      *
      * @param dest    the destination <code>LongBuffer</code> (bits are packed into <code>long</code> values).

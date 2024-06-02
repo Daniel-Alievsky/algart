@@ -528,6 +528,63 @@ public class PackedBitArraysPer8Test {
                 showProgress(testCount);
             }
 
+            System.out.println("Testing \"packBitsInReverseOrder\" method...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                PackedBitArraysPer8.packBitsInReverseOrder(pDestWork1, destPos, bSrc, srcPos, count);
+                PackedBitArraysPer8.packBitsInReverseOrderNoSync(pDestWork2, destPos, bSrc, srcPos, count);
+                for (int k = 0; k < count; k++) {
+                    if (bSrc[srcPos + k] != PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, destPos + k)) {
+                        throw new AssertionError("The bug A in packBitsInReverseOrder found in test #" +
+                                testCount + ": "
+                                + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + ", error found at " + k);
+                    }
+                }
+                for (int k = 0; k < destPos; k++) {
+                    if (PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, k) !=
+                            PackedBitArraysPer8.getBitInReverseOrder(pDest, k)) {
+                        throw new AssertionError("The bug B in packBitsInReverseOrder found in test #" +
+                                testCount + ": "
+                                + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + ", error found at " + k);
+                    }
+                }
+                for (int k = destPos + count; k < len; k++) {
+                    if (PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, k) !=
+                            PackedBitArraysPer8.getBitInReverseOrder(pDest, k)) {
+                        throw new AssertionError("The bug C in packBitsInReverseOrder found in test #" +
+                                testCount + ": "
+                                + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + ", error found at " + k);
+                    }
+                }
+                byte[] packed = PackedBitArraysPer8.packBitsInReverseOrder(bSrc, srcPos, count);
+                for (int k = 0; k < 8 * packed.length; k++) {
+                    if (PackedBitArraysPer8.getBitInReverseOrder(packed, k) != (k < count && bSrc[srcPos + k])) {
+                        throw new AssertionError("The bug D in packBitsInReverseOrder found in test #"
+                                + testCount + ": "
+                                + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + ", error found at " + k);
+                    }
+                }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug E in packBitsInReverseOrderNoSync " +
+                            "found in test #" + testCount);
+                }
+                System.arraycopy(bSrc, 0, bDestWork1, 0, bSrc.length);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork1, srcPos, packed, 0, count);
+                if (!java.util.Arrays.equals(bSrc, bDestWork1)) {
+                    throw new AssertionError("The bug F in packBitsInReverseOrder " +
+                            "found in test #" + testCount);
+                }
+                showProgress(testCount);
+            }
+
             System.out.println("Testing \"copyBits\" method, two different arrays...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);

@@ -962,7 +962,7 @@ public class PackedBitArrays {
     /*Repeat.SectionEnd copyBits*/
 
     /**
-     * Copies <code>count</code> bits from the <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * Packs <code>count</code> bits from the <code>src</code> array, starting from the element <code>#srcPos</code>,
      * into a newly created packed bit array <code>long[{@link #packedLength(int) packedLength}(count)]</code>
      * returned as a result, starting from the bit #0.
      *
@@ -1087,7 +1087,7 @@ public class PackedBitArrays {
     }
 
     /**
-     * Copies <code>count</code> bits from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * Packs <code>count</code> bits from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>.
      *
      * @param dest    the destination array (bits are packed in <code>long</code> values).
@@ -1217,7 +1217,7 @@ public class PackedBitArrays {
     }
 
     /**
-     * Copies <code>count</code> <i>inverted</i> bits from <code>src</code> array, starting from the element
+     * Packs <code>count</code> <i>inverted</i> bits from <code>src</code> array, starting from the element
      * <code>#srcPos</code>, to packed <code>dest</code> array, starting from the bit <code>#destPos</code>.
      *
      * @param dest    the destination array (bits are packed in <code>long</code> values).
