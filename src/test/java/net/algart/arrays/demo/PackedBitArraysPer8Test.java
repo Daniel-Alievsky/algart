@@ -440,6 +440,48 @@ public class PackedBitArraysPer8Test {
                 showProgress(testCount);
             }
 
+            System.out.println("Testing \"unpackBits\", \"unpackBitsInReverseOrder\" method...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
+                System.arraycopy(bDest, 0, bDestWork2, 0, bDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                PackedBitArraysPer8.unpackBits(bDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork2, destPos, pSrc, srcPos, count);
+                for (int k = 0; k < len; k++) {
+                    if (k < destPos || k >= destPos + count) {
+                        if (bDestWork1[k] != bDest[k]) {
+                            throw new AssertionError("The bug A in unpackBits " +
+                                    "found in test #" +
+                                    testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
+                                    count + ", error found at " + k);
+                        }
+                        if (bDestWork2[k] != bDest[k]) {
+                            throw new AssertionError("The bug B in unpackBitsInReverseOrder " +
+                                    "found in test #" +
+                                    testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
+                                    count + ", error found at " + k);
+                        }
+                    }
+                }
+                for (int k = 0; k < count; k++) {
+                    if (bDestWork1[destPos + k] != PackedBitArraysPer8.getBit(pSrc, srcPos + k)) {
+                        throw new AssertionError("The bug C in unpackBits found in test #" +
+                                testCount + ": "
+                                + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + ", error found at " + k);
+                    }
+                    if (bDestWork2[destPos + k] != PackedBitArraysPer8.getBitInReverseOrder(pSrc, srcPos + k)) {
+                        throw new AssertionError("The bug D in getBitInReverseOrder found in test #" +
+                                testCount + ": "
+                                + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
+                                + ", error found at " + k);
+                    }
+                }
+                showProgress(testCount);
+            }
+
             System.out.println("Testing \"packBits\" method...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
@@ -940,10 +982,10 @@ public class PackedBitArraysPer8Test {
 
             System.out.println("Testing \"unpackBits\" to float[]...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
-                System.arraycopy(fDest, 0, fDestWork, 0, fDest.length);
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                System.arraycopy(fDest, 0, fDestWork, 0, fDest.length);
                 PackedBitArraysPer8.unpackBits(fDestWork, destPos, pSrc, srcPos, count,
                         FLOAT_BIT_0, FLOAT_BIT_1);
                 System.arraycopy(bSrc, srcPos, bDestWork1, destPos, count);
@@ -960,6 +1002,29 @@ public class PackedBitArraysPer8Test {
                 for (int k = 0; k < count; k++) {
                     if (floats[k] != fDestWork[destPos + k]) {
                         throw new AssertionError("The bug B in unpackBitsToFloats found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", error found at " + k);
+                    }
+                }
+                System.arraycopy(fDest, 0, fDestWork, 0, fDest.length);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(fDestWork, destPos, pSrc, srcPos, count,
+                        FLOAT_BIT_0, FLOAT_BIT_1);
+                floats = PackedBitArraysPer8.unpackBitsInReverseOrderToFloats(pSrc, srcPos, count,
+                        FLOAT_BIT_0, FLOAT_BIT_1);
+                for (int k = 0; k < len; k++) {
+                    if (fDestWork[k] != (k < destPos || k >= destPos + count ? fDest[k] :
+                            PackedBitArraysPer8.getBitInReverseOrder(pSrc, srcPos + k - destPos) ?
+                                    FLOAT_BIT_1 : FLOAT_BIT_0)) {
+                        throw new AssertionError("The bug C in unpackBitsInReverseOrder to float[] " +
+                                "found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", error found at " + k);
+                    }
+                }
+                for (int k = 0; k < count; k++) {
+                    if (floats[k] != fDestWork[destPos + k]) {
+                        throw new AssertionError("The bug B in unpackBitsInReverseOrderToFloats " +
+                                "found in test #" +
                                 testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
                                 ", error found at " + k);
                     }

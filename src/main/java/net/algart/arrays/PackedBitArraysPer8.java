@@ -2424,7 +2424,7 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Copies <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
      * to <code>dest</code> <code>boolean</code> array, starting from the element <code>#destPos</code>.
      *
      * @param dest    the destination array (unpacked <code>boolean</code> values).
@@ -2470,7 +2470,92 @@ public class PackedBitArraysPer8 {
         }
     }
 
-    /*Repeat() (boolean\[\] unpackBits) ==>
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
+     * to newly created array <code>boolean[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)</code>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBitsInReverseOrder(boolean[], int, byte[], long, int)}
+     * method.</p>
+     *
+     * @param src    the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos position of the first bit read in the source array.
+     * @param count  the number of elements to be unpacked (must be &gt;=0).
+     * @return the unpacked <code>boolean</code> array.
+     * @throws NullPointerException     if <code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
+     */
+    public static boolean[] unpackBitsInReverseOrder(byte[] src, long srcPos, long count) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final boolean[] result = new boolean[(int) count];
+        unpackBitsInReverseOrder(result, 0, src, srcPos, result.length);
+        return result;
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> <code>boolean</code> array, starting from the element <code>#destPos</code>.
+     *
+     * @param dest    the destination array (unpacked <code>boolean</code> values).
+     * @param destPos position of the first bit written in the destination array.
+     * @param src     the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos  position of the first bit read in the source array.
+     * @param count   the number of bits to be unpacked (must be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
+    public static void unpackBitsInReverseOrder(boolean[] dest, int destPos, byte[] src, long srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
+        if (countStart > count) {
+            countStart = count;
+        }
+        for (int destPosMax = destPos + countStart; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0;
+        }
+        count -= countStart;
+        int cnt = count >>> 3;
+        for (int k = (int) (srcPos >>> 3), kMax = k + cnt; k < kMax; k++) {
+            int v = src[k];
+            srcPos += 8;
+            dest[destPos] = (v & (1 << 7)) != 0;
+            dest[destPos + 1] = (v & (1 << 6)) != 0;
+            dest[destPos + 2] = (v & (1 << 5)) != 0;
+            dest[destPos + 3] = (v & (1 << 4)) != 0;
+            dest[destPos + 4] = (v & (1 << 3)) != 0;
+            dest[destPos + 5] = (v & (1 << 2)) != 0;
+            dest[destPos + 6] = (v & (1 << 1)) != 0;
+            dest[destPos + 7] = (v & 1) != 0;
+            destPos += 8;
+        }
+        int countFinish = count & 7;
+        for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0;
+        }
+    }
+
+    /*Repeat() (boolean\[\] unpackBits(?:InReverseOrder)?) ==>
                $1ToChars,,$1ToBytes,,$1ToShorts,,$1ToInts,,$1ToLongs,,$1ToFloats,,$1ToDoubles;;
                boolean ==> char,,byte,,short,,int,,long,,float,,double;;
                Booleans ==> Chars,,Bytes,,Shorts,,Ints,,Longs,,Floats,,Doubles */
@@ -2571,6 +2656,100 @@ public class PackedBitArraysPer8 {
             dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (srcPos & 7))) != 0 ? bit1Value : bit0Value;
         }
     }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
+     * to newly created array <code>boolean[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBits(boolean[], int, byte[], long, int, boolean, boolean)}
+     * method.</p>
+     *
+     * @param src    the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @return the unpacked <code>boolean</code> array.
+     * @throws NullPointerException     if either <code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
+     */
+    public static boolean[] unpackBitsInReverseOrder(
+            byte[] src, long srcPos, long count,
+            boolean bit0Value, boolean bit1Value) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final boolean[] result = new boolean[(int) count];
+        unpackBitsInReverseOrder(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
+        return result;
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> <code>boolean</code> array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * @param dest      the destination array (unpacked <code>boolean</code> values).
+     * @param destPos   position of the first written element in the destination array.
+     * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
+    public static void unpackBitsInReverseOrder(
+            boolean[] dest, int destPos, byte[] src, long srcPos, int count,
+            boolean bit0Value, boolean bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
+        if (countStart > count) {
+            countStart = count;
+        }
+        for (int destPosMax = destPos + countStart; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+        count -= countStart;
+        int cnt = count >>> 3;
+        for (int k = (int) (srcPos >>> 3), kMax = k + cnt; k < kMax; k++) {
+            int v = src[k];
+            srcPos += 8;
+            dest[destPos] = (v & (1 << 7)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 1] = (v & (1 << 6)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 2] = (v & (1 << 5)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 3] = (v & (1 << 4)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 4] = (v & (1 << 3)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 5] = (v & (1 << 2)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 6] = (v & (1 << 1)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 7] = (v & 1) != 0 ? bit1Value : bit0Value;
+            destPos += 8;
+        }
+        int countFinish = count & 7;
+        for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+    }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
@@ -2666,6 +2845,100 @@ public class PackedBitArraysPer8 {
         int countFinish = count & 7;
         for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
             dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (srcPos & 7))) != 0 ? bit1Value : bit0Value;
+        }
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
+     * to newly created array <code>char[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBits(char[], int, byte[], long, int, char, char)}
+     * method.</p>
+     *
+     * @param src    the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @return the unpacked <code>char</code> array.
+     * @throws NullPointerException     if either <code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
+     */
+    public static char[] unpackBitsInReverseOrderToChars(
+            byte[] src, long srcPos, long count,
+            char bit0Value, char bit1Value) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final char[] result = new char[(int) count];
+        unpackBitsInReverseOrder(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
+        return result;
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> <code>char</code> array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * @param dest      the destination array (unpacked <code>char</code> values).
+     * @param destPos   position of the first written element in the destination array.
+     * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
+    public static void unpackBitsInReverseOrder(
+            char[] dest, int destPos, byte[] src, long srcPos, int count,
+            char bit0Value, char bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
+        if (countStart > count) {
+            countStart = count;
+        }
+        for (int destPosMax = destPos + countStart; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+        count -= countStart;
+        int cnt = count >>> 3;
+        for (int k = (int) (srcPos >>> 3), kMax = k + cnt; k < kMax; k++) {
+            int v = src[k];
+            srcPos += 8;
+            dest[destPos] = (v & (1 << 7)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 1] = (v & (1 << 6)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 2] = (v & (1 << 5)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 3] = (v & (1 << 4)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 4] = (v & (1 << 3)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 5] = (v & (1 << 2)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 6] = (v & (1 << 1)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 7] = (v & 1) != 0 ? bit1Value : bit0Value;
+            destPos += 8;
+        }
+        int countFinish = count & 7;
+        for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
         }
     }
 
@@ -2766,6 +3039,100 @@ public class PackedBitArraysPer8 {
         }
     }
 
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
+     * to newly created array <code>byte[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBits(byte[], int, byte[], long, int, byte, byte)}
+     * method.</p>
+     *
+     * @param src    the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @return the unpacked <code>byte</code> array.
+     * @throws NullPointerException     if either <code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
+     */
+    public static byte[] unpackBitsInReverseOrderToBytes(
+            byte[] src, long srcPos, long count,
+            byte bit0Value, byte bit1Value) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final byte[] result = new byte[(int) count];
+        unpackBitsInReverseOrder(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
+        return result;
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> <code>byte</code> array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * @param dest      the destination array (unpacked <code>byte</code> values).
+     * @param destPos   position of the first written element in the destination array.
+     * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
+    public static void unpackBitsInReverseOrder(
+            byte[] dest, int destPos, byte[] src, long srcPos, int count,
+            byte bit0Value, byte bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
+        if (countStart > count) {
+            countStart = count;
+        }
+        for (int destPosMax = destPos + countStart; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+        count -= countStart;
+        int cnt = count >>> 3;
+        for (int k = (int) (srcPos >>> 3), kMax = k + cnt; k < kMax; k++) {
+            int v = src[k];
+            srcPos += 8;
+            dest[destPos] = (v & (1 << 7)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 1] = (v & (1 << 6)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 2] = (v & (1 << 5)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 3] = (v & (1 << 4)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 4] = (v & (1 << 3)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 5] = (v & (1 << 2)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 6] = (v & (1 << 1)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 7] = (v & 1) != 0 ? bit1Value : bit0Value;
+            destPos += 8;
+        }
+        int countFinish = count & 7;
+        for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+    }
+
 
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
@@ -2860,6 +3227,100 @@ public class PackedBitArraysPer8 {
         int countFinish = count & 7;
         for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
             dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (srcPos & 7))) != 0 ? bit1Value : bit0Value;
+        }
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
+     * to newly created array <code>short[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBits(short[], int, byte[], long, int, short, short)}
+     * method.</p>
+     *
+     * @param src    the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @return the unpacked <code>short</code> array.
+     * @throws NullPointerException     if either <code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
+     */
+    public static short[] unpackBitsInReverseOrderToShorts(
+            byte[] src, long srcPos, long count,
+            short bit0Value, short bit1Value) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final short[] result = new short[(int) count];
+        unpackBitsInReverseOrder(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
+        return result;
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> <code>short</code> array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * @param dest      the destination array (unpacked <code>short</code> values).
+     * @param destPos   position of the first written element in the destination array.
+     * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
+    public static void unpackBitsInReverseOrder(
+            short[] dest, int destPos, byte[] src, long srcPos, int count,
+            short bit0Value, short bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
+        if (countStart > count) {
+            countStart = count;
+        }
+        for (int destPosMax = destPos + countStart; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+        count -= countStart;
+        int cnt = count >>> 3;
+        for (int k = (int) (srcPos >>> 3), kMax = k + cnt; k < kMax; k++) {
+            int v = src[k];
+            srcPos += 8;
+            dest[destPos] = (v & (1 << 7)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 1] = (v & (1 << 6)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 2] = (v & (1 << 5)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 3] = (v & (1 << 4)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 4] = (v & (1 << 3)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 5] = (v & (1 << 2)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 6] = (v & (1 << 1)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 7] = (v & 1) != 0 ? bit1Value : bit0Value;
+            destPos += 8;
+        }
+        int countFinish = count & 7;
+        for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
         }
     }
 
@@ -2960,6 +3421,100 @@ public class PackedBitArraysPer8 {
         }
     }
 
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
+     * to newly created array <code>int[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBits(int[], int, byte[], long, int, int, int)}
+     * method.</p>
+     *
+     * @param src    the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @return the unpacked <code>int</code> array.
+     * @throws NullPointerException     if either <code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
+     */
+    public static int[] unpackBitsInReverseOrderToInts(
+            byte[] src, long srcPos, long count,
+            int bit0Value, int bit1Value) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final int[] result = new int[(int) count];
+        unpackBitsInReverseOrder(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
+        return result;
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> <code>int</code> array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * @param dest      the destination array (unpacked <code>int</code> values).
+     * @param destPos   position of the first written element in the destination array.
+     * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
+    public static void unpackBitsInReverseOrder(
+            int[] dest, int destPos, byte[] src, long srcPos, int count,
+            int bit0Value, int bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
+        if (countStart > count) {
+            countStart = count;
+        }
+        for (int destPosMax = destPos + countStart; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+        count -= countStart;
+        int cnt = count >>> 3;
+        for (int k = (int) (srcPos >>> 3), kMax = k + cnt; k < kMax; k++) {
+            int v = src[k];
+            srcPos += 8;
+            dest[destPos] = (v & (1 << 7)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 1] = (v & (1 << 6)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 2] = (v & (1 << 5)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 3] = (v & (1 << 4)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 4] = (v & (1 << 3)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 5] = (v & (1 << 2)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 6] = (v & (1 << 1)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 7] = (v & 1) != 0 ? bit1Value : bit0Value;
+            destPos += 8;
+        }
+        int countFinish = count & 7;
+        for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+    }
+
 
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
@@ -3054,6 +3609,100 @@ public class PackedBitArraysPer8 {
         int countFinish = count & 7;
         for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
             dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (srcPos & 7))) != 0 ? bit1Value : bit0Value;
+        }
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
+     * to newly created array <code>long[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBits(long[], int, byte[], long, int, long, long)}
+     * method.</p>
+     *
+     * @param src    the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @return the unpacked <code>long</code> array.
+     * @throws NullPointerException     if either <code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
+     */
+    public static long[] unpackBitsInReverseOrderToLongs(
+            byte[] src, long srcPos, long count,
+            long bit0Value, long bit1Value) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final long[] result = new long[(int) count];
+        unpackBitsInReverseOrder(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
+        return result;
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> <code>long</code> array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * @param dest      the destination array (unpacked <code>long</code> values).
+     * @param destPos   position of the first written element in the destination array.
+     * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
+    public static void unpackBitsInReverseOrder(
+            long[] dest, int destPos, byte[] src, long srcPos, int count,
+            long bit0Value, long bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
+        if (countStart > count) {
+            countStart = count;
+        }
+        for (int destPosMax = destPos + countStart; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+        count -= countStart;
+        int cnt = count >>> 3;
+        for (int k = (int) (srcPos >>> 3), kMax = k + cnt; k < kMax; k++) {
+            int v = src[k];
+            srcPos += 8;
+            dest[destPos] = (v & (1 << 7)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 1] = (v & (1 << 6)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 2] = (v & (1 << 5)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 3] = (v & (1 << 4)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 4] = (v & (1 << 3)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 5] = (v & (1 << 2)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 6] = (v & (1 << 1)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 7] = (v & 1) != 0 ? bit1Value : bit0Value;
+            destPos += 8;
+        }
+        int countFinish = count & 7;
+        for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
         }
     }
 
@@ -3154,6 +3803,100 @@ public class PackedBitArraysPer8 {
         }
     }
 
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
+     * to newly created array <code>float[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBits(float[], int, byte[], long, int, float, float)}
+     * method.</p>
+     *
+     * @param src    the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @return the unpacked <code>float</code> array.
+     * @throws NullPointerException     if either <code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
+     */
+    public static float[] unpackBitsInReverseOrderToFloats(
+            byte[] src, long srcPos, long count,
+            float bit0Value, float bit1Value) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final float[] result = new float[(int) count];
+        unpackBitsInReverseOrder(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
+        return result;
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> <code>float</code> array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * @param dest      the destination array (unpacked <code>float</code> values).
+     * @param destPos   position of the first written element in the destination array.
+     * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
+    public static void unpackBitsInReverseOrder(
+            float[] dest, int destPos, byte[] src, long srcPos, int count,
+            float bit0Value, float bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
+        if (countStart > count) {
+            countStart = count;
+        }
+        for (int destPosMax = destPos + countStart; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+        count -= countStart;
+        int cnt = count >>> 3;
+        for (int k = (int) (srcPos >>> 3), kMax = k + cnt; k < kMax; k++) {
+            int v = src[k];
+            srcPos += 8;
+            dest[destPos] = (v & (1 << 7)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 1] = (v & (1 << 6)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 2] = (v & (1 << 5)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 3] = (v & (1 << 4)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 4] = (v & (1 << 3)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 5] = (v & (1 << 2)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 6] = (v & (1 << 1)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 7] = (v & 1) != 0 ? bit1Value : bit0Value;
+            destPos += 8;
+        }
+        int countFinish = count & 7;
+        for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+    }
+
 
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
@@ -3248,6 +3991,100 @@ public class PackedBitArraysPer8 {
         int countFinish = count & 7;
         for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
             dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (srcPos & 7))) != 0 ? bit1Value : bit0Value;
+        }
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
+     * to newly created array <code>double[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * <p>Note that this method provides more user-friendly exception messages in a case
+     * of incorrect arguments, than {@link #unpackBits(double[], int, byte[], long, int, double, double)}
+     * method.</p>
+     *
+     * @param src    the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @return the unpacked <code>double</code> array.
+     * @throws NullPointerException     if either <code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
+     *                                  if copying would cause access of data outside the source array bounds.
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
+     */
+    public static double[] unpackBitsInReverseOrderToDoubles(
+            byte[] src, long srcPos, long count,
+            double bit0Value, double bit1Value) {
+        Objects.requireNonNull(src, "Null src");
+        if (srcPos < 0) {
+            throw new IllegalArgumentException("Negative srcPos = " + srcPos);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Negative count = " + count);
+        }
+        if (count > unpackedLength(src) - srcPos) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it cannot contain " + count + " bits since position " + srcPos);
+        }
+        if (count > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large bit array for unpacking to Java array: " +
+                    count + " >= 2^31 bits");
+        }
+        final double[] result = new double[(int) count];
+        unpackBitsInReverseOrder(result, 0, src, srcPos, result.length, bit0Value, bit1Value);
+        return result;
+    }
+
+    /**
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> <code>double</code> array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
+     *
+     * @param dest      the destination array (unpacked <code>double</code> values).
+     * @param destPos   position of the first written element in the destination array.
+     * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos    position of the first bit read in the source array.
+     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
+     * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
+    public static void unpackBitsInReverseOrder(
+            double[] dest, int destPos, byte[] src, long srcPos, int count,
+            double bit0Value, double bit1Value) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int countStart = (srcPos & 7) == 0 ? 0 : 8 - (int) (srcPos & 7);
+        if (countStart > count) {
+            countStart = count;
+        }
+        for (int destPosMax = destPos + countStart; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
+        }
+        count -= countStart;
+        int cnt = count >>> 3;
+        for (int k = (int) (srcPos >>> 3), kMax = k + cnt; k < kMax; k++) {
+            int v = src[k];
+            srcPos += 8;
+            dest[destPos] = (v & (1 << 7)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 1] = (v & (1 << 6)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 2] = (v & (1 << 5)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 3] = (v & (1 << 4)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 4] = (v & (1 << 3)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 5] = (v & (1 << 2)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 6] = (v & (1 << 1)) != 0 ? bit1Value : bit0Value;
+            dest[destPos + 7] = (v & 1) != 0 ? bit1Value : bit0Value;
+            destPos += 8;
+        }
+        int countFinish = count & 7;
+        for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
+            dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
         }
     }
     /*Repeat.AutoGeneratedEnd*/

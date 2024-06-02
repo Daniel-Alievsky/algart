@@ -842,7 +842,8 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Copies <code>count</code> bits, packed into <code>src</code> buffer, starting from the bit <code>#srcPos</code>,
+     * Unpacks <code>count</code> bits, packed into <code>src</code> buffer,
+     * starting from the bit <code>#srcPos</code>,
      * to <code>dest</code> array, starting from the element <code>#destPos</code>.
      *
      * @param dest    the destination array (unpacked <code>boolean</code> values).
