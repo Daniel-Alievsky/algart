@@ -362,8 +362,8 @@ class Conversions {
 
     //[[Repeat() Float ==> Double;;
     //           float ==> double;;
-    //           \(double\)\(([^)]+)\) ==> $1;;
-    //           \(double\)([\w\-]+) ==> $1 ]]
+    //           \(double\)\s*\(([^)]+)\) ==> $1;;
+    //           \(double\)\s*([\w\-]+) ==> $1 ]]
     private static void separableHartleyToFourierFloatArray(
             ArrayContext context,
             UpdatablePNumberArray fRe, UpdatablePNumberArray fIm,
@@ -639,20 +639,20 @@ class Conversions {
                 if (hIm == null) {
                     double s = 0.5 * (hRe1 + hRe2);
                     double d = 0.5 * (hRe1 - hRe2);
-                    fReJA1[fReOfs1 + k1] = (double) s;
-                    fImJA1[fReOfs1 + k1] = (double) -d;
-                    fReJA2[fReOfs2 + k2] = (double) s;
-                    fImJA2[fReOfs2 + k2] = (double) d;
+                    fReJA1[fReOfs1 + k1] = s;
+                    fImJA1[fReOfs1 + k1] = -d;
+                    fReJA2[fReOfs2 + k2] = s;
+                    fImJA2[fReOfs2 + k2] = d;
                 } else {
                     double hIm1 = hImJA1[hImOfs1 + k1], hIm2 = hImJA2[hImOfs2 + k2];
                     double sRe = 0.5 * (hRe1 + hRe2);
                     double sIm = 0.5 * (hIm1 + hIm2);
                     double dRe = 0.5 * (hRe1 - hRe2);
                     double dIm = 0.5 * (hIm1 - hIm2);
-                    fReJA1[fReOfs1 + k1] = (double) (sRe + dIm);
-                    fImJA1[fImOfs1 + k1] = (double) (sIm - dRe);
-                    fReJA2[fReOfs2 + k2] = (double) (sRe - dIm);
-                    fImJA2[fImOfs2 + k2] = (double) (sIm + dRe);
+                    fReJA1[fReOfs1 + k1] = sRe + dIm;
+                    fImJA1[fImOfs1 + k1] = sIm - dRe;
+                    fReJA2[fReOfs2 + k2] = sRe - dIm;
+                    fImJA2[fImOfs2 + k2] = sIm + dRe;
                 }
             }
             count += disp1 + len == disp2 + 1 ? 2L * len - 1 : 2L * len; //odd or even n-1
@@ -754,14 +754,14 @@ class Conversions {
                 double s21 = 0.5 * (hLRe2 + hRRe1);
                 double d12 = 0.5 * (hLRe1 - hRRe2);
                 double d21 = 0.5 * (hLRe2 - hRRe1);
-                fReJA1[fReOfs1 + kL] = (double) s21;
-                fImJA1[fImOfs1 + kL] = (double) -d12;
-                fReJA1[fReOfs1 + kR] = (double) s12;
-                fImJA1[fImOfs1 + kR] = (double) d21;
-                fReJA2[fReOfs2 + kL] = (double) s12;
-                fImJA2[fImOfs2 + kL] = (double) -d21;
-                fReJA2[fReOfs2 + kR] = (double) s21;
-                fImJA2[fImOfs2 + kR] = (double) d12;
+                fReJA1[fReOfs1 + kL] = s21;
+                fImJA1[fImOfs1 + kL] = -d12;
+                fReJA1[fReOfs1 + kR] = s12;
+                fImJA1[fImOfs1 + kR] = d21;
+                fReJA2[fReOfs2 + kL] = s12;
+                fImJA2[fImOfs2 + kL] = -d21;
+                fReJA2[fReOfs2 + kR] = s21;
+                fImJA2[fImOfs2 + kR] = d12;
             } else {
                 double hLIm1 = hImJA1[hImOfs1 + kL], hRIm1 = hImJA1[hImOfs1 + kR];
                 double hLIm2 = hImJA2[hImOfs2 + kL], hRIm2 = hImJA2[hImOfs2 + kR];
@@ -773,14 +773,14 @@ class Conversions {
                 double dIm12 = 0.5 * (hLIm1 - hRIm2);
                 double dRe21 = 0.5 * (hLRe2 - hRRe1);
                 double dIm21 = 0.5 * (hLIm2 - hRIm1);
-                fReJA1[fReOfs1 + kL] = (double) (sRe21 + dIm12);
-                fImJA1[fImOfs1 + kL] = (double) (sIm21 - dRe12);
-                fReJA1[fReOfs1 + kR] = (double) (sRe12 - dIm21);
-                fImJA1[fImOfs1 + kR] = (double) (sIm12 + dRe21);
-                fReJA2[fReOfs2 + kL] = (double) (sRe12 + dIm21);
-                fImJA2[fImOfs2 + kL] = (double) (sIm12 - dRe21);
-                fReJA2[fReOfs2 + kR] = (double) (sRe21 - dIm12);
-                fImJA2[fImOfs2 + kR] = (double) (sIm21 + dRe12);
+                fReJA1[fReOfs1 + kL] = sRe21 + dIm12;
+                fImJA1[fImOfs1 + kL] = sIm21 - dRe12;
+                fReJA1[fReOfs1 + kR] = sRe12 - dIm21;
+                fImJA1[fImOfs1 + kR] = sIm12 + dRe21;
+                fReJA2[fReOfs2 + kL] = sRe12 + dIm21;
+                fImJA2[fImOfs2 + kL] = sIm12 - dRe21;
+                fReJA2[fReOfs2 + kR] = sRe21 - dIm12;
+                fImJA2[fImOfs2 + kR] = sIm21 + dRe12;
             }
         }
     }
