@@ -2836,7 +2836,8 @@ public class PackedBitArraysPer8 {
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
-     * of incorrect arguments, than {@link #unpackBits(boolean[], int, byte[], long, int, boolean, boolean)}
+     * of incorrect arguments, than
+     * {@link #unpackBitsInReverseOrder(boolean[], int, byte[], long, int, boolean, boolean)}
      * method.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
@@ -3028,7 +3029,8 @@ public class PackedBitArraysPer8 {
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
-     * of incorrect arguments, than {@link #unpackBits(char[], int, byte[], long, int, char, char)}
+     * of incorrect arguments, than
+     * {@link #unpackBitsInReverseOrder(char[], int, byte[], long, int, char, char)}
      * method.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
@@ -3220,7 +3222,8 @@ public class PackedBitArraysPer8 {
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
-     * of incorrect arguments, than {@link #unpackBits(byte[], int, byte[], long, int, byte, byte)}
+     * of incorrect arguments, than
+     * {@link #unpackBitsInReverseOrder(byte[], int, byte[], long, int, byte, byte)}
      * method.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
@@ -3412,7 +3415,8 @@ public class PackedBitArraysPer8 {
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
-     * of incorrect arguments, than {@link #unpackBits(short[], int, byte[], long, int, short, short)}
+     * of incorrect arguments, than
+     * {@link #unpackBitsInReverseOrder(short[], int, byte[], long, int, short, short)}
      * method.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
@@ -3604,7 +3608,8 @@ public class PackedBitArraysPer8 {
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
-     * of incorrect arguments, than {@link #unpackBits(int[], int, byte[], long, int, int, int)}
+     * of incorrect arguments, than
+     * {@link #unpackBitsInReverseOrder(int[], int, byte[], long, int, int, int)}
      * method.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
@@ -3796,7 +3801,8 @@ public class PackedBitArraysPer8 {
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
-     * of incorrect arguments, than {@link #unpackBits(long[], int, byte[], long, int, long, long)}
+     * of incorrect arguments, than
+     * {@link #unpackBitsInReverseOrder(long[], int, byte[], long, int, long, long)}
      * method.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
@@ -3988,7 +3994,8 @@ public class PackedBitArraysPer8 {
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
-     * of incorrect arguments, than {@link #unpackBits(float[], int, byte[], long, int, float, float)}
+     * of incorrect arguments, than
+     * {@link #unpackBitsInReverseOrder(float[], int, byte[], long, int, float, float)}
      * method.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
@@ -4180,7 +4187,8 @@ public class PackedBitArraysPer8 {
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
-     * of incorrect arguments, than {@link #unpackBits(double[], int, byte[], long, int, double, double)}
+     * of incorrect arguments, than
+     * {@link #unpackBitsInReverseOrder(double[], int, byte[], long, int, double, double)}
      * method.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
