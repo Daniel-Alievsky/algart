@@ -2874,7 +2874,8 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
      * to <code>dest</code> <code>boolean</code> array, starting from the element <code>#destPos</code>.
      * It means that every element <code>dest[destPos+k]</code> is assigned to
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
@@ -3065,7 +3066,8 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
      * to <code>dest</code> <code>char</code> array, starting from the element <code>#destPos</code>.
      * It means that every element <code>dest[destPos+k]</code> is assigned to
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
@@ -3256,7 +3258,8 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
      * to <code>dest</code> <code>byte</code> array, starting from the element <code>#destPos</code>.
      * It means that every element <code>dest[destPos+k]</code> is assigned to
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
@@ -3447,7 +3450,8 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
      * to <code>dest</code> <code>short</code> array, starting from the element <code>#destPos</code>.
      * It means that every element <code>dest[destPos+k]</code> is assigned to
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
@@ -3638,7 +3642,8 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
      * to <code>dest</code> <code>int</code> array, starting from the element <code>#destPos</code>.
      * It means that every element <code>dest[destPos+k]</code> is assigned to
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
@@ -3829,7 +3834,8 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
      * to <code>dest</code> <code>long</code> array, starting from the element <code>#destPos</code>.
      * It means that every element <code>dest[destPos+k]</code> is assigned to
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
@@ -4020,7 +4026,8 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
      * to <code>dest</code> <code>float</code> array, starting from the element <code>#destPos</code>.
      * It means that every element <code>dest[destPos+k]</code> is assigned to
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
@@ -4211,7 +4218,8 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array in the reverse order,
+     * starting from the bit <code>#srcPos</code>,
      * to <code>dest</code> <code>double</code> array, starting from the element <code>#destPos</code>.
      * It means that every element <code>dest[destPos+k]</code> is assigned to
      * <code>{@link #getBitInReverseOrder getBitInReverseOrder}(srcPos+k)?bit1Value:bit0Value</code>.
