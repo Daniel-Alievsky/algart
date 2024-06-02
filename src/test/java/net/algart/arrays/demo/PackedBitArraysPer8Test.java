@@ -679,7 +679,7 @@ public class PackedBitArraysPer8Test {
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBitsInReverseOrder(pDestWork1, destPos, pSrc, srcPos, count);
                 PackedBitArraysPer8.copyBitsInReverseOrderNoSync(pDestWork2, destPos, pSrc, srcPos, count);
-                PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork1, 0, pDestWork1, 0, len);
                 // unpacking necessary to show bDestWork1 in a case of the bug
                 for (int k = 0; k < count; k++) {
                     boolean bit = PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, destPos + k);
@@ -733,7 +733,7 @@ public class PackedBitArraysPer8Test {
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBitsInReverseOrder(pDestWork1, destPos, pDestWork1, srcPos, count);
                 PackedBitArraysPer8.copyBitsInReverseOrderNoSync(pDestWork2, destPos, pDestWork2, srcPos, count);
-                PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork1, 0, pDestWork1, 0, len);
                 // unpacking necessary to show bDestWork1 in a case of the bug
                 for (int k = 0; k < count; k++) {
                     boolean bit = PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, destPos + k);
