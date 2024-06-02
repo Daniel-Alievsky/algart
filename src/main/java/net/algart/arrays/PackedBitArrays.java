@@ -365,8 +365,8 @@ public class PackedBitArrays {
      *
      * <p>For any two packed bit arrays <code>a1</code> and <code>a2</code> such that
      * <code>PackedBitArrays.bitEquals(a1, pos1, a2, pos2, count)</code>, it is also the case that
-     * <tt>PackedBitArrays.bitHashCode(a1, pos1, pos1 + count) ==
-     * PackedBitArrays.bitHashCode(a2, pos2, pos2 + count)</tt>.
+     * <code>PackedBitArrays.bitHashCode(a1, pos1, pos1 + count) ==
+     * PackedBitArrays.bitHashCode(a2, pos2, pos2 + count)</code>.
      *
      * @param array     the packed bit array whose content-based hash code to compute.
      * @param fromIndex the initial index of the checked fragment, inclusive.
@@ -563,7 +563,7 @@ public class PackedBitArrays {
      * bits at positions <code>srcPos..srcPos+count-1</code>
      * were first unpacked to a temporary <code>boolean[]</code> array with <code>count</code> elements
      * and then the contents of the temporary array were packed into positions
-     * <tt>destPos..destPos+count-1</code>.
+     * <code>destPos..destPos+count-1</code>.
      *
      * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
@@ -1470,9 +1470,9 @@ public class PackedBitArrays {
         }
     }
 
-    /*Repeat() char(\s+threshold)      ==> int$1,,int$1,,int$1,,long$1,,float$1,,double$1;;
-               char                    ==> byte,,short,,int,,long,,float,,double;;
-               (src\[[^]]*])(?!\<\/tt) ==> ($1 & 0xFF),,($1 & 0xFFFF),,$1,,...
+    /*Repeat() char(\s+threshold)        ==> int$1,,int$1,,int$1,,long$1,,float$1,,double$1;;
+               char                      ==> byte,,short,,int,,long,,float,,double;;
+               (src\[[^]]*])(?!\<\/code) ==> ($1 & 0xFF),,($1 & 0xFFFF),,$1,,...
      */
 
     /**
@@ -2019,7 +2019,7 @@ public class PackedBitArrays {
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
-     * so that every element <code>(src[k] & 0xFF)</code> is transformed to boolean (bit) value
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFF) > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
@@ -2153,7 +2153,7 @@ public class PackedBitArrays {
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
-     * so that every element <code>(src[k] & 0xFF)</code> is transformed to boolean (bit) value
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFF) < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
@@ -2287,7 +2287,7 @@ public class PackedBitArrays {
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
-     * so that every element <code>(src[k] & 0xFF)</code> is transformed to boolean (bit) value
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFF) >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
@@ -2421,7 +2421,7 @@ public class PackedBitArrays {
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
-     * so that every element <code>(src[k] & 0xFF)</code> is transformed to boolean (bit) value
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFF) <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
@@ -2556,7 +2556,7 @@ public class PackedBitArrays {
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
-     * so that every element <code>(src[k] & 0xFFFF)</code> is transformed to boolean (bit) value
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFFFF) > threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
@@ -2690,7 +2690,7 @@ public class PackedBitArrays {
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
-     * so that every element <code>(src[k] & 0xFFFF)</code> is transformed to boolean (bit) value
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFFFF) < threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
@@ -2824,7 +2824,7 @@ public class PackedBitArrays {
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
-     * so that every element <code>(src[k] & 0xFFFF)</code> is transformed to boolean (bit) value
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFFFF) >= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
@@ -2958,7 +2958,7 @@ public class PackedBitArrays {
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
-     * so that every element <code>(src[k] & 0xFFFF)</code> is transformed to boolean (bit) value
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFFFF) <= threshold}</nobr>.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
@@ -9827,10 +9827,11 @@ public class PackedBitArrays {
     /*Repeat.AutoGeneratedEnd*/
 
     /**
-     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>,
-     * and add them <code>count</code> elements of <code>dest</code> array, starting from the element <tt>#destPos</tt>.
-     * It means that every element <tt>dest[destPos+k]</tt> is assigned to
-     * <tt>dest[destPos+k]+({@link #getBit getBit}(srcPos+k)?1:0)</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and add them <code>count</code> elements of <code>dest</code> array, starting from the element
+     * <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>dest[destPos+k]+({@link #getBit getBit}(srcPos+k)?1:0)</code>.
      *
      * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
@@ -9939,10 +9940,11 @@ public class PackedBitArrays {
     /*Repeat.SectionStart fillBits*/
 
     /**
-     * Fills <code>count</code> bits in the packed <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * Fills <code>count</code> bits in the packed <code>dest</code> array, starting
+     * from the bit <code>#destPos</code>,
      * by the specified value. <i>Be careful:</i> the second <code>int</code> argument in this method
      * is the number of filled element, but not the end filled index
-     * as in <tt>java.util.Arrays.fill</tt> methods.
+     * as in <code>java.util.Arrays.fill</code> methods.
      *
      * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
@@ -10042,15 +10044,15 @@ public class PackedBitArrays {
      * Returns <code>true</code> if the specified fragment of the given packed bit array
      * is filled by zero bits (<code>0</code>).
      * Returns <code>false</code> if at least one of <code>count</code> bits of this array,
-     * starting from the bit <tt>#pos</tt>, is <code>1</code>.
+     * starting from the bit <code>#pos</code>, is <code>1</code>.
      *
      * <p>If the <code>count</code> argument (number of elements) is 0, this method returns <code>true</code>.
      *
      * @param array the checked bit array (bits are packed in <code>long</code> values).
      * @param pos   the initial index of the checked fragment in the array.
      * @param count the number of checked bits.
-     * @return <code>true</code> if and only if all <code>count</code> bits, starting from the bit <tt>#pos</tt>,
-     * are zero, or if <tt>count==0</tt>.
+     * @return <code>true</code> if and only if all <code>count</code> bits, starting from the bit <code>#pos</code>,
+     * are zero, or if <code>count==0</code>.
      * @throws NullPointerException      if the <code>array</code> argument is <code>null</code>.
      * @throws IndexOutOfBoundsException if checking would cause access of data outside array bounds.
      */
@@ -10088,12 +10090,12 @@ public class PackedBitArrays {
 
     /**
      * Replaces <code>count</code> bits,
-     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * with the logical NOT of corresponding <code>count</code> bits,
-     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
+     * packed in <code>src</code> array, starting from the bit <code>#srcPos</code>.
      *
-     * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
-     * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
+     * <p>This method works correctly even if <code>src&nbsp;==&nbsp;dest</code>
+     * and <code>srcPos&nbsp;==&nbsp;destPos</code>:
      * in this case it just inverts the specified bits.
      *
      * @param dest    the destination array (bits are packed in <code>long</code> values).
@@ -10194,8 +10196,8 @@ public class PackedBitArrays {
     }
 
     /**
-     * Equivalent to <tt>{@link #notBits(long[], long, long[], long, long)
-     * notBits}(dest, destPos, dest, destPos, count)</tt>.
+     * Equivalent to <code>{@link #notBits(long[], long, long[], long, long)
+     * notBits}(dest, destPos, dest, destPos, count)</code>.
      *
      * @param dest    the source/destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the source/destination array.
@@ -10209,12 +10211,12 @@ public class PackedBitArrays {
 
     /**
      * Replaces <code>count</code> bits,
-     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * with the logical AND of them and corresponding <code>count</code> bits,
-     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
+     * packed in <code>src</code> array, starting from the bit <code>#srcPos</code>.
      *
-     * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
-     * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
+     * <p>This method works correctly even if <code>src&nbsp;==&nbsp;dest</code>
+     * and <code>srcPos&nbsp;==&nbsp;destPos</code>:
      * in this case it does nothing (so there are no reasons for this call).
      *
      * @param dest    the destination array (bits are packed in <code>long</code> values).
@@ -10316,12 +10318,12 @@ public class PackedBitArrays {
 
     /**
      * Replaces <code>count</code> bits,
-     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * with the logical OR of them and corresponding <code>count</code> bits,
-     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
+     * packed in <code>src</code> array, starting from the bit <code>#srcPos</code>.
      *
-     * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
-     * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
+     * <p>This method works correctly even if <code>src&nbsp;==&nbsp;dest</code>
+     * and <code>srcPos&nbsp;==&nbsp;destPos</code>:
      * in this case it does nothing (so there are no reasons for this call).
      *
      * @param dest    the destination array (bits are packed in <code>long</code> values).
@@ -10424,12 +10426,12 @@ public class PackedBitArrays {
 
     /**
      * Replaces <code>count</code> bits,
-     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * with the logical XOR of them and corresponding <code>count</code> bits,
-     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
+     * packed in <code>src</code> array, starting from the bit <code>#srcPos</code>.
      *
-     * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
-     * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
+     * <p>This method works correctly even if <code>src&nbsp;==&nbsp;dest</code>
+     * and <code>srcPos&nbsp;==&nbsp;destPos</code>:
      * in this case it clears all specified bits.
      *
      * @param dest    the destination array (bits are packed in <code>long</code> values).
@@ -10531,12 +10533,12 @@ public class PackedBitArrays {
 
     /**
      * Replaces <code>count</code> bits,
-     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * with the logical AND of them and <i>inverted</i> corresponding <code>count</code> bits,
-     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
+     * packed in <code>src</code> array, starting from the bit <code>#srcPos</code>.
      *
-     * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
-     * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
+     * <p>This method works correctly even if <code>src&nbsp;==&nbsp;dest</code>
+     * and <code>srcPos&nbsp;==&nbsp;destPos</code>:
      * in this case it clears all specified bits.
      *
      * @param dest    the destination array (bits are packed in <code>long</code> values).
@@ -10638,12 +10640,12 @@ public class PackedBitArrays {
 
     /**
      * Replaces <code>count</code> bits,
-     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * with the logical OR of them and <i>inverted</i> corresponding <code>count</code> bits,
-     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
+     * packed in <code>src</code> array, starting from the bit <code>#srcPos</code>.
      *
-     * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
-     * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
+     * <p>This method works correctly even if <code>src&nbsp;==&nbsp;dest</code>
+     * and <code>srcPos&nbsp;==&nbsp;destPos</code>:
      * in this case it sets all specified bits to 1.
      *
      * @param dest    the destination array (bits are packed in <code>long</code> values).
@@ -10747,12 +10749,12 @@ public class PackedBitArrays {
 
     /**
      * Reverse order of <code>count</code> bits,
-     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>,
-     * and puts the result into <code>dest</code> array, starting from the bit <tt>#destPos</tt>.
-     * So, the bit <tt>#(destPos+k)</tt> in <code>dest</code> bit array will be equal to the bit
-     * <tt>#(srcPos+count-1-k)</tt> of the <code>src</code> bit array.
+     * packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and puts the result into <code>dest</code> array, starting from the bit <code>#destPos</code>.
+     * So, the bit <code>#(destPos+k)</code> in <code>dest</code> bit array will be equal to the bit
+     * <code>#(srcPos+count-1-k)</code> of the <code>src</code> bit array.
      *
-     * <p>This method does not work correctly if <tt>src&nbsp;==&nbsp;dest</tt>.
+     * <p>This method does not work correctly if <code>src&nbsp;==&nbsp;dest</code>.
      *
      * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
@@ -10843,22 +10845,22 @@ public class PackedBitArrays {
     }
 
     /**
-     * Returns the minimal index <code>k</code>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
-     * and the bit <tt>#k</tt> in the packed <code>src</code> bit array is equal to <code>value</code>,
-     * or <tt>-1</tt> if there is no such bits.
+     * Returns the minimal index <code>k</code>, so that <code>lowIndex&lt;=k&lt;highIndex</code>
+     * and the bit <code>#k</code> in the packed <code>src</code> bit array is equal to <code>value</code>,
+     * or <code>-1</code> if there is no such bits.
      *
-     * <p>If <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>.
      *
      * @param src       the searched packed bit array.
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of bit to be found.
-     * @return the index of the first occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
-     * or <tt>-1</tt> if this bit does not occur
-     * or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return the index of the first occurrence of this bit in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this bit does not occur
+     * or if <code>lowIndex&gt;=highIndex</code>.
      * @throws NullPointerException      if <code>array</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if <code>lowIndex</code> is negative or
-     *                                   if <code>highIndex</code> is greater than <tt>src.length*64</tt>.
+     *                                   if <code>highIndex</code> is greater than <code>src.length*64</code>.
      * @see #lastIndexOfBit(long[], long, long, boolean)
      */
     public static long indexOfBit(long[] src, long lowIndex, long highIndex, boolean value) {
@@ -10919,27 +10921,27 @@ public class PackedBitArrays {
     }
 
     /**
-     * Returns the maximal index <code>k</code>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
-     * and the bit <tt>#k</tt> in the packed <code>src</code> bit array is equal to <code>value</code>,
-     * or <tt>-1</tt> if there is no such bits.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=lowIndex</code>
+     * and the bit <code>#k</code> in the packed <code>src</code> bit array is equal to <code>value</code>,
+     * or <code>-1</code> if there is no such bits.
      *
-     * <p>If <tt>highIndex&lt;=lowIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>highIndex&lt;=lowIndex</code>, this method returns <code>-1</code>.
      *
      * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfBit(long[], long, long, boolean)} method:
-     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     * they describes the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
      *
      * @param src       the searched packed bit array.
      * @param lowIndex  the low index in the array for search (inclusive);
      *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of bit to be found.
-     * @return the index of the last occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
-     * or <tt>-1</tt> if this bit does not occur
-     * or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return the index of the last occurrence of this bit in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this bit does not occur
+     * or if <code>lowIndex&gt;=highIndex</code>.
      * @throws NullPointerException      if <code>src</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if <code>lowIndex</code> is negative or
-     *                                   if <code>highIndex</code> is greater than <tt>src.length*64</tt>.
+     *                                   if <code>highIndex</code> is greater than <code>src.length*64</code>.
      * @see #indexOfBit(long[], long, long, boolean)
      */
     public static long lastIndexOfBit(long[] src, long lowIndex, long highIndex, boolean value) {
@@ -11010,7 +11012,7 @@ public class PackedBitArrays {
      * @return the number of high bits (1) in the given fragment of the given packed bit array.
      * @throws NullPointerException      if the <code>src</code> argument is <code>null</code>.
      * @throws IndexOutOfBoundsException if <code>fromIndex</code> or <code>toIndex</code> are negative,
-     *                                   if <code>toIndex</code> is greater than <tt>src.length*64</tt>,
+     *                                   if <code>toIndex</code> is greater than <code>src.length*64</code>,
      *                                   or if <code>fromIndex</code> is greater than <code>startIndex</code>
      */
     public static long cardinality(long[] src, final long fromIndex, final long toIndex) {

@@ -28,20 +28,20 @@ import java.nio.LongBuffer;
 import java.util.Objects;
 
 /**
- * <p>Operations with bit arrays packed into <tt>java.nio.LongBuffer</tt>.</p>
+ * <p>Operations with bit arrays packed into <code>java.nio.LongBuffer</code>.</p>
  *
  * <p>AlgART bits arrays, created by {@link BufferMemoryModel} and {@link LargeMemoryModel},
  * are based on operations provided by this class.</p>
  *
- * <p>The maximal length of bit arrays supported by this class is <tt>2<sup>37</sup>-64</tt>.
+ * <p>The maximal length of bit arrays supported by this class is <code>2<sup>37</sup>-64</code>.
  * All indexes and lengths passed to methods of this class should not exceed this value.
  * In other case, the results are unspecified. ("Unspecified" means that any elements
- * of the passed buffers can be read or changed, or that <tt>IndexOutOfBoundsException</tt> can be thrown.)</p>
+ * of the passed buffers can be read or changed, or that <code>IndexOutOfBoundsException</code> can be thrown.)</p>
  *
- * <p>In all methods of this class, it's supposed that the bit <tt>#k</tt>
- * in a packed <tt>LongBuffer b</tt> is the bit
- * <tt>#(k%64)</tt> in the long element <tt>b.get(k/64)</tt>. In other words, the bit <tt>#k</tt>
- * (<tt>false</tt> or <tt>true</tt> value) can be extracted by the following operator:</p>
+ * <p>In all methods of this class, it's supposed that the bit <code>#k</code>
+ * in a packed <code>LongBuffer b</code> is the bit
+ * <code>#(k%64)</code> in the long element <code>b.get(k/64)</code>. In other words, the bit <code>#k</code>
+ * (<code>false</code> or <code>true</code> value) can be extracted by the following operator:</p>
  *
  * <pre>
  * (b.get(k &gt;&gt;&gt; 6) &amp; (1L &lt;&lt; (k &amp; 63))) != 0L
@@ -59,8 +59,8 @@ import java.util.Objects;
  * <p>You may use {@link #getBit(LongBuffer, long)} and {@link #setBit(LongBuffer, long, boolean)}, implementing
  * the equivalent code.</p>
  *
- * <p>If any method of this class modifies some portion of an element of a packed <tt>LongBuffer</tt>,
- * i.e. modifies less than all 64 its bits, then all accesses to this <tt>long</tt> element are performed
+ * <p>If any method of this class modifies some portion of an element of a packed <code>LongBuffer</code>,
+ * i.e. modifies less than all 64 its bits, then all accesses to this <code>long</code> element are performed
  * <b>inside a single synchronized block</b>, using the following instruction:</p>
  *
  * <pre>
@@ -73,9 +73,9 @@ import java.util.Objects;
  * If all 64 bits of the element are written, or if the bits are read only, then no synchronization is performed.
  * Such behavior allows to simultaneously work with non-overlapping fragments of a packed bit array
  * from several threads (different fragments for different threads), as if it would be a usual Java array.
- * Synchronization by <tt>{@link #getLock getLock}(buffer)</tt> (instead of <tt>buffer</tt> instance) allows
- * to use in different threads different instances of <tt>LongBuffer</tt>, created by <tt>LongBuffer.wrap</tt>
- * method for the sampe Java <tt>long[]</tt> array.</p>
+ * Synchronization by <code>{@link #getLock getLock}(buffer)</code> (instead of <code>buffer</code> instance) allows
+ * to use in different threads different instances of <code>LongBuffer</code>, created by <code>LongBuffer.wrap</code>
+ * method for the sampe Java <code>long[]</code> array.</p>
  *
  * <p>This class cannot be instantiated.</p>
  *
@@ -87,11 +87,11 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Returns <tt>packedLength &lt;&lt; 6</tt>: the maximal number of bits that
-     * can be stored in the specified number of <tt>long</tt> values.
+     * Returns <code>packedLength &lt;&lt; 6</code>: the maximal number of bits that
+     * can be stored in the specified number of <code>long</code> values.
      *
-     * @param packedLength number of packed <tt>long[]</tt> values.
-     * @return <tt>64 * packedLength</tt>
+     * @param packedLength number of packed <code>long[]</code> values.
+     * @return <code>64 * packedLength</code>
      * @throws TooLargeArrayException   if the argument is too large: &ge; 2<sup>57</sup>.
      * @throws IllegalArgumentException if the argument is negative.
      */
@@ -100,45 +100,48 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Returns <tt>((long) buffer.limit())) &lt;&lt; 6</tt>: the maximal number of bits that
+     * Returns <code>((long) buffer.limit())) &lt;&lt; 6</code>: the maximal number of bits that
      * can be stored in the specified buffer.
      *
-     * @param buffer the buffer (bits are packed into <tt>long</tt> values).
-     * @return <tt>64 * (long) buffer.limit()</tt>
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @param buffer the buffer (bits are packed into <code>long</code> values).
+     * @return <code>64 * (long) buffer.limit()</code>
+     * @throws NullPointerException if the argument is <code>null</code>.
      */
     public static long unpackedLength(LongBuffer buffer) {
         return ((long) buffer.limit()) << 6;
     }
 
     /**
-     * Returns <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt>: the minimal number of <tt>long</tt> values
-     * allowing to store <tt>unpackedLength</tt> bits.
+     * Returns <code>(unpackedLength + 63) &gt;&gt;&gt; 6</code>: the minimal number of <code>long</code> values
+     * allowing to store <code>unpackedLength</code> bits.
      *
      * @param unpackedLength the number of bits (the length of bit array).
-     * @return <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt> (the length of corresponding <tt>long[]</tt> array).
+     * @return <code>(unpackedLength + 63) &gt;&gt;&gt; 6</code>
+     * (the length of corresponding <code>long[]</code> array).
      */
     public static long packedLength(long unpackedLength) {
         return PackedBitArrays.packedLength(unpackedLength);
     }
 
     /**
-     * Equivalent of {@link #packedLength(long)} for <tt>int</tt> argument.
+     * Equivalent of {@link #packedLength(long)} for <code>int</code> argument.
      *
      * @param unpackedLength the number of bits (the length of bit array).
-     * @return <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt> (the length of corresponding <tt>long[]</tt> array).
+     * @return <code>(unpackedLength + 63) &gt;&gt;&gt; 6</code>
+     * (the length of corresponding <code>long[]</code> array).
      */
     public static int packedLength(int unpackedLength) {
         return PackedBitArrays.packedLength(unpackedLength);
     }
 
     /**
-     * Returns <tt>buffer.hasArray()?buffer.array():buffer</tt>.
+     * Returns <code>buffer.hasArray()?buffer.array():buffer</code>.
      * This object is used by all methods of this class for synchronization, when any portion (not all 64 bits)
-     * of some <tt>long</tt> element is modified.
-     * Synchronization by <tt>buffer.array()</tt> (instead of <tt>buffer</tt> instance) allows
-     * to use in different threads different instances of <tt>LongBuffer</tt>, created by <tt>LongBuffer.wrap</tt>
-     * method for the same Java <tt>long[]</tt> array.
+     * of some <code>long</code> element is modified.
+     * Synchronization by <code>buffer.array()</code> (instead of <code>buffer</code> instance) allows
+     * to use in different threads different instances of <code>LongBuffer</code>,
+     * created by <code>LongBuffer.wrap</code>
+     * method for the same Java <code>long[]</code> array.
      *
      * @param buffer the buffer.
      * @return this buffer if it is not backed by a Java array, the underlying Java array if it is backed by it.
@@ -148,23 +151,23 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Returns the bit <tt>#index</tt> in the packed <tt>src</tt> bit buffer.
+     * Returns the bit <code>#index</code> in the packed <code>src</code> bit buffer.
      * Equivalent to the following expression:<pre>
      * (src.get((int)(index &gt;&gt;&gt; 6)) &amp; (1L &lt;&lt; (index &amp; 63))) != 0L;
      * </pre>
      *
-     * @param src   the source buffer (bits are packed into <tt>long</tt> values).
+     * @param src   the source buffer (bits are packed into <code>long</code> values).
      * @param index index of the returned bit.
      * @return the bit at the specified index.
      * @throws IndexOutOfBoundsException if this method cause access of data outside buffer limits.
-     * @throws NullPointerException      if <tt>src</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <code>src</code> is <code>null</code>.
      */
     public static boolean getBit(LongBuffer src, long index) {
         return (src.get((int) (index >>> 6)) & (1L << (index & 63))) != 0L;
     }
 
     /**
-     * Sets the bit <tt>#index</tt> in the packed <tt>dest</tt> bit buffer.
+     * Sets the bit <code>#index</code> in the packed <code>dest</code> bit buffer.
      * Equivalent to the following operators:<pre>
      * synchronized ({@link #getLock PackedBitBuffers.getLock}(dest)) {
      * &#32;   if (value)
@@ -176,11 +179,11 @@ public class PackedBitBuffers {
      * }
      * </pre>
      *
-     * @param dest  the destination buffer (bits are packed into <tt>long</tt> values).
+     * @param dest  the destination buffer (bits are packed into <code>long</code> values).
      * @param index index of the written bit.
      * @param value new bit value.
      * @throws IndexOutOfBoundsException if this method cause access of data outside buffer limit.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      */
     public static void setBit(LongBuffer dest, long index, boolean value) {
         synchronized (getLock(dest)) {
@@ -192,9 +195,9 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Sets the bit <tt>#index</tt> in the packed <tt>dest</tt> bit buffer <i>without synchronization</i>.
+     * Sets the bit <code>#index</code> in the packed <code>dest</code> bit buffer <i>without synchronization</i>.
      * May be used instead of {@link #setBit(LongBuffer, long, boolean)}, if you are not planning to call
-     * this method from different threads for the same <tt>dest</tt> array.
+     * this method from different threads for the same <code>dest</code> array.
      * Equivalent to the following operators:<pre>
      * &#32;   if (value)
      * &#32;       dest.put((int)(index &gt;&gt;&gt; 6),
@@ -205,11 +208,11 @@ public class PackedBitBuffers {
      * }
      * </pre>
      *
-     * @param dest  the destination buffer (bits are packed into <tt>long</tt> values).
+     * @param dest  the destination buffer (bits are packed into <code>long</code> values).
      * @param index index of the written bit.
      * @param value new bit value.
      * @throws IndexOutOfBoundsException if this method cause access of data outside buffer limit.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      */
     public static void setBitNoSync(LongBuffer dest, long index, boolean value) {
         if (value)
@@ -219,16 +222,17 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#srcPos</tt>,
-     * in the packed <tt>src</tt> bit buffer.
+     * Returns the sequence of <code>count</code> bits (maximum 64 bits), starting from the bit <code>#srcPos</code>,
+     * in the packed <code>src</code> bit buffer.
      *
-     * <p>More precisely, the bit <tt>#(srcPos+k)</tt> will be returned in the bit <tt>#k</tt> of the returned
-     * <tt>long</tt> value <tt>R</tt>: the first bit <tt>#srcPos</tt> will be equal to <tt>R&amp;1</tt>,
-     * the following bit <tt>#(srcPos+1)</tt> will be equal to <tt>(R&gt;&gt;1)&amp;1</tt>, etc.
-     * If <tt>count=0</tt>, the result is 0.</p>
+     * <p>More precisely, the bit <code>#(srcPos+k)</code> will be returned in the bit <code>#k</code> of the returned
+     * <code>long</code> value <code>R</code>: the first bit <code>#srcPos</code> will be equal
+     * to <code>R&amp;1</code>,
+     * the following bit <code>#(srcPos+1)</code> will be equal to <code>(R&gt;&gt;1)&amp;1</code>, etc.
+     * If <code>count=0</code>, the result is 0.</p>
      *
      * <p>The same result can be calculated using the following loop
-     * (for correct <tt>count</tt> in the range 0..64):</p>
+     * (for correct <code>count</code> in the range 0..64):</p>
      *
      * <pre>
      *      long result = 0;
@@ -237,21 +241,21 @@ public class PackedBitBuffers {
      *          result |= bit &lt;&lt; k;
      *      }</pre>
      *
-     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     * <p>But this function works significantly faster, if <code>count</code> is greater than 1.</p>
      *
      * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
-     * after the end of the buffer (<tt>&ge;64*src.limit()</tt>);
+     * after the end of the buffer (<code>&ge;64*src.limit()</code>);
      * instead, all bits outside the buffer are considered zero.
      * (But negative indexes are not allowed.)</p>
      *
-     * @param src    the source buffer (bits are packed into <tt>long</tt> values).
+     * @param src    the source buffer (bits are packed into <code>long</code> values).
      * @param srcPos position of the first bit read in the source buffer.
      * @param count  the number of bits to be unpacked (must be &gt;=0 and &lt;64).
-     * @return the sequence of <tt>count</tt> bits.
-     * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt> or
+     * @return the sequence of <code>count</code> bits.
+     * @throws NullPointerException      if <code>src</code> argument is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or
      *                                   if copying would cause access of data outside buffer limits.
-     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
     public static long getBits64(LongBuffer src, long srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
@@ -288,12 +292,12 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
-     * in the packed <tt>dest</tt> bit buffer.
+     * Sets the sequence of <code>count</code> bits (maximum 64 bits), starting from the bit <code>#destPos</code>,
+     * in the packed <code>dest</code> bit buffer.
      * This is the reverse operation of {@link #getBits64(LongBuffer, long, int)}.
      *
      * <p>This function is equivalent to the following loop
-     * (for correct <tt>count</tt> in the range 0..64):</p>
+     * (for correct <code>count</code> in the range 0..64):</p>
      *
      * <pre>
      *      for (int k = 0; k &lt; count; k++) {
@@ -301,20 +305,20 @@ public class PackedBitBuffers {
      *          {@link #setBit(LongBuffer, long, boolean) PackedBitBuffers.setBit}(dest, destPos + k, bit != 0);
      *      }</pre>
      *
-     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     * <p>But this function works significantly faster, if <code>count</code> is greater than 1.</p>
      *
      * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
-     * after the end of the buffer (<tt>&ge;64*dest.limit()</tt>);
+     * after the end of the buffer (<code>&ge;64*dest.limit()</code>);
      * instead, extra bits outside the buffer are just ignored.
      * (But negative indexes are not allowed.)</p>
      *
-     * @param dest    the destination buffer (bits are packed into <tt>long</tt> values).
+     * @param dest    the destination buffer (bits are packed into <code>long</code> values).
      * @param destPos position of the first bit written in the destination buffer.
      * @param count   the number of bits to be written (must be in range 0..64).
-     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt> or
+     * @throws NullPointerException      if <code>dest</code> argument is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
      *                                   if copying would cause access of data outside buffer limits.
-     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
     public static void setBits64(LongBuffer dest, long destPos, long bits, int count) {
         Objects.requireNonNull(dest, "Null dest");
@@ -356,18 +360,18 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
-     * in the packed <tt>dest</tt> bit buffer <i>without synchronization</i>.
+     * Sets the sequence of <code>count</code> bits (maximum 64 bits), starting from the bit <code>#destPos</code>,
+     * in the packed <code>dest</code> bit buffer <i>without synchronization</i>.
      * May be used instead of {@link #setBits64(LongBuffer, long, long, int)}, if you are not planning to call
-     * this method from different threads for the same <tt>dest</tt> buffer.
+     * this method from different threads for the same <code>dest</code> buffer.
      *
-     * @param dest    the destination buffer (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination buffer (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination buffer.
      * @param count   the number of bits to be written (must be in range 0..64).
-     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt> or
+     * @throws NullPointerException      if <code>dest</code> argument is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
      *                                   if copying would cause access of data outside buffer limits.
-     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
     public static void setBits64NoSync(LongBuffer dest, long destPos, long bits, int count) {
         Objects.requireNonNull(dest, "Null dest");
@@ -408,25 +412,25 @@ public class PackedBitBuffers {
 
 
     /**
-     * Copies <tt>count</tt> bits, packed into <tt>src</tt> buffer, starting from the bit <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> buffer, starting from the bit <tt>#destPos</tt>.
+     * Copies <code>count</code> bits, packed into <code>src</code> buffer, starting from the bit <code>#srcPos</code>,
+     * to packed <code>dest</code> buffer, starting from the bit <code>#destPos</code>.
      *
-     * <p>This method works correctly even if <tt>src == dest</tt>
+     * <p>This method works correctly even if <code>src == dest</code>
      * and the copied areas overlap,
-     * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
+     * i.e. if <code>Math.abs(destPos - srcPos) &lt; count</code>.
      * More precisely, in this case the copying is performed as if the
-     * bits at positions <tt>srcPos..srcPos+count-1</tt> in <tt>src</tt>
-     * were first unpacked to a temporary <tt>boolean[]</tt> array with <tt>count</tt> elements
+     * bits at positions <code>srcPos..srcPos+count-1</code> in <code>src</code>
+     * were first unpacked to a temporary <code>boolean[]</code> array with <code>count</code> elements
      * and then the contents of the temporary array were packed into positions
-     * <tt>destPos..destPos+count-1</tt> of <tt>dest</tt>.
+     * <code>destPos..destPos+count-1</code> of <code>dest</code>.
      *
-     * @param dest    the destination <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param dest    the destination <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param destPos position of the first bit written in the destination buffer.
-     * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param src     the source <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be copied (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
     public static void copyBits(LongBuffer dest, long destPos, LongBuffer src, long srcPos, long count) {
         if (src == dest && srcPos == destPos && src != null) {
@@ -437,34 +441,36 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Copies <tt>count</tt> bits, packed into <tt>src</tt> buffer, starting from the bit <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> buffer, starting from the bit <tt>#destPos</tt>,
-     * in normal or reverse order depending on <tt>reverseOrder</tt> argument.
+     * Copies <code>count</code> bits, packed into <code>src</code> buffer, starting from the bit <code>#srcPos</code>,
+     * to packed <code>dest</code> buffer, starting from the bit <code>#destPos</code>,
+     * in normal or reverse order depending on <code>reverseOrder</code> argument.
      *
-     * <p>If <tt>reverseOrder</tt> flag is <tt>false</tt>, this method copies bits in normal order:
-     * bit <tt>#srcPos</tt> of <tt>src</tt> to bit <tt>#destPos</tt> of <tt>dest</tt>, then
-     * bit <tt>#srcPos+1</tt> of <tt>src</tt> to bit <tt>#destPos+1</tt> of <tt>dest</tt>, then
-     * bit <tt>#srcPos+2</tt> of <tt>src</tt> to bit <tt>#destPos+2</tt> of <tt>dest</tt>, ..., then
-     * bit <tt>#srcPos+count-1</tt> of <tt>src</tt> to bit <tt>#destPos+count-1</tt> of <tt>dest</tt>.
-     * If <tt>reverseOrder</tt> flag is <tt>true</tt>, this method copies bits in reverse order:
-     * bit <tt>#srcPos+count-1</tt> of <tt>src</tt> to bit <tt>#destPos+count-1</tt> of <tt>dest</tt>, then
-     * bit <tt>#srcPos+count-2</tt> of <tt>src</tt> to bit <tt>#destPos+count-2</tt> of <tt>dest</tt>, ..., then
-     * bit <tt>#srcPos</tt> of <tt>src</tt> to bit <tt>#destPos</tt> of <tt>dest</tt>.
-     * Usually, copying in reverse order is slower, but it is necessary if <tt>src</tt>
-     * and <tt>dest</tt> are the same buffer or views or the same data (for example,
+     * <p>If <code>reverseOrder</code> flag is <code>false</code>, this method copies bits in normal order:
+     * bit <code>#srcPos</code> of <code>src</code> to bit <code>#destPos</code> of <code>dest</code>, then
+     * bit <code>#srcPos+1</code> of <code>src</code> to bit <code>#destPos+1</code> of <code>dest</code>, then
+     * bit <code>#srcPos+2</code> of <code>src</code> to bit <code>#destPos+2</code> of <code>dest</code>, ..., then
+     * bit <code>#srcPos+count-1</code> of <code>src</code> to bit <code>#destPos+count-1</code> of <code>dest</code>.
+     * If <code>reverseOrder</code> flag is <code>true</code>, this method copies bits in reverse order:
+     * bit <code>#srcPos+count-1</code> of <code>src</code> to
+     * bit <code>#destPos+count-1</code> of <code>dest</code>, then
+     * bit <code>#srcPos+count-2</code> of <code>src</code> to
+     * bit <code>#destPos+count-2</code> of <code>dest</code>, ..., then
+     * bit <code>#srcPos</code> of <code>src</code> to bit <code>#destPos</code> of <code>dest</code>.
+     * Usually, copying in reverse order is slower, but it is necessary if <code>src</code>
+     * and <code>dest</code> are the same buffer or views or the same data (for example,
      * buffers mapped to the same file), the copied areas overlap and
      * destination position is greater than source position.
-     * If <tt>src==dest</tt>, you may use {@link #copyBits(LongBuffer, long, LongBuffer, long, long)}
+     * If <code>src==dest</code>, you may use {@link #copyBits(LongBuffer, long, LongBuffer, long, long)}
      * method that chooses the suitable order automatically.
      *
-     * @param dest         the destination <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param dest         the destination <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param destPos      position of the first bit written in the destination buffer.
-     * @param src          the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param src          the source <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param srcPos       position of the first bit read in the source buffer.
      * @param count        the number of bits to be copied (must be &gt;=0).
-     * @param reverseOrder if <tt>true</tt>, the bits will be copied in the reverse order.
+     * @param reverseOrder if <code>true</code>, the bits will be copied in the reverse order.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @see #copyBits(LongBuffer, long, LongBuffer, long, long)
      */
     public static void copyBits(
@@ -666,24 +672,24 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Swaps <tt>count</tt> bits, packed into <tt>first</tt> buffer,
-     * starting from the bit <tt>#firstPos</tt>,
-     * with <tt>count</tt> bits, packed into <tt>second</tt> buffer,
-     * starting from the bit <tt>#secondPos</tt>.
+     * Swaps <code>count</code> bits, packed into <code>first</code> buffer,
+     * starting from the bit <code>#firstPos</code>,
+     * with <code>count</code> bits, packed into <code>second</code> buffer,
+     * starting from the bit <code>#secondPos</code>.
      *
      * <p>Some bits may be swapped incorrectly if the swapped areas overlap,
-     * i.e. if <tt>first==second</tt> and <tt>Math.abs(firstIndex - secondIndex) &lt; count</tt>,
-     * or if <tt>first</tt> and <tt>second</tt> are views of the same data
+     * i.e. if <code>first==second</code> and <code>Math.abs(firstIndex - secondIndex) &lt; count</code>,
+     * or if <code>first</code> and <code>second</code> are views of the same data
      * (for example, buffers mapped to the same file) and the corresponding areas of this data
      * overlap.
      *
-     * @param first     the first <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param firstPos  starting index of bit to exchange in the first <tt>LongBuffer</tt>.
-     * @param second    the second <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
-     * @param secondPos starting index of bit to exchange in the second <tt>LongBuffer</tt>.
+     * @param first     the first <code>LongBuffer</code> (bits are packed into <code>long</code> values).
+     * @param firstPos  starting index of bit to exchange in the first <code>LongBuffer</code>.
+     * @param second    the second <code>LongBuffer</code> (bits are packed into <code>long</code> values).
+     * @param secondPos starting index of bit to exchange in the second <code>LongBuffer</code>.
      * @param count     the number of bits to be exchanged (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
     public static void swapBits(LongBuffer first, long firstPos, LongBuffer second, long secondPos, long count) {
         Objects.requireNonNull(first, "Null first");
@@ -713,16 +719,16 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Copies <tt>count</tt> bits from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> buffer, starting from the bit <tt>#destPos</tt>.
+     * Copies <code>count</code> bits from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> buffer, starting from the bit <code>#destPos</code>.
      *
-     * @param dest    the destination <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param dest    the destination <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param destPos position of the first bit written in the destination buffer.
-     * @param src     the source array (unpacked <tt>boolean</tt> values).
+     * @param src     the source array (unpacked <code>boolean</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds or buffer limit.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
     public static void packBits(LongBuffer dest, long destPos, boolean[] src, int srcPos, int count) {
         Objects.requireNonNull(dest, "Null dest");
@@ -836,16 +842,16 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Copies <tt>count</tt> bits, packed into <tt>src</tt> buffer, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> array, starting from the element <tt>#destPos</tt>.
+     * Copies <code>count</code> bits, packed into <code>src</code> buffer, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> array, starting from the element <code>#destPos</code>.
      *
-     * @param dest    the destination array (unpacked <tt>boolean</tt> values).
+     * @param dest    the destination array (unpacked <code>boolean</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param src     the source <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be unpacked (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds or buffer limit.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
     public static void unpackBits(boolean[] dest, int destPos, LongBuffer src, long srcPos, int count) {
         Objects.requireNonNull(dest, "Null dest");
@@ -946,17 +952,18 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Fills <tt>count</tt> bits in the packed <tt>dest</tt> buffer, starting from the bit <tt>#destPos</tt>,
-     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * Fills <code>count</code> bits in the packed <code>dest</code> buffer, starting from
+     * the bit <code>#destPos</code>,
+     * by the specified value. <i>Be careful:</i> the second <code>int</code> argument in this method
      * is the number of filled element, but not the end filled index
-     * as in <tt>java.util.Arrays.fill</tt> methods.
+     * as in <code>java.util.Arrays.fill</code> methods.
      *
-     * @param dest    the destination <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param dest    the destination <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param destPos position of the first bit written in the destination buffer.
      * @param count   the number of bits to be filled (must be &gt;=0).
-     * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
+     * @param value   new value of all filled bits (<code>false</code> means the bit 0, <code>true</code> means the bit 1).
      * @throws IndexOutOfBoundsException if filling would cause access of data outside buffer limit.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      */
     public static void fillBits(LongBuffer dest, long destPos, long count, boolean value) {
         Objects.requireNonNull(dest, "Null dest");
@@ -995,19 +1002,19 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical NOT of corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> buffer, starting from the bit <tt>#srcPos</tt>.
-     * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * with the logical NOT of corresponding <code>count</code> bits,
+     * packed in <code>src</code> buffer, starting from the bit <code>#srcPos</code>.
+     * The packed <code>long[]</code> Java array stores bits as described in {@link PackedBitArrays} class.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param src     the source <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
     public static void notBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, notBits_method_impl)
@@ -1099,19 +1106,19 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical AND of them and corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> buffer, starting from the bit <tt>#srcPos</tt>.
-     * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * with the logical AND of them and corresponding <code>count</code> bits,
+     * packed in <code>src</code> buffer, starting from the bit <code>#srcPos</code>.
+     * The packed <code>long[]</code> Java array stores bits as described in {@link PackedBitArrays} class.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param src     the source <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
     public static void andBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, andBits_method_impl)
@@ -1203,19 +1210,19 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical OR of them and corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> buffer, starting from the bit <tt>#srcPos</tt>.
-     * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * with the logical OR of them and corresponding <code>count</code> bits,
+     * packed in <code>src</code> buffer, starting from the bit <code>#srcPos</code>.
+     * The packed <code>long[]</code> Java array stores bits as described in {@link PackedBitArrays} class.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param src     the source <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
     public static void orBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, orBits_method_impl)
@@ -1308,19 +1315,19 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical XOR of them and corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> buffer, starting from the bit <tt>#srcPos</tt>.
-     * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * with the logical XOR of them and corresponding <code>count</code> bits,
+     * packed in <code>src</code> buffer, starting from the bit <code>#srcPos</code>.
+     * The packed <code>long[]</code> Java array stores bits as described in {@link PackedBitArrays} class.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param src     the source <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
     public static void xorBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, xorBits_method_impl)
@@ -1412,19 +1419,19 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical AND of them and <i>inverted</i> corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> buffer, starting from the bit <tt>#srcPos</tt>.
-     * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * with the logical AND of them and <i>inverted</i> corresponding <code>count</code> bits,
+     * packed in <code>src</code> buffer, starting from the bit <code>#srcPos</code>.
+     * The packed <code>long[]</code> Java array stores bits as described in {@link PackedBitArrays} class.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param src     the source <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
     public static void andNotBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, andNotBits_method_impl)
@@ -1516,19 +1523,19 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical OR of them and <i>inverted</i> corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> buffer, starting from the bit <tt>#srcPos</tt>.
-     * The packed <tt>long[]</tt> Java array stores bits as described in {@link PackedBitArrays} class.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * with the logical OR of them and <i>inverted</i> corresponding <code>count</code> bits,
+     * packed in <code>src</code> buffer, starting from the bit <code>#srcPos</code>.
+     * The packed <code>long[]</code> Java array stores bits as described in {@link PackedBitArrays} class.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source <tt>LongBuffer</tt> (bits are packed into <tt>long</tt> values).
+     * @param src     the source <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
     public static void orNotBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, orNotBits_method_impl)
@@ -1621,22 +1628,22 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
-     * and the bit <tt>#k</tt> in the packed <tt>src</tt> bit buffer is equal to <tt>value</tt>,
-     * or <tt>-1</tt> if there is no such bits.
+     * Returns the minimal index <code>k</code>, so that <code>lowIndex&lt;=k&lt;highIndex</code>
+     * and the bit <code>#k</code> in the packed <code>src</code> bit buffer is equal to <code>value</code>,
+     * or <code>-1</code> if there is no such bits.
      *
-     * <p>If <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>.
      *
      * @param src       the searched packed bit buffer.
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of bit to be found.
-     * @return the index of the first occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
-     * or <tt>-1</tt> if this bit does not occur
-     * or if <tt>lowIndex&gt;=highIndex</tt>.
-     * @throws NullPointerException      if <tt>buffer</tt> is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>lowIndex</tt> is negative or
-     *                                   if <tt>highIndex</tt> is greater than <tt>src.limit()*64</tt>.
+     * @return the index of the first occurrence of this bit in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this bit does not occur
+     * or if <code>lowIndex&gt;=highIndex</code>.
+     * @throws NullPointerException      if <code>buffer</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>lowIndex</code> is negative or
+     *                                   if <code>highIndex</code> is greater than <code>src.limit()*64</code>.
      * @see #lastIndexOfBit(LongBuffer, long, long, boolean)
      */
     public static long indexOfBit(LongBuffer src, long lowIndex, long highIndex, boolean value) {
@@ -1700,27 +1707,27 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
-     * and the bit <tt>#k</tt> in the packed <tt>src</tt> bit buffer is equal to <tt>value</tt>,
-     * or <tt>-1</tt> if there is no such bits.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=lowIndex</code>
+     * and the bit <code>#k</code> in the packed <code>src</code> bit buffer is equal to <code>value</code>,
+     * or <code>-1</code> if there is no such bits.
      *
-     * <p>If <tt>highIndex&lt;=lowIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>highIndex&lt;=lowIndex</code>, this method returns <code>-1</code>.
      *
-     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfBit(LongBuffer, long, long, boolean)} method:
-     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     * they describes the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
      *
      * @param src       the searched packed bit buffer.
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of bit to be found.
-     * @return the index of the last occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
-     * or <tt>-1</tt> if this bit does not occur
-     * or if <tt>lowIndex&gt;=highIndex</tt>.
-     * @throws NullPointerException      if <tt>src</tt> is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>lowIndex</tt> is negative or
-     *                                   if <tt>highIndex</tt> is greater than <tt>src.length*64</tt>.
+     * @return the index of the last occurrence of this bit in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this bit does not occur
+     * or if <code>lowIndex&gt;=highIndex</code>.
+     * @throws NullPointerException      if <code>src</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>lowIndex</code> is negative or
+     *                                   if <code>highIndex</code> is greater than <code>src.length*64</code>.
      */
     public static long lastIndexOfBit(LongBuffer src, long lowIndex, long highIndex, boolean value) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, lastIndexOfBit_method_impl)
@@ -1786,13 +1793,13 @@ public class PackedBitBuffers {
      * Returns the number of high bits (1) in the given fragment of the given packed bit buffer.
      *
      * @param src       the source packed bit buffer.
-     * @param fromIndex the initial checked bit index in <tt>src</tt>, inclusive.
-     * @param toIndex   the end checked bit index in <tt>src</tt>, exclusive.
+     * @param fromIndex the initial checked bit index in <code>src</code>, inclusive.
+     * @param toIndex   the end checked bit index in <code>src</code>, exclusive.
      * @return the number of high bits (1) in the given fragment of the given packed bit buffer.
-     * @throws NullPointerException      if the <tt>src</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
-     *                                   if <tt>toIndex</tt> is greater than <tt>src.limit() * 64</tt>,
-     *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>
+     * @throws NullPointerException      if the <code>src</code> argument is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>fromIndex</code> or <code>toIndex</code> are negative,
+     *                                   if <code>toIndex</code> is greater than <code>src.limit() * 64</code>,
+     *                                   or if <code>fromIndex</code> is greater than <code>startIndex</code>
      */
     public static long cardinality(LongBuffer src, long fromIndex, long toIndex) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, cardinality_method_impl)

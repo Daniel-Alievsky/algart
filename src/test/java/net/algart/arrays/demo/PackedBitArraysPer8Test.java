@@ -84,6 +84,21 @@ public class PackedBitArraysPer8Test {
         }
     }
 
+    private static void copyBitsInReverseOrderSimple(
+            byte[] dest,
+            long destPos,
+            byte[] src,
+            long srcPos,
+            long count) {
+        if (src == dest) {
+            src = src.clone();
+        }
+        for (int k = 0; k < count; k++) {
+            final boolean bit = PackedBitArraysPer8.getBitInReverseOrder(src, srcPos + k);
+            PackedBitArraysPer8.setBitInReverseOrder(dest, destPos + k, bit);
+        }
+    }
+
     private static void copyBitsFromReverseToNormalOrderSimple(
             byte[] dest,
             long destPos,
@@ -554,6 +569,128 @@ public class PackedBitArraysPer8Test {
                 showProgress(testCount);
             }
 
+            System.out.println("Testing \"copyBitsInReverseOrder\" method, two different arrays...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                PackedBitArraysPer8.copyBitsInReverseOrder(pDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.copyBitsInReverseOrderNoSync(pDestWork2, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
+                // unpacking necessary to show bDestWork1 in a case of the bug
+                for (int k = 0; k < count; k++) {
+                    boolean bit = PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, destPos + k);
+                    boolean bitSrc = PackedBitArraysPer8.getBitInReverseOrder(pSrc, srcPos + k);
+                    if (bitSrc != bit) {
+                        throw new AssertionError("The bug A in copyBitsInReverseOrder " +
+                                "found in test #" +
+                                testCount + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
+                                count + " (src=" + JArrays.toBinaryString(bSrc, "", 200) +
+                                ", dest=" + JArrays.toBinaryString(bDest, "", 200) +
+                                ", we have " + JArrays.toBinaryString(bDestWork1, "", 200) +
+                                ", dest[" + (destPos + k) + "]=" + bit + " instead of " + bitSrc + ")");
+                    }
+                }
+                for (int k = 0, m = (int) PackedBitArraysPer8.unpackedLength(pDest); k < m; k++) {
+                    if (k < destPos || k >= destPos + count) {
+                        boolean bit = PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, k);
+                        boolean bitSrc = PackedBitArraysPer8.getBitInReverseOrder(pDest, k);
+                        if (bit != bitSrc) {
+                            throw new AssertionError("The bug B in copyBitsInReverseOrder " +
+                                    "found in test #" +
+                                    testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
+                                    count + ", error found at " + k +
+                                    " (src=" + JArrays.toBinaryString(bSrc, "", 200) +
+                                    ", dest=" + JArrays.toBinaryString(bDest, "", 200) +
+                                    ", we have " + JArrays.toBinaryString(bDestWork1, "", 200) +
+                                    ", dest[" + k + "]=" + bit + " instead of " + bitSrc + ")");
+                        }
+                    }
+                }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug C in copyBitsInReverseOrderNoSync " +
+                            "found in test #" + testCount);
+                }
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                copyBitsInReverseOrderSimple(pDestWork2, destPos, pSrc, srcPos, count);
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug D in copyBitsInReverseOrder " +
+                            "found in test #" + testCount);
+                }
+                showProgress(testCount);
+            }
+
+            System.out.println("Testing \"copyBitsInReverseOrder\" method, inside a single array...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                PackedBitArraysPer8.copyBitsInReverseOrder(pDestWork1, destPos, pDestWork1, srcPos, count);
+                PackedBitArraysPer8.copyBitsInReverseOrderNoSync(pDestWork2, destPos, pDestWork2, srcPos, count);
+                PackedBitArraysPer8.unpackBits(bDestWork1, 0, pDestWork1, 0, len);
+                // unpacking necessary to show bDestWork1 in a case of the bug
+                for (int k = 0; k < count; k++) {
+                    boolean bit = PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, destPos + k);
+                    boolean bitSrc = PackedBitArraysPer8.getBitInReverseOrder(pDest, srcPos + k);
+                    if (bit != bitSrc) {
+                        throw new AssertionError("The bug A in copyBitsInReverseOrder " +
+                                "found in test #" +
+                                testCount + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
+                                count + " (src=" + JArrays.toBinaryString(bSrc, "", 200) +
+                                ", dest=" + JArrays.toBinaryString(bDest, "", 200) +
+                                ", we have " + JArrays.toBinaryString(bDestWork1, "", 200) +
+                                ", dest[" + (destPos + k) + "]=" + bit + " instead of " + bitSrc + ")");
+                    }
+                }
+                for (int k = 0, m = (int) PackedBitArraysPer8.unpackedLength(pDest); k < m; k++) {
+                    if (k < destPos || k >= destPos + count) {
+                        boolean bit = PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, k);
+                        boolean bitSrc = PackedBitArraysPer8.getBitInReverseOrder(pDest, k);
+                        if (bit != bitSrc) {
+                            throw new AssertionError("The bug B in copyBitsInReverseOrder " +
+                                    "found in test #" +
+                                    testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
+                                    count + ", error found at " + k +
+                                    " (src=" + JArrays.toBinaryString(bSrc, "", 200) +
+                                    ", dest=" + JArrays.toBinaryString(bDest, "", 200) +
+                                    ", we have " + JArrays.toBinaryString(bDestWork1, "", 200) +
+                                    ", dest[" + k + "]=" + bit + " instead of " + bitSrc + ")");
+                        }
+                    }
+                }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug C in copyBitsInReverseOrderNoSync " +
+                            "found in test #" + testCount);
+                }
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                copyBitsInReverseOrderSimple(pDestWork2, destPos, pDestWork2, srcPos, count);
+                for (int k = 0, m = (int) PackedBitArraysPer8.unpackedLength(pDest); k < m; k++) {
+                    boolean bit = PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, k);
+                    boolean bitTest = PackedBitArraysPer8.getBitInReverseOrder(pDestWork2, k);
+                    if (bit != bitTest) {
+                        throw new AssertionError("The bug D in copyBitsInReverseOrder " +
+                                "found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
+                                count + ", error found at " + k +
+                                (k >= destPos && k < destPos + count ?
+                                        ", inside bit #" + (k - destPos) : ", outside") +
+                                ": " + bit + " instead of " + bitTest);
+                    }
+                }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    // - little testing-of-the-test
+                    throw new AssertionError("Already checked: impossible");
+                }
+                showProgress(testCount);
+            }
+
             System.out.println("Testing \"copyBitsFromReverseToNormalOrder\" method, two different arrays...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
@@ -694,7 +831,6 @@ public class PackedBitArraysPer8Test {
                     boolean bit = PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, destPos + k);
                     boolean bitSrc = PackedBitArraysPer8.getBit(pSrc, srcPos + k);
                     if (bitSrc != bit) {
-                        PackedBitArraysPer8.copyBitsFromNormalToReverseOrder(pDestWork1, destPos, pSrc, srcPos, count);
                         throw new AssertionError("The bug A in copyBitsFromNormalToReverseOrder " +
                                 "found in test #" +
                                 testCount + ": " + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " +
