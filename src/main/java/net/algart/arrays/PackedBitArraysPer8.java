@@ -932,24 +932,24 @@ public class PackedBitArraysPer8 {
        !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
+     * Copies <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>.
      *
-     * <p><i>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
+     * <p><i>This method works correctly even if <code>src&nbsp;==&nbsp;dest</code>
      * and the copied areas overlap</i>,
-     * i.e. if <tt>Math.abs(destPos&nbsp;-&nbsp;srcPos)&nbsp;&lt;&nbsp;count</tt>.
+     * i.e. if <code>Math.abs(destPos&nbsp;-&nbsp;srcPos)&nbsp;&lt;&nbsp;count</code>.
      * More precisely, in this case the copying is performed as if the
-     * bits at positions <tt>srcPos..srcPos+count-1</tt>
-     * were first unpacked to a temporary <tt>boolean[]</tt> array with <tt>count</tt> elements
+     * bits at positions <code>srcPos..srcPos+count-1</code>
+     * were first unpacked to a temporary <code>boolean[]</code> array with <code>count</code> elements
      * and then the contents of the temporary array were packed into positions
      * <tt>destPos..destPos+count-1</code>.
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>byte</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be copied (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -1150,16 +1150,16 @@ public class PackedBitArraysPer8 {
 
     /**
      * Equivalent to {@link #copyBits(byte[], long, byte[], long, long)} method with the only exception,
-     * that this method does not perform synchronization on <tt>dest</tt> array.
+     * that this method does not perform synchronization on <code>dest</code> array.
      * You may use this method instead of {@link #copyBits},
-     * if you are not planning to call it from different threads for the same <tt>dest</tt> array.
+     * if you are not planning to call it from different threads for the same <code>dest</code> array.
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>byte</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be copied (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void copyBitsNoSync(byte[] dest, long destPos, byte[] src, long srcPos, long count) {
@@ -2873,21 +2873,21 @@ public class PackedBitArraysPer8 {
         !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical NOT of corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical NOT of corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it just inverts the specified bits.
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>byte</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2983,10 +2983,10 @@ public class PackedBitArraysPer8 {
      * Equivalent to <tt>{@link #notBits(byte[], long, byte[], long, long)
      * notBits}(dest, destPos, dest, destPos, count)</tt>.
      *
-     * @param dest    the source/destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the source/destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the source/destination array.
      * @param count   the number of bits to be inverted (must be &gt;=0).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     public static void notBits(byte[] dest, long destPos, long count) {
@@ -2994,21 +2994,21 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical AND of them and corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical AND of them and corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it does nothing (so there are no reasons for this call).
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>byte</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3101,21 +3101,21 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical OR of them and corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical OR of them and corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it does nothing (so there are no reasons for this call).
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>byte</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3209,21 +3209,21 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical XOR of them and corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical XOR of them and corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it clears all specified bits.
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>byte</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3316,21 +3316,21 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical AND of them and <i>inverted</i> corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical AND of them and <i>inverted</i> corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it clears all specified bits.
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>byte</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3423,21 +3423,21 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical OR of them and <i>inverted</i> corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical OR of them and <i>inverted</i> corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it sets all specified bits to 1.
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>byte</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3546,16 +3546,17 @@ public class PackedBitArraysPer8 {
         !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Fills <tt>count</tt> bits in the packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * Fills <code>count</code> bits in the packed <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * by the specified value. <i>Be careful:</i> the second <code>int</code> argument in this method
      * is the number of filled element, but not the end filled index
      * as in <tt>java.util.Arrays.fill</tt> methods.
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be filled (must be &gt;=0).
-     * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @param value   new value of all filled bits (<code>false</code> means the bit 0,
+     *                <code>true</code> means the bit 1).
+     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3598,15 +3599,16 @@ public class PackedBitArraysPer8 {
     /**
      * Equivalent to {@link #fillBits(byte[], long, long, boolean)}
      * method with the only exception,
-     * that this method does not perform synchronization on <tt>dest</tt> array.
+     * that this method does not perform synchronization on <code>dest</code> array.
      * You may use this method instead of {@link #fillBits},
-     * if you are not planning to call it from different threads for the same <tt>dest</tt> array.
+     * if you are not planning to call it from different threads for the same <code>dest</code> array.
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be filled (must be &gt;=0).
-     * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @param value   new value of all filled bits (<code>false</code> means the bit 0,
+     *                <code>true</code> means the bit 1).
+     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     public static void fillBitsNoSync(byte[] dest, long destPos, long count, boolean value) {

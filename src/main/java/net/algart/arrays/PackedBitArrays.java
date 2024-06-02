@@ -29,21 +29,22 @@ import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
 /**
- * <p>Operations with bit arrays packed into <tt>long[]</tt> Java arrays.</p>
+ * <p>Operations with bit arrays packed into <code>long[]</code> Java arrays.</p>
  *
  * <p>AlgART bits arrays, created by {@link SimpleMemoryModel},
  * are based on operations provided by this class.</p>
  *
- * <p>The maximal length of bit arrays supported by this class is <tt>2<sup>37</sup>-64</tt>.
+ * <p>The maximal length of bit arrays supported by this class is <code>2<sup>37</sup>-64</code>.
  * All indexes and lengths passed to methods of this class must not exceed this value.
  * Moreover, all indexes and length, concerning usual (non-packed) Java array,
- * must not exceed <tt>2<sup>31</sup>-1</tt>. In other case, the results are unspecified.
+ * must not exceed <code>2<sup>31</sup>-1</code>. In other case, the results are unspecified.
  * ("Unspecified" means that any elements of the passed arrays can be read or changed,
- * or that <tt>IndexOutOfBoundsException</tt> can be thrown.)</p>
+ * or that <code>IndexOutOfBoundsException</code> can be thrown.)</p>
  *
- * <p>In all methods of this class, it's supposed that the bit <tt>#k</tt> in a packed <tt>long[] array</tt>
- * is the bit <tt>#(k%64)</tt> in the long element <tt>array[k/64]</tt>. In other words, the bit <tt>#k</tt>
- * (<tt>false</tt> or <tt>true</tt> value) can be extracted by the following operator:</p>
+ * <p>In all methods of this class, it's supposed that the bit <code>#k</code> in a packed <code>long[] array</code>
+ * is the bit <code>#(k%64)</code> in the long element <code>array[k/64]</code>.
+ * In other words, the bit <code>#k</code>
+ * (<code>false</code> or <code>true</code> value) can be extracted by the following operator:</p>
  *
  * <pre>
  * (array[k &gt;&gt;&gt; 6] &amp; (1L &lt;&lt; (k &amp; 63))) != 0L
@@ -61,8 +62,8 @@ import java.util.zip.Checksum;
  * <p>You may use {@link #getBit(long[], long)} and {@link #setBit(long[], long, boolean)}, implementing
  * the equivalent code.</p>
  *
- * <p>If any method of this class modifies some portion of an element of a packed <tt>long[]</tt> Java array,
- * i.e. modifies less than all 64 its bits, then all accesses to this <tt>long</tt> element are performed
+ * <p>If any method of this class modifies some portion of an element of a packed <code>long[]</code> Java array,
+ * i.e. modifies less than all 64 its bits, then all accesses to this <code>long</code> element are performed
  * <b>inside a single synchronized block</b>, using the following instruction:</p>
  *
  * <pre>
@@ -76,7 +77,7 @@ import java.util.zip.Checksum;
  * Such behavior allows to simultaneously work with non-overlapping fragments of a packed bit array
  * from several threads (different fragments for different threads), as if it would be a usual Java array.
  * However, some methods of this class <b>do not perform</b> such synchronization; the names of all such methods has
- * <tt>...NoSync</tt> postfix.</p>
+ * <code>...NoSync</code> postfix.</p>
  *
  * <p>This class cannot be instantiated.</p>
  *
@@ -91,11 +92,11 @@ public class PackedBitArrays {
     /*Repeat.SectionStart primitives*/
 
     /**
-     * Returns <tt>packedLength &lt;&lt; 6</tt>: the maximal number of bits that
-     * can be stored in the specified number of <tt>long</tt> values.
+     * Returns <code>packedLength &lt;&lt; 6</code>: the maximal number of bits that
+     * can be stored in the specified number of <code>long</code> values.
      *
-     * @param packedLength number of packed <tt>long[]</tt> values.
-     * @return <tt>64 * packedLength</tt>
+     * @param packedLength number of packed <code>long[]</code> values.
+     * @return <code>64 * packedLength</code>
      * @throws TooLargeArrayException   if the argument is too large: &ge; 2<sup>57</sup>.
      * @throws IllegalArgumentException if the argument is negative.
      */
@@ -110,23 +111,24 @@ public class PackedBitArrays {
     }
 
     /**
-     * Returns <tt>((long) array.length) &lt;&lt; 6</tt>: the maximal number of bits that
+     * Returns <code>((long) array.length) &lt;&lt; 6</code>: the maximal number of bits that
      * can be stored in the specified array.
      *
-     * @param array <tt>long[]</tt> array.
-     * @return <tt>64 * (long) array.length</tt>
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @param array <code>long[]</code> array.
+     * @return <code>64 * (long) array.length</code>
+     * @throws NullPointerException if the argument is <code>null</code>.
      */
     public static long unpackedLength(long[] array) {
         return ((long) array.length) << 6;
     }
 
     /**
-     * Returns <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt>: the minimal number of <tt>long</tt> values
-     * allowing to store <tt>unpackedLength</tt> bits.
+     * Returns <code>(unpackedLength + 63) &gt;&gt;&gt; 6</code>: the minimal number of <code>long</code> values
+     * allowing to store <code>unpackedLength</code> bits.
      *
      * @param unpackedLength the number of bits (the length of bit array).
-     * @return <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt> (the length of corresponding <tt>long[]</tt> array).
+     * @return <code>(unpackedLength + 63) &gt;&gt;&gt; 6</code>
+     * (the length of corresponding <code>long[]</code> array).
      * @throws IllegalArgumentException if the argument is negative.
      */
     public static long packedLength(long unpackedLength) {
@@ -138,10 +140,11 @@ public class PackedBitArrays {
     }
 
     /**
-     * Equivalent of {@link #packedLength(long)} for <tt>int</tt> argument.
+     * Equivalent of {@link #packedLength(long)} for <code>int</code> argument.
      *
      * @param unpackedLength the number of bits (the length of bit array).
-     * @return <tt>(unpackedLength + 63) &gt;&gt;&gt; 6</tt> (the length of corresponding <tt>long[]</tt> array).
+     * @return <code>(unpackedLength + 63) &gt;&gt;&gt; 6</code>
+     * (the length of corresponding <code>long[]</code> array).
      * @throws IllegalArgumentException if the argument is negative.
      */
     public static int packedLength(int unpackedLength) {
@@ -153,15 +156,15 @@ public class PackedBitArrays {
     }
 
     /**
-     * Returns the bit <tt>#index</tt> in the packed <tt>src</tt> bit array.
+     * Returns the bit <code>#index</code> in the packed <code>src</code> bit array.
      * Equivalent to the following expression:<pre>
      * (src[(int)(index &gt;&gt;&gt; 6)] &amp; (1L &lt;&lt; (index &amp; 63))) != 0L;
      * </pre>
      *
-     * @param src   the source array (bits are packed in <tt>long</tt> values).
+     * @param src   the source array (bits are packed in <code>long</code> values).
      * @param index index of the returned bit.
      * @return the bit at the specified index.
-     * @throws NullPointerException      if <tt>src</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <code>src</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
      */
     public static boolean getBit(long[] src, long index) {
@@ -169,7 +172,7 @@ public class PackedBitArrays {
     }
 
     /**
-     * Sets the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array.
+     * Sets the bit <code>#index</code> in the packed <code>dest</code> bit array.
      * Equivalent to the following operators:<pre>
      * synchronized (dest) {
      * &#32;   if (value)
@@ -179,10 +182,10 @@ public class PackedBitArrays {
      * }
      * </pre>
      *
-     * @param dest  the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest  the destination array (bits are packed in <code>long</code> values).
      * @param index index of the written bit.
      * @param value new bit value.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -197,7 +200,7 @@ public class PackedBitArrays {
     /*Repeat.SectionEnd primitives*/
 
     /**
-     * Sets the bit <tt>#index</tt> in the packed <tt>dest</tt> bit array <i>without synchronization</i>.
+     * Sets the bit <code>#index</code> in the packed <code>dest</code> bit array <i>without synchronization</i>.
      * Equivalent to the following operators:<pre>
      * &#32;   if (value)
      * &#32;       dest[(int)(index &gt;&gt;&gt; 6)] |= 1L &lt;&lt; (index &amp; 63);
@@ -207,17 +210,17 @@ public class PackedBitArrays {
      * </pre>
      *
      * <p>Note that this method is usually <b>much</b> faster than {@link #setBit(long[], long, boolean)}.
-     * If you are not going to work with the same <tt>dest</tt> array from different threads,
+     * If you are not going to work with the same <code>dest</code> array from different threads,
      * you should prefer this method.
      * Also you may freely use this method if you are synchronizing all access to this array via some
      * form of external synchronization: in this case, no additional internal synchronization is needed.
      * (But remember: such external synchronization must be used on <b>any</b> access to this array,
      * not only when calling this method!)</p>
      *
-     * @param dest  the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest  the destination array (bits are packed in <code>long</code> values).
      * @param index index of the written bit.
      * @param value new bit value.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
      */
     public static void setBitNoSync(long[] dest, long index, boolean value) {
@@ -228,16 +231,17 @@ public class PackedBitArrays {
     }
 
     /**
-     * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#srcPos</tt>,
-     * in the packed <tt>src</tt> bit array.
+     * Returns the sequence of <code>count</code> bits (maximum 64 bits), starting from the bit <code>#srcPos</code>,
+     * in the packed <code>src</code> bit array.
      *
-     * <p>More precisely, the bit <tt>#(srcPos+k)</tt> will be returned in the bit <tt>#k</tt> of the returned
-     * <tt>long</tt> value <tt>R</tt>: the first bit <tt>#srcPos</tt> will be equal to <tt>R&amp;1</tt>,
-     * the following bit <tt>#(srcPos+1)</tt> will be equal to <tt>(R&gt;&gt;1)&amp;1</tt>, etc.
-     * If <tt>count=0</tt>, the result is 0.</p>
+     * <p>More precisely, the bit <code>#(srcPos+k)</code> will be returned in the bit <code>#k</code> of the returned
+     * <code>long</code> value <code>R</code>: the first bit <code>#srcPos</code> will be equal to
+     * <code>R&amp;1</code>, the following bit <code>#(srcPos+1)</code> will be equal to
+     * <code>(R&gt;&gt;1)&amp;1</code>, etc.
+     * If <code>count=0</code>, the result is 0.</p>
      *
      * <p>The same result can be calculated using the following loop
-     * (for correct <tt>count</tt> in the range 0..64):</p>
+     * (for correct <code>count</code> in the range 0..64):</p>
      *
      * <pre>
      *      long result = 0;
@@ -246,20 +250,21 @@ public class PackedBitArrays {
      *          result |= bit &lt;&lt; k;
      *      }</pre>
      *
-     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     * <p>But this function works significantly faster, if <code>count</code> is greater than 1.</p>
      *
      * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
-     * after the end of the array (<tt>&ge;64*src.length</tt>); instead, all bits outside the array are considered zero.
+     * after the end of the array (<code>&ge;64*src.length</code>); instead, all bits outside the array are
+     * considered to be zero.
      * (But negative indexes are not allowed.)</p>
      *
-     * @param src    the source array (bits are packed in <tt>long</tt> values).
+     * @param src    the source array (bits are packed in <code>long</code> values).
      * @param srcPos position of the first bit read in the source array.
      * @param count  the number of bits to be unpacked (must be in range 0..64).
-     * @return the sequence of <tt>count</tt> bits.
-     * @throws NullPointerException      if <tt>src</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>srcPos &lt; 0</tt> or
+     * @return the sequence of <code>count</code> bits.
+     * @throws NullPointerException      if <code>src</code> argument is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or
      *                                   if copying would cause access of data outside array bounds.
-     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
     public static long getBits64(long[] src, long srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
@@ -277,11 +282,12 @@ public class PackedBitArrays {
     }
 
     /**
-     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
-     * in the packed <tt>dest</tt> bit array. This is the reverse operation of {@link #getBits64(long[], long, int)}.
+     * Sets the sequence of <code>count</code> bits (maximum 64 bits), starting from the bit <code>#destPos</code>,
+     * in the packed <code>dest</code> bit array. This is the reverse operation of
+     * {@link #getBits64(long[], long, int)}.
      *
      * <p>This function is equivalent to the following loop
-     * (for correct <tt>count</tt> in the range 0..64):</p>
+     * (for correct <code>count</code> in the range 0..64):</p>
      *
      * <pre>
      *      for (int k = 0; k &lt; count; k++) {
@@ -289,19 +295,20 @@ public class PackedBitArrays {
      *          {@link #setBit(long[], long, boolean) PackedBitArrays.setBit}(dest, destPos + k, bit != 0);
      *      }</pre>
      *
-     * <p>But this function works significantly faster, if <tt>count</tt> is greater than 1.</p>
+     * <p>But this function works significantly faster, if <code>count</code> is greater than 1.</p>
      *
      * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
-     * after the end of the array (<tt>&ge;64*dest.length</tt>); instead, extra bits outside the array are just ignored.
+     * after the end of the array (<code>&ge;64*dest.length</code>); instead, extra bits outside
+     * the array are just ignored.
      * (But negative indexes are not allowed.)</p>
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
-     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt> or
+     * @throws NullPointerException      if <code>dest</code> argument is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
      *                                   if copying would cause access of data outside array bounds.
-     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
     public static void setBits64(long[] dest, long destPos, long bits, int count) {
         Objects.requireNonNull(dest, "Null dest");
@@ -321,18 +328,18 @@ public class PackedBitArrays {
     }
 
     /**
-     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#destPos</tt>,
-     * in the packed <tt>dest</tt> bit array <i>without synchronization</i>.
+     * Sets the sequence of <code>count</code> bits (maximum 64 bits), starting from the bit <code>#destPos</code>,
+     * in the packed <code>dest</code> bit array <i>without synchronization</i>.
      * May be used instead of {@link #setBits64(long[], long, long, int)}, if you are not planning to call
-     * this method from different threads for the same <tt>dest</tt> array.
+     * this method from different threads for the same <code>dest</code> array.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
-     * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>destPos &lt; 0</tt> or
+     * @throws NullPointerException      if <code>dest</code> argument is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
      *                                   if copying would cause access of data outside array bounds.
-     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
     public static void setBits64NoSync(long[] dest, long destPos, long bits, int count) {
         Objects.requireNonNull(dest, "Null dest");
@@ -351,26 +358,26 @@ public class PackedBitArrays {
 
     /**
      * Returns a hash code based on the contents of the specified fragment of the given packed bit array.
-     * If the passed array is <tt>null</tt> or <tt>fromIndex==toIndex</tt>, returns 0.
+     * If the passed array is <code>null</code> or <code>fromIndex==toIndex</code>, returns 0.
      *
      * <p>The returned hash code depends only on the sequence of packed bits, but does not depend
-     * on the position of this sequence in the specified <tt>long[]</tt> array.
+     * on the position of this sequence in the specified <code>long[]</code> array.
      *
-     * <p>For any two packed bit arrays <tt>a1</tt> and <tt>a2</tt> such that
-     * <tt>PackedBitArrays.bitEquals(a1, pos1, a2, pos2, count)</tt>, it is also the case that
+     * <p>For any two packed bit arrays <code>a1</code> and <code>a2</code> such that
+     * <code>PackedBitArrays.bitEquals(a1, pos1, a2, pos2, count)</code>, it is also the case that
      * <tt>PackedBitArrays.bitHashCode(a1, pos1, pos1 + count) ==
      * PackedBitArrays.bitHashCode(a2, pos2, pos2 + count)</tt>.
      *
      * @param array     the packed bit array whose content-based hash code to compute.
      * @param fromIndex the initial index of the checked fragment, inclusive.
      * @param toIndex   the end index of the checked fragment, exclusive.
-     * @return a content-based hash code for the specified fragment in <tt>array</tt>.
-     * @throws IllegalArgumentException  if the <tt>array</tt> argument is not a Java array.
-     * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
-     *                                   if <tt>toIndex</tt> is greater than <tt>array.length*64</tt>
-     *                                   (0 if <tt>array==null</tt>),
-     *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>,
-     *                                   or if <tt>array==null</tt> and not <tt>fromIndex==toIndex==0</tt>
+     * @return a content-based hash code for the specified fragment in <code>array</code>.
+     * @throws IllegalArgumentException  if the <code>array</code> argument is not a Java array.
+     * @throws IndexOutOfBoundsException if <code>fromIndex</code> or <code>toIndex</code> are negative,
+     *                                   if <code>toIndex</code> is greater than <code>array.length*64</code>
+     *                                   (0 if <code>array==null</code>),
+     *                                   or if <code>fromIndex</code> is greater than <code>startIndex</code>,
+     *                                   or if <code>array==null</code> and not <code>fromIndex==toIndex==0</code>
      * @see #bitEquals(long[], long, long[], long, long)
      * @see JArrays#arrayHashCode(Object, int, int)
      */
@@ -381,9 +388,9 @@ public class PackedBitArrays {
     }
 
     /**
-     * Updates hash code (<tt>hash</tt> argument) on the base of the contents
+     * Updates hash code (<code>hash</code> argument) on the base of the contents
      * of the specified fragment of the given packed bit array.
-     * If the passed array is <tt>null</tt> or <tt>fromIndex==toIndex</tt>, does nothing.
+     * If the passed array is <code>null</code> or <code>fromIndex==toIndex</code>, does nothing.
      *
      * <p>This method is used by {@link #bitHashCode(long[], long, long)
      * bitHashCode(long[] array, long fromIndex, long toIndex)}.
@@ -393,7 +400,7 @@ public class PackedBitArrays {
      * return fromIndex == toIndex ? 0 : (int)sum.getValue();
      * </pre>
      *
-     * <p>The following 2 code fragment always produce the same results in <tt>hash</tt>argument:<pre>
+     * <p>The following 2 code fragment always produce the same results in <code>hash</code>argument:<pre>
      * updateBitHashCode(arr, fromIndex, toIndex, hash);
      * </pre>and<pre>
      * updateBitHashCode(arr, fromIndex, k1, hash);
@@ -401,8 +408,8 @@ public class PackedBitArrays {
      * ...
      * updateBitHashCode(arr, kN, toIndex, hash);
      * </pre>
-     * where <tt>fromIndex &lt;= k1 &lt;= k2 &lt;= ... &lt;= kN &lt;= toIndex</tt>.
-     * So, unlike <tt>bitHashCode</tt>, this method allows to calculate correct hash code
+     * where <code>fromIndex &lt;= k1 &lt;= k2 &lt;= ... &lt;= kN &lt;= toIndex</code>.
+     * So, unlike <code>bitHashCode</code>, this method allows to calculate correct hash code
      * of a long array when we cannot get all its element at the same time,
      * but can get sequent portions ot it.
      *
@@ -410,12 +417,12 @@ public class PackedBitArrays {
      * @param fromIndex the initial index of the checked fragment, inclusive.
      * @param toIndex   the end index of the checked fragment, exclusive.
      * @param hash      updated hash code.
-     * @throws NullPointerException      if <tt>array</tt> is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
-     *                                   if <tt>toIndex</tt> is greater than <tt>array.length</tt>
-     *                                   (0 if <tt>array==null</tt>),
-     *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>,
-     *                                   or if <tt>array==null</tt> and not <tt>fromIndex==toIndex==0</tt>
+     * @throws NullPointerException      if <code>array</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>fromIndex</code> or <code>toIndex</code> are negative,
+     *                                   if <code>toIndex</code> is greater than <code>array.length</code>
+     *                                   (0 if <code>array==null</code>),
+     *                                   or if <code>fromIndex</code> is greater than <code>startIndex</code>,
+     *                                   or if <code>array==null</code> and not <code>fromIndex==toIndex==0</code>
      */
     public static void updateBitHashCode(long[] array, long fromIndex, long toIndex, Checksum hash) {
         Objects.requireNonNull(hash, "Null hash argument");
@@ -448,9 +455,9 @@ public class PackedBitArrays {
     }
 
     /**
-     * Returns <tt>true</tt> if the specified fragments of the given packed bit arrays are equals,
-     * or if both arguments are <tt>null</tt>.
-     * Returns <tt>false</tt> if one of the arguments is <tt>null</tt>, but the other is not <tt>null</tt>.
+     * Returns <code>true</code> if the specified fragments of the given packed bit arrays are equals,
+     * or if both arguments are <code>null</code>.
+     * Returns <code>false</code> if one of the arguments is <code>null</code>, but the other is not <code>null</code>.
      *
      * <p>The two packed bit arrays are considered equal if all corresponding pairs of bits
      * in the two arrays are equal.
@@ -460,13 +467,14 @@ public class PackedBitArrays {
      * @param array2 the other array to be tested for equality.
      * @param pos2   the initial index of the checked fragment in the second array.
      * @param length the number of compared elements.
-     * @return <tt>true</tt> if the specified fragments of two arrays are equal.
-     * @throws IllegalArgumentException  if the <tt>array1</tt> or <tt>array2</tt> argument is not a Java array.
-     * @throws IndexOutOfBoundsException if <tt>pos1</tt>, <tt>pos2</tt> or <tt>length</tt> are negative,
-     *                                   if <tt>pos1 + length</tt> is greater than <tt>array1.length*64</tt>
-     *                                   (0 if <tt>array1==null</tt>),
-     *                                   or if <tt>pos2 + length</tt> is greater than <tt>array2.length*64</tt>
-     *                                   (0 if <tt>array2==null</tt>).
+     * @return <code>true</code> if the specified fragments of two arrays are equal.
+     * @throws IllegalArgumentException  if the <code>array1</code> or <code>array2</code> argument is not
+     *                                   a Java array.
+     * @throws IndexOutOfBoundsException if <code>pos1</code>, <code>pos2</code> or <code>length</code> are negative,
+     *                                   if <code>pos1 + length</code> is greater than <code>array1.length*64</code>
+     *                                   (0 if <code>array1==null</code>),
+     *                                   or if <code>pos2 + length</code> is greater than <code>array2.length*64</code>
+     *                                   (0 if <code>array2==null</code>).
      */
     public static boolean bitEquals(long[] array1, long pos1, long[] array2, long pos2, long length) {
         long length1 = array1 == null ? 0 : ((long) array1.length) << 6;
@@ -545,24 +553,24 @@ public class PackedBitArrays {
     /*Repeat.SectionStart copyBits*/
 
     /**
-     * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
+     * Copies <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>.
      *
-     * <p><i>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
+     * <p><i>This method works correctly even if <code>src&nbsp;==&nbsp;dest</code>
      * and the copied areas overlap</i>,
-     * i.e. if <tt>Math.abs(destPos&nbsp;-&nbsp;srcPos)&nbsp;&lt;&nbsp;count</tt>.
+     * i.e. if <code>Math.abs(destPos&nbsp;-&nbsp;srcPos)&nbsp;&lt;&nbsp;count</code>.
      * More precisely, in this case the copying is performed as if the
-     * bits at positions <tt>srcPos..srcPos+count-1</tt>
-     * were first unpacked to a temporary <tt>boolean[]</tt> array with <tt>count</tt> elements
+     * bits at positions <code>srcPos..srcPos+count-1</code>
+     * were first unpacked to a temporary <code>boolean[]</code> array with <code>count</code> elements
      * and then the contents of the temporary array were packed into positions
      * <tt>destPos..destPos+count-1</code>.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be copied (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -763,16 +771,16 @@ public class PackedBitArrays {
 
     /**
      * Equivalent to {@link #copyBits(long[], long, long[], long, long)} method with the only exception,
-     * that this method does not perform synchronization on <tt>dest</tt> array.
+     * that this method does not perform synchronization on <code>dest</code> array.
      * You may use this method instead of {@link #copyBits},
-     * if you are not planning to call it from different threads for the same <tt>dest</tt> array.
+     * if you are not planning to call it from different threads for the same <code>dest</code> array.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be copied (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void copyBitsNoSync(long[] dest, long destPos, long[] src, long srcPos, long count) {
@@ -954,20 +962,20 @@ public class PackedBitArrays {
     /*Repeat.SectionEnd copyBits*/
 
     /**
-     * Copies <tt>count</tt> bits from the <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * into a newly created packed bit array <tt>long[{@link #packedLength(int) packedLength}(count)]</tt>
+     * Copies <code>count</code> bits from the <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * into a newly created packed bit array <code>long[{@link #packedLength(int) packedLength}(count)]</code>
      * returned as a result, starting from the bit #0.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #packBits(long[], long, boolean[], int, int)}
      * method.</p>
      *
-     * @param src    the source array (unpacked <tt>boolean</tt> values).
+     * @param src    the source array (unpacked <code>boolean</code> values).
      * @param srcPos position of the first bit read in the source array.
      * @param count  the number of bits to be packed (must be &gt;=0).
-     * @return the result bit array, where bits are packed in <tt>long</tt>.
-     * @throws NullPointerException     if <tt>src</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     * @return the result bit array, where bits are packed in <code>long</code>.
+     * @throws NullPointerException     if <code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      */
     public static long[] packBits(boolean[] src, int srcPos, int count) {
@@ -1079,15 +1087,15 @@ public class PackedBitArrays {
     }
 
     /**
-     * Copies <tt>count</tt> bits from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
+     * Copies <code>count</code> bits from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (unpacked <tt>boolean</tt> values).
+     * @param src     the source array (unpacked <code>boolean</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -1209,15 +1217,15 @@ public class PackedBitArrays {
     }
 
     /**
-     * Copies <tt>count</tt> <i>inverted</i> bits from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
+     * Copies <code>count</code> <i>inverted</i> bits from <code>src</code> array, starting from the element
+     * <code>#srcPos</code>, to packed <code>dest</code> array, starting from the bit <code>#destPos</code>.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (unpacked inverted <tt>boolean</tt> values).
+     * @param src     the source array (unpacked inverted <code>boolean</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -1339,16 +1347,16 @@ public class PackedBitArrays {
     /**
      * Equivalent to {@link #packBits(long[], long, boolean[], int, int)}
      * method with the only exception,
-     * that this method does not perform synchronization on <tt>dest</tt> array.
+     * that this method does not perform synchronization on <code>dest</code> array.
      * You may use this method instead of {@link #packBits(long[], long, boolean[], int, int)},
-     * if you are not planning to call it from different threads for the same <tt>dest</tt> array.
+     * if you are not planning to call it from different threads for the same <code>dest</code> array.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (unpacked <tt>boolean</tt> values).
+     * @param src     the source array (unpacked <code>boolean</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsNoSync(long[] dest, long destPos, boolean[] src, int srcPos, int count) {
@@ -1468,19 +1476,19 @@ public class PackedBitArrays {
      */
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] > threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>char</tt> values).
+     * @param src       the source array (unpacked <code>char</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -1603,19 +1611,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] < threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>char</tt> values).
+     * @param src       the source array (unpacked <code>char</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -1738,19 +1746,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] >= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>char</tt> values).
+     * @param src       the source array (unpacked <code>char</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -1873,19 +1881,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] <= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>char</tt> values).
+     * @param src       the source array (unpacked <code>char</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2009,19 +2017,19 @@ public class PackedBitArrays {
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>(src[k] & 0xFF)</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFF) > threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>byte</tt> values).
+     * @param src       the source array (unpacked <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2143,19 +2151,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>(src[k] & 0xFF)</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFF) < threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>byte</tt> values).
+     * @param src       the source array (unpacked <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2277,19 +2285,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>(src[k] & 0xFF)</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFF) >= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>byte</tt> values).
+     * @param src       the source array (unpacked <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2411,19 +2419,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>(src[k] & 0xFF)</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFF) <= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>byte</tt> values).
+     * @param src       the source array (unpacked <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2546,19 +2554,19 @@ public class PackedBitArrays {
 
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>(src[k] & 0xFFFF)</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFFFF) > threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>short</tt> values).
+     * @param src       the source array (unpacked <code>short</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2680,19 +2688,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>(src[k] & 0xFFFF)</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFFFF) < threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>short</tt> values).
+     * @param src       the source array (unpacked <code>short</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2814,19 +2822,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>(src[k] & 0xFFFF)</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFFFF) >= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>short</tt> values).
+     * @param src       the source array (unpacked <code>short</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2948,19 +2956,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>(src[k] & 0xFFFF)</code> is transformed to boolean (bit) value
      * <nobr>{@code (src[k] & 0xFFFF) <= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>short</tt> values).
+     * @param src       the source array (unpacked <code>short</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3083,19 +3091,19 @@ public class PackedBitArrays {
 
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] > threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>int</tt> values).
+     * @param src       the source array (unpacked <code>int</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3217,19 +3225,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] < threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>int</tt> values).
+     * @param src       the source array (unpacked <code>int</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3351,19 +3359,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] >= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>int</tt> values).
+     * @param src       the source array (unpacked <code>int</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3485,19 +3493,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] <= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>int</tt> values).
+     * @param src       the source array (unpacked <code>int</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3620,19 +3628,19 @@ public class PackedBitArrays {
 
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] > threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>long</tt> values).
+     * @param src       the source array (unpacked <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3754,19 +3762,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] < threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>long</tt> values).
+     * @param src       the source array (unpacked <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3888,19 +3896,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] >= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>long</tt> values).
+     * @param src       the source array (unpacked <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4022,19 +4030,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] <= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>long</tt> values).
+     * @param src       the source array (unpacked <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4157,19 +4165,19 @@ public class PackedBitArrays {
 
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] > threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>float</tt> values).
+     * @param src       the source array (unpacked <code>float</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4291,19 +4299,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] < threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>float</tt> values).
+     * @param src       the source array (unpacked <code>float</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4425,19 +4433,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] >= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>float</tt> values).
+     * @param src       the source array (unpacked <code>float</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4559,19 +4567,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] <= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>float</tt> values).
+     * @param src       the source array (unpacked <code>float</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4694,19 +4702,19 @@ public class PackedBitArrays {
 
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] > threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>double</tt> values).
+     * @param src       the source array (unpacked <code>double</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4828,19 +4836,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] < threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>double</tt> values).
+     * @param src       the source array (unpacked <code>double</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4962,19 +4970,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] >= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>double</tt> values).
+     * @param src       the source array (unpacked <code>double</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -5096,19 +5104,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Packs <tt>count</tt> elements from <tt>src</tt> array, starting from the element <tt>#srcPos</tt>,
-     * to packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * so that every element <tt>src[k]</tt> is transformed to boolean (bit) value
+     * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
+     * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * so that every element <code>src[k]</code> is transformed to boolean (bit) value
      * <nobr>{@code src[k] <= threshold}</nobr>.
      *
-     * @param dest      the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
-     * @param src       the source array (unpacked <tt>double</tt> values).
+     * @param src       the source array (unpacked <code>double</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -5233,23 +5241,23 @@ public class PackedBitArrays {
     /*Repeat.SectionStart unpackBits*/
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * into a newly created array <tt>boolean[count]</tt> array returned as a result.
-     * Every element <tt>result[k]</tt> of the result array is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * into a newly created array <code>boolean[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(boolean[], int, long[], long, int)}
      * method.</p>
      *
-     * @param src    the source array (bits are packed in <tt>byte</tt> values).
+     * @param src    the source array (bits are packed in <code>byte</code> values).
      * @param srcPos position of the first bit read in the source array.
      * @param count  the number of elements to be unpacked (must be &gt;=0).
-     * @return the unpacked <tt>boolean</tt> array.
-     * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     * @return the unpacked <code>boolean</code> array.
+     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
-     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
      */
     public static boolean[] unpackBits(long[] src, long srcPos, long count) {
         Objects.requireNonNull(src, "Null src");
@@ -5273,15 +5281,15 @@ public class PackedBitArrays {
     }
 
     /**
-     * Copies <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> boolean array, starting from the element <tt>#destPos</tt>.
+     * Copies <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> boolean array, starting from the element <code>#destPos</code>.
      *
-     * @param dest    the destination array (unpacked <tt>boolean</tt> values).
+     * @param dest    the destination array (unpacked <code>boolean</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be unpacked (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(boolean[] dest, int destPos, long[] src, long srcPos, int count) {
@@ -5392,25 +5400,25 @@ public class PackedBitArrays {
                (void unpack(?:Unit|Zero)?Bits\(\s*T\[\]) ==> <T> $1,,... */
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * into a newly created array <tt>boolean[count]</tt> array returned as a result.
-     * Every element <tt>result[k]</tt> of the result array is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * into a newly created array <code>boolean[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(boolean[], int, long[], long, int, boolean, boolean)}
      * method.</p>
      *
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
+     * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @return the unpacked <tt>boolean</tt> array.
-     * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     * @return the unpacked <code>boolean</code> array.
+     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
-     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
      */
     public static boolean[] unpackBits(
             long[] src, long srcPos, long count,
@@ -5436,19 +5444,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> boolean array, starting from the element <tt>#destPos</tt>.
-     * It means that every element <tt>dest[destPos+k]</tt> is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> boolean array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>boolean</tt> values).
+     * @param dest      the destination array (unpacked <code>boolean</code> values).
      * @param destPos   position of the first written element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -5558,20 +5566,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 1 sets the corresponding element of <tt>dest</tt> <tt>boolean</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit1Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to zero bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 1 sets the corresponding element of <code>dest</code> <code>boolean</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit1Value</code>.
+     * Elements of <code>dest</code> array, corresponding to zero bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</code>.
      *
-     * @param dest      the destination array (unpacked <tt>boolean</tt> values).
+     * @param dest      the destination array (unpacked <code>boolean</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -5730,20 +5738,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 0 sets the corresponding element of <tt>dest</tt> <tt>boolean</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit0Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to unit bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 0 sets the corresponding element of <code>dest</code> <code>boolean</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit0Value</code>.
+     * Elements of <code>dest</code> array, corresponding to unit bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>boolean</tt> values).
+     * @param dest      the destination array (unpacked <code>boolean</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -5903,25 +5911,25 @@ public class PackedBitArrays {
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * into a newly created array <tt>char[count]</tt> array returned as a result.
-     * Every element <tt>result[k]</tt> of the result array is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * into a newly created array <code>char[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(char[], int, long[], long, int, char, char)}
      * method.</p>
      *
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
+     * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @return the unpacked <tt>char</tt> array.
-     * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     * @return the unpacked <code>char</code> array.
+     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
-     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
      */
     public static char[] unpackBitsToChars(
             long[] src, long srcPos, long count,
@@ -5947,19 +5955,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> char array, starting from the element <tt>#destPos</tt>.
-     * It means that every element <tt>dest[destPos+k]</tt> is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> char array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>char</tt> values).
+     * @param dest      the destination array (unpacked <code>char</code> values).
      * @param destPos   position of the first written element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -6065,20 +6073,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 1 sets the corresponding element of <tt>dest</tt> <tt>char</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit1Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to zero bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 1 sets the corresponding element of <code>dest</code> <code>char</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit1Value</code>.
+     * Elements of <code>dest</code> array, corresponding to zero bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</code>.
      *
-     * @param dest      the destination array (unpacked <tt>char</tt> values).
+     * @param dest      the destination array (unpacked <code>char</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -6231,20 +6239,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 0 sets the corresponding element of <tt>dest</tt> <tt>char</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit0Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to unit bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 0 sets the corresponding element of <code>dest</code> <code>char</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit0Value</code>.
+     * Elements of <code>dest</code> array, corresponding to unit bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>char</tt> values).
+     * @param dest      the destination array (unpacked <code>char</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -6398,25 +6406,25 @@ public class PackedBitArrays {
 
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * into a newly created array <tt>byte[count]</tt> array returned as a result.
-     * Every element <tt>result[k]</tt> of the result array is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * into a newly created array <code>byte[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(byte[], int, long[], long, int, byte, byte)}
      * method.</p>
      *
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
+     * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @return the unpacked <tt>byte</tt> array.
-     * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     * @return the unpacked <code>byte</code> array.
+     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
-     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
      */
     public static byte[] unpackBitsToBytes(
             long[] src, long srcPos, long count,
@@ -6442,19 +6450,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> byte array, starting from the element <tt>#destPos</tt>.
-     * It means that every element <tt>dest[destPos+k]</tt> is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> byte array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>byte</tt> values).
+     * @param dest      the destination array (unpacked <code>byte</code> values).
      * @param destPos   position of the first written element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -6560,20 +6568,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 1 sets the corresponding element of <tt>dest</tt> <tt>byte</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit1Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to zero bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 1 sets the corresponding element of <code>dest</code> <code>byte</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit1Value</code>.
+     * Elements of <code>dest</code> array, corresponding to zero bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</code>.
      *
-     * @param dest      the destination array (unpacked <tt>byte</tt> values).
+     * @param dest      the destination array (unpacked <code>byte</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -6726,20 +6734,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 0 sets the corresponding element of <tt>dest</tt> <tt>byte</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit0Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to unit bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 0 sets the corresponding element of <code>dest</code> <code>byte</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit0Value</code>.
+     * Elements of <code>dest</code> array, corresponding to unit bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>byte</tt> values).
+     * @param dest      the destination array (unpacked <code>byte</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -6893,25 +6901,25 @@ public class PackedBitArrays {
 
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * into a newly created array <tt>short[count]</tt> array returned as a result.
-     * Every element <tt>result[k]</tt> of the result array is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * into a newly created array <code>short[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(short[], int, long[], long, int, short, short)}
      * method.</p>
      *
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
+     * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @return the unpacked <tt>short</tt> array.
-     * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     * @return the unpacked <code>short</code> array.
+     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
-     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
      */
     public static short[] unpackBitsToShorts(
             long[] src, long srcPos, long count,
@@ -6937,19 +6945,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> short array, starting from the element <tt>#destPos</tt>.
-     * It means that every element <tt>dest[destPos+k]</tt> is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> short array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>short</tt> values).
+     * @param dest      the destination array (unpacked <code>short</code> values).
      * @param destPos   position of the first written element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -7055,20 +7063,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 1 sets the corresponding element of <tt>dest</tt> <tt>short</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit1Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to zero bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 1 sets the corresponding element of <code>dest</code> <code>short</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit1Value</code>.
+     * Elements of <code>dest</code> array, corresponding to zero bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</code>.
      *
-     * @param dest      the destination array (unpacked <tt>short</tt> values).
+     * @param dest      the destination array (unpacked <code>short</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -7221,20 +7229,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 0 sets the corresponding element of <tt>dest</tt> <tt>short</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit0Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to unit bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 0 sets the corresponding element of <code>dest</code> <code>short</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit0Value</code>.
+     * Elements of <code>dest</code> array, corresponding to unit bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>short</tt> values).
+     * @param dest      the destination array (unpacked <code>short</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -7388,25 +7396,25 @@ public class PackedBitArrays {
 
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * into a newly created array <tt>int[count]</tt> array returned as a result.
-     * Every element <tt>result[k]</tt> of the result array is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * into a newly created array <code>int[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(int[], int, long[], long, int, int, int)}
      * method.</p>
      *
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
+     * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @return the unpacked <tt>int</tt> array.
-     * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     * @return the unpacked <code>int</code> array.
+     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
-     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
      */
     public static int[] unpackBitsToInts(
             long[] src, long srcPos, long count,
@@ -7432,19 +7440,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> int array, starting from the element <tt>#destPos</tt>.
-     * It means that every element <tt>dest[destPos+k]</tt> is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> int array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>int</tt> values).
+     * @param dest      the destination array (unpacked <code>int</code> values).
      * @param destPos   position of the first written element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -7550,20 +7558,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 1 sets the corresponding element of <tt>dest</tt> <tt>int</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit1Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to zero bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 1 sets the corresponding element of <code>dest</code> <code>int</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit1Value</code>.
+     * Elements of <code>dest</code> array, corresponding to zero bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</code>.
      *
-     * @param dest      the destination array (unpacked <tt>int</tt> values).
+     * @param dest      the destination array (unpacked <code>int</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -7716,20 +7724,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 0 sets the corresponding element of <tt>dest</tt> <tt>int</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit0Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to unit bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 0 sets the corresponding element of <code>dest</code> <code>int</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit0Value</code>.
+     * Elements of <code>dest</code> array, corresponding to unit bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>int</tt> values).
+     * @param dest      the destination array (unpacked <code>int</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -7883,25 +7891,25 @@ public class PackedBitArrays {
 
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * into a newly created array <tt>long[count]</tt> array returned as a result.
-     * Every element <tt>result[k]</tt> of the result array is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * into a newly created array <code>long[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(long[], int, long[], long, int, long, long)}
      * method.</p>
      *
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
+     * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @return the unpacked <tt>long</tt> array.
-     * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     * @return the unpacked <code>long</code> array.
+     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
-     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
      */
     public static long[] unpackBitsToLongs(
             long[] src, long srcPos, long count,
@@ -7927,19 +7935,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> long array, starting from the element <tt>#destPos</tt>.
-     * It means that every element <tt>dest[destPos+k]</tt> is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> long array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>long</tt> values).
+     * @param dest      the destination array (unpacked <code>long</code> values).
      * @param destPos   position of the first written element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -8045,20 +8053,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 1 sets the corresponding element of <tt>dest</tt> <tt>long</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit1Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to zero bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 1 sets the corresponding element of <code>dest</code> <code>long</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit1Value</code>.
+     * Elements of <code>dest</code> array, corresponding to zero bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</code>.
      *
-     * @param dest      the destination array (unpacked <tt>long</tt> values).
+     * @param dest      the destination array (unpacked <code>long</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -8211,20 +8219,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 0 sets the corresponding element of <tt>dest</tt> <tt>long</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit0Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to unit bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 0 sets the corresponding element of <code>dest</code> <code>long</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit0Value</code>.
+     * Elements of <code>dest</code> array, corresponding to unit bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>long</tt> values).
+     * @param dest      the destination array (unpacked <code>long</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -8378,25 +8386,25 @@ public class PackedBitArrays {
 
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * into a newly created array <tt>float[count]</tt> array returned as a result.
-     * Every element <tt>result[k]</tt> of the result array is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * into a newly created array <code>float[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(float[], int, long[], long, int, float, float)}
      * method.</p>
      *
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
+     * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @return the unpacked <tt>float</tt> array.
-     * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     * @return the unpacked <code>float</code> array.
+     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
-     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
      */
     public static float[] unpackBitsToFloats(
             long[] src, long srcPos, long count,
@@ -8422,19 +8430,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> float array, starting from the element <tt>#destPos</tt>.
-     * It means that every element <tt>dest[destPos+k]</tt> is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> float array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>float</tt> values).
+     * @param dest      the destination array (unpacked <code>float</code> values).
      * @param destPos   position of the first written element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -8540,20 +8548,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 1 sets the corresponding element of <tt>dest</tt> <tt>float</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit1Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to zero bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 1 sets the corresponding element of <code>dest</code> <code>float</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit1Value</code>.
+     * Elements of <code>dest</code> array, corresponding to zero bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</code>.
      *
-     * @param dest      the destination array (unpacked <tt>float</tt> values).
+     * @param dest      the destination array (unpacked <code>float</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -8706,20 +8714,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 0 sets the corresponding element of <tt>dest</tt> <tt>float</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit0Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to unit bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 0 sets the corresponding element of <code>dest</code> <code>float</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit0Value</code>.
+     * Elements of <code>dest</code> array, corresponding to unit bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>float</tt> values).
+     * @param dest      the destination array (unpacked <code>float</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -8873,25 +8881,25 @@ public class PackedBitArrays {
 
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * into a newly created array <tt>double[count]</tt> array returned as a result.
-     * Every element <tt>result[k]</tt> of the result array is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * into a newly created array <code>double[count]</code> array returned as a result.
+     * Every element <code>result[k]</code> of the result array is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(double[], int, long[], long, int, double, double)}
      * method.</p>
      *
-     * @param src       the source array (bits are packed in <tt>byte</tt> values).
+     * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @return the unpacked <tt>double</tt> array.
-     * @throws NullPointerException     if<tt>src</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>srcPos</tt> or <tt>count</tt> is negative, or
+     * @return the unpacked <code>double</code> array.
+     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
-     * @throws TooLargeArrayException   if <tt>count &ge; Integer.MAX_VALUE</tt> (cannot create the result array).
+     * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
      */
     public static double[] unpackBitsToDoubles(
             long[] src, long srcPos, long count,
@@ -8917,19 +8925,19 @@ public class PackedBitArrays {
     }
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> double array, starting from the element <tt>#destPos</tt>.
-     * It means that every element <tt>dest[destPos+k]</tt> is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> double array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>double</tt> values).
+     * @param dest      the destination array (unpacked <code>double</code> values).
      * @param destPos   position of the first written element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -9035,20 +9043,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 1 sets the corresponding element of <tt>dest</tt> <tt>double</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit1Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to zero bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 1 sets the corresponding element of <code>dest</code> <code>double</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit1Value</code>.
+     * Elements of <code>dest</code> array, corresponding to zero bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</code>.
      *
-     * @param dest      the destination array (unpacked <tt>double</tt> values).
+     * @param dest      the destination array (unpacked <code>double</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -9201,20 +9209,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 0 sets the corresponding element of <tt>dest</tt> <tt>double</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit0Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to unit bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 0 sets the corresponding element of <code>dest</code> <code>double</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit0Value</code>.
+     * Elements of <code>dest</code> array, corresponding to unit bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>double</tt> values).
+     * @param dest      the destination array (unpacked <code>double</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -9368,19 +9376,19 @@ public class PackedBitArrays {
 
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * to <tt>dest</tt> T array, starting from the element <tt>#destPos</tt>.
-     * It means that every element <tt>dest[destPos+k]</tt> is assigned to
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * to <code>dest</code> T array, starting from the element <code>#destPos</code>.
+     * It means that every element <code>dest[destPos+k]</code> is assigned to
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>T</tt> values).
+     * @param dest      the destination array (unpacked <code>T</code> values).
      * @param destPos   position of the first written element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static <T> void unpackBits(
@@ -9486,20 +9494,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 1 sets the corresponding element of <tt>dest</tt> <tt>T</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit1Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to zero bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 1 sets the corresponding element of <code>dest</code> <code>T</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit1Value</code>.
+     * Elements of <code>dest</code> array, corresponding to zero bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?bit1Value:dest[destPos+k]</code>.
      *
-     * @param dest      the destination array (unpacked <tt>T</tt> values).
+     * @param dest      the destination array (unpacked <code>T</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static <T> void unpackUnitBits(
@@ -9652,20 +9660,20 @@ public class PackedBitArrays {
     }
 
     /**
-     * Tests <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and for every found bit 0 sets the corresponding element of <tt>dest</tt> <tt>T</tt> array,
-     * starting from the element <tt>#destPos</tt>, to <tt>bit0Value</tt>.
-     * Elements of <tt>dest</tt> array, corresponding to unit bits of the source array, are not changed.
-     * In other words, every element <tt>dest[destPos+k]</tt> is assigned to new value
-     * <tt>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</tt>.
+     * Tests <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * and for every found bit 0 sets the corresponding element of <code>dest</code> <code>T</code> array,
+     * starting from the element <code>#destPos</code>, to <code>bit0Value</code>.
+     * Elements of <code>dest</code> array, corresponding to unit bits of the source array, are not changed.
+     * In other words, every element <code>dest[destPos+k]</code> is assigned to new value
+     * <code>{@link #getBit getBit}(srcPos+k)?dest[destPos+k]:bit0Value</code>.
      *
-     * @param dest      the destination array (unpacked <tt>T</tt> values).
+     * @param dest      the destination array (unpacked <code>T</code> values).
      * @param destPos   position of the first element in the destination array.
-     * @param src       the source array (bits are packed in <tt>long</tt> values).
+     * @param src       the source array (bits are packed in <code>long</code> values).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static <T> void unpackZeroBits(
@@ -9819,17 +9827,17 @@ public class PackedBitArrays {
     /*Repeat.AutoGeneratedEnd*/
 
     /**
-     * Unpacks <tt>count</tt> bits, packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and add them <tt>count</tt> elements of <tt>dest</tt> array, starting from the element <tt>#destPos</tt>.
+     * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>,
+     * and add them <code>count</code> elements of <code>dest</code> array, starting from the element <tt>#destPos</tt>.
      * It means that every element <tt>dest[destPos+k]</tt> is assigned to
      * <tt>dest[destPos+k]+({@link #getBit getBit}(srcPos+k)?1:0)</tt>.
      *
-     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
-     * @param dest    the destination array (unpacked <tt>int</tt> values).
+     * @param dest    the destination array (unpacked <code>int</code> values).
      * @param destPos position of the first increased element in the destination array.
-     * @param count   the number of bits to be added to <tt>dest</tt> elements (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @param count   the number of bits to be added to <code>dest</code> elements (must be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void addBitsToInts(int[] dest, int destPos, long[] src, long srcPos, int count) {
@@ -9931,16 +9939,17 @@ public class PackedBitArrays {
     /*Repeat.SectionStart fillBits*/
 
     /**
-     * Fills <tt>count</tt> bits in the packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * Fills <code>count</code> bits in the packed <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * by the specified value. <i>Be careful:</i> the second <code>int</code> argument in this method
      * is the number of filled element, but not the end filled index
      * as in <tt>java.util.Arrays.fill</tt> methods.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be filled (must be &gt;=0).
-     * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @param value   new value of all filled bits (<code>false</code> means the bit 0,
+     *                <code>true</code> means the bit 1).
+     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -9983,15 +9992,16 @@ public class PackedBitArrays {
     /**
      * Equivalent to {@link #fillBits(long[], long, long, boolean)}
      * method with the only exception,
-     * that this method does not perform synchronization on <tt>dest</tt> array.
+     * that this method does not perform synchronization on <code>dest</code> array.
      * You may use this method instead of {@link #fillBits},
-     * if you are not planning to call it from different threads for the same <tt>dest</tt> array.
+     * if you are not planning to call it from different threads for the same <code>dest</code> array.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be filled (must be &gt;=0).
-     * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @param value   new value of all filled bits (<code>false</code> means the bit 0,
+     *                <code>true</code> means the bit 1).
+     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     public static void fillBitsNoSync(long[] dest, long destPos, long count, boolean value) {
@@ -10029,19 +10039,19 @@ public class PackedBitArrays {
     /*Repeat.SectionEnd fillBits*/
 
     /**
-     * Returns <tt>true</tt> if the specified fragment of the given packed bit array
-     * is filled by zero bits (<tt>0</tt>).
-     * Returns <tt>false</tt> if at least one of <tt>count</tt> bits of this array,
-     * starting from the bit <tt>#pos</tt>, is <tt>1</tt>.
+     * Returns <code>true</code> if the specified fragment of the given packed bit array
+     * is filled by zero bits (<code>0</code>).
+     * Returns <code>false</code> if at least one of <code>count</code> bits of this array,
+     * starting from the bit <tt>#pos</tt>, is <code>1</code>.
      *
-     * <p>If the <tt>count</tt> argument (number of elements) is 0, this method returns <tt>true</tt>.
+     * <p>If the <code>count</code> argument (number of elements) is 0, this method returns <code>true</code>.
      *
-     * @param array the checked bit array (bits are packed in <tt>long</tt> values).
+     * @param array the checked bit array (bits are packed in <code>long</code> values).
      * @param pos   the initial index of the checked fragment in the array.
      * @param count the number of checked bits.
-     * @return <tt>true</tt> if and only if all <tt>count</tt> bits, starting from the bit <tt>#pos</tt>,
+     * @return <code>true</code> if and only if all <code>count</code> bits, starting from the bit <tt>#pos</tt>,
      * are zero, or if <tt>count==0</tt>.
-     * @throws NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if the <code>array</code> argument is <code>null</code>.
      * @throws IndexOutOfBoundsException if checking would cause access of data outside array bounds.
      */
     public static boolean areBitsZero(long[] array, long pos, long count) {
@@ -10077,21 +10087,21 @@ public class PackedBitArrays {
     /*Repeat.SectionStart logicalOperations*/
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical NOT of corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical NOT of corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it just inverts the specified bits.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10187,10 +10197,10 @@ public class PackedBitArrays {
      * Equivalent to <tt>{@link #notBits(long[], long, long[], long, long)
      * notBits}(dest, destPos, dest, destPos, count)</tt>.
      *
-     * @param dest    the source/destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the source/destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the source/destination array.
      * @param count   the number of bits to be inverted (must be &gt;=0).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     public static void notBits(long[] dest, long destPos, long count) {
@@ -10198,21 +10208,21 @@ public class PackedBitArrays {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical AND of them and corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical AND of them and corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it does nothing (so there are no reasons for this call).
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10305,21 +10315,21 @@ public class PackedBitArrays {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical OR of them and corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical OR of them and corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it does nothing (so there are no reasons for this call).
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10413,21 +10423,21 @@ public class PackedBitArrays {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical XOR of them and corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical XOR of them and corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it clears all specified bits.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10520,21 +10530,21 @@ public class PackedBitArrays {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical AND of them and <i>inverted</i> corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical AND of them and <i>inverted</i> corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it clears all specified bits.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10627,21 +10637,21 @@ public class PackedBitArrays {
     }
 
     /**
-     * Replaces <tt>count</tt> bits,
-     * packed in <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
-     * with the logical OR of them and <i>inverted</i> corresponding <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>.
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <tt>#destPos</tt>,
+     * with the logical OR of them and <i>inverted</i> corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>.
      *
      * <p>This method works correctly even if <tt>src&nbsp;==&nbsp;dest</tt>
      * and <tt>srcPos&nbsp;==&nbsp;destPos</tt>:
      * in this case it sets all specified bits to 1.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10736,20 +10746,20 @@ public class PackedBitArrays {
     /*Repeat.SectionEnd logicalOperations*/
 
     /**
-     * Reverse order of <tt>count</tt> bits,
-     * packed in <tt>src</tt> array, starting from the bit <tt>#srcPos</tt>,
-     * and puts the result into <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>.
-     * So, the bit <tt>#(destPos+k)</tt> in <tt>dest</tt> bit array will be equal to the bit
-     * <tt>#(srcPos+count-1-k)</tt> of the <tt>src</tt> bit array.
+     * Reverse order of <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <tt>#srcPos</tt>,
+     * and puts the result into <code>dest</code> array, starting from the bit <tt>#destPos</tt>.
+     * So, the bit <tt>#(destPos+k)</tt> in <code>dest</code> bit array will be equal to the bit
+     * <tt>#(srcPos+count-1-k)</tt> of the <code>src</code> bit array.
      *
      * <p>This method does not work correctly if <tt>src&nbsp;==&nbsp;dest</tt>.
      *
-     * @param dest    the destination array (bits are packed in <tt>long</tt> values).
+     * @param dest    the destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>long</tt> values).
+     * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10833,8 +10843,8 @@ public class PackedBitArrays {
     }
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
-     * and the bit <tt>#k</tt> in the packed <tt>src</tt> bit array is equal to <tt>value</tt>,
+     * Returns the minimal index <code>k</code>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
+     * and the bit <tt>#k</tt> in the packed <code>src</code> bit array is equal to <code>value</code>,
      * or <tt>-1</tt> if there is no such bits.
      *
      * <p>If <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>.
@@ -10846,9 +10856,9 @@ public class PackedBitArrays {
      * @return the index of the first occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
      * or <tt>-1</tt> if this bit does not occur
      * or if <tt>lowIndex&gt;=highIndex</tt>.
-     * @throws NullPointerException      if <tt>array</tt> is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>lowIndex</tt> is negative or
-     *                                   if <tt>highIndex</tt> is greater than <tt>src.length*64</tt>.
+     * @throws NullPointerException      if <code>array</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>lowIndex</code> is negative or
+     *                                   if <code>highIndex</code> is greater than <tt>src.length*64</tt>.
      * @see #lastIndexOfBit(long[], long, long, boolean)
      */
     public static long indexOfBit(long[] src, long lowIndex, long highIndex, boolean value) {
@@ -10909,27 +10919,27 @@ public class PackedBitArrays {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
-     * and the bit <tt>#k</tt> in the packed <tt>src</tt> bit array is equal to <tt>value</tt>,
+     * Returns the maximal index <code>k</code>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
+     * and the bit <tt>#k</tt> in the packed <code>src</code> bit array is equal to <code>value</code>,
      * or <tt>-1</tt> if there is no such bits.
      *
      * <p>If <tt>highIndex&lt;=lowIndex</tt>, this method returns <tt>-1</tt>.
      *
-     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfBit(long[], long, long, boolean)} method:
      * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
      *
      * @param src       the searched packed bit array.
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of bit to be found.
      * @return the index of the last occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
      * or <tt>-1</tt> if this bit does not occur
      * or if <tt>lowIndex&gt;=highIndex</tt>.
-     * @throws NullPointerException      if <tt>src</tt> is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>lowIndex</tt> is negative or
-     *                                   if <tt>highIndex</tt> is greater than <tt>src.length*64</tt>.
+     * @throws NullPointerException      if <code>src</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>lowIndex</code> is negative or
+     *                                   if <code>highIndex</code> is greater than <tt>src.length*64</tt>.
      * @see #indexOfBit(long[], long, long, boolean)
      */
     public static long lastIndexOfBit(long[] src, long lowIndex, long highIndex, boolean value) {
@@ -10995,13 +11005,13 @@ public class PackedBitArrays {
      * Returns the number of high bits (1) in the given fragment of the given packed bit array.
      *
      * @param src       the source packed bit array.
-     * @param fromIndex the initial checked bit index in <tt>array</tt>, inclusive.
-     * @param toIndex   the end checked bit index in <tt>array</tt>, exclusive.
+     * @param fromIndex the initial checked bit index in <code>array</code>, inclusive.
+     * @param toIndex   the end checked bit index in <code>array</code>, exclusive.
      * @return the number of high bits (1) in the given fragment of the given packed bit array.
-     * @throws NullPointerException      if the <tt>src</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
-     *                                   if <tt>toIndex</tt> is greater than <tt>src.length*64</tt>,
-     *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>
+     * @throws NullPointerException      if the <code>src</code> argument is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>fromIndex</code> or <code>toIndex</code> are negative,
+     *                                   if <code>toIndex</code> is greater than <tt>src.length*64</tt>,
+     *                                   or if <code>fromIndex</code> is greater than <code>startIndex</code>
      */
     public static long cardinality(long[] src, final long fromIndex, final long toIndex) {
         //[[Repeat.SectionStart cardinality_method_impl]]
