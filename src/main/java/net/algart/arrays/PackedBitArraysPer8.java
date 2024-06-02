@@ -923,21 +923,6 @@ public class PackedBitArraysPer8 {
         }
     }
 
-    // Note: in the following regexp, we must replace src[...] ==> src[...] & 0xFF,
-    // because we sometimes SHIFT this byte and, so, should work with low 8 bits;
-    // but we may stay dest[...] without "& 0xFF": we use only lowest 8 bits from this value.
-    /*Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, copyBits)
-        <code>long<\/code> ==> <code>byte</code> ;;
-        long\[\] ==> byte[] ;;
-        (\>\>\>)\s*6 ==> $1 3 ;;
-        63\b ==> 7 ;;
-        64\b ==> 8 ;;
-        long\s+(maskStart|maskFinish|v|sPrev|sNext)\b ==> int $1 ;;
-        1L\b ==> 1 ;;
-        src(\[[^\]]+\]) ==> (src$1 & 0xFF) ;;
-        dest(\[[^\]]+\])\s+=(\s+)([^;]+); ==> dest$1 =$2(byte) ($3);
-       !! Auto-generated: NOT EDIT !! */
-
     /**
      * Copies <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>.
@@ -961,7 +946,6 @@ public class PackedBitArraysPer8 {
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void copyBits(byte[] dest, long destPos, byte[] src, long srcPos, long count) {
-
         Objects.requireNonNull(dest, "Null dest");
         Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 3);
@@ -998,7 +982,7 @@ public class PackedBitArraysPer8 {
                     int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
                     synchronized (dest) {
                         dest[dPos + cnt] =
-                                (byte) (((src[sPos + cnt] & 0xFF) & maskFinish) |
+                                (byte) ((src[sPos + cnt] & maskFinish) |
                                         (dest[dPos + cnt] & ~maskFinish));
                     }
                 }
@@ -1006,7 +990,7 @@ public class PackedBitArraysPer8 {
                 if (cntStart > 0) {
                     synchronized (dest) {
                         dest[dPosStart] =
-                                (byte) (((src[sPosStart] & 0xFF) & maskStart) |
+                                (byte) ((src[sPosStart] & maskStart) |
                                         (dest[dPosStart] & ~maskStart));
                     }
                 }
@@ -1026,7 +1010,7 @@ public class PackedBitArraysPer8 {
                     count -= cntStart;
                     dPos++;
                 }
-                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
+                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
                 int cnt = (int) (count >>> 3);
                 final long dPosMin = dPos;
                 sPos += cnt;
@@ -1049,8 +1033,8 @@ public class PackedBitArraysPer8 {
                     //Start_sPrev !! this comment is necessary for preprocessing by Repeater !!
                     sPrev = (src[sPos] & 0xFF);
                     // IndexOutOfBoundException is impossible here, because there is one of the following situations:
-                    // 1) cnt > 0, then (src[sPos] & 0xFF) is really necessary in the following loop;
-                    // 2) cnt == 0 and cntStart > 0, then (src[sPos] & 0xFF) will be necessary for making dest[dPosStart].
+                    // 1) cnt > 0, then src[sPos] is really necessary in the following loop;
+                    // 2) cnt == 0 and cntStart > 0, then src[sPos] will be necessary for making dest[dPosStart].
                     // All other situations are impossible here:
                     // 3) cntFinish > 0: it was processed above in "if (cntFinish > 0)..." branch;
                     // 4) cntStart == 0, cntFinish == 0 and cnt == 0, i.e. count == 0: it's impossible
@@ -1082,7 +1066,7 @@ public class PackedBitArraysPer8 {
             if (sPosRem == dPosRem) {
                 if (cntStart > 0) {
                     synchronized (dest) {
-                        dest[dPos] = (byte) (((src[sPos] & 0xFF) & maskStart) | (dest[dPos] & ~maskStart));
+                        dest[dPos] = (byte) ((src[sPos] & maskStart) | (dest[dPos] & ~maskStart));
                     }
                     count -= cntStart;
                     dPos++;
@@ -1096,7 +1080,7 @@ public class PackedBitArraysPer8 {
                 if (cntFinish > 0) {
                     int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
                     synchronized (dest) {
-                        dest[dPos] = (byte) (((src[sPos] & 0xFF) & maskFinish) | (dest[dPos] & ~maskFinish));
+                        dest[dPos] = (byte) ((src[sPos] & maskFinish) | (dest[dPos] & ~maskFinish));
                     }
                 }
             } else {
@@ -1152,7 +1136,6 @@ public class PackedBitArraysPer8 {
                 }
             }
         }
-
     }
 
     /**
@@ -1205,13 +1188,13 @@ public class PackedBitArraysPer8 {
                 if (cntFinish > 0) {
                     int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
                     dest[dPos + cnt] =
-                            (byte) (((src[sPos + cnt] & 0xFF) & maskFinish) |
+                            (byte) ((src[sPos + cnt] & maskFinish) |
                                     (dest[dPos + cnt] & ~maskFinish));
                 }
                 System.arraycopy(src, sPos, dest, dPos, cnt);
                 if (cntStart > 0) {
                     dest[dPosStart] =
-                            (byte) (((src[sPosStart] & 0xFF) & maskStart) |
+                            (byte) ((src[sPosStart] & maskStart) |
                                     (dest[dPosStart] & ~maskStart));
                 }
             } else {
@@ -1230,7 +1213,7 @@ public class PackedBitArraysPer8 {
                     count -= cntStart;
                     dPos++;
                 }
-                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
+                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
                 int cnt = (int) (count >>> 3);
                 final long dPosMin = dPos;
                 sPos += cnt;
@@ -1251,8 +1234,8 @@ public class PackedBitArraysPer8 {
                     //Start_sPrev !! this comment is necessary for preprocessing by Repeater !!
                     sPrev = (src[sPos] & 0xFF);
                     // IndexOutOfBoundException is impossible here, because there is one of the following situations:
-                    // 1) cnt > 0, then (src[sPos] & 0xFF) is really necessary in the following loop;
-                    // 2) cnt == 0 and cntStart > 0, then (src[sPos] & 0xFF) will be necessary for making dest[dPosStart].
+                    // 1) cnt > 0, then src[sPos] is really necessary in the following loop;
+                    // 2) cnt == 0 and cntStart > 0, then src[sPos] will be necessary for making dest[dPosStart].
                     // All other situations are impossible here:
                     // 3) cntFinish > 0: it was processed above in "if (cntFinish > 0)..." branch;
                     // 4) cntStart == 0, cntFinish == 0 and cnt == 0, i.e. count == 0: it's impossible
@@ -1345,7 +1328,6 @@ public class PackedBitArraysPer8 {
             }
         }
     }
-    /*Repeat.IncludeEnd*/
 
     /**
      * Copies <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
@@ -1407,7 +1389,7 @@ public class PackedBitArraysPer8 {
                     int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
                     synchronized (dest) {
                         dest[dPos + cnt] =
-                                (byte) (((src[sPos + cnt] & 0xFF) & maskFinish) |
+                                (byte) ((src[sPos + cnt] & maskFinish) |
                                         (dest[dPos + cnt] & ~maskFinish));
                     }
                 }
@@ -1415,7 +1397,7 @@ public class PackedBitArraysPer8 {
                 if (cntStart > 0) {
                     synchronized (dest) {
                         dest[dPosStart] =
-                                (byte) (((src[sPosStart] & 0xFF) & maskStart) |
+                                (byte) ((src[sPosStart] & maskStart) |
                                         (dest[dPosStart] & ~maskStart));
                     }
                 }
@@ -1435,7 +1417,7 @@ public class PackedBitArraysPer8 {
                     count -= cntStart;
                     dPos++;
                 }
-                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
+                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
                 int cnt = (int) (count >>> 3);
                 final long dPosMin = dPos;
                 sPos += cnt;
@@ -1447,9 +1429,9 @@ public class PackedBitArraysPer8 {
                     int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
                     int v;
                     if (sPosRem + cntFinish <= 8) { // cntFinish bits are in a single src element
-                        v = (sPrev = (src[sPos] & 0xFF)) >>> sPosRem;
+                        v = (sPrev = (src[sPos] & 0xFF)) << sPosRem;
                     } else {
-                        v = ((sPrev = (src[sPos] & 0xFF)) >>> sPosRem) | ((src[sPos + 1] & 0xFF) << sPosRem8);
+                        v = ((sPrev = (src[sPos] & 0xFF)) << sPosRem) | ((src[sPos + 1] & 0xFF) >>> sPosRem8);
                     }
                     synchronized (dest) {
                         dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
@@ -1457,8 +1439,8 @@ public class PackedBitArraysPer8 {
                 } else {
                     sPrev = (src[sPos] & 0xFF);
                     // IndexOutOfBoundException is impossible here, because there is one of the following situations:
-                    // 1) cnt > 0, then (src[sPos] & 0xFF) is really necessary in the following loop;
-                    // 2) cnt == 0 and cntStart > 0, then (src[sPos] & 0xFF) will be necessary for making dest[dPosStart].
+                    // 1) cnt > 0, then src[sPos] is really necessary in the following loop;
+                    // 2) cnt == 0 and cntStart > 0, then src[sPos] will be necessary for making dest[dPosStart].
                     // All other situations are impossible here:
                     // 3) cntFinish > 0: it was processed above in "if (cntFinish > 0)..." branch;
                     // 4) cntStart == 0, cntFinish == 0 and cnt == 0, i.e. count == 0: it's impossible
@@ -1467,17 +1449,17 @@ public class PackedBitArraysPer8 {
                 while (dPos > dPosMin) { // cnt times
                     --sPos;
                     --dPos;
-                    dest[dPos] = (byte) ((sPrev << sPosRem8) | ((sPrev = (src[sPos] & 0xFF)) >>> sPosRem));
+                    dest[dPos] = (byte) ((sPrev >>> sPosRem8) | ((sPrev = (src[sPos] & 0xFF)) << sPosRem));
                 }
                 if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
                     int v;
                     if (sPosRemStart + cntStart <= 8) { // cntStart bits are in a single src element
                         if (shift > 0)
-                            v = (src[sPosStart] & 0xFF) << shift;
+                            v = (src[sPosStart] & 0xFF) >>> shift;
                         else
-                            v = (src[sPosStart] & 0xFF) >>> -shift;
+                            v = (src[sPosStart] & 0xFF) << -shift;
                     } else {
-                        v = ((src[sPosStart] & 0xFF) >>> -shift) | ((src[sPosStart + 1] & 0xFF) << (8 + shift));
+                        v = ((src[sPosStart] & 0xFF) << -shift) | ((src[sPosStart + 1] & 0xFF) >>> (8 + shift));
                     }
                     synchronized (dest) {
                         dest[dPosStart] = (byte) ((v & maskStart) | (dest[dPosStart] & ~maskStart));
@@ -1489,7 +1471,7 @@ public class PackedBitArraysPer8 {
             if (sPosRem == dPosRem) {
                 if (cntStart > 0) {
                     synchronized (dest) {
-                        dest[dPos] = (byte) (((src[sPos] & 0xFF) & maskStart) | (dest[dPos] & ~maskStart));
+                        dest[dPos] = (byte) ((src[sPos] & maskStart) | (dest[dPos] & ~maskStart));
                     }
                     count -= cntStart;
                     dPos++;
@@ -1503,7 +1485,7 @@ public class PackedBitArraysPer8 {
                 if (cntFinish > 0) {
                     int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
                     synchronized (dest) {
-                        dest[dPos] = (byte) (((src[sPos] & 0xFF) & maskFinish) | (dest[dPos] & ~maskFinish));
+                        dest[dPos] = (byte) ((src[sPos] & maskFinish) | (dest[dPos] & ~maskFinish));
                     }
                 }
             } else {
@@ -1533,11 +1515,11 @@ public class PackedBitArraysPer8 {
                     dPos++;
                 } else {
                     if (count == 0) {
-                        return; // necessary check to avoid IndexOutOfBoundException while accessing (src[sPos] & 0xFF)
+                        return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
                     }
                     sNext = (src[sPos] & 0xFF);
                 }
-                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
+                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
                 final int sPosRem8 = 8 - sPosRem;
                 for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; ) {
                     sPos++;
@@ -1561,9 +1543,195 @@ public class PackedBitArraysPer8 {
         }
     }
 
+    /**
+     * Equivalent to {@link #copyBitsInReverseOrder(byte[], long, byte[], long, long)} method with the only exception,
+     * that this method does not perform synchronization on <code>dest</code> array.
+     * You may use this method instead of {@link #copyBitsInReverseOrder},
+     * if you are not planning to call it from different threads for the same <code>dest</code> array.
+     *
+     * @param dest    the destination array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param destPos position of the first bit written in the destination array.
+     * @param src     the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos  position of the first bit read in the source array.
+     * @param count   the number of bits to be copied (must be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
+     */
     public static void copyBitsInReverseOrderNoSync(byte[] dest, long destPos, byte[] src, long srcPos, long count) {
-        copyBitsInReverseOrder(dest, destPos, src, srcPos, count);
-        //TODO!!
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int sPos = (int) (srcPos >>> 3);
+        int dPos = (int) (destPos >>> 3);
+        int sPosRem = (int) (srcPos & 7);
+        int dPosRem = (int) (destPos & 7);
+        int cntStart = (-dPosRem) & 7;
+        int maskStart = 0xFF >>> dPosRem; // dPosRem times 0, then 1 (from the highest bit)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (0xFF00 >>> (dPosRem + cntStart)); // &= dPosRem+cntStart times 1 (from the highest bit)
+        }
+        //Start_reverseOrder !! this comment is necessary for preprocessing by Repeater !!
+        if (src == dest && srcPos <= destPos && srcPos + count > destPos)
+        //End_reverseOrder !! this comment is necessary for preprocessing by Repeater !!
+        {
+            // overlap possible
+            if (sPosRem == dPosRem) {
+                //Start_nothingToDo !! this comment is necessary for preprocessing by Repeater !!
+                if (sPos == dPos) {
+                    return; // nothing to do
+                }
+                //End_nothingToDo !! this comment is necessary for preprocessing by Repeater !!
+                final int sPosStart = sPos;
+                final int dPosStart = dPos;
+                if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
+                    count -= cntStart;
+                    dPos++;
+                    sPos++;
+                }
+                int cnt = (int) (count >>> 3);
+                int cntFinish = (int) (count & 7);
+                if (cntFinish > 0) {
+                    int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
+                    dest[dPos + cnt] =
+                            (byte) ((src[sPos + cnt] & maskFinish) |
+                                    (dest[dPos + cnt] & ~maskFinish));
+                }
+                System.arraycopy(src, sPos, dest, dPos, cnt);
+                if (cntStart > 0) {
+                    dest[dPosStart] =
+                            (byte) ((src[sPosStart] & maskStart) |
+                                    (dest[dPosStart] & ~maskStart));
+                }
+            } else {
+                final int shift = dPosRem - sPosRem;
+                final int sPosStart = sPos;
+                final int dPosStart = dPos;
+                final int sPosRemStart = sPosRem;
+                if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
+                    if (sPosRem + cntStart <= 8) { // cntStart bits are in a single src element
+                        sPosRem += cntStart;
+                    } else {
+                        sPos++;
+                        sPosRem = (sPosRem + cntStart) & 7;
+                    }
+                    // we suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                    count -= cntStart;
+                    dPos++;
+                }
+                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
+                int cnt = (int) (count >>> 3);
+                final long dPosMin = dPos;
+                sPos += cnt;
+                dPos += cnt;
+                int cntFinish = (int) (count & 7);
+                final int sPosRem8 = 8 - sPosRem;
+                int sPrev;
+                if (cntFinish > 0) {
+                    int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
+                    int v;
+                    if (sPosRem + cntFinish <= 8) { // cntFinish bits are in a single src element
+                        v = (sPrev = (src[sPos] & 0xFF)) << sPosRem;
+                    } else {
+                        v = ((sPrev = (src[sPos] & 0xFF)) << sPosRem) | ((src[sPos + 1] & 0xFF) >>> sPosRem8);
+                    }
+                    dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
+
+                } else {
+                    sPrev = (src[sPos] & 0xFF);
+                    // IndexOutOfBoundException is impossible here, because there is one of the following situations:
+                    // 1) cnt > 0, then src[sPos] is really necessary in the following loop;
+                    // 2) cnt == 0 and cntStart > 0, then src[sPos] will be necessary for making dest[dPosStart].
+                    // All other situations are impossible here:
+                    // 3) cntFinish > 0: it was processed above in "if (cntFinish > 0)..." branch;
+                    // 4) cntStart == 0, cntFinish == 0 and cnt == 0, i.e. count == 0: it's impossible
+                    // in this branch of all algorithm (overlap is impossible when count == 0).
+                }
+                while (dPos > dPosMin) { // cnt times
+                    --sPos;
+                    --dPos;
+                    dest[dPos] = (byte) ((sPrev >>> sPosRem8) | ((sPrev = (src[sPos] & 0xFF)) << sPosRem));
+                }
+                if (cntStart > 0) { // here we correct indexes only: we delay actual access until the end
+                    int v;
+                    if (sPosRemStart + cntStart <= 8) { // cntStart bits are in a single src element
+                        if (shift > 0)
+                            v = (src[sPosStart] & 0xFF) >>> shift;
+                        else
+                            v = (src[sPosStart] & 0xFF) << -shift;
+                    } else {
+                        v = ((src[sPosStart] & 0xFF) << -shift) | ((src[sPosStart + 1] & 0xFF) >>> (8 + shift));
+                    }
+                    dest[dPosStart] = (byte) ((v & maskStart) | (dest[dPosStart] & ~maskStart));
+                }
+            }
+        } else {
+            // usual case
+            if (sPosRem == dPosRem) {
+                if (cntStart > 0) {
+                    dest[dPos] = (byte) ((src[sPos] & maskStart) | (dest[dPos] & ~maskStart));
+
+                    count -= cntStart;
+                    dPos++;
+                    sPos++;
+                }
+                int cnt = (int) (count >>> 3);
+                System.arraycopy(src, sPos, dest, dPos, cnt);
+                sPos += cnt;
+                dPos += cnt;
+                int cntFinish = (int) (count & 7);
+                if (cntFinish > 0) {
+                    int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
+                    dest[dPos] = (byte) ((src[sPos] & maskFinish) | (dest[dPos] & ~maskFinish));
+                }
+            } else {
+                final int shift = dPosRem - sPosRem;
+                int sNext;
+                if (cntStart > 0) {
+                    int v;
+                    if (sPosRem + cntStart <= 8) { // cntStart bits are in a single src element
+                        if (shift > 0)
+                            v = (sNext = (src[sPos] & 0xFF)) >>> shift;
+                        else
+                            v = (sNext = (src[sPos] & 0xFF)) << -shift;
+                        sPosRem += cntStart;
+                    } else {
+                        v = ((src[sPos] & 0xFF) << -shift) | ((sNext = (src[sPos + 1] & 0xFF)) >>> (8 + shift));
+                        sPos++;
+                        sPosRem = (sPosRem + cntStart) & 7;
+                    }
+                    // let's suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                    dest[dPos] = (byte) ((v & maskStart) | (dest[dPos] & ~maskStart));
+                    count -= cntStart;
+                    if (count == 0) {
+                        return; // little optimization
+                    }
+                    dPos++;
+                } else {
+                    if (count == 0) {
+                        return; // necessary check to avoid IndexOutOfBoundException while accessing src[sPos]
+                    }
+                    sNext = (src[sPos] & 0xFF);
+                }
+                // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of src[sPos]
+                final int sPosRem8 = 8 - sPosRem;
+                for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; ) {
+                    sPos++;
+                    dest[dPos] = (byte) ((sNext << sPosRem) | ((sNext = (src[sPos] & 0xFF)) >>> sPosRem8));
+                    dPos++;
+                }
+                int cntFinish = (int) (count & 7);
+                if (cntFinish > 0) {
+                    int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
+                    int v;
+                    if (sPosRem + cntFinish <= 8) { // cntFinish bits are in a single src element
+                        v = sNext << sPosRem;
+                    } else {
+                        v = (sNext << sPosRem) | ((src[sPos + 1] & 0xFF) >>> sPosRem8);
+                    }
+                    dest[dPos] = (byte) ((v & maskFinish) | (dest[dPos] & ~maskFinish));
+                }
+            }
+        }
     }
 
     /**
@@ -1846,8 +2014,6 @@ public class PackedBitArraysPer8 {
             byte[] src,
             long srcPos,
             long count) {
-        // Note: the following method IS NOT BUILT by Repeater; in a case of any improbable changes,
-        // this must be re-written manually!
         Objects.requireNonNull(dest, "Null dest");
         Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 3);
