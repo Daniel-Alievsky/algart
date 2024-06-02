@@ -860,6 +860,36 @@ public class PackedBitArraysPer8Test {
                 showProgress(testCount);
             }
 
+            System.out.println("Testing \"fillBits\" method...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - destPos);
+                boolean value = rnd.nextBoolean();
+                PackedBitArraysPer8.fillBitsInReverseOrder(pDestWork1, destPos, count, value);
+                PackedBitArraysPer8.fillBitsInReverseOrderNoSync(pDestWork2, destPos, count, value);
+                for (int k = 0; k < len; k++) {
+                    boolean vTest = PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, k);
+                    boolean v = k < destPos || k >= destPos + count ?
+                            PackedBitArraysPer8.getBitInReverseOrder(pDest, k) :
+                            value;
+                    if (v != vTest) {
+                        PackedBitArraysPer8.fillBitsInReverseOrder(pDestWork1, destPos, count, value);
+                        throw new AssertionError("The bug A in fillBitsInReverseOrder found in test #" +
+                                testCount + ": "
+                                + "destPos = " + destPos + ", count = " + count + ", value = " + value
+                                + ", " + vTest + " instead of " + v
+                                + ", error found at " + k);
+                    }
+                }
+                if (!java.util.Arrays.equals(pDestWork1, pDestWork2)) {
+                    throw new AssertionError("The bug B in fillBitsInReverseOrderNoSync " +
+                            "found in test #" + testCount);
+                }
+                showProgress(testCount);
+            }
+
             //[[Repeat(INCLUDE_FROM_FILE, PackedBitArraysTest.java, logicalOperations)
             //      PackedBitArrays ==> PackedBitArraysPer8 ;;
             //      startOffset, ==> 0, ;;

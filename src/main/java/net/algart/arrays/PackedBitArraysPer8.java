@@ -631,7 +631,7 @@ public class PackedBitArraysPer8 {
      * }
      * </pre>
      *
-     * @param dest  the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest  the destination array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
      * @param index index of the written bit.
      * @param value new bit value.
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
@@ -664,7 +664,7 @@ public class PackedBitArraysPer8 {
      * }
      * </pre>
      *
-     * @param dest  the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest  the destination array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
      * @param index index of the written bit.
      * @param value new bit value.
      * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
@@ -709,7 +709,7 @@ public class PackedBitArraysPer8 {
      * <p>This bit order is used, for example, in TIFF format when storing binary images or
      * image with less than 8 bits per channel.</p>
      *
-     * @param src    the source array (bits are packed in <tt>byte</tt> values).
+     * @param src    the source array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
      * @param srcPos position of the first bit read in the source array.
      * @param count  the number of bits to be unpacked (must be in range 0..64).
      * @return the sequence of <tt>count</tt> bits.
@@ -789,7 +789,7 @@ public class PackedBitArraysPer8 {
      * after the end of the array (<tt>&ge;8*dest.length</tt>); instead, extra bits outside the array are just ignored.
      * (But negative indexes are not allowed.)</p>
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
@@ -858,7 +858,7 @@ public class PackedBitArraysPer8 {
      * if you are not planning to call
      * this method from different threads for the same <tt>dest</tt> array.
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
      * @param destPos position of the first bit written in the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <tt>dest</tt> argument is <tt>null</tt>.
@@ -1367,7 +1367,7 @@ public class PackedBitArraysPer8 {
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>byte</tt> values in reverse order).
+     * @param src     the source array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be copied (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -1481,7 +1481,7 @@ public class PackedBitArraysPer8 {
      *
      * @param dest    the destination array (bits are packed in <tt>byte</tt> values).
      * @param destPos position of the first bit written in the destination array.
-     * @param src     the source array (bits are packed in <tt>byte</tt> values in reverse order).
+     * @param src     the source array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be copied (must be &gt;=0).
      * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
@@ -1603,7 +1603,7 @@ public class PackedBitArraysPer8 {
      * is equivalent to <tt>{@link #reverseBitsOrderInEachByte(byte[])
      * PackedBitArraysPer8.reverseBitsOrderInEachByte}(dest)</tt>.</p>
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values in reverse order).
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
      * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>byte</tt> values).
      * @param srcPos  position of the first bit read in the source array.
@@ -1718,7 +1718,7 @@ public class PackedBitArraysPer8 {
      * You may use this method instead of {@link #copyBitsFromNormalToReverseOrder},
      * if you are not planning to call it from different threads for the same <tt>dest</tt> array.
      *
-     * @param dest    the destination array (bits are packed in <tt>byte</tt> values in reverse order).
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
      * @param destPos position of the first bit written in the destination array.
      * @param src     the source array (bits are packed in <tt>byte</tt> values).
      * @param srcPos  position of the first bit read in the source array.
@@ -3642,6 +3642,103 @@ public class PackedBitArraysPer8 {
         }
     }
     /*Repeat.IncludeEnd*/
+
+    /**
+     * Fills <tt>count</tt> bits in the packed <tt>dest</tt> array, starting from the bit <tt>#destPos</tt>,
+     * for a case, when the bits are packed in each byte in the reverse order.
+     * <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * is the number of filled element, but not the end filled index
+     * as in <tt>java.util.Arrays.fill</tt> methods.
+     *
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
+     * @param destPos position of the first bit written in the destination array.
+     * @param count   the number of bits to be filled (must be &gt;=0).
+     * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
+     */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
+    public static void fillBitsInReverseOrder(byte[] dest, long destPos, long count, boolean value) {
+        Objects.requireNonNull(dest, "Null dest");
+        int dPos = (int) (destPos >>> 3);
+        int dPosRem = (int) (destPos & 7);
+        int cntStart = (-dPosRem) & 7;
+        int maskStart = 0xFF >>> dPosRem; // dPosRem times 0, then 1 (from the highest bit)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (0xFF00 >>> (dPosRem + count)); // &= dPosRem+cntStart times 1 (from the highest bit)
+        }
+        if (cntStart > 0) {
+            synchronized (dest) {
+                if (value)
+                    dest[dPos] |= (byte) (maskStart);
+                else
+                    dest[dPos] &= (byte) (~maskStart);
+            }
+            count -= cntStart;
+            dPos++;
+        }
+        byte byteValue = value ? (byte) -1 : (byte) 0;
+        for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; dPos++) {
+            dest[dPos] = byteValue;
+        }
+        int cntFinish = (int) (count & 7);
+        if (cntFinish > 0) {
+            int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
+            synchronized (dest) {
+                if (value)
+                    dest[dPos] |= (byte) (maskFinish);
+                else
+                    dest[dPos] &= (byte) (~maskFinish);
+            }
+        }
+    }
+
+    /**
+     * Equivalent to {@link #fillBitsInReverseOrder(byte[], long, long, boolean)}
+     * method with the only exception,
+     * that this method does not perform synchronization on <tt>dest</tt> array.
+     * You may use this method instead of {@link #fillBitsInReverseOrder},
+     * if you are not planning to call it from different threads for the same <tt>dest</tt> array.
+     *
+     * @param dest    the destination array (bits are packed in <tt>byte</tt> values in reverse order 76543210).
+     * @param destPos position of the first bit written in the destination array.
+     * @param count   the number of bits to be filled (must be &gt;=0).
+     * @param value   new value of all filled bits (<tt>false</tt> means the bit 0, <tt>true</tt> means the bit 1).
+     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
+     */
+    public static void fillBitsInReverseOrderNoSync(byte[] dest, long destPos, long count, boolean value) {
+        Objects.requireNonNull(dest, "Null dest");
+        int dPos = (int) (destPos >>> 3);
+        int dPosRem = (int) (destPos & 7);
+        int cntStart = (-dPosRem) & 7;
+        int maskStart = 0xFF >>> dPosRem; // dPosRem times 0, then 1 (from the highest bit)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (0xFF00 >>> (dPosRem + count)); // &= dPosRem+cntStart times 1 (from the highest bit)
+        }
+        if (cntStart > 0) {
+                if (value)
+                    dest[dPos] |= (byte) (maskStart);
+                else
+                    dest[dPos] &= (byte) (~maskStart);
+            count -= cntStart;
+            dPos++;
+        }
+        byte byteValue = value ? (byte) -1 : (byte) 0;
+        for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; dPos++) {
+            dest[dPos] = byteValue;
+        }
+        int cntFinish = (int) (count & 7);
+        if (cntFinish > 0) {
+            int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
+                if (value)
+                    dest[dPos] |= (byte) (maskFinish);
+                else
+                    dest[dPos] &= (byte) (~maskFinish);
+        }
+    }
 
     /**
      * Returns the number of high bits (1) in the given fragment of the given packed bit array.
