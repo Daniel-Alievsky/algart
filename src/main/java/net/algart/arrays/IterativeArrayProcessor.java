@@ -74,6 +74,8 @@ package net.algart.arrays;
  * Without external synchronization, the methods of this interface may return unspecified results
  * while simultaneous accessing the same instance from several threads.</p>
  *
+ * @param <T> the type of the result data returned by this processor.
+ *
  * @author Daniel Alievsky
  */
 public interface IterativeArrayProcessor<T> extends ArrayProcessor {

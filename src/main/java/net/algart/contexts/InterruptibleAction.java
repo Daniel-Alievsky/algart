@@ -36,7 +36,7 @@ import java.util.Objects;
  *
  * @author Daniel Alievsky
  */
-public abstract class InterruptableAction<T> {
+public abstract class InterruptibleAction<T> {
     private final InterruptionContext context;
 
     /**
@@ -45,7 +45,7 @@ public abstract class InterruptableAction<T> {
      * @param context an interruption context that will be used for interruption of the action.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
-    protected InterruptableAction(InterruptionContext context) {
+    protected InterruptibleAction(InterruptionContext context) {
         Objects.requireNonNull(context, "Null context argument");
         this.context = context;
     }

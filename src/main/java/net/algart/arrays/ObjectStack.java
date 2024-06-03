@@ -29,6 +29,8 @@ package net.algart.arrays;
  *
  * <p>Any class implementing this interface <b>must</b> contain non-primitive elements.</p>
  *
+ * @param <E> the generic type of stack elements.
+ *
  * @author Daniel Alievsky
  */
 public interface ObjectStack<E> extends Stack {

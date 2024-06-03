@@ -31,6 +31,8 @@ package net.algart.arrays;
  * <p>The arrays of object created via some {@link MemoryModel memory models} may not implement this interface.
  * You can check, is this interface implemented, by <tt>intstanceof</tt> operator.</p>
  *
+ * @param <E> the generic type of array elements.
+ *
  * @author Daniel Alievsky
  */
 public interface MutableObjectInPlaceArray<E> extends UpdatableObjectInPlaceArray<E>, MutableObjectArray<E> {

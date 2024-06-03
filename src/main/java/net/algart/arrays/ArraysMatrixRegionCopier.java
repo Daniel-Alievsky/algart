@@ -521,7 +521,7 @@ abstract class ArraysMatrixRegionCopier {
             lastCopiedElementsCount = copiedElementsCount;
             long t = System.currentTimeMillis();
             if (lastProgressTime == Long.MIN_VALUE ||
-                t - lastProgressTime > Arrays.SystemSettings.RECOMMENDED_TIME_OF_NONINTERRUPTABLE_PROCESSING)
+                t - lastProgressTime > Arrays.SystemSettings.RECOMMENDED_TIME_OF_NON_INTERRUPTIBLE_PROCESSING)
             {
                 lastProgressTime = t;
                 context.checkInterruptionAndUpdateProgress(srcArray.elementType(), currentProgress, totalProgress);

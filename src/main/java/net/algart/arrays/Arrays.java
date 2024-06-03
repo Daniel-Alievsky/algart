@@ -170,7 +170,7 @@ public class Arrays {
          *
          * <p>The value of this constant is {@value} (milliseconds).
          */
-        public static final int RECOMMENDED_TIME_OF_NONINTERRUPTABLE_PROCESSING = 250;
+        public static final int RECOMMENDED_TIME_OF_NON_INTERRUPTIBLE_PROCESSING = 250;
 
 //        /**
 //         * The maximal time interval, in milliseconds, for calling
@@ -179,14 +179,14 @@ public class Arrays {
 //         * That class tries to estimate the calculation speed and choose the number of elements,
 //         * processed in a single loop iteration, little enough to provide calling
 //         * {@link ArrayContext#checkInterruption()} and {@link ArrayContext#updateProgress ArrayContext.updateProgress}
-//         * not less frequently than every <tt>MAX_TIME_OF_NONINTERRUPTABLE_PROCESSING</tt> milliseconds.
+//         * not less frequently than every <tt>MAX_TIME_OF_NON_INTERRUPTIBLE_PROCESSING</tt> milliseconds.
 //         * It is useful for slow algorithms, when the default buffer size (tens of thousands elements)
 //         * is processed during many seconds or even hours: in this case, the buffer size is automatically reduced
 //         * according to this constant.
 //         *
 //         * <p>The value of this constant is {@value} (milliseconds).
 //         */
-//        public static final int MAX_TIME_OF_NONINTERRUPTABLE_PROCESSING = 2000;
+//        public static final int MAX_TIME_OF_NON_INTERRUPTIBLE_PROCESSING = 2000;
 
         /**
          * Minimal elapsed time, in milliseconds, of long-working operations, when some classes
@@ -8403,11 +8403,11 @@ public class Arrays {
 //                    long t2 = System.currentTimeMillis();
 //                    if (t2 - t1 > 100 // to be on the safe side
 //                        && (t2 - t1) * blockSize >
-//                        SystemSettings.MAX_TIME_OF_NONINTERRUPTABLE_PROCESSING * len)
+//                        SystemSettings.MAX_TIME_OF_NON_INTERRUPTIBLE_PROCESSING * len)
 //                    {
 //                        // too large blockSize: it will be very difficult to interrupt process via checkInterruption()
 //                        actualBlockSize = Math.max(5,
-//                            (int)(SystemSettings.MAX_TIME_OF_NONINTERRUPTABLE_PROCESSING
+//                            (int)(SystemSettings.MAX_TIME_OF_NON_INTERRUPTIBLE_PROCESSING
 //                                * len / (t2 - t1)));
 //                        System.out.println("Correction to " + actualBlockSize);
 //                    }
@@ -8646,7 +8646,7 @@ public class Arrays {
             try {
                 long t1 = progressTime ? lastProgressTime : lastInterruptionTime;
                 long t2 = System.currentTimeMillis();
-                if (t1 == Long.MIN_VALUE || t2 - t1 > SystemSettings.RECOMMENDED_TIME_OF_NONINTERRUPTABLE_PROCESSING) {
+                if (t1 == Long.MIN_VALUE || t2 - t1 > SystemSettings.RECOMMENDED_TIME_OF_NON_INTERRUPTIBLE_PROCESSING) {
                     if (progressTime)
                         lastProgressTime = t2;
                     else
