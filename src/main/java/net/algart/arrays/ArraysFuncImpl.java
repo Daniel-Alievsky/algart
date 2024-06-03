@@ -790,22 +790,23 @@ class ArraysFuncImpl {
         }
         long[] tileDimensions = null; // will be non-null if all non-constant arrays are identically tiled
         long[] baseMatrixDimensions = null;
-        for (int k = 0; k < x.length; k++) {
-            if (Arrays.isNCopies(x[k])) {
+        for (PArray a : x) {
+            if (Arrays.isNCopies(a)) {
                 continue; // skip constant arrays: their tiling is not important
             }
-            if (!Arrays.isTiled(x[k])) {
-                tileDimensions = null; break;
+            if (!Arrays.isTiled(a)) {
+                tileDimensions = null;
+                break;
             }
-            ArraysTileMatrixImpl.TileMatrixArray tma = (ArraysTileMatrixImpl.TileMatrixArray)x[k];
+            ArraysTileMatrixImpl.TileMatrixArray tma = (ArraysTileMatrixImpl.TileMatrixArray) a;
             if (tileDimensions == null) {
                 tileDimensions = tma.tileDimensions();
                 baseMatrixDimensions = tma.baseMatrix().dimensions();
             } else {
                 if (!java.util.Arrays.equals(tileDimensions, tma.tileDimensions()) ||
-                    !java.util.Arrays.equals(baseMatrixDimensions, tma.baseMatrix().dimensions()))
-                {
-                    tileDimensions = null; break;
+                        !java.util.Arrays.equals(baseMatrixDimensions, tma.baseMatrix().dimensions())) {
+                    tileDimensions = null;
+                    break;
                 }
             }
         }

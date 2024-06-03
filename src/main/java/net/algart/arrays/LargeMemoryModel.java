@@ -1893,7 +1893,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         }
         try {
             if (elementType == boolean.class) {
-                boolean value = Boolean.valueOf(s);
+                boolean value = Boolean.parseBoolean(s);
                 return Arrays.nBitCopies(arrayLength, value);
             } else if (elementType == char.class) {
                 if (!s.startsWith("u")) {

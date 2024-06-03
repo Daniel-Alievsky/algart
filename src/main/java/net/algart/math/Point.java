@@ -887,7 +887,7 @@ public class Point implements Comparable<Point> {
      * @return a brief string description of this object.
      */
     public String toString() {
-        StringBuffer result = new StringBuffer("(");
+        final StringBuilder result = new StringBuilder("(");
         for (int k = 0; k < coordinates.length; k++) {
             if (k > 0) {
                 result.append(", ");

@@ -2066,7 +2066,7 @@ public class JArrays {
             Object[] a1 = (Object[])array1;
             Object[] a2 = (Object[])array2;
             for (int pos1Max = pos1 + length; pos1 < pos1Max; pos1++, pos2++) {
-                if (!(a1[pos1] == null ? a2[pos2] == null : a1[pos1].equals(a2[pos2]))) {
+                if (!(Objects.equals(a1[pos1], a2[pos2]))) {
                     return false;
                 }
             }

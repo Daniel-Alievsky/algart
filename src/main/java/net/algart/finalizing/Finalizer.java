@@ -217,7 +217,7 @@ public final class Finalizer {
                 thread.setDaemon(true);
                 try {
                     thread.setPriority(priority);
-                } catch (SecurityException ex) {
+                } catch (SecurityException ignored) {
                 }
                 thread.start();
             }
@@ -277,7 +277,7 @@ public final class Finalizer {
             if (thread != null) {
                 try {
                     thread.setPriority(priority);
-                } catch (SecurityException ex) {
+                } catch (SecurityException ignored) {
                 }
             }
         }
@@ -308,7 +308,7 @@ public final class Finalizer {
                 try {
                     holder = fin.refQueue.remove();
                     phantomHolder = (PhantomFinalizeHolder) holder;
-                } catch (InterruptedException ex) {
+                } catch (InterruptedException ignored) {
                 }
                 if (phantomHolder != null) {
                     phantomHolder.task.run();

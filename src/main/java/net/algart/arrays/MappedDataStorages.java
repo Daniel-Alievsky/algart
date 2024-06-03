@@ -24,7 +24,6 @@
 
 package net.algart.arrays;
 
-import java.lang.reflect.InvocationTargetException;
 import java.nio.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

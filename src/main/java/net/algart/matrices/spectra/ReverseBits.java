@@ -25,7 +25,6 @@
 package net.algart.matrices.spectra;
 
 import net.algart.arrays.ArrayContext;
-import net.algart.matrices.spectra.ComplexScalarSampleArray.*;
 
 class ReverseBits {
     static final int[] REVERSE_16 = new int[65536];

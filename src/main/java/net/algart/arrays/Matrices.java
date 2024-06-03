@@ -4941,6 +4941,7 @@ public class Matrices {
         return dim.length == 1 ? dim[0] + "(x1)" : JArrays.toString(dim, "x", 1000);
     }
 
+    @SuppressWarnings("UnnecessaryBoxing")
     static Object castOutsideValue(Object outsideValue, Array array) {
         if (array instanceof PArray) {
             Number number;

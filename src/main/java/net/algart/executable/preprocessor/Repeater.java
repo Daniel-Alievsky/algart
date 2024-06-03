@@ -431,7 +431,7 @@ public class Repeater implements Cloneable {
                     for (int j = 0; j < replacements.length; j++) {
                         String r = replacements[j][k];
                         Matcher m = compilePatternDotAll("\\$INDEX\\(([\\w\\d\\,=\\s]*)\\)").matcher(r);
-                        StringBuffer rsb = new StringBuffer();
+                        StringBuilder rsb = new StringBuilder();
                         while (m.find()) {
                             int start = 0;
                             int step = 1;
