@@ -243,9 +243,7 @@ public class SubtaskContext implements Context {
             }
             try {
                 return method.invoke(castedParentContext, args);
-            } catch (IllegalAccessException e) {
-                throw new AssertionError("Internal error in " + SubtaskContext.class).initCause(e);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalAccessException | IllegalArgumentException e) {
                 throw new AssertionError("Internal error in " + SubtaskContext.class).initCause(e);
             } catch (InvocationTargetException e) {
                 throw e.getCause();

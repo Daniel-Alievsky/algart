@@ -173,6 +173,7 @@ class MappedDataStorages {
                 error = e;
             }
             try {
+                //noinspection BusyWait
                 Thread.sleep(Math.min(LargeMemoryModel.DELETION_SLEEP_DELAY, timeoutInMillis));
             } catch (InterruptedException ex) {
                 throw error; // return the last exception if interrupted
@@ -2461,15 +2462,14 @@ class MappedDataStorages {
                 StringBuilder sb = new StringBuilder(bankCount + " banks, accessing index "
                     + Long.toHexString(index) + "h");
                 for (int k = 0; k < (result == null ? bankCount : bh.length); k++) {
-                    sb.append(InternalUtils.LF
-                        + "    [" + whereCalled + "] mapping "
-                        + (useSecondBank ? "(at second bank) " : "")
-                        + k + ": " + bh[k]);
+                    sb.append(InternalUtils.LF).append("    [").append(whereCalled)
+                            .append("] mapping ").append(useSecondBank ? "(at second bank) " : "")
+                            .append(k).append(": ").append(bh[k]);
                 }
-                sb.append(InternalUtils.LF + "The reason:");
+                sb.append(InternalUtils.LF).append("The reason:");
                 StackTraceElement[] se = Thread.currentThread().getStackTrace();
                 for (int k = 2; k < se.length; k++) {
-                    sb.append(InternalUtils.LF + "    " + se[k]);
+                    sb.append(InternalUtils.LF).append("    ").append(se[k]);
                 }
                 if (result == null) {
                     LargeMemoryModel.LOGGER.log(level, sb.toString());

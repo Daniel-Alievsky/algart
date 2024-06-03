@@ -24,6 +24,8 @@
 
 package net.algart.contexts;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked exception thrown by {@link Context#as(Class)} method
  * when it cannot serve the request.
@@ -57,5 +59,6 @@ public class UnsupportedContextException extends RuntimeException {
         super("Unsupported context class: " + contextClass.getName());
     }
 
+    @Serial
     private static final long serialVersionUID = -869003795584365428L;
 }

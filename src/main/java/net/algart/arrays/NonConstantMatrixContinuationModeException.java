@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked exception thrown by {@link Matrix.ContinuationMode#continuationConstant()} method,
  * if the continuation mode is not a {@link Matrix.ContinuationMode#isConstant() constant continuation}.</p>
@@ -45,5 +47,6 @@ public class NonConstantMatrixContinuationModeException extends RuntimeException
         super(message);
     }
 
+    @Serial
     private static final long serialVersionUID = 2487762843006655047L;
 }

@@ -24,6 +24,8 @@
 
 package net.algart.math.patterns;
 
+import java.io.Serial;
+
 /**
  * <p>Error thrown if a {@link Pattern pattern} is extremely large to be correctly processed.
  * "Extremely large" usually means that the number of points of the pattern is greater, or is probably greater,
@@ -52,5 +54,6 @@ public class TooManyPointsInPatternError extends Error {
         super(message);
     }
 
-    static final long serialVersionUID = -7030226573403677350L;
+    @Serial
+    private static final long serialVersionUID = -7030226573403677350L;
 }

@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked exception thrown by some methods of {@link Matrix} interface,
  * if the matrix is not a {@link Matrix#isSubMatrix() submatrix} of another matrix.
@@ -48,5 +50,6 @@ public class NotSubMatrixException extends RuntimeException {
         super(message);
     }
 
+    @Serial
     private static final long serialVersionUID = -4789384790151600143L;
 }

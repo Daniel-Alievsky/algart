@@ -24,6 +24,8 @@
 
 package net.algart.math.patterns;
 
+import java.io.Serial;
+
 public class TooLargePatternCoordinatesException extends RuntimeException {
     /**
      * Constructs an instance of this class.
@@ -40,5 +42,6 @@ public class TooLargePatternCoordinatesException extends RuntimeException {
         super(message);
     }
 
-    static final long serialVersionUID = -2153895144415795724L;
+    @Serial
+    private static final long serialVersionUID = -2153895144415795724L;
 }

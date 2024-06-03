@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked exception thrown by some methods, processing several AlgART arrays or matrices,
  * when the passed arrays / matrices have different lengths / dimensions.</p>
@@ -46,5 +48,6 @@ public class SizeMismatchException extends IllegalArgumentException {
         super(message);
     }
 
+    @Serial
     private static final long serialVersionUID = -7197201420951510150L;
 }

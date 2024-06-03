@@ -26,6 +26,7 @@ package net.algart.matrices.morphology;
 
 import net.algart.arrays.Arrays;
 
+import java.io.Serial;
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
 import java.util.*;
@@ -43,6 +44,7 @@ class HistogramCache<T> {
                 return size() > histogramCacheCapacity;
             }
 
+            @Serial
             private static final long serialVersionUID = 3203370748019883916L;
         };
     }

@@ -7133,6 +7133,7 @@ public class Arrays {
                 break;
             long sleepTime = Math.min(t2 - t1 + delay, 10000);
             sleepTime = Math.min(sleepTime, timeoutInMilliseconds - (t2 - tFix));
+            //noinspection BusyWait
             Thread.sleep(Math.max(50, sleepTime));
             delay += 200;
             // Wait at least the same time, as gc() works, +delay, to avoid too high CPU usage.
@@ -8067,20 +8068,18 @@ public class Arrays {
                             final long rFrom = rangeFrom(ri);
                             final long rTo = rangeTo(ri);
                             src.subArray(rFrom, rTo).loadResources(null);
-                            tasks[ti] = new Runnable() {
-                                public void run() {
-                                    Thread th = Thread.currentThread();
-                                    if (th instanceof ThreadForRanges) {
-                                        // so, it's our thread, created by the custom ThreadFactory below
-                                        th.setName("thread #" + (ti + 1) + "/" + numberOfTasks
-                                                + ", range # " + (ri + 1) + "/" + numberOfRanges + " (" + src + ")");
-                                    }
-                                    try {
-                                        processRange(rFrom, rTo, ti, ri);
-                                    } catch (Throwable ex) {
-                                        interruptionRequested = true;
-                                        throwUncheckedException(ex);
-                                    }
+                            tasks[ti] = () -> {
+                                Thread th = Thread.currentThread();
+                                if (th instanceof ThreadForRanges) {
+                                    // so, it's our thread, created by the custom ThreadFactory below
+                                    th.setName("thread #" + (ti + 1) + "/" + numberOfTasks
+                                            + ", range # " + (ri + 1) + "/" + numberOfRanges + " (" + src + ")");
+                                }
+                                try {
+                                    processRange(rFrom, rTo, ti, ri);
+                                } catch (Throwable ex) {
+                                    interruptionRequested = true;
+                                    throwUncheckedException(ex);
                                 }
                             };
                         }
@@ -8089,11 +8088,7 @@ public class Arrays {
                             // to be on the safe side, does not hope on the similar behaviour of
                             // the implementation of performTasks method in threadPoolFactory object
                         } else {
-                            ThreadFactory threadFactory = new ThreadFactory() {
-                                public Thread newThread(Runnable r) {
-                                    return new ThreadForRanges(r);
-                                }
-                            };
+                            ThreadFactory threadFactory = ThreadForRanges::new;
                             threadPoolFactory.performTasks(src, threadFactory, tasks);
                         }
                         if (interruptionReason != null)
@@ -8121,60 +8116,58 @@ public class Arrays {
                 final Object synchronizer = new Object();
                 for (int threadIndex = 0; threadIndex < numberOfTasks; threadIndex++) {
                     final int ti = threadIndex;
-                    tasks[ti] = new Runnable() {
-                        public void run() {
-                            Thread th = Thread.currentThread();
-                            if (th instanceof ThreadForRanges) {
-                                // so, it's our thread, created by the custom ThreadFactory below
-                                th.setName("thread #" + (ti + 1) + "/" + numberOfTasks + " (" + src + ")");
+                    tasks[ti] = () -> {
+                        Thread th = Thread.currentThread();
+                        if (th instanceof ThreadForRanges) {
+                            // so, it's our thread, created by the custom ThreadFactory below
+                            th.setName("thread #" + (ti + 1) + "/" + numberOfTasks + " (" + src + ")");
+                        }
+                        for (long rangeIndex = ti; rangeIndex < numberOfRanges; rangeIndex += numberOfTasks) {
+                            if (interruptionRequested) {
+                                break;
                             }
-                            for (long rangeIndex = ti; rangeIndex < numberOfRanges; rangeIndex += numberOfTasks) {
-                                if (interruptionRequested) {
-                                    break;
-                                }
-                                if (PROCESS_SYNCHRONIZATION_ALGORITHM == ProcessSynchronizationAlgorithm.BEGINS) {
-                                    synchronized (synchronizer) {
-                                        long startIndexInThisSeries = rangeIndex - ti;
-                                        // we start new series per numberOfTasks ranges simultaneously
-                                        while (readyRanges.get() < startIndexInThisSeries) {
-                                            try {
-                                                synchronizer.wait();
-                                            } catch (InterruptedException ex) {
-                                                interruptionRequested = true;
-                                                throw IOErrorJ5.getInstance(ex);
-                                            }
-                                        }
-                                    }
-                                }
-                                try {
-                                    final long rFrom = rangeFrom(rangeIndex);
-                                    final long rTo = rangeTo(rangeIndex);
-                                    src.subArray(rFrom, rTo).loadResources(null);
-                                    processRange(rFrom, rTo, ti, rangeIndex);
-                                } catch (Throwable ex) {
-                                    interruptionRequested = true;
-                                    throwUncheckedException(ex);
-                                }
+                            if (PROCESS_SYNCHRONIZATION_ALGORITHM == ProcessSynchronizationAlgorithm.BEGINS) {
                                 synchronized (synchronizer) {
-                                    if (PROCESS_SYNCHRONIZATION_ALGORITHM == ProcessSynchronizationAlgorithm.BEGINS) {
-                                        readyRanges.incrementAndGet();
-                                    } else {
-                                        while (readyRanges.get() < rangeIndex) {
-                                            try {
-                                                synchronizer.wait();
-                                            } catch (InterruptedException ex) {
-                                                interruptionRequested = true;
-                                                throw IOErrorJ5.getInstance(ex);
-                                            }
+                                    long startIndexInThisSeries = rangeIndex - ti;
+                                    // we start new series per numberOfTasks ranges simultaneously
+                                    while (readyRanges.get() < startIndexInThisSeries) {
+                                        try {
+                                            synchronizer.wait();
+                                        } catch (InterruptedException ex) {
+                                            interruptionRequested = true;
+                                            throw IOErrorJ5.getInstance(ex);
                                         }
-                                        long ready = readyRanges.incrementAndGet();
-                                        if (ready != rangeIndex + 1)
-                                            throw new AssertionError("Invalid synchronization (" + ready
-                                                    + " instead of " + (rangeIndex + 1) + " in "
-                                                    + ParallelExecutor.this.getClass());
                                     }
-                                    synchronizer.notifyAll();
                                 }
+                            }
+                            try {
+                                final long rFrom = rangeFrom(rangeIndex);
+                                final long rTo = rangeTo(rangeIndex);
+                                src.subArray(rFrom, rTo).loadResources(null);
+                                processRange(rFrom, rTo, ti, rangeIndex);
+                            } catch (Throwable ex) {
+                                interruptionRequested = true;
+                                throwUncheckedException(ex);
+                            }
+                            synchronized (synchronizer) {
+                                if (PROCESS_SYNCHRONIZATION_ALGORITHM == ProcessSynchronizationAlgorithm.BEGINS) {
+                                    readyRanges.incrementAndGet();
+                                } else {
+                                    while (readyRanges.get() < rangeIndex) {
+                                        try {
+                                            synchronizer.wait();
+                                        } catch (InterruptedException ex) {
+                                            interruptionRequested = true;
+                                            throw IOErrorJ5.getInstance(ex);
+                                        }
+                                    }
+                                    long ready = readyRanges.incrementAndGet();
+                                    if (ready != rangeIndex + 1)
+                                        throw new AssertionError("Invalid synchronization (" + ready
+                                                + " instead of " + (rangeIndex + 1) + " in "
+                                                + ParallelExecutor.this.getClass());
+                                }
+                                synchronizer.notifyAll();
                             }
                         }
                     };
@@ -8195,11 +8188,7 @@ public class Arrays {
                     if (numberOfTasks == 1) { // NOT THE BEST IDEA: NO loadResources HERE
                         tasks[0].run();
                     } else {
-                        ExecutorService pool = threadPoolFactory.getThreadPool(src, new ThreadFactory() {
-                            public Thread newThread(Runnable r) {
-                                return new ThreadForRanges(r);
-                            }
-                        });
+                        ExecutorService pool = threadPoolFactory.getThreadPool(src, ThreadForRanges::new);
                         try {
                             Future<?>[] results = new Future<?>[numberOfTasks];
                             for (int k = 0; k < numberOfTasks; k++) {

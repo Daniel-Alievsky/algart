@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked exception thrown by methods, creating new AlgART arrays
  * (as {@link MemoryModel#newEmptyArray(Class)}), if the specified element type
@@ -46,5 +48,6 @@ public class UnsupportedElementTypeException extends RuntimeException {
         super(message);
     }
 
+    @Serial
     private static final long serialVersionUID = 2414151893941477245L;
 }

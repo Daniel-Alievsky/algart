@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked exception thrown by {@link DirectAccessible#javaArray()} method,
  * if the object cannot be viewed as a Java array.</p>
@@ -37,5 +39,6 @@ public class NoJavaArrayException extends RuntimeException {
     public NoJavaArrayException() {
     }
 
+    @Serial
     private static final long serialVersionUID = -3038714244503245322L;
 }

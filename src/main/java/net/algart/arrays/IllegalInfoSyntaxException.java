@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.io.Serial;
+
 /**
  * <p>Checked exception thrown if the format of <tt>byte[]</tt> or <tt>String</tt>
  * serialized form of the {@link MatrixInfo} is invalid.
@@ -45,5 +47,6 @@ public class IllegalInfoSyntaxException extends Exception {
         super(message);
     }
 
+    @Serial
     private static final long serialVersionUID = -7581665320134679678L;
 }

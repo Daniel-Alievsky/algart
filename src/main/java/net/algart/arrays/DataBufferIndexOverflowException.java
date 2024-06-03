@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked exception thrown by {@link DataBuffer} methods {@link DataBuffer#from() from()},
  * {@link DataBuffer#to() to()} and {@link DataBuffer#cnt() cnt()}, if the values, they should be returned
@@ -46,5 +48,6 @@ public class DataBufferIndexOverflowException extends RuntimeException {
         super(message);
     }
 
+    @Serial
     private static final long serialVersionUID = 244582200268913586L;
 }

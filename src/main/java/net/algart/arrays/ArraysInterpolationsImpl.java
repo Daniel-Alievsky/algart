@@ -433,7 +433,7 @@ class ArraysInterpolationsImpl {
             if (iy < 0 || iy >= idimY) {
                 return outsideValue;
             }
-            return array.getDouble(iy * idimX + ix);
+            return array.getDouble((long) iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
@@ -544,7 +544,7 @@ class ArraysInterpolationsImpl {
             if (iy < 0 || iy >= idimY) {
                 return outsideValue;
             }
-            return array.getDouble(iy * idimX + ix);
+            return array.getDouble((long) iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
@@ -655,7 +655,7 @@ class ArraysInterpolationsImpl {
             if (iy < 0 || iy >= idimY) {
                 return outsideValue;
             }
-            return array.getDouble(iy * idimX + ix);
+            return array.getDouble((long) iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
@@ -766,7 +766,7 @@ class ArraysInterpolationsImpl {
             if (iy < 0 || iy >= idimY) {
                 return outsideValue;
             }
-            return array.getDouble(iy * idimX + ix);
+            return array.getDouble((long) iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
@@ -877,7 +877,7 @@ class ArraysInterpolationsImpl {
             if (iy < 0 || iy >= idimY) {
                 return outsideValue;
             }
-            return array.getDouble(iy * idimX + ix);
+            return array.getDouble((long) iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
@@ -988,7 +988,7 @@ class ArraysInterpolationsImpl {
             if (iy < 0 || iy >= idimY) {
                 return outsideValue;
             }
-            return array.getDouble(iy * idimX + ix);
+            return array.getDouble((long) iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {
@@ -1099,7 +1099,7 @@ class ArraysInterpolationsImpl {
             if (iy < 0 || iy >= idimY) {
                 return outsideValue;
             }
-            return array.getDouble(iy * idimX + ix);
+            return array.getDouble((long) iy * idimX + ix);
         }
 
         public double get(double x, double y, double z) {

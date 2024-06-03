@@ -1962,7 +1962,7 @@ public class JArrays {
         //           (a1\[.+?])(\s*!=\s*)(a2\[.+?\]) ==> $1$2$3,,$1$2$3,,$1$2$3,,$1$2$3,,$1$2$3,,
         //                       Float.floatToIntBits($1) != Float.floatToIntBits($3),,
         //                       Double.doubleToLongBits($1) != Double.doubleToLongBits($3),,
-        //                       !($1 == null ? $3 == null : $1.equals($3)) ]]
+        //                       !(Objects.equals($1, $3)) ]]
         if (array1 instanceof boolean[]) {
             if (!(array2 instanceof boolean[])) {
                 return false;

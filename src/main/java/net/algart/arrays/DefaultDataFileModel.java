@@ -557,6 +557,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 break;
             }
             try {
+                //noinspection BusyWait
                 Thread.sleep(OPEN_SLEEP_DELAY);
 //                System.out.println("Sleeping for " + file);
             } catch (InterruptedException ex) {
@@ -617,6 +618,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 numberOfGc++;
             }
             try {
+                //noinspection BusyWait
                 Thread.sleep(MAP_SLEEP_DELAY);
             } catch (InterruptedException ex) {
                 break;  // return the last exception if interrupted
@@ -678,6 +680,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 break; // not "think" too long in this situation and return the last exception "result"
             }
             try {
+                //noinspection BusyWait
                 Thread.sleep(Math.min(FORCE_SLEEP_DELAY, timeoutInMillis));
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt(); // restore interrupt status: "result" exception can be ignored

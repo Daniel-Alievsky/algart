@@ -24,6 +24,8 @@
 
 package net.algart.contexts;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked analog of the standard <tt>InterruptedException</tt>.
  * Thrown by {@link InterruptionContext#checkInterruption()} method.</p>
@@ -55,5 +57,6 @@ public class InterruptionException extends RuntimeException {
         super(cause);
     }
 
+    @Serial
     private static final long serialVersionUID = 8166277608312778448L;
 }

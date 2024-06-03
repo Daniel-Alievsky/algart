@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked exception thrown if the <i>n</i>-dimensional simplex {@link Matrices.Simplex}
  * cannot be constructed because all vertices lies on the same hyperplane.
@@ -48,5 +50,6 @@ public class DegeneratedSimplexException extends IllegalArgumentException {
         super(message);
     }
 
+    @Serial
     private static final long serialVersionUID = 5347629842796910748L;
 }

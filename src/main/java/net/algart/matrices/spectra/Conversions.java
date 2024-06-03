@@ -93,55 +93,53 @@ class Conversions {
                     dRe = fast2D ? null : newArr(mm, fRe, layerLen),
                     dIm = fast2D ? null : newArr(mm, fIm, layerLen);
             final int ti = threadIndex;
-            tasks[ti] = new Runnable() {
-                public void run() {
-                    final long layerStep = tasks.length * layerLen;
-                    for (long k1 = ti, disp1 = ti * layerLen; k1 <= nDiv2; k1 += tasks.length, disp1 += layerStep) {
-                        long disp2 = k1 == 0 ? 0 : totalLen - disp1;
-                        PNumberArray
-                                hRe1Local = subArrOrCopy(hDirect ? null : hRe1, hRe, disp1, layerLen),
-                                hIm1Local = subArrOrCopy(hDirect ? null : hIm1, hIm, disp1, layerLen),
-                                hRe2Local = subArrOrCopy(hDirect ? null : hRe2, hRe, disp2, layerLen),
-                                hIm2Local = subArrOrCopy(hDirect ? null : hIm2, hIm, disp2, layerLen);
-                        if (fast2D) {
-                            if (fDirect) {
-                                separableHartleyToFourierDirect2D(
-                                        fRe.subArr(disp1, layerLen), fIm.subArr(disp1, layerLen),
-                                        fRe.subArr(disp2, layerLen), fIm.subArr(disp2, layerLen),
-                                        hRe1Local, hIm1Local, hRe2Local, hIm2Local, fRe.elementType());
-                            } else {
-                                separableHartleyToFourierDirect2D(wRe1, wIm1, wRe2, wIm2,
-                                        hRe1Local, hIm1Local, hRe2Local, hIm2Local, fRe.elementType());
-                                fRe.subArr(disp1, layerLen).copy(wRe1);
-                                fIm.subArr(disp1, layerLen).copy(wIm1);
-                                fRe.subArr(disp2, layerLen).copy(wRe2);
-                                fIm.subArr(disp2, layerLen).copy(wIm2);
-                            }
+            tasks[ti] = () -> {
+                final long layerStep = tasks.length * layerLen;
+                for (long k1 = ti, disp1 = ti * layerLen; k1 <= nDiv2; k1 += tasks.length, disp1 += layerStep) {
+                    long disp2 = k1 == 0 ? 0 : totalLen - disp1;
+                    PNumberArray
+                            hRe1Local = subArrOrCopy(hDirect ? null : hRe1, hRe, disp1, layerLen),
+                            hIm1Local = subArrOrCopy(hDirect ? null : hIm1, hIm, disp1, layerLen),
+                            hRe2Local = subArrOrCopy(hDirect ? null : hRe2, hRe, disp2, layerLen),
+                            hIm2Local = subArrOrCopy(hDirect ? null : hIm2, hIm, disp2, layerLen);
+                    if (fast2D) {
+                        if (fDirect) {
+                            separableHartleyToFourierDirect2D(
+                                    fRe.subArr(disp1, layerLen), fIm.subArr(disp1, layerLen),
+                                    fRe.subArr(disp2, layerLen), fIm.subArr(disp2, layerLen),
+                                    hRe1Local, hIm1Local, hRe2Local, hIm2Local, fRe.elementType());
                         } else {
-                            separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
-                                    wRe1, wIm1, hRe1Local, hIm1Local, layerDims, 1);
-                            separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
-                                    wRe2, wIm2, hRe2Local, hIm2Local, layerDims, 1);
-                            // Below we calculate
-                            //     f1 = (w1+w2)/2 - i * (w1-w2)/2 = s - i * d = (sRe+dIm, sIm-dRe)
-                            //     f2 = (w1+w2)/2 + i * (w1-w2)/2 = s + i * d = (sRe-dIm, sIm+dRe)
-                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sRe, wRe1, wRe2);
-                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sIm, wIm1, wIm2);
-                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dRe, wRe1, wRe2);
-                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dIm, wIm1, wIm2);
-                            UpdatablePNumberArray fRe1 = (UpdatablePNumberArray) fRe.subArr(disp1, layerLen);
-                            UpdatablePNumberArray fIm1 = (UpdatablePNumberArray) fIm.subArr(disp1, layerLen);
-                            UpdatablePNumberArray fRe2 = (UpdatablePNumberArray) fRe.subArr(disp2, layerLen);
-                            UpdatablePNumberArray fIm2 = (UpdatablePNumberArray) fIm.subArr(disp2, layerLen);
-                            Arrays.applyFunc(null, false, 1, true, Func.X_PLUS_Y, fRe1, sRe, dIm);
-                            Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y, fIm1, sIm, dRe);
-                            Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y, fRe2, sRe, dIm);
-                            Arrays.applyFunc(null, false, 1, true, Func.X_PLUS_Y, fIm2, sIm, dRe);
+                            separableHartleyToFourierDirect2D(wRe1, wIm1, wRe2, wIm2,
+                                    hRe1Local, hIm1Local, hRe2Local, hIm2Local, fRe.elementType());
+                            fRe.subArr(disp1, layerLen).copy(wRe1);
+                            fIm.subArr(disp1, layerLen).copy(wIm1);
+                            fRe.subArr(disp2, layerLen).copy(wRe2);
+                            fIm.subArr(disp2, layerLen).copy(wIm2);
                         }
-                        long rl = context == null ? 0 : readyLayers.getAndIncrement();
-                        if (context != null && (rl & progressMask) == 0) {
-                            context.checkInterruptionAndUpdateProgress(fRe.elementType(), rl + 1, nDiv2 + 1);
-                        }
+                    } else {
+                        separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
+                                wRe1, wIm1, hRe1Local, hIm1Local, layerDims, 1);
+                        separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
+                                wRe2, wIm2, hRe2Local, hIm2Local, layerDims, 1);
+                        // Below we calculate
+                        //     f1 = (w1+w2)/2 - i * (w1-w2)/2 = s - i * d = (sRe+dIm, sIm-dRe)
+                        //     f2 = (w1+w2)/2 + i * (w1-w2)/2 = s + i * d = (sRe-dIm, sIm+dRe)
+                        Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sRe, wRe1, wRe2);
+                        Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sIm, wIm1, wIm2);
+                        Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dRe, wRe1, wRe2);
+                        Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dIm, wIm1, wIm2);
+                        UpdatablePNumberArray fRe1 = (UpdatablePNumberArray) fRe.subArr(disp1, layerLen);
+                        UpdatablePNumberArray fIm1 = (UpdatablePNumberArray) fIm.subArr(disp1, layerLen);
+                        UpdatablePNumberArray fRe2 = (UpdatablePNumberArray) fRe.subArr(disp2, layerLen);
+                        UpdatablePNumberArray fIm2 = (UpdatablePNumberArray) fIm.subArr(disp2, layerLen);
+                        Arrays.applyFunc(null, false, 1, true, Func.X_PLUS_Y, fRe1, sRe, dIm);
+                        Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y, fIm1, sIm, dRe);
+                        Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y, fRe2, sRe, dIm);
+                        Arrays.applyFunc(null, false, 1, true, Func.X_PLUS_Y, fIm2, sIm, dRe);
+                    }
+                    long rl = context == null ? 0 : readyLayers.getAndIncrement();
+                    if (context != null && (rl & progressMask) == 0) {
+                        context.checkInterruptionAndUpdateProgress(fRe.elementType(), rl + 1, nDiv2 + 1);
                     }
                 }
             };
@@ -208,64 +206,62 @@ class Conversions {
                     dRe = fast2D || hIm == null ? null : newArr(mm, fRe, layerLen),
                     dIm = fast2D ? null : newArr(mm, fIm, layerLen);
             final int ti = threadIndex;
-            tasks[ti] = new Runnable() {
-                public void run() {
-                    final long layerStep = tasks.length * layerLen;
-                    for (long k1 = ti, disp1 = ti * layerLen; k1 <= nDiv2; k1 += tasks.length, disp1 += layerStep) {
-                        long disp2 = k1 == 0 ? 0 : totalLen - disp1;
-                        PNumberArray
-                                fRe1Local = subArrOrCopy(fDirect ? null : fRe1, fRe, disp1, layerLen),
-                                fIm1Local = subArrOrCopy(fDirect ? null : fIm1, fIm, disp1, layerLen),
-                                fRe2Local = subArrOrCopy(fDirect ? null : fRe2, fRe, disp2, layerLen),
-                                fIm2Local = subArrOrCopy(fDirect ? null : fIm2, fIm, disp2, layerLen);
-                        if (fast2D) {
-                            if (hDirect) {
-                                fourierToSeparableHartleyDirect2D(
-                                        hRe.subArr(disp1, layerLen), hIm == null ? null : hIm.subArr(disp1, layerLen),
-                                        hRe.subArr(disp2, layerLen), hIm == null ? null : hIm.subArr(disp2, layerLen),
-                                        fRe1Local, fIm1Local, fRe2Local, fIm2Local, fRe.elementType());
-                            } else {
-                                fourierToSeparableHartleyDirect2D(
-                                        wRe1, hIm == null ? null : wIm1, wRe2, hIm == null ? null : wIm2,
-                                        fRe1Local, fIm1Local, fRe2Local, fIm2Local, fRe.elementType());
-                                hRe.subArr(disp1, layerLen).copy(wRe1);
-                                hRe.subArr(disp2, layerLen).copy(wRe2);
-                                if (hIm != null) {
-                                    hIm.subArr(disp1, layerLen).copy(wIm1);
-                                    hIm.subArr(disp2, layerLen).copy(wIm2);
-                                }
-                            }
+            tasks[ti] = () -> {
+                final long layerStep = tasks.length * layerLen;
+                for (long k1 = ti, disp1 = ti * layerLen; k1 <= nDiv2; k1 += tasks.length, disp1 += layerStep) {
+                    long disp2 = k1 == 0 ? 0 : totalLen - disp1;
+                    PNumberArray
+                            fRe1Local = subArrOrCopy(fDirect ? null : fRe1, fRe, disp1, layerLen),
+                            fIm1Local = subArrOrCopy(fDirect ? null : fIm1, fIm, disp1, layerLen),
+                            fRe2Local = subArrOrCopy(fDirect ? null : fRe2, fRe, disp2, layerLen),
+                            fIm2Local = subArrOrCopy(fDirect ? null : fIm2, fIm, disp2, layerLen);
+                    if (fast2D) {
+                        if (hDirect) {
+                            fourierToSeparableHartleyDirect2D(
+                                    hRe.subArr(disp1, layerLen), hIm == null ? null : hIm.subArr(disp1, layerLen),
+                                    hRe.subArr(disp2, layerLen), hIm == null ? null : hIm.subArr(disp2, layerLen),
+                                    fRe1Local, fIm1Local, fRe2Local, fIm2Local, fRe.elementType());
                         } else {
-                            fourierToSeparableHartleyRecursive(null, maxTempJavaMemory,
-                                    wRe1, wIm1, fRe1Local, fIm1Local, layerDims, 1);
-                            fourierToSeparableHartleyRecursive(null, maxTempJavaMemory,
-                                    wRe2, wIm2, fRe2Local, fIm2Local, layerDims, 1);
-                            // The order (lines or columns) is not important; we choose this order for the best speed.
-                            // Below we calculate
-                            //     h1 = (w1+w2)/2 + i * (w1-w2)/2 = s + i * d = (sRe-dIm, sIm+dRe)
-                            //     h2 = (w1+w2)/2 - i * (w1-w2)/2 = s - i * d = (sRe+dIm, sIm-dRe)
-                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sRe, wRe1, wRe2);
+                            fourierToSeparableHartleyDirect2D(
+                                    wRe1, hIm == null ? null : wIm1, wRe2, hIm == null ? null : wIm2,
+                                    fRe1Local, fIm1Local, fRe2Local, fIm2Local, fRe.elementType());
+                            hRe.subArr(disp1, layerLen).copy(wRe1);
+                            hRe.subArr(disp2, layerLen).copy(wRe2);
                             if (hIm != null) {
-                                Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sIm, wIm1, wIm2);
-                                Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dRe, wRe1, wRe2);
+                                hIm.subArr(disp1, layerLen).copy(wIm1);
+                                hIm.subArr(disp2, layerLen).copy(wIm2);
                             }
-                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dIm, wIm1, wIm2);
-                            Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y,
-                                    hRe.subArr(disp1, layerLen), sRe, dIm);
-                            if (hIm != null) {
-                                Arrays.applyFunc(null, false, 1, true, Func.X_PLUS_Y,
-                                        hIm.subArr(disp1, layerLen), sIm, dRe);
-                            }
+                        }
+                    } else {
+                        fourierToSeparableHartleyRecursive(null, maxTempJavaMemory,
+                                wRe1, wIm1, fRe1Local, fIm1Local, layerDims, 1);
+                        fourierToSeparableHartleyRecursive(null, maxTempJavaMemory,
+                                wRe2, wIm2, fRe2Local, fIm2Local, layerDims, 1);
+                        // The order (lines or columns) is not important; we choose this order for the best speed.
+                        // Below we calculate
+                        //     h1 = (w1+w2)/2 + i * (w1-w2)/2 = s + i * d = (sRe-dIm, sIm+dRe)
+                        //     h2 = (w1+w2)/2 - i * (w1-w2)/2 = s - i * d = (sRe+dIm, sIm-dRe)
+                        Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sRe, wRe1, wRe2);
+                        if (hIm != null) {
+                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sIm, wIm1, wIm2);
+                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dRe, wRe1, wRe2);
+                        }
+                        Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dIm, wIm1, wIm2);
+                        Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y,
+                                hRe.subArr(disp1, layerLen), sRe, dIm);
+                        if (hIm != null) {
                             Arrays.applyFunc(null, false, 1, true, Func.X_PLUS_Y,
-                                    hRe.subArr(disp2, layerLen), sRe, dIm);
-                            if (hIm != null) {
-                                Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y,
-                                        hIm.subArr(disp2, layerLen), sIm, dRe);
-                            }
-                            long rl = context == null ? 0 : readyLayers.getAndIncrement();
-                            if (context != null && (rl & progressMask) == 0) {
-                                context.checkInterruptionAndUpdateProgress(fRe.elementType(), rl + 1, nDiv2 + 1);
-                            }
+                                    hIm.subArr(disp1, layerLen), sIm, dRe);
+                        }
+                        Arrays.applyFunc(null, false, 1, true, Func.X_PLUS_Y,
+                                hRe.subArr(disp2, layerLen), sRe, dIm);
+                        if (hIm != null) {
+                            Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y,
+                                    hIm.subArr(disp2, layerLen), sIm, dRe);
+                        }
+                        long rl = context == null ? 0 : readyLayers.getAndIncrement();
+                        if (context != null && (rl & progressMask) == 0) {
+                            context.checkInterruptionAndUpdateProgress(fRe.elementType(), rl + 1, nDiv2 + 1);
                         }
                     }
                 }

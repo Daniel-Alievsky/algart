@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked exception thrown if the current or desired array length is extremely large.
  * It is thrown by methods, creating new arrays or resizing existing arrays,
@@ -50,5 +52,6 @@ public class TooLargeArrayException extends RuntimeException {
         super(message);
     }
 
+    @Serial
     private static final long serialVersionUID = 6967772412276478354L;
 }

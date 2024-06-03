@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked exception thrown by some methods of {@link Matrix} interface,
  * if the matrix is not {@link Matrix#isTiled() tiled}.
@@ -47,5 +49,6 @@ public class NotTiledMatrixException extends RuntimeException {
         super(message);
     }
 
+    @Serial
     private static final long serialVersionUID = 7997963759596154265L;
 }

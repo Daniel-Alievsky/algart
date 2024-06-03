@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.io.Serial;
+
 /**
  * <p>Unchecked error thrown if the elements of {@link Array#asTrustedImmutable() trusted immutable}
  * AlgART arrays have been changed.</p>
@@ -45,5 +47,6 @@ public class UnallowedMutationError extends Error {
         super(message);
     }
 
+    @Serial
     private static final long serialVersionUID = -8608272027574159505L;
 }
