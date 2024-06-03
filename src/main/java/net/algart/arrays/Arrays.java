@@ -1094,6 +1094,7 @@ public class Arrays {
              *
              * <p>The default implementation does not use this argument.
              *
+             * @param <T>      the result type for callable task.
              * @param fileName the symbolic name of file, probably its canonical path.
              * @param action   some I/O operations that should be synchronously performed with this file.
              * @return result of the operation.
@@ -1344,6 +1345,7 @@ public class Arrays {
      * <li><tt>{@link MutableObjectArray}.class</tt> for all other classes.</li>
      * </ul>
      *
+     * @param <T>            the generic type of AlgART array.
      * @param arraySupertype required array supertype.
      * @param elementType    required element type.
      * @return the corresponding array type.
@@ -7180,8 +7182,9 @@ public class Arrays {
      * &mdash; all other exceptions are also caught by this method, but lead to throwing
      * <tt>AssertionError</tt>.
      *
+     * @param <T>            the generic type of exception.
      * @param exceptionClass the class all checked exceptions, that can appear in the 2nd argument.
-     * @param exception      some exception of the specified class or unchecked exception.
+     * @param exception      some exception with the specified class or unchecked exception.
      */
     public static <T extends Exception> void throwException(Class<? extends T> exceptionClass, Throwable exception)
             throws T {

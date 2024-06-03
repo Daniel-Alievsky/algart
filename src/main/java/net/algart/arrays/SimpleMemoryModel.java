@@ -597,6 +597,7 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      * Equivalent to <tt>(UpdatableObjectArray<E>){@link #asUpdatableArray(Object)
      * asUpdatableArray}((Object)array)</tt>.
      *
+     * @param <E>   the generic type of array elements.
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.

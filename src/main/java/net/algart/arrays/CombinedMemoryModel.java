@@ -90,17 +90,17 @@ import java.util.Objects;
  * {@link UpdatableObjectArray} / {@link MutableObjectArray} interface.</li>
  *
  * <li>Arrays, created by<ul>
- *     <li>{@link #newEmptyArray(Class) newEmptyArray(Class elementType)},</li>
- *     <li>{@link #newEmptyArray(Class, long) newEmptyArray(Class elementType, long initialCapacity)},</li>
- *     <li>{@link #newArray(Class, long) newArray(Class elementType, long initialLength)}</li>
+ * <li>{@link #newEmptyArray(Class) newEmptyArray(Class elementType)},</li>
+ * <li>{@link #newEmptyArray(Class, long) newEmptyArray(Class elementType, long initialCapacity)},</li>
+ * <li>{@link #newArray(Class, long) newArray(Class elementType, long initialLength)}</li>
  * </ul>are always mutable and resizable: they implement {@link MutableObjectArray} interface.
  * Arrays, created by<ul>
- *     <li>{@link #asUpdatableCombinedArray(Class, UpdatableArray[])
- *     asUpdatableCombinedArray(Class elementType, UpdatableArray[] storage)},</li>
+ * <li>{@link #asUpdatableCombinedArray(Class, UpdatableArray[])
+ * asUpdatableCombinedArray(Class elementType, UpdatableArray[] storage)},</li>
  * </ul>are unresizable.
  * Arrays, created by<ul>
- *     <li>{@link #asCombinedArray(Class, Array[])
- *     asCombinedArray(Class elementType, Array[] storage)},</li>
+ * <li>{@link #asCombinedArray(Class, Array[])
+ * asCombinedArray(Class elementType, Array[] storage)},</li>
  * </ul>are immutable.</li>
  *
  * <li>Arrays, created by this memory model, never implement {@link DirectAccessible} interface.</li>
@@ -148,7 +148,6 @@ import java.util.Objects;
  * there are no ways to modify settings of the created instance.</p>
  *
  * @param <E> the generic type of array elements in object arrays created by this memory model.
- *
  * @author Daniel Alievsky
  */
 public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
@@ -189,7 +188,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          *
          * @param index   an index in the combined array.
          * @param storage a set of arrays where the retrieved content is stored now.
-         * @return        new created object containing an element #<tt>index</tt> of combined array.
+         * @return new created object containing an element #<tt>index</tt> of combined array.
          */
         E get(long index, Array[] storage);
 
@@ -231,9 +230,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * If <tt>unresizable</tt> argument is <tt>false</tt>, every element of returned
          * Java array <i>must</i> implement {@link MutableArray} interface.
          *
-         * @param length initial length of corresponding <i>combined</i> arrays.
+         * @param length      initial length of corresponding <i>combined</i> arrays.
          * @param unresizable if <tt>true</tt>, the created arrays <i>should</i> be unresizable,
-         * in other case they <i>must</i> be mutable and implement {@link MutableArray} interface.
+         *                    in other case they <i>must</i> be mutable and implement {@link MutableArray} interface.
          * @return created storage.
          */
         UpdatableArray[] allocateStorage(long length, boolean unresizable);
@@ -244,7 +243,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * Called while creating new combined arrays.
          *
          * @param indexOfArrayInStorage index of the storage array.
-         * @return                      the number of sequential elements used for storing one combined element.
+         * @return the number of sequential elements used for storing one combined element.
          */
         int numbersOfElementsPerOneCombinedElement(int indexOfArrayInStorage);
     }
@@ -397,10 +396,10 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
          * @throws IllegalArgumentException if the passed ByteBuffer is read-only.
          */
-        protected AbstractByteBufferCombiner(Class<?> elementType,
-            ByteBuffer workStorageForOneElement,
-            MemoryModel memoryModel)
-        {
+        protected AbstractByteBufferCombiner(
+                Class<?> elementType,
+                ByteBuffer workStorageForOneElement,
+                MemoryModel memoryModel) {
             Objects.requireNonNull(elementType, "Null elementType");
             if (elementType == void.class) {
                 throw new IllegalArgumentException("Illegal elementType: it cannot be void.class");
@@ -408,7 +407,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             Objects.requireNonNull(workStorageForOneElement, "Null workStorageForOneElement argument");
             if (workStorageForOneElement.isReadOnly()) {
                 throw new IllegalArgumentException("Illegal workStorageForOneElement argument: "
-                    + "it must not be read-only");
+                        + "it must not be read-only");
             }
             Objects.requireNonNull(memoryModel, "Null memoryModel argument");
             if (!memoryModel.isElementTypeSupported(byte.class)) {
@@ -456,9 +455,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
 
         public final UpdatableArray[] allocateStorage(long length, boolean unresizable) {
             if (unresizable) {
-                return new UpdatableByteArray[] {mm.newUnresizableByteArray(length * elementSize)};
+                return new UpdatableByteArray[]{mm.newUnresizableByteArray(length * elementSize)};
             } else {
-                return new MutableByteArray[] {mm.newByteArray(length * elementSize)};
+                return new MutableByteArray[]{mm.newByteArray(length * elementSize)};
             }
         }
 
@@ -474,9 +473,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * @param <E> the generic type of array elements in object arrays.
      */
     public abstract static class AbstractByteBufferCombinerInPlace<E>
-        extends AbstractByteBufferCombiner<E>
-        implements CombinerInPlace<E>
-    {
+            extends AbstractByteBufferCombiner<E>
+            implements CombinerInPlace<E> {
         /**
          * Creates a new instance of this combiner.
          *
@@ -489,10 +487,10 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
          * @throws IllegalArgumentException if the passed ByteBuffer is read-only.
          */
-        protected AbstractByteBufferCombinerInPlace(Class<?> elementType,
-            ByteBuffer workStorageForOneElement,
-            MemoryModel memoryModel)
-        {
+        protected AbstractByteBufferCombinerInPlace(
+                Class<?> elementType,
+                ByteBuffer workStorageForOneElement,
+                MemoryModel memoryModel) {
             super(elementType, workStorageForOneElement, memoryModel);
         }
 
@@ -536,7 +534,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * some operations with these arrays (namely,
      * {@link UpdatableArray#copy(Array)} and {@link UpdatableArray#swap(UpdatableArray)} will work faster.
      *
-     * @param  combiner will be used for creation of combined arrays by this memory model.
+     * @param <E>      the generic type of array elements.
+     * @param combiner will be used for creation of combined arrays by this memory model.
      * @return created memory model.
      * @throws NullPointerException if <tt>combiner</tt> is <tt>null</tt>.
      */
@@ -548,7 +547,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * This implementation returns <tt>{@link #newEmptyArray(Class, long) newArray}(elementType, 10)</tt>.
      *
      * @param elementType the type of array elements.
-     * @return            created array.
+     * @return created array.
      * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException        if <tt>elementType</tt> is not supported of <tt>void.class</tt>.
      * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
@@ -564,12 +563,12 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * (or {@link ObjectInPlaceArray}, if the combiner, passed while creating the memory model, implements
      * {@link CombinedMemoryModel.CombinerInPlace}).
      *
-     * @param  elementType     the type of array elements (non-primitive).
-     * @param  initialCapacity the initial capacity of the array.
+     * @param elementType     the type of array elements (non-primitive).
+     * @param initialCapacity the initial capacity of the array.
      * @return created array.
      * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>
-     * or if the specified initial length is negative.
+     *                                         or if the specified initial length is negative.
      * @throws UnsupportedElementTypeException if <tt>elementType</tt> is a primitive type.
      * @throws TooLargeArrayException          if the specified initial length is too large.
      * @see #isElementTypeSupported(Class)
@@ -581,11 +580,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
         if (!Object.class.isAssignableFrom(elementType)) {
             throw new UnsupportedElementTypeException(
-                "Primitive element types are not allowed (passed type: " + elementType + ")");
+                    "Primitive element types are not allowed (passed type: " + elementType + ")");
         }
         Class<E> eType = InternalUtils.cast(elementType);
         if (combiner instanceof CombinerInPlace<?>) {
-            return new MutableCombinedInPlaceArray<E>(eType, initialCapacity, 0, (CombinerInPlace<E>)combiner);
+            return new MutableCombinedInPlaceArray<E>(eType, initialCapacity, 0, (CombinerInPlace<E>) combiner);
         } else {
             return new MutableCombinedArray<E>(eType, initialCapacity, 0, combiner);
         }
@@ -602,11 +601,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
         if (!Object.class.isAssignableFrom(elementType)) {
             throw new UnsupportedElementTypeException(
-                "Primitive element types are not allowed (passed type: " + elementType + ")");
+                    "Primitive element types are not allowed (passed type: " + elementType + ")");
         }
         Class<E> eType = InternalUtils.cast(elementType);
         if (combiner instanceof CombinerInPlace<?>) {
-            return new UpdatableCombinedInPlaceArray<E>(eType, length, length, (CombinerInPlace<E>)combiner);
+            return new UpdatableCombinedInPlaceArray<E>(eType, length, length, (CombinerInPlace<E>) combiner);
         } else {
             return new UpdatableCombinedArray<E>(eType, length, length, combiner);
         }
@@ -616,7 +615,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * Returns <tt>true</tt> if this element type is an inheritor of <tt>Object</tt> class.
      *
      * @param elementType the type of array elements.
-     * @return            <tt>true</tt> if this memory model supports this element type.
+     * @return <tt>true</tt> if this memory model supports this element type.
      */
     public boolean isElementTypeSupported(Class<?> elementType) {
         Objects.requireNonNull(elementType, "Null elementType argument");
@@ -648,7 +647,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     }
 
     public boolean isCreatedBy(Array array) {
-        return array instanceof CombinedArray<?> && ((CombinedArray<?>)array).combiner == this.combiner;
+        return array instanceof CombinedArray<?> && ((CombinedArray<?>) array).combiner == this.combiner;
     }
 
     /**
@@ -657,7 +656,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * Returns <tt>false</tt> if the passed array is <tt>null</tt> or an AlgART array created by another memory model.
      *
      * @param array the checked array.
-     * @return      <tt>true</tt> if this array is a combined array created by a combined memory model.
+     * @return <tt>true</tt> if this array is a combined array created by a combined memory model.
      */
     public static boolean isCombinedArray(Array array) {
         return array instanceof CombinedArray<?>;
@@ -678,10 +677,10 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * {@link MutableArray#ensureCapacity(long)} or {@link MutableArray#trim()} methods
      * for this array, or any modification of this or returned array in a case when
      * this array is {@link Array#asCopyOnNextWrite() copy-on-next-write}.
-
-     * @param  elementType the type of created array elements
-     * @param  storage     the internal storage where the combined array elements will be stored
-     * @return             combined array backed by the specified storage
+     *
+     * @param elementType the type of created array elements
+     * @param storage     the internal storage where the combined array elements will be stored
+     * @return combined array backed by the specified storage
      */
     public ObjectArray<E> asCombinedArray(Class<E> elementType, Array[] storage) {
         Array[] storageClone = storage.clone(); // preserves the type of storage elements
@@ -689,7 +688,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             storageClone[k] = storageClone[k].asImmutable();
         }
         if (combiner instanceof CombinerInPlace<?>) {
-            return new CombinedInPlaceArray<E>(elementType, storageClone, (CombinerInPlace<E>)combiner);
+            return new CombinedInPlaceArray<E>(elementType, storageClone, (CombinerInPlace<E>) combiner);
         } else {
             return new CombinedArray<E>(elementType, storageClone, combiner);
         }
@@ -720,9 +719,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * for <tt>storage[]</tt> elements, or any modification of <tt>storage[]</tt> elements
      * in a case when they are {@link Array#asCopyOnNextWrite() copy-on-next-write}.
      *
-     * @param  elementType the type of created array elements
-     * @param  storage     the internal storage where the combined array elements will be stored
-     * @return             combined array backed by the specified storage
+     * @param elementType the type of created array elements
+     * @param storage     the internal storage where the combined array elements will be stored
+     * @return combined array backed by the specified storage
      */
     public UpdatableObjectArray<E> asUpdatableCombinedArray(Class<E> elementType, UpdatableArray[] storage) {
         UpdatableArray[] storageClone = storage.clone(); // preserves the type of storage elements
@@ -730,7 +729,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             storageClone[k] = storageClone[k].asUnresizable().shallowClone();
         }
         if (combiner instanceof CombinerInPlace<?>) {
-            return new UpdatableCombinedInPlaceArray<E>(elementType, storageClone, (CombinerInPlace<E>)combiner);
+            return new UpdatableCombinedInPlaceArray<E>(elementType, storageClone, (CombinerInPlace<E>) combiner);
         } else {
             return new UpdatableCombinedArray<E>(elementType, storageClone, combiner);
         }
@@ -769,7 +768,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * this array is {@link Array#asCopyOnNextWrite() copy-on-next-write}.
      *
      * @param combinedArray the combined array.
-     * @return              array of shallow copies of arrays used as internal storage.
+     * @return array of shallow copies of arrays used as internal storage.
      * @throws NullPointerException     if <tt>combinedArray</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
      *                                  (created by this memory model).
@@ -792,7 +791,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * Fully equivalent to {@link #getStorage(Array)} method.
      *
      * @param combinedArray the combined array.
-     * @return              array of shallow copies of arrays used as internal storage.
+     * @return array of shallow copies of arrays used as internal storage.
      * @throws NullPointerException     if <tt>combinedArray</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
      *                                  (created by this memory model).
@@ -806,7 +805,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * Fully equivalent to {@link #getStorage(Array)} method.
      *
      * @param combinedArray the combined array.
-     * @return              array of shallow copies of arrays used as internal storage.
+     * @return array of shallow copies of arrays used as internal storage.
      * @throws NullPointerException     if <tt>combinedArray</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
      *                                  (created by this memory model).
@@ -822,7 +821,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * where the elements of the combined array are stored.
      *
      * @param combinedArray the combined array.
-     * @return              array of string representations of arrays used as internal storage.
+     * @return array of string representations of arrays used as internal storage.
      * @throws NullPointerException     if <tt>combinedArray</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
      *                                  (created by this memory model).
@@ -832,7 +831,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         if (!(combinedArray instanceof CombinedArray<?>)) {
             throw new IllegalArgumentException("The passed argument is not a combined array");
         }
-        CombinedArray<?> cv = (CombinedArray<?>)combinedArray;
+        CombinedArray<?> cv = (CombinedArray<?>) combinedArray;
         String[] result = new String[cv.storage.length];
         for (int k = 0; k < result.length; k++) {
             result[k] = cv.storage[k].toString();
@@ -879,19 +878,19 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             for (int k = 0; k < stor.length; k++) {
                 if (!unresizableRequired && !(stor[k] instanceof MutableArray)) {
                     throw new IllegalArgumentException("Storage array #" + k + " does not implement MutableArray, "
-                        + "though the resizable one is required while calling Combiner.allocateStorage method");
+                            + "though the resizable one is required while calling Combiner.allocateStorage method");
                 }
                 long correctLength = InternalUtils.longMulAndException(initialLength, numbersOfElements[k]);
                 if (stor[k].length() != correctLength) {
                     throw new IllegalArgumentException("Incorrect length of storage array #" + k
-                        + ": length = " + storage[k].length() + ", but the correct one is " + correctLength);
+                            + ": length = " + storage[k].length() + ", but the correct one is " + correctLength);
                 }
             }
             this.capacity = initialCapacity;
             if (!unresizableRequired) {
                 for (int k = 0; k < stor.length; k++) {
-                    ((MutableArray)stor[k]).ensureCapacity(InternalUtils.longMulAndException(
-                        initialCapacity, numbersOfElements[k]));
+                    ((MutableArray) stor[k]).ensureCapacity(InternalUtils.longMulAndException(
+                            initialCapacity, numbersOfElements[k]));
                 }
             } else {
                 if (initialCapacity != initialLength) {
@@ -927,23 +926,24 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
                 int ne = combiner.numbersOfElementsPerOneCombinedElement(k);
                 if (ne <= 0) {
                     throw new IllegalArgumentException("combiner.numbersOfElementsPerOneCombinedElement("
-                        + k + ") = " + ne + " <= 0");
+                            + k + ") = " + ne + " <= 0");
                 }
                 result &= ne == 1;
                 if (storage[k].length() % ne != 0) {
                     throw new IllegalArgumentException("Incorrect length of storage array #" + k
-                        + ": length = " + storage[k].length() + " and is not divided by "
-                        + "combiner.numbersOfElementsPerOneCombinedElement(" + k + ") = " + ne);
+                            + ": length = " + storage[k].length() + " and is not divided by "
+                            + "combiner.numbersOfElementsPerOneCombinedElement(" + k + ") = " + ne);
                 }
                 long length = storage[k].length() / ne;
                 if (k == 0) {
-                    length0 = length; ne0 = ne;
+                    length0 = length;
+                    ne0 = ne;
                 } else if (length != length0) {
                     throw new IllegalArgumentException("Storage arrays lengths don't correspond to each other: "
-                        + " the length of array # " + k + " = " + storage[k].length()
-                        + " = " + length + " * " + ne + " (" + ne + " per one combined object), "
-                        + "but the length of array #0 = " + storage[0].length()
-                        + " = " + length0 + " * " + ne0 + " (" + ne0 + " per one combined object)");
+                            + " the length of array # " + k + " = " + storage[k].length()
+                            + " = " + length + " * " + ne + " (" + ne + " per one combined object), "
+                            + "but the length of array #0 = " + storage[0].length()
+                            + " = " + length0 + " * " + ne0 + " (" + ne0 + " per one combined object)");
                 }
             }
             return result;
@@ -1025,7 +1025,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             }
             E[] dest = InternalUtils.cast(destArray);
             if (combiner instanceof BufferedCombiner<?>) {
-                ((BufferedCombiner<E>)combiner).get(arrayPos, dest, destArrayOffset, count, storage);
+                ((BufferedCombiner<E>) combiner).get(arrayPos, dest, destArrayOffset, count, storage);
             } else {
                 getDataInternal(arrayPos, dest, destArrayOffset, count);
             }
@@ -1038,11 +1038,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             }
             int count = java.lang.reflect.Array.getLength(destArray);
             if (count > length - arrayPos) {
-                count = (int)(length - arrayPos);
+                count = (int) (length - arrayPos);
             }
             E[] dest = InternalUtils.cast(destArray);
             if (combiner instanceof BufferedCombiner<?>) {
-                ((BufferedCombiner<E>)combiner).get(arrayPos, dest, 0, count, storage);
+                ((BufferedCombiner<E>) combiner).get(arrayPos, dest, 0, count, storage);
             } else {
                 getDataInternal(arrayPos, dest, 0, count);
             }
@@ -1059,7 +1059,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             Array[] stor = new Array[storage.length];
             for (int k = 0; k < storage.length; k++) {
                 stor[k] = storage[k].subArray(
-                    fromIndex * numbersOfElements[k], toIndex * numbersOfElements[k]);
+                        fromIndex * numbersOfElements[k], toIndex * numbersOfElements[k]);
             }
             return new CombinedArray<E>(this.elementType, stor, this.combiner);
         }
@@ -1069,7 +1069,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             Array[] stor = new Array[storage.length];
             for (int k = 0; k < storage.length; k++) {
                 stor[k] = storage[k].subArr(
-                    position * numbersOfElements[k], count * numbersOfElements[k]);
+                        position * numbersOfElements[k], count * numbersOfElements[k]);
             }
             return new CombinedArray<E>(this.elementType, stor, this.combiner);
         }
@@ -1123,8 +1123,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
                 }
             } catch (UnallowedMutationError ex) {
                 UnallowedMutationError e = new UnallowedMutationError(
-                    "Unallowed mutations of trusted immutable array "
-                    + " are detected by checkUnallowedMutation() method [" + this + "]");
+                        "Unallowed mutations of trusted immutable array "
+                                + " are detected by checkUnallowedMutation() method [" + this + "]");
                 e.initCause(ex);
                 throw e;
             }
@@ -1187,8 +1187,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         public final void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
             for (int k = 0; k < storage.length; k++) {
                 storage[k].flushResources(
-                    context == null ? null : context.part(k, k + 1, storage.length),
-                    forcePhysicalWriting);
+                        context == null ? null : context.part(k, k + 1, storage.length),
+                        forcePhysicalWriting);
             }
         }
 
@@ -1196,21 +1196,21 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         public final void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
             for (int k = 0; k < storage.length; k++) {
                 storage[k].freeResources(
-                    context == null ? null : context.part(k, k + 1, storage.length),
-                    forcePhysicalWriting);
+                        context == null ? null : context.part(k, k + 1, storage.length),
+                        forcePhysicalWriting);
             }
         }
 
         public String toString() {
             return (isImmutable() ? "immutable " : "")
-                + "combined array " + elementType.getName()
-                + "[" + length() + "], capacity " + capacity();
+                    + "combined array " + elementType.getName()
+                    + "[" + length() + "], capacity " + capacity();
         }
 
         public final boolean equals(Object obj) {
-            if (obj instanceof CombinedArray<?> && ((CombinedArray<?>)obj).combiner == this.combiner) {
+            if (obj instanceof CombinedArray<?> && ((CombinedArray<?>) obj).combiner == this.combiner) {
                 for (int k = 0; k < storage.length; k++) {
-                    CombinedArray<?> a = (CombinedArray<?>)obj;
+                    CombinedArray<?> a = (CombinedArray<?>) obj;
                     if (!storage[k].equals(a.storage[k])) {
                         return false;
                     }
@@ -1242,7 +1242,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             if (value != null && !elementType.isAssignableFrom(value.getClass())) {
                 throw new ClassCastException("Invalid type of setElement argument");
             }
-            combiner.set(index, InternalUtils.<E>cast(value), (UpdatableArray[])storage);
+            combiner.set(index, InternalUtils.<E>cast(value), (UpdatableArray[]) storage);
         }
 
         public final void set(long index, E value) {
@@ -1262,7 +1262,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             }
             E[] src = InternalUtils.cast(srcArray);
             if (combiner instanceof BufferedCombiner<?>) {
-                ((BufferedCombiner<E>)combiner).set(arrayPos, src, srcArrayOffset, count, (UpdatableArray[])storage);
+                ((BufferedCombiner<E>) combiner).set(arrayPos, src, srcArrayOffset, count, (UpdatableArray[]) storage);
             } else {
                 setDataInternal(arrayPos, src, srcArrayOffset, count);
             }
@@ -1276,11 +1276,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             }
             int count = java.lang.reflect.Array.getLength(srcArray);
             if (count > length - arrayPos) {
-                count = (int)(length - arrayPos);
+                count = (int) (length - arrayPos);
             }
             E[] src = InternalUtils.cast(srcArray);
             if (combiner instanceof BufferedCombiner<?>) {
-                ((BufferedCombiner<E>)combiner).set(arrayPos, src, 0, count, (UpdatableArray[])storage);
+                ((BufferedCombiner<E>) combiner).set(arrayPos, src, 0, count, (UpdatableArray[]) storage);
             } else {
                 setDataInternal(arrayPos, src, 0, count);
             }
@@ -1288,7 +1288,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         private void setDataInternal(long arrayPos, E[] src, int srcArrayOffset, int count) {
-            UpdatableArray[] stor = (UpdatableArray[])storage;
+            UpdatableArray[] stor = (UpdatableArray[]) storage;
             for (int k = srcArrayOffset, kMax = srcArrayOffset + count; k < kMax; k++, arrayPos++) {
                 if (src[k] != null && !elementType.isAssignableFrom(src[k].getClass())) {
                     throw new ClassCastException("Invalid type of setElement argument");
@@ -1304,7 +1304,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             if (destIndex < 0 || destIndex >= length) {
                 throw rangeException(destIndex);
             }
-            UpdatableArray[] stor = (UpdatableArray[])storage;
+            UpdatableArray[] stor = (UpdatableArray[]) storage;
             if (allNumbersAre1) {
                 for (UpdatableArray s : stor) {
                     s.copy(destIndex, srcIndex);
@@ -1320,7 +1320,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         public final void copy(long destIndex, long srcIndex, long count) {
             if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             }
             if (srcIndex < 0) {
                 throw rangeException(srcIndex);
@@ -1334,7 +1334,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             if (destIndex > length - count) {
                 throw rangeException(destIndex + count - 1);
             }
-            UpdatableArray[] stor = (UpdatableArray[])storage;
+            UpdatableArray[] stor = (UpdatableArray[]) storage;
             if (allNumbersAre1) {
                 for (UpdatableArray s : stor) {
                     s.copy(destIndex, srcIndex, count);
@@ -1354,7 +1354,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             if (secondIndex < 0 || secondIndex >= length) {
                 throw rangeException(secondIndex);
             }
-            UpdatableArray[] stor = (UpdatableArray[])storage;
+            UpdatableArray[] stor = (UpdatableArray[]) storage;
             if (allNumbersAre1) {
                 for (int k = 0; k < storage.length; k++) {
                     stor[k].swap(firstIndex, secondIndex);
@@ -1370,7 +1370,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         public final void swap(long firstIndex, long secondIndex, long count) {
             if (count < 0) {
                 throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                    + ") in " + getClass());
+                        + ") in " + getClass());
             }
             if (firstIndex < 0) {
                 throw rangeException(firstIndex);
@@ -1384,7 +1384,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             if (secondIndex > length - count) {
                 throw rangeException(secondIndex + count - 1);
             }
-            UpdatableArray[] stor = (UpdatableArray[])storage;
+            UpdatableArray[] stor = (UpdatableArray[]) storage;
             if (allNumbersAre1) {
                 for (int k = 0; k < storage.length; k++) {
                     stor[k].swap(firstIndex, secondIndex, count);
@@ -1398,11 +1398,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof CombinedArray<?> && ((CombinedArray<?>)src).combiner == this.combiner) {
+            if (src instanceof CombinedArray<?> && ((CombinedArray<?>) src).combiner == this.combiner) {
                 AbstractArray.checkCopyArguments(this, src);
-                CombinedArray<?> a = (CombinedArray<?>)src;
+                CombinedArray<?> a = (CombinedArray<?>) src;
                 for (int k = 0; k < storage.length; k++) {
-                    ((UpdatableArray[])storage)[k].copy(a.storage[k]);
+                    ((UpdatableArray[]) storage)[k].copy(a.storage[k]);
                 }
             } else {
                 defaultCopy(this, src);
@@ -1412,12 +1412,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
 
         public UpdatableArray swap(UpdatableArray another) {
             if (another instanceof UpdatableCombinedArray<?>
-                && ((UpdatableCombinedArray<?>)another).combiner == this.combiner)
-            {
+                    && ((UpdatableCombinedArray<?>) another).combiner == this.combiner) {
                 AbstractArray.checkSwapArguments(this, another);
-                CombinedArray<?> a = (CombinedArray<?>)another;
+                CombinedArray<?> a = (CombinedArray<?>) another;
                 for (int k = 0; k < storage.length; k++) {
-                    ((UpdatableArray)storage[k]).swap((UpdatableArray)a.storage[k]);
+                    ((UpdatableArray) storage[k]).swap((UpdatableArray) a.storage[k]);
                 }
             } else {
                 defaultSwap(this, another);
@@ -1439,8 +1438,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             checkSubArrayArguments(fromIndex, toIndex);
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
-                stor[k] = ((UpdatableArray)storage[k]).subArray(
-                    fromIndex * numbersOfElements[k], toIndex * numbersOfElements[k]);
+                stor[k] = ((UpdatableArray) storage[k]).subArray(
+                        fromIndex * numbersOfElements[k], toIndex * numbersOfElements[k]);
             }
             return new UpdatableCombinedArray<E>(this.elementType, stor, this.combiner);
         }
@@ -1449,8 +1448,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             checkSubArrArguments(position, count);
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
-                stor[k] = ((UpdatableArray)storage[k]).subArr(
-                    position * numbersOfElements[k], count * numbersOfElements[k]);
+                stor[k] = ((UpdatableArray) storage[k]).subArr(
+                        position * numbersOfElements[k], count * numbersOfElements[k]);
             }
             return new UpdatableCombinedArray<E>(this.elementType, stor, this.combiner);
         }
@@ -1458,7 +1457,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         public UpdatableArray asCopyOnNextWrite() {
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
-                stor[k] = ((UpdatableArray[])storage)[k].asCopyOnNextWrite();
+                stor[k] = ((UpdatableArray[]) storage)[k].asCopyOnNextWrite();
             }
             return new UpdatableCombinedArray<E>(this.elementType, stor, this.combiner);
         }
@@ -1484,7 +1483,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
 
         public String toString() {
             return "unresizable combined array " + elementType.getName()
-                + "[" + length() + "], capacity " + capacity();
+                    + "[" + length() + "], capacity " + capacity();
         }
     }
 
@@ -1492,6 +1491,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         MutableCombinedArray(Class<E> elementType, MutableArray[] storage, Combiner<E> combiner) {
             super(elementType, storage, combiner);
         }
+
         MutableCombinedArray(Class<E> elementType, long initialCapacity, long initialLength, Combiner<E> combiner) {
             super(elementType, initialCapacity, initialLength, combiner);
         }
@@ -1502,7 +1502,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
                     InternalUtils.longMulAndException(newLength, numbersOfElements[k]); // check possible overflows
                 }
                 for (int k = 0; k < storage.length; k++) {
-                    ((MutableArray[])storage)[k].length(newLength * numbersOfElements[k]);
+                    ((MutableArray[]) storage)[k].length(newLength * numbersOfElements[k]);
                 }
                 this.length = newLength;
                 recalculateCapacity();
@@ -1516,7 +1516,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
                     InternalUtils.longMulAndException(minCapacity, numbersOfElements[k]); // check possible overflows
                 }
                 for (int k = 0; k < storage.length; k++) {
-                    ((MutableArray[])storage)[k].ensureCapacity(minCapacity * numbersOfElements[k]);
+                    ((MutableArray[]) storage)[k].ensureCapacity(minCapacity * numbersOfElements[k]);
                 }
                 recalculateCapacity();
             }
@@ -1526,7 +1526,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         public MutableObjectArray<E> trim() {
             if (this.length < capacity()) {
                 for (int k = 0; k < storage.length; k++) {
-                    ((MutableArray[])storage)[k].trim();
+                    ((MutableArray[]) storage)[k].trim();
                 }
                 recalculateCapacity();
             }
@@ -1598,7 +1598,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public MutableObjectArray<E> asCopyOnNextWrite() {
-            MutableArray[] stor = (MutableArray[])storage.clone();
+            MutableArray[] stor = (MutableArray[]) storage.clone();
             for (int k = 0; k < storage.length; k++) {
                 stor[k] = stor[k].asCopyOnNextWrite();
                 // it is necessary to avoid future changes in the result storage via CombinedMemoryModel.storage method
@@ -1609,7 +1609,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         public UpdatableObjectArray<E> asUnresizable() {
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
-                stor[k] = ((MutableArray[])storage)[k].asUnresizable();
+                stor[k] = ((MutableArray[]) storage)[k].asUnresizable();
                 // it is necessary to avoid future changes in the result storage via CombinedMemoryModel.storage method
             }
             return new UpdatableCombinedArray<E>(this.elementType, stor, this.combiner);
@@ -1625,22 +1625,21 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
 
         public String toString() {
             return "mutable combined array " + elementType.getName()
-                + "[" + length() + "], capacity " + capacity();
+                    + "[" + length() + "], capacity " + capacity();
         }
     }
 
     private static final class CombinedInPlaceArray<E>
-        extends CombinedArray<E> implements ObjectInPlaceArray<E>
-    {
-        CombinedInPlaceArray(Class<E> elementType, Array[] storage,
-            CombinerInPlace<E> combiner)
-        {
+            extends CombinedArray<E> implements ObjectInPlaceArray<E> {
+        CombinedInPlaceArray(
+                Class<E> elementType, Array[] storage,
+                CombinerInPlace<E> combiner) {
             super(elementType, storage, combiner);
         }
 
-        CombinedInPlaceArray(Class<E> elementType, long initialCapacity, long initialLength,
-            CombinerInPlace<E> combiner)
-        {
+        CombinedInPlaceArray(
+                Class<E> elementType, long initialCapacity, long initialLength,
+                CombinerInPlace<E> combiner) {
             super(elementType, initialCapacity, initialLength, combiner);
         }
 
@@ -1684,38 +1683,37 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public E allocateElement() {
-            return ((CombinerInPlace<E>)combiner).allocateElement();
+            return ((CombinerInPlace<E>) combiner).allocateElement();
         }
 
         public E getInPlace(long index, Object resultValue) {
             E resValue = InternalUtils.<E>cast(resultValue);
-            ((CombinerInPlace<E>)combiner).getInPlace(index, resValue, storage);
+            ((CombinerInPlace<E>) combiner).getInPlace(index, resValue, storage);
             return resValue;
         }
     }
 
     private static final class UpdatableCombinedInPlaceArray<E>
-        extends UpdatableCombinedArray<E> implements UpdatableObjectInPlaceArray<E>
-    {
-        UpdatableCombinedInPlaceArray(Class<E> elementType, UpdatableArray[] storage,
-            CombinerInPlace<E> combiner)
-        {
+            extends UpdatableCombinedArray<E> implements UpdatableObjectInPlaceArray<E> {
+        UpdatableCombinedInPlaceArray(
+                Class<E> elementType, UpdatableArray[] storage,
+                CombinerInPlace<E> combiner) {
             super(elementType, storage, combiner);
         }
 
-        UpdatableCombinedInPlaceArray(Class<E> elementType, long initialCapacity, long initialLength,
-            CombinerInPlace<E> combiner)
-        {
+        UpdatableCombinedInPlaceArray(
+                Class<E> elementType, long initialCapacity, long initialLength,
+                CombinerInPlace<E> combiner) {
             super(elementType, initialCapacity, initialLength, combiner);
         }
 
         public E allocateElement() {
-            return ((CombinerInPlace<E>)combiner).allocateElement();
+            return ((CombinerInPlace<E>) combiner).allocateElement();
         }
 
         public E getInPlace(long index, Object resultValue) {
             E resValue = InternalUtils.<E>cast(resultValue);
-            ((CombinerInPlace<E>)combiner).getInPlace(index, resValue, storage);
+            ((CombinerInPlace<E>) combiner).getInPlace(index, resValue, storage);
             return resValue;
         }
 
@@ -1723,20 +1721,20 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             checkSubArrayArguments(fromIndex, toIndex);
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
-                stor[k] = ((UpdatableArray)storage[k]).subArray(
-                    fromIndex * numbersOfElements[k], toIndex * numbersOfElements[k]);
+                stor[k] = ((UpdatableArray) storage[k]).subArray(
+                        fromIndex * numbersOfElements[k], toIndex * numbersOfElements[k]);
             }
-            return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>)this.combiner);
+            return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>) this.combiner);
         }
 
         public UpdatableObjectInPlaceArray<E> subArr(long position, long count) {
             checkSubArrArguments(position, count);
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
-                stor[k] = ((UpdatableArray)storage[k]).subArr(
-                    position * numbersOfElements[k], count * numbersOfElements[k]);
+                stor[k] = ((UpdatableArray) storage[k]).subArr(
+                        position * numbersOfElements[k], count * numbersOfElements[k]);
             }
-            return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>)this.combiner);
+            return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>) this.combiner);
         }
 
         public UpdatableObjectInPlaceArray<E> asUnresizable() {
@@ -1745,27 +1743,26 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     }
 
     private static final class MutableCombinedInPlaceArray<E>
-        extends MutableCombinedArray<E> implements MutableObjectInPlaceArray<E>
-    {
-        MutableCombinedInPlaceArray(Class<E> elementType, MutableArray[] storage,
-            CombinerInPlace<E> combiner)
-        {
+            extends MutableCombinedArray<E> implements MutableObjectInPlaceArray<E> {
+        MutableCombinedInPlaceArray(
+                Class<E> elementType, MutableArray[] storage,
+                CombinerInPlace<E> combiner) {
             super(elementType, storage, combiner);
         }
 
-        MutableCombinedInPlaceArray(Class<E> elementType, long initialCapacity, long initialLength,
-            CombinerInPlace<E> combiner)
-        {
+        MutableCombinedInPlaceArray(
+                Class<E> elementType, long initialCapacity, long initialLength,
+                CombinerInPlace<E> combiner) {
             super(elementType, initialCapacity, initialLength, combiner);
         }
 
         public E allocateElement() {
-            return ((CombinerInPlace<E>)combiner).allocateElement();
+            return ((CombinerInPlace<E>) combiner).allocateElement();
         }
 
         public E getInPlace(long index, Object resultValue) {
             E resValue = InternalUtils.<E>cast(resultValue);
-            ((CombinerInPlace<E>)combiner).getInPlace(index, resValue, storage);
+            ((CombinerInPlace<E>) combiner).getInPlace(index, resValue, storage);
             return resValue;
         }
 
@@ -1813,38 +1810,38 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             checkSubArrayArguments(fromIndex, toIndex);
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
-                stor[k] = ((UpdatableArray)storage[k]).subArray(
-                    fromIndex * numbersOfElements[k], toIndex * numbersOfElements[k]);
+                stor[k] = ((UpdatableArray) storage[k]).subArray(
+                        fromIndex * numbersOfElements[k], toIndex * numbersOfElements[k]);
             }
-            return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>)this.combiner);
+            return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>) this.combiner);
         }
 
         public UpdatableObjectInPlaceArray<E> subArr(long position, long count) {
             checkSubArrArguments(position, count);
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
-                stor[k] = ((UpdatableArray)storage[k]).subArr(
-                    position * numbersOfElements[k], count * numbersOfElements[k]);
+                stor[k] = ((UpdatableArray) storage[k]).subArr(
+                        position * numbersOfElements[k], count * numbersOfElements[k]);
             }
-            return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>)this.combiner);
+            return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>) this.combiner);
         }
 
         public MutableObjectInPlaceArray<E> asCopyOnNextWrite() {
-            MutableArray[] stor = (MutableArray[])storage.clone();
+            MutableArray[] stor = (MutableArray[]) storage.clone();
             for (int k = 0; k < storage.length; k++) {
                 stor[k] = stor[k].asCopyOnNextWrite();
                 // it is necessary to avoid future changes in the result storage via CombinedMemoryModel.storage method
             }
-            return new MutableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>)this.combiner);
+            return new MutableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>) this.combiner);
         }
 
         public UpdatableObjectInPlaceArray<E> asUnresizable() {
             UpdatableArray[] stor = new UpdatableArray[storage.length];
             for (int k = 0; k < storage.length; k++) {
-                stor[k] = ((MutableArray[])storage)[k].asUnresizable();
+                stor[k] = ((MutableArray[]) storage)[k].asUnresizable();
                 // it is necessary to avoid future changes in the result storage via CombinedMemoryModel.storage method
             }
-            return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>)this.combiner);
+            return new UpdatableCombinedInPlaceArray<E>(this.elementType, stor, (CombinerInPlace<E>) this.combiner);
         }
 
         public MutableObjectInPlaceArray<E> shallowClone() {

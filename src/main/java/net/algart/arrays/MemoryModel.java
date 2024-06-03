@@ -721,7 +721,7 @@ public interface MemoryModel {
      * &nbsp;&nbsp;&nbsp;&nbsp;memoryModel.&lt;String&gt;newEmptyObjectArray(Class elementType);
      * </pre>
      *
-     * @param <E> the generic type of array elements.
+     * @param <E>         the generic type of array elements.
      * @param elementType the type of array elements.
      * @return created AlgART array.
      * @throws UnsupportedElementTypeException if this element type is not supported by this memory model.
@@ -739,7 +739,7 @@ public interface MemoryModel {
      * &nbsp;&nbsp;&nbsp;&nbsp;memoryModel.&lt;String&gt;newEmptyObjectArray(10000);
      * </pre>
      *
-     * @param <E> the generic type of array elements.
+     * @param <E>             the generic type of array elements.
      * @param elementType     the type of array elements.
      * @param initialCapacity the initial capacity of the array.
      * @return created AlgART array.
@@ -755,7 +755,7 @@ public interface MemoryModel {
      * Equivalent to <tt>(MutableObjectArray&lt;E&gt;){@link #newArray(Class, long)
      * newArray}(elementType, initialLength)</tt>.
      *
-     * @param <E> the generic type of array elements.
+     * @param <E>           the generic type of array elements.
      * @param elementType   the type of array elements.
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
@@ -772,7 +772,7 @@ public interface MemoryModel {
      * Equivalent to <tt>(UpdatableObjectArray&lt;E&gt;){@link #newUnresizableArray(Class, long)
      * newUnresizableArray}(elementType, initialLength)</tt>.
      *
-     * @param <E> the generic type of array elements.
+     * @param <E>         the generic type of array elements.
      * @param elementType the type of array elements.
      * @param length      the length and capacity of the array.
      * @return created unresizable AlgART array.
@@ -886,6 +886,7 @@ public interface MemoryModel {
      * <p>The <tt>dim</tt> argument is cloned by this method: no references to it
      * are maintained by the created matrix.
      *
+     * @param <T>            the generic type of AlgART array.
      * @param arraySupertype the desired type of the underlying array (the generic argument of the matrix type).
      * @param elementType    the type of matrix elements.
      * @param dim            the dimensions of the matrix.
@@ -927,6 +928,7 @@ public interface MemoryModel {
      * <p>The typical value for <tt>maxSizeAllocatedInJavaMemory</tt> argument is the result of
      * {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()} method.</p>
      *
+     * @param <T>                          the generic type of AlgART array.
      * @param maxSizeAllocatedInJavaMemory the maximal amount of required memory, for which this method
      *                                     just redirects to the same method of
      *                                     {@link SimpleMemoryModel#getInstance()}
@@ -962,6 +964,7 @@ public interface MemoryModel {
      * newMatrix}(arraySupertype, matrix.{@link Matrix#elementType()
      * elementType()}, matrix.{@link Matrix#dimensions() dimensions()})</tt>.
      *
+     * @param <T>            the generic type of AlgART array.
      * @param arraySupertype the desired type of the underlying array of the new matrix
      *                       (usually an updatable version of the built-in array of the source matrix).
      * @param matrix         the pattern matrix.
@@ -982,6 +985,7 @@ public interface MemoryModel {
      * Equivalent to <tt>{@link #newMatrix(Class, Matrix)
      * newMatrix}(arraySupertype, matrix).{@link Matrix#structureLike(Matrix) structureLike}(matrix)</tt>.
      *
+     * @param <T>            the generic type of AlgART array.
      * @param arraySupertype the desired type of the underlying array of the new matrix
      *                       (usually an updatable version of the built-in array of the source matrix).
      * @param matrix         the pattern matrix.

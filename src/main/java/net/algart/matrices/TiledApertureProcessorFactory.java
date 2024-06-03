@@ -881,7 +881,7 @@ public final class TiledApertureProcessorFactory {
      * See the {@link TiledApertureProcessorFactory comments to this class}, the section
      * "Contexts for the one-tile processor".
      *
-     * @param <T>              the generic type of the keys in the tile processor.
+     * @param <K>              the generic type of the keys in the tile processor.
      * @param oneTileProcessor one-tile aperture processor.
      * @return tiled aperture processor.
      * @throws NullPointerException if the argument is <tt>null</tt>.
