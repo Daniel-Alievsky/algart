@@ -66,7 +66,7 @@ import java.util.Objects;
  * the equivalent code.</p>
  *
  * <p>The order of bits within a byte, that corresponds to the above specification, is what we call
- * the <b>normal</b> order. Some methods of this class also support the <b>reverse</b> bits order:
+ * the <b>normal</b> order. Some methods of this class also support the <b>reverse</b> bit order:
  * see {@link #getBitInReverseOrder(byte[], long)} and {@link #setBitInReverseOrder(byte[], long, boolean)}
  * methods.</p>
  *
@@ -617,7 +617,7 @@ public class PackedBitArraysPer8 {
      * @return the bit at the specified index.
      * @throws NullPointerException      if <code>src</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
-     * @see #reverseBitsOrderInEachByte(byte[], int, int)
+     * @see #reverseBitOrder(byte[], int, byte[], int, int)
      */
     public static boolean getBitInReverseOrder(byte[] src, long index) {
         return (src[(int) (index >>> 3)] & (1 << (7 - ((int) index & 7)))) != 0;
@@ -642,7 +642,7 @@ public class PackedBitArraysPer8 {
      * @param value new bit value.
      * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
-     * @see #reverseBitsOrderInEachByte(byte[], int, int)
+     * @see #reverseBitOrder(byte[], int, int)
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void setBitInReverseOrder(byte[] dest, long index, boolean value) {
@@ -1741,9 +1741,7 @@ public class PackedBitArraysPer8 {
      *
      * <p>The same action may be performed by the following operators:</p>
      * <pre>
-     *     byte[] copy = pSrc.clone();
-     *     {@link #reverseBitsOrderInEachByte(byte[])
-     *     PackedBitArraysPer8.reverseBitsOrderInEachByte}(copy);
+     *     byte[] copy = {@link #reverseBitOrder(byte[]) PackedBitArraysPer8.reverseBitOrder}(src);
      *     {@link #copyBits PackedBitArraysPer8.copyBits}(dest, destPos, copy, srcPos, count);
      * </pre>
      * <p>but without necessity to copy <code>src</code> bytes into a new array.
@@ -1756,8 +1754,8 @@ public class PackedBitArraysPer8 {
      * <pre>
      *      PackedBitArraysPer8.copyBitsFromReverseToNormalOrder(dest, 0, dest, 0, dest.length * 8);
      * </pre>
-     * <p>is equivalent to <code>{@link #reverseBitsOrderInEachByte(byte[])
-     * PackedBitArraysPer8.reverseBitsOrderInEachByte}(dest)</code>.</p>
+     * <p>is equivalent to <code>{@link #reverseBitOrderInPlace(byte[])
+     * PackedBitArraysPer8.reverseBitOrderInPlace}(dest)</code>.</p>
      *
      * @param dest    the destination array (bits are packed in <code>byte</code> values).
      * @param destPos position of the first bit written in the destination array.
@@ -1994,8 +1992,8 @@ public class PackedBitArraysPer8 {
      *      PackedBitArraysPer8.copyBitsFromNormalToReverseOrder(dest, 0, dest, 0, dest.length * 8);
      * </pre>
      * <p>(like the similar call of {@link #copyBitsFromReverseToNormalOrder})
-     * is equivalent to <code>{@link #reverseBitsOrderInEachByte(byte[])
-     * PackedBitArraysPer8.reverseBitsOrderInEachByte}(dest)</code>.</p>
+     * is equivalent to <code>{@link #reverseBitOrderInPlace(byte[])
+     * PackedBitArraysPer8.reverseBitOrderInPlace}(dest)</code>.</p>
      *
      * @param dest    the destination array (bits are packed in <code>byte</code> values in reverse order 76543210).
      * @param destPos position of the first bit written in the destination array.
@@ -5211,27 +5209,77 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Equivalent to <code>{@link #reverseBitsOrderInEachByte(byte[], int, int)
-     * reverseBitOrder}(bytes, 0, bytes.length)</code>.
+     * Equivalent to <code>{@link #reverseBitOrder(byte[], int, byte[], int, int)
+     * reverseBitOrder}(bytes, 0, bytes, 0, bytes.length)</code>.
      *
-     * @param bytes array to be processed.
-     * @throws NullPointerException if <code>bytes</code> is <code>null</code>.
+     * @param bytes array to process and to save results.
+     * @throws NullPointerException if <code>src</code> is <code>null</code>.
      */
-    public static void reverseBitsOrderInEachByte(byte[] bytes) {
+    public static void reverseBitOrderInPlace(byte[] bytes) {
         Objects.requireNonNull(bytes, "Null bytes");
-        reverseBitsOrderInEachByte(bytes, 0, bytes.length);
+        for (int i = 0; i < bytes.length; i++) {
+            bytes[i] = REVERSE[bytes[i] & 0xFF];
+        }
     }
 
     /**
-     * Inverts bits order in all bytes in the specified array.
+     * Equivalent to <code>{@link #reverseBitOrder(byte[], int, int)
+     * reverseBitOrder}(src, 0, src.length)</code>.
+     *
+     * @param src source array to be processed.
+     * @return result array with reversed bit order in bytes.
+     * @throws NullPointerException if <code>src</code> is <code>null</code>.
+     */
+    public static byte[] reverseBitOrder(byte[] src) {
+        return reverseBitOrder(src, 0, src.length);
+    }
+
+    /**
+     * Reverses the bit order in <code>count</code> bytes of <code>src</code> array,
+     * starting from the byte <code>#srcPos</code>,
+     * and returns the reversed bytes in the newly created array.
+     *
+     * <p>The same result can be achieved with the following code:</p>
+     *
+     * <pre>
+     *      byte[] result = new byte[count];
+     *      {@link #reverseBitOrder(byte[], int, byte[], int, int)
+     *      PackedBitArraysPer8.reverseBitOrder}(result, 0, src, srcPos, count);</pre>
+     *
+     * @param src    the source array.
+     * @param srcPos position of the first read element in the source array.
+     * @param count  the number of bytes to be processed.
+     * @return result array with reversed bit order in bytes.
+     * @throws NullPointerException      if <code>src</code> is <code>null</code>.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
+     * @throws IndexOutOfBoundsException if processing would cause access of data outside array bounds.
+     */
+    public static byte[] reverseBitOrder(byte[] src, int srcPos, int count) {
+        Objects.requireNonNull(src, "Null src");
+        JArrays.rangeCheck(src.length, srcPos, count);
+        byte[] result = new byte[count];
+        for (int i = srcPos, j = 0; j < count; i++, j++) {
+            result[j] = REVERSE[src[i] & 0xFF];
+        }
+        return result;
+    }
+
+    /**
+     * Reverses the bit order in <code>count</code> bytes of <code>src</code> array,
+     * starting from the byte <code>#srcPos</code>,
+     * and returns the reversed bytes in <code>dest</code> array,
+     * starting from the byte <code>#destPos</code>.
+     * You can pass the same array in both arguments to perform the reversion in place.
+     *
      * <p>Equivalent to the following loop:</p>
      * <pre>
      *     for (int i = 0; i &lt; count; i++) {
-     *         bytes[pos + i] = (byte) ({@link Integer#reverse(int)
-     *         Integer.reverse}(bytes[pos + i] &amp; 0xFF) >>> 24);
+     *         dest[destPos + i] = {@link #reverseBitOrder(byte)
+     *         PackedBitArraysPer8.reverseBitOrder}(src[srcPos + i]);
+     *     }
      * </pre>
      *
-     * <p>This method can be useful if you have an array of bits, packed into bytes in reverse order:
+     * <p>This method can be useful if you have an array of bits, packed into src in reverse order:
      * <code>(b>>7)&amp;1</code>,
      * <code>(b>>6)&amp;1</code>,
      * <code>(b>>5)&amp;1</code>,
@@ -5240,20 +5288,34 @@ public class PackedBitArraysPer8 {
      * <code>(b>>2)&amp;1</code>,
      * <code>(b>>1)&amp;1</code>,
      * <code>b&amp;1</code>
-     * (highest bits first) for each byte <code>b</code>. You should reverse the bit order in such an array
-     * before using other methods of this class or, for simple cases, use the methods
-     * {@link #getBitInReverseOrder(byte[], long)} and {@link #setBitInReverseOrder(byte[], long, boolean)}.</p>
+     * (highest bits first) for each byte <code>b</code>.</p>
      *
-     * @param bytes array to be processed.
-     * @throws NullPointerException      if <code>bytes</code> is <code>null</code>.
+     * @param dest    array to store results.
+     * @param destPos position of the first stored element in the destination array.
+     * @param src     the source array.
+     * @param srcPos  position of the first read element in the source array.
+     * @param count   the number of bytes to be processed.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
-     * @throws IndexOutOfBoundsException if processing would cause access of data outside the array.
+     * @throws IndexOutOfBoundsException if processing would cause access of data outside array bounds.
      */
-    public static void reverseBitsOrderInEachByte(byte[] bytes, int pos, int count) {
-        Objects.requireNonNull(bytes, "Null bytes");
-        JArrays.rangeCheck(bytes.length, pos, count);
-        for (int i = pos, toIndex = pos + count; i < toIndex; i++) {
-            bytes[i] = REVERSE[bytes[i] & 0xFF];
+    public static void reverseBitOrder(byte[] dest, int destPos, byte[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        JArrays.rangeCheck(src.length, srcPos, dest.length, destPos, count);
+        for (int i = srcPos, j = destPos, toIndex = srcPos + count; i < toIndex; i++, j++) {
+            dest[j] = REVERSE[src[i] & 0xFF];
         }
+    }
+
+    /**
+     * Reverses the bit order of a byte and returns the result.
+     * Equivalent to <code>(byte)&nbsp;({@link Integer#reverse(int) Integer.reverse(value)} >>> 24)</code>.
+     *
+     * @param value byte value
+     * @return the byte with bit order reversed.
+     */
+    public static byte reverseBitOrder(byte value) {
+        return REVERSE[value & 0xFF];
     }
 }

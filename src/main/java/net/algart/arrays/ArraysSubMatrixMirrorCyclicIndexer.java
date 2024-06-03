@@ -521,7 +521,7 @@ class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
             }
             if (inMirror) {
                 baseBitArray.getBits(indexOfLineStartInBase + baseDim0 - baseCoord0 - m, dataBuffer, 0, m);
-                PackedBitArrays.reverseBitsOrder(destArray, destArrayOffset, dataBuffer, 0, m);
+                PackedBitArrays.reverseBits(destArray, destArrayOffset, dataBuffer, 0, m);
             } else {
                 baseBitArray.getBits(indexOfLineStartInBase + baseCoord0, destArray, destArrayOffset, m);
             }
@@ -632,7 +632,7 @@ class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
                 m = MC_INDEXER_BUFFER_LENGTH * 64L;
             }
             if (inMirror) {
-                PackedBitArrays.reverseBitsOrder(dataBuffer, 0, srcArray, srcArrayOffset, m);
+                PackedBitArrays.reverseBits(dataBuffer, 0, srcArray, srcArrayOffset, m);
                 updatableBaseBitArray.setBits(indexOfLineStartInBase + baseDim0 - baseCoord0 - m, dataBuffer, 0, m);
             } else {
                 updatableBaseBitArray.setBits(indexOfLineStartInBase + baseCoord0, srcArray, srcArrayOffset, m);

@@ -4983,11 +4983,11 @@ public class JArrays {
             throw new IllegalArgumentException("Negative number of elements (" + count + ")");
         }
         if (pos < 0) {
-            throw new IndexOutOfBoundsException("Start position " + pos + " < 0");
+            throw new IndexOutOfBoundsException("Start position = " + pos + " < 0");
         }
         if (pos > arrayLen - count) {
-            throw new IndexOutOfBoundsException("End position " + (pos + count)
-                + " > array length ( " + arrayLen + ")");
+            throw new IndexOutOfBoundsException("End position (last index + 1) = " + (pos + count)
+                    + " > array length = " + arrayLen);
         }
     }
 
@@ -4996,18 +4996,18 @@ public class JArrays {
             throw new IllegalArgumentException("Negative number of elements (" + count + ")");
         }
         if (pos1 < 0) {
-            throw new IndexOutOfBoundsException("Start position " + pos1 + " < 0");
+            throw new IndexOutOfBoundsException("Start position = " + pos1 + " < 0");
         }
         if (pos1 > arrayLen1 - count) {
-            throw new IndexOutOfBoundsException("End position " + (pos1 + count)
-                + " > array length ( " + arrayLen1 + ")");
+            throw new IndexOutOfBoundsException("End position (last index + 1) = " + (pos1 + count)
+                + " > array length = " + arrayLen1);
         }
         if (pos2 < 0) {
-            throw new IndexOutOfBoundsException("Start position " + pos2 + " < 0");
+            throw new IndexOutOfBoundsException("Start position = " + pos2 + " < 0");
         }
         if (pos2 > arrayLen2 - count) {
-            throw new IndexOutOfBoundsException("End position " + (pos2 + count)
-                + " > array length ( " + arrayLen2 + ")");
+            throw new IndexOutOfBoundsException("End position (last index + 1) = " + (pos2 + count)
+                + " > array length = " + arrayLen2);
         }
     }
 

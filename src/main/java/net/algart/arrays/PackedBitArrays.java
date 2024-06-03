@@ -10765,7 +10765,7 @@ public class PackedBitArrays {
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
-    public static void reverseBitsOrder(long[] dest, long destPos, long[] src, long srcPos, long count) {
+    public static void reverseBits(long[] dest, long destPos, long[] src, long srcPos, long count) {
         Objects.requireNonNull(dest, "Null dest");
         Objects.requireNonNull(src, "Null src");
         if (count == 0) {

@@ -963,7 +963,7 @@ public class PackedBitArraysTest {
             }
             //[[Repeat.SectionEnd logicalOperations]]
 
-            System.out.println("Testing \"reverseBitsOrder\" method...");
+            System.out.println("Testing \"reverseBits\" method...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
                 System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
@@ -971,7 +971,7 @@ public class PackedBitArraysTest {
                 int srcPos = rnd.nextInt(len + 1);
                 int destPos = rnd.nextInt(len + 1);
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
-                PackedBitArrays.reverseBitsOrder(
+                PackedBitArrays.reverseBits(
                         pDestWork1, startOffset + destPos, pSrc, startOffset + srcPos, count);
                 PackedBitArrays.unpackBits(bDestWork1, 0, pDestWork1, startOffset, len);
                 for (int k = 0; k < count; k++) {
@@ -979,7 +979,7 @@ public class PackedBitArraysTest {
                 }
                 for (int k = 0; k < len; k++) {
                     if (bDestWork1[k] != bDestWork2[k]) {
-                        throw new AssertionError("The bug in reverseBitsOrder found in test #"
+                        throw new AssertionError("The bug in reverseBits found in test #"
                                 + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k);

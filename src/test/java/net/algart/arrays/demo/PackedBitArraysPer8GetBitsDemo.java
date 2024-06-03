@@ -59,10 +59,8 @@ public class PackedBitArraysPer8GetBitsDemo {
     }
 
     private static String toBinaryStringInReverseOrder(byte[] pSrc, int len) {
-        byte[] reverse = pSrc.clone();
-        PackedBitArraysPer8.reverseBitsOrderInEachByte(reverse);
         return JArrays.toBinaryString(
-                PackedBitArraysPer8.unpackBits(reverse, 0, len), "", 200);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(pSrc, 0, len), "", 200);
     }
 
     private static void getBitsTest(byte[] pSrc, int pos, int count, int len) {
@@ -79,7 +77,8 @@ public class PackedBitArraysPer8GetBitsDemo {
         }
         byte[] pDest = pSrc.clone();
         for (long testBits : new long[] {0, 3, -1, -4, ~bits, bits, 0x5555555555555555L}) {
-            System.out.println(" ".repeat(pos) + bitsToString(testBits, count) + " - updating:");
+            System.out.println(" ".repeat(pos) + bitsToString(testBits, count) + " (" + testBits +
+                    ")   - updating with this:");
             PackedBitArraysPer8.setBits64(pDest, pos, testBits, count);
             System.out.println(toBinaryString(pDest, len));
             bits = PackedBitArraysPer8.getBits64(pDest, pos, count);
@@ -115,7 +114,8 @@ public class PackedBitArraysPer8GetBitsDemo {
         }
         byte[] pDest = pSrc.clone();
         for (long testBits : new long[] {0, 3, -1, -4, ~bits, bits, 0x5555555555555555L}) {
-            System.out.println(" ".repeat(pos) + bitsToStringInReverseOrder(testBits, count) + " - updating:");
+            System.out.println(" ".repeat(pos) + bitsToStringInReverseOrder(testBits, count) + " (" + testBits +
+                    ")   - updating with this:");
             PackedBitArraysPer8.setBits64InReverseOrder(pDest, pos, testBits, count);
             System.out.println(toBinaryStringInReverseOrder(pDest, len));
             bits = PackedBitArraysPer8.getBits64InReverseOrder(pDest, pos, count);
