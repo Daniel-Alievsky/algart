@@ -25,7 +25,7 @@
 package net.algart.arrays;
 
 /**
- * <p>Indexer for creating mirror-cyclically continued submatrices.</p>
+ * <p>Indexer for creating mirror-cyclically continued sub-matrices.</p>
  *
  * @author Daniel Alievsky
  */

@@ -204,6 +204,7 @@
  <p>Below is a diagram of basic array interfaces and classes.</p>
 
  <table border="1" cellpadding="4" cellspacing="1">
+     <caption></caption>
      <tr>
          <td colspan="5"><b>{@link net.algart.arrays.SimpleMemoryModel Simple memory model}</b>
          (the only model that supports <i>all</i> {@link net.algart.arrays.Array#elementType() element types})</td>
@@ -272,11 +273,13 @@
      </tr>
  </table>
  <table border="0" cellpadding="0" cellspacing="0">
+     <caption></caption>
      <tr>
          <td>&nbsp;</td>
      </tr>
  </table>
  <table border="1" cellpadding="4" cellspacing="1">
+     <caption></caption>
      <tr>
          <td colspan="5"><b>{@link net.algart.arrays.BufferMemoryModel Buffer memory model}</b>
          and <b>{@link net.algart.arrays.LargeMemoryModel Large memory model}</b>
@@ -345,11 +348,13 @@
      </tr>
  </table>
  <table border="0" cellpadding="0" cellspacing="0">
+     <caption></caption>
      <tr>
          <td>&nbsp;</td>
      </tr>
  </table>
  <table border="1" cellpadding="4" cellspacing="1">
+     <caption></caption>
      <tr>
          <td colspan="5"><b>{@link net.algart.arrays.CombinedMemoryModel} memory model</b>
          (supports only <i>non-primitive</i> {@link net.algart.arrays.Array#elementType() element types})</td>
@@ -443,6 +448,7 @@
  <p>The maximal array lengths for different memory models are listed below.</p>
 
  <table border="1" cellpadding="4" cellspacing="1" width="60%">
+     <caption></caption>
      <tr>
          <td colspan="3"><b>{@link net.algart.arrays.SimpleMemoryModel Simple memory model}</b><br>
          <br>
@@ -494,6 +500,7 @@
      </tr>
  </table>
  <table border="0" cellpadding="0" cellspacing="0">
+     <caption></caption>
      <tr>
          <td>The real limits are less in 32-bit JVM,
          that usually cannot utilize 2 GB of memory.<br>&nbsp;</td>
@@ -501,6 +508,7 @@
  </table>
 
 <table border="1" cellpadding="4" cellspacing="1" width="60%">
+     <caption></caption>
      <tr>
          <td colspan="2"><b>{@link net.algart.arrays.BufferMemoryModel Buffer memory model}</b><br>
          <br>
@@ -536,6 +544,7 @@
      </tr>
  </table>
  <table border="0" cellpadding="0" cellspacing="0">
+     <caption></caption>
      <tr>
          <td>The real limits are less in 32-bit JVM,
          that usually cannot utilize 2 GB of memory.<br>&nbsp;</td>
@@ -543,6 +552,7 @@
  </table>
 
 <table border="1" cellpadding="4" cellspacing="1" width="60%">
+     <caption></caption>
      <tr>
          <td colspan="2"><b>{@link net.algart.arrays.LargeMemoryModel Large memory model}</b><br>
          <br>
@@ -578,6 +588,7 @@
      </tr>
  </table>
  <table border="0" cellpadding="0" cellspacing="0">
+     <caption></caption>
      <tr>
          <td>In other words, the limits are so large that the real maximal array length
          depends only on the available disk space.<br>&nbsp;</td>
@@ -585,6 +596,7 @@
  </table>
 
 <table border="1" cellpadding="4" cellspacing="1" width="60%">
+     <caption></caption>
      <tr>
          <td colspan="1"><b>{@link net.algart.arrays.CombinedMemoryModel Combined memory model}</b><br>
          <br>

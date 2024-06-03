@@ -46,8 +46,8 @@ import java.util.*;
  * of the matrices, where the tiled processor provides several models of continuations &mdash;
  * see below the section "Continuation model outside the bounds of the large matrices".)
  * This new processor splits all the matrices into relatively little <i>tiles</i> (rectangular areas,
- * i.e. submatrices), performs the processing of every tile with the one-tile processor and places the results
- * into the corresponding submatrices of the resulting matrices.
+ * i.e. sub-matrices), performs the processing of every tile with the one-tile processor and places the results
+ * into the corresponding sub-matrices of the resulting matrices.
  * Such conversion of one algorithm to another is called <i>tiling an algorithm</i>
  * and is performed by {@link #tile(ApertureProcessor)} method &mdash; the main method of this class.</p>
  *
@@ -63,7 +63,7 @@ import java.util.*;
  * The same algorithms, tiled with help of this class, process large tiled matrices in more efficient order:
  * they download a rectangular block from all source matrices into newly created
  * (relatively little) matrices, process them and store the results
- * into the corresponding submatrices of the destination matrices.
+ * into the corresponding sub-matrices of the destination matrices.
  * For maximal efficiency, the tiler tries to use {@link SimpleMemoryModel} for storing and processing every
  * rectangular block (a tile); you can control this with <tt>maxTempJavaMemory</tt> argument of all
  * instantiation methods <tt>getInstance</tt>. In addition, the matrices, allocated by the tiled processor
@@ -86,8 +86,8 @@ import java.util.*;
  * several tiles can be processed simultaneously in parallel threads. See below about multithreading.</p>
  *
  *
- * <h4>Specification of {@link ApertureProcessor#process(Map, Map)
- * process} and other methods in the tiled aperture processors</h4>
+ * <h2>Specification of {@link ApertureProcessor#process(Map, Map)
+ * process} and other methods in the tiled aperture processors</h2>
  *
  * <p>Here is the precise specification of the behaviour of the {@link ApertureProcessor},
  * tiled by this tiler, i.e. of the result of {@link #tile(ApertureProcessor oneTileProcessor)}.
@@ -138,7 +138,7 @@ import java.util.*;
  *
  *         <li>It splits all source matrices <b>M</b><sub><i>i</i></sub> (<tt>src.get(<i>i</i>)</tt>)
  *         and all resulting matrices <b>M'</b><sub><i>j</i></sub> (<tt>dest.get(<i>j</i>)</tt>) into
- *         a set of rectangular non-overlapping <i>tiles</i>, i.e. submatrices, the dimensions of which are chosen
+ *         a set of rectangular non-overlapping <i>tiles</i>, i.e. sub-matrices, the dimensions of which are chosen
  *         to be equal to the desired tile dimensions of this tiler ({@link #tileDim()}) or, maybe, less.
  *         (This stage does not suppose any actual calculations: we consider this stage
  *         for the sake of simplicity.)<br>
@@ -252,7 +252,7 @@ import java.util.*;
  *             <li>The central part (submatrix) of all matrices <b>m'</b><sub><i>j</i></sub>,
  *             corresponding to the original (non-extended) tile (<b>f</b>,&nbsp;<b>t</b>),
  *             is copied into the corresponding tile of the resulting matrices <b>M'</b><sub><i>j</i></sub>,
- *             i.e. into their submatrices <nobr><b>M'</b><sub><i>j</i></sub>.{@link
+ *             i.e. into their sub-matrices <nobr><b>M'</b><sub><i>j</i></sub>.{@link
  *             Matrix#subMatrix(long[], long[]) subMatrix}(<b>f</b>, <b>t</b>)</nobr>.
  *             <br>&nbsp;</li>
  *         </ol></li>

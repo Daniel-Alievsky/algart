@@ -31,6 +31,9 @@ import net.algart.arrays.TooLargeArrayException;
 
 import java.util.Objects;
 
+/**
+ * Some algorithm for processing 2-dimensional matrices.
+ */
 public abstract class Abstract2DProcessor {
     private final Class<?> elementType;
     private final int dimX;

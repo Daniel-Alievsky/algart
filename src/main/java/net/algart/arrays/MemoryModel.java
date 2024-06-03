@@ -721,6 +721,7 @@ public interface MemoryModel {
      * &nbsp;&nbsp;&nbsp;&nbsp;memoryModel.&lt;String&gt;newEmptyObjectArray(Class elementType);
      * </pre>
      *
+     * @param <E> the generic type of array elements.
      * @param elementType the type of array elements.
      * @return created AlgART array.
      * @throws UnsupportedElementTypeException if this element type is not supported by this memory model.
@@ -738,6 +739,7 @@ public interface MemoryModel {
      * &nbsp;&nbsp;&nbsp;&nbsp;memoryModel.&lt;String&gt;newEmptyObjectArray(10000);
      * </pre>
      *
+     * @param <E> the generic type of array elements.
      * @param elementType     the type of array elements.
      * @param initialCapacity the initial capacity of the array.
      * @return created AlgART array.
@@ -753,6 +755,7 @@ public interface MemoryModel {
      * Equivalent to <tt>(MutableObjectArray&lt;E&gt;){@link #newArray(Class, long)
      * newArray}(elementType, initialLength)</tt>.
      *
+     * @param <E> the generic type of array elements.
      * @param elementType   the type of array elements.
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
@@ -769,6 +772,7 @@ public interface MemoryModel {
      * Equivalent to <tt>(UpdatableObjectArray&lt;E&gt;){@link #newUnresizableArray(Class, long)
      * newUnresizableArray}(elementType, initialLength)</tt>.
      *
+     * @param <E> the generic type of array elements.
      * @param elementType the type of array elements.
      * @param length      the length and capacity of the array.
      * @return created unresizable AlgART array.

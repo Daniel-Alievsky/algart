@@ -439,8 +439,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_MINUS Side.X_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
@@ -481,8 +481,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_MINUS Side.Y_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
@@ -523,8 +523,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_PLUS Side.X_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
@@ -565,8 +565,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_PLUS Side.Y_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
@@ -607,8 +607,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_PLUS Side.Y_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
@@ -649,8 +649,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_MINUS Side.X_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
@@ -691,8 +691,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_MINUS Side.Y_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
@@ -733,8 +733,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_PLUS Side.X_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
@@ -775,8 +775,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_MINUS Side.Y_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
@@ -817,8 +817,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_PLUS Side.X_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
@@ -859,8 +859,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_PLUS Side.Y_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
          *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
@@ -901,8 +901,8 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_MINUS Side.X_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0>
+         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
+         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
          * <tr>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
          *     <td width=25 height=25 bgcolor="#FFFFFF"></td>

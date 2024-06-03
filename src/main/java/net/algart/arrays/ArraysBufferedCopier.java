@@ -466,7 +466,7 @@ class ArraysBufferedCopier {
 
         /**
          * Copies the matrix by splitting the parent matrix by the last coordinates into "layers"
-         * (submatrices, where all dimensions besides the last one are the same as in the whole parent matrix),
+         * (sub-matrices, where all dimensions besides the last one are the same as in the whole parent matrix),
          * preloading every layer into RAM
          * and processing it in RAM by {@link #copy(ArrayContext, UpdatableArray, Array, boolean)} method.
          * Can be used only for affine transformations,

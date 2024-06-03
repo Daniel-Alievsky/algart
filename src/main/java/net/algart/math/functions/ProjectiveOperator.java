@@ -77,7 +77,8 @@ import java.util.Arrays;
  *     + <i>c</i><sub><i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> + <i>d</i>)
  *   </nobr>
  * </td>
- * </tr></table>
+ * </tr>
+ * </table>
  * </blockquote>
  *
  * <p>However, please note: we do not guarantee that the divisions in the formulas above are performed strictly
@@ -261,6 +262,7 @@ public class ProjectiveOperator
      *
      * <blockquote>
      * <table>
+     * <caption></caption>
      * <tr>
      * <td><nobr><i>d</i> = 1.0;</nobr></td>
      * </tr>

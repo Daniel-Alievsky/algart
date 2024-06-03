@@ -27,7 +27,7 @@ package net.algart.arrays;
 /**
  * <p>Unchecked exception thrown by some methods of {@link Matrix} interface,
  * if the matrix is not a {@link Matrix#isSubMatrix() submatrix} of another matrix.
- * For example, this exception is thrown for matrices, which are not submatrices of another ones, by
+ * For example, this exception is thrown for matrices, which are not sub-matrices of another ones, by
  * {@link Matrix#subMatrixParent()}, {@link Matrix#subMatrixFrom()},
  * {@link Matrix#subMatrixTo()} or {@link Matrix#subMatrixContinuationMode()} methods.</p>
  *

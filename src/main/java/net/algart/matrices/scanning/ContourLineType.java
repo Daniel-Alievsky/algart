@@ -117,6 +117,7 @@ public enum ContourLineType {
      * <p>More precisely, this method is equivalent to:
      * <blockquote>
      * <table cellpadding=0 cellspacing=0 border=0>
+     * <caption></caption>
      * <tr>
      * <td><tt>scanner.{@link Boundary2DScanner#x() x()}+scanner.{@link Boundary2DScanner#lastStep()
      * lastStep()}.{@link Boundary2DScanner.Step#pixelVertexX() pixelVertexX()}</tt></td>
@@ -150,7 +151,7 @@ public enum ContourLineType {
      *
      * <p>More precisely, this method is equivalent to:
      * <blockquote>
-     * <table cellpadding=0 cellspacing=0 border=0>
+     * <table cellpadding=0 cellspacing=0 border=0><caption></caption>
      * <tr>
      * <td><tt>scanner.{@link Boundary2DScanner#y() y()}+scanner.{@link Boundary2DScanner#lastStep()
      * lastStep()}.{@link Boundary2DScanner.Step#pixelVertexY() pixelVertexY()}</tt></td>
