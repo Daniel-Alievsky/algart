@@ -1011,9 +1011,12 @@ public final class TiledApertureProcessorFactory {
                 tasks[taskIndex] = new Runnable() {
                     public void run() {
                         ArrayContext tileContext = switchingContextSupported() ?
-                                ac.part(0.05, 0.95).multithreadingVersion(ti, nt).customDataVersion(new TileInformation(
-                                        IRectangularArea.valueOf(IPoint.valueOf(tilePos), IPoint.valueOf(tileMax)),
-                                        IRectangularArea.valueOf(IPoint.valueOf(extTilePos), IPoint.valueOf(extTileMax)))) :
+                                ac.part(0.05, 0.95).multithreadingVersion(ti, nt).customDataVersion(
+                                        new TileInformation(
+                                                IRectangularArea.valueOf(
+                                                        IPoint.valueOf(tilePos), IPoint.valueOf(tileMax)),
+                                                IRectangularArea.valueOf(
+                                                        IPoint.valueOf(extTilePos), IPoint.valueOf(extTileMax)))) :
                                 ac;
                         subtaskTileProcessor(tileContext).process(destTile, srcTile);
                         // additional matrices CAN appear in destTile
@@ -1083,7 +1086,8 @@ public final class TiledApertureProcessorFactory {
                     throw new SizeMismatchException("The destination matrix with key \"" + key
                             + "\" and the first matrix dimensions mismatch: "
                             + "the destination matrix with key \"" + key + "\" is " + m
-                            + ", but the first matrix has dimensions " + JArrays.toString(result, "x", 1000));
+                            + ", but the first matrix has dimensions "
+                            + JArrays.toString(result, "x", 1000));
                 }
             }
             for (Map.Entry<K, Matrix<?>> e : src.entrySet()) {
@@ -1101,7 +1105,8 @@ public final class TiledApertureProcessorFactory {
                     throw new SizeMismatchException("The source matrix with key \"" + key
                             + "\" and the first matrix dimensions mismatch: "
                             + "the source matrix with key \"" + key + "\" is " + m
-                            + ", but the first matrix has dimensions " + JArrays.toString(result, "x", 1000));
+                            + ", but the first matrix has dimensions "
+                            + JArrays.toString(result, "x", 1000));
                 }
             }
             return result;
