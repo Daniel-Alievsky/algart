@@ -36,7 +36,7 @@ public final class SimpleOperationsSpeed {
     private static final int n = 2048 * 2048;
 
     private static void time(String name, long t1, long t2) {
-        System.out.printf("%-36s %.6f ms, %.6f ns/element, %.3f Giga-element/second %n",
+        System.out.printf("%-42s %.6f ms, %.6f ns/element, %.3f Giga-element/second %n",
                 name + ":", (t2 - t1) * 1e-6, (t2 - t1) / (double) n, (double) n / (t2 - t1));
     }
 
@@ -357,6 +357,22 @@ public final class SimpleOperationsSpeed {
             }
             t2 = System.nanoTime();
             time("setBits64NoSync(5)", t1, t2);
+
+            t1 = System.nanoTime();
+            for (int k = 0; k < n; k++) {
+                longSum += PackedBitArraysPer8.reverseBitOrder((byte) k);
+            }
+            t2 = System.nanoTime();
+            someInfo += longSum;
+            time("PackedBitArraysPer8.reverseBitOrder(byte)", t1, t2);
+
+            t1 = System.nanoTime();
+            for (int k = 0; k < n; k++) {
+                longSum += Integer.reverse((byte) k);
+            }
+            t2 = System.nanoTime();
+            someInfo += longSum;
+            time("Integer.reverse(int)", t1, t2);
 
             t1 = System.nanoTime();
             for (int k = 0; k < n; k++) {
