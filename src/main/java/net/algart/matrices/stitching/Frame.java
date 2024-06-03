@@ -43,6 +43,8 @@ import net.algart.arrays.PArray;
  * always <b>thread-safe</b>.
  * All implementations of this interface from this package are <b>immutable</b>.</p>
  *
+ * @param <P> the type of the frame position.
+ *
  * @author Daniel Alievsky
  */
 public interface Frame<P extends FramePosition> {

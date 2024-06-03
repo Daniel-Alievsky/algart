@@ -29,7 +29,6 @@ import net.algart.arrays.PArray;
 import net.algart.math.RectangularArea;
 import net.algart.math.functions.Func;
 
-
 public interface FramePosition {
     RectangularArea area();
 

@@ -29,10 +29,12 @@ import java.util.Objects;
 /**
  * <p>The class allowing to execute some action, interruptible via standard Java technique,
  * in terms of some {@link InterruptionContext}.
- * In other words, it is a bridge between {@link InterruptionContext} and standard interruption technique
+ * This is a bridge between {@link InterruptionContext} and standard interruption technique
  * based on <tt>thread.interrupt()</tt> and <tt>Thread.interrupted()</tt> calls.</p>
  *
  * <p>To use this class, please override its {@link #run()} method and call {@link #doInterruptibly()}.</p>
+ *
+ * @param <T> the type of the result data returned by this action.
  *
  * @author Daniel Alievsky
  */

@@ -157,6 +157,8 @@ import java.util.Map;
  * select the element type of newly created matrices only on the base of the element types of the arguments,
  * but not, for example, on the base of the matrix dimensions.</p>
  *
+ * @param <K> the type of the keys.
+ *
  * @author Daniel Alievsky
  */
 public interface ApertureProcessor<K> {

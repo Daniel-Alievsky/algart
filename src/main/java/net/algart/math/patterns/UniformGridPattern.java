@@ -95,7 +95,7 @@ import java.util.Set;
  * {@link Patterns#newMinkowskiSum(Collection)} and {@link Patterns#newUnion(Collection)} methods,
  * will not implement {@link UniformGridPattern} interface even in this "good" case.</p>
  *
- * <h4>Grid index restrictions</h4>
+ * <h2>Grid index restrictions</h2>
  *
  * <p>There are the following guarantees for grid indexes <i>i</i><sub><i>j</i></sub><sup>(<i>k</i>)</sup>
  * of any uniform-grid pattern:</p>

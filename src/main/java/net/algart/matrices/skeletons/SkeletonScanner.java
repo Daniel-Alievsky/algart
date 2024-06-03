@@ -36,7 +36,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * This class works on the base of results of classifying skeleton pixels, performed by
  * {@link SkeletonPixelClassifier} class, and requires an object of that class for creating an instance.</p>
  *
- * <h4><a name="graph"></a>The nonoriented graph, formed by the skeleton</h4>
+ * <h2><a name="graph"></a>The nonoriented graph, formed by the skeleton</h2>
 *
  * <p>The base goal of this class is building and scanning the <b><i>skeleton nonoriented graph</i></b>,
  * formed by nodes and branches of the given <i>skeleton</i> (bit matrix).
@@ -219,7 +219,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * {@link #scanBranchFromBranch(boolean, boolean)} methods to understand, how to fully scan every branch.
  * And see below a <a href="#example">full example</a> of breadth-first traversal algorithm.</p>
  *
- * <h4>Skeleton matrix, pixel classifier, current position</h4>
+ * <h2>Skeleton matrix, pixel classifier, current position</h2>
  *
  * <p>This class always processes some fixed bit matrix, which is called <i>the scanned skeleton</i>
  * and can be retrieved by {@link #skeleton()} method, and uses some fixed
@@ -232,7 +232,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * {@link #isInitialized() positioned}</i>, that is the current position is considered to be not set yet and
  * most methods throw <tt>IllegalStateException</tt>.</p>
  *
- * <h4>Remembering and lightweight skeleton scanners</h4>
+ * <h2>Remembering and lightweight skeleton scanners</h2>
  *
  * <p>In addition to storing the current position, this class may support storing information about
  * visiting some pixels (probably in a form of an internal bit matrix, allocated while instantiation of this object).
@@ -286,7 +286,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * methods, which calls {@link #visitPreviousBranchPixel()} when their <tt>withVisiting</tt> argument
  * is <tt>true</tt>.</p>
  *
- * <h4><a name="connectivity"></a>Connectivity model (straight-and-diagonal) and "neighbour" term</h4>
+ * <h2><a name="connectivity"></a>Connectivity model (straight-and-diagonal) and "neighbour" term</h2>
  *
  * <p>Note, that this class, as well as {@link SkeletonPixelClassifier}, supposes
  * the <i>straight-and-diagonal</i> connectivity kind: see
@@ -306,7 +306,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * are coordinates of the second pixel (a neighbour of the first one). In 2-dimensional case,
  * such connectivity kind is also called <i>8-connectivity</i>.</p>
  *
- * <h4><a name="example"></a>Example of usage</h4>
+ * <h2><a name="example"></a>Example of usage</h2>
  *
  * <p>Below is a complete example of code, using a remembering skeleton scanner <tt>ss</tt> for breadth-first
  * traversal of the nonoriented graph, formed by the skeleton.</p>
@@ -413,7 +413,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * corresponding to connected components of the skeleton, maybe even better than the full correct graph
  * with all degenerated branches in a role of edges.</p>
  *
- * <h4>Creating instances of this class</h4>
+ * <h2>Creating instances of this class</h2>
  *
  * <p>This class is designed for a case of any number of dimensions, though, of course, the most popular
  * case is 2-dimensional. You can create an instance of this class by the following basic methods:</p>
@@ -435,7 +435,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * <li>{@link #getLightweightStrongQuadruple3x5ThinningInstance2D(ArrayContext, Matrix)}.</li>
  * </ul>
  *
- * <h4>Pseudo-cyclic continuation</h4>
+ * <h2>Pseudo-cyclic continuation</h2>
  *
  * <p>This class supposes that the processed matrix is infinitely pseudo-cyclically continued, as well
  * {@link net.algart.arrays.Matrices#asShifted Matrices.asShifted} method supposes it.
@@ -444,7 +444,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * where the dimensions of the "submatrix" are greater than dimensions of the source one by 1
  * and the <tt>continuationMode</tt> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
  *
- * <h4>Multithreading compatibility</h4>
+ * <h2>Multithreading compatibility</h2>
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
  * and can be synchronized manually, if multithreading access is necessary.</p>

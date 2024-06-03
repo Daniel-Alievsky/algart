@@ -52,7 +52,7 @@ import java.util.*;
  * and is performed by {@link #tile(ApertureProcessor)} method &mdash; the main method of this class.</p>
  *
  *
- * <h4>Why to tile aperture processors</h4>
+ * <h2>Why to tile aperture processors</h2>
  *
  * <p>The goal of tiling some algorithms is optimization of processing very large matrices,
  * usually located on external storage devices (for example, with help of {@link LargeMemoryModel}).</p>
@@ -281,7 +281,7 @@ import java.util.*;
  * so there is no sense to use this feature: in this case you may specify <tt>numberOfTasks=1</tt>.</p>
  *
  *
- * <h4>Continuation model outside the bounds of the large matrices</h4>
+ * <h2>Continuation model outside the bounds of the large matrices</h2>
  *
  * <p>The behaviour of the aperture processor, tiled by {@link #tile(ApertureProcessor oneTileProcessor)} method,
  * can little differ from the behaviour of the original one-tile processor near the bounds of the matrices,
@@ -312,7 +312,7 @@ import java.util.*;
  * to <tt>IllegalArgumentException</tt>.</p>
  *
  *
- * <h4>Contexts for the one-tile processor</h4>
+ * <h2>Contexts for the one-tile processor</h2>
  *
  * <p>First of all, we note that every tiled processor &mdash; a result of {@link #tile(ApertureProcessor)} method
  * &mdash; always implements not only {@link ApertureProcessor}, but also
@@ -408,7 +408,7 @@ import java.util.*;
  * </ul>
  *
  *
- * <h4>Restrictions</h4>
+ * <h2>Restrictions</h2>
  *
  * <p>Every instance of this class can work only with some fixed number <i>n</i> of matrix dimensions,
  * returned by {@link #dimCount()} method and equal to the length of <tt>tileDim</tt> array,
@@ -432,7 +432,7 @@ import java.util.*;
  * {@link #tile(ApertureProcessor) tiled} processor throws <tt>IndexOutOfBoundsException</tt> and does nothing.
  * Of course, these are very improbable cases.</p>
  *
- * <h4>Creating instances of this class</h4>
+ * <h2>Creating instances of this class</h2>
  *
  * <p>To create instances of this class, you should use one of the following methods:</p>
  *
@@ -444,7 +444,7 @@ import java.util.*;
  * </ul>
  *
  *
- * <h4>Multithreading compatibility</h4>
+ * <h2>Multithreading compatibility</h2>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.

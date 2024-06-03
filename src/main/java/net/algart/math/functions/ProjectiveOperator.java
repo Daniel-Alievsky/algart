@@ -43,7 +43,9 @@ import java.util.Arrays;
  * In other words, the argument of the function, the vector <b>x</b>, is mapped to the following vector <b>y</b>:</p>
  *
  * <blockquote>
- * <table><tr>
+ * <table>
+ * <caption></caption>
+ * <tr>
  * <td><nobr><b>y</b> = </nobr></td>
  * <td><nobr><i>y</i><sub>0</sub><br><i>y</i><sub>1</sub><br>...<br><i>y</i><sub><i>n</i>&minus;1</sub></nobr></td>
  * <td><nobr> = </nobr></td>

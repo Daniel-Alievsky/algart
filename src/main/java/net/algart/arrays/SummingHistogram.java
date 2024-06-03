@@ -79,6 +79,7 @@ import java.util.Objects;
  *
  * <blockquote>
  * <table border="1" cellpadding="8" cellspacing="0">
+ * <caption></caption>
  * <tr><td align="center"><b>Definition of floating-point summing functions
  * <i>S</i>(<i>r</i>) and <i>s</i>(<i>v</i>)
  * </td></tr>

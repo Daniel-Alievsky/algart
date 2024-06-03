@@ -42,7 +42,7 @@ import net.algart.math.*;
  * <p>Patterns are the arguments of many image processing filters.
  * For example, a pattern may specify the form and sizes of the aperture for a linear filter.</p>
  *
- * <h4>Integer patterns</h4>
+ * <h2>Integer patterns</h2>
  *
  * <p>The very important subclass among all patterns is <b><i>integer patterns</i></b>,
  * consisting of points with integer coordinates. More precisely, a pattern is called <i>integer</i>,
@@ -74,7 +74,7 @@ import net.algart.math.*;
  * <li>{@link Patterns#newRectangularIntegerPattern(net.algart.math.IPoint, net.algart.math.IPoint)}.</li>
  * </ul>
  *
- * <h4>Uniform-grid patterns</h4>
+ * <h2>Uniform-grid patterns</h2>
  *
  * <p>The important subclass among all patterns is <b><i>uniform-grid patterns</i></b>, represented
  * by the subinterface {@link UniformGridPattern}. Uniform-grid patterns is a pattern, all points
@@ -141,7 +141,7 @@ import net.algart.math.*;
  * <li>{@link Patterns#newPattern(java.util.Collection)}.</li>
  * </ul>
  *
- * <h4>Direct point-set patterns</h4>
+ * <h2>Direct point-set patterns</h2>
  *
  * <p>One of the most popular, basic kinds of patterns is <b><i>direct point-set patterns</i></b>,
  * represented by the subinterface {@link DirectPointSetPattern}.
@@ -181,7 +181,7 @@ import net.algart.math.*;
  * Most of other direct point-set patterns, provided by this package, are uniform-grid and
  * implement {@link DirectPointSetUniformGridPattern} interface.</p>
  *
- * <h4>Rectangular patterns</h4>
+ * <h2>Rectangular patterns</h2>
  *
  * <p>The second popular basic kind of patterns is <b><i>rectangular patterns</i></b>,
  * represented by the subinterface {@link RectangularPattern}.
@@ -228,7 +228,7 @@ import net.algart.math.*;
  * <li>{@link Patterns#newRectangularIntegerPattern(net.algart.math.IPoint, net.algart.math.IPoint)}.</li>
  * </ul>
  *
- * <h4>Complex patterns</h4>
+ * <h2>Complex patterns</h2>
  *
  * <p>Besides the basic types of patterns &mdash; direct point-set and rectangular &mdash; this package
  * allows to create more complex forms of patterns. Such patterns do not actually store information
@@ -250,7 +250,7 @@ import net.algart.math.*;
  * and consisting of millions or milliards points, via sequential dilations with the Minkowski summands
  * of such a pattern, extracted by {@link #minkowskiDecomposition(int)} call.</p>
  *
- * <h4>Coordinate restrictions</h4>
+ * <h2>Coordinate restrictions</h2>
  *
  * <p>There are the following guarantees for coordinates of the points of any pattern:</p>
  *
@@ -377,7 +377,7 @@ import net.algart.math.*;
  * symmetric()})</tt> always works successfully and never throw {@link TooLargePatternCoordinatesException}.</p>
  *
  *
- * <h4>Note about <tt>equals()</tt></h4>
+ * <h2>Note about <tt>equals()</tt></h2>
  *
  * The <tt>equals()</tt> method in the classes, implementing this interface, <i>may</i> return <tt>false</tt>
  * for two patterns, consisting of the same point sets,
@@ -406,7 +406,7 @@ import net.algart.math.*;
  * then two patterns consists of the identical point sets.</li>
  * </ul>
  *
- * <h4>Multithreading compatibility</h4>
+ * <h2>Multithreading compatibility</h2>
  *
  * <p>The classes, implementing this interface, are <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
