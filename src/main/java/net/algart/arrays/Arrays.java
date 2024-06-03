@@ -2389,6 +2389,7 @@ public class Arrays {
      * but if <tt>element</tt> is <tt>null</tt>, the element type is always <tt>Object.class</tt>,
      * that leads to problems while copying the created array to another object arrays.)
      *
+     * @param <T>         the generic type of elements.
      * @param n           the number of null elements in the returned array.
      * @param elementType the element type of the returned array.
      * @return an immutable unresizable array consisting of <tt>n</tt> <tt>null</tt> elements.
@@ -2432,6 +2433,7 @@ public class Arrays {
      * Equivalent to {@link #asIndexFuncArray(boolean, Func, Class, long)
      * asIndexFuncArray(true, f, requiredType, length)}.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function used for calculating all result array elements.
      * @param requiredType desired type of the returned array.
      * @param length       the length of the returned array.
@@ -2460,6 +2462,7 @@ public class Arrays {
      * about precise details of forming the elements of the returned array on the base
      * of the real result of calling {@link Func#get(double...)} method.
      *
+     * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link #asFuncArray(boolean, Func, Class, PArray...)} method).

@@ -1222,6 +1222,7 @@ public interface MemoryModel {
      * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memoryModel.newObjectMatrix(String.class, 100, 100);
      * </pre>
      *
+     * @param <E>         the generic type of array elements.
      * @param elementType the type of matrix elements.
      * @param dim         the dimensions of the matrix.
      * @return created matrix.
@@ -1245,6 +1246,7 @@ public interface MemoryModel {
      * newUnresizableLazyCopy}(matrix.{@link Matrix#array() array()})).{@link Matrix#cast(Class)
      * cast}(arraySupertype)</tt>.
      *
+     * @param <T>            the generic type of AlgART array.
      * @param arraySupertype the desired type of the underlying array of the new lazy copy
      *                       (usually an updatable version of the built-in array of the source matrix).
      * @param matrix         the source matrix.
@@ -1499,6 +1501,7 @@ public interface MemoryModel {
      * Equivalent to <tt>(UpdatableObjectArray&lt;E&gt;){@link #valueOf(Object, int, int)
      * valueOf}((Object)array, offset, count)</tt>.
      *
+     * @param <E>    the generic type of array elements.
      * @param array  the source Java array with elements of constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
@@ -1511,6 +1514,7 @@ public interface MemoryModel {
     /**
      * Equivalent to <tt>(UpdatableObjectArray&lt;E&gt;){@link #valueOf(Object) valueOf}((Object)array)</tt>.
      *
+     * @param <E>   the generic type of array elements.
      * @param array the source Java array with elements of constructed AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.

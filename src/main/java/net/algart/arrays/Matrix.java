@@ -134,7 +134,6 @@ import java.util.List;
  * all creation methods throw <tt>IllegalArgumentException</tt> in this case.
  *
  * @param <T> the type of the built-in AlgART array.
- *
  * @author Daniel Alievsky
  * @see Array
  * @see UpdatableArray
@@ -652,6 +651,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * subinterfaces or subclasses, <tt>IllegalArgumentException</tt> is thrown instead:
      * updatable array classes cannot be specified in this method.)
      *
+     * @param <U>            the generic type of AlgART array.
      * @param arraySupertype the required supertype of the built-in AlgART array.
      * @return the canonical type of AlgART array of the same kind as the built-in one.
      * @throws NullPointerException     if the passed argument is <tt>null</tt>.
@@ -668,6 +668,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * if it is subtype of (or same type as) the passed <tt>arraySupertype</tt>,
      * or throws <tt>ClassCastException</tt> in other case.
      *
+     * @param <U>            the generic type of AlgART array.
      * @param arraySupertype the required supertype of the built-in AlgART array.
      * @return the canonical updatable type of AlgART array of the same kind as the built-in one.
      * @throws NullPointerException if the passed argument is <tt>null</tt>.
@@ -1157,6 +1158,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * <p>The array <tt>anotherArray</tt> must be {@link Array#isUnresizable() unresizable},
      * and its length must be equal to the length of the array built-in this matrix.
      *
+     * @param <U>          the generic type of AlgART array.
      * @param anotherArray some another AlgART array with the same length as {@link #array()}.
      * @return new matrix instance.
      * @throws NullPointerException     if <tt>anotherArray</tt> argument is <tt>null</tt>.
@@ -1176,6 +1178,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * <p>This method is useful when you need to cast the type of AlgART array,
      * built in this matrix, to to its sub- or superinterface.
      *
+     * @param <U>        the generic type of AlgART array.
      * @param arrayClass the type of built-in array in the new matrix.
      * @return new matrix with the same dimensions, based on the same array cast to the required type.
      * @throws NullPointerException if the argument is <tt>null</tt>.
@@ -2029,7 +2032,7 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Equivalent to <tt>{@link SimpleMemoryModel#asMatrix(Object, long...)}
      * SimpleMemoryModel.asMatrix}(array, dim)</tt>.
-
+     *
      * @param array the source Java array.
      * @param dim   the matrix dimensions.
      * @return a matrix backed by the specified Java array with the specified dimensions.

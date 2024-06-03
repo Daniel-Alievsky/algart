@@ -174,7 +174,6 @@ import java.util.logging.Logger;
  * or {@link #getInstance(DataFileModel)} methods.</p>
  *
  * @param <P> type of the path to data file.
- *
  * @author Daniel Alievsky
  */
 public final class LargeMemoryModel<P> extends AbstractMemoryModel {
@@ -190,20 +189,20 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     // must be initialized before creating default instance
 
     static final int MAX_NUMBER_OF_BANKS_IN_LAZY_FILL_MAP = Math.max(0,
-        InternalUtils.getIntProperty(
-        "net.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMap",
-        8 * 32 * 1048576));  // 32 MB for the bitmap, or ~512 TB for 2 MB banks
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.LargeMemoryModel.maxNumberOfBanksInLazyFillMap",
+                    8 * 32 * 1048576));  // 32 MB for the bitmap, or ~512 TB for 2 MB banks
 
     static final int DELETION_SLEEP_DELAY = 100; // ms
     static final int DELETION_TIMEOUT_IN_DISPOSE = Math.max(0,
-        InternalUtils.getIntProperty(
-        "net.algart.arrays.LargeMemoryModel.deletionTimeoutInDispose", 3000));  // 3 sec
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.LargeMemoryModel.deletionTimeoutInDispose", 3000));  // 3 sec
     static final int DELETION_TIMEOUT_IN_FINALIZATION = Math.max(0,
-        InternalUtils.getIntProperty(
-        "net.algart.arrays.LargeMemoryModel.deletionTimeoutInFinalization", 5));  // 2 attempts with 5 ms interval
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.LargeMemoryModel.deletionTimeoutInFinalization", 5));  // 2 attempts with 5 ms interval
     static final int DELETION_TIMEOUT_IN_CLEANER = Math.max(0,
-        InternalUtils.getIntProperty(
-        "net.algart.arrays.LargeMemoryModel.deletionTimeoutInCleaner", 100));  // 0.1 sec
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.LargeMemoryModel.deletionTimeoutInCleaner", 100));  // 0.1 sec
     static final int DELETION_LOOPS_IN_CLEANER = DefaultDataFileModel.UNSAFE_UNMAP_ON_EXIT ? 10 : 4;
 
     /**
@@ -213,17 +212,18 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     static final int MAX_NUMBER_OF_DELETIONS_WHILE_FINALIZATION = 100;
 
     private static final DataFileModel<File> GLOBAL_DATA_FILE_MODEL;
+
     static {
         DataFileModel<?> dfm = InternalUtils.getClassInstance(
-            "net.algart.arrays.LargeMemoryModel.dataFileModel",
-            DefaultDataFileModel.class.getName(),
-            DataFileModel.class,
-            LOGGER, "Default data file model will be used",
-            "DEFAULT", DefaultDataFileModel.class.getName(),
-            "STANDARD_IO", StandardIODataFileModel.class.getName());
+                "net.algart.arrays.LargeMemoryModel.dataFileModel",
+                DefaultDataFileModel.class.getName(),
+                DataFileModel.class,
+                LOGGER, "Default data file model will be used",
+                "DEFAULT", DefaultDataFileModel.class.getName(),
+                "STANDARD_IO", StandardIODataFileModel.class.getName());
         if (dfm.pathClass() != File.class) {
             LOGGER.severe("Illegal class specified by net.algart.arrays.LargeMemoryModel.dataFileModel: "
-                + "this data file model does not use java.io.File for describing file paths");
+                    + "this data file model does not use java.io.File for describing file paths");
             LOGGER.severe("Default data file model will be used");
             dfm = new DefaultDataFileModel();
         }
@@ -244,7 +244,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         this.dataFileModel = dataFileModel;
         if (dataFileModel.isAutoDeletionRequested()) {
             MappedDataStorages.installTempCleaner();
-            synchronized(allUsedDataFileModelsWithAutoDeletion) {
+            synchronized (allUsedDataFileModelsWithAutoDeletion) {
                 reapDataFileModels();
                 allUsedDataFileModelsWithAutoDeletion.put(
                         new WeakReference<>(dataFileModel, reapedDataFileModels), DUMMY);
@@ -288,13 +288,14 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     /**
      * Returns new instance of this memory model for the specified data file model.
      *
+     * @param <P>           type of the path to data file.
      * @param dataFileModel the data file model that will be used by this memory model instance.
      * @return new instance of this memory model.
      */
     public static <P> LargeMemoryModel<P> getInstance(DataFileModel<P> dataFileModel) {
         LargeMemoryModel<P> defInst = InternalUtils.cast(DEFAULT_INSTANCE);
         return dataFileModel == defInst.dataFileModel ?
-            defInst :
+                defInst :
                 new LargeMemoryModel<>(dataFileModel);
     }
 
@@ -376,10 +377,10 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else //[[Repeat.AutoGeneratedEnd]]
-        {
-            throw new UnsupportedElementTypeException(
-                "Only primitive element types are allowed in LargeMemoryModel (passed type: " + elementType + ")");
-        }
+            {
+                throw new UnsupportedElementTypeException(
+                        "Only primitive element types are allowed in LargeMemoryModel (passed type: " + elementType + ")");
+            }
     }
 
     public boolean isElementTypeSupported(Class<?> elementType) {
@@ -401,8 +402,8 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
 
     public boolean isCreatedBy(Array array) {
         return isLargeArray(array)
-            && ((MappedDataStorages.MappedStorage)((AbstractBufferArray)array).storage).ms.dataFileModel
-            == this.dataFileModel;
+                && ((MappedDataStorages.MappedStorage) ((AbstractBufferArray) array).storage).ms.dataFileModel
+                == this.dataFileModel;
     }
 
     /**
@@ -410,11 +411,11 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * Returns <tt>false</tt> if the passed array is <tt>null</tt> or an AlgART array created by another memory model.
      *
      * @param array the checked array  (can be <tt>null</tt>, than the method returns <tt>false</tt>).
-     * @return      <tt>true</tt> if this array is a large array created by a large memory model.
+     * @return <tt>true</tt> if this array is a large array created by a large memory model.
      */
     public static boolean isLargeArray(Array array) {
         return array instanceof AbstractBufferArray
-            && ((AbstractBufferArray)array).storage instanceof MappedDataStorages.MappedStorage;
+                && ((AbstractBufferArray) array).storage instanceof MappedDataStorages.MappedStorage;
     }
 
     /**
@@ -433,7 +434,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * must return <tt>true</tt>. In other case, <tt>IllegalArgumentException</tt> will be thrown.
      *
      * @param largeArray the AlgART array.
-     * @return           <tt>true</tt> if the corresponded data file is temporary and should be automatically deleted.
+     * @return <tt>true</tt> if the corresponded data file is temporary and should be automatically deleted.
      * @throws NullPointerException     if <tt>largeArray</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>largeArray</tt> is not large array
      *                                  (i.e. is not create by a large memory model).
@@ -443,7 +444,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         if (!(isLargeArray(largeArray))) {
             throw new IllegalArgumentException("The passed argument is not a large array");
         }
-        return ((MappedDataStorages.MappedStorage)((AbstractBufferArray)largeArray).storage).isAutoDeleted();
+        return ((MappedDataStorages.MappedStorage) ((AbstractBufferArray) largeArray).storage).isAutoDeleted();
     }
 
     /**
@@ -489,7 +490,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * must return <tt>true</tt>. In other case, <tt>IllegalArgumentException</tt> will be thrown.
      *
      * @param largeArray the AlgART array.
-     * @return           the data file model used in this array.
+     * @return the data file model used in this array.
      * @throws NullPointerException     if <tt>largeArray</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>largeArray</tt> is not large array
      *                                  (i.e. is not create by a large memory model).
@@ -499,7 +500,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         if (!(isLargeArray(largeArray))) {
             throw new IllegalArgumentException("The passed argument is not a large array");
         }
-        return ((MappedDataStorages.MappedStorage)((AbstractBufferArray)largeArray).storage).getDataFileModel();
+        return ((MappedDataStorages.MappedStorage) ((AbstractBufferArray) largeArray).storage).getDataFileModel();
     }
 
     /**
@@ -530,7 +531,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * will be thrown.
      *
      * @param largeArray the AlgART array.
-     * @return           the data file model used in this array.
+     * @return the data file model used in this array.
      * @throws NullPointerException     if <tt>largeArray</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>largeArray</tt> is not large array
      *                                  (i.e. is not created by a large memory model).
@@ -544,7 +545,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
             throw new IllegalArgumentException("The passed argument is not a large array");
         }
         Object path = ((MappedDataStorages.MappedStorage)
-            ((AbstractBufferArray) largeArray).storage).getDataFilePath();
+                ((AbstractBufferArray) largeArray).storage).getDataFilePath();
         return dataFileModel.pathClass().cast(path);
     }
 
@@ -557,16 +558,16 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * and is compiled without "unchecked cast" warning.
      *
      * @param pathClass the type of the data file paths in the returned memory model.
-     * @return          this memory model, cast to the required type of the data file paths.
+     * @return this memory model, cast to the required type of the data file paths.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      * @throws ClassCastException   if the current type of the data file paths cannot be cast to the required type.
      */
     public <U> LargeMemoryModel<U> cast(Class<U> pathClass) {
         if (!pathClass.isAssignableFrom(dataFileModel.pathClass())) {
             throw new ClassCastException("Cannot cast " + LargeMemoryModel.class.getName()
-                + "<" + dataFileModel.pathClass().getName()
-                + "> to the type " + LargeMemoryModel.class.getName()
-                + "<" + pathClass.getName() + ">");
+                    + "<" + dataFileModel.pathClass().getName()
+                    + "> to the type " + LargeMemoryModel.class.getName()
+                    + "<" + pathClass.getName() + ">");
         }
         return InternalUtils.cast(this);
     }
@@ -595,7 +596,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * must return <tt>true</tt>. In other case, <tt>IllegalArgumentException</tt> will be thrown.
      *
      * @param largeArray the AlgART array.
-     * @return           <tt>true</tt> if this array and any other arrays, sharing data with it, are immutable.
+     * @return <tt>true</tt> if this array and any other arrays, sharing data with it, are immutable.
      * @throws NullPointerException     if <tt>largeArray</tt> is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>largeArray</tt> is not large array
      *                                  (i.e. is not created by a large memory model).
@@ -605,7 +606,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         if (!(isLargeArray(largeArray))) {
             throw new IllegalArgumentException("The passed argument is not a large array");
         }
-        return ((MappedDataStorages.MappedStorage)((AbstractBufferArray)largeArray).storage).ms.readOnly;
+        return ((MappedDataStorages.MappedStorage) ((AbstractBufferArray) largeArray).storage).ms.readOnly;
     }
 
     /**
@@ -675,7 +676,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException               if some I/O error occurred while opening the file. (In a case of any I/O
      *                                   problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                   will be thrown instead of <tt>IOException</tt>.)
@@ -697,9 +698,8 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @see Arrays#read(java.io.InputStream, UpdatablePArray, ByteOrder)
      */
     public PArray asArray(P filePath,
-        Class<?> elementType, long filePosition, long fileAreaSize, ByteOrder byteOrder)
-        throws IOException
-    {
+                          Class<?> elementType, long filePosition, long fileAreaSize, ByteOrder byteOrder)
+            throws IOException {
         Objects.requireNonNull(filePath, "Null filePath argument");
         Objects.requireNonNull(elementType, "Null elementType argument");
         if (filePosition < 0) {
@@ -714,64 +714,63 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
             fileAreaSize = checkFilePositionAndAreaSize(file, filePosition, fileAreaSize, false, true);
             if (elementType == boolean.class && fileAreaSize > Long.MAX_VALUE >>> 3) {
                 throw new TooLargeArrayException("Too large desired bit array length: >2^63-1 bits ("
-                    + fileAreaSize + " bytes)");
+                        + fileAreaSize + " bytes)");
             }
             DataStorage storage;
             AbstractBufferArray result;
             if (elementType == boolean.class) {
                 storage = new MappedDataStorages.MappedBitStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
+                        dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
                 long length = (fileAreaSize >> DataStorage.BYTES_PER_LONG_LOG) << 6;
                 result = new BufferBitArray(storage, length, length, 0L, false);
-            } else
-            if (elementType == byte.class) {
+            } else if (elementType == byte.class) {
                 storage = new MappedDataStorages.MappedByteStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
+                        dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
                 result = new BufferByteArray(storage, fileAreaSize, fileAreaSize, 0L, false);
             } else
-            //[[Repeat() char ==> short,,int,,long,,float,,double;;
-            //           Char ==> Short,,Int,,Long,,Float,,Double;;
-            //           CHAR ==> SHORT,,INT,,LONG,,FLOAT,,DOUBLE ]]
-            if (elementType == char.class) {
-                storage = new MappedDataStorages.MappedCharStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_CHAR_LOG;
-                result = new BufferCharArray(storage, length, length, 0L, false);
-            } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-            if (elementType == short.class) {
-                storage = new MappedDataStorages.MappedShortStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_SHORT_LOG;
-                result = new BufferShortArray(storage, length, length, 0L, false);
-            } else
-            if (elementType == int.class) {
-                storage = new MappedDataStorages.MappedIntStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_INT_LOG;
-                result = new BufferIntArray(storage, length, length, 0L, false);
-            } else
-            if (elementType == long.class) {
-                storage = new MappedDataStorages.MappedLongStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_LONG_LOG;
-                result = new BufferLongArray(storage, length, length, 0L, false);
-            } else
-            if (elementType == float.class) {
-                storage = new MappedDataStorages.MappedFloatStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_FLOAT_LOG;
-                result = new BufferFloatArray(storage, length, length, 0L, false);
-            } else
-            if (elementType == double.class) {
-                storage = new MappedDataStorages.MappedDoubleStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_DOUBLE_LOG;
-                result = new BufferDoubleArray(storage, length, length, 0L, false);
-            } else //[[Repeat.AutoGeneratedEnd]]
-            {
-                throw new UnsupportedElementTypeException(
-                    "Only primitive element types are allowed in LargeMemoryModel (passed type: " + elementType + ")");
-            }
+                //[[Repeat() char ==> short,,int,,long,,float,,double;;
+                //           Char ==> Short,,Int,,Long,,Float,,Double;;
+                //           CHAR ==> SHORT,,INT,,LONG,,FLOAT,,DOUBLE ]]
+                if (elementType == char.class) {
+                    storage = new MappedDataStorages.MappedCharStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_CHAR_LOG;
+                    result = new BufferCharArray(storage, length, length, 0L, false);
+                } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
+                if (elementType == short.class) {
+                    storage = new MappedDataStorages.MappedShortStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_SHORT_LOG;
+                    result = new BufferShortArray(storage, length, length, 0L, false);
+                } else
+                if (elementType == int.class) {
+                    storage = new MappedDataStorages.MappedIntStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_INT_LOG;
+                    result = new BufferIntArray(storage, length, length, 0L, false);
+                } else
+                if (elementType == long.class) {
+                    storage = new MappedDataStorages.MappedLongStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_LONG_LOG;
+                    result = new BufferLongArray(storage, length, length, 0L, false);
+                } else
+                if (elementType == float.class) {
+                    storage = new MappedDataStorages.MappedFloatStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_FLOAT_LOG;
+                    result = new BufferFloatArray(storage, length, length, 0L, false);
+                } else
+                if (elementType == double.class) {
+                    storage = new MappedDataStorages.MappedDoubleStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, true, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_DOUBLE_LOG;
+                    result = new BufferDoubleArray(storage, length, length, 0L, false);
+                } else //[[Repeat.AutoGeneratedEnd]]
+                    {
+                        throw new UnsupportedElementTypeException(
+                                "Only primitive element types are allowed in LargeMemoryModel (passed type: " + elementType + ")");
+                    }
             BufferArraysImpl.forgetOnDeallocation(result);
             if (filePosition == 0) {
                 result.setNewReadOnlyViewStatus();
@@ -861,7 +860,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                     if <tt>false</tt>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -882,9 +881,8 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @see Arrays#write(java.io.OutputStream, PArray, ByteOrder)
      */
     public UpdatablePArray asUpdatableArray(P filePath,
-        Class<?> elementType, long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
-        throws IOException
-    {
+                                            Class<?> elementType, long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
+            throws IOException {
         Objects.requireNonNull(filePath, "Null filePath argument");
         Objects.requireNonNull(elementType, "Null elementType argument");
         if (filePosition < 0) {
@@ -898,65 +896,64 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
             fileAreaSize = checkFilePositionAndAreaSize(file, filePosition, fileAreaSize, truncate, false);
             if (elementType == boolean.class && fileAreaSize > Long.MAX_VALUE >>> 3) {
                 throw new TooLargeArrayException("Too large desired bit array length: >2^63-1 bits ("
-                    + fileAreaSize + " bytes)");
+                        + fileAreaSize + " bytes)");
             }
             DataStorage storage;
             AbstractBufferArray result;
             if (elementType == boolean.class) {
                 storage = new MappedDataStorages.MappedBitStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
+                        dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
                 long length = (fileAreaSize >> DataStorage.BYTES_PER_LONG_LOG) << 6;
                 result = new UpdatableBufferBitArray(storage, length, length, 0L, false);
-            } else
-            if (elementType == byte.class) {
+            } else if (elementType == byte.class) {
                 storage = new MappedDataStorages.MappedByteStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
+                        dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
                 result = new UpdatableBufferByteArray(storage,
-                    fileAreaSize, fileAreaSize, 0L, false);
+                        fileAreaSize, fileAreaSize, 0L, false);
             } else
-            //[[Repeat() char ==> short,,int,,long,,float,,double;;
-            //           Char ==> Short,,Int,,Long,,Float,,Double;;
-            //           CHAR ==> SHORT,,INT,,LONG,,FLOAT,,DOUBLE]]
-            if (elementType == char.class) {
-                storage = new MappedDataStorages.MappedCharStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_CHAR_LOG;
-                result = new UpdatableBufferCharArray(storage, length, length, 0L, false);
-            } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-            if (elementType == short.class) {
-                storage = new MappedDataStorages.MappedShortStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_SHORT_LOG;
-                result = new UpdatableBufferShortArray(storage, length, length, 0L, false);
-            } else
-            if (elementType == int.class) {
-                storage = new MappedDataStorages.MappedIntStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_INT_LOG;
-                result = new UpdatableBufferIntArray(storage, length, length, 0L, false);
-            } else
-            if (elementType == long.class) {
-                storage = new MappedDataStorages.MappedLongStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_LONG_LOG;
-                result = new UpdatableBufferLongArray(storage, length, length, 0L, false);
-            } else
-            if (elementType == float.class) {
-                storage = new MappedDataStorages.MappedFloatStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_FLOAT_LOG;
-                result = new UpdatableBufferFloatArray(storage, length, length, 0L, false);
-            } else
-            if (elementType == double.class) {
-                storage = new MappedDataStorages.MappedDoubleStorage(getMappingSettings(
-                    dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
-                long length = fileAreaSize >> DataStorage.BYTES_PER_DOUBLE_LOG;
-                result = new UpdatableBufferDoubleArray(storage, length, length, 0L, false);
-            } else //[[Repeat.AutoGeneratedEnd]]
-            {
-                throw new UnsupportedElementTypeException(
-                    "Only primitive element types are allowed in LargeMemoryModel (passed type: " + elementType + ")");
-            }
+                //[[Repeat() char ==> short,,int,,long,,float,,double;;
+                //           Char ==> Short,,Int,,Long,,Float,,Double;;
+                //           CHAR ==> SHORT,,INT,,LONG,,FLOAT,,DOUBLE]]
+                if (elementType == char.class) {
+                    storage = new MappedDataStorages.MappedCharStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_CHAR_LOG;
+                    result = new UpdatableBufferCharArray(storage, length, length, 0L, false);
+                } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
+                if (elementType == short.class) {
+                    storage = new MappedDataStorages.MappedShortStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_SHORT_LOG;
+                    result = new UpdatableBufferShortArray(storage, length, length, 0L, false);
+                } else
+                if (elementType == int.class) {
+                    storage = new MappedDataStorages.MappedIntStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_INT_LOG;
+                    result = new UpdatableBufferIntArray(storage, length, length, 0L, false);
+                } else
+                if (elementType == long.class) {
+                    storage = new MappedDataStorages.MappedLongStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_LONG_LOG;
+                    result = new UpdatableBufferLongArray(storage, length, length, 0L, false);
+                } else
+                if (elementType == float.class) {
+                    storage = new MappedDataStorages.MappedFloatStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_FLOAT_LOG;
+                    result = new UpdatableBufferFloatArray(storage, length, length, 0L, false);
+                } else
+                if (elementType == double.class) {
+                    storage = new MappedDataStorages.MappedDoubleStorage(getMappingSettings(
+                            dataFileModel, file, filePosition, filePosition + fileAreaSize, false, elementType));
+                    long length = fileAreaSize >> DataStorage.BYTES_PER_DOUBLE_LOG;
+                    result = new UpdatableBufferDoubleArray(storage, length, length, 0L, false);
+                } else //[[Repeat.AutoGeneratedEnd]]
+                    {
+                        throw new UnsupportedElementTypeException(
+                                "Only primitive element types are allowed in LargeMemoryModel (passed type: " + elementType + ")");
+                    }
             BufferArraysImpl.forgetOnDeallocation(result);
             return (UpdatablePArray) result;
         } catch (Error e) {
@@ -978,6 +975,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *
      * @,,$1@,,...
      */
+
     /**
      * Equivalent to <tt>(BitArray){@link #asArray
      * asArray(filePath, boolean.class, filePosition, fileAreaSize, byteOrder)}</tt>.
@@ -986,7 +984,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -996,10 +994,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public BitArray asBitArray(P filePath,
-        long filePosition, long fileAreaSize, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (BitArray)asArray(filePath, boolean.class, filePosition, fileAreaSize, byteOrder);
+                               long filePosition, long fileAreaSize, ByteOrder byteOrder)
+            throws IOException {
+        return (BitArray) asArray(filePath, boolean.class, filePosition, fileAreaSize, byteOrder);
     }
 
     /**
@@ -1014,7 +1011,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                     if <tt>false</tt>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1024,13 +1021,13 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableBitArray asUpdatableBitArray(P filePath,
-        long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (UpdatableBitArray)asUpdatableArray(filePath, boolean.class,
-            filePosition, fileAreaSize, truncate, byteOrder);
+                                                 long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
+            throws IOException {
+        return (UpdatableBitArray) asUpdatableArray(filePath, boolean.class,
+                filePosition, fileAreaSize, truncate, byteOrder);
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
      * Equivalent to <tt>(CharArray){@link #asArray
      * asArray(filePath, char.class, filePosition, fileAreaSize, byteOrder)}</tt>.
@@ -1039,7 +1036,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1049,10 +1046,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public CharArray asCharArray(P filePath,
-        long filePosition, long fileAreaSize, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (CharArray)asArray(filePath, char.class, filePosition, fileAreaSize, byteOrder);
+                               long filePosition, long fileAreaSize, ByteOrder byteOrder)
+            throws IOException {
+        return (CharArray) asArray(filePath, char.class, filePosition, fileAreaSize, byteOrder);
     }
 
     /**
@@ -1067,7 +1063,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                     if <tt>false</tt>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1077,12 +1073,12 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableCharArray asUpdatableCharArray(P filePath,
-        long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (UpdatableCharArray)asUpdatableArray(filePath, char.class,
-            filePosition, fileAreaSize, truncate, byteOrder);
+                                                 long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
+            throws IOException {
+        return (UpdatableCharArray) asUpdatableArray(filePath, char.class,
+                filePosition, fileAreaSize, truncate, byteOrder);
     }
+
 
     /**
      * Equivalent to <tt>(ByteArray){@link #asArray
@@ -1095,7 +1091,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1108,10 +1104,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public ByteArray asByteArray(P filePath,
-        long filePosition, long fileAreaSize, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (ByteArray)asArray(filePath, byte.class, filePosition, fileAreaSize, byteOrder);
+                               long filePosition, long fileAreaSize, ByteOrder byteOrder)
+            throws IOException {
+        return (ByteArray) asArray(filePath, byte.class, filePosition, fileAreaSize, byteOrder);
     }
 
     /**
@@ -1129,7 +1124,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                     if <tt>false</tt>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1142,12 +1137,12 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableByteArray asUpdatableByteArray(P filePath,
-        long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (UpdatableByteArray)asUpdatableArray(filePath, byte.class,
-            filePosition, fileAreaSize, truncate, byteOrder);
+                                                 long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
+            throws IOException {
+        return (UpdatableByteArray) asUpdatableArray(filePath, byte.class,
+                filePosition, fileAreaSize, truncate, byteOrder);
     }
+
 
     /**
      * Equivalent to <tt>(ShortArray){@link #asArray
@@ -1157,7 +1152,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1167,10 +1162,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public ShortArray asShortArray(P filePath,
-        long filePosition, long fileAreaSize, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (ShortArray)asArray(filePath, short.class, filePosition, fileAreaSize, byteOrder);
+                               long filePosition, long fileAreaSize, ByteOrder byteOrder)
+            throws IOException {
+        return (ShortArray) asArray(filePath, short.class, filePosition, fileAreaSize, byteOrder);
     }
 
     /**
@@ -1185,7 +1179,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                     if <tt>false</tt>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1195,12 +1189,12 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableShortArray asUpdatableShortArray(P filePath,
-        long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (UpdatableShortArray)asUpdatableArray(filePath, short.class,
-            filePosition, fileAreaSize, truncate, byteOrder);
+                                                 long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
+            throws IOException {
+        return (UpdatableShortArray) asUpdatableArray(filePath, short.class,
+                filePosition, fileAreaSize, truncate, byteOrder);
     }
+
 
     /**
      * Equivalent to <tt>(IntArray){@link #asArray
@@ -1210,7 +1204,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1220,10 +1214,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public IntArray asIntArray(P filePath,
-        long filePosition, long fileAreaSize, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (IntArray)asArray(filePath, int.class, filePosition, fileAreaSize, byteOrder);
+                               long filePosition, long fileAreaSize, ByteOrder byteOrder)
+            throws IOException {
+        return (IntArray) asArray(filePath, int.class, filePosition, fileAreaSize, byteOrder);
     }
 
     /**
@@ -1238,7 +1231,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                     if <tt>false</tt>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1248,12 +1241,12 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableIntArray asUpdatableIntArray(P filePath,
-        long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (UpdatableIntArray)asUpdatableArray(filePath, int.class,
-            filePosition, fileAreaSize, truncate, byteOrder);
+                                                 long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
+            throws IOException {
+        return (UpdatableIntArray) asUpdatableArray(filePath, int.class,
+                filePosition, fileAreaSize, truncate, byteOrder);
     }
+
 
     /**
      * Equivalent to <tt>(LongArray){@link #asArray
@@ -1263,7 +1256,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1273,10 +1266,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public LongArray asLongArray(P filePath,
-        long filePosition, long fileAreaSize, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (LongArray)asArray(filePath, long.class, filePosition, fileAreaSize, byteOrder);
+                               long filePosition, long fileAreaSize, ByteOrder byteOrder)
+            throws IOException {
+        return (LongArray) asArray(filePath, long.class, filePosition, fileAreaSize, byteOrder);
     }
 
     /**
@@ -1291,7 +1283,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                     if <tt>false</tt>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1301,12 +1293,12 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableLongArray asUpdatableLongArray(P filePath,
-        long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (UpdatableLongArray)asUpdatableArray(filePath, long.class,
-            filePosition, fileAreaSize, truncate, byteOrder);
+                                                 long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
+            throws IOException {
+        return (UpdatableLongArray) asUpdatableArray(filePath, long.class,
+                filePosition, fileAreaSize, truncate, byteOrder);
     }
+
 
     /**
      * Equivalent to <tt>(FloatArray){@link #asArray
@@ -1316,7 +1308,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1326,10 +1318,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public FloatArray asFloatArray(P filePath,
-        long filePosition, long fileAreaSize, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (FloatArray)asArray(filePath, float.class, filePosition, fileAreaSize, byteOrder);
+                               long filePosition, long fileAreaSize, ByteOrder byteOrder)
+            throws IOException {
+        return (FloatArray) asArray(filePath, float.class, filePosition, fileAreaSize, byteOrder);
     }
 
     /**
@@ -1344,7 +1335,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                     if <tt>false</tt>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1354,12 +1345,12 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableFloatArray asUpdatableFloatArray(P filePath,
-        long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (UpdatableFloatArray)asUpdatableArray(filePath, float.class,
-            filePosition, fileAreaSize, truncate, byteOrder);
+                                                 long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
+            throws IOException {
+        return (UpdatableFloatArray) asUpdatableArray(filePath, float.class,
+                filePosition, fileAreaSize, truncate, byteOrder);
     }
+
 
     /**
      * Equivalent to <tt>(DoubleArray){@link #asArray
@@ -1369,7 +1360,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1379,10 +1370,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public DoubleArray asDoubleArray(P filePath,
-        long filePosition, long fileAreaSize, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (DoubleArray)asArray(filePath, double.class, filePosition, fileAreaSize, byteOrder);
+                               long filePosition, long fileAreaSize, ByteOrder byteOrder)
+            throws IOException {
+        return (DoubleArray) asArray(filePath, double.class, filePosition, fileAreaSize, byteOrder);
     }
 
     /**
@@ -1397,7 +1387,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                     if <tt>false</tt>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
-     * @return             a view of the specified region of the data file as an AlgART array.
+     * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
@@ -1407,11 +1397,10 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableDoubleArray asUpdatableDoubleArray(P filePath,
-        long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
-        throws IOException
-    {
-        return (UpdatableDoubleArray)asUpdatableArray(filePath, double.class,
-            filePosition, fileAreaSize, truncate, byteOrder);
+                                                 long filePosition, long fileAreaSize, boolean truncate, ByteOrder byteOrder)
+            throws IOException {
+        return (UpdatableDoubleArray) asUpdatableArray(filePath, double.class,
+                filePosition, fileAreaSize, truncate, byteOrder);
     }
     /*Repeat.AutoGeneratedEnd*/
 
@@ -1421,8 +1410,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     }
 
     public Matrix<? extends PArray> asMatrix(P filePath, MatrixInfo matrixInfo)
-        throws IOException, IllegalInfoSyntaxException
-    {
+            throws IOException, IllegalInfoSyntaxException {
         Objects.requireNonNull(matrixInfo, "Null matrixInfo argument");
         Map<String, String> additionalProperties = matrixInfo.additionalProperties();
         final Matrix<? extends PArray> nCopiesMatrix = getNCopiesMatrix(matrixInfo, additionalProperties);
@@ -1430,9 +1418,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
             return nCopiesMatrix;
         }
         PArray array = asArray(filePath,
-            matrixInfo.elementType(),
-            matrixInfo.dataOffset(), ALL_FILE,
-            matrixInfo.byteOrder());
+                matrixInfo.elementType(),
+                matrixInfo.dataOffset(), ALL_FILE,
+                matrixInfo.byteOrder());
         array = (PArray) array.subArr(0, Math.min(array.length(), matrixInfo.size()));
         // for example, for bit arrays it can mean uneven number of bytes
         // "min" because matrix information may be damaged: in this case its better to produce exception little later
@@ -1448,8 +1436,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     }
 
     public Matrix<? extends UpdatablePArray> asUpdatableMatrix(P filePath, MatrixInfo matrixInfo)
-        throws IOException, IllegalInfoSyntaxException
-    {
+            throws IOException, IllegalInfoSyntaxException {
         Objects.requireNonNull(matrixInfo, "Null matrixInfo argument");
         Map<String, String> additionalProperties = matrixInfo.additionalProperties();
         PArray nCopiesArray = getNCopiesArray(matrixInfo.elementType(), matrixInfo.size(), additionalProperties);
@@ -1457,9 +1444,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
             throw new IOException("Constant matrix cannot be loaded as updatable one");
         }
         UpdatablePArray array = asUpdatableArray(filePath,
-            matrixInfo.elementType(),
-            matrixInfo.dataOffset(), ALL_FILE, false,
-            matrixInfo.byteOrder());
+                matrixInfo.elementType(),
+                matrixInfo.dataOffset(), ALL_FILE, false,
+                matrixInfo.byteOrder());
         array = array.subArr(0, Math.min(array.length(), matrixInfo.size()));
         // for example, for bit arrays it can mean uneven number of bytes
         // "min" because matrix information may be damaged: in this case its better to produce exception later
@@ -1503,7 +1490,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * See comments to {@link MemoryModel#newLazyCopy(Array)} method.
      *
      * @param array the source array.
-     * @return      the lazy copy of the source array.
+     * @return the lazy copy of the source array.
      * @throws NullPointerException            if the argument is <tt>null</tt>.
      * @throws UnsupportedElementTypeException if the element type of the passed array
      *                                         is not supported by this memory model.
@@ -1516,64 +1503,64 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         //[[Repeat() boolean ==> char,,byte,,short,,int,,long,,float,,double;;
         //           Bit     ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double]]
         if (elementType == boolean.class) {
-            storage = new MappedDataStorages.MappedBitStorage(getMappingSettings((PArray)array, false));
+            storage = new MappedDataStorages.MappedBitStorage(getMappingSettings((PArray) array, false));
             MutableBufferBitArray result = new MutableBufferBitArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
         if (elementType == char.class) {
-            storage = new MappedDataStorages.MappedCharStorage(getMappingSettings((PArray)array, false));
+            storage = new MappedDataStorages.MappedCharStorage(getMappingSettings((PArray) array, false));
             MutableBufferCharArray result = new MutableBufferCharArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == byte.class) {
-            storage = new MappedDataStorages.MappedByteStorage(getMappingSettings((PArray)array, false));
+            storage = new MappedDataStorages.MappedByteStorage(getMappingSettings((PArray) array, false));
             MutableBufferByteArray result = new MutableBufferByteArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == short.class) {
-            storage = new MappedDataStorages.MappedShortStorage(getMappingSettings((PArray)array, false));
+            storage = new MappedDataStorages.MappedShortStorage(getMappingSettings((PArray) array, false));
             MutableBufferShortArray result = new MutableBufferShortArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == int.class) {
-            storage = new MappedDataStorages.MappedIntStorage(getMappingSettings((PArray)array, false));
+            storage = new MappedDataStorages.MappedIntStorage(getMappingSettings((PArray) array, false));
             MutableBufferIntArray result = new MutableBufferIntArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == long.class) {
-            storage = new MappedDataStorages.MappedLongStorage(getMappingSettings((PArray)array, false));
+            storage = new MappedDataStorages.MappedLongStorage(getMappingSettings((PArray) array, false));
             MutableBufferLongArray result = new MutableBufferLongArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == float.class) {
-            storage = new MappedDataStorages.MappedFloatStorage(getMappingSettings((PArray)array, false));
+            storage = new MappedDataStorages.MappedFloatStorage(getMappingSettings((PArray) array, false));
             MutableBufferFloatArray result = new MutableBufferFloatArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == double.class) {
-            storage = new MappedDataStorages.MappedDoubleStorage(getMappingSettings((PArray)array, false));
+            storage = new MappedDataStorages.MappedDoubleStorage(getMappingSettings((PArray) array, false));
             MutableBufferDoubleArray result = new MutableBufferDoubleArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else //[[Repeat.AutoGeneratedEnd]]
-        {
-            throw new UnsupportedElementTypeException(
-                "Only primitive element types are allowed in LargeMemoryModel (passed array: " + array + ")");
-        }
+            {
+                throw new UnsupportedElementTypeException(
+                        "Only primitive element types are allowed in LargeMemoryModel (passed array: " + array + ")");
+            }
     }
 
     /**
      * See comments to {@link MemoryModel#newUnresizableLazyCopy(Array)} method.
      *
      * @param array the source array.
-     * @return      the lazy unresizable copy of the source array.
+     * @return the lazy unresizable copy of the source array.
      * @throws NullPointerException            if the argument is <tt>null</tt>.
      * @throws UnsupportedElementTypeException if the element type of the passed array
      *                                         is not supported by this memory model.
@@ -1586,57 +1573,57 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         //[[Repeat() boolean ==> char,,byte,,short,,int,,long,,float,,double;;
         //           Bit     ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double]]
         if (elementType == boolean.class) {
-            storage = new MappedDataStorages.MappedBitStorage(getMappingSettings((PArray)array, true));
+            storage = new MappedDataStorages.MappedBitStorage(getMappingSettings((PArray) array, true));
             UpdatableBufferBitArray result = new UpdatableBufferBitArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
         if (elementType == char.class) {
-            storage = new MappedDataStorages.MappedCharStorage(getMappingSettings((PArray)array, true));
+            storage = new MappedDataStorages.MappedCharStorage(getMappingSettings((PArray) array, true));
             UpdatableBufferCharArray result = new UpdatableBufferCharArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == byte.class) {
-            storage = new MappedDataStorages.MappedByteStorage(getMappingSettings((PArray)array, true));
+            storage = new MappedDataStorages.MappedByteStorage(getMappingSettings((PArray) array, true));
             UpdatableBufferByteArray result = new UpdatableBufferByteArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == short.class) {
-            storage = new MappedDataStorages.MappedShortStorage(getMappingSettings((PArray)array, true));
+            storage = new MappedDataStorages.MappedShortStorage(getMappingSettings((PArray) array, true));
             UpdatableBufferShortArray result = new UpdatableBufferShortArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == int.class) {
-            storage = new MappedDataStorages.MappedIntStorage(getMappingSettings((PArray)array, true));
+            storage = new MappedDataStorages.MappedIntStorage(getMappingSettings((PArray) array, true));
             UpdatableBufferIntArray result = new UpdatableBufferIntArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == long.class) {
-            storage = new MappedDataStorages.MappedLongStorage(getMappingSettings((PArray)array, true));
+            storage = new MappedDataStorages.MappedLongStorage(getMappingSettings((PArray) array, true));
             UpdatableBufferLongArray result = new UpdatableBufferLongArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == float.class) {
-            storage = new MappedDataStorages.MappedFloatStorage(getMappingSettings((PArray)array, true));
+            storage = new MappedDataStorages.MappedFloatStorage(getMappingSettings((PArray) array, true));
             UpdatableBufferFloatArray result = new UpdatableBufferFloatArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == double.class) {
-            storage = new MappedDataStorages.MappedDoubleStorage(getMappingSettings((PArray)array, true));
+            storage = new MappedDataStorages.MappedDoubleStorage(getMappingSettings((PArray) array, true));
             UpdatableBufferDoubleArray result = new UpdatableBufferDoubleArray(storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else //[[Repeat.AutoGeneratedEnd]]
-        {
-            throw new UnsupportedElementTypeException(
-                "Only primitive element types are allowed in LargeMemoryModel (passed array: " + array + ")");
-        }
+            {
+                throw new UnsupportedElementTypeException(
+                        "Only primitive element types are allowed in LargeMemoryModel (passed array: " + array + ")");
+            }
     }
 
     /**
@@ -1661,7 +1648,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * This information may be useful for debugging.
      *
      * @return the current number of AlgART arrays, created by this model,
-     *         but not deallocated by the garbage collector yet.
+     * but not deallocated by the garbage collector yet.
      */
     public static int activeArrayFinalizationTasksCount() {
         return globalArrayFinalizer.activeTasksCount();
@@ -1676,7 +1663,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * This information may be useful for debugging.
      *
      * @return the current number of mapped blocks, created by this model,
-     *         but not deallocated by the garbage collector yet.
+     * but not deallocated by the garbage collector yet.
      */
     public static int activeMappingFinalizationTasksCount() {
         return globalMappingFinalizer.activeTasksCount();
@@ -1705,7 +1692,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      */
     public static Set<DataFileModel<?>> allUsedDataFileModelsWithAutoDeletion() {
         Set<DataFileModel<?>> result = new HashSet<>();
-        synchronized(allUsedDataFileModelsWithAutoDeletion) {
+        synchronized (allUsedDataFileModelsWithAutoDeletion) {
             reapDataFileModels();
             for (WeakReference<DataFileModel<?>> ref : allUsedDataFileModelsWithAutoDeletion.keySet()) {
                 DataFileModel<?> dfm = ref.get();
@@ -1731,26 +1718,24 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
 
     private MappedDataStorages.MappingSettings<P> getMappingSettings(Class<?> elementClass, boolean unresizable) {
         return MappedDataStorages.MappingSettings.getInstanceForTemporaryFile(
-            this.dataFileModel, elementClass, unresizable, null);
+                this.dataFileModel, elementClass, unresizable, null);
     }
 
     private MappedDataStorages.MappingSettings<P> getMappingSettings(
-        DataFileModel<P> dataFileModel, DataFile dataFile,
-        long dataFileStartOffset, long dataFileEndOffset,
-        boolean readOnly, Class<?> elementClass)
-    {
+            DataFileModel<P> dataFileModel, DataFile dataFile,
+            long dataFileStartOffset, long dataFileEndOffset,
+            boolean readOnly, Class<?> elementClass) {
         return MappedDataStorages.MappingSettings.getInstanceForExistingFile(dataFileModel,
-            dataFile, dataFileStartOffset, dataFileEndOffset, readOnly, elementClass);
+                dataFile, dataFileStartOffset, dataFileEndOffset, readOnly, elementClass);
     }
 
     private MappedDataStorages.MappingSettings<P> getMappingSettings(PArray lazyFillingPattern, boolean unresizable) {
         return MappedDataStorages.MappingSettings.getInstanceForTemporaryFile(
-            this.dataFileModel, lazyFillingPattern.elementType(), unresizable, lazyFillingPattern);
+                this.dataFileModel, lazyFillingPattern.elementType(), unresizable, lazyFillingPattern);
     }
 
     private long checkFilePositionAndAreaSize(DataFile file, long filePosition, long fileAreaSize,
-        boolean truncate, boolean readOnly)
-    {
+                                              boolean truncate, boolean readOnly) {
         assert filePosition >= 0;
         assert fileAreaSize == ALL_FILE || fileAreaSize >= 0;
         try {
@@ -1761,9 +1746,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
                 long fLen = file.length();
                 if (filePosition > (fileAreaSize == ALL_FILE ? fLen : fLen - fileAreaSize)) {
                     throw new IndexOutOfBoundsException("The file is too short: the required area is "
-                        + filePosition
-                        + (fileAreaSize != ALL_FILE ? ".." + (filePosition + fileAreaSize - 1) : "..EndOfFile")
-                        + ", but the file length is " + fLen + " (file \"" + file + "\")");
+                            + filePosition
+                            + (fileAreaSize != ALL_FILE ? ".." + (filePosition + fileAreaSize - 1) : "..EndOfFile")
+                            + ", but the file length is " + fLen + " (file \"" + file + "\")");
                 }
                 if (fileAreaSize == ALL_FILE) {
                     fileAreaSize = fLen - filePosition;
@@ -1773,7 +1758,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
                 if (requiredLen < 0) // overflow
                 {
                     throw new IllegalArgumentException("filePosition + fileAreaSize is too large (>"
-                        + Long.MAX_VALUE + ")");
+                            + Long.MAX_VALUE + ")");
                 }
                 long fLen = openResult == DataFile.OpenResult.CREATED || truncate ? -157 : file.length();
                 if (fLen < requiredLen) {
@@ -1804,106 +1789,104 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         if (elementType == boolean.class) {
             storage = new MappedDataStorages.MappedBitStorage(getMappingSettings(elementType, false));
             MutableBufferBitArray result = new MutableBufferBitArray(storage,
-                initialCapacity, initialLength, 0L, true);
+                    initialCapacity, initialLength, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
         if (elementType == char.class) {
             storage = new MappedDataStorages.MappedCharStorage(getMappingSettings(elementType, false));
             MutableBufferCharArray result = new MutableBufferCharArray(storage,
-                initialCapacity, initialLength, 0L, true);
+                    initialCapacity, initialLength, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == byte.class) {
             storage = new MappedDataStorages.MappedByteStorage(getMappingSettings(elementType, false));
             MutableBufferByteArray result = new MutableBufferByteArray(storage,
-                initialCapacity, initialLength, 0L, true);
+                    initialCapacity, initialLength, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == short.class) {
             storage = new MappedDataStorages.MappedShortStorage(getMappingSettings(elementType, false));
             MutableBufferShortArray result = new MutableBufferShortArray(storage,
-                initialCapacity, initialLength, 0L, true);
+                    initialCapacity, initialLength, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == int.class) {
             storage = new MappedDataStorages.MappedIntStorage(getMappingSettings(elementType, false));
             MutableBufferIntArray result = new MutableBufferIntArray(storage,
-                initialCapacity, initialLength, 0L, true);
+                    initialCapacity, initialLength, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == long.class) {
             storage = new MappedDataStorages.MappedLongStorage(getMappingSettings(elementType, false));
             MutableBufferLongArray result = new MutableBufferLongArray(storage,
-                initialCapacity, initialLength, 0L, true);
+                    initialCapacity, initialLength, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == float.class) {
             storage = new MappedDataStorages.MappedFloatStorage(getMappingSettings(elementType, false));
             MutableBufferFloatArray result = new MutableBufferFloatArray(storage,
-                initialCapacity, initialLength, 0L, true);
+                    initialCapacity, initialLength, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else
         if (elementType == double.class) {
             storage = new MappedDataStorages.MappedDoubleStorage(getMappingSettings(elementType, false));
             MutableBufferDoubleArray result = new MutableBufferDoubleArray(storage,
-                initialCapacity, initialLength, 0L, true);
+                    initialCapacity, initialLength, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else //[[Repeat.AutoGeneratedEnd]]
-        {
-            throw new UnsupportedElementTypeException(
-                "Only primitive element types are allowed in LargeMemoryModel (passed type: " + elementType + ")");
-        }
+            {
+                throw new UnsupportedElementTypeException(
+                        "Only primitive element types are allowed in LargeMemoryModel (passed type: " + elementType + ")");
+            }
     }
 
     private static String getNCopiesArrayDescription(PArray nCopiesArray) {
         if (nCopiesArray instanceof BitArray) {
-            return nCopiesArray.isEmpty() ? "false" : String.valueOf(((BitArray)nCopiesArray).getBit(0));
+            return nCopiesArray.isEmpty() ? "false" : String.valueOf(((BitArray) nCopiesArray).getBit(0));
         } else if (nCopiesArray instanceof CharArray) {
-            return nCopiesArray.isEmpty() ? "u0" : "u" + ((CharArray)nCopiesArray).getInt(0);
+            return nCopiesArray.isEmpty() ? "u0" : "u" + ((CharArray) nCopiesArray).getInt(0);
         } else if (nCopiesArray instanceof ByteArray) {
-            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((ByteArray)nCopiesArray).getByte(0));
+            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((ByteArray) nCopiesArray).getByte(0));
         } else if (nCopiesArray instanceof ShortArray) {
-            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((ShortArray)nCopiesArray).getShort(0));
+            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((ShortArray) nCopiesArray).getShort(0));
         } else if (nCopiesArray instanceof IntArray) {
-            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((IntArray)nCopiesArray).getInt(0));
+            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((IntArray) nCopiesArray).getInt(0));
         } else if (nCopiesArray instanceof LongArray) {
-            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((LongArray)nCopiesArray).getLong(0));
+            return nCopiesArray.isEmpty() ? "0" : String.valueOf(((LongArray) nCopiesArray).getLong(0));
         } else if (nCopiesArray instanceof FloatArray) {
             float v;
             return nCopiesArray.isEmpty() ? "0" : (v = ((FloatArray) nCopiesArray).getFloat(0))
-                + "__" + Float.floatToRawIntBits(v);
+                    + "__" + Float.floatToRawIntBits(v);
         } else if (nCopiesArray instanceof DoubleArray) {
             double v;
             return nCopiesArray.isEmpty() ? "0" : (v = nCopiesArray.getDouble(0))
-                + "__" + Double.doubleToRawLongBits(v);
+                    + "__" + Double.doubleToRawLongBits(v);
         } else {
             throw new AssertionError("Non-allowed type of passed array: " + nCopiesArray.getClass());
         }
     }
 
     private static Matrix<? extends PArray> getNCopiesMatrix(
-        MatrixInfo matrixInfo,
-        Map<String, String> additionalProperties)
-        throws IllegalInfoSyntaxException
-    {
+            MatrixInfo matrixInfo,
+            Map<String, String> additionalProperties)
+            throws IllegalInfoSyntaxException {
         PArray nCopiesArray = getNCopiesArray(matrixInfo.elementType(), matrixInfo.size(), additionalProperties);
         return nCopiesArray != null ? Matrices.matrix(nCopiesArray, matrixInfo.dimensions()) : null;
     }
 
     private static PArray getNCopiesArray(
-        Class<?> elementType,
-        long arrayLength,
-        Map<String, String> additionalProperties)
-        throws IllegalInfoSyntaxException
-    {
+            Class<?> elementType,
+            long arrayLength,
+            Map<String, String> additionalProperties)
+            throws IllegalInfoSyntaxException {
         String s = additionalProperties.get(CONSTANT_PROPERTY_NAME);
         if (s == null) {
             return null;
@@ -1915,29 +1898,29 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
             } else if (elementType == char.class) {
                 if (!s.startsWith("u")) {
                     throw new IllegalInfoSyntaxException("Starting 'u' expected in "
-                        + CONSTANT_PROPERTY_NAME + " property: \"" + s + "\"");
+                            + CONSTANT_PROPERTY_NAME + " property: \"" + s + "\"");
                 }
                 int value = Integer.parseInt(s.substring(1));
                 if (value < Character.MIN_VALUE || value > Character.MAX_VALUE) {
                     throw new IllegalInfoSyntaxException("The constant value " + value + " is out of range "
-                        + (int)Character.MIN_VALUE + ".." + (int)Character.MAX_VALUE + " in "
-                        + CONSTANT_PROPERTY_NAME + " property: \"" + s + "\"");
+                            + (int) Character.MIN_VALUE + ".." + (int) Character.MAX_VALUE + " in "
+                            + CONSTANT_PROPERTY_NAME + " property: \"" + s + "\"");
                 }
-                return Arrays.nCharCopies(arrayLength, (char)value);
+                return Arrays.nCharCopies(arrayLength, (char) value);
             } else if (elementType == byte.class) {
                 int value = Integer.parseInt(s);
                 if (value < 0 || value > 255) {
                     throw new IllegalInfoSyntaxException("The constant value " + value + " is out of range "
-                        + "0..255 in " + CONSTANT_PROPERTY_NAME + " property: \"" + s + "\"");
+                            + "0..255 in " + CONSTANT_PROPERTY_NAME + " property: \"" + s + "\"");
                 }
-                return Arrays.nByteCopies(arrayLength, (byte)value);
+                return Arrays.nByteCopies(arrayLength, (byte) value);
             } else if (elementType == short.class) {
                 int value = Integer.parseInt(s);
                 if (value < 0 || value > 65535) {
                     throw new IllegalInfoSyntaxException("The constant value " + value + " is out of range "
-                        + " 0..65535 in " + CONSTANT_PROPERTY_NAME + " property: \"" + s + "\"");
+                            + " 0..65535 in " + CONSTANT_PROPERTY_NAME + " property: \"" + s + "\"");
                 }
-                return Arrays.nShortCopies(arrayLength, (short)value);
+                return Arrays.nShortCopies(arrayLength, (short) value);
             } else if (elementType == int.class) {
                 int value = Integer.parseInt(s);
                 return Arrays.nIntCopies(arrayLength, value);
@@ -1965,7 +1948,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
             }
         } catch (NumberFormatException e) {
             IllegalInfoSyntaxException ex = new IllegalInfoSyntaxException(
-                "Illegal numeric format in the " + CONSTANT_PROPERTY_NAME + " property: \"" + s + "\"");
+                    "Illegal numeric format in the " + CONSTANT_PROPERTY_NAME + " property: \"" + s + "\"");
             ex.initCause(e);
             throw ex;
         }
@@ -1976,8 +1959,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     }
 
     private static long[] getTileDimensions(int dimCount, Map<String, String> additionalProperties)
-        throws IllegalInfoSyntaxException
-    {
+            throws IllegalInfoSyntaxException {
         String s = additionalProperties.get(TILE_DIMENSIONS_PROPERTY_NAME);
         if (s == null) {
             return null;
@@ -1985,7 +1967,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         String[] tileDimValues = s.split("x", dimCount + 1);
         if (tileDimValues.length != dimCount) {
             throw new IllegalInfoSyntaxException("The number of tile dimensions (in string \""
-                + s + "\") is not equal to the number of matrix dimensions " + dimCount);
+                    + s + "\") is not equal to the number of matrix dimensions " + dimCount);
         }
         try {
             long[] tileDimensions = new long[tileDimValues.length];
@@ -1995,16 +1977,17 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
             return tileDimensions;
         } catch (NumberFormatException e) {
             IllegalInfoSyntaxException ex = new IllegalInfoSyntaxException(
-                "Illegal numeric format in the " + TILE_DIMENSIONS_PROPERTY_NAME + " property: \"" + s + "\"");
+                    "Illegal numeric format in the " + TILE_DIMENSIONS_PROPERTY_NAME + " property: \"" + s + "\"");
             ex.initCause(e);
             throw ex;
         }
     }
 
     private static final Object DUMMY = new Object();
+
     private static void reapDataFileModels() {
         WeakReference<?> ref;
-        while ((ref = (WeakReference<?>)reapedDataFileModels.poll()) != null) {
+        while ((ref = (WeakReference<?>) reapedDataFileModels.poll()) != null) {
             allUsedDataFileModelsWithAutoDeletion.remove(ref);
         }
     }
