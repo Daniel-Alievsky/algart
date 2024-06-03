@@ -166,6 +166,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * if <tt>count</tt> is greater than 1.</p>
      *
      * @param arrayPos position of the first bit written in the destination array.
+     * @param bits     sequence of new bits to be copied into the destination array.
      * @param count    the number of bits to be written (must be in range 0..64).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
@@ -210,6 +211,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * to {@link #setBits64(long, long, int)}.</p>
      *
      * @param arrayPos position of the first bit written in the destination array.
+     * @param bits     sequence of new bits to be copied into the destination array.
      * @param count    the number of bits to be written (must be in range 0..64).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.

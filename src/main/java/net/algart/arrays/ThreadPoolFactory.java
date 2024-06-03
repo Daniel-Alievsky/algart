@@ -208,9 +208,7 @@ public interface ThreadPoolFactory {
      *
      * <p>If <tt>java.lang.InterruptedException</tt> is thrown while calling one of <tt>results[...].get()</tt>,
      * this exception is also caught, and this method throws <tt>java.io.IOError</tt>.
-     * (In Java 1.5, which does not support <tt>java.io.IOError</tt>,
-     * the similar <tt>net.algart.arrays.IOErrorJ5</tt></b> exception is thrown instead: this branch
-     * is not listed above.) Usually, you should avoid interrupting the threads, processing AlgART arrays,
+     * Usually, you should avoid interrupting the threads, processing AlgART arrays,
      * via <tt>Thread.interrupt()</tt> technique (which leads to <tt>java.lang.InterruptedException</tt>):
      * see the package description about runtime exceptions issue.
      *
@@ -259,6 +257,9 @@ public interface ThreadPoolFactory {
      * Equivalent to <tt>{@link #performTasks(ThreadFactory, Runnable[])
      * performTasks}(threadFactory, java.util.Arrays.copyOfRange(tasks, from, to))</tt> call.
      *
+     * @param threadFactory the factory, passed to {@link #getThreadPool(java.util.concurrent.ThreadFactory)}
+     *                      method to get the necessary thread pool;
+     *                      can be <tt>null</tt>, then some default thread factory will be used.
      * @param from  the initial index of the performed task, inclusive
      * @param to    the final index of the performed task, exclusive. (This index may lie outside the array.)
      * @param tasks the tasks which should be performed.

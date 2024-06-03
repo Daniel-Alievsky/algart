@@ -2495,6 +2495,7 @@ public class Arrays {
      * Equivalent to {@link #asFuncArray(boolean, Func, Class, PArray...)
      * asFuncArray(true, f, requiredType, x)}.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to all passed AlgART arrays.
      * @param requiredType desired type of the returned array.
      * @param x            several AlgART arrays; at least one array must be passed.
@@ -2619,6 +2620,7 @@ public class Arrays {
      * if the starting offset of the destination array is not greater than the starting offsets
      * of the arguments.
      *
+     * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see above).
      * @param f                 the mathematical function applied to all passed AlgART arrays.
@@ -2661,6 +2663,7 @@ public class Arrays {
      * #asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)
      * asUpdatableFuncArray(true, f, requiredType, x)}.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to all passed AlgART arrays.
      * @param requiredType desired type of the returned array.
      * @param x            several AlgART arrays; at least one array must be passed.
@@ -2731,6 +2734,7 @@ public class Arrays {
      * interfaces are not implemented.</li>
      * </ul>
      *
+     * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link #asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -6280,6 +6284,7 @@ public class Arrays {
      * implement {@link UpdatableArray} interface. In this case,
      * all modification methods of the returned list will throw <tt>UnsupportedOperationException</tt>.
      *
+     * @param <E> the generic type of list elements.
      * @param array           the AlgART array by which the list will be backed.
      * @param listElementType the generic element type in the returned list.
      * @return a list view of this AlgART array.
@@ -6322,6 +6327,7 @@ public class Arrays {
     /**
      * Equivalent to {@link #asList(Array, Class) asList}(array, array.elementType()}.
      *
+     * @param <E> the generic type of list elements.
      * @param array the AlgART array by which the list will be backed.
      * @return a list view of this AlgART array.
      * @throws NullPointerException   if the argument is <tt>null</tt>.
@@ -7188,6 +7194,7 @@ public class Arrays {
      * @param <T>            the generic type of exception.
      * @param exceptionClass the class all checked exceptions, that can appear in the 2nd argument.
      * @param exception      some exception with the specified class or unchecked exception.
+     * @throws T             if the passed exception is an instance of <code>exceptionClass</code>.
      */
     public static <T extends Exception> void throwException(Class<? extends T> exceptionClass, Throwable exception)
             throws T {

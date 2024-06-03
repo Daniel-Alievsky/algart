@@ -36,7 +36,8 @@
 
     <target name="javadoc">
         <delete dir="../docs"/>
-        <javadoc destdir="../docs/api/" author="true" version="true" charset="UTF-8" Locale="en_US" additionalparam="-notimestamp -Xdoclint:none --allow-script-in-comments">
+        <javadoc destdir="../docs/api/" author="true" version="true" charset="UTF-8" Locale="en_US"
+                 additionalparam="-notimestamp -Xmaxwarns 1000 -Xmaxerrs 1000 -Xdoclint:all,-missing,-html --allow-script-in-comments">
         <!-- Locale is necessary to provide English, not Breakiterator algorithm of parsing the first sentence -->
             <packageset dir="../src/main/java/">
                 <include name="net/algart/**"/>
@@ -45,7 +46,6 @@
             <header><![CDATA[
 <!--algartHeader-->
 <div align=\"center\" style=\"margin:0 0 8px 0\">
-<noindex>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3ML7QX3E6"></script>
 <script>
@@ -55,7 +55,6 @@
 
   gtag('config', 'G-F3ML7QX3E6');
 </script>
-</noindex>
 </div>
 <div style=\"margin:0\"><a target=\"_top\" href=\"http://algart.net/\"><i>AlgART Home</i></a></div>
 <!--/algartHeader-->
