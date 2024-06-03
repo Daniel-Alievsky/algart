@@ -27,6 +27,8 @@ package net.algart.arrays;
 /**
  * <p>Data buffer for <tt>Object</tt> elements.</p>
  *
+ * @param <E> the generic type of array elements.
+ *
  * @author Daniel Alievsky
  */
 public interface DataObjectBuffer<E> extends DataBuffer {

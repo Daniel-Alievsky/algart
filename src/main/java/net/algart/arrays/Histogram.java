@@ -60,6 +60,7 @@ import java.util.Objects;
  *
  * <blockquote>
  * <table border="1" cellpadding="8" cellspacing="0">
+ * <caption></caption>
  * <tr><td align="center"><b>Definition of floating-point percentile <i>v</i>(<i>r</i>) and rank <i>r</i>(<i>v</i>)
  * </td></tr>
  *

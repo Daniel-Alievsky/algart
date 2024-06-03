@@ -57,7 +57,7 @@
  <b>{@link net.algart.arrays.PackedBitBuffers}</b>
  provide some basic functionality for processing regular Java arrays, buffers, and packed bit arrays.</p>
 
- <h4>Contents</h4>
+ <h2>Contents</h2>
  <ul>
  <li><a href="#features">Main features of AlgART arrays</a></li>
  <li><a href="#diagramOfInterfaces">The diagram of interfaces and implementations</a></li>
@@ -646,7 +646,7 @@
  <p>AlgART array architecture supports <b>5 ways</b> for solving this task, including 2 ways
  described above. We shall compare all them below.</p>
 
- <h4>1. Syntactical protection</h4>
+ <h2>1. Syntactical protection</h2>
 
  <p>The 1st solution is the simplest, fastest, but not safe enough. It is a <i>syntactical</i> solution.
  If the <tt>process</tt> method does not need to modify its argument, it should be declared with
@@ -668,7 +668,7 @@
  However, if <tt>process</tt> method is written by you or by your colleagues,
  and you only need to protect against possible bugs, the syntactical protection will help you.</p>
 
- <h4>2. Cloning</h4>
+ <h2>2. Cloning</h2>
 
  <p>It is a very simple and absolutely safe solution:</p>
 
@@ -684,7 +684,7 @@
  <p>Unfortunately, such a solution requires additional memory and time, even if the <tt>process</tt>
  method, really, does not try do modify its argument.</p>
 
- <h4>3. Immutable view</h4>
+ <h2>3. Immutable view</h2>
 
  <p>It is a traditional, also simple and absolutely safe method,
  used by standard Java collections and NIO buffers:</p>
@@ -711,7 +711,7 @@
  based on Java arrays. Unfortunately, an immutable view has no right to provide such direct access
  to internal storage, because it is a possible way to corrupt the array.</p>
 
- <h4>4. Trusted immutable view</h4>
+ <h2>4. Trusted immutable view</h2>
 
  <p>It is a compromise between absolute safety, provided by cloning and immutable views,
  and maximal efficiency, achieved while using syntactical protection only. An example of usage:</p>
@@ -759,7 +759,7 @@
  it <i>can</i> perform changes of the array, which will not be detected by this technique.</li>
  </ul>
 
- <h4>5. Copy-on-next-write view</h4>
+ <h2>5. Copy-on-next-write view</h2>
 
  <p>It is a more efficient alternative to cloning an array. This solution is also absolutely
  safe, but, sometimes, it requires additional memory and time. An example:</p>

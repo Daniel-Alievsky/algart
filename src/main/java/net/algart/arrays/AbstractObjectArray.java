@@ -31,6 +31,8 @@ import java.util.Objects;
  * The only {@link ObjectArray#get(long)} method is not defined in this class;
  * all other methods are implemented via calls of {@link ObjectArray#get(long)}.</p>
  *
+ * @param <E> the generic type of array elements.
+ *
  * @author Daniel Alievsky
  */
 public abstract class AbstractObjectArray<E> extends AbstractArray implements ObjectArray<E> {

@@ -147,6 +147,8 @@ import java.util.Objects;
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
+ * @param <E> the generic type of array elements in object arrays created by this memory model.
+ *
  * @author Daniel Alievsky
  */
 public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
@@ -175,6 +177,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *
      * <p>The methods of this interface may not check indexes of elements:
      * all necessary checks are performed by AlgART array implementation created by {@link CombinedMemoryModel}.</p>
+     *
+     * @param <E> the generic type of array elements in object arrays.
      */
     public interface Combiner<E> {
         /**
@@ -255,6 +259,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * for arrays created by
      * {@link CombinedMemoryModel#asUpdatableCombinedArray(Class, UpdatableArray[])} or
      * {@link CombinedMemoryModel#asCombinedArray(Class, Array[])} methods).</p>
+     *
+     * @param <E> the generic type of array elements in object arrays.
      */
     public interface CombinerInPlace<E> extends Combiner<E> {
 
@@ -290,6 +296,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * methods declared in this interface. In other case, those methods
      * will call separate <tt>get/set</tt> method, declared in {@link Combiner},
      * for every loaded/stored element of the combined array.</p>
+     *
+     * @param <E> the generic type of array elements in object arrays.
      */
     public interface BufferedCombiner<E> extends Combiner<E> {
         /**
@@ -361,6 +369,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * <p>Unfortunately, for simple structure of element types,
      * this combiner usually work essentially slower
      * than the direct implementation of {@link Combiner} interface.</p>
+     *
+     * @param <E> the generic type of array elements in object arrays.
      */
     public abstract static class AbstractByteBufferCombiner<E> implements Combiner<E> {
         /**
@@ -460,6 +470,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     /**
      * <p>A version of {@link AbstractByteBufferCombiner} skeleton class
      * implementing {@link CombinerInPlace} interface.</p>
+     *
+     * @param <E> the generic type of array elements in object arrays.
      */
     public abstract static class AbstractByteBufferCombinerInPlace<E>
         extends AbstractByteBufferCombiner<E>

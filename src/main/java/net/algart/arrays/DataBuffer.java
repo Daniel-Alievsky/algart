@@ -186,10 +186,10 @@ package net.algart.arrays;
  * It usually will not lead to allocating new memory and will be performed quickly.
  * To map the next region of the AlgART array, you may use {@link #mapNext()} method.
  * If the AlgART array is exhausted, the buffer becomes empty,
- * that may be checked by {@link #hasData()} method.
+ * that may be checked by {@link #hasData()} method.</li>
  * </ol>
  *
- * <h4><a name="directAndIndirect"></a>Direct and indirect data buffers</h4>
+ * <h2><a name="directAndIndirect"></a>Direct and indirect data buffers</h2>
  *
  * <p>The data buffers, provided by this package for AlgART arrays, are divided into 2 groups.</p>
  *
@@ -269,7 +269,7 @@ package net.algart.arrays;
  *
  * <p>You may determine, whether the buffer is direct or indirect, via {@link #isDirect()} method.</p>
  *
- * <h4><a name="invariants"></a>Invariants of the data buffers</h4>
+ * <h2><a name="invariants"></a>Invariants of the data buffers</h2>
  *
  * <p>For any kind of the data buffer, there are the following guarantees:</p>
  *
@@ -310,7 +310,7 @@ package net.algart.arrays;
  * </li>
  * </ul>
  *
- * <h4><a name="subInterface"></a>Specific subinterfaces</h4>
+ * <h2><a name="subInterface"></a>Specific subinterfaces</h2>
  *
  * <p>The {@link #data()} method, declared in this interface, returns <tt>Object</tt>
  * (the only existing superclass for all Java arrays), that is not too convenient.
@@ -325,7 +325,7 @@ package net.algart.arrays;
  * simplified versions) is overridden in specific AlgART arrays ({@link BitArray}, {@link CharArray}, etc.)
  * and returns one of the listed subinterfaces.</p>
  *
- * <h4><a name="sequentialMapping"></a>Sequential mapping all AlgART array</h4>
+ * <h2><a name="sequentialMapping"></a>Sequential mapping all AlgART array</h2>
  *
  * <p>This interface has no methods allowing to get the reference to the underlying AlgART array
  * or get its <i>length</i>. But you may check,
@@ -339,7 +339,7 @@ package net.algart.arrays;
  * But please remember that {@link #hasData()} returns <tt>false</tt> also before the first mapping
  * of a newly created data buffer.</p>
  *
- * <h4><a name="usageExamples"></a>Usage examples</h4>
+ * <h2><a name="usageExamples"></a>Usage examples</h2>
  *
  * <p>Below is a typical usage example:</p>
  *
@@ -389,7 +389,7 @@ package net.algart.arrays;
  * }
  * </pre>
  *
- * <h4><a name="problems"></a>Performance problem connected with a lot of data buffers</h4>
+ * <h2><a name="problems"></a>Performance problem connected with a lot of data buffers</h2>
  *
  * <p>There is a problem connected with creating and using a lot of <i>indirect</i> data buffers
  * (thousands and tens of thousands). In this situation, every data buffer allocates its own
@@ -405,7 +405,7 @@ package net.algart.arrays;
  * performance problem, you should check the newly created buffer, {@link #isDirect() is it direct},
  * and, if not, ignore it and use standard Java arrays with help of {@link JArrayPool}.</p>
  *
- * <h4><a name="notes"></a>Additional notes</h4>
+ * <h2><a name="notes"></a>Additional notes</h2>
  *
  * <p>The data buffers are allowed not to implement <tt>hashCode</tt> and <tt>equals</tt> method.
  * Usually, the default implementation of these methods from <tt>Object</tt> class are used.</p>

@@ -173,6 +173,8 @@ import java.util.logging.Logger;
  * there are no ways to modify settings of its instance returned by {@link #getInstance()}
  * or {@link #getInstance(DataFileModel)} methods.</p>
  *
+ * @param <P> type of the path to data file.
+ *
  * @author Daniel Alievsky
  */
 public final class LargeMemoryModel<P> extends AbstractMemoryModel {

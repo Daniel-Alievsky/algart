@@ -31,7 +31,7 @@ package net.algart.arrays;
  * <p>Any class implementing this interface <b>must</b> contain non-primitive elements
  * ({@link #elementType()} must not return a primitive type).</p>
  *
- * @param &lt;E&gt; the generic type of array elements.
+ * @param <E> the generic type of array elements.
  *
  * @author Daniel Alievsky
  */

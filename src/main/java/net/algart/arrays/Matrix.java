@@ -133,6 +133,8 @@ import java.util.List;
  * as the type argument, alike <tt>Matrix&lt;MutableByteArray&gt;</tt>:
  * all creation methods throw <tt>IllegalArgumentException</tt> in this case.
  *
+ * @param <T> the type of the built-in AlgART array
+ *
  * @author Daniel Alievsky
  * @see Array
  * @see UpdatableArray

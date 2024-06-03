@@ -4189,6 +4189,7 @@ public class Matrices {
      * Equivalent to <tt>{@link Arrays#toByteJavaArray(byte[], PArray)
      * Arrays.toByteJavaArray}(result, matrix.array())</tt>.
      *
+     * @param result the result <tt>byte[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source matrix,
@@ -4223,6 +4224,7 @@ public class Matrices {
      * Equivalent to <tt>{@link Arrays#toShortJavaArray(short[], PArray)
      * Arrays.toShortJavaArray}(result, matrix.array())</tt>.
      *
+     * @param result the result <tt>short[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source matrix,
@@ -4257,6 +4259,7 @@ public class Matrices {
      * Equivalent to <tt>{@link Arrays#toIntJavaArray(int[], PArray)
      * Arrays.toIntJavaArray}(result, matrix.array())</tt>.
      *
+     * @param result the result <tt>int[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source matrix,
@@ -4291,6 +4294,7 @@ public class Matrices {
      * Equivalent to <tt>{@link Arrays#toLongJavaArray(long[], PArray)
      * Arrays.toLongJavaArray}(result, matrix.array())</tt>.
      *
+     * @param result the result <tt>long[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source matrix,
@@ -4325,6 +4329,7 @@ public class Matrices {
      * Equivalent to <tt>{@link Arrays#toFloatJavaArray(float[], PArray)
      * Arrays.toFloatJavaArray}(result, matrix.array())</tt>.
      *
+     * @param result the result <tt>float[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source matrix,
@@ -4359,6 +4364,7 @@ public class Matrices {
      * Equivalent to <tt>{@link Arrays#toDoubleJavaArray(double[], PArray)
      * Arrays.toDoubleJavaArray}(result, matrix.array())</tt>.
      *
+     * @param result the result <tt>double[]</tt> array; can be <tt>null</tt>, then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <tt>result</tt> argument or (when <tt>result==null</tt>) a newly created array:
      * Java array containing all the elements in the source matrix,

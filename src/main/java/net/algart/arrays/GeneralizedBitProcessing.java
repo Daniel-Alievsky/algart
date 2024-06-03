@@ -58,6 +58,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * <div align="center">
  * <table width="90%" border="1" cellpadding="8" cellspacing="0">
+ *   <caption></caption>
  *   <tr>
  *     <td width="50%"><b>Round-down mode</b></td>
  *     <td width="50%"><b>Round-up mode</b></td>
@@ -142,6 +143,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * <div align="center">
  * <table width="90%" border="1" cellpadding="8" cellspacing="0">
+ *   <caption></caption>
  *   <tr>
  *     <td width="50%"><b>Round-down mode</b></td>
  *     <td width="50%"><b>Round-up mode</b></td>

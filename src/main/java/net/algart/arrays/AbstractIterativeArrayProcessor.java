@@ -34,6 +34,8 @@ import java.util.Objects;
  * <p>All non-abstract methods are completely implemented here and usually
  * should not be overridden in subclasses.</p>
  *
+ * @param <T> the type of the result data returned by this processor.
+ *
  * @author Daniel Alievsky
  */
 public abstract class AbstractIterativeArrayProcessor<T>

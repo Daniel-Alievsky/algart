@@ -32,6 +32,8 @@ import java.util.Objects;
  * are not defined in this class;
  * all other methods are implemented via calls of these 2 methods.</p>
  *
+ * @param <E> the generic type of array elements.
+ *
  * @author Daniel Alievsky
  */
 public abstract class AbstractUpdatableObjectArray<E>

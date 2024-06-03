@@ -58,6 +58,8 @@ import java.util.Set;
  * and not <b>thread-safe</b>, but must be <b>thread-compatible</b>
  * (allow manual synchronization for multithreading access).</p>
  *
+ * @param <P> type of the path to data file.
+ *
  * @author Daniel Alievsky
  */
 public interface DataFileModel<P> {
