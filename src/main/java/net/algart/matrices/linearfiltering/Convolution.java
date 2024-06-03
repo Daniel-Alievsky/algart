@@ -100,6 +100,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * of this interface does not provide better algorithm for non-"lazy"
      * {@link #convolution(Class, Matrix, WeightedPattern)} method.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param src          the source matrix.
      * @param pattern      the pattern.

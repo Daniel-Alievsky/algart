@@ -535,15 +535,15 @@ public final class TiledApertureProcessorFactory {
     private final long[] allocationTileDim;
     private final int dimCount; // == tileDim.length
 
-    private TiledApertureProcessorFactory(ArrayContext context,
-        Matrix.ContinuationMode continuationMode, long maxTempJavaMemory,
-        long[] processingTileDim, long[] allocationTileDim, int numberOfTasks)
-    {
+    private TiledApertureProcessorFactory(
+            ArrayContext context,
+            Matrix.ContinuationMode continuationMode, long maxTempJavaMemory,
+            long[] processingTileDim, long[] allocationTileDim, int numberOfTasks) {
         Objects.requireNonNull(continuationMode, "Null continuation mode");
         Objects.requireNonNull(processingTileDim, "Null processing tile dimensions Java array");
         if (continuationMode == Matrix.ContinuationMode.NONE) {
             throw new IllegalArgumentException(getClass() + " cannot be used with continuation mode \""
-                + continuationMode + "\"");
+                    + continuationMode + "\"");
         }
         if (processingTileDim.length == 0) {
             throw new IllegalArgumentException("Empty processing tile dimensions Java array");
@@ -560,11 +560,11 @@ public final class TiledApertureProcessorFactory {
         for (int k = 0; k < dimCount; k++) {
             if (this.processingTileDim[k] <= 0) {
                 throw new IllegalArgumentException("Negative or zero processing tile dimension #"
-                    + k + ": " + this.processingTileDim[k]);
+                        + k + ": " + this.processingTileDim[k]);
             }
             if (this.allocationTileDim != null && this.allocationTileDim[k] <= 0) {
                 throw new IllegalArgumentException("Negative or zero allocation tile dimension #"
-                    + k + ": " + this.allocationTileDim[k]);
+                        + k + ": " + this.allocationTileDim[k]);
             }
         }
         if (maxTempJavaMemory < 0) {
@@ -576,7 +576,7 @@ public final class TiledApertureProcessorFactory {
         this.threadPoolFactory = Arrays.getThreadPoolFactory(context);
         this.originalNumberOfTasks = numberOfTasks;
         this.numberOfTasks = numberOfTasks > 0 ? numberOfTasks :
-            Math.max(1, this.threadPoolFactory.recommendedNumberOfTasks());
+                Math.max(1, this.threadPoolFactory.recommendedNumberOfTasks());
     }
 
     /**
@@ -597,7 +597,7 @@ public final class TiledApertureProcessorFactory {
      * @param tileDim           see the basic {@link
      *                          #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
      *                          getInstance} method.
-     * @return                  new tiler.
+     * @return new tiler.
      * @throws NullPointerException     if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
@@ -605,11 +605,11 @@ public final class TiledApertureProcessorFactory {
      *                                  or if <tt>tileDim.length==0</tt>,
      *                                  or if one of elements of <tt>tileDim</tt> Java array is zero or negative.
      */
-    public static TiledApertureProcessorFactory getInstance(ArrayContext context,
-        Matrix.ContinuationMode continuationMode, long maxTempJavaMemory, long[] tileDim)
-    {
+    public static TiledApertureProcessorFactory getInstance(
+            ArrayContext context,
+            Matrix.ContinuationMode continuationMode, long maxTempJavaMemory, long[] tileDim) {
         return new TiledApertureProcessorFactory(context, continuationMode, maxTempJavaMemory,
-            tileDim, Matrices.defaultTileDimensions(tileDim.length), 0);
+                tileDim, Matrices.defaultTileDimensions(tileDim.length), 0);
     }
 
     /**
@@ -632,7 +632,7 @@ public final class TiledApertureProcessorFactory {
      * @param allocationTileDim see the basic {@link
      *                          #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
      *                          getInstance} method.
-     * @return                  new tiler.
+     * @return new tiler.
      * @throws NullPointerException     if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
@@ -643,11 +643,13 @@ public final class TiledApertureProcessorFactory {
      *                                  or if one of elements of <tt>tileDim</tt> or (non-null)
      *                                  <tt>allocationTileDim</tt> Java arrays is zero or negative.
      */
-    public static TiledApertureProcessorFactory getInstance(ArrayContext context,
-        Matrix.ContinuationMode continuationMode, long maxTempJavaMemory, long[] tileDim, long[] allocationTileDim)
-    {
+    public static TiledApertureProcessorFactory getInstance(
+            ArrayContext context,
+            Matrix.ContinuationMode continuationMode,
+            long maxTempJavaMemory,
+            long[] tileDim, long[] allocationTileDim) {
         return new TiledApertureProcessorFactory(context, continuationMode, maxTempJavaMemory,
-            tileDim, allocationTileDim, 0);
+                tileDim, allocationTileDim, 0);
     }
 
     /**
@@ -671,7 +673,7 @@ public final class TiledApertureProcessorFactory {
      * @param numberOfTasks     see the basic {@link
      *                          #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
      *                          getInstance} method.
-     * @return                  new tiler.
+     * @return new tiler.
      * @throws NullPointerException     if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
@@ -680,12 +682,12 @@ public final class TiledApertureProcessorFactory {
      *                                  or if <tt>numberOfTasks&lt;0</tt>,
      *                                  or if one of elements of <tt>tileDim</tt> Java array is zero or negative.
      */
-    public static TiledApertureProcessorFactory getInstance(ArrayContext context,
-        Matrix.ContinuationMode continuationMode, long maxTempJavaMemory, long[] tileDim,
-        int numberOfTasks)
-    {
+    public static TiledApertureProcessorFactory getInstance(
+            ArrayContext context,
+            Matrix.ContinuationMode continuationMode, long maxTempJavaMemory, long[] tileDim,
+            int numberOfTasks) {
         return new TiledApertureProcessorFactory(context, continuationMode, maxTempJavaMemory,
-            tileDim, Matrices.defaultTileDimensions(tileDim.length), numberOfTasks);
+                tileDim, Matrices.defaultTileDimensions(tileDim.length), numberOfTasks);
     }
 
     /**
@@ -728,7 +730,7 @@ public final class TiledApertureProcessorFactory {
      *                          You may specify <tt>numberOfTasks=1</tt> for saving memory, if you know that
      *                          the one-tile processors, which you are going to tile, provide multithreading
      *                          optimization themselves.
-     * @return                  new tiler.
+     * @return new tiler.
      * @throws NullPointerException     if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
@@ -746,12 +748,12 @@ public final class TiledApertureProcessorFactory {
      * @see #tileDim()
      * @see #numberOfTasks()
      */
-    public static TiledApertureProcessorFactory getInstance(ArrayContext context,
-        Matrix.ContinuationMode continuationMode, long maxTempJavaMemory, long[] tileDim, long[] allocationTileDim,
-        int numberOfTasks)
-    {
+    public static TiledApertureProcessorFactory getInstance(
+            ArrayContext context,
+            Matrix.ContinuationMode continuationMode, long maxTempJavaMemory, long[] tileDim, long[] allocationTileDim,
+            int numberOfTasks) {
         return new TiledApertureProcessorFactory(context, continuationMode, maxTempJavaMemory,
-            tileDim, allocationTileDim, numberOfTasks);
+                tileDim, allocationTileDim, numberOfTasks);
     }
 
     /**
@@ -779,11 +781,11 @@ public final class TiledApertureProcessorFactory {
      * that it uses the specified <tt>newContext</tt> for all operations.
      *
      * @param newContext another context, used by the returned instance; can be <tt>null</tt>.
-     * @return           new instance with another context.
+     * @return new instance with another context.
      */
     public TiledApertureProcessorFactory context(ArrayContext newContext) {
         return new TiledApertureProcessorFactory(newContext, continuationMode,
-            maxTempJavaMemory, processingTileDim, allocationTileDim, originalNumberOfTasks);
+                maxTempJavaMemory, processingTileDim, allocationTileDim, originalNumberOfTasks);
     }
 
     /**
@@ -794,7 +796,7 @@ public final class TiledApertureProcessorFactory {
      * can process only matrices with this number of dimensions.
      *
      * @return the number of dimensions of matrices, which can be processed by aperture processors,
-     *         tiled by this tiler; always &ge;1.
+     * tiled by this tiler; always &ge;1.
      */
     public int dimCount() {
         return this.dimCount;
@@ -809,7 +811,7 @@ public final class TiledApertureProcessorFactory {
      * method and the {@link TiledApertureProcessorFactory comments to this class} for more details.
      *
      * @return the continuation mode of this tiler; cannot be <tt>null</tt> or
-     *         {@link net.algart.arrays.Matrix.ContinuationMode#NONE}.
+     * {@link net.algart.arrays.Matrix.ContinuationMode#NONE}.
      */
     public Matrix.ContinuationMode continuationMode() {
         return this.continuationMode;
@@ -825,7 +827,7 @@ public final class TiledApertureProcessorFactory {
      * method and the {@link TiledApertureProcessorFactory comments to this class} for more details.
      *
      * @return the maximal amount of Java memory, in bytes, allowed for allocating temporary matrices
-     *         for storing a tile; always &ge;0.
+     * for storing a tile; always &ge;0.
      */
     public long maxTempJavaMemory() {
         return this.maxTempJavaMemory;
@@ -879,8 +881,9 @@ public final class TiledApertureProcessorFactory {
      * See the {@link TiledApertureProcessorFactory comments to this class}, the section
      * "Contexts for the one-tile processor".
      *
+     * @param <T>              the generic type of the keys in the tile processor.
      * @param oneTileProcessor one-tile aperture processor.
-     * @return                 tiled aperture processor.
+     * @return tiled aperture processor.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
     public <K> ApertureProcessor<K> tile(ApertureProcessor<K> oneTileProcessor) {
@@ -898,13 +901,12 @@ public final class TiledApertureProcessorFactory {
     @Override
     public String toString() {
         return "universal " + dimCount + "-dimensional "
-            + (numberOfTasks == 1 ? "" : numberOfTasks +"-threading ")
-            + "processing tiler (tiles " + JArrays.toString(processingTileDim, "x", 1000) + ")";
+                + (numberOfTasks == 1 ? "" : numberOfTasks + "-threading ")
+                + "processing tiler (tiles " + JArrays.toString(processingTileDim, "x", 1000) + ")";
     }
 
     private class BasicTilingProcessor<K> extends AbstractArrayProcessorWithContextSwitching
-        implements ApertureProcessor<K>, ArrayProcessorWithContextSwitching
-    {
+            implements ApertureProcessor<K>, ArrayProcessorWithContextSwitching {
         private final ApertureProcessor<K> oneTileProcessor;
 
         private BasicTilingProcessor(ApertureProcessor<K> oneTileProcessor) {
@@ -917,13 +919,13 @@ public final class TiledApertureProcessorFactory {
             Objects.requireNonNull(src, "Null table of source matrices");
             Objects.requireNonNull(dest, "Null table of destination matrices");
             final Map<K, Matrix<? extends UpdatableArray>> destCopy =
-                new LinkedHashMap<K, Matrix<? extends UpdatableArray>>();
+                    new LinkedHashMap<K, Matrix<? extends UpdatableArray>>();
             for (Map.Entry<K, Matrix<?>> e : dest.entrySet()) {
                 K key = e.getKey();
                 Matrix<?> m = e.getValue();
                 if (m != null && !(m.array() instanceof UpdatableArray)) {
                     throw new IllegalArgumentException("The destination matrix with key \"" + key
-                        + "\" is not updatable and cannot be used for returning result");
+                            + "\" is not updatable and cannot be used for returning result");
                 }
                 destCopy.put(key, m == null ? null : m.cast(UpdatableArray.class));
             }
@@ -954,7 +956,7 @@ public final class TiledApertureProcessorFactory {
                 // so, there is a guarantee that maxTileDim are allowed matrix dimensions
                 tileCount *= tileCounts[k]; // overflow impossible, because tileCounts[k] <= dim[k]
             }
-            final int nt = (int)Math.min(numberOfTasks, tileCount);
+            final int nt = (int) Math.min(numberOfTasks, tileCount);
             final IRectangularArea maxAperture = maxDependenceAperture(srcCopy.keySet());
             DependenceApertureBuilder.extendDimensions(dim, maxAperture); // overflow check before any calculations
             long maxExtTileSize = Arrays.longMul(DependenceApertureBuilder.extendDimensions(maxTileDim, maxAperture));
@@ -998,21 +1000,21 @@ public final class TiledApertureProcessorFactory {
                     tileSize *= tileDim[k];
                 }
                 final ArrayContext ac =
-                    nt == 1 ?
-                        context.part(readyElementsCount, readyElementsCount + tileSize, matrixSize) :
-                        context.noProgressVersion();
+                        nt == 1 ?
+                                context.part(readyElementsCount, readyElementsCount + tileSize, matrixSize) :
+                                context.noProgressVersion();
                 final Map<K, Matrix<?>> srcTile = loadSrcTile(ac.part(0.0, 0.05),
-                    maxAperture, srcTileMem.get(taskIndex), srcCopy, tilePos, tileDim, extTileDim);
+                        maxAperture, srcTileMem.get(taskIndex), srcCopy, tilePos, tileDim, extTileDim);
                 final Map<K, Matrix<?>> destTile = prepareDestTile(
-                    destTileMem.get(taskIndex), destCopy.keySet(), extTileDim);
+                        destTileMem.get(taskIndex), destCopy.keySet(), extTileDim);
                 final int ti = taskIndex;
                 tasks[taskIndex] = new Runnable() {
                     public void run() {
                         ArrayContext tileContext = switchingContextSupported() ?
-                            ac.part(0.05, 0.95).multithreadingVersion(ti, nt).customDataVersion(new TileInformation(
-                                IRectangularArea.valueOf(IPoint.valueOf(tilePos), IPoint.valueOf(tileMax)),
-                                IRectangularArea.valueOf(IPoint.valueOf(extTilePos), IPoint.valueOf(extTileMax)))) :
-                            ac;
+                                ac.part(0.05, 0.95).multithreadingVersion(ti, nt).customDataVersion(new TileInformation(
+                                        IRectangularArea.valueOf(IPoint.valueOf(tilePos), IPoint.valueOf(tileMax)),
+                                        IRectangularArea.valueOf(IPoint.valueOf(extTilePos), IPoint.valueOf(extTileMax)))) :
+                                ac;
                         subtaskTileProcessor(tileContext).process(destTile, srcTile);
                         // additional matrices CAN appear in destTile
                     }
@@ -1034,8 +1036,8 @@ public final class TiledApertureProcessorFactory {
                         postprocessing[i].run();
                     }
                     Class<?> elementType = (!destCopy.isEmpty() ?
-                        destCopy.values().iterator().next() :
-                        srcCopy.values().iterator().next()).elementType();
+                            destCopy.values().iterator().next() :
+                            srcCopy.values().iterator().next()).elementType();
                     context.checkInterruptionAndUpdateProgress(elementType, readyElementsCount, matrixSize);
                 }
                 if (taskIndex == nt) {
@@ -1061,9 +1063,8 @@ public final class TiledApertureProcessorFactory {
         }
 
         private long[] getDimensionsAndCheck(
-            Map<K, Matrix<? extends UpdatableArray>> dest,
-            Map<K, Matrix<?>> src)
-        {
+                Map<K, Matrix<? extends UpdatableArray>> dest,
+                Map<K, Matrix<?>> src) {
             long[] result = null;
             for (Map.Entry<K, Matrix<? extends UpdatableArray>> e : dest.entrySet()) {
                 K key = e.getKey();
@@ -1073,16 +1074,16 @@ public final class TiledApertureProcessorFactory {
                 }
                 if (m.dimCount() != dimCount) {
                     throw new IllegalArgumentException("The destination matrix with key \"" + key
-                        + "\" has " + m.dimCount()
-                        + " dimensions, but this processing tiler works with " + dimCount + " dimensions");
+                            + "\" has " + m.dimCount()
+                            + " dimensions, but this processing tiler works with " + dimCount + " dimensions");
                 }
                 if (result == null) {
                     result = m.dimensions();
                 } else if (!m.dimEquals(result)) {
                     throw new SizeMismatchException("The destination matrix with key \"" + key
-                        + "\" and the first matrix dimensions mismatch: "
-                        + "the destination matrix with key \"" + key + "\" is " + m
-                        + ", but the first matrix has dimensions " + JArrays.toString(result, "x", 1000));
+                            + "\" and the first matrix dimensions mismatch: "
+                            + "the destination matrix with key \"" + key + "\" is " + m
+                            + ", but the first matrix has dimensions " + JArrays.toString(result, "x", 1000));
                 }
             }
             for (Map.Entry<K, Matrix<?>> e : src.entrySet()) {
@@ -1091,16 +1092,16 @@ public final class TiledApertureProcessorFactory {
                 assert m != null;
                 if (m.dimCount() != dimCount) {
                     throw new IllegalArgumentException("The source matrix with key \"" + key
-                        + "\" has " + m.dimCount()
-                        + " dimensions, but this processing tiler works with " + dimCount + " dimensions");
+                            + "\" has " + m.dimCount()
+                            + " dimensions, but this processing tiler works with " + dimCount + " dimensions");
                 }
                 if (result == null) {
                     result = m.dimensions();
                 } else if (!m.dimEquals(result)) {
                     throw new SizeMismatchException("The source matrix with key \"" + key
-                        + "\" and the first matrix dimensions mismatch: "
-                        + "the source matrix with key \"" + key + "\" is " + m
-                        + ", but the first matrix has dimensions " + JArrays.toString(result, "x", 1000));
+                            + "\" and the first matrix dimensions mismatch: "
+                            + "the source matrix with key \"" + key + "\" is " + m
+                            + ", but the first matrix has dimensions " + JArrays.toString(result, "x", 1000));
                 }
             }
             return result;
@@ -1119,11 +1120,11 @@ public final class TiledApertureProcessorFactory {
             return IRectangularArea.valueOf(IPoint.valueOf(min), IPoint.valueOf(max));
         }
 
-        private double estimateWorkMemory(long extendedTileSize,
-            Collection<Matrix<? extends UpdatableArray>> destList,
-            Collection<Matrix<?>> srcList,
-            int numberOfTasks)
-        {
+        private double estimateWorkMemory(
+                long extendedTileSize,
+                Collection<Matrix<? extends UpdatableArray>> destList,
+                Collection<Matrix<?>> srcList,
+                int numberOfTasks) {
             double result = 0.0;
             for (Matrix<?> m : srcList) {
                 result += Math.max(Arrays.sizeOf(m.elementType()), 0.0) * extendedTileSize;
@@ -1138,11 +1139,10 @@ public final class TiledApertureProcessorFactory {
         }
 
         private List<Map<K, UpdatableArray>> allocateTile(
-            MemoryModel betterMemoryModel,
-            long extendedTileSize,
-            Map<K, ? extends Matrix<?>> processorArguments,
-            int numberOfTasks)
-        {
+                MemoryModel betterMemoryModel,
+                long extendedTileSize,
+                Map<K, ? extends Matrix<?>> processorArguments,
+                int numberOfTasks) {
             List<Map<K, UpdatableArray>> result = new ArrayList<Map<K, UpdatableArray>>();
             for (int taskIndex = 0; taskIndex < numberOfTasks; taskIndex++) {
                 Map<K, UpdatableArray> tileMemory = new LinkedHashMap<K, UpdatableArray>();
@@ -1159,12 +1159,12 @@ public final class TiledApertureProcessorFactory {
             return result;
         }
 
-        private Map<K, Matrix<?>> loadSrcTile(ArrayContext ac,
-            IRectangularArea maxAperture,
-            Map<K, UpdatableArray> srcTileMem,
-            Map<K, Matrix<?>> src,
-            long[] tilePos, long[] tileDim, long[] extTileDim)
-        {
+        private Map<K, Matrix<?>> loadSrcTile(
+                ArrayContext ac,
+                IRectangularArea maxAperture,
+                Map<K, UpdatableArray> srcTileMem,
+                Map<K, Matrix<?>> src,
+                long[] tilePos, long[] tileDim, long[] extTileDim) {
             long len = Arrays.longMul(extTileDim);
             Map<K, Matrix<?>> srcTile = new LinkedHashMap<K, Matrix<?>>();
             long[] inTilePos = new long[dimCount];
@@ -1182,18 +1182,17 @@ public final class TiledApertureProcessorFactory {
                     preciseTileDim[k] = DependenceApertureBuilder.safelyAdd(tileDim[k], a.width(k));
                 }
                 Matrices.copy(ac.part(i, ++i, n),
-                    tileMatrix.subMatr(inTilePos, preciseTileDim),
-                    e.getValue().subMatr(preciseTilePos, preciseTileDim, continuationMode));
+                        tileMatrix.subMatr(inTilePos, preciseTileDim),
+                        e.getValue().subMatr(preciseTilePos, preciseTileDim, continuationMode));
                 srcTile.put(key, tileMatrix);
             }
             return srcTile;
         }
 
         private Map<K, Matrix<?>> prepareDestTile(
-            Map<K, UpdatableArray> destTileMem,
-            Set<K> destKeys,
-            long[] extTileDim)
-        {
+                Map<K, UpdatableArray> destTileMem,
+                Set<K> destKeys,
+                long[] extTileDim) {
             long len = Arrays.longMul(extTileDim);
             Map<K, Matrix<?>> destTile = new LinkedHashMap<K, Matrix<?>>();
             for (K key : destKeys) {
@@ -1203,10 +1202,10 @@ public final class TiledApertureProcessorFactory {
             return destTile;
         }
 
-        private void allocateDestMatricesIfNecessary(long[] dim,
-            Map<K, Matrix<? extends UpdatableArray>> dest,
-            Map<K, Matrix<?>> destTile)
-        {
+        private void allocateDestMatricesIfNecessary(
+                long[] dim,
+                Map<K, Matrix<? extends UpdatableArray>> dest,
+                Map<K, Matrix<?>> destTile) {
             for (Map.Entry<K, Matrix<?>> e : destTile.entrySet()) {
                 K key = e.getKey();
                 if (dest.get(key) != null) {
@@ -1215,11 +1214,11 @@ public final class TiledApertureProcessorFactory {
                 Matrix<?> destTileMatrix = e.getValue();
                 if (destTileMatrix == null)
                     throw new AssertionError("Illegal implementation of one-tile processor "
-                        + oneTileProcessor.getClass()
-                        + (dest.containsKey(key) ? ": it leaves null result matrix" : ": it creates null result")
-                        + " for the key \"" + key + "\"");
+                            + oneTileProcessor.getClass()
+                            + (dest.containsKey(key) ? ": it leaves null result matrix" : ": it creates null result")
+                            + " for the key \"" + key + "\"");
                 Matrix<UpdatableArray> destMatrix = this.memoryModel().newMatrix(UpdatableArray.class,
-                    destTileMatrix.elementType(), dim);
+                        destTileMatrix.elementType(), dim);
                 if (allocationTileDim != null) {
                     destMatrix = destMatrix.tile(allocationTileDim);
                 }
@@ -1229,23 +1228,22 @@ public final class TiledApertureProcessorFactory {
                 K key = e.getKey();
                 if (e.getValue() == null)
                     throw new AssertionError("Illegal implementation of one-tile processor "
-                        + oneTileProcessor.getClass()
-                        + ": it does not allocate necessary result matrix with the key \"" + key + "\"");
+                            + oneTileProcessor.getClass()
+                            + ": it does not allocate necessary result matrix with the key \"" + key + "\"");
                 if (destTile.get(key) == null)
                     throw new AssertionError("Illegal implementation of one-tile processor "
-                        + oneTileProcessor.getClass()
-                        + ": it removes the matrix with the key \"" + key + "\" from the list of resulting arguments");
+                            + oneTileProcessor.getClass()
+                            + ": it removes the matrix with the key \"" + key + "\" from the list of resulting arguments");
             }
             assert dest.size() == destTile.size(); // moreover, they have identical key sets
         }
 
         private void saveDestTile(
-            ArrayContext ac,
-            IRectangularArea maxAperture,
-            Map<K, Matrix<? extends UpdatableArray>> dest,
-            Map<K, Matrix<?>> destTile,
-            long[] tilePos, long[] tileDim)
-        {
+                ArrayContext ac,
+                IRectangularArea maxAperture,
+                Map<K, Matrix<? extends UpdatableArray>> dest,
+                Map<K, Matrix<?>> destTile,
+                long[] tilePos, long[] tileDim) {
             long[] inTilePos = maxAperture.min().symmetric().coordinates();
             int i = 0, n = dest.size();
             for (Map.Entry<K, Matrix<? extends UpdatableArray>> e : dest.entrySet()) {
@@ -1254,8 +1252,8 @@ public final class TiledApertureProcessorFactory {
                 assert destMatrix != null : "internal bug: dest matrix with the key \"" + key + "\" is not allocated";
                 Matrix<?> destTileMatrix = destTile.get(key);
                 Matrices.copy(ac.part(i, ++i, n),
-                    destMatrix.subMatr(tilePos, tileDim),
-                    destTileMatrix.subMatr(inTilePos, tileDim));
+                        destMatrix.subMatr(tilePos, tileDim),
+                        destTileMatrix.subMatr(inTilePos, tileDim));
             }
         }
 
@@ -1274,8 +1272,8 @@ public final class TiledApertureProcessorFactory {
             Object p = ((ArrayProcessorWithContextSwitching) oneTileProcessor).context(tileContext);
             if (!(p instanceof ApertureProcessor<?>)) {
                 throw new AssertionError("Illegal implementation of one-tile processor, "
-                    + oneTileProcessor.getClass() + ": it implements " + ApertureProcessor.class
-                    + ", but after switching context the result does not implement it");
+                        + oneTileProcessor.getClass() + ": it implements " + ApertureProcessor.class
+                        + ", but after switching context the result does not implement it");
             }
             return (ApertureProcessor<K>) p;
         }

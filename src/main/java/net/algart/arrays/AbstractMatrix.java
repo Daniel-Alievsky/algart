@@ -34,7 +34,7 @@ import java.util.Objects;
  *
  * <p>All non-abstract methods are completely implemented here and may be not overridden in subclasses.</p>
  *
- * @param <T> the type of the built-in AlgART array
+ * @param <T> the type of the built-in AlgART array.
  *
  * @author Daniel Alievsky
  */

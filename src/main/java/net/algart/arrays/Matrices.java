@@ -1527,7 +1527,7 @@ public class Matrices {
      * {@link UpdatableFloatArray#matrix(long...)},
      * {@link UpdatableDoubleArray#matrix(long...)}.</p>
      *
-     *
+     * @param <T>   the generic type of AlgART array.
      * @param array an array storing all matrix elements.
      * @param dim   the matrix dimensions.
      * @return new matrix backed by <tt>array</tt> with the given dimensions.
@@ -1570,6 +1570,7 @@ public class Matrices {
      * <p>The passed <tt>dim</tt> argument is cloned by this method: no references to it
      * are maintained by the created matrix.
      *
+     * @param <T>      the generic type of AlgART array.
      * @param array    an array storing all matrix elements.
      * @param position the starting position inside the array, from which the matrix elements are placed.
      * @param dim      the matrix dimensions.
@@ -1637,6 +1638,7 @@ public class Matrices {
      * this method allows specifying non-updatable <tt>arraySupertype</tt> (for example,
      * <tt>{@link ByteArray}.class</tt>).
      *
+     * @param <T>            the generic type of AlgART array.
      * @param arraySupertype the desired type of the underlying array (the generic argument of the matrix type).
      * @param elementType    the type of matrix elements.
      * @throws NullPointerException     if <tt>elementType</tt> or <tt>dim</tt> is <tt>null</tt>.
@@ -1730,6 +1732,7 @@ public class Matrices {
      * and before checking the types of arrays. It is necessary to provide a guarantee
      * that the elements of the returned list will not be changed to matrices of unallowed type.
      *
+     * @param <T>        the generic type of AlgART arrays.
      * @param arrayClass the required class / interface of built-in arrays for all passed matrices.
      * @param matrices   an array of any matrices.
      * @return the <tt>matrices</tt> argument (the same reference to a Java array).
@@ -1765,6 +1768,7 @@ public class Matrices {
      * <tt>matrices.get(k).{@link Matrix#array() array()}</tt>.
      * If some passed matrices are <tt>null</tt> or have different dimensions, throws a corresponding exception.
      *
+     * @param <T>        the generic type of AlgART arrays.
      * @param arrayClass the required class / interface of built-in arrays for all passed matrices.
      * @param matrices   list of some matrices.
      * @return array of {@link Matrix#array() built-in AlgART arrays} of all passed matrices.
@@ -1788,6 +1792,7 @@ public class Matrices {
      * if <tt>requireIdenticalType=true</tt>, also checks that all passed matrices have identical
      * {@link Matrix#elementType() element type}.
      *
+     * @param <T>        the generic type of AlgART array.
      * @param arrayClass the required class / interface of built-in arrays for all passed matrices.
      * @param matrices   list of some matrices.
      * @return array of {@link Matrix#array() built-in AlgART arrays} of all passed matrices.
@@ -1886,6 +1891,7 @@ public class Matrices {
      * Equivalent to <tt>{@link #separate(ArrayContext, Matrix, int)
      * separate}(context, interleaved, Integer.MAX_VALUE)</tt> (no limitations).
      *
+     * @param <T>         the generic type of the built-in AlgART arrays.
      * @param context     the context.
      * @param interleaved the source interleaved matrix.
      * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension.
@@ -1920,6 +1926,7 @@ public class Matrices {
      * In any case, the number of returned matrices, greater than {@code Integer.MAX_VALUE}, usually leads to
      * <tt>OutOfMemoryError</tt>.
      *
+     * @param <T>         the generic type of the built-in AlgART arrays.
      * @param context     the context; allows to specify (in particular)
      *                    the memory model for creating returned matrices;
      *                    can be <tt>null</tt>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
@@ -2039,6 +2046,7 @@ public class Matrices {
      * the array in the returned matrix will be direct-accessible wrapper: {@link Arrays#isJavaArrayWrapper(Array)}
      * will return <tt>true</tt> for the {@link Matrix#array() built-in array}.</p>
      *
+     * @param <T>       the generic type of the built-in AlgART arrays.
      * @param context   the context; allows to specify (in particular)
      *                  the memory model for creating returned matrix;
      *                  can be <tt>null</tt>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
@@ -2083,6 +2091,7 @@ public class Matrices {
      * Equivalent to <tt>{@link #asLayers(Matrix, int)
      * asLayers}(merged, Integer.MAX_VALUE)</tt> (no limitations).
      *
+     * @param <T>    the generic type of the built-in AlgART arrays.
      * @param merged the source merged matrix.
      * @return a list of matrices: "layers" of the source one along the last dimension.
      * @throws NullPointerException  if <tt>merged</tt> argument is <tt>null</tt>.
@@ -2119,6 +2128,7 @@ public class Matrices {
      * of the source matrix: modification in the source matrix will affect the returned matrices,
      * and vice versa.</p>
      *
+     * @param <T>    the generic type of the built-in AlgART arrays.
      * @param merged the source merged matrix.
      * @param limit  maximal allowed number of returned matrices (the last dimension of the source matrix).
      * @return a list of matrices: "layers" of the source one along the last dimension.
@@ -2163,6 +2173,7 @@ public class Matrices {
      * (for 3 channels) and the pixels are stored sequentially in "planes": RRR... (plane with z-index 0),
      * then GGG... (plane with z-index 1), then BBB... (plane with z-index 2).</p>
      *
+     * @param <T>         the generic type of the built-in AlgART arrays.
      * @param memoryModel memory model for creating the result matrix.
      * @param matrices    list of the source matrices; must be non-empty.
      * @return result merged matrix.
@@ -2737,6 +2748,7 @@ public class Matrices {
      * asCoordFuncMatrix}(true, {@link ConstantFunc#getInstance(double)
      * ConstantFunc.getInstance}(constant), requiredType, dim)</tt>.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param constant     the constant value of all elements of the returned matrix.
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param dim          dimensions of the returned matrix.
@@ -2754,6 +2766,7 @@ public class Matrices {
      * Equivalent to {@link #asCoordFuncMatrix(boolean, Func, Class, long...)
      * asCoordFuncMatrix(true, f, requiredType, dim)}.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function used for calculating all result matrix elements.
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param dim          dimensions of the returned matrix.
@@ -2789,6 +2802,7 @@ public class Matrices {
      * about precise details of forming the elements of the returned matrix on the base
      * of the real result of calling {@link Func#get(double...)} method.
      *
+     * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -2834,6 +2848,7 @@ public class Matrices {
      * Equivalent to <tt>{@link #asFuncMatrix(Func, Class, List)
      * asFuncMatrix}(f, requiredType, {@link #several(Class, Matrix[]) several}(PArray.class, x))</tt>.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to the passed AlgART matrix.
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param x            the AlgART matrix.
@@ -2854,6 +2869,7 @@ public class Matrices {
      * asFuncMatrix}(truncateOverflows, f, requiredType, {@link #several(Class, Matrix[])
      * several}(PArray.class, x))</tt>.
      *
+     * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -2877,6 +2893,7 @@ public class Matrices {
      * asFuncMatrix}(f, requiredType, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2))</tt>.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to all passed AlgART matrices.
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param x1           1st AlgART matrix.
@@ -2899,6 +2916,7 @@ public class Matrices {
      * asFuncMatrix}(truncateOverflows, f, requiredType, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2))</tt>.
      *
+     * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -2924,6 +2942,7 @@ public class Matrices {
      * asFuncMatrix}(f, requiredType, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2, x3))</tt>.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to all passed AlgART matrices.
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param x1           1st AlgART matrix.
@@ -2947,6 +2966,7 @@ public class Matrices {
      * asFuncMatrix}(truncateOverflows, f, requiredType, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2, x3))</tt>.
      *
+     * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -2973,6 +2993,7 @@ public class Matrices {
      * asFuncMatrix}(f, requiredType, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2, x3, x4))</tt>.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to all passed AlgART matrices.
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param x1           1st AlgART matrix.
@@ -2998,6 +3019,7 @@ public class Matrices {
      * asFuncMatrix}(truncateOverflows, f, requiredType, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2, x3, x4))</tt>.
      *
+     * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3025,6 +3047,7 @@ public class Matrices {
      * Equivalent to {@link #asFuncMatrix(boolean, Func, Class, List)
      * asFuncMatrix(true, f, requiredType, x)}.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to all passed AlgART matrices.
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param x            several AlgART matrices; must not be empty.
@@ -3055,6 +3078,7 @@ public class Matrices {
      * <p>In addition, this method checks, whether all passed matrices have the
      * {@link Matrix#dimEquals(Matrix) same dimensions}, and throws an exception in other case.
      *
+     * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3086,6 +3110,7 @@ public class Matrices {
      * Equivalent to {@link #asUpdatableFuncMatrix(boolean, net.algart.math.functions.Func.Updatable, Class, Matrix)
      * asUpdatableFuncMatrix(true, f, requiredType, x)}.
      *
+     * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to the passed AlgART matrix.
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param x            the source matrix.
@@ -3110,6 +3135,7 @@ public class Matrices {
      * Arrays#asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)
      * Arrays.asUpdatableFuncArray(truncateOverflows, f, requiredType, x.array())})</tt>.
      *
+     * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <tt>int</tt>, <tt>short</tt>, <tt>byte</tt>
      *                          and <tt>char</tt> resulting values (see comments to {@link
      *                          Arrays#asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)}
@@ -4388,6 +4414,7 @@ public class Matrices {
      * It performs cloning with maximal speed via multithreading optimization. We recommend to call
      * it after lazy calculations.</p>
      *
+     * @param matrix the matrix to be cloned.
      * @return exact updatable clone of the passed matrix.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      */
@@ -4406,6 +4433,8 @@ public class Matrices {
      *     (return result)
      * </pre>
      *
+     * @param memoryModel the memory model, used for allocation a new copy of this array.
+     * @param matrix      the matrix to be cloned.
      * @return exact updatable clone of the passed matrix.
      * @throws NullPointerException if one of the arguments is <tt>null</tt>.
      */

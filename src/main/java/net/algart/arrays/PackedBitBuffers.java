@@ -314,6 +314,7 @@ public class PackedBitBuffers {
      *
      * @param dest    the destination buffer (bits are packed into <code>long</code> values).
      * @param destPos position of the first bit written in the destination buffer.
+     * @param bits    sequence of new bits to be copied into the destination buffer.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <code>dest</code> argument is <code>null</code>.
      * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
@@ -367,6 +368,7 @@ public class PackedBitBuffers {
      *
      * @param dest    the destination buffer (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the destination buffer.
+     * @param bits    sequence of new bits to be copied into the destination buffer.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <code>dest</code> argument is <code>null</code>.
      * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
