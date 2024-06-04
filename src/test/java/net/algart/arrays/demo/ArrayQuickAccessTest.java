@@ -40,13 +40,13 @@ public class ArrayQuickAccessTest {
         final Object javaArray = array instanceof DirectAccessible da && da.hasJavaArray() ? da.javaArray() : null;
         final int offset = array instanceof DirectAccessible da && da.hasJavaArray() ? da.javaArrayOffset() : -1;
         if (javaArray == null) {
-            System.out.printf("%s%n    usual, ja() = %s, %s%n", array, ja, ja2);
+            System.out.printf("%s%n    not direct-accessible, ja() = %s, %s%n", array, ja, ja2);
             assert !wrapper;
         } else {
             assert ((DirectAccessible) array).javaArrayLength() == array.length() : "Invalid javaArrayLength()";
             int length = java.lang.reflect.Array.getLength(javaArray);
             assert wrapper == (offset == 0 && length == array.length());
-            System.out.printf("%s%n    direct-accessible %s[%d] (%s), offset %d%s%n",
+            System.out.printf("%s%n    DIRECT-ACCESSIBLE %s[%d] (%s), offset %d%s%n",
                     array,
                     javaArray.getClass().getComponentType().getSimpleName(), length,
                     length == array.length() ? "the same length" : "DIFFERENT length",
@@ -60,6 +60,33 @@ public class ArrayQuickAccessTest {
             assert ja != ja2;
         }
         compareJa(array);
+        if (array instanceof BitArray bitArray) {
+            checkBitArray(bitArray, cannotBeWrapper);
+        }
+    }
+
+    private static void checkBitArray(BitArray array, boolean cannotBeWrapper) {
+        long[] ja = array.jaBits();
+        long[] ja2 = array.jaBits();
+        assert ja != null && ja2 != null;
+        final boolean wrapper = array.isPackedBitArrayWrapper();
+        if (wrapper && cannotBeWrapper) {
+            throw new AssertionError("Unexpected packed bit wrapper!");
+        }
+        if (array.isJavaArrayWrapper() || array instanceof DirectAccessible) {
+            throw new AssertionError("Cannot be usual wrapper for bits");
+        }
+        if (!wrapper) {
+            System.out.printf("    not packed bit array wrapper, ja() = %s, %s%n", ja, ja2);
+        } else {
+            System.out.printf("    PACKED BIT ARRAY WRAPPER bit[%d] (%s)%n", array.length(), ja);
+        }
+        if (wrapper) {
+            assert ja2 == ja;
+        } else {
+            assert ja != ja2;
+        }
+        compareJaBits(array);
     }
 
     private static void check(Array array, boolean cannotBeWrapper) {
@@ -133,6 +160,14 @@ public class ArrayQuickAccessTest {
                 throw new AssertionError();
             }
         }
+    }
+
+    private static void compareJaBits(BitArray array) {
+        final long[] ja = array.jaBits();
+        final long[] j = Arrays.toPackedBitArray(array);
+        if (!java.util.Arrays.equals(ja, j)) {
+                throw new AssertionError();
+            }
     }
 
     private static class TestArray extends AbstractDoubleArray {
