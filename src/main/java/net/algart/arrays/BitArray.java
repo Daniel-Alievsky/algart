@@ -194,6 +194,8 @@ public interface BitArray extends PFixedArray {
      * getBit}(arrayPos + k);
      * </pre>
      *
+     * <p>but usually works much faster.</p>
+     *
      * <p>Note: if <tt>IndexOutOfBoundsException</tt> occurs due to attempt to write data outside the passed
      * Java array, the target Java array can be partially filled.
      * In other words, this method <b>can be non-atomic regarding this failure</b>.
@@ -276,6 +278,54 @@ public interface BitArray extends PFixedArray {
      * @see Arrays#goodStartOffsetInArrayOfLongs(BitArray, long, int)
      */
     long nextQuickPosition(long position);
+
+    /**
+     * Returns <tt>true</tt> this array is actually a <i>wrapper</i> for
+     * a packed bit array (<tt>long[]</tt Java array, see {@link PackedBitArrays} class>,
+     * like wrappers returned by {@link SimpleMemoryModel#asUpdatableBitArray(long[], long)} method.
+     *
+     * <p>Note that this method returns <tt>false</tt> for {@link #subArray(long, long) subarrays} with non-zero
+     * offset. Also, it returns <tt>false</tt> if the underlying packed array contains more than
+     * <code>{@link PackedBitArrays#packedLength(long)
+     * PackedBitArrays.packedLength}(thisArray.{@link Array#length() length()}</code> elements:
+     * possible for a growing {@link MutableBitArray}.
+     * In other words, the situation is similar to {@link Array#isJavaArrayWrapper()} method,
+     * but for packed bits.
+     *
+     * @return whether this array is a wrapper for a packed bit array.
+     * @see #jaBits()
+     */
+    default boolean isPackedBitArrayWrapper() {
+        return false;
+    }
+
+    /**
+     * Returns a reference to the underlying packed bit array, if this AlgART array is its wrapper
+     * (see {@link #isPackedBitArrayWrapper()}, otherwise returns
+     * <tt>{@link Arrays#toPackedBitArray(BitArray) Arrays.toPackedBitArray(thisArray)} in other case.
+     *
+     * <p>In other words, this method returns a packed bit array, identical to this AlgART array
+     * in terms of {@link PackedBitArrays} class.</p>
+     *
+     * <p>The returned array is always identical to
+     * the result of {@link Arrays#toPackedBitArray(BitArray) Arrays.toPackedBitArray(thisArray)}.
+     * But this method works very quickly when possible, in particular, for most bit arrays created
+     * by {@link SimpleMemoryModel}.</p>
+     *
+     * <p><b>Be careful: this method can be potentially unsafe while inaccurate usage!</b>
+     * The main purpose of this method is to quickly access array data for <i>reading</i>.
+     * But it also allows you to <i>modify</i> this data,
+     * and the result of such modification is unpredictable: this may change the original AlgART array,
+     * but may also not change. (Of course, this is impossible for {@link #isImmutable() immutable} arrays.)
+     * Typically you <b>should not</b> attempt to modify the Java array returned by this method;
+     * this helps to avoid difficult bugs.</p>
+     *
+     * @return packed Java bit array containing all the bits in this array.
+     * @see #isPackedBitArrayWrapper()
+     */
+    default long[] jaBits() {
+        return Arrays.toPackedBitArray(this);
+    }
 
     /**
      * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableBitArray(long[], long)

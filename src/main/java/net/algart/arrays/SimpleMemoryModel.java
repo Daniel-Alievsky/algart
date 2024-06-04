@@ -413,6 +413,7 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
      * @throws IllegalArgumentException if <tt>array</tt> argument is not an array
      *                                  or <tt>boolean[]</tt> array.
+     * @see Array#ja()
      */
     public static UpdatableArray asUpdatableArray(Object array) {
         Objects.requireNonNull(array, "Null array argument");
@@ -477,6 +478,7 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      * @throws IllegalArgumentException if <tt>length&lt;0</tt> or
      *                                  if the passed <tt>array</tt> is too short to store
      *                                  <tt>length</tt> bits (i.e. if <tt>array.length &lt; (length+63)/64).</tt>
+     * @see BitArray#jaBits()
      */
     public static UpdatableBitArray asUpdatableBitArray(long[] packedBitArray, long length) {
         Objects.requireNonNull(packedBitArray, "Null packedBitArray");

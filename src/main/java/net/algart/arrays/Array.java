@@ -1092,7 +1092,8 @@ public interface Array {
      *     <li><tt>da.{@link DirectAccessible#javaArrayOffset() javaArrayOffset()} == 0</tt>;</li>
      *     <li><tt>array.{@link Array#length() length()} == n</tt>, where <tt>n</tt> is the length of Java array
      *     <tt>da.{@link DirectAccessible#javaArray() javaArray()}</tt>:<br>
-     *     <tt>array.{@link Array#length() length()} == java.lang.reflect.Array.getLength(da.javaArray())</tt>.</li>
+     *     <tt>array.{@link Array#length() length()} == java.lang.reflect.Array.getLength(da.javaArray())</tt>
+     *     (this condition is usually not fulfilled, for example, in a growing {@link MutableArray}).</li>
      * </ol>
      *
      * <p>In this situation, the specified AlgART array is called <i>a wrapper</i>
@@ -1110,9 +1111,9 @@ public interface Array {
     }
 
     /**
-     * Returns the underlying Java array <tt>ja</tt>, if this AlgART array is its wrapper
+     * Returns a reference to the underlying Java array <tt>ja</tt>, if this AlgART array is its wrapper
      * (see {@link #isJavaArrayWrapper()}); otherwise returns
-     * <tt>{@link Arrays#toJavaArray(Array) Arrays.toJavaArray}(thisObject)</tt> in other case.
+     * <tt>{@link Arrays#toJavaArray(Array) Arrays.toJavaArray}(thisObject)</tt>.
      *
      * <p>In other words, this method returns a Java-array, absolutely identical to this AlgART array &mdash;
      * having identical length and elements, &mdash; and does this as quickly as possible
@@ -1137,10 +1138,12 @@ public interface Array {
      * {@link FloatArray#ja()}}, {@link DoubleArray#ja()}},
      * {@link ObjectArray#ja()}}.</p>
      *
-     * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
-     * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
+     * <p><b>Be careful: this method can be potentially unsafe while inaccurate usage!</b>
+     * The main purpose of this method is to quickly access array data for <i>reading</i>.
+     * But it also allows you to <i>modify</i> this data,
      * and the result of such modification is unpredictable: this may change the original AlgART array,
-     * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
+     * but may also not change. (Of course, this is impossible for {@link #isImmutable() immutable} arrays.)
+     * Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
      *
      * <p>Note that usually you <b>should</b> prefer methods of {@link DirectAccessible} interface

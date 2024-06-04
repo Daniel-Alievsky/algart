@@ -4591,14 +4591,14 @@ public class Arrays {
     }
 
     /**
-     * Returns a Java array containing all the elements in this AlgART array in proper sequence,
+     * Returns the Java array containing all the elements in this AlgART array in proper sequence,
      * if the length of this array is not too large (not greater than <tt>Integer.MAX_VALUE</tt>).
      * In other case, throws {@link TooLargeArrayException}.
      *
      * <p>The result is always a newly created Java array.
      * Its length will be equal to current
-     * <tt>array.{@link MutableArray#length() length()}</tt>, and array elements will be stored
-     * in elements <tt>#0..#{@link MutableArray#length() length()}-1}</tt> of the returned array.
+     * <tt>array.{@link Array#length() length()}</tt>, and array elements will be stored
+     * in elements <tt>#0..#{@link Array#length() length()}-1}</tt> of the returned array.
      *
      * <p>The returned Java array will be "safe" in the sense that no references to it are
      * maintained by this array.
@@ -4639,6 +4639,47 @@ public class Arrays {
         }
         Object result = java.lang.reflect.Array.newInstance(array.elementType(), (int) len);
         array.getData(0, result);
+        return result;
+    }
+
+    /**
+     * Returns packed bit array containing all the bits in this AlgART array
+     * in terms of {@link PackedBitArrays} class and {@link BitArray#getBits} method.
+     * If the length of this array is too large (greater than 2<sup>37</sup>&minus;1),
+     * this method throws {@link TooLargeArrayException}.
+     *
+     * <p>The result is always a newly created Java array.
+     * Its length will be equal to <code>{@link PackedBitArrays#packedLength(long)
+     * PackedBitArrays.packedLength}(array.{@link Array#length() length()}</code>,
+     * and array elements will be stored the first <tt>#0..#{@link Array#length() length()}-1}</tt> bits
+     * of the returned packed bit array.</p>
+     *
+     * <p>This method is equivalent to the following code:</p>
+     * <pre>
+     *     final long length = thisArray.length();
+     *     final long packedLength = PackedBitArrays.packedLength(length);
+     *     if (packedLength != (int) packedLength) ... // throwing TooLargeArrayException
+     *     final long[] result = new long[(int) packedLength];
+     *     thisArray.{@link BitArray#getBits(long, long[], long, long) getBits}(0, result, 0, length);
+     * </pre>
+     *
+     * @param array the source AlgART array.
+     * @return packed Java bit array containing all the bits in this array.
+     * @throws NullPointerException   if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws TooLargeArrayException if the array length is greater than 2<sup>37</sup>&minus;1.
+     * @see BitArray#jaBits()
+     * @see BitArray#getBits(long, long[], long, long)
+     */
+    public static long[] toPackedBitArray(BitArray array) {
+        Objects.requireNonNull(array, "Null array argument");
+        final long length = array.length();
+        final long packedLength = PackedBitArrays.packedLength(length);
+        if (packedLength != (int) packedLength) {
+            throw new TooLargeArrayException("Cannot convert AlgART bit array to packed long[] array, "
+                    + "because it is too large: " + array);
+        }
+        final long[] result = new long[(int) packedLength];
+        array.getBits(0, result, 0, length);
         return result;
     }
 

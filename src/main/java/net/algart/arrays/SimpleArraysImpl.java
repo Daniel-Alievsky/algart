@@ -122,6 +122,7 @@ class SimpleArraysImpl {
         // longJavaArrayOffsetInternal() should be declared in AbstractJAArray for correct implementation of its method
         abstract long longJavaArrayOffsetInternal();
 
+        // Note: in current implementation this method is necessary only for SUB-ARRAYS.
         final void reallocateStorage() {
             if (this.isImmutable()) // it can be not-Updatable - for example, trusted immutable + copy-on-next-write
                 throw new InternalError("Internal error in SimpleMemoryModel implementation (unallowed reallocation)");
@@ -924,9 +925,6 @@ class SimpleArraysImpl {
 
         public float[] ja() {
             if (length == this.floatArray.length) {
-                if (isCopyOnNextWrite()) {
-                    reallocateStorage();
-                }
                 return this.floatArray;
             }
             return Arrays.toJavaArray(this);
@@ -2499,9 +2497,6 @@ class SimpleArraysImpl {
 
         public char[] ja() {
             if (length == this.charArray.length) {
-                if (isCopyOnNextWrite()) {
-                    reallocateStorage();
-                }
                 return this.charArray;
             }
             return Arrays.toJavaArray(this);
@@ -4087,9 +4082,6 @@ class SimpleArraysImpl {
 
         public byte[] ja() {
             if (length == this.byteArray.length) {
-                if (isCopyOnNextWrite()) {
-                    reallocateStorage();
-                }
                 return this.byteArray;
             }
             return Arrays.toJavaArray(this);
@@ -5655,9 +5647,6 @@ class SimpleArraysImpl {
 
         public short[] ja() {
             if (length == this.shortArray.length) {
-                if (isCopyOnNextWrite()) {
-                    reallocateStorage();
-                }
                 return this.shortArray;
             }
             return Arrays.toJavaArray(this);
@@ -7208,9 +7197,6 @@ class SimpleArraysImpl {
 
         public int[] ja() {
             if (length == this.intArray.length) {
-                if (isCopyOnNextWrite()) {
-                    reallocateStorage();
-                }
                 return this.intArray;
             }
             return Arrays.toJavaArray(this);
@@ -8726,9 +8712,6 @@ class SimpleArraysImpl {
 
         public long[] ja() {
             if (length == this.longArray.length) {
-                if (isCopyOnNextWrite()) {
-                    reallocateStorage();
-                }
                 return this.longArray;
             }
             return Arrays.toJavaArray(this);
@@ -10228,9 +10211,6 @@ class SimpleArraysImpl {
 
         public double[] ja() {
             if (length == this.doubleArray.length) {
-                if (isCopyOnNextWrite()) {
-                    reallocateStorage();
-                }
                 return this.doubleArray;
             }
             return Arrays.toJavaArray(this);
@@ -11743,9 +11723,6 @@ class SimpleArraysImpl {
         @SuppressWarnings("unchecked")
         public Object[] ja() {
             if (length == this.objectArray.length) {
-                if (isCopyOnNextWrite()) {
-                    reallocateStorage();
-                }
                 return this.objectArray;
             }
             return Arrays.toJavaArray(this);
@@ -13595,6 +13572,19 @@ class SimpleArraysImpl {
             return (UpdatableArray) standardObjectClone();
         }
 
+        @Override
+        public boolean isPackedBitArrayWrapper() {
+            return (length + 63) >>> 6 == bitArray.length;
+        }
+
+        @Override
+        public long[] jaBits() {
+            if (isPackedBitArrayWrapper()) {
+                return this.bitArray;
+            }
+            return Arrays.toPackedBitArray(this);
+        }
+
         public String toString() {
             return "unresizable simple AlgART array bit[" + length()
                     + "], built-in Java-array @" + Integer.toHexString(System.identityHashCode(bitArray))
@@ -13912,6 +13902,8 @@ class SimpleArraysImpl {
             if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
             }
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             //noinspection SynchronizeOnNonFinalField
             synchronized (this.bitArray) {
                 PackedBitArrays.setBits64Impl(bitArray, offset + arrayPos, bits, count);
@@ -13933,6 +13925,8 @@ class SimpleArraysImpl {
             if (arrayPos > length - count) {
                 throw rangeException(arrayPos + count - 1);
             }
+            if (this.capacity < 0) // copy-on-next-write
+                reallocateStorage();
             PackedBitArrays.setBits64Impl(bitArray, offset + arrayPos, bits, count);
         }
 
@@ -14046,6 +14040,22 @@ class SimpleArraysImpl {
 
         public UpdatableArray shallowClone() {
             return (UpdatableArray) standardObjectClone();
+        }
+
+        @Override
+        public boolean isPackedBitArrayWrapper() {
+            return offset == 0 && (length + 63) >>> 6 == bitArray.length;
+        }
+
+        @Override
+        public long[] jaBits() {
+            if (isPackedBitArrayWrapper()) {
+                if (isCopyOnNextWrite()) {
+                    reallocateStorage();
+                }
+                return this.bitArray;
+            }
+            return Arrays.toPackedBitArray(this);
         }
 
         public String toString() {

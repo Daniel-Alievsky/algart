@@ -246,6 +246,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * setBit}(arrayPos + k, {@link PackedBitArrays#getBit(long[], long)
      * PackedBitArrays.getBit}(srcArray, srcArrayOffset + k));
      * </pre>
+     * <p>but usually works much faster.</p>
      *
      * <p>Note: if <tt>IndexOutOfBoundsException</tt> occurs due to attempt to read data outside the passed
      * Java array, this AlgART array can be partially filled.
