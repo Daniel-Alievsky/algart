@@ -2043,7 +2043,7 @@ public class Matrices {
      * where <tt>memoryModel</tt> is <tt>context.getMemoryModel()</tt> or
      * {@link SimpleMemoryModel} for <tt>null</tt> context.
      * In the latter case ({@link SimpleMemoryModel}) this provides a guarantee, that
-     * the array in the returned matrix will be direct-accessible wrapper: {@link Arrays#isJavaArrayWrapper(Array)}
+     * the array in the returned matrix will be direct-accessible wrapper: {@link Array#isJavaArrayWrapper()}
      * will return <tt>true</tt> for the {@link Matrix#array() built-in array}.</p>
      *
      * @param <T>       the generic type of the built-in AlgART arrays.

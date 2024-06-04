@@ -278,6 +278,10 @@ class SimpleArraysImpl {
             setNewStatus(false);
         }
 
+        public boolean isJavaArrayWrapper() {
+            return false;
+        }
+
         public final boolean hasJavaArray() {
             if (this instanceof BitArray) {
                 throw new InternalError("Internal error in SimpleMemoryModel implementation " +
@@ -914,6 +918,10 @@ class SimpleArraysImpl {
             return 0;
         }
 
+        public boolean isJavaArrayWrapper() {
+            return length == this.floatArray.length;
+        }
+
         public float[] ja() {
             if (length == this.floatArray.length) {
                 if (isCopyOnNextWrite()) {
@@ -1008,6 +1016,10 @@ class SimpleArraysImpl {
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        public boolean isJavaArrayWrapper() {
+            return offset == 0 && length == this.floatArray.length;
         }
 
         public float[] ja() {
@@ -2481,6 +2493,10 @@ class SimpleArraysImpl {
             return 0;
         }
 
+        public boolean isJavaArrayWrapper() {
+            return length == this.charArray.length;
+        }
+
         public char[] ja() {
             if (length == this.charArray.length) {
                 if (isCopyOnNextWrite()) {
@@ -2575,6 +2591,10 @@ class SimpleArraysImpl {
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        public boolean isJavaArrayWrapper() {
+            return offset == 0 && length == this.charArray.length;
         }
 
         public char[] ja() {
@@ -4061,6 +4081,10 @@ class SimpleArraysImpl {
             return 0;
         }
 
+        public boolean isJavaArrayWrapper() {
+            return length == this.byteArray.length;
+        }
+
         public byte[] ja() {
             if (length == this.byteArray.length) {
                 if (isCopyOnNextWrite()) {
@@ -4155,6 +4179,10 @@ class SimpleArraysImpl {
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        public boolean isJavaArrayWrapper() {
+            return offset == 0 && length == this.byteArray.length;
         }
 
         public byte[] ja() {
@@ -5621,6 +5649,10 @@ class SimpleArraysImpl {
             return 0;
         }
 
+        public boolean isJavaArrayWrapper() {
+            return length == this.shortArray.length;
+        }
+
         public short[] ja() {
             if (length == this.shortArray.length) {
                 if (isCopyOnNextWrite()) {
@@ -5715,6 +5747,10 @@ class SimpleArraysImpl {
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        public boolean isJavaArrayWrapper() {
+            return offset == 0 && length == this.shortArray.length;
         }
 
         public short[] ja() {
@@ -7166,6 +7202,10 @@ class SimpleArraysImpl {
             return 0;
         }
 
+        public boolean isJavaArrayWrapper() {
+            return length == this.intArray.length;
+        }
+
         public int[] ja() {
             if (length == this.intArray.length) {
                 if (isCopyOnNextWrite()) {
@@ -7260,6 +7300,10 @@ class SimpleArraysImpl {
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        public boolean isJavaArrayWrapper() {
+            return offset == 0 && length == this.intArray.length;
         }
 
         public int[] ja() {
@@ -8676,6 +8720,10 @@ class SimpleArraysImpl {
             return 0;
         }
 
+        public boolean isJavaArrayWrapper() {
+            return length == this.longArray.length;
+        }
+
         public long[] ja() {
             if (length == this.longArray.length) {
                 if (isCopyOnNextWrite()) {
@@ -8770,6 +8818,10 @@ class SimpleArraysImpl {
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        public boolean isJavaArrayWrapper() {
+            return offset == 0 && length == this.longArray.length;
         }
 
         public long[] ja() {
@@ -10170,6 +10222,10 @@ class SimpleArraysImpl {
             return 0;
         }
 
+        public boolean isJavaArrayWrapper() {
+            return length == this.doubleArray.length;
+        }
+
         public double[] ja() {
             if (length == this.doubleArray.length) {
                 if (isCopyOnNextWrite()) {
@@ -10264,6 +10320,10 @@ class SimpleArraysImpl {
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        public boolean isJavaArrayWrapper() {
+            return offset == 0 && length == this.doubleArray.length;
         }
 
         public double[] ja() {
@@ -11676,6 +11736,10 @@ class SimpleArraysImpl {
             return 0;
         }
 
+        public boolean isJavaArrayWrapper() {
+            return length == this.objectArray.length;
+        }
+
         @SuppressWarnings("unchecked")
         public Object[] ja() {
             if (length == this.objectArray.length) {
@@ -11779,6 +11843,10 @@ class SimpleArraysImpl {
 
         public int javaArrayOffset() {
             return offset;
+        }
+
+        public boolean isJavaArrayWrapper() {
+            return offset == 0 && length == this.objectArray.length;
         }
 
         @SuppressWarnings("unchecked")

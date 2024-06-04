@@ -60,7 +60,7 @@ import java.util.Objects;
  * then you can be sure that its length (returned by {@link Array#length()} and
  * {@link DirectAccessible#javaArrayLength()} methods) is equal to the actual length
  * of the Java array, returned by {@link DirectAccessible#javaArray()} method;
- * {@link Arrays#isJavaArrayWrapper(Array)} returns <tt>true</tt> for such arrays.</p>
+ * {@link Array#isJavaArrayWrapper()} returns <tt>true</tt> for such arrays.</p>
  *
  * <p>All arrays, created by this memory model, have empty implementation of
  * {@link Array#loadResources(ArrayContext)},
@@ -405,7 +405,7 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      * and changes in the returned array "write through" to <tt>array</tt> argument.
      * The length and capacity of the returned array are equal to <tt>array.length</tt>.
      *
-     * <p>For arrays, created by this method, {@link Arrays#isJavaArrayWrapper(Array)}
+     * <p>For arrays, created by this method, {@link Array#isJavaArrayWrapper()}
      * method returns <tt>true</tt>.</p>
      *
      * @param array the source Java array.

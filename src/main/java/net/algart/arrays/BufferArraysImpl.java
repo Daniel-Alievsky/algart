@@ -221,6 +221,11 @@ class BufferArraysImpl {
             storage.getData(offset + arrayPos, destArray, 0, count);
         }
 
+        @Override
+        public boolean isJavaArrayWrapper() {
+            return false;
+        }
+
         public final void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
             if (!(this instanceof BitArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "

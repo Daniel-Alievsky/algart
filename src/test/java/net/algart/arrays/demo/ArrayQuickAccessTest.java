@@ -33,7 +33,7 @@ public class ArrayQuickAccessTest {
         Object ja = array.ja();
         Object ja2 = array.ja();
         assert ja != null && ja2 != null;
-        final boolean wrapper = Arrays.isJavaArrayWrapper(array);
+        final boolean wrapper = array.isJavaArrayWrapper();
         if (wrapper && cannotBeWrapper) {
             throw new AssertionError("Unexpected wrapper!");
         }
@@ -73,7 +73,7 @@ public class ArrayQuickAccessTest {
     }
 
     private static void compareJa(Array array) {
-        boolean wrapper = Arrays.isJavaArrayWrapper(array);
+        boolean wrapper = array.isJavaArrayWrapper();
         final Object ja = array.ja();
         //[[Repeat() Bit ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double;;
         //           boolean ==> char,,byte,,short,,int,,long,,float,,double]]

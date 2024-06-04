@@ -1080,8 +1080,38 @@ public interface Array {
     UpdatableArray updatableClone(MemoryModel memoryModel);
 
     /**
+     * Returns <tt>true</tt> this array is actually a <i>wrapper</i> for
+     * standard Java array, like wrappers returned by {@link SimpleMemoryModel#asUpdatableArray(Object)} method.
+     *
+     * <p>More precisely, this method returns <tt>true</tt>,
+     * if and only if all the following conditions are fulfilled:</p>
+     * <ol>
+     *     <li><tt>thisArray instanceof {@link DirectAccessible}</tt>;
+     *     let <tt>da = (DirectAccessible) thisArray</tt>;</li>
+     *     <li><tt>da.{@link DirectAccessible#hasJavaArray() hasJavaArray()}</tt>;</li>
+     *     <li><tt>da.{@link DirectAccessible#javaArrayOffset() javaArrayOffset()} == 0</tt>;</li>
+     *     <li><tt>array.{@link Array#length() length()} == n</tt>, where <tt>n</tt> is the length of Java array
+     *     <tt>da.{@link DirectAccessible#javaArray() javaArray()}</tt>:<br>
+     *     <tt>array.{@link Array#length() length()} == java.lang.reflect.Array.getLength(da.javaArray())</tt>.</li>
+     * </ol>
+     *
+     * <p>In this situation, the specified AlgART array is called <i>a wrapper</i>
+     * of the underlying Java array <tt>da.{@link DirectAccessible#javaArray() javaArray()}</tt>.</p>
+     *
+     * @return whether this array is a wrapper for standard Java array: direct-accessible array with zero offset and
+     * with length, equal to the number of elements of the underlying Java array.
+     * @see #ja()
+     */
+    default boolean isJavaArrayWrapper() {
+        return this instanceof DirectAccessible da &&
+                da.hasJavaArray() &&
+                da.javaArrayOffset() == 0 &&
+                java.lang.reflect.Array.getLength(da.javaArray()) == length();
+    }
+
+    /**
      * Returns the underlying Java array <tt>ja</tt>, if this AlgART array is its wrapper
-     * (see {@link Arrays#isJavaArrayWrapper(Array)}); otherwise returns
+     * (see {@link #isJavaArrayWrapper()}); otherwise returns
      * <tt>{@link Arrays#toJavaArray(Array) Arrays.toJavaArray}(thisObject)</tt> in other case.
      *
      * <p>In other words, this method returns a Java-array, absolutely identical to this AlgART array &mdash;
@@ -1090,7 +1120,7 @@ public interface Array {
      *
      * <p>This method is equivalent to the following operators:</p>
      * <pre>
-     *     thisObject instanceof DirectAccessible da &amp;&amp;
+     *     thisObject thisArray DirectAccessible da &amp;&amp;
      *                 da.hasJavaArray() &amp;&amp;
      *                 da.javaArrayOffset() == 0 &amp;&amp;
      *                 java.lang.reflect.Array.getLength(da.javaArray()) == thisObject.{@link Array#length()
@@ -1122,7 +1152,7 @@ public interface Array {
      *
      * @return Java array, equivalent to this AlgART array.
      * @see DirectAccessible
-     * @see Arrays#isJavaArrayWrapper(Array)
+     * @see #isJavaArrayWrapper()
      * @see PArray#jaByte()
      * @see PArray#jaShort()
      * @see PArray#jaInt()

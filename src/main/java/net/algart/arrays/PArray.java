@@ -222,7 +222,7 @@ public interface PArray extends Array {
      *
      * <p>This method may be used instead of {@link Arrays#toByteJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <tt>byte[]</tt> array
-     * and there is high probability that this AlgART array is a {@link Arrays#isJavaArrayWrapper(Array) wrapper}
+     * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <tt>byte[]</tt> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
@@ -246,7 +246,7 @@ public interface PArray extends Array {
      *
      * <p>This method may be used instead of {@link Arrays#toShortJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <tt>short[]</tt> array
-     * and there is high probability that this AlgART array is a {@link Arrays#isJavaArrayWrapper(Array) wrapper}
+     * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <tt>short[]</tt> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
@@ -270,7 +270,7 @@ public interface PArray extends Array {
      *
      * <p>This method may be used instead of {@link Arrays#toIntJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <tt>int[]</tt> array
-     * and there is high probability that this AlgART array is a {@link Arrays#isJavaArrayWrapper(Array) wrapper}
+     * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <tt>int[]</tt> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
@@ -294,7 +294,7 @@ public interface PArray extends Array {
      *
      * <p>This method may be used instead of {@link Arrays#toLongJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <tt>long[]</tt> array
-     * and there is high probability that this AlgART array is a {@link Arrays#isJavaArrayWrapper(Array) wrapper}
+     * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <tt>long[]</tt> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
@@ -318,7 +318,7 @@ public interface PArray extends Array {
      *
      * <p>This method may be used instead of {@link Arrays#toFloatJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <tt>float[]</tt> array
-     * and there is high probability that this AlgART array is a {@link Arrays#isJavaArrayWrapper(Array) wrapper}
+     * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <tt>float[]</tt> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
@@ -342,7 +342,7 @@ public interface PArray extends Array {
      *
      * <p>This method may be used instead of {@link Arrays#toDoubleJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <tt>double[]</tt> array
-     * and there is high probability that this AlgART array is a {@link Arrays#isJavaArrayWrapper(Array) wrapper}
+     * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <tt>double[]</tt> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
