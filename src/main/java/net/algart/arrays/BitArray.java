@@ -281,8 +281,9 @@ public interface BitArray extends PFixedArray {
 
     /**
      * Returns <tt>true</tt> this array is actually a <i>wrapper</i> for
-     * a packed bit array (<tt>long[]</tt Java array, see {@link PackedBitArrays} class>,
-     * like wrappers returned by {@link SimpleMemoryModel#asUpdatableBitArray(long[], long)} method.
+     * a packed bit array,
+     * like wrappers returned by {@link SimpleMemoryModel#asUpdatableBitArray(long[], long)} method
+     * (see {@link PackedBitArrays} class about packed bit <tt>long[]</tt> arrays).
      *
      * <p>Note that this method returns <tt>false</tt> for {@link #subArray(long, long) subarrays} with non-zero
      * offset. Also, it returns <tt>false</tt> if the underlying packed array contains more than
