@@ -27,7 +27,7 @@ package net.algart.matrices.scanning.demo;
 import net.algart.arrays.*;
 import net.algart.external.MatrixIO;
 import net.algart.math.functions.RectangularFunc;
-import net.algart.matrices.scanning.ConnectedObjectScanner;
+import net.algart.matrices.scanning.Boundary2DScanner;
 import net.algart.matrices.scanning.ConnectivityType;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class RemoveSmallObjectsDemo {
+public class FillHolesDemo {
     public static void main(String[] args) throws IOException {
         int startArgIndex = 0;
         boolean onlyThreshold = false;
@@ -43,19 +43,17 @@ public class RemoveSmallObjectsDemo {
             onlyThreshold = true;
             startArgIndex++;
         }
-        if (args.length < startArgIndex + 4) {
+        if (args.length < startArgIndex + 3) {
             System.out.printf("Usage: %s " +
-                            "source_image.jpg/png/bmp result_image.bmp threshold minArea [numberOfTests]%n",
-                    RemoveSmallObjectsDemo.class.getName());
+                            "[-onlyThreshold] source_image.jpg/png/bmp result_image.bmp threshold [numberOfTests]%n",
+                    FillHolesDemo.class.getName());
             System.out.println("  threshold is a value in 0..1 range)");
-            System.out.println("  min_area is minimal required number of pixels in the connected object");
             return;
         }
         final Path sourceFile = Paths.get(args[startArgIndex]);
         final Path resultFile = Paths.get(args[startArgIndex + 1]);
         final double threshold = Double.parseDouble(args[startArgIndex + 2]);
-        final long minArea = Long.parseLong(args[startArgIndex + 3]);
-        final int numberOfTests = startArgIndex + 4 >= args.length ? 1 : Integer.parseInt(args[startArgIndex + 4]);
+        final int numberOfTests = startArgIndex + 3 >= args.length ? 1 : Integer.parseInt(args[startArgIndex + 3]);
         System.out.printf("Loading image %s...%n", sourceFile.toAbsolutePath().normalize());
         List<Matrix<UpdatablePArray>> matrices = MatrixIO.readImage(sourceFile);
         Matrix<? extends PArray> intensity = ColorMatrices.asRGBIntensity(matrices);
@@ -67,18 +65,15 @@ public class RemoveSmallObjectsDemo {
         Matrices.copy(result, binary);
         if (!onlyThreshold) {
             System.out.printf("Scanning image %s...%n%n", binary);
-            ConnectedObjectScanner scanner = ConnectedObjectScanner.getStacklessDepthFirstScanner(
-                    result, ConnectivityType.STRAIGHT_AND_DIAGONAL);
             for (int test = 1; test <= numberOfTests; test++) {
                 System.out.printf("Test #%d...%n", test);
-                Matrices.copy(result, binary);
                 long t1 = System.nanoTime();
-                scanner.clearAllBySizes(null, result, minArea, Long.MAX_VALUE);
+                Boundary2DScanner.fillHoles(result, binary, ConnectivityType.STRAIGHT_AND_DIAGONAL);
                 long t2 = System.nanoTime();
-                System.out.printf("Objects scanned and filtered in %.3f ms%n%n", (t2 - t1) * 1e-6);
+                System.out.printf("Boundary scanned and filtered in %.3f ms%n%n", (t2 - t1) * 1e-6);
             }
         }
         MatrixIO.writeImage(resultFile, List.of(result));
-        System.out.printf("Result binary image (without small objects) is saved in %s%n", resultFile);
+        System.out.printf("Result binary image (with filled holes) is saved in %s%n", resultFile);
     }
 }

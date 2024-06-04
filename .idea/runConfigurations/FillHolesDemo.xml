@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="FillHolesDemo" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="net.algart.matrices.scanning.demo.FillHolesDemo" />
+    <module name="algart" />
+    <option name="PROGRAM_PARAMETERS" value="-onlyThreshold src/test/resources/demo/images/objects_sample.jpg /tmp/no_holes.bmp 0.05 5" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="net.algart.matrices.scanning.demo.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
