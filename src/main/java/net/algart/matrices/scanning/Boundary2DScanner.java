@@ -4307,6 +4307,11 @@ public abstract class Boundary2DScanner {
 
     private static boolean isDirectBitArray(BitArray array) {
         if (SimpleMemoryModel.isSimpleArray(array)) {
+            // We MUST check SimpleMemoryModel: here we can be sure, that DataBitBuffer
+            // returns true reference to the built-in packed Java array.
+            // Possible alternative is BitArray.jaBits (since AlgART 1.4.10),
+            // but this method works better for subarray with zero-offset
+            // (here we do not require that the length must be correct).
             DataBitBuffer buf = array.buffer(DataBuffer.AccessMode.READ, 16);
             return buf.isDirect(); // possibly not for immutable or copy-on-next-write arrays
         } else {
