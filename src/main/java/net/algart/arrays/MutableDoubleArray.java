@@ -29,7 +29,7 @@ package net.algart.arrays;
   float ==> double
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Resizable AlgART array of <tt>double</tt> values.</p>
+ * <p>Resizable AlgART array of <code>double</code> values.</p>
  *
  * @author Daniel Alievsky
  */

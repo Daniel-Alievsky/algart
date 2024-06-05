@@ -26,7 +26,7 @@ package net.algart.arrays;
 
 /*Repeat.SectionStart all*/
 /**
- * <p>Resizable AlgART array of <tt>float</tt> values.</p>
+ * <p>Resizable AlgART array of <code>float</code> values.</p>
  *
  * @author Daniel Alievsky
  */

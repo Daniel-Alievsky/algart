@@ -30,7 +30,7 @@ package net.algart.arrays;
   float ==> char
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Resizable AlgART array of <tt>char</tt> values.</p>
+ * <p>Resizable AlgART array of <code>char</code> values.</p>
  *
  * @author Daniel Alievsky
  */

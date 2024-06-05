@@ -30,7 +30,7 @@ package net.algart.arrays;
   float ==> byte
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Resizable AlgART array of <tt>byte</tt> values.</p>
+ * <p>Resizable AlgART array of <code>byte</code> values.</p>
  *
  * @author Daniel Alievsky
  */

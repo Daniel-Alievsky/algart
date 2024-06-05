@@ -655,27 +655,27 @@ public class Patterns {
          !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Returns the product of passed multipliers from the index, specified in <tt>from</tt> argument (inclusive),
-     * until the index, specified in <tt>to</tt> argument (exclusive), i&#46;e&#46;
-     * <tt>multipliers[from]*multipliers[from+1]*...*multipliers[to-1]</tt>,
-     * if this product is in <tt>-2<sup>63</sup>+1..2<sup>63</sup>-1</tt> range,
-     * or <tt>Long.MIN_VALUE</tt> (<tt>-2<sup>63</sup></tt>) in other cases ("overflow").
+     * Returns the product of passed multipliers from the index, specified in <code>from</code> argument (inclusive),
+     * until the index, specified in <code>to</code> argument (exclusive), i&#46;e&#46;
+     * <code>multipliers[from]*multipliers[from+1]*...*multipliers[to-1]</code>,
+     * if this product is in <code>-2<sup>63</sup>+1..2<sup>63</sup>-1</code> range,
+     * or <code>Long.MIN_VALUE</code> (<code>-2<sup>63</sup></code>) in other cases ("overflow").
      *
-     * <p>Must be <tt>0&lt;=from&lt;=to&lt;=multipliers.length</tt>. If <tt>from==to</tt>, returns 1.
+     * <p>Must be <code>0&lt;=from&lt;=to&lt;=multipliers.length</code>. If <code>from==to</code>, returns 1.
      *
-     * <p>Note: if the product is <tt>Long.MIN_VALUE</tt>, this situation cannot
+     * <p>Note: if the product is <code>Long.MIN_VALUE</code>, this situation cannot
      * be distinguished from the overflow.
      *
      * <p>Also note: if at least one of the passed multipliers is 0, then the result will be always 0,
-     * even if product of some other multipliers is out of <tt>-2<sup>63</sup>+1..2<sup>63</sup>-1</tt> range.
+     * even if product of some other multipliers is out of <code>-2<sup>63</sup>+1..2<sup>63</sup>-1</code> range.
      *
-     * @param multipliers the <tt>long</tt> values to be multiplied.
-     * @param from        the initial index in <tt>array</tt>, inclusive.
-     * @param to          the end index in <tt>array</tt>, exclusive.
-     * @return the product of all multipliers or <tt>Long.MIN_VALUE</tt> if a case of overflow.
-     * @throws NullPointerException      if <tt>multipliers</tt> argument is <tt>null</tt>.
-     * @throws IndexOutOfBoundsException if <tt>from&lt;0</tt> or <tt>to&gt;multipliers.length</tt>.
-     * @throws IllegalArgumentException  if <tt>from&gt;to</tt>.
+     * @param multipliers the <code>long</code> values to be multiplied.
+     * @param from        the initial index in <code>array</code>, inclusive.
+     * @param to          the end index in <code>array</code>, exclusive.
+     * @return the product of all multipliers or <code>Long.MIN_VALUE</code> if a case of overflow.
+     * @throws NullPointerException      if <code>multipliers</code> argument is <code>null</code>.
+     * @throws IndexOutOfBoundsException if <code>from&lt;0</code> or <code>to&gt;multipliers.length</code>.
+     * @throws IllegalArgumentException  if <code>from&gt;to</code>.
      * @see #longMul(long...)
      * @see #longMul(long, long)
      */
@@ -696,22 +696,22 @@ public class Patterns {
     }
 
     /**
-     * Returns the product of all passed multipliers (<tt>multipliers[0]*multipliers[1]*...</tt>),
-     * if it is in <tt>-2<sup>63</sup>+1..2<sup>63</sup>-1</tt> range,
-     * or <tt>Long.MIN_VALUE</tt> (<tt>-2<sup>63</sup></tt>) in other cases ("overflow").
-     * Equivalent to <tt>{@link #longMul(long[], int, int) longMul}(multipliers,0,multipliers.length)</tt>.
+     * Returns the product of all passed multipliers (<code>multipliers[0]*multipliers[1]*...</code>),
+     * if it is in <code>-2<sup>63</sup>+1..2<sup>63</sup>-1</code> range,
+     * or <code>Long.MIN_VALUE</code> (<code>-2<sup>63</sup></code>) in other cases ("overflow").
+     * Equivalent to <code>{@link #longMul(long[], int, int) longMul}(multipliers,0,multipliers.length)</code>.
      *
-     * <p>If the multipliers array is empty (<tt>longMul()</tt> call), returns 1.
+     * <p>If the multipliers array is empty (<code>longMul()</code> call), returns 1.
      *
-     * <p>Note: if the product is <tt>Long.MIN_VALUE</tt>, this situation cannot
+     * <p>Note: if the product is <code>Long.MIN_VALUE</code>, this situation cannot
      * be distinguished from the overflow.
      *
      * <p>Also note: if at least one of the passed multipliers is 0, then the result will be always 0,
-     * even if product of some other multipliers is out of <tt>-2<sup>63</sup>+1..2<sup>63</sup>-1</tt> range.
+     * even if product of some other multipliers is out of <code>-2<sup>63</sup>+1..2<sup>63</sup>-1</code> range.
      *
-     * @param multipliers the <tt>long</tt> values to be multiplied.
-     * @return the product of all multipliers or <tt>Long.MIN_VALUE</tt> if a case of overflow.
-     * @throws NullPointerException if <tt>multipliers</tt> argument is <tt>null</tt>.
+     * @param multipliers the <code>long</code> values to be multiplied.
+     * @return the product of all multipliers or <code>Long.MIN_VALUE</code> if a case of overflow.
+     * @throws NullPointerException if <code>multipliers</code> argument is <code>null</code>.
      * @see #longMul(long[], int, int)
      * @see #longMul(long, long)
      */
@@ -727,20 +727,20 @@ public class Patterns {
     }
 
     /**
-     * Returns the product <tt>a*b</tt>, if it is in <tt>-2<sup>63</sup>+1..2<sup>63</sup>-1</tt> range,
-     * or <tt>Long.MIN_VALUE</tt> (<tt>-2<sup>63</sup></tt>) in other cases ("overflow").
+     * Returns the product <code>a*b</code>, if it is in <code>-2<sup>63</sup>+1..2<sup>63</sup>-1</code> range,
+     * or <code>Long.MIN_VALUE</code> (<code>-2<sup>63</sup></code>) in other cases ("overflow").
      *
-     * <p>Note: if the product is <tt>Long.MIN_VALUE</tt>, this situation cannot
+     * <p>Note: if the product is <code>Long.MIN_VALUE</code>, this situation cannot
      * be distinguished from the overflow.
      *
-     * <p>Also note: if one of the multipliers <tt>a</tt> and <tt>b</tt> is equal to the "overflow marker"
-     * <tt>Long.MIN_VALUE</tt>, then, as it is follows from the common rule, the result of this method will also
-     * be equal to <tt>Long.MIN_VALUE</tt> &mdash; excepting the only case, when one of the multipliers
-     * <tt>a</tt> and <tt>b</tt> is zero. If <tt>a==0</tt> or <tt>b==0</tt>, the result is always 0.
+     * <p>Also note: if one of the multipliers <code>a</code> and <code>b</code> is equal to the "overflow marker"
+     * <code>Long.MIN_VALUE</code>, then, as it is follows from the common rule, the result of this method will also
+     * be equal to <code>Long.MIN_VALUE</code> &mdash; excepting the only case, when one of the multipliers
+     * <code>a</code> and <code>b</code> is zero. If <code>a==0</code> or <code>b==0</code>, the result is always 0.
      *
-     * @param a the first <tt>long</tt> value.
-     * @param b the second <tt>long</tt> value.
-     * @return the product <tt>a*b</tt> or <tt>Long.MIN_VALUE</tt> if a case of overflow.
+     * @param a the first <code>long</code> value.
+     * @param b the second <code>long</code> value.
+     * @return the product <code>a*b</code> or <code>Long.MIN_VALUE</code> if a case of overflow.
      * @see #longMul(long...)
      * @see #longMul(long[], int, int)
      */

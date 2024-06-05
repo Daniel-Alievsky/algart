@@ -31,7 +31,7 @@ package net.algart.arrays;
   float ==> boolean
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Resizable AlgART array of <tt>boolean</tt> values.</p>
+ * <p>Resizable AlgART array of <code>boolean</code> values.</p>
  *
  * @author Daniel Alievsky
  */

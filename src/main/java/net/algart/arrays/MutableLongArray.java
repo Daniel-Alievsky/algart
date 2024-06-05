@@ -30,7 +30,7 @@ package net.algart.arrays;
   float ==> long
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Resizable AlgART array of <tt>long</tt> values.</p>
+ * <p>Resizable AlgART array of <code>long</code> values.</p>
  *
  * @author Daniel Alievsky
  */

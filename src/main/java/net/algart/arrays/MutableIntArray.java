@@ -30,7 +30,7 @@ package net.algart.arrays;
   float ==> int
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Resizable AlgART array of <tt>int</tt> values.</p>
+ * <p>Resizable AlgART array of <code>int</code> values.</p>
  *
  * @author Daniel Alievsky
  */
