@@ -48,15 +48,15 @@ package net.algart.arrays;
 public interface MutableArray extends Stack, UpdatableArray {
     /**
      * Changes the current number of elements in this array.
-     * If <tt>newLength</tt> is greater than current number of elements,
-     * all new elements will be always zero (0 for numbers, <tt>false</tt> for booleans,
-     * <tt>null</tt> or some "empty" objects for non-primitive elements).
+     * If <code>newLength</code> is greater than current number of elements,
+     * all new elements will be always zero (0 for numbers, <code>false</code> for booleans,
+     * <code>null</code> or some "empty" objects for non-primitive elements).
      *
-     * <p>Notice: if <tt>newLength</tt> is less than current number of elements,
-     * then the unused elements (from <tt>newLength</tt> to <tt>(current length)-1</tt>)
+     * <p>Notice: if <code>newLength</code> is less than current number of elements,
+     * then the unused elements (from <code>newLength</code> to <code>(current length)-1</code>)
      * may be changed (for example, filled by zero) while calling this method.
      * It is not important usually, because the array doesn't provide access to elements
-     * after <tt>(current length)-1</tt>.
+     * after <code>(current length)-1</code>.
      * But if there are some "views" of this array, for examples, created by
      * {@link #subArray(long, long)} or {@link #asUnresizable()} methods,
      * you need to remember that reducing length of the source array can lead to changing
@@ -71,7 +71,7 @@ public interface MutableArray extends Stack, UpdatableArray {
     MutableArray length(long newLength);
 
     /**
-     * Equivalent to the call <tt>{@link #length(long) length}(0)</tt>.
+     * Equivalent to the call <code>{@link #length(long) length}(0)</code>.
      *
      * @return a reference to this array.
      */
@@ -82,7 +82,7 @@ public interface MutableArray extends Stack, UpdatableArray {
     /**
      * Increases the capacity of this instance, if necessary,
      * to ensure that it can hold at least the given number of elements.
-     * After this call, the current capacity will be &gt;=<tt>minCapacity</tt>.
+     * After this call, the current capacity will be &gt;=<code>minCapacity</code>.
      *
      * @param minCapacity the desired minimum capacity.
      * @return a reference to this array.
@@ -105,11 +105,11 @@ public interface MutableArray extends Stack, UpdatableArray {
      * Appends the specified array to the end of this array.
      * This method must work always if the element types of this and appended arrays
      * (returned by {@link #elementType()}) are the same.
-     * <tt>IllegalArgumentException</tt> will be thrown.
+     * <code>IllegalArgumentException</code> will be thrown.
      *
      * @param appendedArray  appended array.
      * @return               a reference to this array.
-     * @throws NullPointerException     if <tt>appendedArray</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <code>appendedArray</code> argument is <code>null</code>.
      * @throws IllegalArgumentException if the source and this element types do not match.
      * @throws TooLargeArrayException   if the resulting array length is too large for this type of arrays.
      * @see #asUnresizable()

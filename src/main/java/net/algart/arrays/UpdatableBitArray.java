@@ -31,47 +31,48 @@ package net.algart.arrays;
   Float(?!ing) ==> Boolean ;;
   float ==> boolean
      !! Auto-generated: NOT EDIT !! */
+
 /**
- * <p>AlgART array of <tt>boolean</tt> values, read/write access, no resizing.</p>
+ * <p>AlgART array of <code>boolean</code> values, read/write access, no resizing.</p>
  *
  * @author Daniel Alievsky
  */
 public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt>.
+     * Sets the element #<code>index</code> to the specified <code>value</code>.
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.
-     * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */
     void setBit(long index, boolean value);
 
     /**
      * Fills all the elements of this array by the specified value. Equivalent to
-     * <tt>{@link #fill(long, long, boolean) fill}(0, thisArray.length(), value)</tt>.
+     * <code>{@link #fill(long, long, boolean) fill}(0, thisArray.length(), value)</code>.
      *
      * @param value the value to be stored in all elements of the array.
-     * @return      a reference to this array.
+     * @return a reference to this array.
      * @see #fill(long, long, boolean)
      * @see Arrays#zeroFill(UpdatableArray)
      */
     UpdatableBitArray fill(boolean value);
 
     /**
-     * Fills <tt>count</tt> elements of this array, starting from <tt>position</tt> index,
+     * Fills <code>count</code> elements of this array, starting from <code>position</code> index,
      * by the specified value. Equivalent to the following loop:<pre>
      * for (long k = 0; k &lt; count; k++) {
      * &#32;   {@link #setBit(long, boolean) setBit}(position + k, value);
      * }</pre>
      * but works much faster and checks indexes
-     * (and throws possible <tt>IndexOutOfBoundsException</tt>) in the very beginning.
+     * (and throws possible <code>IndexOutOfBoundsException</code>) in the very beginning.
      *
      * @param position start index (inclusive) to be filled.
      * @param count    number of filled elements.
      * @param value    the value to be stored in the elements of the array.
-     * @return         a reference to this array.
-     * @throws IndexOutOfBoundsException for illegal <tt>position</tt> and <tt>count</tt>
-     *                                   (<tt>position &lt; 0 || count &lt; 0 || position + count &gt; length()</tt>).
+     * @return a reference to this array.
+     * @throws IndexOutOfBoundsException for illegal <code>position</code> and <code>count</code>
+     *                                   (<code>position &lt; 0 || count &lt; 0 || position + count &gt; length()</code>).
      * @see #fill(boolean)
      * @see Arrays#zeroFill(UpdatableArray)
      */

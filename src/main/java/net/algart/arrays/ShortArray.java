@@ -33,7 +33,7 @@ package net.algart.arrays;
      !! Auto-generated: NOT EDIT !! */
 
 /**
- * <p>AlgART array of <tt>short</tt> values, read-only access.</p>
+ * <p>AlgART array of <code>short</code> values, read-only access.</p>
  *
  * @author Daniel Alievsky
  */
@@ -45,55 +45,55 @@ public interface ShortArray extends PIntegerArray {
     Class<? extends MutableShortArray> mutableType();
 
     /**
-     * Returns the unsigned short (char) #<tt>index</tt>.
+     * Returns the unsigned short (char) #<code>index</code>.
      *
      * @param index index of element to get.
      * @return the unsigned short (char) at the specified position in this array.
-     * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */
     int getShort(long index);
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that
-     * <tt>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</tt>
-     * and <tt>{@link #getShort(long) getShort}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such array element.
+     * Returns the minimal index <code>k</code>, so that
+     * <code>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</code>
+     * and <code>{@link #getShort(long) getShort}(k)==value</code>,
+     * or <code>-1</code> if there is no such array element.
      *
-     * <p>In particular, if <tt>lowIndex&gt;=thisArray.{@link #length() length()}}</tt>
-     * or <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>,
-     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     * <p>In particular, if <code>lowIndex&gt;=thisArray.{@link #length() length()}}</code>
+     * or <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>,
+     * and if <code>lowIndex&lt;0</code>, the result is the same as if <code>lowIndex==0</code>.
      *
-     * <p>You may specify <tt>lowIndex=0</tt> and <tt>highIndex=Long.MAX_VALUE</tt> to search
+     * <p>You may specify <code>lowIndex=0</code> and <code>highIndex=Long.MAX_VALUE</code> to search
      * through all array elements.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the first occurrence of this value in this array
-     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     * or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     long indexOf(long lowIndex, long highIndex, short value);
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
-     * and <tt>{@link #getShort(long) getShort}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such array element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=max(lowIndex,0)</code>
+     * and <code>{@link #getShort(long) getShort}(k)==value</code>,
+     * or <code>-1</code> if there is no such array element.
      *
-     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>highIndex&gt;=thisArray.{@link #length() length()}</tt>,
-     * the result is the same as if <tt>highIndex==thisArray.{@link #length() length()}</tt>.
+     * <p>In particular, if <code>highIndex&lt;=0</code> or <code>highIndex&lt;=lowIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>highIndex&gt;=thisArray.{@link #length() length()}</code>,
+     * the result is the same as if <code>highIndex==thisArray.{@link #length() length()}</code>.
      *
-     * <p>You may specify <tt>lowIndex=0</tt> and <tt>highIndex=Long.MAX_VALUE</tt> to search
+     * <p>You may specify <code>lowIndex=0</code> and <code>highIndex=Long.MAX_VALUE</code> to search
      * through all array elements.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the last occurrence of this value in this array
-     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     * or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     long lastIndexOf(long lowIndex, long highIndex, short value);
 
