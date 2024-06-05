@@ -66,8 +66,8 @@ public class ArrayQuickAccessTest {
     }
 
     private static void checkBitArray(BitArray array, boolean cannotBeWrapper) {
-        long[] ja = array.jaBits();
-        long[] ja2 = array.jaBits();
+        long[] ja = array.jaBit();
+        long[] ja2 = array.jaBit();
         assert ja != null && ja2 != null;
         final boolean wrapper = array.isPackedBitArrayWrapper();
         if (wrapper && cannotBeWrapper) {
@@ -163,7 +163,7 @@ public class ArrayQuickAccessTest {
     }
 
     private static void compareJaBits(BitArray array) {
-        final long[] ja = array.jaBits();
+        final long[] ja = array.jaBit();
         final long[] j = Arrays.toPackedBitArray(array);
         if (!java.util.Arrays.equals(ja, j)) {
                 throw new AssertionError();

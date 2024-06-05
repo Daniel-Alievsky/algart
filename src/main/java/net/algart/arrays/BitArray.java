@@ -25,10 +25,10 @@
 package net.algart.arrays;
 
 /*Repeat(INCLUDE_FROM_FILE, FloatArray.java, all)
-  (or <tt>null</tt> in other case\.) ==> $1
-     * Usually, this method always returns <tt>null</tt>,
+  (or <code>null</code> in other case\.) ==> $1
+     * Usually, this method always returns <code>null</code>,
      * because typical implementation packs bits in another primitive types
-     * (as <tt>int</tt> or <tt>long</tt>). ;;
+     * (as <code>int</code> or <code>long</code>). ;;
   PFloating ==> PFixed ;;
   FloatArray ==> BitArray ;;
   FloatBuffer ==> BitBuffer ;;
@@ -126,27 +126,30 @@ public interface BitArray extends PFixedArray {
     /*Repeat.IncludeEnd*/
 
     /**
-     * Equivalent to <tt>{@link #getBit(long) getBit()} ? 1 : 0</tt>.
+     * Equivalent to <code>{@link #getBit(long) getBit()} ? 1 : 0</code>.
      *
      * <p>Note that this method is already declared in {@link PFixedArray}.
      * It is redeclared here only for documentation and code search purposes.</p>
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     int getInt(long index);
 
     /**
-     * Returns the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#arrayPos</tt>.
+     * Returns the sequence of <code>count</code> bits (maximum 64 bits),
+     * starting from the bit <code>#arrayPos</code>.
      *
-     * <p>More precisely, the bit <tt>#(arrayPos+k)</tt> will be returned in the bit <tt>#k</tt> of the returned
-     * <tt>long</tt> value <tt>R</tt>: the first bit <tt>#arrayPos</tt> will be equal to <tt>R&amp;1</tt>,
-     * the following bit <tt>#(arrayPos+1)</tt> will be equal to <tt>(R&gt;&gt;1)&amp;1</tt>, etc.
-     * If <tt>count=0</tt>, the result is 0.</p>
+     * <p>More precisely, the bit <code>#(arrayPos+k)</code> will be returned
+     * in the bit <code>#k</code> of the returned
+     * <code>long</code> value <code>R</code>: the first bit <code>#arrayPos</code>
+     * will be equal to <code>R&amp;1</code>,
+     * the following bit <code>#(arrayPos+1)</code> will be equal to <code>(R&gt;&gt;1)&amp;1</code>, etc.
+     * If <code>count=0</code>, the result is 0.</p>
      *
      * <p>The same result can be calculated using the following loop
-     * (for correct <tt>count</tt> in the range 0..64):</p>
+     * (for correct <code>count</code> in the range 0..64):</p>
      *
      * <pre>
      *      long result = 0;
@@ -156,13 +159,13 @@ public interface BitArray extends PFixedArray {
      *      }</pre>
      *
      * <p>But this method works significantly faster in basic implementations of this interface,
-     * if <tt>count</tt> is greater than 1.</p>
+     * if <code>count</code> is greater than 1.</p>
      *
      * @param arrayPos position of the first bit read in the source array.
      * @param count    the number of bits to be unpacked (must be in range 0..64).
-     * @return the sequence of <tt>count</tt> bits.
+     * @return the sequence of <code>count</code> bits.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array.
-     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
     default long getBits64(long arrayPos, int count) {
         if (arrayPos < 0) {
@@ -184,8 +187,8 @@ public interface BitArray extends PFixedArray {
     }
 
     /**
-     * Copies <tt>count</tt> bits of this array, starting from <tt>arrayPos</tt> index,
-     * into the specified <i>packed</i> bit array, starting from <tt>destArrayOffset</tt> index.
+     * Copies <code>count</code> bits of this array, starting from <code>arrayPos</code> index,
+     * into the specified <i>packed</i> bit array, starting from <code>destArrayOffset</code> index.
      *
      * <p>This method is equivalent to the following loop:<pre>
      * for (long k = 0; k &lt; count; k++)
@@ -196,7 +199,7 @@ public interface BitArray extends PFixedArray {
      *
      * <p>but usually works much faster.</p>
      *
-     * <p>Note: if <tt>IndexOutOfBoundsException</tt> occurs due to attempt to write data outside the passed
+     * <p>Note: if <code>IndexOutOfBoundsException</code> occurs due to attempt to write data outside the passed
      * Java array, the target Java array can be partially filled.
      * In other words, this method <b>can be non-atomic regarding this failure</b>.
      * All other possible exceptions are checked in the very beginning of this method
@@ -206,9 +209,9 @@ public interface BitArray extends PFixedArray {
      * @param destArray       the target packed bit array.
      * @param destArrayOffset starting position in the target packed bit array.
      * @param count           the number of bits to be copied.
-     * @throws NullPointerException      if <tt>destArray</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <code>destArray</code> argument is <code>null</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target Java array.
-     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code>.
      * @see BitArray#getData(long, Object, int, int)
      * @see UpdatableBitArray#setBits(long, long[], long, long)
      * @see PackedBitArrays
@@ -216,24 +219,24 @@ public interface BitArray extends PFixedArray {
     void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count);
 
     /**
-     * Returns the minimal <tt>pos &gt;= max(position,0)</tt>, for which the calls
+     * Returns the minimal <code>pos &gt;= max(position,0)</code>, for which the calls
      * {@link #getBits(long, long[], long, long) getBits(pos, destArray, 0, someCount)}
      * and (for updatable array)
      * {@link UpdatableBitArray#setBits(long, long[], long, long) setBits(pos, srcArray, 0, someCount)}
      * work essentially faster than for most of the other ("slow") positions,
-     * or <tt>-1</tt> if there is no such position,
-     * in particular, if <tt>position&gt;={@link #length() length()}</tt>.
+     * or <code>-1</code> if there is no such position,
+     * in particular, if <code>position&gt;={@link #length() length()}</code>.
      *
      * <p>These calls perform copying bits to / from a bit array (with zero offset),
-     * where the bits are packed into usual Java <tt>long[]</tt> array.
+     * where the bits are packed into usual Java <code>long[]</code> array.
      * For many implementations of this interface, in particular, for AlgART bit arrays
      * created by all {@link SimpleMemoryModel simple}, {@link BufferMemoryModel buffer} and
      * {@link LargeMemoryModel large memory models}, it means copying bits between internal
-     * packed representation and Java <tt>long[]</tt>array. If the bit index "<tt>position</tt>" corresponds
-     * to a beginning of some packed portion of such representation (usually <tt>long</tt> value),
+     * packed representation and Java <code>long[]</code>array. If the bit index "<code>position</code>" corresponds
+     * to a beginning of some packed portion of such representation (usually <code>long</code> value),
      * in other words, if the position is <i>aligned</i>,
-     * then the copying may be performed quickly: it is just copying a sequence of <tt>long</tt> values.
-     * In other case, the copying requires bit shift of <tt>long</tt> values.
+     * then the copying may be performed quickly: it is just copying a sequence of <code>long</code> values.
+     * In other case, the copying requires bit shift of <code>long</code> values.
      * This method returns the nearest aligned position, starting from the passed index,
      * for such AlgART bit arrays.
      *
@@ -242,36 +245,37 @@ public interface BitArray extends PFixedArray {
      * and (for updatable array)
      * {@link UpdatableBitArray#setBits(long, long[], long, long)
      * setBits(pos, srcArray, arrayOffset, someCount)}
-     * with any (non-zero) <tt>arrayOffset</tt>,
+     * with any (non-zero) <code>arrayOffset</code>,
      * you may suppose that these calls are quick, for most implementations,
-     * when <tt>pos=qp+arrayOffset&plusmn;64*j</tt>,
-     * where <tt>qp!=-1</tt> is the result of this method for the given position
-     * and <tt>j=0,1,2,...</tt> is any integer.
+     * when <code>pos=qp+arrayOffset&plusmn;64*j</code>,
+     * where <code>qp!=-1</code> is the result of this method for the given position
+     * and <code>j=0,1,2,...</code> is any integer.
      *
-     * <p>This method may return <tt>-1</tt> in some cases: it means that there are no preferred
-     * indexes in the bit array, at least, after the passed index <tt>position</tt>.
-     * (For example, <tt>-1</tt> is usually returned for any <tt>position</tt> argument
+     * <p>This method may return <code>-1</code> in some cases: it means that there are no preferred
+     * indexes in the bit array, at least, after the passed index <code>position</code>.
+     * (For example, <code>-1</code> is usually returned for any <code>position</code> argument
      * in "lazy" arrays, created by
      * {@link Arrays#asFuncArray(boolean, net.algart.math.functions.Func, Class, PArray...)
      * Arrays.asFuncArray}
      * and similar methods.)
-     * In other case, the returned value is usually in a range <tt>position..position+63</tt>.
+     * In other case, the returned value is usually in a range <code>position..position+63</code>.
      *
-     * <p>Important note: if this method returns <tt>-1</tt> for the argument <tt>position=0</tt>, it means
+     * <p>Important note: if this method returns <code>-1</code> for the argument <code>position=0</code>, it means
      * that {@link #getBits getBits} method never (or almost never) work faster than
      * {@link #getData(long, Object, int, int) getData} for any positions in this bit array.
-     * Moreover, if <tt>{@link #nextQuickPosition(long) nextQuickPosition}(0)==-1</tt>,
+     * Moreover, if <code>{@link #nextQuickPosition(long) nextQuickPosition}(0)==-1</code>,
      * then {@link #getBits getBits}, as well as the standard {@link DataBitBuffer data buffer},
      * probably works slower than {@link #getData(long, Object, int, int) getData}.
      * In this situation, it's good idea to choose the algorithm branch based on
-     * {@link #getData(long, Object, int, int) getData} and processing <tt>boolean[]</tt> arrays.
+     * {@link #getData(long, Object, int, int) getData} and processing <code>boolean[]</code> arrays.
      *
      * <p>For arrays, created by {@link Arrays#nBitCopies(long, boolean)} method,
-     * this method just returns <tt>max(position,0)</tt>
-     * (or <tt>-1</tt> if <tt>position&gt;={@link #length() length()}</tt>):
+     * this method just returns <code>max(position,0)</code>
+     * (or <code>-1</code> if <code>position&gt;={@link #length() length()}</code>):
      * all positions are good enough in such arrays.
      *
-     * <p>For negative <tt>position</tt> argument this method returns the same result as for <tt>position=0</tt>.
+     * <p>For negative <code>position</code> argument this method returns
+     * the same result as for <code>position=0</code>.
      *
      * @param position some index inside this bit array.
      * @return the minimal "quick" (usually "aligned") position starting from this index.
@@ -280,13 +284,16 @@ public interface BitArray extends PFixedArray {
     long nextQuickPosition(long position);
 
     /**
-     * Returns <tt>true</tt> this array is actually a <i>wrapper</i> for
+     * Returns <code>true</code> this array is actually a <i>wrapper</i> for
      * a packed bit array,
      * like wrappers returned by {@link SimpleMemoryModel#asUpdatableBitArray(long[], long)} method
-     * (see {@link PackedBitArrays} class about packed bit <tt>long[]</tt> arrays).
+     * (see {@link PackedBitArrays} class about packed bit <code>long[]</code> arrays).
+     * That packed bit array is returned by {@link #jaBit()} method,
+     * if and only if this method returns <code>true</code>;
+     * otherwise {@link #jaBit()} method returns a copy of array data.
      *
-     * <p>Note that this method returns <tt>false</tt> for {@link #subArray(long, long) subarrays} with non-zero
-     * offset. Also, it returns <tt>false</tt> if the underlying packed array contains more than
+     * <p>Note that this method returns <code>false</code> for {@link #subArray(long, long) subarrays} with non-zero
+     * offset. Also, it returns <code>false</code> if the underlying packed array contains more than
      * <code>{@link PackedBitArrays#packedLength(long)
      * PackedBitArrays.packedLength}(thisArray.{@link Array#length() length()}</code> elements:
      * possible for a growing {@link MutableBitArray}.
@@ -294,7 +301,7 @@ public interface BitArray extends PFixedArray {
      * but for packed bits.
      *
      * @return whether this array is a wrapper for a packed bit array.
-     * @see #jaBits()
+     * @see #jaBit()
      */
     default boolean isPackedBitArrayWrapper() {
         return false;
@@ -303,7 +310,7 @@ public interface BitArray extends PFixedArray {
     /**
      * Returns a reference to the underlying packed bit array, if this AlgART array is its wrapper
      * (see {@link #isPackedBitArrayWrapper()}, otherwise returns
-     * <tt>{@link Arrays#toPackedBitArray(BitArray) Arrays.toPackedBitArray(thisArray)} in other case.
+     * <code>{@link Arrays#toPackedBitArray(BitArray) Arrays.toPackedBitArray(thisArray)}</code>.
      *
      * <p>In other words, this method returns a packed bit array, identical to this AlgART array
      * in terms of {@link PackedBitArrays} class.</p>
@@ -313,18 +320,25 @@ public interface BitArray extends PFixedArray {
      * But this method works very quickly when possible, in particular, for most bit arrays created
      * by {@link SimpleMemoryModel}.</p>
      *
-     * <p><b>Be careful: this method can be potentially unsafe while inaccurate usage!</b>
-     * The main purpose of this method is to quickly access array data for <i>reading</i>.
+     * <p>Be careful: this method can be potentially unsafe while inaccurate usage!
+     * The typical purpose of this method is to quickly access array data for <i>reading</i>.
      * But it also allows you to <i>modify</i> this data,
-     * and the result of such modification is unpredictable: this may change the original AlgART array,
-     * but may also not change. (Of course, this is impossible for {@link #isImmutable() immutable} arrays.)
-     * Typically you <b>should not</b> attempt to modify the Java array returned by this method;
-     * this helps to avoid difficult bugs.</p>
+     * and the results of such modification can be different: this may change the original AlgART array,
+     * but may also not change. (Of course, this is impossible for {@link #isImmutable() immutable} arrays.)</p>
+     *
+     * <p>Therefore, if you only need to read the array data,
+     * you <b>should not</b> attempt to modify the Java array
+     * returned by this method: this will help to avoid difficult bugs.</p>
+     *
+     * <p>If you really want to modify array data, you may do this by updating the returned Java array, but
+     * you <b>must</b> follow two conditions:
+     * 1) this object must be an instance {@link UpdatableBitArray};
+     * 2) {@link #isPackedBitArrayWrapper()} method must return <code>true</code>.</p>
      *
      * @return packed Java bit array containing all the bits in this array.
      * @see #isPackedBitArrayWrapper()
      */
-    default long[] jaBits() {
+    default long[] jaBit() {
         return Arrays.toPackedBitArray(this);
     }
 
@@ -332,13 +346,14 @@ public interface BitArray extends PFixedArray {
      * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableBitArray(long[], long)
      * SimpleMemoryModel.asUpdatableBitArray}(packedBitArray, length)</tt>.
      *
-     * @param packedBitArray the source <tt>long[]</tt>> array.
+     * @param packedBitArray the source <code>long[]</code>> array.
      * @param length         the length of the returned bit array.
      * @return an unresizable AlgART bit array backed by the specified Java array.
-     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>length&lt;0</tt> or
-     *                                  if the passed <tt>array</tt> is too short to store
-     *                                  <tt>length</tt> bits (i.e. if <tt>array.length &lt; (length+63)/64).</tt>
+     * @throws NullPointerException     if <code>array</code> argument is <code>null</code>.
+     * @throws IllegalArgumentException if <code>length&lt;0</code> or
+     *                                  if the passed <code>array</code> is too short to store
+     *                                  <code>length</code> bits
+     *                                  (i.e. if <code>array.length &lt; (length+63)/64).</code>
      */
     static UpdatableBitArray as(long[] packedBitArray, long length) {
         return SimpleMemoryModel.asUpdatableBitArray(packedBitArray, length);

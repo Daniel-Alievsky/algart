@@ -101,10 +101,12 @@ package net.algart.arrays;
  * According the contract, the Java array returned by {@link #javaArray()} method
  * must contain elements of the same type as the AlgART array,
  * but the bits in bit AlgART arrays are packed and cannot be viewed as <tt>boolean[]</tt> array.
- * However, you can use {@link DataBuffer data buffers} and {@link BitArray#jaBits()} method
+ * However, you can use {@link DataBuffer data buffers} and {@link BitArray#jaBit()} method
  * for direct block access to bit arrays.</p>
  *
  * @author Daniel Alievsky
+ * @see Array#ja()
+ * @see BitArray#jaBit()
  * @see DataBuffer
  */
 public interface DirectAccessible {

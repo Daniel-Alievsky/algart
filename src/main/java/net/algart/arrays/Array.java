@@ -1085,7 +1085,9 @@ public interface Array {
     /**
      * Returns <code>true</code> this array is actually a <i>wrapper</i> for
      * standard Java array, like wrappers returned by {@link SimpleMemoryModel#asUpdatableArray(Object)} method.
-     * This array is returned by {@link #ja()} method, if and only if this method returns <code>true</code>
+     * That array is returned by {@link #ja()} method,
+     * if and only if this method returns <code>true</code>;
+     * otherwise {@link #ja()} method returns a copy of array data.
      *
      * <p>More precisely, this method returns <code>true</code>,
      * if and only if all the following conditions are fulfilled:</p>
@@ -1151,10 +1153,14 @@ public interface Array {
      * and the results of such modification can be different: this may change the original AlgART array,
      * but may also not change. (Of course, this is impossible for {@link #isImmutable() immutable} arrays.)</p>
      *
-     * <p>Therefore, if you need only read array data, you <b>should not</b> attempt to modify the Java array
+     * <p>Therefore, if you only need to read the array data,
+     * you <b>should not</b> attempt to modify the Java array
      * returned by this method: this will help to avoid difficult bugs.</p>
      *
-     * <p>If you want to modify array data</p>
+     * <p>If you really want to modify array data, you may do this by updating the returned Java array, but
+     * you <b>must</b> follow two conditions:
+     * 1) this object must be an instance {@link UpdatableArray} of its subinterfaces;
+     * 2) {@link #isJavaArrayWrapper()} method must return <code>true</code>.</p>
      *
      * <p>Note that usually you <b>should</b> prefer methods of {@link DirectAccessible} interface
      * instead of this method, because that interface allows to quickly process sub-arrays

@@ -810,7 +810,7 @@
  can use this technique together with trusted immutable view:
  "<code>Array protected = a.{@link net.algart.arrays.Array#asCopyOnNextWrite()
  asCopyOnNextWrite()}.{@link net.algart.arrays.Array#asTrustedImmutable()
- asTrustedImmutable()}<code>" Such protection is also absolutely safe,
+ asTrustedImmutable()}</code>" Such protection is also absolutely safe,
  but also allows to catch unallowed attempts of correction by
  {@link net.algart.arrays.Array#checkUnallowedMutation() checkUnallowedMutation()} method.</li>
  </ul>

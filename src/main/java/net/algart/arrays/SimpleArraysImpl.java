@@ -13578,7 +13578,7 @@ class SimpleArraysImpl {
         }
 
         @Override
-        public long[] jaBits() {
+        public long[] jaBit() {
             if (isPackedBitArrayWrapper()) {
                 return this.bitArray;
             }
@@ -14048,7 +14048,7 @@ class SimpleArraysImpl {
         }
 
         @Override
-        public long[] jaBits() {
+        public long[] jaBit() {
             if (isPackedBitArrayWrapper()) {
                 if (isCopyOnNextWrite()) {
                     reallocateStorage();

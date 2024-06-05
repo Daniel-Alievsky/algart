@@ -4705,7 +4705,7 @@ public class Arrays {
      * @return packed Java bit array containing all the bits in this array.
      * @throws NullPointerException   if <code>array</code> argument is <code>null</code>.
      * @throws TooLargeArrayException if the array length is greater than 2<sup>37</sup>&minus;1.
-     * @see BitArray#jaBits()
+     * @see BitArray#jaBit()
      * @see BitArray#getBits(long, long[], long, long)
      */
     public static long[] toPackedBitArray(BitArray array) {

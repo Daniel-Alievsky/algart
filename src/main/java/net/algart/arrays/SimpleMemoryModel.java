@@ -478,7 +478,7 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      * @throws IllegalArgumentException if <tt>length&lt;0</tt> or
      *                                  if the passed <tt>array</tt> is too short to store
      *                                  <tt>length</tt> bits (i.e. if <tt>array.length &lt; (length+63)/64).</tt>
-     * @see BitArray#jaBits()
+     * @see BitArray#jaBit()
      */
     public static UpdatableBitArray asUpdatableBitArray(long[] packedBitArray, long length) {
         Objects.requireNonNull(packedBitArray, "Null packedBitArray");
