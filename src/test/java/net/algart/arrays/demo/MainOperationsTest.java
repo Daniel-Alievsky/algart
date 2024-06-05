@@ -4373,8 +4373,10 @@ public class MainOperationsTest implements Cloneable {
                 }
             }
             work1.copy(clone);
-            Matrix<? extends UpdatablePArray> pmDest = Matrices.matrixAtSubArray((UpdatablePArray) work2, 0, newDim);
-            Matrices.resize(rnd.nextInt(3) == 0 ? ArrayContext.DEFAULT_SINGLE_THREAD : null, rMethod, pmDest, pm);
+            Matrix<? extends UpdatablePArray> pmDest = Matrices.matrixAtSubArray(
+                    (UpdatablePArray) work2, 0, newDim);
+            Matrices.resize(rnd.nextInt(3) == 0 ? ArrayContext.DEFAULT_SINGLE_THREAD : null,
+                    rMethod, pmDest, pm);
             if (rMethod.interpolation() || compressionIn2Times) {
                 // without interpolation, little floating-point errors in coordinates can lead to serious difference
                 for (int k = 0, n = (int) rm.size(); k < n; k++) {

@@ -2804,8 +2804,31 @@ public class Arrays {
     }
 
     /**
+     * Equivalent to {@link #applyFunc(ArrayContext, Func, UpdatablePArray, PArray...)
+     * applyFunc(null, f, result, x)}.
+     *
+     * @param f       the mathematical function applied to the source AlgART arrays.
+     * @param result  the destination array.
+     * @param x       the source arrays; may be empty;
+     *                may include <code>result</code> array to provide "in-place" operations.
+     * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
+     *                                  or one of <code>x</code> arrays is <code>null</code>.
+     * @throws IllegalArgumentException if <code>x.length==0</code> (no arrays passed),
+     *                                  or if the number of passed <code>x</code> arrays is insufficient
+     *                                  for calculating the passed <code>f</code> function.
+     *                                  (In the last situation, <code>IndexOutOfBoundsException</code>
+     *                                  may occur instead of while copying data to the result.)
+     * @throws SizeMismatchException    if <code>x.length&gt;1</code> and some of passed arrays have different lengths.
+     * @throws java.io.IOError          if the current thread is interrupted by the standard
+     *                                  <code>Thread.interrupt()</code> call.
+     */
+    public static void applyFunc(Func f, UpdatablePArray result, PArray... x) {
+        applyFunc(null, f, result, x);
+    }
+
+    /**
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)
-     * applyFunc(context, f, true, result, x)}.
+     * applyFunc(context, true, f, result, x)}.
      *
      * @param context the context of copying; can be <code>null</code>, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART arrays.

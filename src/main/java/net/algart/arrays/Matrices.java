@@ -3060,7 +3060,8 @@ public class Matrices {
      *                                  different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-            Func f, Class<? extends T> requiredType,
+            Func f,
+            Class<? extends T> requiredType,
             List<? extends Matrix<? extends PArray>> x) {
         return asFuncMatrix(true, f, requiredType, x);
     }
@@ -3096,7 +3097,9 @@ public class Matrices {
      *                                  different dimensions.
      */
     public static <T extends PArray> Matrix<T> asFuncMatrix(
-            boolean truncateOverflows, Func f, Class<? extends T> requiredType,
+            boolean truncateOverflows,
+            Func f,
+            Class<? extends T> requiredType,
             List<? extends Matrix<? extends PArray>> x) {
         PArray[] arrays = arraysOfParallelMatrices(PArray.class, x);
         if (arrays.length == 0) // check this, not x.size(), which can be changed in a parallel thread
@@ -3120,7 +3123,8 @@ public class Matrices {
      *                                  Arrays#asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)} method.
      */
     public static <T extends UpdatablePArray> Matrix<T> asUpdatableFuncMatrix(
-            Func.Updatable f, Class<? extends T> requiredType,
+            Func.Updatable f,
+            Class<? extends T> requiredType,
             Matrix<? extends UpdatablePArray> x) {
         return asUpdatableFuncMatrix(true, f, requiredType, x);
     }
@@ -3150,9 +3154,34 @@ public class Matrices {
      *                                  method.
      */
     public static <T extends UpdatablePArray> Matrix<T> asUpdatableFuncMatrix(
-            boolean truncateOverflows, Func.Updatable f, Class<? extends T> requiredType,
+            boolean truncateOverflows,
+            Func.Updatable f,
+            Class<? extends T> requiredType,
             Matrix<? extends UpdatablePArray> x) {
         return x.matrix(Arrays.asUpdatableFuncArray(truncateOverflows, f, requiredType, x.array()));
+    }
+
+    /**
+     * Equivalent to {@link #applyFunc(ArrayContext, Func, Matrix, Matrix)
+     * applyFunc(null, f, result, x)}.
+     *
+     * @param f       the mathematical function applied to the source AlgART matrices.
+     * @param result  the destination matrix.
+     * @param x       the source matrix.
+     * @throws NullPointerException     if <tt>f</tt>, <tt>result</tt>, <tt>x</tt>
+     *                                  or one of <tt>x</tt> matrices is <tt>null</tt>.
+     * @throws IllegalArgumentException in the same situations as {@link
+     *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
+     *                                  method.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
+     * @throws java.io.IOError          if the current thread is interrupted by the standard
+     *                                  <tt>Thread.interrupt()</tt> call.
+     */
+    public static void applyFunc(
+            Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x) {
+        applyFunc(null, f, result, x);
     }
 
     /**
@@ -3173,8 +3202,10 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-            ArrayContext context, Func f,
-            Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x) {
+            ArrayContext context,
+            Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x) {
         applyFunc(context, true, f, result, x);
     }
 
@@ -3205,6 +3236,31 @@ public class Matrices {
     }
 
     /**
+     * Equivalent to {@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * applyFunc(null, f, result, x1, x2)}.
+     *
+     * @param f       the mathematical function applied to the source AlgART matrices.
+     * @param result  the destination matrix.
+     * @param x1      1st AlgART matrix.
+     * @param x2      2nd AlgART matrix.
+     * @throws NullPointerException     if <tt>f</tt>, <tt>result</tt>, <tt>x</tt>
+     *                                  or one of <tt>x</tt> matrices is <tt>null</tt>.
+     * @throws IllegalArgumentException in the same situations as {@link
+     *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
+     *                                  method.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
+     * @throws java.io.IOError          if the current thread is interrupted by the standard
+     *                                  <tt>Thread.interrupt()</tt> call.
+     */
+    public static void applyFunc(
+            Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x1,
+            Matrix<? extends PArray> x2) {
+        applyFunc(null, f, result, x1, x2);
+    }
+
+    /**
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix, Matrix)
      * applyFunc(context, true, f, result, x1, x2)}.
      *
@@ -3223,8 +3279,11 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-            ArrayContext context, Func f,
-            Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x1, Matrix<? extends PArray> x2) {
+            ArrayContext context,
+            Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x1,
+            Matrix<? extends PArray> x2) {
         applyFunc(context, true, f, result, x1, x2);
     }
 
@@ -3250,9 +3309,40 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-            ArrayContext context, boolean truncateOverflows, Func f,
-            Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x1, Matrix<? extends PArray> x2) {
+            ArrayContext context,
+            boolean truncateOverflows,
+            Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x1,
+            Matrix<? extends PArray> x2) {
         applyFunc(context, truncateOverflows, f, result, several(PArray.class, x1, x2));
+    }
+
+    /**
+     * Equivalent to {@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix, Matrix)
+     * applyFunc(null, f, result, x1, x2, x3)}.
+     *
+     * @param f       the mathematical function applied to the source AlgART matrices.
+     * @param result  the destination matrix.
+     * @param x1      1st AlgART matrix.
+     * @param x2      2nd AlgART matrix.
+     * @param x3      3rd AlgART matrix.
+     * @throws NullPointerException     if <tt>f</tt>, <tt>result</tt>, <tt>x</tt>
+     *                                  or one of <tt>x</tt> matrices is <tt>null</tt>.
+     * @throws IllegalArgumentException in the same situations as {@link
+     *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
+     *                                  method.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
+     * @throws java.io.IOError          if the current thread is interrupted by the standard
+     *                                  <tt>Thread.interrupt()</tt> call.
+     */
+    public static void applyFunc(
+            Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x1,
+            Matrix<? extends PArray> x2,
+            Matrix<? extends PArray> x3) {
+        applyFunc(null, f, result, x1, x2, x3);
     }
 
     /**
@@ -3277,7 +3367,9 @@ public class Matrices {
     public static void applyFunc(
             ArrayContext context, Func f,
             Matrix<? extends UpdatablePArray> result,
-            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2, Matrix<? extends PArray> x3) {
+            Matrix<? extends PArray> x1,
+            Matrix<? extends PArray> x2,
+            Matrix<? extends PArray> x3) {
         applyFunc(context, true, f, result, x1, x2, x3);
     }
 
@@ -3304,10 +3396,43 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-            ArrayContext context, boolean truncateOverflows, Func f,
+            ArrayContext context,
+            boolean truncateOverflows,
+            Func f,
             Matrix<? extends UpdatablePArray> result,
-            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2, Matrix<? extends PArray> x3) {
+            Matrix<? extends PArray> x1,
+            Matrix<? extends PArray> x2,
+            Matrix<? extends PArray> x3) {
         applyFunc(context, truncateOverflows, f, result, several(PArray.class, x1, x2, x3));
+    }
+
+    /**
+     * Equivalent to {@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix, Matrix)
+     * applyFunc(null, f, result, x1, x2, x3, x4)}.
+     *
+     * @param f       the mathematical function applied to the source AlgART matrices.
+     * @param result  the destination matrix.
+     * @param x1      1st AlgART matrix.
+     * @param x2      2nd AlgART matrix.
+     * @param x3      3rd AlgART matrix.
+     * @param x4      4th AlgART matrix.
+     * @throws NullPointerException     if <tt>f</tt>, <tt>result</tt>, <tt>x</tt>
+     *                                  or one of <tt>x</tt> matrices is <tt>null</tt>.
+     * @throws IllegalArgumentException in the same situations as {@link
+     *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
+     *                                  method.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
+     * @throws java.io.IOError          if the current thread is interrupted by the standard
+     *                                  <tt>Thread.interrupt()</tt> call.
+     */
+    public static void applyFunc(
+            Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x1,
+            Matrix<? extends PArray> x2,
+            Matrix<? extends PArray> x3,
+            Matrix<? extends PArray> x4) {
+        applyFunc(null, f, result, x1, x2, x3, x4);
     }
 
     /**
@@ -3331,10 +3456,13 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-            ArrayContext context, Func f,
+            ArrayContext context,
+            Func f,
             Matrix<? extends UpdatablePArray> result,
-            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2,
-            Matrix<? extends PArray> x3, Matrix<? extends PArray> x4) {
+            Matrix<? extends PArray> x1,
+            Matrix<? extends PArray> x2,
+            Matrix<? extends PArray> x3,
+            Matrix<? extends PArray> x4) {
         applyFunc(context, true, f, result, x1, x2, x3, x4);
     }
 
@@ -3362,11 +3490,38 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-            ArrayContext context, boolean truncateOverflows, Func f,
+            ArrayContext context,
+            boolean truncateOverflows,
+            Func f,
             Matrix<? extends UpdatablePArray> result,
-            Matrix<? extends PArray> x1, Matrix<? extends PArray> x2,
-            Matrix<? extends PArray> x3, Matrix<? extends PArray> x4) {
+            Matrix<? extends PArray> x1,
+            Matrix<? extends PArray> x2,
+            Matrix<? extends PArray> x3,
+            Matrix<? extends PArray> x4) {
         applyFunc(context, truncateOverflows, f, result, several(PArray.class, x1, x2, x3, x4));
+    }
+
+    /**
+     * Equivalent to {@link #applyFunc(ArrayContext, Func, Matrix, List)
+     * applyFunc(null, f, result, x)}.
+     *
+     * @param f       the mathematical function applied to the source AlgART matrices.
+     * @param result  the destination matrix.
+     * @param x       several AlgART matrices; may be empty.
+     * @throws NullPointerException     if <tt>f</tt>, <tt>result</tt>, <tt>x</tt>
+     *                                  or one of <tt>x</tt> matrices is <tt>null</tt>.
+     * @throws IllegalArgumentException in the same situations as {@link
+     *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
+     *                                  method.
+     * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
+     * @throws java.io.IOError          if the current thread is interrupted by the standard
+     *                                  <tt>Thread.interrupt()</tt> call.
+     */
+    public static void applyFunc(
+            Func f,
+            Matrix<? extends UpdatablePArray> result,
+            List<? extends Matrix<? extends PArray>> x) {
+        applyFunc(null, f, result, x);
     }
 
     /**
@@ -3387,8 +3542,10 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-            ArrayContext context, Func f,
-            Matrix<? extends UpdatablePArray> result, List<? extends Matrix<? extends PArray>> x) {
+            ArrayContext context,
+            Func f,
+            Matrix<? extends UpdatablePArray> result,
+            List<? extends Matrix<? extends PArray>> x) {
         applyFunc(context, true, f, result, x);
     }
 
@@ -3419,8 +3576,11 @@ public class Matrices {
      *                                  <tt>Thread.interrupt()</tt> call.
      */
     public static void applyFunc(
-            ArrayContext context, boolean truncateOverflows, Func f,
-            Matrix<? extends UpdatablePArray> result, List<? extends Matrix<? extends PArray>> x) {
+            ArrayContext context,
+            boolean truncateOverflows,
+            Func f,
+            Matrix<? extends UpdatablePArray> result,
+            List<? extends Matrix<? extends PArray>> x) {
         Objects.requireNonNull(result, "Null result argument");
         PArray[] arrays = arraysOfParallelMatrices(PArray.class, x);
         int k = 0;
@@ -3721,6 +3881,24 @@ public class Matrices {
     }
 
     /**
+     * Equivalent to {@link #resize(ArrayContext, ResizingMethod, Matrix, Matrix)
+     * resize(null, resizingMethod, result, src)}.
+     *
+     * @param resizingMethod the algorithm of resizing.
+     * @param result         the destination matrix.
+     * @param src            the source matrix.
+     * @throws NullPointerException     if <tt>resizingMethod</tt>, <tt>matrix</tt> or <tt>newDim</tt> argument
+     *                                  is <tt>null</tt>.
+     * @throws IllegalArgumentException if the passed matrices have different number of dimensions.
+     */
+    public static void resize(
+            ResizingMethod resizingMethod,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> src) {
+        resize(null, resizingMethod, result, src);
+    }
+
+    /**
      * Resizes the source matrix to the dimensions of the passed <tt>result</tt> matrix
      * and stores the resized matrix in <tt>result</tt> argument.
      *
@@ -3763,6 +3941,9 @@ public class Matrices {
      * @param resizingMethod the algorithm of resizing.
      * @param result         the destination matrix.
      * @param src            the source matrix.
+     * @throws NullPointerException     if <tt>resizingMethod</tt>, <tt>matrix</tt> or <tt>newDim</tt> argument
+     *                                  is <tt>null</tt>.
+     * @throws IllegalArgumentException if the passed matrices have different number of dimensions.
      */
     public static void resize(
             ArrayContext context,
