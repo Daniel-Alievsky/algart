@@ -36,7 +36,7 @@ import java.nio.ByteOrder;
  * its inheritors {@link UpdatableArray} and {@link MutableArray},
  * are usually returned by  {@link #asImmutable()} method.</p>
  *
- * <p>If the elements of this array are primitive values (<tt>byte</tt>, <tt>short</tt>, etc.),
+ * <p>If the elements of this array are primitive values (<code>byte</code>, <code>short</code>, etc.),
  * the array <b>must</b> implement one of
  * {@link BitArray}, {@link CharArray},
  * {@link ByteArray}, {@link ShortArray},
@@ -61,14 +61,14 @@ public interface Array {
     /**
      * Returns the type of array elements.
      * For arrays of primitive types, returns:<ul>
-     * <li><tt>boolean.class</tt> for {@link BitArray},</li>
-     * <li><tt>char.class</tt> for {@link CharArray},</li>
-     * <li><tt>byte.class</tt> for {@link ByteArray},</li>
-     * <li><tt>short.class</tt> for {@link ShortArray},</li>
-     * <li><tt>int.class</tt> for {@link IntArray}),</li>
-     * <li><tt>long.class</tt> for {@link LongArray},</li>
-     * <li><tt>float.class</tt> for {@link FloatArray},</li>
-     * <li><tt>double.class</tt> for {@link DoubleArray}.</li>
+     * <li><code>boolean.class</code> for {@link BitArray},</li>
+     * <li><code>char.class</code> for {@link CharArray},</li>
+     * <li><code>byte.class</code> for {@link ByteArray},</li>
+     * <li><code>short.class</code> for {@link ShortArray},</li>
+     * <li><code>int.class</code> for {@link IntArray}),</li>
+     * <li><code>long.class</code> for {@link LongArray},</li>
+     * <li><code>float.class</code> for {@link FloatArray},</li>
+     * <li><code>double.class</code> for {@link DoubleArray}.</li>
      * </ul>
      * All elements of the array are values of this type or (for non-primitive types)
      * some inheritor of this type.
@@ -85,15 +85,15 @@ public interface Array {
      * Returns the <i>canonical AlgART type</i> of this array: the class of one of 9 basic interfaces,
      * describing all kinds of AlgART arrays for 8 primitive and any non-primitive element types.
      * More precisely, returns:<ul>
-     * <li><tt>{@link BitArray}.class</tt>, if this object is an instance of {@link BitArray},</li>
-     * <li><tt>{@link CharArray}.class</tt>, if this object is an instance of {@link CharArray},</li>
-     * <li><tt>{@link ByteArray}.class</tt>, if this object is an instance of {@link ByteArray},</li>
-     * <li><tt>{@link ShortArray}.class</tt>, if this object is an instance of {@link ShortArray},</li>
-     * <li><tt>{@link IntArray}.class</tt>, if this object is an instance of {@link IntArray},</li>
-     * <li><tt>{@link LongArray}.class</tt>, if this object is an instance of {@link LongArray},</li>
-     * <li><tt>{@link FloatArray}.class</tt>, if this object is an instance of {@link FloatArray},</li>
-     * <li><tt>{@link DoubleArray}.class</tt>, if this object is an instance of {@link DoubleArray},</li>
-     * <li><tt>{@link ObjectArray}.class</tt>, if this object is an instance of {@link ObjectArray}.</li>
+     * <li><code>{@link BitArray}.class</code>, if this object is an instance of {@link BitArray},</li>
+     * <li><code>{@link CharArray}.class</code>, if this object is an instance of {@link CharArray},</li>
+     * <li><code>{@link ByteArray}.class</code>, if this object is an instance of {@link ByteArray},</li>
+     * <li><code>{@link ShortArray}.class</code>, if this object is an instance of {@link ShortArray},</li>
+     * <li><code>{@link IntArray}.class</code>, if this object is an instance of {@link IntArray},</li>
+     * <li><code>{@link LongArray}.class</code>, if this object is an instance of {@link LongArray},</li>
+     * <li><code>{@link FloatArray}.class</code>, if this object is an instance of {@link FloatArray},</li>
+     * <li><code>{@link DoubleArray}.class</code>, if this object is an instance of {@link DoubleArray},</li>
+     * <li><code>{@link ObjectArray}.class</code>, if this object is an instance of {@link ObjectArray}.</li>
      * </ul>
      *
      * <p>There is a guarantee that this method works very quickly
@@ -108,15 +108,15 @@ public interface Array {
      * the class of one of 9 basic interfaces,
      * describing all kinds of updatable AlgART arrays for 8 primitive and any non-primitive element types.
      * More precisely, returns:<ul>
-     * <li><tt>{@link UpdatableBitArray}.class</tt>, if this object is an instance of {@link BitArray},</li>
-     * <li><tt>{@link UpdatableCharArray}.class</tt>, if this object is an instance of {@link CharArray},</li>
-     * <li><tt>{@link UpdatableByteArray}.class</tt>, if this object is an instance of {@link ByteArray},</li>
-     * <li><tt>{@link UpdatableShortArray}.class</tt>, if this object is an instance of {@link ShortArray},</li>
-     * <li><tt>{@link UpdatableIntArray}.class</tt>, if this object is an instance of {@link IntArray},</li>
-     * <li><tt>{@link UpdatableLongArray}.class</tt>, if this object is an instance of {@link LongArray},</li>
-     * <li><tt>{@link UpdatableFloatArray}.class</tt>, if this object is an instance of {@link FloatArray},</li>
-     * <li><tt>{@link UpdatableDoubleArray}.class</tt>, if this object is an instance of {@link DoubleArray},</li>
-     * <li><tt>{@link UpdatableObjectArray}.class</tt>, if this object is an instance of {@link ObjectArray}.</li>
+     * <li><code>{@link UpdatableBitArray}.class</code>, if this object is an instance of {@link BitArray},</li>
+     * <li><code>{@link UpdatableCharArray}.class</code>, if this object is an instance of {@link CharArray},</li>
+     * <li><code>{@link UpdatableByteArray}.class</code>, if this object is an instance of {@link ByteArray},</li>
+     * <li><code>{@link UpdatableShortArray}.class</code>, if this object is an instance of {@link ShortArray},</li>
+     * <li><code>{@link UpdatableIntArray}.class</code>, if this object is an instance of {@link IntArray},</li>
+     * <li><code>{@link UpdatableLongArray}.class</code>, if this object is an instance of {@link LongArray},</li>
+     * <li><code>{@link UpdatableFloatArray}.class</code>, if this object is an instance of {@link FloatArray},</li>
+     * <li><code>{@link UpdatableDoubleArray}.class</code>, if this object is an instance of {@link DoubleArray},</li>
+     * <li><code>{@link UpdatableObjectArray}.class</code>, if this object is an instance of {@link ObjectArray}.</li>
      * </ul>
      *
      * <p>There is a guarantee that this method works very quickly
@@ -131,15 +131,15 @@ public interface Array {
      * the class of one of 9 basic interfaces,
      * describing all kinds of resizable AlgART arrays for 8 primitive and any non-primitive element types.
      * More precisely, returns:<ul>
-     * <li><tt>{@link MutableBitArray}.class</tt>, if this object is an instance of {@link BitArray},</li>
-     * <li><tt>{@link MutableCharArray}.class</tt>, if this object is an instance of {@link CharArray},</li>
-     * <li><tt>{@link MutableByteArray}.class</tt>, if this object is an instance of {@link ByteArray},</li>
-     * <li><tt>{@link MutableShortArray}.class</tt>, if this object is an instance of {@link ShortArray},</li>
-     * <li><tt>{@link MutableIntArray}.class</tt>, if this object is an instance of {@link IntArray},</li>
-     * <li><tt>{@link MutableLongArray}.class</tt>, if this object is an instance of {@link LongArray},</li>
-     * <li><tt>{@link MutableFloatArray}.class</tt>, if this object is an instance of {@link FloatArray},</li>
-     * <li><tt>{@link MutableDoubleArray}.class</tt>, if this object is an instance of {@link DoubleArray},</li>
-     * <li><tt>{@link MutableObjectArray}.class</tt>, if this object is an instance of {@link ObjectArray}.</li>
+     * <li><code>{@link MutableBitArray}.class</code>, if this object is an instance of {@link BitArray},</li>
+     * <li><code>{@link MutableCharArray}.class</code>, if this object is an instance of {@link CharArray},</li>
+     * <li><code>{@link MutableByteArray}.class</code>, if this object is an instance of {@link ByteArray},</li>
+     * <li><code>{@link MutableShortArray}.class</code>, if this object is an instance of {@link ShortArray},</li>
+     * <li><code>{@link MutableIntArray}.class</code>, if this object is an instance of {@link IntArray},</li>
+     * <li><code>{@link MutableLongArray}.class</code>, if this object is an instance of {@link LongArray},</li>
+     * <li><code>{@link MutableFloatArray}.class</code>, if this object is an instance of {@link FloatArray},</li>
+     * <li><code>{@link MutableDoubleArray}.class</code>, if this object is an instance of {@link DoubleArray},</li>
+     * <li><code>{@link MutableObjectArray}.class</code>, if this object is an instance of {@link ObjectArray}.</li>
      * </ul>
      *
      * <p>There is a guarantee that this method works very quickly
@@ -161,16 +161,16 @@ public interface Array {
     long length();
 
     /**
-     * Returns the length as 32-bit <tt>int</tt> value.
-     * If the {@link #length() actual length} is greater than <tt>Integer.MAX_VALUE</tt>,
-     * throws <tt>TooLargeArrayException</tt>.
+     * Returns the length as 32-bit <code>int</code> value.
+     * If the {@link #length() actual length} is greater than <code>Integer.MAX_VALUE</code>,
+     * throws <code>TooLargeArrayException</code>.
      *
      * <p>This method is convenient to allocate memory for a regular Java array
      * if you want to ensure that this AlgART array can be completely copied into such an array.</p>
      *
      * @return the length: number of elements in this array, if it is less than 2<sup>31</sup>.
      * @throws TooLargeArrayException if the actual length is greater than
-     *                                <tt>Integer.MAX_VALUE</tt>=2<sup>31</sup>&minus;1.
+     *                                <code>Integer.MAX_VALUE</code>=2<sup>31</sup>&minus;1.
      */
     default int length32() throws TooLargeArrayException {
         long r = length();
@@ -184,9 +184,9 @@ public interface Array {
     }
 
     /**
-     * Equivalent to the call <tt>{@link #length() length}() == 0</tt>.
+     * Equivalent to the call <code>{@link #length() length}() == 0</code>.
      *
-     * @return <tt>true</tt> if the array is empty, i.e. its length is zero.
+     * @return <code>true</code> if the array is empty, i.e. its length is zero.
      */
     default boolean isEmpty() {
         return length() == 0;
@@ -208,10 +208,10 @@ public interface Array {
     long capacity();
 
     /**
-     * Returns the element #<tt>index</tt>.
+     * Returns the element #<code>index</code>.
      * It this array contains elements of primitive types,
-     * the value is automatically wrapped in an object (<tt>Boolean</tt>,
-     * <tt>Byte</tt>, etc.).
+     * the value is automatically wrapped in an object (<code>Boolean</code>,
+     * <code>Byte</code>, etc.).
      *
      * <p>It is a low-level method.
      * For arrays of primitive elements, implementing one of corresponding interfaces
@@ -229,22 +229,22 @@ public interface Array {
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.
-     * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */
     Object getElement(long index);
 
     /**
-     * Copies <tt>count</tt> elements of this array, starting from <tt>arrayPos</tt> index,
-     * into the specified Java array of corresponding type, starting from <tt>destArrayOffset</tt> index.
+     * Copies <code>count</code> elements of this array, starting from <code>arrayPos</code> index,
+     * into the specified Java array of corresponding type, starting from <code>destArrayOffset</code> index.
      *
      * <p>For non-primitive element type ({@link ObjectArray}, {@link UpdatableObjectArray},
      * {@link MutableObjectArray} subinterfaces), this method may allocate new instances
-     * for Java array elements <tt>destArray[destArrayOffset]..destArray[destArrayOffset+count-1]</tt>,
+     * for Java array elements <code>destArray[destArrayOffset]..destArray[destArrayOffset+count-1]</code>,
      * but also may change the state of already existing non-null elements: it depends on implementation.
-     * In any case, you can be sure that if some of the target elements <tt>destArray[k]==null</tt>,
+     * In any case, you can be sure that if some of the target elements <code>destArray[k]==null</code>,
      * this method always allocate new element.
      *
-     * <p>Note: if <tt>IndexOutOfBoundsException</tt> occurs due to attempt to write data outside the passed
+     * <p>Note: if <code>IndexOutOfBoundsException</code> occurs due to attempt to write data outside the passed
      * Java array, the target Java array can be partially filled.
      * In other words, this method <b>can be non-atomic regarding this failure</b>.
      * All other possible exceptions are checked in the very beginning of this method
@@ -254,14 +254,15 @@ public interface Array {
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be copied.
-     * @throws NullPointerException      if <tt>destArray</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException  if <tt>destArray</tt> argument is not an array or if <tt>count &lt; 0</tt>.
+     * @throws NullPointerException      if <code>destArray</code> argument is <code>null</code>.
+     * @throws IllegalArgumentException  if <code>destArray</code> argument is not an array or
+     *                                   if <code>count &lt; 0</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target Java array.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
+     * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
+     * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                   (both this and <code>ArrayStoreException</code> are possible,
      *                                   depending on implementation).
      * @see DirectAccessible
      * @see UpdatableArray#setData(long, Object, int, int)
@@ -270,26 +271,26 @@ public interface Array {
     void getData(long arrayPos, Object destArray, int destArrayOffset, int count);
 
     /**
-     * Copies <tt>min(this.{@link #length() length() - arrayPos}, destArray.length})</tt>
-     * elements of this array, starting from <tt>arrayPos</tt> index,
-     * into the specified Java array of corresponding type, starting from <tt>0</tt> index.
+     * Copies <code>min(this.{@link #length() length() - arrayPos}, destArray.length})</code>
+     * elements of this array, starting from <code>arrayPos</code> index,
+     * into the specified Java array of corresponding type, starting from <code>0</code> index.
      *
      * <p>For non-primitive element type ({@link ObjectArray}, {@link UpdatableObjectArray},
      * {@link MutableObjectArray} subinterfaces), this method may allocate new instances
-     * for Java array elements <tt>destArray[0]..destArray[count-1]</tt>,
+     * for Java array elements <code>destArray[0]..destArray[count-1]</code>,
      * but also may change the state of already existing non-null elements: it depends on implementation.
-     * In any case, you can be sure: if some of the target elements <tt>destArray[k]==null</tt>,
+     * In any case, you can be sure: if some of the target elements <code>destArray[k]==null</code>,
      * this method always allocates new elements.
      *
      * @param arrayPos  starting position in this AlgART array.
      * @param destArray the target Java array.
-     * @throws NullPointerException     if <tt>destArray</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>destArray</tt> argument is not an array.
-     * @throws ArrayStoreException      if <tt>destArray</tt> element type mismatches with this array
+     * @throws NullPointerException     if <code>destArray</code> argument is <code>null</code>.
+     * @throws IllegalArgumentException if <code>destArray</code> argument is not an array.
+     * @throws ArrayStoreException      if <code>destArray</code> element type mismatches with this array
      *                                  {@link #elementType()}.
-     * @throws ClassCastException       if <tt>destArray</tt> element type mismatches with this array
+     * @throws ClassCastException       if <code>destArray</code> element type mismatches with this array
      *                                  {@link #elementType()}
-     *                                  (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                  (both this and <code>ArrayStoreException</code> are possible,
      *                                  depending on implementation).
      * @see DirectAccessible
      * @see #getData(long, Object, int, int)
@@ -302,7 +303,7 @@ public interface Array {
      * and element type returned by {@link #elementType()} method.
      *
      * <p>This method is equivalent to the following call:
-     * <tt>java.lang.reflect.Array.newInstance(elementType(),&nbsp;length)</tt>.
+     * <code>java.lang.reflect.Array.newInstance(elementType(),&nbsp;length)</code>.
      *
      * <p>This method can be helpful while using together with
      * {@link #getData(long, Object, int, int) getData} /
@@ -310,19 +311,19 @@ public interface Array {
      *
      * @param length the length of created Java-array.
      * @return Java-array with the specified length and the same type of elements.
-     * @throws NegativeArraySizeException if the specified <tt>length</tt> is negative.
+     * @throws NegativeArraySizeException if the specified <code>length</code> is negative.
      */
     Object newJavaArray(int length);
 
     /**
-     * Returns a view of the portion of this array between <tt>fromIndex</tt>,
-     * inclusive, and <tt>toIndex</tt>, exclusive.
+     * Returns a view of the portion of this array between <code>fromIndex</code>,
+     * inclusive, and <code>toIndex</code>, exclusive.
      * <ul>
-     * <li>If <tt>fromIndex</tt> and <tt>toIndex</tt> are equal, the returned array is empty.
+     * <li>If <code>fromIndex</code> and <code>toIndex</code> are equal, the returned array is empty.
      * <li>The returned array is backed by this array, so &mdash; if this array is not immutable
      * &mdash; any changes of the elements of the returned array are reflected in this array, and vice-versa.
      * <li>The capacity of returned array (returned by {@link #capacity()} method) will be
-     * equal to the its length (returned by {@link #length()}, that is <tt>toIndex-fromIndex</tt>.
+     * equal to the its length (returned by {@link #length()}, that is <code>toIndex-fromIndex</code>.
      * <li>The {@link #elementType() type of elements} of the returned array is the same
      * as the type of elements of this array.</li>
      * <li>The returned array is {@link #asImmutable() immutable},
@@ -337,12 +338,12 @@ public interface Array {
      * it is always <i>unresizable</i>.</li>
      * </ul>
      *
-     * <p>Like <tt>List.subList</tt> method, this method eliminates the need
+     * <p>Like <code>List.subList</code> method, this method eliminates the need
      * for explicit range operations.
      * For example, you may use {@link Arrays#sort(UpdatableArray, ArrayComparator)}
      * method for sorting a fragment of the array.
      *
-     * <p>Unlike <tt>List.subList</tt>, the semantics of the array returned
+     * <p>Unlike <code>List.subList</code>, the semantics of the array returned
      * by this method is well-defined in any case, even in case of
      * resizing of the source array.
      * Namely, if the internal storage of this or returned array is reallocated,
@@ -359,9 +360,9 @@ public interface Array {
      * @param fromIndex low endpoint (inclusive) of the subarray.
      * @param toIndex   high endpoint (exclusive) of the subarray.
      * @return a view of the specified range within this array.
-     * @throws IndexOutOfBoundsException for illegal <tt>fromIndex</tt> and <tt>toIndex</tt>
-     *                                   (<tt>fromIndex &lt; 0 || toIndex &gt; {@link #length()}
-     *                                   || fromIndex &gt; toIndex</tt>).
+     * @throws IndexOutOfBoundsException for illegal <code>fromIndex</code> and <code>toIndex</code>
+     *                                   (<code>fromIndex &lt; 0 || toIndex &gt; {@link #length()}
+     *                                   || fromIndex &gt; toIndex</code>).
      * @see #subArr(long, long)
      */
     Array subArray(long fromIndex, long toIndex);
@@ -369,16 +370,16 @@ public interface Array {
     /**
      * Equivalent to {@link #subArray(long, long) subArray(position, position + count)}.
      * The only possible difference is other exception messages.
-     * If <tt>position+count&gt;Long.MAX_VALUE</tt> (overflow),
+     * If <code>position+count&gt;Long.MAX_VALUE</code> (overflow),
      * an exception message is allowed to be not fully correct
      * (maximal speed is more important than absolutely correct exception messages for such exotic situations).
      *
      * @param position start position (inclusive) of the subarray.
      * @param count    number of elements in the subarray.
      * @return a view of the specified range within this array.
-     * @throws IndexOutOfBoundsException for illegal <tt>position</tt> and <tt>count</tt>
-     *                                   (<tt>position &lt; 0 || count &lt; 0
-     *                                   || position + count &gt; {@link #length()}</tt>).
+     * @throws IndexOutOfBoundsException for illegal <code>position</code> and <code>count</code>
+     *                                   (<code>position &lt; 0 || count &lt; 0
+     *                                   || position + count &gt; {@link #length()}</code>).
      * @see #subArray(long, long)
      */
     Array subArr(long position, long count);
@@ -389,21 +390,21 @@ public interface Array {
      *
      * <p>If this array does not implement {@link UpdatableArray} interface
      * (so, it is probably {@link #asImmutable() immutable} or {@link #asTrustedImmutable()
-     * trusted immutable}), the <tt>mode</tt> argument must be {@link DataBuffer.AccessMode#READ}.
+     * trusted immutable}), the <code>mode</code> argument must be {@link DataBuffer.AccessMode#READ}.
      *
-     * <p>The <tt>capacity</tt> argument must be in range <tt>0..2<sup>37</sup>-1</tt>
-     * for {@link BitArray bit arrays} or <tt>0..2<sup>31</sup>-1</tt> for all other element types.
+     * <p>The <code>capacity</code> argument must be in range <code>0..2<sup>37</sup>-1</code>
+     * for {@link BitArray bit arrays} or <code>0..2<sup>31</sup>-1</code> for all other element types.
      *
-     * <p>If the <tt>capacity</tt> argument is greater than this array {@link #length()},
+     * <p>If the <code>capacity</code> argument is greater than this array {@link #length()},
      * it is truncated to this length.
      *
      * @param mode     the access mode for new buffer.
      * @param capacity the capacity of the buffer.
      * @return new data buffer for accessing this array.
-     * @throws NullPointerException     if <tt>mode</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if the <tt>mode</tt> is not the {@link DataBuffer.AccessMode#READ},
+     * @throws NullPointerException     if <code>mode</code> argument is <code>null</code>.
+     * @throws IllegalArgumentException if the <code>mode</code> is not the {@link DataBuffer.AccessMode#READ},
      *                                  but this arrays does not implement {@link UpdatableArray} interface,
-     *                                  or if the specified <tt>capacity</tt> is negative or too high
+     *                                  or if the specified <code>capacity</code> is negative or too high
      *                                  (&gt;=0..2<sup>37</sup> for bits or &gt;=0..2<sup>31</sup> for
      *                                  other element types).
      * @see #buffer(net.algart.arrays.DataBuffer.AccessMode)
@@ -414,25 +415,26 @@ public interface Array {
 
     /**
      * Equivalent to {@link #buffer(net.algart.arrays.DataBuffer.AccessMode, long)
-     * buffer(mode, someCapacity)}, where <tt>mode</tt> is the argument of this method
-     * and <tt>someCapacity</tt> is chosen automatically to provide good performance in typical situations.
+     * buffer(mode, someCapacity)}, where <code>mode</code> is the argument of this method
+     * and <code>someCapacity</code> is chosen automatically to provide good performance in typical situations.
      * Usually, the capacity is chosen to get a buffer occupying several kilobytes,
      * that can fit in an internal cache of most processors.
      *
-     * <p>In any case, you can be sure that the chosen capacity will not be greater than <tt>Integer.MAX_VALUE-64</tt>.
+     * <p>In any case, you can be sure that the chosen capacity will not be greater than
+     * <code>Integer.MAX_VALUE-64</code>.
      *
      * @param mode the access mode for new buffer.
      * @return new data buffer for accessing this array.
-     * @throws NullPointerException     if <tt>mode</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if the <tt>mode</tt> is not the {@link DataBuffer.AccessMode#READ},
+     * @throws NullPointerException     if <code>mode</code> argument is <code>null</code>.
+     * @throws IllegalArgumentException if the <code>mode</code> is not the {@link DataBuffer.AccessMode#READ},
      *                                  but this arrays does not implement {@link UpdatableArray} interface.
      */
     DataBuffer buffer(DataBuffer.AccessMode mode);
 
     /**
      * Equivalent to {@link #buffer(net.algart.arrays.DataBuffer.AccessMode, long)
-     * buffer(suitableMode, capacity)}, where <tt>capacity</tt> is the argument of this method
-     * and <tt>suitableMode</tt> is chosen automatically. Namely, <tt>suitableMode</tt> is:<ul>
+     * buffer(suitableMode, capacity)}, where <code>capacity</code> is the argument of this method
+     * and <code>suitableMode</code> is chosen automatically. Namely, <code>suitableMode</code> is:<ul>
      * <li>{@link DataBuffer.AccessMode#READ_WRITE} if this array implements {@link UpdatableArray} interface
      * (i.e., is modifiable and, maybe, resizable);</li>
      * <li>{@link DataBuffer.AccessMode#READ} if this array does not implements this interface
@@ -441,7 +443,7 @@ public interface Array {
      *
      * @param capacity the capacity of the buffer.
      * @return new data buffer for accessing this array.
-     * @throws IllegalArgumentException if the specified <tt>capacity</tt> is negative or too high
+     * @throws IllegalArgumentException if the specified <code>capacity</code> is negative or too high
      *                                  (&gt;=0..2<sup>37</sup> for bits or &gt;=0..2<sup>31</sup> for
      *                                  other element types).
      */
@@ -449,11 +451,12 @@ public interface Array {
 
     /**
      * Equivalent to {@link #buffer(net.algart.arrays.DataBuffer.AccessMode, long)
-     * buffer(suitableMode, someCapacity)}, where both <tt>suitableMode</tt> and <tt>someCapacity</tt>
+     * buffer(suitableMode, someCapacity)}, where both <code>suitableMode</code> and <code>someCapacity</code>
      * arguments are chosen automatically. The algorithm of choosing these arguments is the same
      * as for {@link #buffer(net.algart.arrays.DataBuffer.AccessMode)} and {@link #buffer(long)} methods.
      *
-     * <p>In any case, you can be sure that the chosen capacity will not be greater than <tt>Integer.MAX_VALUE-64</tt>.
+     * <p>In any case, you can be sure that the chosen capacity will not be greater than
+     * <code>Integer.MAX_VALUE-64</code>.
      *
      * @return new data buffer for accessing this array.
      */
@@ -461,14 +464,14 @@ public interface Array {
 
     /**
      * Returns an <i>immutable</i> view of this array.
-     * If this array is already immutable (i.e. {@link #isImmutable()} is <tt>true</tt>),
+     * If this array is already immutable (i.e. {@link #isImmutable()} is <code>true</code>),
      * returns a reference to this object.
      *
      * <p>A array is considered to be <i>immutable</i>,
      * if there are no ways to modify its content or state with help of this instance.
      * In particular, immutable arrays never
      * implement {@link UpdatableArray} or {@link DirectAccessible} interfaces.
-     * Moreover, any third-party implementation of <tt>Array</tt> interface
+     * Moreover, any third-party implementation of <code>Array</code> interface
      * <i>must</i> return an instance of a class, which has no methods or fields
      * allowing to change this instance.
      *
@@ -491,20 +494,20 @@ public interface Array {
      * <p>By default, the array factories ({@link MemoryModel memory models}) create mutable arrays,
      * but they can be converted to immutable by this method.
      *
-     * <p>Note: {@link #isNew()} method, called for the result of this method, always returns <tt>false</tt>
+     * <p>Note: {@link #isNew()} method, called for the result of this method, always returns <code>false</code>
      * &mdash; because it does not implement {@link UpdatableArray}.
      *
      * <p>Also note: {@link #isNewReadOnlyView()} method, called for the result of this method, always returns
      * the same value as {@link #isNewReadOnlyView()} for this object.
      * Really,
      * <ul>
-     * <li>it this object is immutable (<tt>{@link #isImmutable()}==true</tt>),
+     * <li>it this object is immutable (<code>{@link #isImmutable()}==true</code>),
      * then it is obvious (this method just returns a reference to this array);</li>
-     * <li>it this object is not immutable (<tt>{@link #isImmutable()}==false</tt>),
+     * <li>it this object is not immutable (<code>{@link #isImmutable()}==false</code>),
      * then, according to the contract to {@link #isNewReadOnlyView()} method,
-     * {@link #isNewReadOnlyView()} must return <tt>false</tt> for this array
-     * (in other case {@link #isImmutable()} would return <tt>true</tt>) and
-     * it also must return <tt>false</tt> for the returned array
+     * {@link #isNewReadOnlyView()} must return <code>false</code> for this array
+     * (in other case {@link #isImmutable()} would return <code>true</code>) and
+     * it also must return <code>false</code> for the returned array
      * (because it is a view of another array and not an original view of external data &mdash;
      * see the beginning of the comment to {@link #isNewReadOnlyView()}).
      * </li>
@@ -520,19 +523,19 @@ public interface Array {
     Array asImmutable();
 
     /**
-     * Returns <tt>true</tt> if this instance is <i>immutable</i>, i&#46;e&#46; there are no ways to
+     * Returns <code>true</code> if this instance is <i>immutable</i>, i&#46;e&#46; there are no ways to
      * change its content or state. (See {@link #asImmutable()} method for more details.)
      *
-     * <p>It is possible that array is immutable in fact, but this method returns <tt>false</tt>:
+     * <p>It is possible that array is immutable in fact, but this method returns <code>false</code>:
      * for example, if the array is mapped to read-only file. However, it is guaranteed:
      * <i>if the array was created via {@link #asImmutable} method, this method
-     * returns <tt>true</tt></i>.
+     * returns <code>true</code></i>.
      *
-     * <p>Typically, this method returns <tt>true</tt> if the array:
+     * <p>Typically, this method returns <code>true</code> if the array:
      * <ol>
      * <li>does not implement {@link UpdatableArray} interface;</li>
      * <li>does not implement {@link DirectAccessible} interface, or implements it,
-     * but {@link DirectAccessible#hasJavaArray()} method returns <tt>false</tt>.</li>
+     * but {@link DirectAccessible#hasJavaArray()} method returns <code>false</code>.</li>
      * </ol>
      *
      * <p>But you should not use these conditions to check whether an array is immutable;
@@ -543,7 +546,7 @@ public interface Array {
      * neither {@link UpdatableArray}, nor {@link DirectAccessible}, but offers another methods
      * allowing to change its state or content.
      *
-     * <p>Note: if this method returns <tt>true</tt>, it does not mean that its content cannot
+     * <p>Note: if this method returns <code>true</code>, it does not mean that its content cannot
      * be modified at all. Quite the contrary, usually an immutable array <b>a</b>
      * is just an immutable view of another mutable array <b>b</b>
      * (created via <b>a</b>=<b>b.</b>{@link #asImmutable} call),
@@ -551,13 +554,13 @@ public interface Array {
      * Immutability means only that there are no ways to modify the content or state of the object <b>a</b>,
      * <i>if this object</i> <b>a</b> <i>is the only reference to its content, which you have</i>.
      * The same note is true for immutable collections, created by the standard
-     * <tt>Collections.unmodifiableList</tt> and analogous methods.
+     * <code>Collections.unmodifiableList</code> and analogous methods.
      * Please compare this with the behaviour of another method {@link #isNewReadOnlyView()}.
      *
      * <p>There is a guarantee that this method works very quickly
      * (usually it just returns a constant or a value of some private field).
      *
-     * @return <tt>true</tt> if this instance is immutable.
+     * @return <code>true</code> if this instance is immutable.
      * @see #asImmutable()
      */
     boolean isImmutable();
@@ -624,9 +627,9 @@ public interface Array {
      *
      * <p>Implementation of this method usually checks whether the hash code was changed since array creation.
      *
-     * <p>We recommend to call this method in <tt>finally</tt>
+     * <p>We recommend to call this method in <code>finally</code>
      * sections after using the trusted immutable array.
-     * If it is impossible to create necessary <tt>finally</tt> section,
+     * If it is impossible to create necessary <code>finally</code> section,
      * you may use {@link net.algart.finalizing.Finalizer} class (or an equivalent tool)
      * to schedule call of this method for the {@link #shallowClone() shallow clone} of this array
      * on deallocation of this array:<pre>
@@ -690,10 +693,10 @@ public interface Array {
      * Some implementations of updatable arrays may just return the full (deep) copy of this object,
      * alike {@link #mutableClone(MemoryModel)} method, and in this case
      * {@link TooLargeArrayException} is possible.
-     * All implementations from this package, excepting <tt>AbstractUpdatableXxxArray</tt> classes,
+     * All implementations from this package, excepting <code>AbstractUpdatableXxxArray</code> classes,
      * returns a view;
-     * but in <tt>AbstractUpdatableXxxArray</tt> classes this method is equivalent to
-     * <tt>{@link #updatableClone(MemoryModel) updatableClone}({@link Arrays#SMM}).</tt>
+     * but in <code>AbstractUpdatableXxxArray</code> classes this method is equivalent to
+     * <code>{@link #updatableClone(MemoryModel) updatableClone}({@link Arrays#SMM}).</code>
      *
      * <p>Please note that <b>copy-on-next-write arrays are not traditional copy-on-write objects like
      * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/CopyOnWriteArrayList.html"
@@ -717,13 +720,13 @@ public interface Array {
     Array asCopyOnNextWrite();
 
     /**
-     * Returns <tt>true</tt> if this array is copy-on-next-write.
-     * In other words, if this method returns <tt>true</tt>, it means that the next
+     * Returns <code>true</code> if this array is copy-on-next-write.
+     * In other words, if this method returns <code>true</code>, it means that the next
      * attempt (but not further) to modify this array, or any other access that can lead to
      * its modification (like {@link DirectAccessible#javaArray()} method), will lead to
      * reallocation of the underlying storage. After reallocation,
      * the array will cease to be copy-on-next-write: further calls of
-     * this method will return <tt>false</tt>.
+     * this method will return <code>false</code>.
      *
      * <p>This method can be useful if it's possible to select another,
      * more optimal algorithm branch, allowing to avoid reallocation
@@ -740,19 +743,19 @@ public interface Array {
      * <p>There is a guarantee that this method works very quickly
      * (usually it just returns a constant or a value of some private field).
      *
-     * @return <tt>true</tt> if this array is copy-on-next-write.
+     * @return <code>true</code> if this array is copy-on-next-write.
      * @see #asCopyOnNextWrite()
      */
     boolean isCopyOnNextWrite();
 
     /**
-     * Returns <tt>true</tt> if this instance is unresizable, i&#46;e&#46; there are no ways to
+     * Returns <code>true</code> if this instance is unresizable, i&#46;e&#46; there are no ways to
      * change its length or capacity.
      *
      * <p>It is guaranteed that if the array was created via {@link #asImmutable} method, this method
-     * returns <tt>true</tt>.
+     * returns <code>true</code>.
      *
-     * <p>Typically, this method returns <tt>true</tt> if the array does not implement
+     * <p>Typically, this method returns <code>true</code> if the array does not implement
      * {@link MutableArray}.
      * But you should not use this condition to check whether an array is unresizable;
      * please use this method instead.
@@ -763,22 +766,22 @@ public interface Array {
      * <p>There is a guarantee that this method works very quickly
      * (usually it just returns a constant or a value of some private field).
      *
-     * @return <tt>true</tt> if this instance is unresizable.
+     * @return <code>true</code> if this instance is unresizable.
      * @see UpdatableArray#asUnresizable()
      */
     boolean isUnresizable();
 
     /**
-     * Returns <tt>true</tt> if this array instance is <i>new</i>, i&#46;e&#46; it was created
-     * by one of {@link MemoryModel} methods, creating an array or a matrix (<tt>newXxx</tt>
-     * or <tt>valueOf</tt>), or by fully equivalent methods.
+     * Returns <code>true</code> if this array instance is <i>new</i>, i&#46;e&#46; it was created
+     * by one of {@link MemoryModel} methods, creating an array or a matrix (<code>newXxx</code>
+     * or <code>valueOf</code>), or by fully equivalent methods.
      * All other ways of creating AlgART array instance ({@link #asImmutable()},
      * {@link #shallowClone()}, {@link #subArray(long, long)}, {@link SimpleMemoryModel#asUpdatableArray(Object)}
      * etc.) create <i>non-new</i> arrays.
      *
      * <p>In updatable arrays the "new status", returned by this method, can be cleared manually by
      * {@link UpdatableArray#setNonNew()} method. Note that immutable arrays, not implementing {@link UpdatableArray}
-     * interface, are never <i>new</i> (this method returns <tt>false</tt>).
+     * interface, are never <i>new</i> (this method returns <code>false</code>).
      *
      * <p>If the array is <i>new</i>, you can be sure that it is an original object, storing the data,
      * but not a view of some other array ({@link #asImmutable() immutable view},
@@ -797,16 +800,16 @@ public interface Array {
      * of one element of the storage will be reflected in other elements.
      *
      * <p><i>New</i> status of the array, provided by this method, allows to correctly resolve this problem.
-     * We should store in the storage the full content (clone) of an array, if this method returns <tt>false</tt>,
+     * We should store in the storage the full content (clone) of an array, if this method returns <code>false</code>,
      * or the reference to an array or to its internal data (as  {@link DirectAccessible#javaArray()}),
-     * if it returns <tt>true</tt>. In the second case, we must additionally clear the status of the original
+     * if it returns <code>true</code>. In the second case, we must additionally clear the status of the original
      * array object, received from the factory, by {@link UpdatableArray#setNonNew()} method &mdash;
      * it guarantees that we shall store only 1 reference to each really new array.
      *
      * <p>Additional important feature, provided by this method: if you know the memory model, which has created this
      * instance, then you can be absolutely sure in all details of the algorithm of internal storing
      * the array data (if it is documented in the corresponding memory model). It is important,
-     * for example, for {@link LargeMemoryModel}: if this method returns <tt>true</tt>, then the content
+     * for example, for {@link LargeMemoryModel}: if this method returns <code>true</code>, then the content
      * of this array corresponds to the content of an external file according to a known, fully documented scheme.
      * Unlike this, another forms of AlgART arrays &mdash; like {@link #subArray(long, long) subarrays} &mdash;
      * have no documented correspondence with the content of an external data, even when we can retrieve
@@ -821,18 +824,18 @@ public interface Array {
     boolean isNew();
 
     /**
-     * Returns <tt>true</tt> if this array instance is <i>new-read-only-view</i>, i&#46;e&#46;
+     * Returns <code>true</code> if this array instance is <i>new-read-only-view</i>, i&#46;e&#46;
      * a newly created <i>view</i> of some external data, providing <i>read-only</i> access to this data &mdash;
      * like {@link LargeMemoryModel#asArray(Object, Class, long, long, java.nio.ByteOrder)} method.
      * All other ways of creating AlgART array instance (methods of {@link MemoryModel} class,
      * {@link #asImmutable()}, {@link #shallowClone()}, {@link #subArray(long, long)}}
-     * etc.) create arrays, in which this method returns <tt>false</tt>.
+     * etc.) create arrays, in which this method returns <code>false</code>.
      * In the current version of this package, the only ways to create <i>new-read-only-view</i> AlgART array
      * are the following:
      * <ul>
      * <li>the method
      * {@link LargeMemoryModel#asArray(Object, Class, long filePosition, long fileAreaSize, ByteOrder byteOrder)},
-     * when its <tt>filePosition</tt> argument is zero (<tt>filePosition==0</tt>);
+     * when its <code>filePosition</code> argument is zero (<code>filePosition==0</code>);
      * </li>
      * <li>the versions of this method for concrete element types
      * {@link LargeMemoryModel#asBitArray(Object, long, long, java.nio.ByteOrder) asBitArray},
@@ -843,7 +846,7 @@ public interface Array {
      * {@link LargeMemoryModel#asLongArray(Object, long, long, java.nio.ByteOrder) asLongArray},
      * {@link LargeMemoryModel#asFloatArray(Object, long, long, java.nio.ByteOrder) asFloatArray},
      * {@link LargeMemoryModel#asDoubleArray(Object, long, long, java.nio.ByteOrder) asDoubleArray}
-     * in a case of the same condition: their <tt>filePosition</tt> argument is zero;
+     * in a case of the same condition: their <code>filePosition</code> argument is zero;
      * </li>
      * <li>{@link LargeMemoryModel#asMatrix(Object filePath, MatrixInfo matrixInfo)} method
      * in a case when the {@link MatrixInfo#dataOffset() data offset}, stored in its {@link MatrixInfo} argument,
@@ -857,11 +860,11 @@ public interface Array {
      * (More precisely, there are no methods, allowing to change it after finishing
      * the method, which has created a new array instance.)
      * Note that in updatable arrays, implementing {@link UpdatableArray}
-     * interface, this method returns <tt>false</tt> always.
-     * Moreover, if this method returns <tt>true</tt>, then there is a guarantee that
-     * {@link #isImmutable()} method also returns <tt>true</tt>.
+     * interface, this method returns <code>false</code> always.
+     * Moreover, if this method returns <code>true</code>, then there is a guarantee that
+     * {@link #isImmutable()} method also returns <code>true</code>.
      *
-     * <p>If this method returns <tt>true</tt>, you can be sure that it is an original object,
+     * <p>If this method returns <code>true</code>, you can be sure that it is an original object,
      * associated with external data with read-only access rights,
      * but not a view of some other array ({@link #asImmutable() immutable view},
      * {@link #subArray(long, long) subarray}, etc.) and not an updatable view of some external data,
@@ -878,11 +881,11 @@ public interface Array {
      * maximal performance in a case, when <i>we know that all data are immutable (read-only) and we shall never
      * change them</i>. In the last case, there is no problem to create any number of references to the same
      * data, as well as there is no problem to create a lot of references to the same
-     * immutable Java object like <tt>String</tt>.
+     * immutable Java object like <code>String</code>.
      *
-     * <p>This method allows to improve the described behaviour. Namely, if this method returns <tt>true</tt>,
+     * <p>This method allows to improve the described behaviour. Namely, if this method returns <code>true</code>,
      * you still <i>may</i> store the reference to an AlgART array or to its internal data in your storage,
-     * though {@link #isNew()} returns <tt>false</tt>.
+     * though {@link #isNew()} returns <code>false</code>.
      * Yes, you can so create several references to the same array data,
      * but it does not lead to incorrect behaviour &mdash; this data will always remain unchanged.
      *
@@ -893,7 +896,7 @@ public interface Array {
      * retrieved from an array by {@link LargeMemoryModel#getDataFilePath(Array)} method,
      * via {@link LargeMemoryModel#asUpdatableArray(Object, Class, long, long, boolean, java.nio.ByteOrder)
      * LargeMemoryModel.asUpdatableArray} method &mdash; please use the original reference
-     * to AlgART array (where this method returns <tt>true</tt>) or new instances,
+     * to AlgART array (where this method returns <code>true</code>) or new instances,
      * created by {@link LargeMemoryModel#asArray(Object, Class, long, long, java.nio.ByteOrder)
      * LargeMemoryModel.asArray} method.
      * Maybe, future versions of {@link LargeMemoryModel} class will contain API,
@@ -904,7 +907,7 @@ public interface Array {
      * if you know the memory model, which has created this instance,
      * then you can be absolutely sure in all details of the algorithm of internal storing
      * the array data (if it is documented in the corresponding memory model). It is important
-     * for {@link LargeMemoryModel}: if this method returns <tt>true</tt>, then the content
+     * for {@link LargeMemoryModel}: if this method returns <code>true</code>, then the content
      * of this array corresponds to the content of an external file according to a known, fully documented scheme.
      * Unlike this, another forms of AlgART arrays &mdash; like {@link #subArray(long, long) subarrays} &mdash;
      * have no documented correspondence with the content of an external data, even when we can retrieve
@@ -919,16 +922,16 @@ public interface Array {
     boolean isNewReadOnlyView();
 
     /**
-     * Returns <tt>true</tt> if this array instance is <i>lazy</i>, i&#46;e&#46;
+     * Returns <code>true</code> if this array instance is <i>lazy</i>, i&#46;e&#46;
      * if access to its element means some calculations for producing result or actual saving element.
      * Examples of <i>lazy</i> arrays are results of
      * {@link Arrays#asFuncArray(net.algart.math.functions.Func, Class, PArray...)}
      * and analogous methods.
      *
-     * <p>If this method returns <tt>false</tt>, it means that reading elements
+     * <p>If this method returns <code>false</code>, it means that reading elements
      * (and writing for {@link UpdatableArray updatable arrays}) is performed as quickly as possible:
      * it is just copying data from one memory (maybe a disk) to another.
-     * In particular, this method returns <tt>false</tt> for {@link #isNew new} arrays,
+     * In particular, this method returns <code>false</code> for {@link #isNew new} arrays,
      * their {@link #asImmutable() immutable views}, {@link #subArray(long, long) subarrays}, etc.
      *
      * <p>There is a guarantee that this method works very quickly
@@ -946,17 +949,17 @@ public interface Array {
      * for example, in a disk file.
      *
      * <p>For all array instances created by this package the byte order is native
-     * (<tt>ByteOrder.nativeOrder()</tt>), with the only exception:
+     * (<code>ByteOrder.nativeOrder()</code>), with the only exception:
      * arrays, created by {@link LargeMemoryModel#asArray(Object, Class, long, long, ByteOrder)},
      * {@link LargeMemoryModel#asUpdatableArray(Object, Class, long, long, boolean, ByteOrder)} methods
      * and their versions for concrete element types, will have byte order
      * specified by the argument of these methods.
      *
      * <p>Please note: in the combined arrays, created via {@link CombinedMemoryModel},
-     * this method returns <tt>ByteOrder.nativeOrder()</tt>, though the byte order in the
+     * this method returns <code>ByteOrder.nativeOrder()</code>, though the byte order in the
      * underlying storage arrays may be another.
      *
-     * <p>This method never returns <tt>null</tt>.
+     * <p>This method never returns <code>null</code>.
      *
      * <p>There is a guarantee that this method works very quickly
      * (usually it just returns a constant or a value of some private field).
@@ -1000,7 +1003,7 @@ public interface Array {
      *
      * <p>This method is an analog of the standard Java NIO
      * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html#duplicate()"
-     * ><tt>ByteBuffer.duplicate()</tt></a> method. However, unlike <tt>ByteBuffer.duplicate()</tt>,
+     * ><code>ByteBuffer.duplicate()</code></a> method. However, unlike <code>ByteBuffer.duplicate()</code>,
      * <i>this method is necessary very rarely</i>. Usually, you need another forms
      * of array views: {@link #asImmutable()}, {@link UpdatableArray#asUnresizable()}, etc.
      * The most often usage of this method is finalization
@@ -1039,8 +1042,8 @@ public interface Array {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return a mutable copy of this array.
-     * @throws NullPointerException            if the argument is <tt>null</tt>.
-     * @throws UnsupportedElementTypeException if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
+     * @throws NullPointerException            if the argument is <code>null</code>.
+     * @throws UnsupportedElementTypeException if <code>thisArray.{@link Array#elementType()}</code> is not supported
      *                                         by the specified memory model.
      * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
      *                                         for this the specified memory model.
@@ -1070,8 +1073,8 @@ public interface Array {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return an updatable copy of this array.
-     * @throws NullPointerException            if the argument is <tt>null</tt>.
-     * @throws UnsupportedElementTypeException if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
+     * @throws NullPointerException            if the argument is <code>null</code>.
+     * @throws UnsupportedElementTypeException if <code>thisArray.{@link Array#elementType()}</code> is not supported
      *                                         by the specified memory model.
      * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
      *                                         for this the specified memory model.
@@ -1080,24 +1083,27 @@ public interface Array {
     UpdatableArray updatableClone(MemoryModel memoryModel);
 
     /**
-     * Returns <tt>true</tt> this array is actually a <i>wrapper</i> for
+     * Returns <code>true</code> this array is actually a <i>wrapper</i> for
      * standard Java array, like wrappers returned by {@link SimpleMemoryModel#asUpdatableArray(Object)} method.
+     * This array is returned by {@link #ja()} method, if and only if this method returns <code>true</code>
      *
-     * <p>More precisely, this method returns <tt>true</tt>,
+     * <p>More precisely, this method returns <code>true</code>,
      * if and only if all the following conditions are fulfilled:</p>
      * <ol>
-     *     <li><tt>thisArray instanceof {@link DirectAccessible}</tt>;
-     *     let <tt>da = (DirectAccessible) thisArray</tt>;</li>
-     *     <li><tt>da.{@link DirectAccessible#hasJavaArray() hasJavaArray()}</tt>;</li>
-     *     <li><tt>da.{@link DirectAccessible#javaArrayOffset() javaArrayOffset()} == 0</tt>;</li>
-     *     <li><tt>array.{@link Array#length() length()} == n</tt>, where <tt>n</tt> is the length of Java array
-     *     <tt>da.{@link DirectAccessible#javaArray() javaArray()}</tt>:<br>
-     *     <tt>array.{@link Array#length() length()} == java.lang.reflect.Array.getLength(da.javaArray())</tt>
+     *     <li><code>thisArray instanceof {@link DirectAccessible}</code>;
+     *     let <code>da = (DirectAccessible) thisArray</code>;</li>
+     *     <li><code>da.{@link DirectAccessible#hasJavaArray() hasJavaArray()}</code>;</li>
+     *     <li><code>da.{@link DirectAccessible#javaArrayOffset() javaArrayOffset()} == 0</code>;</li>
+     *     <li><code>array.{@link Array#length() length()} == n</code>, where <code>n</code>
+     *     is the length of Java array
+     *     <code>da.{@link DirectAccessible#javaArray() javaArray()}</code>:<br>
+     *     <code>array.{@link Array#length() length()} == java.lang.reflect.Array.getLength(da.javaArray())</code>
      *     (this condition is usually not fulfilled, for example, in a growing {@link MutableArray}).</li>
      * </ol>
      *
      * <p>In this situation, the specified AlgART array is called <i>a wrapper</i>
-     * of the underlying Java array <tt>da.{@link DirectAccessible#javaArray() javaArray()}</tt>.</p>
+     * of the underlying Java array, returned by <code>da.{@link DirectAccessible#javaArray() javaArray()}</code>
+     * or by {@link #ja()} method.</p>
      *
      * @return whether this array is a wrapper for standard Java array: direct-accessible array with zero offset and
      * with length, equal to the number of elements of the underlying Java array.
@@ -1111,9 +1117,9 @@ public interface Array {
     }
 
     /**
-     * Returns a reference to the underlying Java array <tt>ja</tt>, if this AlgART array is its wrapper
+     * Returns a reference to the underlying Java array <code>ja</code>, if this AlgART array is its wrapper
      * (see {@link #isJavaArrayWrapper()}); otherwise returns
-     * <tt>{@link Arrays#toJavaArray(Array) Arrays.toJavaArray}(thisObject)</tt>.
+     * <code>{@link Arrays#toJavaArray(Array) Arrays.toJavaArray}(thisObject)</code>.
      *
      * <p>In other words, this method returns a Java-array, absolutely identical to this AlgART array &mdash;
      * having identical length and elements, &mdash; and does this as quickly as possible
@@ -1129,7 +1135,8 @@ public interface Array {
      *                 da.javaArray() :
      *                 Arrays.toJavaArray(this);
      * </pre>
-     * <p>but works little faster if the first case, "<tt>da.javaArray()</tt>", is selected (this is a wrapper).</p>
+     * <p>but works little faster if the first case, "<code>da.javaArray()</code>",
+     * is selected (this is a wrapper).</p>
      *
      * <p>There are overridden versions of this method in subinterfaces for specific element types:
      * {@link BitArray#ja()}, {@link CharArray#ja()}},
@@ -1138,13 +1145,16 @@ public interface Array {
      * {@link FloatArray#ja()}}, {@link DoubleArray#ja()}},
      * {@link ObjectArray#ja()}}.</p>
      *
-     * <p><b>Be careful: this method can be potentially unsafe while inaccurate usage!</b>
-     * The main purpose of this method is to quickly access array data for <i>reading</i>.
+     * <p>Be careful: this method can be potentially unsafe while inaccurate usage!
+     * The typical purpose of this method is to quickly access array data for <i>reading</i>.
      * But it also allows you to <i>modify</i> this data,
-     * and the result of such modification is unpredictable: this may change the original AlgART array,
-     * but may also not change. (Of course, this is impossible for {@link #isImmutable() immutable} arrays.)
-     * Typically you <b>should not</b> attempt to modify the Java array returned by this method;
-     * this helps to avoid difficult bugs.</p>
+     * and the results of such modification can be different: this may change the original AlgART array,
+     * but may also not change. (Of course, this is impossible for {@link #isImmutable() immutable} arrays.)</p>
+     *
+     * <p>Therefore, if you need only read array data, you <b>should not</b> attempt to modify the Java array
+     * returned by this method: this will help to avoid difficult bugs.</p>
+     *
+     * <p>If you want to modify array data</p>
      *
      * <p>Note that usually you <b>should</b> prefer methods of {@link DirectAccessible} interface
      * instead of this method, because that interface allows to quickly process sub-arrays
@@ -1166,24 +1176,24 @@ public interface Array {
     Object ja();
 
     /**
-     * Equivalent to <tt>{@link Matrices#matrix(Array, long[]) matrix}(thisArray, dim)</tt>.
+     * Equivalent to <code>{@link Matrices#matrix(Array, long[]) matrix}(thisArray, dim)</code>.
      *
      * @param dim the matrix dimensions.
-     * @return new matrix backed by <tt>array</tt> with the given dimensions.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>dim</tt> argument is <tt>null</tt>.
+     * @return new matrix backed by <code>array</code> with the given dimensions.
+     * @throws NullPointerException     if <code>array</code> or <code>dim</code> argument is <code>null</code>.
      * @throws IllegalArgumentException if the passed array is resizable
      *                                  (for example, implements {@link MutableArray}),
-     *                                  or if the number of dimensions is 0 (empty <tt>dim</tt> Java array),
+     *                                  or if the number of dimensions is 0 (empty <code>dim</code> Java array),
      *                                  or if some of the dimensions are negative.
      * @throws SizeMismatchException    if the product of all dimensions is not equal to the array length.
-     * @throws TooLargeArrayException   if the product of all dimensions is greater than <tt>Long.MAX_VALUE</tt>.
+     * @throws TooLargeArrayException   if the product of all dimensions is greater than <code>Long.MAX_VALUE</code>.
      */
     default Matrix<? extends Array> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }
 
     /**
-     * Equivalent to <tt>{@link #loadResources(ArrayContext) loadResources}(null)</tt>.
+     * Equivalent to <code>{@link #loadResources(ArrayContext) loadResources}(null)</code>.
      * This is the most typical case of loading resources.
      *
      * @see #loadResources(ArrayContext)
@@ -1223,13 +1233,13 @@ public interface Array {
      * tries to preload the content of that arrays, though it is not guaranteed.
      * This method usually does nothing if the {@link #length() length} of this array is zero.
      *
-     * <p>The <tt>context</tt> argument is necessary to allow user to interrupt this method and to view
-     * the execution progress. Namely, if this argument is not <tt>null</tt>, this method probably calls
-     * <tt>context.{@link ArrayContext#checkInterruption() checkInterruption}</tt> and
-     * <tt>context.{@link ArrayContext#updateProgress updateProgress}</tt> methods from time to time.
+     * <p>The <code>context</code> argument is necessary to allow user to interrupt this method and to view
+     * the execution progress. Namely, if this argument is not <code>null</code>, this method probably calls
+     * <code>context.{@link ArrayContext#checkInterruption() checkInterruption}</code> and
+     * <code>context.{@link ArrayContext#updateProgress updateProgress}</code> methods from time to time.
      * It may be useful if preloading data can require long time, for example, the content should be
      * loaded from Internet.
-     * You always may pass <tt>null</tt> as this argument; then all will work correctly,
+     * You always may pass <code>null</code> as this argument; then all will work correctly,
      * but, maybe, the user will be bored for some time.
      * For all arrays, created by this package, this method works quickly enough
      * and doesn't require non-null context.
@@ -1239,7 +1249,7 @@ public interface Array {
      * created by {@link Arrays#nByteCopies}, {@link Arrays#nCharCopies}, etc.:
      * these arrays have no associated resources.
      *
-     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be <code>null</code>, then it will be ignored.
      * @see #freeResources(ArrayContext)
      * @see #flushResources(ArrayContext)
      * @see #flushResources(ArrayContext, boolean)
@@ -1247,7 +1257,7 @@ public interface Array {
     void loadResources(ArrayContext context);
 
     /**
-     * Equivalent to <tt>{@link #flushResources(ArrayContext, boolean) flushResources}(null, false)</tt>.
+     * Equivalent to <code>{@link #flushResources(ArrayContext, boolean) flushResources}(null, false)</code>.
      * This is the most typical case of flushing resources.
      *
      * @see #loadResources(ArrayContext)
@@ -1258,9 +1268,9 @@ public interface Array {
     }
 
     /**
-     * Equivalent to <tt>{@link #flushResources(ArrayContext, boolean) flushResources}(context, false)</tt>.
+     * Equivalent to <code>{@link #flushResources(ArrayContext, boolean) flushResources}(context, false)</code>.
      *
-     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be <code>null</code>, then it will be ignored.
      * @see #loadResources(ArrayContext)
      * @see #freeResources(ArrayContext)
      */
@@ -1290,15 +1300,15 @@ public interface Array {
      * </li>
      * </ol>
      *
-     * <p>If <tt>forcePhysicalWriting</tt> argument is <tt>false</tt>, this method works as quick as possible.
+     * <p>If <code>forcePhysicalWriting</code> argument is <code>false</code>, this method works as quick as possible.
      *
-     * <p>If <tt>forcePhysicalWriting</tt> argument is <tt>true</tt>, this
+     * <p>If <code>forcePhysicalWriting</code> argument is <code>true</code>, this
      * method tries to physically flush all unsaved elements of this array to the storage device.
      * The precise actions, performed in this case, are not specified.
      * The typical behaviour: all internal caches, if they are provided by Java implementation of the AlgART array,
      * are written to the external device via OS calls, and OS is requested to flush buffers or file-mapping
      * to the physical disk.
-     * The mode <tt>forcePhysicalWriting=true</tt> increases chances that the data will be really flushed to
+     * The mode <code>forcePhysicalWriting=true</code> increases chances that the data will be really flushed to
      * external devices and, so, OS will release physical memory, which was probably used for disk or another cache.
      * This mode also increases chances that all changes, made in this array until this moment,
      * will be immediately "visible" in another software (another OS process) as changes in the corresponding
@@ -1315,17 +1325,17 @@ public interface Array {
      * parts of the source array.
      *
      * <p>In particular, please note: this method may do something even for immutable arrays.
-     * If an array is an {@link #asImmutable() immutable view} of another array <tt><b>a</b></tt>,
-     * flushing this view is equivalent to flushing the original array <tt><b>a</b></tt>.
+     * If an array is an {@link #asImmutable() immutable view} of another array <code><b>a</b></code>,
+     * flushing this view is equivalent to flushing the original array <code><b>a</b></code>.
      *
-     * <p>The <tt>context</tt> argument is necessary to allow user to interrupt this method and to view
-     * the execution progress. Namely, if this argument is not <tt>null</tt>, this method probably calls
-     * <tt>context.{@link ArrayContext#checkInterruption() checkInterruption}</tt> and
-     * <tt>context.{@link ArrayContext#updateProgress updateProgress}</tt> methods from time to time.
+     * <p>The <code>context</code> argument is necessary to allow user to interrupt this method and to view
+     * the execution progress. Namely, if this argument is not <code>null</code>, this method probably calls
+     * <code>context.{@link ArrayContext#checkInterruption() checkInterruption}</code> and
+     * <code>context.{@link ArrayContext#updateProgress updateProgress}</code> methods from time to time.
      * It may be useful if this array is very large and writing non-flushed data to an external device
      * requires long time. For example, it is possible for arrays, created by
      * {@link LargeMemoryModel#newLazyCopy(Array) LargeMemoryModel.newLazyCopy} method.
-     * You always may pass <tt>null</tt> as this argument; then all will work correctly,
+     * You always may pass <code>null</code> as this argument; then all will work correctly,
      * but, maybe, the user will be bored for some time.
      *
      * <p>This method does nothing for arrays created by the {@link SimpleMemoryModel simple memory model}
@@ -1335,7 +1345,7 @@ public interface Array {
      *
      * <p>All operations, performed by this method, are also performed by
      * {@link #freeResources(ArrayContext, boolean)} method with
-     * the same <tt>forcePhysicalWriting</tt> argument.
+     * the same <code>forcePhysicalWriting</code> argument.
      *
      * <p><b>Performance note:</b> please avoid sequential calls of this method, like the following:<pre>
      *     array.flushResources(null, false);
@@ -1345,7 +1355,7 @@ public interface Array {
      * however, it is still possible that the second call will spend time for writing data again t
      * o an external device.
      *
-     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be <code>null</code>, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      * @see #loadResources(ArrayContext)
@@ -1355,7 +1365,7 @@ public interface Array {
     void flushResources(ArrayContext context, boolean forcePhysicalWriting);
 
     /**
-     * Equivalent to <tt>{@link #freeResources(ArrayContext, boolean) freeResources}(null, false)</tt>.
+     * Equivalent to <code>{@link #freeResources(ArrayContext, boolean) freeResources}(null, false)</code>.
      * This is the most typical case of freeing resources.
      *
      * @see #loadResources(ArrayContext)
@@ -1366,9 +1376,9 @@ public interface Array {
     }
 
     /**
-     * Equivalent to <tt>{@link #freeResources(ArrayContext, boolean) freeResources}(context, false)</tt>.
+     * Equivalent to <code>{@link #freeResources(ArrayContext, boolean) freeResources}(context, false)</code>.
      *
-     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be <code>null</code>, then it will be ignored.
      * @see #loadResources(ArrayContext)
      * @see #flushResources(ArrayContext)
      */
@@ -1384,8 +1394,8 @@ public interface Array {
      * they will be automatically re-acquired.
      *
      * <p>As a part of the work, this method always performs the same actions as
-     * <tt>{@link #flushResources(ArrayContext, boolean) flushResources}(context, forcePhysicalWriting)</tt>
-     * call with the same <tt>forcePhysicalWriting</tt> argument. See comments to that method for more details
+     * <code>{@link #flushResources(ArrayContext, boolean) flushResources}(context, forcePhysicalWriting)</code>
+     * call with the same <code>forcePhysicalWriting</code> argument. See comments to that method for more details
      * about flushing external resources.
      *
      * <p>This method guarantees that any changes, made after its call in any external resources,
@@ -1401,14 +1411,14 @@ public interface Array {
      * It means that calling this method can slow down the next access not only to this array,
      * but also to another ones, for example, to its {@link #subArray(long, long) subarrays}.
      *
-     * <p>The <tt>context</tt> argument is necessary to allow user to interrupt this method and to view
-     * the execution progress. Namely, if this argument is not <tt>null</tt>, this method probably calls
-     * <tt>context.{@link ArrayContext#checkInterruption() checkInterruption}</tt> and
-     * <tt>context.{@link ArrayContext#updateProgress updateProgress}</tt> methods from time to time.
+     * <p>The <code>context</code> argument is necessary to allow user to interrupt this method and to view
+     * the execution progress. Namely, if this argument is not <code>null</code>, this method probably calls
+     * <code>context.{@link ArrayContext#checkInterruption() checkInterruption}</code> and
+     * <code>context.{@link ArrayContext#updateProgress updateProgress}</code> methods from time to time.
      * It may be useful if this array is very large and writing non-flushed data to an external device
      * requires long time. For example, it is possible for arrays, created by
      * {@link LargeMemoryModel#newLazyCopy(Array) LargeMemoryModel.newLazyCopy} method.
-     * You always may pass <tt>null</tt> as this argument; then all will work correctly,
+     * You always may pass <code>null</code> as this argument; then all will work correctly,
      * but, maybe, the user will be bored for some time.
      *
      * <p>This method does nothing for arrays created by the {@link SimpleMemoryModel simple memory model}
@@ -1419,16 +1429,16 @@ public interface Array {
      * <p><b>Performance note 1:</b> you may use the call<pre>
      *     array.{@link #subArray(long, long) subArray(0,0)}.freeResources(null, false)
      * </pre>
-     * to release all resources, associated with the original <tt>array</tt>.
+     * to release all resources, associated with the original <code>array</code>.
      * It may work <i>faster</i> than simple
-     * "<tt>array.freeResources(null,false)</tt>",
+     * "<code>array.freeResources(null,false)</code>",
      * because there is no necessity to <i>flush all array elements</i>:
      * releasing a subarray requires flushing only the subarray elements,
      * i.e. no elements in a case of the zero-length subarray.
      * This speeding-up is guaranteed for arrays, created by {@link LargeMemoryModel large memory model},
      * but is not guaranteed for other arrays: it is still possible that
-     * "<tt>array.{@link #subArray(long, long) subArray(0,0)}.freeResources(context,false)</tt>"
-     * call will flush <i>all</i> <tt>array</tt> data.
+     * "<code>array.{@link #subArray(long, long) subArray(0,0)}.freeResources(context,false)</code>"
+     * call will flush <i>all</i> <code>array</code> data.
      *
      * <p><b>Performance note 2:</b> please avoid calling {@link #flushResources(ArrayContext, boolean)}
      * together with this method:<pre>
@@ -1440,22 +1450,22 @@ public interface Array {
      *     array.freeResources(null);
      *     // - it's much better to use a single call "array.freeResources(null, true)"
      * </pre>
-     * <p>It is very possible that the call of <tt>freeResources</tt> method will spend time for flushing data again,
-     * though they were already flushed by the previous <tt>flushResources</tt> method.
+     * <p>It is very possible that the call of <code>freeResources</code> method will spend time for flushing data again,
+     * though they were already flushed by the previous <code>flushResources</code> method.
      * If is much better to perform all the work in a single call of this method with the corresponding
-     * <tt>forcePhysicalWriting</tt> argument.
+     * <code>forcePhysicalWriting</code> argument.
      *
      * <p>All resources allocated by this package are automatically released and &mdash;
      * for temporary resources, i.e. garbage, &mdash;
      * removed (as it is possible) by built-in cleanup procedures while JVM termination.
      * However, we recommend to directly call
-     * <tt>freeResources(context)</tt> at the end of methods
+     * <code>freeResources(context)</code> at the end of methods
      * that create and process large AlgART arrays.
      * The reason is that if there will be a lot of non-released large arrays, the automatic cleanup procedure
      * may strongly reduce the speed of closing the application.
      *
      * <p><b>Important:</b> you <i>must</i> use this method if you are working with some collection
-     * (like <tt>java.util.List</tt> or a usual Java array) of large AlgART arrays
+     * (like <code>java.util.List</code> or a usual Java array) of large AlgART arrays
      * (each per many megabytes or gigabytes) <i>and</i> if this collection contains many elements:
      * more than several tens. If an AlgART array has some associated resources, for example,
      * like arrays created by {@link LargeMemoryModel} and mapped on a disk file, then every such instance
@@ -1467,7 +1477,7 @@ public interface Array {
      * In other case, thousands of inactive instances of AlgART arrays with non-released resources
      * can exhaust all available RAM (or address space).
      *
-     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be <code>null</code>, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      * @see #loadResources(ArrayContext context)
@@ -1483,7 +1493,7 @@ public interface Array {
      * <p>The result of this method may depend on implementation and usually contains
      * a short description of the array length, capacity, element type.
      *
-     * <p>Note: for {@link CharArray character arrays}, unlike <tt>CharSequence.toString()</tt>,
+     * <p>Note: for {@link CharArray character arrays}, unlike <code>CharSequence.toString()</code>,
      * this method works as for all other array types.
      * If you need to convert a character array to a string,
      * containing all characters of the array, you may use
@@ -1495,11 +1505,11 @@ public interface Array {
 
     /**
      * Returns the hash code of this array. The result depends on all elements of the array
-     * (from element <tt>#0</tt> to element <tt>#{@link #length()}-1</tt>).
+     * (from element <code>#0</code> to element <code>#{@link #length()}-1</code>).
      *
      * <p>For non-primitive element type ({@link ObjectArray}, {@link UpdatableObjectArray},
      * {@link MutableObjectArray} subinterfaces), the result is always based on implementation
-     * of <tt>hashCode</tt> method in the class of elements ({@link #elementType()}).
+     * of <code>hashCode</code> method in the class of elements ({@link #elementType()}).
      *
      * @return the hash code of this array.
      */
@@ -1507,7 +1517,7 @@ public interface Array {
 
     /**
      * Indicates whether some other array is equal to this one.
-     * Returns <tt>true</tt> if and only if:<ol>
+     * Returns <code>true</code> if and only if:<ol>
      * <li>the specified object is an array (i.e. implements {@link Array}),</li>
      * <li>both arrays have the same {@link #length() length},</li>
      * <li>for arrays of primitive elements
@@ -1517,26 +1527,26 @@ public interface Array {
      * {@link FloatArray}, {@link DoubleArray}):
      * both arrays have the same {@link #elementType() element type}
      * and all corresponding pairs of elements are equal
-     * (for <tt>float</tt> and <tt>double</tt> elements,
-     * unlike the <tt>==</tt> operator, this method considers
-     * <tt>NaN</tt> equals to itself, and 0.0 unequal to -0.0);</li>
+     * (for <code>float</code> and <code>double</code> elements,
+     * unlike the <code>==</code> operator, this method considers
+     * <code>NaN</code> equals to itself, and 0.0 unequal to -0.0);</li>
      * <li>for non-primitive arrays (when both arrays implement {@link ObjectArray}),
      * the method may check one from two following conditions
      * (only 1st or only 2nd, depending on implementation):<ul>
      * <li>both arrays have the same {@link #elementType() element type}
      * and all corresponding pairs of elements contain identical data
-     * (<tt>equals</tt> method of the class of elements
+     * (<code>equals</code> method of the class of elements
      * is not used in this case: {@link CombinedMemoryModel combined arrays} are an example);</li>
-     * <li>for all corresponding pairs of elements <tt>e1</tt>, <tt>e2</tt>
-     * (<tt>e1</tt> is an element <tt>#i</tt> of this array,
-     * <tt>e2</tt> is an element <tt>#i</tt> of the <tt>obj</tt> argument,
-     * <tt>i=0,1,...,{@link #length() length()}-1)</tt>, the following check returns <tt>true</tt>:
-     * <tt>(e1==null ? e2==null : e1.equals(e2))</tt>.</li>
+     * <li>for all corresponding pairs of elements <code>e1</code>, <code>e2</code>
+     * (<code>e1</code> is an element <code>#i</code> of this array,
+     * <code>e2</code> is an element <code>#i</code> of the <code>obj</code> argument,
+     * <code>i=0,1,...,{@link #length() length()}-1)</code>, the following check returns <code>true</code>:
+     * <code>(e1==null ? e2==null : e1.equals(e2))</code>.</li>
      * </ul></li>
      * </ol>
      *
      * @param obj the object to be compared for equality with this array.
-     * @return <tt>true</tt> if the specified object is an array equal to this one.
+     * @return <code>true</code> if the specified object is an array equal to this one.
      */
     boolean equals(Object obj);
 }

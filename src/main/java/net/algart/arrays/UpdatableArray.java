@@ -32,7 +32,7 @@ package net.algart.arrays;
  * does not allow to change number of elements.
  * The instances of this interface are usually returned by {@link MutableArray#asUnresizable()} method.</p>
  *
- * <p>If elements of this array are primitive values (<tt>byte</tt>, <tt>short</tt>, etc.),
+ * <p>If elements of this array are primitive values (<code>byte</code>, <code>short</code>, etc.),
  * the array <b>must</b> implement one of
  * {@link UpdatableBitArray}, {@link UpdatableCharArray},
  * {@link UpdatableByteArray}, {@link UpdatableShortArray},
@@ -54,7 +54,7 @@ package net.algart.arrays;
  */
 public interface UpdatableArray extends Array, ArrayExchanger {
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt>.
+     * Sets the element #<code>index</code> to the specified <code>value</code>.
      * The new value is first automatically unwrapped if this array contains elements of primitive types.
      *
      * <p>It is a low-level method.
@@ -72,37 +72,37 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * we recommend to use {@link UpdatableObjectArray#set(long, Object)}.
      *
      * <p>For arrays of primitive elements, this method
-     * throws <tt>NullPointerException</tt> if <tt>value == null</tt>.
+     * throws <code>NullPointerException</code> if <code>value == null</code>.
      * For arrays of non-primitive elements, this method
-     * does not throw <tt>NullPointerException</tt> in this case,
-     * but may set the element to some default value, if <tt>null</tt> elements are not supported
+     * does not throw <code>NullPointerException</code> in this case,
+     * but may set the element to some default value, if <code>null</code> elements are not supported
      * by the {@link MemoryModel memory model} (as in a case of {@link CombinedMemoryModel}).
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.
-     * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
-     * @throws NullPointerException      if <tt>value == null</tt> and it is an array of primitive elements.
-     * @throws ClassCastException        if it is an array of primitive elements and <tt>value</tt>
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
+     * @throws NullPointerException      if <code>value == null</code> and it is an array of primitive elements.
+     * @throws ClassCastException        if it is an array of primitive elements and <code>value</code>
      *                                   is not a corresponding wrapped class
-     *                                   (<tt>Boolean</tt>, <tt>Integer</tt>, etc.)
-     * @throws ArrayStoreException       if it is an array of non-primitive elements and <tt>value</tt>
+     *                                   (<code>Boolean</code>, <code>Integer</code>, etc.)
+     * @throws ArrayStoreException       if it is an array of non-primitive elements and <code>value</code>
      *                                   is not an instance of {@link #elementType()} class.
      */
     void setElement(long index, Object value);
 
     /**
-     * Copies <tt>count</tt> elements from the specified Java array of corresponding type,
-     * starting from <tt>srcArrayOffset</tt> index,
-     * into this array, starting from <tt>arrayPos</tt> index.
+     * Copies <code>count</code> elements from the specified Java array of corresponding type,
+     * starting from <code>srcArrayOffset</code> index,
+     * into this array, starting from <code>arrayPos</code> index.
      *
      * <p>For {@link UpdatableObjectArray arrays of non-primitive elements},
-     * if some elements of Java array are <tt>null</tt>,
-     * this method does not throw <tt>NullPointerException</tt>,
+     * if some elements of Java array are <code>null</code>,
+     * this method does not throw <code>NullPointerException</code>,
      * but may set the corresponding array elements to some default value,
-     * if <tt>null</tt> elements are not supported
+     * if <code>null</code> elements are not supported
      * by the {@link MemoryModel memory model} (as in a case of {@link CombinedMemoryModel}).
      *
-     * <p>Note: if <tt>IndexOutOfBoundsException</tt> occurs due to attempt to read data outside the passed
+     * <p>Note: if <code>IndexOutOfBoundsException</code> occurs due to attempt to read data outside the passed
      * Java array, this AlgART array can be partially filled.
      * In other words, this method <b>can be non-atomic regarding this failure</b>.
      * All other possible exceptions are checked in the very beginning of this method
@@ -112,15 +112,16 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @param srcArray       the source Java array.
      * @param srcArrayOffset starting position in the source Java array.
      * @param count          the number of elements to be copied.
-     * @return               a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException  if <tt>srcArray</tt> argument is not an array or if <tt>count &lt; 0</tt>.
+     * @return a reference to this AlgART array.
+     * @throws NullPointerException      if <code>srcArray</code> argument is <code>null</code>.
+     * @throws IllegalArgumentException  if <code>srcArray</code> argument is not an array or if
+     *                                   <code>count &lt; 0</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
+     * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType() elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
+     * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType() elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                   (both this and <code>ArrayStoreException</code> are possible,
      *                                   depending on implementation).
      * @see DirectAccessible
      * @see #getData(long, Object, int, int)
@@ -128,29 +129,29 @@ public interface UpdatableArray extends Array, ArrayExchanger {
     UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count);
 
     /**
-     * Copies <tt>min(this.{@link #length() length()} - arrayPos, srcArray.length})</tt>
+     * Copies <code>min(this.{@link #length() length()} - arrayPos, srcArray.length})</code>
      * elements from the specified Java array of corresponding type,
-     * starting from <tt>0</tt> index,
-     * into this array, starting from <tt>arrayPos</tt> index.
+     * starting from <code>0</code> index,
+     * into this array, starting from <code>arrayPos</code> index.
      *
      * <p>For {@link UpdatableObjectArray arrays of non-primitive elements},
-     * if some elements of Java array are <tt>null</tt>,
-     * this method does not throw <tt>NullPointerException</tt>,
+     * if some elements of Java array are <code>null</code>,
+     * this method does not throw <code>NullPointerException</code>,
      * but may set the corresponding array elements to some default value,
-     * if <tt>null</tt> elements are not supported
+     * if <code>null</code> elements are not supported
      * by the {@link MemoryModel memory model} (as in a case of {@link CombinedMemoryModel}).
      *
-     * @param arrayPos       starting position in this AlgART array.
-     * @param srcArray       the source Java array.
-     * @return               a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException  if <tt>srcArray</tt> argument is not an array.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
-     *                                   {@link #elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
-     *                                   {@link #elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
-     *                                   depending on implementation).
+     * @param arrayPos starting position in this AlgART array.
+     * @param srcArray the source Java array.
+     * @return a reference to this AlgART array.
+     * @throws NullPointerException     if <code>srcArray</code> argument is <code>null</code>.
+     * @throws IllegalArgumentException if <code>srcArray</code> argument is not an array.
+     * @throws ArrayStoreException      if <code>destArray</code> element type mismatches with this array
+     *                                  {@link #elementType()}.
+     * @throws ClassCastException       if <code>destArray</code> element type mismatches with this array
+     *                                  {@link #elementType()}
+     *                                  (both this and <code>ArrayStoreException</code> are possible,
+     *                                  depending on implementation).
      * @see DirectAccessible
      * @see #setData(long, Object, int, int)
      * @see #getData(long, Object)
@@ -159,59 +160,59 @@ public interface UpdatableArray extends Array, ArrayExchanger {
     UpdatableArray setData(long arrayPos, Object srcArray);
 
     /**
-     * Copies element #<tt>srcIndex</tt> to position #<tt>destIndex</tt> inside this array.
+     * Copies element #<code>srcIndex</code> to position #<code>destIndex</code> inside this array.
      *
      * @param destIndex index of element to replace.
      * @param srcIndex  index of element to be copied.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     void copy(long destIndex, long srcIndex);
 
     /**
-     * Copies <tt>count</tt> elements, starting from <tt>srcIndex</tt> index,
-     * to the same array, starting from <tt>destIndex</tt> index.
+     * Copies <code>count</code> elements, starting from <code>srcIndex</code> index,
+     * to the same array, starting from <code>destIndex</code> index.
      *
      * <p><i>This method works correctly even if the copied areas overlap</i>,
-     * i.e. if <tt>Math.abs(destIndex - srcIndex) &lt; count</tt>.
+     * i.e. if <code>Math.abs(destIndex - srcIndex) &lt; count</code>.
      * More precisely, in this case the copying is performed as if the
-     * elements at positions <tt>srcIndex..srcIndex+count-1</tt>
-     * were first copied to a temporary array with <tt>count</tt> elements
+     * elements at positions <code>srcIndex..srcIndex+count-1</code>
+     * were first copied to a temporary array with <code>count</code> elements
      * and then the contents of the temporary array were copied into positions
-     * <tt>destIndex..destIndex+count-1</tt> of this array.
+     * <code>destIndex..destIndex+count-1</code> of this array.
      *
      * @param destIndex starting index of element to replace.
      * @param srcIndex  starting index of element to be copied.
      * @param count     the number of elements to be copied.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     void copy(long destIndex, long srcIndex, long count);
 
     /**
-     * Swaps elements at positions #<tt>firstIndex</tt> and #<tt>secondIndex</tt> inside this array.
+     * Swaps elements at positions #<code>firstIndex</code> and #<code>secondIndex</code> inside this array.
      *
      * @param firstIndex  first index of element to exchange.
      * @param secondIndex second index of element to exchange.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     void swap(long firstIndex, long secondIndex);
 
     /**
-     * Swaps <tt>count</tt> elements, starting from <tt>firstIndex</tt> index,
-     * with <tt>count</tt> elements in the same array, starting from <tt>secondIndex</tt> index.
+     * Swaps <code>count</code> elements, starting from <code>firstIndex</code> index,
+     * with <code>count</code> elements in the same array, starting from <code>secondIndex</code> index.
      *
      * <p>Some elements may be swapped incorrectly if the swapped areas overlap,
-     * i.e. if <tt>Math.abs(firstIndex - secondIndex) &lt; count</tt>.
+     * i.e. if <code>Math.abs(firstIndex - secondIndex) &lt; count</code>.
      *
      * @param firstIndex  starting first index of element to exchange.
      * @param secondIndex starting second index of element to exchange.
      * @param count       the number of elements to be exchanged.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     void swap(long firstIndex, long secondIndex, long count);
 
     /**
-     * Copies <tt>min(this.{@link #length() length()}, src.{@link #length() length()})</tt> elements of
-     * <tt>src</tt> array, starting from index 0,
+     * Copies <code>min(this.{@link #length() length()}, src.{@link #length() length()})</code> elements of
+     * <code>src</code> array, starting from index 0,
      * to this array, starting from index 0.
      *
      * <p>You may use {@link #subArray(long, long)} or {@link #subArr(long, long)} methods
@@ -219,17 +220,17 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * destArray.subArr(destPos, count).copy(srcArray.subArr(srcPos, count));
      * </pre>
      *
-     * <p>Some elements may be copied incorrectly if this array and <tt>src</tt>
+     * <p>Some elements may be copied incorrectly if this array and <code>src</code>
      * are views of the same data and the swapped data areas overlap
-     * (in the example above, <tt>Math.abs(destPos - srcPos) &lt; count)</tt>).
+     * (in the example above, <code>Math.abs(destPos - srcPos) &lt; count)</code>).
      * However, for arrays, created by {@link SimpleMemoryModel}, this method work correctly <i>always</i>,
      * even for overlapping areas.
      * For any arrays, if the copied areas of the underlying data are <i>the same</i>
-     * (for example, if <tt>src</tt> if some view of this array generated by
+     * (for example, if <code>src</code> if some view of this array generated by
      * {@link Arrays#asIndexFuncArray Arrays.asFuncArray}, but not {@link Arrays#asShifted Arrays.asShifted} method),
      * this method work correctly: any elements will be read before they will be updated.
      *
-     * <p>This method works only if the element types of this and <tt>src</tt> arrays
+     * <p>This method works only if the element types of this and <code>src</code> arrays
      * (returned by {@link #elementType()}) are the same, or (for non-primitive elements)
      * if element type of this array is a superclass of the source element type.
      *
@@ -244,16 +245,16 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} for copying large arrays.
      *
      * @param src the source array.
-     * @return    a reference to this array.
-     * @throws NullPointerException     if <tt>src</tt> argument is <tt>null</tt>.
+     * @return a reference to this array.
+     * @throws NullPointerException     if <code>src</code> argument is <code>null</code>.
      * @throws IllegalArgumentException if the source and this element types do not match.
      * @see Arrays#copy(ArrayContext, UpdatableArray, Array)
      */
     UpdatableArray copy(Array src);
 
     /**
-     * Swaps <tt>min(this.{@link #length() length()}, src.{@link #length() length()})</tt> elements of
-     * <tt>another</tt> array, starting from index 0,
+     * Swaps <code>min(this.{@link #length() length()}, src.{@link #length() length()})</code> elements of
+     * <code>another</code> array, starting from index 0,
      * and the same number of elements of this array, starting from index 0.
      *
      * <p>You may use {@link #subArray(long, long)} or {@link #subArr(long, long)} methods
@@ -261,11 +262,11 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * array1.subArr(pos1, count).swap(array2.subArr(pos2, count));
      * </pre>
      *
-     * <p>Some elements may be swapped incorrectly if this array and <tt>another</tt> is the same array,
+     * <p>Some elements may be swapped incorrectly if this array and <code>another</code> is the same array,
      * or are views of the same data, and the swapped areas overlap
-     * (in the example above, <tt>Math.abs(pos1 - pos2) &lt; count)</tt>).
+     * (in the example above, <code>Math.abs(pos1 - pos2) &lt; count)</code>).
      *
-     * <p>This method must work always if the element types of this and <tt>src</tt> arrays
+     * <p>This method must work always if the element types of this and <code>src</code> arrays
      * (returned by {@link #elementType()}) are the same.
      *
      * <p>For non-primitive element type ({@link ObjectArray}, {@link UpdatableObjectArray},
@@ -279,9 +280,9 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * with calling {@link ArrayContext} methods to allow interruption and showing progress.
      *
      * @param another another array.
-     * @return        a reference to this array.
-     * @throws NullPointerException           if <tt>another</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException       if another and this element types do not match.
+     * @return a reference to this array.
+     * @throws NullPointerException     if <code>another</code> argument is <code>null</code>.
+     * @throws IllegalArgumentException if another and this element types do not match.
      */
     UpdatableArray swap(UpdatableArray another);
 
@@ -312,7 +313,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
 
     /**
      * Clears the "{@link #isNew() new status}" for this array instance.
-     * After this call, the {@link #isNew()} method will return <tt>false</tt> for this instance.
+     * After this call, the {@link #isNew()} method will return <code>false</code> for this instance.
      * If the internal storage of this array will be reallocated in the future,
      * this instance may become "new" again.
      *
