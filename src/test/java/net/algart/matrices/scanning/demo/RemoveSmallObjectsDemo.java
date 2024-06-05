@@ -61,7 +61,7 @@ public class RemoveSmallObjectsDemo {
         Matrix<? extends PArray> intensity = ColorMatrices.asRGBIntensity(matrices);
         Matrix<UpdatableBitArray> binary = Arrays.SMM.newBitMatrix(intensity.dimensions());
         Matrix<UpdatableBitArray> result = Arrays.SMM.newBitMatrix(intensity.dimensions());
-        Matrices.applyFunc( null,
+        Matrices.applyFunc(
                 RectangularFunc.getInstance(0, threshold * intensity.maxPossibleValue(), 0, 1),
                 binary, intensity);
         Matrices.copy(result, binary);

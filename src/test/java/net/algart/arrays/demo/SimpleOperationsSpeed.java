@@ -221,18 +221,17 @@ public final class SimpleOperationsSpeed {
 
             t1 = System.nanoTime();
             UpdatablePArray array = SimpleMemoryModel.asUpdatableByteArray(bytes);
-            Arrays.applyFunc(null, false,
-                    SelectConstantFunc.getInstance(0, 255), array, (BitArray) mask);
+            Arrays.applyFunc(SelectConstantFunc.getInstance(0, 255), array, (BitArray) mask);
             t2 = System.nanoTime();
             time("unpackBits via applyFunc (->byte)", t1, t2);
 
             t1 = System.nanoTime();
-            Arrays.unpackBits(SimpleMemoryModel.asUpdatableByteArray(bytes), mask, 0, 255);
+            Arrays.unpackBits(null, SimpleMemoryModel.asUpdatableByteArray(bytes), mask, 0, 255);
             t2 = System.nanoTime();
             time("unpackBits() (->byte)", t1, t2);
 
             t1 = System.nanoTime();
-            Arrays.unpackZeroBits(SimpleMemoryModel.asUpdatableIntArray(ints), mask, 0);
+            Arrays.unpackZeroBits(null, SimpleMemoryModel.asUpdatableIntArray(ints), mask, 0);
             t2 = System.nanoTime();
             time("unpackZeroBits() (->int)", t1, t2);
 
