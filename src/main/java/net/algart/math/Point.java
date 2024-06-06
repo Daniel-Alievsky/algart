@@ -223,7 +223,7 @@ public class Point implements Comparable<Point> {
      * Java typecast <code>(double)longValue</code>.
      *
      * @param iPoint the integer point.
-     * @return       the real point with same coordinates.
+     * @return the real point with same coordinates.
      * @throws NullPointerException if the passed integer point is <code>null</code>.
      */
     public static Point valueOf(IPoint iPoint) {
@@ -651,8 +651,8 @@ public class Point implements Comparable<Point> {
     public void scaleAndShift(double[] resultCoordinates, double[] multipliers, Point shift) {
         if (resultCoordinates.length < coordinates.length) {
             throw new IllegalArgumentException("Too short result coordinates array: double["
-                    + resultCoordinates.length + "]; "
-                    + coordinates.length + " elements required to store coordinates");
+                    + resultCoordinates.length + "]; " + coordinates.length
+                    + " elements required to store coordinates");
         }
         Objects.requireNonNull(multipliers, "Null multipliers argument");
         if (multipliers.length != coordinates.length) {
@@ -927,7 +927,7 @@ public class Point implements Comparable<Point> {
      * and the results are compared.
      *
      * @param obj the object to be compared for equality with this instance.
-     * @return    <code>true</code> if the specified object is a point equal to this one.
+     * @return <code>true</code> if the specified object is a point equal to this one.
      */
     public boolean equals(Object obj) {
         if (!(obj instanceof Point)) {
@@ -984,16 +984,16 @@ public class Point implements Comparable<Point> {
     private static void getBytes(double[] array, byte[] result) {
         for (int disp = 0, k = 0; k < array.length; k++) {
             long l = Double.doubleToLongBits(array[k]);
-            int value = (int)l ^ 630591835; // provide different results than for other similar classes
-            result[disp++] = (byte)value;
-            result[disp++] = (byte)(value >>> 8);
-            result[disp++] = (byte)(value >>> 16);
-            result[disp++] = (byte)(value >>> 24);
-            value = (int)(l >>> 32) ^ 928687429; // provide different results than for other similar classes
-            result[disp++] = (byte)value;
-            result[disp++] = (byte)(value >>> 8);
-            result[disp++] = (byte)(value >>> 16);
-            result[disp++] = (byte)(value >>> 24);
+            int value = (int) l ^ 630591835; // provide different results than for other similar classes
+            result[disp++] = (byte) value;
+            result[disp++] = (byte) (value >>> 8);
+            result[disp++] = (byte) (value >>> 16);
+            result[disp++] = (byte) (value >>> 24);
+            value = (int) (l >>> 32) ^ 928687429; // provide different results than for other similar classes
+            result[disp++] = (byte) value;
+            result[disp++] = (byte) (value >>> 8);
+            result[disp++] = (byte) (value >>> 16);
+            result[disp++] = (byte) (value >>> 24);
         }
     }
 
@@ -1004,16 +1004,16 @@ public class Point implements Comparable<Point> {
     static class Test {
         public static void main(String[] args) {
             Range[] ranges = {
-                Range.valueOf(1.1, 2.7),
-                Range.valueOf(1.6, 2.8),
-                Range.valueOf(-27.1, 24.81),
-                Range.valueOf(0, Long.MAX_VALUE),
-                Range.valueOf(Long.MIN_VALUE, -100),
-                Range.valueOf(Long.MIN_VALUE + 1, -100),
-                Range.valueOf(Long.MIN_VALUE + 2000000, -100),
-                Range.valueOf(Long.MIN_VALUE + 2000000, 100),
-                Range.valueOf(-1e3, 1e8),
-                Range.valueOf(-4e18, 6e18),
+                    Range.valueOf(1.1, 2.7),
+                    Range.valueOf(1.6, 2.8),
+                    Range.valueOf(-27.1, 24.81),
+                    Range.valueOf(0, Long.MAX_VALUE),
+                    Range.valueOf(Long.MIN_VALUE, -100),
+                    Range.valueOf(Long.MIN_VALUE + 1, -100),
+                    Range.valueOf(Long.MIN_VALUE + 2000000, -100),
+                    Range.valueOf(Long.MIN_VALUE + 2000000, 100),
+                    Range.valueOf(-1e3, 1e8),
+                    Range.valueOf(-4e18, 6e18),
             };
             for (Range r : ranges) {
                 IRange cast = null, rounded = null;
@@ -1048,57 +1048,57 @@ public class Point implements Comparable<Point> {
             }
             System.out.println();
             Point[] points = {
-                Point.valueOf(12, 3),
-                Point.valueOf(1.2, 3, 1),
-                Point.valueOf(12, 3, 0),
-                Point.valueOf(1.2, 3, 0, 1.234),
-                Point.valueOf(12, 3, 0, -21234),
-                Point.valueOf(-12, 123453, 27182, 821234),
-                Point.valueOf(14, -3),
-                Point.valueOf(0),
-                Point.valueOf(0, 0),
-                Point.valueOf(-3, -2),
-                Point.valueOf(-4, 5),
-                Point.valueOf(15, 20),
-                Point.valueOf(3, 1.33),
-                Point.valueOf(4.1, 5),
-                Point.valueOf(0, 0, 0),
-                Point.origin(3),
-                Point.valueOf(new double[18]),
-                Point.valueOf(new double[18]),
-                Point.valueOf(13, 0.0),
-                Point.valueOf(13, -0.0),
-                Point.valueOf(4413.1, 0.1),
-                Point.valueOf(4413.2, -0.8),
-                Point.valueOf(13, 1, 0),
-                Point.valueOf(3, 4, 0),
-                Point.valueOf(13),
-                Point.valueOf(1e3, 30),
-                Point.valueOf(1e3, 1e20),
-                Point.valueOf(-5e18, 30),
-                Point.valueOf(-5e18, -300),
-                Point.valueOf(-7e18, -5e18),
-                Point.valueOf(5e18, 1e20),
+                    Point.valueOf(12, 3),
+                    Point.valueOf(1.2, 3, 1),
+                    Point.valueOf(12, 3, 0),
+                    Point.valueOf(1.2, 3, 0, 1.234),
+                    Point.valueOf(12, 3, 0, -21234),
+                    Point.valueOf(-12, 123453, 27182, 821234),
+                    Point.valueOf(14, -3),
+                    Point.valueOf(0),
+                    Point.valueOf(0, 0),
+                    Point.valueOf(-3, -2),
+                    Point.valueOf(-4, 5),
+                    Point.valueOf(15, 20),
+                    Point.valueOf(3, 1.33),
+                    Point.valueOf(4.1, 5),
+                    Point.valueOf(0, 0, 0),
+                    Point.origin(3),
+                    Point.valueOf(new double[18]),
+                    Point.valueOf(new double[18]),
+                    Point.valueOf(13, 0.0),
+                    Point.valueOf(13, -0.0),
+                    Point.valueOf(4413.1, 0.1),
+                    Point.valueOf(4413.2, -0.8),
+                    Point.valueOf(13, 1, 0),
+                    Point.valueOf(3, 4, 0),
+                    Point.valueOf(13),
+                    Point.valueOf(1e3, 30),
+                    Point.valueOf(1e3, 1e20),
+                    Point.valueOf(-5e18, 30),
+                    Point.valueOf(-5e18, -300),
+                    Point.valueOf(-7e18, -5e18),
+                    Point.valueOf(5e18, 1e20),
             };
             java.util.Arrays.sort(points);
             for (Point rp : points) {
                 System.out.println(rp + "; symmetric: " + rp.symmetric()
-                    + "; distance from origin: " + rp.distanceFromOrigin()
-                    + " = " + rp.distanceFrom(Arrays.asList(Point.origin(rp.coordCount())))
-                    + (rp.coordCount() > 1 && rp.projectionAlongAxisEquals(0, Point.origin(rp.coordCount() - 1)) ?
-                    "; x-projection is origin" : "")
-                    + "; x-shift: " + rp.shiftAlongAxis(0, 100.0)
-                    + "; x-projection: "
-                    + (rp.coordCount() == 1 ? "impossible" : rp.projectionAlongAxis(0))
-                    + "; last-axis-projection: "
-                    + (rp.coordCount() == 1 ? "impossible" : rp.projectionAlongAxis(rp.coordCount() - 1))
-                    + "; *2: " + rp.multiply(2.0)
-                    + " = " + rp.scale(IPoint.valueOfEqualCoordinates(rp.coordCount(), 2).toPoint().coordinates())
-                    + " = " + rp.scaleAndShift(
-                    Point.valueOfEqualCoordinates(rp.coordCount(), 2.0).coordinates(),
-                    Point.origin(rp.coordCount()))
-                    + "; sqr: " + rp.scalarProduct(rp)
-                    + "; hash: " + rp.hashCode() + "; address: " + System.identityHashCode(rp));
+                        + "; distance from origin: " + rp.distanceFromOrigin()
+                        + " = " + rp.distanceFrom(Arrays.asList(Point.origin(rp.coordCount())))
+                        + (rp.coordCount() > 1 && rp.projectionAlongAxisEquals(0, Point.origin(rp.coordCount() - 1)) ?
+                        "; x-projection is origin" : "")
+                        + "; x-shift: " + rp.shiftAlongAxis(0, 100.0)
+                        + "; x-projection: "
+                        + (rp.coordCount() == 1 ? "impossible" : rp.projectionAlongAxis(0))
+                        + "; last-axis-projection: "
+                        + (rp.coordCount() == 1 ? "impossible" : rp.projectionAlongAxis(rp.coordCount() - 1))
+                        + "; *2: " + rp.multiply(2.0)
+                        + " = " + rp.scale(IPoint.valueOfEqualCoordinates(rp.coordCount(), 2).toPoint().coordinates())
+                        + " = " + rp.scaleAndShift(
+                        Point.valueOfEqualCoordinates(rp.coordCount(), 2.0).coordinates(),
+                        Point.origin(rp.coordCount()))
+                        + "; sqr: " + rp.scalarProduct(rp)
+                        + "; hash: " + rp.hashCode() + "; address: " + System.identityHashCode(rp));
             }
             System.out.println();
             for (int k = 0; k < points.length - 1; k += 2) {
@@ -1110,22 +1110,22 @@ public class Point implements Comparable<Point> {
                     Point point = Point.valueOfEqualCoordinates(ra.coordCount(), -1.5);
                     RectangularArea test = RectangularArea.valueOf(point, Point.origin(ra.coordCount()));
                     assert ra.intersects(test) ? ra.intersection(test).equals(RectangularArea.valueOf(
-                        ra.min().max(test.min()), ra.max().min(test.max()))) :
-                        ra.intersection(test) == null;
+                            ra.min().max(test.min()), ra.max().min(test.max()))) :
+                            ra.intersection(test) == null;
                     System.out.println(ra + "; ranges: " + java.util.Arrays.asList(ra.ranges())
-                        + "; contains(origin): " + ra.contains(Point.origin(ra.coordCount()))
-                        + "; expand(origin): " + ra.expand(Point.origin(ra.coordCount()))
-                        + "; expand(-1,-1..2,2): " + ra.expand(RectangularArea.valueOf(
-                        Point.valueOfEqualCoordinates(ra.coordCount(), -1),
-                        Point.valueOfEqualCoordinates(ra.coordCount(), 2)))
-                        + "; parallel distance to (-1.5,-1.5,...): "
-                        + (ra.coordCount() == 2 ? ra.parallelDistance(-1.5, -1.5) : ra.coordCount() == 3 ?
-                        ra.parallelDistance(-1.5, -1.5, -1.5) :
-                        ra.parallelDistance(point))
-                        + (ra.contains(point) ? " (inside)" : "")
-                        + "; intersection with " + test + ": " + ra.intersection(test)
-                        + "; subtracted " + test + ": " + ra.difference(new ArrayList<RectangularArea>(), test)
-                        + "; hash: " + ra.hashCode());
+                            + "; contains(origin): " + ra.contains(Point.origin(ra.coordCount()))
+                            + "; expand(origin): " + ra.expand(Point.origin(ra.coordCount()))
+                            + "; expand(-1,-1..2,2): " + ra.expand(RectangularArea.valueOf(
+                            Point.valueOfEqualCoordinates(ra.coordCount(), -1),
+                            Point.valueOfEqualCoordinates(ra.coordCount(), 2)))
+                            + "; parallel distance to (-1.5,-1.5,...): "
+                            + (ra.coordCount() == 2 ? ra.parallelDistance(-1.5, -1.5) : ra.coordCount() == 3 ?
+                            ra.parallelDistance(-1.5, -1.5, -1.5) :
+                            ra.parallelDistance(point))
+                            + (ra.contains(point) ? " (inside)" : "")
+                            + "; intersection with " + test + ": " + ra.intersection(test)
+                            + "; subtracted " + test + ": " + ra.difference(new ArrayList<RectangularArea>(), test)
+                            + "; hash: " + ra.hashCode());
                 } catch (Exception e) {
                     System.out.println("  Cannot create area with " + points[k] + " and " + points[k + 1] + ": " + e);
                 }
@@ -1146,17 +1146,18 @@ public class Point implements Comparable<Point> {
                     IPoint point = IPoint.valueOfEqualCoordinates(ra.coordCount(), 10);
                     IRectangularArea test = IRectangularArea.valueOf(IPoint.origin(ra.coordCount()), point);
                     assert rounded.intersects(test) ? rounded.intersection(test).equals(IRectangularArea.valueOf(
-                        rounded.min().max(test.min()), rounded.max().min(test.max()))) :
-                        rounded.intersection(test) == null;
+                            rounded.min().max(test.min()), rounded.max().min(test.max()))) :
+                            rounded.intersection(test) == null;
                     System.out.println(ra + " rounded to " + rounded
-                        + "; parallel distance to (10,10,...): "
-                        + (ra.coordCount() == 2 ? rounded.parallelDistance(10, 10) : ra.coordCount() == 3 ?
-                        rounded.parallelDistance(10, 10, 10) :
-                        rounded.parallelDistance(point))
-                        + (rounded.contains(point) ? " (inside)" : "")
-                        + "; intersection with " + test + ": " + rounded.intersection(test)
-                        + "; subtracted " + test + ": " + rounded.difference(new ArrayList<IRectangularArea>(), test)
-                        + "; hash: " + rounded.hashCode()
+                            + "; parallel distance to (10,10,...): "
+                            + (ra.coordCount() == 2 ? rounded.parallelDistance(10, 10) : ra.coordCount() == 3 ?
+                            rounded.parallelDistance(10, 10, 10) :
+                            rounded.parallelDistance(point))
+                            + (rounded.contains(point) ? " (inside)" : "")
+                            + "; intersection with " + test + ": " + rounded.intersection(test)
+                            + "; subtracted " + test + ": "
+                            + rounded.difference(new ArrayList<IRectangularArea>(), test)
+                            + "; hash: " + rounded.hashCode()
                     );
                 } catch (Exception e) {
                     System.out.println("  Cannot call toRoundedRectangularArea for " + ra + ": " + e);

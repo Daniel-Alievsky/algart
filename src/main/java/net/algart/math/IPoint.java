@@ -656,7 +656,8 @@ public class IPoint implements Comparable<IPoint> {
     public void scaleAndShift(double[] resultCoordinates, double[] multipliers, Point shift) {
         if (resultCoordinates.length < coordinates.length) {
             throw new IllegalArgumentException("Too short result coordinates array: double["
-                    + resultCoordinates.length + "]; " + coordinates.length + " elements required to store coordinates");
+                    + resultCoordinates.length + "]; " + coordinates.length
+                    + " elements required to store coordinates");
         }
         Objects.requireNonNull(multipliers, "Null multipliers argument");
         if (multipliers.length != coordinates.length) {
