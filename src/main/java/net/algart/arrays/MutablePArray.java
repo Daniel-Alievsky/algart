@@ -39,16 +39,16 @@ package net.algart.arrays;
 public interface MutablePArray extends UpdatablePArray, MutableArray {
     /**
      * Removes the last element at this array and returns its value,
-     * converted to <tt>double</tt>:
-     * <tt>(double)(value&amp;0xFF)</tt> for <tt>byte</tt> value,
-     * <tt>(double)(value&amp;0xFFFF)</tt> for <tt>short</tt> value,
-     * <tt>(double)value</tt> for <tt>int</tt>, <tt>long</tt>,
-     * <tt>float</tt>, <tt>double</tt>, <tt>char</tt> values,
-     * or <tt>value?1.0:0.0</tt> for <tt>boolean</tt> values.
+     * converted to <code>double</code>:
+     * <code>(double)(value&amp;0xFF)</code> for <code>byte</code> value,
+     * <code>(double)(value&amp;0xFFFF)</code> for <code>short</code> value,
+     * <code>(double)value</code> for <code>int</code>, <code>long</code>,
+     * <code>float</code>, <code>double</code>, <code>char</code> values,
+     * or <code>value?1.0:0.0</code> for <code>boolean</code> values.
      * Please note that this method returns unsigned values for byte and short arrays.
      * Returned value contains full information stored in the element,
-     * excepting the case of very large <tt>long</tt> elements.
-     * If this array {@link #isEmpty() is empty}, the method throws <tt>EmptyStackException</tt>.
+     * excepting the case of very large <code>long</code> elements.
+     * If this array {@link #isEmpty() is empty}, the method throws <code>EmptyStackException</code>.
      *
      * <p>Depending on the specific subinterface implemented by the object,
      * this method is equivalent to one of the following expressions:</p>
@@ -71,11 +71,11 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
     double popDouble();
 
     /**
-     * Appends <tt>value</tt> element to the end of this array with conversion from <tt>double</tt>,
-     * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
-     * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
-     * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),
-     * or as <tt>value!=0.0</tt> for <tt>boolean</tt> element type.
+     * Appends <code>value</code> element to the end of this array with conversion from <code>double</code>,
+     * as <code>(xxx)value</code> for numeric element type <code>xxx</code>
+     * (<code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>,
+     * <code>float</code>, <code>double</code> or <code>char</code>),
+     * or as <code>value!=0.0</code> for <code>boolean</code> element type.
      *
      * <p>The same action may be performed by the following code:</p>
      * <pre>
@@ -90,11 +90,11 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
     void addDouble(double value);
 
     /**
-     * Appends <tt>value</tt> element to the end of this array with conversion from <tt>long</tt>,
-     * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
-     * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
-     * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),
-     * or as <tt>value!=0</tt> for <tt>boolean</tt> element type.
+     * Appends <code>value</code> element to the end of this array with conversion from <code>long</code>,
+     * as <code>(xxx)value</code> for numeric element type <code>xxx</code>
+     * (<code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>,
+     * <code>float</code>, <code>double</code> or <code>char</code>),
+     * or as <code>value!=0</code> for <code>boolean</code> element type.
      *
      * <p>The same action may be performed by the following code:</p>
      * <pre>
@@ -109,11 +109,11 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
     void addLong(long value);
 
     /**
-     * Appends <tt>value</tt> element to the end of this array with conversion from <tt>int</tt>,
-     * as <tt>(xxx)value</tt> for numeric element type <tt>xxx</tt>
-     * (<tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
-     * <tt>float</tt>, <tt>double</tt> or <tt>char</tt>),
-     * or as <tt>value!=0</tt> for <tt>boolean</tt> element type.
+     * Appends <code>value</code> element to the end of this array with conversion from <code>int</code>,
+     * as <code>(xxx)value</code> for numeric element type <code>xxx</code>
+     * (<code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>,
+     * <code>float</code>, <code>double</code> or <code>char</code>),
+     * or as <code>value!=0</code> for <code>boolean</code> element type.
      *
      * <p>This method is equivalent to both {@link #addLong(long) addLong(index, (long) value)}
      * and {@link #addDouble(double) addDouble((double) value)}, but can work little faster.

@@ -41,7 +41,7 @@ public interface PArray extends Array {
     /**
      * Return the number of memory bits occupied by every element of this array.
      * The amount of memory used by the array can be estimated as
-     * <tt>{@link #capacity()}*bitsPerElement()/8</tt> bytes
+     * <code>{@link #capacity()}*bitsPerElement()/8</code> bytes
      * (when the array capacity is large enough).
      *
      * <p>If the number of occupied bits is not defined (for example, may depend on JVM implementation),
@@ -61,7 +61,7 @@ public interface PArray extends Array {
      *
      * <p>Please keep in mind that the real amount of occupied memory, theoretically, can differ
      * from the value returned by this method.
-     * For example, some JVM, theoretically, may store <tt>byte</tt> elements of <tt>byte[]</tt> array
+     * For example, some JVM, theoretically, may store <code>byte</code> elements of <code>byte[]</code> array
      * in 32-bit memory words. In this case, this method will return invalid result for byte arrays
      * created by the {@link SimpleMemoryModel simple memory model}.
      * <i>However:</i> we guarantee the results of this method are always correct for arrays created
@@ -77,12 +77,12 @@ public interface PArray extends Array {
 
     /**
      * Returns 0 for {@link BitArray}, {@link ByteArray}, {@link CharArray} and {@link ShortArray},
-     * <tt>Integer.MIN_VALUE</tt> for {@link IntArray},
-     * <tt>Long.MIN_VALUE</tt> for {@link LongArray},
-     * <tt>valueForFloatingPoint</tt> for {@link FloatArray} and {@link DoubleArray}.
+     * <code>Integer.MIN_VALUE</code> for {@link IntArray},
+     * <code>Long.MIN_VALUE</code> for {@link LongArray},
+     * <code>valueForFloatingPoint</code> for {@link FloatArray} and {@link DoubleArray}.
      * For {@link PFixedArray fixed-point arrays} it is the minimal possible value,
      * that can stored in elements of this array
-     * (<tt>byte</tt> and <tt>short</tt> elements are interpreted as unsigned).
+     * (<code>byte</code> and <code>short</code> elements are interpreted as unsigned).
      * This method is equivalent to
      * <tt>{@link Arrays#minPossibleValue(Class, double) minPossibleValue}(thisArray.getClass(),
      * valueForFloatingPoint)</tt>.
@@ -98,12 +98,12 @@ public interface PArray extends Array {
      * Returns 1 for {@link BitArray},
      * 0xFF for {@link ByteArray},
      * 0xFFFF for {@link CharArray} and {@link ShortArray},
-     * <tt>Integer.MAX_VALUE</tt> for {@link IntArray},
-     * <tt>Long.MAX_VALUE</tt> for {@link LongArray},
-     * <tt>valueForFloatingPoint</tt> for {@link FloatArray} and {@link DoubleArray}.
+     * <code>Integer.MAX_VALUE</code> for {@link IntArray},
+     * <code>Long.MAX_VALUE</code> for {@link LongArray},
+     * <code>valueForFloatingPoint</code> for {@link FloatArray} and {@link DoubleArray}.
      * For {@link PFixedArray fixed-point arrays} it is the maximal possible value,
      * that can stored in elements of this array
-     * (<tt>byte</tt> and <tt>short</tt> elements are interpreted as unsigned).
+     * (<code>byte</code> and <code>short</code> elements are interpreted as unsigned).
      * This method is equivalent to
      * <tt>{@link Arrays#maxPossibleValue(Class, double) maxPossibleValue}(thisArray.getClass(),
      * valueForFloatingPoint)</tt>.
@@ -116,80 +116,80 @@ public interface PArray extends Array {
     double maxPossibleValue(double valueForFloatingPoint);
 
     /**
-     * Returns the element #<tt>index</tt> converted to <tt>double</tt>:
-     * <tt>(double)(value&amp;0xFF)</tt> for <tt>byte</tt> value,
-     * <tt>(double)(value&amp;0xFFFF)</tt> for <tt>short</tt> value,
-     * <tt>(double)value</tt> for <tt>int</tt>, <tt>long</tt>,
-     * <tt>float</tt>, <tt>double</tt>, <tt>char</tt> values,
-     * or <tt>value?1.0:0.0</tt> for <tt>boolean</tt> values.
+     * Returns the element #<code>index</code> converted to <code>double</code>:
+     * <code>(double)(value&amp;0xFF)</code> for <code>byte</code> value,
+     * <code>(double)(value&amp;0xFFFF)</code> for <code>short</code> value,
+     * <code>(double)value</code> for <code>int</code>, <code>long</code>,
+     * <code>float</code>, <code>double</code>, <code>char</code> values,
+     * or <code>value?1.0:0.0</code> for <code>boolean</code> values.
      * Please note that this method returns unsigned values for byte and short arrays.
      * Returned value contains full information stored in the element,
-     * excepting the case of very large <tt>long</tt> elements.
+     * excepting the case of very large <code>long</code> elements.
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      * @see UpdatablePArray#setDouble(long, double)
      */
     double getDouble(long index);
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that
-     * <tt>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</tt>
-     * and <tt>{@link #getDouble(long) getDouble}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such array element.
+     * Returns the minimal index <code>k</code>, so that
+     * <code>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</code>
+     * and <code>{@link #getDouble(long) getDouble}(k)==value</code>,
+     * or <code>-1</code> if there is no such array element.
      *
-     * <p>In particular, if <tt>lowIndex&gt;=thisArray.{@link #length() length()}}</tt>
-     * or <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>,
-     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     * <p>In particular, if <code>lowIndex&gt;=thisArray.{@link #length() length()}}</code>
+     * or <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>,
+     * and if <code>lowIndex&lt;0</code>, the result is the same as if <code>lowIndex==0</code>.
      *
-     * <p>You may specify <tt>lowIndex=0</tt> and <tt>highIndex=Long.MAX_VALUE</tt> to search
+     * <p>You may specify <code>lowIndex=0</code> and <code>highIndex=Long.MAX_VALUE</code> to search
      * through all array elements.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the first occurrence of this value in this array
-     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     * or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     long indexOf(long lowIndex, long highIndex, double value);
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
-     * and <tt>{@link #getDouble(long) getDouble}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such array element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=max(lowIndex,0)</code>
+     * and <code>{@link #getDouble(long) getDouble}(k)==value</code>,
+     * or <code>-1</code> if there is no such array element.
      *
-     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>highIndex&gt;=thisArray.{@link #length() length()}</tt>,
-     * the result is the same as if <tt>highIndex==thisArray.{@link #length() length()}</tt>.
+     * <p>In particular, if <code>highIndex&lt;=0</code> or <code>highIndex&lt;=lowIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>highIndex&gt;=thisArray.{@link #length() length()}</code>,
+     * the result is the same as if <code>highIndex==thisArray.{@link #length() length()}</code>.
      *
-     * <p>You may specify <tt>lowIndex=0</tt> and <tt>highIndex=Long.MAX_VALUE</tt> to search
+     * <p>You may specify <code>lowIndex=0</code> and <code>highIndex=Long.MAX_VALUE</code> to search
      * through all array elements.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the last occurrence of this value in this array
-     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     * or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     long lastIndexOf(long lowIndex, long highIndex, double value);
 
     /**
-     * Returns <tt>true</tt> if all elements of this array are zero
-     * (<tt>false</tt> for <tt>boolean[]</tt> array, <tt>(char)0</tt> for <tt>char[]</tt>).
-     * Returns <tt>false</tt> if at least one of elements of this array is non-zero.
+     * Returns <code>true</code> if all elements of this array are zero
+     * (<code>false</code> for <code>boolean[]</code> array, <code>(char)0</code> for <code>char[]</code>).
+     * Returns <code>false</code> if at least one of elements of this array is non-zero.
      *
      * <p>For arrays of floating-point types ({@link PFloatingArray}),
-     * this method considers that <tt>+0.0==-0.0</tt>: both values are considered to be zero.
+     * this method considers that <code>+0.0==-0.0</code>: both values are considered to be zero.
      *
-     * <p>If the {@link #length() length} of this array is 0 (the array is empty), returns <tt>true</tt>.
+     * <p>If the {@link #length() length} of this array is 0 (the array is empty), returns <code>true</code>.
      *
      * <p>This method usually requires some time for execution, because it checks all array elements.
      *
-     * @return <tt>true</tt> if and only if all elements of this array are zero, or if this array is empty.
+     * @return <code>true</code> if and only if all elements of this array are zero, or if this array is empty.
      */
     boolean isZeroFilled();
 
@@ -221,9 +221,9 @@ public interface PArray extends Array {
      * ja()} : {@link Arrays#toByteJavaArray(PArray) Arrays.toByteJavaArray}(thisObject)</tt>.
      *
      * <p>This method may be used instead of {@link Arrays#toByteJavaArray(PArray)},
-     * if you need maximally quick access to this data in a form of <tt>byte[]</tt> array
+     * if you need maximally quick access to this data in a form of <code>byte[]</code> array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
-     * for standard <tt>byte[]</tt> array.</p>
+     * for standard <code>byte[]</code> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
      * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
@@ -231,9 +231,9 @@ public interface PArray extends Array {
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
      *
-     * @return Java array containing all the elements in this array, cast to <tt>byte</tt> type
+     * @return Java array containing all the elements in this array, cast to <code>byte</code> type
      * according to AlgART rules.
-     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      */
     default byte[] jaByte() {
         return this instanceof ByteArray a ? a.ja() : Arrays.toByteJavaArray(this);
@@ -245,9 +245,9 @@ public interface PArray extends Array {
      * ja()} : {@link Arrays#toShortJavaArray(PArray) Arrays.toShortJavaArray}(thisObject)</tt>.
      *
      * <p>This method may be used instead of {@link Arrays#toShortJavaArray(PArray)},
-     * if you need maximally quick access to this data in a form of <tt>short[]</tt> array
+     * if you need maximally quick access to this data in a form of <code>short[]</code> array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
-     * for standard <tt>short[]</tt> array.</p>
+     * for standard <code>short[]</code> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
      * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
@@ -255,9 +255,9 @@ public interface PArray extends Array {
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
      *
-     * @return Java array containing all the elements in this array, cast to <tt>short</tt> type
+     * @return Java array containing all the elements in this array, cast to <code>short</code> type
      * according to AlgART rules.
-     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      */
     default short[] jaShort() {
         return this instanceof ShortArray a ? a.ja() : Arrays.toShortJavaArray(this);
@@ -269,9 +269,9 @@ public interface PArray extends Array {
      * ja()} : {@link Arrays#toIntJavaArray(PArray) Arrays.toIntJavaArray}(thisObject)</tt>.
      *
      * <p>This method may be used instead of {@link Arrays#toIntJavaArray(PArray)},
-     * if you need maximally quick access to this data in a form of <tt>int[]</tt> array
+     * if you need maximally quick access to this data in a form of <code>int[]</code> array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
-     * for standard <tt>int[]</tt> array.</p>
+     * for standard <code>int[]</code> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
      * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
@@ -279,9 +279,9 @@ public interface PArray extends Array {
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
      *
-     * @return Java array containing all the elements in this array, cast to <tt>int</tt> type
+     * @return Java array containing all the elements in this array, cast to <code>int</code> type
      * according to AlgART rules.
-     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      */
     default int[] jaInt() {
         return this instanceof IntArray a ? a.ja() : Arrays.toIntJavaArray(this);
@@ -293,9 +293,9 @@ public interface PArray extends Array {
      * ja()} : {@link Arrays#toLongJavaArray(PArray) Arrays.toLongJavaArray}(thisObject)</tt>.
      *
      * <p>This method may be used instead of {@link Arrays#toLongJavaArray(PArray)},
-     * if you need maximally quick access to this data in a form of <tt>long[]</tt> array
+     * if you need maximally quick access to this data in a form of <code>long[]</code> array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
-     * for standard <tt>long[]</tt> array.</p>
+     * for standard <code>long[]</code> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
      * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
@@ -303,9 +303,9 @@ public interface PArray extends Array {
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
      *
-     * @return Java array containing all the elements in this array, cast to <tt>long</tt> type
+     * @return Java array containing all the elements in this array, cast to <code>long</code> type
      * according to AlgART rules.
-     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      */
     default long[] jaLong() {
         return this instanceof LongArray a ? a.ja() : Arrays.toLongJavaArray(this);
@@ -317,9 +317,9 @@ public interface PArray extends Array {
      * ja()} : {@link Arrays#toFloatJavaArray(PArray) Arrays.toFloatJavaArray}(thisObject)</tt>.
      *
      * <p>This method may be used instead of {@link Arrays#toFloatJavaArray(PArray)},
-     * if you need maximally quick access to this data in a form of <tt>float[]</tt> array
+     * if you need maximally quick access to this data in a form of <code>float[]</code> array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
-     * for standard <tt>float[]</tt> array.</p>
+     * for standard <code>float[]</code> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
      * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
@@ -327,9 +327,9 @@ public interface PArray extends Array {
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
      *
-     * @return Java array containing all the elements in this array, cast to <tt>float</tt> type
+     * @return Java array containing all the elements in this array, cast to <code>float</code> type
      * according to AlgART rules.
-     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      */
     default float[] jaFloat() {
         return this instanceof FloatArray a ? a.ja() : Arrays.toFloatJavaArray(this);
@@ -341,9 +341,9 @@ public interface PArray extends Array {
      * ja()} : {@link Arrays#toDoubleJavaArray(PArray) Arrays.toDoubleJavaArray}(thisObject)</tt>.
      *
      * <p>This method may be used instead of {@link Arrays#toDoubleJavaArray(PArray)},
-     * if you need maximally quick access to this data in a form of <tt>double[]</tt> array
+     * if you need maximally quick access to this data in a form of <code>double[]</code> array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
-     * for standard <tt>double[]</tt> array.</p>
+     * for standard <code>double[]</code> array.</p>
      *
      * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
      * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
@@ -351,9 +351,9 @@ public interface PArray extends Array {
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
      *
-     * @return Java array containing all the elements in this array, cast to <tt>double</tt> type
+     * @return Java array containing all the elements in this array, cast to <code>double</code> type
      * according to AlgART rules.
-     * @throws TooLargeArrayException if the array length is greater than <tt>Integer.MAX_VALUE</tt>.
+     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      */
     default double[] jaDouble() {
         return this instanceof DoubleArray a ? a.ja() : Arrays.toDoubleJavaArray(this);
@@ -365,9 +365,9 @@ public interface PArray extends Array {
 
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
-     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>array</tt> argument is not an array,
-     *                                  or <tt>boolean[]</tt> array, or <tt>Objects[]</tt> array.
+     * @throws NullPointerException     if <code>array</code> argument is <code>null</code>.
+     * @throws IllegalArgumentException if <code>array</code> argument is not an array,
+     *                                  or <code>boolean[]</code> array, or <code>Objects[]</code> array.
      */
     static UpdatablePArray as(Object array) {
         return SimpleMemoryModel.asUpdatablePArray(array);
