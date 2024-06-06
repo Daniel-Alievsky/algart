@@ -311,6 +311,7 @@ public class PackedBitArrays {
      *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void setBits64(long[] dest, long destPos, long bits, int count) {
         Objects.requireNonNull(dest, "Null dest");
         if (destPos < 0) {
@@ -9850,7 +9851,7 @@ public class PackedBitArrays {
         if (countStart > count)
             countStart = count;
         for (int destPosMax = destPos + countStart; destPos < destPosMax; srcPos++, destPos++) {
-            dest[destPos] += (src[(int) (srcPos >>> 6)] >>> (srcPos & 63)) & 1;
+            dest[destPos] += (int) ((src[(int) (srcPos >>> 6)] >>> (srcPos & 63)) & 1);
         }
         count -= countStart;
         int cnt = count >>> 6;
@@ -9935,7 +9936,7 @@ public class PackedBitArrays {
         }
         int countFinish = count & 63;
         for (int destPosMax = destPos + countFinish; destPos < destPosMax; srcPos++, destPos++) {
-            dest[destPos] += (src[(int) (srcPos >>> 6)] >>> (srcPos & 63)) & 1;
+            dest[destPos] += (int) ((src[(int) (srcPos >>> 6)] >>> (srcPos & 63)) & 1);
         }
     }
 
@@ -10931,7 +10932,7 @@ public class PackedBitArrays {
      *
      * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfBit(long[], long, long, boolean)} method:
-     * they describes the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
+     * they describe the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
      *
      * @param src       the searched packed bit array.
      * @param lowIndex  the low index in the array for search (inclusive);

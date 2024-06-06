@@ -1019,6 +1019,7 @@ public class PackedBitBuffers {
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void notBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, notBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)   !! Auto-generated: NOT EDIT !! >>
@@ -1123,6 +1124,7 @@ public class PackedBitBuffers {
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void andBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, andBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)    !! Auto-generated: NOT EDIT !! >>
@@ -1227,6 +1229,7 @@ public class PackedBitBuffers {
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void orBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, orBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)   !! Auto-generated: NOT EDIT !! >>
@@ -1332,6 +1335,7 @@ public class PackedBitBuffers {
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void xorBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, xorBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)   !! Auto-generated: NOT EDIT !! >>
@@ -1436,6 +1440,7 @@ public class PackedBitBuffers {
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void andNotBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, andNotBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)   !! Auto-generated: NOT EDIT !! >>
@@ -1540,6 +1545,7 @@ public class PackedBitBuffers {
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void orNotBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, orNotBits_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1)   !! Auto-generated: NOT EDIT !! >>

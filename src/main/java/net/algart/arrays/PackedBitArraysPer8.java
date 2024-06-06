@@ -174,7 +174,6 @@ public class PackedBitArraysPer8 {
      * @return <code>long</code> array, storing the same packed bits according the rules of {@link PackedBitArrays}.
      * @throws NullPointerException if the argument is <code>null</code>.
      */
-    @SuppressWarnings("JavadocDeclaration")
     public static long[] toLongArray(ByteBuffer byteBuffer) {
         Objects.requireNonNull(byteBuffer, "Null ByteBuffer");
         ByteBuffer bb = byteBuffer.duplicate();
@@ -498,6 +497,7 @@ public class PackedBitArraysPer8 {
      *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void setBits64(byte[] dest, long destPos, long bits, int count) {
         Objects.requireNonNull(dest, "Null dest");
         if (destPos < 0) {
@@ -807,6 +807,7 @@ public class PackedBitArraysPer8 {
      *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void setBits64InReverseOrder(byte[] dest, long destPos, long bits, int count) {
         Objects.requireNonNull(dest, "Null dest");
         if (destPos < 0) {
