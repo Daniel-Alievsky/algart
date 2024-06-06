@@ -84,8 +84,8 @@ public interface PArray extends Array {
      * that can stored in elements of this array
      * (<code>byte</code> and <code>short</code> elements are interpreted as unsigned).
      * This method is equivalent to
-     * <tt>{@link Arrays#minPossibleValue(Class, double) minPossibleValue}(thisArray.getClass(),
-     * valueForFloatingPoint)</tt>.
+     * <code>{@link Arrays#minPossibleValue(Class, double) minPossibleValue}(thisArray.getClass(),
+     * valueForFloatingPoint)</code>.
      *
      * @param valueForFloatingPoint the value returned for floating-point array type.
      * @return the minimal possible value, that can stored in elements of this array,
@@ -105,8 +105,8 @@ public interface PArray extends Array {
      * that can stored in elements of this array
      * (<code>byte</code> and <code>short</code> elements are interpreted as unsigned).
      * This method is equivalent to
-     * <tt>{@link Arrays#maxPossibleValue(Class, double) maxPossibleValue}(thisArray.getClass(),
-     * valueForFloatingPoint)</tt>.
+     * <code>{@link Arrays#maxPossibleValue(Class, double) maxPossibleValue}(thisArray.getClass(),
+     * valueForFloatingPoint)</code>.
      *
      * @param valueForFloatingPoint the value returned for floating-point array type.
      * @return the maximal possible value, that can stored in elements of this array,
@@ -217,8 +217,8 @@ public interface PArray extends Array {
 
     /**
      * Equivalent to the following expression:
-     * <tt>thisObject instanceof ByteArray a ? a.{@link ByteArray#ja()
-     * ja()} : {@link Arrays#toByteJavaArray(PArray) Arrays.toByteJavaArray}(thisObject)</tt>.
+     * <code>thisObject instanceof ByteArray a ? a.{@link ByteArray#ja()
+     * ja()} : {@link Arrays#toByteJavaArray(PArray) Arrays.toByteJavaArray}(thisObject)</code>.
      *
      * <p>This method may be used instead of {@link Arrays#toByteJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <code>byte[]</code> array
@@ -241,8 +241,8 @@ public interface PArray extends Array {
 
     /**
      * Equivalent to the following expression:
-     * <tt>thisObject instanceof ShortArray a ? a.{@link ShortArray#ja()
-     * ja()} : {@link Arrays#toShortJavaArray(PArray) Arrays.toShortJavaArray}(thisObject)</tt>.
+     * <code>thisObject instanceof ShortArray a ? a.{@link ShortArray#ja()
+     * ja()} : {@link Arrays#toShortJavaArray(PArray) Arrays.toShortJavaArray}(thisObject)</code>.
      *
      * <p>This method may be used instead of {@link Arrays#toShortJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <code>short[]</code> array
@@ -265,8 +265,8 @@ public interface PArray extends Array {
 
     /**
      * Equivalent to the following expression:
-     * <tt>thisObject instanceof IntArray a ? a.{@link IntArray#ja()
-     * ja()} : {@link Arrays#toIntJavaArray(PArray) Arrays.toIntJavaArray}(thisObject)</tt>.
+     * <code>thisObject instanceof IntArray a ? a.{@link IntArray#ja()
+     * ja()} : {@link Arrays#toIntJavaArray(PArray) Arrays.toIntJavaArray}(thisObject)</code>.
      *
      * <p>This method may be used instead of {@link Arrays#toIntJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <code>int[]</code> array
@@ -289,8 +289,8 @@ public interface PArray extends Array {
 
     /**
      * Equivalent to the following expression:
-     * <tt>thisObject instanceof LongArray a ? a.{@link LongArray#ja()
-     * ja()} : {@link Arrays#toLongJavaArray(PArray) Arrays.toLongJavaArray}(thisObject)</tt>.
+     * <code>thisObject instanceof LongArray a ? a.{@link LongArray#ja()
+     * ja()} : {@link Arrays#toLongJavaArray(PArray) Arrays.toLongJavaArray}(thisObject)</code>.
      *
      * <p>This method may be used instead of {@link Arrays#toLongJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <code>long[]</code> array
@@ -313,8 +313,8 @@ public interface PArray extends Array {
 
     /**
      * Equivalent to the following expression:
-     * <tt>thisObject instanceof FloatArray a ? a.{@link FloatArray#ja()
-     * ja()} : {@link Arrays#toFloatJavaArray(PArray) Arrays.toFloatJavaArray}(thisObject)</tt>.
+     * <code>thisObject instanceof FloatArray a ? a.{@link FloatArray#ja()
+     * ja()} : {@link Arrays#toFloatJavaArray(PArray) Arrays.toFloatJavaArray}(thisObject)</code>.
      *
      * <p>This method may be used instead of {@link Arrays#toFloatJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <code>float[]</code> array
@@ -337,8 +337,8 @@ public interface PArray extends Array {
 
     /**
      * Equivalent to the following expression:
-     * <tt>thisObject instanceof DoubleArray a ? a.{@link DoubleArray#ja()
-     * ja()} : {@link Arrays#toDoubleJavaArray(PArray) Arrays.toDoubleJavaArray}(thisObject)</tt>.
+     * <code>thisObject instanceof DoubleArray a ? a.{@link DoubleArray#ja()
+     * ja()} : {@link Arrays#toDoubleJavaArray(PArray) Arrays.toDoubleJavaArray}(thisObject)</code>.
      *
      * <p>This method may be used instead of {@link Arrays#toDoubleJavaArray(PArray)},
      * if you need maximally quick access to this data in a form of <code>double[]</code> array
@@ -360,8 +360,8 @@ public interface PArray extends Array {
     }/*Repeat.AutoGeneratedEnd*/
 
     /**
-     * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatablePArray(Object)
-     * SimpleMemoryModel.asUpdatablePArray}(array)</tt>.
+     * Equivalent to <code>{@link SimpleMemoryModel#asUpdatablePArray(Object)
+     * SimpleMemoryModel.asUpdatablePArray}(array)</code>.
 
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.

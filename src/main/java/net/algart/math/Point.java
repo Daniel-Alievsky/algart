@@ -519,8 +519,8 @@ public class Point implements Comparable<Point> {
      * <code>thisInstance.{@link #coord(int) coord(i)}+increment</code>.
      * In other words, shifts this point along all axes by the given value.
      *
-     * <p>Equivalent to <tt>{@link #add(Point) add}({@link Point#valueOfEqualCoordinates(int, double)
-     * Point.valueOfEqualCoordinates}(n,increment))</tt>, where <code>n={@link #coordCount()}</code>.
+     * <p>Equivalent to <code>{@link #add(Point) add}({@link Point#valueOfEqualCoordinates(int, double)
+     * Point.valueOfEqualCoordinates}(n,increment))</code>, where <code>n={@link #coordCount()}</code>.
      *
      * @param increment the value, which will be added to all coordinates of this point.
      * @return this resulting point.
@@ -637,8 +637,8 @@ public class Point implements Comparable<Point> {
      * which stores the coordinates of the result in the specified Java array instead of creating new instance
      * of this class.
      * Equivalent to the following call:
-     * <nobr><tt>{@link #scaleAndShift(double[], Point) scaleAndShift}(multipliers,shift).{@link #coordinates(double[])
-     * coordinates}(resultCoordinates)</tt></nobr>, but works little faster.
+     * <nobr><code>{@link #scaleAndShift(double[], Point) scaleAndShift}(multipliers,shift).{@link #coordinates(double[])
+     * coordinates}(resultCoordinates)</code></nobr>, but works little faster.
      *
      * @param resultCoordinates Java array for storing results.
      * @param multipliers       the multipliers for all coordinates.
@@ -737,8 +737,8 @@ public class Point implements Comparable<Point> {
      * Returns the projection of this point along the given axis with the number of coordinates,
      * decreased by 1. Namely, the resulting point <i>P</i> has
      * {@link #coordCount()}&minus;1 coordinates, equal to
-     * <nobr><i>P</i><code>.{@link #coord(int) coord}(</code><i>i</i><tt>)=thisInstance.{@link #coord(int)
-     * coord}(</tt><i>i'</i><code>)</code></nobr>, <i>i'</i>=<i>i</i> for <i>i</i>&lt;<code>coordIndex</code> or
+     * <nobr><i>P</i><code>.{@link #coord(int) coord}(</code><i>i</i><code>)=thisInstance.{@link #coord(int)
+     * coord}(</code><i>i'</i><code>)</code></nobr>, <i>i'</i>=<i>i</i> for <i>i</i>&lt;<code>coordIndex</code> or
      * <i>i'</i>=<i>i</i>+1 for <i>i</i>&ge;<code>coordIndex</code>.
      *
      * @param coordIndex the number of coordinate, along which the projecting is performed.
@@ -835,10 +835,10 @@ public class Point implements Comparable<Point> {
      *
      * <p>More precisely, let
      * <i>n</i><code>=max(thisInstance.{@link #coordCount()},o.{@link #coordCount()})</code>,
-     * <i>x</i><sub><i>i</i></sub> is <tt>thisInstance.{@link #coord(int)
-     * coord}((<i>i</i>+firstCoordIndex)%<i>n</i>)</tt>,
-     * <i>y</i><sub><i>i</i></sub> is <tt>o.{@link #coord(int)
-     * coord}((<i>i</i>+firstCoordIndex)%<i>n</i>)</tt>.
+     * <i>x</i><sub><i>i</i></sub> is <code>thisInstance.{@link #coord(int)
+     * coord}((<i>i</i>+firstCoordIndex)%<i>n</i>)</code>,
+     * <i>y</i><sub><i>i</i></sub> is <code>o.{@link #coord(int)
+     * coord}((<i>i</i>+firstCoordIndex)%<i>n</i>)</code>.
      * As in {@link #compareTo(Point)} method, we suppose here that
      * all coordinates {@link #coord(int) coord(<i>k</i>)} with <code><i>k</i>&gt;={@link #coordCount()}</code>
      * are zero.

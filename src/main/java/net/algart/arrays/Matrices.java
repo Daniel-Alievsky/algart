@@ -445,8 +445,8 @@ public class Matrices {
 
         /**
          * Creates 3-dimensional tetrahedron with the specified coordinates of vertices. Equivalent to
-         * <nobr><tt>{@link #getSimplex(double[][]) getSimplex}(new double[][]
-         * {{x1,y1,z1},{x2,y2,z2},{x3,y3,z3},{x4,y4,z4}})</tt></nobr>.
+         * <code>{@link #getSimplex(double[][]) getSimplex}(new double[][]
+         * {{x1,y1,z1},{x2,y2,z2},{x3,y3,z3},{x4,y4,z4}})</code>.
          *
          * <p>The specified vertices must not lie in the same plane.
          *
@@ -774,8 +774,8 @@ public class Matrices {
         /**
          * Returns <code>true</code> if and only the specified coordinate value lies inside the corresponding
          * {@link #coordRange(int) coordinate range}. In other words, returns the result of the following check:
-         * <nobr><tt>{@link #coordRange(int) coordRange}({@link #n() n()}-1).{@link IRange#contains(long)
-         * contains}(coordinateValue)</tt></nobr>.
+         * <code>{@link #coordRange(int) coordRange}({@link #n() n()}-1).{@link IRange#contains(long)
+         * contains}(coordinateValue)</code>.
          * Besides this, this method checks the number of dimensions {@link #n()} and throws
          * <code>IllegalStateException</code> if <code>{@link #n()}==1</code>.
          *
@@ -886,8 +886,8 @@ public class Matrices {
          * <code>coordRanges[1].{@link IRange#max() max()} &lt; matrix.{@link Matrix#dim(int) dim}(1)</code>,<br>
          * ...,<br>
          * <code>0 &le; coordRanges[<i>n</i>-1].{@link IRange#min() min()}</code>,&nbsp;&nbsp;&nbsp;
-         * <tt>coordRanges[<i>n</i>-1].{@link IRange#max() max()} &lt;
-         * matrix.{@link Matrix#dim(int) dim}(<i>n</i>-1)</tt>
+         * <code>coordRanges[<i>n</i>-1].{@link IRange#max() max()} &lt;
+         * matrix.{@link Matrix#dim(int) dim}(<i>n</i>-1)</code>
          * </blockquote>
          *
          * <p>This method is equivalent to the following call:
@@ -916,16 +916,16 @@ public class Matrices {
          *
          * <blockquote>
          * <code>0 &le; coordRanges[0].{@link IRange#min() min()} - <i>sh</i><sub>0</sub></code>,<br>
-         * <tt>coordRanges[0].{@link IRange#max() max()} - <i>sh</i><sub>0</sub> &lt;
-         * matrix.{@link Matrix#dim(int) dim}(0)</tt>,<br>
+         * <code>coordRanges[0].{@link IRange#max() max()} - <i>sh</i><sub>0</sub> &lt;
+         * matrix.{@link Matrix#dim(int) dim}(0)</code>,<br>
          * <code>0 &le; coordRanges[1].{@link IRange#min() min()} - <i>sh</i><sub>1</sub></code>,<br>
-         * <tt>coordRanges[1].{@link IRange#max() max()} - <i>sh</i><sub>1</sub> &lt;
-         * matrix.{@link Matrix#dim(int) dim}(1)</tt>,<br>
+         * <code>coordRanges[1].{@link IRange#max() max()} - <i>sh</i><sub>1</sub> &lt;
+         * matrix.{@link Matrix#dim(int) dim}(1)</code>,<br>
          * ...,<br>
          * <code>0 &le; coordRanges[<i>n</i>-1].{@link IRange#min() min()} -
          * <i>sh</i><sub><i>n</i>-1</sub></code>,<br>
-         * <tt>coordRanges[<i>n</i>-1].{@link IRange#max() max()} - <i>sh</i><sub><i>n</i>-1</sub> &lt;
-         * matrix.{@link Matrix#dim(int) dim}(<i>n</i>-1)</tt>,
+         * <code>coordRanges[<i>n</i>-1].{@link IRange#max() max()} - <i>sh</i><sub><i>n</i>-1</sub> &lt;
+         * matrix.{@link Matrix#dim(int) dim}(<i>n</i>-1)</code>,
          * </blockquote>
          *
          * <p>where <nobr><code>sh<sub><i>k</i></sub> = k &lt; backShifts.length ? backShifts[k] : 0</code></nobr>
@@ -1575,8 +1575,8 @@ public class Matrices {
      * and {@link Matrix#dim(int) Matrix.dim(n)} method will return <code>dim[n]</code>.
      *
      * <p>This method returns the same result as the call
-     * <tt>{@link #matrix(Array, long...) matrix}(array.{@link Array#subArr(long, long)
-     * subArr}(position,product),dim)</tt>, where <code>product=dim[0]*dim[1]*...*dim[dim.length-1]</code>.
+     * <code>{@link #matrix(Array, long...) matrix}(array.{@link Array#subArr(long, long)
+     * subArr}(position,product),dim)</code>, where <code>product=dim[0]*dim[1]*...*dim[dim.length-1]</code>.
      * But {@link Array#subArr(long, long) subArr} method is not called in a case of invalid dimensions;
      * in this case, an exception is thrown.
      *
@@ -1902,8 +1902,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #separate(ArrayContext, Matrix, int)
-     * separate}(context, interleaved, Integer.MAX_VALUE)</tt> (no limitations).
+     * Equivalent to <code>{@link #separate(ArrayContext, Matrix, int)
+     * separate}(context, interleaved, Integer.MAX_VALUE)</code> (no limitations).
      *
      * @param <T>         the generic type of the built-in AlgART arrays.
      * @param context     the context.
@@ -2103,8 +2103,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #asLayers(Matrix, int)
-     * asLayers}(merged, Integer.MAX_VALUE)</tt> (no limitations).
+     * Equivalent to <code>{@link #asLayers(Matrix, int)
+     * asLayers}(merged, Integer.MAX_VALUE)</code> (no limitations).
      *
      * @param <T>    the generic type of the built-in AlgART arrays.
      * @param merged the source merged matrix.
@@ -2289,8 +2289,8 @@ public class Matrices {
     /**
      * Checks whether all passed matrices are not <code>null</code> and have
      * {@link Matrix#dimEquals(Matrix) equal dimensions} and, it is not so, throws a corresponding exception.
-     * Equivalent to <tt>{@link #checkDimensionEquality(java.util.Collection)
-     * checkDimensionEquality}({@link Matrices#several Matrices.several}(matrices))</tt>.
+     * Equivalent to <code>{@link #checkDimensionEquality(java.util.Collection)
+     * checkDimensionEquality}({@link Matrices#several Matrices.several}(matrices))</code>.
      *
      * @param matrices list of some matrices.
      * @throws NullPointerException  if the <code>matrices</code> list or one of its elements is <code>null</code>.
@@ -2350,8 +2350,8 @@ public class Matrices {
      * <p>For the case {@link InterpolationMethod#POLYLINEAR_FUNCTION POLYLINEAR_FUNCTION}, please note,
      * that if the real coordinates <i>x</i><sub><i>k</i></sub> is near the high boundary,
      * namely if
-     * <nobr><tt>matrix.{@link Matrix#dim(int) dim}(<i>k</i>)&minus;1 &lt;= <i>x</i><sub><i>k</i></sub>
-     * &lt; matrix.{@link Matrix#dim(int) dim}(<i>k</i>)</tt>,</nobr>
+     * <nobr><code>matrix.{@link Matrix#dim(int) dim}(<i>k</i>)&minus;1 &lt;= <i>x</i><sub><i>k</i></sub>
+     * &lt; matrix.{@link Matrix#dim(int) dim}(<i>k</i>)</code>,</nobr>
      * then interpolation will not be used, because necessary next matrix element is outside the matrix.
      * Such real coordinate is processed as if it would be equal to
      * <code>matrix.{@link Matrix#dim(int) dim}(<i>k</i>)&minus;1</code>.
@@ -2522,8 +2522,8 @@ public class Matrices {
      * An analog of <code>{@link #asInterpolationFunc(Matrix, InterpolationMethod, boolean)}</code> method,
      * that use constant continuation for all coordinates outside the matrix.
      * The returned function works almost like the result of
-     * <tt>{@link #asInterpolationFunc(Matrix, InterpolationMethod, boolean)
-     * asInterpolationFunc(matrix, interpolationMethod, true)}</tt>,
+     * <code>{@link #asInterpolationFunc(Matrix, InterpolationMethod, boolean)
+     * asInterpolationFunc(matrix, interpolationMethod, true)}</code>,
      * but if the integer indexes are out of the required ranges,
      * {@link Func#get(double...)} method returns the <code>outsideValue</code> instead throwing
      * <code>IndexOutOfBoundsException</code>.
@@ -2723,8 +2723,8 @@ public class Matrices {
      * @param f some continued interpolation view of an AlgART matrix.
      * @return the value used outside the matrix.
      * @throws NullPointerException     if <code>f</code> argument is <code>null</code>.
-     * @throws IllegalArgumentException if <tt>!{@link #isContinuedInterpolationFunc(Func)
-     *                                  isContinuedInterpolationFunc}(f)</tt>
+     * @throws IllegalArgumentException if <code>!{@link #isContinuedInterpolationFunc(Func)
+     *                                  isContinuedInterpolationFunc}(f)</code>
      * @see #isInterpolationFunc(Func)
      * @see #getInterpolationMethod(Func)
      */
@@ -2750,8 +2750,8 @@ public class Matrices {
      * @param f some interpolation view of an AlgART matrix.
      * @return the interpolation algorithm, used by this function.
      * @throws NullPointerException     if <code>f</code> argument is <code>null</code>.
-     * @throws IllegalArgumentException if <tt>!{@link #isInterpolationFunc(Func)
-     *                                  isInterpolationFunc}(f)</tt>
+     * @throws IllegalArgumentException if <code>!{@link #isInterpolationFunc(Func)
+     *                                  isInterpolationFunc}(f)</code>
      * @see #isInterpolationFunc(Func)
      */
     public static InterpolationMethod getInterpolationMethod(Func f) {
@@ -2764,9 +2764,9 @@ public class Matrices {
 
     /**
      * Returns a constant matrix, filled by the specified constant.
-     * Equivalent to <tt>{@link #asCoordFuncMatrix(boolean, Func, Class, long...)
+     * Equivalent to <code>{@link #asCoordFuncMatrix(boolean, Func, Class, long...)
      * asCoordFuncMatrix}(true, {@link ConstantFunc#getInstance(double)
-     * ConstantFunc.getInstance}(constant), requiredType, dim)</tt>.
+     * ConstantFunc.getInstance}(constant), requiredType, dim)</code>.
      *
      * @param <T>          the generic type of AlgART array.
      * @param constant     the constant value of all elements of the returned matrix.
@@ -2812,8 +2812,8 @@ public class Matrices {
      * index}(<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i>))
      * </pre>
      * <p>is a result of the call
-     * <tt>f.{@link Func#get(double...)
-     * get}(<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i>)</tt>.
+     * <code>f.{@link Func#get(double...)
+     * get}(<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i>)</code>.
      * So, this method does not require any source matrices.
      *
      * <p>Matrices, created by this method, are called <i>functional</i> matrices.
@@ -2853,8 +2853,8 @@ public class Matrices {
      * created by this package, calculated on the base of coordinates only, not depending on another arrays/matrices.
      * This method is equivalent to the following operator:
      * <pre>
-     * <tt>matrix != null &amp;&amp; {@link Arrays#isIndexFuncArray
-     * Arrays.isIndexFuncArray}(matrix.{@link Matrix#array() array()})</tt>
+     * <code>matrix != null &amp;&amp; {@link Arrays#isIndexFuncArray
+     * Arrays.isIndexFuncArray}(matrix.{@link Matrix#array() array()})</code>
      * </pre>
      *
      * @param matrix the checked AlgART matrix (can be <code>null</code>, then the method returns <code>false</code>).
@@ -2865,8 +2865,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #asFuncMatrix(Func, Class, List)
-     * asFuncMatrix}(f, requiredType, {@link #several(Class, Matrix[]) several}(PArray.class, x))</tt>.
+     * Equivalent to <code>{@link #asFuncMatrix(Func, Class, List)
+     * asFuncMatrix}(f, requiredType, {@link #several(Class, Matrix[]) several}(PArray.class, x))</code>.
      *
      * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to the passed AlgART matrix.
@@ -2885,9 +2885,9 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #asFuncMatrix(boolean, Func, Class, List)
+     * Equivalent to <code>{@link #asFuncMatrix(boolean, Func, Class, List)
      * asFuncMatrix}(truncateOverflows, f, requiredType, {@link #several(Class, Matrix[])
-     * several}(PArray.class, x))</tt>.
+     * several}(PArray.class, x))</code>.
      *
      * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
@@ -2909,9 +2909,9 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #asFuncMatrix(Func, Class, List)
+     * Equivalent to <code>{@link #asFuncMatrix(Func, Class, List)
      * asFuncMatrix}(f, requiredType, {@link #several(Class, Matrix[])
-     * several}(PArray.class, x1, x2))</tt>.
+     * several}(PArray.class, x1, x2))</code>.
      *
      * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to all passed AlgART matrices.
@@ -2932,9 +2932,9 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #asFuncMatrix(boolean, Func, Class, List)
+     * Equivalent to <code>{@link #asFuncMatrix(boolean, Func, Class, List)
      * asFuncMatrix}(truncateOverflows, f, requiredType, {@link #several(Class, Matrix[])
-     * several}(PArray.class, x1, x2))</tt>.
+     * several}(PArray.class, x1, x2))</code>.
      *
      * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
@@ -2958,9 +2958,9 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #asFuncMatrix(Func, Class, List)
+     * Equivalent to <code>{@link #asFuncMatrix(Func, Class, List)
      * asFuncMatrix}(f, requiredType, {@link #several(Class, Matrix[])
-     * several}(PArray.class, x1, x2, x3))</tt>.
+     * several}(PArray.class, x1, x2, x3))</code>.
      *
      * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to all passed AlgART matrices.
@@ -2982,9 +2982,9 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #asFuncMatrix(boolean, Func, Class, List)
+     * Equivalent to <code>{@link #asFuncMatrix(boolean, Func, Class, List)
      * asFuncMatrix}(truncateOverflows, f, requiredType, {@link #several(Class, Matrix[])
-     * several}(PArray.class, x1, x2, x3))</tt>.
+     * several}(PArray.class, x1, x2, x3))</code>.
      *
      * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
@@ -3009,9 +3009,9 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #asFuncMatrix(Func, Class, List)
+     * Equivalent to <code>{@link #asFuncMatrix(Func, Class, List)
      * asFuncMatrix}(f, requiredType, {@link #several(Class, Matrix[])
-     * several}(PArray.class, x1, x2, x3, x4))</tt>.
+     * several}(PArray.class, x1, x2, x3, x4))</code>.
      *
      * @param <T>          the generic type of AlgART array.
      * @param f            the mathematical function applied to all passed AlgART matrices.
@@ -3035,9 +3035,9 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #asFuncMatrix(boolean, Func, Class, List)
+     * Equivalent to <code>{@link #asFuncMatrix(boolean, Func, Class, List)
      * asFuncMatrix}(truncateOverflows, f, requiredType, {@link #several(Class, Matrix[])
-     * several}(PArray.class, x1, x2, x3, x4))</tt>.
+     * several}(PArray.class, x1, x2, x3, x4))</code>.
      *
      * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
@@ -3090,9 +3090,9 @@ public class Matrices {
      * An analog of {@link
      * Arrays#asFuncArray(boolean, Func, Class, PArray...)} method
      * for AlgART matrices. More precisely, this method is equivalent to
-     * <tt>m0.{@link Matrix#matrix(Array)
+     * <code>m0.{@link Matrix#matrix(Array)
      * matrix}({@link Arrays#asFuncArray(boolean, Func, Class, PArray...)
-     * Arrays.asFuncArray(truncateOverflows, f, requiredType, arrays)})</tt>,
+     * Arrays.asFuncArray(truncateOverflows, f, requiredType, arrays)})</code>,
      * where <code>m0</code> is <code>x.get(0)</code> and <code>arrays</code> is
      * <code>{x.get(0).{@link Matrix#array() array}(), x.get(1).{@link Matrix#array() array}(), ...}</code>.
      *
@@ -3155,10 +3155,10 @@ public class Matrices {
      * Arrays#asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)
      * Arrays.asUpdatableFuncArray}
      * method for AlgART matrices. More precisely, this method is equivalent to
-     * <tt>x.{@link Matrix#matrix(Array)
+     * <code>x.{@link Matrix#matrix(Array)
      * matrix}({@link
      * Arrays#asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)
-     * Arrays.asUpdatableFuncArray(truncateOverflows, f, requiredType, x.array())})</tt>.
+     * Arrays.asUpdatableFuncArray(truncateOverflows, f, requiredType, x.array())})</code>.
      *
      * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
@@ -3233,9 +3233,9 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #applyFunc(ArrayContext, boolean, Func, Matrix, List)
+     * Equivalent to <code>{@link #applyFunc(ArrayContext, boolean, Func, Matrix, List)
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
-     * several}(PArray.class, x))</tt>.
+     * several}(PArray.class, x))</code>.
      *
      * @param context           the context of copying; can be <code>null</code>, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
@@ -3311,9 +3311,9 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #applyFunc(ArrayContext, boolean, Func, Matrix, List)
+     * Equivalent to <code>{@link #applyFunc(ArrayContext, boolean, Func, Matrix, List)
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
-     * several}(PArray.class, x1, x2))</tt>.
+     * several}(PArray.class, x1, x2))</code>.
      *
      * @param context           the context of copying; can be <code>null</code>, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
@@ -3397,9 +3397,9 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #applyFunc(ArrayContext, boolean, Func, Matrix, List)
+     * Equivalent to <code>{@link #applyFunc(ArrayContext, boolean, Func, Matrix, List)
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
-     * several}(PArray.class, x1, x2, x3))</tt>.
+     * several}(PArray.class, x1, x2, x3))</code>.
      *
      * @param context           the context of copying; can be <code>null</code>, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
@@ -3410,7 +3410,7 @@ public class Matrices {
      * @param x1                1st AlgART matrix.
      * @param x2                2nd AlgART matrix.
      * @param x3                3rd AlgART matrix.
-     * @throws NullPointerException     if <tt>f</tt> or one of passed matrices is <code>null</code>.
+     * @throws NullPointerException     if <code>f</code> or one of passed matrices is <code>null</code>.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3490,9 +3490,9 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link #applyFunc(ArrayContext, boolean, Func, Matrix, List)
+     * Equivalent to <code>{@link #applyFunc(ArrayContext, boolean, Func, Matrix, List)
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
-     * several}(PArray.class, x1, x2, x3, x4))</tt>.
+     * several}(PArray.class, x1, x2, x3, x4))</code>.
      *
      * @param context           the context of copying; can be <code>null</code>, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
@@ -3573,8 +3573,8 @@ public class Matrices {
     }
 
     /**
-     * Calls to <tt>{@link Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)
-     * Arrays.applyFunc}(context, truncateOverflows, f, result.array(), arrays)</tt>,
+     * Calls to <code>{@link Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)
+     * Arrays.applyFunc}(context, truncateOverflows, f, result.array(), arrays)</code>,
      * where <code>arrays</code> is
      * <code>{x.get(0).{@link Matrix#array() array}(), x.get(1).{@link Matrix#array() array}(), ...}</code>.
      *
@@ -3619,8 +3619,8 @@ public class Matrices {
 
     /**
      * Performs the specified predicate for all elements of <code>source</code> to produce <code>result</code>.
-     * <p>Equivalent to <tt>{@link #applyFunc(ArrayContext, Func, Matrix, List)
-     * applyFunc}(context, func, result, source)</tt>, where <code>func</code> has the following implementation:
+     * <p>Equivalent to <code>{@link #applyFunc(ArrayContext, Func, Matrix, List)
+     * applyFunc}(context, func, result, source)</code>, where <code>func</code> has the following implementation:
      * <pre>
      *  public double get(double... x) {
      *     return predicate.test(x[0]) ? 1.0 : 0.0;
@@ -3655,8 +3655,8 @@ public class Matrices {
 
     /**
      * Performs the specified function for all elements of <code>source</code> to produce <code>result</code>.
-     * <p>Equivalent to <tt>{@link #applyFunc(ArrayContext, Func, Matrix, List)
-     * applyFunc}(context, func, result, source)</tt>, where <code>func</code> has the following implementation:
+     * <p>Equivalent to <code>{@link #applyFunc(ArrayContext, Func, Matrix, List)
+     * applyFunc}(context, func, result, source)</code>, where <code>func</code> has the following implementation:
      * <pre>
      *  public double get(double... x) {
      *     return function.applyAsDouble(x[0]);
@@ -3726,8 +3726,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to creating a "lazy" matrix by <nobr><tt>lazy = {@link #asPrecision(Matrix, Class)
-     * asPrecision(matrix, result.elementType()}</tt></nobr> call
+     * Equivalent to creating a "lazy" matrix by <nobr><code>lazy = {@link #asPrecision(Matrix, Class)
+     * asPrecision(matrix, result.elementType()}</code></nobr> call
      * and copying it into the <code>result</code> argument by
      * <nobr><code>{@link #copy(ArrayContext, Matrix, Matrix) copy(context, result, lazy)}</code></nobr> call.
      *
@@ -3991,9 +3991,9 @@ public class Matrices {
 
     /**
      * Addition: equivalent to
-     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * <code>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
      * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, {@link Func#X_PLUS_Y
-     * Func.X_PLUS_Y}, result, a, b)</tt>.
+     * Func.X_PLUS_Y}, result, a, b)</code>.
      *
      * @param result elementwise sum <b>a + b</b>.
      * @param a      matrix <b>a</b>.
@@ -4021,9 +4021,9 @@ public class Matrices {
 
     /**
      * Subtraction: equivalent to
-     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * <code>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
      * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, {@link Func#X_MINUS_Y
-     * Func.X_MINUS_Y}, result, a, b)</tt>.
+     * Func.X_MINUS_Y}, result, a, b)</code>.
      *
      * @param result elementwise difference <b>a &minus; b</b>.
      * @param a      matrix <b>a</b>.
@@ -4049,8 +4049,8 @@ public class Matrices {
 
     /**
      * Binary OR: equivalent to
-     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
-     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.MAX, result, a, b)</tt>.
+     * <code>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.MAX, result, a, b)</code>.
      *
      * @param result binary OR <b>a | b</b>.
      * @param a      matrix <b>a</b>.
@@ -4076,8 +4076,8 @@ public class Matrices {
 
     /**
      * Binary AND: equivalent to
-     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
-     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.MIN, result, a, b)</tt>.
+     * <code>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.MIN, result, a, b)</code>.
      *
      * @param result binary AND <b>a | b</b>.
      * @param a      matrix <b>a</b>.
@@ -4104,8 +4104,8 @@ public class Matrices {
 
     /**
      * Binary XOR: equivalent to
-     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
-     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.ABS_DIFF, result, a, b)</tt>.
+     * <code>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.ABS_DIFF, result, a, b)</code>.
      *
      * @param result binary XOR <b>a ^ b</b>.
      * @param a      matrix <b>a</b>.
@@ -4133,8 +4133,8 @@ public class Matrices {
 
     /**
      * Binary AND-NOT: equivalent to
-     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
-     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.POSITIVE_DIFF, result, a, b)</tt>.
+     * <code>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.POSITIVE_DIFF, result, a, b)</code>.
      *
      * @param result binary AND-NOT <b>a &amp; ~b</b>.
      * @param a      matrix <b>a</b>.
@@ -4159,8 +4159,8 @@ public class Matrices {
 
     /**
      * Binary NOT: equivalent to
-     * <tt>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix)
-     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.REVERSE, result, source)</tt>.
+     * <code>{@link #applyFunc(ArrayContext, Func, Matrix, Matrix)
+     * applyFunc}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, Func.REVERSE, result, source)</code>.
      *
      * @param result binary NOT <b>~a</b>.
      * @param source matrix <b>a</b>.
@@ -4174,8 +4174,8 @@ public class Matrices {
 
     /**
      * Equivalent to
-     * <tt>{@link Arrays#packBitsGreater(UpdatableBitArray, PArray, double)
-     * packBitsGreater}(result.array(), intensities.array(), threshold)</tt>
+     * <code>{@link Arrays#packBitsGreater(UpdatableBitArray, PArray, double)
+     * packBitsGreater}(result.array(), intensities.array(), threshold)</code>
      *
      * @param result      result bit matrix.
      * @param intensities source matrix.
@@ -4196,8 +4196,8 @@ public class Matrices {
 
     /**
      * Equivalent to
-     * <tt>{@link Arrays#packBitsLess(UpdatableBitArray, PArray, double)
-     * packBitsLess}(result.array(), intensities.array(), threshold)</tt>
+     * <code>{@link Arrays#packBitsLess(UpdatableBitArray, PArray, double)
+     * packBitsLess}(result.array(), intensities.array(), threshold)</code>
      *
      * @param result      result bit matrix.
      * @param intensities source matrix.
@@ -4218,8 +4218,8 @@ public class Matrices {
 
     /**
      * Equivalent to
-     * <tt>{@link Arrays#packBitsGreaterOrEqual(UpdatableBitArray, PArray, double)
-     * packBitsGreaterOrEqual}(result.array(), intensities.array(), threshold)</tt>
+     * <code>{@link Arrays#packBitsGreaterOrEqual(UpdatableBitArray, PArray, double)
+     * packBitsGreaterOrEqual}(result.array(), intensities.array(), threshold)</code>
      *
      * @param result      result bit matrix.
      * @param intensities source matrix.
@@ -4240,8 +4240,8 @@ public class Matrices {
 
     /**
      * Equivalent to
-     * <tt>{@link Arrays#packBitsLessOrEqual(UpdatableBitArray, PArray, double)
-     * packBitsLessOrEqual}(result.array(), intensities.array(), threshold)</tt>
+     * <code>{@link Arrays#packBitsLessOrEqual(UpdatableBitArray, PArray, double)
+     * packBitsLessOrEqual}(result.array(), intensities.array(), threshold)</code>
      *
      * @param result      result bit matrix.
      * @param intensities source matrix.
@@ -4262,8 +4262,8 @@ public class Matrices {
 
     /**
      * Equivalent to
-     * <tt>{@link Arrays#unpackBits(UpdatablePArray, BitArray, double, double)
-     * unpackBits}(result.array(), bits.array(), filler0, filler1)</tt>
+     * <code>{@link Arrays#unpackBits(UpdatablePArray, BitArray, double, double)
+     * unpackBits}(result.array(), bits.array(), filler0, filler1)</code>
      *
      * @param result  result matrix.
      * @param bits    source bit matrix.
@@ -4285,8 +4285,8 @@ public class Matrices {
 
     /**
      * Equivalent to
-     * <tt>{@link Arrays#unpackUnitBits(UpdatablePArray, BitArray, double)
-     * unpackUnitBits}(result.array(), bits.array(), filler1)</tt>
+     * <code>{@link Arrays#unpackUnitBits(UpdatablePArray, BitArray, double)
+     * unpackUnitBits}(result.array(), bits.array(), filler1)</code>
      *
      * @param result  result matrix.
      * @param bits    source bit matrix.
@@ -4306,8 +4306,8 @@ public class Matrices {
 
     /**
      * Equivalent to
-     * <tt>{@link Arrays#unpackZeroBits(UpdatablePArray, BitArray, double)
-     * unpackZeroBits}(result.array(), bits.array(), filler0)</tt>
+     * <code>{@link Arrays#unpackZeroBits(UpdatablePArray, BitArray, double)
+     * unpackZeroBits}(result.array(), bits.array(), filler0)</code>
      *
      * @param result  result matrix.
      * @param bits    source bit matrix.
@@ -4402,8 +4402,8 @@ public class Matrices {
                Byte ==> Short,,Int,,Long,,Float,,Double */
 
     /**
-     * Equivalent to <tt>{@link Arrays#toByteJavaArray(PArray)
-     * Arrays.toByteJavaArray}(matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toByteJavaArray(PArray)
+     * Arrays.toByteJavaArray}(matrix.array())</code>.
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>byte</code> type.
@@ -4417,8 +4417,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link Arrays#toByteJavaArray(byte[], PArray)
-     * Arrays.toByteJavaArray}(result, matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toByteJavaArray(byte[], PArray)
+     * Arrays.toByteJavaArray}(result, matrix.array())</code>.
      *
      * @param result the result <code>byte[]</code> array; can be <code>null</code>,
      *               then it will be created automatically.
@@ -4438,8 +4438,8 @@ public class Matrices {
     }/*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Equivalent to <tt>{@link Arrays#toShortJavaArray(PArray)
-     * Arrays.toShortJavaArray}(matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toShortJavaArray(PArray)
+     * Arrays.toShortJavaArray}(matrix.array())</code>.
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>short</code> type.
@@ -4453,8 +4453,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link Arrays#toShortJavaArray(short[], PArray)
-     * Arrays.toShortJavaArray}(result, matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toShortJavaArray(short[], PArray)
+     * Arrays.toShortJavaArray}(result, matrix.array())</code>.
      *
      * @param result the result <code>short[]</code> array; can be <code>null</code>,
      *               then it will be created automatically.
@@ -4474,8 +4474,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link Arrays#toIntJavaArray(PArray)
-     * Arrays.toIntJavaArray}(matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toIntJavaArray(PArray)
+     * Arrays.toIntJavaArray}(matrix.array())</code>.
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>int</code> type.
@@ -4489,8 +4489,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link Arrays#toIntJavaArray(int[], PArray)
-     * Arrays.toIntJavaArray}(result, matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toIntJavaArray(int[], PArray)
+     * Arrays.toIntJavaArray}(result, matrix.array())</code>.
      *
      * @param result the result <code>int[]</code> array; can be <code>null</code>,
      *               then it will be created automatically.
@@ -4510,8 +4510,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link Arrays#toLongJavaArray(PArray)
-     * Arrays.toLongJavaArray}(matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toLongJavaArray(PArray)
+     * Arrays.toLongJavaArray}(matrix.array())</code>.
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>long</code> type.
@@ -4525,8 +4525,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link Arrays#toLongJavaArray(long[], PArray)
-     * Arrays.toLongJavaArray}(result, matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toLongJavaArray(long[], PArray)
+     * Arrays.toLongJavaArray}(result, matrix.array())</code>.
      *
      * @param result the result <code>long[]</code> array; can be <code>null</code>,
      *               then it will be created automatically.
@@ -4546,8 +4546,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link Arrays#toFloatJavaArray(PArray)
-     * Arrays.toFloatJavaArray}(matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toFloatJavaArray(PArray)
+     * Arrays.toFloatJavaArray}(matrix.array())</code>.
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>float</code> type.
@@ -4561,8 +4561,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link Arrays#toFloatJavaArray(float[], PArray)
-     * Arrays.toFloatJavaArray}(result, matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toFloatJavaArray(float[], PArray)
+     * Arrays.toFloatJavaArray}(result, matrix.array())</code>.
      *
      * @param result the result <code>float[]</code> array; can be <code>null</code>,
      *               then it will be created automatically.
@@ -4582,8 +4582,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link Arrays#toDoubleJavaArray(PArray)
-     * Arrays.toDoubleJavaArray}(matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toDoubleJavaArray(PArray)
+     * Arrays.toDoubleJavaArray}(matrix.array())</code>.
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>double</code> type.
@@ -4597,8 +4597,8 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to <tt>{@link Arrays#toDoubleJavaArray(double[], PArray)
-     * Arrays.toDoubleJavaArray}(result, matrix.array())</tt>.
+     * Equivalent to <code>{@link Arrays#toDoubleJavaArray(double[], PArray)
+     * Arrays.toDoubleJavaArray}(result, matrix.array())</code>.
      *
      * @param result the result <code>double[]</code> array; can be <code>null</code>,
      *               then it will be created automatically.
@@ -4659,8 +4659,8 @@ public class Matrices {
     }
 
     /**
-     * This method just calls <tt>{@link Arrays#copy(ArrayContext, UpdatableArray, Array)
-     * Arrays.copy}(context, dest.{@link Matrix#array() array()}, src.{@link Matrix#array() array()})</tt>,
+     * This method just calls <code>{@link Arrays#copy(ArrayContext, UpdatableArray, Array)
+     * Arrays.copy}(context, dest.{@link Matrix#array() array()}, src.{@link Matrix#array() array()})</code>,
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
@@ -4682,9 +4682,9 @@ public class Matrices {
     }
 
     /**
-     * This method just calls <tt>{@link Arrays#copy(ArrayContext, UpdatableArray, Array, int)
+     * This method just calls <code>{@link Arrays#copy(ArrayContext, UpdatableArray, Array, int)
      * Arrays.copy}(context, dest.{@link Matrix#array() array()}, src.{@link Matrix#array() array()},
-     * numberOfTasks)</tt>,
+     * numberOfTasks)</code>,
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
@@ -4715,9 +4715,9 @@ public class Matrices {
     }
 
     /**
-     * This method just calls <tt>{@link Arrays#copy(ArrayContext, UpdatableArray, Array, int, boolean)
+     * This method just calls <code>{@link Arrays#copy(ArrayContext, UpdatableArray, Array, int, boolean)
      * Arrays.copy}(context, dest.{@link Matrix#array() array()}, src.{@link Matrix#array() array()},
-     * numberOfTasks, strictMode)</tt>,
+     * numberOfTasks, strictMode)</code>,
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
@@ -4751,8 +4751,8 @@ public class Matrices {
     }
 
     /**
-     * This method just calls <tt>{@link Arrays#compareAndCopy(ArrayContext, UpdatableArray, Array)
-     * Arrays.compareAndCopy}(context, dest.{@link Matrix#array() array()}, src.{@link Matrix#array() array()})</tt>,
+     * This method just calls <code>{@link Arrays#compareAndCopy(ArrayContext, UpdatableArray, Array)
+     * Arrays.compareAndCopy}(context, dest.{@link Matrix#array() array()}, src.{@link Matrix#array() array()})</code>,
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
@@ -4781,8 +4781,8 @@ public class Matrices {
 
     /**
      * Just copies <code>src</code> into <code>dest</code> without using multithreading.
-     * Equivalent to <tt>{@link #copy(ArrayContext, Matrix, Matrix)
-     * copy}(ArrayContext.{@link ArrayContext#DEFAULT_SINGLE_THREAD DEFAULT_SINGLE_THREAD}, dest, src).</tt>
+     * Equivalent to <code>{@link #copy(ArrayContext, Matrix, Matrix)
+     * copy}(ArrayContext.{@link ArrayContext#DEFAULT_SINGLE_THREAD DEFAULT_SINGLE_THREAD}, dest, src).</code>
      *
      * @param dest the destination matrix.
      * @param src  the src matrix.
@@ -4970,7 +4970,7 @@ public class Matrices {
      * @param shifts       the shift between the source and destination regions.
      * @param outsideValue the value used while copying elements, lying outside <code>src</code> matrix.
      * @throws NullPointerException     if <code>dest</code>, <code>src</code>, <code>destRegion</code>
-     *                                  or <tt>shifts</tt> argument is <code>null</code>.
+     *                                  or <code>shifts</code> argument is <code>null</code>.
      * @throws IllegalArgumentException if the source and destination element types do not match,
      *                                  i.e. if <code>dest.{@link Matrix#elementType() elementType()}</code>
      *                                  is not equal to <code>src.{@link Matrix#elementType() elementType()}</code>
