@@ -32,10 +32,7 @@ import java.util.Objects;
 
 /**
  * <p>The memory model, based on <tt>ByteBuffer</tt> and other buffers from
- * <noindex>
- * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/nio/package-summary.html"><tt>java.nio</tt></a>
- * </noindex>
- * package.
+ * {@link java.nio} package.
  * It means that AlgART array of elements of some <tt><i>type</i></tt> (<tt>byte</tt>,
  * <tt>char</tt>, etc.) contains an underlying NIO buffer
  * <tt><i>Type</i>Buffer</tt> (correspondingly <tt>ByteBuffer</tt>, <tt>CharBuffer</tt>, etc.),
@@ -63,15 +60,11 @@ import java.util.Objects;
  * The real limit is little less in 32-bit JVM, usually ~1.0-1.5 GB.</p>
  *
  * <p>The NIO buffers, used by this memory model, are always
- * <noindex>
- * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html#direct"><i>direct</i></a>:
- * </noindex>
+ * <i>direct</i>:
  * they are created by <tt>ByteBuffer.allocateDirect</tt> method with, for non-byte arrays,
  * the following <tt>byteBuffer.as<i>Type</i>Buffer()</tt> call.
  * The byte order in the buffers is always
- * <noindex>
- * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/nio/ByteOrder.html#nativeOrder()"><i>native</i></a>,
- * </noindex>
+ * <i>native</i>,
  * excepting the case when AlgART arrays are created via {@link #asUpdatableArray(ByteBuffer, Class)}
  * method, when the byte order of the passed buffer is preserver.</p>
  *
