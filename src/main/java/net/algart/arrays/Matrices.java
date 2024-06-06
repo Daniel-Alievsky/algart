@@ -5152,6 +5152,14 @@ public class Matrices {
         }
     }
 
+    /**
+     * Returns the string representation for array <code>dim</code>, probably containing dimensions of some
+     * matrix, like the result of {@link Matrix#dimensions()} method.
+     *
+     * @param dim dimensions of some matrix.
+     * @return the string representations of all elements joined into one string.
+     * @throws NullPointerException if the argument is <code>null</code>.
+     */
     public static String dimensionsToString(long[] dim) {
         return dim.length == 1 ? dim[0] + "(x1)" : JArrays.toString(dim, "x", 1000);
     }
