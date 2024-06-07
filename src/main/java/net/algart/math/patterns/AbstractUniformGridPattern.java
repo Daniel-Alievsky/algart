@@ -234,7 +234,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
             long count = 1;
             for (int k = 0; k < dimCount; k++) {
                 long size = gridIndexRange(k).size();
-                count = Patterns.longMul(count, size);
+                count = net.algart.arrays.Arrays.longMul(count, size);
                 if (count == Long.MIN_VALUE || count == Long.MAX_VALUE) {
                     // MAX_VALUE is also prohibited here: it may be returned by pointCount() for large number of points
                     // Note that this situation is impossible for actually rectangular pattern, represented

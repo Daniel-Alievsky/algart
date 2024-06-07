@@ -64,7 +64,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
             checkCoordRange(coordRange(k, gridIndexRange));
             long size = gridIndexRange.size();
             if (count != Long.MIN_VALUE) {
-                count = Patterns.longMul(count, size);
+                count = net.algart.arrays.Arrays.longMul(count, size);
             }
             largeCount *= size;
         }

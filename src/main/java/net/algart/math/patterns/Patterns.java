@@ -48,22 +48,22 @@ public class Patterns {
     // TODO!! Note: this method always returns SimplePattern or UniformGridPattern.
     public static DirectPointSetPattern newPattern(Collection<Point> points) {
         Objects.requireNonNull(points, "Null points argument");
-        points = new ArrayList<Point>(points);
+        points = new ArrayList<>(points);
         boolean allInteger = true;
         for (Point p : points) {
             Objects.requireNonNull(p, "Null point in the set");
             allInteger &= p.isInteger() & AbstractUniformGridPattern.isAllowedGridIndex(p.toIntegerPoint());
         }
         if (allInteger) {
-            HashSet<IPoint> integerPoints = new HashSet<IPoint>();
+            HashSet<IPoint> integerPoints = new HashSet<>();
             for (Point p : points) {
                 integerPoints.add(p.toIntegerPoint());
             }
             return newIntegerPattern(integerPoints);
         }
         if (points.size() <= 2) {
-            final Point[] pointsArray = points.toArray(new Point[points.size()]);
-            if (pointsArray.length == 1 || (pointsArray.length == 2 && pointsArray[0].equals(pointsArray[1]))) {
+            final Point[] pointsArray = points.toArray(new Point[0]);
+            if (pointsArray.length == 1 || pointsArray[0].equals(pointsArray[1])) {
                 return new OnePointPattern(pointsArray[0]);
             } else {
                 return new TwoPointsPattern(pointsArray[0], pointsArray[1]);
@@ -76,7 +76,7 @@ public class Patterns {
     // TODO!! Note: this method always returns SimplePattern or UniformGridPattern.
     public static DirectPointSetPattern newPattern(Point... points) {
         Objects.requireNonNull(points, "Null points argument");
-        return newPattern(Arrays.asList(points));
+        return newPattern(List.of(points));
     }
 
     public static DirectPointSetUniformGridPattern newUniformGridPattern(
@@ -85,7 +85,7 @@ public class Patterns {
             Collection<IPoint> gridIndexes) {
         Objects.requireNonNull(originOfGrid, "Null originOfGrid");
         Objects.requireNonNull(gridIndexes, "Null gridIndexes argument");
-        return new BasicDirectPointSetUniformGridPattern(originOfGrid, stepsOfGrid, new HashSet<IPoint>(gridIndexes));
+        return new BasicDirectPointSetUniformGridPattern(originOfGrid, stepsOfGrid, new HashSet<>(gridIndexes));
     }
 
     /**
@@ -123,7 +123,7 @@ public class Patterns {
      */
     public static DirectPointSetUniformGridPattern newIntegerPattern(Collection<IPoint> points) {
         Objects.requireNonNull(points, "Null points argument");
-        HashSet<IPoint> gridIndexes = new HashSet<IPoint>(points);
+        HashSet<IPoint> gridIndexes = new HashSet<>(points);
         return new BasicDirectPointSetUniformGridPattern(
                 gridIndexes.isEmpty() ? 1 : gridIndexes.iterator().next().coordCount(),
                 gridIndexes);
@@ -144,7 +144,7 @@ public class Patterns {
      */
     public static DirectPointSetUniformGridPattern newIntegerPattern(IPoint... points) {
         Objects.requireNonNull(points, "Null points argument");
-        return newIntegerPattern(Arrays.asList(points));
+        return newIntegerPattern(List.of(points));
     }
 
     /**
@@ -185,10 +185,11 @@ public class Patterns {
      */
     public static UniformGridPattern newSphereIntegerPattern(Point center, final double r) {
         Objects.requireNonNull(center, "Null center argument");
-        if (r < 0.0)
+        if (r < 0.0) {
             throw new IllegalArgumentException("Negative sphere radius");
+        }
         double[] semiAxes = new double[center.coordCount()];
-        Arrays.fill(semiAxes, r);
+        java.util.Arrays.fill(semiAxes, r);
         return newEllipsoidIntegerPattern(center, semiAxes);
 /* OLD ALGORITHM
         final int n = center.coordCount();
@@ -227,20 +228,23 @@ public class Patterns {
         Objects.requireNonNull(center, "Null center argument");
         Objects.requireNonNull(semiAxes, "Null semiAxes argument");
         final int n = center.coordCount();
-        if (semiAxes.length != n)
+        if (semiAxes.length != n) {
             throw new IllegalArgumentException("Number of semi-axes " + semiAxes.length
                     + " is not equal to center.coordCount()=" + n);
+        }
         final double[] semiAxesClone = semiAxes.clone();
         final double[] semiAxesInv = new double[n];
         final int[] semiAxesUpperBounds = new int[n];
         for (int k = 0; k < n; k++) {
             double semiAxis = semiAxesClone[k];
-            if (semiAxis < 0.0)
+            if (semiAxis < 0.0) {
                 throw new IllegalArgumentException("Negative semiAxes[" + k + "] = " + semiAxis);
+            }
             semiAxesUpperBounds[k] = (int) (semiAxis + 2.0);
-            if (semiAxesUpperBounds[k] == Integer.MAX_VALUE)
+            if (semiAxesUpperBounds[k] == Integer.MAX_VALUE) {
                 throw new TooManyPointsInPatternError("Too large desired " + n + "D ellipsoid: semiAxes["
                         + k + "]=" + semiAxis);
+            }
             semiAxesInv[k] = 1.0 / semiAxis; // maybe Infinity
         }
         if (n == 1) {
@@ -249,7 +253,7 @@ public class Patterns {
                     StrictMath.round(StrictMath.floor(center.coord(0) + semiAxesClone[0])))).roundedPoints());
         }
         final IRange[] oneSegmentCoordRanges = new IRange[n];
-        HashSet<IPoint> points = new HashSet<IPoint>();
+        HashSet<IPoint> points = new HashSet<>();
         for (int k = 0; k < oneSegmentCoordRanges.length; k++) {
             addPointsToEllipsoid(points,
                     new double[]{center.coord(k)},
@@ -314,8 +318,9 @@ public class Patterns {
         Objects.requireNonNull(projection, "Null projection argument");
         Objects.requireNonNull(minSurface, "Null minSurface argument");
         Objects.requireNonNull(maxSurface, "Null maxSurface argument");
-        if (lastCoordinateStep <= 0.0)
+        if (lastCoordinateStep <= 0.0) {
             throw new IllegalArgumentException("Zero or negative last step of the grid is not allowed");
+        }
         final int dimCount = projection.dimCount();
         final Set<IPoint> projectionIndexes = projection.gridIndexes();
         final Point projectionOrigin = projection.originOfGrid();
@@ -346,9 +351,10 @@ public class Patterns {
                 resultIndexes.add(IPoint.valueOf(resultIndex));
             }
         }
-        if (resultIndexes.isEmpty())
+        if (resultIndexes.isEmpty()) {
             throw new IllegalArgumentException("Empty pattern: in all points of the projection pattern "
                     + "the minimal surface is above the maximal surface");
+        }
         return new BasicDirectPointSetUniformGridPattern(Point.valueOf(origin), steps, resultIndexes) {
             public String toString() {
                 return super.toString() + " (segment between surfaces " + minSurface + " and " + maxSurface + ")";
@@ -363,8 +369,9 @@ public class Patterns {
             IRange... gridIndexRanges) {
         Objects.requireNonNull(originOfGrid, "Null originOfGrid");
         Objects.requireNonNull(gridIndexRanges, "Null gridIndexRanges argument");
-        if (gridIndexRanges.length == 0)
+        if (gridIndexRanges.length == 0) {
             throw new IllegalArgumentException("Empty gridIndexRanges array");
+        }
         return new BasicRectangularPattern(originOfGrid, stepsOfGrid, gridIndexRanges);
     }
 
@@ -402,8 +409,9 @@ public class Patterns {
      */
     public static RectangularPattern newRectangularIntegerPattern(IRange... ranges) {
         Objects.requireNonNull(ranges, "Null ranges argument");
-        if (ranges.length == 0)
+        if (ranges.length == 0) {
             throw new IllegalArgumentException("Empty ranges array");
+        }
         return new BasicRectangularPattern(ranges);
     }
 
@@ -431,9 +439,10 @@ public class Patterns {
      */
     public static UniformGridPattern newRectangularIntegerPattern(IPoint min, IPoint max) {
         int n = min.coordCount();
-        if (n != max.coordCount())
+        if (n != max.coordCount()) {
             throw new IllegalArgumentException("Coordinates count mismatch: \"min\" is "
                     + n + "-dimensional, \"max\" is " + max.coordCount() + "-dimensional");
+        }
         IRange[] ranges = new IRange[n];
         for (int k = 0; k < n; k++) {
             ranges[k] = IRange.valueOf(min.coord(k), max.coord(k));
@@ -500,7 +509,7 @@ public class Patterns {
      *                                  <code>Long.MAX_VALUE</code>.
      */
     public static Pattern newMinkowskiSum(Pattern... patterns) {
-        return newMinkowskiSum(Arrays.asList(patterns));
+        return newMinkowskiSum(List.of(patterns));
     }
 
     //TODO!! not forget to comment a case when all patterns are compatible rectangular patterns
@@ -508,17 +517,19 @@ public class Patterns {
     // if some of pattern are not integer patterns
     public static Pattern newMinkowskiSum(Collection<Pattern> patterns) {
         Objects.requireNonNull(patterns, "Null patterns argument");
-        if (patterns.isEmpty())
+        if (patterns.isEmpty()) {
             throw new IllegalArgumentException("Empty patterns array");
-        Pattern[] patternsArray = patterns.toArray(new Pattern[patterns.size()]);
+        }
+        Pattern[] patternsArray = patterns.toArray(new Pattern[0]);
         // cloning before checking guarantees correct behaviour while multithreading
         boolean allCompatibleRectangular = true;
         Pattern first = patternsArray[0];
         for (int k = 0; k < patternsArray.length; k++) {
             Objects.requireNonNull(patternsArray[k], "Null pattern #" + k + " in the list");
-            if (patternsArray[k].dimCount() != first.dimCount())
+            if (patternsArray[k].dimCount() != first.dimCount()) {
                 throw new IllegalArgumentException("Patterns dimensions mismatch: the first pattern has "
                         + first.dimCount() + " dimensions, but pattern #" + k + " has " + patternsArray[k].dimCount());
+            }
             if (allCompatibleRectangular // important to check it before typecast
                     && !(patternsArray[k] instanceof RectangularPattern
                     && ((UniformGridPattern) patternsArray[k]).stepsOfGridEqual((UniformGridPattern) first))) {
@@ -532,8 +543,9 @@ public class Patterns {
             // the actualization is necessary to be sure in the implementation of minkowskiAdd method
             for (int k = 1; k < patternsArray.length; k++) {
                 result = result.minkowskiAdd(patternsArray[k]);
-                if (!(result instanceof RectangularPattern))
+                if (!(result instanceof RectangularPattern)) {
                     throw new AssertionError("Invalid SimpleRectangularGridPattern.minkowskiAdd implementation");
+                }
             }
             if (result.pointCount() == 1) {
                 return new OnePointPattern(result.coordMin());
@@ -558,10 +570,11 @@ public class Patterns {
      */
     public static Pattern newMinkowskiMultiplePattern(Pattern pattern, int n) {
         Objects.requireNonNull(pattern, "Null pattern argument");
-        if (n <= 0)
+        if (n <= 0) {
             throw new IllegalArgumentException("Negative or zero n argument");
+        }
         Pattern[] patterns = new Pattern[n];
-        Arrays.fill(patterns, pattern);
+        java.util.Arrays.fill(patterns, pattern);
         return new MinkowskiSum(patterns);
     }
 
@@ -648,154 +661,6 @@ public class Patterns {
         BigDecimal bigDiff = bigB.subtract(bigA);
         return bigDiff.compareTo(BIG_DECIMAL_MAX_COORDINATE) <= 0;
     }
-
-    /*Repeat(INCLUDE_FROM_FILE, ../../arrays/Arrays.java, longMul)
-      public\s+static ==> static
-         !! Auto-generated: NOT EDIT !! */
-
-    /**
-     * Returns the product of passed multipliers from the index, specified in <code>from</code> argument (inclusive),
-     * until the index, specified in <code>to</code> argument (exclusive), i&#46;e&#46;
-     * <code>multipliers[from]*multipliers[from+1]*...*multipliers[to-1]</code>,
-     * if this product is in <code>-2<sup>63</sup>+1..2<sup>63</sup>-1</code> range,
-     * or <code>Long.MIN_VALUE</code> (<code>-2<sup>63</sup></code>) in other cases ("overflow").
-     *
-     * <p>Must be <code>0&lt;=from&lt;=to&lt;=multipliers.length</code>. If <code>from==to</code>, returns 1.
-     *
-     * <p>Note: if the product is <code>Long.MIN_VALUE</code>, this situation cannot
-     * be distinguished from the overflow.
-     *
-     * <p>Also note: if at least one of the passed multipliers is 0, then the result will be always 0,
-     * even if product of some other multipliers is out of <code>-2<sup>63</sup>+1..2<sup>63</sup>-1</code> range.
-     *
-     * @param multipliers the <code>long</code> values to be multiplied.
-     * @param from        the initial index in <code>array</code>, inclusive.
-     * @param to          the end index in <code>array</code>, exclusive.
-     * @return the product of all multipliers or <code>Long.MIN_VALUE</code> if a case of overflow.
-     * @throws NullPointerException      if <code>multipliers</code> argument is <code>null</code>.
-     * @throws IndexOutOfBoundsException if <code>from&lt;0</code> or <code>to&gt;multipliers.length</code>.
-     * @throws IllegalArgumentException  if <code>from&gt;to</code>.
-     * @see #longMul(long...)
-     * @see #longMul(long, long)
-     */
-    static long longMul(long[] multipliers, int from, int to) {
-        if (to > multipliers.length || from < 0) // simultaneously checks multipliers!=null
-            throw new IndexOutOfBoundsException("Indexes out of bounds 0.." + multipliers.length
-                    + ": from = " + from + ", to = " + to);
-        if (from > to)
-            throw new IllegalArgumentException("Illegal indexes: from = " + from + " > to = " + to);
-        if (from == to) {
-            return 1;
-        }
-        long result = multipliers[from];
-        for (int k = from + 1; k < to; k++) {
-            result = longMul(result, multipliers[k]);
-        }
-        return result;
-    }
-
-    /**
-     * Returns the product of all passed multipliers (<code>multipliers[0]*multipliers[1]*...</code>),
-     * if it is in <code>-2<sup>63</sup>+1..2<sup>63</sup>-1</code> range,
-     * or <code>Long.MIN_VALUE</code> (<code>-2<sup>63</sup></code>) in other cases ("overflow").
-     * Equivalent to <code>{@link #longMul(long[], int, int) longMul}(multipliers,0,multipliers.length)</code>.
-     *
-     * <p>If the multipliers array is empty (<code>longMul()</code> call), returns 1.
-     *
-     * <p>Note: if the product is <code>Long.MIN_VALUE</code>, this situation cannot
-     * be distinguished from the overflow.
-     *
-     * <p>Also note: if at least one of the passed multipliers is 0, then the result will be always 0,
-     * even if product of some other multipliers is out of <code>-2<sup>63</sup>+1..2<sup>63</sup>-1</code> range.
-     *
-     * @param multipliers the <code>long</code> values to be multiplied.
-     * @return the product of all multipliers or <code>Long.MIN_VALUE</code> if a case of overflow.
-     * @throws NullPointerException if <code>multipliers</code> argument is <code>null</code>.
-     * @see #longMul(long[], int, int)
-     * @see #longMul(long, long)
-     */
-    static long longMul(long... multipliers) {
-        if (multipliers.length == 0) {
-            return 1;
-        }
-        long result = multipliers[0];
-        for (int k = 1; k < multipliers.length; k++) {
-            result = longMul(result, multipliers[k]);
-        }
-        return result;
-    }
-
-    /**
-     * Returns the product <code>a*b</code>, if it is in <code>-2<sup>63</sup>+1..2<sup>63</sup>-1</code> range,
-     * or <code>Long.MIN_VALUE</code> (<code>-2<sup>63</sup></code>) in other cases ("overflow").
-     *
-     * <p>Note: if the product is <code>Long.MIN_VALUE</code>, this situation cannot
-     * be distinguished from the overflow.
-     *
-     * <p>Also note: if one of the multipliers <code>a</code> and <code>b</code> is equal to the "overflow marker"
-     * <code>Long.MIN_VALUE</code>, then, as it is follows from the common rule, the result of this method will also
-     * be equal to <code>Long.MIN_VALUE</code> &mdash; excepting the only case, when one of the multipliers
-     * <code>a</code> and <code>b</code> is zero. If <code>a==0</code> or <code>b==0</code>, the result is always 0.
-     *
-     * @param a the first <code>long</code> value.
-     * @param b the second <code>long</code> value.
-     * @return the product <code>a*b</code> or <code>Long.MIN_VALUE</code> if a case of overflow.
-     * @see #longMul(long...)
-     * @see #longMul(long[], int, int)
-     */
-    static long longMul(long a, long b) {
-        boolean sign = false;
-        if (a < 0L) {
-            a = -a;
-            sign = true;
-        }
-        if (b < 0L) {
-            b = -b;
-            sign = !sign;
-        }
-        long aL = a & 0xFFFFFFFFL, aH = a >>> 32;
-        long bL = b & 0xFFFFFFFFL, bH = b >>> 32;
-        // |a*b| = aH*bH * 2^64 + (aH*bL + aL*bH) * 2^32 + aL*bL (all unsigned, aH,bH < 2^31)
-        // let c = aH*bL + aL*bH, d = aL*bL (unsigned)
-        // aH*bH must be zero (in other case, there is overflow)
-        // so, |a*b| = c * 2^32 + d; it must be < 2^31
-        long c, d;
-        if (aH == 0L) {
-            if (bH == 0L) { // |a*b| = d, if d < 2^63
-                d = aL * bL;
-                if (d < 0L) { // d >= 2^63
-                    return Long.MIN_VALUE;
-                }
-                return sign ? -d : d;
-            } else {
-                d = aL * bL;
-                if (d < 0L) { // d >= 2^63
-                    return Long.MIN_VALUE;
-                }
-                c = aL * bH;
-            }
-        } else {
-            if (bH == 0L) {
-                d = aL * bL;
-                if (d < 0L) { // d >= 2^63
-                    return Long.MIN_VALUE;
-                }
-                c = aH * bL;
-            } else { // aH != 0, bH != 0
-                return Long.MIN_VALUE;
-            }
-        }
-        // here d < 2^63; c = aH*bL or aL*bH, so, c < 2^63
-        if (c > Integer.MAX_VALUE) { // c >= 2^31: it means overflow (|a*b| >= c * 2^32 >= 2^63)
-            return Long.MIN_VALUE;
-        }
-        long result = (c << 32) + d;
-        if (result < 0L) { // c * 2^32 + d >= 2^63
-            return Long.MIN_VALUE;
-        }
-        return sign ? -result : result;
-    }
-    /*Repeat.IncludeEnd*/
 
     private static void addPointsToSphere(
             Set<IPoint> points, double[] center, long[] coordinates,

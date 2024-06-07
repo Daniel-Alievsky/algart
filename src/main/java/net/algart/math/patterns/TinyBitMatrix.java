@@ -24,6 +24,7 @@
 
 package net.algart.math.patterns;
 
+import net.algart.arrays.Arrays;
 import net.algart.arrays.PackedBitArrays;
 import net.algart.math.IPoint;
 
@@ -246,7 +247,7 @@ class TinyBitMatrix {
         for (int k = 0; k < dim.length; k++) {
             lDim[k] = dim[k];
         }
-        long len = Patterns.longMul(lDim);
+        long len = Arrays.longMul(lDim);
         if (len == Long.MIN_VALUE) {
             throw new TooManyPointsInPatternError("Illegal dimensions: dim[0] * dim[1] * ... > Long.MAX_VALUE");
         }
