@@ -638,7 +638,7 @@ public class Arrays {
          * for optimization on multiprocessor or multicore computers.
          *
          * <p>Many algorithms, in particular, based on
-         * <nobr>{@link Arrays#copy(ArrayContext, UpdatableArray, Array)}</nobr> method and
+         * {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} method and
          * {@link Arrays.ParallelExecutor} class,
          * use multithreading processing for more optimal usage of available processors.
          * But parallel processing works fine only for limited amount of memory.
@@ -752,7 +752,7 @@ public class Arrays {
          * for "1783" it returns 1783.
          *
          * <p>More precisely, if the specified string ends with "K", "k", "M", "m", "G" or "g", then
-         * this method calls <nobr><code>Integer.parseInt(s.substring(0,s.length()-1))</code></nobr>
+         * this method calls <code>Integer.parseInt(s.substring(0,s.length()-1))</code>
          * and multiplies the result by 1024 (2<sup>10</sup>), 1048576 (2<sup>20</sup>) or
          * 1073741824 (2<sup>30</sup>); in a case of overflow while multiplying,
          * <code>NumberFormatException</code> is thrown.
@@ -777,7 +777,7 @@ public class Arrays {
          * for "1M" it returns 1048576, for "1783" it returns 1783.
          *
          * <p>More precisely, if the specified string ends with "K", "k", "M", "m", "G", "g", "T" or "t", then
-         * this method calls <nobr><code>Long.parseLong(s.substring(0,s.length()-1))</code></nobr>
+         * this method calls <code>Long.parseLong(s.substring(0,s.length()-1))</code>
          * and multiplies the result by 1024 (2<sup>10</sup>), 1048576 (2<sup>20</sup>),
          * 1073741824 (2<sup>30</sup>) or 1099511627776 (2<sup>40</sup>); in a case of overflow while multiplying,
          * <code>NumberFormatException</code> is thrown.
@@ -1170,7 +1170,7 @@ public class Arrays {
      * All they, as well as any object types, can be elements of AlgART arrays.
      */
     public static List<Class<?>> PRIMITIVE_TYPES =
-            Collections.unmodifiableList(java.util.Arrays.<Class<?>>asList(
+            List.of(
                     boolean.class,
                     char.class,
                     byte.class,
@@ -1178,7 +1178,7 @@ public class Arrays {
                     int.class,
                     long.class,
                     float.class,
-                    double.class));
+                    double.class);
 
 
     /**
@@ -2209,7 +2209,7 @@ public class Arrays {
      * @throws IllegalArgumentException if <code>n &lt; 0</code>.
      */
     public static <T> ObjectArray<T> nObjectCopies(long n, T element) {
-        return new CopiesArraysImpl.CopiesObjectArray<T>(n, element);
+        return new CopiesArraysImpl.CopiesObjectArray<>(n, element);
     }
 
     /**
@@ -2360,7 +2360,7 @@ public class Arrays {
      * @throws IllegalArgumentException if n &lt; 0.
      */
     public static <E> ObjectArray<E> nNullCopies(long n, Class<E> elementType) {
-        CopiesArraysImpl.CopiesObjectArray<E> result = new CopiesArraysImpl.CopiesObjectArray<E>(n, null);
+        CopiesArraysImpl.CopiesObjectArray<E> result = new CopiesArraysImpl.CopiesObjectArray<>(n, null);
         result.elementType = elementType;
         return result;
     }
@@ -2922,7 +2922,7 @@ public class Arrays {
      * {@link #asUpdatableFuncArray(net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)} or
      * {@link #asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)},
      * this method also returns <code>true</code>, and {@link #getFunc(Array)} also allows to get
-     * the used mathematical function. However, if the array is a {@link Array#subArray} subarray}
+     * the used mathematical function. However, if the array is a {@link Array#subArray subarray}
      * of some functional array, this method returns <code>false</code>.
      *
      * @param array the checked AlgART array (can be <code>null</code>, than the method returns <code>false</code>).
@@ -2961,7 +2961,7 @@ public class Arrays {
     /**
      * Returns the mathematical function, used for creating the passed {@link #isFuncArray functional} array,
      * or throws an exception if this array is not functional.
-     * The returned function is the same function that was passed to the method, called to created the passed array:
+     * The returned function is the same function that was passed to the method, called to create the passed array:
      * <ul>
      * <li>{@link #asIndexFuncArray(Func, Class, long)},
      * <li>{@link #asIndexFuncArray(boolean, Func, Class, long)},
@@ -3182,7 +3182,7 @@ public class Arrays {
      * by <code>{@link #getUnderlyingArrays(Array) getUnderlyingArrays(array)}[0]</code>
      * call, and get the used shift by {@link #getShift(Array)} call.
      *
-     * <p>Please note: if the array is a {@link Array#subArray} subarray}
+     * <p>Please note: if the array is a {@link Array#subArray subarray}.
      * of some shifted array, this method returns <code>false</code>.
      * <p>Please note: if the array is a {@link Array#subArray subarray}
      * of some shifted array, this method may return both <code>true</code> and <code>false</code>,
@@ -3232,12 +3232,12 @@ public class Arrays {
      * In this situation, performing this method really means actual execution of the algorithm,
      * and several threads allow to use all system processors for this purpose.
      * <br>
-     * Multithread copying is performed by a thread pool: <code>java.util.concurrent.ExecutorService</code>.
+     * Multithreading copying is performed by a thread pool: <code>java.util.concurrent.ExecutorService</code>.
      * The full copying procedure is split into several tasks, where each task
      * copies some set of regions of <code>src</code> array to the corresponding regions of <code>dest</code> array.
      * All tasks are submitted to the thread pool, and then this method
      * waits until all tasks will be completed.
-     * The thread pool, performing the multithread copying, and the number of copying tasks
+     * The thread pool, performing the multithreading copying, and the number of copying tasks
      * are gotten by the methods of
      * <code>context.{@link ArrayContext#getThreadPoolFactory() getThreadPoolFactory()}</code> object;
      * if <code>context</code> argument is <code>null</code>,
@@ -3403,7 +3403,7 @@ public class Arrays {
 
     /**
      * This method is an analog of {@link #copy(ArrayContext, UpdatableArray, Array)}
-     * allowing to know, whether the destination array was really modified while copying.
+     * allowing to know whether the destination array was really modified while copying.
      * Namely, this method performs the same things as
      * {@link #copy(ArrayContext context, UpdatableArray dest, Array src)}
      * and returns the status, where {@link Arrays.ComparingCopyStatus#changed()} method
@@ -3743,7 +3743,7 @@ public class Arrays {
      * <li>gets its real value <code>v = array.{@link PArray#getDouble(long) getDouble}(k)</code>;</li>
      * <li>calculates the index of the column in the histogram:
      * <code>m = (int)StrictMath.floor((v - from) * multiplier)</code>,
-     * where <nobr><code>multiplier = histogram.length / (to - from)</code></nobr>;</li>
+     * where <code>multiplier = histogram.length / (to - from)</code>;</li>
      * <li>if this index lies in the range <code>0 &lt;= m &lt; histogram.length</code>,
      * increments the corresponding element of the passed <code>histogram</code> Java array:
      * <code>histogram[m]++</code></li>
@@ -3758,7 +3758,7 @@ public class Arrays {
      * if <code>from&nbsp;&gt;=&nbsp;to</code>.
      *
      * <p>Please draw attention to the formula at the step 2. It differs from the more obvious formula
-     * <nobr><code>(int)((v-from)/(to-from)*histogram.length)</code></nobr>
+     * <code>(int)((v-from)/(to-from)*histogram.length)</code>
      * and theoretically can lead to little other results.
      *
      * <p>The <code>context</code> argument is used in the same manner as in
@@ -4307,7 +4307,7 @@ public class Arrays {
     }
 
     /**
-     * Fills all elements of the array by zero (0 for numbers, <code>false</code> for boolean values,
+     * Fills all the elements of the array by zero (0 for numbers, <code>false</code> for boolean values,
      * <code>null</code> or some "empty" objects for non-primitive elements).
      *
      * @param array the filled array.
@@ -4547,7 +4547,7 @@ public class Arrays {
      * <p>This method does not flush or close the passed stream.
      *
      * @param outputStream the output stream.
-     * @param array        the array the should be written.
+     * @param array        the array that should be written.
      * @param byteOrder    the byte order in the stream;
      *                     it is not used in cases of {@link ByteArray} and {@link BitArray}.
      * @throws NullPointerException if <code>outputStream</code>, <code>array</code> or <code>byteOrder</code>
@@ -4595,7 +4595,7 @@ public class Arrays {
      * <p>This method does not close the passed stream.
      *
      * @param inputStream the input stream.
-     * @param array       the updatable array the should be read.
+     * @param array       the updatable array that should be read.
      * @param byteOrder   the byte order in the stream;
      *                    it is not used in cases of {@link ByteArray} and {@link BitArray}.
      * @throws NullPointerException if <code>inputStream</code>, <code>array</code> or <code>byteOrder</code>
@@ -4872,7 +4872,7 @@ public class Arrays {
      * of any memory model instance, which actually copies data into newly allocated array.
      *
      * @param array the source AlgART object array.
-     * @return Java array containing all of the elements in this array.
+     * @return Java array containing all the elements in this array.
      * @throws NullPointerException   if <code>array</code> argument is <code>null</code>.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray(Array)
@@ -5409,7 +5409,7 @@ public class Arrays {
      * the unsigned decimal representation is used.
      * For arrays of objects ({@link ObjectArray}),
      * the <code>null</code> elements are represented as <code>"null"</code> string,
-     * and non-null elements are converted to strings by their <code>toString</code> method.
+     * and all non-null elements converted to strings by their <code>toString</code> method.
      *
      * <p>If the necessary string length exceeds <code>maxStringLength</code> characters,
      * this method break joining after the element, which leads to exceeding this limit,
@@ -5751,7 +5751,7 @@ public class Arrays {
      * <p>This method is convenient if you need to set the new length to a sum <code>a+b</code> of 2
      * <code>long</code> values <code>a</code> and <code>b</code> (usual signed positive <code>long</code> values),
      * but you are not sure that this sum cannot exceed <code>Long.MAX_VALUE=2<sup>63</sup>-1</code> limit.
-     * For example, let <code>a</code> is some resizable array and you need to increase its length
+     * For example, let <code>a</code> is some resizable array, and you need to increase its length
      * by some positive <code>incr</code> value. If, due to some bug, <code>incr</code> is too large
      * (as <code>Long.MAX_VALUE</code>), then the call <code>a.length(a.length()+incr)</code> can
      * <i>reduce</i> the array length, but the call <code>Arrays.length(a, a.length()+incr)</code>
@@ -5775,7 +5775,7 @@ public class Arrays {
      * {@link BitArray#getBits(long, long[], long, long) getBits(position, destArray, offset, someCount)}
      * and (for updatable array)
      * {@link UpdatableBitArray#setBits(long, long[], long, long) setBits(position, srcArray, offset, someCount)}
-     * work essentially faster than for most of other ("slow") positions,
+     * work essentially faster than for most of the other ("slow") positions,
      * or <code>0</code> if there is no such offset,
      * in particular, if <code>position&gt;={@link Array#length() length()}</code>.
      *
@@ -5795,7 +5795,7 @@ public class Arrays {
      * If <code>maxAvailableGap=0</code>, this method always returns <code>0</code>.
      *
      * <p>This method is convenient in the following typical situation.
-     * Let we have some work <code>long[]</code> array and we need to load there
+     * Let us have some work <code>long[]</code> array, and we need to load there
      * <code>n</code> packed bits from {@link BitArray} from the given position.
      * The simple call {@link BitArray#getBits(long, long[], long, long)
      * getBits(position, workArray, 0, n)} will work slowly if the position in the bit arrays is not aligned.
@@ -6349,7 +6349,7 @@ public class Arrays {
             throw new ClassCastException("The passed array element type cannot be stored in List<"
                     + listElementType + "> (" + array + ")");
         }
-        return new AlgARTArrayList<E>(array);
+        return new AlgARTArrayList<>(array);
     }
 
     /**
@@ -6365,7 +6365,7 @@ public class Arrays {
      */
     public static <E> List<E> asList(ObjectArray<E> array) {
         Objects.requireNonNull(array, "Null array argument");
-        return new AlgARTArrayList<E>(array);
+        return new AlgARTArrayList<>(array);
     }
 
     /**
@@ -6941,7 +6941,7 @@ public class Arrays {
      * The sorted array is returned in <code>positions</code> argument.
      *
      * <p>If <code>positions.length==0</code> (empty array), this method returns 0 and does nothing.
-     * If <code>positions.length==1</code> (1 point at the cirlce), this method sets <code>positions[0]=0</code>
+     * If <code>positions.length==1</code> (1 point at the circle), this method sets <code>positions[0]=0</code>
      * and returns the previous value of <code>positions[0]</code>.
      * If <code>length==0</code> or <code>length&lt;0</code>, this method throws <code>IllegalArgumentException</code>:
      * such length is not allowed.
@@ -6954,7 +6954,7 @@ public class Arrays {
      * @param length    the length of the cycle (circle).
      * @param positions some positions inside <code>0..length-1</code> range;
      *                  they will be corrected by this method: elements are sorted by increasing,
-     *                  and some element (retuned as the result) is cyclically subtracted
+     *                  and some element (returned as the result) is cyclically subtracted
      *                  from all other elements, to provide the minimal value of the maximal element.
      * @return the value of the element of the original <code>positions</code> array,
      * which is the start of the shortest cyclic range arc.
@@ -6971,7 +6971,7 @@ public class Arrays {
             if (positions[k] < 0 || positions[k] >= length) {
                 throw new IllegalArgumentException("positions[" + k + "] is out of range 0..length-1=" + (length - 1));
             }
-            // must be checked before corrections of positinos array to provide failure atomicity
+            // must be checked before corrections of positions array to provide failure atomicity
         }
         if (positions.length == 0) {
             return 0;
@@ -6993,7 +6993,7 @@ public class Arrays {
         if (!sorted) {
             java.util.Arrays.sort(positions);
         }
-        assert positions.length >= 2; // important: in other case, maxGap below will be set to length instead of 0
+        // assert positions.length >= 2; // important: in other case, maxGap below will be set to length instead of 0
         long maxGap = positions[0] - positions[positions.length - 1] + length;
         int maxGapRightIndex = 0;
         if (maxGap > half) {
@@ -7142,7 +7142,7 @@ public class Arrays {
      * the {@link LargeMemoryModel large memory model} schedules some tasks:
      * namely, automatic releasing used resources and deletion of temporary files.
      *
-     * @param timeoutInMilliseconds the maximal time to wait in milliseconds; please not specify
+     * @param timeoutInMilliseconds the maximal time to wait in milliseconds; please don't specify
      *                              large values here: several seconds is a good choice.
      * @return <code>true</code> if all finalization tasks were successfully completed.
      * @throws IllegalArgumentException if <code>timeoutInMilliseconds &lt;= 0</code>.
@@ -7207,7 +7207,7 @@ public class Arrays {
      * throw new AssertionError("Impossible exception: " + exception);
      * </pre>
      *
-     * <p>This method is convenient when you need to catch all exceptions of the specified class
+     * <p>This method is convenient when you need to catch all exceptions, belonging to the specified class,
      * and also all unchecked exceptions and errors,
      * then do something in connection with an exception/error,
      * and then re-throw the exception/error.
@@ -7406,7 +7406,7 @@ public class Arrays {
         /**
          * The optimized algorithm, used by
          * {@link Arrays#copy(ArrayContext, UpdatableArray, Array, int, boolean)} method in "non-strict" mode:
-         * it recursibly splits the underlying array of the source one into a tree of "tiles" (by all coordinates,
+         * it recursively splits the underlying array of the source one into a tree of "tiles" (by all coordinates,
          * if it is a {@link Matrix matrix}) and preloads every tile, which is little enough,
          * into Java memory before copying.
          * May be used if the source array is a view of some underlying array,
@@ -7454,7 +7454,7 @@ public class Arrays {
          * was really used, it does only mean that the corresponding <code>strictMode</code> argument
          * of the copying method was <code>false</code>.
          *
-         * @return <code>true</code> the array was copyied strictly, <code>false</code> if it was copyied
+         * @return <code>true</code> the array was copied strictly, <code>false</code> if it was copied
          * by {@link Arrays#copy(ArrayContext, UpdatableArray, Array, int, boolean)} or
          * {@link Matrices#copy(ArrayContext, Matrix, Matrix, int, boolean)} method
          * with <code>strictMode=false</code>.
@@ -7723,7 +7723,7 @@ public class Arrays {
         }
 
         void setAll(long indexOfMin, long indexOfMax, PArray src) {
-            // Is is called for non-empty array only. Possible cases.
+            // It is called for non-empty array only. Possible cases.
             // 1) An array contains some "ordinary" values (the only possible case for PFixedArray).
             //    In this case, indexOfMin and indexOfMax are initialized properly, and min/max contain
             //    correct values ( < or > comparison worked at least once).
@@ -8063,7 +8063,7 @@ public class Arrays {
          * <p>The number of tasks and regions and the sizes of regions may be specified
          * by arguments of the constructor or may be chosen automatically (if that arguments are 0).
          *
-         * <p>The thread pool, performing the multithread processing,
+         * <p>The thread pool, performing the multithreading processing,
          * is returned and (before finishing the processing) released by the methods of
          * <code>context.{@link ArrayContext#getThreadPoolFactory() getThreadPoolFactory()}</code> object,
          * where <code>context</code> is the argument of the constructor.
@@ -8153,6 +8153,7 @@ public class Arrays {
                         finish();
                     } catch (RuntimeException ex) {
                         if (noExceptions) {
+                            //noinspection ThrowFromFinallyBlock
                             throw ex;
                         }
                     }
@@ -8249,7 +8250,6 @@ public class Arrays {
                                     results[k].get(); // waiting for finishing
                                 }
                             } catch (ExecutionException ex) {
-                                Throwable cause = ex.getCause();
                                 throwUncheckedException(ex);
                             } catch (InterruptedException ex) {
                                 interruptionRequested = true;
@@ -8268,6 +8268,7 @@ public class Arrays {
                         finish();
                     } catch (RuntimeException ex) {
                         if (noExceptions) {
+                            //noinspection ThrowFromFinallyBlock
                             throw ex;
                         }
                     }
@@ -8449,9 +8450,8 @@ public class Arrays {
             }
             fromIndex += startGap;
             toIndex -= endGap;
-            int actualBlockSize = blockSize;
             for (long p = fromIndex; p < toIndex; ) {
-                long len = Math.min(toIndex - p, actualBlockSize);
+                long len = Math.min(toIndex - p, blockSize);
                 assert len == (int) len;
 // ESTIMATION BELOW NOT TOO GOOD IDEA: SOME ALGORITHMS LIKE RANK MORPHOLOGY HAVE LONG-TIME PREPARATION IN EACH getData
 //                if (p == fromIndex) {
@@ -8517,7 +8517,7 @@ public class Arrays {
          * This default implementation of this method returns 0.
          * The overridden implementation may return some positive value.
          * In this case, last {@link #endGap(long) endGap(rangeIndex)}
-         * ellements will not be processed
+         * elements will not be processed
          * by {@link #processRange(long fromIndex, long toIndex, int threadIndex, long rangeIndex)} method:
          * they will be skipped and not passed to {@link #processSubArr(long, int, int)} method.
          * This can be useful for some algorithms that change the source AlgART arrays depending
@@ -8978,7 +8978,7 @@ public class Arrays {
      * of some AlgART matrix, created by {@link Matrix#tile()} method.
      *
      * @param array the checked AlgART array: built-in array of some AlgART tiled matrix.
-     * @return the tile dimensions, used for creating a the tiled matrix.
+     * @return the tile dimensions, used for creating the tiled matrix.
      * @throws NullPointerException if the passed array is <code>null</code>.
      * @throws ClassCastException   if <code>!{@link #isTiled(Array) isTiled}(array)</code>.
      */
@@ -9059,8 +9059,9 @@ public class Arrays {
             return new DataBuffersImpl.ArrayDoubleBuffer((DoubleArray) array, mode, capacity, trusted);
         } else if (array instanceof ObjectArray<?>) {
             return new DataBuffersImpl.ArrayObjectBuffer<>(InternalUtils.cast(array), mode, capacity, trusted);
-        } else
+        } else {
             return new DataBuffersImpl.ArrayBuffer(array, mode, capacity, trusted);
+        }
         // - to be on the safe side, for possible "strange" inheritors
     }
 
@@ -9191,12 +9192,12 @@ public class Arrays {
         }
 
         public E get(int index) {
-            return InternalUtils.<E>cast(array.getElement(index));
+            return InternalUtils.cast(array.getElement(index));
         }
 
         public E set(int index, E element) {
             if (array instanceof UpdatableArray) {
-                E oldValue = InternalUtils.<E>cast(array.getElement(index));
+                E oldValue = InternalUtils.cast(array.getElement(index));
                 ((UpdatableArray) array).setElement(index, element);
                 return oldValue;
             } else {

@@ -245,7 +245,7 @@ public class Matrices {
      * which returns <code>true</code> if and only if the point with the specified coordinates belongs to the region.
      * It is enough to implement this method to define a new region.
      * In addition, this class always requires to specify {@link #coordRanges() coordinate ranges}:
-     * such ranges that coordinates of all region points guaranteedly belong to them.</p>
+     * such ranges that coordinates of all region points surely belong to them.</p>
      *
      * <p>However, the region, constructed by this way, provides low performance of
      * {@link Matrices#copyRegion Matrices.copyRegion} / {@link Matrices#fillRegion Matrices.fillRegion} methods,
@@ -255,7 +255,7 @@ public class Matrices {
      * <nobr>{@link #sectionAtLastCoordinate(long sectionCoordinateValue)}</nobr>,
      * which builds an intersection of this region with some hyperplane and returns this intersection
      * as one or several regions with less number of dimensions. This method is not abstract
-     * (it is implemeneted via <nobr>{@link #contains(long...)}</nobr> method by default), but an inheritor
+     * (it is implemented via <nobr>{@link #contains(long...)}</nobr> method by default), but an inheritor
      * can offer much faster implementation for most cases &mdash; and all inheritors from this package
      * really do it.</p>
      *
@@ -265,7 +265,7 @@ public class Matrices {
      * for all possible values of its argument <code>sectionCoordinateValue</code>.
      * Then every <nobr>(<i>n</i>&minus;1)-dimensional</nobr> section can be similarly represented
      * as a union of its <nobr>(<i>n</i>&minus;2)-dimensional</nobr> sections, etc.
-     * But for <nobr>2-dimensional</nobr> case most region types (in particular, all inhertiros of this class
+     * But for <nobr>2-dimensional</nobr> case most region types (in particular, all inheritors of this class
      * from this package) can return the required intersection (with a horizontal line)
      * as one or several <i>continuous segments</i>: regions of special type (<nobr>1-dimensional</nobr>
      * {@link Matrices.Hyperparallelepiped Hyperparallelepiped}), which can be processes very quickly.</p>
@@ -320,7 +320,7 @@ public class Matrices {
          * <p>The passed <code>coordRanges</code> array is cloned by this constructor: no references to it
          * are maintained by the created object.
          *
-         * @param coordRanges the ranges that guaranteedly contain coordinates of all points of this region
+         * @param coordRanges the ranges that surely contain coordinates of all points of this region
          *                    (they will be returned by {@link #coordRanges()} method).
          * @throws NullPointerException     if the <code>coordRanges</code> array some of
          *                                  its elements is <code>null</code>.
@@ -626,7 +626,7 @@ public class Matrices {
          *
          * <p>The returned array is a clone of the internal array stored in this object.
          *
-         * @return the ranges that guaranteedly contain coordinates of all points of this region.
+         * @return the ranges that surely contain coordinates of all points of this region.
          */
         public final IRange[] coordRanges() {
             return coordRanges.clone();
@@ -637,7 +637,7 @@ public class Matrices {
          * Equivalent to <code>{@link #coordRanges()}[coordIndex]</code>, but works faster.
          *
          * @param coordIndex the index of coordinate.
-         * @return the ranges that guaranteedly contain the coordinate <code>#coordIndex</code>
+         * @return the ranges that surely contain the coordinate <code>#coordIndex</code>
          * of all points of this region.
          * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
          *                                   <code>coordIndex&gt;={@link #n()}</code>.
@@ -1594,7 +1594,7 @@ public class Matrices {
      * @throws IllegalArgumentException  if the passed array is resizable
      *                                   (for example, implements {@link MutableArray}),
      *                                   or if the number of dimensions is 0 (empty <code>dim</code> Java array),
-     *                                   or if some of dimensions are negative.
+     *                                   or if some of the dimensions are negative.
      * @throws SizeMismatchException     if the product of all dimensions is greater than
      *                                   <code>array.length()-position</code>.
      * @throws TooLargeArrayException    if the product of all dimensions is greater than <code>Long.MAX_VALUE</code>.
@@ -1725,9 +1725,7 @@ public class Matrices {
         long[] result = new long[dimCount];
         long defaultTileSide = InternalUtils.DEFAULT_MATRIX_TILE_SIDES[
                 Math.min(result.length, InternalUtils.DEFAULT_MATRIX_TILE_SIDES.length - 1)];
-        for (int k = 0; k < result.length; k++) {
-            result[k] = defaultTileSide;
-        }
+        java.util.Arrays.fill(result, defaultTileSide);
         return result;
     }
 
@@ -2330,7 +2328,7 @@ public class Matrices {
      * <li>If <code>interpolationMethod</code> is {@link InterpolationMethod#POLYLINEAR_FUNCTION POLYLINEAR_FUNCTION},
      * the function value is calculated as a polylinear interpolation of
      * 2<sup><code>matrix.{@link Matrix#dimCount() dimCount()}</code></sup> neighbour matrix elements
-     * (linear interpolation in one-dimensional case, bilinear in 2-dimensional, etc.)
+     * (linear interpolation in one-dimensional case, bi-linear in 2-dimensional, etc.)
      * </ul>
      *
      * <p>The real coordinates <i>x</i><sub><i>k</i></sub> must be inside the matrix:
@@ -3834,7 +3832,7 @@ public class Matrices {
      * a better choice than the usual linear averaging.
      * </ol>
      *
-     * <p>There is an exception from the rules listed above. If the source matrix is empty
+     * <p>There is an exception to the rules listed above. If the source matrix is empty
      * (at least one dimension is 0), the returned matrix will be zero-filled always.
      * (In this case, there are no ways to calculate any elements.)
      *
