@@ -96,7 +96,7 @@ public class Arrays {
         private SystemSettings() {
         }
 
-        private static final String VERSION = "1.4.9";
+        private static final String VERSION = "1.4.10";
         private static final int[] PARSED_VERSION;
 
         static {
