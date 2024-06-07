@@ -67,16 +67,18 @@ class InternalUtils {
         JAVA_32 = java32;
     }
 
-    static final boolean SERVER_OPTIMIZATION = getBooleanProperty("net.algart.arrays.serverOptimization", false);
-    static final int MAX_AVAILABLE_PROCESSORS = Math.max(1, Math.min(1024,
-        getIntPropertyWithImportant("net.algart.arrays.maxAvailableProcessors", JAVA_32 ? 8 : 256)));
+    static final boolean SERVER_OPTIMIZATION = getBooleanProperty(
+            "net.algart.arrays.serverOptimization", false);
+    static final int MAX_AVAILABLE_PROCESSORS = Math.max(1, Math.min(32768,
+        getIntPropertyWithImportant("net.algart.arrays.maxAvailableProcessors", JAVA_32 ? 16 : 16384)));
     static final long MAX_TEMP_JAVA_MEMORY = Math.min(1L << 56, Math.max(0L,
-        getLongPropertyWithImportant("net.algart.arrays.maxTempJavaMemory", 33554432))); // 32 MB
+        getLongPropertyWithImportant("net.algart.arrays.maxTempJavaMemory", 67108864))); // 64 MB
     static final long MAX_TEMP_JAVA_MEMORY_FOR_TILING = Math.min(1L << 56, Math.max(0L,
         getLongPropertyWithImportant("net.algart.arrays.maxTempJavaMemoryForTiling",
             Math.max(134217728, MAX_TEMP_JAVA_MEMORY)))); // 128 MB
     static final long MAX_MULTITHREADING_MEMORY = Math.min(1L << 56, Math.max(256L,
-        getLongPropertyWithImportant("net.algart.arrays.maxMultithreadingMemory", 1048576))); // 1 MB
+        getLongPropertyWithImportant("net.algart.arrays.maxMultithreadingMemory",
+                1048576))); // 1 MB
     static final boolean PROFILING;
     static {
         boolean ea = false;

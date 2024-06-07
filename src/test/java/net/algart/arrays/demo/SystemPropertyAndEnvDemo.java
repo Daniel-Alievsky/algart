@@ -27,7 +27,7 @@ package net.algart.arrays.demo;
 import static net.algart.arrays.Arrays.SystemSettings.*;
 
 /**
- * <p>Shows the system settings, loaded via {@link net.algart.arrays.Arrays.SystemSettings} methods.</p>
+ * <p>Test for loading system properties and environment variables.</p>
  *
  * @author Daniel Alievsky
  */

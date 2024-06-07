@@ -137,14 +137,15 @@ public class Arrays {
          *
          * <p>This value is determined while initializing {@link Arrays} class
          * from the system property "net.algart.arrays.maxAvailableProcessors" by the call
-         * <code>System.getProperty("net.algart.arrays.maxAvailableProcessors","256")</code> (on 64-bit Java machines) or
-         * <code>System.getProperty("net.algart.arrays.maxAvailableProcessors","8")</code> (on 32-bit Java machines).
+         * <code>System.getProperty("net.algart.arrays.maxAvailableProcessors","16384")</code>
+         * (on 64-bit Java machines) or
+         * <code>System.getProperty("net.algart.arrays.maxAvailableProcessors","16")</code> (on 32-bit Java machines).
          * If this property contains zero or a negative integer, it is supposed to be 1,
          * that means disabling any attempts of multiprocessor optimization.
-         * If this property contains an integer greater than the limit 1024,
+         * If this property contains an integer greater than the limit 32768,
          * this limit is used instead.
          * If some exception occurs while calling <code>System.getProperty</code> or if it is not an integer,
-         * it will contain the default value 256/8 (on 64/32-bit Java machines correspondingly).
+         * it will contain the default value 16384/16 (on 64/32-bit Java machines correspondingly).
          *
          * <p>32-bit and 64-bit Java are distinguished via {@link #isJava32()} method.
          * Please remember that the result of that method is not 100% robust.
@@ -387,8 +388,8 @@ public class Arrays {
          * the minimum from <code>Runtime.getRuntime().availableProcessors()</code> value and
          * the {@link #MAX_AVAILABLE_PROCESSORS} constant.
          * The value of that constant is read from system property
-         * "net.algart.arrays.maxAvailableProcessors" and equal to 256 by default
-         * (or 8 on 32-bit JVM). See comments to that constant for more details.
+         * "net.algart.arrays.maxAvailableProcessors" and equal to 16384 by default
+         * (or 16 on 32-bit JVM). See comments to that constant for more details.
          *
          * <p>This method is used by AlgART libraries in all situation, where it is necessary to
          * know to actual number of processor units, in particular, in {@link #cpuCount()} method,
@@ -719,9 +720,6 @@ public class Arrays {
          * All this analyse is performed only once while initializing {@link Arrays} class.
          *
          * @return <code>true</code> on 32-bit Java machines.
-         * @see <a href="http://java.sun.com/docs/hotspot/HotSpotFAQ.html#64bit_detection">Frequently
-         * Asked Questions About the Java HotSpot VM:
-         * When writing Java code, how do I distinguish between 32 and 64-bit operation?</a>
          */
         public static boolean isJava32() {
             return InternalUtils.JAVA_32;

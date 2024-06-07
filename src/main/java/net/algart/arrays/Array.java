@@ -699,8 +699,7 @@ public interface Array {
      * <code>{@link #updatableClone(MemoryModel) updatableClone}({@link Arrays#SMM}).</code>
      *
      * <p>Please note that <b>copy-on-next-write arrays are not traditional copy-on-write objects like
-     * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/CopyOnWriteArrayList.html"
-     * >CopyOnWriteArrayList</a>!</b> In particular, copy-on-next-write arrays
+     * {@link java.util.concurrent.CopyOnWriteArrayList}!</b> In particular, copy-on-next-write arrays
      * are not thread-safe.
      *
      * <p>The main purpose of using copy-on-next-write arrays is more efficient alternative
