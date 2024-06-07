@@ -80,10 +80,9 @@ public class Patterns {
     }
 
     public static DirectPointSetUniformGridPattern newUniformGridPattern(
-        Point originOfGrid,
-        double[] stepsOfGrid,
-        Collection<IPoint> gridIndexes)
-    {
+            Point originOfGrid,
+            double[] stepsOfGrid,
+            Collection<IPoint> gridIndexes) {
         Objects.requireNonNull(originOfGrid, "Null originOfGrid");
         Objects.requireNonNull(gridIndexes, "Null gridIndexes argument");
         return new BasicDirectPointSetUniformGridPattern(originOfGrid, stepsOfGrid, new HashSet<IPoint>(gridIndexes));
@@ -126,8 +125,8 @@ public class Patterns {
         Objects.requireNonNull(points, "Null points argument");
         HashSet<IPoint> gridIndexes = new HashSet<IPoint>(points);
         return new BasicDirectPointSetUniformGridPattern(
-            gridIndexes.isEmpty() ? 1 : gridIndexes.iterator().next().coordCount(),
-            gridIndexes);
+                gridIndexes.isEmpty() ? 1 : gridIndexes.iterator().next().coordCount(),
+                gridIndexes);
     }
 
     /**
@@ -181,7 +180,7 @@ public class Patterns {
      * @param center the center of the sphere (circle in 2-dimensional case).
      * @param r      the radius of the sphere.
      * @return the pattern consisting of all points inside this sphere (circle in 2-dimensional case).
-     * @throws IllegalArgumentException if <code>r&lt;0.0</code>,
+     * @throws IllegalArgumentException    if <code>r&lt;0.0</code>,
      * @throws TooManyPointsInPatternError if <code>r</code> is about <code>Integer.MAX_VALUE</code> or greater.
      */
     public static UniformGridPattern newSphereIntegerPattern(Point center, final double r) {
@@ -230,7 +229,7 @@ public class Patterns {
         final int n = center.coordCount();
         if (semiAxes.length != n)
             throw new IllegalArgumentException("Number of semi-axes " + semiAxes.length
-                + " is not equal to center.coordCount()=" + n);
+                    + " is not equal to center.coordCount()=" + n);
         final double[] semiAxesClone = semiAxes.clone();
         final double[] semiAxesInv = new double[n];
         final int[] semiAxesUpperBounds = new int[n];
@@ -241,29 +240,29 @@ public class Patterns {
             semiAxesUpperBounds[k] = (int) (semiAxis + 2.0);
             if (semiAxesUpperBounds[k] == Integer.MAX_VALUE)
                 throw new TooManyPointsInPatternError("Too large desired " + n + "D ellipsoid: semiAxes["
-                    + k + "]=" + semiAxis);
+                        + k + "]=" + semiAxis);
             semiAxesInv[k] = 1.0 / semiAxis; // maybe Infinity
         }
         if (n == 1) {
             return newIntegerPattern(newRectangularIntegerPattern(IRange.valueOf(
-                StrictMath.round(StrictMath.ceil(center.coord(0) - semiAxesClone[0])),
-                StrictMath.round(StrictMath.floor(center.coord(0) + semiAxesClone[0])))).roundedPoints());
+                    StrictMath.round(StrictMath.ceil(center.coord(0) - semiAxesClone[0])),
+                    StrictMath.round(StrictMath.floor(center.coord(0) + semiAxesClone[0])))).roundedPoints());
         }
         final IRange[] oneSegmentCoordRanges = new IRange[n];
         HashSet<IPoint> points = new HashSet<IPoint>();
         for (int k = 0; k < oneSegmentCoordRanges.length; k++) {
             addPointsToEllipsoid(points,
-                new double[]{center.coord(k)},
-                new int[]{semiAxesUpperBounds[k]},
-                new double[]{semiAxesInv[k]},
-                new long[]{0}, 0, 0.0);
+                    new double[]{center.coord(k)},
+                    new int[]{semiAxesUpperBounds[k]},
+                    new double[]{semiAxesInv[k]},
+                    new long[]{0}, 0, 0.0);
             // 1-dimensional "ellipsoid" to get maximal radius by common algorithm
             oneSegmentCoordRanges[k] = new BasicDirectPointSetUniformGridPattern(1, points).gridIndexRange(0);
             points.clear();
         }
         addPointsToEllipsoid(points, center.coordinates(), semiAxesUpperBounds, semiAxesInv,
-            new long[n], // zero-filled
-            0, 0.0);
+                new long[n], // zero-filled
+                0, 0.0);
         return new BasicDirectPointSetUniformGridPattern(n, points) {
             @Override
             public IRange gridIndexRange(int coordIndex) {
@@ -279,8 +278,8 @@ public class Patterns {
                     sb.append(semiAxesClone[k]);
                 }
                 return super.toString() + " ("
-                    + (dimCount == 1 ? "segment" : dimCount == 2 ? "ellipse" : "ellipsoid")
-                    + ", semiAxes = " + sb + ")";
+                        + (dimCount == 1 ? "segment" : dimCount == 2 ? "ellipse" : "ellipsoid")
+                        + ", semiAxes = " + sb + ")";
             }
         };
     }
@@ -307,12 +306,11 @@ public class Patterns {
     }
 
     public static UniformGridPattern newSpaceSegment(
-        UniformGridPattern projection,
-        final Func minSurface,
-        final Func maxSurface,
-        double lastCoordinateOfOrigin,
-        double lastCoordinateStep)
-    {
+            UniformGridPattern projection,
+            final Func minSurface,
+            final Func maxSurface,
+            double lastCoordinateOfOrigin,
+            double lastCoordinateStep) {
         Objects.requireNonNull(projection, "Null projection argument");
         Objects.requireNonNull(minSurface, "Null minSurface argument");
         Objects.requireNonNull(maxSurface, "Null maxSurface argument");
@@ -339,9 +337,9 @@ public class Patterns {
                 continue;
             }
             long minIndex = (long) StrictMath.ceil(lastCoordinateStep == 1.0 ? min - lastCoordinateOfOrigin :
-                (min - lastCoordinateOfOrigin) / lastCoordinateStep);
+                    (min - lastCoordinateOfOrigin) / lastCoordinateStep);
             long maxIndex = (long) StrictMath.floor(lastCoordinateStep == 1.0 ? max - lastCoordinateOfOrigin :
-                (max - lastCoordinateOfOrigin) / lastCoordinateStep);
+                    (max - lastCoordinateOfOrigin) / lastCoordinateStep);
             projectionIndex.coordinates(resultIndex);
             for (long i = minIndex; i <= maxIndex; i++) {
                 resultIndex[dimCount] = i;
@@ -350,7 +348,7 @@ public class Patterns {
         }
         if (resultIndexes.isEmpty())
             throw new IllegalArgumentException("Empty pattern: in all points of the projection pattern "
-                + "the minimal surface is above the maximal surface");
+                    + "the minimal surface is above the maximal surface");
         return new BasicDirectPointSetUniformGridPattern(Point.valueOf(origin), steps, resultIndexes) {
             public String toString() {
                 return super.toString() + " (segment between surfaces " + minSurface + " and " + maxSurface + ")";
@@ -360,10 +358,9 @@ public class Patterns {
 
 
     public static RectangularPattern newRectangularUniformGridPattern(
-        Point originOfGrid,
-        double[] stepsOfGrid,
-        IRange... gridIndexRanges)
-    {
+            Point originOfGrid,
+            double[] stepsOfGrid,
+            IRange... gridIndexRanges) {
         Objects.requireNonNull(originOfGrid, "Null originOfGrid");
         Objects.requireNonNull(gridIndexRanges, "Null gridIndexRanges argument");
         if (gridIndexRanges.length == 0)
@@ -436,7 +433,7 @@ public class Patterns {
         int n = min.coordCount();
         if (n != max.coordCount())
             throw new IllegalArgumentException("Coordinates count mismatch: \"min\" is "
-                + n + "-dimensional, \"max\" is " + max.coordCount() + "-dimensional");
+                    + n + "-dimensional, \"max\" is " + max.coordCount() + "-dimensional");
         IRange[] ranges = new IRange[n];
         for (int k = 0; k < n; k++) {
             ranges[k] = IRange.valueOf(min.coord(k), max.coord(k));
@@ -521,18 +518,17 @@ public class Patterns {
             Objects.requireNonNull(patternsArray[k], "Null pattern #" + k + " in the list");
             if (patternsArray[k].dimCount() != first.dimCount())
                 throw new IllegalArgumentException("Patterns dimensions mismatch: the first pattern has "
-                    + first.dimCount() + " dimensions, but pattern #" + k + " has " + patternsArray[k].dimCount());
+                        + first.dimCount() + " dimensions, but pattern #" + k + " has " + patternsArray[k].dimCount());
             if (allCompatibleRectangular // important to check it before typecast
-                && !(patternsArray[k] instanceof RectangularPattern
-                && ((UniformGridPattern) patternsArray[k]).stepsOfGridEqual((UniformGridPattern) first)))
-            {
+                    && !(patternsArray[k] instanceof RectangularPattern
+                    && ((UniformGridPattern) patternsArray[k]).stepsOfGridEqual((UniformGridPattern) first))) {
                 allCompatibleRectangular = false;
             }
         }
         if (allCompatibleRectangular) {
             UniformGridPattern ugFirst = (UniformGridPattern) first;
             Pattern result = new BasicRectangularPattern(ugFirst.originOfGrid(), ugFirst.stepsOfGrid(),
-                ugFirst.gridIndexArea().ranges());
+                    ugFirst.gridIndexArea().ranges());
             // the actualization is necessary to be sure in the implementation of minkowskiAdd method
             for (int k = 1; k < patternsArray.length; k++) {
                 result = result.minkowskiAdd(patternsArray[k]);
@@ -631,7 +627,7 @@ public class Patterns {
      *
      * @param x1 the first number.
      * @param x2 the second number.
-     * @return   if the mathematically precise difference between these numbers is &le;{@link Pattern#MAX_COORDINATE}.
+     * @return if the mathematically precise difference between these numbers is &le;{@link Pattern#MAX_COORDINATE}.
      */
     public static boolean isAllowedDifference(double x1, double x2) {
         if (Double.isNaN(x1) || Double.isNaN(x2) || Double.isInfinite(x1) || Double.isInfinite(x2)) {
@@ -794,7 +790,7 @@ public class Patterns {
             return Long.MIN_VALUE;
         }
         long result = (c << 32) + d;
-        if (result < 0L)  { // c * 2^32 + d >= 2^63
+        if (result < 0L) { // c * 2^32 + d >= 2^63
             return Long.MIN_VALUE;
         }
         return sign ? -result : result;
@@ -802,9 +798,8 @@ public class Patterns {
     /*Repeat.IncludeEnd*/
 
     private static void addPointsToSphere(
-        Set<IPoint> points, double[] center, long[] coordinates,
-        int lastCoordinatesCount, int ir, double rSqr, double rSum)
-    {
+            Set<IPoint> points, double[] center, long[] coordinates,
+            int lastCoordinatesCount, int ir, double rSqr, double rSum) {
         int dimCount = coordinates.length;
         int currentCoordIndex = dimCount - 1 - lastCoordinatesCount;
         int min = (int) center[currentCoordIndex] - ir;
@@ -822,15 +817,14 @@ public class Patterns {
                 coordinates[currentCoordIndex] = i;
                 double diff = i - center[currentCoordIndex];
                 addPointsToSphere(points, center, coordinates, lastCoordinatesCount + 1,
-                    ir, rSqr, rSum + diff * diff);
+                        ir, rSqr, rSum + diff * diff);
             }
         }
     }
 
     private static void addPointsToEllipsoid(
-        Set<IPoint> points, double[] center, int[] semiAxesUpperBounds, double[] semiAxesInv,
-        long[] coordinates, int lastCoordinatesCount, double sum)
-    {
+            Set<IPoint> points, double[] center, int[] semiAxesUpperBounds, double[] semiAxesInv,
+            long[] coordinates, int lastCoordinatesCount, double sum) {
         int dimCount = coordinates.length;
         int currentCoordIndex = dimCount - 1 - lastCoordinatesCount;
         double rInv = semiAxesInv[currentCoordIndex];
@@ -854,7 +848,7 @@ public class Patterns {
                 if (newSum <= 1.000000001) { // little optimization: avoiding extra loop for some coordinates
                     coordinates[currentCoordIndex] = i;
                     addPointsToEllipsoid(points, center, semiAxesUpperBounds, semiAxesInv,
-                        coordinates, lastCoordinatesCount + 1, newSum);
+                            coordinates, lastCoordinatesCount + 1, newSum);
                 }
             }
         }
