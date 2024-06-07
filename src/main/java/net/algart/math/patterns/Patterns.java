@@ -103,24 +103,24 @@ public class Patterns {
      * where <i>N</i> and <i>M</i> is the number of points in both patterns, and may work slowly.
      * The {@link Pattern#minkowskiDecomposition(int)} method returns the list containing
      * this pattern instance as the only element.
-     * The <tt>equals</tt> method returns <tt>true</tt> if and only if the passed object is also simple
+     * The <code>equals</code> method returns <code>true</code> if and only if the passed object is also simple
      * pattern, consisting of the same points and created by this or equivalent method from this package.
      *
-     * <p>The coordinates of all points must be in range <tt>-Long.MAX_VALUE/2..Long.MAX_VALUE/2</tt>,
+     * <p>The coordinates of all points must be in range <code>-Long.MAX_VALUE/2..Long.MAX_VALUE/2</code>,
      * excepting the only case when the number of points is 1.
      *
      * <p>The returned pattern will be "safe" in the sense that no references to the passed set are maintained by it.
-     * In other words, this method always allocates new set (probably <tt>HashSet</tt>) and copies
+     * In other words, this method always allocates new set (probably <code>HashSet</code>) and copies
      * the passed set into it.
      *
      * @param points the source points set.
      * @return the pattern consisting of all source points.
-     * @throws NullPointerException     if <tt>points</tt> argument is <tt>null</tt>
-     *                                  or some of passed points is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>points</tt> argument is an empty set,
+     * @throws NullPointerException     if <code>points</code> argument is <code>null</code>
+     *                                  or some of passed points is <code>null</code>.
+     * @throws IllegalArgumentException if <code>points</code> argument is an empty set,
      *                                  or if some points have different number of coordinates,
      *                                  or if there are 2 or more points and some point coordinates are out of range
-     *                                  <tt>-Long.MAX_VALUE/2..Long.MAX_VALUE/2</tt>.
+     *                                  <code>-Long.MAX_VALUE/2..Long.MAX_VALUE/2</code>.
      */
     public static DirectPointSetUniformGridPattern newIntegerPattern(Collection<IPoint> points) {
         Objects.requireNonNull(points, "Null points argument");
@@ -136,12 +136,12 @@ public class Patterns {
      *
      * @param points the source points set.
      * @return the pattern consisting of all source points.
-     * @throws NullPointerException     if <tt>points</tt> argument is <tt>null</tt>
-     *                                  or some of passed points is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>points</tt> argument is an empty array,
+     * @throws NullPointerException     if <code>points</code> argument is <code>null</code>
+     *                                  or some of passed points is <code>null</code>.
+     * @throws IllegalArgumentException if <code>points</code> argument is an empty array,
      *                                  or if some points have different number of coordinates,
      *                                  or if there are 2 or more points and some point coordinates are out of range
-     *                                  <tt>-Long.MAX_VALUE/2..Long.MAX_VALUE/2</tt>.
+     *                                  <code>-Long.MAX_VALUE/2..Long.MAX_VALUE/2</code>.
      */
     public static DirectPointSetUniformGridPattern newIntegerPattern(IPoint... points) {
         Objects.requireNonNull(points, "Null points argument");
@@ -171,8 +171,8 @@ public class Patterns {
      * with very uneven edges. For example, in 2-dimensional case (circles)
      * we recommend to pass <i>r</i>~<i>k</i>-0.2, where <i>k</i> is a positive integer.
      *
-     * <p>Please be careful: too large values of <tt>r</tt> argument may lead to
-     * very long execution and even to <tt>OutOfMemoryError</tt>,
+     * <p>Please be careful: too large values of <code>r</code> argument may lead to
+     * very long execution and even to <code>OutOfMemoryError</code>,
      * especially for 2- and 3-dimensional patterns.
      * Moreover, there are no ways to interrupt this method or to show its execution progress.
      * We recommend to restrict the passed radius by some suitable value,
@@ -181,8 +181,8 @@ public class Patterns {
      * @param center the center of the sphere (circle in 2-dimensional case).
      * @param r      the radius of the sphere.
      * @return the pattern consisting of all points inside this sphere (circle in 2-dimensional case).
-     * @throws IllegalArgumentException if <tt>r&lt;0.0</tt>,
-     * @throws TooManyPointsInPatternError if <tt>r</tt> is about <tt>Integer.MAX_VALUE</tt> or greater.
+     * @throws IllegalArgumentException if <code>r&lt;0.0</code>,
+     * @throws TooManyPointsInPatternError if <code>r</code> is about <code>Integer.MAX_VALUE</code> or greater.
      */
     public static UniformGridPattern newSphereIntegerPattern(Point center, final double r) {
         Objects.requireNonNull(center, "Null center argument");
@@ -377,11 +377,11 @@ public class Patterns {
      * (<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>,...,<i>x</i><sub><i>n</i>-1</sub>) that
      * <tt>ranges[<i>i</i>].{@link IRange#min()
      * min()}</tt>&lt;=<i>x</i><sub><i>i</i></sub>&lt;=<tt>ranges[<i>i</i>].{@link IRange#max()
-     * max()}</tt>, <i>i</i>=0,1,...,<i>n</i>-1, <i>n</i>=<tt>ranges.length</tt>.
-     * The number of space dimensions of the returned pattern will be equal to the length of <tt>ranges</tt> array.
+     * max()}</tt>, <i>i</i>=0,1,...,<i>n</i>-1, <i>n</i>=<code>ranges.length</code>.
+     * The number of space dimensions of the returned pattern will be equal to the length of <code>ranges</code> array.
      *
      * <p>In the returned pattern,
-     * the {@link UniformGridPattern#isActuallyRectangular()} method returns <tt>true</tt> always.
+     * the {@link UniformGridPattern#isActuallyRectangular()} method returns <code>true</code> always.
      * The {@link Pattern#minkowskiAdd(Pattern)} method creates a new rectangular pattern (via this method),
      * if its argument is also rectangular, according the definition of Minkowski sum;
      * in other case, it returns new {@link #newIntegerPattern simple} pattern and works slowly
@@ -390,7 +390,7 @@ public class Patterns {
      * ~log<sub>2</sub>(<i>N</i>) 2-point simple patterns or, maybe,
      * the list containing one 1-point pattern if this rectangular pattern is degenerate
      * (1-point).
-     * The <tt>equals</tt> method returns <tt>true</tt> if and only if the passed object is also rectangular
+     * The <code>equals</code> method returns <code>true</code> if and only if the passed object is also rectangular
      * pattern, consisting of the same points and created by this or equivalent method from this package.
      *
      * <p>The returned pattern will be "safe" in the sense that no references to the passed array are maintained by it.
@@ -399,9 +399,9 @@ public class Patterns {
      *
      * @param ranges the source ranges describing <i>n</i>-dimensional rectangular parallelepiped.
      * @return the rectangular pattern.
-     * @throws NullPointerException     if <tt>ranges</tt> argument is <tt>null</tt>
-     *                                  or some of passed ranges are <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>ranges</tt> argument is empty (contains no elements).
+     * @throws NullPointerException     if <code>ranges</code> argument is <code>null</code>
+     *                                  or some of passed ranges are <code>null</code>.
+     * @throws IllegalArgumentException if <code>ranges</code> argument is empty (contains no elements).
      */
     public static RectangularPattern newRectangularIntegerPattern(IRange... ranges) {
         Objects.requireNonNull(ranges, "Null ranges argument");
@@ -412,24 +412,25 @@ public class Patterns {
 
     /**
      * Equivalent to {@link #newRectangularIntegerPattern newRectangularIntegerPattern(ranges)},
-     * where <tt>ranges[k]</tt> is <tt>{@link IRange#valueOf(long, long)
+     * where <code>ranges[k]</code> is <tt>{@link IRange#valueOf(long, long)
      * IRange.valueOf}(min.{@link IPoint#coord(int) coord(k)}, max.{@link IPoint#coord(int) coord(k)})</tt>.
      * The number of dimensions of the created pattern is equal to the number of coordinates
-     * of <tt>min</tt> and <tt>max</tt> points.
+     * of <code>min</code> and <code>max</code> points.
      *
-     * <p>The number of coordinates of <tt>min</tt> and <tt>max</tt> points must be the same.
-     * All coordinates of <tt>min</tt> point must not be greater than the corresponding coordinates
-     * of the <tt>max</tt> points.
+     * <p>The number of coordinates of <code>min</code> and <code>max</code> points must be the same.
+     * All coordinates of <code>min</code> point must not be greater than the corresponding coordinates
+     * of the <code>max</code> points.
      *
      * @param min starting points of the parallelepiped (left top vertex in 2D case), inclusive.
      * @param max ending points of the parallelepiped (left top vertex in 2D case), inclusive.
      * @return the rectangular pattern, two vertices of which are the passed points.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
-     * @throws IllegalArgumentException if the numbers of coordinates of <tt>min</tt> and <tt>max</tt>
+     * @throws NullPointerException     if one of the arguments is <code>null</code>.
+     * @throws IllegalArgumentException if the numbers of coordinates of <code>min</code> and <code>max</code>
      *                                  points are different,
      *                                  or if <tt>min.{@link IPoint#coord(int) coord}(k) &gt;
-     *                                  max.{@link IPoint#coord(int) coord}(k)</tt> for some <tt>k</tt>,
-     *                                  or if the difference between these coordinates is <tt>&gt;=Long.MAX_VALUE</tt>.
+     *                                  max.{@link IPoint#coord(int) coord}(k)</tt> for some <code>k</code>,
+     *                                  or if the difference between these coordinates is
+     *                                  <code>&gt;=Long.MAX_VALUE</code>.
      */
     public static UniformGridPattern newRectangularIntegerPattern(IPoint min, IPoint max) {
         int n = min.coordCount();
@@ -445,15 +446,15 @@ public class Patterns {
 
 
 //    /**
-//     * Returns <tt>true</tt> if and only if the given pattern was created by
+//     * Returns <code>true</code> if and only if the given pattern was created by
 //     * {@link #newRectangularIntegerPattern(IRange...)} or equivalent method from this package.
 //     *
-//     * <p>Please compare: unlike this, {@link UniformGridPattern#isRectangular()} method returns <tt>true</tt>
+//     * <p>Please compare: unlike this, {@link UniformGridPattern#isRectangular()} method returns <code>true</code>
 //     * for any rectangular patterns, in particular, for ones created by {@link #newIntegerPattern(Collection)}
 //     * method if this set is rectangular (for example, the single point).
 //     *
 //     * @param pattern the checked pattern.
-//     * @return        <tt>true</tt> if and only if the given pattern was created by
+//     * @return        <code>true</code> if and only if the given pattern was created by
 //     *                {@link #newRectangularIntegerPattern(IRange...)} or equivalent method from this package.
 //     */
 //    public static boolean isRectangular(Pattern pattern) {
@@ -478,7 +479,7 @@ public class Patterns {
      * {@link AbstractUniformGridPattern#isActuallyRectangular()} method.
      * The {@link Pattern#minkowskiAdd(Pattern)} method creates a new Minkowski sum by this method,
      * that contains an additional summand equal to the added pattern.
-     * The <tt>equals</tt> method returns <tt>true</tt> if and only if the passed object is also Minkowski
+     * The <code>equals</code> method returns <code>true</code> if and only if the passed object is also Minkowski
      * sum, consisting of the same summands and created by this or equivalent method from this package.
      *
      * <p>If all passed patterns are {@link UniformGridPattern#isActuallyRectangular() rectangular}, the behavior of this method
@@ -491,14 +492,15 @@ public class Patterns {
      *
      * @param patterns the summands of the returned Minkowski sum.
      * @return the Minkowski sum.
-     * @throws NullPointerException     if <tt>patterns</tt> argument is <tt>null</tt>
-     *                                  or some of passed patterns are <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>patterns</tt> argument is an empty array,
+     * @throws NullPointerException     if <code>patterns</code> argument is <code>null</code>
+     *                                  or some of passed patterns are <code>null</code>.
+     * @throws IllegalArgumentException if <code>patterns</code> argument is an empty array,
      *                                  or if some patterns have different number of dimensions,
-     *                                  or if some of the {@link Pattern#roundedCoordRange(int) coordinate ranges} in the
-     *                                  precise result are out of <tt>Long.MIN_VALUE..Long.MAX_VALUE</tt> range
+     *                                  or if some of the {@link Pattern#roundedCoordRange(int)
+     *                                  coordinate ranges} in the
+     *                                  precise result are out of <code>Long.MIN_VALUE..Long.MAX_VALUE</code> range
      *                                  or have the size (maximum - minimum), greater or equal to
-     *                                  <tt>Long.MAX_VALUE</tt>.
+     *                                  <code>Long.MAX_VALUE</code>.
      */
     public static Pattern newMinkowskiSum(Pattern... patterns) {
         return newMinkowskiSum(Arrays.asList(patterns));
@@ -548,15 +550,15 @@ public class Patterns {
     }
 
     /**
-     * Equivalent to {@link #newMinkowskiSum(Pattern...) newMinkowskiSum(patterns)}, where <tt>pattern</tt>
-     * is the array with the length <tt>n</tt> containing <tt>n</tt> copies of the passed pattern.
+     * Equivalent to {@link #newMinkowskiSum(Pattern...) newMinkowskiSum(patterns)}, where <code>pattern</code>
+     * is the array with the length <code>n</code> containing <code>n</code> copies of the passed pattern.
      * Some algorithms of this package work better with such form of the Minkowski sums.
      *
      * @param pattern the pattern.
      * @param n       the multiplier.
      * @return the Minkowski multiple of the passed pattern.
-     * @throws NullPointerException     if <tt>pattern</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>n &lt;= 0</tt>.
+     * @throws NullPointerException     if <code>pattern</code> argument is <code>null</code>.
+     * @throws IllegalArgumentException if <code>n &lt;= 0</code>.
      */
     public static Pattern newMinkowskiMultiplePattern(Pattern pattern, int n) {
         Objects.requireNonNull(pattern, "Null pattern argument");
@@ -586,7 +588,7 @@ public class Patterns {
      * where <i>N</i> and <i>M</i> is the number of points in both patterns, and may work slowly.
      * The {@link Pattern#minkowskiDecomposition(int)} method returns the list containing
      * this pattern instance as the only element.
-     * The <tt>equals</tt> method returns <tt>true</tt> if and only if the passed object is also union
+     * The <code>equals</code> method returns <code>true</code> if and only if the passed object is also union
      * of patterns, consisting of the same summands and created by this or equivalent method from this package.
      *
      * <p>The returned pattern will be "safe" in the sense that no references to the passed array are maintained by it.
@@ -595,13 +597,13 @@ public class Patterns {
      *
      * @param patterns the summands of the returned union.
      * @return the set-theoretic union.
-     * @throws NullPointerException     if <tt>patterns</tt> argument is <tt>null</tt>
-     *                                  or some of passed patterns are <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>patterns</tt> argument is an empty array,
+     * @throws NullPointerException     if <code>patterns</code> argument is <code>null</code>
+     *                                  or some of passed patterns are <code>null</code>.
+     * @throws IllegalArgumentException if <code>patterns</code> argument is an empty array,
      *                                  or if some patterns have different number of dimensions,
      *                                  or if some of the {@link Pattern#roundedCoordRange(int) coordinate ranges} in the
      *                                  precise result have the size (maximum - minimum), greater or equal to
-     *                                  <tt>Long.MAX_VALUE</tt>.
+     *                                  <code>Long.MAX_VALUE</code>.
      */
     public static Pattern newUnion(Pattern... patterns) {
         Objects.requireNonNull(patterns, "Null patterns argument");
@@ -616,16 +618,16 @@ public class Patterns {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if the absolute value of the precise mathematical difference
-     * |<tt>x1</tt>&minus;<tt>x2</tt>| is not greater than {@link Pattern#MAX_COORDINATE}:
-     * <nobr>|<tt>x1</tt>&minus;<tt>x2</tt>|&le;{@link Pattern#MAX_COORDINATE}</nobr>.
+     * Returns <code>true</code> if and only if the absolute value of the precise mathematical difference
+     * |<code>x1</code>&minus;<code>x2</code>| is not greater than {@link Pattern#MAX_COORDINATE}:
+     * |<code>x1</code>&minus;<code>x2</code>|&le;{@link Pattern#MAX_COORDINATE}.
      *
      * <p>Note: this condition is checked <i>absolutely strictly with ideal precision</i>.
      * If this difference is near to {@link Pattern#MAX_COORDINATE} value,
-     * this method uses <tt>BigDecimal</tt> class to provide absolutely correct result.
+     * this method uses <code>BigDecimal</code> class to provide absolutely correct result.
      *
-     * <p>Special cases: if any of two arguments contains <tt>NaN</tt> or an infinity,
-     * this method returns <tt>false</tt>.
+     * <p>Special cases: if any of two arguments contains <code>NaN</code> or an infinity,
+     * this method returns <code>false</code>.
      *
      * @param x1 the first number.
      * @param x2 the second number.
@@ -635,9 +637,10 @@ public class Patterns {
         if (Double.isNaN(x1) || Double.isNaN(x2) || Double.isInfinite(x1) || Double.isInfinite(x2)) {
             return false;
         }
-        double a = x1 <= x2 ? x1 : x2;
-        double b = x1 <= x2 ? x2 : x1;
-        double diff = b - a; // according IEEE 754, it is the nearest double value to the mathematical difference b-a
+        @SuppressWarnings("ManualMinMaxCalculation") double a = x1 <= x2 ? x1 : x2;
+        @SuppressWarnings("ManualMinMaxCalculation") double b = x1 <= x2 ? x2 : x1;
+        double diff = b - a;
+        // - according to IEEE 754, it is the nearest double value to the mathematical difference b-a
         if (diff < Pattern.MAX_COORDINATE - 1) { // -1 and +1 to be on the safe side
             return true;
         }
@@ -764,31 +767,36 @@ public class Patterns {
         if (aH == 0L) {
             if (bH == 0L) { // |a*b| = d, if d < 2^63
                 d = aL * bL;
-                if (d < 0L) // d >= 2^63
+                if (d < 0L) { // d >= 2^63
                     return Long.MIN_VALUE;
+                }
                 return sign ? -d : d;
             } else {
                 d = aL * bL;
-                if (d < 0L) // d >= 2^63
+                if (d < 0L) { // d >= 2^63
                     return Long.MIN_VALUE;
+                }
                 c = aL * bH;
             }
         } else {
             if (bH == 0L) {
                 d = aL * bL;
-                if (d < 0L) // d >= 2^63
+                if (d < 0L) { // d >= 2^63
                     return Long.MIN_VALUE;
+                }
                 c = aH * bL;
             } else { // aH != 0, bH != 0
                 return Long.MIN_VALUE;
             }
         }
         // here d < 2^63; c = aH*bL or aL*bH, so, c < 2^63
-        if (c > Integer.MAX_VALUE) // c >= 2^31: it means overflow (|a*b| >= c * 2^32 >= 2^63)
+        if (c > Integer.MAX_VALUE) { // c >= 2^31: it means overflow (|a*b| >= c * 2^32 >= 2^63)
             return Long.MIN_VALUE;
+        }
         long result = (c << 32) + d;
-        if (result < 0L) // c * 2^32 + d >= 2^63
+        if (result < 0L)  { // c * 2^32 + d >= 2^63
             return Long.MIN_VALUE;
+        }
         return sign ? -result : result;
     }
     /*Repeat.IncludeEnd*/
