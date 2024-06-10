@@ -458,7 +458,7 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      */
     public static UpdatablePArray asUpdatablePArray(Object array) {
         if (array instanceof Object[]) {
-            throw new IllegalArgumentException("asMatrix cannot be called for Object[] array");
+            throw new IllegalArgumentException("asUpdatablePArray/asMatrix cannot be called for Object[] array");
         }
         return (UpdatablePArray) asUpdatableArray(array);
     }
