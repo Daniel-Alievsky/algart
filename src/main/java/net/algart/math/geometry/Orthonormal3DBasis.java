@@ -747,6 +747,24 @@ public final class Orthonormal3DBasis {
     }
 
     /**
+     * Analog ot {@link #lengthSquare(double, double, double)} for integer components.
+     * Equivalent to <tt>x * x + y * y + z * z</tt>.
+     *
+     * <p>Note: this method does not check possible overflow! To avoid overflow, we recommend never
+     * pass here the components of the segment, which precise length &ge;2<sup>31</sup>*&radic;2.
+     * If you can guarantee that overflow is impossible, this method works faster than
+     * {@link #lengthSquare(double, double, double)}.
+     *
+     * @param x <i>x</i>-projection of the segment.
+     * @param y <i>y</i>-projection of the segment.
+     * @param z <i>z</i>-projection of the segment.
+     * @return the square of the segment length.
+     */
+    public static long lengthSquareInteger(long x, long y, long z) {
+        return x * x + y * y + z * z;
+    }
+
+    /**
      * Returns the scalar product of <b>a</b> and <b>b</b> vectors:
      * <tt>ax * bx + ay * by + az * bz</tt>.
      *
