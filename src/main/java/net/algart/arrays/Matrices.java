@@ -3638,17 +3638,7 @@ public class Matrices {
         Objects.requireNonNull(predicate);
         Matrices.applyFunc(
                 context,
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0]);
-                    }
-
-                    @Override
-                    public double get(double x0) {
-                        return predicate.test(x0) ? 1.0 : 0.0;
-                    }
-                }, result, source);
+                (Func1) x0 -> predicate.test(x0) ? 1.0 : 0.0, result, source);
     }
 
     /**
@@ -3674,17 +3664,7 @@ public class Matrices {
         Objects.requireNonNull(function);
         Matrices.applyFunc(
                 context,
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0]);
-                    }
-
-                    @Override
-                    public double get(double x0) {
-                        return function.applyAsDouble(x0);
-                    }
-                }, result, source);
+                (Func1) function::applyAsDouble, result, source);
     }
 
     /**

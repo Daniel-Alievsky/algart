@@ -97,4 +97,3 @@ public class CoordFuncDemo {
         System.out.println("Done");
     }
 }
-

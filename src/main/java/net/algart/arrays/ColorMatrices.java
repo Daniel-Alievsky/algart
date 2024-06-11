@@ -24,7 +24,7 @@
 
 package net.algart.arrays;
 
-import net.algart.math.functions.AbstractFunc;
+import net.algart.math.functions.Func3;
 import net.algart.math.functions.LinearFunc;
 
 import java.util.ArrayList;
@@ -110,17 +110,8 @@ public class ColorMatrices {
         final double bScaleInv = 1.0 / b.array().maxPossibleValue(1.0);
         final double scale = Arrays.maxPossibleValue(resultType, 1.0);
         return Matrices.asFuncMatrix(
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0], x[1], x[2]);
-                    }
-
-                    @Override
-                    public double get(double x0, double x1, double x2) {
-                        return scale * rgbToHue(x0 * rScaleInv, x1 * gScaleInv, x2 * bScaleInv);
-                    }
-                },
+                (Func3) (x0, x1, x2) ->
+                        scale * rgbToHue(x0 * rScaleInv, x1 * gScaleInv, x2 * bScaleInv),
                 resultType, r, g, b);
     }
 
@@ -135,17 +126,8 @@ public class ColorMatrices {
         final double bScaleInv = 1.0 / b.array().maxPossibleValue(1.0);
         final double scale = Arrays.maxPossibleValue(resultType, 1.0);
         return Matrices.asFuncMatrix(
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0], x[1], x[2]);
-                    }
-
-                    @Override
-                    public double get(double x0, double x1, double x2) {
-                        return scale * rgbToSaturationHsv(x0 * rScaleInv, x1 * gScaleInv, x2 * bScaleInv);
-                    }
-                },
+                (Func3) (x0, x1, x2) ->
+                        scale * rgbToSaturationHsv(x0 * rScaleInv, x1 * gScaleInv, x2 * bScaleInv),
                 resultType, r, g, b);
     }
 
@@ -160,17 +142,8 @@ public class ColorMatrices {
         final double bScaleInv = 1.0 / b.array().maxPossibleValue(1.0);
         final double scale = Arrays.maxPossibleValue(resultType, 1.0);
         return Matrices.asFuncMatrix(
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0], x[1], x[2]);
-                    }
-
-                    @Override
-                    public double get(double x0, double x1, double x2) {
-                        return scale * rgbToValue(x0 * rScaleInv, x1 * gScaleInv, x2 * bScaleInv);
-                    }
-                },
+                (Func3) (x0, x1, x2) ->
+                        scale * rgbToValue(x0 * rScaleInv, x1 * gScaleInv, x2 * bScaleInv),
                 resultType, r, g, b);
     }
 
@@ -185,17 +158,8 @@ public class ColorMatrices {
         final double bScaleInv = 1.0 / b.array().maxPossibleValue(1.0);
         final double scale = Arrays.maxPossibleValue(resultType, 1.0);
         return Matrices.asFuncMatrix(
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0], x[1], x[2]);
-                    }
-
-                    @Override
-                    public double get(double x0, double x1, double x2) {
-                        return scale * rgbToSaturationHsl(x0 * rScaleInv, x1 * gScaleInv, x2 * bScaleInv);
-                    }
-                },
+                (Func3) (x0, x1, x2) ->
+                        scale * rgbToSaturationHsl(x0 * rScaleInv, x1 * gScaleInv, x2 * bScaleInv),
                 resultType, r, g, b);
     }
 
@@ -210,17 +174,8 @@ public class ColorMatrices {
         final double bScaleInv = 1.0 / b.array().maxPossibleValue(1.0);
         final double scale = Arrays.maxPossibleValue(resultType, 1.0);
         return Matrices.asFuncMatrix(
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0], x[1], x[2]);
-                    }
-
-                    @Override
-                    public double get(double x0, double x1, double x2) {
-                        return scale * rgbToLightness(x0 * rScaleInv, x1 * gScaleInv, x2 * bScaleInv);
-                    }
-                },
+                (Func3) (x0, x1, x2) ->
+                        scale * rgbToLightness(x0 * rScaleInv, x1 * gScaleInv, x2 * bScaleInv),
                 resultType, r, g, b);
     }
 
@@ -236,17 +191,8 @@ public class ColorMatrices {
         final double vScaleInv = 1.0 / value.array().maxPossibleValue(1.0);
         final double resultScale = Arrays.maxPossibleValue(resultType, 1.0);
         return Matrices.asFuncMatrix(
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0], x[1], x[2]);
-                    }
-
-                    @Override
-                    public double get(double x0, double x1, double x2) {
-                        return resultScale * hsvToRed(x0 * hScaleInv, x1 * sScaleInv, x2 * vScaleInv);
-                    }
-                },
+                (Func3) (x0, x1, x2) ->
+                        resultScale * hsvToRed(x0 * hScaleInv, x1 * sScaleInv, x2 * vScaleInv),
                 resultType, hue, saturation, value);
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
@@ -261,17 +207,8 @@ public class ColorMatrices {
         final double vScaleInv = 1.0 / value.array().maxPossibleValue(1.0);
         final double resultScale = Arrays.maxPossibleValue(resultType, 1.0);
         return Matrices.asFuncMatrix(
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0], x[1], x[2]);
-                    }
-
-                    @Override
-                    public double get(double x0, double x1, double x2) {
-                        return resultScale * hsvToGreen(x0 * hScaleInv, x1 * sScaleInv, x2 * vScaleInv);
-                    }
-                },
+                (Func3) (x0, x1, x2) ->
+                        resultScale * hsvToGreen(x0 * hScaleInv, x1 * sScaleInv, x2 * vScaleInv),
                 resultType, hue, saturation, value);
     }
 
@@ -286,17 +223,8 @@ public class ColorMatrices {
         final double vScaleInv = 1.0 / value.array().maxPossibleValue(1.0);
         final double resultScale = Arrays.maxPossibleValue(resultType, 1.0);
         return Matrices.asFuncMatrix(
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0], x[1], x[2]);
-                    }
-
-                    @Override
-                    public double get(double x0, double x1, double x2) {
-                        return resultScale * hsvToBlue(x0 * hScaleInv, x1 * sScaleInv, x2 * vScaleInv);
-                    }
-                },
+                (Func3) (x0, x1, x2) ->
+                        resultScale * hsvToBlue(x0 * hScaleInv, x1 * sScaleInv, x2 * vScaleInv),
                 resultType, hue, saturation, value);
     }
     /*Repeat.AutoGeneratedEnd*/
@@ -313,17 +241,8 @@ public class ColorMatrices {
         final double lScaleInv = 1.0 / lightness.array().maxPossibleValue(1.0);
         final double resultScale = Arrays.maxPossibleValue(resultType, 1.0);
         return Matrices.asFuncMatrix(
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0], x[1], x[2]);
-                    }
-
-                    @Override
-                    public double get(double x0, double x1, double x2) {
-                        return resultScale * hslToRed(x0 * hScaleInv, x1 * sScaleInv, x2 * lScaleInv);
-                    }
-                },
+                (Func3) (x0, x1, x2) ->
+                        resultScale * hslToRed(x0 * hScaleInv, x1 * sScaleInv, x2 * lScaleInv),
                 resultType, hue, saturation, lightness);
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
@@ -338,17 +257,8 @@ public class ColorMatrices {
         final double lScaleInv = 1.0 / lightness.array().maxPossibleValue(1.0);
         final double resultScale = Arrays.maxPossibleValue(resultType, 1.0);
         return Matrices.asFuncMatrix(
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0], x[1], x[2]);
-                    }
-
-                    @Override
-                    public double get(double x0, double x1, double x2) {
-                        return resultScale * hslToGreen(x0 * hScaleInv, x1 * sScaleInv, x2 * lScaleInv);
-                    }
-                },
+                (Func3) (x0, x1, x2) ->
+                        resultScale * hslToGreen(x0 * hScaleInv, x1 * sScaleInv, x2 * lScaleInv),
                 resultType, hue, saturation, lightness);
     }
 
@@ -363,17 +273,8 @@ public class ColorMatrices {
         final double lScaleInv = 1.0 / lightness.array().maxPossibleValue(1.0);
         final double resultScale = Arrays.maxPossibleValue(resultType, 1.0);
         return Matrices.asFuncMatrix(
-                new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0], x[1], x[2]);
-                    }
-
-                    @Override
-                    public double get(double x0, double x1, double x2) {
-                        return resultScale * hslToBlue(x0 * hScaleInv, x1 * sScaleInv, x2 * lScaleInv);
-                    }
-                },
+                (Func3) (x0, x1, x2) ->
+                        resultScale * hslToBlue(x0 * hScaleInv, x1 * sScaleInv, x2 * lScaleInv),
                 resultType, hue, saturation, lightness);
     }
     /*Repeat.AutoGeneratedEnd*/
