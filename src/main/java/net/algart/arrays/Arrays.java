@@ -1748,7 +1748,6 @@ public class Arrays {
      * Equivalent to {@link Class#isPrimitive() elementType.isPrimitive()}, but
      * does not throw exception for {@code null} argument (<code>false</code> is returned for {@code null}).
      *
-     *
      * @param elementType some element type; can be {@code null}, then <code>false</code> is returned.
      * @return whether this element type is a primitive type.
      */

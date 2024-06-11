@@ -428,9 +428,34 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      */
     public static UpdatablePArray asUpdatablePArray(Object array) {
         if (array instanceof Object[]) {
-            throw new IllegalArgumentException("asUpdatablePArray cannot be called for Object[] array");
+            throw new IllegalArgumentException("Object[] Java array cannot be viewed as UpdatablePArray");
         }
         return (UpdatablePArray) asUpdatableArray(array);
+    }
+
+    /**
+     * Analog of {@link #asUpdatableArray(Object)} with the only difference, that this method
+     * does not work with Java array of objects.
+     *
+     * <p>This method has a brief alias: {@link PArray#as(Object)}.</p>
+     *
+     * @param array the source Java array.
+     * @return an unresizable AlgART array backed by the specified Java array.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>array</code> argument is not an array,
+     *                                  or <code>boolean[]</code> array, or <code>Objects[]</code> array.
+     */
+    public static UpdatablePArray asUpdatablePNumberArray(Object array) {
+        if (array instanceof Object[]) {
+            throw new IllegalArgumentException("asUpdatablePNumberArray cannot be called for Object[] array");
+        }
+        if (array instanceof boolean[]) {
+            throw new IllegalArgumentException("asUpdatablePNumberArray cannot be called for boolean[] array");
+        }
+        if (array instanceof char[]) {
+            throw new IllegalArgumentException("asUpdatablePNumberArray cannot be called for char[] array");
+        }
+        return (UpdatablePNumberArray) asUpdatableArray(array);
     }
 
     /**

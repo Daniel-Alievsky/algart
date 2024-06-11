@@ -1565,9 +1565,9 @@ public interface Array {
      * @param length      the length and capacity of the array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>
+     * @throws IllegalArgumentException        if <code>elementType</code> is <code>void.class</code>
      *                                         or if the specified length is negative.
-     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
      */
     static UpdatableArray newArray(MemoryModel memoryModel, Class<?> elementType, long length) {
@@ -1575,6 +1575,18 @@ public interface Array {
         return memoryModel.newUnresizableArray(elementType, length);
     }
 
+    /**
+     * Equivalent to <code>{@link #newArray(MemoryModel, Class, long)
+     * newArray}({@link Arrays#SMM Arrays.SMM}, elementType, length)</code>.
+     *
+     * @param elementType the type of array elements.
+     * @param length      the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws NullPointerException if one of the arguments is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is <code>void.class</code>
+     *                                         or if the specified length is negative.
+     * @throws TooLargeArrayException          if the specified length is too large for {@link SimpleMemoryModel}.
+     */
     static UpdatableArray newArray(Class<?> elementType, long length) {
         return newArray(Arrays.SMM, elementType, length);
     }

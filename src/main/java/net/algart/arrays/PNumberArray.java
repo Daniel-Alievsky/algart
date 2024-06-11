@@ -48,6 +48,24 @@ public interface PNumberArray extends PArray {
         return Matrices.matrix(this, dim);
     }
 
+    /**
+     * Equivalent to <code>(UpdatablePNumberArray) {@link MemoryModel#newUnresizableArray(Class, long)
+     * memoryModel.newUnresizableArray(elementType, length)}</code>, but with throwing
+     * <code>IllegalArgumentException</code> in a case when the type casting to {@link UpdatablePNumberArray}
+     * is impossible (non-primitive element type, <code>boolean</code> or <code>char</code>).
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param elementType the type of array elements.
+     * @param length      the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws NullPointerException            if one of the arguments is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is not  <code>byte.class</code>,
+     *                                         <code>short.class</code>, <code>int.class</code>,
+     *                                         <code>long.class</code>,
+     *                                         <code>float.class</code> or <code>double.class</code>
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
+     * @throws TooLargeArrayException          if the specified length is too large for this memory model.
+     */
     static UpdatablePNumberArray newArray(MemoryModel memoryModel, Class<?> elementType, long length) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         Objects.requireNonNull(elementType, "Null element type");
@@ -57,8 +75,21 @@ public interface PNumberArray extends PArray {
         return (UpdatablePNumberArray) memoryModel.newUnresizableArray(elementType, length);
     }
 
+    /**
+     * Equivalent to <code>{@link #newArray(MemoryModel, Class, long)
+     * newArray}({@link Arrays#SMM Arrays.SMM}, elementType, length)</code>.
+     *
+     * @param elementType the type of array elements.
+     * @param length      the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
+     * @throws IllegalArgumentException if <code>elementType</code> is not  <code>byte.class</code>,
+     *                                  <code>short.class</code>, <code>int.class</code>,
+     *                                  <code>long.class</code>,
+     *                                  <code>float.class</code> or <code>double.class</code>
+     * @throws TooLargeArrayException   if the specified length is too large for {@link SimpleMemoryModel}.
+     */
     static UpdatablePNumberArray newArray(Class<?> elementType, long length) {
         return newArray(Arrays.SMM, elementType, length);
     }
-
 }

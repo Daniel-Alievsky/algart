@@ -126,8 +126,8 @@ public interface MemoryModel {
      * The capacity of new array will be equal to its length.
      *
      * <p>This method is equivalent to the following call:
-     * <tt>{@link #newEmptyArray(Class, long) newEmptyArray(elementType, initialLength)}.{@link
-     * MutableArray#length(long) length(initialLength)}.{@link MutableArray#trim() trim()}</tt>.
+     * <code>{@link #newEmptyArray(Class, long) newEmptyArray(elementType, initialLength)}.{@link
+     * MutableArray#length(long) length(initialLength)}.{@link MutableArray#trim() trim()}</code>.
      *
      * @param elementType   the type of array elements.
      * @param initialLength the initial length and capacity of the array.
@@ -148,8 +148,8 @@ public interface MemoryModel {
      * The capacity of new array will be equal to its length.
      *
      * <p>The analogous result may be obtained the following call:
-     * <tt>{@link #newArray(Class, long) newArray(elementType, length)}.{@link
-     * MutableArray#asUnresizable() asUnresizable()}</tt>.
+     * <code>{@link #newArray(Class, long) newArray(elementType, length)}.{@link
+     * MutableArray#asUnresizable() asUnresizable()}</code>.
      * However, we don't recommend to use such code.
      * If you are sure that you will not need to change the array length,
      * please always use this method
@@ -177,9 +177,9 @@ public interface MemoryModel {
     UpdatableArray newUnresizableArray(Class<?> elementType, long length);
 
     /**
-     * Equivalent to <tt>{@link #newArray(Class, long)
+     * Equivalent to <code>{@link #newArray(Class, long)
      * newArray}(array.{@link Array#elementType() elementType()}, array.{@link Array#length()
-     * length()})</tt>.
+     * length()})</code>.
      *
      * @param array the pattern array.
      * @return new AlgART array with the same length and element type.
@@ -193,9 +193,9 @@ public interface MemoryModel {
     MutableArray newArray(Array array);
 
     /**
-     * Equivalent to <tt>{@link #newUnresizableArray(Class, long)
+     * Equivalent to <code>{@link #newUnresizableArray(Class, long)
      * newUnresizableArray}(array.{@link Array#elementType() elementType()}, array.{@link Array#length()
-     * length()})</tt>.
+     * length()})</code>.
      *
      * @param array the pattern array.
      * @return new unresizable AlgART array with the same length and element type.
@@ -228,8 +228,8 @@ public interface MemoryModel {
     MutableBitArray newEmptyBitArray();
 
     /**
-     * Equivalent to <tt>(MutableBitArray){@link #newEmptyArray(Class, long)
-     * newEmptyArray}(boolean.class, initialCapacity)</tt>.
+     * Equivalent to <code>(MutableBitArray){@link #newEmptyArray(Class, long)
+     * newEmptyArray}(boolean.class, initialCapacity)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableBitArray a = memoryModel.newEmptyBitArray(10000);
@@ -247,8 +247,8 @@ public interface MemoryModel {
     MutableBitArray newEmptyBitArray(long initialCapacity);
 
     /**
-     * Equivalent to <tt>(MutableBitArray){@link #newArray(Class, long)
-     * newArray}(boolean.class, initialLength)</tt>.
+     * Equivalent to <code>(MutableBitArray){@link #newArray(Class, long)
+     * newArray}(boolean.class, initialLength)</code>.
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
@@ -263,8 +263,8 @@ public interface MemoryModel {
     MutableBitArray newBitArray(long initialLength);
 
     /**
-     * Equivalent to <tt>(UpdatableBitArray){@link #newUnresizableArray(Class, long)
-     * newUnresizableArray}(boolean.class, initialLength)</tt>.
+     * Equivalent to <code>(UpdatableBitArray){@link #newUnresizableArray(Class, long)
+     * newUnresizableArray}(boolean.class, initialLength)</code>.
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
@@ -295,8 +295,8 @@ public interface MemoryModel {
     MutableCharArray newEmptyCharArray();
 
     /**
-     * Equivalent to <tt>(MutableCharArray){@link #newEmptyArray(Class, long)
-     * newEmptyArray}(char.class, initialCapacity)</tt>.
+     * Equivalent to <code>(MutableCharArray){@link #newEmptyArray(Class, long)
+     * newEmptyArray}(char.class, initialCapacity)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableCharArray a = memoryModel.newEmptyCharArray(10000);
@@ -314,8 +314,8 @@ public interface MemoryModel {
     MutableCharArray newEmptyCharArray(long initialCapacity);
 
     /**
-     * Equivalent to <tt>(MutableCharArray){@link #newArray(Class, long)
-     * newArray}(char.class, initialLength)</tt>.
+     * Equivalent to <code>(MutableCharArray){@link #newArray(Class, long)
+     * newArray}(char.class, initialLength)</code>.
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
@@ -330,8 +330,8 @@ public interface MemoryModel {
     MutableCharArray newCharArray(long initialLength);
 
     /**
-     * Equivalent to <tt>(UpdatableCharArray){@link #newUnresizableArray(Class, long)
-     * newUnresizableArray}(char.class, initialLength)</tt>.
+     * Equivalent to <code>(UpdatableCharArray){@link #newUnresizableArray(Class, long)
+     * newUnresizableArray}(char.class, initialLength)</code>.
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
@@ -362,8 +362,8 @@ public interface MemoryModel {
     MutableByteArray newEmptyByteArray();
 
     /**
-     * Equivalent to <tt>(MutableByteArray){@link #newEmptyArray(Class, long)
-     * newEmptyArray}(byte.class, initialCapacity)</tt>.
+     * Equivalent to <code>(MutableByteArray){@link #newEmptyArray(Class, long)
+     * newEmptyArray}(byte.class, initialCapacity)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableByteArray a = memoryModel.newEmptyByteArray(10000);
@@ -381,8 +381,8 @@ public interface MemoryModel {
     MutableByteArray newEmptyByteArray(long initialCapacity);
 
     /**
-     * Equivalent to <tt>(MutableByteArray){@link #newArray(Class, long)
-     * newArray}(byte.class, initialLength)</tt>.
+     * Equivalent to <code>(MutableByteArray){@link #newArray(Class, long)
+     * newArray}(byte.class, initialLength)</code>.
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
@@ -397,8 +397,8 @@ public interface MemoryModel {
     MutableByteArray newByteArray(long initialLength);
 
     /**
-     * Equivalent to <tt>(UpdatableByteArray){@link #newUnresizableArray(Class, long)
-     * newUnresizableArray}(byte.class, initialLength)</tt>.
+     * Equivalent to <code>(UpdatableByteArray){@link #newUnresizableArray(Class, long)
+     * newUnresizableArray}(byte.class, initialLength)</code>.
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
@@ -429,8 +429,8 @@ public interface MemoryModel {
     MutableShortArray newEmptyShortArray();
 
     /**
-     * Equivalent to <tt>(MutableShortArray){@link #newEmptyArray(Class, long)
-     * newEmptyArray}(short.class, initialCapacity)</tt>.
+     * Equivalent to <code>(MutableShortArray){@link #newEmptyArray(Class, long)
+     * newEmptyArray}(short.class, initialCapacity)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableShortArray a = memoryModel.newEmptyShortArray(10000);
@@ -448,8 +448,8 @@ public interface MemoryModel {
     MutableShortArray newEmptyShortArray(long initialCapacity);
 
     /**
-     * Equivalent to <tt>(MutableShortArray){@link #newArray(Class, long)
-     * newArray}(short.class, initialLength)</tt>.
+     * Equivalent to <code>(MutableShortArray){@link #newArray(Class, long)
+     * newArray}(short.class, initialLength)</code>.
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
@@ -464,8 +464,8 @@ public interface MemoryModel {
     MutableShortArray newShortArray(long initialLength);
 
     /**
-     * Equivalent to <tt>(UpdatableShortArray){@link #newUnresizableArray(Class, long)
-     * newUnresizableArray}(short.class, initialLength)</tt>.
+     * Equivalent to <code>(UpdatableShortArray){@link #newUnresizableArray(Class, long)
+     * newUnresizableArray}(short.class, initialLength)</code>.
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
@@ -496,8 +496,8 @@ public interface MemoryModel {
     MutableIntArray newEmptyIntArray();
 
     /**
-     * Equivalent to <tt>(MutableIntArray){@link #newEmptyArray(Class, long)
-     * newEmptyArray}(int.class, initialCapacity)</tt>.
+     * Equivalent to <code>(MutableIntArray){@link #newEmptyArray(Class, long)
+     * newEmptyArray}(int.class, initialCapacity)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableIntArray a = memoryModel.newEmptyIntArray(10000);
@@ -515,8 +515,8 @@ public interface MemoryModel {
     MutableIntArray newEmptyIntArray(long initialCapacity);
 
     /**
-     * Equivalent to <tt>(MutableIntArray){@link #newArray(Class, long)
-     * newArray}(int.class, initialLength)</tt>.
+     * Equivalent to <code>(MutableIntArray){@link #newArray(Class, long)
+     * newArray}(int.class, initialLength)</code>.
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
@@ -531,8 +531,8 @@ public interface MemoryModel {
     MutableIntArray newIntArray(long initialLength);
 
     /**
-     * Equivalent to <tt>(UpdatableIntArray){@link #newUnresizableArray(Class, long)
-     * newUnresizableArray}(int.class, initialLength)</tt>.
+     * Equivalent to <code>(UpdatableIntArray){@link #newUnresizableArray(Class, long)
+     * newUnresizableArray}(int.class, initialLength)</code>.
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
@@ -563,8 +563,8 @@ public interface MemoryModel {
     MutableLongArray newEmptyLongArray();
 
     /**
-     * Equivalent to <tt>(MutableLongArray){@link #newEmptyArray(Class, long)
-     * newEmptyArray}(long.class, initialCapacity)</tt>.
+     * Equivalent to <code>(MutableLongArray){@link #newEmptyArray(Class, long)
+     * newEmptyArray}(long.class, initialCapacity)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableLongArray a = memoryModel.newEmptyLongArray(10000);
@@ -582,8 +582,8 @@ public interface MemoryModel {
     MutableLongArray newEmptyLongArray(long initialCapacity);
 
     /**
-     * Equivalent to <tt>(MutableLongArray){@link #newArray(Class, long)
-     * newArray}(long.class, initialLength)</tt>.
+     * Equivalent to <code>(MutableLongArray){@link #newArray(Class, long)
+     * newArray}(long.class, initialLength)</code>.
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
@@ -598,8 +598,8 @@ public interface MemoryModel {
     MutableLongArray newLongArray(long initialLength);
 
     /**
-     * Equivalent to <tt>(UpdatableLongArray){@link #newUnresizableArray(Class, long)
-     * newUnresizableArray}(long.class, initialLength)</tt>.
+     * Equivalent to <code>(UpdatableLongArray){@link #newUnresizableArray(Class, long)
+     * newUnresizableArray}(long.class, initialLength)</code>.
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
@@ -630,8 +630,8 @@ public interface MemoryModel {
     MutableFloatArray newEmptyFloatArray();
 
     /**
-     * Equivalent to <tt>(MutableFloatArray){@link #newEmptyArray(Class, long)
-     * newEmptyArray}(float.class, initialCapacity)</tt>.
+     * Equivalent to <code>(MutableFloatArray){@link #newEmptyArray(Class, long)
+     * newEmptyArray}(float.class, initialCapacity)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableFloatArray a = memoryModel.newEmptyFloatArray(10000);
@@ -649,8 +649,8 @@ public interface MemoryModel {
     MutableFloatArray newEmptyFloatArray(long initialCapacity);
 
     /**
-     * Equivalent to <tt>(MutableFloatArray){@link #newArray(Class, long)
-     * newArray}(float.class, initialLength)</tt>.
+     * Equivalent to <code>(MutableFloatArray){@link #newArray(Class, long)
+     * newArray}(float.class, initialLength)</code>.
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
@@ -665,8 +665,8 @@ public interface MemoryModel {
     MutableFloatArray newFloatArray(long initialLength);
 
     /**
-     * Equivalent to <tt>(UpdatableFloatArray){@link #newUnresizableArray(Class, long)
-     * newUnresizableArray}(float.class, initialLength)</tt>.
+     * Equivalent to <code>(UpdatableFloatArray){@link #newUnresizableArray(Class, long)
+     * newUnresizableArray}(float.class, initialLength)</code>.
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
@@ -697,8 +697,8 @@ public interface MemoryModel {
     MutableDoubleArray newEmptyDoubleArray();
 
     /**
-     * Equivalent to <tt>(MutableDoubleArray){@link #newEmptyArray(Class, long)
-     * newEmptyArray}(double.class, initialCapacity)</tt>.
+     * Equivalent to <code>(MutableDoubleArray){@link #newEmptyArray(Class, long)
+     * newEmptyArray}(double.class, initialCapacity)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableDoubleArray a = memoryModel.newEmptyDoubleArray(10000);
@@ -716,8 +716,8 @@ public interface MemoryModel {
     MutableDoubleArray newEmptyDoubleArray(long initialCapacity);
 
     /**
-     * Equivalent to <tt>(MutableDoubleArray){@link #newArray(Class, long)
-     * newArray}(double.class, initialLength)</tt>.
+     * Equivalent to <code>(MutableDoubleArray){@link #newArray(Class, long)
+     * newArray}(double.class, initialLength)</code>.
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
@@ -732,8 +732,8 @@ public interface MemoryModel {
     MutableDoubleArray newDoubleArray(long initialLength);
 
     /**
-     * Equivalent to <tt>(UpdatableDoubleArray){@link #newUnresizableArray(Class, long)
-     * newUnresizableArray}(double.class, initialLength)</tt>.
+     * Equivalent to <code>(UpdatableDoubleArray){@link #newUnresizableArray(Class, long)
+     * newUnresizableArray}(double.class, initialLength)</code>.
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
@@ -766,8 +766,8 @@ public interface MemoryModel {
     <E> MutableObjectArray<E> newEmptyObjectArray(Class<E> elementType);
 
     /**
-     * Equivalent to <tt>(MutableObjectArray&lt;E&gt;){@link #newEmptyArray(Class, long)
-     * newEmptyArray}(elementType, initialCapacity)</tt>.
+     * Equivalent to <code>(MutableObjectArray&lt;E&gt;){@link #newEmptyArray(Class, long)
+     * newEmptyArray}(elementType, initialCapacity)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableObjectArray&lt;String&gt; a =
@@ -787,8 +787,8 @@ public interface MemoryModel {
     <E> MutableObjectArray<E> newEmptyObjectArray(Class<E> elementType, long initialCapacity);
 
     /**
-     * Equivalent to <tt>(MutableObjectArray&lt;E&gt;){@link #newArray(Class, long)
-     * newArray}(elementType, initialLength)</tt>.
+     * Equivalent to <code>(MutableObjectArray&lt;E&gt;){@link #newArray(Class, long)
+     * newArray}(elementType, initialLength)</code>.
      *
      * @param <E>           the generic type of array elements.
      * @param elementType   the type of array elements.
@@ -804,8 +804,8 @@ public interface MemoryModel {
     <E> MutableObjectArray<E> newObjectArray(Class<E> elementType, long initialLength);
 
     /**
-     * Equivalent to <tt>(UpdatableObjectArray&lt;E&gt;){@link #newUnresizableArray(Class, long)
-     * newUnresizableArray}(elementType, initialLength)</tt>.
+     * Equivalent to <code>(UpdatableObjectArray&lt;E&gt;){@link #newUnresizableArray(Class, long)
+     * newUnresizableArray}(elementType, initialLength)</code>.
      *
      * @param <E>         the generic type of array elements.
      * @param elementType the type of array elements.
@@ -875,8 +875,8 @@ public interface MemoryModel {
      * <p>with the only difference that the copying, maybe, will be deferred.
      *
      * <p>The analogous result may be obtained the following call:
-     * <tt>{@link #newLazyCopy(Array) newLazyCopy(array)}.{@link
-     * MutableArray#asUnresizable() asUnresizable()}</tt>.
+     * <code>{@link #newLazyCopy(Array) newLazyCopy(array)}.{@link
+     * MutableArray#asUnresizable() asUnresizable()}</code>.
      * However, such call may require much more resources than this method.
      * See {@link #newUnresizableArray(Class, long)} method to learn more about this difference.
      *
@@ -999,9 +999,9 @@ public interface MemoryModel {
             long... dim);
 
     /**
-     * Equivalent to <tt>{@link #newMatrix(Class, Class, long...)
+     * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
      * newMatrix}(arraySupertype, matrix.{@link Matrix#elementType()
-     * elementType()}, matrix.{@link Matrix#dimensions() dimensions()})</tt>.
+     * elementType()}, matrix.{@link Matrix#dimensions() dimensions()})</code>.
      *
      * @param <T>            the generic type of AlgART array.
      * @param arraySupertype the desired type of the underlying array of the new matrix
@@ -1022,8 +1022,8 @@ public interface MemoryModel {
     <T extends UpdatableArray> Matrix<T> newMatrix(Class<T> arraySupertype, Matrix<?> matrix);
 
     /**
-     * Equivalent to <tt>{@link #newMatrix(Class, Matrix)
-     * newMatrix}(arraySupertype, matrix).{@link Matrix#structureLike(Matrix) structureLike}(matrix)</tt>.
+     * Equivalent to <code>{@link #newMatrix(Class, Matrix)
+     * newMatrix}(arraySupertype, matrix).{@link Matrix#structureLike(Matrix) structureLike}(matrix)</code>.
      *
      * @param <T>            the generic type of AlgART array.
      * @param arraySupertype the desired type of the underlying array of the new matrix
@@ -1047,8 +1047,8 @@ public interface MemoryModel {
                bit     ==> char,,byte,,short,,int,,long,,float,,double */
 
     /**
-     * Equivalent to <tt>{@link #newMatrix(Class, Class, long...)
-     * newMatrix}(UpdatableBitArray.class, boolean.class, dim)</tt>.
+     * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
+     * newMatrix}(UpdatableBitArray.class, boolean.class, dim)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;Matrix&lt;UpdatableBitArray&gt; m = memoryModel.newBitMatrix(100, 100);
@@ -1074,8 +1074,8 @@ public interface MemoryModel {
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Equivalent to <tt>{@link #newMatrix(Class, Class, long...)
-     * newMatrix}(UpdatableCharArray.class, char.class, dim)</tt>.
+     * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
+     * newMatrix}(UpdatableCharArray.class, char.class, dim)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;Matrix&lt;UpdatableCharArray&gt; m = memoryModel.newCharMatrix(100, 100);
@@ -1088,7 +1088,8 @@ public interface MemoryModel {
      *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
      *                                         is greater than <code>Long.MAX_VALUE</code>.
-     * @throws UnsupportedElementTypeException if <code>char</code> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>char</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1100,8 +1101,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>{@link #newMatrix(Class, Class, long...)
-     * newMatrix}(UpdatableByteArray.class, byte.class, dim)</tt>.
+     * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
+     * newMatrix}(UpdatableByteArray.class, byte.class, dim)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;Matrix&lt;UpdatableByteArray&gt; m = memoryModel.newByteMatrix(100, 100);
@@ -1114,7 +1115,8 @@ public interface MemoryModel {
      *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
      *                                         is greater than <code>Long.MAX_VALUE</code>.
-     * @throws UnsupportedElementTypeException if <code>byte</code> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>byte</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1126,8 +1128,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>{@link #newMatrix(Class, Class, long...)
-     * newMatrix}(UpdatableShortArray.class, short.class, dim)</tt>.
+     * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
+     * newMatrix}(UpdatableShortArray.class, short.class, dim)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;Matrix&lt;UpdatableShortArray&gt; m = memoryModel.newShortMatrix(100, 100);
@@ -1140,7 +1142,8 @@ public interface MemoryModel {
      *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
      *                                         is greater than <code>Long.MAX_VALUE</code>.
-     * @throws UnsupportedElementTypeException if <code>short</code> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>short</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1152,8 +1155,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>{@link #newMatrix(Class, Class, long...)
-     * newMatrix}(UpdatableIntArray.class, int.class, dim)</tt>.
+     * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
+     * newMatrix}(UpdatableIntArray.class, int.class, dim)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;Matrix&lt;UpdatableIntArray&gt; m = memoryModel.newIntMatrix(100, 100);
@@ -1166,7 +1169,8 @@ public interface MemoryModel {
      *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
      *                                         is greater than <code>Long.MAX_VALUE</code>.
-     * @throws UnsupportedElementTypeException if <code>int</code> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>int</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1178,8 +1182,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>{@link #newMatrix(Class, Class, long...)
-     * newMatrix}(UpdatableLongArray.class, long.class, dim)</tt>.
+     * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
+     * newMatrix}(UpdatableLongArray.class, long.class, dim)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;Matrix&lt;UpdatableLongArray&gt; m = memoryModel.newLongMatrix(100, 100);
@@ -1192,7 +1196,8 @@ public interface MemoryModel {
      *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
      *                                         is greater than <code>Long.MAX_VALUE</code>.
-     * @throws UnsupportedElementTypeException if <code>long</code> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>long</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1204,8 +1209,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>{@link #newMatrix(Class, Class, long...)
-     * newMatrix}(UpdatableFloatArray.class, float.class, dim)</tt>.
+     * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
+     * newMatrix}(UpdatableFloatArray.class, float.class, dim)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;Matrix&lt;UpdatableFloatArray&gt; m = memoryModel.newFloatMatrix(100, 100);
@@ -1218,7 +1223,8 @@ public interface MemoryModel {
      *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
      *                                         is greater than <code>Long.MAX_VALUE</code>.
-     * @throws UnsupportedElementTypeException if <code>float</code> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>float</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1230,8 +1236,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>{@link #newMatrix(Class, Class, long...)
-     * newMatrix}(UpdatableDoubleArray.class, double.class, dim)</tt>.
+     * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
+     * newMatrix}(UpdatableDoubleArray.class, double.class, dim)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;Matrix&lt;UpdatableDoubleArray&gt; m = memoryModel.newDoubleMatrix(100, 100);
@@ -1257,8 +1263,8 @@ public interface MemoryModel {
     /*Repeat.AutoGeneratedEnd*/
 
     /**
-     * Equivalent to <tt>{@link #newMatrix(Class, Class, long...)
-     * newMatrix}(UpdatableObjectArray.class, elementType, dim)</tt>.
+     * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
+     * newMatrix}(UpdatableObjectArray.class, elementType, dim)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;Matrix&lt;UpdatableObjectArray&lt;String&gt;&gt; m =
@@ -1285,9 +1291,9 @@ public interface MemoryModel {
     <E> Matrix<UpdatableObjectArray<E>> newObjectMatrix(Class<E> elementType, long... dim);
 
     /**
-     * Equivalent to <tt>matrix.{@link Matrix#matrix(Array) matrix}({@link #newUnresizableLazyCopy(Array)
+     * Equivalent to <code>matrix.{@link Matrix#matrix(Array) matrix}({@link #newUnresizableLazyCopy(Array)
      * newUnresizableLazyCopy}(matrix.{@link Matrix#array() array()})).{@link Matrix#cast(Class)
-     * cast}(arraySupertype)</tt>.
+     * cast}(arraySupertype)</code>.
      *
      * @param <T>            the generic type of AlgART array.
      * @param arraySupertype the desired type of the underlying array of the new lazy copy
@@ -1316,8 +1322,8 @@ public interface MemoryModel {
      * In other words, this method must always allocate a new AlgART array.
      *
      * <p>This method is equivalent to the following expression:
-     * <tt>{@link #newUnresizableArray(Class, long) newUnresizableArray}(elementType, count).{@link
-     * UpdatableArray#setData(long, Object, int, int) setData}(0, array, offset, count)</tt>,
+     * <code>{@link #newUnresizableArray(Class, long) newUnresizableArray}(elementType, count).{@link
+     * UpdatableArray#setData(long, Object, int, int) setData}(0, array, offset, count)</code>,
      * where <code>elementType</code> is the type of <code>array</code> elements
      * (<code>array.getClass().getComponentType()</code>).
      *
@@ -1340,8 +1346,8 @@ public interface MemoryModel {
      * In other words, this method must always allocate a new array.
      *
      * <p>This method is equivalent to the following expression:
-     * <tt>{@link #newUnresizableArray(Class, long) newUnresizableArray}(elementType, len).{@link
-     * UpdatableArray#setData(long, Object) setData}(0, array)</tt>,
+     * <code>{@link #newUnresizableArray(Class, long) newUnresizableArray}(elementType, len).{@link
+     * UpdatableArray#setData(long, Object) setData}(0, array)</code>,
      * where <code>elementType</code> is the type of <code>array</code> elements
      * (<code>array.getClass().getComponentType()</code>) and
      * <code>len</code> is the length of the passed Java array.
@@ -1357,8 +1363,8 @@ public interface MemoryModel {
                Bit     ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double */
 
     /**
-     * Equivalent to <tt>(UpdatableBitArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</tt>.
+     * Equivalent to <code>(UpdatableBitArray){@link #valueOf(Object, int, int)
+     * valueOf}((Object)array, offset, count)</code>.
      *
      * @param array  the source Java array with elements of constructed AlgART array.
      * @param offset starting position in the source Java array.
@@ -1380,8 +1386,8 @@ public interface MemoryModel {
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Equivalent to <tt>(UpdatableCharArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</tt>.
+     * Equivalent to <code>(UpdatableCharArray){@link #valueOf(Object, int, int)
+     * valueOf}((Object)array, offset, count)</code>.
      *
      * @param array  the source Java array with elements of constructed AlgART array.
      * @param offset starting position in the source Java array.
@@ -1403,8 +1409,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(UpdatableByteArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</tt>.
+     * Equivalent to <code>(UpdatableByteArray){@link #valueOf(Object, int, int)
+     * valueOf}((Object)array, offset, count)</code>.
      *
      * @param array  the source Java array with elements of constructed AlgART array.
      * @param offset starting position in the source Java array.
@@ -1426,8 +1432,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(UpdatableShortArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</tt>.
+     * Equivalent to <code>(UpdatableShortArray){@link #valueOf(Object, int, int)
+     * valueOf}((Object)array, offset, count)</code>.
      *
      * @param array  the source Java array with elements of constructed AlgART array.
      * @param offset starting position in the source Java array.
@@ -1449,8 +1455,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(UpdatableIntArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</tt>.
+     * Equivalent to <code>(UpdatableIntArray){@link #valueOf(Object, int, int)
+     * valueOf}((Object)array, offset, count)</code>.
      *
      * @param array  the source Java array with elements of constructed AlgART array.
      * @param offset starting position in the source Java array.
@@ -1472,8 +1478,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(UpdatableLongArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</tt>.
+     * Equivalent to <code>(UpdatableLongArray){@link #valueOf(Object, int, int)
+     * valueOf}((Object)array, offset, count)</code>.
      *
      * @param array  the source Java array with elements of constructed AlgART array.
      * @param offset starting position in the source Java array.
@@ -1495,8 +1501,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(UpdatableFloatArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</tt>.
+     * Equivalent to <code>(UpdatableFloatArray){@link #valueOf(Object, int, int)
+     * valueOf}((Object)array, offset, count)</code>.
      *
      * @param array  the source Java array with elements of constructed AlgART array.
      * @param offset starting position in the source Java array.
@@ -1518,8 +1524,8 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(UpdatableDoubleArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</tt>.
+     * Equivalent to <code>(UpdatableDoubleArray){@link #valueOf(Object, int, int)
+     * valueOf}((Object)array, offset, count)</code>.
      *
      * @param array  the source Java array with elements of constructed AlgART array.
      * @param offset starting position in the source Java array.
@@ -1541,8 +1547,8 @@ public interface MemoryModel {
     /*Repeat.AutoGeneratedEnd*/
 
     /**
-     * Equivalent to <tt>(UpdatableObjectArray&lt;E&gt;){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</tt>.
+     * Equivalent to <code>(UpdatableObjectArray&lt;E&gt;){@link #valueOf(Object, int, int)
+     * valueOf}((Object)array, offset, count)</code>.
      *
      * @param <E>    the generic type of array elements.
      * @param array  the source Java array with elements of constructed AlgART array.
