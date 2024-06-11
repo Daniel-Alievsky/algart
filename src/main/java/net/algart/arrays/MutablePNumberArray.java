@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>Resizable AlgART array of any numeric primitive elements (byte, short, int, long, float or double).</p>
  *
@@ -36,4 +38,44 @@ package net.algart.arrays;
  * @author Daniel Alievsky
  */
 public interface MutablePNumberArray extends UpdatablePNumberArray, MutablePArray {
+    /**
+     * Equivalent to <code>(MutablePNumberArray) to {@link MemoryModel#newEmptyArray(Class)
+     * memoryModel.newEmptyArray(elementType)}</code>, but with throwing
+     * <code>IllegalArgumentException</code> in a case when the type casting to {@link MutablePNumberArray}
+     * is impossible (non-primitive element type, <code>boolean</code> or <code>char</code>).
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param elementType the type of array elements.
+     * @return created empty AlgART array.
+     * @throws NullPointerException            if one of the arguments is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is not  <code>byte.class</code>,
+     *                                         <code>short.class</code>, <code>int.class</code>,
+     *                                         <code>long.class</code>,
+     *                                         <code>float.class</code> or <code>double.class</code>.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
+     */
+    static MutablePNumberArray newEmpty(MemoryModel memoryModel, Class<?> elementType) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        Objects.requireNonNull(elementType, "Null element type");
+        if (!Arrays.isNumberElementType(elementType)) {
+            throw new IllegalArgumentException("Not a numeric primitive type: " + elementType);
+        }
+        return (MutablePNumberArray) memoryModel.newEmptyArray(elementType);
+    }
+
+    /**
+     * Equivalent to <code>{@link #newEmpty(MemoryModel, Class)
+     * newEmpty}({@link Arrays#SMM Arrays.SMM}, elementType)</code>.
+     *
+     * @param elementType the type of array elements.
+     * @return created empty AlgART array.
+     * @throws NullPointerException     if the argument is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is not  <code>byte.class</code>,
+     *                                         <code>short.class</code>, <code>int.class</code>,
+     *                                         <code>long.class</code>,
+     *                                         <code>float.class</code> or <code>double.class</code>.
+     */
+    static MutablePNumberArray newEmpty(Class<?> elementType) {
+        return newEmpty(Arrays.SMM, elementType);
+    }
 }

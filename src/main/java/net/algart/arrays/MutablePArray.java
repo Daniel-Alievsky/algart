@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>Resizable AlgART array of primitive elements (boolean, char, byte, short, int, long, float or double).</p>
  *
@@ -142,4 +144,39 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
     MutablePArray asCopyOnNextWrite();
 
     MutablePArray shallowClone();
+
+    /**
+     * Equivalent to <code>(MutablePArray) to {@link MemoryModel#newEmptyArray(Class)
+     * memoryModel.newEmptyArray(elementType)}</code>, but with throwing
+     * <code>IllegalArgumentException</code> in a case when the type casting to {@link MutablePArray}
+     * is impossible (non-primitive element type).
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param elementType the type of array elements.
+     * @return created empty AlgART array.
+     * @throws NullPointerException            if one of the arguments is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is not a primitive class.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
+     */
+    static MutablePArray newEmpty(MemoryModel memoryModel, Class<?> elementType) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        Objects.requireNonNull(elementType, "Null element type");
+        if (!elementType.isPrimitive()) {
+            throw new IllegalArgumentException("Not a primitive type: " + elementType);
+        }
+        return (MutablePArray) memoryModel.newEmptyArray(elementType);
+    }
+
+    /**
+     * Equivalent to <code>{@link #newEmpty(MemoryModel, Class)
+     * newEmpty}({@link Arrays#SMM Arrays.SMM}, elementType)</code>.
+     *
+     * @param elementType the type of array elements.
+     * @return created empty AlgART array.
+     * @throws NullPointerException     if the argument is {@code null}.
+     * @throws IllegalArgumentException if <code>elementType</code> is not a primitive class.
+     */
+    static MutablePArray newEmpty(Class<?> elementType) {
+        return newEmpty(Arrays.SMM, elementType);
+    }
 }

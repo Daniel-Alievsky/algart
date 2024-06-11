@@ -25,6 +25,9 @@
 package net.algart.arrays;
 
 /*Repeat.SectionStart all*/
+
+import java.util.Objects;
+
 /**
  * <p>Resizable AlgART array of <code>float</code> values.</p>
  *
@@ -52,5 +55,30 @@ public interface MutableFloatArray extends FloatStack, UpdatableFloatArray, Muta
 
     MutableFloatArray shallowClone();
     /*Repeat.SectionEnd resultTypes*/
-/*Repeat.SectionEnd all*/
+
+    /**
+     * Equivalent to <code>{@link MemoryModel#newEmptyFloatArray()
+     * memoryModel.newEmptyFloatArray()}</code>.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @return created empty AlgART array.
+     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws UnsupportedElementTypeException if <code>float</code> element type
+     *                                         is not supported by this memory model.
+     */
+    static MutableFloatArray newEmpty(MemoryModel memoryModel) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newEmptyFloatArray();
+    }
+
+    /**
+     * Equivalent to <code>{@link Arrays#SMM Arrays.SMM}.{@link MemoryModel#newEmptyFloatArray()
+     * newEmptyFloatArray()}</code>.
+     *
+     * @return created empty AlgART array.
+     */
+    static MutableFloatArray newEmpty() {
+        return Arrays.SMM.newEmptyFloatArray();
+    }
+    /*Repeat.SectionEnd all*/
 }

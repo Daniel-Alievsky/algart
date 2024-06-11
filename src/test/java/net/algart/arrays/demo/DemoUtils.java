@@ -124,7 +124,7 @@ class DemoUtils {
     }
 
     static UpdatableArray createTestResizableIfPossibleArray(String elementTypeName, long len) {
-        return createTestArray(elementTypeName, len, elementTypeName.indexOf("Packed") != -1, true);
+        return createTestArray(elementTypeName, len, elementTypeName.contains("Packed"), true);
     }
 
     private static MemoryModel cmmcm = null, cmmcp = null, cmmcs = null;
@@ -155,9 +155,9 @@ class DemoUtils {
         if (elementTypeName.startsWith("Combined")) {
             MemoryModel cmm = memoryModel(elementTypeName);
             if (unresizable) {
-                a = cmm.newUnresizableArray(CombinedArraysDemo.Circle.class, len);
+                a = Array.newArray(cmm, CombinedArraysDemo.Circle.class, len);
             } else {
-                a = ma = cmm.newEmptyArray(CombinedArraysDemo.Circle.class);
+                a = ma = MutableArray.newEmpty(cmm, CombinedArraysDemo.Circle.class);
             }
             CombinedArraysDemo.Circle circle = new CombinedArraysDemo.Circle();
             if (unresizable) {

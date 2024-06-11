@@ -24,10 +24,12 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>AlgART one-dimensional array of any elements, full access (reading, writing, resizing).</p>
  *
- * <p>If the elements of this array are primitive values (<tt>byte</tt>, <tt>short</tt>, etc.),
+ * <p>If the elements of this array are primitive values (<code>byte</code>, <code>short</code>, etc.),
  * the array <b>must</b> implement one of
  * {@link MutableBitArray}, {@link MutableCharArray}, {@link MutableByteArray}, {@link MutableShortArray},
  * {@link MutableIntArray}, {@link MutableLongArray}, {@link MutableFloatArray}, {@link MutableDoubleArray}
@@ -63,11 +65,11 @@ public interface MutableArray extends Stack, UpdatableArray {
      * last elements of such views.
      *
      * @param newLength the desired new number of elements.
-     * @return          a reference to this array.
+     * @return a reference to this array.
      * @throws TooLargeArrayException   if the specified length is too large for this type of arrays.
      * @throws IllegalArgumentException if the specified length is negative.
      * @see Arrays#lengthUnsigned(MutableArray, long)
-   */
+     */
     MutableArray length(long newLength);
 
     /**
@@ -107,8 +109,8 @@ public interface MutableArray extends Stack, UpdatableArray {
      * (returned by {@link #elementType()}) are the same.
      * <code>IllegalArgumentException</code> will be thrown.
      *
-     * @param appendedArray  appended array.
-     * @return               a reference to this array.
+     * @param appendedArray appended array.
+     * @return a reference to this array.
      * @throws NullPointerException     if <code>appendedArray</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and this element types do not match.
      * @throws TooLargeArrayException   if the resulting array length is too large for this type of arrays.
@@ -127,4 +129,33 @@ public interface MutableArray extends Stack, UpdatableArray {
     MutableArray asCopyOnNextWrite();
 
     MutableArray shallowClone();
+
+    /**
+     * Equivalent to {@link MemoryModel#newEmptyArray(Class)
+     * memoryModel.newEmptyArray(elementType)}.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param elementType the type of array elements.
+     * @return created empty AlgART array.
+     * @throws NullPointerException            if one of the arguments is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is <code>void.class</code>.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
+     */
+    static MutableArray newEmpty(MemoryModel memoryModel, Class<?> elementType) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newEmptyArray(elementType);
+    }
+
+    /**
+     * Equivalent to <code>{@link #newEmpty(MemoryModel, Class)
+     * newEmpty}({@link Arrays#SMM Arrays.SMM}, elementType)</code>.
+     *
+     * @param elementType the type of array elements.
+     * @return created empty AlgART array.
+     * @throws NullPointerException     if the argument is {@code null}.
+     * @throws IllegalArgumentException if <code>elementType</code> is <code>void.class</code>.
+     */
+    static UpdatableArray newEmpty(Class<?> elementType) {
+        return Arrays.SMM.newEmptyArray(elementType);
+    }
 }

@@ -30,6 +30,9 @@ package net.algart.arrays;
   Float(?!ing) ==> Boolean ;;
   float ==> boolean
      !! Auto-generated: NOT EDIT !! */
+
+import java.util.Objects;
+
 /**
  * <p>Resizable AlgART array of <code>boolean</code> values.</p>
  *
@@ -55,5 +58,29 @@ public interface MutableBitArray extends BitStack, UpdatableBitArray, MutablePFi
     MutableBitArray asCopyOnNextWrite();
 
     MutableBitArray shallowClone();
+    /**
+     * Equivalent to <code>{@link MemoryModel#newEmptyBitArray()
+     * memoryModel.newEmptyBitArray()}</code>.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @return created empty AlgART array.
+     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws UnsupportedElementTypeException if <code>boolean</code> element type
+     *                                         is not supported by this memory model.
+     */
+    static MutableBitArray newEmpty(MemoryModel memoryModel) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newEmptyBitArray();
+    }
+
+    /**
+     * Equivalent to <code>{@link Arrays#SMM Arrays.SMM}.{@link MemoryModel#newEmptyBitArray()
+     * newEmptyBitArray()}</code>.
+     *
+     * @return created empty AlgART array.
+     */
+    static MutableBitArray newEmpty() {
+        return Arrays.SMM.newEmptyBitArray();
+    }
     /*Repeat.IncludeEnd*/
 }

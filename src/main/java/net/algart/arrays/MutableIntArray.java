@@ -29,6 +29,9 @@ package net.algart.arrays;
   Float(?!ing) ==> Int ;;
   float ==> int
      !! Auto-generated: NOT EDIT !! */
+
+import java.util.Objects;
+
 /**
  * <p>Resizable AlgART array of <code>int</code> values.</p>
  *
@@ -54,5 +57,29 @@ public interface MutableIntArray extends IntStack, UpdatableIntArray, MutablePIn
     MutableIntArray asCopyOnNextWrite();
 
     MutableIntArray shallowClone();
+    /**
+     * Equivalent to <code>{@link MemoryModel#newEmptyIntArray()
+     * memoryModel.newEmptyIntArray()}</code>.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @return created empty AlgART array.
+     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws UnsupportedElementTypeException if <code>int</code> element type
+     *                                         is not supported by this memory model.
+     */
+    static MutableIntArray newEmpty(MemoryModel memoryModel) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newEmptyIntArray();
+    }
+
+    /**
+     * Equivalent to <code>{@link Arrays#SMM Arrays.SMM}.{@link MemoryModel#newEmptyIntArray()
+     * newEmptyIntArray()}</code>.
+     *
+     * @return created empty AlgART array.
+     */
+    static MutableIntArray newEmpty() {
+        return Arrays.SMM.newEmptyIntArray();
+    }
     /*Repeat.IncludeEnd*/
 }

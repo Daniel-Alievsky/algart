@@ -29,6 +29,9 @@ package net.algart.arrays;
   Float(?!ing) ==> Byte ;;
   float ==> byte
      !! Auto-generated: NOT EDIT !! */
+
+import java.util.Objects;
+
 /**
  * <p>Resizable AlgART array of <code>byte</code> values.</p>
  *
@@ -54,5 +57,29 @@ public interface MutableByteArray extends ByteStack, UpdatableByteArray, Mutable
     MutableByteArray asCopyOnNextWrite();
 
     MutableByteArray shallowClone();
+    /**
+     * Equivalent to <code>{@link MemoryModel#newEmptyByteArray()
+     * memoryModel.newEmptyByteArray()}</code>.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @return created empty AlgART array.
+     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws UnsupportedElementTypeException if <code>byte</code> element type
+     *                                         is not supported by this memory model.
+     */
+    static MutableByteArray newEmpty(MemoryModel memoryModel) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newEmptyByteArray();
+    }
+
+    /**
+     * Equivalent to <code>{@link Arrays#SMM Arrays.SMM}.{@link MemoryModel#newEmptyByteArray()
+     * newEmptyByteArray()}</code>.
+     *
+     * @return created empty AlgART array.
+     */
+    static MutableByteArray newEmpty() {
+        return Arrays.SMM.newEmptyByteArray();
+    }
     /*Repeat.IncludeEnd*/
 }

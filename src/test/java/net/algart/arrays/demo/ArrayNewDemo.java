@@ -46,5 +46,16 @@ public class ArrayNewDemo {
         System.out.println(a6);
         UpdatableBitArray a7 = BitArray.newArray(Arrays.BMM, 10000);
         System.out.println(a7);
+        MutableArray a8 = MutableArray.newEmpty(Arrays.BMM, short.class);
+        System.out.println(a8);
+        // MutableArray a9 = MutablePArray.newEmpty(String.class);
+        MutablePArray a9 = MutablePArray.newEmpty(char.class);
+        System.out.println(a9);
+        MutablePNumberArray a10 = MutablePNumberArray.newEmpty(float.class);
+        System.out.println(a10);
+        MutableBitArray a11 = MutableBitArray.newEmpty(Arrays.BMM);
+        System.out.println(a11);
+        MutableDoubleArray a12 = MutableDoubleArray.newEmpty();
+        System.out.println(a12);
     }
 }

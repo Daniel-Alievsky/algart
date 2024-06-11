@@ -62,7 +62,7 @@ public interface PNumberArray extends PArray {
      * @throws IllegalArgumentException        if <code>elementType</code> is not  <code>byte.class</code>,
      *                                         <code>short.class</code>, <code>int.class</code>,
      *                                         <code>long.class</code>,
-     *                                         <code>float.class</code> or <code>double.class</code>.
+     *                                         <code>float.class</code> or <code>double.class</code>,
      *                                         or if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
