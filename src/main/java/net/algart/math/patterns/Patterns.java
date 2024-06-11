@@ -114,8 +114,8 @@ public class Patterns {
      *
      * @param points the source points set.
      * @return the pattern consisting of all source points.
-     * @throws NullPointerException     if <code>points</code> argument is <code>null</code>
-     *                                  or some of passed points is <code>null</code>.
+     * @throws NullPointerException     if <code>points</code> argument is {@code null}
+     *                                  or some of passed points is {@code null}.
      * @throws IllegalArgumentException if <code>points</code> argument is an empty set,
      *                                  or if some points have different number of coordinates,
      *                                  or if there are 2 or more points and some point coordinates are out of range
@@ -135,8 +135,8 @@ public class Patterns {
      *
      * @param points the source points set.
      * @return the pattern consisting of all source points.
-     * @throws NullPointerException     if <code>points</code> argument is <code>null</code>
-     *                                  or some of passed points is <code>null</code>.
+     * @throws NullPointerException     if <code>points</code> argument is {@code null}
+     *                                  or some of passed points is {@code null}.
      * @throws IllegalArgumentException if <code>points</code> argument is an empty array,
      *                                  or if some points have different number of coordinates,
      *                                  or if there are 2 or more points and some point coordinates are out of range
@@ -403,8 +403,8 @@ public class Patterns {
      *
      * @param ranges the source ranges describing <i>n</i>-dimensional rectangular parallelepiped.
      * @return the rectangular pattern.
-     * @throws NullPointerException     if <code>ranges</code> argument is <code>null</code>
-     *                                  or some of passed ranges are <code>null</code>.
+     * @throws NullPointerException     if <code>ranges</code> argument is {@code null}
+     *                                  or some of passed ranges are {@code null}.
      * @throws IllegalArgumentException if <code>ranges</code> argument is empty (contains no elements).
      */
     public static RectangularPattern newRectangularIntegerPattern(IRange... ranges) {
@@ -429,7 +429,7 @@ public class Patterns {
      * @param min starting points of the parallelepiped (left top vertex in 2D case), inclusive.
      * @param max ending points of the parallelepiped (left top vertex in 2D case), inclusive.
      * @return the rectangular pattern, two vertices of which are the passed points.
-     * @throws NullPointerException     if one of the arguments is <code>null</code>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the numbers of coordinates of <code>min</code> and <code>max</code>
      *                                  points are different,
      *                                  or if <tt>min.{@link IPoint#coord(int) coord}(k) &gt;
@@ -498,8 +498,8 @@ public class Patterns {
      *
      * @param patterns the summands of the returned Minkowski sum.
      * @return the Minkowski sum.
-     * @throws NullPointerException     if <code>patterns</code> argument is <code>null</code>
-     *                                  or some of passed patterns are <code>null</code>.
+     * @throws NullPointerException     if <code>patterns</code> argument is {@code null}
+     *                                  or some of passed patterns are {@code null}.
      * @throws IllegalArgumentException if <code>patterns</code> argument is an empty array,
      *                                  or if some patterns have different number of dimensions,
      *                                  or if some of the {@link Pattern#roundedCoordRange(int)
@@ -565,7 +565,7 @@ public class Patterns {
      * @param pattern the pattern.
      * @param n       the multiplier.
      * @return the Minkowski multiple of the passed pattern.
-     * @throws NullPointerException     if <code>pattern</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>pattern</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n &lt;= 0</code>.
      */
     public static Pattern newMinkowskiMultiplePattern(Pattern pattern, int n) {
@@ -606,8 +606,8 @@ public class Patterns {
      *
      * @param patterns the summands of the returned union.
      * @return the set-theoretic union.
-     * @throws NullPointerException     if <code>patterns</code> argument is <code>null</code>
-     *                                  or some of passed patterns are <code>null</code>.
+     * @throws NullPointerException     if <code>patterns</code> argument is {@code null}
+     *                                  or some of passed patterns are {@code null}.
      * @throws IllegalArgumentException if <code>patterns</code> argument is an empty array,
      *                                  or if some patterns have different number of dimensions,
      *                                  or if some of the {@link Pattern#roundedCoordRange(int) coordinate ranges} in the

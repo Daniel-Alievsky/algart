@@ -75,7 +75,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * throws <code>NullPointerException</code> if <code>value == null</code>.
      * For arrays of non-primitive elements, this method
      * does not throw <code>NullPointerException</code> in this case,
-     * but may set the element to some default value, if <code>null</code> elements are not supported
+     * but may set the element to some default value, if {@code null} elements are not supported
      * by the {@link MemoryModel memory model} (as in a case of {@link CombinedMemoryModel}).
      *
      * @param index index of element to replace.
@@ -96,10 +96,10 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * into this array, starting from <code>arrayPos</code> index.
      *
      * <p>For {@link UpdatableObjectArray arrays of non-primitive elements},
-     * if some elements of Java array are <code>null</code>,
+     * if some elements of Java array are {@code null},
      * this method does not throw <code>NullPointerException</code>,
      * but may set the corresponding array elements to some default value,
-     * if <code>null</code> elements are not supported
+     * if {@code null} elements are not supported
      * by the {@link MemoryModel memory model} (as in a case of {@link CombinedMemoryModel}).
      *
      * <p>Note: if <code>IndexOutOfBoundsException</code> occurs due to attempt to read data outside the passed
@@ -113,7 +113,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * @param srcArrayOffset starting position in the source Java array.
      * @param count          the number of elements to be copied.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException      if <code>srcArray</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>srcArray</code> argument is {@code null}.
      * @throws IllegalArgumentException  if <code>srcArray</code> argument is not an array or if
      *                                   <code>count &lt; 0</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
@@ -135,16 +135,16 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * into this array, starting from <code>arrayPos</code> index.
      *
      * <p>For {@link UpdatableObjectArray arrays of non-primitive elements},
-     * if some elements of Java array are <code>null</code>,
+     * if some elements of Java array are {@code null},
      * this method does not throw <code>NullPointerException</code>,
      * but may set the corresponding array elements to some default value,
-     * if <code>null</code> elements are not supported
+     * if {@code null} elements are not supported
      * by the {@link MemoryModel memory model} (as in a case of {@link CombinedMemoryModel}).
      *
      * @param arrayPos starting position in this AlgART array.
      * @param srcArray the source Java array.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException     if <code>srcArray</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>srcArray</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>srcArray</code> argument is not an array.
      * @throws ArrayStoreException      if <code>destArray</code> element type mismatches with this array
      *                                  {@link #elementType()}.
@@ -246,7 +246,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      *
      * @param src the source array.
      * @return a reference to this array.
-     * @throws NullPointerException     if <code>src</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and this element types do not match.
      * @see Arrays#copy(ArrayContext, UpdatableArray, Array)
      */
@@ -281,7 +281,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      *
      * @param another another array.
      * @return a reference to this array.
-     * @throws NullPointerException     if <code>another</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>another</code> argument is {@code null}.
      * @throws IllegalArgumentException if another and this element types do not match.
      */
     UpdatableArray swap(UpdatableArray another);

@@ -100,7 +100,7 @@ public class Matrices {
          * it will return a range, always including all matrix coordinates,
          * for example, <code>Long.MIN_VALUE..Long.MAX_VALUE</code>.
          *
-         * <p>This method never returns <code>null</code>.
+         * <p>This method never returns {@code null}.
          *
          * @return the dependence range for this interpolation algorithm.
          */
@@ -198,7 +198,7 @@ public class Matrices {
              * Creates new instance of this class.
              *
              * @param interpolationMethod interpolation that should be used while resizing.
-             * @throws NullPointerException if the argument is <code>null</code>.
+             * @throws NullPointerException if the argument is {@code null}.
              */
             protected Averaging(InterpolationMethod interpolationMethod) {
                 super(interpolationMethod);
@@ -211,11 +211,11 @@ public class Matrices {
 
             /**
              * Returns the function that should be used for "averaging" several elements while compression.
-             * May return <code>null</code>, than the default behavior (usual averaging the source elements).
-             * This implementation returns <code>null</code>.
+             * May return {@code null}, than the default behavior (usual averaging the source elements).
+             * This implementation returns {@code null}.
              *
              * @param apertureDim the sizes of averaged aperture in the source matrix.
-             * @return the function that will be used for averaging; can be <code>null</code>
+             * @return the function that will be used for averaging; can be {@code null}
              * (default behavior).
              */
             protected Func getAveragingFunc(long[] apertureDim) {
@@ -323,7 +323,7 @@ public class Matrices {
          * @param coordRanges the ranges that surely contain coordinates of all points of this region
          *                    (they will be returned by {@link #coordRanges()} method).
          * @throws NullPointerException     if the <code>coordRanges</code> array some of
-         *                                  its elements is <code>null</code>.
+         *                                  its elements is {@code null}.
          * @throws IllegalArgumentException if the passed array is empty (<code>coordRanges.length==0</code>).
          */
         protected Region(IRange[] coordRanges) {
@@ -347,7 +347,7 @@ public class Matrices {
          * @param xRange the range of the only coordinate of all points of the segment.
          * @return the segment containing all points from the specified range
          * (including minimal and maximal values).
-         * @throws NullPointerException if the argument is <code>null</code>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public static Hyperparallelepiped getSegment(IRange xRange) {
             return new Hyperparallelepiped(xRange);
@@ -364,7 +364,7 @@ public class Matrices {
          * @param xRange the <i>x</i>-projection of the rectangle.
          * @param yRange the <i>y</i>-projection of the rectangle.
          * @return the rectangle <code>xRange &times; yRange</code>.
-         * @throws NullPointerException if one of the arguments is <code>null</code>.
+         * @throws NullPointerException if one of the arguments is {@code null}.
          */
         public static Hyperparallelepiped getRectangle2D(IRange xRange, IRange yRange) {
             return new Hyperparallelepiped(xRange, yRange);
@@ -379,7 +379,7 @@ public class Matrices {
          * @param yRange the <i>y</i>-projection of the rectangle.
          * @param zRange the <i>z</i>-projection of the rectangle.
          * @return the parallelepiped <code>xRange &times; yRange &times; zRange</code>.
-         * @throws NullPointerException if one of the arguments is <code>null</code>.
+         * @throws NullPointerException if one of the arguments is {@code null}.
          */
         public static Hyperparallelepiped getParallelepiped3D(IRange xRange, IRange yRange, IRange zRange) {
             return new Hyperparallelepiped(xRange, yRange, zRange);
@@ -409,7 +409,7 @@ public class Matrices {
          * @param coordRanges the ranges of coordinates of the hyperparallelepiped.
          * @return the hyperparallelepiped <code>coordRanges[0] &times; coordRanges[1] &times; ...</code>
          * @throws NullPointerException     if the <code>coordRanges</code> array some of its elements
-         *                                  is <code>null</code>.
+         *                                  is {@code null}.
          * @throws IllegalArgumentException if the passed array is empty (<code>coordRanges.length==0</code>).
          */
         public static Hyperparallelepiped getHyperparallelepiped(IRange... coordRanges) {
@@ -505,7 +505,7 @@ public class Matrices {
          * @param vertices coordinates of all vertices.
          * @return the simplex with the specified vertices.
          * @throws NullPointerException        if the <code>vertices</code> array or some of its elements
-         *                                     is <code>null</code>.
+         *                                     is {@code null}.
          * @throws IllegalArgumentException    if the <code>vertices</code> array or some of its elements is empty
          *                                     (has zero length),
          *                                     or if the length of some <code>vertices[k]</code> array is not equal to
@@ -557,8 +557,8 @@ public class Matrices {
          * @param b           the values on the right side of inequalities, defining the half-spaces.
          * @param coordRanges the ranges of coordinates of the containing hyperparallelepiped.
          * @return the intersection of the specified half-spaces and hyperparallelepiped.
-         * @throws NullPointerException     if one of the arguments is <code>null</code>
-         *                                  or if some element of <code>coordRanges</code> array is <code>null</code>.
+         * @throws NullPointerException     if one of the arguments is {@code null}
+         *                                  or if some element of <code>coordRanges</code> array is {@code null}.
          * @throws IllegalArgumentException if <code>coordRanges.length==0</code>,
          *                                  or if <code>a.length!=coordRanges.length*b.length</code>.
          */
@@ -592,7 +592,7 @@ public class Matrices {
          * @param vertices coordinates of all vertices.
          * @return the 2-dimensional polygon with the specified vertices.
          * @throws NullPointerException     if the <code>vertices</code> array or some of its elements
-         *                                  is <code>null</code>.
+         *                                  is {@code null}.
          * @throws IllegalArgumentException if the <code>vertices</code> array or some of its elements is empty
          *                                  (has zero length),
          *                                  or if the length of some <code>vertices[k]</code> array is not 2.
@@ -685,7 +685,7 @@ public class Matrices {
          * @param coordinates the coordinates of the point: the first element is <i>x</i>, the second is <i>y</i>, ...
          * @return <code>true</code> if and only if the point with the specified coordinates
          * belongs to this region.
-         * @throws NullPointerException          if the argument is <code>null</code>.
+         * @throws NullPointerException          if the argument is {@code null}.
          * @throws IndexOutOfBoundsException     if the length of the passed array is less than {@link #n()}.
          * @throws UnsupportedOperationException if the inheritor does not implement this operation.
          */
@@ -719,7 +719,7 @@ public class Matrices {
          * <nobr><i>y</i>-coordinate</nobr> in <nobr>2-dimensional</nobr> case,
          * <nobr><i>z</i>-coordinate</nobr> in <nobr>3-dimensional</nobr> case, etc.)
          * If the intersection is empty, this method returns an empty array (<code>"new&nbsp;Region[0]"</code>).
-         * This method never returns <code>null</code>.
+         * This method never returns {@code null}.
          *
          * <p>This method must not be used if this region is <nobr>1-dimensional</nobr>
          * (<code>{@link #n()}==1</code>). In this case, it throws <code>IllegalStateException</code>.
@@ -895,7 +895,7 @@ public class Matrices {
          *
          * @param matrix the matrix.
          * @return <code>true</code> if this region lies fully inside the specified matrix.
-         * @throws NullPointerException if the <code>matrix</code> argument is <code>null</code>.
+         * @throws NullPointerException if the <code>matrix</code> argument is {@code null}.
          */
         public boolean isInsideMatrix(Matrix<?> matrix) {
             return isInsideMatrix(matrix, new long[0]);
@@ -935,7 +935,7 @@ public class Matrices {
          * @return <code>true</code> if this region, shifted backwards by the specified shifts,
          * lies fully inside the specified matrix.
          * @throws NullPointerException if the <code>matrix</code> or <code>backShifts</code> argument
-         *                              is <code>null</code>.
+         *                              is {@code null}.
          */
         public boolean isInsideMatrix(Matrix<?> matrix, long... backShifts) {
             Objects.requireNonNull(matrix, "Null matrix argument");
@@ -1248,7 +1248,7 @@ public class Matrices {
          * @return whether the simplex with the specified vertices is degenerated and cannot be described
          * by this class.
          * @throws NullPointerException     if the <code>vertices</code> array or some of its elements
-         *                                  is <code>null</code>.
+         *                                  is {@code null}.
          * @throws IllegalArgumentException if the <code>vertices</code> array or some of its elements is empty
          *                                  (has zero length),
          *                                  or if the length of some <code>vertices[k]</code> array is not equal to
@@ -1544,7 +1544,7 @@ public class Matrices {
      * @param array an array storing all matrix elements.
      * @param dim   the matrix dimensions.
      * @return new matrix backed by <code>array</code> with the given dimensions.
-     * @throws NullPointerException     if <code>array</code> or <code>dim</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>array</code> or <code>dim</code> argument is {@code null}.
      * @throws IllegalArgumentException if the passed array is resizable
      *                                  (for example, implements {@link MutableArray}),
      *                                  or if the number of dimensions is 0 (empty <code>dim</code> Java array),
@@ -1588,7 +1588,7 @@ public class Matrices {
      * @param position the starting position inside the array, from which the matrix elements are placed.
      * @param dim      the matrix dimensions.
      * @return new matrix backed by <code>array</code> with the given dimensions.
-     * @throws NullPointerException      if <code>array</code> or <code>dim</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>array</code> or <code>dim</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException for illegal <code>position</code>
      *                                   (<code>position &lt; 0 || position &gt; array.length()</code>).
      * @throws IllegalArgumentException  if the passed array is resizable
@@ -1638,7 +1638,7 @@ public class Matrices {
      * <code>type={@link Arrays#type Arrays.type}(UpdatableArray.class,elementType)</code>.
      * Before this check, this method also throws <code>IllegalArgumentException</code> if the passed
      * type is {@link MutableArray mutable}, i.e. if <code>MutableArray.class.isAssignableFrom(arraySupertype)</code>.
-     * And in the very beginning this method throws an exception if one of its arguments is <code>null</code>
+     * And in the very beginning this method throws an exception if one of its arguments is {@code null}
      * or if <code>elementType==void.class</code>.
      * In all other cases, this method does nothing.
      *
@@ -1654,7 +1654,7 @@ public class Matrices {
      * @param <T>            the generic type of AlgART array.
      * @param arraySupertype the desired type of the underlying array (the generic argument of the matrix type).
      * @param elementType    the type of matrix elements.
-     * @throws NullPointerException     if <code>elementType</code> or <code>dim</code> is <code>null</code>.
+     * @throws NullPointerException     if <code>elementType</code> or <code>dim</code> is {@code null}.
      * @throws IllegalArgumentException if <code>elementType</code> is <code>void.class</code>
      *                                  or if <code>arraySupertype</code> is {@link MutableArray} or its subtype.
      * @throws ClassCastException       if <code>arraySupertype</code> and <code>elementType</code> do not match.
@@ -1679,7 +1679,7 @@ public class Matrices {
      *
      * @param matrix some AlgART matrix.
      * @return the estimated size of this matrix in bytes.
-     * @throws NullPointerException if the argument is <code>null</code>.
+     * @throws NullPointerException if the argument is {@code null}.
      * @see Arrays#sizeOf(Array)
      */
     public static long sizeOf(Matrix<?> matrix) {
@@ -1694,8 +1694,8 @@ public class Matrices {
      *
      * @param matrices some collection of AlgART matrices.
      * @return the estimated summary size of all these matrices in bytes.
-     * @throws NullPointerException if the argument is <code>null</code> or
-     *                              if one of elements of the passed collection is <code>null</code>.
+     * @throws NullPointerException if the argument is {@code null} or
+     *                              if one of elements of the passed collection is {@code null}.
      * @see Arrays#sizeOf(Array)
      */
     public static <T extends Array> double sizeOf(Collection<Matrix<? extends T>> matrices) {
@@ -1731,7 +1731,7 @@ public class Matrices {
 
     /**
      * Returns an updatable list <code>java.util.Arrays.asList(matrices.clone())</code>,
-     * if all these matrices are not <code>null</code> and all their built-in arrays
+     * if all these matrices are not {@code null} and all their built-in arrays
      * <code>matrices[k].{@link Matrix#array() array()}</code> are instances of the required <code>arrayClass</code>,
      * or throws an exception in other case.
      *
@@ -1747,7 +1747,7 @@ public class Matrices {
      * @param arrayClass the required class / interface of built-in arrays for all passed matrices.
      * @param matrices   an array of any matrices.
      * @return the <code>matrices</code> argument (the same reference to a Java array).
-     * @throws NullPointerException if <code>arrayClass</code> or one of the passed matrices is <code>null</code>.
+     * @throws NullPointerException if <code>arrayClass</code> or one of the passed matrices is {@code null}.
      * @throws ClassCastException   if one of matrices contains built-in AlgART array that is not an instance
      *                              of the type <code>arrayClass</code>
      *                              (<code>!arrayClass.isInstance(matrices[k].{@link Matrix#array() array()})</code>).
@@ -1772,19 +1772,19 @@ public class Matrices {
     }
 
     /**
-     * Checks whether all passed matrices are not <code>null</code> and have
+     * Checks whether all passed matrices are not {@code null} and have
      * {@link Matrix#dimEquals(Matrix) equal dimensions} and, if it is true,
      * creates and returns Java array of {@link Matrix#array() built-in AlgART arrays} of all passed matrices.
      * In other words, in the returned array the element <code>#k</code> is
      * <code>matrices.get(k).{@link Matrix#array() array()}</code>.
-     * If some passed matrices are <code>null</code> or have different dimensions, throws a corresponding exception.
+     * If some passed matrices are {@code null} or have different dimensions, throws a corresponding exception.
      *
      * @param <T>        the generic type of AlgART arrays.
      * @param arrayClass the required class / interface of built-in arrays for all passed matrices.
      * @param matrices   list of some matrices.
      * @return array of {@link Matrix#array() built-in AlgART arrays} of all passed matrices.
      * @throws NullPointerException  if <code>arrayClass</code> argument, the <code>matrices</code> list
-     *                               or one of its elements is <code>null</code>.
+     *                               or one of its elements is {@code null}.
      * @throws SizeMismatchException if <code>matrices.size()&gt;1</code> and some of the passed matrices have
      *                               different dimensions.
      * @throws ClassCastException    if one of matrices contains built-in AlgART array that is not an instance
@@ -1808,7 +1808,7 @@ public class Matrices {
      * @param matrices   list of some matrices.
      * @return array of {@link Matrix#array() built-in AlgART arrays} of all passed matrices.
      * @throws NullPointerException     if <code>arrayClass</code> argument, the <code>matrices</code> list
-     *                                  or one of its elements is <code>null</code>.
+     *                                  or one of its elements is {@code null}.
      * @throws SizeMismatchException    if <code>matrices.size()&gt;1</code> and some of the passed matrices have
      *                                  different dimensions.
      * @throws IllegalArgumentException if <code>matrices.size()&gt;1</code> and some of the passed matrices have
@@ -1870,7 +1870,7 @@ public class Matrices {
      * @param result      the list of the result matrices.
      * @param interleaved the source interleaved matrix.
      * @throws NullPointerException     if <code>interleaved</code> argument, the <code>results</code> list or
-     *                                  one of its elements is <code>null</code>.
+     *                                  one of its elements is {@code null}.
      * @throws SizeMismatchException    if some of the result matrices have dimensions, that do not match the last
      *                                  <i>n</i> dimensions
      *                                  <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
@@ -1907,7 +1907,7 @@ public class Matrices {
      * @param context     the context.
      * @param interleaved the source interleaved matrix.
      * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension.
-     * @throws NullPointerException  if <code>interleaved</code> argument is <code>null</code>.
+     * @throws NullPointerException  if <code>interleaved</code> argument is {@code null}.
      * @throws IllegalStateException if <code>interleaved</code> matrix is 1-dimensional.
      */
     public static <T extends PArray> List<Matrix<T>> separate(ArrayContext context, Matrix<? extends T> interleaved) {
@@ -1941,12 +1941,12 @@ public class Matrices {
      * @param <T>         the generic type of the built-in AlgART arrays.
      * @param context     the context; allows to specify (in particular)
      *                    the memory model for creating returned matrices;
-     *                    can be <code>null</code>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
+     *                    can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param interleaved the source interleaved matrix.
      * @param limit       maximal allowed number of returned matrices (the first dimension of the source matrix).
      * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension
      * (like the red, green, blue channels for 3-channel RGB image, stored in RGBRGB... format).
-     * @throws NullPointerException     if <code>interleaved</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>interleaved</code> argument is {@code null}.
      * @throws IllegalStateException    if <code>interleaved</code> matrix is 1-dimensional.
      * @throws IllegalArgumentException if <code>limit &le; 0</code> or
      *                                  if the number of returned matrices {@code >limit}.
@@ -1999,7 +1999,7 @@ public class Matrices {
      * @param result    the result matrix.
      * @param separated list of the source matrices; must be non-empty.
      * @throws NullPointerException     if <code>result</code> argument, the <code>separated</code> list or
-     *                                  one of its elements is <code>null</code>.
+     *                                  one of its elements is {@code null}.
      * @throws SizeMismatchException    if some of the source matrices have dimensions, that do not match the last
      *                                  <i>n</i> dimensions
      *                                  <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
@@ -2054,7 +2054,7 @@ public class Matrices {
      * <p>Note: the matrix, returned by this method, is created by the call
      * <code>memoryModel.{@link MemoryModel#newMatrix(Class, Class, long...) newMatrix}(...)</code>,
      * where <code>memoryModel</code> is <code>context.getMemoryModel()</code> or
-     * {@link SimpleMemoryModel} for <code>null</code> context.
+     * {@link SimpleMemoryModel} for {@code null} context.
      * In the latter case ({@link SimpleMemoryModel}) this provides a guarantee, that
      * the array in the returned matrix will be direct-accessible wrapper: {@link Array#isJavaArrayWrapper()}
      * will return <code>true</code> for the {@link Matrix#array() built-in array}.</p>
@@ -2062,12 +2062,12 @@ public class Matrices {
      * @param <T>       the generic type of the built-in AlgART arrays.
      * @param context   the context; allows to specify (in particular)
      *                  the memory model for creating returned matrix;
-     *                  can be <code>null</code>, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
+     *                  can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param separated list of the source matrices-"channels" (like the red, green, blue channels for 3-channel
      *                  RGB image); must be non-empty.
      * @return result matrix, where "channels" are interleaved along the first dimension
      * (RGBRGB... sequence for 3-channel RGB image).
-     * @throws NullPointerException     if <code>separated</code> list or one of its elements is <code>null</code>.
+     * @throws NullPointerException     if <code>separated</code> list or one of its elements is {@code null}.
      * @throws SizeMismatchException    if <code>separated.size()&gt;1</code> and some of the passed matrices have
      *                                  different dimensions.
      * @throws IllegalArgumentException if <code>separated</code> list is empty, or if
@@ -2107,7 +2107,7 @@ public class Matrices {
      * @param <T>    the generic type of the built-in AlgART arrays.
      * @param merged the source merged matrix.
      * @return a list of matrices: "layers" of the source one along the last dimension.
-     * @throws NullPointerException  if <code>merged</code> argument is <code>null</code>.
+     * @throws NullPointerException  if <code>merged</code> argument is {@code null}.
      * @throws IllegalStateException if <code>merged</code> matrix is 1-dimensional.
      */
     public static <T extends Array> List<Matrix<T>> asLayers(Matrix<T> merged) {
@@ -2145,7 +2145,7 @@ public class Matrices {
      * @param merged the source merged matrix.
      * @param limit  maximal allowed number of returned matrices (the last dimension of the source matrix).
      * @return a list of matrices: "layers" of the source one along the last dimension.
-     * @throws NullPointerException     if <code>merged</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>merged</code> argument is {@code null}.
      * @throws IllegalStateException    if <code>merged</code> matrix is 1-dimensional.
      * @throws IllegalArgumentException if <code>limit &le; 0</code> or
      *                                  if the number of returned matrices {@code >limit}.
@@ -2192,7 +2192,7 @@ public class Matrices {
      * @param matrices    list of the source matrices; must be non-empty.
      * @return result merged matrix.
      * @throws NullPointerException     if <code>arrayClass</code> argument, the <code>matrices</code> list,
-     *                                  one of its elements or memory model is <code>null</code>.
+     *                                  one of its elements or memory model is {@code null}.
      * @throws SizeMismatchException    if <code>matrices.size()&gt;1</code> and some of the passed matrices have
      *                                  different dimensions.
      * @throws IllegalArgumentException if <code>matrices</code> list is empty, or if
@@ -2232,7 +2232,7 @@ public class Matrices {
      * {@link Matrix#elementType() element type}.
      *
      * @param matrices list of some matrices.
-     * @throws NullPointerException     if the <code>matrices</code> list or one of its elements is <code>null</code>.
+     * @throws NullPointerException     if the <code>matrices</code> list or one of its elements is {@code null}.
      * @throws SizeMismatchException    if <code>matrices.size()&gt;1</code> and some of the passed matrices have
      *                                  different dimensions.
      * @throws IllegalArgumentException if <code>matrices.size()&gt;1</code> and some of the passed matrices have
@@ -2269,13 +2269,13 @@ public class Matrices {
     }
 
     /**
-     * Checks whether all passed matrices are not <code>null</code> and have
+     * Checks whether all passed matrices are not {@code null} and have
      * {@link Matrix#dimEquals(Matrix) equal dimensions} and, it is not so, throws a corresponding exception.
      * The same check is performed by {@link #arraysOfParallelMatrices} method,
      * but this method does not return any result.
      *
      * @param matrices list of some matrices.
-     * @throws NullPointerException  if the <code>matrices</code> list or one of its elements is <code>null</code>.
+     * @throws NullPointerException  if the <code>matrices</code> list or one of its elements is {@code null}.
      * @throws SizeMismatchException if <code>matrices.size()&gt;1</code> and some of the passed matrices have
      *                               different dimensions.
      * @see #checkDimensionEquality(Matrix[])
@@ -2285,13 +2285,13 @@ public class Matrices {
     }
 
     /**
-     * Checks whether all passed matrices are not <code>null</code> and have
+     * Checks whether all passed matrices are not {@code null} and have
      * {@link Matrix#dimEquals(Matrix) equal dimensions} and, it is not so, throws a corresponding exception.
      * Equivalent to <code>{@link #checkDimensionEquality(java.util.Collection)
      * checkDimensionEquality}({@link Matrices#several Matrices.several}(matrices))</code>.
      *
      * @param matrices list of some matrices.
-     * @throws NullPointerException  if the <code>matrices</code> list or one of its elements is <code>null</code>.
+     * @throws NullPointerException  if the <code>matrices</code> list or one of its elements is {@code null}.
      * @throws SizeMismatchException if <code>matrices.length&gt;1</code> and some of the passed matrices have
      *                               different dimensions.
      */
@@ -2368,7 +2368,7 @@ public class Matrices {
      * @return the view of the matrix as a mathematical function of
      * <code>matrix.{@link Matrix#dimCount() dimCount()}</code> arguments.
      * @throws NullPointerException if <code>matrix</code> or <code>interpolationMethod</code> argument
-     *                              is <code>null</code>.
+     *                              is {@code null}.
      * @see #asInterpolationFunc(Matrix, InterpolationMethod, double)
      * @see #isInterpolationFunc(Func)
      * @see #asResized(net.algart.arrays.Matrices.ResizingMethod, Matrix, long...)
@@ -2532,7 +2532,7 @@ public class Matrices {
      * @return the view of the matrix as a mathematical function of
      * <code>matrix.{@link Matrix#dimCount() dimCount()}</code> arguments.
      * @throws NullPointerException if <code>matrix</code> or <code>interpolationMethod</code> argument
-     *                              is <code>null</code>.
+     *                              is {@code null}.
      * @see #isInterpolationFunc(Func)
      */
     public static Func asInterpolationFunc(
@@ -2616,7 +2616,7 @@ public class Matrices {
 
 
     /**
-     * Returns <code>true</code> if the passed function is not <code>null</code> interpolation view
+     * Returns <code>true</code> if the passed function is not {@code null} interpolation view
      * of an AlgART matrix, created by this package.
      * More precisely, if returns <code>true</code>
      * if and only if the function is a result of one of the following methods:
@@ -2627,7 +2627,7 @@ public class Matrices {
      * You may get the underlying matrix, passed to those methods in the first argument,
      * by <code>{@link #getUnderlyingMatrix(Func)}</code>.
      *
-     * @param f some mathematical function (can be <code>null</code>, than the method returns <code>false</code>).
+     * @param f some mathematical function (can be {@code null}, than the method returns <code>false</code>).
      * @return whether this function is an interpolation view of some AlgART matrix.
      * @see #getUnderlyingMatrix(Func)
      * @see #isOnlyInsideInterpolationFunc(Func)
@@ -2639,12 +2639,12 @@ public class Matrices {
     }
 
     /**
-     * Returns <code>true</code> if the passed function is not <code>null</code> interpolation view
+     * Returns <code>true</code> if the passed function is not {@code null} interpolation view
      * of an AlgART matrix, created by {@link #asInterpolationFunc(Matrix, InterpolationMethod, boolean)} method.
      * You may get the underlying matrix, passed to those methods in the first argument,
      * by <code>{@link #getUnderlyingMatrix(Func)}</code>.
      *
-     * @param f some mathematical function (can be <code>null</code>, than the method returns <code>false</code>).
+     * @param f some mathematical function (can be {@code null}, than the method returns <code>false</code>).
      * @return whether this function is an interpolation view of some AlgART matrix without outside continuation.
      * @see #isInterpolationFunc(Func)
      * @see #getUnderlyingMatrix(Func)
@@ -2655,14 +2655,14 @@ public class Matrices {
     }
 
     /**
-     * Returns <code>true</code> if the passed function is not <code>null</code> interpolation view of
+     * Returns <code>true</code> if the passed function is not {@code null} interpolation view of
      * an AlgART matrix,
      * created by {@link #asInterpolationFunc(Matrix, InterpolationMethod, boolean)} method with <code>true</code>
      * last argument.
      * You may get the underlying matrix, passed to those methods in the first argument,
      * by <code>{@link #getUnderlyingMatrix(Func)}</code>.
      *
-     * @param f some mathematical function (can be <code>null</code>, than the method returns <code>false</code>).
+     * @param f some mathematical function (can be {@code null}, than the method returns <code>false</code>).
      * @return whether this function is an interpolation view of some AlgART matrix without outside continuation
      * with checking indexes.
      * @see #isInterpolationFunc(Func)
@@ -2676,13 +2676,13 @@ public class Matrices {
     }
 
     /**
-     * Returns <code>true</code> if the passed function is not <code>null</code> interpolation view
+     * Returns <code>true</code> if the passed function is not {@code null} interpolation view
      * of an AlgART matrix,
      * created by {@link #asInterpolationFunc(Matrix, InterpolationMethod, double)} method.
      * You may get the underlying matrix, passed to those methods in the first argument,
      * by <code>{@link #getUnderlyingMatrix(Func)}</code>.
      *
-     * @param f some mathematical function (can be <code>null</code>, than the method returns <code>false</code>).
+     * @param f some mathematical function (can be {@code null}, than the method returns <code>false</code>).
      * @return whether this function is an interpolation view of some AlgART matrix with outside continuation.
      * @see #isInterpolationFunc(Func)
      * @see #getUnderlyingMatrix(Func)
@@ -2698,7 +2698,7 @@ public class Matrices {
      *
      * @param f some interpolation view of an AlgART matrix.
      * @return the reference to the AlgART matrix, represented by the passed view.
-     * @throws NullPointerException     if <code>f</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>f</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>!{@link #isInterpolationFunc(Func) isInterpolationFunc}(f)</code>
      * @see #isInterpolationFunc(Func)
      * @see #getInterpolationMethod(Func)
@@ -2720,7 +2720,7 @@ public class Matrices {
      *
      * @param f some continued interpolation view of an AlgART matrix.
      * @return the value used outside the matrix.
-     * @throws NullPointerException     if <code>f</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>f</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>!{@link #isContinuedInterpolationFunc(Func)
      *                                  isContinuedInterpolationFunc}(f)</code>
      * @see #isInterpolationFunc(Func)
@@ -2747,7 +2747,7 @@ public class Matrices {
      *
      * @param f some interpolation view of an AlgART matrix.
      * @return the interpolation algorithm, used by this function.
-     * @throws NullPointerException     if <code>f</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>f</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>!{@link #isInterpolationFunc(Func)
      *                                  isInterpolationFunc}(f)</code>
      * @see #isInterpolationFunc(Func)
@@ -2771,7 +2771,7 @@ public class Matrices {
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param dim          dimensions of the returned matrix.
      * @return the matrix, defined by the passed function.
-     * @throws NullPointerException     if <code>requiredType</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>requiredType</code> argument is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asCoordFuncMatrix(boolean, Func, Class, long...)} method.
      */
@@ -2789,7 +2789,7 @@ public class Matrices {
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param dim          dimensions of the returned matrix.
      * @return the matrix, defined by the passed function.
-     * @throws NullPointerException     if <code>f</code> or <code>requiredType</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>f</code> or <code>requiredType</code> argument is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asCoordFuncMatrix(boolean, Func, Class, long...)} method.
      */
@@ -2828,7 +2828,7 @@ public class Matrices {
      * @param requiredType      desired type of the built-in array in the returned matrix.
      * @param dim               dimensions of the returned matrix.
      * @return the matrix, defined by the passed function.
-     * @throws NullPointerException     if <code>f</code> or <code>requiredType</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>f</code> or <code>requiredType</code> argument is {@code null}.
      * @throws IllegalArgumentException if the number of dimensions is 0 (empty <code>dim</code> Java array),
      *                                  or if some of dimensions are negative,
      *                                  and also in the same situations as
@@ -2847,7 +2847,7 @@ public class Matrices {
     }
 
     /**
-     * Returns <code>true</code> if the passed matrix is not <code>null</code> <i>functional</i> matrix,
+     * Returns <code>true</code> if the passed matrix is not {@code null} <i>functional</i> matrix,
      * created by this package, calculated on the base of coordinates only, not depending on another arrays/matrices.
      * This method is equivalent to the following operator:
      * <pre>
@@ -2855,7 +2855,7 @@ public class Matrices {
      * Arrays.isIndexFuncArray}(matrix.{@link Matrix#array() array()})</code>
      * </pre>
      *
-     * @param matrix the checked AlgART matrix (can be <code>null</code>, then the method returns <code>false</code>).
+     * @param matrix the checked AlgART matrix (can be {@code null}, then the method returns <code>false</code>).
      * @return <code>true</code> if the passed matrix a functional one, calculated on the base of coordinates only.
      */
     public static boolean isCoordFuncMatrix(Matrix<? extends PArray> matrix) {
@@ -2872,7 +2872,7 @@ public class Matrices {
      * @param x            the AlgART matrix.
      * @return a view of the passed matrix, defined by the passed function.
      * @throws NullPointerException     if <code>f</code>, <code>requiredType</code> or
-     *                                  the passed matrix is <code>null</code>.
+     *                                  the passed matrix is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
      */
@@ -2896,7 +2896,7 @@ public class Matrices {
      * @param x                 the AlgART matrix.
      * @return a view of the passed matrix, defined by the passed function.
      * @throws NullPointerException     if <code>f</code>, <code>requiredType</code> or
-     *                                  the passed matrix is <code>null</code>.
+     *                                  the passed matrix is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
      */
@@ -2918,7 +2918,7 @@ public class Matrices {
      * @param x2           2nd AlgART matrix.
      * @return a view of the passed matrices, defined by the passed function.
      * @throws NullPointerException     if <code>f</code>, <code>requiredType</code> or
-     *                                  one of passed matrices is <code>null</code>.
+     *                                  one of passed matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
      * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
@@ -2944,7 +2944,7 @@ public class Matrices {
      * @param x2                2nd AlgART matrix.
      * @return a view of the passed matrices, defined by the passed function.
      * @throws NullPointerException     if <code>f</code>, <code>requiredType</code> or
-     *                                  one of passed matrices is <code>null</code>.
+     *                                  one of passed matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
      * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
@@ -2968,7 +2968,7 @@ public class Matrices {
      * @param x3           3rd AlgART matrix.
      * @return a view of the passed matrices, defined by the passed function.
      * @throws NullPointerException     if <code>f</code>, <code>requiredType</code> or
-     *                                  one of passed matrices is <code>null</code>.
+     *                                  one of passed matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
      * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
@@ -2995,7 +2995,7 @@ public class Matrices {
      * @param x3                3rd AlgART matrix.
      * @return a view of the passed matrices, defined by the passed function.
      * @throws NullPointerException     if <code>f</code>, <code>requiredType</code> or
-     *                                  one of passed matrices is <code>null</code>.
+     *                                  one of passed matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
      * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
@@ -3020,7 +3020,7 @@ public class Matrices {
      * @param x4           4th AlgART matrix.
      * @return a view of the passed matrices, defined by the passed function.
      * @throws NullPointerException     if <code>f</code>, <code>requiredType</code> or
-     *                                  one of passed matrices is <code>null</code>.
+     *                                  one of passed matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
      * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
@@ -3049,7 +3049,7 @@ public class Matrices {
      * @param x4                4th AlgART matrix.
      * @return a view of the passed matrices, defined by the passed function.
      * @throws NullPointerException     if <code>f</code>, <code>requiredType</code> or
-     *                                  one of passed matrices is <code>null</code>.
+     *                                  one of passed matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)} method.
      * @throws SizeMismatchException    if some of the passed matrices have different dimensions.
@@ -3071,7 +3071,7 @@ public class Matrices {
      * @param x            several AlgART matrices; must not be empty.
      * @return a view of the passed <code>x</code> matrices, defined by the passed function.
      * @throws NullPointerException     if <code>f</code>, <code>requiredType</code> or <code>x</code> argument
-     *                                  is <code>null</code> or if one of <code>x</code> elements is <code>null</code>.
+     *                                  is {@code null} or if one of <code>x</code> elements is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #asFuncMatrix(boolean, Func, Class, List)}.
      * @throws SizeMismatchException    if <code>x.size()&gt;1</code> and some of the passed matrices have
@@ -3106,7 +3106,7 @@ public class Matrices {
      * @param x                 several AlgART matrices; must not be empty.
      * @return a view of the passed <code>x</code> matrices, defined by the passed function.
      * @throws NullPointerException     if <code>f</code>, <code>requiredType</code> or <code>x</code> argument
-     *                                  is <code>null</code> or if one of <code>x</code> matrices is <code>null</code>.
+     *                                  is {@code null} or if one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException if <code>x.isEmpty()</code> (no matrices passed),
      *                                  and also in the same situations as
      *                                  {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
@@ -3136,7 +3136,7 @@ public class Matrices {
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param x            the source matrix.
      * @return an updatable view of the passed <code>x</code> matrix, defined by the passed function.
-     * @throws NullPointerException     if <code>requiredType</code> or <code>x</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>requiredType</code> or <code>x</code> argument is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#asUpdatableFuncArray(boolean,
      *                                  net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)} method.
@@ -3168,7 +3168,7 @@ public class Matrices {
      * @param requiredType      desired type of the built-in array in the returned matrix.
      * @param x                 the original AlgART matrix.
      * @return an updatable view of the passed <code>x</code> matrix, defined by the passed function.
-     * @throws NullPointerException     if <code>requiredType</code> or <code>x</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>requiredType</code> or <code>x</code> argument is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#asUpdatableFuncArray(boolean,
      *                                  net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)}
@@ -3190,7 +3190,7 @@ public class Matrices {
      * @param result the destination matrix.
      * @param x      the source matrix.
      * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
-     *                                  or one of <code>x</code> matrices is <code>null</code>.
+     *                                  or one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3209,12 +3209,12 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix)
      * applyFunc(context, true, f, result, x)}.
      *
-     * @param context the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context the context of copying; can be {@code null}, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x       the source matrix.
      * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
-     *                                  or one of <code>x</code> matrices is <code>null</code>.
+     *                                  or one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3235,14 +3235,14 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x))</code>.
      *
-     * @param context           the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
      *                          <code>byte</code> and <code>char</code> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
      * @param f                 the mathematical function applied to the source AlgART matrices.
      * @param result            the destination matrix.
      * @param x                 the AlgART matrix.
-     * @throws NullPointerException     if <code>f</code> or one of passed matrices is <code>null</code>.
+     * @throws NullPointerException     if <code>f</code> or one of passed matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3265,7 +3265,7 @@ public class Matrices {
      * @param x1     1st AlgART matrix.
      * @param x2     2nd AlgART matrix.
      * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
-     *                                  or one of <code>x</code> matrices is <code>null</code>.
+     *                                  or one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3285,13 +3285,13 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix, Matrix)
      * applyFunc(context, true, f, result, x1, x2)}.
      *
-     * @param context the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context the context of copying; can be {@code null}, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x1      1st AlgART matrix.
      * @param x2      2nd AlgART matrix.
      * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
-     *                                  or one of <code>x</code> matrices is <code>null</code>.
+     *                                  or one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3313,7 +3313,7 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2))</code>.
      *
-     * @param context           the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
      *                          <code>byte</code> and <code>char</code> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3321,7 +3321,7 @@ public class Matrices {
      * @param result            the destination matrix.
      * @param x1                1st AlgART matrix.
      * @param x2                2nd AlgART matrix.
-     * @throws NullPointerException     if <code>f</code> or one of passed matrices is <code>null</code>.
+     * @throws NullPointerException     if <code>f</code> or one of passed matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3349,7 +3349,7 @@ public class Matrices {
      * @param x2     2nd AlgART matrix.
      * @param x3     3rd AlgART matrix.
      * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
-     *                                  or one of <code>x</code> matrices is <code>null</code>.
+     *                                  or one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3370,14 +3370,14 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix, Matrix, Matrix)
      * applyFunc(context, true, f, result, x1, x2, x3)}.
      *
-     * @param context the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context the context of copying; can be {@code null}, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x1      1st AlgART matrix.
      * @param x2      2nd AlgART matrix.
      * @param x3      3rd AlgART matrix.
      * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
-     *                                  or one of <code>x</code> matrices is <code>null</code>.
+     *                                  or one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3399,7 +3399,7 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2, x3))</code>.
      *
-     * @param context           the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
      *                          <code>byte</code> and <code>char</code> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3408,7 +3408,7 @@ public class Matrices {
      * @param x1                1st AlgART matrix.
      * @param x2                2nd AlgART matrix.
      * @param x3                3rd AlgART matrix.
-     * @throws NullPointerException     if <code>f</code> or one of passed matrices is <code>null</code>.
+     * @throws NullPointerException     if <code>f</code> or one of passed matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3438,7 +3438,7 @@ public class Matrices {
      * @param x3     3rd AlgART matrix.
      * @param x4     4th AlgART matrix.
      * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
-     *                                  or one of <code>x</code> matrices is <code>null</code>.
+     *                                  or one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3460,7 +3460,7 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix, Matrix, Matrix)
      * applyFunc(context, true, f, result, x1, x2, x3, x4)}.
      *
-     * @param context the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context the context of copying; can be {@code null}, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x1      1st AlgART matrix.
@@ -3468,7 +3468,7 @@ public class Matrices {
      * @param x3      3rd AlgART matrix.
      * @param x4      4th AlgART matrix.
      * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
-     *                                  or one of <code>x</code> matrices is <code>null</code>.
+     *                                  or one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3492,7 +3492,7 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2, x3, x4))</code>.
      *
-     * @param context           the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
      *                          <code>byte</code> and <code>char</code> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3502,7 +3502,7 @@ public class Matrices {
      * @param x2                2nd AlgART matrix.
      * @param x3                3rd AlgART matrix.
      * @param x4                4th AlgART matrix.
-     * @throws NullPointerException     if <code>f</code> or one of passed matrices is <code>null</code>.
+     * @throws NullPointerException     if <code>f</code> or one of passed matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3530,7 +3530,7 @@ public class Matrices {
      * @param result the destination matrix.
      * @param x      several AlgART matrices; may be empty.
      * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
-     *                                  or one of <code>x</code> matrices is <code>null</code>.
+     *                                  or one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3549,12 +3549,12 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, List)
      * applyFunc(context, true, f, result, x)}.
      *
-     * @param context the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context the context of copying; can be {@code null}, then it will be ignored.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x       several AlgART matrices; may be empty.
      * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
-     *                                  or one of <code>x</code> matrices is <code>null</code>.
+     *                                  or one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3580,7 +3580,7 @@ public class Matrices {
      * {@link Matrix#dimEquals(Matrix) same dimensions} as <code>result</code> one,
      * and throws an exception in other case.
      *
-     * @param context           the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}, then it will be ignored.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
      *                          <code>byte</code> and <code>char</code> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3588,7 +3588,7 @@ public class Matrices {
      * @param result            the destination matrix.
      * @param x                 several AlgART matrices; may be empty.
      * @throws NullPointerException     if <code>f</code>, <code>result</code>, <code>x</code>
-     *                                  or one of <code>x</code> matrices is <code>null</code>.
+     *                                  or one of <code>x</code> matrices is {@code null}.
      * @throws IllegalArgumentException in the same situations as {@link
      *                                  Arrays#applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)}
      *                                  method.
@@ -3711,7 +3711,7 @@ public class Matrices {
      * @return the matrix with the required element type, where every element is equal to
      * the corresponding element of the source matrix, multiplied
      * by the automatically chosen scale.
-     * @throws NullPointerException     if one of the arguments is <code>null</code>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the required element type is not a primitive type.
      */
     public static Matrix<? extends PArray> asPrecision(Matrix<? extends PArray> matrix, Class<?> newElementType) {
@@ -3736,10 +3736,10 @@ public class Matrices {
      * <p>If the source and result matrices have the same element type, this method just copies <code>matrix</code>
      * to <code>result</code>.
      *
-     * @param context the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context the context of copying; can be {@code null}, then it will be ignored.
      * @param result  the destination matrix.
      * @param matrix  the source matrix.
-     * @throws NullPointerException  if <code>result</code> or <code>matrix</code> is <code>null</code>.
+     * @throws NullPointerException  if <code>result</code> or <code>matrix</code> is {@code null}.
      * @throws SizeMismatchException if passed matrices have different dimensions.
      * @throws java.io.IOError       if the current thread is interrupted by the standard
      *                               <code>Thread.interrupt()</code> call.
@@ -3841,7 +3841,7 @@ public class Matrices {
      * @param newDim         the dimensions of resized matrix.
      * @return the resized matrix.
      * @throws NullPointerException     if <code>resizingMethod</code>, <code>matrix</code> or
-     *                                  <code>newDim</code> argument is <code>null</code>.
+     *                                  <code>newDim</code> argument is {@code null}.
      * @throws IllegalArgumentException if the number of <code>newDim</code> elements is not equal to
      *                                  <code>matrix.{@link Matrix#dimCount() dimCount()}</code>,
      *                                  or if some of new dimensions are negative.
@@ -3864,7 +3864,7 @@ public class Matrices {
      * <pre>
      *     scales[k]==(double)newDim[k]/(double)matrix.{@link Matrix#dim(int) dim}(k)
      * </pre>
-     * or if <code>scales</code> argument is <code>null</code>, this method is equivalent to
+     * or if <code>scales</code> argument is {@code null}, this method is equivalent to
      * {@link #asResized(Matrices.ResizingMethod, Matrix, long...)}.
      *
      * <p>To get a strict specification of behaviour of this method, please
@@ -3878,12 +3878,12 @@ public class Matrices {
      * @param resizingMethod the algorithm of resizing.
      * @param matrix         the source AlgART matrix.
      * @param newDim         the dimensions of resized matrix.
-     * @param scales         the scales of resizing along every coordinate; can be <code>null</code>,
+     * @param scales         the scales of resizing along every coordinate; can be {@code null},
      *                       then calculated automatically as
      *                       <code>scales[k] = (double)newDim[k]/(double)matrix.{@link Matrix#dim(int) dim}(k)</code>.
      * @return the resized matrix.
      * @throws NullPointerException     if <code>resizingMethod</code>, <code>matrix</code> or
-     *                                  <code>newDim</code> argument is <code>null</code>.
+     *                                  <code>newDim</code> argument is {@code null}.
      * @throws IllegalArgumentException if the length of <code>newDim</code> or (when <code>scales!=null</code>)
      *                                  <code>scales</code> array is not equal to
      *                                  <code>matrix.{@link Matrix#dimCount() dimCount()}</code>,
@@ -3909,7 +3909,7 @@ public class Matrices {
      * @param result         the destination matrix.
      * @param src            the source matrix.
      * @throws NullPointerException     if <code>resizingMethod</code>, <code>result</code> or
-     *                                  <code>src</code> argument is <code>null</code>.
+     *                                  <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if the passed matrices have different number of dimensions.
      */
     public static void resize(
@@ -3958,12 +3958,12 @@ public class Matrices {
      * <p>By the way, in a case of such differences the results of this method usually better correspond
      * to intuitive expectations of the results of resizing.
      *
-     * @param context        the context of resizing; can be <code>null</code>, then it will be ignored.
+     * @param context        the context of resizing; can be {@code null}, then it will be ignored.
      * @param resizingMethod the algorithm of resizing.
      * @param result         the destination matrix.
      * @param src            the source matrix.
      * @throws NullPointerException     if <code>resizingMethod</code>, <code>result</code> or
-     *                                  <code>src</code> argument is <code>null</code>.
+     *                                  <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if the passed matrices have different number of dimensions.
      */
     public static void resize(
@@ -4178,7 +4178,7 @@ public class Matrices {
      * @param result      result bit matrix.
      * @param intensities source matrix.
      * @param threshold   threshold that will be compared with all elements of <code>intensities</code>.
-     * @throws NullPointerException  if one of the passed matrices is <code>null</code>.
+     * @throws NullPointerException  if one of the passed matrices is {@code null}.
      * @throws SizeMismatchException if the passed matrices have different dimensions.
      */
     public static void packBitsGreater(
@@ -4200,7 +4200,7 @@ public class Matrices {
      * @param result      result bit matrix.
      * @param intensities source matrix.
      * @param threshold   threshold that will be compared with all elements of <code>intensities</code>.
-     * @throws NullPointerException  if one of the passed matrices is <code>null</code>.
+     * @throws NullPointerException  if one of the passed matrices is {@code null}.
      * @throws SizeMismatchException if the passed matrices have different dimensions.
      */
     public static void packBitsLess(
@@ -4222,7 +4222,7 @@ public class Matrices {
      * @param result      result bit matrix.
      * @param intensities source matrix.
      * @param threshold   threshold that will be compared with all elements of <code>intensities</code>.
-     * @throws NullPointerException  if one of the passed matrices is <code>null</code>.
+     * @throws NullPointerException  if one of the passed matrices is {@code null}.
      * @throws SizeMismatchException if the passed matrices have different dimensions.
      */
     public static void packBitsGreaterOrEqual(
@@ -4244,7 +4244,7 @@ public class Matrices {
      * @param result      result bit matrix.
      * @param intensities source matrix.
      * @param threshold   threshold that will be compared with all elements of <code>intensities</code>.
-     * @throws NullPointerException  if one of the passed matrices is <code>null</code>.
+     * @throws NullPointerException  if one of the passed matrices is {@code null}.
      * @throws SizeMismatchException if the passed matrices have different dimensions.
      */
     public static void packBitsLessOrEqual(
@@ -4267,7 +4267,7 @@ public class Matrices {
      * @param bits    source bit matrix.
      * @param filler0 the value that will be set in <code>result</code> for zero bits.
      * @param filler1 the value that will be set in <code>result</code> for unit bits.
-     * @throws NullPointerException  if one of the passed matrices is <code>null</code>.
+     * @throws NullPointerException  if one of the passed matrices is {@code null}.
      * @throws SizeMismatchException if the passed matrices have different dimensions.
      */
     public static void unpackBits(
@@ -4289,7 +4289,7 @@ public class Matrices {
      * @param result  result matrix.
      * @param bits    source bit matrix.
      * @param filler1 the value that will be set in <code>result</code> for unit bits.
-     * @throws NullPointerException  if one of the passed matrices is <code>null</code>.
+     * @throws NullPointerException  if one of the passed matrices is {@code null}.
      * @throws SizeMismatchException if the passed matrices have different dimensions.
      */
     public static void unpackUnitBits(
@@ -4310,7 +4310,7 @@ public class Matrices {
      * @param result  result matrix.
      * @param bits    source bit matrix.
      * @param filler0 the value that will be set in <code>result</code> for zero bits.
-     * @throws NullPointerException  if one of the passed matrices is <code>null</code>.
+     * @throws NullPointerException  if one of the passed matrices is {@code null}.
      * @throws SizeMismatchException if the passed matrices have different dimensions.
      */
     public static void unpackZeroBits(
@@ -4378,7 +4378,7 @@ public class Matrices {
      * @param matrix the source AlgART matrix.
      * @param shifts the shifts (to the right) of all indexes in the returned view.
      * @return a shifted view of the passed matrix.
-     * @throws NullPointerException if <code>shifts</code> or <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException if <code>shifts</code> or <code>matrix</code> argument is {@code null}.
      */
     public static Matrix<Array> asShifted(Matrix<? extends Array> matrix, long... shifts) {
         // Note! The following declaration would be incorrect:
@@ -4405,7 +4405,7 @@ public class Matrices {
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>byte</code> type.
-     * @throws NullPointerException   if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException   if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see Array#ja()
      */
@@ -4418,15 +4418,15 @@ public class Matrices {
      * Equivalent to <code>{@link Arrays#toByteJavaArray(byte[], PArray)
      * Arrays.toByteJavaArray}(result, matrix.array())</code>.
      *
-     * @param result the result <code>byte[]</code> array; can be <code>null</code>,
+     * @param result the result <code>byte[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
      * Java array containing all the elements in the source matrix,
      * cast to <code>byte</code> type according to AlgART rules.
-     * @throws NullPointerException      if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException    if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
-     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not <code>null</code>, but its length
+     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
      *                                   is too small: less than {@link Matrix#size() matrix.size()}.
      * @see Array#ja()
      */
@@ -4441,7 +4441,7 @@ public class Matrices {
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>short</code> type.
-     * @throws NullPointerException   if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException   if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see Array#ja()
      */
@@ -4454,15 +4454,15 @@ public class Matrices {
      * Equivalent to <code>{@link Arrays#toShortJavaArray(short[], PArray)
      * Arrays.toShortJavaArray}(result, matrix.array())</code>.
      *
-     * @param result the result <code>short[]</code> array; can be <code>null</code>,
+     * @param result the result <code>short[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
      * Java array containing all the elements in the source matrix,
      * cast to <code>short</code> type according to AlgART rules.
-     * @throws NullPointerException      if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException    if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
-     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not <code>null</code>, but its length
+     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
      *                                   is too small: less than {@link Matrix#size() matrix.size()}.
      * @see Array#ja()
      */
@@ -4477,7 +4477,7 @@ public class Matrices {
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>int</code> type.
-     * @throws NullPointerException   if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException   if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see Array#ja()
      */
@@ -4490,15 +4490,15 @@ public class Matrices {
      * Equivalent to <code>{@link Arrays#toIntJavaArray(int[], PArray)
      * Arrays.toIntJavaArray}(result, matrix.array())</code>.
      *
-     * @param result the result <code>int[]</code> array; can be <code>null</code>,
+     * @param result the result <code>int[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
      * Java array containing all the elements in the source matrix,
      * cast to <code>int</code> type according to AlgART rules.
-     * @throws NullPointerException      if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException    if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
-     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not <code>null</code>, but its length
+     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
      *                                   is too small: less than {@link Matrix#size() matrix.size()}.
      * @see Array#ja()
      */
@@ -4513,7 +4513,7 @@ public class Matrices {
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>long</code> type.
-     * @throws NullPointerException   if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException   if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see Array#ja()
      */
@@ -4526,15 +4526,15 @@ public class Matrices {
      * Equivalent to <code>{@link Arrays#toLongJavaArray(long[], PArray)
      * Arrays.toLongJavaArray}(result, matrix.array())</code>.
      *
-     * @param result the result <code>long[]</code> array; can be <code>null</code>,
+     * @param result the result <code>long[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
      * Java array containing all the elements in the source matrix,
      * cast to <code>long</code> type according to AlgART rules.
-     * @throws NullPointerException      if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException    if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
-     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not <code>null</code>, but its length
+     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
      *                                   is too small: less than {@link Matrix#size() matrix.size()}.
      * @see Array#ja()
      */
@@ -4549,7 +4549,7 @@ public class Matrices {
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>float</code> type.
-     * @throws NullPointerException   if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException   if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see Array#ja()
      */
@@ -4562,15 +4562,15 @@ public class Matrices {
      * Equivalent to <code>{@link Arrays#toFloatJavaArray(float[], PArray)
      * Arrays.toFloatJavaArray}(result, matrix.array())</code>.
      *
-     * @param result the result <code>float[]</code> array; can be <code>null</code>,
+     * @param result the result <code>float[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
      * Java array containing all the elements in the source matrix,
      * cast to <code>float</code> type according to AlgART rules.
-     * @throws NullPointerException      if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException    if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
-     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not <code>null</code>, but its length
+     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
      *                                   is too small: less than {@link Matrix#size() matrix.size()}.
      * @see Array#ja()
      */
@@ -4585,7 +4585,7 @@ public class Matrices {
      *
      * @param matrix the source AlgART matrix.
      * @return Java array containing all the elements in this matrix, cast to <code>double</code> type.
-     * @throws NullPointerException   if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException   if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see Array#ja()
      */
@@ -4598,15 +4598,15 @@ public class Matrices {
      * Equivalent to <code>{@link Arrays#toDoubleJavaArray(double[], PArray)
      * Arrays.toDoubleJavaArray}(result, matrix.array())</code>.
      *
-     * @param result the result <code>double[]</code> array; can be <code>null</code>,
+     * @param result the result <code>double[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @param matrix the source AlgART matrix.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
      * Java array containing all the elements in the source matrix,
      * cast to <code>double</code> type according to AlgART rules.
-     * @throws NullPointerException      if <code>matrix</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>matrix</code> argument is {@code null}.
      * @throws TooLargeArrayException    if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
-     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not <code>null</code>, but its length
+     * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
      *                                   is too small: less than {@link Matrix#size() matrix.size()}.
      * @see Array#ja()
      */
@@ -4625,7 +4625,7 @@ public class Matrices {
      *
      * @param matrix the matrix to be cloned.
      * @return exact updatable clone of the passed matrix.
-     * @throws NullPointerException if the argument is <code>null</code>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public static Matrix<? extends UpdatablePArray> clone(Matrix<? extends PArray> matrix) {
         return clone(Arrays.SMM, matrix);
@@ -4645,7 +4645,7 @@ public class Matrices {
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @param matrix      the matrix to be cloned.
      * @return exact updatable clone of the passed matrix.
-     * @throws NullPointerException if one of the arguments is <code>null</code>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      */
     public static Matrix<? extends UpdatablePArray> clone(MemoryModel memoryModel, Matrix<? extends PArray> matrix) {
         Objects.requireNonNull(memoryModel, "Null memory model");
@@ -4662,11 +4662,11 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context the context of copying; can be {@code null}, then it will be ignored.
      * @param dest    the destination matrix.
      * @param src     the source matrix.
      * @return the information about copying.
-     * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
@@ -4686,13 +4686,13 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context       the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context       the context of copying; can be {@code null}, then it will be ignored.
      * @param dest          the destination matrix.
      * @param src           the source matrix.
      * @param numberOfTasks the required number of parallel tasks;
      *                      can be <code>0</code>, then it will be chosen automatically.
      * @return the information about copying.
-     * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match,
      *                                  or if the <code>numberOfThreads</code> argument is negative.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
@@ -4719,7 +4719,7 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context       the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context       the context of copying; can be {@code null}, then it will be ignored.
      * @param dest          the destination matrix.
      * @param src           the source matrix.
      * @param numberOfTasks the required number of parallel tasks;
@@ -4727,7 +4727,7 @@ public class Matrices {
      * @param strictMode    if <code>false</code>, optimization is allowed even if it can lead to little differences
      *                      between the source and copied elements.
      * @return the information about copying.
-     * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match,
      *                                  or if the <code>numberOfThreads</code> argument is negative.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
@@ -4754,11 +4754,11 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context the context of copying; can be {@code null}, then it will be ignored.
      * @param dest    the destination matrix.
      * @param src     the source matrix.
      * @return the result of {@link Arrays#compareAndCopy Arrays.compareAndCopy} call.
-     * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws java.io.IOError          if the current thread is interrupted by the standard
@@ -4784,7 +4784,7 @@ public class Matrices {
      *
      * @param dest the destination matrix.
      * @param src  the src matrix.
-     * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is {@code null}.
      * @throws IllegalArgumentException if the src and destination element types do not match.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
@@ -4840,7 +4840,7 @@ public class Matrices {
      *
      * <p>The <code>context</code> argument is used as in
      * {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} method,
-     * but <b>without multithreading</b>. Namely, if <code>context</code> is not <code>null</code>,
+     * but <b>without multithreading</b>. Namely, if <code>context</code> is not {@code null},
      * this method periodically calls its {@link ArrayContext#updateProgress updateProgress} and
      * {@link ArrayContext#checkInterruption checkInterruption} methods.
      *
@@ -4858,13 +4858,13 @@ public class Matrices {
      * before starting the copying, and <code>IndexOutOfBoundsException</code> is thrown if necessary
      * in the very beginning: so, this method is atomic regarding failures for hyperparallelepipeds.
      *
-     * @param context    the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context    the context of copying; can be {@code null}, then it will be ignored.
      * @param dest       the destination matrix.
      * @param src        the source matrix.
      * @param destRegion the region in the destination matrix that should be copied from the source one.
      * @param shifts     the shift between the source and destination regions.
      * @throws NullPointerException      if <code>dest</code>, <code>src</code>, <code>destRegion</code>
-     *                                   or <code>shifts</code> argument is <code>null</code>.
+     *                                   or <code>shifts</code> argument is {@code null}.
      * @throws IllegalArgumentException  if the source and destination element types do not match,
      *                                   i.e. if <code>dest.{@link Matrix#elementType() elementType()}</code>
      *                                   is not equal to <code>src.{@link Matrix#elementType() elementType()}</code>
@@ -4918,8 +4918,8 @@ public class Matrices {
      *
      * <p>For non-primitive element types, the <code>outsideValue</code> argument
      * must be some instance of the class <code>src.{@link Matrix#elementType() elementType()}</code>,
-     * or its superclass, or <code>null</code>.
-     * For primitive element types, <code>outsideValue</code> can be <code>null</code> or <i>any</i>
+     * or its superclass, or {@code null}.
+     * For primitive element types, <code>outsideValue</code> can be {@code null} or <i>any</i>
      * wrapper for primitive types: <code>Boolean</code>, <code>Byte</code>, etc. The rules of conversion
      * of this value to required primitive type are exactly the same as in
      * {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
@@ -4961,19 +4961,19 @@ public class Matrices {
      * }
      * </pre>
      *
-     * @param context      the context of copying; can be <code>null</code>, then it will be ignored.
+     * @param context      the context of copying; can be {@code null}, then it will be ignored.
      * @param dest         the destination matrix.
      * @param src          the source matrix.
      * @param destRegion   the region in the destination matrix that should be copied from the source one.
      * @param shifts       the shift between the source and destination regions.
      * @param outsideValue the value used while copying elements, lying outside <code>src</code> matrix.
      * @throws NullPointerException     if <code>dest</code>, <code>src</code>, <code>destRegion</code>
-     *                                  or <code>shifts</code> argument is <code>null</code>.
+     *                                  or <code>shifts</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match,
      *                                  i.e. if <code>dest.{@link Matrix#elementType() elementType()}</code>
      *                                  is not equal to <code>src.{@link Matrix#elementType() elementType()}</code>
      *                                  and is not its superclass (for non-primitive element types).
-     * @throws ClassCastException       if <code>outsideValue</code> is not <code>null</code> and its class
+     * @throws ClassCastException       if <code>outsideValue</code> is not {@code null} and its class
      *                                  is illegal, i.e. cannot be cast to the necessary type according
      *                                  the rules specified for
      *                                  the {@link Matrix.ContinuationMode#getConstantMode(Object)
@@ -5034,20 +5034,20 @@ public class Matrices {
      *
      * <p>For non-primitive element types, the <code>value</code> argument
      * must be some instance of the class <code>src.{@link Matrix#elementType() elementType()}</code>,
-     * or its superclass, or <code>null</code>.
-     * For primitive element types, <code>value</code> can be <code>null</code> or <i>any</i>
+     * or its superclass, or {@code null}.
+     * For primitive element types, <code>value</code> can be {@code null} or <i>any</i>
      * wrapper for primitive types: <code>Boolean</code>, <code>Byte</code>, etc. The rules of conversion
      * of this value to required primitive type are exactly the same as in
      * {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
      * the case of the {@link Matrix.ContinuationMode#getConstantMode(Object) constant continuation mode}.
      *
-     * @param context    the context of filling; can be <code>null</code>, then it will be ignored.
+     * @param context    the context of filling; can be {@code null}, then it will be ignored.
      * @param dest       the destination matrix.
      * @param destRegion the region in the destination matrix that should be filled by the specified value.
      * @param value      the value to be stored in all elements of the matrix inside the region.
      * @throws NullPointerException if <code>dest</code>, <code>src</code> or <code>destRegion</code>
-     *                              argument is <code>null</code>.
-     * @throws ClassCastException   if <code>value</code> is not <code>null</code> and its class is illegal, i.e.
+     *                              argument is {@code null}.
+     * @throws ClassCastException   if <code>value</code> is not {@code null} and its class is illegal, i.e.
      *                              cannot be cast to the necessary type according the rules specified
      *                              for the {@link Matrix.ContinuationMode#getConstantMode(Object)
      *                              constant submatrix continuation mode}.
@@ -5156,7 +5156,7 @@ public class Matrices {
      *
      * @param dim dimensions of some matrix.
      * @return the string representations of all elements joined into one string.
-     * @throws NullPointerException if the argument is <code>null</code>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public static String dimensionsToString(long[] dim) {
         return dim.length == 1 ? dim[0] + "(x1)" : JArrays.toString(dim, "x", 1000);

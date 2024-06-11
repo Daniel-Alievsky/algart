@@ -25,10 +25,6 @@
 package net.algart.arrays;
 
 /*Repeat(INCLUDE_FROM_FILE, FloatArray.java, all)
-  (or <code>null</code> in other case\.) ==> $1
-     * Usually, this method always returns <code>null</code>,
-     * because typical implementation packs bits in another primitive types
-     * (as <code>int</code> or <code>long</code>). ;;
   PFloating ==> PFixed ;;
   FloatArray ==> BitArray ;;
   FloatBuffer ==> BitBuffer ;;
@@ -209,7 +205,7 @@ public interface BitArray extends PFixedArray {
      * @param destArray       the target packed bit array.
      * @param destArrayOffset starting position in the target packed bit array.
      * @param count           the number of bits to be copied.
-     * @throws NullPointerException      if <code>destArray</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>destArray</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target Java array.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code>.
      * @see BitArray#getData(long, Object, int, int)
@@ -349,7 +345,7 @@ public interface BitArray extends PFixedArray {
      * @param packedBitArray the source <code>long[]</code>> array.
      * @param length         the length of the returned bit array.
      * @return an unresizable AlgART bit array backed by the specified Java array.
-     * @throws NullPointerException     if <code>array</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>length&lt;0</code> or
      *                                  if the passed <code>array</code> is too short to store
      *                                  <code>length</code> bits

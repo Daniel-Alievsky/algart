@@ -50,7 +50,7 @@ public interface MutableArray extends Stack, UpdatableArray {
      * Changes the current number of elements in this array.
      * If <code>newLength</code> is greater than current number of elements,
      * all new elements will be always zero (0 for numbers, <code>false</code> for booleans,
-     * <code>null</code> or some "empty" objects for non-primitive elements).
+     * {@code null} or some "empty" objects for non-primitive elements).
      *
      * <p>Notice: if <code>newLength</code> is less than current number of elements,
      * then the unused elements (from <code>newLength</code> to <code>(current length)-1</code>)
@@ -109,7 +109,7 @@ public interface MutableArray extends Stack, UpdatableArray {
      *
      * @param appendedArray  appended array.
      * @return               a reference to this array.
-     * @throws NullPointerException     if <code>appendedArray</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>appendedArray</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and this element types do not match.
      * @throws TooLargeArrayException   if the resulting array length is too large for this type of arrays.
      * @see #asUnresizable()

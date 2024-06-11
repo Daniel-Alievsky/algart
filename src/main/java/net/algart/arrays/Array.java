@@ -25,6 +25,7 @@
 package net.algart.arrays;
 
 import java.nio.ByteOrder;
+import java.util.Objects;
 
 /**
  * <p>AlgART array of any elements, read-only access.</p>
@@ -254,7 +255,7 @@ public interface Array {
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be copied.
-     * @throws NullPointerException      if <code>destArray</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>destArray</code> argument is {@code null}.
      * @throws IllegalArgumentException  if <code>destArray</code> argument is not an array or
      *                                   if <code>count &lt; 0</code>.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target Java array.
@@ -284,7 +285,7 @@ public interface Array {
      *
      * @param arrayPos  starting position in this AlgART array.
      * @param destArray the target Java array.
-     * @throws NullPointerException     if <code>destArray</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>destArray</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>destArray</code> argument is not an array.
      * @throws ArrayStoreException      if <code>destArray</code> element type mismatches with this array
      *                                  {@link #elementType()}.
@@ -401,7 +402,7 @@ public interface Array {
      * @param mode     the access mode for new buffer.
      * @param capacity the capacity of the buffer.
      * @return new data buffer for accessing this array.
-     * @throws NullPointerException     if <code>mode</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>mode</code> argument is {@code null}.
      * @throws IllegalArgumentException if the <code>mode</code> is not the {@link DataBuffer.AccessMode#READ},
      *                                  but this arrays does not implement {@link UpdatableArray} interface,
      *                                  or if the specified <code>capacity</code> is negative or too high
@@ -425,7 +426,7 @@ public interface Array {
      *
      * @param mode the access mode for new buffer.
      * @return new data buffer for accessing this array.
-     * @throws NullPointerException     if <code>mode</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>mode</code> argument is {@code null}.
      * @throws IllegalArgumentException if the <code>mode</code> is not the {@link DataBuffer.AccessMode#READ},
      *                                  but this arrays does not implement {@link UpdatableArray} interface.
      */
@@ -958,7 +959,7 @@ public interface Array {
      * this method returns <code>ByteOrder.nativeOrder()</code>, though the byte order in the
      * underlying storage arrays may be another.
      *
-     * <p>This method never returns <code>null</code>.
+     * <p>This method never returns {@code null}.
      *
      * <p>There is a guarantee that this method works very quickly
      * (usually it just returns a constant or a value of some private field).
@@ -1041,7 +1042,7 @@ public interface Array {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return a mutable copy of this array.
-     * @throws NullPointerException            if the argument is <code>null</code>.
+     * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if <code>thisArray.{@link Array#elementType()}</code> is not supported
      *                                         by the specified memory model.
      * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
@@ -1072,7 +1073,7 @@ public interface Array {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return an updatable copy of this array.
-     * @throws NullPointerException            if the argument is <code>null</code>.
+     * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if <code>thisArray.{@link Array#elementType()}</code> is not supported
      *                                         by the specified memory model.
      * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
@@ -1185,7 +1186,7 @@ public interface Array {
      *
      * @param dim the matrix dimensions.
      * @return new matrix backed by <code>array</code> with the given dimensions.
-     * @throws NullPointerException     if <code>array</code> or <code>dim</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>array</code> or <code>dim</code> argument is {@code null}.
      * @throws IllegalArgumentException if the passed array is resizable
      *                                  (for example, implements {@link MutableArray}),
      *                                  or if the number of dimensions is 0 (empty <code>dim</code> Java array),
@@ -1239,12 +1240,12 @@ public interface Array {
      * This method usually does nothing if the {@link #length() length} of this array is zero.
      *
      * <p>The <code>context</code> argument is necessary to allow user to interrupt this method and to view
-     * the execution progress. Namely, if this argument is not <code>null</code>, this method probably calls
+     * the execution progress. Namely, if this argument is not {@code null}, this method probably calls
      * <code>context.{@link ArrayContext#checkInterruption() checkInterruption}</code> and
      * <code>context.{@link ArrayContext#updateProgress updateProgress}</code> methods from time to time.
      * It may be useful if preloading data can require long time, for example, the content should be
      * loaded from Internet.
-     * You always may pass <code>null</code> as this argument; then all will work correctly,
+     * You always may pass {@code null} as this argument; then all will work correctly,
      * but, maybe, the user will be bored for some time.
      * For all arrays, created by this package, this method works quickly enough
      * and doesn't require non-null context.
@@ -1254,7 +1255,7 @@ public interface Array {
      * created by {@link Arrays#nByteCopies}, {@link Arrays#nCharCopies}, etc.:
      * these arrays have no associated resources.
      *
-     * @param context the context of execution; can be <code>null</code>, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, then it will be ignored.
      * @see #freeResources(ArrayContext)
      * @see #flushResources(ArrayContext)
      * @see #flushResources(ArrayContext, boolean)
@@ -1275,7 +1276,7 @@ public interface Array {
     /**
      * Equivalent to <code>{@link #flushResources(ArrayContext, boolean) flushResources}(context, false)</code>.
      *
-     * @param context the context of execution; can be <code>null</code>, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, then it will be ignored.
      * @see #loadResources(ArrayContext)
      * @see #freeResources(ArrayContext)
      */
@@ -1334,13 +1335,13 @@ public interface Array {
      * flushing this view is equivalent to flushing the original array <code><b>a</b></code>.
      *
      * <p>The <code>context</code> argument is necessary to allow user to interrupt this method and to view
-     * the execution progress. Namely, if this argument is not <code>null</code>, this method probably calls
+     * the execution progress. Namely, if this argument is not {@code null}, this method probably calls
      * <code>context.{@link ArrayContext#checkInterruption() checkInterruption}</code> and
      * <code>context.{@link ArrayContext#updateProgress updateProgress}</code> methods from time to time.
      * It may be useful if this array is very large and writing non-flushed data to an external device
      * requires long time. For example, it is possible for arrays, created by
      * {@link LargeMemoryModel#newLazyCopy(Array) LargeMemoryModel.newLazyCopy} method.
-     * You always may pass <code>null</code> as this argument; then all will work correctly,
+     * You always may pass {@code null} as this argument; then all will work correctly,
      * but, maybe, the user will be bored for some time.
      *
      * <p>This method does nothing for arrays created by the {@link SimpleMemoryModel simple memory model}
@@ -1360,7 +1361,7 @@ public interface Array {
      * however, it is still possible that the second call will spend time for writing data again t
      * o an external device.
      *
-     * @param context              the context of execution; can be <code>null</code>, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      * @see #loadResources(ArrayContext)
@@ -1383,7 +1384,7 @@ public interface Array {
     /**
      * Equivalent to <code>{@link #freeResources(ArrayContext, boolean) freeResources}(context, false)</code>.
      *
-     * @param context the context of execution; can be <code>null</code>, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, then it will be ignored.
      * @see #loadResources(ArrayContext)
      * @see #flushResources(ArrayContext)
      */
@@ -1417,13 +1418,13 @@ public interface Array {
      * but also to another ones, for example, to its {@link #subArray(long, long) subarrays}.
      *
      * <p>The <code>context</code> argument is necessary to allow user to interrupt this method and to view
-     * the execution progress. Namely, if this argument is not <code>null</code>, this method probably calls
+     * the execution progress. Namely, if this argument is not {@code null}, this method probably calls
      * <code>context.{@link ArrayContext#checkInterruption() checkInterruption}</code> and
      * <code>context.{@link ArrayContext#updateProgress updateProgress}</code> methods from time to time.
      * It may be useful if this array is very large and writing non-flushed data to an external device
      * requires long time. For example, it is possible for arrays, created by
      * {@link LargeMemoryModel#newLazyCopy(Array) LargeMemoryModel.newLazyCopy} method.
-     * You always may pass <code>null</code> as this argument; then all will work correctly,
+     * You always may pass {@code null} as this argument; then all will work correctly,
      * but, maybe, the user will be bored for some time.
      *
      * <p>This method does nothing for arrays created by the {@link SimpleMemoryModel simple memory model}
@@ -1482,7 +1483,7 @@ public interface Array {
      * In other case, thousands of inactive instances of AlgART arrays with non-released resources
      * can exhaust all available RAM (or address space).
      *
-     * @param context              the context of execution; can be <code>null</code>, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      * @see #loadResources(ArrayContext context)
@@ -1554,4 +1555,27 @@ public interface Array {
      * @return <code>true</code> if the specified object is an array equal to this one.
      */
     boolean equals(Object obj);
+
+    /**
+     * Equivalent to {@link MemoryModel#newUnresizableArray(Class, long)
+     * memoryModel.newUnresizableArray(elementType, length)}.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param elementType the type of array elements.
+     * @param length      the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws NullPointerException if one of the arguments is {@code null}.
+     * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>
+     *                                         or if the specified length is negative.
+     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
+     * @throws TooLargeArrayException          if the specified length is too large for this memory model.
+     */
+    static UpdatableArray newArray(MemoryModel memoryModel, Class<?> elementType, long length) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newUnresizableArray(elementType, length);
+    }
+
+    static UpdatableArray newArray(Class<?> elementType, long length) {
+        return newArray(Arrays.SMM, elementType, length);
+    }
 }

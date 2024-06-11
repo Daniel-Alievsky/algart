@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>AlgART array of any primitive numeric elements (byte, short, int, long, float or double),
  * read-only access.</p>
@@ -45,4 +47,18 @@ public interface PNumberArray extends PArray {
     default Matrix<? extends PNumberArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }
+
+    static UpdatablePNumberArray newArray(MemoryModel memoryModel, Class<?> elementType, long length) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        Objects.requireNonNull(elementType, "Null element type");
+        if (!Arrays.isNumberElementType(elementType)) {
+            throw new IllegalArgumentException("Not a numeric primitive type: " + elementType);
+        }
+        return (UpdatablePNumberArray) memoryModel.newUnresizableArray(elementType, length);
+    }
+
+    static UpdatablePNumberArray newArray(Class<?> elementType, long length) {
+        return newArray(Arrays.SMM, elementType, length);
+    }
+
 }

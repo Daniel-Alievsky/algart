@@ -127,7 +127,7 @@ public interface FloatArray extends PFloatingArray {
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
-     * @throws NullPointerException if <code>array</code> argument is <code>null</code>.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     static UpdatableFloatArray as(float[] array) {
         return SimpleMemoryModel.asUpdatableFloatArray(array);

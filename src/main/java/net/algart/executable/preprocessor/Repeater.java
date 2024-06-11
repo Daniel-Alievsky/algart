@@ -33,6 +33,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * <p>Simple preprocessor based on regular expression for Java and other source code.</p>
@@ -547,7 +548,7 @@ public class Repeater implements Cloneable {
                 System.err.println("I/O error while processing " + processedFile);
                 System.err.println("  " + e.getMessage());
             }
-        } catch (SyntaxException e) {
+        } catch (SyntaxException | PatternSyntaxException e) {
             synchronized (lock) {
                 exceptionOccurred = true;
                 System.out.println();

@@ -30,8 +30,8 @@ package net.algart.arrays;
  *
  * <p>Virtual memory model is an abstraction describing how the array elements are stored in memory.
  * For example, the simplest memory model is {@link SimpleMemoryModel}, that use Java arrays for storing array
- * elements (alike <tt>java.util.ArrayList</tt>). Another example is {@link LargeMemoryModel}:
- * memory model based on direct byte buffers created via <tt>java.nio.ByteBuffer.allocateDirect</tt>
+ * elements (alike <code>java.util.ArrayList</code>). Another example is {@link LargeMemoryModel}:
+ * memory model based on direct byte buffers created via <code>java.nio.ByteBuffer.allocateDirect</code>
  * method or via mapping disk files.</p>
  *
  * <p>The arrays, created with help of different memory models, implement identical interfaces
@@ -60,7 +60,7 @@ public interface MemoryModel {
     /**
      * Allocates an empty resizable array with the specified element type and a little initial capacity.
      * It is equivalent to {@link #newEmptyArray(Class, long) newEmptyArray(elementType, n)}, where
-     * <tt>n</tt> is some little value.
+     * <code>n</code> is some little value.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableFloatArray a = (MutableFloatArray)memoryModel.newEmptyArray(float.class);
@@ -68,9 +68,9 @@ public interface MemoryModel {
      *
      * @param elementType the type of array elements.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if <tt>elementType</tt> is not supported of <tt>void.class</tt>.
-     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is not supported of <code>void.class</code>.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newArray(Class, long)
      */
@@ -79,21 +79,21 @@ public interface MemoryModel {
     /**
      * Allocates an empty resizable array with the specified element type and initial capacity.
      *
-     * <p>The element type can be either usual object class (as <tt>String.class</tt>),
-     * or one of the primitive types: <tt>boolean.class</tt>,
-     * <tt>byte.class</tt>, <tt>short.class</tt>, <tt>int.class</tt>,
-     * <tt>long.class</tt>, <tt>float.class</tt>, <tt>double.class</tt>,
-     * <tt>char.class</tt>. The element type cannot be <tt>void.class</tt>.
+     * <p>The element type can be either usual object class (as <code>String.class</code>),
+     * or one of the primitive types: <code>boolean.class</code>,
+     * <code>byte.class</code>, <code>short.class</code>, <code>int.class</code>,
+     * <code>long.class</code>, <code>float.class</code>, <code>double.class</code>,
+     * <code>char.class</code>. The element type cannot be <code>void.class</code>.
      *
      * <p>In a case of primitive types, the created array
      * will implement the corresponding interface {@link BitArray},
      * {@link ByteArray}, {@link ShortArray}, {@link IntArray},
      * {@link LongArray}, {@link FloatArray}, {@link DoubleArray} or
      * {@link CharArray}. In this case, the created array
-     * (unlike standard <tt>ArrayList</tt>) will occupy the same amount of memory
-     * as the Java array <tt>boolean[initialCapacity]</tt>, <tt>byte[initialCapacity]</tt>, etc.
+     * (unlike standard <code>ArrayList</code>) will occupy the same amount of memory
+     * as the Java array <code>boolean[initialCapacity]</code>, <code>byte[initialCapacity]</code>, etc.
      *
-     * <p>In a case of non-primitive types (<tt>Object</tt> inheritors), the created array
+     * <p>In a case of non-primitive types (<code>Object</code> inheritors), the created array
      * will implement the {@link MutableObjectArray} interface.
      *
      * <p>Some element type may be not supported by this memory model.
@@ -102,7 +102,7 @@ public interface MemoryModel {
      *
      * <p>Some too large array capacities may be not supported by this memory model.
      * For example, {@link SimpleMemoryModel} does not support arrays larger than 0x7FFFFFFF
-     * (<tt>Integer.MAX_VALUE</tt>) elements.
+     * (<code>Integer.MAX_VALUE</code>) elements.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableFloatArray a = (MutableFloatArray)memoryModel.newEmptyArray(float.class, 10000);
@@ -111,10 +111,10 @@ public interface MemoryModel {
      * @param elementType     the type of array elements.
      * @param initialCapacity the initial capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is <code>void.class</code>
      *                                         or if the specified initial capacity is negative.
-     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial capacity is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newArray(Class, long)
@@ -132,10 +132,10 @@ public interface MemoryModel {
      * @param elementType   the type of array elements.
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is <code>void.class</code>
      *                                         or if the specified initial length is negative.
-     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyArray(Class, long)
@@ -165,13 +165,14 @@ public interface MemoryModel {
      * @param elementType the type of array elements.
      * @param length      the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is <code>void.class</code>
      *                                         or if the specified length is negative.
-     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newArray(Class, long)
+     * @see Array#newArray(MemoryModel, Class, long)
      */
     UpdatableArray newUnresizableArray(Class<?> elementType, long length);
 
@@ -182,8 +183,9 @@ public interface MemoryModel {
      *
      * @param array the pattern array.
      * @return new AlgART array with the same length and element type.
-     * @throws NullPointerException            if <tt>array</tt> is <tt>null</tt>.
-     * @throws UnsupportedElementTypeException if <tt>array.elementType()</tt> is not supported by this memory model.
+     * @throws NullPointerException            if <code>array</code> is {@code null}.
+     * @throws UnsupportedElementTypeException if <code>array.elementType()</code>
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the {@link Array#length() length} of passed array is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -197,8 +199,9 @@ public interface MemoryModel {
      *
      * @param array the pattern array.
      * @return new unresizable AlgART array with the same length and element type.
-     * @throws NullPointerException            if <tt>array</tt> is <tt>null</tt>.
-     * @throws UnsupportedElementTypeException if <tt>array.elementType()</tt> is not supported by this memory model.
+     * @throws NullPointerException            if <code>array</code> is {@code null}.
+     * @throws UnsupportedElementTypeException if <code>array.elementType()</code>
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the {@link Array#length() length} of passed array is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -210,14 +213,15 @@ public interface MemoryModel {
                bit               ==> char,,byte,,short,,int,,long,,float,,double */
 
     /**
-     * Equivalent to <tt>(MutableBitArray){@link #newEmptyArray(Class) newEmptyArray}(boolean.class)</tt>.
+     * Equivalent to <code>(MutableBitArray){@link #newEmptyArray(Class) newEmptyArray}(boolean.class)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableBitArray a = memoryModel.newEmptyBitArray();
      * </pre>
      *
      * @return created AlgART array.
-     * @throws UnsupportedElementTypeException if <tt>boolean</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>boolean</code> element type
+     *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newBitArray(long)
      */
@@ -234,7 +238,8 @@ public interface MemoryModel {
      * @param initialCapacity the initial capacity of the array.
      * @return created AlgART array.
      * @throws IllegalArgumentException        if the specified initial capacity is negative.
-     * @throws UnsupportedElementTypeException if <tt>boolean</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>boolean</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial capacity is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newBitArray(long)
@@ -247,9 +252,10 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
-     * @throws UnsupportedElementTypeException if <tt>boolean</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>boolean</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyBitArray(long)
@@ -262,9 +268,10 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
-     * @throws UnsupportedElementTypeException if <tt>boolean</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>boolean</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyBitArray(long)
@@ -273,14 +280,15 @@ public interface MemoryModel {
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Equivalent to <tt>(MutableCharArray){@link #newEmptyArray(Class) newEmptyArray}(char.class)</tt>.
+     * Equivalent to <code>(MutableCharArray){@link #newEmptyArray(Class) newEmptyArray}(char.class)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableCharArray a = memoryModel.newEmptyCharArray();
      * </pre>
      *
      * @return created AlgART array.
-     * @throws UnsupportedElementTypeException if <tt>char</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>char</code> element type
+     *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newCharArray(long)
      */
@@ -297,7 +305,8 @@ public interface MemoryModel {
      * @param initialCapacity the initial capacity of the array.
      * @return created AlgART array.
      * @throws IllegalArgumentException        if the specified initial capacity is negative.
-     * @throws UnsupportedElementTypeException if <tt>char</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>char</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial capacity is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newCharArray(long)
@@ -310,9 +319,10 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
-     * @throws UnsupportedElementTypeException if <tt>char</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>char</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyCharArray(long)
@@ -325,9 +335,10 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
-     * @throws UnsupportedElementTypeException if <tt>char</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>char</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyCharArray(long)
@@ -336,14 +347,15 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(MutableByteArray){@link #newEmptyArray(Class) newEmptyArray}(byte.class)</tt>.
+     * Equivalent to <code>(MutableByteArray){@link #newEmptyArray(Class) newEmptyArray}(byte.class)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableByteArray a = memoryModel.newEmptyByteArray();
      * </pre>
      *
      * @return created AlgART array.
-     * @throws UnsupportedElementTypeException if <tt>byte</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>byte</code> element type
+     *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newByteArray(long)
      */
@@ -360,7 +372,8 @@ public interface MemoryModel {
      * @param initialCapacity the initial capacity of the array.
      * @return created AlgART array.
      * @throws IllegalArgumentException        if the specified initial capacity is negative.
-     * @throws UnsupportedElementTypeException if <tt>byte</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>byte</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial capacity is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newByteArray(long)
@@ -373,9 +386,10 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
-     * @throws UnsupportedElementTypeException if <tt>byte</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>byte</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyByteArray(long)
@@ -388,9 +402,10 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
-     * @throws UnsupportedElementTypeException if <tt>byte</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>byte</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyByteArray(long)
@@ -399,14 +414,15 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(MutableShortArray){@link #newEmptyArray(Class) newEmptyArray}(short.class)</tt>.
+     * Equivalent to <code>(MutableShortArray){@link #newEmptyArray(Class) newEmptyArray}(short.class)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableShortArray a = memoryModel.newEmptyShortArray();
      * </pre>
      *
      * @return created AlgART array.
-     * @throws UnsupportedElementTypeException if <tt>short</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>short</code> element type
+     *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newShortArray(long)
      */
@@ -423,7 +439,8 @@ public interface MemoryModel {
      * @param initialCapacity the initial capacity of the array.
      * @return created AlgART array.
      * @throws IllegalArgumentException        if the specified initial capacity is negative.
-     * @throws UnsupportedElementTypeException if <tt>short</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>short</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial capacity is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newShortArray(long)
@@ -436,9 +453,10 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
-     * @throws UnsupportedElementTypeException if <tt>short</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>short</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyShortArray(long)
@@ -451,9 +469,10 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
-     * @throws UnsupportedElementTypeException if <tt>short</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>short</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyShortArray(long)
@@ -462,14 +481,15 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(MutableIntArray){@link #newEmptyArray(Class) newEmptyArray}(int.class)</tt>.
+     * Equivalent to <code>(MutableIntArray){@link #newEmptyArray(Class) newEmptyArray}(int.class)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableIntArray a = memoryModel.newEmptyIntArray();
      * </pre>
      *
      * @return created AlgART array.
-     * @throws UnsupportedElementTypeException if <tt>int</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>int</code> element type
+     *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newIntArray(long)
      */
@@ -486,7 +506,8 @@ public interface MemoryModel {
      * @param initialCapacity the initial capacity of the array.
      * @return created AlgART array.
      * @throws IllegalArgumentException        if the specified initial capacity is negative.
-     * @throws UnsupportedElementTypeException if <tt>int</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>int</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial capacity is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newIntArray(long)
@@ -499,9 +520,10 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
-     * @throws UnsupportedElementTypeException if <tt>int</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>int</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyIntArray(long)
@@ -514,9 +536,10 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
-     * @throws UnsupportedElementTypeException if <tt>int</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>int</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyIntArray(long)
@@ -525,14 +548,15 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(MutableLongArray){@link #newEmptyArray(Class) newEmptyArray}(long.class)</tt>.
+     * Equivalent to <code>(MutableLongArray){@link #newEmptyArray(Class) newEmptyArray}(long.class)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableLongArray a = memoryModel.newEmptyLongArray();
      * </pre>
      *
      * @return created AlgART array.
-     * @throws UnsupportedElementTypeException if <tt>long</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>long</code> element type
+     *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newLongArray(long)
      */
@@ -549,7 +573,8 @@ public interface MemoryModel {
      * @param initialCapacity the initial capacity of the array.
      * @return created AlgART array.
      * @throws IllegalArgumentException        if the specified initial capacity is negative.
-     * @throws UnsupportedElementTypeException if <tt>long</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>long</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial capacity is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newLongArray(long)
@@ -562,9 +587,10 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
-     * @throws UnsupportedElementTypeException if <tt>long</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>long</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyLongArray(long)
@@ -577,9 +603,10 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
-     * @throws UnsupportedElementTypeException if <tt>long</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>long</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyLongArray(long)
@@ -588,14 +615,15 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(MutableFloatArray){@link #newEmptyArray(Class) newEmptyArray}(float.class)</tt>.
+     * Equivalent to <code>(MutableFloatArray){@link #newEmptyArray(Class) newEmptyArray}(float.class)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableFloatArray a = memoryModel.newEmptyFloatArray();
      * </pre>
      *
      * @return created AlgART array.
-     * @throws UnsupportedElementTypeException if <tt>float</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>float</code> element type
+     *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newFloatArray(long)
      */
@@ -612,7 +640,8 @@ public interface MemoryModel {
      * @param initialCapacity the initial capacity of the array.
      * @return created AlgART array.
      * @throws IllegalArgumentException        if the specified initial capacity is negative.
-     * @throws UnsupportedElementTypeException if <tt>float</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>float</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial capacity is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newFloatArray(long)
@@ -625,9 +654,10 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
-     * @throws UnsupportedElementTypeException if <tt>float</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>float</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyFloatArray(long)
@@ -640,9 +670,10 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
-     * @throws UnsupportedElementTypeException if <tt>float</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>float</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyFloatArray(long)
@@ -651,14 +682,15 @@ public interface MemoryModel {
 
 
     /**
-     * Equivalent to <tt>(MutableDoubleArray){@link #newEmptyArray(Class) newEmptyArray}(double.class)</tt>.
+     * Equivalent to <code>(MutableDoubleArray){@link #newEmptyArray(Class) newEmptyArray}(double.class)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableDoubleArray a = memoryModel.newEmptyDoubleArray();
      * </pre>
      *
      * @return created AlgART array.
-     * @throws UnsupportedElementTypeException if <tt>double</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>double</code> element type
+     *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newDoubleArray(long)
      */
@@ -675,7 +707,8 @@ public interface MemoryModel {
      * @param initialCapacity the initial capacity of the array.
      * @return created AlgART array.
      * @throws IllegalArgumentException        if the specified initial capacity is negative.
-     * @throws UnsupportedElementTypeException if <tt>double</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>double</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial capacity is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newDoubleArray(long)
@@ -688,9 +721,10 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
-     * @throws UnsupportedElementTypeException if <tt>double</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>double</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyDoubleArray(long)
@@ -703,9 +737,10 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
-     * @throws UnsupportedElementTypeException if <tt>double</tt> element type is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>double</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newEmptyDoubleArray(long)
@@ -714,7 +749,7 @@ public interface MemoryModel {
     /*Repeat.AutoGeneratedEnd*/
 
     /**
-     * Equivalent to <tt>(MutableObjectArray&lt;E&gt;){@link #newEmptyArray(Class) newEmptyArray}(elementType)</tt>.
+     * Equivalent to <code>(MutableObjectArray&lt;E&gt;){@link #newEmptyArray(Class) newEmptyArray}(elementType)</code>.
      *
      * <p>Example of usage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;MutableObjectArray&lt;String&gt; a =
@@ -759,7 +794,7 @@ public interface MemoryModel {
      * @param elementType   the type of array elements.
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
      * @throws UnsupportedElementTypeException if this element type is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified initial length is too large for this memory model.
@@ -776,7 +811,7 @@ public interface MemoryModel {
      * @param elementType the type of array elements.
      * @param length      the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
      * @throws UnsupportedElementTypeException if this element type is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
@@ -788,7 +823,7 @@ public interface MemoryModel {
     /**
      * Allocates a resizable array with the same content as the passed one, where the actual copying the elements
      * will be deferred as long as possible, maybe, until the first access to elements.
-     * The capacity of new array will be equal to its length (i.e. <tt>array.length()</tt>).
+     * The capacity of new array will be equal to its length (i.e. <code>array.length()</code>).
      *
      * <p>More precisely, this method does the same things as the following operators:
      *
@@ -798,13 +833,13 @@ public interface MemoryModel {
      * result.{@link UpdatableArray#copy(Array) copy}(array); // now the result is the copy of the source array
      * </pre>
      * <p>with the only difference that the copying, maybe, will not be performed immediately.
-     * If you will not modify the source <tt>array</tt>, the array, returned by this method,
-     * will work absolutely identically to the <tt>result</tt> array in the example, listed above.
-     * If you will modify the source <tt>array</tt> after calling this method,
+     * If you will not modify the source <code>array</code>, the array, returned by this method,
+     * will work absolutely identically to the <code>result</code> array in the example, listed above.
+     * If you will modify the source <code>array</code> after calling this method,
      * the precise content of the returned array will be unspecified.
      *
-     * <p>Any changes, performed in the returned array, will never be reflected in the source <tt>array</tt>.
-     * In other words, any corrections in the returned lazy copy do not affect the source <tt>array</tt>.
+     * <p>Any changes, performed in the returned array, will never be reflected in the source <code>array</code>.
+     * In other words, any corrections in the returned lazy copy do not affect the source <code>array</code>.
      *
      * <p>The {@link Array#flushResources(ArrayContext)} and {@link Array#freeResources(ArrayContext)} methods,
      * called in the returned array, guarantee completion of all deferred copying.
@@ -818,7 +853,7 @@ public interface MemoryModel {
      * @param array the source array.
      * @return the lazy copy of the source array, if lazy copying is supported by the memory model,
      * or the usual identical copy of the source array in other case.
-     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if the element type of the passed array
      *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the length of the passed array is too large for this memory model.
@@ -828,7 +863,7 @@ public interface MemoryModel {
     /**
      * Equivalent to {@link #newLazyCopy(Array)} method with the only difference, that the returned array
      * is unresizable.
-     * The capacity of new array will be equal to its length (i.e. <tt>array.length()</tt>).
+     * The capacity of new array will be equal to its length (i.e. <code>array.length()</code>).
      *
      * <p>As well as for {@link #newLazyCopy(Array)}, this method does the same things as the following operators:
      *
@@ -854,7 +889,7 @@ public interface MemoryModel {
      * @param array the source array.
      * @return the lazy unresizable copy of the source array, if lazy copying is supported by the memory model,
      * or the usual identical unresizable copy of the source array in other case.
-     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if the element type of the passed array
      *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the length of the passed array is too large for this memory model.
@@ -866,24 +901,24 @@ public interface MemoryModel {
      *
      * <p>The AlgART array, that backs the new matrix (and is will be returned by {@link Matrix#array()}
      * method), will be unresizable. It is created by the following call:
-     * <tt>{@link #newUnresizableArray(Class, long) newUnresizableArray}(elementType, len)</tt>,
-     * where <tt>len</tt> is the product of all passed dimensions:
-     * <tt>len = dim[0] * dim[1] * ...</tt>.
-     * The {@link Matrix#dimCount()} method will return <tt>dim.length</tt>,
-     * and {@link Matrix#dim(int) Matrix.dim(n)} method will return <tt>dim[n]</tt>.
+     * <code>{@link #newUnresizableArray(Class, long) newUnresizableArray}(elementType, len)</code>,
+     * where <code>len</code> is the product of all passed dimensions:
+     * <code>len = dim[0] * dim[1] * ...</code>.
+     * The {@link Matrix#dimCount()} method will return <code>dim.length</code>,
+     * and {@link Matrix#dim(int) Matrix.dim(n)} method will return <code>dim[n]</code>.
      *
-     * <p>The <tt>arraySupertype</tt> argument must be equal to or supertype of the class of
+     * <p>The <code>arraySupertype</code> argument must be equal to or supertype of the class of
      * the underlying array, created by the call specified above.
-     * In other case, <tt>ClassCastException</tt> is thrown.
+     * In other case, <code>ClassCastException</code> is thrown.
      * (This check is performed at the very beginning,
      * before actual calling {@link #newUnresizableArray(Class, long) newUnresizableArray}
      * and allocating memory.)
-     * Also <tt>arraySupertype</tt> argument must not be {@link MutableArray} or its subtype,
+     * Also <code>arraySupertype</code> argument must not be {@link MutableArray} or its subtype,
      * because the underlying array of any matrix is always unresizable.
      * This argument allows to use this method for safe creating a matrix
      * with the required generics type parameter.
      *
-     * <p>The <tt>dim</tt> argument is cloned by this method: no references to it
+     * <p>The <code>dim</code> argument is cloned by this method: no references to it
      * are maintained by the created matrix.
      *
      * @param <T>            the generic type of AlgART array.
@@ -891,15 +926,16 @@ public interface MemoryModel {
      * @param elementType    the type of matrix elements.
      * @param dim            the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException            if <tt>elementType</tt> or <tt>dim</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>,
-     *                                         or if <tt>arraySupertype</tt> is {@link MutableArray} or its subtype,
-     *                                         or if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt; 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>elementType</code> or <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is <code>void.class</code>,
+     *                                         or if <code>arraySupertype</code> is {@link MutableArray} or its subtype,
+     *                                         or if the specified dimensions are incorrect:
+     *                                         <code>dim.length==0</code>,
+     *                                         <code>dim[n] &lt; 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws ClassCastException              if <tt>arraySupertype</tt> and <tt>elementType</tt> do not match.
-     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws ClassCastException              if <code>arraySupertype</code> and <code>elementType</code> do not match.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see Matrix
@@ -914,18 +950,18 @@ public interface MemoryModel {
     /**
      * An analog of {@link #newMatrix(Class, Class, long...)}, which automatically uses {@link SignalMemoryModel}
      * instead of this memory model if the required matrix size is not greater than
-     * <tt>maxSizeAllocatedInJavaMemory</tt> bytes.
+     * <code>maxSizeAllocatedInJavaMemory</code> bytes.
      *
      * <p>This method is equivalent to the following:
      * <pre>
      *     ({@link Arrays#sizeOf(Class, long) Arrays.sizeOf}(elementType, {@link Arrays#longMul(long...)
      *     Arrays.longMul}(dim)) &lt;= maxSizeAllocatedInJavaMemory ?
      *         {@link Arrays#SMM} :
-     *         <tt>thisInstance</tt>)
+     *         <code>thisInstance</code>)
      *     .{@link #newMatrix(Class, Class, long...) newMatrix}(arraySupertype, elementType, dim);
      * </pre>
      *
-     * <p>The typical value for <tt>maxSizeAllocatedInJavaMemory</tt> argument is the result of
+     * <p>The typical value for <code>maxSizeAllocatedInJavaMemory</code> argument is the result of
      * {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()} method.</p>
      *
      * @param <T>                          the generic type of AlgART array.
@@ -937,20 +973,23 @@ public interface MemoryModel {
      * @param elementType                  the type of matrix elements.
      * @param dim                          the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException            if <tt>elementType</tt> or <tt>dim</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>,
-     *                                         or if <tt>arraySupertype</tt> is {@link MutableArray} or its subtype,
-     *                                         or if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt; 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>elementType</code> or <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is <code>void.class</code>,
+     *                                         or if <code>arraySupertype</code> is {@link MutableArray}
+     *                                         or its subtype,
+     *                                         or if the specified dimensions are incorrect:
+     *                                         <code>dim.length == 0</code>,
+     *                                         <code>dim[n] &lt; 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws ClassCastException              if <tt>arraySupertype</tt> and <tt>elementType</tt> do not match.
-     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model
-     *                                         or, for a matrix smaller than <tt>maxSizeAllocatedInJavaMemory</tt>,
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws ClassCastException              if <code>arraySupertype</code> and <code>elementType</code>
+     *                                         do not match.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model
+     *                                         or, for a matrix smaller than <code>maxSizeAllocatedInJavaMemory</code>,
      *                                         by {@link SimpleMemoryModel}.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model or,
-     *                                         for a matrix smaller than <tt>maxSizeAllocatedInJavaMemory</tt>,
+     *                                         for a matrix smaller than <code>maxSizeAllocatedInJavaMemory</code>,
      *                                         by {@link SimpleMemoryModel}.
      */
     <T extends UpdatableArray> Matrix<T> newMatrix(
@@ -969,10 +1008,11 @@ public interface MemoryModel {
      *                       (usually an updatable version of the built-in array of the source matrix).
      * @param matrix         the pattern matrix.
      * @return new matrix with the same dimensions and element type.
-     * @throws NullPointerException            if <tt>matrix</tt> is <tt>null</tt>.
-     * @throws ClassCastException              if <tt>arraySupertype</tt> and <tt>matrix.elementType()</tt>
+     * @throws NullPointerException            if <code>matrix</code> is {@code null}.
+     * @throws ClassCastException              if <code>arraySupertype</code> and <code>matrix.elementType()</code>
      *                                         do not match.
-     * @throws UnsupportedElementTypeException if <tt>matrix.elementType()</tt> is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>matrix.elementType()</code>
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the {@link Matrix#size() size} of passed matrix is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -990,10 +1030,11 @@ public interface MemoryModel {
      *                       (usually an updatable version of the built-in array of the source matrix).
      * @param matrix         the pattern matrix.
      * @return new matrix with the same dimensions, element type and similar ordering elements.
-     * @throws NullPointerException            if <tt>matrix</tt> is <tt>null</tt>.
-     * @throws ClassCastException              if <tt>arraySupertype</tt> and <tt>matrix.elementType()</tt>
+     * @throws NullPointerException            if <code>matrix</code> is {@code null}.
+     * @throws ClassCastException              if <code>arraySupertype</code> and <code>matrix.elementType()</code>
      *                                         do not match.
-     * @throws UnsupportedElementTypeException if <tt>matrix.elementType()</tt> is not supported by this memory model.
+     * @throws UnsupportedElementTypeException if <code>matrix.elementType()</code>
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the {@link Matrix#size() size} of passed matrix is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1015,12 +1056,13 @@ public interface MemoryModel {
      *
      * @param dim the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException            if <tt>dim</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt;= 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <code>dim.length == 0</code>,
+     *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws UnsupportedElementTypeException if <tt>boolean</tt> element type is not supported by this memory model.
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws UnsupportedElementTypeException if <code>boolean</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1041,12 +1083,12 @@ public interface MemoryModel {
      *
      * @param dim the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException            if <tt>dim</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt;= 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <code>dim.length == 0</code>,
+     *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws UnsupportedElementTypeException if <tt>char</tt> element type is not supported by this memory model.
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws UnsupportedElementTypeException if <code>char</code> element type is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1067,12 +1109,12 @@ public interface MemoryModel {
      *
      * @param dim the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException            if <tt>dim</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt;= 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <code>dim.length == 0</code>,
+     *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws UnsupportedElementTypeException if <tt>byte</tt> element type is not supported by this memory model.
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws UnsupportedElementTypeException if <code>byte</code> element type is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1093,12 +1135,12 @@ public interface MemoryModel {
      *
      * @param dim the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException            if <tt>dim</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt;= 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <code>dim.length == 0</code>,
+     *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws UnsupportedElementTypeException if <tt>short</tt> element type is not supported by this memory model.
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws UnsupportedElementTypeException if <code>short</code> element type is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1119,12 +1161,12 @@ public interface MemoryModel {
      *
      * @param dim the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException            if <tt>dim</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt;= 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <code>dim.length == 0</code>,
+     *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws UnsupportedElementTypeException if <tt>int</tt> element type is not supported by this memory model.
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws UnsupportedElementTypeException if <code>int</code> element type is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1145,12 +1187,12 @@ public interface MemoryModel {
      *
      * @param dim the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException            if <tt>dim</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt;= 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <code>dim.length == 0</code>,
+     *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws UnsupportedElementTypeException if <tt>long</tt> element type is not supported by this memory model.
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws UnsupportedElementTypeException if <code>long</code> element type is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1171,12 +1213,12 @@ public interface MemoryModel {
      *
      * @param dim the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException            if <tt>dim</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt;= 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <code>dim.length == 0</code>,
+     *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws UnsupportedElementTypeException if <tt>float</tt> element type is not supported by this memory model.
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws UnsupportedElementTypeException if <code>float</code> element type is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1197,12 +1239,13 @@ public interface MemoryModel {
      *
      * @param dim the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException            if <tt>dim</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt;= 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <code>dim.length == 0</code>,
+     *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws UnsupportedElementTypeException if <tt>double</tt> element type is not supported by this memory model.
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws UnsupportedElementTypeException if <code>double</code> element type
+     *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1226,12 +1269,12 @@ public interface MemoryModel {
      * @param elementType the type of matrix elements.
      * @param dim         the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException            if <tt>dim</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt;= 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if the specified dimensions are incorrect: <code>dim.length == 0</code>,
+     *                                         <code>dim[n] &lt;= 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      * @see #isElementTypeSupported(Class)
@@ -1252,8 +1295,8 @@ public interface MemoryModel {
      * @param matrix         the source matrix.
      * @return the lazy copy of the source matrix, if lazy copying is supported by the memory model,
      * or the usual identical copy of the source matrix in other case.
-     * @throws NullPointerException            if onn of the arguments is <tt>null</tt>.
-     * @throws ClassCastException              if <tt>arraySupertype</tt> does not match
+     * @throws NullPointerException            if onn of the arguments is {@code null}.
+     * @throws ClassCastException              if <code>arraySupertype</code> does not match
      *                                         to the element type of the passed matrix.
      * @throws UnsupportedElementTypeException if the element type of the passed matrix
      *                                         is not supported by this memory model.
@@ -1264,9 +1307,9 @@ public interface MemoryModel {
 
 
     /**
-     * Allocates an unresizable AlgART array containing <tt>count</tt> elements of
+     * Allocates an unresizable AlgART array containing <code>count</code> elements of
      * the specified Java array:
-     * <tt>array[offset], array[offset + 1], ..., array[offset + count - 1]</tt>.
+     * <code>array[offset], array[offset + 1], ..., array[offset + count - 1]</code>.
      *
      * <p>The returned AlgART array will be "safe" in the sense that no references to the passed Java array
      * are maintained by it.
@@ -1275,22 +1318,22 @@ public interface MemoryModel {
      * <p>This method is equivalent to the following expression:
      * <tt>{@link #newUnresizableArray(Class, long) newUnresizableArray}(elementType, count).{@link
      * UpdatableArray#setData(long, Object, int, int) setData}(0, array, offset, count)</tt>,
-     * where <tt>elementType</tt> is the type of <tt>array</tt> elements
-     * (<tt>array.getClass().getComponentType()</tt>).
+     * where <code>elementType</code> is the type of <code>array</code> elements
+     * (<code>array.getClass().getComponentType()</code>).
      *
      * @param array  the source Java array with elements of constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException  if <tt>array</tt> argument is not a Java array.
+     * @throws NullPointerException      if <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>array</code> argument is not a Java array.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
      */
     UpdatableArray valueOf(Object array, int offset, int count);
 
     /**
      * Allocates an unresizable AlgART array containing all elements of the specified Java array:
-     * <tt>array[0], array[1], ..., array[array.length - 1]</tt>.
+     * <code>array[0], array[1], ..., array[array.length - 1]</code>.
      *
      * <p>The returned AlgART array will be "safe" in the sense that no references to the passed Java array
      * are maintained by it.
@@ -1299,14 +1342,14 @@ public interface MemoryModel {
      * <p>This method is equivalent to the following expression:
      * <tt>{@link #newUnresizableArray(Class, long) newUnresizableArray}(elementType, len).{@link
      * UpdatableArray#setData(long, Object) setData}(0, array)</tt>,
-     * where <tt>elementType</tt> is the type of <tt>array</tt> elements
-     * (<tt>array.getClass().getComponentType()</tt>) and
-     * <tt>len</tt> is the length of the passed Java array.
+     * where <code>elementType</code> is the type of <code>array</code> elements
+     * (<code>array.getClass().getComponentType()</code>) and
+     * <code>len</code> is the length of the passed Java array.
      *
      * @param array the source Java array with elements of constructed AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>array</tt> argument is not a Java array.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>array</code> argument is not a Java array.
      */
     UpdatableArray valueOf(Object array);
 
@@ -1321,17 +1364,17 @@ public interface MemoryModel {
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
      */
     UpdatableBitArray valueOf(boolean[] array, int offset, int count);
 
     /**
-     * Equivalent to <tt>(UpdatableBitArray){@link #valueOf(Object) valueOf}((Object)array)</tt>.
+     * Equivalent to <code>(UpdatableBitArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
      *
      * @param array the source Java array with elements of constructed AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     UpdatableBitArray valueOf(boolean[] array);
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
@@ -1344,17 +1387,17 @@ public interface MemoryModel {
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
      */
     UpdatableCharArray valueOf(char[] array, int offset, int count);
 
     /**
-     * Equivalent to <tt>(UpdatableCharArray){@link #valueOf(Object) valueOf}((Object)array)</tt>.
+     * Equivalent to <code>(UpdatableCharArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
      *
      * @param array the source Java array with elements of constructed AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     UpdatableCharArray valueOf(char[] array);
 
@@ -1367,17 +1410,17 @@ public interface MemoryModel {
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
      */
     UpdatableByteArray valueOf(byte[] array, int offset, int count);
 
     /**
-     * Equivalent to <tt>(UpdatableByteArray){@link #valueOf(Object) valueOf}((Object)array)</tt>.
+     * Equivalent to <code>(UpdatableByteArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
      *
      * @param array the source Java array with elements of constructed AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     UpdatableByteArray valueOf(byte[] array);
 
@@ -1390,17 +1433,17 @@ public interface MemoryModel {
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
      */
     UpdatableShortArray valueOf(short[] array, int offset, int count);
 
     /**
-     * Equivalent to <tt>(UpdatableShortArray){@link #valueOf(Object) valueOf}((Object)array)</tt>.
+     * Equivalent to <code>(UpdatableShortArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
      *
      * @param array the source Java array with elements of constructed AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     UpdatableShortArray valueOf(short[] array);
 
@@ -1413,17 +1456,17 @@ public interface MemoryModel {
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
      */
     UpdatableIntArray valueOf(int[] array, int offset, int count);
 
     /**
-     * Equivalent to <tt>(UpdatableIntArray){@link #valueOf(Object) valueOf}((Object)array)</tt>.
+     * Equivalent to <code>(UpdatableIntArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
      *
      * @param array the source Java array with elements of constructed AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     UpdatableIntArray valueOf(int[] array);
 
@@ -1436,17 +1479,17 @@ public interface MemoryModel {
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
      */
     UpdatableLongArray valueOf(long[] array, int offset, int count);
 
     /**
-     * Equivalent to <tt>(UpdatableLongArray){@link #valueOf(Object) valueOf}((Object)array)</tt>.
+     * Equivalent to <code>(UpdatableLongArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
      *
      * @param array the source Java array with elements of constructed AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     UpdatableLongArray valueOf(long[] array);
 
@@ -1459,17 +1502,17 @@ public interface MemoryModel {
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
      */
     UpdatableFloatArray valueOf(float[] array, int offset, int count);
 
     /**
-     * Equivalent to <tt>(UpdatableFloatArray){@link #valueOf(Object) valueOf}((Object)array)</tt>.
+     * Equivalent to <code>(UpdatableFloatArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
      *
      * @param array the source Java array with elements of constructed AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     UpdatableFloatArray valueOf(float[] array);
 
@@ -1482,17 +1525,17 @@ public interface MemoryModel {
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
      */
     UpdatableDoubleArray valueOf(double[] array, int offset, int count);
 
     /**
-     * Equivalent to <tt>(UpdatableDoubleArray){@link #valueOf(Object) valueOf}((Object)array)</tt>.
+     * Equivalent to <code>(UpdatableDoubleArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
      *
      * @param array the source Java array with elements of constructed AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     UpdatableDoubleArray valueOf(double[] array);
     /*Repeat.AutoGeneratedEnd*/
@@ -1506,49 +1549,49 @@ public interface MemoryModel {
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException      if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
      */
     <E> UpdatableObjectArray<E> valueOf(E[] array, int offset, int count);
 
     /**
-     * Equivalent to <tt>(UpdatableObjectArray&lt;E&gt;){@link #valueOf(Object) valueOf}((Object)array)</tt>.
+     * Equivalent to <code>(UpdatableObjectArray&lt;E&gt;){@link #valueOf(Object) valueOf}((Object)array)</code>.
      *
      * @param <E>   the generic type of array elements.
      * @param array the source Java array with elements of constructed AlgART array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     <E> UpdatableObjectArray<E> valueOf(E[] array);
 
 
     /**
-     * Returns <tt>true</tt> if this memory model can create arrays with this element type.
+     * Returns <code>true</code> if this memory model can create arrays with this element type.
      * If it does not support it, creation methods of this memory model
      * will throw {@link UnsupportedElementTypeException}.
-     * The result is not defined for <tt>void.class</tt>.
+     * The result is not defined for <code>void.class</code>.
      *
      * @param elementType the type of array elements.
-     * @return <tt>true</tt> if this memory model supports this element type.
-     * @throws NullPointerException if <tt>elementType</tt> is <tt>null</tt>.
+     * @return <code>true</code> if this memory model supports this element type.
+     * @throws NullPointerException if <code>elementType</code> is {@code null}.
      */
     boolean isElementTypeSupported(Class<?> elementType);
 
     /**
-     * Returns <tt>true</tt> if this memory model can create arrays with all primitive element types:
-     * <tt>boolean</tt>, <tt>char</tt>, <tt>byte</tt>, <tt>short</tt>,
-     * <tt>int</tt>, <tt>long</tt>, <tt>float</tt>, <tt>double</tt>.
+     * Returns <code>true</code> if this memory model can create arrays with all primitive element types:
+     * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
+     * <code>int</code>, <code>long</code>, <code>float</code>, <code>double</code>.
      *
-     * @return <tt>true</tt> if this memory model supports all primitive element types.
+     * @return <code>true</code> if this memory model supports all primitive element types.
      * @see #isElementTypeSupported(Class)
      */
     boolean areAllPrimitiveElementTypesSupported();
 
     /**
-     * Returns <tt>true</tt> if this memory model can create arrays with <i>all</i> element types.
+     * Returns <code>true</code> if this memory model can create arrays with <i>all</i> element types.
      * This package offers only one such memory model: {@link SimpleMemoryModel}.
      *
-     * @return <tt>true</tt> if this memory model supports element types.
+     * @return <code>true</code> if this memory model supports element types.
      * @see #isElementTypeSupported(Class)
      */
     boolean areAllElementTypesSupported();
@@ -1569,12 +1612,12 @@ public interface MemoryModel {
      *
      * @param elementType the type of array elements.
      * @return maximal possible length of arrays supported by this memory model.
-     * @throws NullPointerException if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <code>elementType</code> is {@code null}.
      */
     long maxSupportedLength(Class<?> elementType);
 
     /**
-     * Returns <tt>true</tt> if the passed <tt>array</tt> was created by this
+     * Returns <code>true</code> if the passed <code>array</code> was created by this
      * (or identical) memory model.
      *
      * <p>For {@link SimpleMemoryModel} and {@link BufferMemoryModel},
@@ -1588,10 +1631,10 @@ public interface MemoryModel {
      * the memory model is also combined and was created with
      * the same <i>instance</i> of the {@link CombinedMemoryModel.Combiner combiner}.
      *
-     * <p>Returns <tt>false</tt> if the passed argument is <tt>null</tt>.
+     * <p>Returns <code>false</code> if the passed argument is {@code null}.
      *
-     * @param array the AlgART array (can be <tt>null</tt>, than the method returns <tt>false</tt>).
-     * @return <tt>true</tt> if the passed <tt>array</tt> was created by this memory model.
+     * @param array the AlgART array (can be {@code null}, than the method returns <code>false</code>).
+     * @return <code>true</code> if the passed <code>array</code> was created by this memory model.
      */
     boolean isCreatedBy(Array array);
 }

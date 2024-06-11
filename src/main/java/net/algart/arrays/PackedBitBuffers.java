@@ -105,7 +105,7 @@ public class PackedBitBuffers {
      *
      * @param buffer the buffer (bits are packed into <code>long</code> values).
      * @return <code>64 * (long) buffer.limit()</code>
-     * @throws NullPointerException if the argument is <code>null</code>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public static long unpackedLength(LongBuffer buffer) {
         return ((long) buffer.limit()) << 6;
@@ -160,7 +160,7 @@ public class PackedBitBuffers {
      * @param index index of the returned bit.
      * @return the bit at the specified index.
      * @throws IndexOutOfBoundsException if this method cause access of data outside buffer limits.
-     * @throws NullPointerException      if <code>src</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>src</code> is {@code null}.
      */
     public static boolean getBit(LongBuffer src, long index) {
         return (src.get((int) (index >>> 6)) & (1L << (index & 63))) != 0L;
@@ -183,7 +183,7 @@ public class PackedBitBuffers {
      * @param index index of the written bit.
      * @param value new bit value.
      * @throws IndexOutOfBoundsException if this method cause access of data outside buffer limit.
-     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
      */
     public static void setBit(LongBuffer dest, long index, boolean value) {
         synchronized (getLock(dest)) {
@@ -212,7 +212,7 @@ public class PackedBitBuffers {
      * @param index index of the written bit.
      * @param value new bit value.
      * @throws IndexOutOfBoundsException if this method cause access of data outside buffer limit.
-     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
      */
     public static void setBitNoSync(LongBuffer dest, long index, boolean value) {
         if (value)
@@ -252,7 +252,7 @@ public class PackedBitBuffers {
      * @param srcPos position of the first bit read in the source buffer.
      * @param count  the number of bits to be unpacked (must be &gt;=0 and &lt;64).
      * @return the sequence of <code>count</code> bits.
-     * @throws NullPointerException      if <code>src</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>src</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or
      *                                   if copying would cause access of data outside buffer limits.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
@@ -316,7 +316,7 @@ public class PackedBitBuffers {
      * @param destPos position of the first bit written in the destination buffer.
      * @param bits    sequence of new bits to be copied into the destination buffer.
      * @param count   the number of bits to be written (must be in range 0..64).
-     * @throws NullPointerException      if <code>dest</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
      *                                   if copying would cause access of data outside buffer limits.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
@@ -370,7 +370,7 @@ public class PackedBitBuffers {
      * @param destPos position of the first bit written in the destination buffer.
      * @param bits    sequence of new bits to be copied into the destination buffer.
      * @param count   the number of bits to be written (must be in range 0..64).
-     * @throws NullPointerException      if <code>dest</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
      *                                   if copying would cause access of data outside buffer limits.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
@@ -432,7 +432,7 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be copied (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      */
     public static void copyBits(LongBuffer dest, long destPos, LongBuffer src, long srcPos, long count) {
         if (src == dest && srcPos == destPos && src != null) {
@@ -472,7 +472,7 @@ public class PackedBitBuffers {
      * @param count        the number of bits to be copied (must be &gt;=0).
      * @param reverseOrder if <code>true</code>, the bits will be copied in the reverse order.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @see #copyBits(LongBuffer, long, LongBuffer, long, long)
      */
     public static void copyBits(
@@ -691,7 +691,7 @@ public class PackedBitBuffers {
      * @param secondPos starting index of bit to exchange in the second <code>LongBuffer</code>.
      * @param count     the number of bits to be exchanged (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      */
     public static void swapBits(LongBuffer first, long firstPos, LongBuffer second, long secondPos, long count) {
         Objects.requireNonNull(first, "Null first");
@@ -730,7 +730,7 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds or buffer limit.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      */
     public static void packBits(LongBuffer dest, long destPos, boolean[] src, int srcPos, int count) {
         Objects.requireNonNull(dest, "Null dest");
@@ -854,7 +854,7 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be unpacked (must be &gt;=0).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds or buffer limit.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      */
     public static void unpackBits(boolean[] dest, int destPos, LongBuffer src, long srcPos, int count) {
         Objects.requireNonNull(dest, "Null dest");
@@ -964,9 +964,10 @@ public class PackedBitBuffers {
      * @param dest    the destination <code>LongBuffer</code> (bits are packed into <code>long</code> values).
      * @param destPos position of the first bit written in the destination buffer.
      * @param count   the number of bits to be filled (must be &gt;=0).
-     * @param value   new value of all filled bits (<code>false</code> means the bit 0, <code>true</code> means the bit 1).
+     * @param value   new value of all filled bits (<code>false</code> means the bit 0,
+     *                <code>true</code> means the bit 1).
      * @throws IndexOutOfBoundsException if filling would cause access of data outside buffer limit.
-     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
      */
     public static void fillBits(LongBuffer dest, long destPos, long count, boolean value) {
         Objects.requireNonNull(dest, "Null dest");
@@ -1017,7 +1018,7 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void notBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
@@ -1122,7 +1123,7 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void andBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
@@ -1227,7 +1228,7 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void orBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
@@ -1333,7 +1334,7 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void xorBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
@@ -1438,7 +1439,7 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void andNotBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
@@ -1543,7 +1544,7 @@ public class PackedBitBuffers {
      * @param srcPos  position of the first bit read in the source buffer.
      * @param count   the number of bits to be replaced (must be &gt;=0).
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void orNotBits(long[] dest, long destPos, LongBuffer src, long srcPos, long count) {
@@ -1650,7 +1651,7 @@ public class PackedBitBuffers {
      * @return the index of the first occurrence of this bit in range <code>lowIndex..highIndex-1</code>,
      * or <code>-1</code> if this bit does not occur
      * or if <code>lowIndex&gt;=highIndex</code>.
-     * @throws NullPointerException      if <code>buffer</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>buffer</code> is {@code null}.
      * @throws IndexOutOfBoundsException if <code>lowIndex</code> is negative or
      *                                   if <code>highIndex</code> is greater than <code>src.limit()*64</code>.
      * @see #lastIndexOfBit(LongBuffer, long, long, boolean)
@@ -1734,7 +1735,7 @@ public class PackedBitBuffers {
      * @return the index of the last occurrence of this bit in range <code>lowIndex..highIndex-1</code>,
      * or <code>-1</code> if this bit does not occur
      * or if <code>lowIndex&gt;=highIndex</code>.
-     * @throws NullPointerException      if <code>src</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>src</code> is {@code null}.
      * @throws IndexOutOfBoundsException if <code>lowIndex</code> is negative or
      *                                   if <code>highIndex</code> is greater than <code>src.length*64</code>.
      */
@@ -1805,7 +1806,7 @@ public class PackedBitBuffers {
      * @param fromIndex the initial checked bit index in <code>src</code>, inclusive.
      * @param toIndex   the end checked bit index in <code>src</code>, exclusive.
      * @return the number of high bits (1) in the given fragment of the given packed bit buffer.
-     * @throws NullPointerException      if the <code>src</code> argument is <code>null</code>.
+     * @throws NullPointerException      if the <code>src</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if <code>fromIndex</code> or <code>toIndex</code> are negative,
      *                                   if <code>toIndex</code> is greater than <code>src.limit() * 64</code>,
      *                                   or if <code>fromIndex</code> is greater than <code>startIndex</code>

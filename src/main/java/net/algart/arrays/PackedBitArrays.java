@@ -116,7 +116,7 @@ public class PackedBitArrays {
      *
      * @param array <code>long[]</code> array.
      * @return <code>64 * (long) array.length</code>
-     * @throws NullPointerException if the argument is <code>null</code>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public static long unpackedLength(long[] array) {
         return ((long) array.length) << 6;
@@ -164,7 +164,7 @@ public class PackedBitArrays {
      * @param src   the source array (bits are packed in <code>long</code> values).
      * @param index index of the returned bit.
      * @return the bit at the specified index.
-     * @throws NullPointerException      if <code>src</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>src</code> is {@code null}.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
      */
     public static boolean getBit(long[] src, long index) {
@@ -185,7 +185,7 @@ public class PackedBitArrays {
      * @param dest  the destination array (bits are packed in <code>long</code> values).
      * @param index index of the written bit.
      * @param value new bit value.
-     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -220,7 +220,7 @@ public class PackedBitArrays {
      * @param dest  the destination array (bits are packed in <code>long</code> values).
      * @param index index of the written bit.
      * @param value new bit value.
-     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if this method cause access of data outside array bounds.
      */
     public static void setBitNoSync(long[] dest, long index, boolean value) {
@@ -261,7 +261,7 @@ public class PackedBitArrays {
      * @param srcPos position of the first bit read in the source array.
      * @param count  the number of bits to be unpacked (must be in range 0..64).
      * @return the sequence of <code>count</code> bits.
-     * @throws NullPointerException      if <code>src</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>src</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or
      *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
@@ -306,7 +306,7 @@ public class PackedBitArrays {
      * @param destPos position of the first bit written in the destination array.
      * @param bits    sequence of new bits to be copied into the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
-     * @throws NullPointerException      if <code>dest</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
      *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
@@ -339,7 +339,7 @@ public class PackedBitArrays {
      * @param destPos position of the first bit written in the destination array.
      * @param bits    sequence of new bits to be copied into the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
-     * @throws NullPointerException      if <code>dest</code> argument is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
      *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
@@ -361,7 +361,7 @@ public class PackedBitArrays {
 
     /**
      * Returns a hash code based on the contents of the specified fragment of the given packed bit array.
-     * If the passed array is <code>null</code> or <code>fromIndex==toIndex</code>, returns 0.
+     * If the passed array is {@code null} or <code>fromIndex==toIndex</code>, returns 0.
      *
      * <p>The returned hash code depends only on the sequence of packed bits, but does not depend
      * on the position of this sequence in the specified <code>long[]</code> array.
@@ -393,7 +393,7 @@ public class PackedBitArrays {
     /**
      * Updates hash code (<code>hash</code> argument) on the base of the contents
      * of the specified fragment of the given packed bit array.
-     * If the passed array is <code>null</code> or <code>fromIndex==toIndex</code>, does nothing.
+     * If the passed array is {@code null} or <code>fromIndex==toIndex</code>, does nothing.
      *
      * <p>This method is used by {@link #bitHashCode(long[], long, long)
      * bitHashCode(long[] array, long fromIndex, long toIndex)}.
@@ -420,7 +420,7 @@ public class PackedBitArrays {
      * @param fromIndex the initial index of the checked fragment, inclusive.
      * @param toIndex   the end index of the checked fragment, exclusive.
      * @param hash      updated hash code.
-     * @throws NullPointerException      if <code>array</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>array</code> is {@code null}.
      * @throws IndexOutOfBoundsException if <code>fromIndex</code> or <code>toIndex</code> are negative,
      *                                   if <code>toIndex</code> is greater than <code>array.length</code>
      *                                   (0 if <code>array==null</code>),
@@ -459,8 +459,8 @@ public class PackedBitArrays {
 
     /**
      * Returns <code>true</code> if the specified fragments of the given packed bit arrays are equals,
-     * or if both arguments are <code>null</code>.
-     * Returns <code>false</code> if one of the arguments is <code>null</code>, but the other is not <code>null</code>.
+     * or if both arguments are {@code null}.
+     * Returns <code>false</code> if one of the arguments is {@code null}, but the other is not {@code null}.
      *
      * <p>The two packed bit arrays are considered equal if all corresponding pairs of bits
      * in the two arrays are equal.
@@ -573,7 +573,7 @@ public class PackedBitArrays {
      * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be copied (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -783,7 +783,7 @@ public class PackedBitArrays {
      * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be copied (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void copyBitsNoSync(long[] dest, long destPos, long[] src, long srcPos, long count) {
@@ -977,7 +977,7 @@ public class PackedBitArrays {
      * @param srcPos position of the first bit read in the source array.
      * @param count  the number of bits to be packed (must be &gt;=0).
      * @return the result bit array, where bits are packed in <code>long</code>.
-     * @throws NullPointerException     if <code>src</code> is <code>null</code>.
+     * @throws NullPointerException     if <code>src</code> is {@code null}.
      * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      */
@@ -1098,7 +1098,7 @@ public class PackedBitArrays {
      * @param src     the source array (unpacked <code>boolean</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -1228,7 +1228,7 @@ public class PackedBitArrays {
      * @param src     the source array (unpacked inverted <code>boolean</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -1359,7 +1359,7 @@ public class PackedBitArrays {
      * @param src     the source array (unpacked <code>boolean</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be packed (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void packBitsNoSync(long[] dest, long destPos, boolean[] src, int srcPos, int count) {
@@ -1491,7 +1491,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -1626,7 +1626,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -1761,7 +1761,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -1896,7 +1896,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2032,7 +2032,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2166,7 +2166,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2300,7 +2300,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2434,7 +2434,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2569,7 +2569,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2703,7 +2703,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2837,7 +2837,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -2971,7 +2971,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3106,7 +3106,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3240,7 +3240,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3374,7 +3374,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3508,7 +3508,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3643,7 +3643,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3777,7 +3777,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -3911,7 +3911,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4045,7 +4045,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4180,7 +4180,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4314,7 +4314,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4448,7 +4448,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4582,7 +4582,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4717,7 +4717,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than this value are packed to unit bits (1),
      *                  the source elements less than or equal to this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4851,7 +4851,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than to this value are packed to unit bits (1),
      *                  the source elements greater than or equal this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -4985,7 +4985,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are greater than or equal to this value are packed to unit bits (1),
      *                  the source elements less than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -5119,7 +5119,7 @@ public class PackedBitArrays {
      * @param count     the number of bits to be packed (must be &gt;=0).
      * @param threshold the source elements that are less than or equal to this value are packed to unit bits (1),
      *                  the source elements greater than this threshold are packed to zero bits (0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -5257,7 +5257,7 @@ public class PackedBitArrays {
      * @param srcPos position of the first bit read in the source array.
      * @param count  the number of elements to be unpacked (must be &gt;=0).
      * @return the unpacked <code>boolean</code> array.
-     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws NullPointerException     if<code>src</code> is {@code null}.
      * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
@@ -5292,7 +5292,7 @@ public class PackedBitArrays {
      * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be unpacked (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(boolean[] dest, int destPos, long[] src, long srcPos, int count) {
@@ -5418,7 +5418,7 @@ public class PackedBitArrays {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>boolean</code> array.
-     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws NullPointerException     if<code>src</code> is {@code null}.
      * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
@@ -5459,7 +5459,7 @@ public class PackedBitArrays {
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -5582,7 +5582,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -5754,7 +5754,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -5929,7 +5929,7 @@ public class PackedBitArrays {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>char</code> array.
-     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws NullPointerException     if<code>src</code> is {@code null}.
      * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
@@ -5970,7 +5970,7 @@ public class PackedBitArrays {
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -6089,7 +6089,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -6255,7 +6255,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -6424,7 +6424,7 @@ public class PackedBitArrays {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>byte</code> array.
-     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws NullPointerException     if<code>src</code> is {@code null}.
      * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
@@ -6465,7 +6465,7 @@ public class PackedBitArrays {
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -6584,7 +6584,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -6750,7 +6750,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -6919,7 +6919,7 @@ public class PackedBitArrays {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>short</code> array.
-     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws NullPointerException     if<code>src</code> is {@code null}.
      * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
@@ -6960,7 +6960,7 @@ public class PackedBitArrays {
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -7079,7 +7079,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -7245,7 +7245,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -7414,7 +7414,7 @@ public class PackedBitArrays {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>int</code> array.
-     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws NullPointerException     if<code>src</code> is {@code null}.
      * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
@@ -7455,7 +7455,7 @@ public class PackedBitArrays {
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -7574,7 +7574,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -7740,7 +7740,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -7909,7 +7909,7 @@ public class PackedBitArrays {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>long</code> array.
-     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws NullPointerException     if<code>src</code> is {@code null}.
      * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
@@ -7950,7 +7950,7 @@ public class PackedBitArrays {
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -8069,7 +8069,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -8235,7 +8235,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -8404,7 +8404,7 @@ public class PackedBitArrays {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>float</code> array.
-     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws NullPointerException     if<code>src</code> is {@code null}.
      * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
@@ -8445,7 +8445,7 @@ public class PackedBitArrays {
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -8564,7 +8564,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -8730,7 +8730,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -8899,7 +8899,7 @@ public class PackedBitArrays {
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>double</code> array.
-     * @throws NullPointerException     if<code>src</code> is <code>null</code>.
+     * @throws NullPointerException     if<code>src</code> is {@code null}.
      * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
      *                                  if copying would cause access of data outside the source array bounds.
      * @throws TooLargeArrayException   if <code>count &ge; Integer.MAX_VALUE</code> (cannot create the result array).
@@ -8940,7 +8940,7 @@ public class PackedBitArrays {
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackBits(
@@ -9059,7 +9059,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackUnitBits(
@@ -9225,7 +9225,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void unpackZeroBits(
@@ -9391,7 +9391,7 @@ public class PackedBitArrays {
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static <T> void unpackBits(
@@ -9510,7 +9510,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit1Value the value of elements of the destination array to which the bit 1 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static <T> void unpackUnitBits(
@@ -9676,7 +9676,7 @@ public class PackedBitArrays {
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked (must be &gt;=0).
      * @param bit0Value the value of elements of the destination array to which the bit 0 is translated.
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static <T> void unpackZeroBits(
@@ -9841,7 +9841,7 @@ public class PackedBitArrays {
      * @param dest    the destination array (unpacked <code>int</code> values).
      * @param destPos position of the first increased element in the destination array.
      * @param count   the number of bits to be added to <code>dest</code> elements (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside array bounds.
      */
     public static void addBitsToInts(int[] dest, int destPos, long[] src, long srcPos, int count) {
@@ -9954,7 +9954,7 @@ public class PackedBitArrays {
      * @param count   the number of bits to be filled (must be &gt;=0).
      * @param value   new value of all filled bits (<code>false</code> means the bit 0,
      *                <code>true</code> means the bit 1).
-     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10006,7 +10006,7 @@ public class PackedBitArrays {
      * @param count   the number of bits to be filled (must be &gt;=0).
      * @param value   new value of all filled bits (<code>false</code> means the bit 0,
      *                <code>true</code> means the bit 1).
-     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside array bounds.
      */
     public static void fillBitsNoSync(long[] dest, long destPos, long count, boolean value) {
@@ -10056,7 +10056,7 @@ public class PackedBitArrays {
      * @param count the number of checked bits.
      * @return <code>true</code> if and only if all <code>count</code> bits, starting from the bit <code>#pos</code>,
      * are zero, or if <code>count==0</code>.
-     * @throws NullPointerException      if the <code>array</code> argument is <code>null</code>.
+     * @throws NullPointerException      if the <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if checking would cause access of data outside array bounds.
      */
     public static boolean areBitsZero(long[] array, long pos, long count) {
@@ -10106,7 +10106,7 @@ public class PackedBitArrays {
      * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10205,7 +10205,7 @@ public class PackedBitArrays {
      * @param dest    the source/destination array (bits are packed in <code>long</code> values).
      * @param destPos position of the first bit written in the source/destination array.
      * @param count   the number of bits to be inverted (must be &gt;=0).
-     * @throws NullPointerException      if <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     public static void notBits(long[] dest, long destPos, long count) {
@@ -10227,7 +10227,7 @@ public class PackedBitArrays {
      * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10334,7 +10334,7 @@ public class PackedBitArrays {
      * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10442,7 +10442,7 @@ public class PackedBitArrays {
      * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10549,7 +10549,7 @@ public class PackedBitArrays {
      * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10656,7 +10656,7 @@ public class PackedBitArrays {
      * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10764,7 +10764,7 @@ public class PackedBitArrays {
      * @param src     the source array (bits are packed in <code>long</code> values).
      * @param srcPos  position of the first bit read in the source array.
      * @param count   the number of bits to be replaced (must be &gt;=0).
-     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is <code>null</code>.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
@@ -10861,7 +10861,7 @@ public class PackedBitArrays {
      * @return the index of the first occurrence of this bit in range <code>lowIndex..highIndex-1</code>,
      * or <code>-1</code> if this bit does not occur
      * or if <code>lowIndex&gt;=highIndex</code>.
-     * @throws NullPointerException      if <code>array</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>array</code> is {@code null}.
      * @throws IndexOutOfBoundsException if <code>lowIndex</code> is negative or
      *                                   if <code>highIndex</code> is greater than <code>src.length*64</code>.
      * @see #lastIndexOfBit(long[], long, long, boolean)
@@ -10942,7 +10942,7 @@ public class PackedBitArrays {
      * @return the index of the last occurrence of this bit in range <code>lowIndex..highIndex-1</code>,
      * or <code>-1</code> if this bit does not occur
      * or if <code>lowIndex&gt;=highIndex</code>.
-     * @throws NullPointerException      if <code>src</code> is <code>null</code>.
+     * @throws NullPointerException      if <code>src</code> is {@code null}.
      * @throws IndexOutOfBoundsException if <code>lowIndex</code> is negative or
      *                                   if <code>highIndex</code> is greater than <code>src.length*64</code>.
      * @see #indexOfBit(long[], long, long, boolean)
@@ -11013,7 +11013,7 @@ public class PackedBitArrays {
      * @param fromIndex the initial checked bit index in <code>array</code>, inclusive.
      * @param toIndex   the end checked bit index in <code>array</code>, exclusive.
      * @return the number of high bits (1) in the given fragment of the given packed bit array.
-     * @throws NullPointerException      if the <code>src</code> argument is <code>null</code>.
+     * @throws NullPointerException      if the <code>src</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if <code>fromIndex</code> or <code>toIndex</code> are negative,
      *                                   if <code>toIndex</code> is greater than <code>src.length*64</code>,
      *                                   or if <code>fromIndex</code> is greater than <code>startIndex</code>

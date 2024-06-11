@@ -71,7 +71,7 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param coordinates cartesian coordinates of the point.
      * @return the point with the given coordinates.
-     * @throws NullPointerException     if the passed array is <code>null</code>.
+     * @throws NullPointerException     if the passed array is {@code null}.
      * @throws IllegalArgumentException if the passed array is empty (no coordinates are passed).
      */
     public static IPoint valueOf(long... coordinates) {
@@ -219,7 +219,7 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param point the real point.
      * @return the integer point with same (cast) coordinates.
-     * @throws NullPointerException if the passed point is <code>null</code>.
+     * @throws NullPointerException if the passed point is {@code null}.
      */
     public static IPoint valueOf(Point point) {
         Objects.requireNonNull(point, "Null point argument");
@@ -238,7 +238,7 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param point the real point.
      * @return the integer point with same (rounded) coordinates.
-     * @throws NullPointerException if the passed point is <code>null</code>.
+     * @throws NullPointerException if the passed point is {@code null}.
      */
     public static IPoint roundOf(Point point) {
         Objects.requireNonNull(point, "Null point argument");
@@ -285,7 +285,7 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param result the array where you want to store results.
      * @return a reference to the passed <code>result</code> array.
-     * @throws NullPointerException     if <code>result</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>result</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>result.length&lt;{@link #coordCount()}</code>.
      */
     public long[] coordinates(long[] result) {
@@ -387,8 +387,8 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param points some collection of points.
      * @return the Hausdorff distance from this point to the set of points, passed via the collection.
-     * @throws NullPointerException     if the argument is <code>null</code> or if some elements of the passed
-     *                                  collection are <code>null</code>.
+     * @throws NullPointerException     if the argument is {@code null} or if some elements of the passed
+     *                                  collection are {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this point and in some
      *                                  of the given points are different.
      */
@@ -429,7 +429,7 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param point the added point.
      * @return the vector sum of this and given point.
-     * @throws NullPointerException     if the argument is <code>null</code>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this and given points
      *                                  are different.
      */
@@ -453,7 +453,7 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param point the subtracted point.
      * @return the vector difference of this and given point.
-     * @throws NullPointerException     if the argument is <code>null</code>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this and given points
      *                                  are different.
      */
@@ -477,7 +477,7 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param point the compared point.
      * @return the coordinate-wise minimum this and given point.
-     * @throws NullPointerException     if the argument is <code>null</code>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this and given points
      *                                  are different.
      */
@@ -501,7 +501,7 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param point the compared point.
      * @return the coordinate-wise maximum this and given point.
-     * @throws NullPointerException     if the argument is <code>null</code>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this and given points
      *                                  are different.
      */
@@ -585,7 +585,7 @@ public class IPoint implements Comparable<IPoint> {
      * @param multipliers the multipliers for all coordinates.
      * @return the point, each coordinate <code>#i</code> of which is product of the corresponding coordinate
      * <code>#i</code> of this one and the corresponding multiplier <code>multiplier[i]</code>.
-     * @throws NullPointerException     if the argument is <code>null</code>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} is not equal to
      *                                  <code>multipliers.length</code>.
      */
@@ -627,7 +627,7 @@ public class IPoint implements Comparable<IPoint> {
      * <code>#i</code> of this one and the corresponding multiplier <code>multiplier[i]</code>,
      * incremented by the corresponding coordinate
      * <code>shift.{@link Point#coord(int) coord(i)}</code>.
-     * @throws NullPointerException     if one of the arguments is <code>null</code>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} is not equal to
      *                                  <code>multipliers.length</code>.
      */
@@ -648,7 +648,7 @@ public class IPoint implements Comparable<IPoint> {
      * @param resultCoordinates Java array for storing results.
      * @param multipliers       the multipliers for all coordinates.
      * @param shift             the shift along all coordinates.
-     * @throws NullPointerException     if one of the arguments is <code>null</code>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} is greater than
      *                                  <code>resultCoordinates.length</code> or is not equal to
      *                                  <code>multipliers.length</code>.
@@ -707,7 +707,7 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param point another point.
      * @return the scalar product of this and given point.
-     * @throws NullPointerException     if the argument is <code>null</code>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this and given points
      *                                  are different.
      */
@@ -826,7 +826,7 @@ public class IPoint implements Comparable<IPoint> {
      * @param o the point to be compared.
      * @return negative integer, zero, or a positive integer as this point
      * is lexicographically less than, equal to, or greater than <code>o</code>.
-     * @throws NullPointerException if the argument is <code>null</code>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public int compareTo(IPoint o) {
         return compareTo(o, 0);
@@ -862,7 +862,7 @@ public class IPoint implements Comparable<IPoint> {
      * @param firstCoordIndex the index of "first" coordinate, that is compared after all other coordinates.
      * @return negative integer, zero, or a positive integer as this point
      * is lexicographically less than, equal to, or greater than <code>o</code>.
-     * @throws NullPointerException     if the <code>o</code> argument is <code>null</code>.
+     * @throws NullPointerException     if the <code>o</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>firstCoordIndex</code> is negative.
      */
     public int compareTo(IPoint o, int firstCoordIndex) {
@@ -954,7 +954,7 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param point the added point.
      * @return the vector sum of this and given point.
-     * @throws NullPointerException     if the argument is <code>null</code>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this and given points
      *                                  are different.
      * @throws ArithmeticException      in a case of <code>long</code> overflow.
@@ -979,7 +979,7 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param point the subtracted point.
      * @return the vector difference of this and given point.
-     * @throws NullPointerException     if the argument is <code>null</code>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in this and given points
      *                                  are different.
      * @throws ArithmeticException      in a case of <code>long</code> overflow.
@@ -1041,7 +1041,7 @@ public class IPoint implements Comparable<IPoint> {
      * @param multipliers the multipliers for all coordinates.
      * @return the point, each coordinate <code>#i</code> of which is product of the corresponding coordinate
      * <code>#i</code> of this one and the corresponding multiplier <code>multiplier[i]</code>.
-     * @throws NullPointerException     if the argument is <code>null</code>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} is not equal to
      *                                  <code>multipliers.length</code>.
      */
@@ -1112,7 +1112,7 @@ public class IPoint implements Comparable<IPoint> {
      *                               by the product of all dimensions.
      * @return the index in this array, corresponding the position in the matrix,
      * describing by this point.
-     * @throws NullPointerException     if <code>dimensions</code> argument is <code>null</code>.
+     * @throws NullPointerException     if <code>dimensions</code> argument is {@code null}.
      * @throws IllegalArgumentException if some elements of <code>dimensions</code> array are negative
      *                                  (however note, that this method does not check elements, indexes of which are
      *                                  &gt;={@link #coordCount()})
